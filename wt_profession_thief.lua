@@ -415,12 +415,12 @@ DatAss.cAttack = inheritsFrom(wt_cause)
 DatAss.eAttack = inheritsFrom(wt_effect)
 
 function DatAss.cAttack:evaluate()
-    return Player:GetTarget() ~= 0
+    return wt_core_state_combat.CurrentTarget ~= 0
 end
 
 function DatAss.eAttack:execute()
     Player:StopMoving()
-    TID = Player:GetTarget()
+    TID = wt_core_state_combat.CurrentTarget
     if ( TID ~= 0 ) then
         local T = CharacterList:Get(TID)
         if ( T ~= nil ) then
