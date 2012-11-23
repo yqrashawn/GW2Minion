@@ -167,7 +167,7 @@ function c_openvendor:evaluate()
 			if( Player:GetTarget() ~= wt_global_information.CurrentVendor.characterID) then
 				Player:SetTarget(wt_global_information.CurrentVendor.characterID)
 			end			
-			if (not Inventory:IsVendorOpened() ) then
+			if (not Inventory:IsVendorOpened() and  not Player:IsConversationOpen()) then
 				return true	
 			end
 		end		
@@ -194,6 +194,36 @@ end
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
+-- Do Conversation with Vendor Cause & Effect
+local c_conversation = inheritsFrom(wt_cause)
+local e_selltovendor = inheritsFrom(wt_effect)
+
+function c_conversation:evaluate()		
+	if (wt_global_information.CurrentVendor ~= nil and wt_global_information.CurrentVendor ~= 0 and Player:IsConversationOpen() and not wt_core_state_vendoring.junksold ) then	
+		return true
+	end
+	return false
+end
+
+e_conversation.throttle = 2000
+function e_conversation:execute()		
+	wt_debug("Chatting with Vendor...")
+	if ( Player:IsConversationOpen()) then						
+		local options = Player:GetConversationOptions()
+		nextOption , entry  = next(options)		
+		while (nextOption ~=nil) do
+			if(entry.type == GW2.CONVERSATIONOPTIONS.Sell) then
+				Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Sell)
+			elseif(entry.type == GW2.CONVERSATIONOPTIONS.Continue) then
+				Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Continue)
+			end
+			nextOption,entry = next(object,nextOption)			
+		end		
+	end
+end
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 -- Selling Items To Vendor Cause & Effect
 local c_selltovendor = inheritsFrom(wt_cause)
 local e_selltovendor = inheritsFrom(wt_effect)
@@ -205,7 +235,7 @@ function c_selltovendor:evaluate()
 	return false
 end
 
-e_selltovendor.throttle = 1000
+e_selltovendor.throttle = 1500
 function e_selltovendor:execute()		
 	wt_debug("Selling Junk...")
 	if ( Inventory:IsVendorOpened()) then				
@@ -262,6 +292,9 @@ function wt_core_state_vendoring:initialize()
 	
 	local ke_openvendor = wt_kelement:create("OpenVendor",c_openvendor,e_openvendor,30)
 	wt_core_state_vendoring:add(ke_openvendor)
+	
+	local ke_doconversation = wt_kelement:create("Conversation",c_conversation,e_conversation,25)
+	wt_core_state_vendoring:add(ke_doconversation)
 	
 	local ke_selltovendor = wt_kelement:create("SellItems",c_selltovendor,e_selltovendor,20)
 	wt_core_state_vendoring:add(ke_selltovendor)
