@@ -67,6 +67,7 @@ function gw2minion.GUIVarUpdate(Event,NewVals, OldVals)
 end
 
 function wt_global_information.Reset()
+	Player:StopMoving()
 	wt_core_controller.requestStateChange(wt_core_state_idle)
 	wt_global_information.CurrentMarkerList = nil
 	wt_global_information.SelectedMarker = nil
