@@ -196,7 +196,7 @@ end
 ------------------------------------------------------------------------------
 -- Do Conversation with Vendor Cause & Effect
 local c_conversation = inheritsFrom(wt_cause)
-local e_selltovendor = inheritsFrom(wt_effect)
+local e_conversation = inheritsFrom(wt_effect)
 
 function c_conversation:evaluate()		
 	if (wt_global_information.CurrentVendor ~= nil and wt_global_information.CurrentVendor ~= 0 and Player:IsConversationOpen() and not wt_core_state_vendoring.junksold ) then	
