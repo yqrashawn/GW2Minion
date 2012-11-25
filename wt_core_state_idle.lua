@@ -11,109 +11,62 @@ wt_core_state_idle.kelement_list = { }
 wt_core_state_idle.selectedMarkerList = { }
 wt_core_state_idle.selectedMarkerIndex = 0
 
-------------------------------------------------------------------------------
--- Died Cause & Effect
-local c_check_died = inheritsFrom(wt_cause)
-local e_died = inheritsFrom(wt_effect)
 
-function c_check_died:evaluate()
-	return not Player.alive
-end
+-- DepositItems Cause & Effect
+local c_deposit = inheritsFrom(wt_cause)
+local e_deposit = inheritsFrom(wt_effect)
 
-function e_died:execute()
-		-- change state to handle the dead situation
-		wt_core_controller.requestStateChange(wt_core_state_dead)
-end
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
--- QuickLoot Cause & Effect (looting just the things that are in range already, this we can do while beeing infight)
-local c_check_quickloot = inheritsFrom(wt_cause)
-local e_quickloot = inheritsFrom(wt_effect)
-
-function c_check_quickloot:evaluate()
-	if(Inventory:GetNumberOfFreeInventorySlots() > 0) then
-		c_check_quickloot.EList = CharacterList("nearest,lootable,onmesh,maxdistance=120")
-		NextIndex , LootTarget = next(c_check_quickloot.EList)
-		if ( NextIndex ~= nil ) then		
-			if ( NextIndex == Player:GetInteractableTarget()) then						
-				return true;
-			end
+function c_deposit:evaluate()
+	if(ItemList.freeSlotCount == 0) then
+		if ( wt_global_information.InventoryFull == 0 ) then
+			return true
+		else
+			return false -- already tried to deposit stuff, still have 0 space in inventory -> vendoringcheck will jump in
 		end
-		--stupidcheck since some enemies are not marked as lootable but they are lootable
-		local e = Player:GetInteractableTarget()
-		if (e ~= nil) then
-			etable = CharacterList:Get(e)
-			if ( etable ~= nil) then
-				if (etable.healthstate == GW2.HEALTHSTATE.Defeated and (etable.attitude == GW2.ATTITUDE.Hostile or etable.attitude == GW2.ATTITUDE.Neutral) and etable.isMonster) then
-					return true
-				end
-			end
-		end
-	end
-	return false;
-end
-
-function e_quickloot:execute()
- 	local NextIndex = 0
-	local LootTarget = nil
-	NextIndex , LootTarget = next(c_check_quickloot.EList)
-	if ( NextIndex ~= nil and NextIndex == Player:GetInteractableTarget()) then		
-		wt_debug("looting")
-		Player:Interact(NextIndex)			
 	else
-		local e = Player:GetInteractableTarget()
-		if (e ~= nil) then
-			etable = CharacterList:Get(e)
-			if ( etable ~= nil) then
-				if (etable.healthstate == GW2.HEALTHSTATE.Defeated and (etable.attitude == GW2.ATTITUDE.Hostile or etable.attitude == GW2.ATTITUDE.Neutral) and etable.isMonster) then
-					wt_debug("Looting..")
-					Player:Interact(e)
-					return
-				end
-			end
-		end
+		wt_global_information.InventoryFull = 0
 	end
-	wt_error("No Target to Quick-Loot")	
+	return false
+end
+e_deposit.throttle = 1000
+function e_deposit:execute()
+	wt_debug("Deposing Collectables..")
+	wt_global_information.InventoryFull = 1
+	Inventory:DepositCollectables()
 end
 
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
--- Aggro Cause & Effect
-local c_check_aggro = inheritsFrom(wt_cause)
-local e_aggro = inheritsFrom(wt_effect)
+-- Vendoring Check Cause & Effect
+local c_vendorcheck = inheritsFrom(wt_cause)
+local e_vendorcheck = inheritsFrom(wt_effect)
 
-function c_check_aggro:evaluate()
-	if (Player.inCombat) then		
-		c_check_aggro.TargetList = (CharacterList("attackable,alive,incombat,maxdistance=1200,minlevel=2"))	
-		if ( TableSize(c_check_aggro.TargetList) > 0 ) then
-			nextTarget , E  = next(c_check_aggro.TargetList)		
-			if (nextTarget ~=nil) then
-				return true
-			end
-		end
-	end
-
-	c_check_aggro.TargetList = (CharacterList("los,attackable,alive,maxdistance=500,minlevel=2"))
-	if ( TableSize(c_check_aggro.TargetList) > 0 ) then
+function c_vendorcheck:evaluate()
+	if(ItemList.freeSlotCount == 0 and wt_global_information.InventoryFull == 1 and wt_global_information.CurrentVendor ~= nil) then
 		return true
 	end
 	return false
 end
 
-function e_aggro:execute()
-	if ( TableSize(c_check_aggro.TargetList) > 0 ) then
-		nextTarget , E  = next(c_check_aggro.TargetList)		
-		if (nextTarget ~=nil) then
-			wt_debug("possible aggro target found")
-			wt_core_state_combat.setTarget(nextTarget)
-			wt_core_controller.requestStateChange(wt_core_state_combat)
-		end
-	end
+function e_vendorcheck:execute()
+	wt_core_controller.requestStateChange(wt_core_state_vendoring)
 end
 
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
+-- NeedRepair Check Cause & Effect
+local c_repaircheck = inheritsFrom(wt_cause)
+local e_repaircheck = inheritsFrom(wt_effect)
+-- IsEquippmentDamaged() is defined in /gw2lib/wt_utility.lua
+function c_repaircheck:evaluate()	
+	if( gEnableRepair == "1" and wt_global_information.RepairMerchant ~= nil and IsEquippmentDamaged()) then
+		if ( MapObjectList("onmesh,nearest,maxdistance=5000,type="..GW2.MAPOBJECTTYPE.RepairMerchant)) then
+			return true
+		end
+	end
+	return false
+end
+
+function e_repaircheck:execute()
+	wt_core_controller.requestStateChange(wt_core_state_repair)
+end
+
 -- Search for Reviveable Targets Cause & Effect
 local c_check_revive = inheritsFrom(wt_cause)
 local e_revive = inheritsFrom(wt_effect)
@@ -128,7 +81,7 @@ function c_check_revive:evaluate()
 			end
 		end
 	end
-	return false;
+	return false
 end
 
 function e_revive:execute()
@@ -148,19 +101,17 @@ function e_revive:execute()
 					end
 				end
 			end
-		end		
+		end
 	else
 		wt_error("No Target to revive")
 	end
 end
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 -- Loot Cause & Effect
 local c_check_loot = inheritsFrom(wt_cause)
 local e_loot = inheritsFrom(wt_effect)
 
 function c_check_loot:evaluate()
-	if(Inventory:GetNumberOfFreeInventorySlots() > 0) then
+	if ( ItemList.freeSlotCount > 0 ) then
 		c_check_loot.EList = CharacterList("nearest,lootable,onmesh,maxdistance=1200")
 		if ( TableSize(c_check_loot.EList) > 0 ) then
 			return true;
@@ -192,31 +143,8 @@ function e_loot:execute()
 		wt_error("No Target to Loot")
 	end
 end
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
--- Rest Cause & Effect
-local c_rest = inheritsFrom(wt_cause)
-local e_rest = inheritsFrom(wt_effect)
 
-function c_rest:evaluate()
-	local HP = Player.health.percent
-	if ( HP < wt_global_information.Currentprofession.RestHealthLimit) then
-		return true
-	end
-	return false
-end
 
-function e_rest:execute()
-	wt_debug("resting...")
-	if(Player.health.percent < 65 and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6)) then
-		wt_debug("Using healspell for resting...")
-		Player:CastSpell(GW2.SKILLBARSLOT.Slot_6)
-	end	
-	return
-end
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 -- Gatherbale Cause & Effect
 local c_check_gatherable = inheritsFrom(wt_cause)
 local e_gather = inheritsFrom(wt_effect)
@@ -228,8 +156,8 @@ function c_check_gatherable:evaluate()
 		return true
 	end
 
-	if(Inventory:GetNumberOfFreeInventorySlots() > 0 ) then
-		c_check_gatherable.EList = GadgetList("onmesh,shortestpath,gatherable,maxdistance=4000")	
+	if ( ItemList.freeSlotCount > 0 ) then
+		c_check_gatherable.EList = GadgetList("onmesh,shortestpath,gatherable,maxdistance=4000")
 		if ( TableSize(c_check_gatherable.EList) > 0 ) then
 			local GatherTarget = nil
 			local resourceType = nil
@@ -239,13 +167,13 @@ function c_check_gatherable:evaluate()
 			c_check_gatherable.GatherTargetID = nil
 		end
 	end
-	return false;
+	return false
 end
 
 function e_gather:execute()
  	local NextIndex = c_check_gatherable.GatherTargetID
 	local GatherTarget = GadgetList:Get(c_check_gatherable.GatherTargetID)
-	if (GatherTarget ~= nil) then
+	if ( GatherTarget ~= nil ) then
 			wt_debug("found target to gather")
 			if ( GatherTarget.distance > 100 ) then
 				wt_debug("moving to gatherable..." ..GatherTarget.distance)
@@ -264,8 +192,6 @@ function e_gather:execute()
 end
 
 
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 -- Search for Targets Cause & Effect
 local c_check_target = inheritsFrom(wt_cause)
 local e_targetsearch = inheritsFrom(wt_effect)
@@ -277,15 +203,14 @@ function c_check_target:evaluate()
 		Target = CharacterList:Get(TargetID)
 	end
 	if (Target == nil or not Target.alive) then
-		c_check_target.TargetList = (CharacterList("shortestpath,onmesh,attackable,alive,maxdistance=2000,minlevel=2,maxlevel="..(Player.level + wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel)))	
+		c_check_target.TargetList = (CharacterList("shortestpath,onmesh,noCritter,attackable,alive,maxdistance=2000,maxlevel="..(Player.level + wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel)))
 		return TableSize(c_check_target.TargetList) > 0
 	end
 	return false
 end
 
-
 function e_targetsearch:execute()
-	nextTarget , E  = next(c_check_target.TargetList)		
+	nextTarget , E  = next(c_check_target.TargetList)
 	if (nextTarget ~=nil) then
 		wt_debug("found target")
 		Player:StopMoving()
@@ -294,7 +219,7 @@ function e_targetsearch:execute()
 	end
 end
 
-
+-- Search for NextMarker Cause & Effect
 local c_marker = inheritsFrom(wt_cause)
 local e_marker = inheritsFrom(wt_effect)
 
@@ -306,7 +231,7 @@ function c_marker:evaluate()
 		wt_core_state_idle.selectedMarkerList = nil
 	end
 	local distance = 0
-	
+
 	if ( wt_global_information.SelectedMarker ~= nil ) then
 		distance =  Distance3D(wt_global_information.SelectedMarker.x,wt_global_information.SelectedMarker.y,wt_global_information.SelectedMarker.z,Player.pos.x,Player.pos.y,Player.pos.z)
 		if (distance <= 150) then
@@ -316,50 +241,26 @@ function c_marker:evaluate()
 	return ( TableSize(wt_global_information.CurrentMarkerList)>0 and (wt_global_information.SelectedMarker == nil or distance>150) )
 end
 
-
 function e_marker:execute()
 	UpdateNextMarker()
 	if ( wt_global_information.SelectedMarker ~= nil) then
-			wt_debug("Walking towards Next Marker")
-			Player:MoveTo(wt_global_information.SelectedMarker.x,wt_global_information.SelectedMarker.y,wt_global_information.SelectedMarker.z,150)
+		wt_debug("Walking towards Next Marker")
+		Player:MoveTo(wt_global_information.SelectedMarker.x,wt_global_information.SelectedMarker.y,wt_global_information.SelectedMarker.z,150)
 	end
 end
 
 
-local c_keepdoinganything = inheritsFrom(wt_cause)
-local e_keepdoinganything = inheritsFrom(wt_effect)
 
-function c_keepdoinganything:evaluate()
-	return false
-	--c_keepdoinganything.TargetList = (CharacterList("nearest,onmesh,attackable,alive"))
-	--return TableSize(c_keepdoinganything.TargetList)>0
-end
-
-function e_keepdoinganything:execute()
-	nextTarget , E  = next(c_keepdoinganything.TargetList)		
-	if (nextTarget ~=nil) then
-		wt_debug("found last hope target")
-		Player:StopMoving()
-		wt_core_state_combat.setTarget(nextTarget)
-		wt_core_controller.requestStateChange(wt_core_state_combat)
-	end	
-end 
-
-
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 -- Marker-Navigation Logic
 function UpdateNextMarker()
-	
-	if ( wt_global_information.SelectedMarker == nil or Distance3D(wt_global_information.SelectedMarker.x,wt_global_information.SelectedMarker.y,wt_global_information.SelectedMarker.z,Player.pos.x,Player.pos.y,Player.pos.z) < 450 ) then								
+	if ( wt_global_information.SelectedMarker == nil or Distance3D(wt_global_information.SelectedMarker.x,wt_global_information.SelectedMarker.y,wt_global_information.SelectedMarker.z,Player.pos.x,Player.pos.y,Player.pos.z) < 450 ) then
 		if (wt_core_state_idle.selectedMarkerList == nil or (#wt_core_state_idle.selectedMarkerList <= wt_core_state_idle.selectedMarkerIndex) or (wt_core_state_idle.selectedMarkerList[wt_core_state_idle.selectedMarkerIndex] ~= nil and Player.level > wt_core_state_idle.selectedMarkerList[wt_core_state_idle.selectedMarkerIndex].maxlevel)) then
 			wt_debug("Generating new MarkerList for our Level")
 			if (wt_global_information.CurrentMarkerList ~=nil) then
 				wt_core_state_idle.selectedMarkerList = { }
 				nextMarker,v = next(wt_global_information.CurrentMarkerList)
 				while ( nextMarker ~= nil ) do
-					if ( v ~= wt_global_information.SelectedMarker and Distance3D(v.x,v.y,v.z,Player.pos.x,Player.pos.y,Player.pos.z) > 250 and (Player.level >= v.minlevel and Player.level <= v.maxlevel)) then								
+					if ( v ~= wt_global_information.SelectedMarker and Distance3D(v.x,v.y,v.z,Player.pos.x,Player.pos.y,Player.pos.z) > 250 and (Player.level >= v.minlevel and Player.level <= v.maxlevel)) then
 						table.insert(wt_core_state_idle.selectedMarkerList,v)
 					end
 				   nextMarker,v = next(wt_global_information.CurrentMarkerList,nextMarker)
@@ -368,68 +269,57 @@ function UpdateNextMarker()
 			else
 				wt_debug("Error, CurrentMarkerList is empty!")
 			end
-		else					
+		else
 			if ( #wt_core_state_idle.selectedMarkerList > wt_core_state_idle.selectedMarkerIndex ) then
 				wt_debug("Selecting next Marker")
 				wt_core_state_idle.selectedMarkerIndex = wt_core_state_idle.selectedMarkerIndex + 1
 				wt_global_information.SelectedMarker = wt_core_state_idle.selectedMarkerList[wt_core_state_idle.selectedMarkerIndex]
 				wt_debug(wt_core_state_idle.selectedMarkerList[wt_core_state_idle.selectedMarkerIndex])
-			end				
-		end				
+			end
+		end
 	end
 end
 
 
-local c_deposit = inheritsFrom(wt_cause)
-local e_deposit = inheritsFrom(wt_effect)
-
-function c_deposit:evaluate()
-	return false -- (Inventory:GetNumberOfFreeInventorySlots() == 0) 
-end
-
-function e_deposit:execute()
-	Inventory:DepositCollectables()
-end 
-
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 
 function wt_core_state_idle:initialize()
 
-	local ke_died = wt_kelement:create("Died",c_check_died,e_died, wt_effect.priorities.interrupt )
+	local ke_died = wt_kelement:create("Died",c_died,e_died, wt_effect.priorities.interrupt )
 	wt_core_state_idle:add(ke_died)
-	
-	local ke_quickloot = wt_kelement:create("QuickLoot",c_check_quickloot,e_quickloot,110)
+
+	local ke_quickloot = wt_kelement:create("QuickLoot",c_quickloot,e_quickloot,110)
 	wt_core_state_idle:add(ke_quickloot)
-		
-	local ke_aggro = wt_kelement:create("AggroCheck",c_check_aggro,e_aggro, 100 )
+
+	local ke_aggro = wt_kelement:create("AggroCheck",c_aggro,e_aggro, 100 )
 	wt_core_state_idle:add(ke_aggro)
-	
-	local ke_deposit = wt_kelement:create("Deposit",c_deposit,e_deposit, 90)
+
+	local ke_deposit = wt_kelement:create("DepositItems",c_deposit,e_deposit, 90)
 	wt_core_state_idle:add(ke_deposit)
-	
+
+	local ke_vendorcheck = wt_kelement:create("VendoringCheck",c_vendorcheck,e_vendorcheck, 88)
+	wt_core_state_idle:add(ke_vendorcheck)
+
+	local ke_repaircheck = wt_kelement:create("RepairCheck",c_repaircheck,e_repaircheck, 86)
+	wt_core_state_idle:add(ke_repaircheck)
+
 	local ke_revive = wt_kelement:create("Revive",c_check_revive,e_revive, 85)
 	wt_core_state_idle:add(ke_revive)
 
 	local ke_rest = wt_kelement:create("Rest",c_rest,e_rest,75)
 	wt_core_state_idle:add(ke_rest)
-	
+
 	local ke_loot = wt_kelement:create("Loot",c_check_loot,e_loot,50)
 	wt_core_state_idle:add(ke_loot)
-		
+
 	local ke_gather = wt_kelement:create("Gather",c_check_gatherable,e_gather, 40)
 	wt_core_state_idle:add(ke_gather)
-	
+
 	local ke_targetsearch = wt_kelement:create("Targetsearch",c_check_target,e_targetsearch,30)
 	wt_core_state_idle:add(ke_targetsearch)
 
 	local ke_marker= wt_kelement:create("Marker",c_marker,e_marker,20)
 	wt_core_state_idle:add(ke_marker)
 
-	--local ke_lasthope= wt_kelement:create("KeepMoving",c_keepdoinganything,e_keepdoinganything,10)
-	--wt_core_state_idle:add(ke_lasthope)
-	
 end
 
 -- setup kelements for the state

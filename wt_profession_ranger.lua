@@ -14,72 +14,72 @@ wt_profession_ranger.RestHealthLimit = 70
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 -- NeedHeal Check
-wt_profession_ranger.c_heal_action = inheritsFrom(wt_cause)
-wt_profession_ranger.e_heal_action = inheritsFrom(wt_effect)
+wt_profession_ranger.c_heal_action = inheritsFrom( wt_cause )
+wt_profession_ranger.e_heal_action = inheritsFrom( wt_effect )
 
 function wt_profession_ranger.c_heal_action:evaluate()
-	return (Player.health.percent < 50 and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6))
+	return ( Player.health.percent < 50 and not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_6 ) )
 end
 wt_profession_ranger.e_heal_action.usesAbility = true
 
 function wt_profession_ranger.e_heal_action:execute()
 	wt_debug("e_heal_action")
-	Player:CastSpell(GW2.SKILLBARSLOT.Slot_6)
+	Player:CastSpell( GW2.SKILLBARSLOT.Slot_6 )
 end
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 -- Move Closer to Target Check
-wt_profession_ranger.c_MoveCloser = inheritsFrom(wt_cause)
-wt_profession_ranger.e_MoveCloser = inheritsFrom(wt_effect)
+wt_profession_ranger.c_MoveCloser = inheritsFrom( wt_cause )
+wt_profession_ranger.e_MoveCloser = inheritsFrom( wt_effect )
 
 function wt_profession_ranger.c_MoveCloser:evaluate()
 	if ( wt_core_state_combat.CurrentTarget ~= 0 ) then
-		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
+		local T = CharacterList:Get( wt_core_state_combat.CurrentTarget )
 		local Distance = T ~= nil and T.distance or 0
 		local LOS = T~=nil and T.los or false
-		if (Distance >= wt_global_information.AttackRange  or LOS~=true) then
+		if ( Distance >= wt_global_information.AttackRange or LOS ~= true ) then
 			return true
 		else
-			if( Player:GetTarget() ~= wt_core_state_combat.CurrentTarget) then
-				Player:SetTarget(wt_core_state_combat.CurrentTarget)
+			if ( Player:GetTarget() ~= wt_core_state_combat.CurrentTarget ) then
+				Player:SetTarget( wt_core_state_combat.CurrentTarget )
 			end
 		end
 	end
-	return false;
+	return false
 end
 
 function wt_profession_ranger.e_MoveCloser:execute()
 	wt_debug("e_MoveCloser ")
 	local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
 	if ( T ~= nil ) then
-		Player:MoveTo(T.pos.x,T.pos.y,T.pos.z,120) -- the last number is the distance to the target where to stop
+		Player:MoveTo( T.pos.x, T.pos.y, T.pos.z, 120 ) -- the last number is the distance to the target where to stop
 	end
 end
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
--- Update Weapon Data 
-wt_profession_ranger.c_update_weapons = inheritsFrom(wt_cause)
-wt_profession_ranger.e_update_weapons = inheritsFrom(wt_effect)
+-- Update Weapon Data
+wt_profession_ranger.c_update_weapons = inheritsFrom( wt_cause )
+wt_profession_ranger.e_update_weapons = inheritsFrom( wt_effect )
 
 function wt_profession_ranger.c_update_weapons:evaluate()
-	wt_profession_ranger.MHweapon = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon)
-	wt_profession_ranger.OHweapon = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon)
+	wt_profession_ranger.MHweapon = Inventory:GetEquippedItemBySlot( GW2.EQUIPMENTSLOT.MainHandWeapon )
+	wt_profession_ranger.OHweapon = Inventory:GetEquippedItemBySlot( GW2.EQUIPMENTSLOT.OffHandWeapon )
 	return false
 end
 
-function wt_profession_ranger.e_update_weapons:execute()	
+function wt_profession_ranger.e_update_weapons:execute()
 end
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
--- Combat Default Attack 
-wt_profession_ranger.c_attack_default = inheritsFrom(wt_cause)
-wt_profession_ranger.e_attack_default = inheritsFrom(wt_effect)
+-- Combat Default Attack
+wt_profession_ranger.c_attack_default = inheritsFrom( wt_cause )
+wt_profession_ranger.e_attack_default = inheritsFrom( wt_effect )
 
 function wt_profession_ranger.c_attack_default:evaluate()
-	  return wt_core_state_combat.CurrentTarget~= 0
+	  return wt_core_state_combat.CurrentTarget ~= 0
 end
 
 wt_profession_ranger.e_attack_default.usesAbility = true
@@ -113,51 +113,36 @@ function wt_profession_ranger.e_attack_default:execute()
 	end
 end
 
-
 -----------------------------------------------------------------------------------
 -- Registration and setup of causes and effects to the different states
 -----------------------------------------------------------------------------------
 
 -- We need to check if the players current profession is ours to only add our profession specific routines
-if ( wt_profession_ranger.professionID > -1 and wt_profession_ranger.professionID == Player.profession) then
+if ( wt_profession_ranger.professionID > -1 and wt_profession_ranger.professionID == Player.profession ) then
 
-	wt_debug("Initalizing profession routine for Ranger")
+	wt_debug( "Initalizing profession routine for Ranger" )
 	-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
 	-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
 	-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua
-	
-	
-	-- Our C & E´s for Ranger combat:
-	local ke_heal_action = wt_kelement:create("heal_action",wt_profession_ranger.c_heal_action,wt_profession_ranger.e_heal_action, 100 )
-		wt_core_state_combat:add(ke_heal_action)
-		
-	local ke_MoveClose_action = wt_kelement:create("Move closer",wt_profession_ranger.c_MoveCloser,wt_profession_ranger.e_MoveCloser, 75 )
-		wt_core_state_combat:add(ke_MoveClose_action)
 
-	local ke_Update_weapons = wt_kelement:create("UpdateWeaponData",wt_profession_ranger.c_update_weapons,wt_profession_ranger.e_update_weapons, 55 )
-		wt_core_state_combat:add(ke_Update_weapons)
-		
-		
-	local ke_Attack_default = wt_kelement:create("Attackdefault",wt_profession_ranger.c_attack_default,wt_profession_ranger.e_attack_default, 45 )
-		wt_core_state_combat:add(ke_Attack_default)
-		
+
+	-- Our C & E´s for Ranger combat:
+	local ke_heal_action = wt_kelement:create( "heal_action", wt_profession_ranger.c_heal_action, wt_profession_ranger.e_heal_action, 100 )
+		wt_core_state_combat:add( ke_heal_action )
+
+	local ke_MoveClose_action = wt_kelement:create( "Move closer", wt_profession_ranger.c_MoveCloser, wt_profession_ranger.e_MoveCloser, 75 )
+		wt_core_state_combat:add( ke_MoveClose_action )
+
+	local ke_Update_weapons = wt_kelement:create( "UpdateWeaponData", wt_profession_ranger.c_update_weapons, wt_profession_ranger.e_update_weapons, 55 )
+		wt_core_state_combat:add( ke_Update_weapons )
+
+
+	local ke_Attack_default = wt_kelement:create( "Attackdefault", wt_profession_ranger.c_attack_default, wt_profession_ranger.e_attack_default, 45 )
+		wt_core_state_combat:add( ke_Attack_default )
+
 
 	-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
 	wt_global_information.Currentprofession = wt_profession_ranger
 	wt_global_information.AttackRange = 900
 end
 -----------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-

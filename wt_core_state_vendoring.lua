@@ -7,81 +7,7 @@ wt_core_state_vendoring.name = "Vendoring"
 wt_core_state_vendoring.kelement_list = { }
 wt_core_state_vendoring.junksold = false 
 
-------------------------------------------------------------------------------
--- Died Cause & Effect
-local c_check_died = inheritsFrom(wt_cause)
-local e_died = inheritsFrom(wt_effect)
 
-function c_check_died:evaluate()
-	return not Player.alive
-end
-
-function e_died:execute()
-		-- change state to handle the dead situation
-		wt_core_controller.requestStateChange(wt_core_state_dead)
-end
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
--- Aggro Cause & Effect
-local c_check_aggro = inheritsFrom(wt_cause)
-local e_aggro = inheritsFrom(wt_effect)
-
-function c_check_aggro:evaluate()
-	if (Player.inCombat) then		
-		c_check_aggro.TargetList = (CharacterList("attackable,alive,incombat,maxdistance=1200,noCritter,onmesh"))	
-		if ( TableSize(c_check_aggro.TargetList) > 0 ) then
-			nextTarget , E  = next(c_check_aggro.TargetList)		
-			if (nextTarget ~=nil) then
-				return true
-			end
-		end
-	end
-
-	c_check_aggro.TargetList = (CharacterList("los,attackable,alive,maxdistance=500,noCritter,onmesh"))
-	if ( TableSize(c_check_aggro.TargetList) > 0 ) then
-		return true
-	end
-	return false
-end
-
-function e_aggro:execute()
-	if ( TableSize(c_check_aggro.TargetList) > 0 ) then
-		nextTarget , E  = next(c_check_aggro.TargetList)		
-		if (nextTarget ~=nil) then
-			wt_debug("possible aggro target found")
-			wt_core_state_combat.setTarget(nextTarget)
-			wt_core_controller.requestStateChange(wt_core_state_combat)
-		end
-	end
-end
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
--- Rest Cause & Effect
-local c_rest = inheritsFrom(wt_cause)
-local e_rest = inheritsFrom(wt_effect)
-
-function c_rest:evaluate()
-	local HP = Player.health.percent
-	if ( HP < wt_global_information.Currentprofession.RestHealthLimit) then
-		return true
-	end
-	return false
-end
-
-function e_rest:execute()
-	wt_debug("resting...")
-	if(Player.health.percent < 65 and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6)) then
-		wt_debug("Using healspell for resting...")
-		Player:CastSpell(GW2.SKILLBARSLOT.Slot_6)
-	end	
-	return
-end
-
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 -- Search for Vendor Cause & Effect
 local c_vendorcheck = inheritsFrom(wt_cause)
 local e_vendor = inheritsFrom(wt_effect)
@@ -108,9 +34,6 @@ function e_vendor:execute()
 	end
 end
 
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 -- VendorCheck Cause & Effect
 local c_novendorcheck = inheritsFrom(wt_cause)
 local e_novendor = inheritsFrom(wt_effect)
@@ -127,15 +50,15 @@ function e_novendor:execute()
 	wt_core_controller.requestStateChange(wt_core_state_idle)
 end
 
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 -- MoveTo Vendor Cause & Effect
 local c_movetovendorcheck = inheritsFrom(wt_cause)
 local e_movetovendor = inheritsFrom(wt_effect)
 
 function c_movetovendorcheck:evaluate()
 	if (wt_global_information.CurrentVendor ~= nil and wt_global_information.CurrentVendor ~= 0) then			
-		distance =  Distance3D(wt_global_information.CurrentVendor.pos.x,wt_global_information.CurrentVendor.pos.y,wt_global_information.CurrentVendor.pos.z,Player.pos.x,Player.pos.y,Player.pos.z)
+		e_movetovendor.vpos = wt_global_information.CurrentVendor.pos
+		local ppos = Player.pos
+		distance =  Distance3D(e_movetovendor.vpos.x,e_movetovendor.vpos.y,e_movetovendor.vpos.z,ppos.x,ppos.y,ppos.z)
 		wt_debug("Vendordist : "..distance)
 		if (distance >= 80) then
 			return true	
@@ -147,21 +70,21 @@ e_movetovendor.throttle = 250
 function e_movetovendor:execute()
 	wt_debug("MoveToVendor.. "..wt_global_information.CurrentVendor.characterID)	
 	if ( wt_global_information.CurrentVendor ~= nil and wt_global_information.CurrentVendor ~= 0) then
-		Player:MoveTo(wt_global_information.CurrentVendor.pos.x,wt_global_information.CurrentVendor.pos.y,wt_global_information.CurrentVendor.pos.z,80)
+		Player:MoveTo(e_movetovendor.vpos.x,e_movetovendor.vpos.y,e_movetovendor.vpos.z,80)
 	else 
 		wt_global_information.CurrentVendor = 0
 	end
 end
 
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 -- Open Vendor Cause & Effect
 local c_openvendor = inheritsFrom(wt_cause)
 local e_openvendor = inheritsFrom(wt_effect)
 
 function c_openvendor:evaluate()	
 	if (wt_global_information.CurrentVendor ~= nil and wt_global_information.CurrentVendor ~= 0) then			
-		distance =  Distance3D(wt_global_information.CurrentVendor.pos.x,wt_global_information.CurrentVendor.pos.y,wt_global_information.CurrentVendor.pos.z,Player.pos.x,Player.pos.y,Player.pos.z)
+		local vpos = wt_global_information.CurrentVendor.pos
+		local ppos = Player.pos
+		distance =  Distance3D(vpos.x,vpos.y,vpos.z,ppos.x,ppos.y,ppos.z)
 		if (distance < 80) then
 			Player:StopMoving()
 			if( Player:GetTarget() ~= wt_global_information.CurrentVendor.characterID) then
@@ -192,8 +115,6 @@ function e_openvendor:execute()
 end
 
 
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 -- Do Conversation with Vendor Cause & Effect
 local c_conversation = inheritsFrom(wt_cause)
 local e_conversation = inheritsFrom(wt_effect)
@@ -222,8 +143,6 @@ function e_conversation:execute()
 	end
 end
 
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 -- Selling Items To Vendor Cause & Effect
 local c_selltovendor = inheritsFrom(wt_cause)
 local e_selltovendor = inheritsFrom(wt_effect)
@@ -244,8 +163,6 @@ function e_selltovendor:execute()
 	end
 end
 
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 -- VendorDone Cause & Effect
 local c_vendordone = inheritsFrom(wt_cause)
 local e_vendordone = inheritsFrom(wt_effect)
@@ -267,15 +184,14 @@ function e_vendordone:execute()
 	wt_core_controller.requestStateChange(wt_core_state_idle)
 end
 
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
+-------------------------------------------------------------
 
 function wt_core_state_vendoring:initialize()
 
-	local ke_died = wt_kelement:create("Died",c_check_died,e_died, wt_effect.priorities.interrupt )
+	local ke_died = wt_kelement:create("Died",c_died,e_died, wt_effect.priorities.interrupt )
 	wt_core_state_vendoring:add(ke_died)
 		
-	local ke_aggro = wt_kelement:create("AggroCheck",c_check_aggro,e_aggro, 100 )
+	local ke_aggro = wt_kelement:create("AggroCheck",c_aggro,e_aggro, 100 )
 	wt_core_state_vendoring:add(ke_aggro)
 	
 	local ke_rest = wt_kelement:create("Rest",c_rest,e_rest,75)
