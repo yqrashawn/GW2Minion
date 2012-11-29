@@ -356,8 +356,6 @@ function DatAss.Spellbook.Update()
 			DatAss.Spellbook.AddToList(DatAss.BlackPowder)
 		elseif (DatAss.mainWeapon ~= nil and DatAss.secondaryWeapon ~= nil and DatAss.mainWeapon.weapontype == GW2.WEAPONTYPE.Pistol and DatAss.secondaryWeapon.weapontype == GW2.WEAPONTYPE.Pistol) then
 			DatAss.Spellbook.AddToList(DatAss.BlackPowder)
-		elseif (DatAss.mainWeapon ~= nil and DatAss.secondaryWeapon ~= nil and DatAss.mainWeapon.weapontype == GW2.WEAPONTYPE.Sword and DatAss.secondaryWeapon.weapontype == GW2.WEAPONTYPE.Pistol) then
-			DatAss.Spellbook.AddToList(DatAss.BlackPowder)
 		end
 	end
 	
@@ -541,7 +539,6 @@ function DatAss.eAttack:execute()
 						DatAss.ThievesGuild:TryCast(TID)
 					end
 				elseif (Player.health.percent <= 60 and DatAss.ThievesGuild:TryCast(TID)) then
-				elseif (Player.health.percent <= 60 and DatAss.BlackPowder:TryCast(TID)) then
 				elseif (not DatAss.hasSteal and DatAss.Steal:TryCast(TID)) then
 					DatAss.hasSteal = true
 				elseif (DatAss.hasSteal and DatAss.Steal:TryCast(TID)) then
