@@ -95,7 +95,6 @@ function wt_global_information.Reset()
 end
 
 
-
 -- Register Event Handlers
 RegisterEventHandler("Module.Initalize",gw2minion.HandleInit)
 RegisterEventHandler("Gameloop.Update",wt_global_information.OnUpdate)

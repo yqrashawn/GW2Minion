@@ -1,3 +1,13 @@
+
+--[[
+ ***********************************************************************************************************************
+ 
+								21/11/2012  Custom Thief class courtesy of z0mg
+ 
+ ***********************************************************************************************************************
+--]]
+
+
 --[[
 ********************************************************************************?***************************************
                                                     Loader
@@ -417,12 +427,12 @@ DatAss.cAttack = inheritsFrom(wt_cause)
 DatAss.eAttack = inheritsFrom(wt_effect)
 
 function DatAss.cAttack:evaluate()
-    return wt_core_state_combat.CurrentTarget ~= 0
+    return Player:GetTarget() ~= 0
 end
 
 function DatAss.eAttack:execute()
     Player:StopMoving()
-    TID = wt_core_state_combat.CurrentTarget
+    TID = Player:GetTarget()
     if ( TID ~= 0 ) then
         local T = CharacterList:Get(TID)
         if ( T ~= nil ) then
