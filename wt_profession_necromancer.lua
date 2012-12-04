@@ -11,6 +11,21 @@ wt_profession_necromancer.professionRoutineName = "Necromancer"
 wt_profession_necromancer.professionRoutineVersion = "1.0"
 wt_profession_necromancer.RestHealthLimit = 70
 
+
+wt_profession_necromancer.petIDs = {
+    10547, -- Blood Fiend
+    10589, -- Shadow Fiend
+    10533, -- Bone Fiend
+    10541, -- Bone Minions
+    10646, -- Flesh Golem
+}
+wt_profession_necromancer.Slots = {
+	GW2.SKILLBARSLOT.Slot_6,
+	GW2.SKILLBARSLOT.Slot_7,
+	GW2.SKILLBARSLOT.Slot_8,
+	GW2.SKILLBARSLOT.Slot_9,
+	GW2.SKILLBARSLOT.Slot_10,
+}
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 -- NeedHeal Check
@@ -25,6 +40,42 @@ wt_profession_necromancer.e_heal_action.usesAbility = true
 function wt_profession_necromancer.e_heal_action:execute()
 	wt_debug("e_heal_action")
 	Player:CastSpell(GW2.SKILLBARSLOT.Slot_6)
+end
+
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+-- NeedHeal Check
+wt_profession_necromancer.c_pets = inheritsFrom(wt_cause)
+wt_profession_necromancer.e_pets = inheritsFrom(wt_effect)
+
+function wt_profession_necromancer.c_pets:evaluate()	
+	if (not Player.incombat ) then 
+		for index1, ID in pairs(wt_profession_necromancer.petIDs) do
+			for index2, slot in pairs(wt_profession_necromancer.Slots) do
+				SpellInfo = Player:GetSpellInfo(slot)
+				if (SpellInfo ~= nil) then
+					if (ID == SpellInfo.skillID and not Player:IsSpellOnCooldown(slot)) then
+						return true
+					end
+				end
+			end
+		end
+	end
+	return false
+end
+
+wt_profession_necromancer.e_pets.usesAbility = true
+function wt_profession_necromancer.e_pets:execute()
+	for index1, ID in pairs(wt_profession_necromancer.petIDs) do
+		for index2, slot in pairs(wt_profession_necromancer.Slots) do
+			SpellInfo = Player:GetSpellInfo(slot)
+			if (SpellInfo ~= nil) then
+				if (ID == SpellInfo.skillID and not Player:IsSpellOnCooldown(slot)) then
+					Player:CastSpell(slot)
+				end
+			end
+		end
+	end
 end
 
 ------------------------------------------------------------------------------
@@ -137,11 +188,16 @@ if ( wt_profession_necromancer.professionID > -1 and wt_profession_necromancer.p
 	
 	local ke_Update_weapons = wt_kelement:create("UpdateWeaponData",wt_profession_necromancer.c_update_weapons,wt_profession_necromancer.e_update_weapons, 55 )
 		wt_core_state_combat:add(ke_Update_weapons)
-		
-		
+			
 	local ke_Attack_default = wt_kelement:create("Attackdefault",wt_profession_necromancer.c_attack_default,wt_profession_necromancer.e_attack_default, 45 )
 		wt_core_state_combat:add(ke_Attack_default)
-		
+	
+	
+	-- C & E`s for Idle state
+	
+	local ke_checkPets = wt_kelement:create("Summon Pets",wt_profession_necromancer.c_pets,wt_profession_necromancer.e_pets, 95 )
+		wt_core_state_idle:add(ke_checkPets)
+	
 
 	-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
 	wt_global_information.Currentprofession = wt_profession_necromancer

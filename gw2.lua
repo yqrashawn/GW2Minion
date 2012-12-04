@@ -4,7 +4,7 @@ wt_global_information = {}
 wt_global_information.Currentprofession = nil
 wt_global_information.Now = 0
 wt_global_information.PVP = false
-wt_global_information.MainWindow = { Name = "GW2Minion", x=100, y=120 , width=170, height=150 }
+wt_global_information.MainWindow = { Name = "GW2Minion", x=100, y=120 , width=200, height=200 }
 wt_global_information.BtnStart = { Name="StartStop" ,Event = "GUI_REQUEST_RUN_TOGGLE" }
 wt_global_information.BtnPulse = { Name="Pulse" ,Event = "Debug.Pulse" }
 wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel = 3  
@@ -12,6 +12,10 @@ wt_global_information.CurrentMarkerList = nil
 wt_global_information.SelectedMarker = nil
 wt_global_information.AttackRange = 1200
 wt_global_information.MaxLootDistance = 1200
+wt_global_information.MaxGatherDistance = 4000
+wt_global_information.MaxAggroDistanceFar = 1200
+wt_global_information.MaxAggroDistanceClose = 500
+wt_global_information.MaxSearchEnemyDistance = 2500
 wt_global_information.lastrun = 0
 wt_global_information.InventoryFull = 0
 wt_global_information.CurrentVendor = 0
@@ -35,6 +39,12 @@ if (Settings.GW2MINION.version == 1.1 ) then
 	Settings.GW2MINION.gEnableRepair = "0"
 end
 
+if (Settings.GW2MINION.version == 1.2 ) then
+	Settings.GW2MINION.version = 1.3
+	Settings.GW2MINION.gIgnoreMarkerCap = "0"
+end
+
+
 function wt_global_information.OnUpdate( event, tickcount )
 	wt_global_information.Now = tickcount
 
@@ -57,19 +67,23 @@ function gw2minion.HandleInit()
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Log","gEnableLog");
 	GUI_NewField(wt_global_information.MainWindow.Name,"State","gGW2MinionState");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Effect","gGW2MinionEffect");
+	GUI_NewField(wt_global_information.MainWindow.Name,"MainTask","gGW2MinionTask");
 	GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Ignore Marker Level Cap","gIgnoreMarkerCap");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Repair Equippment","gEnableRepair");
+	
 	
 	gEnableLog = Settings.GW2MINION.gEnableLog
 	gGW2MinionPulseTime = Settings.GW2MINION.gGW2MinionPulseTime 
 	gEnableRepair = Settings.GW2MINION.gEnableRepair
+	gIgnoreMarkerCap = Settings.GW2MINION.gIgnoreMarkerCap
 	wt_debug("GUI Setup done")
 	wt_core_controller.requestStateChange(wt_core_state_idle)
 end
 
 function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
-		if ( k == "gEnableLog" or k == "gGW2MinionPulseTime" or k == "gEnableRepair" ) then
+		if ( k == "gEnableLog" or k == "gGW2MinionPulseTime" or k == "gEnableRepair" or k == "gIgnoreMarkerCap") then
 			Settings.GW2MINION[tostring(k)] = v
 		end
 	end
@@ -86,12 +100,13 @@ function wt_global_information.Reset()
 	wt_global_information.InventoryFull = 0
 	wt_global_information.CurrentVendor = 0
 	wt_global_information.RepairMerchant = 0
-	wt_core_state_idle.selectedMarkerIndex = 0
 	wt_core_state_vendoring.junksold = false 
 	wt_core_state_combat.CurrentTarget = 0
 	c_aggro.TargetList = {}
-	wt_core_state_idle.selectedMarkerList = { }
-	-- ???
+	wt_core_taskmanager.task_list = { }
+	wt_core_taskmanager.possible_tasks = { }
+	wt_core_taskmanager.current_task = nil
+	wt_core_taskmanager.markerList = { }
 end
 
 
