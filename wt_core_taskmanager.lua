@@ -1,5 +1,6 @@
 -- the core of the cause and effect engine
-
+ 
+ 
 wt_core_taskmanager = { }
 wt_core_taskmanager.task_list = { }
 wt_core_taskmanager.possible_tasks = { }
