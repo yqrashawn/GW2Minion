@@ -80,7 +80,7 @@ function c_check_revive:evaluate()
 	if ( TID ~= nil ) then
 		local T = CharacterList:Get( TID )
 		if ( T ~= nil ) then
-			if ( T.distance < 600 and T.attitude == GW2.ATTITUDE.Friendly and T.healthstate == GW2.HEALTHSTATE.Defeated and T.pos.onmesh ) then
+			if ( T.distance < 600 and T.attitude == GW2.ATTITUDE.Friendly and T.healthstate == GW2.HEALTHSTATE.Defeated and T.onmesh ) then
 				return true
 			end
 		end
@@ -99,7 +99,7 @@ function e_revive:execute()
 	if ( TID ~= nil ) then
 		local T = CharacterList:Get( TID )
 		if ( T ~= nil ) then
-			if ( T.healthstate == GW2.HEALTHSTATE.Defeated and T.attitude == GW2.ATTITUDE.Friendly and T.pos.onmesh ) then
+			if ( T.healthstate == GW2.HEALTHSTATE.Defeated and T.attitude == GW2.ATTITUDE.Friendly and T.onmesh ) then
 				if ( T.distance > 100 ) then
 					if ( not debug_e_revive and e_revive_move_index == nil ) then
 						e_revive_move_index = TID
@@ -107,7 +107,8 @@ function e_revive:execute()
 					elseif ( debug_e_revive and e_revive_move_index ~= nil ) then
 						wt_debug( "Idle: moving to reviveable target..." ..T.distance )
 					end
-					Player:MoveTo( T.pos.x, T.pos.y,T.pos.z , 80 )
+					local TPOS = T.pos
+					Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 80 )
 				elseif( T.distance < 100 ) then
 					Player:StopMoving()
 					if ( Player:GetCurrentlyCastedSpell() == 17 ) then
@@ -160,7 +161,8 @@ function e_loot:execute()
 				e_loot_n_index = NextIndex
 				wt_debug( "Idle: moving to loot" )
 			end
-			Player:MoveTo( LootTarget.pos.x, LootTarget.pos.y, LootTarget.pos.z , 0 )
+			local TPOS = LootTarget.pos
+			Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 0 )
 		elseif ( LootTarget.distance < 100 and NextIndex == Player:GetInteractableTarget() ) then
 			Player:StopMoving()
 			if ( Player:GetCurrentlyCastedSpell() == 17 ) then
@@ -175,7 +177,8 @@ function e_loot:execute()
 				e_loot_n_index = NextIndex
 				wt_debug( "Idle: directly moving to loot" )
 			end
-			Player:MoveToStraight( LootTarget.pos.x, LootTarget.pos.y, LootTarget.pos.z , 0 )
+			local TPOS = LootTarget.pos
+			Player:MoveToStraight( TPOS.x, TPOS.y, TPOS.z , 0 )
 		end
 	else
 		wt_error( "Idle: No Target to Loot" )
@@ -229,7 +232,8 @@ function e_gather:execute()
 			elseif ( e_gather_d and e_gather_d_index == c_check_gatherable.GatherTargetID ) then
 				wt_debug( "Idle: moving to gatherable..." ..GatherTarget.distance )
 			end
-			Player:MoveTo( GatherTarget.pos.x, GatherTarget.pos.y, GatherTarget.pos.z ,50 )
+			local TPOS = GatherTarget.pos
+			Player:MoveTo(TPOS.x, TPOS.y, TPOS.z ,50 )
 		elseif ( GatherTarget.distance <= 100 ) then
 			Player:StopMoving()
 			if ( Player:GetCurrentlyCastedSpell() == 17 ) then
@@ -285,7 +289,7 @@ function wt_core_state_idle:initialize()
 	local ke_rest = wt_kelement:create( "Rest", c_rest, e_rest, 75 )
 	wt_core_state_idle:add( ke_rest )
 
-	local ke_loot = wt_kelement:create(" Loot", c_check_loot, e_loot, 50 )
+	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 50 )
 	wt_core_state_idle:add( ke_loot )
 
 	local ke_gather = wt_kelement:create( "Gather", c_check_gatherable, e_gather, 40 )

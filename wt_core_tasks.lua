@@ -7,6 +7,7 @@ function wt_core_taskmanager:addWaypointTask( waypoint )
 		local explWP = inheritsFrom( wt_task )
 		explWP.name = "Explore Waypoint"
 		explWP.priority = wt_task.priorities.normal
+		explWP.position = {}
 		explWP.position.x = waypoint.pos.x
 		explWP.position.y = waypoint.pos.y
 		explWP.position.z = waypoint.pos.z
@@ -19,8 +20,8 @@ function wt_core_taskmanager:addWaypointTask( waypoint )
 			if ( not wt_core_taskmanager.behavior == "move" ) then
 				wt_core_taskmanager:SetMoveToBehavior()
 			end
-			local me = Player
-			local distance =  Distance3D( explWP.position.x, explWP.position.y, explWP.position.z, me.pos.x, me.pos.y, me.pos.z )
+			local mypos = Player.pos
+			local distance =  Distance3D( explWP.position.x, explWP.position.y, explWP.position.z, mypos.x, mypos.y, mypos.z )
 			if ( distance > 150 ) then
 				--wt_debug("Walking towards new Waypoint ")	
 				Player:MoveTo( explWP.position.x, explWP.position.y, explWP.position.z, 200 )
@@ -29,9 +30,9 @@ function wt_core_taskmanager:addWaypointTask( waypoint )
 		end
 
 		function explWP:isFinished()
-			local me = Player
-			if ( me ~= nil ) then 
-				local distance =  Distance3D( explWP.position.x, explWP.position.y, explWP.position.z, me.pos.x, me.pos.y, me.pos.z )
+			local mypos = Player.pos
+			if ( mypos ~= nil ) then 
+				local distance =  Distance3D( explWP.position.x, explWP.position.y, explWP.position.z, mypos.x, mypos.y, mypos.z )
 				if ( distance < 250 ) then
 					wt_debug("Task Finished " .. explWP.name)
 					wt_core_taskmanager:SetDefaultBehavior()
@@ -51,6 +52,7 @@ function wt_core_taskmanager:addPOITask( poi )
 		local explPoi = inheritsFrom( wt_task )
 		explPoi.name = "Explore PointOfInterest"
 		explPoi.priority = wt_task.priorities.normal
+		explPoi.position = {}
 		explPoi.position.x = poi.pos.x
 		explPoi.position.y = poi.pos.y
 		explPoi.position.z = poi.pos.z
@@ -63,8 +65,8 @@ function wt_core_taskmanager:addPOITask( poi )
 			if ( not wt_core_taskmanager.behavior == "move" ) then
 				wt_core_taskmanager:SetMoveToBehavior()
 			end
-			local me = Player
-			local distance =  Distance3D( explPoi.position.x, explPoi.position.y, explPoi.position.z, me.pos.x, me.pos.y, me.pos.z )
+			local mypos = Player.pos
+			local distance =  Distance3D( explPoi.position.x, explPoi.position.y, explPoi.position.z, mypos.x, mypos.y, mypos.z )
 			if ( distance > 150 ) then
 				--wt_debug("Walking towards new PointOfInterest ")	
 				Player:MoveTo( explPoi.position.x, explPoi.position.y, explPoi.position.z, 200 )
@@ -73,9 +75,9 @@ function wt_core_taskmanager:addPOITask( poi )
 		end
 
 		function explPoi:isFinished()
-			local me = Player
-			if ( me ~= nil ) then 
-				local distance =  Distance3D( explPoi.position.x, explPoi.position.y, explPoi.position.z, me.pos.x, me.pos.y, me.pos.z )
+			local mypos = Player.pos
+			if ( mypos ~= nil ) then 
+				local distance =  Distance3D( explPoi.position.x, explPoi.position.y, explPoi.position.z, mypos.x, mypos.y, mypos.z )
 				if ( distance < 250 ) then
 					wt_debug("Task Finished " .. explPoi.name)
 					wt_core_taskmanager:SetDefaultBehavior()
@@ -139,6 +141,7 @@ function wt_core_taskmanager:addFarmSpotTask( marker )
 	newtask.priority = wt_task.priorities.normal
 	newtask.spotreached = false
 	newtask.startingTime = 0
+	newtask.position = {}
 	newtask.position.x = marker.x
 	newtask.position.y = marker.y
 	newtask.position.z = marker.z
@@ -204,6 +207,7 @@ function wt_core_taskmanager:addHeartQuestTask( quest )
 	newtask.priority = wt_task.priorities.normal
 	newtask.spotreached = false
 	newtask.startingTime = 0
+	newtask.position = {}
 	newtask.position.x = quest.pos.x
 	newtask.position.y = quest.pos.y
 	newtask.position.z = quest.pos.z

@@ -11,7 +11,7 @@ wt_core_taskmanager.behavior = "default"
 function wt_core_taskmanager:addTask( task )
 	if (task ~= nil and  type(task) == "table") then
 	--TODO: Add checks for more task values
-		wt_debug("Adding Task to List: "..task.name .. "(Prio:"..task.priority..")")
+		--wt_debug("Adding Task to List: "..task.name .. "(Prio:"..task.priority..")")
 		table.insert(wt_core_taskmanager.task_list,task)
 	end
 end
@@ -25,7 +25,7 @@ function wt_core_taskmanager:checkLevelRange( posX, posY, posZ )
 		j, marker = next(wt_core_taskmanager.markerList)
 		while ( j ~= nil and marker ~= nil ) do
 			distance =  Distance3D( marker.x, marker.y, marker.z, posX, posY, posZ )
-			wt_debug( "Dist to marker : "..distance)
+			--wt_debug( "Dist to marker : "..distance)
 			if ( distance <= 5000 ) then
 				if ( we.level >= marker.minlevel and we.level <= marker.maxlevel ) then
 					return true
@@ -103,17 +103,17 @@ function wt_core_taskmanager:update_tasks( )
 	if ( wt_core_taskmanager.markerList ~= nil ) then
 		local we = Player
 		j, marker = next(wt_core_taskmanager.markerList)
-		while ( j ~= nil and marker ~= nil ) do				
+		while ( j ~= nil and marker ~= nil ) do		
+			wt_debug( "FarmSpot Marker on NavMesh found..")
 			distance =  Distance3D( marker.x, marker.y, marker.z, we.pos.x, we.pos.y, we.pos.z )
 			if ( distance > 500 and marker.type == 0 and ((we.level >= marker.minlevel and we.level <= marker.maxlevel) or gIgnoreMarkerCap == "1")) then  --type 0 is farmspot													
-				--wt_debug( "FarmSpot Marker on NavMesh found..")
+				wt_debug( "FarmSpot Marker Added to Tasklist..")
 				wt_core_taskmanager:addFarmSpotTask( marker )				
 			end
 			j, marker = next(wt_core_taskmanager.markerList,j)
 		end
 		
 	end
-	
 	-- Add Random point to goto
 	-- Add ???
 	
@@ -167,7 +167,7 @@ function wt_core_taskmanager:DoTask()
 		if (gGW2MinionTask ~= nil ) then
 			gGW2MinionTask = wt_core_taskmanager.current_task.name
 		end
-		wt_debug("Doing task " .. wt_core_taskmanager.current_task.name)				
+		--wt_debug("Doing task " .. wt_core_taskmanager.current_task.name)				
 		wt_core_taskmanager.current_task.execute()		
 	else
 		wt_core_taskmanager:SetNewTask()
