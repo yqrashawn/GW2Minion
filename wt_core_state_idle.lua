@@ -189,25 +189,16 @@ end
 -- Gatherbale Cause & Effect
 local c_check_gatherable = inheritsFrom( wt_cause )
 local e_gather = inheritsFrom( wt_effect )
-c_check_gatherable.GatherTargetTime = 0
-local e_gather_d_index = nil -- debug index, no reason to print debug message over and over unless you are debugging it
-local e_gather_d = false -- true == active running debugging on this specific code
 
 function c_check_gatherable:evaluate()
-
-	if ( c_check_gatherable.GatherTargetID ~= nil and wt_global_information.Now - c_check_gatherable.GatherTargetTime < 2000 ) then
-		return true
-	end
-
 	if ( ItemList.freeSlotCount > 0 ) then
 		c_check_gatherable.EList = GadgetList( "onmesh,shortestpath,gatherable,maxdistance="..wt_global_information.MaxGatherDistance )
-		if ( TableSize( c_check_gatherable.EList ) > 0 ) then
-			local GatherTarget = nil
-			local resourceType = nil
-			c_check_gatherable.GatherTargetID, GatherTarget = next( c_check_gatherable.EList )
-			return true
-		else
-			c_check_gatherable.GatherTargetID = nil
+		if ( TableSize( c_check_gatherable.EList ) > 0 ) then			
+			local nextTarget
+			nextTarget, GatherTarget = next( c_check_gatherable.EList )
+			if ( nextTarget ~= nil and nextTarget ~= 0) then
+				return true
+			end		
 		end
 	end
 	return false
@@ -215,36 +206,14 @@ end
 
 e_gather.throttle = 250
 function e_gather:execute()
-	local NextIndex = c_check_gatherable.GatherTargetID
-	local GatherTarget = GadgetList:Get( c_check_gatherable.GatherTargetID )
-	if ( GatherTarget ~= nil ) then
-
-		if ( not e_gather_d and e_gather_d_index ~= c_check_gatherable.GatherTargetID ) then
-			wt_debug( "Idle: found target to gather" )
-		elseif ( e_gather_d and e_gather_d_index == c_check_gatherable.GatherTargetID ) then
-			wt_debug( "Idle: found target to gather" )
+	if ( TableSize(c_check_gatherable.EList) > 0 ) then
+		local nextTarget 
+		nextTarget , E  = next(c_check_gatherable.EList)
+		if (nextTarget ~=nil and nextTarget ~= 0) then
+			wt_debug("Gatherable Target found..")
+			wt_core_state_gathering.setTarget(nextTarget)
+			wt_core_controller.requestStateChange(wt_core_state_gathering)
 		end
-
-
-		if ( GatherTarget.distance > 100 ) then
-			if ( not e_gather_d and e_gather_d_index ~= c_check_gatherable.GatherTargetID ) then
-				wt_debug( "Idle: moving to gatherable..." ..GatherTarget.distance )
-			elseif ( e_gather_d and e_gather_d_index == c_check_gatherable.GatherTargetID ) then
-				wt_debug( "Idle: moving to gatherable..." ..GatherTarget.distance )
-			end
-			local TPOS = GatherTarget.pos
-			Player:MoveTo(TPOS.x, TPOS.y, TPOS.z ,50 )
-		elseif ( GatherTarget.distance <= 100 ) then
-			Player:StopMoving()
-			if ( Player:GetCurrentlyCastedSpell() == 17 ) then
-				wt_debug( "Idle: gathering..." )
-				Player:Use( NextIndex )
-			end
-		end
-		e_gather_d_index = c_check_gatherable.GatherTargetID
-	else
-		c_check_gatherable.GatherTargetID = nil
-		wt_error( "Idle: No Target to gather" )
 	end
 end
 

@@ -62,7 +62,8 @@ function wt_core_taskmanager:update_tasks( )
 		while ( i ~= nil and entry ~= nil ) do
 			--wt_debug( "Unexplored Waypoint on NavMesh found..")
 			-- Search a nearby Marker to check if that area is suited for our current playerlevel
-			if ( wt_core_taskmanager:checkLevelRange( entry.pos.x, entry.pos.y, entry.pos.z ) ) then 
+			local mPos = entry.pos
+			if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then 
 				--wt_debug( "LevelArea of that Waypoint fits to our PlayerLevel..adding it to the list")
 				wt_core_taskmanager:addWaypointTask( entry )
 			end	
@@ -77,7 +78,8 @@ function wt_core_taskmanager:update_tasks( )
 		while ( i ~= nil and entry ~= nil ) do
 			--wt_debug( "Unexplored PointOfInterest on NavMesh found..")
 			-- Search a nearby Marker to check if that area is suited for our current playerlevel
-			if ( wt_core_taskmanager:checkLevelRange( entry.pos.x, entry.pos.y, entry.pos.z ) ) then 
+			local mPos = entry.pos
+			if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then  
 				--wt_debug( "LevelArea of that PointOfInterest fits to our PlayerLevel..adding it to the list")
 				wt_core_taskmanager:addPOITask( entry )
 			end	
@@ -92,7 +94,8 @@ function wt_core_taskmanager:update_tasks( )
 		while ( i ~= nil and entry ~= nil ) do
 			--wt_debug( "Unfinished HeartQuest on NavMesh found..")
 			-- Search a nearby Marker to check if that area is suited for our current playerlevel
-			if ( wt_core_taskmanager:checkLevelRange( entry.pos.x, entry.pos.y, entry.pos.z ) ) then 
+			local mPos = entry.pos
+			if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then  
 				--wt_debug( "LevelArea of that HeartQuest fits to our PlayerLevel..adding it to the list")
 				wt_core_taskmanager:addHeartQuestTask( entry )
 			end	
@@ -106,7 +109,8 @@ function wt_core_taskmanager:update_tasks( )
 		j, marker = next(wt_core_taskmanager.markerList)
 		while ( j ~= nil and marker ~= nil ) do		
 			wt_debug( "FarmSpot Marker on NavMesh found..")
-			distance =  Distance3D( marker.x, marker.y, marker.z, we.pos.x, we.pos.y, we.pos.z )
+			local myPos = we.pos
+			distance =  Distance3D( marker.x, marker.y, marker.z, myPos.x, myPos.y, myPos.z )
 			if ( distance > 500 and marker.type == 0 and ((we.level >= marker.minlevel and we.level <= marker.maxlevel) or gIgnoreMarkerCap == "1")) then  --type 0 is farmspot													
 				wt_debug( "FarmSpot Marker Added to Tasklist..")
 				wt_core_taskmanager:addFarmSpotTask( marker )				
