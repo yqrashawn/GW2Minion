@@ -1,11 +1,57 @@
 -- Dead State for all professions
 -- Fights downed and respawns at nearby waypoint
 
+--[[
+==Skills by profession==
+====1 Guardian====
+1 Wrath
+2 Wave of Light
+3 Symbol of Judgment
+
+====2 Warrior====
+1 Throw Rock
+2 Hammer Toss
+3 Vengeance
+
+====3 Engineer====
+1 Throw Junk
+2 Grappling Line
+3 Booby Trap
+
+====4 Ranger====
+1 Throw Dirt
+2 Thunderclap
+3 Lick Wounds
+
+====5 Thief====
+1 Trail of Knives
+1 (stealth) Venomous Knife
+2 Shadow Escape
+3 Smoke Bomb (thief skill)
+
+====6 Elementalist====
+1 Discharge Lightning
+2 Vapor Form
+3 Grasping Earth
+
+====7 Mesmer====
+1 Mind Blast
+2 Deception (mesmer)
+3 Phantasmal Rogue
+
+====8 Necromancer====
+1 Life Leech
+2 Fear (necromancer skill)
+3 Fetid Ground
+
+====all Common====
+4 Bandage
+--]]
+
 wt_core_state_dead = inheritsFrom(wt_core_state)
 wt_core_state_dead.name = "Dead"
 wt_core_state_dead.kelement_list = { }
 wt_core_state_dead.CurrentTarget = 0
-
 
 ------------------------------------------------------------------------------
 -- Alive again Check
