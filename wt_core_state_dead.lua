@@ -57,7 +57,7 @@ function e_downed_combat:execute()
 						if ( s4 == nil or tostring( s4.name ) == "" ) then
 							s4 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_4 )
 						end
-						-- Ranger & Warrior: Bandage
+						-- Ranger: Bandage
 						if ( debug_downed ) then
 							wt_debug( string.format( downed_str_format, tostring( s4.name ) or "nil", "4", GW2.SKILLBARSLOT.Slot_4 ) )
 						else
@@ -68,9 +68,8 @@ function e_downed_combat:execute()
 						downed_lastslot = 4
 						Player:CastSpell( GW2.SKILLBARSLOT.Slot_4, targetID )
 
-					elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_3 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) and ( Player.profession ~= 4 ) and ( Player.profession ~= 2 ) then
+					elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_3 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) and ( Player.profession ~= 4 )  then
 						-- Ranger skill slot_3 is disabled until pet attack (F1) have been fixed
-						-- Warrior Skill Slot_3 (Vengangce) is pointless for the bot (IMHO) Tensor
 						if ( s3 == nil or tostring( s3.name ) == "" ) then
 							s3 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_3 )
 						end
@@ -90,7 +89,6 @@ function e_downed_combat:execute()
 							s2 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_2 )
 						end
 						-- Ranger: Thunderclap
-						-- Warrior: Hammer Toss
 						if ( debug_downed ) then
 							wt_debug( string.format( downed_str_format, tostring( s2.name ) or "nil", "2", GW2.SKILLBARSLOT.Slot_2 ) )
 						else
@@ -106,7 +104,6 @@ function e_downed_combat:execute()
 							s1 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_1 )
 						end
 						-- Ranger: Throw Dirt
-						-- Warrior: Throw Rock
 						if ( debug_downed ) then
 							wt_debug( string.format( downed_str_format, tostring( s1.name ) or "nil", "1", GW2.SKILLBARSLOT.Slot_1 ) )
 						else
