@@ -1,11 +1,57 @@
 -- Dead State for all professions
 -- Fights downed and respawns at nearby waypoint
 
+--[[
+==Skills by profession==
+====1 Guardian====
+1 Wrath
+2 Wave of Light
+3 Symbol of Judgment
+
+====2 Warrior====
+1 Throw Rock
+2 Hammer Toss
+3 Vengeance
+
+====3 Engineer====
+1 Throw Junk
+2 Grappling Line
+3 Booby Trap
+
+====4 Ranger====
+1 Throw Dirt
+2 Thunderclap
+3 Lick Wounds
+
+====5 Thief====
+1 Trail of Knives
+1 (stealth) Venomous Knife
+2 Shadow Escape
+3 Smoke Bomb (thief skill)
+
+====6 Elementalist====
+1 Discharge Lightning
+2 Vapor Form
+3 Grasping Earth
+
+====7 Mesmer====
+1 Mind Blast
+2 Deception (mesmer)
+3 Phantasmal Rogue
+
+====8 Necromancer====
+1 Life Leech
+2 Fear (necromancer skill)
+3 Fetid Ground
+
+====all Common====
+4 Bandage
+--]]
+
 wt_core_state_dead = inheritsFrom(wt_core_state)
 wt_core_state_dead.name = "Dead"
 wt_core_state_dead.kelement_list = { }
 wt_core_state_dead.CurrentTarget = 0
-
 
 ------------------------------------------------------------------------------
 -- Alive again Check
@@ -57,7 +103,7 @@ function e_downed_combat:execute()
 						if ( s4 == nil or tostring( s4.name ) == "" ) then
 							s4 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_4 )
 						end
-						-- Ranger & Warrior: Bandage
+						-- Ranger: Bandage
 						if ( debug_downed ) then
 							wt_debug( string.format( downed_str_format, tostring( s4.name ) or "nil", "4", GW2.SKILLBARSLOT.Slot_4 ) )
 						else
@@ -68,9 +114,8 @@ function e_downed_combat:execute()
 						downed_lastslot = 4
 						Player:CastSpell( GW2.SKILLBARSLOT.Slot_4, targetID )
 
-					elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_3 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) and ( Player.profession ~= 4 ) and ( Player.profession ~= 2 ) then
+					elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_3 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) and ( Player.profession ~= 4 )  then
 						-- Ranger skill slot_3 is disabled until pet attack (F1) have been fixed
-						-- Warrior Skill Slot_3 (Vengangce) is pointless for the bot (IMHO) Tensor
 						if ( s3 == nil or tostring( s3.name ) == "" ) then
 							s3 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_3 )
 						end
@@ -90,7 +135,6 @@ function e_downed_combat:execute()
 							s2 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_2 )
 						end
 						-- Ranger: Thunderclap
-						-- Warrior: Hammer Toss
 						if ( debug_downed ) then
 							wt_debug( string.format( downed_str_format, tostring( s2.name ) or "nil", "2", GW2.SKILLBARSLOT.Slot_2 ) )
 						else
@@ -106,7 +150,6 @@ function e_downed_combat:execute()
 							s1 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_1 )
 						end
 						-- Ranger: Throw Dirt
-						-- Warrior: Throw Rock
 						if ( debug_downed ) then
 							wt_debug( string.format( downed_str_format, tostring( s1.name ) or "nil", "1", GW2.SKILLBARSLOT.Slot_1 ) )
 						else
