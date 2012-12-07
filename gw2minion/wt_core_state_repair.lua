@@ -67,7 +67,7 @@ function e_movetovendorR:execute()
 		local T = MapObjectList:Get(wt_core_state_repair.CurrentTargetID)
 		if ( T ~= nil ) then
 			if ( e_moveto_d_indexR ~= wt_core_state_repair.CurrentTargetID ) then
-				e_moveto_d_indexR = wt_core_state_repair.
+				e_moveto_d_indexR = wt_core_state_repair.CurrentTargetID
 				wt_debug( "Repair: moving to Vendor..." )	
 			end		
 			local TPOS = T.pos		
