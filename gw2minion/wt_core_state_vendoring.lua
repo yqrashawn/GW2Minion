@@ -54,10 +54,12 @@ local e_moveto_d_index = nil -- debug index, no reason to print debug message ov
 function c_movetovendorcheck:evaluate()
 	if ( wt_core_state_vendoring.CurrentTargetID ~= nil and wt_core_state_vendoring.CurrentTargetID ~= 0 ) then
 		local T = MapObjectList:Get(wt_core_state_vendoring.CurrentTargetID)
-		if ( T ~= nil ) then
+		if ( T ~= nil and T.distance ~= nil) then
 			if ( T.distance > 100 ) then			
 				return true
 			end
+		--else
+			--wt_core_state_vendoring.CurrentTargetID == 0
 		end
 	end
 	return false
@@ -70,7 +72,7 @@ function e_movetovendor:execute()
 		if ( T ~= nil ) then
 			if ( e_moveto_d_index ~= wt_core_state_vendoring.CurrentTargetID ) then
 				e_moveto_d_index = wt_core_state_vendoring.CurrentTargetID
-				wt_debug( "Vendoring: moving to Vendor..." ..T.distance )		
+				wt_debug( "Vendoring: moving to Vendor..." )		
 			end
 			local TPOS = T.pos
 			Player:MoveTo(TPOS.x, TPOS.y, TPOS.z ,50 )
@@ -88,7 +90,7 @@ local e_openvendor = inheritsFrom(wt_effect)
 function c_openvendor:evaluate()
 	if ( wt_core_state_vendoring.CurrentTargetID ~= nil and wt_core_state_vendoring.CurrentTargetID ~= 0 ) then
 		local T = MapObjectList:Get(wt_core_state_vendoring.CurrentTargetID)
-		if ( T ~= nil ) then
+		if ( T ~= nil and T.distance ~= nil)  then
 			if ( T.distance <= 100 ) then				
 				local nearestID = Player:GetInteractableTarget()
 				if ( nearestID ~= nil and T.characterID ~= nearestID ) then 

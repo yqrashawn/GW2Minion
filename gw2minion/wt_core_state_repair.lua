@@ -52,7 +52,7 @@ local e_moveto_d_indexR = nil -- debug index, no reason to print debug message o
 function c_movetovendorcheckR:evaluate()
 	if ( wt_core_state_repair.CurrentTargetID ~= nil and wt_core_state_repair.CurrentTargetID ~= 0 ) then
 		local T = MapObjectList:Get(wt_core_state_repair.CurrentTargetID)
-		if ( T ~= nil ) then
+		if ( T ~= nil and T.distance ~= nil)  then
 			if ( T.distance > 100 ) then			
 				return true
 			end
@@ -68,7 +68,7 @@ function e_movetovendorR:execute()
 		if ( T ~= nil ) then
 			if ( e_moveto_d_indexR ~= wt_core_state_repair.CurrentTargetID ) then
 				e_moveto_d_indexR = wt_core_state_repair.
-				wt_debug( "Repair: moving to Vendor..." ..T.distance )	
+				wt_debug( "Repair: moving to Vendor..." )	
 			end		
 			local TPOS = T.pos		
 			Player:MoveTo(TPOS.x, TPOS.y, TPOS.z ,50 )
@@ -86,7 +86,7 @@ local e_openvendorR = inheritsFrom(wt_effect)
 function c_openvendorR:evaluate()
 	if ( wt_core_state_repair.CurrentTargetID ~= nil and wt_core_state_repair.CurrentTargetID ~= 0 ) then
 		local T = MapObjectList:Get(wt_core_state_repair.CurrentTargetID)
-		if ( T ~= nil ) then
+		if ( T ~= nil and T.distance ~= nil)  then
 			if ( T.distance <= 100 ) then				
 				local nearestID = Player:GetInteractableTarget()
 				if ( nearestID ~= nil and T.characterID ~= nearestID ) then 
