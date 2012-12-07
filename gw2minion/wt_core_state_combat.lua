@@ -17,7 +17,7 @@ function c_combat_over:evaluate()
 		return true
 	else
 		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-		if ( T == nil or not T.alive) then
+		if ( T == nil or not T.alive or (T.attitude == 0 or T.attitude == 3) ) then
 			return true
 		end
 	end
@@ -74,7 +74,7 @@ function wt_core_state_combat:initialize()
 		wt_core_state_combat:add(ke_combat_over)
 
 		local ke_quickloot = wt_kelement:create("QuickLoot",c_quickloot,e_quickloot,145)
-		wt_core_state_idle:add(ke_quickloot)
+		wt_core_state_combat:add(ke_quickloot)
 		
 		local ke_better_target_search = wt_kelement:create("better_target_search",c_better_target_search,e_better_target_search, 125 )
 		wt_core_state_combat:add(ke_better_target_search)

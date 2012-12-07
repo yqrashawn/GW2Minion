@@ -190,9 +190,9 @@ function wt_core_taskmanager:SetDefaultBehavior()
 end
 function wt_core_taskmanager:SetMoveToBehavior()
 	wt_core_taskmanager.behavior = "move"
-	wt_global_information.MaxLootDistance = math.random(600,1200)
+	wt_global_information.MaxLootDistance = math.random(800,1400)
 	wt_global_information.MaxGatherDistance = math.random(1200,4000)
-	wt_global_information.MaxAggroDistanceFar = math.random(150,1200)
-	wt_global_information.MaxAggroDistanceClose = math.random(150,500)
+	wt_global_information.MaxAggroDistanceFar = math.random(500,1200)
+	wt_global_information.MaxAggroDistanceClose = math.random(300,500)
 	wt_global_information.MaxSearchEnemyDistance = math.random(600,1200)
 end

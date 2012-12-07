@@ -8,6 +8,9 @@ c_died = inheritsFrom(wt_cause)
 e_died = inheritsFrom(wt_effect)
 
 function c_died:evaluate()
+	if ( not wt_core_taskmanager.behavior == "default" ) then
+		wt_core_taskmanager:SetDefaultBehavior()
+	end
 	if ( Player.alive ~=true ) then
 		return true
 	end
@@ -130,7 +133,7 @@ e_quickloot.throttle = math.random(500,2500)
 function e_rest:execute()
 	
 	local s6 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_6 )
-	if(Player:GetCurrentlyCastedSpell() == 17 and Player.health.percent < 65 and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6) and math.random(0,100) > 25) then
+	if(Player:GetCurrentlyCastedSpell() == 17 and Player.health.percent < 65 and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6)) then
 		if ( c_rest_heal ) then
 			c_rest_heal = not c_rest_heal
 			if (s6 ~= nil) then

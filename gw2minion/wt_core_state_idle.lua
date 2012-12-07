@@ -39,14 +39,31 @@ local c_vendorcheck = inheritsFrom( wt_cause )
 local e_vendorcheck = inheritsFrom( wt_effect )
 
 function c_vendorcheck:evaluate()
-	if ( ItemList.freeSlotCount == 0 and wt_global_information.InventoryFull == 1 and wt_global_information.CurrentVendor ~= nil ) then
-		return true
+	if ( ItemList.freeSlotCount == 0 and wt_global_information.InventoryFull == 1 and wt_global_information.HasVendor ) then
+		c_vendorcheck.EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
+		if ( TableSize( c_vendorcheck.EList ) > 0 ) then			
+			local nextTarget
+			nextTarget, E = next( c_vendorcheck.EList )
+			if ( nextTarget ~= nil and nextTarget ~= 0) then
+				return true
+			else
+				wt_global_information.HasVendor = false
+			end		
+		end		
 	end
 	return false
 end
 
 function e_vendorcheck:execute()
-	wt_core_controller.requestStateChange( wt_core_state_vendoring )
+	if ( TableSize(c_vendorcheck.EList) > 0 ) then
+		local nextTarget 
+		nextTarget , E  = next(c_vendorcheck.EList)
+		if (nextTarget ~=nil and nextTarget ~= 0) then
+			wt_debug("Merchant on NavMesh found..")
+			wt_core_state_vendoring.setTarget(nextTarget)
+			wt_core_controller.requestStateChange( wt_core_state_vendoring )
+		end
+	end		
 end
 
 ------------------------------------------------------------------------------
@@ -55,16 +72,31 @@ local c_repaircheck = inheritsFrom( wt_cause )
 local e_repaircheck = inheritsFrom( wt_effect )
 -- IsEquippmentDamaged() is defined in /gw2lib/wt_utility.lua
 function c_repaircheck:evaluate()
-	if ( gEnableRepair == "1" and wt_global_information.RepairMerchant ~= nil and IsEquippmentDamaged() ) then
-		if ( MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant ) ) then
-			return true
-		end
+	if ( gEnableRepair == "1" and wt_global_information.HasRepairMerchant and IsEquippmentDamaged() ) then
+		c_repaircheck.EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
+		if ( TableSize( c_repaircheck.EList ) > 0 ) then			
+			local nextTarget
+			nextTarget, E = next( c_repaircheck.EList )
+			if ( nextTarget ~= nil and nextTarget ~= 0) then
+				return true
+			else
+				wt_global_information.HasRepairMerchant = false
+			end		
+		end		
 	end
 	return false
 end
 
 function e_repaircheck:execute()
-	wt_core_controller.requestStateChange( wt_core_state_repair )
+	if ( TableSize(c_repaircheck.EList) > 0 ) then
+		local nextTarget 
+		nextTarget , E  = next(c_repaircheck.EList)
+		if (nextTarget ~=nil and nextTarget ~= 0) then
+			wt_debug("RepairMerchant on NavMesh found..")
+			wt_core_state_repair.setTarget(nextTarget)
+			wt_core_controller.requestStateChange( wt_core_state_repair )
+		end
+	end		
 end
 
 ------------------------------------------------------------------------------

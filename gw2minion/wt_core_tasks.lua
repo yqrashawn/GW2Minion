@@ -97,7 +97,7 @@ function wt_core_taskmanager:addSearchAndKillTask(  )
 		if ( not wt_core_taskmanager.behavior == "default" ) then
 			wt_core_taskmanager:SetDefaultBehavior()
 		end
-		TargetList = ( CharacterList( "shortestpath,onmesh,noCritter,attackable,alive,maxdistance="..wt_global_information.MaxSearchEnemyDistance..",maxlevel="..( Player.level + wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel ) ) )
+		TargetList = ( CharacterList( "shortestpath,onmesh,noCritter,attackable,alive,maxdistance=4000,maxlevel="..( Player.level + wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel ) ) )
 		if ( TargetList ~= nil ) then 	
 			nextTarget, E  = next( TargetList )
 			if ( nextTarget ~= nil and (wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then

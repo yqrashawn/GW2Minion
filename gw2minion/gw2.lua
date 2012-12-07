@@ -18,8 +18,8 @@ wt_global_information.MaxAggroDistanceClose = 500
 wt_global_information.MaxSearchEnemyDistance = 2500
 wt_global_information.lastrun = 0
 wt_global_information.InventoryFull = 0
-wt_global_information.CurrentVendor = 0
-wt_global_information.RepairMerchant = 0
+wt_global_information.HasVendor = true
+wt_global_information.HasRepairMerchant = true
 
 gw2minion = { }
 
@@ -98,8 +98,8 @@ function wt_global_information.Reset()
 	wt_global_information.MaxLootDistance = 1200
 	wt_global_information.lastrun = 0
 	wt_global_information.InventoryFull = 0
-	wt_global_information.CurrentVendor = 0
-	wt_global_information.RepairMerchant = 0
+	wt_global_information.HasVendor = true
+	wt_global_information.HasRepairMerchant = true
 	wt_core_state_vendoring.junksold = false 
 	wt_core_state_combat.CurrentTarget = 0
 	c_aggro.TargetList = {}

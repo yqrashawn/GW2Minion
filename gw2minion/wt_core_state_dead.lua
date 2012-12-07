@@ -59,6 +59,9 @@ local cd_check_alive = inheritsFrom(wt_cause)
 local ed_alive = inheritsFrom(wt_effect)
 
 function cd_check_alive:evaluate()
+	if ( not wt_core_taskmanager.behavior == "default" ) then
+		wt_core_taskmanager:SetDefaultBehavior()
+	end
 	if ( Player.alive == true ) then
 		if ( downed_lastslot ~= nil ) then
 			downed_lastslot = nil

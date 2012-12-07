@@ -17,7 +17,6 @@ function c_Gathering_over:evaluate()
 	else
 		local T = GadgetList:Get(wt_core_state_gathering.CurrentTargetID)
 		if ( T == nil or not T.gatherable ) then
-			wt_debug("SJSJ")
 			return true
 		end
 	end
@@ -103,7 +102,6 @@ function e_gather:execute()
 				wt_debug( "Gather: gathering..." ..wt_core_state_gathering.CurrentTargetID )		
 			end		
 			if ( Player:GetCurrentlyCastedSpell() == 17 ) then
-			wt_debug("SssssssJSJ")
 				Player:Use( wt_core_state_gathering.CurrentTargetID )
 			end
 			return
@@ -131,19 +129,19 @@ function wt_core_state_gathering:initialize()
 		local ke_died = wt_kelement:create("Died",c_died,e_died, wt_effect.priorities.interrupt )
 		wt_core_state_gathering:add(ke_died)
 
-		local ke_aggro = wt_kelement:create( "AggroCheck", c_aggro, e_aggro, 200 )
+		local ke_aggro = wt_kelement:create( "AggroCheck", c_aggro, e_aggro, 100 )
 		wt_core_state_gathering:add( ke_aggro )
 
-		local ke_rest = wt_kelement:create( "Rest", c_rest, e_rest, 175 )
+		local ke_rest = wt_kelement:create( "Rest", c_rest, e_rest, 75 )
 		wt_core_state_gathering:add( ke_rest )
 		
-		local ke_Gathering_over = wt_kelement:create("Gathering_over",c_Gathering_over,e_Gathering_over, 150 )
+		local ke_Gathering_over = wt_kelement:create("Gathering_over",c_Gathering_over,e_Gathering_over, 50 )
 		wt_core_state_gathering:add(ke_Gathering_over)
 		
-		local ke_movetogatherable = wt_kelement:create( "MoveToGatherable", c_movetogatherable, e_movetogatherable, 100 )
+		local ke_movetogatherable = wt_kelement:create( "MoveToGatherable", c_movetogatherable, e_movetogatherable, 25 )
 		wt_core_state_gathering:add( ke_movetogatherable )
 		
-		local ke_gather = wt_kelement:create( "Gathering", c_gather, e_gather, 75 )
+		local ke_gather = wt_kelement:create( "Gathering", c_gather, e_gather, 5 )
 		wt_core_state_gathering:add( ke_gather )
 
 end
