@@ -67,13 +67,10 @@ function e_movetovendorR:execute()
 		local T = MapObjectList:Get(wt_core_state_repair.CurrentTargetID)
 		if ( T ~= nil ) then
 			if ( e_moveto_d_indexR ~= wt_core_state_repair.CurrentTargetID ) then
-				e_moveto_d_indexR = wt_core_state_repair.CurrentTargetID
-								
-			end
-			wt_debug( "Repair: moving to Vendor..." )	
-			wt_debug( "Repair: moving to Vendor..." ..T.distance )		
-			local TPOS = T.pos	
-				wt_debug( TPOS )		
+				e_moveto_d_indexR = wt_core_state_repair.
+				wt_debug( "Repair: moving to Vendor..." ..T.distance )	
+			end		
+			local TPOS = T.pos		
 			Player:MoveTo(TPOS.x, TPOS.y, TPOS.z ,50 )
 		end
 	else
