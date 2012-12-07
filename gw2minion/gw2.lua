@@ -4,7 +4,7 @@ wt_global_information = {}
 wt_global_information.Currentprofession = nil
 wt_global_information.Now = 0
 wt_global_information.PVP = false
-wt_global_information.MainWindow = { Name = "GW2Minion", x=100, y=120 , width=200, height=200 }
+wt_global_information.MainWindow = { Name = "GW2Minion", x=100, y=120 , width=200, height=220 }
 wt_global_information.BtnStart = { Name="StartStop" ,Event = "GUI_REQUEST_RUN_TOGGLE" }
 wt_global_information.BtnPulse = { Name="Pulse" ,Event = "Debug.Pulse" }
 wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel = 3  
