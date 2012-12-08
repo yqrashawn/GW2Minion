@@ -56,7 +56,9 @@ function c_movetovendorcheckR:evaluate()
 			if ( T.distance > 100 ) then			
 				return true
 			end
-		end
+		else
+			wt_core_state_repair.CurrentTargetID == nil
+		end	
 	end
 	return false
 end

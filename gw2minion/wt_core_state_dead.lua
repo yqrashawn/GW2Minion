@@ -95,7 +95,7 @@ function e_downed_combat:execute()
 	local s1, s2, s3, s4 = nil, nil, nil, nil
 	if ( Player.inCombat ) then
 		wt_debug("e_downed_combat Player.InCombat = true")
-		TargetList = ( CharacterList( "lowesthealth,nearest,attackable,incombat,alive,maxdistance=1200" ) )
+		TargetList = ( CharacterList( "lowesthealth,attackable,incombat,alive,maxdistance=1200" ) )
 		if ( TableSize( TargetList ) > 0 ) then
 			targetID, E  = next( TargetList )
 			if ( targetID ~= nil ) then

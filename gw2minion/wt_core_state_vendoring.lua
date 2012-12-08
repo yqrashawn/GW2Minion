@@ -58,8 +58,8 @@ function c_movetovendorcheck:evaluate()
 			if ( T.distance > 100 ) then			
 				return true
 			end
-		--else
-			--wt_core_state_vendoring.CurrentTargetID == 0
+		else
+			wt_core_state_vendoring.CurrentTargetID == nil
 		end
 	end
 	return false
