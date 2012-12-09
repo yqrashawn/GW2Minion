@@ -94,10 +94,13 @@ function wt_profession_warrior.e_attack_default:execute()
 			local s3 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_3)
 			local s4 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_4)
 			local s5 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_5)
+			local flurry = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
 			if (s1 ~= nil) then
 				wt_global_information.AttackRange = s1.maxRange
 				if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange or s5.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,wt_core_state_combat.CurrentTarget)
+				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13) and flurry~=nil and (T.distance < flurry.maxRange)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)	
 				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and (T.distance < s4.maxRange or s4.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,wt_core_state_combat.CurrentTarget)
 				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
