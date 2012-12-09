@@ -59,7 +59,7 @@ function c_movetovendorcheck:evaluate()
 				return true
 			end
 		else
-			wt_core_state_vendoring.CurrentTargetID == nil
+			wt_core_state_vendoring.CurrentTargetID = nil
 		end
 	end
 	return false

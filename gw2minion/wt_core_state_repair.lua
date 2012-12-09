@@ -57,7 +57,7 @@ function c_movetovendorcheckR:evaluate()
 				return true
 			end
 		else
-			wt_core_state_repair.CurrentTargetID == nil
+			wt_core_state_repair.CurrentTargetID = nil
 		end	
 	end
 	return false
