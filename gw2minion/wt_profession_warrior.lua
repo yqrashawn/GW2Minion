@@ -99,7 +99,7 @@ function wt_profession_warrior.e_attack_default:execute()
 				wt_global_information.AttackRange = s1.maxRange
 				if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange or s5.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,wt_core_state_combat.CurrentTarget)
-				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13) and flurry~=nil and (T.distance < flurry.maxRange)) then
+				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13) and flurry~=nil and Player:GetProfessionPowerPercentage() > 35 and (T.distance < flurry.maxRange)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)	
 				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and (T.distance < s4.maxRange or s4.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,wt_core_state_combat.CurrentTarget)
