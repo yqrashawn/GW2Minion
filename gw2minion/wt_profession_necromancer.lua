@@ -147,7 +147,10 @@ function wt_profession_necromancer.e_attack_default:execute()
 			local s3 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_3)
 			local s4 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_4)
 			local s5 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_5)
-			if (s1 ~= nil) then
+			local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
+			if (Player.health.percent < 50 and deathshroud ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13)) then
+				Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)			
+			elseif (s1 ~= nil) then
 				wt_global_information.AttackRange = s1.maxRange
 				if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange or s5.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)

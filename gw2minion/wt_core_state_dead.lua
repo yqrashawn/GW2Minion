@@ -165,6 +165,23 @@ function e_downed_combat:execute()
 					end
 				end
 			end
+		else
+		--sometimes we are in combat but no enemy nearby
+		if ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_4 ) ) then
+			if ( s4 == nil or tostring( s4.name ) == "" ) then
+				s4 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_4 )
+			end
+			-- Ranger: Bandage
+			if ( debug_downed ) then
+				wt_debug( string.format( downed_str_format, tostring( s4.name ) or "nil", "4", GW2.SKILLBARSLOT.Slot_4 ) )
+			else
+				if ( downed_lastslot ~= 4 ) then
+					wt_debug( string.format( downed_str_format, tostring( s4.name ) or "nil", "4", GW2.SKILLBARSLOT.Slot_4 ) )
+				end
+			end
+			downed_lastslot = 4
+			Player:CastSpell( GW2.SKILLBARSLOT.Slot_4, targetID )
+		end
 		end
 	end
 
