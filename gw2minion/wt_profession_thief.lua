@@ -457,7 +457,7 @@ function DatAss.eAttack:execute()
 			-- Someone please clean this up. I don't really have any decent ideas on how to improve the appearance of the following lines of code.
 			if (Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1).skillID ~= 13022 and DatAss.mainWeapon ~= nil and DatAss.secondaryWeapon ~= nil and DatAss.mainWeapon.weapontype == GW2.WEAPONTYPE.Dagger and DatAss.secondaryWeapon.weapontype == GW2.WEAPONTYPE.Dagger) then 
 				if (DatAss.GetNearbyEnemyCount() > 1 and (DatAss.Caltrops:CanCast() or DatAss.ThievesGuild:CanCast())) then
-					if (not DatAss.Caltrops:TryCast(TID)) then
+					if (not DatAss.ShouldAOE() or not DatAss.Caltrops:TryCast(TID)) then
 						DatAss.ThievesGuild:TryCast(TID)
 					end
 				elseif (Player.health.percent <= 60 and DatAss.ThievesGuild:TryCast(TID)) then
@@ -465,7 +465,7 @@ function DatAss.eAttack:execute()
 					DatAss.hasSteal = true
 				elseif (DatAss.hasSteal and DatAss.Steal:TryCast(TID)) then
 					DatAss.hasSteal = false
-				elseif (DatAss.Caltrops:TryCast(TID)) then
+				elseif (DatAss.ShouldAOE() and DatAss.Caltrops:TryCast(TID)) then
 				elseif (T.health.percent > 40 and DatAss.DeathBlossom:TryCast(TID)) then
 				elseif (T.health.percent <= 40 and DatAss.Heartseeker:TryCast(TID)) then            
 				elseif (DatAss.Backstab:TryCast(TID)) then
