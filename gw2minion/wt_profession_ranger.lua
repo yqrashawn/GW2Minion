@@ -24,7 +24,7 @@ function debug_msg( tid, t, slot, name )
 	if ( slot ~= nil ) then
 		if ( debug_attack  and tid ~= nil ) then
 			if ( debug_slot ~= slot ) then
-				wt_debug( string.format( debug_attack_msg_format, tostring( name ) or "", slot, t.name or "MOB", tid, t.distance ) )
+				wt_debug( string.format( debug_attack_msg_format, tostring( name ) or "", slot, tostring(t.name) or "MOB", tid, t.distance ) )
 				debug_slot = slot
 			end
 		elseif ( debug_heal and tid == nil ) then
@@ -39,7 +39,7 @@ function debug_msg( tid, t, slot, name )
 	else
 		if ( debug_move ) then
 			if ( debug_tid ~= tid ) then
-				wt_debug( string.format( debug_move_msg_format, t.name or "MOB", tid, t.distance ) )
+				wt_debug( string.format( debug_move_msg_format, tostring(t.name) or "MOB", tid, t.distance ) )
 				debug_tid = tid
 			end
 		end
