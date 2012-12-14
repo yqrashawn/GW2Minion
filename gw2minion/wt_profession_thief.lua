@@ -1,4 +1,3 @@
-
 --[[
  ***********************************************************************************************************************
  
@@ -75,6 +74,21 @@ function DatAss.GetNearbyEnemyCount()
         end
     end
     return i
+end
+
+function DatAss.ShouldAOE()
+    local i = 0
+    local t = (CharacterList("alive,attackable,maxdistance=240"))
+    if (t ~= nil ) then
+        id,v = next(t)
+        while ( id ~= nil ) do
+            if (v.health.percent > 70) then
+            	return true
+    	    end
+            id,v = next(t,id)
+        end
+    end
+    return false
 end
 
 function DatAss.GetStringOfWeaponType(weapon)
@@ -430,7 +444,7 @@ end
 
 function DatAss.eAttack:execute()
     Player:StopMoving()
-    TID = Player:GetTarget()
+    TID = wt_core_state_combat.CurrentTarget
     if ( TID ~= 0 ) then
         local T = CharacterList:Get(TID)
         if ( T ~= nil ) then
