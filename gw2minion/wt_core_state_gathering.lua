@@ -102,6 +102,7 @@ function e_gather:execute()
 				wt_debug( "Gather: gathering..." ..wt_core_state_gathering.CurrentTargetID )		
 			end		
 			if ( Player:GetCurrentlyCastedSpell() == 17 ) then
+				--wt_debug( "Picking up "..wt_core_state_gathering.CurrentTargetID)
 				Player:Use( wt_core_state_gathering.CurrentTargetID )
 			end
 			return

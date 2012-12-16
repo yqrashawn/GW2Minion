@@ -5,6 +5,7 @@ wt_task.name = "task"
 
 wt_task.priorities = {
 	normal = 50,
+	high = 75,
 }
 
 wt_task.priority = wt_task.priorities.normal

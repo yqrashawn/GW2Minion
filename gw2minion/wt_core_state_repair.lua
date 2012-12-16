@@ -93,6 +93,7 @@ function c_openvendorR:evaluate()
 				local nearestID = Player:GetInteractableTarget()
 				if ( nearestID ~= nil and T.characterID ~= nearestID ) then 
 					if ( Player:GetTarget() ~= T.characterID) then				
+						wt_debug( "Repair: Selecting Vendor.. " )
 						Player:SetTarget(T.characterID)						
 					end
 				end
@@ -114,8 +115,10 @@ function e_openvendorR:execute()
 	wt_debug( "Repair: Opening Vendor.. " )
 	if ( wt_core_state_repair.CurrentTargetID ~= nil and wt_core_state_repair.CurrentTargetID ~= 0 ) then
 		local T = MapObjectList:Get(wt_core_state_repair.CurrentTargetID)
-		if ( T ~= nil ) then
+		if ( T ~= nil and T.characterID ~= nil and T.characterID ~= 0) then
 			Player:Interact( T.characterID )
+		else 
+			wt_core_state_repair.CurrentTargetID = 0
 		end
 	end	
 end

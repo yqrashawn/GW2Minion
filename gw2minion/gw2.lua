@@ -44,6 +44,10 @@ if (Settings.GW2MINION.version == 1.2 ) then
 	Settings.GW2MINION.gIgnoreMarkerCap = "0"
 end
 
+if (Settings.GW2MINION.version == 1.3 ) then
+	Settings.GW2MINION.version = 1.31
+	Settings.GW2MINION.gHuntPresents = "0"
+end
 
 function wt_global_information.OnUpdate( event, tickcount )
 	wt_global_information.Now = tickcount
@@ -71,19 +75,21 @@ function gw2minion.HandleInit()
 	GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Ignore Marker Level Cap","gIgnoreMarkerCap");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Repair Equippment","gEnableRepair");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Hunt Presents","gHuntPresents");
 	
 	
 	gEnableLog = Settings.GW2MINION.gEnableLog
 	gGW2MinionPulseTime = Settings.GW2MINION.gGW2MinionPulseTime 
 	gEnableRepair = Settings.GW2MINION.gEnableRepair
 	gIgnoreMarkerCap = Settings.GW2MINION.gIgnoreMarkerCap
+	gHuntPresents = Settings.GW2MINION.gHuntPresents
 	wt_debug("GUI Setup done")
 	wt_core_controller.requestStateChange(wt_core_state_idle)
 end
 
 function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
-		if ( k == "gEnableLog" or k == "gGW2MinionPulseTime" or k == "gEnableRepair" or k == "gIgnoreMarkerCap") then
+		if ( k == "gEnableLog" or k == "gGW2MinionPulseTime" or k == "gEnableRepair" or k == "gIgnoreMarkerCap" or k == "gHuntPresents") then
 			Settings.GW2MINION[tostring(k)] = v
 		end
 	end

@@ -274,3 +274,66 @@ function wt_core_taskmanager:addHeartQuestTask( quest )
 	
 end
 
+
+
+------------------------------------------------------------------
+-- Hunt Presents Task
+function wt_core_taskmanager:addPresentHuntTask( entry )
+	if ( entry ~= nil and entry.pos.x ~= 0 and entry.pos.y ~= 0 and entry.pos.z ~= 0 ) then 
+		local newtask = inheritsFrom( wt_task )
+		newtask.name = "Hunting Present"
+		newtask.priority = wt_task.priorities.high
+		newtask.position = entry.pos
+		newtask.done = false
+		newtask.spotreached = false
+		newtask.last_execution = 0
+		newtask.throttle = 500
+		
+	function newtask:execute()
+		if ( not newtask.spotreached ) then
+			if ( not wt_core_taskmanager.behavior == "move" ) then
+				wt_core_taskmanager:SetMoveToBehavior()
+			end
+			local me = Player
+			local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, me.pos.x, me.pos.y, me.pos.z )
+			if ( distance > 100 ) then
+				--wt_debug("Walking towards FarmSpot Marker ")	
+				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 50 )
+					newtask.last_execution = wt_global_information.Now
+				end
+			else
+				newtask.spotreached = true
+				newtask.startingTime = wt_global_information.Now
+			end
+			newtask.name = "Hunting Present, dist: "..(math.floor(distance))
+		else
+			if ( not wt_core_taskmanager.behavior == "default" ) then
+				wt_core_taskmanager:SetDefaultBehavior()
+			end
+			local me = Player
+			local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, me.pos.x, me.pos.y, me.pos.z )
+			local t = Player:GetInteractableTarget()			
+			if ( t ~= nil and t ~= 0  ) then
+				local present = GadgetList:Get(t)
+				if ( present ~= nil and present ~= 0 and (present.contentID == 230215 or present.contentID == 228283 )) then
+					Player:Interact(t)
+					Player:StopMoving()
+					newtask.done = true			
+				end
+			end
+			Player:StopMoving()
+			newtask.done = true	
+		end		
+	end
+
+		function newtask:isFinished()
+			if ( newtask.done ) then 
+				wt_core_taskmanager:SetDefaultBehavior()
+				return true
+			end
+			return false
+		end	
+		wt_core_taskmanager:addTask( newtask )
+	end
+end

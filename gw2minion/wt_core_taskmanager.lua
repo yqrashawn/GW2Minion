@@ -21,8 +21,11 @@ end
 -- checks if a point on the worldmap is in levelrange of the player by trying to utilize the min/maxlevel of nearby placed Markers
 function wt_core_taskmanager:checkLevelRange( posX, posY, posZ )
 	local we = Player	
-
+	
 	if ( wt_core_taskmanager.markerList ~= nil and we ~= nil and posX ~= 0 and posY ~= 0 and posZ ~= 0) then
+		if ( gIgnoreMarkerCap == "1") then
+			return true
+		end
 		j, marker = next(wt_core_taskmanager.markerList)
 		while ( j ~= nil and marker ~= nil ) do
 			distance =  Distance3D( marker.x, marker.y, marker.z, posX, posY, posZ )
@@ -35,7 +38,6 @@ function wt_core_taskmanager:checkLevelRange( posX, posY, posZ )
 			j, marker = next(wt_core_taskmanager.markerList,j)
 		end
 		wt_debug( "WARNING: No Marker nearby found, check your NavMesh and add a Marker Nearby to set the levelrange!")
-		return true
 	end
 	return false
 end
@@ -119,6 +121,21 @@ function wt_core_taskmanager:update_tasks( )
 		end
 		
 	end
+	
+	-- Add Xmas Presents
+	local t_object = MapObjectList( "onmesh,type=593" ) --593 = Presents
+	if ( TableSize( t_object ) > 0 ) then
+		i, entry = next(t_object)
+		while ( i ~= nil and entry ~= nil ) do
+			local mPos = entry.pos
+			if ( gHuntPresents == "1" and wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then  
+				wt_debug( "Add PresentHuntTask")
+				wt_core_taskmanager:addPresentHuntTask( entry )
+			end	
+			i, entry = next(t_object,i)
+		end
+	end
+	
 	-- Add Random point to goto
 	-- Add ???
 	
@@ -147,8 +164,8 @@ function wt_core_taskmanager:SetNewTask()
 	if (highestPriority>0) then
 		for k,task in pairs(wt_core_taskmanager.possible_tasks) do
 			if( task.priority < highestPriority) then
-				wt_debug("TM_Removing:"..task.name .. "(Prio:"..task.priority..")")
-				wt_core_taskmanager.possible_tasks[k] = nil
+				wt_debug("TM_Removing:"..task.name .. "(Prio:"..task.priority..")" .. " highest Prio:" ..highestPriority)
+				table.remove(wt_core_taskmanager.possible_tasks,k)
 			end			
 		end
 		-- Select randomly a task from all remaining tasks in the list
