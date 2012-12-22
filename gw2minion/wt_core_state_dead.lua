@@ -160,6 +160,7 @@ function e_downed_combat:execute()
 					return
 				-- Slot 1
 				end
+			-- targetID = nil
 			end
 		-- TableSize( TargetList ) > 0
 		end
@@ -173,6 +174,7 @@ function e_downed_combat:execute()
 		return
 	-- Slot 4
 	end
+	return
 end
 
 ------------------------------------------------------------------------------
