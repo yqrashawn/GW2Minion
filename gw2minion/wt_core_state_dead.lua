@@ -135,7 +135,7 @@ function e_downed_combat:execute()
 					return
 				-- Slot 4
 
-				elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_3 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) and ( Player.profession ~= 4 )  then
+				elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_3 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) and ( Player.profession ~= 4 )  and ( Player.profession ~= 1 )then
 					-- Ranger skill slot_3 is disabled until pet attack (F1) have been fixed
 					-- Ranger: Lick Wounds
 					D_Msg( 3, E, false )
