@@ -125,7 +125,7 @@ function wt_core_taskmanager:update_tasks( )
 
 	
 	-- if we have no task because the playerlevel is above the maplevel and the user forgot to check the ignore marker cap button:
-	if ( #wt_core_taskmanager.task_list <= 1 ) then
+	if ( #wt_core_taskmanager.task_list <= 1 and gIgnoreMarkerCap == "0") then
 		gIgnoreMarkerCap = "1"
 		wt_core_taskmanager:update_tasks( )
 	end

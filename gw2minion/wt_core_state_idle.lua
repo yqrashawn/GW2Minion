@@ -310,7 +310,7 @@ function wt_core_state_idle:initialize()
 	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 86 )
 	wt_core_state_idle:add( ke_repaircheck )
 
-	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 85 )
+	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )
 	wt_core_state_idle:add( ke_revive )
 
 	local ke_rest = wt_kelement:create( "Rest", c_rest, e_rest, 75 )

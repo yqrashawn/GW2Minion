@@ -101,7 +101,7 @@ function wt_core_state_salvaging.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_core_state_salvaging:HandleInit() 
-	GUI_NewField(wt_global_information.MainWindow.Name,"Max Salvage Rarity","gMaxSalvageRarity");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Max Salvage Rarity","gMaxSalvageRarity","Settings");
 	gMaxSalvageRarity = Settings.GW2MINION.gMaxSalvageRarity
 	
 	-- Add to other states only after all files have been loaded

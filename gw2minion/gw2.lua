@@ -52,19 +52,22 @@ end
 
 -- Module Event Handler
 function gw2minion.HandleInit()
-	wt_debug("received Module.Initalize")	
+	wt_debug("received Module.Initalize")
 	GUI_NewWindow(wt_global_information.MainWindow.Name,wt_global_information.MainWindow.x,wt_global_information.MainWindow.y,wt_global_information.MainWindow.width,wt_global_information.MainWindow.height)
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnStart.Name , wt_global_information.BtnStart.Event)
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnPulse.Name , wt_global_information.BtnPulse.Event)
-	GUI_NewField(wt_global_information.MainWindow.Name,"Pulse Time (ms)","gGW2MinionPulseTime");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Log","gEnableLog");
-	GUI_NewField(wt_global_information.MainWindow.Name,"State","gGW2MinionState");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Effect","gGW2MinionEffect");
-	GUI_NewField(wt_global_information.MainWindow.Name,"MainTask","gGW2MinionTask");
-	GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Ignore Marker Level Cap","gIgnoreMarkerCap");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Repair Equippment","gEnableRepair");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Max ItemSell Rarity","gMaxItemSellRarity");
+	GUI_NewSeperator(wt_global_information.MainWindow.Name);	
+	GUI_NewField(wt_global_information.MainWindow.Name,"Pulse Time (ms)","gGW2MinionPulseTime","BotStatus");	
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Log","gEnableLog","BotStatus");
+	GUI_NewField(wt_global_information.MainWindow.Name,"State","gGW2MinionState","BotStatus");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Effect","gGW2MinionEffect","BotStatus");	
+	GUI_NewField(wt_global_information.MainWindow.Name,"MainTask","gGW2MinionTask","BotStatus");
+	GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT","BotStatus");
+	GUI_NewSeperator(wt_global_information.MainWindow.Name);
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Ignore Marker Level Cap","gIgnoreMarkerCap","Settings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Repair Equippment","gEnableRepair","Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Max ItemSell Rarity","gMaxItemSellRarity","Settings");
+	
 	
 	
 	gEnableLog = Settings.GW2MINION.gEnableLog
