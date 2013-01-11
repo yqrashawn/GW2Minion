@@ -41,6 +41,10 @@ function e_vendordone:execute()
 	wt_debug("Vendoring finished")
 	wt_core_state_vendoring.CurrentTargetID = 0
 	wt_core_state_vendoring.junksold = false
+	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID) then
+		wt_core_state_minion.MinionNeedsVendor = false
+		MultiBotSend( "11;none","gw2minion" )
+	end
 	wt_core_controller.requestStateChange(wt_core_state_idle)
 	return
 end
@@ -75,6 +79,19 @@ function e_movetovendor:execute()
 				wt_debug( "Vendoring: moving to Vendor..." )		
 			end
 			local TPOS = T.pos
+			if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID ~= Player.characterID and T.distance > 2000) then
+				-- follow grp leader until we are close enough to a vendor
+				local party = Player:GetPartyMembers()
+				if (party ~= nil and wt_core_state_minion.LeaderID ~= nil) then
+					local leader = party[tonumber(wt_core_state_minion.LeaderID)]
+					if (leader ~= nil) then
+						local pos = leader.pos
+						--TODO: Getmovementstate of leader, adopt range accordingly
+						Player:MoveTo(pos.x,pos.y,pos.z,math.random( 20, 100 ))
+						return
+					end
+				end				
+			end
 			Player:MoveTo(TPOS.x, TPOS.y, TPOS.z ,50 )
 		end
 	else
@@ -257,7 +274,7 @@ function wt_core_state_vendoring:initialize()
 
 	local ke_rest = wt_kelement:create( "Rest", c_rest, e_rest, 75 )
 	wt_core_state_vendoring:add( ke_rest )
-
+	
 	local ke_vendordone = wt_kelement:create( "VendorDone", c_vendordone, e_vendordone, 50 )
 	wt_core_state_vendoring:add( ke_vendordone )
 	

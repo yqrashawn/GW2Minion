@@ -107,6 +107,7 @@ function wt_core_state_salvaging:HandleInit()
 	-- Add to other states only after all files have been loaded
 	local ke_do_salvage = wt_kelement:create( "Do Salvage", c_need_salvage, e_need_salvage, 89 )
 	wt_core_state_idle:add( ke_do_salvage )
+	wt_core_state_minion:add( ke_do_salvage )
 	
 end
 

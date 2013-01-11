@@ -236,6 +236,7 @@ if ( wt_profession_necromancer.professionID > -1 and wt_profession_necromancer.p
 	
 	local ke_checkPets = wt_kelement:create("Summon Pets",wt_profession_necromancer.c_pets,wt_profession_necromancer.e_pets, 95 )
 		wt_core_state_idle:add(ke_checkPets)
+		wt_core_state_minion:add(ke_checkPets)
 	
 
 	-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.

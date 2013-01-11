@@ -49,6 +49,9 @@ function e_better_target_search:execute()
 		wt_debug( "Combat: Switching to better target " .. nextTarget )
 		Player:StopMoving()
 		wt_core_state_combat.setTarget( nextTarget )
+		if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID) then
+			MultiBotSend( "5;"..nextTarget,"gw2minion" )
+		end
 	end
 end
 

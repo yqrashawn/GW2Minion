@@ -106,6 +106,7 @@ function wt_global_information.Reset()
 	wt_core_taskmanager.possible_tasks = { }
 	wt_core_taskmanager.current_task = nil
 	wt_core_taskmanager.markerList = { }
+	wt_core_state_minion.LeaderID = nil
 end
 
 
