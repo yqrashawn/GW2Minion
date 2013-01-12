@@ -467,7 +467,7 @@ function c_followLead:evaluate()
 		if (party ~= nil) then
 			local leader = party[tonumber(wt_core_state_minion.LeaderID)]
 			if (leader ~= nil) then
-				if ((leader.distance > 500 or leader.los~=true) and leader.onmesh) then
+				if ((leader.distance > math.random( 50, 500 ) or leader.los~=true) and leader.onmesh) then
 					return true
 				end				
 			else
@@ -478,7 +478,7 @@ function c_followLead:evaluate()
 	return false
 end
 
-e_followLead.throttle = math.random( 500, 1000 )
+e_followLead.throttle = math.random( 250, 1000 )
 function e_followLead:execute()
 	local party = Player:GetPartyMembers()
 	if (party ~= nil and wt_core_state_minion.LeaderID ~= nil) then
@@ -486,7 +486,7 @@ function e_followLead:execute()
 		if (leader ~= nil) then
 			local pos = leader.pos
 			--TODO: Getmovementstate of leader, adopt range accordingly
-			Player:MoveTo(pos.x,pos.y,pos.z,math.random( 20, 300 ))
+			Player:MoveTo(pos.x,pos.y,pos.z,math.random( 20, 350 ))
 		end
 	end
 end
