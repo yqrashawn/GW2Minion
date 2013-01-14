@@ -7,7 +7,7 @@ wt_core_state_minion.LeaderID = nil
 wt_core_state_minion.FocusTarget = nil
 wt_core_state_minion.PartyAggroTargets = {}
 wt_core_state_minion.MinionNeedsVendor = false
-
+wt_core_state_minion.LeadBroadcastTmr = nil
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
@@ -48,16 +48,17 @@ function c_setrole:evaluate()
 	end	
 	return false
 end
-e_setrole.throttle = 1000
+e_setrole.throttle = math.random( 1000, 2000 )
 function e_setrole:execute()	
 	if ( c_setrole.askedCounter < 3 ) then
-		wt_debug("Asking for our Role..")
+		wt_debug("Searching Leader..")
 		c_setrole.askedCounter = c_setrole.askedCounter + 1
 		MultiBotSend( "1;none","gw2minion" )
 	else
-		wt_debug("Setting our Role to Leader & telling others..")
+		wt_debug("No leader found, setting our Role to Leader & telling others..")
 		c_setrole.askedCounter = 0
 		wt_core_state_minion.LeaderID = Player.characterID
+		wt_core_state_minion.name = "Beeing Leader"
 		MultiBotSend( "2;"..Player.characterID,"gw2minion" )
 	end
 end
@@ -100,7 +101,7 @@ function c_vendorcheck:evaluate()
 			local nextTarget
 			nextTarget, E = next( c_vendorcheck.EList )
 			if ( nextTarget ~= nil and nextTarget ~= 0 ) then
-				if ( gMinionstick == "1" and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID ~= Player.characterID ) then 
+				if ( (ItemList.freeSlotCount <= 2 and wt_global_information.InventoryFull == 1) and gMinionstick == "1" and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID ~= Player.characterID ) then 
 					-- we are follower, Tell leader we need to vendor
 					MultiBotSend( "10;none","gw2minion" )
 					return true
@@ -172,7 +173,7 @@ function c_check_revivep:evaluate()
 	if (party ~= nil and wt_core_state_minion.LeaderID ~= nil) then
 		local index, player  = next( party )
 		while ( index ~= nil and player ~= nil ) do			
-			if (player.distance < 3000 and player.healthstate == GW2.HEALTHSTATE.Defeated and player.onmesh) then
+			if (player.distance < 4000 and player.healthstate == GW2.HEALTHSTATE.Defeated and player.onmesh) then
 				c_check_revivep.ID = index
 				return true
 			end
@@ -262,63 +263,6 @@ function e_revive:execute()
 	end
 end
 
-
----------------------------------------------------------------------
--- Rest(party) Cause & Effect
-local c_restp = inheritsFrom( wt_cause )
-local e_restp = inheritsFrom( wt_effect )
-
-function c_restp:evaluate()
-	local HP = Player.health.percent
-	if ( HP < wt_global_information.Currentprofession.RestHealthLimit ) then
-		return true
-	end
-	-- leader checks on minions
-	if (wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID ) then 
-		local party = Player:GetPartyMembers()
-		if (party ~= nil) then
-			local index, player  = next( party )
-			while ( index ~= nil and player ~= nil ) do			
-				if (player.distance < 3500 and player.alive and player.onmesh and player.health.percent < wt_global_information.Currentprofession.RestHealthLimit ) then					
-					return true
-				end
-				index, player  = next( party,index )
-			end		
-		end
-	end
-	return false
-end
-
-e_restp.throttle = math.random( 500, 2500 )
-function e_restp:execute()
-	local HP = Player.health.percent
-	if ( HP < wt_global_information.Currentprofession.RestHealthLimit ) then
-		local s6 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_6 )
-		if( Player:GetCurrentlyCastedSpell() == 17 and Player.health.percent < 65 and not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_6 ) ) then
-			if ( c_rest_heal ) then
-				c_rest_heal = not c_rest_heal
-				if ( s6 ~= nil ) then
-					wt_debug( "Using "..tostring( s6.name ).." to heal ("..Player.health.percent.."%)" )
-				end
-			end
-			Player:CastSpell( GW2.SKILLBARSLOT.Slot_6 )
-		end
-	end
-	if (wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID ) then 
-		local party = Player:GetPartyMembers()
-		if (party ~= nil) then
-			local index, player  = next( party )
-			while ( index ~= nil and player ~= nil ) do			
-				if (player.distance > 1000 and player.alive and player.onmesh and player.health.percent < wt_global_information.Currentprofession.RestHealthLimit ) then					
-					local pos = player.pos
-					Player:MoveTo(pos.x,pos.y,pos.z,math.random( 20, 100 ))
-				end
-				index, player  = next( party,index )
-			end		
-		end
-	end
-	return
-end
 
  ------------------------------------------------------------------------------
 -- Loot Cause & Effect
@@ -467,7 +411,7 @@ function c_followLead:evaluate()
 		if (party ~= nil) then
 			local leader = party[tonumber(wt_core_state_minion.LeaderID)]
 			if (leader ~= nil) then
-				if ((leader.distance > math.random( 50, 500 ) or leader.los~=true) and leader.onmesh) then
+				if ((leader.distance > 350 or leader.los~=true) and leader.onmesh) then
 					return true
 				end				
 			else
@@ -485,12 +429,64 @@ function e_followLead:execute()
 		local leader = party[tonumber(wt_core_state_minion.LeaderID)]
 		if (leader ~= nil) then
 			local pos = leader.pos
-			--TODO: Getmovementstate of leader, adopt range accordingly
-			Player:MoveTo(pos.x,pos.y,pos.z,math.random( 20, 350 ))
+			if (leader.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
+				Player:MoveTo(pos.x,pos.y,pos.z,25)
+			else
+				Player:MoveTo(pos.x,pos.y,pos.z,math.random( 10, 150 ))
+			end
 		end
 	end
 end
  
+ 
+------------------------------------------------------------------------------
+-- Try to hold the Group together Cause & Effect
+local c_buildgrp = inheritsFrom( wt_cause )
+local e_buildgrp = inheritsFrom( wt_effect )
+
+function c_buildgrp:evaluate()
+	if (wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID) then
+		-- Making sure the group sticks together
+		if (gMinionstick == "1") then 
+			local party = Player:GetPartyMembers()
+			if (party ~= nil ) then
+				local index, player  = next( party )
+				while ( index ~= nil and player ~= nil ) do			
+					if (player.distance > 1200 and player.alive and player.onmesh) then
+						return true
+					end
+					index, player  = next( party,index )
+				end		
+			end
+		end	
+	end
+	return false
+end
+
+e_buildgrp.throttle = math.random(500,1000)
+function e_buildgrp:execute()
+	-- Making sure the group sticks together
+	if (gMinionstick == "1") then 
+		local party = Player:GetPartyMembers()
+		if (party ~= nil ) then
+			local index, player  = next( party )
+			while ( index ~= nil and player ~= nil ) do			
+				if (player.alive and player.onmesh) then
+					if (player.distance > 2500 ) then
+						local pos = player.pos
+						--TODO: Getmovementstate of player, adopt range accordingly
+						Player:MoveTo(pos.x,pos.y,pos.z,math.random( 20, 350 ))
+						return
+					elseif(player.distance <= 2500 and player.distance > 1200) then
+						wt_debug("Waiting for Partymembers to get to us")
+						Player:StopMoving()
+					end
+				end
+				index, player  = next( party,index )
+			end		
+		end
+	end	
+end
 ------------------------------------------------------------------------------
 -- Lead Group Cause & Effect
 local c_lead = inheritsFrom( wt_cause )
@@ -504,11 +500,35 @@ function c_lead:evaluate()
 end
 
 function e_lead:execute()
+	-- To prevent fuckups, broadcast that we are the leader every 60 seconds
+	if ( wt_core_state_minion.LeadBroadcastTmr == nil or (wt_global_information.Now - wt_core_state_minion.LeadBroadcastTmr > 60000)) then
+		wt_core_state_minion.LeadBroadcastTmr = wt_global_information.Now
+		MultiBotSend( "3;"..Player.characterID,"gw2minion" )
+		return
+	end
+	-- Making sure the group sticks together
+	if (gMinionstick == "1") then 
+		local party = Player:GetPartyMembers()
+		if (party ~= nil ) then
+			local index, player  = next( party )
+			while ( index ~= nil and player ~= nil ) do			
+				if (player.distance > 1200 and player.alive and player.onmesh) then
+					local pos = player.pos
+					--TODO: Getmovementstate of player, adopt range accordingly
+					Player:MoveTo(pos.x,pos.y,pos.z,math.random( 20, 350 ))
+					return
+				end
+				index, player  = next( party,index )
+			end		
+		end
+	end	
 	wt_core_taskmanager:DoTask()
 end
  
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
+-- C&E's attached to other states:
+
 -- iAmMinion Cause & Effect fpr the idle state
 local c_iamminion = inheritsFrom( wt_cause )
 local e_iamminion = inheritsFrom( wt_effect )
@@ -527,7 +547,40 @@ function e_iamminion:execute()
 	wt_core_controller.requestStateChange( wt_core_state_minion )
 end
 
+------------------------------------------------------------------------------
+-- BroadCastFocusTarget Cause & Effect for the combat state
+local c_setfocust = inheritsFrom( wt_cause )
+local e_setfocust = inheritsFrom( wt_effect )
 
+function c_setfocust:evaluate()
+	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil ) then
+		if ( wt_core_state_minion.LeaderID == Player.characterID and wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0) then
+			local T = CharacterList:Get( wt_core_state_combat.CurrentTarget )
+			if ( T ~= nil and T.alive and ( T.attitude == 1 or T.attitude == 2 ) ) then
+				if ( wt_core_state_minion.FocusTargetBroadcastTmr == nil or (wt_global_information.Now - wt_core_state_minion.FocusTargetBroadcastTmr > 250)) then
+					wt_core_state_minion.FocusTargetBroadcastTmr = wt_global_information.Now					
+					return true
+				end
+			end
+		end
+	end
+	return false
+end
+
+function e_setfocust:execute()
+	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil ) then
+		if ( wt_core_state_minion.LeaderID == Player.characterID and wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0) then
+			local T = CharacterList:Get( wt_core_state_combat.CurrentTarget )
+			if ( T ~= nil and T.alive and ( T.attitude == 1 or T.attitude == 2 ) ) then
+				if ( wt_core_state_minion.FocusTargetBroadcastTmr == nil or (wt_global_information.Now - wt_core_state_minion.FocusTargetBroadcastTmr > 250)) then
+					wt_core_state_minion.FocusTargetBroadcastTmr = wt_global_information.Now
+					MultiBotSend( "5;"..wt_core_state_combat.CurrentTarget,"gw2minion" )
+					return true
+				end
+			end
+		end
+	end
+end
 ---------------------------------------------------------------------
 -- HandleMultiBotMessages
 function HandleMultiBotMessages( event, message )
@@ -542,15 +595,22 @@ local msg = message:sub(delimiter+1)
 			if ( wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID  == Player.characterID) then
 				MultiBotSend( "2;"..Player.characterID,"gw2minion" )
 			end
-		elseif ( tonumber(msgID) == 2 ) then -- Set Leader
-			wt_debug( "New Leader is characterID : "..tonumber(msg) )
-			wt_core_state_minion.LeaderID = tonumber(msg)	
+		elseif ( tonumber(msgID) == 2 ) then -- Set Leader to the one with the smallest ID (no idea how to do this in a better way yet...)
+			if ( wt_core_state_minion.LeaderID == nil or wt_core_state_minion.LeaderID > tonumber(msg)) then
+				wt_core_state_minion.LeaderID = tonumber(msg)
+				wt_core_state_minion.name = "Beeing a Minion"
+				wt_debug( "New Leader is characterID : "..tonumber(msg) )
+			end
+		elseif ( tonumber(msgID) == 3 ) then -- Claim Leader			
+			wt_core_state_minion.LeaderID = tonumber(msg)
+			wt_core_state_minion.name = "Beeing a Minion"
+			wt_debug( "Leadership got claimed by characterID : "..tonumber(msg) )							
 		elseif ( tonumber(msgID) == 5 ) then -- Set FocusTarget
-			wt_debug( "New FocusTarget is characterID : "..tonumber(msg) )
+			wt_debug( "FocusTarget is characterID : "..tonumber(msg) )
 			wt_core_state_minion.FocusTarget = tonumber(msg)			
 		elseif ( tonumber(msgID) == 6 ) then -- Inform leader about party-aggro-target
 			local newTarget = CharacterList:Get(tonumber(msg))
-			if (newTarget ~= nil and wt_core_state_minion.PartyAggroTargets ~= nil and wt_core_state_minion.PartyAggroTargets[tonumber(msg)] == nil and newTarget.distance < 2500 and newTarget.alive ) then 
+			if (newTarget ~= nil and wt_core_state_minion.PartyAggroTargets ~= nil and wt_core_state_minion.PartyAggroTargets[tonumber(msg)] == nil and newTarget.distance < 4500 and newTarget.alive ) then 
 				wt_debug( "Adding new PartyAggroTarget to List : "..tonumber(msg) )
 				wt_core_state_minion.PartyAggroTargets[tonumber(msg)] = newTarget
 			end
@@ -564,7 +624,22 @@ local msg = message:sub(delimiter+1)
 				wt_debug( "We still need to vendor, telling leader.." )
 				MultiBotSend( "10;none","gw2minion" )
 			end
+		elseif ( tonumber(msgID) == 12 ) then -- Leader reached Vendor, tells Minions to update their "nearest Vendor" (this is needed sometimes)
+			if ( wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID  ~= Player.characterID ) then
+				wt_debug( "Leader is near Vendor, refreshing our Vendor.." )
+				wt_core_state_minion.MinionNeedsVendor = true
+				wt_core_state_vendoring.CurrentTargetID = 0				
+			end
 		end
+	end
+end
+
+function wt_core_state_minion.ClaimLead( Event ) 
+	if ( MultiBotIsConnected( ) ) then
+		wt_debug( "Claiming leadership.." )
+		wt_core_state_minion.LeaderID = Player.characterID
+		wt_core_state_minion.name = "Beeing Leader"
+		MultiBotSend( "3;"..Player.characterID,"gw2minion" )
 	end
 end
 
@@ -587,8 +662,10 @@ function wt_core_state_minion:HandleInit()
 	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer IP","gIP","GroupBotting");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Port","gPort","GroupBotting");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Password","gPw","GroupBotting");
-	GUI_NewSeperator(wt_global_information.MainWindow.Name);	
+	GUI_NewSeperator(wt_global_information.MainWindow.Name);
+	GUI_NewButton(wt_global_information.MainWindow.Name, "Claim Leadership" , "Claimlead.Event","GroupBotting")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Always stick together","gMinionstick","GroupBotting");
+	
 	
 	gMinionEnabled = Settings.GW2MINION.gMinionEnabled
 	gIP = Settings.GW2MINION.gIP
@@ -601,6 +678,8 @@ function wt_core_state_minion:HandleInit()
 	local ke_iamminion = wt_kelement:create( "GroupMinion", c_iamminion, e_iamminion, 250 )
 	wt_core_state_idle:add( ke_iamminion )
 	
+	local ke_setfocust = wt_kelement:create( "SendFocusTarget", c_setfocust, e_setfocust, 126 )
+	wt_core_state_combat:add( ke_setfocust )
 end
 
 function wt_core_state_minion:initialize()
@@ -622,8 +701,7 @@ function wt_core_state_minion:initialize()
 		Settings.GW2MINION.gPw = "mypassword"
 	end
 	
-	
-	
+	RegisterEventHandler("Claimlead.Event",wt_core_state_minion.ClaimLead)
 	RegisterEventHandler("Module.Initalize",wt_core_state_minion.HandleInit)
 	RegisterEventHandler("GUI.Update",wt_core_state_minion.GUIVarUpdate)
 	RegisterEventHandler("MULTIBOT.Message",HandleMultiBotMessages)
@@ -659,8 +737,8 @@ function wt_core_state_minion:initialize()
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )
 	wt_core_state_minion:add( ke_revive )
 
-	local ke_restp = wt_kelement:create( "Rest", c_restp, e_restp, 75 )
-	wt_core_state_minion:add( ke_restp )
+	local ke_rest = wt_kelement:create( "Rest", c_rest, e_rest, 75 )
+	wt_core_state_minion:add( ke_rest )
 	
 	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 50 )
 	wt_core_state_minion:add( ke_loot )
@@ -673,6 +751,9 @@ function wt_core_state_minion:initialize()
 	
 	local ke_sticktoleader = wt_kelement:create( "Follow Leader", c_followLead, e_followLead, 20 )
 	wt_core_state_minion:add( ke_sticktoleader )
+	
+	local ke_buildgrp = wt_kelement:create( "Grouping", c_buildgrp, e_buildgrp, 15 )
+	wt_core_state_minion:add( ke_buildgrp )
 	
 	local ke_lead = wt_kelement:create( "Lead", c_lead, e_lead, 10 )
 	wt_core_state_minion:add( ke_lead )

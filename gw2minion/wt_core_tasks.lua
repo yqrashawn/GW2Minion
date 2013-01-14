@@ -6,7 +6,7 @@ function wt_core_taskmanager:addWaypointTask( waypoint )
 	if ( waypoint ~= nil and waypoint.pos.x ~= 0 and waypoint.pos.y ~= 0 and waypoint.pos.z ~= 0 ) then 
 		local newtask = inheritsFrom( wt_task )
 		newtask.name = "Explore Waypoint"
-		newtask.priority = wt_task.priorities.normal
+		newtask.priority = wt_task.priorities.high
 		newtask.position = waypoint.pos
 		newtask.done = false
 		newtask.last_execution = 0
@@ -47,7 +47,7 @@ function wt_core_taskmanager:addPOITask( poi )
 	if ( poi ~= nil and poi.pos.x ~= 0 and poi.pos.y ~= 0 and poi.pos.z ~= 0 ) then 
 		local newtask = inheritsFrom( wt_task )
 		newtask.name = "Explore PointOfInterest"
-		newtask.priority = wt_task.priorities.normal
+		newtask.priority = wt_task.priorities.high
 		newtask.position = poi.pos
 		newtask.done = false
 		newtask.last_execution = 0

@@ -41,10 +41,10 @@ function e_vendordone:execute()
 	wt_debug("Vendoring finished")
 	wt_core_state_vendoring.CurrentTargetID = 0
 	wt_core_state_vendoring.junksold = false
-	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID) then
-		wt_core_state_minion.MinionNeedsVendor = false
+	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID) then		
 		MultiBotSend( "11;none","gw2minion" )
 	end
+	wt_core_state_minion.MinionNeedsVendor = false
 	wt_core_controller.requestStateChange(wt_core_state_idle)
 	return
 end
@@ -135,6 +135,10 @@ function e_openvendor:execute()
 		local T = MapObjectList:Get(wt_core_state_vendoring.CurrentTargetID)
 		if ( T ~= nil ) then
 			Player:Interact( T.characterID )
+			-- tell minions to refresh their vendor, this is needed to prevent fuckups in the lists
+			if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID ) then
+				MultiBotSend( "12;none","gw2minion" )
+			end
 		end
 	end	
 end

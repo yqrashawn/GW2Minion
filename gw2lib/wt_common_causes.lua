@@ -132,7 +132,8 @@ function c_aggro:evaluate()
 					return true
 				end
 			end
-		end	
+		end
+		return false		
 	end
 	
 	-- For Solo botting	
@@ -186,6 +187,7 @@ function e_aggro:execute()
 				end
 			end
 		end
+		return false
 	end
 	
 	--For Solo botting
@@ -209,20 +211,55 @@ function c_rest:evaluate()
 	if ( HP < wt_global_information.Currentprofession.RestHealthLimit ) then
 		return true
 	end
+	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID ) then -- We Lead	
+		local party = Player:GetPartyMembers()
+		if (party ~= nil) then
+			local index, player  = next( party )
+			while ( index ~= nil and player ~= nil ) do			
+				if (player.distance < 4000 and player.alive and player.onmesh and player.health.percent < wt_global_information.Currentprofession.RestHealthLimit ) then					
+					return true
+				end
+				index, player  = next( party,index )
+			end		
+		end		
+	end
 	return false
 end
 
 e_rest.throttle = math.random( 500, 2500 )
 function e_rest:execute()
-	local s6 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_6 )
-	if( Player:GetCurrentlyCastedSpell() == 17 and Player.health.percent < 65 and not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_6 ) ) then
-		if ( c_rest_heal ) then
-			c_rest_heal = not c_rest_heal
-			if ( s6 ~= nil ) then
-				wt_debug( "Using "..tostring( s6.name ).." to heal ("..Player.health.percent.."%)" )
-			end
+	if (Player.profession == 8 ) then 
+		local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
+		if (not Player.inCombat and deathshroud ~= nil and deathshroud.skillID == 10585) then
+			Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
+			return
 		end
-		Player:CastSpell( GW2.SKILLBARSLOT.Slot_6 )
+	end
+	local HP = Player.health.percent
+	if ( HP < wt_global_information.Currentprofession.RestHealthLimit ) then
+		local s6 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_6 )
+		if( Player:GetCurrentlyCastedSpell() == 17 and not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_6 ) ) then
+			if ( c_rest_heal ) then
+				c_rest_heal = not c_rest_heal
+				if ( s6 ~= nil ) then
+					wt_debug( "Using "..tostring( s6.name ).." to heal ("..Player.health.percent.."%)" )
+				end
+			end
+			Player:CastSpell( GW2.SKILLBARSLOT.Slot_6 )
+		end
+	end
+	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID ) then -- We Lead	
+		local party = Player:GetPartyMembers()
+		if (party ~= nil) then
+			local index, player  = next( party )
+			while ( index ~= nil and player ~= nil ) do			
+				if (player.distance > 3500 and player.alive and player.onmesh and player.health.percent < wt_global_information.Currentprofession.RestHealthLimit ) then					
+					local pos = player.pos
+					Player:MoveTo(pos.x,pos.y,pos.z,math.random( 20, 100 ))
+				end
+				index, player  = next( party,index )
+			end		
+		end
 	end
 	return
 end

@@ -197,9 +197,9 @@ function ed_dead:execute()
 		if (party ~= nil and wt_core_state_minion.LeaderID ~= nil) then
 			local index, player  = next( party )
 			while ( index ~= nil and player ~= nil ) do			
-				if (player.distance < 3000 and player.alive and player.onmesh) then						
+				if (player.distance < 4000 and player.alive and player.onmesh) then						
 					wt_debug( "Waiting for a partymember to rezz me..")
-					return false
+					return
 				end
 				index, player  = next( party,index )
 			end		
