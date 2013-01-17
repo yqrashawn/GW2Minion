@@ -70,10 +70,25 @@ function wt_profession_elementalist.getWeapons(MainHand,OffHand)
 	
 	--local OffHand = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_4)
 	if (MainHand ~= nil and OffHand ~= nil ) then
-		if     (MainHand.skillID == 12345 and OffHand.skillID == 12345) then return ("DaggerDagger") 
-		elseif (MainHand.skillID == 12345 and OffHand.skillID == 12345) then return ("DaggerFocus")
-		elseif (MainHand.skillID == 12345 and OffHand.skillID == 12345) then return ("ScepterDagger")
-		elseif (MainHand.skillID == 12345 and OffHand.skillID == 12345) then return ("ScepterFocus")
+		if     (MainHand.skillID == 15718 and OffHand.skillID == 5691) then return ("DaggerDagger1") 
+		elseif (MainHand.skillID == 15716 and OffHand.skillID == 5520) then return ("DaggerDagger2")
+		elseif (MainHand.skillID == 5489  and OffHand.skillID == 5529) then return ("DaggerDagger3")
+		elseif (MainHand.skillID == 15717 and OffHand.skillID == 5690) then return ("DaggerDagger4")
+		
+		elseif (MainHand.skillID == 15718 and OffHand.skillID == 5497) then return ("DaggerFocus1")
+		elseif (MainHand.skillID == 15716 and OffHand.skillID == 5556) then return ("DaggerFocus2")
+		elseif (MainHand.skillID == 5489  and OffHand.skillID == 5530) then return ("DaggerFocus3")
+		elseif (MainHand.skillID == 15717 and OffHand.skillID == 5555) then return ("DaggerFocus4")
+		
+		elseif (MainHand.skillID == 5508 and OffHand.skillID == 5691) then return ("ScepterDagger")
+		elseif (MainHand.skillID == 5693 and OffHand.skillID == 5520) then return ("ScepterDagger")
+		elseif (MainHand.skillID == 5526 and OffHand.skillID == 5529) then return ("ScepterDagger")
+		elseif (MainHand.skillID == 5500 and OffHand.skillID == 5690) then return ("ScepterDagger")
+		
+		elseif (MainHand.skillID == 5508 and OffHand.skillID == 5497) then return ("ScepterFocus")
+		elseif (MainHand.skillID == 5693 and OffHand.skillID == 5556) then return ("ScepterFocus")
+		elseif (MainHand.skillID == 5526 and OffHand.skillID == 5530) then return ("ScepterFocus")
+		elseif (MainHand.skillID == 5500 and OffHand.skillID == 5555) then return ("ScepterFocus")
 		end
 	end
 end
@@ -97,7 +112,8 @@ function wt_profession_elementalist.e_attack_default:execute()
 		local T = CharacterList:Get(TID)
 		if ( T ~= nil ) then						
 			--wt_debug("attacking " .. TID .. " Distance " .. T.distance)
-			Player:SetFacing(T.pos.x-Player.pos.x,T.pos.z-Player.pos.z,T.pos.y-Player.pos.y)
+			local TPos = T.pos
+			Player:SetFacing(TPos.x, TPos.y, TPos.z)
 			local s1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
 			local s2 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_2)
 			local s3 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_3)

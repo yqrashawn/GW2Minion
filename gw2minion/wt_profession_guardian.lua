@@ -88,11 +88,10 @@ function wt_profession_guardian.e_attack_action:execute()
 	Player:StopMoving()
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= 0 ) then
-		local T = CharacterList:Get(TID)
-		local PPos = Player.pos
-		local TPos = T.pos
+		local T = CharacterList:Get(TID)		
 		if ( T ~= nil ) then
-			Player:SetFacing(TPos.x-PPos.x,TPos.z-PPos.z,TPos.y-PPos.y)
+			local TPos = T.pos
+			Player:SetFacing(TPos.x, TPos.y, TPos.z)
 			local MHweapon = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon)
 			local OHweapon = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon)
 			
