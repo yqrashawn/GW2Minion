@@ -8,7 +8,7 @@ wt_core_state_salvaging.kelement_list = { }
 
 -- utility functions
 function wt_core_state_salvaging.ShouldSalvage(item)
-	if ( item ~= nil and ( item.itemtype ==  GW2.ITEMTYPE.Armor or item.itemtype ==  GW2.ITEMTYPE.Weapon ) and item.rarity <= tonumber(gMaxSalvageRarity) ) then
+	if ( item ~= nil and not item.soulbound and ( item.itemtype ==  GW2.ITEMTYPE.Armor or item.itemtype ==  GW2.ITEMTYPE.Weapon ) and item.rarity <= tonumber(gMaxSalvageRarity) ) then
 		return true
 	end
 	return false

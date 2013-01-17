@@ -607,7 +607,10 @@ local msg = message:sub(delimiter+1)
 			wt_debug( "Leadership got claimed by characterID : "..tonumber(msg) )							
 		elseif ( tonumber(msgID) == 5 ) then -- Set FocusTarget
 			wt_debug( "FocusTarget is characterID : "..tonumber(msg) )
-			wt_core_state_minion.FocusTarget = tonumber(msg)			
+			wt_core_state_minion.FocusTarget = tonumber(msg)	
+			if ( Player:GetCurrentlyCastedSpell() == 17 and wt_core_controller.state ~= wt_core_state_combat) then 			
+				wt_core_controller.requestStateChange( wt_core_state_combat )			
+			end
 		elseif ( tonumber(msgID) == 6 ) then -- Inform leader about party-aggro-target
 			local newTarget = CharacterList:Get(tonumber(msg))
 			if (newTarget ~= nil and wt_core_state_minion.PartyAggroTargets ~= nil and wt_core_state_minion.PartyAggroTargets[tonumber(msg)] == nil and newTarget.distance < 4500 and newTarget.alive ) then 
@@ -678,8 +681,12 @@ function wt_core_state_minion:HandleInit()
 	local ke_iamminion = wt_kelement:create( "GroupMinion", c_iamminion, e_iamminion, 250 )
 	wt_core_state_idle:add( ke_iamminion )
 	
+	local ke_reviveparty = wt_kelement:create( "ReviveParty", c_check_revivep, e_revivep, 130 )
+	wt_core_state_combat:add( ke_reviveparty )	
 	local ke_setfocust = wt_kelement:create( "SendFocusTarget", c_setfocust, e_setfocust, 126 )
 	wt_core_state_combat:add( ke_setfocust )
+	
+
 end
 
 function wt_core_state_minion:initialize()

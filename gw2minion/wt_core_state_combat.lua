@@ -81,6 +81,7 @@ function wt_core_state_combat:initialize()
 		local ke_quickloot = wt_kelement:create( "QuickLoot", c_quickloot, e_quickloot, 145 )
 		wt_core_state_combat:add( ke_quickloot )
 		
+		--groupbotting, revivepartymember @ prio 130
 		--groupbotting, focustargetbroadcast @ prio 126
 		
 		local ke_better_target_search = wt_kelement:create( "better_target_search", c_better_target_search, e_better_target_search, 125 )
