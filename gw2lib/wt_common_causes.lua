@@ -95,7 +95,7 @@ function c_aggro:evaluate()
 				nextTarget, nChar = next( wt_core_state_minion.PartyAggroTargets )
 				if ( nextTarget ~= nil and nextTarget ~= 0) then
 					local ntarget = CharacterList:Get(tonumber(nextTarget))
-					if ( ntarget ~= nil and ntarget.distance < 2500 and ntarget.alive ) then
+					if ( ntarget ~= nil and ntarget.distance < 4000 and ntarget.alive ) then
 						c_aggro.TargetList[tonumber(nextTarget)] = nChar
 						return true
 					else 
@@ -105,11 +105,11 @@ function c_aggro:evaluate()
 			end
 			
 			-- Search for new FocusTarget
-			c_aggro.TargetList = ( CharacterList( "nearest,attackable,alive,incombat,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
+			c_aggro.TargetList = ( CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
 			if ( TableSize( c_aggro.TargetList ) > 0 ) then
 				return true
 			end
-			c_aggro.TargetList = ( CharacterList( "nearest,los,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
+			c_aggro.TargetList = ( CharacterList( "nearest,los,attackable,incombat,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 			if ( TableSize( c_aggro.TargetList ) > 0 ) then
 				return true
 			end			
@@ -118,7 +118,7 @@ function c_aggro:evaluate()
 			-- kill focus target
 			if ( wt_core_state_minion.FocusTarget ~= nil ) then
 				local target = CharacterList:Get(tonumber(wt_core_state_minion.FocusTarget))
-				if ( target ~= nil and target.distance < 2000 and target.alive ) then
+				if ( target ~= nil and target.distance < 4000 and target.alive ) then
 					return true
 				end
 			end
@@ -170,10 +170,11 @@ function e_aggro:execute()
 		else -- We Follow
 			if ( wt_core_state_minion.FocusTarget ~= nil ) then
 				local target = CharacterList:Get(tonumber(wt_core_state_minion.FocusTarget))
-				if ( target ~= nil and target.distance < 2000 and target.alive ) then
+				if ( target ~= nil and target.distance < 4000 and target.alive ) then
 					wt_debug( "Attacking Focustarget" )
 					wt_core_state_combat.setTarget( wt_core_state_minion.FocusTarget )
-					wt_core_controller.requestStateChange( wt_core_state_combat )	
+					wt_core_controller.requestStateChange( wt_core_state_combat )
+					return
 				end
 			end
 			if ( TableSize( c_aggro.TargetList ) > 0 ) then

@@ -576,6 +576,7 @@ function e_setfocust:execute()
 					wt_core_state_minion.FocusTargetBroadcastTmr = wt_global_information.Now
 					MultiBotSend( "5;"..wt_core_state_combat.CurrentTarget,"gw2minion" )
 					return true
+					--TODOOOOOO ADD MultiBotSend( "6;".
 				end
 			end
 		end
@@ -584,7 +585,7 @@ end
 ---------------------------------------------------------------------
 -- HandleMultiBotMessages
 function HandleMultiBotMessages( event, message )
-d("MBM:" .. message)
+--d("MBM:" .. message)
 local delimiter = message:find(';')
 local msgID = message:sub(0,delimiter-1)
 local msg = message:sub(delimiter+1)
@@ -607,10 +608,7 @@ local msg = message:sub(delimiter+1)
 			wt_debug( "Leadership got claimed by characterID : "..tonumber(msg) )							
 		elseif ( tonumber(msgID) == 5 ) then -- Set FocusTarget
 			wt_debug( "FocusTarget is characterID : "..tonumber(msg) )
-			wt_core_state_minion.FocusTarget = tonumber(msg)	
-			if ( Player:GetCurrentlyCastedSpell() == 17 and wt_core_controller.state ~= wt_core_state_combat) then 			
-				wt_core_controller.requestStateChange( wt_core_state_combat )			
-			end
+			wt_core_state_minion.FocusTarget = tonumber(msg)
 		elseif ( tonumber(msgID) == 6 ) then -- Inform leader about party-aggro-target
 			local newTarget = CharacterList:Get(tonumber(msg))
 			if (newTarget ~= nil and wt_core_state_minion.PartyAggroTargets ~= nil and wt_core_state_minion.PartyAggroTargets[tonumber(msg)] == nil and newTarget.distance < 4500 and newTarget.alive ) then 

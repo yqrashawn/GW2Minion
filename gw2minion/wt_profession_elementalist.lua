@@ -10,7 +10,7 @@ wt_profession_elementalist.professionID = 6 -- needs to be set
 wt_profession_elementalist.professionRoutineName = "Elementalist"
 wt_profession_elementalist.professionRoutineVersion = "1.0"
 wt_profession_elementalist.RestHealthLimit = 70
-
+wt_profession_elementalist.switchattunementTmr = 0
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 -- NeedHeal Check
@@ -57,6 +57,9 @@ function wt_profession_elementalist.e_MoveCloser:execute()
 	end
 end
 
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+-- Determine our weapon
 function wt_profession_elementalist.getWeapons(MainHand,OffHand)
 	-- A bit stoopid but failsafe way to always get the correct weapons
 	--local MainHand = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
@@ -80,19 +83,33 @@ function wt_profession_elementalist.getWeapons(MainHand,OffHand)
 		elseif (MainHand.skillID == 5489  and OffHand.skillID == 5530) then return ("DaggerFocus3")
 		elseif (MainHand.skillID == 15717 and OffHand.skillID == 5555) then return ("DaggerFocus4")
 		
-		elseif (MainHand.skillID == 5508 and OffHand.skillID == 5691) then return ("ScepterDagger")
-		elseif (MainHand.skillID == 5693 and OffHand.skillID == 5520) then return ("ScepterDagger")
-		elseif (MainHand.skillID == 5526 and OffHand.skillID == 5529) then return ("ScepterDagger")
-		elseif (MainHand.skillID == 5500 and OffHand.skillID == 5690) then return ("ScepterDagger")
+		elseif (MainHand.skillID == 5508 and OffHand.skillID == 5691) then return ("ScepterDagger1")
+		elseif (MainHand.skillID == 5693 and OffHand.skillID == 5520) then return ("ScepterDagger2")
+		elseif (MainHand.skillID == 5526 and OffHand.skillID == 5529) then return ("ScepterDagger3")
+		elseif (MainHand.skillID == 5500 and OffHand.skillID == 5690) then return ("ScepterDagger4")
 		
-		elseif (MainHand.skillID == 5508 and OffHand.skillID == 5497) then return ("ScepterFocus")
-		elseif (MainHand.skillID == 5693 and OffHand.skillID == 5556) then return ("ScepterFocus")
-		elseif (MainHand.skillID == 5526 and OffHand.skillID == 5530) then return ("ScepterFocus")
-		elseif (MainHand.skillID == 5500 and OffHand.skillID == 5555) then return ("ScepterFocus")
+		elseif (MainHand.skillID == 5508 and OffHand.skillID == 5497) then return ("ScepterFocus1")
+		elseif (MainHand.skillID == 5693 and OffHand.skillID == 5556) then return ("ScepterFocus2")
+		elseif (MainHand.skillID == 5526 and OffHand.skillID == 5530) then return ("ScepterFocus3")
+		elseif (MainHand.skillID == 5500 and OffHand.skillID == 5555) then return ("ScepterFocus4")
 		end
 	end
 end
 
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+-- Randomly switch attunement
+function RandomAttunement(current)
+	if (wt_profession_elementalist.switchattunementTmr == 0 or wt_global_information.Now - wt_profession_elementalist.switchattunementTmr > math.random(2500,5000)) then	
+		wt_profession_elementalist.switchattunementTmr = wt_global_information.Now
+		local switch = math.random(12,15)
+		if ( switch ~= current and not Player:IsSpellOnCooldown(switch) ) then
+			Player:CastSpell(switch)
+			return true
+		end
+	end
+	return false 
+end
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 -- Combat Attack 
@@ -138,13 +155,202 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						if (not RandomAttunement(12)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
 					end
 				end
-			elseif ( myWeap == "DaggerDagger") then
+			elseif ( myWeap == "Staff2") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
 					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange or s5.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and (T.distance < s4.maxRange or s4.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving and (T.distance < s3.maxRange or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(13)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+				elseif ( myWeap == "Staff3") then
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange or s5.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and (T.distance < s4.maxRange or s4.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < 400 or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(14)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+			elseif ( myWeap == "Staff4") then
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange or s5.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and (T.distance < s4.maxRange or s4.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and Player.health.percent < math.random(10,70) and(T.distance < s3.maxRange or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100) and T.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(15)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+			elseif ( myWeap == "DaggerDagger1") then --fire
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(12)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+			elseif ( myWeap == "DaggerDagger2") then --water
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and Player.health.percent < math.random(50,75)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 160) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(13)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+			elseif ( myWeap == "DaggerDagger3") then --lightning
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 180 ) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(14)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+			elseif ( myWeap == "DaggerDagger4") then -- earth
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 350 ) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 230 ) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < 240) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(15)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end			
+			elseif ( myWeap == "ScepterDagger1") then --fire
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(12)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+			elseif ( myWeap == "ScepterDagger2") then --water
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and Player.health.percent < math.random(50,75)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 160) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(13)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+			elseif ( myWeap == "ScepterDagger3") then --lightning
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 180 ) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(14)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+			elseif ( myWeap == "ScepterDagger4") then -- earth
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 350 ) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 230 ) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(15)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+			elseif ( myWeap == "ScepterFocus1") then --fire
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and (T.distance < s4.maxRange or s4.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
@@ -153,10 +359,12 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						if (not RandomAttunement(12)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
 					end
 				end
-			elseif ( myWeap == "DaggerFocus") then
+			elseif ( myWeap == "ScepterFocus2") then --water
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
 					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange or s5.maxRange < 100)) then
@@ -165,42 +373,116 @@ function wt_profession_elementalist.e_attack_default:execute()
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						if (not RandomAttunement(13)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
 					end
 				end
-			elseif ( myWeap == "ScepterDagger") then
+			elseif ( myWeap == "ScepterFocus3") then --lightning
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange or s5.maxRange < 100)) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 300 ) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and (T.distance < s4.maxRange or s4.maxRange < 100)) then
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 300) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						if (not RandomAttunement(14)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
 					end
 				end
-			elseif ( myWeap == "ScepterFocus") then
+			elseif ( myWeap == "ScepterFocus4") then -- earth
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange or s5.maxRange < 100)) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 ) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and (T.distance < s4.maxRange or s4.maxRange < 100)) then
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 180 ) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						if (not RandomAttunement(15)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
 					end
 				end
+			elseif ( myWeap == "DaggerFocus1") then --fire
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(12)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+			elseif ( myWeap == "DaggerFocus2") then --water
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and Player.health.percent < math.random(50,75)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 160) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(13)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+			elseif ( myWeap == "DaggerFocus3") then --lightning
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 180 ) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(14)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end
+			elseif ( myWeap == "DaggerFocus4") then -- earth
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 350 ) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 230 ) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
+						if (not RandomAttunement(15)) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end	
 			else --DEFAULT ATTACK
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange

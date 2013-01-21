@@ -214,7 +214,7 @@ function c_selltovendor:evaluate()
 end
 
 e_selltovendor.throttle = math.random( 1000, 1500 )
-e_selltovendor.delay = math.random( 1000, 2000 )
+e_selltovendor.delay = math.random( 500, 1500 )
 function e_selltovendor:execute()	
 	if ( Inventory:IsVendorOpened() ) then
 		-- 1st Sell Weapons
@@ -223,7 +223,7 @@ function e_selltovendor:execute()
 		while ( tmpR > 0 and sold == false) do
 			local sweapons = ItemList("itemtype=18,rarity="..tmpR)	
 			id,item = next(sweapons)
-			if (id ~=nil and item ~= nil and not item.soulbound) then					
+			if (id ~=nil and item ~= nil ) then					
 				wt_debug( "Vendoring: Selling Weapon... ")
 				item:Sell()
 				sold = true				
@@ -237,7 +237,7 @@ function e_selltovendor:execute()
 			while ( tmpR > 0 and sold == false) do
 				local sarmor = ItemList("itemtype=0,rarity="..tmpR)					
 				id,item = next(sarmor)
-				if (id ~=nil and item ~= nil and not item.soulbound) then					
+				if (id ~=nil and item ~= nil ) then					
 					wt_debug( "Vendoring: Selling Armor... ")
 					item:Sell()
 					sold = true				
