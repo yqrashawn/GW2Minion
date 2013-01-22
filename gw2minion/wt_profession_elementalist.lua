@@ -99,7 +99,7 @@ end
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 -- Randomly switch attunement
-function RandomAttunement(current)
+function wt_profession_elementalist.RandomAttunement(current)
 	if (wt_profession_elementalist.switchattunementTmr == 0 or wt_global_information.Now - wt_profession_elementalist.switchattunementTmr > math.random(2500,5000)) then	
 		wt_profession_elementalist.switchattunementTmr = wt_global_information.Now
 		local switch = math.random(12,15)
@@ -155,7 +155,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(12)) then
+						if (not wt_profession_elementalist.RandomAttunement(12)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -172,7 +172,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(13)) then
+						if (not wt_profession_elementalist.RandomAttunement(13)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -189,7 +189,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(14)) then
+						if (not wt_profession_elementalist.RandomAttunement(14)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -206,7 +206,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100) and T.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(15)) then
+						if (not wt_profession_elementalist.RandomAttunement(15)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -223,7 +223,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(12)) then
+						if (not wt_profession_elementalist.RandomAttunement(12)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -240,7 +240,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(13)) then
+						if (not wt_profession_elementalist.RandomAttunement(13)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -257,7 +257,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(14)) then
+						if (not wt_profession_elementalist.RandomAttunement(14)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -274,7 +274,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < 240) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(15)) then
+						if (not wt_profession_elementalist.RandomAttunement(15)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -291,7 +291,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(12)) then
+						if (not wt_profession_elementalist.RandomAttunement(12)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -308,7 +308,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(13)) then
+						if (not wt_profession_elementalist.RandomAttunement(13)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -325,7 +325,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(14)) then
+						if (not wt_profession_elementalist.RandomAttunement(14)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -342,7 +342,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(15)) then
+						if (not wt_profession_elementalist.RandomAttunement(15)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -359,7 +359,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(12)) then
+						if (not wt_profession_elementalist.RandomAttunement(12)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -376,7 +376,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(13)) then
+						if (not wt_profession_elementalist.RandomAttunement(13)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -393,7 +393,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(14)) then
+						if (not wt_profession_elementalist.RandomAttunement(14)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -410,7 +410,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(15)) then
+						if (not wt_profession_elementalist.RandomAttunement(15)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -427,7 +427,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(12)) then
+						if (not wt_profession_elementalist.RandomAttunement(12)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -444,7 +444,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(13)) then
+						if (not wt_profession_elementalist.RandomAttunement(13)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -461,7 +461,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(14)) then
+						if (not wt_profession_elementalist.RandomAttunement(14)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
@@ -478,7 +478,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						if (not RandomAttunement(15)) then
+						if (not wt_profession_elementalist.RandomAttunement(15)) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end

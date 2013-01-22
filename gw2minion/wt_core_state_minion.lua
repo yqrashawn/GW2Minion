@@ -656,7 +656,6 @@ function wt_core_state_minion.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_core_state_minion:HandleInit() 
-	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	GUI_NewLabel(wt_global_information.MainWindow.Name,"THE HOST NEEDS TO START THE","GroupBotting");
 	GUI_NewLabel(wt_global_information.MainWindow.Name,"MultiBotComServer.exe!!","GroupBotting");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable","gMinionEnabled","GroupBotting");
@@ -666,7 +665,7 @@ function wt_core_state_minion:HandleInit()
 	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	GUI_NewButton(wt_global_information.MainWindow.Name, "Claim Leadership" , "Claimlead.Event","GroupBotting")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Always stick together","gMinionstick","GroupBotting");
-	
+	GUI_FoldGroup(wt_global_information.MainWindow.Name,"GroupBotting");
 	
 	gMinionEnabled = Settings.GW2MINION.gMinionEnabled
 	gIP = Settings.GW2MINION.gIP

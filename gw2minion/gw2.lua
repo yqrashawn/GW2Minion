@@ -63,11 +63,12 @@ function gw2minion.HandleInit()
 	GUI_NewField(wt_global_information.MainWindow.Name,"Effect","gGW2MinionEffect","BotStatus");	
 	GUI_NewField(wt_global_information.MainWindow.Name,"MainTask","gGW2MinionTask","BotStatus");
 	GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT","BotStatus");
-	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Ignore Marker Level Cap","gIgnoreMarkerCap","Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Repair Equippment","gEnableRepair","Settings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Max ItemSell Rarity","gMaxItemSellRarity","Settings");
 	
+	GUI_FoldGroup(wt_global_information.MainWindow.Name,"BotStatus");
+	GUI_FoldGroup(wt_global_information.MainWindow.Name,"Settings");
 	
 	
 	gEnableLog = Settings.GW2MINION.gEnableLog
