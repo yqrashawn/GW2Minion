@@ -59,36 +59,43 @@ end
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
--- Determine our weapon
-function wt_profession_warrior.getWeapons(MainHand,OffHand)
+-- Determine our weapons
+function wt_profession_warrior.GetMainHandWeapon(MainHand)
 	-- A bit stoopid but failsafe way to always get the correct weapons
-	--local MainHand = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
+	--d(Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1).skillID)
 	if (MainHand ~= nil ) then
 		if     (MainHand.skillID == 14432 ) then return ("Rifle") 
 		elseif (MainHand.skillID == 14356 ) then return ("GreatSword") 
-		elseif (MainHand.skillID == 14384 ) then return ("Hammer") 
+		elseif (MainHand.skillID == 14358 ) then return ("Hammer")
+		elseif (MainHand.skillID == 14431 ) then return ("Longbow")
+		elseif (MainHand.skillID == 14364 ) then return ("Sword")
+		elseif (MainHand.skillID == 14376 ) then return ("Mace")
+		elseif (MainHand.skillID == 14369 ) then return ("Axe")		
 		end
 	end
-	
-	--local OffHand = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_4)
-	if (MainHand ~= nil and OffHand ~= nil ) then
-		if     (MainHand.skillID == 14364 and OffHand.skillID == 14518) then return ("SwordMace") 
-		elseif (MainHand.skillID == 14376 and OffHand.skillID == 14498) then return ("MaceSword")		
-		elseif (MainHand.skillID == 14369 and OffHand.skillID == 14498) then return ("AxeSword")
-		elseif (MainHand.skillID == 14364 and OffHand.skillID == 14418) then return ("SwordAxe")
-		elseif (MainHand.skillID == 14369 and OffHand.skillID == 14393) then return ("AxeWarhorn")
-		elseif (MainHand.skillID == 14364 and OffHand.skillID == 14393) then return ("SwordWarhorn")
-		elseif (MainHand.skillID == 14376 and OffHand.skillID == 14393) then return ("MaceWarhorn")	
-		
-		end
-	end
+	return "default"
 end
-
+-- Determine our weapon
+function wt_profession_warrior.GetOffHandWeapon(OffHand)
+	if (OffHand ~= nil ) then
+		if     (OffHand.skillID == 14395 ) then return ("Rifle") 
+		elseif (OffHand.skillID == 14510 ) then return ("GreatSword") 
+		elseif (OffHand.skillID == 14359 ) then return ("Hammer")
+		elseif (OffHand.skillID == 14505 ) then return ("Longbow")		
+		elseif (OffHand.skillID == 14498 ) then return ("Sword")
+		elseif (OffHand.skillID == 14518 ) then return ("Mace")
+		elseif (OffHand.skillID == 14418 ) then return ("Axe")		
+		elseif (OffHand.skillID == 14393 ) then return ("Warhorn")
+		elseif (OffHand.skillID == 14361 ) then return ("Shield")
+		end
+	end
+	return "default"
+end
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
--- Randomly switch attunement
+-- Randomly switch Weaponset
 function wt_profession_warrior.SwitchWeapon(current)
-	if (wt_profession_warrior.switchweaponTmr == 0 or wt_global_information.Now - wt_profession_warrior.switchweaponTmr > math.random(2500,5000)) then	
+	if (wt_profession_warrior.switchweaponTmr == 0 or wt_global_information.Now - wt_profession_warrior.switchweaponTmr > math.random(1500,5000)) then	
 		wt_profession_warrior.switchweaponTmr = wt_global_information.Now
 		if ( gWarSwapWeapons == "1" and Player:CanSwapWeaponSet() ) then
 			Player:SwapWeaponSet()
@@ -123,24 +130,112 @@ function wt_profession_warrior.e_attack_default:execute()
 			local s3 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_3)
 			local s4 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_4)
 			local s5 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_5)
-			local flurry = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
+			local F1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
 			
-			if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13) and flurry~=nil and Player:GetProfessionPowerPercentage() > 35 and (T.distance < flurry.maxRange)) then
+			if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13) and F1~=nil and Player:GetProfessionPowerPercentage() > 35 and (T.distance < F1.maxRange)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
 					return
 			end
 			
-			local myWeap = wt_profession_warrior.getWeapons(s1,s4)
+			local myMHWeap = wt_profession_warrior.GetMainHandWeapon(s1)
+			local myOHWeap = wt_profession_warrior.GetOffHandWeapon(s4)
 						
-			if ( myWeap == "Rifle" ) then			
+			if ( myOHWeap == "Rifle" ) then			
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
 					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange)) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return
+					end
+				end
+			end
+			if ( myOHWeap == "GreatSword") then				
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < s5.maxRange and T.distance > 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange and T.distance > 300) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return				
+					end
+				end	
+			end				
+			if ( myOHWeap == "Hammer") then				
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < s5.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
+					end
+				end
+			end
+			if ( myOHWeap == "Longbow") then				
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < s5.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
+					end
+				end
+			end				
+			if ( myOHWeap == "Sword") then				
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < s5.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return				
+					end
+				end
+			end
+			if ( myOHWeap == "Mace") then				
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
+					end
+				end
+			end
+			if ( myOHWeap == "Axe") then				
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
+					end
+				end				
+			end
+			if ( myOHWeap == "Warhorn") then				
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
+					end
+				end						
+			end
+			if ( myOHWeap == "Shield") then				
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
+					end
+				end
+			end
+			------
+			if ( myMHWeap == "Rifle" ) then			
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID) 
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and T.distance < s1.maxRange) then
@@ -149,14 +244,10 @@ function wt_profession_warrior.e_attack_default:execute()
 						end
 					end
 				end
-			elseif ( myWeap == "GreatSword") then				
+			elseif ( myMHWeap == "GreatSword") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < s5.maxRange and T.distance > 300) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange and T.distance > 300) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange and T.distance > 350) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange and T.distance > 350) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
@@ -166,14 +257,23 @@ function wt_profession_warrior.e_attack_default:execute()
 						end
 					end
 				end			
-			elseif ( myWeap == "Hammer") then				
+			elseif ( myMHWeap == "Hammer") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < s5.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and T.distance < s1.maxRange) then
+						if (not wt_profession_warrior.SwitchWeapon()) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end	
+			elseif ( myMHWeap == "Longbow") then				
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
@@ -183,14 +283,10 @@ function wt_profession_warrior.e_attack_default:execute()
 						end
 					end
 				end						
-			elseif ( myWeap == "SwordMace") then				
+			elseif ( myMHWeap == "Sword") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < s5.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange and T.distance > 300 ) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
@@ -200,14 +296,10 @@ function wt_profession_warrior.e_attack_default:execute()
 						end
 					end
 				end
-			elseif ( myWeap == "MaceSword") then				
+			elseif ( myMHWeap == "Mace") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < 160 ) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
@@ -217,14 +309,10 @@ function wt_profession_warrior.e_attack_default:execute()
 						end
 					end
 				end
-			elseif ( myWeap == "AxeWarhorn") then				
+			elseif ( myMHWeap == "Axe") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange and T.distance > 300 and T.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange and T.distance > 300 and T.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange ) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
@@ -234,78 +322,7 @@ function wt_profession_warrior.e_attack_default:execute()
 						end
 					end
 				end
-			elseif ( myWeap == "AxeSword") then				
-				if (s1 ~= nil) then
-					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange and T.distance > 300 and T.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange ) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and T.distance < s1.maxRange) then
-						if (not wt_profession_warrior.SwitchWeapon()) then
-							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
-						end
-					end
-				end
-			elseif ( myWeap == "SwordAxe") then				
-				if (s1 ~= nil) then
-					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 ) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange and T.distance > 300 ) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and T.distance < s1.maxRange) then
-						if (not wt_profession_warrior.SwitchWeapon()) then
-							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
-						end
-					end
-				end	
-			elseif ( myWeap == "SwordWarhorn") then				
-				if (s1 ~= nil) then
-					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange and T.distance > 300 ) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and T.distance < s1.maxRange) then
-						if (not wt_profession_warrior.SwitchWeapon()) then
-							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
-						end
-					end
-				end		
-			elseif ( myWeap == "MaceWarhorn") then				
-				if (s1 ~= nil) then
-					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < 160 ) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and T.distance < s1.maxRange) then
-						if (not wt_profession_warrior.SwitchWeapon()) then
-							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
-						end
-					end
-				end		
 				
-			--d(Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1).skillID)
-			
-			
 			
 			else --DEFAULT ATTACK
 				if (s1 ~= nil) then

@@ -229,7 +229,7 @@ end
 
 e_rest.throttle = math.random( 500, 2500 )
 function e_rest:execute()
-	if (Player.profession == 8 ) then 
+	if (Player.profession == 8 ) then -- Necro, leave shroud
 		local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
 		if (not Player.inCombat and deathshroud ~= nil and deathshroud.skillID == 10585) then
 			Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
