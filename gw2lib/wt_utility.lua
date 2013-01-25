@@ -18,3 +18,22 @@ function IsEquippmentDamaged( )
 	end
 	return false
 end
+
+-- takes in a % number and gives back a random number near that value, for randomizing skill usage at x% hp
+function randomize(val)
+	if ( val <= 100 and val > 0) then
+		local high,low
+		if ( (val + 15) > 100) then
+			high = 100			
+		else
+			high = val + 15
+		end
+		if ( (val - 15) <= 0) then
+			low = 1			
+		else
+			low = val - 15
+		end
+		return math.random(low,high)
+	end
+	return 0
+end

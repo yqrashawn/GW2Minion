@@ -128,21 +128,66 @@ function wt_profession_guardian.e_attack_default:execute()
 			local F2 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_14) --Virtue of Resolve
 			local F3 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_15) --Virtue of Courage
 						
-			
+			-- Virtues
 			if ( gGuardF1 == "1" and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13) and F1~=nil and T.distance < 160) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
 					return
 			end
-			if ( gGuardF2 == "1" and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_14) and F2~=nil and Player.incombat and Player.health.percent < math.random(20,50)) then
-					Player:CastSpell(GW2.SKILLBARSLOT.Slot_14)
-					return
+			if ( gGuardF2 == "1" and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_14) and F2~=nil and Player.inCombat )  then
+				local SK10 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_10)
+				if (SK10 ~= nil and SK10.skillID == 9154 and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_10)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_14) return
+				elseif (SK10 ~= nil and SK10.skillID ~= 9154 and Player.health.percent < math.random(20,50) ) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_14) return
+				end
 			end
-			if ( gGuardF3 == "1" and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_15) and F3~=nil and Player.incombat and Player.health.percent < math.random(20,50)) then
-					Player:CastSpell(GW2.SKILLBARSLOT.Slot_15)
+			if ( gGuardF3 == "1" and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_15) and F3~=nil and Player.inCombat )  then
+				local SK10 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_10)
+				if (SK10 ~= nil and SK10.skillID == 9154 and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_10)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_15) return
+				elseif (SK10 ~= nil and SK10.skillID ~= 9154 and Player.health.percent < math.random(20,50) ) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_15) return
+				end
+			end
+			
+			-- Skill 7,8,9,Elite
+			if ( tonumber(gGuardSK7) > 0 ) then
+				local SK7 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_7)
+				if ( SK7 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_7) and Player.health.percent < randomize(tonumber(gGuardSK7)) and (T.distance < SK7.maxRange or T.distance < 140 or SK7.maxRange < 100)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_7)
 					return
+				end
+			end
+			if ( tonumber(gGuardSK8) > 0 ) then
+				local SK8 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_8)
+				if ( SK8 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_8) and Player.health.percent < randomize(tonumber(gGuardSK8)) and (T.distance < SK8.maxRange or T.distance < 140 or SK8.maxRange < 100)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_8)
+					return
+				end
+			end
+			if ( tonumber(gGuardSK9) > 0 ) then
+				local SK9 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_9)
+				if ( SK9 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_9) and Player.health.percent < randomize(tonumber(gGuardSK9)) and (T.distance < SK9.maxRange or T.distance < 140 or SK9.maxRange < 100)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_9)
+					return
+				end
+			end
+			if ( tonumber(gGuardSK10) > 0 ) then
+				local SK10 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_10)
+				if ( SK10 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_10) ) then
+					if ( SK10.skillID == 9154 and Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13) and Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_14) and Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_15)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_10)
+						return 
+					elseif ( SK10.skillID ~= 9154 and Player.health.percent < randomize(tonumber(gGuardSK10)) and (T.distance < SK10.maxRange or T.distance < 140 or SK10.maxRange < 100)) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_10)
+						return
+					end
+				end
 			end
 			
 			
+			
+			-- Weapons
 			local myMHWeap = wt_profession_guardian.GetMainHandWeapon(s1)
 			local myOHWeap = wt_profession_guardian.GetOffHandWeapon(s4)
 						
@@ -159,7 +204,7 @@ function wt_profession_guardian.e_attack_default:execute()
 			if ( myOHWeap == "Greatsword") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 580 and T.distance > 200) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 580 and T.distance > 140) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < 240) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return				
@@ -179,7 +224,7 @@ function wt_profession_guardian.e_attack_default:execute()
 			if ( myOHWeap == "Focus") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 180 and Player.incombat) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 180 and Player.inCombat) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
@@ -275,7 +320,7 @@ function wt_profession_guardian.e_attack_default:execute()
 			elseif ( myMHWeap == "Mace") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange and T.incombat) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange and T.inCombat) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange ) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
@@ -313,7 +358,7 @@ end
 -----------------------------------------------------------------------------------
 function wt_profession_guardian.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
-		if ( k == "gGuardSwapWeapons" or k == "gGuardF1" or k == "gGuardF2" or k == "gGuardF3") then
+		if ( k == "gGuardSwapWeapons" or k == "gGuardF1" or k == "gGuardF2" or k == "gGuardF3" or k == "gGuardSK7" or k == "gGuardSK8" or k == "gGuardSK9" or k == "gGuardSK10") then
 			Settings.GW2MINION[tostring(k)] = v
 		end
 	end
@@ -324,6 +369,11 @@ function wt_profession_guardian:HandleInit()
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F1","gGuardF1","Guardian-Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F2","gGuardF2","Guardian-Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F3","gGuardF3","Guardian-Settings");
+	GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Guardian-Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gGuardSK7","Guardian-Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gGuardSK8","Guardian-Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gGuardSK9","Guardian-Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gGuardSK10","Guardian-Settings");
 	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	
 	
@@ -331,6 +381,10 @@ function wt_profession_guardian:HandleInit()
 	gGuardF1 = Settings.GW2MINION.gGuardF1
 	gGuardF2 = Settings.GW2MINION.gGuardF2
 	gGuardF3 = Settings.GW2MINION.gGuardF3
+	gGuardSK7 = Settings.GW2MINION.gGuardSK7
+	gGuardSK8 = Settings.GW2MINION.gGuardSK8
+	gGuardSK9 = Settings.GW2MINION.gGuardSK9
+	gGuardSK10 = Settings.GW2MINION.gGuardSK10
 
 end
 -- We need to check if the players current profession is ours to only add our profession specific routines
@@ -350,6 +404,18 @@ if ( wt_profession_guardian.professionID > -1 and wt_profession_guardian.profess
 	end
 	if ( Settings.GW2MINION.gGuardF3 == nil ) then
 		Settings.GW2MINION.gGuardF3 = "0"
+	end
+	if ( Settings.GW2MINION.gGuardSK7 == nil ) then
+		Settings.GW2MINION.gGuardSK7 = "0"
+	end
+	if ( Settings.GW2MINION.gGuardSK8 == nil ) then
+		Settings.GW2MINION.gGuardSK8 = "0"
+	end
+	if ( Settings.GW2MINION.gGuardSK9 == nil ) then
+		Settings.GW2MINION.gGuardSK9 = "0"
+	end
+	if ( Settings.GW2MINION.gGuardSK10 == nil ) then
+		Settings.GW2MINION.gGuardSK10 = "0"
 	end
 	RegisterEventHandler("Module.Initalize",wt_profession_guardian.HandleInit)
 	RegisterEventHandler("GUI.Update",wt_profession_guardian.GUIVarUpdate)

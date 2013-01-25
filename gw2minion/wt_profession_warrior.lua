@@ -18,7 +18,7 @@ wt_profession_warrior.c_heal_action = inheritsFrom(wt_cause)
 wt_profession_warrior.e_heal_action = inheritsFrom(wt_effect)
 
 function wt_profession_warrior.c_heal_action:evaluate()
-	return (Player.health.percent < 50 and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6))
+	return (Player.health.percent < wt_profession_warrior.RestHealthLimit and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6))
 end
 wt_profession_warrior.e_heal_action.usesAbility = true
 
@@ -94,7 +94,7 @@ end
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 -- Randomly switch Weaponset
-function wt_profession_warrior.SwitchWeapon(current)
+function wt_profession_warrior.SwitchWeapon()
 	if (wt_profession_warrior.switchweaponTmr == 0 or wt_global_information.Now - wt_profession_warrior.switchweaponTmr > math.random(1500,5000)) then	
 		wt_profession_warrior.switchweaponTmr = wt_global_information.Now
 		if ( gWarSwapWeapons == "1" and Player:CanSwapWeaponSet() ) then
@@ -132,11 +132,42 @@ function wt_profession_warrior.e_attack_default:execute()
 			local s5 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_5)
 			local F1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
 			
-			if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13) and F1~=nil and Player:GetProfessionPowerPercentage() > 35 and (T.distance < F1.maxRange)) then
+			-- F1-F4 Skills
+			if ( gWarUseBurst == "1" and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13) and F1~=nil and Player:GetProfessionPowerPercentage() == 100 and (T.distance < F1.maxRange)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
 					return
 			end
+			-- Skill 7,8,9,Elite
+			if ( tonumber(gWarSK7) > 0 ) then
+				local SK7 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_7)
+				if ( SK7 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_7) and Player.health.percent < randomize(tonumber(gWarSK7)) and (T.distance < SK7.maxRange or T.distance < 140 or SK7.maxRange < 100)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_7)
+					return
+				end
+			end
+			if ( tonumber(gWarSK8) > 0 ) then
+				local SK8 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_8)
+				if ( SK8 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_8) and Player.health.percent < randomize(tonumber(gWarSK8)) and (T.distance < SK8.maxRange or T.distance < 140 or SK8.maxRange < 100)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_8)
+					return
+				end
+			end
+			if ( tonumber(gWarSK9) > 0 ) then
+				local SK9 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_9)
+				if ( SK9 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_9) and Player.health.percent < randomize(tonumber(gWarSK9)) and (T.distance < SK9.maxRange or T.distance < 140 or SK9.maxRange < 100)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_9)
+					return
+				end
+			end
+			if ( tonumber(gWarSK10) > 0 ) then
+				local SK10 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_10)
+				if ( SK10 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_10) and Player.health.percent < randomize(tonumber(gWarSK10)) and (T.distance < SK10.maxRange or T.distance < 140 or SK10.maxRange < 100)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_10)
+					return
+				end
+			end
 			
+			-- Attack with weapon
 			local myMHWeap = wt_profession_warrior.GetMainHandWeapon(s1)
 			local myOHWeap = wt_profession_warrior.GetOffHandWeapon(s4)
 						
@@ -193,7 +224,7 @@ function wt_profession_warrior.e_attack_default:execute()
 			if ( myOHWeap == "Mace") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.inCombat) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
@@ -203,7 +234,7 @@ function wt_profession_warrior.e_attack_default:execute()
 			if ( myOHWeap == "Axe") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.inCombat) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
@@ -213,7 +244,7 @@ function wt_profession_warrior.e_attack_default:execute()
 			if ( myOHWeap == "Warhorn") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.inCombat) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
@@ -223,7 +254,7 @@ function wt_profession_warrior.e_attack_default:execute()
 			if ( myOHWeap == "Shield") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.incombat) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < 160 and T.inCombat) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
@@ -247,9 +278,9 @@ function wt_profession_warrior.e_attack_default:execute()
 			elseif ( myMHWeap == "GreatSword") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange and T.distance > 350) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange) then
+					--if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < 500 and T.distance > 400) then
+						--Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and T.distance < s1.maxRange) then
 						if (not wt_profession_warrior.SwitchWeapon()) then
@@ -350,7 +381,7 @@ end
 -----------------------------------------------------------------------------------
 function wt_profession_warrior.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
-		if ( k == "gWarSwapWeapons" ) then
+		if ( k == "gWarSwapWeapons" or k == "gWarUseBurst" or k == "gWarSK7" or k == "gWarSK8" or k == "gWarSK9" or k == "gWarSK10") then
 			Settings.GW2MINION[tostring(k)] = v
 		end
 	end
@@ -358,11 +389,22 @@ end
 
 function wt_profession_warrior:HandleInit() 	
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gWarSwapWeapons","Warrior-Settings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F1","gWarUseBurst","Warrior-Settings");
+	GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Warrior-Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gWarSK7","Warrior-Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gWarSK8","Warrior-Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gWarSK9","Warrior-Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gWarSK10","Warrior-Settings");
 	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	
 	
 	gWarSwapWeapons = Settings.GW2MINION.gWarSwapWeapons
-
+	gWarUseBurst = Settings.GW2MINION.gWarUseBurst
+	gWarSK7 = Settings.GW2MINION.gWarSK7
+	gWarSK8 = Settings.GW2MINION.gWarSK8
+	gWarSK9 = Settings.GW2MINION.gWarSK9
+	gWarSK10 = Settings.GW2MINION.gWarSK10
+	
 end
 -- We need to check if the players current profession is ours to only add our profession specific routines
 if ( wt_profession_warrior.professionID > -1 and wt_profession_warrior.professionID == Player.profession) then
@@ -373,7 +415,21 @@ if ( wt_profession_warrior.professionID > -1 and wt_profession_warrior.professio
 	if ( Settings.GW2MINION.gWarSwapWeapons == nil ) then
 		Settings.GW2MINION.gWarSwapWeapons = "0"
 	end
-	
+	if ( Settings.GW2MINION.gWarUseBurst == nil ) then
+		Settings.GW2MINION.gWarUseBurst = "0"
+	end
+	if ( Settings.GW2MINION.gWarSK7 == nil ) then
+		Settings.GW2MINION.gWarSK7 = "0"
+	end
+	if ( Settings.GW2MINION.gWarSK8 == nil ) then
+		Settings.GW2MINION.gWarSK8 = "0"
+	end
+	if ( Settings.GW2MINION.gWarSK9 == nil ) then
+		Settings.GW2MINION.gWarSK9 = "0"
+	end
+	if ( Settings.GW2MINION.gWarSK10 == nil ) then
+		Settings.GW2MINION.gWarSK10 = "0"
+	end
 	RegisterEventHandler("Module.Initalize",wt_profession_warrior.HandleInit)
 	RegisterEventHandler("GUI.Update",wt_profession_warrior.GUIVarUpdate)
 	

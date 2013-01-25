@@ -221,7 +221,7 @@ function e_selltovendor:execute()
 		local tmpR = tonumber(gMaxItemSellRarity)		
 		local sold = false		
 		while ( tmpR > 0 and sold == false) do
-			local sweapons = ItemList("itemtype=18,rarity="..tmpR)	
+			local sweapons = ItemList("itemtype=18,notsoulbound,rarity="..tmpR)	
 			id,item = next(sweapons)
 			if (id ~=nil and item ~= nil ) then					
 				wt_debug( "Vendoring: Selling Weapon... ")
@@ -235,7 +235,7 @@ function e_selltovendor:execute()
 		if ( not sold ) then
 			tmpR = tonumber(gMaxItemSellRarity)	
 			while ( tmpR > 0 and sold == false) do
-				local sarmor = ItemList("itemtype=0,rarity="..tmpR)					
+				local sarmor = ItemList("itemtype=0,notsoulbound,rarity="..tmpR)					
 				id,item = next(sarmor)
 				if (id ~=nil and item ~= nil ) then					
 					wt_debug( "Vendoring: Selling Armor... ")
