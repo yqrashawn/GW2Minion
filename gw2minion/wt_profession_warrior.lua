@@ -33,15 +33,17 @@ wt_profession_warrior.c_MoveCloser = inheritsFrom(wt_cause)
 wt_profession_warrior.e_MoveCloser = inheritsFrom(wt_effect)
 
 function wt_profession_warrior.c_MoveCloser:evaluate()
-	if ( wt_core_state_combat.CurrentTarget ~= 0 ) then
+	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
 		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-		local Distance = T ~= nil and T.distance or 0
-		local LOS = T~=nil and T.los or false
-		if (Distance >= wt_global_information.AttackRange  or LOS~=true) then
-			return true
-		else
-			if( Player:GetTarget() ~= wt_core_state_combat.CurrentTarget) then
-				Player:SetTarget(wt_core_state_combat.CurrentTarget)
+		if ( T ~= nil ) then
+			local Distance = T.distance or 0
+			local LOS = T.los or false
+			if (Distance >= wt_global_information.AttackRange or LOS~=true) then
+				return true
+			else
+				if( Player:GetTarget() ~= wt_core_state_combat.CurrentTarget) then
+					Player:SetTarget(wt_core_state_combat.CurrentTarget)
+				end
 			end
 		end
 	end
@@ -50,9 +52,12 @@ end
 
 function wt_profession_warrior.e_MoveCloser:execute()
 	--wt_debug("e_MoveCloser ")
-	local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-	if ( T ~= nil ) then
-		Player:MoveTo(T.pos.x,T.pos.y,T.pos.z,120) -- the last number is the distance to the target where to stop
+	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
+		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
+		if ( T ~= nil ) then
+			local Tpos = T.pos
+			Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,120) -- the last number is the distance to the target where to stop
+		end
 	end
 end
 
@@ -65,12 +70,12 @@ function wt_profession_warrior.GetMainHandWeapon(MainHand)
 	--d(Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1).skillID)
 	if (MainHand ~= nil ) then
 		if     (MainHand.skillID == 14432 ) then return ("Rifle") 
-		elseif (MainHand.skillID == 14356 ) then return ("GreatSword") 
+		elseif (MainHand.skillID == 14356 or MainHand.skillID == 14373 or MainHand.skillID == 14374) then return ("GreatSword") 
 		elseif (MainHand.skillID == 14358 ) then return ("Hammer")
 		elseif (MainHand.skillID == 14431 ) then return ("Longbow")
-		elseif (MainHand.skillID == 14364 ) then return ("Sword")
+		elseif (MainHand.skillID == 14364 or MainHand.skillID == 14365 or MainHand.skillID == 14363) then return ("Sword")
 		elseif (MainHand.skillID == 14376 ) then return ("Mace")
-		elseif (MainHand.skillID == 14369 ) then return ("Axe")		
+		elseif (MainHand.skillID == 14369 or MainHand.skillID == 14371 or MainHand.skillID == 14370) then return ("Axe")		
 		end
 	end
 	return "default"
@@ -119,7 +124,7 @@ wt_profession_warrior.e_attack_default.usesAbility = true
 function wt_profession_warrior.e_attack_default:execute()
 	Player:StopMoving()
 	TID = wt_core_state_combat.CurrentTarget
-	if ( TID ~= 0 ) then
+	if ( TID ~= nil and TID ~= 0 ) then
 		local T = CharacterList:Get(TID)
 		if ( T ~= nil ) then		
 			--wt_debug("attacking " .. wt_core_state_combat.CurrentTarget .. " Distance " .. T.distance)
@@ -184,9 +189,9 @@ function wt_profession_warrior.e_attack_default:execute()
 			if ( myOHWeap == "GreatSword") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < s5.maxRange and T.distance > 300) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < s5.maxRange ) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange and T.distance > 300) then
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange ) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return				
 					end
 				end	
@@ -278,9 +283,9 @@ function wt_profession_warrior.e_attack_default:execute()
 			elseif ( myMHWeap == "GreatSword") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					--if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < 500 and T.distance > 400) then
-						--Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < 500 and T.distance > 350) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and T.distance < s1.maxRange) then
 						if (not wt_profession_warrior.SwitchWeapon()) then
@@ -357,6 +362,7 @@ function wt_profession_warrior.e_attack_default:execute()
 			
 			else --DEFAULT ATTACK
 				if (s1 ~= nil) then
+					
 					wt_global_information.AttackRange = s1.maxRange
 					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange or s5.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID)

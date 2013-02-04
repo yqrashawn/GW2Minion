@@ -5,6 +5,7 @@ wt_core_state_combat = inheritsFrom( wt_core_state )
 wt_core_state_combat.name = "Combat"
 wt_core_state_combat.kelement_list = { }
 wt_core_state_combat.CurrentTarget = 0
+wt_core_state_combat.MovementTmr = 0
 
 --/////////////////////////////////////////////////////
 -- Combat over Check
@@ -17,7 +18,7 @@ function c_combat_over:evaluate()
 		return true
 	else
 		local T = CharacterList:Get( wt_core_state_combat.CurrentTarget )
-		if ( T == nil or not T.alive or ( T.attitude == 0 or T.attitude == 3 ) ) then
+		if ( T == nil or not T.alive or not T.onmesh or ( T.attitude == 0 or T.attitude == 3 ) ) then
 			return true
 		end
 	end
@@ -50,7 +51,7 @@ function e_better_target_search:execute()
 		Player:StopMoving()
 		wt_core_state_combat.setTarget( nextTarget )
 		if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil ) then
-			if ( wt_core_state_minion.LeaderID == Player.characterID ) then
+			if ( Player and wt_core_state_minion.LeaderID == Player.characterID ) then
 				MultiBotSend( "5;"..nextTarget,"gw2minion" )
 			else
 				MultiBotSend( "6;"..nextTarget,"gw2minion" )
@@ -69,6 +70,7 @@ function wt_core_state_combat.setTarget( CurrentTarget )
 	end
 end
 
+
 --/////////////////////////////////////////////////////
 function wt_core_state_combat:initialize()
 
@@ -80,6 +82,9 @@ function wt_core_state_combat:initialize()
 
 		local ke_quickloot = wt_kelement:create( "QuickLoot", c_quickloot, e_quickloot, 145 )
 		wt_core_state_combat:add( ke_quickloot )
+		
+		local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 144 )
+		wt_core_state_combat:add( ke_quicklootchest )	
 		
 		--groupbotting, revivepartymember @ prio 130
 		--groupbotting, focustargetbroadcast @ prio 126

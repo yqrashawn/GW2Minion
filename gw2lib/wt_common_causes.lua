@@ -54,30 +54,83 @@ e_quickloot.delay = math.random( 50, 150 )
 function e_quickloot:execute()
  	local NextIndex = 0
 	local LootTarget = nil
-	NextIndex, LootTarget = next( c_quickloot.EList )
-	if ( NextIndex ~= nil and NextIndex == Player:GetInteractableTarget() ) then
-		if ( e_quickloot.n_index  ~= NextIndex ) then
-			e_quickloot.n_index  = NextIndex
-			wt_debug( "QuickLooting" )
-		end
-		Player:Interact( NextIndex )
-	else
-		local e = Player:GetInteractableTarget()
-		if ( e ~= nil ) then
-			etable = CharacterList:Get( e )
-			if ( etable ~= nil ) then
-				if ( etable.healthstate == GW2.HEALTHSTATE.Defeated and ( etable.attitude == GW2.ATTITUDE.Hostile or etable.attitude == GW2.ATTITUDE.Neutral ) and etable.isMonster ) then
-					if ( e_quickloot.n_index  ~= e ) then
-						e_quickloot.n_index  = e
-						wt_debug( "QuickLooting" )
+	if (c_quickloot.EList ~= nil ) then
+		NextIndex, LootTarget = next( c_quickloot.EList )
+		if ( NextIndex ~= nil and NextIndex == Player:GetInteractableTarget() ) then
+			if ( e_quickloot.n_index  ~= NextIndex ) then
+				e_quickloot.n_index  = NextIndex
+				wt_debug( "QuickLooting" )
+			end
+			Player:Interact( NextIndex )
+		else
+			local e = Player:GetInteractableTarget()
+			if ( e ~= nil ) then
+				etable = CharacterList:Get( e )
+				if ( etable ~= nil ) then
+					if ( etable.healthstate == GW2.HEALTHSTATE.Defeated and ( etable.attitude == GW2.ATTITUDE.Hostile or etable.attitude == GW2.ATTITUDE.Neutral ) and etable.isMonster ) then
+						if ( e_quickloot.n_index  ~= e ) then
+							e_quickloot.n_index  = e
+							wt_debug( "QuickLooting" )
+						end
+						Player:Interact( e )
+						return
 					end
-					Player:Interact( e )
-					return
 				end
 			end
 		end
 	end
 	wt_error( "No Target to Quick-Loot" )
+end
+
+--------------------------------------------------------------------------------
+-- QuickLoot Cause & Effect (looting just the things that are in range already, this we can do while beeing infight)
+c_quicklootchest = inheritsFrom( wt_cause )
+e_quicklootchest = inheritsFrom( wt_effect )
+
+function c_quicklootchest:evaluate()
+	if ( ItemList.freeSlotCount > 0 ) then
+		c_quicklootchest.EList = GadgetList("nearest,onmesh,contentID=198260" ) --contentID=198260
+		NextIndex, LootTarget = next( c_quicklootchest.EList )
+		if ( NextIndex ~= nil ) then
+			if ( NextIndex == Player:GetInteractableTarget() ) then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+e_quicklootchest.n_index = nil
+e_quicklootchest.throttle = math.random( 150, 450 )
+function e_quicklootchest:execute()
+ 	local NextIndex = 0
+	local LootTarget = nil
+	if (c_quicklootchest.EList ~= nil ) then
+		NextIndex, LootTarget = next( c_quicklootchest.EList )
+		if ( NextIndex ~= nil and NextIndex == Player:GetInteractableTarget() ) then
+			if ( e_quicklootchest.n_index  ~= NextIndex ) then
+				e_quicklootchest.n_index  = NextIndex
+				wt_debug( "QuickLootingChest" )
+			end
+			Player:Use( NextIndex )
+		else
+			local e = Player:GetInteractableTarget()
+			if ( e ~= nil ) then
+				local gadget = GadgetList:Get( e )
+				if ( gadget ~= nil ) then
+					if ( gadget.contentID == 198260) then --198260 is pve loot chest/box
+						if ( e_quicklootchest.n_index  ~= e ) then
+							e_quicklootchest.n_index  = e
+							wt_debug( "QuickLootingChest" )
+						end
+						Player:Use( e )
+						return
+					end
+				end
+			end
+		end
+	end
+	wt_error( "No Chest to Quick-Loot" )
 end
 
 ----------------------------------------------------------------------------------
@@ -87,7 +140,7 @@ e_aggro = inheritsFrom( wt_effect )
 
 function c_aggro:evaluate()
 	-- For Groupbotting
-	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil ) then
+	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil and Player.characterID ~= nil) then
 		if ( wt_core_state_minion.LeaderID == Player.characterID ) then -- We Lead			
 			-- Kill all PartyAggroTargets in range of leader first
 			if ( TableSize( wt_core_state_minion.PartyAggroTargets ) > 0 ) then
@@ -118,7 +171,7 @@ function c_aggro:evaluate()
 			-- kill focus target
 			if ( wt_core_state_minion.FocusTarget ~= nil ) then
 				local target = CharacterList:Get(tonumber(wt_core_state_minion.FocusTarget))
-				if ( target ~= nil and target.distance < 4000 and target.alive ) then
+				if ( target ~= nil and target.distance < 4000 and target.alive and target.onmesh) then
 					return true
 				end
 			end
@@ -170,7 +223,7 @@ function e_aggro:execute()
 		else -- We Follow
 			if ( wt_core_state_minion.FocusTarget ~= nil ) then
 				local target = CharacterList:Get(tonumber(wt_core_state_minion.FocusTarget))
-				if ( target ~= nil and target.distance < 4000 and target.alive ) then
+				if ( target ~= nil and target.distance < 4000 and target.alive and target.onmesh) then
 					wt_debug( "Attacking Focustarget" )
 					wt_core_state_combat.setTarget( wt_core_state_minion.FocusTarget )
 					wt_core_controller.requestStateChange( wt_core_state_combat )

@@ -37,6 +37,7 @@ function wt_core_taskmanager:addWaypointTask( waypoint )
 			end
 			return false
 		end	
+		wt_debug("ADDED")
 		wt_core_taskmanager:addTask( newtask )
 	end
 end

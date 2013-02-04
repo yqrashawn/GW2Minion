@@ -8,7 +8,7 @@
 wt_core_state_idle = inheritsFrom( wt_core_state )
 wt_core_state_idle.name = "Idle"
 wt_core_state_idle.kelement_list = { }
-wt_core_state_idle.DebugModes = { Revive = { Master = true, TID = nil, state = false, Move = true, Revive = true, NoTarget = true }, Loot = { Master = true, state = false, Size = 0, index = nil, TSize = true, Move = true } }
+wt_core_state_idle.DebugModes = { Revive = { Master = true, TID = nil, state = false, Move = true, Revive = true, NoTarget = true }, Loot = { Master = true, state = false, Size = 0, index = nil, TSize = true, Move = true } ,LootChest = { Master = true, state = false, Size = 0, index = nil, TSize = true, Move = true }}
 -- wt_core_state_idle.DebugModes.Revive.TID -- Target ID
 -- wt_core_state_idle.DebugModes.Revive.Master -- Master Revive Debug message switch ( true / false ) if true do debug messages, if false don't do debug messages.
 -- wt_core_state_idle.DebugModes.state
@@ -216,7 +216,7 @@ e_loot.delay = math.random( 100, 500 )
 function e_loot:execute()
 	local NextIndex, LootTarget = 0, nil
 	NextIndex, LootTarget = next( c_check_loot.EList )
-	if ( NextIndex ~= nil ) then
+	if ( NextIndex ~= nil and LootTarget ~= nil) then
 		if ( wt_core_state_idle.DebugModes.Loot.Master and wt_core_state_idle.DebugModes.Loot.Size > 0 and wt_core_state_idle.DebugModes.Loot.index ~= NextIndex ) then wt_debug( "Idle: loottable size " .. TableSize( c_check_loot.EList ) ) end
 		if ( LootTarget.distance > 130 ) then
 			if ( wt_core_state_idle.DebugModes.Loot.Master and wt_core_state_idle.DebugModes.Loot.index ~= NextIndex and wt_core_state_idle.DebugModes.Loot.state == "Moving" ) then wt_core_state_idle.DebugModes.Loot.index = NextIndex wt_debug( "Idle: moving to loot" ) end
@@ -241,6 +241,81 @@ function e_loot:execute()
 		end
 	else
 		wt_error( "Idle: No Target to Loot" )
+	end
+end
+
+
+------------------------------------------------------------------------------
+-- LootChests Cause & Effect
+local c_lootchest = inheritsFrom( wt_cause )
+local e_lootchest = inheritsFrom( wt_effect )
+local e_lootchest_t_size = 0
+local e_lootchest_n_index = nil
+
+function c_lootchest:evaluate()
+	if ( ItemList.freeSlotCount > 0 ) then
+		c_lootchest.EList = GadgetList("nearest,onmesh,contentID=198260,maxdistance=" .. wt_global_information.MaxLootDistance )
+		if ( TableSize( c_lootchest.EList ) > 0 ) then
+			if ( wt_core_state_idle.DebugModes.LootChest.Master ) then
+				local index, LT = next( c_lootchest.EList )
+				if ( index ~= nil ) then
+					if ( wt_core_state_idle.DebugModes.LootChest.index == index or wt_core_state_idle.DebugModes.LootChest.state == false ) then
+						if ( LT.distance > 130 and wt_core_state_idle.DebugModes.LootChest.state ~= "Moving" and wt_core_state_idle.DebugModes.LootChest.Move ) then
+							wt_core_state_idle.DebugModes.LootChest.state = "Moving"
+							if ( wt_core_state_idle.DebugModes.LootChest.index == index ) then wt_core_state_idle.DebugModes.LootChest.index = nil end
+						elseif ( LT.distance < 100 and wt_core_state_idle.DebugModes.LootChest.state ~= "Looting" ) then
+							wt_core_state_idle.DebugModes.LootChest.state = "Looting"
+							if ( wt_core_state_idle.DebugModes.LootChest.index == index ) then wt_core_state_idle.DebugModes.LootChest.index = nil end
+						elseif ( LT.distance < 150 and wt_core_state_idle.DebugModes.LootChest.state ~= "DirectMoving" ) then
+							wt_core_state_idle.DebugModes.LootChest.state = "DirectMoving"
+							if ( wt_core_state_idle.DebugModes.LootChest.index == index ) then wt_core_state_idle.DebugModes.LootChest.index = nil end
+						end
+					end
+					if ( wt_core_state_idle.DebugModes.LootChest.Size ~= TableSize( c_lootchest.EList ) and wt_core_state_idle.DebugModes.LootChest.TSize ) then wt_core_state_idle.DebugModes.LootChest.Size = TableSize( c_check_loot.EList ) end
+					return true
+				end
+			end
+			return true
+		end
+		if ( wt_core_state_idle.DebugModes.LootChest.Master ) then
+			if ( wt_core_state_idle.DebugModes.LootChest.Size ~= TableSize( c_lootchest.EList ) ) then wt_core_state_idle.DebugModes.LootChest.Size = TableSize( c_check_loot.EList ) end
+			if ( wt_core_state_idle.DebugModes.LootChest.state ~= false ) then wt_core_state_idle.DebugModes.LootChest.state = false end
+		end
+	end
+	return false
+end
+
+e_lootchest.throttle = math.random( 500, 1500 )
+e_lootchest.delay = math.random( 100, 500 )
+-- A Note to "e_loot:execute()" after the introduction of QuickLoot, "e_loot:Execute()" never seem to reach past "Idle: moving to loot" if QuickLoot is present in state.
+function e_lootchest:execute()
+	local NextIndex, LootTarget = 0, nil
+	NextIndex, LootTarget = next( c_lootchest.EList )
+	if ( NextIndex ~= nil ) then
+		if ( wt_core_state_idle.DebugModes.LootChest.Master and wt_core_state_idle.DebugModes.LootChest.Size > 0 and wt_core_state_idle.DebugModes.LootChest.index ~= NextIndex ) then wt_debug( "Idle: loottable size " .. TableSize( c_check_loot.EList ) ) end
+		if ( LootTarget.distance > 130 ) then
+			if ( wt_core_state_idle.DebugModes.LootChest.Master and wt_core_state_idle.DebugModes.LootChest.index ~= NextIndex and wt_core_state_idle.DebugModes.LootChest.state == "Moving" ) then wt_core_state_idle.DebugModes.LootChest.index = NextIndex wt_debug( "Idle: moving to loot" ) end
+			local TPOS = LootTarget.pos
+			Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 50 )
+		elseif ( LootTarget.distance < 100 and NextIndex == Player:GetInteractableTarget() ) then
+			Player:StopMoving()
+			if ( Player:GetCurrentlyCastedSpell() == 17 ) then
+				if ( e_loot_n_index ~= NextIndex ) then
+					e_loot_n_index = NextIndex
+					wt_debug( "Idle: looting chest" )
+				end
+				Player:Interact( NextIndex )
+			end
+		elseif ( LootTarget.distance < 150 ) then
+			if ( e_loot_n_index ~= NextIndex ) then
+				e_loot_n_index = NextIndex
+				wt_debug( "Idle: directly moving to loot chest" )
+			end
+			local TPOS = LootTarget.pos
+			Player:MoveToStraight( TPOS.x, TPOS.y, TPOS.z , 50 )
+		end
+	else
+		wt_error( "Idle: No Chest to Loot found" )
 	end
 end
 
@@ -297,6 +372,9 @@ function wt_core_state_idle:initialize()
 
 	local ke_quickloot = wt_kelement:create( "QuickLoot", c_quickloot, e_quickloot, 110 )
 	wt_core_state_idle:add( ke_quickloot )
+	
+	local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 105 )
+	wt_core_state_idle:add( ke_quicklootchest )
 
 	local ke_aggro = wt_kelement:create( "AggroCheck", c_aggro, e_aggro, 100 )
 	wt_core_state_idle:add( ke_aggro )
@@ -319,6 +397,9 @@ function wt_core_state_idle:initialize()
 
 	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 50 )
 	wt_core_state_idle:add( ke_loot )
+	
+	local ke_lootchests = wt_kelement:create("LootChest", c_lootchest, e_lootchest, 49 )
+	wt_core_state_idle:add( ke_lootchests )
 
 	local ke_gather = wt_kelement:create( "Gather", c_check_gatherable, e_gather, 40 )
 	wt_core_state_idle:add( ke_gather )

@@ -8,7 +8,7 @@ wt_core_state_minion.FocusTarget = nil
 wt_core_state_minion.PartyAggroTargets = {}
 wt_core_state_minion.MinionNeedsVendor = false
 wt_core_state_minion.LeadBroadcastTmr = nil
-
+wt_core_state_minion.IdleTmr = 0
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
@@ -27,11 +27,11 @@ e_server.throttle = 1000
 function e_server:execute()
 	wt_debug("Trying to connect to MultibotComServer....")
 	if ( not MultiBotConnect( gIP , tonumber(gPort) , gPw) ) then
-		wt_debug("Cannot reach MultibotComServer... Make sure you have started the MultibotComServer.exe and the correct password!")
+		wt_debug("Cannot reach MultibotComServer... Make sure you have started the MultibotComServer.exe and the correct Password,IP and Port!")
 	else
-		if ( not MultiBotJoinChannel( "gw2minion" ) ) then
-			wt_debug("Cannot join gw2minion channel...bug?")
-		end
+		MultiBotJoinChannel("remotecmd")
+		MultiBotJoinChannel("gw2minion")
+		wt_debug("Joined channels !")
 	end	
 end
 
@@ -48,7 +48,7 @@ function c_setrole:evaluate()
 	end	
 	return false
 end
-e_setrole.throttle = math.random( 1000, 2000 )
+e_setrole.throttle = 1000
 function e_setrole:execute()	
 	if ( c_setrole.askedCounter < 3 ) then
 		wt_debug("Searching Leader..")
@@ -59,7 +59,7 @@ function e_setrole:execute()
 		c_setrole.askedCounter = 0
 		wt_core_state_minion.LeaderID = Player.characterID
 		wt_core_state_minion.name = "Beeing Leader"
-		MultiBotSend( "2;"..Player.characterID,"gw2minion" )
+		MultiBotSend( "2;"..wt_core_state_minion.LeaderID,"gw2minion" )
 	end
 end
 
@@ -411,9 +411,17 @@ function c_followLead:evaluate()
 		if (party ~= nil) then
 			local leader = party[tonumber(wt_core_state_minion.LeaderID)]
 			if (leader ~= nil) then
-				if ((leader.distance > 350 or leader.los~=true) and leader.onmesh) then
+				if ((leader.distance > math.random(200,400) or leader.los~=true) and leader.onmesh) then
+					wt_core_state_minion.IdleTmr = wt_global_information.Now
 					return true
-				end				
+				end		
+				-- TIMER for random movement when leader is standing on a spot too long, this should go in a seperate C&E ..but I'm lazy
+				if ( Player.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving and wt_global_information.Now - wt_core_state_minion.IdleTmr > math.random(2500,15000) ) then
+					wt_core_state_minion.IdleTmr = wt_global_information.Now
+					wt_core_state_minion.IdleTmr = wt_core_state_minion.IdleTmr + math.random(5000,10000)
+					local pos = leader.pos
+					Player:MoveToRandomPointAroundCircle(pos.x,pos.y,pos.z,550);
+				end
 			else
 				wt_debug( "YOU ARE NOT IN A PARTY WITH THE LEADER! JOIN A PARTY!" )
 			end		
@@ -422,7 +430,7 @@ function c_followLead:evaluate()
 	return false
 end
 
-e_followLead.throttle = math.random( 250, 1000 )
+e_followLead.throttle = math.random( 500, 1000 )
 function e_followLead:execute()
 	local party = Player:GetPartyMembers()
 	if (party ~= nil and wt_core_state_minion.LeaderID ~= nil) then
@@ -430,9 +438,9 @@ function e_followLead:execute()
 		if (leader ~= nil) then
 			local pos = leader.pos
 			if (leader.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
-				Player:MoveTo(pos.x,pos.y,pos.z,25)
-			else
-				Player:MoveTo(pos.x,pos.y,pos.z,math.random( 10, 150 ))
+				Player:MoveToRandom(pos.x,pos.y,pos.z,350);
+			else				
+				Player:MoveToRandomPointAroundCircle(pos.x,pos.y,pos.z,550);
 			end
 		end
 	end
@@ -529,15 +537,13 @@ end
 ------------------------------------------------------------------------------
 -- C&E's attached to other states:
 
--- iAmMinion Cause & Effect fpr the idle state
+-- MultiBotComServerConnect Cause & Effect fpr the idle state
 local c_iamminion = inheritsFrom( wt_cause )
 local e_iamminion = inheritsFrom( wt_effect )
 
 function c_iamminion:evaluate()
 	if (gMinionEnabled == "1") then		
 		return true
-	elseif (MultiBotIsConnected( )) then
-		MultiBotDisconnect( )
 	end	
 	return false
 end
@@ -556,10 +562,11 @@ function c_setfocust:evaluate()
 	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil ) then
 		if ( wt_core_state_minion.LeaderID == Player.characterID and wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0) then
 			local T = CharacterList:Get( wt_core_state_combat.CurrentTarget )
-			if ( T ~= nil and T.alive and ( T.attitude == 1 or T.attitude == 2 ) ) then
+			if ( T ~= nil and T.alive and ( T.attitude == 1 or T.attitude == 2 ) and T.onmesh) then
 				if ( wt_core_state_minion.FocusTargetBroadcastTmr == nil or (wt_global_information.Now - wt_core_state_minion.FocusTargetBroadcastTmr > 250)) then
 					wt_core_state_minion.FocusTargetBroadcastTmr = wt_global_information.Now					
-					return true
+					MultiBotSend( "5;"..wt_core_state_combat.CurrentTarget,"gw2minion" )
+					return false -- we always return false since we don't want to make the bot stop here
 				end
 			end
 		end
@@ -568,68 +575,60 @@ function c_setfocust:evaluate()
 end
 
 function e_setfocust:execute()
-	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil ) then
-		if ( wt_core_state_minion.LeaderID == Player.characterID and wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0) then
-			local T = CharacterList:Get( wt_core_state_combat.CurrentTarget )
-			if ( T ~= nil and T.alive and ( T.attitude == 1 or T.attitude == 2 ) ) then
-				if ( wt_core_state_minion.FocusTargetBroadcastTmr == nil or (wt_global_information.Now - wt_core_state_minion.FocusTargetBroadcastTmr > 250)) then
-					wt_core_state_minion.FocusTargetBroadcastTmr = wt_global_information.Now
-					MultiBotSend( "5;"..wt_core_state_combat.CurrentTarget,"gw2minion" )
-					return true
-					--TODOOOOOO ADD MultiBotSend( "6;".
-				end
-			end
-		end
-	end
+	return 
 end
 ---------------------------------------------------------------------
 -- HandleMultiBotMessages
-function HandleMultiBotMessages( event, message )
---d("MBM:" .. message)
-local delimiter = message:find(';')
-local msgID = message:sub(0,delimiter-1)
-local msg = message:sub(delimiter+1)
---d("msgID:" .. msgID)
---d("msg:" .. msg)
-	if (msgID ~= nil and msg ~= nil ) then
-		if( tonumber(msgID) == 1 ) then -- Ask for leader
-			if ( wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID  == Player.characterID) then
-				MultiBotSend( "2;"..Player.characterID,"gw2minion" )
-			end
-		elseif ( tonumber(msgID) == 2 ) then -- Set Leader to the one with the smallest ID (no idea how to do this in a better way yet...)
-			if ( wt_core_state_minion.LeaderID == nil or wt_core_state_minion.LeaderID > tonumber(msg)) then
-				wt_core_state_minion.LeaderID = tonumber(msg)
-				wt_core_state_minion.name = "Beeing a Minion"
-				wt_debug( "New Leader is characterID : "..tonumber(msg) )
-			end
-		elseif ( tonumber(msgID) == 3 ) then -- Claim Leader			
-			wt_core_state_minion.LeaderID = tonumber(msg)
-			wt_core_state_minion.name = "Beeing a Minion"
-			wt_debug( "Leadership got claimed by characterID : "..tonumber(msg) )							
-		elseif ( tonumber(msgID) == 5 ) then -- Set FocusTarget
-			wt_debug( "FocusTarget is characterID : "..tonumber(msg) )
-			wt_core_state_minion.FocusTarget = tonumber(msg)
-		elseif ( tonumber(msgID) == 6 ) then -- Inform leader about party-aggro-target
-			local newTarget = CharacterList:Get(tonumber(msg))
-			if (newTarget ~= nil and wt_core_state_minion.PartyAggroTargets ~= nil and wt_core_state_minion.PartyAggroTargets[tonumber(msg)] == nil and newTarget.distance < 4500 and newTarget.alive ) then 
-				wt_debug( "Adding new PartyAggroTarget to List : "..tonumber(msg) )
-				wt_core_state_minion.PartyAggroTargets[tonumber(msg)] = newTarget
-			end
-		elseif ( tonumber(msgID) == 10 ) then -- A minion needs to Vendor, set our Primary task accordingly
-			if ( wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID  == Player.characterID) then
-				wt_debug( "Minion needs to vendor, going to Vendor" )
-				wt_core_state_minion.MinionNeedsVendor = true
-			end
-		elseif ( tonumber(msgID) == 11 ) then -- Leader asks if a minion still needs to Vendor
-			if ( wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID  ~= Player.characterID and ItemList.freeSlotCount <= 2 and wt_global_information.InventoryFull == 1 and wt_global_information.HasVendor) then
-				wt_debug( "We still need to vendor, telling leader.." )
-				MultiBotSend( "10;none","gw2minion" )
-			end
-		elseif ( tonumber(msgID) == 12 ) then -- Leader reached Vendor, tells Minions to update their "nearest Vendor" (this is needed sometimes)
-			if ( wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID  ~= Player.characterID ) then
-				wt_debug( "Leader is near Vendor, refreshing our Vendor.." )
-				wt_core_state_minion.MinionNeedsVendor = true
-				wt_core_state_vendoring.CurrentTargetID = 0				
+function HandleMultiBotMessages( event, message, channel )	
+	if (channel == "gw2minion" ) then
+		--d("MBM:" .. message)		
+		local delimiter = message:find(';')
+		if (delimiter ~= nil and delimiter ~= 0) then
+			local msgID = message:sub(0,delimiter-1)
+			local msg = message:sub(delimiter+1)
+			--d("msgID:" .. msgID)
+			--d("msg:" .. msg)
+			if (msgID ~= nil and msg ~= nil ) then
+				if( tonumber(msgID) == 1 ) then -- Ask for leader
+					if ( wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID) then
+						MultiBotSend( "2;"..wt_core_state_minion.LeaderID,"gw2minion" )
+					end
+				elseif ( tonumber(msgID) == 2 ) then -- Set Leader to the one with the smallest ID (no idea how to do this in a better way yet...)
+					if ( wt_core_state_minion.LeaderID == nil or wt_core_state_minion.LeaderID > tonumber(msg)) then
+						wt_core_state_minion.LeaderID = tonumber(msg)
+						wt_core_state_minion.name = "Beeing a Minion"
+						wt_debug( "New Leader is characterID : "..tonumber(msg) )
+					end
+				elseif ( tonumber(msgID) == 3 ) then -- Claim Leader			
+					wt_core_state_minion.LeaderID = tonumber(msg)
+					wt_core_state_minion.name = "Beeing a Minion"
+					wt_debug( "Leadership got claimed by characterID : "..tonumber(msg) )							
+				elseif ( tonumber(msgID) == 5 ) then -- Set FocusTarget
+					wt_debug( "FocusTarget is characterID : "..tonumber(msg) )
+					wt_core_state_minion.FocusTarget = tonumber(msg)
+				elseif ( tonumber(msgID) == 6 ) then -- Inform leader about party-aggro-target
+					local newTarget = CharacterList:Get(tonumber(msg))
+					if (newTarget ~= nil and wt_core_state_minion.PartyAggroTargets ~= nil and wt_core_state_minion.PartyAggroTargets[tonumber(msg)] == nil and newTarget.distance ~= nil and newTarget.distance < 4500 and newTarget.alive ) then 
+						wt_debug( "Adding new PartyAggroTarget to List : "..tonumber(msg) )
+						wt_core_state_minion.PartyAggroTargets[tonumber(msg)] = newTarget
+					end
+				elseif ( tonumber(msgID) == 10 ) then -- A minion needs to Vendor, set our Primary task accordingly
+					if ( wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID  == Player.characterID) then
+						wt_debug( "Minion needs to vendor, going to Vendor" )
+						wt_core_state_minion.MinionNeedsVendor = true
+					end
+				elseif ( tonumber(msgID) == 11 ) then -- Leader asks if a minion still needs to Vendor
+					if ( wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID  ~= Player.characterID and ItemList.freeSlotCount <= 2 and wt_global_information.InventoryFull == 1 and wt_global_information.HasVendor) then
+						wt_debug( "We still need to vendor, telling leader.." )
+						MultiBotSend( "10;none","gw2minion" )
+					end
+				elseif ( tonumber(msgID) == 12 ) then -- Leader reached Vendor, tells Minions to update their "nearest Vendor" (this is needed sometimes)
+					if ( wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID  ~= Player.characterID ) then
+						wt_debug( "Leader is near Vendor, refreshing our Vendor.." )
+						wt_core_state_minion.MinionNeedsVendor = true
+						wt_core_state_vendoring.CurrentTargetID = 0				
+					end
+				end
 			end
 		end
 	end
@@ -640,7 +639,7 @@ function wt_core_state_minion.ClaimLead( Event )
 		wt_debug( "Claiming leadership.." )
 		wt_core_state_minion.LeaderID = Player.characterID
 		wt_core_state_minion.name = "Beeing Leader"
-		MultiBotSend( "3;"..Player.characterID,"gw2minion" )
+		MultiBotSend( "3;"..wt_core_state_minion.LeaderID,"gw2minion" )
 	end
 end
 
@@ -658,7 +657,8 @@ end
 function wt_core_state_minion:HandleInit() 
 	GUI_NewLabel(wt_global_information.MainWindow.Name,"THE HOST NEEDS TO START THE","GroupBotting");
 	GUI_NewLabel(wt_global_information.MainWindow.Name,"MultiBotComServer.exe!!","GroupBotting");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable","gMinionEnabled","GroupBotting");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable BrowserStats","gStats_enabled","GroupBotting");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Groupbotting","gMinionEnabled","GroupBotting");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer IP","gIP","GroupBotting");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Port","gPort","GroupBotting");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Password","gPw","GroupBotting");
@@ -675,7 +675,7 @@ function wt_core_state_minion:HandleInit()
 	 
 	
 	-- Add to other states only after all files have been loaded
-	local ke_iamminion = wt_kelement:create( "GroupMinion", c_iamminion, e_iamminion, 250 )
+	local ke_iamminion = wt_kelement:create( "MultiBotServerCheck", c_iamminion, e_iamminion, 250 )
 	wt_core_state_idle:add( ke_iamminion )
 	
 	local ke_reviveparty = wt_kelement:create( "ReviveParty", c_check_revivep, e_revivep, 130 )
@@ -722,6 +722,9 @@ function wt_core_state_minion:initialize()
 		
 	local ke_quickloot = wt_kelement:create( "QuickLoot", c_quickloot, e_quickloot, 110 )
 	wt_core_state_minion:add( ke_quickloot )
+	
+	local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 105 )
+	wt_core_state_minion:add( ke_quicklootchest )	
 
 	local ke_maggro = wt_kelement:create( "AggroCheck", c_aggro, e_aggro, 100 )
 	wt_core_state_minion:add( ke_maggro )

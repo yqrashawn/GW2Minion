@@ -33,15 +33,17 @@ wt_profession_engineer.c_MoveCloser = inheritsFrom(wt_cause)
 wt_profession_engineer.e_MoveCloser = inheritsFrom(wt_effect)
 
 function wt_profession_engineer.c_MoveCloser:evaluate()
-	if ( wt_core_state_combat.CurrentTarget ~= 0 ) then
+	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
 		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-		local Distance = T ~= nil and T.distance or 0
-		local LOS = T~=nil and T.los or false
-		if (Distance >= wt_global_information.AttackRange  or LOS~=true) then
-			return true
-		else
-			if( Player:GetTarget() ~= wt_core_state_combat.CurrentTarget) then
-				Player:SetTarget(wt_core_state_combat.CurrentTarget)
+		if ( T ~= nil ) then
+			local Distance = T.distance or 0
+			local LOS = T.los or false
+			if (Distance >= wt_global_information.AttackRange or LOS~=true) then
+				return true
+			else
+				if( Player:GetTarget() ~= wt_core_state_combat.CurrentTarget) then
+					Player:SetTarget(wt_core_state_combat.CurrentTarget)
+				end
 			end
 		end
 	end
@@ -50,9 +52,12 @@ end
 
 function wt_profession_engineer.e_MoveCloser:execute()
 	--wt_debug("e_MoveCloser ")
-	local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-	if ( T ~= nil ) then
-		Player:MoveTo(T.pos.x,T.pos.y,T.pos.z,120) -- the last number is the distance to the target where to stop
+	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
+		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
+		if ( T ~= nil ) then
+			local Tpos = T.pos
+			Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,120) -- the last number is the distance to the target where to stop
+		end
 	end
 end
 

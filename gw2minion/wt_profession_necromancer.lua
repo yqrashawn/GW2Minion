@@ -50,13 +50,15 @@ wt_profession_necromancer.c_pets = inheritsFrom(wt_cause)
 wt_profession_necromancer.e_pets = inheritsFrom(wt_effect)
 
 function wt_profession_necromancer.c_pets:evaluate()	
-	if (Player.health.percent > 15 ) then 
-		for index1, ID in pairs(wt_profession_necromancer.petIDs) do
-			for index2, slot in pairs(wt_profession_necromancer.Slots) do
-				SpellInfo = Player:GetSpellInfo(slot)
-				if (SpellInfo ~= nil) then
-					if (ID == SpellInfo.skillID and not Player:IsSpellOnCooldown(slot)) then
-						return true
+	if (gAutoUsePets == "1") then
+		if (Player.health.percent > 15 ) then 
+			for index1, ID in pairs(wt_profession_necromancer.petIDs) do
+				for index2, slot in pairs(wt_profession_necromancer.Slots) do
+					SpellInfo = Player:GetSpellInfo(slot)
+					if (SpellInfo ~= nil) then
+						if (ID == SpellInfo.skillID and not Player:IsSpellOnCooldown(slot)) then
+							return true
+						end
 					end
 				end
 			end
@@ -88,15 +90,17 @@ wt_profession_necromancer.c_MoveCloser = inheritsFrom(wt_cause)
 wt_profession_necromancer.e_MoveCloser = inheritsFrom(wt_effect)
 
 function wt_profession_necromancer.c_MoveCloser:evaluate()
-	if ( wt_core_state_combat.CurrentTarget ~= 0 ) then
+	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
 		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-		local Distance = T ~= nil and T.distance or 0
-		local LOS = T~=nil and T.los or false
-		if (Distance >= wt_global_information.AttackRange  or LOS~=true) then
-			return true
-		else
-			if( Player:GetTarget() ~= wt_core_state_combat.CurrentTarget) then
-				Player:SetTarget(wt_core_state_combat.CurrentTarget)
+		if ( T ~= nil ) then
+			local Distance = T.distance or 0
+			local LOS = T.los or false
+			if (Distance >= wt_global_information.AttackRange or LOS~=true) then
+				return true
+			else
+				if( Player:GetTarget() ~= wt_core_state_combat.CurrentTarget) then
+					Player:SetTarget(wt_core_state_combat.CurrentTarget)
+				end
 			end
 		end
 	end
@@ -105,9 +109,12 @@ end
 
 function wt_profession_necromancer.e_MoveCloser:execute()
 	--wt_debug("e_MoveCloser ")
-	local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-	if ( T ~= nil ) then
-		Player:MoveTo(T.pos.x,T.pos.y,T.pos.z,120) -- the last number is the distance to the target where to stop
+	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
+		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
+		if ( T ~= nil ) then
+			local Tpos = T.pos
+			Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,120) -- the last number is the distance to the target where to stop
+		end
 	end
 end
 
@@ -152,6 +159,7 @@ function wt_profession_necromancer.e_use_slot_skills:execute()
 		SpellInfo = Player:GetSpellInfo(wt_profession_necromancer.e_slotToCast)
 		if (SpellInfo ~= nil) then
 			if (not Player:IsSpellOnCooldown(wt_profession_necromancer.e_slotToCast)) then
+				Player:StopMoving()
 				Player:CastSpell(wt_profession_necromancer.e_slotToCast)
 			end
 		end	
@@ -168,6 +176,7 @@ function wt_profession_necromancer.GetMainHandWeapon(MainHand)
 		elseif (MainHand.skillID == 10702 ) then return ("Dagger") 
 		elseif (MainHand.skillID == 10698 ) then return ("Scepter")
 		elseif (MainHand.skillID == 10596 ) then return ("Staff")	
+		elseif (MainHand.skillID == 10554 ) then return ("Shroud")
 		end
 	end
 	return "default"
@@ -179,6 +188,7 @@ function wt_profession_necromancer.GetOffHandWeapon(OffHand)
 		elseif (OffHand.skillID == 10568 ) then return ("Staff") 
 		elseif (OffHand.skillID == 10707 ) then return ("Focus")
 		elseif (OffHand.skillID == 10556 ) then return ("Warhorn")
+		elseif (OffHand.skillID == 10594 ) then return ("Shroud")
 		end
 	end
 	return "default"
@@ -231,7 +241,7 @@ function wt_profession_necromancer.e_attack_default:execute()
 			
 			local myMHWeap = wt_profession_necromancer.GetMainHandWeapon(s1)
 			local myOHWeap = wt_profession_necromancer.GetOffHandWeapon(s4)
-						
+			
 			if ( myOHWeap == "Dagger" ) then			
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
@@ -272,6 +282,14 @@ function wt_profession_necromancer.e_attack_default:execute()
 					end
 				end				
 			end
+			if ( myOHWeap == "Shroud") then	
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
+					end
+				end				
+			end			
 			------
 			if ( myMHWeap == "Dagger" ) then			
 				if (s1 ~= nil) then
@@ -325,6 +343,20 @@ function wt_profession_necromancer.e_attack_default:execute()
 						end
 					end
 				end			
+			elseif ( myMHWeap == "Shroud") then				
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and T.distance < s3.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and T.distance < s2.maxRange) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and T.distance < s1.maxRange) then
+						if (not wt_profession_necromancer.SwitchWeapon()) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
+					end
+				end	
+			
 			
 			else --DEFAULT ATTACK
 				if (s1 ~= nil) then
@@ -352,7 +384,7 @@ end
 -----------------------------------------------------------------------------------
 function wt_profession_necromancer.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
-		if ( k == "gNecroSwapWeapons" ) then
+		if ( k == "gNecroSwapWeapons" or k == "gAutoUsePets") then
 			Settings.GW2MINION[tostring(k)] = v
 		end
 	end
@@ -360,11 +392,12 @@ end
 
 function wt_profession_necromancer:HandleInit() 	
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gNecroSwapWeapons","Necromancer-Settings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUsePets","gAutoUsePets","Necromancer-Settings");	
 	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	
 	
 	gNecroSwapWeapons = Settings.GW2MINION.gNecroSwapWeapons
-
+	gAutoUsePets = Settings.GW2MINION.gAutoUsePets
 end
 -- We need to check if the players current profession is ours to only add our profession specific routines
 if ( wt_profession_necromancer.professionID > -1 and wt_profession_necromancer.professionID == Player.profession) then
@@ -374,6 +407,9 @@ if ( wt_profession_necromancer.professionID > -1 and wt_profession_necromancer.p
 	-- GUI Elements
 	if ( Settings.GW2MINION.gNecroSwapWeapons == nil ) then
 		Settings.GW2MINION.gNecroSwapWeapons = "0"
+	end
+	if ( Settings.GW2MINION.gAutoUsePets == nil ) then
+		Settings.GW2MINION.gAutoUsePets = "1"
 	end
 	
 	RegisterEventHandler("Module.Initalize",wt_profession_necromancer.HandleInit)
