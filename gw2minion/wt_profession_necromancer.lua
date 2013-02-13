@@ -131,7 +131,7 @@ function wt_profession_necromancer.c_use_slot_skills:evaluate()
 		TID = wt_core_state_combat.CurrentTarget
 		if ( TID ~= 0 ) then
 			local T = CharacterList:Get(TID)
-			if ( T ~= nil and T.distance ~= nil) then
+			if ( T ~= nil and T.distance ~= nil and T.distance < 1200) then
 				for index, slot in pairs(wt_profession_necromancer.Slots) do
 					SpellInfo = Player:GetSpellInfo(slot)
 					if (SpellInfo ~= nil and not Player:IsSpellOnCooldown(slot)) then
@@ -155,14 +155,22 @@ end
 
 wt_profession_necromancer.e_use_slot_skills.throttle = math.random( 250, 550 )
 function wt_profession_necromancer.e_use_slot_skills:execute()
-	if (wt_profession_necromancer.e_slotToCast ~= nil) then
-		SpellInfo = Player:GetSpellInfo(wt_profession_necromancer.e_slotToCast)
-		if (SpellInfo ~= nil) then
-			if (not Player:IsSpellOnCooldown(wt_profession_necromancer.e_slotToCast)) then
-				Player:StopMoving()
-				Player:CastSpell(wt_profession_necromancer.e_slotToCast)
+	if (wt_core_state_combat.CurrentTarget ~= 0 ) then 
+		TID = wt_core_state_combat.CurrentTarget
+		if ( TID ~= 0 ) then
+			local T = CharacterList:Get(TID)
+			if ( T ~= nil and T.distance ~= nil and T.distance < 1200) then
+				if (wt_profession_necromancer.e_slotToCast ~= nil) then
+					SpellInfo = Player:GetSpellInfo(wt_profession_necromancer.e_slotToCast)
+					if (SpellInfo ~= nil) then
+						if (not Player:IsSpellOnCooldown(wt_profession_necromancer.e_slotToCast)) then
+							Player:StopMoving()
+							Player:CastSpell(wt_profession_necromancer.e_slotToCast,TID)
+						end
+					end	
+				end
 			end
-		end	
+		end
 	end
 end
 

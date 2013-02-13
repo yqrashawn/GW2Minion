@@ -41,10 +41,6 @@ function e_vendordone:execute()
 	wt_debug("Vendoring finished")
 	wt_core_state_vendoring.CurrentTargetID = 0
 	wt_core_state_vendoring.junksold = false
-	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID) then		
-		MultiBotSend( "11;none","gw2minion" )
-	end
-	wt_core_state_minion.MinionNeedsVendor = false
 	wt_core_controller.requestStateChange(wt_core_state_idle)
 	return
 end
@@ -78,20 +74,7 @@ function e_movetovendor:execute()
 				e_moveto_d_index = wt_core_state_vendoring.CurrentTargetID
 				wt_debug( "Vendoring: moving to Vendor..." )		
 			end
-			local TPOS = T.pos
-			if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID ~= Player.characterID and T.distance > 2000) then
-				-- follow grp leader until we are close enough to a vendor
-				local party = Player:GetPartyMembers()
-				if (party ~= nil and wt_core_state_minion.LeaderID ~= nil) then
-					local leader = party[tonumber(wt_core_state_minion.LeaderID)]
-					if (leader ~= nil) then
-						local pos = leader.pos
-						--TODO: Getmovementstate of leader, adopt range accordingly
-						Player:MoveTo(pos.x,pos.y,pos.z,math.random( 20, 100 ))
-						return
-					end
-				end				
-			end
+			local TPOS = T.pos			
 			Player:MoveTo(TPOS.x, TPOS.y, TPOS.z ,50 )
 		end
 	else
@@ -135,10 +118,10 @@ function e_openvendor:execute()
 		local T = MapObjectList:Get(wt_core_state_vendoring.CurrentTargetID)
 		if ( T ~= nil ) then
 			Player:Interact( T.characterID )
-			-- tell minions to refresh their vendor, this is needed to prevent fuckups in the lists
-			if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID ) then
-				MultiBotSend( "12;none","gw2minion" )
-			end
+			-- Tell all minions nearby to vendor
+			if ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
+				MultiBotSend( "11;0","gw2minion" )
+			end			
 		end
 	end	
 end

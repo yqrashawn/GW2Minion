@@ -116,6 +116,10 @@ function e_openvendorR:execute()
 		local T = MapObjectList:Get( wt_core_state_repair.CurrentTargetID )
 		if ( T ~= nil and T.characterID ~= nil and T.characterID ~= 0 ) then
 			Player:Interact( T.characterID )
+			-- Tell all minions nearby to vendor
+			if ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
+				MultiBotSend( "16;0","gw2minion" )
+			end		
 		else
 			wt_core_state_repair.CurrentTargetID = 0
 		end
@@ -162,8 +166,6 @@ function e_conversationR:execute()
 
 		if ( not found ) then
 			wt_debug( "Repair: can't handle repairvendor, please report back to the developers" )
-			wt_debug( "Repair: Repair disabled" )
-			wt_global_information.HasRepairMerchant = false
 		end
 
 	end

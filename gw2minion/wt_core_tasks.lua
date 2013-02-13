@@ -275,3 +275,115 @@ function wt_core_taskmanager:addHeartQuestTask( quest )
 	
 end
 
+
+
+--**********************************************************
+-- PRIORITY TASKS
+--**********************************************************
+------------------------------------------------------------------
+-- Go To Vendor Task
+function wt_core_taskmanager:addVendorTask( )	
+	local EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
+	if ( TableSize( EList ) > 0 ) then
+		local nextTarget
+		nextTarget, E = next( EList )
+		if ( nextTarget ~= nil and nextTarget ~= 0 ) then				
+			local newtask = inheritsFrom( wt_task )
+			newtask.name = "GoTo Vendor"
+			newtask.priority = wt_task.priorities.vendor
+			newtask.position = E.pos
+			newtask.done = false
+			newtask.last_execution = 0
+			newtask.throttle = 500
+			
+			function newtask:execute()
+				local mypos = Player.pos
+				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
+				if ( distance > 150 ) then
+						--wt_debug("Walking towards new PointOfInterest ")	
+					if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+						Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 50 )
+						newtask.last_execution = wt_global_information.Now
+					end
+					newtask.name = "GoTo Vendor, dist: "..(math.floor(distance))
+				else										
+					local EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
+					if ( TableSize( EList ) > 0 ) then
+						local nextTarget
+						nextTarget, E = next( EList )
+						if ( nextTarget ~= nil and nextTarget ~= 0 ) then				
+							wt_debug( "Merchant nearby.." )
+							wt_core_state_vendoring.setTarget( nextTarget )
+							MultiBotSend( "11;"..nextTarget,"gw2minion" )
+							wt_core_controller.requestStateChange( wt_core_state_vendoring )
+						end
+					end
+					newtask.done = true
+				end
+			end
+			
+			function newtask:isFinished()
+				if ( newtask.done ) then 
+					wt_core_taskmanager:SetDefaultBehavior()
+					return true
+				end
+				return false
+			end	
+			wt_core_taskmanager:addPartytask( newtask )
+		end
+	end
+end
+
+
+-- Go To Repair Task
+function wt_core_taskmanager:addRepairTask( )	
+	local EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
+	if ( TableSize( EList ) > 0 ) then
+		local nextTarget
+		nextTarget, E = next( EList )
+		if ( nextTarget ~= nil and nextTarget ~= 0 ) then				
+			local newtask = inheritsFrom( wt_task )
+			newtask.name = "GoTo Repair"
+			newtask.priority = wt_task.priorities.repair
+			newtask.position = E.pos
+			newtask.done = false
+			newtask.last_execution = 0
+			newtask.throttle = 500
+			
+			function newtask:execute()
+				local mypos = Player.pos
+				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
+				if ( distance > 150 ) then
+						--wt_debug("Walking towards new PointOfInterest ")	
+					if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+						Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 50 )
+						newtask.last_execution = wt_global_information.Now
+					end
+					newtask.name = "GoTo Repair, dist: "..(math.floor(distance))
+				else
+					local EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
+					if ( TableSize( EList ) > 0 ) then
+						local nextTarget
+						nextTarget, E = next( EList )
+						if ( nextTarget ~= nil and nextTarget ~= 0 ) then				
+							wt_debug( "RepairMerchant nearby.." )
+							wt_core_state_repair.setTarget( nextTarget )
+							MultiBotSend( "16;"..nextTarget,"gw2minion" )
+							wt_core_controller.requestStateChange( wt_core_state_repair )
+						end
+					end
+					newtask.done = true
+				end
+			end
+			
+			function newtask:isFinished()
+				if ( newtask.done ) then 
+					wt_core_taskmanager:SetDefaultBehavior()
+					return true
+				end
+				return false
+			end	
+			wt_core_taskmanager:addPartytask( newtask )
+		end
+	end
+end

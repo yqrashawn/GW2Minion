@@ -1,19 +1,29 @@
--- the core of the cause and effect engine
+-- Taskmanager
 
 
 wt_core_taskmanager = { }
 wt_core_taskmanager.task_list = { }
 wt_core_taskmanager.possible_tasks = { }
 wt_core_taskmanager.current_task = nil
+wt_core_taskmanager.Partytask_list = { }
+wt_core_taskmanager.Customtask_list = { }
 wt_core_taskmanager.markerList = { }
 wt_core_taskmanager.behavior = "default"
+wt_core_taskmanager.prioTmr = 0
 
 -- To add a new task
 function wt_core_taskmanager:addTask( task )
-	if ( task ~= nil and  type( task ) == "table") then
-	--TODO: Add checks for more task values
+	if ( task ~= nil and  type( task ) == "table") then	
 		--wt_debug( "Adding Task to List: " .. task.name .. "(Prio:"..task.priority..")" )
 		table.insert( wt_core_taskmanager.task_list, task )
+	end
+end
+
+-- To add a new task
+function wt_core_taskmanager:addPartytask( task )
+	if ( task ~= nil and  type( task ) == "table") then	
+		wt_debug( "Adding PartyTask to List: " .. task.name .. "(Prio:"..task.priority..")" )
+		table.insert( wt_core_taskmanager.Partytask_list, task )
 	end
 end
 -------------------------------------------------------------------------
@@ -27,7 +37,7 @@ function wt_core_taskmanager:checkLevelRange( posX, posY, posZ )
 			return true
 		end
 		j, marker = next( wt_core_taskmanager.markerList )
-		while ( j ~= nil and marker ~= nil ) do
+		while ( j ~= nil and marker ~= nil ) do			
 			distance =  Distance3D( marker.x, marker.y, marker.z, posX, posY, posZ )
 			--wt_debug( "Dist to marker : " .. distance )
 			if ( distance <= 5000 ) then
@@ -43,7 +53,7 @@ function wt_core_taskmanager:checkLevelRange( posX, posY, posZ )
 end
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
--- Possible Tasks
+-- Possible default Tasks
 function wt_core_taskmanager:update_tasks( )
 
 	wt_core_taskmanager.task_list = { }
@@ -120,7 +130,6 @@ function wt_core_taskmanager:update_tasks( )
 			end
 			j, marker = next( wt_core_taskmanager.markerList, j )
 		end
-
 	end
 
 	
@@ -135,10 +144,11 @@ function wt_core_taskmanager:update_tasks( )
 	-- Add ???
 
 end
--------------------------------------------------------------------------
--------------------------------------------------------------------------
 
--- set the next task
+
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+-- Set the next default task
 function wt_core_taskmanager:SetNewTask()
 	local highestPriority = 0
 	wt_core_taskmanager:update_tasks( )
@@ -178,13 +188,73 @@ function wt_core_taskmanager:SetNewTask()
 	end
 end
 
+
+function CheckPriorityTasks()
+	if (wt_global_information.Now - wt_core_taskmanager.prioTmr > 2000) then
+		wt_core_taskmanager.prioTmr = wt_global_information.Now
+		local possiblePrioTaskList = {}
+		highestPriority = 0
+
+		
+		-- Add all tasks from the wt_core_taskmanager.Partytask_list			
+		for k, task in pairs( wt_core_taskmanager.Partytask_list ) do
+			if ( task ~= nil and  type( task ) == "table" and highestPriority < task.priority and task:canRun() ) then
+				highestPriority = task.priority
+				table.insert( possiblePrioTaskList, task )
+			end
+		end
+		
+		-- Add Custom tasks here
+		wt_core_taskmanager.AddCustomTasks()
+		for k, task in pairs( wt_core_taskmanager.Customtask_list ) do
+			if ( task ~= nil and  type( task ) == "table" and highestPriority < task.priority and task:canRun() ) then
+				highestPriority = task.priority
+				table.insert( possiblePrioTaskList, task )
+			end
+		end
+		
+		-- remove all tasks with lower priority
+		if ( highestPriority > 0 ) then
+			for k, task in pairs( possiblePrioTaskList ) do
+				if( task.priority < highestPriority ) then
+					wt_debug( "TM_Removing:"..task.name .. "(Prio:" .. task.priority .. ")" .. " highest Prio:" .. highestPriority )
+					table.remove( possiblePrioTaskList, k )
+				end
+			end
+			
+			-- set new task if prio is higher than our current task
+			if ( #possiblePrioTaskList > 0 ) then
+				for k, task in pairs( possiblePrioTaskList ) do
+					if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() and wt_core_taskmanager.current_task.priority >= task.priority ) then					
+					--keep current task				
+					else						
+						wt_debug( "New Prio-Task selected: " .. task.name .. "(Prio:" .. task.priority .. ")" )
+						wt_core_taskmanager.current_task = task
+					end
+				end
+			end
+		end	
+		
+		-- Reset the lists
+		wt_core_taskmanager.Partytask_list = {}
+		wt_core_taskmanager.Customtask_list = {}
+	end
+end
+
+function wt_core_taskmanager.AddCustomTasks()
+-- Overwrite this function with a function that adds customs tasks to the wt_core_taskmanager.Customtask_list, for dungeons and map specific events
+end
+
+ 
 -- Main function that evaluates and executes the tasks
 function wt_core_taskmanager:DoTask()
+	-- Check if a task with higher priority popped up (Events;partystuff,customscripts etc)
+	CheckPriorityTasks()
+	
 	if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() ) then
 		if (gGW2MinionTask ~= nil ) then
 			gGW2MinionTask = wt_core_taskmanager.current_task.name
 		end
-		--wt_debug( "Doing task " .. wt_core_taskmanager.current_task.name )
 		wt_core_taskmanager.current_task.execute()
 	else
 		wt_core_taskmanager:SetNewTask()

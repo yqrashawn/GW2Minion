@@ -20,8 +20,9 @@ wt_global_information.MaxAggroDistanceClose = 500
 wt_global_information.MaxSearchEnemyDistance = 2500
 wt_global_information.lastrun = 0
 wt_global_information.InventoryFull = 0
-wt_global_information.HasVendor = true
-wt_global_information.HasRepairMerchant = true
+wt_global_information.LeaderID = nil
+wt_global_information.PartyAggroTargets = {}
+wt_global_information.FocusTarget = nil
 wt_global_information.stats_lastrun = 0
 
 gw2minion = { }
@@ -39,7 +40,6 @@ if (Settings.GW2MINION.version <= 1.33 ) then
 	Settings.GW2MINION.gEnableRepair = "0"
 	Settings.GW2MINION.gIgnoreMarkerCap = "0"	
 	Settings.GW2MINION.gMaxItemSellRarity = "2"
-	Settings.GW2MINION.gStats_enabled = "0"
 end
 
 function wt_global_information.OnUpdate( event, tickcount )
@@ -82,7 +82,6 @@ function gw2minion.HandleInit()
 	gEnableRepair = Settings.GW2MINION.gEnableRepair
 	gIgnoreMarkerCap = Settings.GW2MINION.gIgnoreMarkerCap
 	gMaxItemSellRarity = Settings.GW2MINION.gMaxItemSellRarity
-	gStats_enabled = Settings.GW2MINION.gStats_enabled 
 	
 	wt_debug("GUI Setup done")
 	wt_core_controller.requestStateChange(wt_core_state_idle)
@@ -90,7 +89,7 @@ end
 
 function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
-		if ( k == "gEnableLog" or k == "gStats_enabled" or k == "gGW2MinionPulseTime" or k == "gEnableRepair" or k == "gIgnoreMarkerCap" or k == "gMaxItemSellRarity" ) then
+		if ( k == "gEnableLog" or k == "gGW2MinionPulseTime" or k == "gEnableRepair" or k == "gIgnoreMarkerCap" or k == "gMaxItemSellRarity" ) then
 			Settings.GW2MINION[tostring(k)] = v
 		end
 	end
@@ -105,8 +104,6 @@ function wt_global_information.Reset()
 	wt_global_information.MaxLootDistance = 1200
 	wt_global_information.lastrun = 0
 	wt_global_information.InventoryFull = 0
-	wt_global_information.HasVendor = true
-	wt_global_information.HasRepairMerchant = true
 	wt_core_state_vendoring.junksold = false 
 	wt_core_state_combat.CurrentTarget = 0
 	c_aggro.TargetList = {}
@@ -114,7 +111,13 @@ function wt_global_information.Reset()
 	wt_core_taskmanager.possible_tasks = { }
 	wt_core_taskmanager.current_task = nil
 	wt_core_taskmanager.markerList = { }
-	wt_core_state_minion.LeaderID = nil
+	wt_global_information.LeaderID = nil
+	wt_global_information.PartyAggroTargets = {}
+	wt_global_information.FocusTarget = nil
+	if ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then		
+		MultiBotLeaveChannel( "gw2minion" )
+		MultiBotDisconnect( )
+	end		
 	wt_core_controller.requestStateChange(wt_core_state_idle)
 end
 
@@ -159,7 +162,7 @@ function wt_global_information.GatherAndSendStats()
 			MultiBotSend("running=false","setval");
 		end
 		
-		if (wt_core_state_minion.LeaderID ~= nil and wt_core_state_minion.LeaderID == Player.characterID) then
+		if (wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID == Player.characterID) then
 			MultiBotSend("role=Leader","setval");
 		else
 			MultiBotSend("role=Minion","setval");
