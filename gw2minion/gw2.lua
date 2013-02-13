@@ -24,6 +24,9 @@ wt_global_information.LeaderID = nil
 wt_global_information.PartyAggroTargets = {}
 wt_global_information.FocusTarget = nil
 wt_global_information.stats_lastrun = 0
+wt_global_information.HasRepairMerchant = 0
+wt_global_information.HasVendor = 0
+
 
 gw2minion = { }
 
@@ -114,6 +117,8 @@ function wt_global_information.Reset()
 	wt_global_information.LeaderID = nil
 	wt_global_information.PartyAggroTargets = {}
 	wt_global_information.FocusTarget = nil
+	wt_global_information.HasRepairMerchant = 0
+	wt_global_information.HasVendor = 0
 	if ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then		
 		MultiBotLeaveChannel( "gw2minion" )
 		MultiBotDisconnect( )
