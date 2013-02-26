@@ -116,7 +116,7 @@ end
 
 -- on/off switch
 function wt_core_controller.ToggleRun()
-	if ( NavigationManager:IsNavMeshLoaded() ) then
+	if ( NavigationManager:IsNavMeshLoaded() ) then		
 		wt_core_controller.shouldRun = not wt_core_controller.shouldRun
 		wt_global_information.Reset()
 		d("Core Run State:",wt_core_controller.shouldRun)

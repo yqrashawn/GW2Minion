@@ -105,7 +105,7 @@ end
 ------------------------------------------------------------------------------
 -- Randomly switch attunement
 function wt_profession_elementalist.RandomAttunement(current)
-	if (gEleSwap == "1" and wt_profession_elementalist.switchattunementTmr == 0 or wt_global_information.Now - wt_profession_elementalist.switchattunementTmr > math.random(2500,5000)) then	
+	if (gEleSwap == "1" and (wt_profession_elementalist.switchattunementTmr == 0 or wt_global_information.Now - wt_profession_elementalist.switchattunementTmr > math.random(2500,5000))) then	
 		wt_profession_elementalist.switchattunementTmr = wt_global_information.Now
 		local switch = math.random(12,15)
 		if ( switch ~= current and not Player:IsSpellOnCooldown(switch) ) then

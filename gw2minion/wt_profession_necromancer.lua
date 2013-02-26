@@ -241,11 +241,42 @@ function wt_profession_necromancer.e_attack_default:execute()
 			local s4 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_4)
 			local s5 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_5)
 			local F1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
-			
-			if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13) and F1~=nil and F1.skillID == 10574 and Player:GetProfessionPowerPercentage() > 35 and Player.health.percent < math.random(1,45)) then
+						
+			if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13) and F1~=nil and F1.skillID == 10574 and Player:GetProfessionPowerPercentage() > 25 and Player.health.percent < math.random(1,55)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
 				return
 			end
+			
+			-- Skill 7,8,9,Elite
+			if ( tonumber(gNecSK7) > 0 ) then
+				local SK7 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_7)
+				if ( SK7 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_7) and Player.health.percent < randomize(tonumber(gNecSK7)) and (T.distance < SK7.maxRange or T.distance < 140 or SK7.maxRange < 100)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_7)
+					return
+				end
+			end
+			if ( tonumber(gNecSK8) > 0 ) then
+				local SK8 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_8)
+				if ( SK8 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_8) and Player.health.percent < randomize(tonumber(gNecSK8)) and (T.distance < SK8.maxRange or T.distance < 140 or SK8.maxRange < 100)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_8)
+					return
+				end
+			end
+			if ( tonumber(gNecSK9) > 0 ) then
+				local SK9 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_9)
+				if ( SK9 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_9) and Player.health.percent < randomize(tonumber(gNecSK9)) and (T.distance < SK9.maxRange or T.distance < 140 or SK9.maxRange < 100)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_9)
+					return
+				end
+			end
+			if ( tonumber(gNecSK10) > 0 ) then
+				local SK10 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_10)
+				if ( SK10 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_10) and Player.health.percent < randomize(tonumber(gNecSK10)) and (T.distance < SK10.maxRange or T.distance < 140 or SK10.maxRange < 100)) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_10)
+					return
+				end
+			end
+
 			
 			local myMHWeap = wt_profession_necromancer.GetMainHandWeapon(s1)
 			local myOHWeap = wt_profession_necromancer.GetOffHandWeapon(s4)
@@ -392,7 +423,7 @@ end
 -----------------------------------------------------------------------------------
 function wt_profession_necromancer.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
-		if ( k == "gNecroSwapWeapons" or k == "gAutoUsePets") then
+		if ( k == "gNecroSwapWeapons" or k == "gAutoUsePets" or k == "gNecSK7" or k == "gNecSK8" or k == "gNecSK9" or k == "gNecSK10") then
 			Settings.GW2MINION[tostring(k)] = v
 		end
 	end
@@ -400,12 +431,20 @@ end
 
 function wt_profession_necromancer:HandleInit() 	
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gNecroSwapWeapons","Necromancer-Settings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUsePets","gAutoUsePets","Necromancer-Settings");	
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUsePets","gAutoUsePets","Necromancer-Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gNecSK7","Necromancer-Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gNecSK8","Necromancer-Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gNecSK9","Necromancer-Settings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gNecSK10","Necromancer-Settings");	
 	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	
 	
 	gNecroSwapWeapons = Settings.GW2MINION.gNecroSwapWeapons
 	gAutoUsePets = Settings.GW2MINION.gAutoUsePets
+	gNecSK7 = Settings.GW2MINION.gNecSK7
+	gNecSK8 = Settings.GW2MINION.gNecSK8
+	gNecSK9 = Settings.GW2MINION.gNecSK9
+	gNecSK10 = Settings.GW2MINION.gNecSK10
 end
 -- We need to check if the players current profession is ours to only add our profession specific routines
 if ( wt_profession_necromancer.professionID > -1 and wt_profession_necromancer.professionID == Player.profession) then
@@ -418,6 +457,18 @@ if ( wt_profession_necromancer.professionID > -1 and wt_profession_necromancer.p
 	end
 	if ( Settings.GW2MINION.gAutoUsePets == nil ) then
 		Settings.GW2MINION.gAutoUsePets = "1"
+	end
+		if ( Settings.GW2MINION.gNecSK7 == nil ) then
+		Settings.GW2MINION.gNecSK7 = "0"
+	end
+	if ( Settings.GW2MINION.gNecSK8 == nil ) then
+		Settings.GW2MINION.gNecSK8 = "0"
+	end
+	if ( Settings.GW2MINION.gNecSK9 == nil ) then
+		Settings.GW2MINION.gNecSK9 = "0"
+	end
+	if ( Settings.GW2MINION.gNecSK10 == nil ) then
+		Settings.GW2MINION.gNecSK10 = "0"
 	end
 	
 	RegisterEventHandler("Module.Initalize",wt_profession_necromancer.HandleInit)

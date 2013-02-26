@@ -86,7 +86,9 @@ function wt_core_state_combat:initialize()
 		local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 144 )
 		wt_core_state_combat:add( ke_quicklootchest )	
 		
-		--groupbotting, revivepartymember @ prio 130
+		local ke_revivparty = wt_kelement:create( "ReviveParty", c_revivep, e_revivep, 130 )
+		wt_core_state_combat:add( ke_revivparty )	
+		
 		--groupbotting, focustargetbroadcast @ prio 126
 		
 		local ke_better_target_search = wt_kelement:create( "better_target_search", c_better_target_search, e_better_target_search, 125 )

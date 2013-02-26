@@ -8,18 +8,7 @@
 wt_core_state_idle = inheritsFrom( wt_core_state )
 wt_core_state_idle.name = "Idle"
 wt_core_state_idle.kelement_list = { }
-wt_core_state_idle.DebugModes = { Revive = { Master = true, TID = nil, state = false, Move = true, Revive = true, NoTarget = true }, Loot = { Master = true, state = false, Size = 0, index = nil, TSize = true, Move = true } ,LootChest = { Master = true, state = false, Size = 0, index = nil, TSize = true, Move = true }}
--- wt_core_state_idle.DebugModes.Revive.TID -- Target ID
--- wt_core_state_idle.DebugModes.Revive.Master -- Master Revive Debug message switch ( true / false ) if true do debug messages, if false don't do debug messages.
--- wt_core_state_idle.DebugModes.state
--- wt_core_state_idle.DebugModes.Revive.Move -- true = keep spamming the debug message
--- wt_core_state_idle.DebugModes.Revive.Revive -- true = keep spamming the debug message
--- wt_core_state_idle.DebugModes.Revive.NoTarget -- true = create debug message for No Revive Target
 
--- wt_core_state_idle.DebugModes.Loot.Size -- Table size of Loot Target table
--- wt_core_state_idle.DebugModes.Loot.index -- Target ID of Loot Target
--- wt_core_state_idle.DebugModes.Loot.Master -- Master Loot Debug message switch ( true / false ) if true do debug messages, if false don't do debug messages.
--- wt_core_state_idle.DebugModes.Loot.state
 
 ------------------------------------------------------------------------------
 -- DepositItems Cause & Effect
@@ -140,6 +129,7 @@ function e_gather:execute()
 	end
 end
 
+
 ------------------------------------------------------------------------------
 -- Do Tasks Cause & Effect
 local c_dotask = inheritsFrom( wt_cause )
@@ -168,10 +158,15 @@ function wt_core_state_idle:initialize()
 	local ke_aggro = wt_kelement:create( "AggroCheck", c_aggro, e_aggro, 100 )
 	wt_core_state_idle:add( ke_aggro )
 
-	local ke_deposit = wt_kelement:create( "DepositItems", c_deposit, e_deposit, 90 )
+	local ke_deposit = wt_kelement:create( "DepositItems", c_deposit, e_deposit, 95 )
 	wt_core_state_idle:add( ke_deposit )
 
-	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 88 )
+	--89 salvage
+	
+	local ke_dopriotasks = wt_kelement:create( "DoPrioTask", c_dopriotask, e_dopriotask, 88 )
+	wt_core_state_idle:add( ke_dopriotasks )
+	
+	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 87 )
 	wt_core_state_idle:add( ke_vendorcheck )
 
 	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 86 )
@@ -192,6 +187,9 @@ function wt_core_state_idle:initialize()
 
 	local ke_gather = wt_kelement:create( "Gather", c_check_gatherable, e_gather, 40 )
 	wt_core_state_idle:add( ke_gather )
+	
+	local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 37 )
+	wt_core_state_idle:add( ke_switchmesh )	
 
 	local ke_dotasks = wt_kelement:create( "DoTask", c_dotask, e_dotask, 35 )
 	wt_core_state_idle:add( ke_dotasks )

@@ -1,12 +1,12 @@
 -- Taskmanager
 
-
 wt_core_taskmanager = { }
 wt_core_taskmanager.task_list = { }
 wt_core_taskmanager.possible_tasks = { }
 wt_core_taskmanager.current_task = nil
 wt_core_taskmanager.Partytask_list = { }
 wt_core_taskmanager.Customtask_list = { }
+wt_core_taskmanager.CustomLuaFunctions = { }  -- Add the functions that fill the Customtask_list with your tasks to this table!
 wt_core_taskmanager.markerList = { }
 wt_core_taskmanager.behavior = "default"
 wt_core_taskmanager.prioTmr = 0
@@ -19,11 +19,19 @@ function wt_core_taskmanager:addTask( task )
 	end
 end
 
--- To add a new task
+-- To add a new party task
 function wt_core_taskmanager:addPartytask( task )
 	if ( task ~= nil and  type( task ) == "table") then	
 		wt_debug( "Adding PartyTask to List: " .. task.name .. "(Prio:"..task.priority..")" )
 		table.insert( wt_core_taskmanager.Partytask_list, task )
+	end
+end
+
+-- To add a new custom task
+function wt_core_taskmanager:addCustomtask( task )
+	if ( task ~= nil and  type( task ) == "table") then	
+		wt_debug( "Adding CustomTask to List: " .. task.name .. "(Prio:"..task.priority..")" )
+		table.insert( wt_core_taskmanager.Customtask_list, task )
 	end
 end
 -------------------------------------------------------------------------
@@ -134,7 +142,7 @@ function wt_core_taskmanager:update_tasks( )
 
 	
 	-- if we have no task because the playerlevel is above the maplevel and the user forgot to check the ignore marker cap button:
-	if ( #wt_core_taskmanager.task_list <= 1 and gIgnoreMarkerCap == "0") then
+	if ( TableSize(wt_core_taskmanager.task_list) <= 1 and gIgnoreMarkerCap == "0") then
 		gIgnoreMarkerCap = "1"
 		wt_core_taskmanager:update_tasks( )
 	end
@@ -174,10 +182,10 @@ function wt_core_taskmanager:SetNewTask()
 			end
 		end
 		-- Select randomly a task from all remaining tasks in the list
-		if ( #wt_core_taskmanager.possible_tasks > 0 ) then
-			local taskindex = math.random( 1, #wt_core_taskmanager.possible_tasks )
+		if ( TableSize(wt_core_taskmanager.possible_tasks) > 0 ) then
+			local taskindex = math.random( 1, TableSize(wt_core_taskmanager.possible_tasks) )
 
-			wt_debug( "Selecting Task:" .. taskindex.. " out of " .. #wt_core_taskmanager.possible_tasks .. " possible Tasks" )
+			wt_debug( "Selecting Task:" .. taskindex.. " out of " .. TableSize(wt_core_taskmanager.possible_tasks) .. " possible Tasks" )
 			for k, task in pairs( wt_core_taskmanager.possible_tasks ) do
 				if ( k == taskindex ) then
 					wt_debug( "New task selected: " .. task.name .. "(Prio:" .. task.priority .. ")" )
@@ -190,11 +198,10 @@ end
 
 
 function CheckPriorityTasks()
-	if (wt_global_information.Now - wt_core_taskmanager.prioTmr > 2000) then
+	if (wt_global_information.Now - wt_core_taskmanager.prioTmr > 1000) then
 		wt_core_taskmanager.prioTmr = wt_global_information.Now
 		local possiblePrioTaskList = {}
 		highestPriority = 0
-
 		
 		-- Add all tasks from the wt_core_taskmanager.Partytask_list			
 		for k, task in pairs( wt_core_taskmanager.Partytask_list ) do
@@ -223,7 +230,7 @@ function CheckPriorityTasks()
 			end
 			
 			-- set new task if prio is higher than our current task
-			if ( #possiblePrioTaskList > 0 ) then
+			if ( TableSize(possiblePrioTaskList) > 0 ) then
 				for k, task in pairs( possiblePrioTaskList ) do
 					if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() and wt_core_taskmanager.current_task.priority >= task.priority ) then					
 					--keep current task				
@@ -242,15 +249,20 @@ function CheckPriorityTasks()
 end
 
 function wt_core_taskmanager.AddCustomTasks()
--- Overwrite this function with a function that adds customs tasks to the wt_core_taskmanager.Customtask_list, for dungeons and map specific events
+-- This function adds custom tasks to the wt_core_taskmanager.Customtask_list, for dungeons and map specific events
+-- Add functions from your own code to the wt_core_taskmanager.CustomLuaFunctions table, these will be called and should in return fill the 
+-- wt_core_taskmanager.Customtask_list with tasks that have to be executed
+	
+	for k, func in pairs( wt_core_taskmanager.CustomLuaFunctions ) do
+		if ( func ~= nil and  type( func ) == "function" ) then			
+			func()			
+		end
+	end
 end
 
  
 -- Main function that evaluates and executes the tasks
 function wt_core_taskmanager:DoTask()
-	-- Check if a task with higher priority popped up (Events;partystuff,customscripts etc)
-	CheckPriorityTasks()
-	
 	if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() ) then
 		if (gGW2MinionTask ~= nil ) then
 			gGW2MinionTask = wt_core_taskmanager.current_task.name
@@ -261,18 +273,34 @@ function wt_core_taskmanager:DoTask()
 	end
 end
 
+function wt_core_taskmanager:CheckPrioTask()
+	-- Check if a task with higher priority popped up (Events;partystuff,customscripts etc)
+	CheckPriorityTasks()
+	if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() and wt_core_taskmanager.current_task.priority > 1000) then
+		return true
+	end	
+	return false
+end
+
+function wt_core_taskmanager:DoPrioTask()
+	if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() and wt_core_taskmanager.current_task.priority > 1000) then
+		if (gGW2MinionTask ~= nil ) then
+			gGW2MinionTask = wt_core_taskmanager.current_task.name
+		end
+		wt_core_taskmanager.current_task.execute()
+	end	
+end
+
 -- Different Behavior for different Tasks
 function wt_core_taskmanager:SetDefaultBehavior()
-	wt_core_taskmanager.behavior = "default"
-	wt_global_information.MaxLootDistance = 1200
+	wt_core_taskmanager.behavior = "default"	
 	wt_global_information.MaxGatherDistance = 4000
 	wt_global_information.MaxAggroDistanceFar = 1200
 	wt_global_information.MaxAggroDistanceClose = 500
 	wt_global_information.MaxSearchEnemyDistance = 2500
 end
 function wt_core_taskmanager:SetMoveToBehavior()
-	wt_core_taskmanager.behavior = "move"
-	wt_global_information.MaxLootDistance = math.random( 800, 1400 )
+	wt_core_taskmanager.behavior = "move"	
 	wt_global_information.MaxGatherDistance = math.random( 1200, 4000 )
 	wt_global_information.MaxAggroDistanceFar = math.random( 500, 1200 )
 	wt_global_information.MaxAggroDistanceClose = math.random( 300, 500 )

@@ -387,3 +387,49 @@ function wt_core_taskmanager:addRepairTask( )
 		end
 	end
 end
+
+
+-- Special task to open eggs
+function wt_core_taskmanager:addEggTask(egg)     
+                        local newtask = inheritsFrom( wt_task )
+                        newtask.name = "KillEggs"
+                        newtask.priority = 300
+                        newtask.position = egg.pos
+                        newtask.done = false
+                        newtask.last_execution = 0
+                        newtask.throttle = 500
+                       
+                        function newtask:execute()
+                                local mypos = Player.pos
+                                local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
+                                if ( distance > 100 ) then                                             
+                                        if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+                                                Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 50 )
+                                                newtask.last_execution = wt_global_information.Now
+                                        end
+                                        newtask.name = "SquishEgg, dist: "..(math.floor(distance))
+                                else
+                                        local EList = GadgetList("contentID=227767, nearest,onmesh")
+                                        if ( TableSize( EList ) > 0 ) then
+                                                local nextTarget
+                                                nextTarget, E = next( EList )
+                                                if ( nextTarget ~= nil and nextTarget ~= 0 and E.distance < 150) then   
+													Player:Use( nextTarget )                                                                          
+                                                else
+													newtask.done = true
+                                                end
+                                        end
+                                        newtask.done = true
+                                end
+                        end
+                       
+                        function newtask:isFinished()
+                                if ( newtask.done ) then
+                                    wt_core_taskmanager:SetDefaultBehavior()
+                                    return true
+                                end
+                                return false
+                        end    
+						wt_debug("ADDED EGG")
+                        wt_core_taskmanager:addCustomtask( newtask )
+end

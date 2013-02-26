@@ -66,7 +66,7 @@ end
 local c_noleader = inheritsFrom( wt_cause )
 local e_noleader = inheritsFrom( wt_effect )
 function c_noleader:evaluate()
-	if (wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID ~= Player.characterID) then
+	if (wt_global_information.TargetMapID == 0 and wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID ~= Player.characterID) then
 		local party = Player:GetPartyMembers()
 		if (party ~= nil) then
 			local leader = party[tonumber(wt_global_information.LeaderID)]
@@ -182,11 +182,38 @@ end
 ------------------------------------------------------------------------------
 -- Search for Reviveable Partymembers Cause & Effect
   
- ------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 -- Search for Reviveable Targets Cause & Effect
 
- ------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 -- Loot Cause & Effect
+
+
+------------------------------------------------------------------------------
+-- Kill FocusTarget Cause & Effect
+local c_focus = inheritsFrom( wt_cause )
+local e_focus = inheritsFrom( wt_effect )
+function c_focus:evaluate()
+	-- kill focus target
+	if ( wt_global_information.FocusTarget ~= nil ) then
+		local target = CharacterList:Get(tonumber(wt_global_information.FocusTarget))
+		if ( target ~= nil and target.distance < 4000 and target.alive and target.onmesh) then
+			return true
+		end
+	end
+	wt_global_information.FocusTarget = nil
+	return false
+end
+function e_focus:execute()
+	if ( wt_global_information.FocusTarget ~= nil ) then
+		local target = CharacterList:Get(tonumber(wt_global_information.FocusTarget))
+		if ( target ~= nil and target.distance < 4000 and target.alive and target.onmesh) then
+			wt_debug( "Attacking Focustarget" )
+			wt_core_state_combat.setTarget( wt_global_information.FocusTarget )
+			wt_core_controller.requestStateChange( wt_core_state_combat )
+		end
+	end
+end
 
 ------------------------------------------------------------------------------
 -- Gatherbale Cause & Effect
@@ -223,9 +250,8 @@ end
 -- Follow Leader Cause & Effect
 local c_followLead = inheritsFrom( wt_cause )
 local e_followLead = inheritsFrom( wt_effect )
-
 function c_followLead:evaluate()
-	if (wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID ~= Player.characterID) then
+	if (wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID ~= 0 and wt_global_information.LeaderID ~= Player.characterID) then
 		local party = Player:GetPartyMembers()
 		if (party ~= nil) then
 			local leader = party[tonumber(wt_global_information.LeaderID)]
@@ -248,7 +274,6 @@ function c_followLead:evaluate()
 	end
 	return false
 end
-
 e_followLead.throttle = math.random( 400, 1000 )
 function e_followLead:execute()
 	local party = Player:GetPartyMembers()
@@ -285,23 +310,26 @@ function wt_core_state_minion:initialize()
 	local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 105 )
 	wt_core_state_minion:add( ke_quicklootchest )
 
+	local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 104)
+	wt_core_state_minion:add( ke_switchmesh )
+	
 	local ke_noleader = wt_kelement:create( "NoLeader", c_noleader, e_noleader, 102 )
 	wt_core_state_minion:add( ke_noleader )	
 
+	local ke_revparty = wt_kelement:create( "ReviveParty", c_revivep, e_revivep, 101 )
+	wt_core_state_minion:add( ke_revparty )
+	
 	local ke_maggro = wt_kelement:create( "AggroCheck", c_aggro, e_aggro, 100 )
 	wt_core_state_minion:add( ke_maggro )
 	
 	local ke_deposit = wt_kelement:create( "DepositItems", c_deposit, e_deposit, 90 )
 	wt_core_state_minion:add( ke_deposit )
-	
+	--salvaging 89
 	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 88 )
 	wt_core_state_minion:add( ke_vendorcheck )
 
 	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 86 )
 	wt_core_state_minion:add( ke_repaircheck )
-
-	local ke_reviveparty = wt_kelement:create( "ReviveParty", c_check_revivep, e_revivep, 83 )
-	wt_core_state_minion:add( ke_reviveparty )
 	
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )
 	wt_core_state_minion:add( ke_revive )
@@ -312,6 +340,9 @@ function wt_core_state_minion:initialize()
 	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 50 )
 	wt_core_state_minion:add( ke_loot )
 
+	local ke_atkfocus = wt_kelement:create("FocusAtk", c_focus, e_focus, 45 )
+	wt_core_state_minion:add( ke_atkfocus )
+	
 	local ke_gather = wt_kelement:create( "Gather", c_check_gatherable, e_gather, 40 )
 	wt_core_state_minion:add( ke_gather )
 	

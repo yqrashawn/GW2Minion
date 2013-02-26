@@ -2,6 +2,55 @@
 -- those can easily be used in compound cause objects to check
 -- for multiple causes at once
 
+
+DebugModes = { Revive = { Master = true, TID = nil, state = false, Move = true, Revive = true, NoTarget = true }, Loot = { Master = true, state = false, Size = 0, index = nil, TSize = true, Move = true } ,LootChest = { Master = true, state = false, Size = 0, index = nil, TSize = true, Move = true }}
+-- DebugModes.Revive.TID -- Target ID
+-- DebugModes.Revive.Master -- Master Revive Debug message switch ( true / false ) if true do debug messages, if false don't do debug messages.
+-- DebugModes.state
+-- DebugModes.Revive.Move -- true = keep spamming the debug message
+-- DebugModes.Revive.Revive -- true = keep spamming the debug message
+-- DebugModes.Revive.NoTarget -- true = create debug message for No Revive Target
+
+-- DebugModes.Loot.Size -- Table size of Loot Target table
+-- DebugModes.Loot.index -- Target ID of Loot Target
+-- DebugModes.Loot.Master -- Master Loot Debug message switch ( true / false ) if true do debug messages, if false don't do debug messages.
+-- DebugModes.Loot.state
+
+
+--**********************************************
+-- NavMeshSwitch C&E
+--**********************************************
+c_navswitch = inheritsFrom( wt_cause )
+e_navswitch = inheritsFrom( wt_effect )
+function c_navswitch:evaluate()
+	if ( gNavSwitchEnabled == "1" and Inventory:GetInventoryMoney() > 500) then
+		if ( NavigationManager:GetTargetMapID() ~= 0) then
+			return true
+		end		
+		if (gMinionEnabled == "0" or (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID == Player.characterID)) then			
+			if (mm.lastswitchTmr == 0) then
+				mm.lastswitchTmr = wt_global_information.Now
+			else
+				gMapswitch = math.floor(((gNavSwitchTime * 60000) - (wt_global_information.Now - mm.lastswitchTmr)) / 1000)
+				if ( mm.GetmeshfilelistSize() > 1 and (wt_global_information.Now - mm.lastswitchTmr > (gNavSwitchTime * 60000))) then
+					if ( not Player.inCombat ) then
+						Player:StopMoving()			
+						return true
+					end
+				end
+			end
+		else
+			gMapswitch = 0
+		end
+	end
+	return false
+end
+function e_navswitch:execute()
+	wt_debug("Switching NavMesh!")
+	mm.lastswitchTmr  = wt_global_information.Now
+	wt_core_controller.requestStateChange( wt_core_state_navswitch )
+end
+
 --**********************************************
 -- Death Check
 --**********************************************
@@ -50,8 +99,7 @@ function c_quickloot:evaluate()
 	return false
 end
 e_quickloot.n_index = nil
-e_quickloot.throttle = math.random( 50, 450 )
-e_quickloot.delay = math.random( 50, 250 )
+e_quickloot.throttle = math.random( 50, 250 )
 function e_quickloot:execute()
  	local NextIndex = 0
 	local LootTarget = nil
@@ -174,15 +222,6 @@ function c_aggro:evaluate()
 			end			
 			
 		else -- We follow
-			-- kill focus target
-			if ( wt_global_information.FocusTarget ~= nil and wt_core_controller.state ~= nil and wt_core_controller.state == wt_core_state_minion) then
-				local target = CharacterList:Get(tonumber(wt_global_information.FocusTarget))
-				if ( target ~= nil and target.distance < 4000 and target.alive and target.onmesh) then
-					return true
-				end
-			end
-			wt_global_information.FocusTarget = nil
-			
 			-- close range aggro targets
 			c_aggro.TargetList = ( CharacterList( "nearest,los,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 			if ( TableSize( c_aggro.TargetList ) > 0 ) then
@@ -225,16 +264,7 @@ function e_aggro:execute()
 					wt_core_controller.requestStateChange( wt_core_state_combat )
 				end
 			end
-		else -- We Follow
-			if ( wt_global_information.FocusTarget ~= nil and wt_core_controller.state ~= nil and wt_core_controller.state == wt_core_state_minion) then
-				local target = CharacterList:Get(tonumber(wt_global_information.FocusTarget))
-				if ( target ~= nil and target.distance < 4000 and target.alive and target.onmesh) then
-					wt_debug( "Attacking Focustarget" )
-					wt_core_state_combat.setTarget( wt_global_information.FocusTarget )
-					wt_core_controller.requestStateChange( wt_core_state_combat )
-					return
-				end
-			end
+		else -- We Follow			
 			if ( TableSize( c_aggro.TargetList ) > 0 ) then
 				nextTarget, E  = next( c_aggro.TargetList )
 				if ( nextTarget ~= nil ) then
@@ -259,6 +289,24 @@ function e_aggro:execute()
 		end
 	end
 end
+
+
+
+--************************************************************
+-- Do Prio Tasks Cause & Effect
+--************************************************************
+c_dopriotask = inheritsFrom( wt_cause )
+e_dotask = inheritsFrom( wt_effect )
+function c_dopriotask:evaluate()
+	if ( wt_core_taskmanager ~= nil ) then
+		return wt_core_taskmanager:CheckPrioTask()	
+	end	
+	return false
+end
+function e_dotask:execute()
+	wt_core_taskmanager:DoPrioTask()
+end
+
 
 
 
@@ -330,17 +378,16 @@ end
 --************************************************************
 -- Revive PartyMember in Groupbotting
 --************************************************************
-c_check_revivep = inheritsFrom( wt_cause )
+c_revivep = inheritsFrom( wt_cause )
 e_revivep = inheritsFrom( wt_effect )
-c_check_revivep.ID = nil
-
-function c_check_revivep:evaluate()
+c_revivep.ID = nil
+function c_revivep:evaluate()
 	local party = Player:GetPartyMembers()
-	if (party ~= nil and wt_core_state_leader.LeaderID ~= nil) then
+	if (party ~= nil and wt_global_information.LeaderID ~= nil) then
 		local index, player  = next( party )
 		while ( index ~= nil and player ~= nil ) do			
 			if (player.distance < 4000 and ((player.healthstate == GW2.HEALTHSTATE.Defeated and not Player.inCombat) or (player.healthstate == GW2.HEALTHSTATE.Downed)) and player.onmesh) then
-				c_check_revivep.ID = index
+				c_revivep.ID = index
 				return true
 			end
 			index, player  = next( party,index )
@@ -348,19 +395,20 @@ function c_check_revivep:evaluate()
 	end
 	return false
 end
-
+e_revivep.throttle = 250
 function e_revivep:execute()
-	if (c_check_revivep.ID ~= nil and c_check_revivep.ID ~= 0 ) then
-		local T = CharacterList:Get( c_check_revivep.ID )
+	if (c_revivep.ID ~= nil and c_revivep.ID ~= 0 ) then
+		local T = CharacterList:Get( c_revivep.ID )
 		if ( T ~= nil ) then
-			if ( ((player.healthstate == GW2.HEALTHSTATE.Defeated and not Player.inCombat) or (player.healthstate == GW2.HEALTHSTATE.Downed)) and T.onmesh ) then
+			if ( ((T.healthstate == GW2.HEALTHSTATE.Defeated and not Player.inCombat) or (T.healthstate == GW2.HEALTHSTATE.Downed)) and T.onmesh ) then		
 				if ( T.distance > 100 ) then
 					local TPOS = T.pos
-					Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 50 )
+					Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 25 )
 				elseif( T.distance <= 100 ) then
 					Player:StopMoving()
 					if ( Player:GetCurrentlyCastedSpell() == 17 ) then
-						Player:Interact( c_check_revivep.ID )
+						Player:Interact( c_revivep.ID )
+						wt_debug("Reviving Partymember")
 						return
 					end
 				end
@@ -382,25 +430,25 @@ function c_check_revive:evaluate()
 		local T = CharacterList:Get( TID )
 		if ( T ~= nil ) then
 			if ( T.distance < wt_global_information.MaxReviveDistance and T.attitude == GW2.ATTITUDE.Friendly and T.healthstate == GW2.HEALTHSTATE.Defeated and T.onmesh ) then
-				if ( wt_core_state_idle.DebugModes.Revive.Master ) then
-					if ( T.distance > 100 and wt_core_state_idle.DebugModes.state ~= "Move" ) then
-						wt_core_state_idle.DebugModes.state = "Move"
-						if ( wt_core_state_idle.DebugModes.Revive.TID ~= nil ) then wt_core_state_idle.DebugModes.Revive.TID = nil end
-					elseif ( T.distance < 100 and wt_core_state_idle.DebugModes.state ~= "Revive" ) then
-						wt_core_state_idle.DebugModes.state = "Revive"
-						if ( wt_core_state_idle.DebugModes.Revive.TID ~= nil ) then wt_core_state_idle.DebugModes.Revive.TID = nil end
+				if ( DebugModes.Revive.Master ) then
+					if ( T.distance > 100 and DebugModes.state ~= "Move" ) then
+						DebugModes.state = "Move"
+						if ( DebugModes.Revive.TID ~= nil ) then DebugModes.Revive.TID = nil end
+					elseif ( T.distance < 100 and DebugModes.state ~= "Revive" ) then
+						DebugModes.state = "Revive"
+						if ( DebugModes.Revive.TID ~= nil ) then DebugModes.Revive.TID = nil end
 					end
-					if ( wt_core_state_idle.DebugModes.Revive.Move or wt_core_state_idle.DebugModes.Revive.Revive ) then
-						-- if ( wt_core_state_idle.DebugModes.Revive.TID ~= nil ) then wt_core_state_idle.DebugModes.Revive.TID = nil end
+					if ( DebugModes.Revive.Move or DebugModes.Revive.Revive ) then
+						-- if ( DebugModes.Revive.TID ~= nil ) then DebugModes.Revive.TID = nil end
 					end
 				end
 				return true
 			end
 		end
 	end
-	if ( wt_core_state_idle.DebugModes.Revive.Master ) then
-		if ( wt_core_state_idle.DebugModes.state ~= false ) then wt_core_state_idle.DebugModes.state = false end
-		if ( wt_core_state_idle.DebugModes.Revive.TID ~= nil ) then wt_core_state_idle.DebugModes.Revive.TID = nil end
+	if ( DebugModes.Revive.Master ) then
+		if ( DebugModes.state ~= false ) then DebugModes.state = false end
+		if ( DebugModes.Revive.TID ~= nil ) then DebugModes.Revive.TID = nil end
 	end
 	return false
 end
@@ -411,13 +459,13 @@ function e_revive:execute()
 		if ( T ~= nil ) then
 			if ( T.healthstate == GW2.HEALTHSTATE.Defeated and T.attitude == GW2.ATTITUDE.Friendly and T.onmesh ) then
 				if ( T.distance > 100 ) then
-					if ( wt_core_state_idle.DebugModes.Revive.TID ~= TID and wt_core_state_idle.DebugModes.Revive.Master ) then wt_core_state_idle.DebugModes.Revive.TID = TID wt_debug( string.format( "Idle: moving to reviveable target %s Dist: %u", tostring( T.name ), T.distance ) ) end
+					if ( DebugModes.Revive.TID ~= TID and DebugModes.Revive.Master ) then DebugModes.Revive.TID = TID wt_debug( string.format( "Idle: moving to reviveable target %s Dist: %u", tostring( T.name ), T.distance ) ) end
 					local TPOS = T.pos
 					Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 80 )
 				elseif( T.distance < 100 ) then
 					Player:StopMoving()
 					if ( Player:GetCurrentlyCastedSpell() == 17 ) then
-						if ( wt_core_state_idle.DebugModes.Revive.TID ~= TID and wt_core_state_idle.DebugModes.Revive.Master ) then wt_core_state_idle.DebugModes.Revive.TID = TID wt_debug( string.format( "Idle: reviving target %s", tostring( T.name ) ) ) end
+						if ( DebugModes.Revive.TID ~= TID and DebugModes.Revive.Master ) then DebugModes.Revive.TID = TID wt_debug( string.format( "Idle: reviving target %s", tostring( T.name ) ) ) end
 						Player:Interact( TID )
 						return
 					end
@@ -425,7 +473,7 @@ function e_revive:execute()
 			end
 		end
 	else
-		if ( wt_core_state_idle.DebugModes.Revive.NoTarget and wt_core_state_idle.DebugModes.Revive.Master ) then wt_error( "Idle: No Target to revive" ) end
+		if ( DebugModes.Revive.NoTarget and DebugModes.Revive.Master ) then wt_error( "Idle: No Target to revive" ) end
 	end
 end
 
@@ -434,70 +482,39 @@ end
 --*********************************************************
 -- Loot Cause & Effect
 --*********************************************************
-local c_check_loot = inheritsFrom( wt_cause )
-local e_loot = inheritsFrom( wt_effect )
-local e_loot_t_size = 0
-local e_loot_n_index = nil
-
+c_check_loot = inheritsFrom( wt_cause )
+e_loot = inheritsFrom( wt_effect )
 function c_check_loot:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then
 		c_check_loot.EList = CharacterList( "nearest,lootable,onmesh,maxdistance=" .. wt_global_information.MaxLootDistance )
-		if ( TableSize( c_check_loot.EList ) > 0 ) then
-			if ( wt_core_state_idle.DebugModes.Loot.Master ) then
-				local index, LT = next( c_check_loot.EList )
-				if ( index ~= nil ) then
-					if ( wt_core_state_idle.DebugModes.Loot.index == index or wt_core_state_idle.DebugModes.Loot.state == false ) then
-						if ( LT.distance > 130 and wt_core_state_idle.DebugModes.Loot.state ~= "Moving" and wt_core_state_idle.DebugModes.Loot.Move ) then
-							wt_core_state_idle.DebugModes.Loot.state = "Moving"
-							if ( wt_core_state_idle.DebugModes.Loot.index == index ) then wt_core_state_idle.DebugModes.Loot.index = nil end
-						elseif ( LT.distance < 100 and wt_core_state_idle.DebugModes.Loot.state ~= "Looting" ) then
-							wt_core_state_idle.DebugModes.Loot.state = "Looting"
-							if ( wt_core_state_idle.DebugModes.Loot.index == index ) then wt_core_state_idle.DebugModes.Loot.index = nil end
-						elseif ( LT.distance < 150 and wt_core_state_idle.DebugModes.Loot.state ~= "DirectMoving" ) then
-							wt_core_state_idle.DebugModes.Loot.state = "DirectMoving"
-							if ( wt_core_state_idle.DebugModes.Loot.index == index ) then wt_core_state_idle.DebugModes.Loot.index = nil end
-						end
-					end
-					if ( wt_core_state_idle.DebugModes.Loot.Size ~= TableSize( c_check_loot.EList ) and wt_core_state_idle.DebugModes.Loot.TSize ) then wt_core_state_idle.DebugModes.Loot.Size = TableSize( c_check_loot.EList ) end
-					return true
-				end
+		if ( TableSize( c_check_loot.EList ) > 0 ) then			
+			local index, LT = next( c_check_loot.EList )
+			if ( index ~= nil and LT~=nil) then					
+				return true
 			end
-			return true
-		end
-		if ( wt_core_state_idle.DebugModes.Loot.Master ) then
-			if ( wt_core_state_idle.DebugModes.Loot.Size ~= TableSize( c_check_loot.EList ) ) then wt_core_state_idle.DebugModes.Loot.Size = TableSize( c_check_loot.EList ) end
-			if ( wt_core_state_idle.DebugModes.Loot.state ~= false ) then wt_core_state_idle.DebugModes.Loot.state = false end
-		end
+		end		
 	end
 	return false
 end
 e_loot.throttle = math.random( 250, 500 )
--- A Note to "e_loot:execute()" after the introduction of QuickLoot, "e_loot:Execute()" never seem to reach past "Idle: moving to loot" if QuickLoot is present in state.
-function e_loot:execute()
-	local NextIndex, LootTarget = 0, nil
-	NextIndex, LootTarget = next( c_check_loot.EList )
-	if ( NextIndex ~= nil ) then
-		if ( wt_core_state_idle.DebugModes.Loot.Master and wt_core_state_idle.DebugModes.Loot.Size > 0 and wt_core_state_idle.DebugModes.Loot.index ~= NextIndex ) then wt_debug( "Idle: loottable size " .. TableSize( c_check_loot.EList ) ) end
-		if ( LootTarget.distance > 130 ) then
-			if ( wt_core_state_idle.DebugModes.Loot.Master and wt_core_state_idle.DebugModes.Loot.index ~= NextIndex and wt_core_state_idle.DebugModes.Loot.state == "Moving" ) then wt_core_state_idle.DebugModes.Loot.index = NextIndex wt_debug( "Idle: moving to loot" ) end
-			local TPOS = LootTarget.pos
-			Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 0 )
-		elseif ( LootTarget.distance < 100 and NextIndex == Player:GetInteractableTarget() ) then
-			Player:StopMoving()
-			if ( Player:GetCurrentlyCastedSpell() == 17 ) then
-				if ( e_loot_n_index ~= NextIndex ) then
-					e_loot_n_index = NextIndex
-					wt_debug( "Idle: looting" )
+function e_loot:execute()	
+	if ( TableSize( c_check_loot.EList ) > 0 ) then			
+		local index, LT = next( c_check_loot.EList )
+		if ( index ~= nil and LT~=nil) then	
+			if ( LT.distance ~= nil and LT.distance > 130 ) then	
+				local TPOS = LT.pos
+				Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 0 )
+			elseif ( LT.distance < 100 and index == Player:GetInteractableTarget() ) then
+				Player:StopMoving()
+				if ( Player:GetCurrentlyCastedSpell() == 17 ) then					
+					wt_debug( "Looting Corpse" )					
+					Player:Interact( index )
 				end
-				Player:Interact( NextIndex )
+			elseif (LT.distance < 100 and index ~= Player:GetInteractableTarget()) then
+				Player:StopMoving()
+				wt_debug( "Targeting Corpse" )					
+				Player:SetTarget(index)
 			end
-		elseif ( LootTarget.distance < 150 ) then
-			if ( e_loot_n_index ~= NextIndex ) then
-				e_loot_n_index = NextIndex
-				wt_debug( "Idle: directly moving to loot" )
-			end
-			local TPOS = LootTarget.pos
-			Player:MoveToStraight( TPOS.x, TPOS.y, TPOS.z , 0 )
 		end
 	else
 		wt_error( "Idle: No Target to Loot" )
@@ -509,72 +526,39 @@ end
 -- LootChests Cause & Effect
 c_lootchest = inheritsFrom( wt_cause )
 e_lootchest = inheritsFrom( wt_effect )
-e_lootchest_t_size = 0
-e_lootchest_n_index = nil
-
 function c_lootchest:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then
 		c_lootchest.EList = GadgetList("nearest,onmesh,contentID=198260,maxdistance=" .. wt_global_information.MaxLootDistance )
-		if ( TableSize( c_lootchest.EList ) > 0 ) then
-			if ( wt_core_state_idle.DebugModes.LootChest.Master ) then
-				local index, LT = next( c_lootchest.EList )
-				if ( index ~= nil ) then
-					if ( wt_core_state_idle.DebugModes.LootChest.index == index or wt_core_state_idle.DebugModes.LootChest.state == false ) then
-						if ( LT.distance > 130 and wt_core_state_idle.DebugModes.LootChest.state ~= "Moving" and wt_core_state_idle.DebugModes.LootChest.Move ) then
-							wt_core_state_idle.DebugModes.LootChest.state = "Moving"
-							if ( wt_core_state_idle.DebugModes.LootChest.index == index ) then wt_core_state_idle.DebugModes.LootChest.index = nil end
-						elseif ( LT.distance < 100 and wt_core_state_idle.DebugModes.LootChest.state ~= "Looting" ) then
-							wt_core_state_idle.DebugModes.LootChest.state = "Looting"
-							if ( wt_core_state_idle.DebugModes.LootChest.index == index ) then wt_core_state_idle.DebugModes.LootChest.index = nil end
-						elseif ( LT.distance < 150 and wt_core_state_idle.DebugModes.LootChest.state ~= "DirectMoving" ) then
-							wt_core_state_idle.DebugModes.LootChest.state = "DirectMoving"
-							if ( wt_core_state_idle.DebugModes.LootChest.index == index ) then wt_core_state_idle.DebugModes.LootChest.index = nil end
-						end
-					end
-					if ( wt_core_state_idle.DebugModes.LootChest.Size ~= TableSize( c_lootchest.EList ) and wt_core_state_idle.DebugModes.LootChest.TSize ) then wt_core_state_idle.DebugModes.LootChest.Size = TableSize( c_check_loot.EList ) end
-					return true
-				end
+		if ( TableSize( c_lootchest.EList ) > 0 ) then			
+			local index, LT = next( c_lootchest.EList )
+			if ( index ~= nil and LT~=nil) then					
+				return true
 			end
-			return true
-		end
-		if ( wt_core_state_idle.DebugModes.LootChest.Master ) then
-			if ( wt_core_state_idle.DebugModes.LootChest.Size ~= TableSize( c_lootchest.EList ) ) then wt_core_state_idle.DebugModes.LootChest.Size = TableSize( c_check_loot.EList ) end
-			if ( wt_core_state_idle.DebugModes.LootChest.state ~= false ) then wt_core_state_idle.DebugModes.LootChest.state = false end
-		end
+		end	
 	end
 	return false
 end
-
-e_lootchest.throttle = math.random( 500, 1500 )
-e_lootchest.delay = math.random( 100, 500 )
--- A Note to "e_loot:execute()" after the introduction of QuickLoot, "e_loot:Execute()" never seem to reach past "Idle: moving to loot" if QuickLoot is present in state.
+e_lootchest.throttle = math.random( 250, 500 )
 function e_lootchest:execute()
-	local NextIndex, LootTarget = 0, nil
-	NextIndex, LootTarget = next( c_lootchest.EList )
-	if ( NextIndex ~= nil ) then
-		if ( wt_core_state_idle.DebugModes.LootChest.Master and wt_core_state_idle.DebugModes.LootChest.Size > 0 and wt_core_state_idle.DebugModes.LootChest.index ~= NextIndex ) then wt_debug( "Idle: loottable size " .. TableSize( c_check_loot.EList ) ) end
-		if ( LootTarget.distance > 130 ) then
-			if ( wt_core_state_idle.DebugModes.LootChest.Master and wt_core_state_idle.DebugModes.LootChest.index ~= NextIndex and wt_core_state_idle.DebugModes.LootChest.state == "Moving" ) then wt_core_state_idle.DebugModes.LootChest.index = NextIndex wt_debug( "Idle: moving to loot" ) end
-			local TPOS = LootTarget.pos
-			Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 50 )
-		elseif ( LootTarget.distance < 100 and NextIndex == Player:GetInteractableTarget() ) then
-			Player:StopMoving()
-			if ( Player:GetCurrentlyCastedSpell() == 17 ) then
-				if ( e_loot_n_index ~= NextIndex ) then
-					e_loot_n_index = NextIndex
-					wt_debug( "Idle: looting chest" )
+	if ( TableSize( c_lootchest.EList ) > 0 ) then			
+		local index, LT = next( c_lootchest.EList )
+		if ( index ~= nil and LT~=nil) then	
+			if ( LT.distance ~= nil and LT.distance > 130 ) then	
+				local TPOS = LT.pos
+				Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 0 )
+			elseif ( LT.distance < 100 and index == Player:GetInteractableTarget() ) then
+				Player:StopMoving()
+				if ( Player:GetCurrentlyCastedSpell() == 17 ) then					
+					wt_debug( "Looting Chest" )					
+					Player:Interact( index )
 				end
-				Player:Interact( NextIndex )
+			elseif (LT.distance < 100 and index ~= Player:GetInteractableTarget()) then
+				Player:StopMoving()
+				wt_debug( "Targeting Chest" )					
+				Player:SetTarget(index)
 			end
-		elseif ( LootTarget.distance < 150 ) then
-			if ( e_loot_n_index ~= NextIndex ) then
-				e_loot_n_index = NextIndex
-				wt_debug( "Idle: directly moving to loot chest" )
-			end
-			local TPOS = LootTarget.pos
-			Player:MoveToStraight( TPOS.x, TPOS.y, TPOS.z , 50 )
 		end
 	else
 		wt_error( "Idle: No Chest to Loot found" )
-	end
+	end	
 end

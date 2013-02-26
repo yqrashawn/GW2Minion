@@ -8,7 +8,11 @@ wt_task.priorities = {
 	high = 75,
 	vendor = 100,
 	repair = 125,
+	
+	-- Every Prio above 1000 is beeing executed right after aggrocheck! For very important things...
+	
 }
+
 
 wt_task.execution_count = 0
 wt_task.max_execution_count = 0
