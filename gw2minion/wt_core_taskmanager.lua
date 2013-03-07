@@ -68,7 +68,9 @@ function wt_core_taskmanager:update_tasks( )
 
 	
 	-- Add Search and Kill enemies
-	wt_core_taskmanager:addSearchAndKillTask(  )
+	if (Player:GetLocalMapID() ~= 33) then --dont do this in dungeons
+		wt_core_taskmanager:addSearchAndKillTask(  )
+	end
 	
 	-- Updating MarkerList-data if needed
 	if ( wt_core_taskmanager.markerList == nil or TableSize( wt_core_taskmanager.markerList ) == 0 or MarkersNeedUpdate() ) then
@@ -163,6 +165,7 @@ function wt_core_taskmanager:SetNewTask()
 	wt_core_taskmanager.possible_tasks = { }
 	wt_core_taskmanager.current_task = nil
 
+	
 	-- enlist all possible tasks
 	for k, task in pairs( wt_core_taskmanager.task_list ) do
 		if ( task ~= nil and  type( task ) == "table" and task:canRun() and highestPriority <= task.priority ) then
@@ -182,10 +185,10 @@ function wt_core_taskmanager:SetNewTask()
 			end
 		end
 		-- Select randomly a task from all remaining tasks in the list
-		if ( TableSize(wt_core_taskmanager.possible_tasks) > 0 ) then
-			local taskindex = math.random( 1, TableSize(wt_core_taskmanager.possible_tasks) )
+		if ( #wt_core_taskmanager.possible_tasks > 0 ) then
+			local taskindex = math.random( 1, #wt_core_taskmanager.possible_tasks )
 
-			wt_debug( "Selecting Task:" .. taskindex.. " out of " .. TableSize(wt_core_taskmanager.possible_tasks) .. " possible Tasks" )
+			wt_debug( "Selecting Task:" .. taskindex.. " out of " .. #wt_core_taskmanager.possible_tasks .. " possible Tasks" )
 			for k, task in pairs( wt_core_taskmanager.possible_tasks ) do
 				if ( k == taskindex ) then
 					wt_debug( "New task selected: " .. task.name .. "(Prio:" .. task.priority .. ")" )
@@ -251,17 +254,15 @@ end
 function wt_core_taskmanager.AddCustomTasks()
 -- This function adds custom tasks to the wt_core_taskmanager.Customtask_list, for dungeons and map specific events
 -- Add functions from your own code to the wt_core_taskmanager.CustomLuaFunctions table, these will be called and should in return fill the 
--- wt_core_taskmanager.Customtask_list with tasks that have to be executed
-	
+-- wt_core_taskmanager.Customtask_list with tasks that have to be executed	
 	for k, func in pairs( wt_core_taskmanager.CustomLuaFunctions ) do
 		if ( func ~= nil and  type( func ) == "function" ) then			
 			func()			
 		end
 	end
 end
-
  
--- Main function that evaluates and executes the tasks
+-- Main function that evaluates and executes the normal primary target tasks (goto, vendor, repair etc.)
 function wt_core_taskmanager:DoTask()
 	if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() ) then
 		if (gGW2MinionTask ~= nil ) then
@@ -273,23 +274,41 @@ function wt_core_taskmanager:DoTask()
 	end
 end
 
-function wt_core_taskmanager:CheckPrioTask()
-	-- Check if a task with higher priority popped up (Events;partystuff,customscripts etc)
+
+-- Check if a task with priority > 10000 popped up (they are getting executed BEFORE aggrocheck)
+function wt_core_taskmanager:CheckEmergencyTask()	
 	CheckPriorityTasks()
-	if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() and wt_core_taskmanager.current_task.priority > 1000) then
+	if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() and wt_core_taskmanager.current_task.priority > 10000) then
 		return true
 	end	
 	return false
 end
-
-function wt_core_taskmanager:DoPrioTask()
-	if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() and wt_core_taskmanager.current_task.priority > 1000) then
+function wt_core_taskmanager:DoEmergencyTask()
+	if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() and wt_core_taskmanager.current_task.priority > 10000) then
 		if (gGW2MinionTask ~= nil ) then
 			gGW2MinionTask = wt_core_taskmanager.current_task.name
 		end
 		wt_core_taskmanager.current_task.execute()
 	end	
 end
+
+
+-- Check if a task with priority >1000 and < 10000 popped up (they are getting executed AFTER aggrocheck)
+function wt_core_taskmanager:CheckPrioTask()	
+	if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() and wt_core_taskmanager.current_task.priority > 1000 and wt_core_taskmanager.current_task.priority < 10000) then
+		return true
+	end	
+	return false
+end
+function wt_core_taskmanager:DoPrioTask()
+	if ( wt_core_taskmanager.current_task ~= nil and not wt_core_taskmanager.current_task.isFinished() and wt_core_taskmanager.current_task.priority > 1000 and wt_core_taskmanager.current_task.priority < 10000) then
+		if (gGW2MinionTask ~= nil ) then
+			gGW2MinionTask = wt_core_taskmanager.current_task.name
+		end
+		wt_core_taskmanager.current_task.execute()
+	end	
+end
+
 
 -- Different Behavior for different Tasks
 function wt_core_taskmanager:SetDefaultBehavior()

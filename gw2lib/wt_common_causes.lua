@@ -291,6 +291,22 @@ function e_aggro:execute()
 end
 
 
+--************************************************************
+-- Do Emergency Tasks Cause & Effect
+--************************************************************
+c_doemergencytask = inheritsFrom( wt_cause )
+e_doemergencytask = inheritsFrom( wt_effect )
+function c_doemergencytask:evaluate()
+	if ( wt_core_taskmanager ~= nil ) then
+		return wt_core_taskmanager:CheckEmergencyTask()	
+	end	
+	return false
+end
+function e_doemergencytask:execute()
+	wt_core_taskmanager:DoEmergencyTask()
+end
+
+
 
 --************************************************************
 -- Do Prio Tasks Cause & Effect

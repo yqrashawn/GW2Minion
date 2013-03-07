@@ -66,7 +66,7 @@ function TableSize( T )
 	local count = 0
 	
 	k, v  = next( T )
-	if ( k ~= nil ) then			
+	while ( k ~= nil ) do			
 		count = count + 1
 		k, v  = next( T, k )
 	end

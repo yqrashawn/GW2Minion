@@ -9,7 +9,7 @@ wt_task.priorities = {
 	vendor = 100,
 	repair = 125,
 	
-	-- Every Prio above 1000 is beeing executed right after aggrocheck! For very important things...
+	-- Every Prio above 1000 is beeing executed before aggrocheck! For very important things...
 	
 }
 

@@ -109,17 +109,26 @@ end
 
 e_openvendorR.throttle = math.random( 500, 2000 )
 e_openvendorR.delay = math.random( 1000, 2500 )
+e_openvendorR.switch = false
 function e_openvendorR:execute()
 	Player:StopMoving()
 	wt_debug( "Repair: Opening Vendor.. " )
 	if ( wt_core_state_repair.CurrentTargetID ~= nil and wt_core_state_repair.CurrentTargetID ~= 0 ) then
 		local T = MapObjectList:Get( wt_core_state_repair.CurrentTargetID )
-		if ( T ~= nil and T.characterID ~= nil and T.characterID ~= 0 ) then
+		if ( T ~= nil and T.characterID ~= nil and T.characterID ~= 0 and e_openvendorR.switch == false) then			
 			Player:Interact( T.characterID )
+			e_openvendorR.switch = true
 			-- Tell all minions nearby to vendor
 			if ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
 				MultiBotSend( "16;0","gw2minion" )
-			end		
+			end	
+		elseif ( T ~= nil and T.characterID ~= nil and T.characterID ~= 0 and e_openvendorR.switch == true) then			
+			Player:Use( T.characterID )
+			e_openvendorR.switch = false
+			-- Tell all minions nearby to vendor
+			if ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
+				MultiBotSend( "16;0","gw2minion" )
+			end	
 		else
 			wt_core_state_repair.CurrentTargetID = 0
 		end
