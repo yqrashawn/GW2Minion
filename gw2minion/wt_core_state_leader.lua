@@ -315,7 +315,7 @@ function HandleMultiBotMessages( event, message, channel )
 					elseif ( tonumber(msgID) == 10 ) then -- A minion needs to Vendor, set our Primary task accordingly
 						if ( wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID  == Player.characterID) then
 							wt_debug( "A Minion needs to vendor, going to Vendor" )
-							wt_core_taskmanager:addVendorTask({task_type = "party"})
+							wt_core_taskmanager:addVendorTask({task_type = "party", priority = 10001})
 						end
 					elseif ( tonumber(msgID) == 11 ) then -- Leader tells Minions to Vendor
 						if ( wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID ~= Player.characterID ) then
@@ -333,7 +333,7 @@ function HandleMultiBotMessages( event, message, channel )
 					elseif ( tonumber(msgID) == 15 ) then -- A minion needs to Repair, set our Primary task accordingly
 						if ( wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID  == Player.characterID) then
 							wt_debug( "A Minion needs to repair, going to Merchant" )
-							wt_core_taskmanager:addRepairTask({task_type = "party"})
+							wt_core_taskmanager:addRepairTask({task_type = "party", priority = 10001})
 						end
 					elseif ( tonumber(msgID) == 16 ) then -- Leader tells Minions to Repair
 						if ( gEnableRepair == "1" and IsEquipmentBroken() and wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID ~= Player.characterID ) then

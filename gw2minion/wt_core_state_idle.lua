@@ -54,9 +54,9 @@ function c_vendorcheck:evaluate()
 end
 function e_vendorcheck:execute()
 	if (gVendor_Repair == "1") then
-		wt_core_taskmanager:addRepairTask({priority = 1001, task_type = "custom"})
+		wt_core_taskmanager:addRepairTask({priority = 10001, task_type = "custom"})
 	end
-	wt_core_taskmanager:addVendorTask({priority = 1001, task_type = "custom"})
+	wt_core_taskmanager:addVendorTask({priority = 10001, task_type = "custom"})
 end
 
 ------------------------------------------------------------------------------
@@ -80,9 +80,9 @@ function c_repaircheck:evaluate()
 end
 
 function e_repaircheck:execute()
-	wt_core_taskmanager:addRepairTask({priority = 1001, task_type = "custom"})
+	wt_core_taskmanager:addRepairTask({priority = 10001, task_type = "custom"})
 	if( gVendor_Repair == "1") then
-		wt_core_taskmanager:addVendorTask({priority = 1001, task_type = "custom"})
+		wt_core_taskmanager:addVendorTask({priority = 10001, task_type = "custom"})
 	end
 end
 
