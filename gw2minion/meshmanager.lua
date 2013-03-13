@@ -144,7 +144,7 @@ function mm.ClearList()
 	mm.meshfilelist = {}
 	GUI_RefreshWindow(mm.mainwindow.name)
 	for meshfile in io.popen('dir /b "' .. mm.navmeshfilepath ..'*.info"'):lines() do
-		os.remove(mm.navmeshfilepath..tostring(meshfile)..".info")
+		os.remove(mm.navmeshfilepath..tostring(meshfile))
 	end		
 end
 
@@ -192,6 +192,7 @@ function mm.GenerateInfoFile( )
 		wt_debug("YOU NEED TO LOAD THE NAVMESH FIRST, AND LEARN TO READ LOL")
 	end
 end
+
 
 RegisterEventHandler("MM.toggle", mm.ToggleMenu)
 RegisterEventHandler("MM.Add", mm.GenerateInfoFile)

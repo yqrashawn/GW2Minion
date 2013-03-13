@@ -28,6 +28,7 @@ wt_global_information.HasRepairMerchant = 0
 wt_global_information.HasVendor = 0
 wt_global_information.TargetWaypointID = 0
 
+
 gw2minion = { }
 
 if (Settings.GW2MINION.version == nil ) then
@@ -36,20 +37,37 @@ if (Settings.GW2MINION.version == nil ) then
 	Settings.GW2MINION.gEnableLog = "0"
 end
 
-
-if (Settings.GW2MINION.version <= 1.35 ) then
-	Settings.GW2MINION.version = 1.36
+if (Settings.GW2MINION.version <= 1.36 ) then
+	Settings.GW2MINION.version = 1.37	
+end
+if ( Settings.GW2MINION.gGW2MinionPulseTime == nil ) then
 	Settings.GW2MINION.gGW2MinionPulseTime = "150"
+end
+if ( Settings.GW2MINION.gEnableRepair == nil ) then
 	Settings.GW2MINION.gEnableRepair = "1"
-	Settings.GW2MINION.gIgnoreMarkerCap = "0"	
+end
+if ( Settings.GW2MINION.gIgnoreMarkerCap == nil ) then
+	Settings.GW2MINION.gIgnoreMarkerCap = "0"
+end
+if ( Settings.GW2MINION.gMaxItemSellRarity == nil ) then
 	Settings.GW2MINION.gMaxItemSellRarity = "2"
+end
+if ( Settings.GW2MINION.gNavSwitchEnabled == nil ) then
 	Settings.GW2MINION.gNavSwitchEnabled = "0"
+end
+if ( Settings.GW2MINION.gNavSwitchTime == nil ) then
 	Settings.GW2MINION.gNavSwitchTime = "20"
-	Settings.GW2MINION.gStats_enabled = "0"	
 end
 if ( Settings.GW2MINION.gStats_enabled == nil ) then
 	Settings.GW2MINION.gStats_enabled = "0"
 end
+if ( Settings.GW2MINION.gEnableLog == nil ) then
+	Settings.GW2MINION.gEnableLog = "0"
+end
+if ( Settings.GW2MINION.gAutostartbot == nil ) then
+	Settings.GW2MINION.gAutostartbot = "0"
+end
+
 	
 
 function wt_global_information.OnUpdate( event, tickcount )
@@ -83,6 +101,7 @@ function gw2minion.HandleInit()
 	GUI_NewField(wt_global_information.MainWindow.Name,"MainTask","gGW2MinionTask","BotStatus");
 	GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT","BotStatus");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MapSwitch in","gMapswitch","BotStatus");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoStartBot","gAutostartbot","Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Ignore Marker Level Cap","gIgnoreMarkerCap","Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Repair Equippment","gEnableRepair","Settings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Max ItemSell Rarity","gMaxItemSellRarity","Settings");
@@ -95,15 +114,20 @@ function gw2minion.HandleInit()
 	gEnableRepair = Settings.GW2MINION.gEnableRepair
 	gIgnoreMarkerCap = Settings.GW2MINION.gIgnoreMarkerCap
 	gMaxItemSellRarity = Settings.GW2MINION.gMaxItemSellRarity
+	gAutostartbot = = Settings.GW2MINION.gAutostartbot
 	gMapswitch = 0
 	
 	wt_debug("GUI Setup done")
 	wt_core_controller.requestStateChange(wt_core_state_idle)
+	
+	if (gAutostartbot == "1") then
+		wt_core_controller.shouldRun = true
+	end
 end
 
 function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
-		if ( k == "gEnableLog" or k == "gGW2MinionPulseTime" or k == "gEnableRepair" or k == "gIgnoreMarkerCap" or k == "gMaxItemSellRarity" ) then
+		if ( k == "gEnableLog" or k == "gGW2MinionPulseTime" or k == "gEnableRepair" or k == "gIgnoreMarkerCap" or k == "gMaxItemSellRarity" or k == "gAutostartbot") then
 			Settings.GW2MINION[tostring(k)] = v
 		end
 	end

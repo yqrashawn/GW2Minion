@@ -422,9 +422,11 @@ function e_revivep:execute()
 					Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 25 )
 				elseif( T.distance <= 100 ) then
 					Player:StopMoving()
-					if ( Player:GetCurrentlyCastedSpell() == 17 ) then
+					if (Player:GetTarget() ~= Player:GetInteractableTarget() or Player:GetInteractableTarget() ~= c_revivep.ID) then
+						Player:SetTarget(c_revivep.ID)					
+					elseif( Player:GetCurrentlyCastedSpell() == 17 ) then
 						Player:Interact( c_revivep.ID )
-						wt_debug("Reviving Partymember")
+						wt_debug("Reviving Partymember: "..tostring(c_revivep.ID))
 						return
 					end
 				end

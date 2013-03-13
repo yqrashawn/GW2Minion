@@ -1,5 +1,7 @@
 -- This file contains warrior specific combat routines
-
+if (not Player) then
+return
+end
 -- Load routine only if player is a warrior
 if ( 2 ~= Player.profession ) then
 	return

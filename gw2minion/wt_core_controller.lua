@@ -121,7 +121,11 @@ function wt_core_controller.ToggleRun()
 		wt_global_information.Reset()
 		d("Core Run State:",wt_core_controller.shouldRun)
 	else
-		d("CAN'T START THE BOT, YOU NEED TO LOAD A NAVMESH FIRST!")
+		if (gAutostartbot == "1") then
+			wt_meshloader.LoadMesh()
+		else
+			d("CAN'T START THE BOT, YOU NEED TO LOAD A NAVMESH FIRST!")
+		end
 	end
 end
 
