@@ -94,6 +94,7 @@ function dungeonAC.ModuleInit()
 		
 		local ke_openchest = wt_kelement:create( "OpenChest", c_openchest, e_openchest, 390 )
 		wt_core_state_minion:add( ke_openchest )
+		wt_core_state_leader:add( ke_openchest )
 		wt_core_state_combat:add( ke_openchest )
 	end
 end
@@ -123,20 +124,20 @@ function dungeonAC.OnUpdate()
 							dungeonAC.KillGravelin(event)	
 						elseif (dungeonAC.currentStep == 6 ) then
 							dungeonAC.KillBoss(event)							
-						end					
-					elseif(event.eventID == 2605 and event.type == 163) then --C,D,F = 1 						
-						dungeonAC.KillBoss2(event)
+						end						
 					end	
 				else
 					while (i~=nil and event~=nil) do
-						if(event.eventID == 2604 and event.type == 153) then --C,D,F = 1 					
-							if (dungeonAC.currentStep < 8 ) then
-								dungeonAC.OpenChest(event)
-								break
-							elseif ( dungeonAC.currentStep == 8) then
+						if(event.eventID == 2605 and event.type == 163) then --C,D,F = 1 						
+							dungeonAC.KillBoss2(event)
+						elseif(event.eventID == 2604 and event.type == 153) then --C,D,F = 1 					
+							--if (dungeonAC.currentStep < 8 ) then
+								--dungeonAC.OpenChest(event)
+								--break
+							--elseif ( dungeonAC.currentStep == 8) then
 								dungeonAC.KillBoss3(event)
 								break
-							end
+							--end
 						end
 						i,event = next(mlist,i)
 					end
