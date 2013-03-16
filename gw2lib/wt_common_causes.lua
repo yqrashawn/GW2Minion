@@ -417,10 +417,10 @@ function e_revivep:execute()
 		local T = CharacterList:Get( c_revivep.ID )
 		if ( T ~= nil ) then
 			if ( ((T.healthstate == GW2.HEALTHSTATE.Defeated and not Player.inCombat) or (T.healthstate == GW2.HEALTHSTATE.Downed)) and T.onmesh ) then		
-				if ( T.distance > 100 ) then
+				if ( T.distance > 110 ) then
 					local TPOS = T.pos
 					Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 25 )
-				elseif( T.distance <= 100 ) then
+				elseif( T.distance <= 110 ) then
 					Player:StopMoving()
 					if (Player:GetTarget() ~= Player:GetInteractableTarget() or Player:GetInteractableTarget() ~= c_revivep.ID) then
 						Player:SetTarget(c_revivep.ID)					

@@ -6,22 +6,37 @@ tb.lastrun = 0
 
 function tb.ModuleInit() 	
 	GUI_NewWindow("ToolBox", 450, 100, 200, 300)	
-	GUI_NewButton("ToolBox","AutoUnpackAllBags","TB.unpack")
-	GUI_NewSeperator("ToolBox")	
-	GUI_NewButton("ToolBox","AutoSalvageAllItems","TB.salvage")
+	GUI_NewButton("ToolBox","AutoUnpackAllBags","TB.unpack", "Bags_Supplies")
+	GUI_NewButton("ToolBox","AutoSalvageAllItems","TB.salvage", "Bags_Supplies")
+	GUI_NewButton("ToolBox","SupplyRun","TB.supplyRun","Bags_Supplies")
+	GUI_NewButton("ToolBox","PrintItemDataID","TB.printID","Bags_Supplies")
+	GUI_NewField("ToolBox","ItemName:","tb_itemname","Bags_Supplies")
 	GUI_NewSeperator("ToolBox")
-	GUI_NewButton("ToolBox","EventMonitor","TB.eventmon")
+	GUI_NewButton("ToolBox","EventMonitor","TB.eventmon","Dev")
+	GUI_NewButton("ToolBox","Minions,(Re)load Mesh","TB.reload","Dev")
+	GUI_NewField("ToolBox","Meshname:","greloadmesh", "Dev");
 	GUI_NewSeperator("ToolBox")
-	GUI_NewButton("ToolBox","Minions,(Re)load Mesh","TB.reload")
-	GUI_NewField("ToolBox","Meshname:","greloadmesh");
+	GUI_NewButton("ToolBox","GetInteractableTarget","TB.getInteractableTarget","NPC")
+	GUI_NewButton("ToolBox","GetTarget","TB.getTarget","NPC")
+	GUI_NewButton("ToolBox","SetTarget","TB.setTarget","NPC")
+	GUI_NewButton("ToolBox","InteractTarget","TB.interactTarget","NPC")
+	GUI_NewField("ToolBox","Target: ","tb_target","NPC")
+	GUI_NewButton("ToolBox","GetConversationOptions","TB.getConversationOptions","NPC")
+	GUI_NewButton("ToolBox","SelectConversationOption","TB.selectConversationOption","NPC")
+	GUI_NewField("ToolBox","Option Number:","tb_option","NPC")
 	GUI_NewSeperator("ToolBox")
-	GUI_NewButton("ToolBox","PrintItemDataID","TB.printID")
-	GUI_NewField("ToolBox","ItemName:","tb_itemname")
-	GUI_NewSeperator("ToolBox")
-	GUI_NewButton("ToolBox","SupplyRun","TB.supplyRun")
+	GUI_NewButton("ToolBox","PlayerPosition","TB.playerPosition","Movement")
+	GUI_NewButton("ToolBox","MoveTo","TB.moveTo","Movement")
+	GUI_NewButton("ToolBox","Teleport","TB.teleport","Movement")
+	GUI_NewField("ToolBox","X: ","tb_xPos","Movement")
+	GUI_NewField("ToolBox","Y: ","tb_yPos","Movement")
+	GUI_NewField("ToolBox","Z: ","tb_zPos","Movement")
 	GUI_NewButton("ToolBox","TestFunction","TB.testfx")
+	GUI_FoldGroup("ToolBox","Bags_Supplies")
+	GUI_FoldGroup("ToolBox","Dev")
 	GUI_WindowVisible("ToolBox",false)
 	tb_itemname = "          "
+	tb_target = "            "
 
 end
 
@@ -33,6 +48,92 @@ function tb.ToggleMenu()
 		GUI_WindowVisible("ToolBox",true)	
 		tb.visible = true
 	end
+end
+
+function tb.GetInteractableTarget()
+	local t = Player:GetInteractableTarget()
+	if t ~= 0 then
+		local char = CharacterList:Get(t)
+		tb_target = tostring(t)
+		GUI_RefreshWindow()
+		d("Interactable Target: "..tostring(char.name).." "..tostring(t))
+	else
+		d("No Interactable Target")
+	end
+end
+
+function tb.GetTarget()
+	local t = Player:GetTarget()
+	if t ~= 0 then
+		local char = CharacterList:Get(t)
+		tb_target = tostring(t)
+		GUI_RefreshWindow()
+		d("Current Target: "..tostring(char.name).." "..tostring(t))
+	else
+		d("No Current Target")
+	end
+end
+
+function tb.SetTarget()
+	local t = Player:SetTarget(tonumber(tb_target))
+	if t == true then
+		local char = CharacterList:Get(tb_target)
+		d("Target Set: "..tostring(char.name).. " "..tostring(tb_target))
+	elseif t == false then
+		d("Target Set Error")
+	else
+		d("t = nil")
+	end
+end
+
+function tb.InteractTarget()
+	local t = Player:Interact(tonumber(tb_target))
+	local char = CharacterList:Get(tb_target)
+	if t == true and char ~= nil then
+		d("Interact with: "..tostring(char.name).." "..tb_target.." successful")
+	elseif t == false and char ~= nil then
+		d("Interact with: "..tostring(char.name).." "..tb_target.." failed")
+	else
+		d("No target selected or could not get target")
+	end
+end
+
+function tb.GetConversationOptions()
+	local t = Player:GetConversationOptions()
+	if t ~= nil then
+		for key, option in pairs(t) do
+			d("Option Index (For Selection): "..tostring(key)..", Option Number (GW2.Enum): "..tostring(option))
+		end
+	else
+		d("No conversation options")
+	end
+end
+
+function tb.SelectConversationOption()
+	local t = nil
+	t = Player:SelectConversationOptionByIndex(tonumber(tb_option))
+	if t ~=  false then
+		d("Conversation option "..tb_option.." selected")
+	else
+		d("Could not select conversation option")
+	end
+end
+
+function tb.PlayerPosition()
+	d(Player.pos)
+	tb_xPos = tostring(Player.pos.x)
+	tb_yPos = tostring(Player.pos.y)
+	tb_zPos = tostring(Player.pos.z)
+	GUI_RefreshWindow()
+end
+
+function tb.MoveTo()
+	wt_debug("Moving to target..")
+	Player:MoveTo(tonumber(tb_xPos),tonumber(tb_yPos),tonumber(tb_zPos))
+end
+
+function tb.Teleport()
+	Player:Teleport(tonumber(tb_xPos),tonumber(tb_yPos),tonumber(tb_zPos))
 end
 
 function tb.TestFunction()
@@ -50,7 +151,7 @@ function tb.PrintDataID()
 end
 
 function tb.OnUpdate( event, tickcount )
-	if (tb.running ) then
+	if (tb.running ) then	
 		if (tickcount - tb.lastrun > 150) then
 			tb.lastrun = tickcount	
 			if (not wt_core_taskmanager:CheckPrioTask()) then
@@ -78,7 +179,7 @@ function tb.UnpackBags()
 				newtask.deposited = false
 				local inv = ItemList("")	
 				id,item = next(inv)
-				if (id ~=nil and item ~= nil ) then	
+				while (id ~=nil and item ~= nil ) do	
 					local itemid = item.dataID
 					if ( itemid == 10169 or itemid == 21867 
 					or itemid == 11542 or itemid == 11540 or itemid == 11540 
@@ -90,6 +191,7 @@ function tb.UnpackBags()
 						opened = true					
 						item:Use()
 					end
+					id,item = next(inv,id)
 				end
 			else 
 				if (not newtask.deposited) then
@@ -114,6 +216,7 @@ function tb.UnpackBags()
 		
 		wt_core_taskmanager.current_task = newtask
 		tb.running = true
+		wt_debug("Unpack Bag Task added..")
 	else
 		wt_core_taskmanager.current_task = nil
 		tb.running = false
@@ -201,80 +304,6 @@ function tb.DoSupplyRun()
 	wt_core_taskmanager:addRepairTask({keep_in_queue = true, priority = 10001, task_type = "custom"})
 end
 
-function tb:repairNowTask()
-	local EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
-	if ( TableSize( EList ) > 0 ) then
-		local nextTarget
-		nextTarget, E = next( EList )
-		if ( nextTarget ~= nil and nextTarget ~= 0 ) then				
-			local newtask = inheritsFrom( wt_task )
-			newtask.name = "GoTo Repair"
-			newtask.priority = wt_task.priorities.repair
-			newtask.position = E.pos
-			newtask.done = false
-			newtask.last_execution = 0
-			newtask.throttle = 500
-			
-			local mypos = Player.pos
-			local wps = WaypointList("samezone,onmesh")
-			local bestWP = nil
-			if(newtask.last_execution == 0) then
-				if(wps~=nil) then
-					local bestDistance = Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z)
-					local i,wp = next(wps)
-					while (i~=nil and wp~=nil) do
-						local tempDistance = Distance3D( wp.pos.x, wp.pos.y, wp.pos.z, newtask.position.x, newtask.position.y, newtask.position.z )
-						if tempDistance < bestDistance then
-							bestDistance = tempDistance
-							bestWP = wp
-						end
-						i,wp = next(wps,i)
-					end
-				end
-				if bestWP ~= nil then
-					d("teleporting to repair at"..tostring(bestWP.name))
-					Player:TeleportToWaypoint(bestWP.contentID)
-				end
-			end
-	
-			function newtask:execute()
-				mypos = Player.pos
-				distance = Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z)
-				if ( distance > 150 ) then
-						--wt_debug("Walking towards new PointOfInterest ")	
-					if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
-						Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 50 )
-						newtask.last_execution = wt_global_information.Now
-					end
-					newtask.name = "GoTo Repair, dist: "..(math.floor(distance))
-				else
-					local EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
-					if ( TableSize( EList ) > 0 ) then
-						local nextTarget
-						nextTarget, E = next( EList )
-						if ( nextTarget ~= nil and nextTarget ~= 0 ) then				
-							wt_debug( "RepairMerchant nearby.." )
-							wt_core_state_repair.setTarget( nextTarget )
-							MultiBotSend( "16;"..nextTarget,"gw2minion" )
-							wt_core_controller.requestStateChange( wt_core_state_repair )
-						end
-					end
-					newtask.done = true
-				end
-			end
-			function newtask:isFinished()
-				if ( newtask.done ) then
-					return true
-				end
-				return false
-			end
-			if not newtask.done then
-				wt_core_taskmanager:addCustomtask(newtask)
-			end
-		end
-	end
-end
-
 function tb.MinionsloadMesh()
 	wt_debug("Telling Minions to (re)load mesh: "..tostring(greloadmesh))
 	if (greloadmesh ~= nil and greloadmesh ~= "" and gMinionEnabled == "1" and MultiBotIsConnected( )) then
@@ -290,5 +319,14 @@ RegisterEventHandler("TB.reload", tb.MinionsloadMesh)
 RegisterEventHandler("TB.eventmon", eventmonitor.ToggleMenu)
 RegisterEventHandler("TB.supplyRun", tb.DoSupplyRun)
 RegisterEventHandler("TB.testfx", tb.TestFunction)
+RegisterEventHandler("TB.getInteractableTarget", tb.GetInteractableTarget)
+RegisterEventHandler("TB.getTarget", tb.GetTarget)
+RegisterEventHandler("TB.setTarget", tb.SetTarget)
+RegisterEventHandler("TB.interactTarget", tb.InteractTarget)
+RegisterEventHandler("TB.getConversationOptions", tb.GetConversationOptions)
+RegisterEventHandler("TB.selectConversationOption", tb.SelectConversationOption)
+RegisterEventHandler("TB.playerPosition",tb.PlayerPosition)
+RegisterEventHandler("TB.moveTo", tb.MoveTo)
+RegisterEventHandler("TB.teleport", tb.Teleport)
 RegisterEventHandler("Gameloop.Update",tb.OnUpdate)
 RegisterEventHandler("Module.Initalize",tb.ModuleInit)

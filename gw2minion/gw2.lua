@@ -140,7 +140,7 @@ function gw2minion.HandleInit()
 	gEnableRepair = Settings.GW2MINION.gEnableRepair
 	gIgnoreMarkerCap = Settings.GW2MINION.gIgnoreMarkerCap
 	gMaxItemSellRarity = Settings.GW2MINION.gMaxItemSellRarity
-	gAutostartbot = = Settings.GW2MINION.gAutostartbot
+	gAutostartbot = Settings.GW2MINION.gAutostartbot
 	gMapswitch = 0
 	gUseWaypoints = Settings.GW2MINION.gUseWaypoints
 	gVendor_Repair = Settings.GW2MINION.gVendor_Repair
@@ -159,7 +159,7 @@ function gw2minion.HandleInit()
 	wt_core_controller.requestStateChange(wt_core_state_idle)
 	
 	if (gAutostartbot == "1") then
-		wt_core_controller.shouldRun = true
+		wt_core_controller.ToggleRun()
 	end
 end
 

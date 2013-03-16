@@ -13,6 +13,7 @@ wt_profession_warrior.professionRoutineName = "Warrior"
 wt_profession_warrior.professionRoutineVersion = "1.0"
 wt_profession_warrior.RestHealthLimit = math.random(60,75)
 wt_profession_warrior.switchweaponTmr = 0
+wt_profession_warrior.combatMoveTmr = 0
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 -- NeedHeal Check
@@ -112,6 +113,35 @@ function wt_profession_warrior.SwitchWeapon()
 	return false 
 end
 
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+-- Random CombatMovement
+function wt_profession_warrior.CombatMovement()
+	if (wt_profession_warrior.combatMoveTmr == 0 or wt_global_information.Now - wt_profession_warrior.combatMoveTmr > 1000) then	
+		wt_profession_warrior.combatMoveTmr = wt_global_information.Now + math.random(500,2000)
+		if (Player:GetMovementState() == 0) then			
+			if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
+				local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
+				if ( T ~= nil ) then					
+					if (T.distance ~= nil and T.distance < 140) then
+						local s = math.random(0,2)
+						if( s == 0 and T.health.percent < math.random(0,90) and Player.endurance >= 50) then
+							Player:Evade(3)							
+						elseif ( s == 1) then
+							--Player:SetMovement(2)
+						elseif (s == 2) then
+							--Player:SetMovement(3)
+						end
+						return
+					end
+				end
+			end
+		else
+			Player:StopMoving()
+		end
+	end	
+end
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 -- Combat Default Attack 
@@ -124,7 +154,7 @@ end
 
 wt_profession_warrior.e_attack_default.usesAbility = true
 function wt_profession_warrior.e_attack_default:execute()
-	Player:StopMoving()
+	wt_profession_warrior.CombatMovement()
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= nil and TID ~= 0 ) then
 		local T = CharacterList:Get(TID)

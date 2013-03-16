@@ -202,7 +202,7 @@ function e_selltovendor:execute()
 	if ( Inventory:IsVendorOpened() ) then	
 		local sold = false	
 		
-		if ( gVendor_Weapons ) then
+		if ( gVendor_Weapons == "1") then
 		local tmpR = tonumber(gMaxItemSellRarity)	
 			-- Sell Weapons	
 			while ( tmpR > 0 and sold == false) do
@@ -217,7 +217,7 @@ function e_selltovendor:execute()
 			end
 		end
 		
-		if ( gVendor_Armor ) then
+		if ( gVendor_Armor == "1") then
 		local tmpR = tonumber(gMaxItemSellRarity)	
 			-- Sell Armor
 			if ( not sold ) then
@@ -234,7 +234,7 @@ function e_selltovendor:execute()
 			end	
 		end
 		
-		if ( gVendor_Trinkets ) then
+		if ( gVendor_Trinkets == "1") then
 		local tmpR = tonumber(gMaxItemSellRarity)	
 			-- Sell Trinkets
 			if ( not sold ) then
@@ -251,7 +251,7 @@ function e_selltovendor:execute()
 			end		
 		end
 		
-		if ( gVendor_UpgradeComps ) then
+		if ( gVendor_UpgradeComps == "1") then
 		local tmpR = tonumber(gMaxItemSellRarity)	
 			-- Sell Upgrade Components
 			if ( not sold ) then
@@ -268,7 +268,7 @@ function e_selltovendor:execute()
 			end		
 		end
 		
-		if ( gVendor_CraftingMats ) then
+		if ( gVendor_CraftingMats == "1") then
 		local tmpR = tonumber(gMaxItemSellRarity)	
 			-- Sell Crafting Mats
 			if ( not sold ) then
@@ -285,7 +285,7 @@ function e_selltovendor:execute()
 			end		
 		end
 		
-		if ( gVendor_Trophies ) then
+		if ( gVendor_Trophies == "1") then
 		local tmpR = tonumber(gMaxItemSellRarity)	
 			-- Sell Trophies
 			if ( not sold ) then
@@ -302,7 +302,7 @@ function e_selltovendor:execute()
 			end		
 		end
 		
-		if ( gVendor_Junk ) then
+		if ( gVendor_Junk == "1") then
 			-- Sell Junk
 			if ( not sold ) then
 				wt_debug( "Vendoring: Selling Junk..." )

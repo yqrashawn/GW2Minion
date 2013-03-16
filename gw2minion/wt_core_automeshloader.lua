@@ -12,7 +12,7 @@ wt_meshloader.meshlist = {
 	--DivinitysReach:
 	[18] = "",
 	--PlainsofAshford:
-	[19] = "[1-15]AshfordPlains"
+	[19] = "[1-15]AshfordPlains",
 	--BlazeridgeSteppes:
 	[20] = "",
 	--FieldsofRuin:
@@ -39,6 +39,8 @@ wt_meshloader.meshlist = {
 	[31] = "",
 	--DiessaPlateau:
 	[32] = "",
+	--AscalonianCatacombs:
+	[33] = "cata",
 	--CaledonForrest:
 	[34] = "",
 	--MetricaProvince:
@@ -76,7 +78,7 @@ wt_meshloader.meshlist = {
 	--Hoelbrak:
 	[326] = "",
 	--SouthsunCove:
-	[873] = "",
+	[873] = ""
 }
 
 
@@ -97,3 +99,5 @@ function wt_meshloader.LoadMesh()
 		end	
 	end
 end
+
+RegisterEventHandler("Gameloop.MapChanged",wt_meshloader.LoadMesh)

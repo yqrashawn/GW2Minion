@@ -2,42 +2,145 @@
 dungeonAC = { }
 dungeonAC.currentStep = 1
 
+------------------------------------------------------------------------------
+-- Teleports the char out of the water 
+local c_telewater = inheritsFrom( wt_cause )
+local e_telewater = inheritsFrom( wt_effect )
+function c_telewater:evaluate()
+	local m = Player:GetMovementState()
+	if ( m ~=nil and m == 5 or m == 6 or m == 7 or m == 8) then		
+		return true
+	end	
+	return false
+end
+e_telewater.throttle = 1500
+e_telewater.delay = 1500
+e_telewater.ported = false
+function e_telewater:execute()
+	if (not e_telewater.ported) then
+		wt_debug("We are in the water..porting back")	
+		Player:Teleport(3809,-4740, -1060)	
+		e_telewater.ported = true
+	else
+		Player:SetMovement(0)
+		Player:StopMoving()
+		e_telewater.ported = false
+	end	
+end
+
+------------------------------------------------------------------------------
+-- Opens Big chest
+local c_openchest = inheritsFrom( wt_cause )
+local e_openchest = inheritsFrom( wt_effect )
+function c_openchest:evaluate()
+	local mlist = MapMarkerList("type=405,maxdistance=1500")
+		if (mlist ~= nil) then
+			local i,chest = next(mlist)
+			local found = false
+			while (i~=nil and chest ~= nil and chest.characterID ~= nil and chest.characterID ~= 0) do
+				if (Player:GetTarget() == chest.characterID or Player:SetTarget(chest.characterID)) then
+					found = true
+					break
+				end
+				i,g = next(mlist,i)
+			end	
+			if (found) then
+				wt_debug("Chest Found...")
+				return true
+			end
+		end
+	return false
+end
+e_openchest.throttle = 500
+function e_openchest:execute()
+	local target = nil
+	local targetID = nil
+	local mlist = MapMarkerList("type=405,maxdistance=1500")
+	if (mlist ~= nil) then
+		local i,g = next(mlist)
+		local found = false
+		while (i~=nil and g~=nil and g.characterID ~= nil and g.characterID ~= 0) do
+			if (Player:GetTarget() == g.characterID or Player:SetTarget(g.characterID)) then
+				target = g
+				targetID = g.characterID
+				break
+			end			
+			i,g = next(mlist,i)
+		end	
+		if (target ~= nil and target.pos ~= nil and targetID ~= nil) then			
+			if ( target.distance > 120 ) then                                             
+				local gpos = target.pos
+				Player:MoveTo( gpos.x, gpos.y, gpos.z, 50 )   
+			else				
+				wt_debug("OpenChest ...")
+				Player:Use(targetID)
+			end
+		end
+	end
+end
+
+
 function dungeonAC.ModuleInit() 
 	-- Registering our custom code within the wt_core_taskmanager.CustomLuaFunctions table in wt_core_taskmanager.lua	
-	if (wt_core_taskmanager ~= nil and wt_core_taskmanager.CustomLuaFunctions ~= nil) then
-		wt_debug("Adding Ascalonian Catacombs functions to list")
-		table.insert(wt_core_taskmanager.CustomLuaFunctions,dungeonAC.OnUpdate)
+	if (Player:GetLocalMapID() == 33) then
+		if (wt_core_taskmanager ~= nil and wt_core_taskmanager.CustomLuaFunctions ~= nil) then
+			wt_debug("Adding Ascalonian Catacombs functions to list")
+			table.insert(wt_core_taskmanager.CustomLuaFunctions,dungeonAC.OnUpdate)
+		end
+		  
+		local ke_tele = wt_kelement:create( "IHateWater", c_telewater, e_telewater, 400 )
+		wt_core_state_minion:add( ke_tele )
+		wt_core_state_combat:add( ke_tele )
+		
+		local ke_openchest = wt_kelement:create( "OpenChest", c_openchest, e_openchest, 390 )
+		wt_core_state_minion:add( ke_openchest )
+		wt_core_state_combat:add( ke_openchest )
 	end
 end
 
 function dungeonAC.OnUpdate()	
-	-- Here I would do conditional checks and add my Custom Tasks to wt_core_taskmanager.Customtask_list	
-	if (Player:GetLocalMapID() == 33) then
+	-- Here I would do conditional checks and add my Custom Tasks to wt_core_taskmanager.Customtask_list
+	if (Player:GetLocalMapID() == 33) then	
 		local mlist = MapMarkerList("isevent")
-		if (mlist ~= nil) then	
+		if (mlist ~= nil) then
 			local i,event = next(mlist)
-			if (i~=nil and event~=nil) then	
-				wt_global_information.MaxAggroDistanceFar = 500
-				--TODO: Add ReadyCheck
-				if( event.eventID == 2606 and event.type == 159) then -- EventD = 1, charID=346					
-					dungeonAC.Step1(event)
-				elseif(event.eventID == 2607 and event.type == 159) then -- EventD = 0, charID=347					
-					if ( dungeonAC.currentStep == 1 ) then
-						dungeonAC.Step2OpenCoffins(event)						
-					elseif ( dungeonAC.currentStep == 2) then
-						dungeonAC.DeactivateTrap(event)
-					elseif (dungeonAC.currentStep == 3 ) then
-						dungeonAC.DeactivateTrap2(event)
-					elseif (dungeonAC.currentStep == 4 ) then
-						dungeonAC.OpenDoor(event)
-					elseif (dungeonAC.currentStep == 5 ) then
-						dungeonAC.KillGravelin(event)	
-					elseif (dungeonAC.currentStep == 6 ) then
-						dungeonAC.KillBoss(event)							
+			if (i~=nil and event~=nil) then
+				if (TableSize(mlist) == 1) then
+					wt_global_information.MaxAggroDistanceFar = 600
+					--TODO: Add ReadyCheck
+					if( event.eventID == 2606 and event.type == 159) then -- EventD = 1, charID=346					
+						dungeonAC.Step1(event)
+					elseif(event.eventID == 2607 and event.type == 159) then -- EventD = 0, charID=347					
+						if ( dungeonAC.currentStep == 1 ) then
+							dungeonAC.Step2OpenCoffins(event)						
+						elseif ( dungeonAC.currentStep == 2) then
+							dungeonAC.DeactivateTrap(event)
+						elseif (dungeonAC.currentStep == 3 ) then
+							dungeonAC.DeactivateTrap2(event)
+						elseif (dungeonAC.currentStep == 4 ) then
+							dungeonAC.OpenDoor(event)
+						elseif (dungeonAC.currentStep == 5 ) then
+							dungeonAC.KillGravelin(event)	
+						elseif (dungeonAC.currentStep == 6 ) then
+							dungeonAC.KillBoss(event)							
+						end					
+					elseif(event.eventID == 2605 and event.type == 163) then --C,D,F = 1 						
+						dungeonAC.KillBoss2(event)
+					end	
+				else
+					while (i~=nil and event~=nil) do
+						if(event.eventID == 2604 and event.type == 153) then --C,D,F = 1 					
+							if (dungeonAC.currentStep < 8 ) then
+								dungeonAC.OpenChest(event)
+								break
+							elseif ( dungeonAC.currentStep == 8) then
+								dungeonAC.KillBoss3(event)
+								break
+							end
+						end
+						i,event = next(mlist,i)
 					end
-				--elseif(event.eventID == 2605 and event.type == 163 event.C == 1) then
-					
-				end			
+				end
 			end
 		end
 	end	
@@ -139,7 +242,7 @@ function dungeonAC.Step2OpenCoffins(event)
 				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 					newtask.last_execution = wt_global_information.Now
 					local gpos = target.pos
-					Player:MoveTo( gpos.x, gpos.y, gpos.z, 50 )                
+					Player:MoveTo( gpos.x, gpos.y, gpos.z, 70 )                
 				end
 				newtask.name = "Walking to target, dist: "..(math.floor(target.distance))
 			else
@@ -279,7 +382,7 @@ function dungeonAC.DeactivateTrap2(event)
 		if (gl ~= nil) then
 			local i,g = next(gl)
 			while (i~=nil and g~=nil) do
-				if (g.health == nil and g.type == 14 and g.isselectable == 1 and g.contentID == 89683 and g.los) then
+				if (g.health == nil and g.type == 7 and g.isselectable == 1 and g.contentID == 89683 and g.los) then
 					target = g
 					targetID = i
 					break
@@ -288,14 +391,19 @@ function dungeonAC.DeactivateTrap2(event)
 			end			
 		end
 		if (target ~= nil and target.pos ~= nil and targetID ~= nil) then			
-			if ( target.distance > 120 ) then                                             
+			if ( target.distance > 1200 ) then                                             
 				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 					newtask.last_execution = wt_global_information.Now
 					local gpos = target.pos
 					Player:MoveTo( gpos.x, gpos.y, gpos.z, 5 )                
 				end
 				newtask.name = "Walking to Trap, dist: "..(math.floor(target.distance))
-			else
+			elseif ( target.distance < 1200 and target.distance > 120) then
+					local gpos = target.pos
+					Player:Teleport(gpos.x, gpos.y, gpos.z)
+					Player:SetMovement(0)
+					Player:StopMoving()
+			elseif( target.distance < 120 ) then
 				if ( Player:GetTarget() ~= targetID ) then
 					Player:SetTarget(targetID)
 				else
@@ -368,9 +476,9 @@ function dungeonAC.OpenDoor(event)
 				Player:SwapWeaponSet()
 				dungeonAC.currentStep = 5
 				newtask.done = true	
-			elseif ( distance < 100 ) then
+			elseif ( distance < 15 ) then
 				Player:StopMoving()
-				Player:Teleport(newtask.Platepos.x, newtask.Platepos.y, newtask.Platepos.z)							
+				--Player:Teleport(newtask.Platepos.x, newtask.Platepos.y, newtask.Platepos.z)							
 			else
 				Player:MoveTo( newtask.Platepos.x, newtask.Platepos.y, newtask.Platepos.z, 5 )
 			end
@@ -403,7 +511,7 @@ end
 function dungeonAC.KillGravelin(event)
 	local newtask = inheritsFrom( wt_task )
     newtask.name = "AC KillGravelin"
-    newtask.priority = 500
+    newtask.priority = 10500
     newtask.position = { x =-1897, y =-6828, z=-468}	
     newtask.done = false
     newtask.last_execution = 0	
@@ -427,17 +535,17 @@ function dungeonAC.KillGravelin(event)
 				i,g = next(gl,i)
 			end			
 		end
-		if (target ~= nil and target.pos ~= nil and targetID ~= nil) then			
+		if (target ~= nil and target.pos ~= nil and targetID ~= nil and target.health ~=nil and target.health.current > 0) then			
 			if ( target.distance > 120 ) then                                             
 				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 					newtask.last_execution = wt_global_information.Now
 					local gpos = target.pos
-					Player:MoveTo( gpos.x, gpos.y, gpos.z, 5 )                
+					Player:MoveTo( gpos.x, gpos.y, gpos.z, 75 )                
 				end
 				newtask.name = "Walking to Burrow, dist: "..(math.floor(target.distance))			
 			end
 		else
-			Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 50 )
+			Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 75 )
 			local mypos = Player.pos
 			local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
 			if ( distance < 100) then
@@ -493,6 +601,40 @@ function dungeonAC.KillBoss(event)
 	wt_core_taskmanager:addCustomtask( newtask )
 end
 
+function dungeonAC.KillBoss2(event)
+	local newtask = inheritsFrom( wt_task )
+    newtask.name = "AC KillBoss"
+    newtask.priority = 500
+    newtask.position = event.pos	
+    newtask.done = false
+    newtask.last_execution = 0	
+    newtask.throttle = 500
+	newtask.waitingTmr = 0
+	newtask.MaxwaitingTmr = 5000
+	newtask.eventID = event.eventID
+	
+    function newtask:execute()
+		local mypos = Player.pos
+        local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
+        if ( distance > 120 ) then                                             
+			if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+                newtask.last_execution = wt_global_information.Now
+				Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 50 )                
+            end
+            newtask.name = "Walking to Boss, dist: "..(math.floor(distance))
+		end
+	end
+		 
+    function newtask:isFinished()
+		if ( newtask.done ) then
+			return true
+		end
+		return false
+	end    
+
+	wt_debug("AC KillBoss added..")
+	wt_core_taskmanager:addCustomtask( newtask )
+end
 
 function dungeonAC.OpenChest(event)
 	local newtask = inheritsFrom( wt_task )
@@ -508,17 +650,17 @@ function dungeonAC.OpenChest(event)
     function newtask:execute()
 		local target = nil
 		local targetID = nil
-		local gl = GadgetList("")
-		if (gl ~= nil) then
-			local i,g = next(gl)
-			while (i~=nil and g~=nil) do
-				if (g.health == nil and g.type == 2 and g.isselectable == 1) then
+		local mlist = MapMarkerList("type=405,maxdistance=1500")
+		if (mlist ~= nil) then
+			local i,g = next(mlist)
+			while (i~=nil and g~=nil and g.characterID ~= nil and g.characterID ~= 0) do
+				if (Player:GetTarget() == g.characterID or Player:SetTarget(g.characterID)) then
 					target = g
-					targetID = i
+					targetID = g.characterID
 					break
 				end			
-				i,g = next(gl,i)
-			end			
+				i,g = next(mlist,i)
+			end
 		end
 		if (target ~= nil and target.pos ~= nil and targetID ~= nil) then			
 			if ( target.distance > 120 ) then                                             
@@ -529,19 +671,17 @@ function dungeonAC.OpenChest(event)
 				end
 				newtask.name = "Walking to Chest, dist: "..(math.floor(target.distance))
 			else
-				if ( Player:GetTarget() ~= targetID ) then
-					Player:SetTarget(targetID)
-				else
-					wt_debug("OpenChest ...")
-					Player:Use(targetID)
-					newtask.done = true
-				end
+				wt_debug("OpenChest ...")
+				Player:Use(targetID)
+				dungeonAC.currentStep = 8
+				newtask.done = true
 			end
 		else
 			Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 50 )
 			local mypos = Player.pos
 			local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
 			if ( distance < 100) then
+				Player:PressF()
 				dungeonAC.currentStep = 8
 				newtask.done = true				
 			end
@@ -555,6 +695,41 @@ function dungeonAC.OpenChest(event)
 		return false
 	end 
 	wt_debug("AC OpenChest Added..")
+	wt_core_taskmanager:addCustomtask( newtask )
+end
+
+function dungeonAC.KillBoss3(event)
+	local newtask = inheritsFrom( wt_task )
+    newtask.name = "AC KillBoss3"
+    newtask.priority = 500
+    newtask.position = { x =13181, y =-2068, z=-776}	
+    newtask.done = false
+    newtask.last_execution = 0	
+    newtask.throttle = 500
+	newtask.waitingTmr = 0
+	newtask.MaxwaitingTmr = 5000
+	newtask.eventID = event.eventID
+	
+    function newtask:execute()
+		local mypos = Player.pos
+        local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
+        if ( distance > 120 ) then                                             
+			if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+                newtask.last_execution = wt_global_information.Now
+				Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 50 )                
+            end
+            newtask.name = "Walking to Boss, dist: "..(math.floor(distance))
+		end
+	end
+		 
+    function newtask:isFinished()
+		if ( newtask.done ) then
+			return true
+		end
+		return false
+	end    
+
+	wt_debug("AC KillBoss added..")
 	wt_core_taskmanager:addCustomtask( newtask )
 end
 
