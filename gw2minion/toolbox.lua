@@ -32,8 +32,9 @@ function tb.ModuleInit()
 	GUI_NewField("ToolBox","Y: ","tb_yPos","Movement")
 	GUI_NewField("ToolBox","Z: ","tb_zPos","Movement")
 	GUI_NewButton("ToolBox","TestFunction","TB.testfx")
-	GUI_FoldGroup("ToolBox","Bags_Supplies")
+	GUI_FoldGroup("ToolBox","Movement")
 	GUI_FoldGroup("ToolBox","Dev")
+	GUI_FoldGroup("ToolBox","NPC")
 	GUI_WindowVisible("ToolBox",false)
 	tb_itemname = "          "
 	tb_target = "            "
@@ -153,11 +154,13 @@ end
 function tb.OnUpdate( event, tickcount )
 	if (tb.running ) then	
 		if (tickcount - tb.lastrun > 150) then
-			tb.lastrun = tickcount	
-			if (not wt_core_taskmanager:CheckPrioTask()) then
+			tb.lastrun = tickcount				
+			if (not wt_core_taskmanager:CheckEmergencyTask()) then
 				tb.running = false
-			else
-				wt_core_taskmanager:DoPrioTask()
+				return
+			else			
+				wt_core_taskmanager:DoEmergencyTask()
+				return
 			end			
 		end	
 	end
@@ -167,7 +170,7 @@ function tb.UnpackBags()
 	if (wt_core_taskmanager.current_task == nil) then
 		local newtask = inheritsFrom( wt_task )
 		newtask.name = "Opening Bags"
-		newtask.priority = 1500
+		newtask.priority = 15000
 		newtask.done = false
 		newtask.last_execution = 0
 		newtask.throttle = 150
@@ -227,7 +230,7 @@ function tb.AutoSalvage()
 	if (wt_core_taskmanager.current_task == nil) then	
 		local newtask = inheritsFrom( wt_task )
 		newtask.name = "Salvage All Items"
-		newtask.priority = 1500
+		newtask.priority = 15000
 		newtask.done = false
 		newtask.last_execution = 0
 		newtask.throttle = 150

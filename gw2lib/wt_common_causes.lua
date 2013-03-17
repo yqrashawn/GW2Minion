@@ -334,20 +334,34 @@ e_rest = inheritsFrom( wt_effect )
 function c_rest:evaluate()
 	local HP = Player.health.percent
 	if ( HP < wt_global_information.Currentprofession.RestHealthLimit ) then
-		return true
+		local mybuffs = Player.buffs
+		local hazardfound= false
+		if (mybuffs~=nil) then
+		  i,e = next(mybuffs)
+		  while (i~=nil and e~=nil) do
+			 if (e.skillID == 737 or e.contentID == 134797 or
+				 e.skillID == 723 or e.contentID == 35864) then --Burning
+				hazardfound = true
+			 end
+			 i,e = next(mybuffs,i)
+		  end
+		end
+		if (not hazardfound) then
+			return true
+		end
 	end
-	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID == Player.characterID ) then -- We Lead	
+	--[[if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID == Player.characterID ) then -- We Lead	
 		local party = Player:GetPartyMembers()
 		if (party ~= nil) then
 			local index, player  = next( party )
 			while ( index ~= nil and player ~= nil ) do			
-				if (player.distance < 4000 and player.alive and player.onmesh and player.health.percent < wt_global_information.Currentprofession.RestHealthLimit ) then					
+				if (player.distance < 4000 and player.alive and player.onmesh and player.health.percent < 75 ) then					
 					return true
 				end
 				index, player  = next( party,index )
 			end		
 		end		
-	end
+	end]]
 	return false
 end
 e_rest.throttle = math.random( 500, 2500 )

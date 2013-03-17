@@ -66,7 +66,7 @@ local e_repaircheck = inheritsFrom( wt_effect )
 -- IsEquipmentBroken() is defined in /gw2lib/wt_utility.lua
 c_repaircheck.throttle = 2500
 function c_repaircheck:evaluate()
-	if ( gEnableRepair == "1" and IsEquipmentBroken() ) then
+	if ( gEnableRepair == "1" and IsEquipmentDamaged() ) then
 		c_repaircheck.EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
 		if ( TableSize( c_repaircheck.EList ) > 0 ) then
 			local nextTarget

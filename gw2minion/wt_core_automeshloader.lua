@@ -40,7 +40,7 @@ wt_meshloader.meshlist = {
 	--DiessaPlateau:
 	[32] = "",
 	--AscalonianCatacombs:
-	[33] = "cata",
+	[33] = "AC",
 	--CaledonForrest:
 	[34] = "",
 	--MetricaProvince:
@@ -90,6 +90,7 @@ function wt_meshloader.LoadMesh()
 			wt_debug("Auto-Loading Navmesh " ..tostring(meshname))
 			local path = GetStartupPath().."\\Navigation\\"..tostring(meshname)
 			if (io.open(path..".obj")) then
+				NavigationManager:UnloadNavMesh()				
 				NavigationManager:LoadNavMesh(path)
 				GUI_CloseMarkerInspector()
 			else
