@@ -20,13 +20,9 @@ wt_global_information.MaxAggroDistanceClose = 500
 wt_global_information.MaxSearchEnemyDistance = 2500
 wt_global_information.lastrun = 0
 wt_global_information.InventoryFull = 0
-wt_global_information.LeaderID = nil
-wt_global_information.PartyAggroTargets = {}
 wt_global_information.FocusTarget = nil
+Settings.GW2MINION.TargetWaypointID = 0
 wt_global_information.stats_lastrun = 0
-wt_global_information.HasRepairMerchant = 0
-wt_global_information.HasVendor = 0
-wt_global_information.TargetWaypointID = 0
 
 
 gw2minion = { }
@@ -58,7 +54,6 @@ end
 if (Settings.GW2MINION.version <= 1.39 ) then
 	Settings.GW2MINION.version = 1.40
 	Settings.GW2MINION.gUseWaypoints = "0"
-	Settings.GW2MINION.gVendor_Repair = "0"
 	Settings.GW2MINION.gVendor_Weapons = "1"
 	Settings.GW2MINION.gVendor_Armor = "1"
 	Settings.GW2MINION.gVendor_Junk = "1"
@@ -83,17 +78,17 @@ end
 
 function wt_global_information.OnUpdate( event, tickcount )
 	wt_global_information.Now = tickcount
-
+	
+	if ( (gStats_enabled == "1" or gMinionEnabled == "1") and tickcount - wt_global_information.stats_lastrun > 2000) then
+		wt_global_information.stats_lastrun = tickcount	
+		wt_global_information.UpdateMultiServerStatus()
+	end	
+	
 	gGW2MiniondeltaT = tostring(tickcount - wt_global_information.lastrun)
 	if (tickcount - wt_global_information.lastrun > tonumber(gGW2MinionPulseTime)) then
-		wt_global_information.lastrun = tickcount	
-		wt_core_controller.Run()
-		--GUI_RefreshWindow(wt_global_information.MainWindow.Name)
-	end	
-	if ( gStats_enabled == "1" and tickcount - wt_global_information.stats_lastrun > 2000) then
-		wt_global_information.stats_lastrun = tickcount	
-		wt_global_information.GatherAndSendStats()
-	end		
+		wt_global_information.lastrun = tickcount
+		wt_core_controller.Run()		
+	end			
 end
 
 -- Module Event Handler
@@ -103,28 +98,27 @@ function gw2minion.HandleInit()
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnStart.Name , wt_global_information.BtnStart.Event)
 	GUI_NewButton(wt_global_information.MainWindow.Name,"ToolBox","TB.toggle")
 	GUI_NewButton(wt_global_information.MainWindow.Name,"NavMeshSwitcher","MM.toggle")
+	GUI_NewField(wt_global_information.MainWindow.Name,"MyTask","gGW2MinionTask");
 	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnPulse.Name , wt_global_information.BtnPulse.Event,"BotStatus")
 	GUI_NewField(wt_global_information.MainWindow.Name,"Pulse Time (ms)","gGW2MinionPulseTime","BotStatus");	
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Log","gEnableLog","BotStatus");
 	GUI_NewField(wt_global_information.MainWindow.Name,"State","gGW2MinionState","BotStatus");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Effect","gGW2MinionEffect","BotStatus");	
-	GUI_NewField(wt_global_information.MainWindow.Name,"MainTask","gGW2MinionTask","BotStatus");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Effect","gGW2MinionEffect","BotStatus");		
 	GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT","BotStatus");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MapSwitch in","gMapswitch","BotStatus");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoStartBot","gAutostartbot","Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Ignore Marker Level Cap","gIgnoreMarkerCap","Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Repair Equippment","gEnableRepair","Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Use WP Vendor/Repair", "gUseWaypoints","Settings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Vendor/Repair Same Time", "gVendor_Repair","Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Max ItemSell Rarity","gMaxItemSellRarity","Settings")
+		GUI_NewField(wt_global_information.MainWindow.Name,"Max ItemSell Rarity","gMaxItemSellRarity","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Weapons","gVendor_Weapons","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Armor","gVendor_Armor","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Trinkets","gVendor_Trinkets","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Upgrade Components","gVendor_UpgradeComps","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Crafting Materials","gVendor_CraftingMats","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Trophies","gVendor_Trophies","VendorSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Junk","gVendor_Junk","VendorSettings")
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Junk","gVendor_Junk","VendorSettings")	
 	--[[
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Gathering Tools", "gBuyGatheringTools","Settings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"How Many To Stock","gGatheringToolStock","Settings");
@@ -132,9 +126,11 @@ function gw2minion.HandleInit()
 	GUI_NewField(wt_global_information.MainWindow.Name,"How Many To Stock","gSalvageKitStock","Settings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"What Quality","gSalvageKitQuality","Settings");]]
 	
+	
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,"BotStatus");
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,"Settings");
-		
+	GUI_FoldGroup(wt_global_information.MainWindow.Name,"VendorSettings");	
+	
 	gEnableLog = Settings.GW2MINION.gEnableLog
 	gGW2MinionPulseTime = Settings.GW2MINION.gGW2MinionPulseTime 
 	gEnableRepair = Settings.GW2MINION.gEnableRepair
@@ -143,7 +139,6 @@ function gw2minion.HandleInit()
 	gAutostartbot = Settings.GW2MINION.gAutostartbot
 	gMapswitch = 0
 	gUseWaypoints = Settings.GW2MINION.gUseWaypoints
-	gVendor_Repair = Settings.GW2MINION.gVendor_Repair
 	gVendor_Weapons = Settings.GW2MINION.gVendor_Weapons
 	gVendor_Armor = Settings.GW2MINION.gVendor_Armor
 	gVendor_Junk = Settings.GW2MINION.gVendor_Junk
@@ -172,7 +167,6 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "gMaxItemSellRarity" or 
 				k == "gAutostartbot" or
 				k == "gUseWaypoints" or 
-				k == "gVendor_Repair" or 
 				k == "gVendor_Weapons" or
 				k == "gVendor_Armor" or
 				k == "gVendor_Trinkets" or
@@ -197,76 +191,73 @@ function wt_global_information.Reset()
 	wt_global_information.MaxLootDistance = 1200
 	wt_global_information.lastrun = 0
 	wt_global_information.InventoryFull = 0
-	wt_core_state_vendoring.junksold = false 
 	wt_core_state_combat.CurrentTarget = 0
-	wt_core_taskmanager.task_list = { }
-	wt_core_taskmanager.possible_tasks = { }
+	wt_core_taskmanager.Customtask_list = { }
 	wt_core_taskmanager.current_task = nil
 	wt_core_taskmanager.markerList = { }
-	wt_global_information.LeaderID = nil
-	wt_global_information.PartyAggroTargets = {}
 	wt_global_information.FocusTarget = nil
-	wt_global_information.HasRepairMerchant = 0
-	wt_global_information.HasVendor = 0
-	gMapswitch = 0
-	--if ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then		
-	--	MultiBotLeaveChannel( "gw2minion" )		
-	--end		
+	gMapswitch = 0	
+	
+	NavigationManager:SetTargetMapID(0)
 	wt_core_controller.requestStateChange(wt_core_state_idle)
 end
 
-function wt_global_information.GatherAndSendStats() 
-	if ( MultiBotIsConnected() ) then		
-		MultiBotSend("name=" .. tostring(Player.name) .."("..tostring(Player.level)..")","setval");
-		MultiBotSend("health=" .. tostring(math.floor(Player.health.current)),"setval");
-		MultiBotSend("maxhealth=" .. tostring(Player.health.max),"setval");
-		MultiBotSend("healthstate=" .. tostring(Player.healthstate),"setval");
-		MultiBotSend("endurance=" .. tostring(Player.endurance),"setval");
-		MultiBotSend("money=" .. tostring(Inventory:GetInventoryMoney()),"setval");
-		MultiBotSend("freeslots=" .. tostring(ItemList.freeSlotCount),"setval");
-		MultiBotSend("onmesh=" .. tostring(Player.onmesh),"setval");		
-		local pPos = Player.pos
-		MultiBotSend("pos=" .. tostring(math.floor(pPos.x).. "|" ..math.floor(pPos.y).. "|" ..math.floor(pPos.z)),"setval");		
-		
-		local TID = Player:GetTarget()
-		if (TID ~= nil and TID ~= 0 and wt_core_controller.shouldRun ~=nil and wt_core_controller.shouldRun==true) then
-			local Target = CharacterList:Get(TID)
-			if ( Target ~= nil ) then
-				MultiBotSend("target=" ..tostring(Target.name) .."("..tostring(Target.health.percent).."%)","setval");
-			end			
-		else
-			MultiBotSend("target=None","setval");
-		end	
-		
-		if (gGW2MinionState ~= nil and wt_core_controller.shouldRun ~=nil and wt_core_controller.shouldRun==true) then
-			MultiBotSend("state=" ..tostring(gGW2MinionState),"setval");
-		else
-			MultiBotSend("state=None","setval");
-		end	
-		
-		if (gGW2MinionEffect ~= nil and wt_core_controller.shouldRun ~=nil and wt_core_controller.shouldRun==true) then
-			MultiBotSend("effect=" ..tostring(gGW2MinionEffect),"setval");
-		else
-			MultiBotSend("effect=None","setval");
-		end	
+function wt_global_information.UpdateMultiServerStatus() 
+	if ( MultiBotIsConnected()) then
+		if (gStats_enabled == "1") then
+			MultiBotSend("name=" .. tostring(Player.name) .."("..tostring(Player.level)..")","setval");
+			MultiBotSend("health=" .. tostring(math.floor(Player.health.current)),"setval");
+			MultiBotSend("maxhealth=" .. tostring(Player.health.max),"setval");
+			MultiBotSend("healthstate=" .. tostring(Player.healthstate),"setval");
+			MultiBotSend("endurance=" .. tostring(Player.endurance),"setval");
+			MultiBotSend("money=" .. tostring(Inventory:GetInventoryMoney()),"setval");
+			MultiBotSend("freeslots=" .. tostring(ItemList.freeSlotCount),"setval");
+			MultiBotSend("onmesh=" .. tostring(Player.onmesh),"setval");		
+			local pPos = Player.pos
+			MultiBotSend("pos=" .. tostring(math.floor(pPos.x).. "|" ..math.floor(pPos.y).. "|" ..math.floor(pPos.z)),"setval");		
 			
-		if (wt_core_controller ~= nil and wt_core_controller.shouldRun ~=nil and wt_core_controller.shouldRun==true) then
-			MultiBotSend("running=true","setval");
-		else
-			MultiBotSend("running=false","setval");
-		end
-		
-		if (wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID == Player.characterID) then
-			MultiBotSend("role=Leader","setval");
-		else
-			MultiBotSend("role=Minion","setval");
-		end
-		
+			local TID = Player:GetTarget()
+			if (TID ~= nil and TID ~= 0 and wt_core_controller.shouldRun ~=nil and wt_core_controller.shouldRun==true) then
+				local Target = CharacterList:Get(TID)
+				if ( Target ~= nil ) then
+					MultiBotSend("target=" ..tostring(Target.name) .."("..tostring(Target.health.percent).."%)","setval");
+				end			
+			else
+				MultiBotSend("target=None","setval");
+			end	
+			
+			if (gGW2MinionState ~= nil and wt_core_controller.shouldRun ~=nil and wt_core_controller.shouldRun==true) then
+				MultiBotSend("state=" ..tostring(gGW2MinionState),"setval");
+			else
+				MultiBotSend("state=None","setval");
+			end	
+			
+			if (gGW2MinionEffect ~= nil and wt_core_controller.shouldRun ~=nil and wt_core_controller.shouldRun==true) then
+				MultiBotSend("effect=" ..tostring(gGW2MinionEffect),"setval");
+			else
+				MultiBotSend("effect=None","setval");
+			end	
+				
+			if (wt_core_controller ~= nil and wt_core_controller.shouldRun ~=nil and wt_core_controller.shouldRun==true) then
+				MultiBotSend("running=true","setval");
+			else
+				MultiBotSend("running=false","setval");
+			end
+			
+			if (Player:GetRole() == 1) then
+				MultiBotSend("role=Leader","setval");
+			else
+				MultiBotSend("role=Minion","setval");
+			end
+		end		
 	else
 		wt_debug("Trying to connect to MultibotComServer....")
 		if ( not MultiBotConnect( gIP , tonumber(gPort) , gPw) ) then
 			gStats_enabled = "0"
-			wt_debug("Cannot reach MultibotComServer... Make sure you have started the MultibotComServer.exe and the correct Password,IP and Port!")
+			gMinionEnabled = "0"
+			wt_error("*****Groupbotting & Stats DISABLED*****")
+			wt_error("Cannot reach MultibotComServer... ")
+			wt_error("Start the MultibotComServer.exe and setup the correct Password,IP and Port!")
 		else			
 			MultiBotJoinChannel("remotecmd")
 			MultiBotJoinChannel("gw2minion")

@@ -48,7 +48,7 @@ wt_meshloader.meshlist = {
 	--EternalBattlegrounds:
 	[38] = "",
 	--MountMaelstrom:
-	[39] = "",
+	[39] = "mahlstromgipfel 1.4",
 	--LionsArch:
 	[50] = "",
 	--StraitsofDevastation:
@@ -58,7 +58,7 @@ wt_meshloader.meshlist = {
 	--BrisbanWildlands:
 	[54] = "",
 	--CursedShore:
-	[62] = "",
+	[62] = "cs_chain_abob",
 	--MalchorsLeap:
 	[65] = "",
 	--BloodtideCoast:
@@ -90,8 +90,9 @@ function wt_meshloader.LoadMesh()
 			wt_debug("Auto-Loading Navmesh " ..tostring(meshname))
 			local path = GetStartupPath().."\\Navigation\\"..tostring(meshname)
 			if (io.open(path..".obj")) then
-				NavigationManager:UnloadNavMesh()				
-				NavigationManager:LoadNavMesh(path)
+				if (NavigationManager:UnloadNavMesh()) then
+					NavigationManager:LoadNavMesh(path)
+				end
 				GUI_CloseMarkerInspector()
 			else
 				wt_debug("ERROR: Can't open or find the file: "..tostring(meshname))
@@ -99,6 +100,10 @@ function wt_meshloader.LoadMesh()
 			end		
 		end	
 	end
+	if ( MultiBotIsConnected( ) ) then		
+		MultiBotJoinChannel("gw2minion")
+		wt_debug("Successfully Re-Joined MultiBotServer channels !")			
+	end	
 end
 
 RegisterEventHandler("Gameloop.MapChanged",wt_meshloader.LoadMesh)

@@ -69,6 +69,8 @@ function cd_check_alive:evaluate()
 end
 
 function ed_alive:execute()
+	Player:ClearTarget()
+	Player:StopMoving()
 	wt_core_controller.requestStateChange( wt_core_state_idle )
 end
 
@@ -206,6 +208,7 @@ function ed_dead:execute()
 		end
 	end
 	wt_debug( "Downed: RESPAWN AT NEAREST WAYPOINT " )
+	wt_global_information.Reset()
 	wt_debug( Player:RespawnAtClosestResShrine() )
 end
 

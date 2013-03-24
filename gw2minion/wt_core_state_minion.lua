@@ -1,116 +1,40 @@
 -- The Minion's Minion State ;)
 
 wt_core_state_minion = inheritsFrom(wt_core_state)
-wt_core_state_minion.name = "Beeing a Minion"
+wt_core_state_minion.name = "Minion"
 wt_core_state_minion.kelement_list = { }
-wt_core_state_minion.LeadBroadcastTmr = nil
 wt_core_state_minion.IdleTmr = 0
 
 
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
-
-------------------------------------------------------------------------------
--- Check the Multibot-Serverconnection Cause & Effect
-local c_server = inheritsFrom( wt_cause )
-local e_server = inheritsFrom( wt_effect )
-
-function c_server:evaluate()
-	if ( gMinionEnabled == "1" and not MultiBotIsConnected( ) ) then		
-		return true
-	end	
-	return false
-end
-e_server.throttle = 1000
-function e_server:execute()
-	wt_debug("Trying to connect to MultibotComServer....")
-	if ( not MultiBotConnect( gIP , tonumber(gPort) , gPw) ) then
-		wt_debug("Cannot reach MultibotComServer... Make sure you have started the MultibotComServer.exe and setup the correct Password,IP and Port!")
-	else
-		MultiBotJoinChannel("remotecmd")
-		MultiBotJoinChannel("gw2minion")
-		wt_debug("Joined channels !")
-	end	
-end
-
-
-------------------------------------------------------------------------------
--- Set this clients role Cause & Effect
-local c_setrole = inheritsFrom( wt_cause )
-local e_setrole = inheritsFrom( wt_effect )
-c_setrole.askedCounter = 0
-
-function c_setrole:evaluate()
-	if ( MultiBotIsConnected( ) and wt_global_information.LeaderID == nil ) then	
-		return true
-	end	
-	return false
-end
-e_setrole.throttle = 1000
-function e_setrole:execute()	
-	if ( c_setrole.askedCounter < 3 ) then
-		wt_debug("Searching Leader..")
-		c_setrole.askedCounter = c_setrole.askedCounter + 1
-		MultiBotSend( "1;none","gw2minion" )
-	else
-		wt_debug("No leader found, setting our Role to Leader & telling others..")
-		c_setrole.askedCounter = 0
-		wt_global_information.LeaderID = Player.characterID
-		MultiBotSend( "2;"..wt_global_information.LeaderID,"gw2minion" )
-		wt_core_controller.requestStateChange( wt_core_state_leader  )
-	end
-end
 
 ------------------------------------------------------------------------------
 -- NoLeader Cause & Effect
 local c_noleader = inheritsFrom( wt_cause )
 local e_noleader = inheritsFrom( wt_effect )
+c_noleader.throttle = math.random( 1000, 3000 )
 function c_noleader:evaluate()
-	if (wt_global_information.TargetMapID == 0 and wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID ~= Player.characterID) then
+	if ( Settings.GW2MINION.gLeaderID ~= nil) then
 		local party = Player:GetPartyMembers()
 		if (party ~= nil) then
-			local leader = party[tonumber(wt_global_information.LeaderID)]
-			if (leader == nil) then
-				return true
+			local leader = party[tonumber(Settings.GW2MINION.gLeaderID)]
+			if (leader ~= nil) then
+				return false
 			end		
 		end	
 	end
-	return false
+	return true
 end
 e_noleader.throttle = math.random( 1000, 3000 )
 function e_noleader:execute()
-	wt_debug( "Leader is not in the same map right now?" )
-	wt_debug( "Resetting leader.." )
-	wt_global_information.LeaderID = nil
+	wt_debug( "Leader is gone? ..reseting state" )
 	wt_core_controller.requestStateChange( wt_core_state_idle )
 end
 
 
 -- Aggro is in wt_common_causes
 
-------------------------------------------------------------------------------
--- DepositItems Cause & Effect
-local c_deposit = inheritsFrom( wt_cause )
-local e_deposit = inheritsFrom( wt_effect )
+-- DepositItems is in wt_common_causes
 
-function c_deposit:evaluate()
-	if ( ItemList.freeSlotCount <= 3 ) then
-		if ( wt_global_information.InventoryFull == 0 ) then
-			return true
-		else
-			return false -- already tried to deposit stuff, still have 0 space in inventory -> vendoringcheck will jump in
-		end
-	else
-		wt_global_information.InventoryFull = 0
-	end
-	return false
-end
-e_deposit.throttle = 1000
-function e_deposit:execute()
-	wt_debug( "Idle: Deposing Collectables.." )
-	wt_global_information.InventoryFull = 1
-	Inventory:DepositCollectables()
-end
 
  ------------------------------------------------------------------------------
 -- Vendoring Check Cause & Effect
@@ -133,15 +57,7 @@ function c_vendorcheck:evaluate()
 	return false
 end
 function e_vendorcheck:execute()
-	if ( TableSize( c_vendorcheck.EList ) > 0 ) then
-		local nextTarget
-		nextTarget, E  = next( c_vendorcheck.EList )
-		if ( nextTarget ~=nil and nextTarget ~= 0 ) then
-			wt_debug( "Merchant on NavMesh found.." )
-			wt_core_state_vendoring.setTarget( nextTarget )
-			wt_core_controller.requestStateChange( wt_core_state_vendoring )
-		end
-	end
+	wt_core_taskmanager:addVendorTask(5000)
 end
 
 ------------------------------------------------------------------------------
@@ -165,28 +81,21 @@ function c_repaircheck:evaluate()
 	end	
 	return false
 end
-
 function e_repaircheck:execute()
-	if ( TableSize( c_repaircheck.EList ) > 0 ) then
-		local nextTarget
-		nextTarget, E  = next( c_repaircheck.EList )
-		if (nextTarget ~= nil and nextTarget ~= 0 ) then
-			wt_debug( "RepairMerchant on NavMesh found.." )
-			wt_core_state_repair.setTarget( nextTarget )
-			wt_core_controller.requestStateChange( wt_core_state_repair )
-		end
-	end
+	wt_core_taskmanager:addRepairTask(4500)
 end
 
 
-------------------------------------------------------------------------------
--- Search for Reviveable Partymembers Cause & Effect
+-- Search for Reviveable Partymembers is in wt_common_causes
   
-------------------------------------------------------------------------------
--- Search for Reviveable Targets Cause & Effect
+  
+-- Search for Reviveable Targets is in wt_common_causes
 
-------------------------------------------------------------------------------
--- Loot Cause & Effect
+
+-- Loot is in wt_common_causes
+
+
+-- LootChest is in wt_common_causes
 
 
 ------------------------------------------------------------------------------
@@ -216,10 +125,9 @@ function e_focus:execute()
 end
 
 ------------------------------------------------------------------------------
--- Gatherbale Cause & Effect
+-- Gatherable Cause & Effect
 local c_check_gatherable = inheritsFrom( wt_cause )
 local e_gather = inheritsFrom( wt_effect )
-
 c_check_gatherable.throttle = 1000
 function c_check_gatherable:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then		
@@ -251,10 +159,10 @@ end
 local c_followLead = inheritsFrom( wt_cause )
 local e_followLead = inheritsFrom( wt_effect )
 function c_followLead:evaluate()
-	if (wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID ~= 0 and wt_global_information.LeaderID ~= Player.characterID) then
+	if (Player:GetRole() ~= 1 and Settings.GW2MINION.gLeaderID ~= nil) then
 		local party = Player:GetPartyMembers()
 		if (party ~= nil) then
-			local leader = party[tonumber(wt_global_information.LeaderID)]
+			local leader = party[tonumber(Settings.GW2MINION.gLeaderID)]
 			if (leader ~= nil) then
 				if ((leader.distance > math.random(100,400) or leader.los~=true) and leader.onmesh) then
 					wt_core_state_minion.IdleTmr = wt_global_information.Now
@@ -268,7 +176,9 @@ function c_followLead:evaluate()
 					Player:MoveToRandomPointAroundCircle(pos.x,pos.y,pos.z,550);
 				end
 			else
-				wt_debug( "YOU ARE NOT IN A PARTY WITH THE LEADER! JOIN A PARTY!" )
+				wt_debug( "Leader is not in our map or there is no leader anymore?" )
+				wt_debug( "Asking for leader.." )
+				wt_core_controller.requestStateChange( wt_core_state_idle )
 			end		
 		end
 	end
@@ -277,15 +187,18 @@ end
 e_followLead.throttle = math.random( 400, 1000 )
 function e_followLead:execute()
 	local party = Player:GetPartyMembers()
-	if (party ~= nil and wt_global_information.LeaderID ~= nil) then
-		local leader = party[tonumber(wt_global_information.LeaderID)]
+	if (party ~= nil and Settings.GW2MINION.gLeaderID ~= nil) then
+		local leader = party[tonumber(Settings.GW2MINION.gLeaderID)]
 		if (leader ~= nil) then
 			local pos = leader.pos
 			if (leader.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
+				--wt_debug("PREDICT")
+				--Player:MoveToPredict(pos.x,pos.y,pos.z,pos.hx,pos.hy,pos.hz);
 				Player:MoveToRandom(pos.x,pos.y,pos.z,350);
 			else				
 				Player:MoveToRandomPointAroundCircle(pos.x,pos.y,pos.z,550);
 			end
+			wt_core_state_minion.IdleTmr = wt_global_information.Now
 		end
 	end
 end
@@ -297,21 +210,18 @@ function wt_core_state_minion:initialize()
 	-- State C&E
 	local ke_died = wt_kelement:create( "Died", c_died, e_died, wt_effect.priorities.interrupt )
 	wt_core_state_minion:add( ke_died )
-	
-	local ke_checkServer = wt_kelement:create( "CheckServer", c_server, e_server, 450 )
-	wt_core_state_minion:add( ke_checkServer )
-	
-	local ke_setRole = wt_kelement:create( "SetRole", c_setrole, e_setrole, 440 )
-	wt_core_state_minion:add( ke_setRole )
-		
+			
 	local ke_quickloot = wt_kelement:create( "QuickLoot", c_quickloot, e_quickloot, 110 )
 	wt_core_state_minion:add( ke_quickloot )
 	
 	local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 105 )
 	wt_core_state_minion:add( ke_quicklootchest )
 
-	local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 104)
-	wt_core_state_minion:add( ke_switchmesh )
+	local ke_doemertasks = wt_kelement:create( "EmergencyTask", c_doemergencytask, e_doemergencytask, 103 )
+	wt_core_state_minion:add( ke_doemertasks )
+	
+	--local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 104)
+	--wt_core_state_minion:add( ke_switchmesh )
 	
 	local ke_noleader = wt_kelement:create( "NoLeader", c_noleader, e_noleader, 102 )
 	wt_core_state_minion:add( ke_noleader )	
@@ -319,13 +229,17 @@ function wt_core_state_minion:initialize()
 	local ke_revparty = wt_kelement:create( "ReviveParty", c_revivep, e_revivep, 101 )
 	wt_core_state_minion:add( ke_revparty )
 	
-	local ke_maggro = wt_kelement:create( "AggroCheck", c_aggro, e_aggro, 100 )
+	local ke_maggro = wt_kelement:create( "AggroCheck", c_groupaggro, E_groupaggro, 100 )
 	wt_core_state_minion:add( ke_maggro )
 	
 	local ke_deposit = wt_kelement:create( "DepositItems", c_deposit, e_deposit, 90 )
 	wt_core_state_minion:add( ke_deposit )
 	--salvaging 89
-	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 88 )
+	
+	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 88 )
+	wt_core_state_minion:add( ke_dopriotasks )
+	
+	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 87 )
 	wt_core_state_minion:add( ke_vendorcheck )
 
 	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 86 )
@@ -340,6 +254,9 @@ function wt_core_state_minion:initialize()
 	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 50 )
 	wt_core_state_minion:add( ke_loot )
 
+	local ke_lootchests = wt_kelement:create("LootChest", c_lootchest, e_lootchest, 49 )
+	wt_core_state_minion:add( ke_lootchests )
+	
 	local ke_atkfocus = wt_kelement:create("FocusAtk", c_focus, e_focus, 45 )
 	wt_core_state_minion:add( ke_atkfocus )
 	

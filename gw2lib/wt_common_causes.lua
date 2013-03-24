@@ -10,7 +10,7 @@ DebugModes = { Revive = { Master = true, TID = nil, state = false, Move = true, 
 -- DebugModes.Revive.Move -- true = keep spamming the debug message
 -- DebugModes.Revive.Revive -- true = keep spamming the debug message
 -- DebugModes.Revive.NoTarget -- true = create debug message for No Revive Target
-
+	
 -- DebugModes.Loot.Size -- Table size of Loot Target table
 -- DebugModes.Loot.index -- Target ID of Loot Target
 -- DebugModes.Loot.Master -- Master Loot Debug message switch ( true / false ) if true do debug messages, if false don't do debug messages.
@@ -22,34 +22,85 @@ DebugModes = { Revive = { Master = true, TID = nil, state = false, Move = true, 
 --**********************************************
 c_navswitch = inheritsFrom( wt_cause )
 e_navswitch = inheritsFrom( wt_effect )
-function c_navswitch:evaluate()
-	if ( gNavSwitchEnabled == "1" and Inventory:GetInventoryMoney() > 500) then
-		if ( NavigationManager:GetTargetMapID() ~= 0) then
-			return true
-		end		
-		if (gMinionEnabled == "0" or (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID == Player.characterID)) then			
-			if (mm.lastswitchTmr == 0) then
+c_navswitch.throttle = 2000
+function c_navswitch:evaluate()	
+		
+	-- CHECK IF NEW MAP WAS SET ALREADY
+	if ( NavigationManager:GetTargetMapID() ~= 0 and NavigationManager:GetTargetMapID() ~= Player:GetLocalMapID()) then
+		wt_debug("We need to Teleport!")					
+		return true
+	else
+		--if ( NavigationManager:GetTargetMapID() == 0 and gNavSwitchEnabled == "1" and tonumber(Player:GetLocalMapID()) ~= nil and gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then		
+		--	MultiBotSend( "21;"..tonumber(Player:GetLocalMapID()),"gw2minion" ) -- Spam send Minions our MapID
+		--end
+		NavigationManager:SetTargetMapID(0)		
+	end
+	
+	if ( gNavSwitchEnabled == "1" ) then
+		-- CHECK IF IT IS TIME TO SWITCH MAPS		
+		if (gMinionEnabled == "0" or (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1)) then			
+			-- SOLO OR LEADER			
+			gMapswitch = math.floor(((gNavSwitchTime * 60000) - (wt_global_information.Now - mm.lastswitchTmr)) / 1000)
+			
+			if (mm.lastswitchTmr == 0 ) then
 				mm.lastswitchTmr = wt_global_information.Now
-			else
-				gMapswitch = math.floor(((gNavSwitchTime * 60000) - (wt_global_information.Now - mm.lastswitchTmr)) / 1000)
-				if ( mm.GetmeshfilelistSize() > 1 and (wt_global_information.Now - mm.lastswitchTmr > (gNavSwitchTime * 60000))) then
-					if ( not Player.inCombat ) then
-						Player:StopMoving()			
-						return true
+			elseif ( mm.GetmeshfilelistSize() > 1 and (wt_global_information.Now - mm.lastswitchTmr > (gNavSwitchTime * 60000))) then
+				mm.lastswitchTmr = wt_global_information.Now
+				
+				local mapindex = math.random(1,mm.GetmeshfilelistSize())
+				local lmapid = Player:GetLocalMapID()
+				for i,meshfile in pairs(mm.meshfilelist) do	
+					if (i~=nil and meshfile ~= nil and i == mapindex and lmapid ~= nil) then
+						if ( tonumber(meshfile.MapID) ~= lmapid  ) then	
+							if ( meshfile.WPIDList ~= nil ) then
+								local newWP = meshfile.WPIDList[ math.random( TableSize(meshfile.WPIDList) ) ]
+								wt_debug("Teleport to MapID: "..tostring(meshfile.MapID).. " / WaypointID: "..tostring(newWP))
+								Settings.GW2MINION.TargetWaypointID = newWP								
+								NavigationManager:SetTargetMapID(tonumber(meshfile.MapID))
+								--  SEND TO MINIONS
+								if (gMinionEnabled == "1") then	
+									MultiBotSend( "20;"..tonumber(newWP),"gw2minion" )
+									MultiBotSend( "21;"..tonumber(meshfile.MapID),"gw2minion" )									
+								end
+								return true								
+							end	
+						end							
 					end
 				end
 			end
 		else
 			gMapswitch = 0
-		end
+		end		
 	end
 	return false
 end
-function e_navswitch:execute()
-	wt_debug("Switching NavMesh!")
-	mm.lastswitchTmr  = wt_global_information.Now
-	wt_core_controller.requestStateChange( wt_core_state_navswitch )
+e_navswitch.throttle = 2500
+e_navswitch.counter = 0
+function e_navswitch:execute()	
+	wt_debug("Switching NavMesh to MapID:" ..tostring(NavigationManager:GetTargetMapID()).." / WaypointID: "..tostring(Settings.GW2MINION.TargetWaypointID))
+	if (Inventory:GetInventoryMoney() > 500) then
+		if (tonumber(Settings.GW2MINION.TargetWaypointID) ~= nil and tonumber(Settings.GW2MINION.TargetWaypointID) ~= 0 and tonumber(NavigationManager:GetTargetMapID())~=nil and tonumber(NavigationManager:GetTargetMapID())~=0) then
+			Player:StopMoving()
+			Player:TeleportToWaypoint(tonumber(Settings.GW2MINION.TargetWaypointID))
+			e_navswitch.counter = e_navswitch.counter + 1
+		else
+			wt_error("Something went wrong while switching the navmesh")
+		end	
+		
+		if (e_navswitch.counter > 3) then
+			wt_error("Seems we cannot teleport to WaypointID : "..tostring(Settings.GW2MINION.TargetWaypointID))
+			wt_error("Is this Waypoint not explored for this character?")
+			e_navswitch.counter = 0
+			NavigationManager:SetTargetMapID(0)
+		end
+	else
+		wt_error("Whoooops, we don't have enough money for teleporting?!?")
+		NavigationManager:SetTargetMapID(0)	
+	end
+	--wt_core_controller.requestStateChange( wt_core_state_navswitch )
 end
+
+
 
 --**********************************************
 -- Death Check
@@ -57,15 +108,14 @@ end
 c_died = inheritsFrom( wt_cause )
 e_died = inheritsFrom( wt_effect )
 function c_died:evaluate()
-	if ( not wt_core_taskmanager.behavior == "default" ) then
-		wt_core_taskmanager:SetDefaultBehavior()
-	end
 	if ( Player.alive ~= true ) then
 		return true
 	end
 	return false
 end
 function e_died:execute()
+	Player:ClearTarget()
+	Player:StopMoving()
 	wt_core_controller.requestStateChange( wt_core_state_dead )
 end
 
@@ -99,7 +149,7 @@ function c_quickloot:evaluate()
 	return false
 end
 e_quickloot.n_index = nil
-e_quickloot.throttle = math.random( 50, 250 )
+e_quickloot.throttle = math.random( 150, 450 )
 function e_quickloot:execute()
  	local NextIndex = 0
 	local LootTarget = nil
@@ -128,11 +178,8 @@ function e_quickloot:execute()
 			end
 		end
 	end
-	wt_error( "No Target to Quick-Loot" )
+	wt_debug( "No Target to Quick-Loot" )
 end
-
-
-
 
 
 --********************************************************************
@@ -186,55 +233,65 @@ function e_quicklootchest:execute()
 end
 
 
+--*************************************************************
+-- GROUP BOTTING Aggro Cause & Effect
+-- I'm abusing the C&E System a bit ;) by using the c_groupaggro:evaluate() to add "Kill Tasks" to the Tasklist
+-- These Kill Tasks are then performing the state change to combat
+--*************************************************************
+c_groupaggro = inheritsFrom( wt_cause )
+e_groupaggro = inheritsFrom( wt_effect )
+function c_groupaggro:evaluate()
+	-- GROUP BOTTING
+	if (gMinionEnabled == "1" and MultiBotIsConnected( )) then
+		
+		-- LEADER
+		if ( Player:GetRole() == 1 ) then	
+			local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los,incombat,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
+			if ( TableSize( TList ) > 0 ) then
+				local id, E  = next( TList )
+				if ( id ~= nil and id ~= 0 and E ~= nil) then
+					wt_core_taskmanager:addKillTask( id, E, 3000 )
+					return false
+				end		
+			end	
+			
+			local TList = ( CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
+			if ( TableSize( TList ) > 0 ) then
+				local id, E  = next( TList )
+				if ( id ~= nil and id ~= 0 and E ~= nil) then
+					wt_core_taskmanager:addKillTask( id, E, 2500 )
+					return false
+				end		
+			end	
+					
+		
+		-- MINION
+		else
+			local TList = ( CharacterList( "nearest,los,incombat,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
+			if ( TableSize( TList ) > 0 ) then
+				local id, E  = next( TList )
+				if ( id ~= nil and id ~= 0 and E ~= nil) then
+					wt_core_taskmanager:addKillTask( id, E, 3000 )
+					MultiBotSend( "6;"..tonumber(id),"gw2minion" )	-- Inform leader about our aggro target
+					return false
+				end		
+			end
+		end		
+	end	
+	return false
+end
+function e_groupaggro:execute()
+	return false
+end
+
 
 --*************************************************************
--- Aggro Cause & Effect
+-- SOLO Aggro Cause & Effect
 --*************************************************************
 c_aggro = inheritsFrom( wt_cause )
 e_aggro = inheritsFrom( wt_effect )
 function c_aggro:evaluate()
-	-- For Groupbotting
-	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_global_information.LeaderID ~= nil and Player.characterID ~= nil) then
-		if ( wt_global_information.LeaderID == Player.characterID ) then -- We Lead			
-			-- Kill all PartyAggroTargets in range of leader first
-			if ( TableSize( wt_global_information.PartyAggroTargets ) > 0 ) then
-				local nextTarget
-				nextTarget, nChar = next( wt_global_information.PartyAggroTargets )
-				if ( nextTarget ~= nil and nextTarget ~= 0) then
-					local ntarget = CharacterList:Get(tonumber(nextTarget))
-					if ( ntarget ~= nil and ntarget.distance < 4000 and ntarget.alive and ntarget.onmesh) then
-						c_aggro.TargetList[tonumber(nextTarget)] = nChar
-						return true
-					else 
-						table.remove(wt_global_information.PartyAggroTargets,tonumber(nextTarget))
-					end
-				end
-			end
-			
-			-- Search for new FocusTarget
-			c_aggro.TargetList = ( CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
-			if ( TableSize( c_aggro.TargetList ) > 0 ) then
-				return true
-			end
-			c_aggro.TargetList = ( CharacterList( "nearest,los,attackable,incombat,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
-			if ( TableSize( c_aggro.TargetList ) > 0 ) then
-				return true
-			end			
-			
-		else -- We follow
-			-- close range aggro targets
-			c_aggro.TargetList = ( CharacterList( "nearest,los,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
-			if ( TableSize( c_aggro.TargetList ) > 0 ) then
-				nextTarget, E  = next( c_aggro.TargetList )
-				if ( nextTarget ~= nil ) then
-					return true
-				end
-			end
-		end
-		return false		
-	end
-	
-	-- For Solo botting	
+	-- SOLO BOTTING
 	if ( Player.inCombat ) then
 		c_aggro.TargetList = ( CharacterList( "nearest,attackable,alive,incombat,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
 		if ( TableSize( c_aggro.TargetList ) > 0 ) then
@@ -244,42 +301,15 @@ function c_aggro:evaluate()
 			end
 		end
 	end
-
 	c_aggro.TargetList = ( CharacterList( "nearest,los,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 	if ( TableSize( c_aggro.TargetList ) > 0 ) then
 		return true
 	end
+	
 	return false
 end
-function e_aggro:execute()
-	-- For Groupbotting
-	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_global_information.LeaderID ~= nil ) then
-		if ( wt_global_information.LeaderID == Player.characterID ) then -- We Lead		
-			if ( TableSize( c_aggro.TargetList ) > 0 ) then
-				nextTarget, E  = next( c_aggro.TargetList )
-				if ( nextTarget ~= nil ) then
-					wt_debug( "Begin Combat, Possible aggro target found" )
-					MultiBotSend( "5;"..nextTarget,"gw2minion" )
-					wt_core_state_combat.setTarget( nextTarget )
-					wt_core_controller.requestStateChange( wt_core_state_combat )
-				end
-			end
-		else -- We Follow			
-			if ( TableSize( c_aggro.TargetList ) > 0 ) then
-				nextTarget, E  = next( c_aggro.TargetList )
-				if ( nextTarget ~= nil ) then
-					wt_debug( "Begin Combat, Possible aggro target found" )
-					--TODO: Inform leader about our aggro target
-					MultiBotSend( "6;"..nextTarget,"gw2minion" )					
-					wt_core_state_combat.setTarget( nextTarget )
-					wt_core_controller.requestStateChange( wt_core_state_combat )
-				end
-			end
-		end
-		return false
-	end
-	
-	--For Solo botting
+function e_aggro:execute()	
+	-- SOLO BOTTING
 	if ( TableSize( c_aggro.TargetList ) > 0 ) then
 		nextTarget, E  = next( c_aggro.TargetList )
 		if ( nextTarget ~= nil ) then
@@ -291,39 +321,75 @@ function e_aggro:execute()
 end
 
 
+
+--*************************************************************
+-- DepositItems Cause & Effect
+--*************************************************************
+c_deposit = inheritsFrom( wt_cause )
+e_deposit = inheritsFrom( wt_effect )
+function c_deposit:evaluate()
+	if ( ItemList.freeSlotCount <= 3 ) then
+		if ( wt_global_information.InventoryFull == 0 ) then
+			return true
+		else
+			return false -- already tried to deposit stuff, still have 0 space in inventory -> vendoringcheck will jump in
+		end
+	else
+		wt_global_information.InventoryFull = 0
+	end
+	return false
+end
+e_deposit.throttle = 1000
+function e_deposit:execute()
+	wt_debug( "Idle: Deposing Collectables.." )
+	wt_global_information.InventoryFull = 1
+	Inventory:DepositCollectables()
+end
+
+
 --************************************************************
--- Do Emergency Tasks Cause & Effect
+-- Do Emergency Tasks Cause & Effect - Done before AggroCheck
 --************************************************************
 c_doemergencytask = inheritsFrom( wt_cause )
 e_doemergencytask = inheritsFrom( wt_effect )
 function c_doemergencytask:evaluate()
-	if ( wt_core_taskmanager ~= nil ) then
-		return wt_core_taskmanager:CheckEmergencyTask()	
+	if (wt_core_taskmanager.current_task ~= nil and wt_core_taskmanager.current_task.priority > 10000) then
+		return true
 	end	
 	return false
 end
 function e_doemergencytask:execute()
-	wt_core_taskmanager:DoEmergencyTask()
+	wt_core_taskmanager:DoTask()
 end
 
 
-
 --************************************************************
--- Do Prio Tasks Cause & Effect
+-- Do Prio Tasks Cause & Effect - Done after AggroCheck
 --************************************************************
 c_dopriotask = inheritsFrom( wt_cause )
-e_dotask = inheritsFrom( wt_effect )
+e_dopriotask = inheritsFrom( wt_effect )
 function c_dopriotask:evaluate()
-	if ( wt_core_taskmanager ~= nil ) then
-		return wt_core_taskmanager:CheckPrioTask()	
-	end	
+	if (wt_core_taskmanager.current_task ~= nil and wt_core_taskmanager.current_task.priority > 999 and wt_core_taskmanager.current_task.priority <= 10000) then
+		return true
+	end
 	return false
 end
-function e_dotask:execute()
-	wt_core_taskmanager:DoPrioTask()
+function e_dopriotask:execute()
+	wt_core_taskmanager:DoTask()
 end
 
 
+--************************************************************
+-- Do Tasks Cause & Effect 
+--************************************************************
+c_dotask = inheritsFrom( wt_cause )
+e_dotask = inheritsFrom( wt_effect )
+function c_dotask:evaluate()	
+	return true
+end
+function e_dotask:execute()
+	wt_core_taskmanager:DoTask()
+end
 
 
 --************************************************************
@@ -333,24 +399,31 @@ c_rest = inheritsFrom( wt_cause )
 e_rest = inheritsFrom( wt_effect )
 function c_rest:evaluate()
 	local HP = Player.health.percent
-	if ( HP < wt_global_information.Currentprofession.RestHealthLimit ) then
-		local mybuffs = Player.buffs
+	if ( HP < math.random(55,75) ) then
+		
+		--- HUGE BUG on C++ side, need to fix that first ...
+		--[[local mybuffs = Player.buffs
 		local hazardfound= false
-		if (mybuffs~=nil) then
+		if (mybuffs ~= nil) then
 		  i,e = next(mybuffs)
-		  while (i~=nil and e~=nil) do
-			 if (e.skillID == 737 or e.contentID == 134797 or
-				 e.skillID == 723 or e.contentID == 35864) then --Burning
-				hazardfound = true
-			 end
+		  while (i ~= nil and e ~= nil) do			
+			--d(tostring (i))
+			--d(tostring (i) .. " " ..tostring(e) .. " " .. tostring(e.skillID))
+			--if (tonumber(e.skillID) ~= nil and tonumber(e.contentID) ~= nil) then
+				--if (e.skillID == 737 or e.contentID == 134797 or
+				--	e.skillID == 723 or e.contentID == 35864) then --Burning
+				--	hazardfound = true					
+				--end
+			--end
 			 i,e = next(mybuffs,i)
 		  end
 		end
 		if (not hazardfound) then
 			return true
-		end
+		end]]
+		return true
 	end
-	--[[if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID == Player.characterID ) then -- We Lead	
+	--[[if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1 ) then -- We Lead	
 		local party = Player:GetPartyMembers()
 		if (party ~= nil) then
 			local index, player  = next( party )
@@ -374,7 +447,7 @@ function e_rest:execute()
 		end
 	end
 	local HP = Player.health.percent
-	if ( HP < wt_global_information.Currentprofession.RestHealthLimit ) then
+	if ( HP < math.random(55,75) ) then
 		local s6 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_6 )
 		if( Player:GetCurrentlyCastedSpell() == 17 and not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_6 ) ) then
 			if ( c_rest_heal ) then
@@ -386,12 +459,12 @@ function e_rest:execute()
 			Player:CastSpell( GW2.SKILLBARSLOT.Slot_6 )
 		end
 	end
-	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and wt_global_information.LeaderID ~= nil and wt_global_information.LeaderID == Player.characterID ) then -- We Lead	
+	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1 ) then -- We Lead	
 		local party = Player:GetPartyMembers()
 		if (party ~= nil) then
 			local index, player  = next( party )
 			while ( index ~= nil and player ~= nil ) do			
-				if (player.distance > 3500 and player.alive and player.onmesh and player.health.percent < wt_global_information.Currentprofession.RestHealthLimit ) then					
+				if (player.distance > 3500 and player.alive and player.onmesh and player.health.percent < math.random(55,75) ) then					
 					local pos = player.pos
 					Player:MoveTo(pos.x,pos.y,pos.z,math.random( 20, 100 ))
 				end
@@ -403,8 +476,6 @@ function e_rest:execute()
 end
 
 
-
-
 --************************************************************
 -- Revive PartyMember in Groupbotting
 --************************************************************
@@ -413,7 +484,7 @@ e_revivep = inheritsFrom( wt_effect )
 c_revivep.ID = nil
 function c_revivep:evaluate()
 	local party = Player:GetPartyMembers()
-	if (party ~= nil and wt_global_information.LeaderID ~= nil) then
+	if (party ~= nil ) then
 		local index, player  = next( party )
 		while ( index ~= nil and player ~= nil ) do			
 			if (player.distance < 4000 and ((player.healthstate == GW2.HEALTHSTATE.Defeated and not Player.inCombat) or (player.healthstate == GW2.HEALTHSTATE.Downed)) and player.onmesh) then
@@ -448,7 +519,6 @@ function e_revivep:execute()
 		end
 	end
 end
-
 
 
 --****************************************************
@@ -554,8 +624,9 @@ function e_loot:execute()
 end
 
 
-------------------------------------------------------------------------------
+--*********************************************************
 -- LootChests Cause & Effect
+--*********************************************************
 c_lootchest = inheritsFrom( wt_cause )
 e_lootchest = inheritsFrom( wt_effect )
 function c_lootchest:evaluate()
@@ -563,7 +634,7 @@ function c_lootchest:evaluate()
 		c_lootchest.EList = GadgetList("nearest,onmesh,contentID=198260,maxdistance=" .. wt_global_information.MaxLootDistance )
 		if ( TableSize( c_lootchest.EList ) > 0 ) then			
 			local index, LT = next( c_lootchest.EList )
-			if ( index ~= nil and LT~=nil) then					
+			if ( index ~= nil and LT~=nil and LT.isselectable == 1) then					
 				return true
 			end
 		end	

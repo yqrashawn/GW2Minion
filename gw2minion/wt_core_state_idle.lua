@@ -1,8 +1,4 @@
--- The Idle State
--- Check for Buffs/Debuffs
--- Check for Full Inventory
--- Check for Goals
--- ...
+-- The Idle State- For solo botting
 
 -- We inherit from wt_core_state, which gives us: function wt_core_state:run(), function wt_core_state:add( kelement ) and function wt_core_state:register()
 wt_core_state_idle = inheritsFrom( wt_core_state )
@@ -11,10 +7,40 @@ wt_core_state_idle.kelement_list = { }
 
 
 ------------------------------------------------------------------------------
+-- MultiBotComServerConnect Cause & Effect
+local c_iamminion = inheritsFrom( wt_cause )
+local e_iamminion = inheritsFrom( wt_effect )
+function c_iamminion:evaluate()
+	if (gMinionEnabled == "1" and MultiBotIsConnected( )) then		
+		return true
+	end	
+	return false
+end
+function e_iamminion:execute()
+	if ( Player:GetRole() == 1) then
+		if (tonumber(Player.characterID) ~= nil) then
+			MultiBotSend( "1;"..tonumber(Player.characterID),"gw2minion" ) -- Spam send who is the Leader
+		end
+		wt_debug( "Switching to - LEADER" )
+		wt_core_controller.requestStateChange( wt_core_state_leader )
+	else
+		local party = Player:GetPartyMembers()
+		if (party ~= nil) then
+			if ( Settings.GW2MINION.gLeaderID == nil or party[tonumber(Settings.GW2MINION.gLeaderID)] == nil ) then
+				MultiBotSend( "2;none","gw2minion" )
+				MultiBotJoinChannel("gw2minion")
+			end
+		end
+		wt_debug( "Switching to - MINION" )
+		wt_core_controller.requestStateChange( wt_core_state_minion )
+	end
+end
+
+
+------------------------------------------------------------------------------
 -- DepositItems Cause & Effect
 local c_deposit = inheritsFrom( wt_cause )
 local e_deposit = inheritsFrom( wt_effect )
-
 function c_deposit:evaluate()
 	if ( ItemList.freeSlotCount <= 2 ) then
 		if ( wt_global_information.InventoryFull == 0 ) then
@@ -33,6 +59,7 @@ function e_deposit:execute()
 	wt_global_information.InventoryFull = 1
 	Inventory:DepositCollectables()
 end
+
 
 ------------------------------------------------------------------------------
 -- Vendoring Check Cause & Effect
@@ -53,11 +80,9 @@ function c_vendorcheck:evaluate()
 	return false
 end
 function e_vendorcheck:execute()
-	if (gVendor_Repair == "1") then
-		wt_core_taskmanager:addRepairTask({priority = 10001, task_type = "custom"})
-	end
-	wt_core_taskmanager:addVendorTask({priority = 10001, task_type = "custom"})
+	wt_core_taskmanager:addVendorTask(5000)
 end
+
 
 ------------------------------------------------------------------------------
 -- NeedRepair Check Cause & Effect
@@ -78,21 +103,15 @@ function c_repaircheck:evaluate()
 	end	
 	return false
 end
-
 function e_repaircheck:execute()
-	wt_core_taskmanager:addRepairTask({priority = 10001, task_type = "custom"})
-	if( gVendor_Repair == "1") then
-		wt_core_taskmanager:addVendorTask({priority = 10001, task_type = "custom"})
-	end
+	wt_core_taskmanager:addRepairTask(4500)
 end
-
 
 
 ------------------------------------------------------------------------------
 -- Gatherbale Cause & Effect
 local c_check_gatherable = inheritsFrom( wt_cause )
 local e_gather = inheritsFrom( wt_effect )
-
 c_check_gatherable.throttle = 1000
 function c_check_gatherable:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then		
@@ -120,31 +139,23 @@ function e_gather:execute()
 end
 
 
-------------------------------------------------------------------------------
--- Do Tasks Cause & Effect
-local c_dotask = inheritsFrom( wt_cause )
-local e_dotask = inheritsFrom( wt_effect )
-
-function c_dotask:evaluate()
-	return true
-end
-
-function e_dotask:execute()
-	wt_core_taskmanager:DoTask()
-end
-
-
 function wt_core_state_idle:initialize()
 
 	local ke_died = wt_kelement:create( "Died", c_died, e_died, wt_effect.priorities.interrupt )
 	wt_core_state_idle:add( ke_died )
-
+	
+	local ke_iamminion = wt_kelement:create( "MultiBotServerCheck", c_iamminion, e_iamminion, 250 )
+	wt_core_state_idle:add( ke_iamminion )	
+	
 	local ke_quickloot = wt_kelement:create( "QuickLoot", c_quickloot, e_quickloot, 110 )
 	wt_core_state_idle:add( ke_quickloot )
 	
 	local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 105 )
 	wt_core_state_idle:add( ke_quicklootchest )
-
+	
+	local ke_doemertasks = wt_kelement:create( "EmergencyTask", c_doemergencytask, e_doemergencytask, 103 )
+	wt_core_state_idle:add( ke_doemertasks )
+	
 	local ke_aggro = wt_kelement:create( "AggroCheck", c_aggro, e_aggro, 100 )
 	wt_core_state_idle:add( ke_aggro )
 
@@ -153,13 +164,16 @@ function wt_core_state_idle:initialize()
 
 	--89 salvage
 	
-	local ke_dopriotasks = wt_kelement:create( "DoPrioTask", c_dopriotask, e_dopriotask, 88 )
+	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 88 )
 	wt_core_state_idle:add( ke_dopriotasks )
 	
-	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 87 )
+	--local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 87 )
+	--wt_core_state_idle:add( ke_switchmesh )
+	
+	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 86 )
 	wt_core_state_idle:add( ke_vendorcheck )
 
-	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 86 )
+	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 85 )
 	wt_core_state_idle:add( ke_repaircheck )
 
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )
@@ -177,9 +191,6 @@ function wt_core_state_idle:initialize()
 
 	local ke_gather = wt_kelement:create( "Gather", c_check_gatherable, e_gather, 40 )
 	wt_core_state_idle:add( ke_gather )
-	
-	local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 37 )
-	wt_core_state_idle:add( ke_switchmesh )	
 
 	local ke_dotasks = wt_kelement:create( "DoTask", c_dotask, e_dotask, 35 )
 	wt_core_state_idle:add( ke_dotasks )

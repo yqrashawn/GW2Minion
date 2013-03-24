@@ -11,58 +11,7 @@ wt_profession_warrior  =  inheritsFrom( nil )
 wt_profession_warrior.professionID = 2 -- needs to be set
 wt_profession_warrior.professionRoutineName = "Warrior"
 wt_profession_warrior.professionRoutineVersion = "1.0"
-wt_profession_warrior.RestHealthLimit = math.random(60,75)
 wt_profession_warrior.switchweaponTmr = 0
-wt_profession_warrior.combatMoveTmr = 0
------------------------------------------------------------------------------------
------------------------------------------------------------------------------------
--- NeedHeal Check
-wt_profession_warrior.c_heal_action = inheritsFrom(wt_cause)
-wt_profession_warrior.e_heal_action = inheritsFrom(wt_effect)
-
-function wt_profession_warrior.c_heal_action:evaluate()
-	return (Player.health.percent < wt_profession_warrior.RestHealthLimit and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6))
-end
-wt_profession_warrior.e_heal_action.usesAbility = true
-
-function wt_profession_warrior.e_heal_action:execute()
-	wt_debug("e_heal_action")
-	Player:CastSpell(GW2.SKILLBARSLOT.Slot_6)
-end
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
--- Move Closer to Target Check
-wt_profession_warrior.c_MoveCloser = inheritsFrom(wt_cause)
-wt_profession_warrior.e_MoveCloser = inheritsFrom(wt_effect)
-
-function wt_profession_warrior.c_MoveCloser:evaluate()
-	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
-		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-		if ( T ~= nil ) then
-			local Distance = T.distance or 0
-			local LOS = T.los or false
-			if (Distance >= wt_global_information.AttackRange or LOS~=true) then
-				return true
-			else
-				if( Player:GetTarget() ~= wt_core_state_combat.CurrentTarget) then
-					Player:SetTarget(wt_core_state_combat.CurrentTarget)
-				end
-			end
-		end
-	end
-	return false;
-end
-
-function wt_profession_warrior.e_MoveCloser:execute()
-	--wt_debug("e_MoveCloser ")
-	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
-		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-		if ( T ~= nil ) then
-			local Tpos = T.pos
-			Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,120) -- the last number is the distance to the target where to stop
-		end
-	end
-end
 
 
 ------------------------------------------------------------------------------
@@ -113,48 +62,16 @@ function wt_profession_warrior.SwitchWeapon()
 	return false 
 end
 
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
--- Random CombatMovement
-function wt_profession_warrior.CombatMovement()
-	if (wt_profession_warrior.combatMoveTmr == 0 or wt_global_information.Now - wt_profession_warrior.combatMoveTmr > 1000) then	
-		wt_profession_warrior.combatMoveTmr = wt_global_information.Now + math.random(500,2000)
-		if (Player:GetMovementState() == 0) then			
-			if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
-				local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-				if ( T ~= nil ) then					
-					if (T.distance ~= nil and T.distance < 140) then
-						local s = math.random(0,2)
-						if( s == 0 and T.health.percent < math.random(0,90) and Player.endurance >= 50) then
-							Player:Evade(3)							
-						elseif ( s == 1) then
-							--Player:SetMovement(2)
-						elseif (s == 2) then
-							--Player:SetMovement(3)
-						end
-						return
-					end
-				end
-			end
-		else
-			Player:StopMoving()
-		end
-	end	
-end
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 -- Combat Default Attack 
 wt_profession_warrior.c_attack_default = inheritsFrom(wt_cause)
 wt_profession_warrior.e_attack_default = inheritsFrom(wt_effect)
-
 function wt_profession_warrior.c_attack_default:evaluate()
 	  return wt_core_state_combat.CurrentTarget ~= 0
 end
-
 wt_profession_warrior.e_attack_default.usesAbility = true
 function wt_profession_warrior.e_attack_default:execute()
-	wt_profession_warrior.CombatMovement()
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= nil and TID ~= 0 ) then
 		local T = CharacterList:Get(TID)
@@ -389,8 +306,7 @@ function wt_profession_warrior.e_attack_default:execute()
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
 						end
 					end
-				end
-				
+				end				
 			
 			else --DEFAULT ATTACK
 				if (s1 ~= nil) then
@@ -476,11 +392,6 @@ if ( wt_profession_warrior.professionID > -1 and wt_profession_warrior.professio
 	-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
 	-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
 	-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua		
-	local ke_heal_action = wt_kelement:create("heal_action",wt_profession_warrior.c_heal_action,wt_profession_warrior.e_heal_action, 100 )
-	wt_core_state_combat:add(ke_heal_action)
-
-	local ke_MoveClose_action = wt_kelement:create("Move closer",wt_profession_warrior.c_MoveCloser,wt_profession_warrior.e_MoveCloser, 75 )
-	wt_core_state_combat:add(ke_MoveClose_action)
 		
 	local ke_Attack_default = wt_kelement:create("Attack",wt_profession_warrior.c_attack_default,wt_profession_warrior.e_attack_default, 45 )
 	wt_core_state_combat:add(ke_Attack_default)

@@ -63,6 +63,7 @@ end
 
 -- Main function that evaluates and executes states
 function wt_core_controller.DoState()
+	wt_core_taskmanager:Update_Tasks( )
 	if ( wt_core_controller.state ~= nil ) then
 		if ( gGW2MinionState ~= nil ) then
 			gGW2MinionState = wt_core_controller.state.name
@@ -109,7 +110,7 @@ end
 
 -- run the statemachine
 function wt_core_controller.Run()
-	if ( wt_core_controller.shouldRun ) then
+	if ( wt_core_controller.shouldRun ) then		
 		wt_core_controller.DoState()
 	end
 end
@@ -119,12 +120,12 @@ function wt_core_controller.ToggleRun()
 	if ( NavigationManager:IsNavMeshLoaded() ) then		
 		wt_core_controller.shouldRun = not wt_core_controller.shouldRun
 		wt_global_information.Reset()
-		d("Core Run State:",wt_core_controller.shouldRun)
+		wt_debug("Core Run State:",wt_core_controller.shouldRun)
 	else
 		if (gAutostartbot == "1") then
 			wt_meshloader.LoadMesh()
 		else
-			d("CAN'T START THE BOT, YOU NEED TO LOAD A NAVMESH FIRST!")
+			wt_error("CAN'T START THE BOT, YOU NEED TO LOAD A NAVMESH FIRST!")
 		end
 	end
 end

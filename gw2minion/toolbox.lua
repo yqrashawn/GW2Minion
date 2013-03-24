@@ -12,7 +12,7 @@ function tb.ModuleInit()
 	GUI_NewButton("ToolBox","PrintItemDataID","TB.printID","Bags_Supplies")
 	GUI_NewField("ToolBox","ItemName:","tb_itemname","Bags_Supplies")
 	GUI_NewSeperator("ToolBox")
-	GUI_NewButton("ToolBox","EventMonitor","TB.eventmon","Dev")
+	GUI_NewButton("ToolBox","devmonitor","TB.eventmon","Dev")
 	GUI_NewButton("ToolBox","Minions,(Re)load Mesh","TB.reload","Dev")
 	GUI_NewField("ToolBox","Meshname:","greloadmesh", "Dev");
 	GUI_NewSeperator("ToolBox")
@@ -31,7 +31,6 @@ function tb.ModuleInit()
 	GUI_NewField("ToolBox","X: ","tb_xPos","Movement")
 	GUI_NewField("ToolBox","Y: ","tb_yPos","Movement")
 	GUI_NewField("ToolBox","Z: ","tb_zPos","Movement")
-	GUI_NewButton("ToolBox","TestFunction","TB.testfx")
 	GUI_FoldGroup("ToolBox","Movement")
 	GUI_FoldGroup("ToolBox","Dev")
 	GUI_FoldGroup("ToolBox","NPC")
@@ -137,16 +136,11 @@ function tb.Teleport()
 	Player:Teleport(tonumber(tb_xPos),tonumber(tb_yPos),tonumber(tb_zPos))
 end
 
-function tb.TestFunction()
-	item = ItemList:Get(1)
-	d(item.dataID)
-end
-
 function tb.PrintDataID()
 	for id, item in pairs(ItemList("")) do
 		if(tostring(item.name) == tb_itemname) then
 			d(tostring(id))
-			d(item.name..": "..item.dataID)
+			d(item.name..": "..tostring(item.dataID))
 		end
 	end
 end
@@ -155,12 +149,10 @@ function tb.OnUpdate( event, tickcount )
 	if (tb.running ) then	
 		if (tickcount - tb.lastrun > 150) then
 			tb.lastrun = tickcount				
-			if (not wt_core_taskmanager:CheckEmergencyTask()) then
-				tb.running = false
-				return
+			if (wt_core_taskmanager.current_task ~= nil) then
+				wt_core_taskmanager:DoTask()								
 			else			
-				wt_core_taskmanager:DoEmergencyTask()
-				return
+				tb.running = false				
 			end			
 		end	
 	end
@@ -169,13 +161,16 @@ end
 function tb.UnpackBags()
 	if (wt_core_taskmanager.current_task == nil) then
 		local newtask = inheritsFrom( wt_task )
+		newtask.UID = "UNPACKBAG"
 		newtask.name = "Opening Bags"
+		newtask.timestamp = 0
+		newtask.lifetime = 0
 		newtask.priority = 15000
 		newtask.done = false
 		newtask.last_execution = 0
 		newtask.throttle = 150
 		newtask.deposited = false
-		
+
 		function newtask:execute()
 			local opened = false
 			if (ItemList.freeSlotCount > 1) then
@@ -189,7 +184,7 @@ function tb.UnpackBags()
 					or itemid == 11455 or itemid == 11455 or itemid == 11456 
 					or itemid == 11456 or itemid == 11519 or itemid == 11509 
 					or itemid == 11496 or itemid == 11472 or itemid == 11504 
-					or itemid == 11483) then --ADD MORE IDs HERE
+					or itemid == 11483 or itemid == 11454) then --ADD MORE IDs HERE
 						wt_debug( "Opening Bag..")
 						opened = true					
 						item:Use()
@@ -229,6 +224,9 @@ end
 function tb.AutoSalvage()	
 	if (wt_core_taskmanager.current_task == nil) then	
 		local newtask = inheritsFrom( wt_task )
+		newtask.UID = "AUTOSALVAGE"
+		newtask.timestamp = 0
+		newtask.lifetime = 0
 		newtask.name = "Salvage All Items"
 		newtask.priority = 15000
 		newtask.done = false
@@ -302,9 +300,21 @@ function tb.AutoSalvage()
 	end
 end
 
-function tb.DoSupplyRun()
-	wt_core_taskmanager:addVendorTask({keep_in_queue = true, priority = 10001, task_type = "custom"})
-	wt_core_taskmanager:addRepairTask({keep_in_queue = true, priority = 10001, task_type = "custom"})
+function tb.DoSupplyRun()	
+	if (wt_core_taskmanager.current_task == nil) then
+		wt_core_taskmanager:addVendorTask(15000)
+		tb.running = true		
+		wt_debug("Doing Supply Run")
+		if (TableSize(wt_core_taskmanager.Customtask_list) == 1) then
+			i,wt_core_taskmanager.current_task = next(wt_core_taskmanager.Customtask_list)
+			wt_core_taskmanager.Customtask_list = {}
+		end
+	else
+		wt_core_taskmanager.current_task = nil
+		tb.running = false
+		wt_debug("Stopping Supply Run")
+	end	
+	--wt_core_taskmanager:addRepairTask(15000)
 end
 
 function tb.MinionsloadMesh()
@@ -319,9 +329,8 @@ RegisterEventHandler("TB.toggle", tb.ToggleMenu)
 RegisterEventHandler("TB.unpack", tb.UnpackBags)
 RegisterEventHandler("TB.salvage", tb.AutoSalvage)
 RegisterEventHandler("TB.reload", tb.MinionsloadMesh)
-RegisterEventHandler("TB.eventmon", eventmonitor.ToggleMenu)
+RegisterEventHandler("TB.eventmon", devmonitor.ToggleMenu)
 RegisterEventHandler("TB.supplyRun", tb.DoSupplyRun)
-RegisterEventHandler("TB.testfx", tb.TestFunction)
 RegisterEventHandler("TB.getInteractableTarget", tb.GetInteractableTarget)
 RegisterEventHandler("TB.getTarget", tb.GetTarget)
 RegisterEventHandler("TB.setTarget", tb.SetTarget)

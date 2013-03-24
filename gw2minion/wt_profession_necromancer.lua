@@ -9,7 +9,6 @@ wt_profession_necromancer  =  inheritsFrom( nil )
 wt_profession_necromancer.professionID = 8 -- needs to be set
 wt_profession_necromancer.professionRoutineName = "Necromancer"
 wt_profession_necromancer.professionRoutineVersion = "1.0"
-wt_profession_necromancer.RestHealthLimit = math.random(60,75)
 wt_profession_necromancer.switchweaponTmr = 0
 
 wt_profession_necromancer.petIDs = {
@@ -27,21 +26,6 @@ wt_profession_necromancer.Slots = {
 	GW2.SKILLBARSLOT.Slot_10,
 }
 
------------------------------------------------------------------------------------
------------------------------------------------------------------------------------
--- NeedHeal Check
-wt_profession_necromancer.c_heal_action = inheritsFrom(wt_cause)
-wt_profession_necromancer.e_heal_action = inheritsFrom(wt_effect)
-
-function wt_profession_necromancer.c_heal_action:evaluate()
-	return (Player.health.percent < wt_profession_necromancer.RestHealthLimit and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6))
-end
-wt_profession_necromancer.e_heal_action.usesAbility = true
-
-function wt_profession_necromancer.e_heal_action:execute()
-	--wt_debug("e_heal_action")
-	Player:CastSpell(GW2.SKILLBARSLOT.Slot_6)
-end
 
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
@@ -79,41 +63,6 @@ function wt_profession_necromancer.e_pets:execute()
 					return true
 				end
 			end
-		end
-	end
-end
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
--- Move Closer to Target Check
-wt_profession_necromancer.c_MoveCloser = inheritsFrom(wt_cause)
-wt_profession_necromancer.e_MoveCloser = inheritsFrom(wt_effect)
-
-function wt_profession_necromancer.c_MoveCloser:evaluate()
-	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
-		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-		if ( T ~= nil ) then
-			local Distance = T.distance or 0
-			local LOS = T.los or false
-			if (Distance >= wt_global_information.AttackRange or LOS~=true) then
-				return true
-			else
-				if( Player:GetTarget() ~= wt_core_state_combat.CurrentTarget) then
-					Player:SetTarget(wt_core_state_combat.CurrentTarget)
-				end
-			end
-		end
-	end
-	return false;
-end
-
-function wt_profession_necromancer.e_MoveCloser:execute()
-	--wt_debug("e_MoveCloser ")
-	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
-		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-		if ( T ~= nil ) then
-			local Tpos = T.pos
-			Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,120) -- the last number is the distance to the target where to stop
 		end
 	end
 end
@@ -164,7 +113,6 @@ function wt_profession_necromancer.e_use_slot_skills:execute()
 					SpellInfo = Player:GetSpellInfo(wt_profession_necromancer.e_slotToCast)
 					if (SpellInfo ~= nil) then
 						if (not Player:IsSpellOnCooldown(wt_profession_necromancer.e_slotToCast)) then
-							Player:StopMoving()
 							Player:CastSpell(wt_profession_necromancer.e_slotToCast,TID)
 						end
 					end	
@@ -227,7 +175,6 @@ end
 
 wt_profession_necromancer.e_attack_default.usesAbility = true
 function wt_profession_necromancer.e_attack_default:execute()
-	Player:StopMoving()
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= 0 ) then
 		local T = CharacterList:Get(TID)
@@ -479,11 +426,6 @@ if ( wt_profession_necromancer.professionID > -1 and wt_profession_necromancer.p
 	-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
 	-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
 	-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua		
-	local ke_heal_action = wt_kelement:create("Healing",wt_profession_necromancer.c_heal_action,wt_profession_necromancer.e_heal_action, 100 )
-	wt_core_state_combat:add(ke_heal_action)
-
-	local ke_MoveClose_action = wt_kelement:create("Move closer",wt_profession_necromancer.c_MoveCloser,wt_profession_necromancer.e_MoveCloser, 75 )
-	wt_core_state_combat:add(ke_MoveClose_action)
 		
 	local ke_Use_Slot_skills = wt_kelement:create("UseSlotSkills",wt_profession_necromancer.c_use_slot_skills,wt_profession_necromancer.e_use_slot_skills, 55 )
 	wt_core_state_combat:add(ke_Use_Slot_skills)

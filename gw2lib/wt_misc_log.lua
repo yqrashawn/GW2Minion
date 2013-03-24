@@ -25,5 +25,6 @@ function wt_debug( OutString )
 end
 
 function wt_error( text )
-	wt_debug( "Error: " .. tostring( text ) )
+	GUI_WindowMinimized("GW2Console",false)
+	wt_debug( "**ERROR**: " .. tostring( text ) )
 end

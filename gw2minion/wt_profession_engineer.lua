@@ -9,58 +9,7 @@ wt_profession_engineer  =  inheritsFrom( nil )
 wt_profession_engineer.professionID = 3 -- needs to be set
 wt_profession_engineer.professionRoutineName = "Engineer"
 wt_profession_engineer.professionRoutineVersion = "1.1"
-wt_profession_engineer.RestHealthLimit = math.random(60,75)
 wt_profession_engineer.switchweaponTmr = 0
------------------------------------------------------------------------------------
------------------------------------------------------------------------------------
--- NeedHeal Check
-wt_profession_engineer.c_heal_action = inheritsFrom(wt_cause)
-wt_profession_engineer.e_heal_action = inheritsFrom(wt_effect)
-
-function wt_profession_engineer.c_heal_action:evaluate()
-	return (Player.health.percent < wt_profession_engineer.RestHealthLimit and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6))
-end
-wt_profession_engineer.e_heal_action.usesAbility = true
-
-function wt_profession_engineer.e_heal_action:execute()
-	wt_debug("e_heal_action")
-	Player:CastSpell(GW2.SKILLBARSLOT.Slot_6)
-end
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
--- Move Closer to Target Check
-wt_profession_engineer.c_MoveCloser = inheritsFrom(wt_cause)
-wt_profession_engineer.e_MoveCloser = inheritsFrom(wt_effect)
-
-function wt_profession_engineer.c_MoveCloser:evaluate()
-	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
-		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-		if ( T ~= nil ) then
-			local Distance = T.distance or 0
-			local LOS = T.los or false
-			if (Distance >= wt_global_information.AttackRange or LOS~=true) then
-				return true
-			else
-				if( Player:GetTarget() ~= wt_core_state_combat.CurrentTarget) then
-					Player:SetTarget(wt_core_state_combat.CurrentTarget)
-				end
-			end
-		end
-	end
-	return false;
-end
-
-function wt_profession_engineer.e_MoveCloser:execute()
-	--wt_debug("e_MoveCloser ")
-	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
-		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-		if ( T ~= nil ) then
-			local Tpos = T.pos
-			Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,120) -- the last number is the distance to the target where to stop
-		end
-	end
-end
-
 
 
 ------------------------------------------------------------------------------
@@ -112,13 +61,13 @@ function wt_profession_engineer.SwitchWeapon()
 		-- 5805/6020 - Grenades / off: 6110
 		
 		-- Switch back to normal weapon
-		if ( SK7 ~= nil and SK7.skillID == 6114 or SK7.skillID == 6115 or SK7.skillID == 6113 or SK7.skillID == 6111 or SK7.skillID == 6110) then
+		if ( SK7 ~= nil and (SK7.skillID == 6114 or SK7.skillID == 6115 or SK7.skillID == 6113 or SK7.skillID == 6111 or SK7.skillID == 6110)) then
 			Player:CastSpell(GW2.SKILLBARSLOT.Slot_7)
 			return true
-		elseif ( SK8 ~= nil and SK8.skillID == 6114 or SK8.skillID == 6115 or SK8.skillID == 6113 or SK8.skillID == 6111 or SK8.skillID == 6110) then
+		elseif ( SK8 ~= nil and (SK8.skillID == 6114 or SK8.skillID == 6115 or SK8.skillID == 6113 or SK8.skillID == 6111 or SK8.skillID == 6110)) then
 			Player:CastSpell(GW2.SKILLBARSLOT.Slot_8)
 			return true
-		elseif ( SK9 ~= nil and SK9.skillID == 6114 or SK9.skillID == 6115 or SK9.skillID == 6113 or SK9.skillID == 6111 or SK9.skillID == 6110) then
+		elseif ( SK9 ~= nil and (SK9.skillID == 6114 or SK9.skillID == 6115 or SK9.skillID == 6113 or SK9.skillID == 6111 or SK9.skillID == 6110)) then
 			Player:CastSpell(GW2.SKILLBARSLOT.Slot_9)
 			return true
 		end
@@ -150,7 +99,6 @@ end
 
 wt_profession_engineer.e_attack_default.usesAbility = true
 function wt_profession_engineer.e_attack_default:execute()
-	Player:StopMoving()
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= 0 ) then
 		local T = CharacterList:Get(TID)
@@ -456,11 +404,6 @@ if ( wt_profession_engineer.professionID > -1 and wt_profession_engineer.profess
 	-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
 	-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
 	-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua		
-	local ke_heal_action = wt_kelement:create("heal_action",wt_profession_engineer.c_heal_action,wt_profession_engineer.e_heal_action, 100 )
-	wt_core_state_combat:add(ke_heal_action)
-
-	local ke_MoveClose_action = wt_kelement:create("Move closer",wt_profession_engineer.c_MoveCloser,wt_profession_engineer.e_MoveCloser, 75 )
-	wt_core_state_combat:add(ke_MoveClose_action)
 		
 	local ke_Attack_default = wt_kelement:create("Attack",wt_profession_engineer.c_attack_default,wt_profession_engineer.e_attack_default, 45 )
 	wt_core_state_combat:add(ke_Attack_default)

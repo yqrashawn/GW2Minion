@@ -9,7 +9,6 @@ wt_profession_ranger  =  inheritsFrom( nil )
 wt_profession_ranger.professionID = 4 -- needs to be set
 wt_profession_ranger.professionRoutineName = "Ranger"
 wt_profession_ranger.professionRoutineVersion = "1.0"
-wt_profession_ranger.RestHealthLimit = 70
 
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
@@ -67,58 +66,6 @@ offhand = {
 }
 ]]--
 
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
--- NeedHeal Check
-wt_profession_ranger.c_heal_action = inheritsFrom( wt_cause )
-wt_profession_ranger.e_heal_action = inheritsFrom( wt_effect )
-
-function wt_profession_ranger.c_heal_action:evaluate()
-	return ( Player.health.percent < 50 and not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_6 ) )
-end
-wt_profession_ranger.e_heal_action.usesAbility = true
-
-function wt_profession_ranger.e_heal_action:execute()
-	local s6 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_6 )
-	if ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_6 ) ) then
---		wt_debug( "e_heal_action" )
-		if ( Player:IsCasting( GW2.SKILLBARSLOT.Slot_6 ) and  Player:GetCurrentlyCastedSpell() == GW2.SKILLBARSLOT.Slot_6 ) then
-			debug_msg( nil, nil, 6, s6.name )
-		end
-		Player:CastSpell( GW2.SKILLBARSLOT.Slot_6 )
-	end
-end
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
--- Move Closer to Target Check
-wt_profession_ranger.c_MoveCloser = inheritsFrom( wt_cause )
-wt_profession_ranger.e_MoveCloser = inheritsFrom( wt_effect )
-
-function wt_profession_ranger.c_MoveCloser:evaluate()
-	if ( wt_core_state_combat.CurrentTarget ~= 0 ) then
-		local T = CharacterList:Get( wt_core_state_combat.CurrentTarget )
-		local Distance = T ~= nil and T.distance or 0
-		local LOS = T~=nil and T.los or false
-		if ( Distance >= wt_global_information.AttackRange or LOS ~= true ) then
-			return true
-		else
-			if ( Player:GetTarget() ~= wt_core_state_combat.CurrentTarget ) then
-				Player:SetTarget( wt_core_state_combat.CurrentTarget )
-			end
-		end
-	end
-	return false
-end
-
-function wt_profession_ranger.e_MoveCloser:execute()
-local TID = wt_core_state_combat.CurrentTarget
-	local T = CharacterList:Get( TID )
-	if ( T ~= nil ) then
-		debug_msg( TID, T, nil)
-		Player:MoveTo( T.pos.x, T.pos.y, T.pos.z, 120 ) -- the last number is the distance to the target where to stop
-	end
-end
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
@@ -147,7 +94,6 @@ end
 
 wt_profession_ranger.e_attack_default.usesAbility = true
 function wt_profession_ranger.e_attack_default:execute()
-	Player:StopMoving()
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= 0 ) then
 		local T = CharacterList:Get( TID )
@@ -455,11 +401,6 @@ if ( wt_profession_ranger.professionID > -1 and wt_profession_ranger.professionI
 
 
 	-- Our C & E´s for Ranger combat:
-	local ke_heal_action = wt_kelement:create( "heal_action", wt_profession_ranger.c_heal_action, wt_profession_ranger.e_heal_action, 100 )
-		wt_core_state_combat:add( ke_heal_action )
-
-	local ke_MoveClose_action = wt_kelement:create( "Move closer", wt_profession_ranger.c_MoveCloser, wt_profession_ranger.e_MoveCloser, 75 )
-		wt_core_state_combat:add( ke_MoveClose_action )
 
 	local ke_Update_weapons = wt_kelement:create( "UpdateWeaponData", wt_profession_ranger.c_update_weapons, wt_profession_ranger.e_update_weapons, 55 )
 		wt_core_state_combat:add( ke_Update_weapons )
