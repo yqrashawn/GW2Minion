@@ -401,26 +401,23 @@ function c_rest:evaluate()
 	local HP = Player.health.percent
 	if ( HP < math.random(55,75) ) then
 		
-		--- HUGE BUG on C++ side, need to fix that first ...
-		--[[local mybuffs = Player.buffs
+		local mybuffs = Player.buffs
 		local hazardfound= false
 		if (mybuffs ~= nil) then
 		  i,e = next(mybuffs)
-		  while (i ~= nil and e ~= nil) do			
-			--d(tostring (i))
-			--d(tostring (i) .. " " ..tostring(e) .. " " .. tostring(e.skillID))
-			--if (tonumber(e.skillID) ~= nil and tonumber(e.contentID) ~= nil) then
-				--if (e.skillID == 737 or e.contentID == 134797 or
-				--	e.skillID == 723 or e.contentID == 35864) then --Burning
-				--	hazardfound = true					
-				--end
-			--end
+		  while (i ~= nil and e ~= nil) do		
+			if (tonumber(e.skillID) ~= nil and tonumber(e.contentID) ~= nil) then
+				if (e.skillID == 737 or e.contentID == 134797 or
+					e.skillID == 723 or e.contentID == 35864) then --Burning
+					hazardfound = true					
+				end
+			end
 			 i,e = next(mybuffs,i)
 		  end
 		end
 		if (not hazardfound) then
 			return true
-		end]]
+		end
 		return true
 	end
 	--[[if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1 ) then -- We Lead	

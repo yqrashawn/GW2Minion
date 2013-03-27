@@ -8,7 +8,8 @@ GW2MINION_raw =
 	["Mesh_mahlstromgipfel 1.4"] = "1",
 	TargetWaypointID = 0,
 	gAutoUsePets = "1",
-	gAutostartbot = "1",
+	gAutostartbot = "0",
+	gCombatmovement = "1",
 	gEleSK10 = "90",
 	gEleSK7 = "87",
 	gEleSK8 = "99",
@@ -32,7 +33,7 @@ GW2MINION_raw =
 	gGuardSwapWeapons = "1",
 	gIP = "127.0.0.1",
 	gIgnoreMarkerCap = "1",
-	gLeaderID = 5482,
+	gLeaderID = 5348,
 	gLeaderIndex = "0",
 	gLeaderMapID = 62,
 	gMaxItemSellRarity = "3",
@@ -69,6 +70,7 @@ GW2MINION_raw =
 	gWarSK9 = "70",
 	gWarSwapWeapons = "1",
 	gWarUseBurst = "1",
+	gdoEvents = "1",
 	salvagesettings = 
 	{
 		

@@ -185,7 +185,7 @@ function e_setfocust:execute()
 end
 
 
-function wt_core_state_leader.ClaimLead( Event ) 
+--[[function wt_core_state_leader.ClaimLead( Event ) 
 	if ( MultiBotIsConnected( ) ) then
 		wt_debug( "Claiming leadership.." )
 		if (tonumber(Player.characterID) ~= nil) then
@@ -193,7 +193,7 @@ function wt_core_state_leader.ClaimLead( Event )
 		end
 		wt_core_controller.requestStateChange( wt_core_state_idle )
 	end
-end
+end]]
 
 -------------------------------------------------------------
 -------------------------------------------------------------
@@ -215,7 +215,7 @@ function wt_core_state_leader:HandleInit()
 	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Port","gPort","GroupBotting");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Password","gPw","GroupBotting");
 	GUI_NewSeperator(wt_global_information.MainWindow.Name);
-	GUI_NewButton(wt_global_information.MainWindow.Name, "Claim Leadership" , "Claimlead.Event","GroupBotting")
+	--GUI_NewButton(wt_global_information.MainWindow.Name, "Claim Leadership" , "Claimlead.Event","GroupBotting")
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,"GroupBotting");
 	
 	gStats_enabled = Settings.GW2MINION.gStats_enabled
@@ -244,10 +244,10 @@ function wt_core_state_leader:initialize()
 		Settings.GW2MINION.gPort = "7777"
 	end
 	if ( Settings.GW2MINION.gPw == nil ) then
-		Settings.GW2MINION.gPw = "mypassword"
+		Settings.GW2MINION.gPw = "mypw"
 	end
 	
-	RegisterEventHandler("Claimlead.Event",wt_core_state_leader.ClaimLead)
+	--RegisterEventHandler("Claimlead.Event",wt_core_state_leader.ClaimLead)
 	RegisterEventHandler("Module.Initalize",wt_core_state_leader.HandleInit)
 	RegisterEventHandler("GUI.Update",wt_core_state_leader.GUIVarUpdate)	
 	
