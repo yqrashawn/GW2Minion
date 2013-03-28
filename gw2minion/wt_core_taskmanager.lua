@@ -42,7 +42,7 @@ function wt_core_taskmanager:checkLevelRange( posX, posY, posZ )
 			end
 			j, marker = next( wt_core_taskmanager.markerList, j )
 		end
-		wt_debug( "WARNING: No Marker nearby found, check your NavMesh and add a Marker Nearby to set the levelrange!" )
+		--wt_debug( "WARNING: No Marker Near Task-Objective found, check your NavMesh and add a Marker near each Waypoint,PoI and Heartquest to set the levelrange!" )
 	end
 	return false
 end
@@ -145,14 +145,13 @@ function wt_core_taskmanager:Update_Tasks( )
 					wt_core_taskmanager.markerList = MarkerList()
 				end
 				
-				local MMList = MapMarkerList( "" )
+				local MMList = MapMarkerList( "worldmarkertype=20" )
 				if ( TableSize( MMList ) > 0 ) then
 					i, entry = next( MMList )
 					while ( i ~= nil and entry ~= nil ) do
 						local etype = entry.type
 						local mtype = entry.markertype
-						local wtype = entry.worldmarkertype
-						if ( wtype == 20) then -- 20 means it is in our zone	
+							
 						
 							-- Locked Waypoints
 							if ( mtype==14 and etype == 30 and entry.onmesh) then
@@ -185,7 +184,7 @@ function wt_core_taskmanager:Update_Tasks( )
 									wt_core_taskmanager:addEventTask( i, entry , 6000)
 								end						
 							end
-						end
+							
 						i, entry = next( MMList, i )
 					end
 				end

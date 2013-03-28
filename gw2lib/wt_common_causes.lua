@@ -616,7 +616,7 @@ function e_loot:execute()
 			end
 		end
 	else
-		wt_error( "Idle: No Target to Loot" )
+		wt_debug( "Idle: No Target to Loot" )
 	end
 end
 
@@ -628,11 +628,14 @@ c_lootchest = inheritsFrom( wt_cause )
 e_lootchest = inheritsFrom( wt_effect )
 function c_lootchest:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then
-		c_lootchest.EList = GadgetList("nearest,onmesh,contentID=198260,maxdistance=" .. wt_global_information.MaxLootDistance )
+		c_lootchest.EList = GadgetList("nearest,maxdistance=" .. wt_global_information.MaxLootDistance..",onmesh") --old contentID=198260
 		if ( TableSize( c_lootchest.EList ) > 0 ) then			
 			local index, LT = next( c_lootchest.EList )
-			if ( index ~= nil and LT~=nil and LT.isselectable == 1) then					
-				return true
+			while ( index ~= nil and LT~=nil ) do
+				if ( LT.isselectable == 1 and (LT.contentID == 198260 or LT.contentID == 232192)) then
+					return true
+				end
+				index, LT = next( c_lootchest.EList,index )
 			end
 		end	
 	end
@@ -640,22 +643,32 @@ function c_lootchest:evaluate()
 end
 e_lootchest.throttle = math.random( 250, 500 )
 function e_lootchest:execute()
-	if ( TableSize( c_lootchest.EList ) > 0 ) then			
+	if ( TableSize( c_lootchest.EList ) > 0 ) then
+		local chest,ID = nil
 		local index, LT = next( c_lootchest.EList )
-		if ( index ~= nil and LT~=nil) then	
-			if ( LT.distance ~= nil and LT.distance > 130 ) then	
-				local TPOS = LT.pos
+		while ( index ~= nil and LT~=nil ) do
+			if ( LT.isselectable == 1 and (LT.contentID == 198260 or LT.contentID == 232192)) then
+				chest = LT
+				ID = index
+				break
+			end
+			index, LT = next( c_lootchest.EList,index )
+		end
+		
+		if ( chest ~= nil and ID ~= nil ) then	
+			if ( chest.distance ~= nil and chest.distance >= 100 ) then	
+				local TPOS = chest.pos
 				Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 0 )
-			elseif ( LT.distance < 100 and index == Player:GetInteractableTarget() ) then
+			elseif ( chest.distance < 100 and ID == Player:GetInteractableTarget() ) then
 				Player:StopMoving()
 				if ( Player:GetCurrentlyCastedSpell() == 17 ) then					
-					wt_debug( "Looting Chest" )					
-					Player:Interact( index )
+					wt_debug( "Looting Chest ID:"..tostring(ID))					
+					Player:Use( ID )
 				end
-			elseif (LT.distance < 100 and index ~= Player:GetInteractableTarget()) then
+			elseif (chest.distance < 100 and ID ~= Player:GetInteractableTarget()) then
 				Player:StopMoving()
 				wt_debug( "Targeting Chest" )					
-				Player:SetTarget(index)
+				Player:SetTarget(ID)
 			end
 		end
 	else

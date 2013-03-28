@@ -177,16 +177,18 @@ function tb.UnpackBags()
 				newtask.deposited = false
 				local inv = ItemList("")	
 				id,item = next(inv)
-				while (id ~=nil and item ~= nil ) do	
+				while (id ~=nil and item ~= nil ) do
 					local itemid = item.dataID
-					if ( itemid == 10169 or itemid == 21867 
-					or itemid == 11542 or itemid == 11540 or itemid == 11540 
-					or itemid == 11455 or itemid == 11455 or itemid == 11456 
+					wt_debug("ID: "..tostring(itemid))
+					if ( itemid == 11725 or itemid == 11638  
+					or itemid == 11696  or itemid == 11632  or itemid == 11613  
+					or itemid == 11626  or itemid == 11455 or itemid == 11456 
 					or itemid == 11456 or itemid == 11519 or itemid == 11509 
 					or itemid == 11496 or itemid == 11472 or itemid == 11504 
 					or itemid == 11483 or itemid == 11454) then --ADD MORE IDs HERE
 						wt_debug( "Opening Bag..")
-						opened = true					
+						opened = true
+						
 						item:Use()
 					end
 					id,item = next(inv,id)
