@@ -26,9 +26,9 @@ function e_iamminion:execute()
 	else
 		local party = Player:GetPartyMembers()
 		if (party ~= nil) then
-			if ( Settings.GW2MINION.gLeaderID == nil or party[tonumber(Settings.GW2MINION.gLeaderID)] == nil ) then
-				MultiBotSend( "2;none","gw2minion" )
+			if ( Settings.GW2MINION.gLeaderID == nil or party[tonumber(Settings.GW2MINION.gLeaderID)] == nil ) then				
 				MultiBotJoinChannel("gw2minion")
+				MultiBotSend( "2;none","gw2minion" )				
 			end
 		end
 		wt_debug( "Switching to - MINION" )
@@ -91,7 +91,7 @@ local e_repaircheck = inheritsFrom( wt_effect )
 -- IsEquipmentBroken() is defined in /gw2lib/wt_utility.lua
 c_repaircheck.throttle = 2500
 function c_repaircheck:evaluate()
-	if ( gEnableRepair == "1" and IsEquipmentDamaged() ) then
+	if ( gEnableRepair == "1" and IsEquipmentBroken() ) then
 		c_repaircheck.EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
 		if ( TableSize( c_repaircheck.EList ) > 0 ) then
 			local nextTarget
@@ -165,19 +165,19 @@ function wt_core_state_idle:initialize()
 	local ke_deposit = wt_kelement:create( "DepositItems", c_deposit, e_deposit, 95 )
 	wt_core_state_idle:add( ke_deposit )
 
+	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 90 )
+	wt_core_state_idle:add( ke_loot )
+	
 	--89 salvage
 	
 	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 88 )
 	wt_core_state_idle:add( ke_dopriotasks )
 	
-	--local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 87 )
-	--wt_core_state_idle:add( ke_switchmesh )
+	local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 87 )
+	wt_core_state_idle:add( ke_switchmesh )
 	
 	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 86 )
 	wt_core_state_idle:add( ke_vendorcheck )
-	
-	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 85 )
-	wt_core_state_idle:add( ke_loot )
 	
 	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 84 )
 	wt_core_state_idle:add( ke_repaircheck )

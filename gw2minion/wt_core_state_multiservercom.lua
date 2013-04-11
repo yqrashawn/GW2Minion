@@ -36,6 +36,18 @@ function HandleMultiBotMessages( event, message, channel )
 								if (tonumber(Player.characterID) ~= nil) then
 									MultiBotSend( "1;"..tonumber(Player.characterID),"gw2minion" )
 								end
+								if ( gNavSwitchEnabled == "1" ) then									
+									local wp = WaypointList("nearest,samezone,notcontested,onmesh")									
+									if ( TableSize( wp ) > 0 ) then
+										i, entry = next( wp )
+										if ( i ~= nil and entry~= nil) then
+											wt_debug( "Sending Minions my mapID: "..tostring(Player:GetLocalMapID()) )									
+											MultiBotSend( "21;"..tostring(Player:GetLocalMapID()),"gw2minion" )
+											wt_debug( "Sending Minions nearest WaypointID: "..tostring(entry.contentID) )
+											MultiBotSend( "20;"..tostring(entry.contentID),"gw2minion" )											
+										end
+									end
+								end								
 							end						
 					end
 					
@@ -83,28 +95,17 @@ function HandleMultiBotMessages( event, message, channel )
 								wt_core_taskmanager:addRepairTask(4500)
 							end
 						elseif ( tonumber(msgID) == 16 ) then -- Leader tells Minions to Repair
-							if ( gEnableRepair == "1" and IsEquipmentDamaged() and Player:GetRole() ~= 1 ) then
+							if ( gEnableRepair == "1" and IsEquipmentBroken() and Player:GetRole() ~= 1 ) then
 								wt_debug( "Leader sais we should Repair now.." )
 								wt_core_taskmanager:addRepairTask(4500)		
 							end
-							
 						
-						-- SET MAP
-						elseif ( tonumber(msgID) == 20 ) then -- Leader sets TargetMapID
-							if (tonumber(msg) ~= nil ) then
-								
-								local char = CharacterList:Get(tonumber(msg))
-								if (char ~= nil) then
-									Settings.GW2MINION.gLeaderID = tonumber(msg)
-									wt_core_controller.requestStateChange( wt_core_state_idle )
-								end
-							end
-						
+												
 						
 						-- NAVMESHSWITCH
 						elseif ( tonumber(msgID) == 20 and tonumber(msg) ~= nil) then -- Tell Minions to Teleport - Set TargetWaypointID
 							if ( Player:GetRole() ~= 1) then
-								wt_debug( "Recieved Leader's TargetWaypointID" )
+								wt_debug( "Recieved Leader's TargetWaypointID : "..tostring(msg) )
 								Settings.GW2MINION.TargetWaypointID = tonumber(msg)
 							end
 						elseif ( tonumber(msgID) == 21 and tonumber(msg) ~= nil) then -- Tell Minions to Teleport - Set TargetMapID

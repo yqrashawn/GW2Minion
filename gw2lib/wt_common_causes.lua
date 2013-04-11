@@ -22,21 +22,16 @@ DebugModes = { Revive = { Master = true, TID = nil, state = false, Move = true, 
 --**********************************************
 c_navswitch = inheritsFrom( wt_cause )
 e_navswitch = inheritsFrom( wt_effect )
-c_navswitch.throttle = 2000
 function c_navswitch:evaluate()	
+	if ( gNavSwitchEnabled == "1" and  not Player.inCombat) then	
+		-- CHECK IF NEW MAP WAS SET ALREADY					
+		if ( NavigationManager:GetTargetMapID() ~= 0 and NavigationManager:GetTargetMapID() ~= Player:GetLocalMapID()) then
+			wt_debug("We need to Teleport!")					
+			return true
+		else
+			NavigationManager:SetTargetMapID(0)		
+		end
 		
-	-- CHECK IF NEW MAP WAS SET ALREADY
-	if ( NavigationManager:GetTargetMapID() ~= 0 and NavigationManager:GetTargetMapID() ~= Player:GetLocalMapID()) then
-		wt_debug("We need to Teleport!")					
-		return true
-	else
-		--if ( NavigationManager:GetTargetMapID() == 0 and gNavSwitchEnabled == "1" and tonumber(Player:GetLocalMapID()) ~= nil and gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then		
-		--	MultiBotSend( "21;"..tonumber(Player:GetLocalMapID()),"gw2minion" ) -- Spam send Minions our MapID
-		--end
-		NavigationManager:SetTargetMapID(0)		
-	end
-	
-	if ( gNavSwitchEnabled == "1" ) then
 		-- CHECK IF IT IS TIME TO SWITCH MAPS		
 		if (gMinionEnabled == "0" or (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1)) then			
 			-- SOLO OR LEADER			
@@ -59,8 +54,8 @@ function c_navswitch:evaluate()
 								NavigationManager:SetTargetMapID(tonumber(meshfile.MapID))
 								--  SEND TO MINIONS
 								if (gMinionEnabled == "1") then	
-									MultiBotSend( "20;"..tonumber(newWP),"gw2minion" )
-									MultiBotSend( "21;"..tonumber(meshfile.MapID),"gw2minion" )									
+									MultiBotSend( "20;"..tostring(newWP),"gw2minion" )
+									MultiBotSend( "21;"..tostring(meshfile.MapID),"gw2minion" )
 								end
 								return true								
 							end	
@@ -81,6 +76,7 @@ function e_navswitch:execute()
 	if (Inventory:GetInventoryMoney() > 500) then
 		if (tonumber(Settings.GW2MINION.TargetWaypointID) ~= nil and tonumber(Settings.GW2MINION.TargetWaypointID) ~= 0 and tonumber(NavigationManager:GetTargetMapID())~=nil and tonumber(NavigationManager:GetTargetMapID())~=0) then
 			Player:StopMoving()
+			wt_core_taskmanager.ResetTaskManager()
 			Player:TeleportToWaypoint(tonumber(Settings.GW2MINION.TargetWaypointID))
 			e_navswitch.counter = e_navswitch.counter + 1
 		else
@@ -97,7 +93,6 @@ function e_navswitch:execute()
 		wt_error("Whoooops, we don't have enough money for teleporting?!?")
 		NavigationManager:SetTargetMapID(0)	
 	end
-	--wt_core_controller.requestStateChange( wt_core_state_navswitch )
 end
 
 
@@ -229,7 +224,7 @@ function e_quicklootchest:execute()
 			end
 		end
 	end
-	wt_error( "No Chest to Quick-Loot" )
+	wt_debug( "No Chest to Quick-Loot" )
 end
 
 
@@ -407,8 +402,9 @@ function c_rest:evaluate()
 		  i,e = next(mybuffs)
 		  while (i ~= nil and e ~= nil) do		
 			if (tonumber(e.skillID) ~= nil and tonumber(e.contentID) ~= nil) then
-				if (e.skillID == 737 or e.contentID == 134797 or
-					e.skillID == 723 or e.contentID == 35864) then --Burning
+				if (e.skillID == 737 or	--Burning
+					e.skillID == 723 or --Poison
+					e.skillID == 736 ) then	--Bleeding
 					hazardfound = true					
 				end
 			end
@@ -418,20 +414,7 @@ function c_rest:evaluate()
 		if (not hazardfound) then
 			return true
 		end
-		return true
-	end
-	--[[if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1 ) then -- We Lead	
-		local party = Player:GetPartyMembers()
-		if (party ~= nil) then
-			local index, player  = next( party )
-			while ( index ~= nil and player ~= nil ) do			
-				if (player.distance < 4000 and player.alive and player.onmesh and player.health.percent < 75 ) then					
-					return true
-				end
-				index, player  = next( party,index )
-			end		
-		end		
-	end]]
+	end	
 	return false
 end
 e_rest.throttle = math.random( 500, 2500 )
@@ -486,6 +469,9 @@ function c_revivep:evaluate()
 		while ( index ~= nil and player ~= nil ) do			
 			if (player.distance < 4000 and ((player.healthstate == GW2.HEALTHSTATE.Defeated and not Player.inCombat) or (player.healthstate == GW2.HEALTHSTATE.Downed)) and player.onmesh) then
 				c_revivep.ID = index
+				if ( wt_core_controller.state ~= nil and wt_core_controller.state.name == "Combat" ) then
+					wt_core_state_combat.CurrentTarget = 0 -- Leave combat state or it will never work :)
+				end
 				return true
 			end
 			index, player  = next( party,index )
@@ -572,7 +558,7 @@ function e_revive:execute()
 			end
 		end
 	else
-		if ( DebugModes.Revive.NoTarget and DebugModes.Revive.Master ) then wt_error( "Idle: No Target to revive" ) end
+		if ( DebugModes.Revive.NoTarget and DebugModes.Revive.Master ) then wt_debug( "Idle: No Target to revive" ) end
 	end
 end
 
@@ -632,7 +618,7 @@ function c_lootchest:evaluate()
 		if ( TableSize( c_lootchest.EList ) > 0 ) then			
 			local index, LT = next( c_lootchest.EList )
 			while ( index ~= nil and LT~=nil ) do
-				if ( LT.isselectable == 1 and (LT.contentID == 198260 or LT.contentID == 232192)) then
+				if ( LT.isselectable == 1 and (LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194)) then
 					return true
 				end
 				index, LT = next( c_lootchest.EList,index )
@@ -647,7 +633,7 @@ function e_lootchest:execute()
 		local chest,ID = nil
 		local index, LT = next( c_lootchest.EList )
 		while ( index ~= nil and LT~=nil ) do
-			if ( LT.isselectable == 1 and (LT.contentID == 198260 or LT.contentID == 232192)) then
+			if ( LT.isselectable == 1 and (LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194)) then
 				chest = LT
 				ID = index
 				break
@@ -672,6 +658,6 @@ function e_lootchest:execute()
 			end
 		end
 	else
-		wt_error( "Idle: No Chest to Loot found" )
+		wt_debug( "Idle: No Chest to Loot found" )
 	end	
 end

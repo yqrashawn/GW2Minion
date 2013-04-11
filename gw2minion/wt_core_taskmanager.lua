@@ -228,7 +228,6 @@ end
 
 
 
-
 function wt_core_taskmanager.AddCustomTasks()
 -- This function adds custom tasks to the wt_core_taskmanager.Customtask_list, for dungeons and map specific tasks
 -- Add functions from your own code to the wt_core_taskmanager.CustomLuaFunctions table, these will be called and should in return fill the 
@@ -260,4 +259,15 @@ function wt_core_taskmanager:DoTask( )
 			wt_core_taskmanager.SelectNextTask()
 		end
 	end
+end
+
+
+function wt_core_taskmanager.ResetTaskManager()
+	wt_core_taskmanager.current_task = nil
+	wt_core_taskmanager.last_task = nil
+	wt_core_taskmanager.Customtask_list = { }
+	wt_core_taskmanager.Customtask_history = {}
+	wt_core_taskmanager.CustomLuaFunctions = { }
+	wt_core_taskmanager.UpdateTaskListTmr = 0
+	wt_core_taskmanager.markerList = { }
 end

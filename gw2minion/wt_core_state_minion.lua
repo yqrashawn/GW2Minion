@@ -57,7 +57,7 @@ function c_vendorcheck:evaluate()
 	return false
 end
 function e_vendorcheck:execute()
-	wt_core_taskmanager:addVendorTask(5000)
+	wt_core_taskmanager:addVendorTask(8000)
 end
 
 ------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ local e_repaircheck = inheritsFrom( wt_effect )
 -- IsEquipmentBroken() is defined in /gw2lib/wt_utility.lua
 c_repaircheck.throttle = 2500
 function c_repaircheck:evaluate()
-	if ( gEnableRepair == "1" and IsEquipmentDamaged() ) then
+	if ( gEnableRepair == "1" and IsEquipmentBroken() ) then
 		c_repaircheck.EList = MapObjectList( "onmesh,maxdistance=5000,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
 		if ( TableSize( c_repaircheck.EList ) > 0 ) then
 			local nextTarget
@@ -82,7 +82,7 @@ function c_repaircheck:evaluate()
 	return false
 end
 function e_repaircheck:execute()
-	wt_core_taskmanager:addRepairTask(4500)
+	wt_core_taskmanager:addRepairTask(8500)
 end
 
 
@@ -165,20 +165,14 @@ function c_followLead:evaluate()
 			local leader = party[tonumber(Settings.GW2MINION.gLeaderID)]
 			if (leader ~= nil) then
 				if ((leader.distance > math.random(100,400) or leader.los~=true) and leader.onmesh) then
-					wt_core_state_minion.IdleTmr = wt_global_information.Now
 					return true
 				end		
 				-- TIMER for random movement when leader is standing on a spot too long, this should go in a seperate C&E ..but I'm lazy
-				if ( Player.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving and wt_global_information.Now - wt_core_state_minion.IdleTmr > math.random(2500,15000) ) then
-					wt_core_state_minion.IdleTmr = wt_global_information.Now
-					wt_core_state_minion.IdleTmr = wt_core_state_minion.IdleTmr + math.random(5000,10000)
-					local pos = leader.pos
-					Player:MoveToRandomPointAroundCircle(pos.x,pos.y,pos.z,550);
+				if ( Player.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving and wt_global_information.Now - wt_core_state_minion.IdleTmr > math.random(5000,30000) ) then
+					return true					
 				end
 			else
-				wt_debug( "Leader is not in our map or there is no leader anymore?" )
-				wt_debug( "Asking for leader.." )
-				wt_core_controller.requestStateChange( wt_core_state_idle )
+				return true
 			end		
 		end
 	end
@@ -190,15 +184,29 @@ function e_followLead:execute()
 	if (party ~= nil and Settings.GW2MINION.gLeaderID ~= nil) then
 		local leader = party[tonumber(Settings.GW2MINION.gLeaderID)]
 		if (leader ~= nil) then
-			local pos = leader.pos
-			if (leader.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
-				--wt_debug("PREDICT")
-				--Player:MoveToPredict(pos.x,pos.y,pos.z,pos.hx,pos.hy,pos.hz);
-				Player:MoveToRandom(pos.x,pos.y,pos.z,350);
-			else				
+			if ((leader.distance > math.random(100,400) or leader.los~=true) and leader.onmesh) then
+				local pos = leader.pos
+				if (leader.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
+					--wt_debug("PREDICT")
+					--Player:MoveToPredict(pos.x,pos.y,pos.z,pos.hx,pos.hy,pos.hz);
+					Player:MoveToRandom(pos.x,pos.y,pos.z,350);
+				else				
+					Player:MoveToRandomPointAroundCircle(pos.x,pos.y,pos.z,550);
+				end
+				wt_core_state_minion.IdleTmr = wt_global_information.Now
+				return
+			end
+			
+			if ( Player.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving and wt_global_information.Now - wt_core_state_minion.IdleTmr > math.random(5000,30000) ) then
+				wt_core_state_minion.IdleTmr = wt_global_information.Now
+				wt_core_state_minion.IdleTmr = wt_core_state_minion.IdleTmr + math.random(5000,10000)
+				local pos = leader.pos
 				Player:MoveToRandomPointAroundCircle(pos.x,pos.y,pos.z,550);
 			end
-			wt_core_state_minion.IdleTmr = wt_global_information.Now
+		else
+			wt_debug( "Leader is not in our map or there is no leader anymore?" )
+			wt_debug( "Asking for leader.." )				
+			wt_core_controller.requestStateChange( wt_core_state_idle )
 		end
 	end
 end
@@ -216,14 +224,15 @@ function wt_core_state_minion:initialize()
 	
 	--local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 105 )
 	--wt_core_state_minion:add( ke_quicklootchest )
-	local ke_lootchests = wt_kelement:create("LootChest", c_lootchest, e_lootchest, 104 )
+		
+	local ke_lootchests = wt_kelement:create("LootChest", c_lootchest, e_lootchest, 105 )
 	wt_core_state_minion:add( ke_lootchests )
 
+	local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 104)
+	wt_core_state_minion:add( ke_switchmesh )
+	
 	local ke_doemertasks = wt_kelement:create( "EmergencyTask", c_doemergencytask, e_doemergencytask, 103 )
 	wt_core_state_minion:add( ke_doemertasks )
-	
-	--local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 104)
-	--wt_core_state_minion:add( ke_switchmesh )
 	
 	local ke_noleader = wt_kelement:create( "NoLeader", c_noleader, e_noleader, 102 )
 	wt_core_state_minion:add( ke_noleader )	
@@ -238,16 +247,16 @@ function wt_core_state_minion:initialize()
 	wt_core_state_minion:add( ke_deposit )
 	--salvaging 89
 	
-	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 88 )
-	wt_core_state_minion:add( ke_dopriotasks )
-	
-	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 87 )
-	wt_core_state_minion:add( ke_vendorcheck )
-
-	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 86 )
+	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 88 )
 	wt_core_state_minion:add( ke_loot )
 	
-	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 86 )
+	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 87 )
+	wt_core_state_minion:add( ke_dopriotasks )
+	
+	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 86 )
+	wt_core_state_minion:add( ke_vendorcheck )
+	
+	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 85 )
 	wt_core_state_minion:add( ke_repaircheck )
 		
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )

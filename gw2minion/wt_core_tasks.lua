@@ -899,22 +899,26 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 								if (E.distance > 500) then
 									local Epos = E.pos
 									Player:MoveToRandomPointAroundCircle( Epos.x, Epos.y, Epos.z, 500 )
+									return
 								else									
 									wt_core_state_combat.setTarget( nextTarget )
 									wt_core_controller.requestStateChange( wt_core_state_combat )
+									return
 								end
 							end
 						end
-						--if (Player.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving) then
-						--	Player:MoveToRandomPointAroundCircle(  newtask.position.x, newtask.position.y, newtask.position.z, 2500 )
-						--end
+						if (Player.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving and newtask.eventType ~= nil) then
+							if ( myevent.distance > 500 ) then	
+								Player:MoveToRandomPointAroundCircle(  newtask.position.x, newtask.position.y, newtask.position.z, 750 )
+							end
+						end
 					else
 						if ((wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then
 						
 							if ( myevent.distance > 3000 ) then	
-								Player:MoveToRandomPointAroundCircle(  newtask.position.x, newtask.position.y, newtask.position.z, 500 )
+								Player:MoveToRandomPointAroundCircle(  newtask.position.x, newtask.position.y, newtask.position.z, 750 )
 							else
-								TargetList = ( CharacterList( "noCritter,attackable,alive,maxdistance=2500,onmesh") )
+								TargetList = ( CharacterList( "nearest,attackable,alive,maxdistance=2500,onmesh") )
 								if ( TargetList ~= nil ) then 	
 									nextTarget, E  = next( TargetList )
 									if ( nextTarget ~= nil ) then

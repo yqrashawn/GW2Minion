@@ -185,7 +185,30 @@ function tb.UnpackBags()
 					or itemid == 11626  or itemid == 11455 or itemid == 11456 
 					or itemid == 11456 or itemid == 11519 or itemid == 11509 
 					or itemid == 11496 or itemid == 11472 or itemid == 11504 
-					or itemid == 11483 or itemid == 11454) then --ADD MORE IDs HERE
+					or itemid == 11483 or itemid == 11454 or itemid == 11696 --Light Bag of Booty
+					or itemid == 11632 --Light Supply Bag
+					or itemid == 11613 --Hidden Hoards
+					or itemid == 11626 --Ritual Sacks
+					or itemid == 11638 --Bags of Pinched Goods
+					or itemid == 11724 --Large Moldy Bags
+					or itemid == 11725 --Heavy Moldy Bags
+					or itemid == 11614 --Hidden Trove
+					or itemid == 11630 --Tiny supply Bags
+					or itemid == 11702 --Tiny Bag of Skritt Shinies
+					or itemid == 11654 --Tiny Stolen Supplies Bags
+					or itemid == 11631 --Small Supply Bags
+					or itemid == 11639 --Bags of Filched Goods
+					or itemid == 11662 --Tiny Bag of Trinkets
+					or itemid == 11646 --Tiny Miner's Bags
+					or itemid == 11622 --Tiny Ritual's Bags
+					or itemid == 11623 --Small Ritual's Bags
+					or itemid == 11723 --Medium Moldy Bags
+					or itemid == 11684 --Bags of Theoretical Material
+					or itemid == 11691 --Medium  Thorned Bags
+					or itemid == 11660 --Large Stolen Supplies Bags
+					or itemid == 11635 --Medium Supply Bags
+					or itemid == 11699 --Medium Bag of Booty (thanks Vox!)
+					) then --ADD MORE IDs HERE
 						wt_debug( "Opening Bag..")
 						opened = true
 						

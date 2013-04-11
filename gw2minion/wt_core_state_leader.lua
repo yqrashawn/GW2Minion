@@ -43,7 +43,7 @@ local e_repaircheck = inheritsFrom( wt_effect )
 -- IsEquipmentBroken() is defined in /gw2lib/wt_utility.lua
 c_repaircheck.throttle = 2500
 function c_repaircheck:evaluate()
-	if ( gEnableRepair == "1" and IsEquipmentDamaged() ) then
+	if ( gEnableRepair == "1" and IsEquipmentBroken() ) then
 		c_repaircheck.EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
 		if ( TableSize( c_repaircheck.EList ) > 0 ) then
 			local nextTarget
@@ -290,19 +290,20 @@ function wt_core_state_leader:initialize()
 	
 	local ke_deposit = wt_kelement:create( "DepositItems", c_deposit, e_deposit, 90 )
 	wt_core_state_leader:add( ke_deposit )
+	
 	--salvaging 89
 	
-	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 88 )
+	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 88 )
+	wt_core_state_leader:add( ke_loot )
+	
+	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 87 )
 	wt_core_state_leader:add( ke_dopriotasks )
 	
-	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 87 )
+	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 86 )
 	wt_core_state_leader:add( ke_vendorcheck )
 
-	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 86 )
+	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 85 )
 	wt_core_state_leader:add( ke_repaircheck )
-	
-	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 84 )
-	wt_core_state_leader:add( ke_loot )
 	
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )
 	wt_core_state_leader:add( ke_revive )

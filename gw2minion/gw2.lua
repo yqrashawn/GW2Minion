@@ -103,7 +103,7 @@ function gw2minion.HandleInit()
 	GUI_NewWindow(wt_global_information.MainWindow.Name,wt_global_information.MainWindow.x,wt_global_information.MainWindow.y,wt_global_information.MainWindow.width,wt_global_information.MainWindow.height)
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnStart.Name , wt_global_information.BtnStart.Event)
 	GUI_NewButton(wt_global_information.MainWindow.Name,"ToolBox","TB.toggle")
-	--GUI_NewButton(wt_global_information.MainWindow.Name,"NavMeshSwitcher","MM.toggle")
+	GUI_NewButton(wt_global_information.MainWindow.Name,"NavMeshSwitcher","MM.toggle")
 	GUI_NewField(wt_global_information.MainWindow.Name,"MyTask","gGW2MinionTask");
 	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnPulse.Name , wt_global_information.BtnPulse.Event,"BotStatus")

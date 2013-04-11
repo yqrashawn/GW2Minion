@@ -29,8 +29,7 @@ function mm.ModuleInit()
 	GUI_WindowVisible(mm.mainwindow.name,false)
 	mm.RefreshMeshFileList()
 			
-	--gNavSwitchEnabled = Settings.GW2MINION.gNavSwitchEnabled
-	gNavSwitchEnabled = "0"
+	gNavSwitchEnabled = Settings.GW2MINION.gNavSwitchEnabled
 	gNavSwitchTime = Settings.GW2MINION.gNavSwitchTime
 end
 

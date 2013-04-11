@@ -69,6 +69,7 @@ function e_combat_over:execute()
 	wt_debug( "Combat finished" )
 	wt_core_state_combat.CurrentTarget = 0
 	wt_core_state_combat.StopCM()
+	Player:ClearTarget()
 	wt_core_controller.requestStateChange( wt_core_state_idle )
 	return
 end
@@ -218,7 +219,7 @@ function c_combatmove:evaluate()
 						end	
 					else
 						-- MELEE
-						if ( Tdist < 100 and wt_core_state_combat.CMForward ~= 0) then -- we are too close	and moving towards enemy
+						if ( Tdist < 85 and wt_core_state_combat.CMForward ~= 0) then -- we are too close	and moving towards enemy
 							Player:UnSetMovement(0)	-- stop moving forward	
 							wt_core_state_combat.CMForward = 0
 						elseif (Tdist > wt_global_information.AttackRange and wt_core_state_combat.CMBackward ~= 0) then -- we are too far away and moving backwards
@@ -302,7 +303,7 @@ function c_combatmove:evaluate()
 				end
 				
 				
-				-- JUMP
+				--[[ JUMP
 				if (wt_core_state_combat.combatJumpTmr == 0 ) then
 					wt_core_state_combat.combatJumpTmr = wt_global_information.Now + math.random(5000,10000)
 				elseif(wt_global_information.Now - wt_core_state_combat.combatJumpTmr > 0) then	
@@ -311,7 +312,7 @@ function c_combatmove:evaluate()
 					if ( jmp == 1) then
 						Player:Jump()
 					end		
-				end	
+				end	]]
 				
 			end	
 		end
