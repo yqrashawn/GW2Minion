@@ -143,6 +143,9 @@ function wt_core_state_idle:initialize()
 
 	local ke_died = wt_kelement:create( "Died", c_died, e_died, wt_effect.priorities.interrupt )
 	wt_core_state_idle:add( ke_died )
+
+	local c_stopcbmovek = wt_kelement:create( "CheckMovement", c_stopcbmove, e_stopcbmove, 270 )
+	wt_core_state_idle:add( c_stopcbmovek )	
 	
 	local ke_iamminion = wt_kelement:create( "MultiBotServerCheck", c_iamminion, e_iamminion, 250 )
 	wt_core_state_idle:add( ke_iamminion )	

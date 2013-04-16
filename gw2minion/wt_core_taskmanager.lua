@@ -261,13 +261,3 @@ function wt_core_taskmanager:DoTask( )
 	end
 end
 
-
-function wt_core_taskmanager.ResetTaskManager()
-	wt_core_taskmanager.current_task = nil
-	wt_core_taskmanager.last_task = nil
-	wt_core_taskmanager.Customtask_list = { }
-	wt_core_taskmanager.Customtask_history = {}
-	wt_core_taskmanager.CustomLuaFunctions = { }
-	wt_core_taskmanager.UpdateTaskListTmr = 0
-	wt_core_taskmanager.markerList = { }
-end

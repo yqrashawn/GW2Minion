@@ -218,7 +218,10 @@ function wt_core_state_minion:initialize()
 	-- State C&E
 	local ke_died = wt_kelement:create( "Died", c_died, e_died, wt_effect.priorities.interrupt )
 	wt_core_state_minion:add( ke_died )
-			
+	
+	local c_stopcbmovek = wt_kelement:create( "CheckMovement", c_stopcbmove, e_stopcbmove, 270 )
+	wt_core_state_idle:add( c_stopcbmovek )	
+	
 	local ke_quickloot = wt_kelement:create( "QuickLoot", c_quickloot, e_quickloot, 110 )
 	wt_core_state_minion:add( ke_quickloot )
 	

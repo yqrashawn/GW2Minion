@@ -76,7 +76,13 @@ function e_navswitch:execute()
 	if (Inventory:GetInventoryMoney() > 500) then
 		if (tonumber(Settings.GW2MINION.TargetWaypointID) ~= nil and tonumber(Settings.GW2MINION.TargetWaypointID) ~= 0 and tonumber(NavigationManager:GetTargetMapID())~=nil and tonumber(NavigationManager:GetTargetMapID())~=0) then
 			Player:StopMoving()
-			wt_core_taskmanager.ResetTaskManager()
+			--Beat me for doing this so uglydamnlazy...
+			wt_core_taskmanager.current_task = nil
+			wt_core_taskmanager.last_task = nil
+			wt_core_taskmanager.Customtask_list = { }
+			wt_core_taskmanager.Customtask_history = {}
+			wt_core_taskmanager.CustomLuaFunctions = { }
+			wt_core_taskmanager.markerList = { }
 			Player:TeleportToWaypoint(tonumber(Settings.GW2MINION.TargetWaypointID))
 			e_navswitch.counter = e_navswitch.counter + 1
 		else
@@ -660,4 +666,22 @@ function e_lootchest:execute()
 	else
 		wt_debug( "Idle: No Chest to Loot found" )
 	end	
+end
+
+
+--*********************************************************
+-- Stupid-Make-Sure-We-Dont-Backpadel/Strafe-Into-The-Woods- Cause & Effect
+--*********************************************************
+c_stopcbmove = inheritsFrom( wt_cause )
+e_stopcbmove = inheritsFrom( wt_effect )
+c_stopcbmove.throttle = 2000
+function c_stopcbmove:evaluate()
+	Player:UnSetMovement(0) --Back
+	Player:UnSetMovement(2) --Left
+	Player:UnSetMovement(3) --Right
+	return false
+end
+e_lootchest.throttle = math.random( 250, 500 )
+function e_stopcbmove:execute()
+	
 end
