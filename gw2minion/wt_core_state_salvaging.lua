@@ -40,6 +40,9 @@ local c_need_salvage = inheritsFrom(wt_cause)
 local e_need_salvage = inheritsFrom(wt_effect)
 
 function c_need_salvage:evaluate()
+	if (gDoSalvaging == "0") then
+		return false
+	end
 	
 	if ( ItemList.freeSlotCount < 5) then
 		local items,tools = wt_core_state_salvaging.GetSalvageableItems()

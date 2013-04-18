@@ -86,7 +86,39 @@ function HandleMultiBotMessages( event, message, channel )
 								wt_debug( "Leader sais we should Vendor now.." )
 								wt_core_taskmanager:addVendorTask(5000)		
 							end
-
+						
+						-- VENDORBUY
+						elseif ( tonumber(msgID) == 12 ) then -- A minion needs to Vendor, set our Primary task accordingly
+							if ( Player:GetRole() == 1) then
+								if (gBuySalvageKits == "1") then
+									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.salvageKitIDs[tonumber(gSalvageKitQuality)], tonumber(gSalvageKitStock))
+								end
+								if (gBuyGatheringTools == "1") then
+									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.foragingToolIDs[tonumber(gGatheringToolQuality)], tonumber(gGatheringToolStock))
+									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.loggingToolIDs[tonumber(gGatheringToolQuality)], tonumber(gGatheringToolStock))
+									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.miningToolIDs[tonumber(gGatheringToolQuality)], tonumber(gGatheringToolStock))
+								end
+								if (gBuySalvageKits == "0" and gBuyGatheringTools == "0") then
+									wt_core_taskmanager:addVendorTask(5000)
+								end
+								wt_debug( "A Minion needs to vendor, going to Vendor" )
+							end
+						elseif ( tonumber(msgID) == 13 ) then -- Leader tells Minions to Vendor
+							if ( Player:GetRole() ~= 1 ) then
+								if (gBuySalvageKits == "1") then
+									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.salvageKitIDs[tonumber(gSalvageKitQuality)], tonumber(gSalvageKitStock))
+								end
+								if (gBuyGatheringTools == "1") then
+									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.foragingToolIDs[tonumber(gGatheringToolQuality)], tonumber(gGatheringToolStock))
+									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.loggingToolIDs[tonumber(gGatheringToolQuality)], tonumber(gGatheringToolStock))
+									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.miningToolIDs[tonumber(gGatheringToolQuality)], tonumber(gGatheringToolStock))
+								end
+								if (gBuySalvageKits == "0" and gBuyGatheringTools == "0") then
+									wt_core_taskmanager:addVendorTask(5000)
+								end
+								wt_debug( "Leader sais we should Vendor now.." )
+							end
+						
 							
 						-- REPAIR
 						elseif ( tonumber(msgID) == 15 ) then -- A minion needs to Repair, set our Primary task accordingly

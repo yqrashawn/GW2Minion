@@ -35,6 +35,36 @@ function e_vendorcheck:execute()
 	wt_core_taskmanager:addVendorTask(5000)
 end
 
+------------------------------------------------------------------------------
+-- VendorPurchase Check Cause & Effect
+local c_vendorbuycheck = inheritsFrom( wt_cause )
+local e_vendorbuycheck = inheritsFrom( wt_effect )
+c_vendorbuycheck.throttle = 2500
+function c_vendorbuycheck:evaluate()
+	if ((gBuyGatheringTools == "1" and wt_core_items:NeedGatheringTools()) or
+		(gBuySalvageKits == "1" and wt_core_items:NeedSalvageKits())) 
+	then	
+		c_vendorcheck.EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
+		if ( TableSize( c_vendorcheck.EList ) > 0 ) then
+			local nextTarget
+			nextTarget, E = next( c_vendorcheck.EList )
+			if ( nextTarget ~= nil and nextTarget ~= 0 ) then				
+				return true	
+			end
+		end
+	end
+	return false
+end
+function e_vendorbuycheck:execute()
+	if (wt_core_items:NeedGatheringTools()) then
+		wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.foragingToolIDs[tonumber(gGatheringToolQuality)], tonumber(gGatheringToolStock))
+		wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.loggingToolIDs[tonumber(gGatheringToolQuality)], tonumber(gGatheringToolStock))
+		wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.miningToolIDs[tonumber(gGatheringToolQuality)], tonumber(gGatheringToolStock))
+	end
+	if (wt_core_items:NeedSalvageKits()) then
+		wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.salvageKitIDs[tonumber(gSalvageKitQuality)], tonumber(gSalvageKitStock))
+	end
+end
 
 ------------------------------------------------------------------------------
 -- NeedRepair Check Cause & Effect
@@ -267,9 +297,6 @@ function wt_core_state_leader:initialize()
 	local ke_died = wt_kelement:create( "Died", c_died, e_died, wt_effect.priorities.interrupt )
 	wt_core_state_leader:add( ke_died )
 	
-	local c_stopcbmovek = wt_kelement:create( "CheckMovement", c_stopcbmove, e_stopcbmove, 270 )
-	wt_core_state_idle:add( c_stopcbmovek )	
-	
 	local ke_quickloot = wt_kelement:create( "QuickLoot", c_quickloot, e_quickloot, 110 )
 	wt_core_state_leader:add( ke_quickloot )
 	
@@ -305,7 +332,10 @@ function wt_core_state_leader:initialize()
 	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 86 )
 	wt_core_state_leader:add( ke_vendorcheck )
 
-	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 85 )
+	local ke_vendorbuycheck = wt_kelement:create( "VendorBuyCheck", c_vendorbuycheck, e_vendorbuycheck, 85 )
+	wt_core_state_leader:add( ke_vendorbuycheck )
+	
+	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 84 )
 	wt_core_state_leader:add( ke_repaircheck )
 	
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )

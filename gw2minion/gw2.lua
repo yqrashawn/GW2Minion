@@ -61,10 +61,22 @@ if (Settings.GW2MINION.version <= 1.39 ) then
 	Settings.GW2MINION.gVendor_CraftingMats = "0"
 	Settings.GW2MINION.gVendor_Trinkets = "0"
 	Settings.GW2MINION.gVendor_Trophies = "0"
-	--[[
-	Settings.GW2MINION.gBuyGatheringTools = "0"
-	Settings.GW2MINION.gBuySalvageKits = "0"]]
 end
+if (Settings.GW2MINION.version <= 1.40 ) then
+	Settings.GW2MINION.version = 1.41
+	Settings.GW2MINION.gBuyGatheringTools = "0"
+	Settings.GW2MINION.gBuySalvageKits = "0"
+	Settings.GW2MINION.gDoGathering = "1"
+	Settings.GW2MINION.gGatherMining = "1"
+	Settings.GW2MINION.gGatherForaging = "1"
+	Settings.GW2MINION.gGatherLogging = "1"
+	Settings.GW2MINION.gDoSalvaging = "1"
+	Settings.GW2MINION.gGatheringToolStock = "3"
+	Settings.GW2MINION.gGatheringToolQuality = "5"
+	Settings.GW2MINION.gSalvageKitStock = "10"
+	Settings.GW2MINION.gSalvageKitQuality = "2"
+end
+
 if ( Settings.GW2MINION.gStats_enabled == nil ) then
 	Settings.GW2MINION.gStats_enabled = "0"
 end
@@ -126,15 +138,19 @@ function gw2minion.HandleInit()
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Upgrade Components","gVendor_UpgradeComps","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Crafting Materials","gVendor_CraftingMats","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Trophies","gVendor_Trophies","VendorSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Junk","gVendor_Junk","VendorSettings")	
-	gGW2MinionTask = "            " 
-	--[[
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Gathering Tools", "gBuyGatheringTools","Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"How Many To Stock","gGatheringToolStock","Settings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Salvage Kits", "gBuySalvageKits","Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"How Many To Stock","gSalvageKitStock","Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"What Quality","gSalvageKitQuality","Settings");]]
-	
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Junk","gVendor_Junk","VendorSettings")
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Gathering", "gDoGathering","GatherSettings");	
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Gathering Tools", "gBuyGatheringTools","GatherSettings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Gathering Tool Stock","gGatheringToolStock","GatherSettings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Gathering Tool Quality","gGatheringToolQuality","GatherSettings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Mining", "gGatherMining","GatherSettings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Foraging", "gGatherForaging","GatherSettings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Logging", "gGatherLogging","GatherSettings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Salvaging", "gDoSalvaging","SalvageSettings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Salvage Kits", "gBuySalvageKits","SalvageSettings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Salvage Kit Stock","gSalvageKitStock","SalvageSettings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Salvage Kit Quality","gSalvageKitQuality","SalvageSettings");
+	gGW2MinionTask = "            "
 	
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,"BotStatus");
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,"Settings");
@@ -157,9 +173,17 @@ function gw2minion.HandleInit()
 	gVendor_CraftingMats = Settings.GW2MINION.gVendor_CraftingMats
 	gVendor_Trinkets = Settings.GW2MINION.gVendor_Trinkets
 	gVendor_Trophies = Settings.GW2MINION.gVendor_Trophies
-	--[[
 	gBuyGatheringTools = Settings.GW2MINION.gBuyGatheringTools
-	gBuySalvageKits = Settings.GW2MINION.gBuySalvageKits]]
+	gBuySalvageKits = Settings.GW2MINION.gBuySalvageKits
+	gDoGathering = Settings.GW2MINION.gDoGathering
+	gGatherMining = Settings.GW2MINION.gGatherMining
+	gGatherForaging = Settings.GW2MINION.gGatherForaging
+	gGatherLogging = Settings.GW2MINION.gGatherLogging
+	gDoSalvaging = Settings.GW2MINION.gDoSalvaging
+	gGatheringToolStock = Settings.GW2MINION.gGatheringToolStock
+	gGatheringToolQuality = Settings.GW2MINION.gGatheringToolQuality
+	gSalvageKitStock = Settings.GW2MINION.gSalvageKitStock
+	gSalvageKitQuality = Settings.GW2MINION.gSalvageKitQuality
 	
 	wt_debug("GUI Setup done")
 	wt_core_controller.requestStateChange(wt_core_state_idle)
@@ -186,10 +210,18 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "gVendor_Trophies" or
 				k == "gVendor_Junk" or
 				k == "gCombatmovement" or
-				k == "gdoEvents"
-				
-				--[[or k == "gBuyGatheringTools" 
-				or k == "gBuySalvageKits"]]) 
+				k == "gdoEvents" or
+				k == "gBuyGatheringTools" or
+				k == "gBuySalvageKits" or
+				k == "gDoGathering" or
+				k == "gGatherMining" or
+				k == "gGatherForaging" or
+				k == "gGatherLogging" or
+				k == "gDoSalvaging" or
+				k == "gGatheringToolStock" or
+				k == "gGatheringToolQuality" or
+				k == "gSalvageKitStock" or
+				k == "gSalvageKitQuality" )
 		then
 			Settings.GW2MINION[tostring(k)] = v
 		end

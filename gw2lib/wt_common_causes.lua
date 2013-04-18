@@ -75,14 +75,7 @@ function e_navswitch:execute()
 	wt_debug("Switching NavMesh to MapID:" ..tostring(NavigationManager:GetTargetMapID()).." / WaypointID: "..tostring(Settings.GW2MINION.TargetWaypointID))
 	if (Inventory:GetInventoryMoney() > 500) then
 		if (tonumber(Settings.GW2MINION.TargetWaypointID) ~= nil and tonumber(Settings.GW2MINION.TargetWaypointID) ~= 0 and tonumber(NavigationManager:GetTargetMapID())~=nil and tonumber(NavigationManager:GetTargetMapID())~=0) then
-			Player:StopMoving()
-			--Beat me for doing this so uglydamnlazy...
-			wt_core_taskmanager.current_task = nil
-			wt_core_taskmanager.last_task = nil
-			wt_core_taskmanager.Customtask_list = { }
-			wt_core_taskmanager.Customtask_history = {}
-			wt_core_taskmanager.CustomLuaFunctions = { }
-			wt_core_taskmanager.markerList = { }
+			Player:StopMoving()			
 			Player:TeleportToWaypoint(tonumber(Settings.GW2MINION.TargetWaypointID))
 			e_navswitch.counter = e_navswitch.counter + 1
 		else
@@ -190,47 +183,47 @@ c_quicklootchest = inheritsFrom( wt_cause )
 e_quicklootchest = inheritsFrom( wt_effect )
 function c_quicklootchest:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then
-		c_quicklootchest.EList = GadgetList("nearest,onmesh,contentID=198260" ) --contentID=198260
-		NextIndex, LootTarget = next( c_quicklootchest.EList )
-		if ( NextIndex ~= nil ) then
-			if ( NextIndex == Player:GetInteractableTarget() ) then
-				return true
+		c_lootchest.EList = GadgetList("nearest,maxdistance=120,onmesh") --old contentID=198260
+		if ( TableSize( c_lootchest.EList ) > 0 ) then			
+			local index, LT = next( c_lootchest.EList )
+			while ( index ~= nil and LT~=nil ) do
+				if ( LT.isselectable == 1 and (LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194)) then
+					return true
+				end
+				index, LT = next( c_lootchest.EList,index )
 			end
-		end
+		end	
 	end
 	return false
 end
 e_quicklootchest.n_index = nil
 e_quicklootchest.throttle = math.random( 150, 450 )
 function e_quicklootchest:execute()
- 	local NextIndex = 0
-	local LootTarget = nil
-	if (c_quicklootchest.EList ~= nil ) then
-		NextIndex, LootTarget = next( c_quicklootchest.EList )
-		if ( NextIndex ~= nil and NextIndex == Player:GetInteractableTarget() ) then
-			if ( e_quicklootchest.n_index  ~= NextIndex ) then
-				e_quicklootchest.n_index  = NextIndex
-				wt_debug( "QuickLootingChest" )
+ 	if ( TableSize( c_lootchest.EList ) > 0 ) then
+		local chest,ID = nil
+		local index, LT = next( c_lootchest.EList )
+		while ( index ~= nil and LT~=nil ) do
+			if ( LT.isselectable == 1 and (LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194)) then
+				chest = LT
+				ID = index
+				break
 			end
-			Player:Use( NextIndex )
-		else
-			local e = Player:GetInteractableTarget()
-			if ( e ~= nil ) then
-				local gadget = GadgetList:Get( e )
-				if ( gadget ~= nil ) then
-					if ( gadget.contentID == 198260) then --198260 is pve loot chest/box
-						if ( e_quicklootchest.n_index  ~= e ) then
-							e_quicklootchest.n_index  = e
-							wt_debug( "QuickLootingChest" )
-						end
-						Player:Use( e )
-						return
-					end
-				end
+			index, LT = next( c_lootchest.EList,index )
+		end
+		
+		if ( chest ~= nil and ID ~= nil ) then	
+			if ( ID == Player:GetInteractableTarget() ) then					
+				wt_debug( "QuickLooting Chest ID:"..tostring(ID))					
+				Player:Use( ID )				
+			elseif (ID ~= Player:GetInteractableTarget()) then
+				Player:StopMoving()
+				wt_debug( "Targeting Chest" )					
+				Player:SetTarget(ID)
 			end
 		end
-	end
-	wt_debug( "No Chest to Quick-Loot" )
+	else
+		wt_debug( "Idle: No Chest to Loot found" )
+	end	
 end
 
 
@@ -676,12 +669,13 @@ c_stopcbmove = inheritsFrom( wt_cause )
 e_stopcbmove = inheritsFrom( wt_effect )
 c_stopcbmove.throttle = 2000
 function c_stopcbmove:evaluate()
-	Player:UnSetMovement(0) --Back
-	Player:UnSetMovement(2) --Left
-	Player:UnSetMovement(3) --Right
-	return false
+ local mstate = Player:GetMovementState()
+    if mstate == 1 then Player:UnSetMovement(1) elseif
+       mstate == 2 then Player:UnSetMovement(2) elseif
+       mstate == 3 then Player:UnSetMovement(3)
+    end
+    return false
 end
-e_lootchest.throttle = math.random( 250, 500 )
 function e_stopcbmove:execute()
 	
 end

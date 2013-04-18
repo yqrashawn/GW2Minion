@@ -215,7 +215,8 @@ function mm.LoadMesh()
 	if ( MultiBotIsConnected( ) ) then		
 		MultiBotJoinChannel("gw2minion")
 		wt_debug("Successfully Re-Joined MultiBotServer channels !")			
-	end	
+	end
+	wt_core_taskmanager.ClearTasks()
 end
 
 RegisterEventHandler("Gameloop.MapChanged",mm.LoadMesh)

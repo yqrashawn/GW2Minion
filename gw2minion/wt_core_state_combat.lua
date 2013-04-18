@@ -57,7 +57,7 @@ function c_combat_over:evaluate()
 			wt_core_state_combat.StopCM()
 		end
 		local T = CharacterList:Get( wt_core_state_combat.CurrentTarget )
-		if ( T == nil or not T.alive or not T.onmesh or ( T.attitude == 0 or T.attitude == 3 ) ) then
+		if ( T == nil or not T.alive or not T.onmesh or T.attitude == 0 or T.attitude == 3 ) then
 			Player:ClearTarget()
 			wt_core_state_combat.StopCM()
 			return true

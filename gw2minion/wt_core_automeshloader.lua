@@ -39,12 +39,14 @@ wt_meshloader.meshlist = {
 	[31] = "",
 	--DiessaPlateau:
 	[32] = "",
-	--AscalonianCatacombs:
+	--AscalonianCatacombsStory:
 	[33] = "AC",
 	--CaledonForrest:
 	[34] = "",
 	--MetricaProvince:
 	[35] = "",
+	--AscalonianCatacombsExplo:
+	[36] = "AC2",
 	--EternalBattlegrounds:
 	[38] = "",
 	--MountMaelstrom:

@@ -1,6 +1,7 @@
 -- Blacklists for unsellable items and contested NPCs
 wt_core_taskmanager.itemBlacklist = {}
 wt_core_taskmanager.npcBlacklist = {}
+wt_core_taskmanager.vendorBlacklist = {}
 
 -- Tasks that can be added to the taskmanager
 
@@ -675,7 +676,7 @@ function wt_core_taskmanager:addVendorTask( priority )
 									if (newtask.firstSell) then
 										newtask.firstSell = false
 									else
-										item = ItemList:Get(newtask.itemSlotID)
+										local item = ItemList:Get(newtask.itemSlotID)
 										if (item ~= nil) then
 											if (item.stackcount == newtask.itemStackcount) then
 												--item did not sell, add it to blacklist
@@ -697,7 +698,7 @@ function wt_core_taskmanager:addVendorTask( priority )
 									-- Sell Weapons	
 									while ( tmpR > 0 and sold == false) do
 										local sweapons = ItemList("itemtype=18,notsoulbound,rarity="..tmpR)	
-										id,item = next(sweapons)
+										local id,item = next(sweapons)
 										if (id ~=nil and item ~= nil) then
 											local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
 											if(blacklistCount == nil or blacklistCount < 3) then
@@ -718,7 +719,7 @@ function wt_core_taskmanager:addVendorTask( priority )
 									if ( not sold ) then
 										while ( tmpR > 0 and sold == false) do
 											local sarmor = ItemList("itemtype=0,notsoulbound,rarity="..tmpR)					
-											id,item = next(sarmor)
+											local id,item = next(sarmor)
 											if (id ~=nil and item ~= nil) then
 												local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
 												if(blacklistCount == nil or blacklistCount < 3) then
@@ -740,7 +741,7 @@ function wt_core_taskmanager:addVendorTask( priority )
 									if ( not sold ) then
 										while ( tmpR > 0 and sold == false) do
 											local strinket = ItemList("itemtype=15,notsoulbound,rarity="..tmpR)					
-											id,item = next(strinket)
+											local id,item = next(strinket)
 											if (id ~=nil and item ~= nil) then
 												local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
 												if(blacklistCount == nil or blacklistCount < 3) then
@@ -762,7 +763,7 @@ function wt_core_taskmanager:addVendorTask( priority )
 									if ( not sold ) then
 										while ( tmpR > 0 and sold == false) do
 											local supgrade = ItemList("itemtype=17,notsoulbound,rarity="..tmpR)					
-											id,item = next(supgrade)
+											local id,item = next(supgrade)
 											if (id ~=nil and item ~= nil) then
 												local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
 												if(blacklistCount == nil or blacklistCount < 3) then
@@ -784,7 +785,7 @@ function wt_core_taskmanager:addVendorTask( priority )
 									if ( not sold ) then
 										while ( tmpR > 0 and sold == false) do
 											local scraftmats = ItemList("itemtype=5,notsoulbound,rarity="..tmpR)				
-											id,item = next(scraftmats)
+											local id,item = next(scraftmats)
 											if (id ~=nil and item ~= nil) then
 												local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
 												if(blacklistCount == nil or blacklistCount < 3) then
@@ -806,7 +807,7 @@ function wt_core_taskmanager:addVendorTask( priority )
 									if ( not sold ) then
 										while ( tmpR > 0 and sold == false) do
 											local strophies = ItemList("itemtype=16,notsoulbound,rarity="..tmpR)					
-											id,item = next(strophies)
+											local id,item = next(strophies)
 											if (id ~=nil and item ~= nil) then
 												local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
 												if(blacklistCount == nil or blacklistCount < 3) then
@@ -865,6 +866,204 @@ function wt_core_taskmanager:addVendorTask( priority )
 	end
 end
 
+-- totalStacks is NOT the amount to buy, it is the amount that the bot should have in inventory
+-- when the buy task is completed
+function wt_core_taskmanager:addVendorBuyTask(priority, contentID, totalStacks)
+	for npcID, listTime in pairs(wt_core_taskmanager.npcBlacklist) do
+		if (npcID ~= nil and listTime ~= nil) then
+			--clear out npcs that have been blacklisted longer than 5 mins
+			if (os.difftime(os.time(), listTime) > 300) then
+				wt_core_taskmanager.npcBlacklist[npcID] = nil
+			end
+		end
+	end
+	
+	local EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
+	if ( TableSize( EList ) > 0 ) then
+		local nextTarget, E = next( EList )
+		if ( nextTarget ~= nil and nextTarget ~= 0 and E.characterID ~= nil and wt_core_taskmanager.vendorBlacklist[E.characterID] == nil and wt_core_taskmanager.npcBlacklist[E.characterID] == nil) then
+			
+			local newtask = inheritsFrom( wt_task )
+			newtask.UID = "VENDORBUY"..contentID
+			newtask.timestamp = wt_global_information.Now
+			newtask.name = "GoTo Vendor"
+			newtask.position = E.pos
+			newtask.done = false
+			newtask.NPC = nextTarget
+			newtask.throttle = 500
+			newtask.last_execution = 0
+			newtask.itemsPurchased = false
+			newtask.priority = tonumber(priority)
+			newtask.totalStacks = tonumber(totalStacks)
+			newtask.contentID = tonumber(contentID)
+			
+			function newtask:execute()				
+				mypos = Player.pos
+				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
+				if ( distance > 150 ) then
+					-- MAKE SURE ALL MINIONS ARE NEARBY
+					if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	
+						local party = Player:GetPartyMembers()
+						if (party ~= nil ) then
+							local index, player  = next( party )
+							while ( index ~= nil and player ~= nil ) do			
+								if (player.distance > 1200 and player.onmesh) then
+									MultiBotSend( "100;"..tonumber(Player.characterID),"gw2minion" ) -- Minions follow Leader									
+									break
+								end
+								index, player  = next( party,index )
+							end		
+						end						
+					end
+					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 75 )
+					newtask.name = "Vendor: "..(math.floor(distance))
+				else
+					if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+						newtask.last_execution = wt_global_information.Now
+						--MAKE SURE ALL MINIONS ARE NEARBY WHEN IN GROUP
+						if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	
+							local party = Player:GetPartyMembers()
+							local canvendor = true							
+							if (party ~= nil) then
+								local i,p = next (party)
+								while (i~= nil and p~= nil) do
+									if (p.distance > 1500) then
+										canvendor = false
+									end
+									i,p = next(party,i)
+								end
+							end
+							if (not canvendor) then
+								wt_debug("Waiting for our whole party to get to me....")
+								MultiBotSend( "100;"..tonumber(Player.characterID),"gw2minion" ) -- Minions follow Leader	
+								return
+							else
+								wt_debug("Telling Minions to vendor")
+								MultiBotSend( "13;0","gw2minion" )
+							end
+						end						
+						
+						local vendor = MapObjectList:Get(newtask.NPC)
+						if ( vendor ~= nil and vendor.distance < 150 and vendor.characterID ~= nil and vendor.characterID ~= 0) then													
+							-- TARGET VENDOR
+							local nearestID = Player:GetInteractableTarget()
+							if ( vendor.characterID ~= nil and vendor.characterID ~= 0 and nearestID ~= nil and vendor.characterID ~= nearestID ) then 
+								if ( Player:GetTarget() ~= vendor.characterID) then				
+									Player:SetTarget(vendor.characterID)
+									return
+								end
+							end
+							-- INTERACT WITH VENDOR
+							if ( not Inventory:IsVendorOpened() and  not Player:IsConversationOpen() ) then
+								wt_debug( "Vendoring: Opening Vendor.. " )
+								Player:Interact( vendor.characterID )
+								return
+							end
+							-- CHAT WITH VENDOR
+							if ( not Inventory:IsVendorOpened() and Player:IsConversationOpen() and not newtask.junksold ) then
+								wt_debug( "Vendoring: Chatting with Vendor.." )							
+								local options = Player:GetConversationOptions()
+								nextOption, entry  = next( options )
+								local found = false
+								while ( nextOption ~= nil ) do
+									if( entry == GW2.CONVERSATIONOPTIONS.Shop ) then
+										Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Shop )
+										found = true
+										break
+									elseif( entry == GW2.CONVERSATIONOPTIONS.KarmaShop ) then
+										Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.KarmaShop )
+										found = true
+										break
+									elseif( entry == 23 ) then
+										Player:SelectConversationOption( 23 )
+										found = true
+										break
+									end
+									nextOption, entry  = next( options, nextOption )
+								end
+								if ( not found ) then
+									nextOption, entry  = next( options )
+									while ( nextOption ~=nil ) do
+										if( entry == GW2.CONVERSATIONOPTIONS.Continue ) then
+											Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Continue )
+											found = true
+											break
+										elseif( entry == GW2.CONVERSATIONOPTIONS.Story ) then
+											Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Story )
+											found = true
+											break
+										end
+										nextOption, entry  = next( options, nextOption )
+									end
+								end
+								if ( not found ) then
+									wt_core_taskmanager.npcBlacklist[vendor.characterID] = os.time()
+									wt_debug( "Vendoring: can't handle vendor, please report back to the developers" )
+								end
+								return
+							end
+							-- BUY ITEMS
+							if (Inventory:IsVendorOpened() and not newtask.itemsPurchased) then
+								-- Check current stock
+								local contentID = tonumber(newtask.contentID)
+								local myStacks = wt_core_items:GetItemStock(contentID)
+								if (myStacks < newtask.totalStacks) then
+									-- Buy Items
+									wt_debug(tostring(myStacks).." stacks found in inventory. Buying "..tostring(newtask.totalStacks - myStacks).." stacks")
+									
+									local vendorItems = VendorItemList("contentID="..newtask.contentID)
+									if (vendorItems ~= nil ) then
+										local id,item=next(vendorItems)
+										if (id ~= nil) then
+											item:Buy()
+										else
+											wt_debug("Vendor doesn't have salvage kits/gtools....blacklisting")
+											wt_core_taskmanager.vendorBlacklist[vendor.characterID] = true
+											newtask.itemsPurchased = true
+										end
+									else
+										wt_debug("Vendor doesn't have salvage kits/gtools....blacklisting")
+										wt_core_taskmanager.vendorBlacklist[vendor.characterID] = true
+										newtask.itemsPurchased = true
+									end
+								else
+									newtask.done = true
+								end
+									
+								newtask.throttle = math.random(500,1500)
+							end
+							-- DONE LOL
+							if (newtask.itemsPurchased) then
+								newtask.done = true
+							end		
+						else
+							-- Reget closest Vendor
+							wt_debug("Vendor changed, trying to get new NPC..")
+							local EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
+							if ( TableSize( EList ) > 0 ) then
+								local nextTarget, E = next( EList )
+								if ( nextTarget ~= nil and nextTarget ~= 0 and E.characterID ~= nil and wt_core_taskmanager.vendorBlacklist[E.characterID] == nil and wt_core_taskmanager.npcBlacklist[E.characterID] == nil) then
+									newtask.position = E.pos
+									newtask.NPC = nextTarget
+								end
+							end
+						end
+					end
+				end
+			end
+			
+			function newtask:isFinished()
+				if ( newtask.done ) then 
+					return true
+				end
+				return false
+			end
+			
+			wt_debug("Buy Items Task Added..")
+			wt_core_taskmanager:addCustomtask(newtask)
+		end
+	end
+end
 
 -- Do Event Task - P:6000
 function wt_core_taskmanager:addEventTask( ID,event, prio )
