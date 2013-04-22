@@ -43,6 +43,7 @@ function devmonitor.ClearFields()
 	
 	GUI_NewField("devmonitor","GagetType","GadgetGetType","GadgetInfo")
 	GUI_NewField("devmonitor","GadgetID","GadgetID","GadgetInfo")
+	GUI_NewField("devmonitor","GadgetAttitude","GadgetAttitude","GadgetInfo")
 	GUI_NewField("devmonitor","Health.current","GadgetHealthCurrent","GadgetInfo")
 	GUI_NewField("devmonitor","Health.max","GadgetHealthMax","GadgetInfo")
 	GUI_NewField("devmonitor","Health.percent","GadgetHealthPercent","GadgetInfo")
@@ -140,6 +141,7 @@ function devmonitor.UpdateWindow()
 			if (mytarget ~= nil) then
 				GadgetID = TID
 				GadgetGetType = "Gadget"
+				GadgetAttitude = tostring(mytarget.attitude)
 				if (mytarget.hashpbar and mytarget.iscombatant and mytarget.health ~= nil) then
 					GadgetHealthCurrent = mytarget.health.current
 					GadgetHealthMax = mytarget.health.max

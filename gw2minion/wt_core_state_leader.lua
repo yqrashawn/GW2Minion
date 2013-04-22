@@ -137,8 +137,9 @@ end
 local c_buildgrp = inheritsFrom( wt_cause )
 local e_buildgrp = inheritsFrom( wt_effect )
 c_buildgrp.needtowait = false
+c_buildgrp.needtowaitTmr = 0
 function c_buildgrp:evaluate()
-	if (c_buildgrp.needtowait == true) then
+	if (c_buildgrp.needtowait == true) then		
 		return true
 	end
 	
@@ -153,6 +154,7 @@ function c_buildgrp:evaluate()
 		end		
 	end
 	c_buildgrp.needtowait = false
+	c_buildgrp.needtowaitTmr = 0
 	return false
 end
 e_buildgrp.throttle = math.random(1500,2500)
@@ -163,25 +165,31 @@ function e_buildgrp:execute()
 		while ( index ~= nil and player ~= nil ) do			
 			if (player.onmesh and player.distance > 1200) then
 				if (c_buildgrp.needtowait) then
-					return
+					if (c_buildgrp.needtowaitTmr ~= 0 and wt_global_information.Now - c_buildgrp.needtowaitTmr > 5000) then
+						c_buildgrp.needtowait = false
+						return
+					end
 				end
 				local rdist = math.random(1800,3500)
 				if (player.distance > rdist ) then
 					local pos = player.pos
 					--TODO: Getmovementstate of player, adopt range accordingly
-					Player:MoveToRandomPointAroundCircle(pos.x,pos.y,pos.z,1000)
+					Player:MoveTo(pos.x,pos.y,pos.z,1000)
 					c_buildgrp.needtowait = true
+					c_buildgrp.needtowaitTmr = wt_global_information.Now
 					return
 				elseif(player.distance <= rdist and player.distance > 2500 and c_buildgrp.needtowait == false) then
 					wt_debug("Waiting for Partymembers to get to us")
 					Player:StopMoving()
 					c_buildgrp.needtowait = true
+					c_buildgrp.needtowaitTmr = wt_global_information.Now
 					return
 				end
 			end
 			index, player  = next( party,index )
 		end	
 		c_buildgrp.needtowait = false
+		c_buildgrp.needtowaitTmr = 0
 	end
 end
 
