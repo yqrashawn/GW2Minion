@@ -1087,7 +1087,7 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 	newtask.timestamp = wt_global_information.Now				
 	newtask.name = "Event"	
 	newtask.priority = prio
-	newtask.eventID = ID	
+	newtask.eventID = event.eventID	
 	newtask.spotreached = false
 	newtask.startingTime = 0
 	newtask.eventType = nil

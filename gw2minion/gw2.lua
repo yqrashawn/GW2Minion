@@ -51,31 +51,61 @@ end
 if ( Settings.GW2MINION.gNavSwitchTime == nil ) then
 	Settings.GW2MINION.gNavSwitchTime = "20"
 end
-if (Settings.GW2MINION.version <= 1.39 ) then
-	Settings.GW2MINION.version = 1.40
+
+if ( Settings.GW2MINION.gUseWaypoints == nil ) then
 	Settings.GW2MINION.gUseWaypoints = "0"
+end
+if ( Settings.GW2MINION.gVendor_Weapons == nil ) then
 	Settings.GW2MINION.gVendor_Weapons = "1"
+end
+if ( Settings.GW2MINION.gVendor_Armor == nil ) then
 	Settings.GW2MINION.gVendor_Armor = "1"
+end
+if ( Settings.GW2MINION.gVendor_Junk == nil ) then
 	Settings.GW2MINION.gVendor_Junk = "1"
+end
+if ( Settings.GW2MINION.gVendor_UpgradeComps == nil ) then
 	Settings.GW2MINION.gVendor_UpgradeComps = "0"
+end
+if ( Settings.GW2MINION.gVendor_CraftingMats == nil ) then
 	Settings.GW2MINION.gVendor_CraftingMats = "0"
+end
+if ( Settings.GW2MINION.gVendor_Trinkets == nil ) then
 	Settings.GW2MINION.gVendor_Trinkets = "0"
+end
+if ( Settings.GW2MINION.gVendor_Trophies == nil ) then
 	Settings.GW2MINION.gVendor_Trophies = "0"
 end
-if (Settings.GW2MINION.version <= 1.40 ) then
-	Settings.GW2MINION.version = 1.41
+if ( Settings.GW2MINION.gBuyGatheringTools == nil ) then
 	Settings.GW2MINION.gBuyGatheringTools = "0"
+end
+if ( Settings.GW2MINION.gBuySalvageKits == nil ) then
 	Settings.GW2MINION.gBuySalvageKits = "0"
+end
+if ( Settings.GW2MINION.gDoGathering == nil ) then
 	Settings.GW2MINION.gDoGathering = "1"
+end
+if ( Settings.GW2MINION.gDoSalvaging == nil ) then
 	Settings.GW2MINION.gDoSalvaging = "1"
+end
+if ( Settings.GW2MINION.gGatheringToolStock == nil ) then
 	Settings.GW2MINION.gGatheringToolStock = "1"
+end
+if ( Settings.GW2MINION.gGatheringToolQuality == nil ) then
 	Settings.GW2MINION.gGatheringToolQuality = "5"
+end
+if ( Settings.GW2MINION.gSalvageKitStock == nil ) then
 	Settings.GW2MINION.gSalvageKitStock = "3"
+end
+if ( Settings.GW2MINION.gSalvageKitQuality == nil ) then
 	Settings.GW2MINION.gSalvageKitQuality = "2"
+end
+if ( Settings.GW2MINION.gBuyBestGatheringTool == nil ) then
 	Settings.GW2MINION.gBuyBestGatheringTool = "1"
+end
+if ( Settings.GW2MINION.gBuyBestSalvageKit == nil ) then
 	Settings.GW2MINION.gBuyBestSalvageKit = "0"
 end
-
 if ( Settings.GW2MINION.gStats_enabled == nil ) then
 	Settings.GW2MINION.gStats_enabled = "0"
 end
