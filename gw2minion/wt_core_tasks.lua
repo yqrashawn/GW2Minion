@@ -1185,7 +1185,6 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 				else
 					if ( newtask.needPause and (wt_global_information.Now - newtask.pausestartingTime) < newtask.pausemaxduration) then
 						newtask.name = "Event: Waiting.."
-						
 						-- Search for nearby enemies
 						local Elist = ( CharacterList( "nearest,attackable,alive,incombat,noCritter,onmesh,maxdistance=2500" ) )
 						if ( TableSize( Elist ) > 0 ) then
@@ -1200,6 +1199,28 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 									wt_core_controller.requestStateChange( wt_core_state_combat )
 									return
 								end
+							end
+						end
+						local npcList = CharacterList("nearest,npc,dead,maxdistance=2500")
+						if ( TableSize( npcList ) > 0 ) then
+							local nextTarget, E  = next( npcList )
+							if ( nextTarget ~= nil and E ~= nil ) then
+								if ( E.distance > 110 ) then
+								local TPOS = E.pos
+								Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 25 )
+							elseif( E.distance <= 110 ) then
+								Player:StopMoving()
+								local npcID = Player:GetInteractableTarget()
+								d("1"..tostring(npcID))
+								d("2"..tostring(E.characterID))
+								if (npcID ~= nil) then				
+									if( Player:GetCurrentlyCastedSpell() == 17 ) then
+										Player:Interact(npcID)
+										wt_debug("Reviving NPC: "..tostring(E.characterID))
+										return
+									end
+								end
+							end
 							end
 						end
 						if (Player.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving and newtask.eventType ~= nil) then
