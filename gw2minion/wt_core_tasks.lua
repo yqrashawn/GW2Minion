@@ -1,6 +1,8 @@
 -- Blacklists for unsellable items and contested NPCs
 wt_core_taskmanager.itemBlacklist = {}
+-- npcBlacklist is for contested npcs
 wt_core_taskmanager.npcBlacklist = {}
+-- vendorBlacklist is for vendors who don't sell salvage kits/gathering tools
 wt_core_taskmanager.vendorBlacklist = {}
 
 -- Tasks that can be added to the taskmanager
@@ -1029,11 +1031,25 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 												else
 													wt_debug("Vendor doesn't have salvage kits/gtools....blacklisting")
 													wt_core_taskmanager.vendorBlacklist[vendor.characterID] = true
+													-- tell minions to blacklist vendor
+													if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	
+														MultiBotSend( "18;"..tonumber(vendor.characterID),"gw2minion" )
+													-- tell leader to blacklist vendor
+													elseif (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() ~= 1) then
+														MultiBotSend( "17;"..tonumber(vendor.characterID),"gw2minion" )
+													end
 													newtask.done = true
 												end
 											else
 												wt_debug("Vendor doesn't have requested quality salvage kits/gtools....blacklisting")
 												wt_core_taskmanager.vendorBlacklist[vendor.characterID] = true
+												-- tell minions to blacklist vendor
+												if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	
+													MultiBotSend( "18;"..tonumber(vendor.characterID),"gw2minion" )
+												-- tell leader to blacklist vendor
+												elseif (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() ~= 1) then
+													MultiBotSend( "17;"..tonumber(vendor.characterID),"gw2minion" )
+												end
 												newtask.done = true
 											end
 										end
@@ -1075,6 +1091,8 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 			
 			wt_debug("Buy Items Task Added..")
 			wt_core_taskmanager:addCustomtask(newtask)
+		elseif(nextTarget ~= nil and nextTarget ~= 0 and E.characterID ~= nil) then
+			--wt_debug("Got a vendor purchase task but no suitable vendors found nearby :(")
 		end
 	end
 end
