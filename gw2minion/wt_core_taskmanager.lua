@@ -154,21 +154,21 @@ function wt_core_taskmanager:Update_Tasks( )
 							
 						
 							-- Locked Waypoints
-							if ( mtype==14 and etype == 30 and entry.onmesh) then
+							if ( mtype==15 and etype == 36 and entry.onmesh) then
 								local mPos = entry.pos
 								if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
 									wt_core_taskmanager:addWaypointTask( entry )
 								end
 								
 							-- Point Of Interest
-							elseif( etype == 452 and entry.onmesh) then
+							elseif( etype == 458 and entry.onmesh) then
 								local mPos = entry.pos
 								if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
 									wt_core_taskmanager:addPOITask( entry )
 								end
 							
 							-- Unfinished HeartQuests
-							elseif ( mtype==7 and (etype == 137 or etype == 140) and entry.onmesh) then
+							elseif ( mtype==8 and (etype == 146 or etype == 143) and entry.onmesh) then
 								local mPos = entry.pos
 								if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
 									local lastrun = wt_core_taskmanager.Customtask_history["HeartQuest"..tostring(math.floor(entry.pos.x))] or 0
@@ -178,7 +178,7 @@ function wt_core_taskmanager:Update_Tasks( )
 								end
 								
 							-- Events
-							elseif ( gdoEvents == "1" and mtype==5 and entry.onmesh and entry.eventID ~= 0) then
+							elseif ( gdoEvents == "1" and mtype==6 and entry.onmesh and entry.eventID ~= 0) then
 								local lastrun = wt_core_taskmanager.Customtask_history["Event"..tostring(entry.eventID)] or 0
 								if ((wt_global_information.Now - lastrun) > 450000) then
 									wt_core_taskmanager:addEventTask( i, entry , 6000)
@@ -266,7 +266,7 @@ function wt_core_taskmanager.ClearTasks()
 	wt_core_taskmanager.last_task = nil
 	wt_core_taskmanager.Customtask_list = { }
 	wt_core_taskmanager.Customtask_history = {}
-	wt_core_taskmanager.CustomLuaFunctions = { }
+	--wt_core_taskmanager.CustomLuaFunctions = { }
 	wt_core_taskmanager.markerList = { }
 	wt_debug("All Tasks cleared...")
 end
