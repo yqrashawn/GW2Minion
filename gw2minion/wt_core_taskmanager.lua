@@ -12,8 +12,10 @@ wt_core_taskmanager.markerList = { }
 
 -- Add new Tasks or refresh lifetime of existing Tasks
 function wt_core_taskmanager:addCustomtask( task )
-	if ( task ~= nil and  type( task ) == "table") then	
-		--wt_debug( "Updated Task: " ..tostring(task.name).. "(UID: "..tostring(task.UID).." Prio: "..tostring(task.priority).." LifeTime: "..tostring(task.lifetime).."")
+	if ( task ~= nil and  type( task ) == "table") then
+		if (tostring(task.name) ~= "FarmSpot ") then
+			wt_debug( "Updated Task: " ..tostring(task.name).. "(UID: "..tostring(task.UID).." Prio: "..tostring(task.priority).." LifeTime: "..tostring(task.lifetime).."")
+		end
 		if (wt_core_taskmanager.Customtask_list[task.UID] == nil or wt_core_taskmanager.Customtask_list[task.UID].lifetime < task.lifetime or wt_core_taskmanager.Customtask_list[task.UID].priority < task.priority) then
 			wt_core_taskmanager.Customtask_list[task.UID] = task
 		end
@@ -151,7 +153,6 @@ function wt_core_taskmanager:Update_Tasks( )
 					while ( i ~= nil and entry ~= nil ) do
 						local etype = entry.type
 						local mtype = entry.markertype
-							
 						
 							-- Locked Waypoints
 							if ( mtype==15 and etype == 36 and entry.onmesh) then
@@ -179,9 +180,13 @@ function wt_core_taskmanager:Update_Tasks( )
 								
 							-- Events
 							elseif ( gdoEvents == "1" and mtype==6 and entry.onmesh and entry.eventID ~= 0) then
+							d("test1")
+							elseif ( gdoEvents == "1" and mtype==5 and entry.onmesh and entry.eventID ~= 0 ) then
+							d("test1")
 								local lastrun = wt_core_taskmanager.Customtask_history["Event"..tostring(entry.eventID)] or 0
 								if ((wt_global_information.Now - lastrun) > 450000) then
-									wt_core_taskmanager:addEventTask( i, entry , 6000)
+									d("test2")
+									wt_core_taskmanager:addEventTask( i, entry , 950)
 								end						
 							end
 							

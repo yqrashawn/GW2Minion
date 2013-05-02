@@ -217,13 +217,15 @@ function wt_core_state_idle:initialize()
 	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 84 )
 	wt_core_state_idle:add( ke_repaircheck )
 
+	local ke_doeventtasks = wt_kelement:create( "Event", c_doeventtask, e_doeventtask, 83 )
+	wt_core_state_idle:add( ke_doeventtasks )
+	
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )
 	wt_core_state_idle:add( ke_revive )
 
 	--leave shroud from necro , prio 76
 	local ke_rest = wt_kelement:create( "Rest", c_rest, e_rest, 75 )
 	wt_core_state_idle:add( ke_rest )
-
 
 	local ke_gather = wt_kelement:create( "Gather", c_check_gatherable, e_gather, 40 )
 	wt_core_state_idle:add( ke_gather )

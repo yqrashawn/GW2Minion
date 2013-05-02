@@ -356,6 +356,20 @@ function e_doemergencytask:execute()
 	wt_core_taskmanager:DoTask()
 end
 
+--************************************************************
+-- Do Event Tasks Cause & Effect - Done after AggroCheck
+--************************************************************
+c_doeventtask = inheritsFrom( wt_cause )
+e_doeventtask = inheritsFrom( wt_effect )
+function c_doeventtask:evaluate()
+	if (wt_core_taskmanager.current_task ~= nil and wt_core_taskmanager.current_task.priority > 900 and wt_core_taskmanager.current_task.priority <= 999 ) then
+		return true
+	end
+	return false
+end
+function e_doeventtask:execute()
+	wt_core_taskmanager:DoTask()
+end
 
 --************************************************************
 -- Do Prio Tasks Cause & Effect - Done after AggroCheck

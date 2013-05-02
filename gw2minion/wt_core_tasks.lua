@@ -4,6 +4,8 @@ wt_core_taskmanager.itemBlacklist = {}
 wt_core_taskmanager.npcBlacklist = {}
 -- vendorBlacklist is for vendors who don't sell salvage kits/gathering tools
 wt_core_taskmanager.vendorBlacklist = {}
+-- eventBlacklist is for events that the bot could not complete
+wt_core_taskmanager.eventBlacklist = {}
 
 -- Tasks that can be added to the taskmanager
 
@@ -1117,8 +1119,9 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 	newtask.needUpdate = false
 	newtask.needPause = false
 	newtask.pausestartingTime = 0
-	newtask.pausemaxduration = math.random(10000,30000) 
+	newtask.pausemaxduration = math.random(10000,30000)
 	newtask.EventComponents = {}
+	newtask.waiting = false
 	
 	function newtask:execute()
 
@@ -1175,7 +1178,6 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 			if ( myevent ~= nil and myevent.pos ~= nil) then
 				newtask.position = myevent.pos
 				if ( not newtask.spotreached ) then
-				
 					if ( myevent.distance > 1000 ) then
 						if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 							if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	
@@ -1199,15 +1201,27 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 						newtask.startingTime = wt_global_information.Now
 					end
 					newtask.name = "Event: "..(math.floor(myevent.distance))
-					
+					newtask.name = "Event: "..(math.floor(distance))
 				else
 					if ( newtask.needPause and (wt_global_information.Now - newtask.pausestartingTime) < newtask.pausemaxduration) then
+						if (newtask.waiting == false) then
+							newtask.waiting = true
+							newtask.waitingTime = os.time()
+						else
+							if (os.difftime(os.time(), newtask.waitingTime) > 60) then
+								wt_core_taskmanager.eventBlacklist[newtask.eventID] = true
+								newtask.done = true
+								return
+							end
+						end
+						
 						newtask.name = "Event: Waiting.."
 						-- Search for nearby enemies
 						local Elist = ( CharacterList( "nearest,attackable,alive,incombat,noCritter,onmesh,maxdistance=2500" ) )
 						if ( TableSize( Elist ) > 0 ) then
 							nextTarget, E  = next( Elist )
 							if ( nextTarget ~= nil and E ~= nil ) then
+								newtask.waiting = false
 								if (E.distance > 500) then
 									local Epos = E.pos
 									Player:MoveToRandomPointAroundCircle( Epos.x, Epos.y, Epos.z, 500 )
@@ -1224,21 +1238,20 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 							local nextTarget, E  = next( npcList )
 							if ( nextTarget ~= nil and E ~= nil ) then
 								if ( E.distance > 110 ) then
-								local TPOS = E.pos
-								Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 25 )
-							elseif( E.distance <= 110 ) then
-								Player:StopMoving()
-								local npcID = Player:GetInteractableTarget()
-								d("1"..tostring(npcID))
-								d("2"..tostring(E.characterID))
-								if (npcID ~= nil) then				
-									if( Player:GetCurrentlyCastedSpell() == 17 ) then
-										Player:Interact(npcID)
-										wt_debug("Reviving NPC: "..tostring(E.characterID))
-										return
+									local TPOS = E.pos
+									Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 25 )
+								elseif( E.distance <= 110 ) then
+									Player:StopMoving()
+									local npcID = Player:GetInteractableTarget()
+									if (npcID ~= 0) then
+										newtask.waiting = false
+										if( Player:GetCurrentlyCastedSpell() == 17 ) then
+											Player:Interact(npcID)
+											wt_debug("Reviving NPC: "..tostring(E.name))
+											return
+										end
 									end
 								end
-							end
 							end
 						end
 						if (Player.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving and newtask.eventType ~= nil) then
@@ -1312,7 +1325,8 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 			return true
 		end
 		return false
-	end		
+	end
+	wt_debug("adding event task")
 	wt_core_taskmanager:addCustomtask( newtask )	
 end
 

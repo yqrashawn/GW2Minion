@@ -349,6 +349,9 @@ function wt_core_state_leader:initialize()
 	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 84 )
 	wt_core_state_leader:add( ke_repaircheck )
 	
+	local ke_doeventtasks = wt_kelement:create( "Event", c_doeventtask, e_doeventtask, 83 )
+	wt_core_state_idle:add( ke_doeventtasks )
+	
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )
 	wt_core_state_leader:add( ke_revive )
 
