@@ -51,7 +51,6 @@ end
 if ( Settings.GW2MINION.gNavSwitchTime == nil ) then
 	Settings.GW2MINION.gNavSwitchTime = "20"
 end
-
 if ( Settings.GW2MINION.gUseWaypoints == nil ) then
 	Settings.GW2MINION.gUseWaypoints = "0"
 end
@@ -77,10 +76,10 @@ if ( Settings.GW2MINION.gVendor_Trophies == nil ) then
 	Settings.GW2MINION.gVendor_Trophies = "0"
 end
 if ( Settings.GW2MINION.gBuyGatheringTools == nil ) then
-	Settings.GW2MINION.gBuyGatheringTools = "0"
+	Settings.GW2MINION.gBuyGatheringTools = "1"
 end
 if ( Settings.GW2MINION.gBuySalvageKits == nil ) then
-	Settings.GW2MINION.gBuySalvageKits = "0"
+	Settings.GW2MINION.gBuySalvageKits = "1"
 end
 if ( Settings.GW2MINION.gDoGathering == nil ) then
 	Settings.GW2MINION.gDoGathering = "1"
@@ -95,7 +94,7 @@ if ( Settings.GW2MINION.gGatheringToolQuality == nil ) then
 	Settings.GW2MINION.gGatheringToolQuality = "5"
 end
 if ( Settings.GW2MINION.gSalvageKitStock == nil ) then
-	Settings.GW2MINION.gSalvageKitStock = "3"
+	Settings.GW2MINION.gSalvageKitStock = "1"
 end
 if ( Settings.GW2MINION.gSalvageKitQuality == nil ) then
 	Settings.GW2MINION.gSalvageKitQuality = "2"
@@ -104,7 +103,7 @@ if ( Settings.GW2MINION.gBuyBestGatheringTool == nil ) then
 	Settings.GW2MINION.gBuyBestGatheringTool = "1"
 end
 if ( Settings.GW2MINION.gBuyBestSalvageKit == nil ) then
-	Settings.GW2MINION.gBuyBestSalvageKit = "0"
+	Settings.GW2MINION.gBuyBestSalvageKit = "1"
 end
 if ( Settings.GW2MINION.gStats_enabled == nil ) then
 	Settings.GW2MINION.gStats_enabled = "0"

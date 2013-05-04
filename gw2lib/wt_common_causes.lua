@@ -670,10 +670,8 @@ e_stopcbmove = inheritsFrom( wt_effect )
 c_stopcbmove.throttle = 2000
 function c_stopcbmove:evaluate()
  local mstate = Player:GetMovementState()
-    if mstate == 1 then Player:UnSetMovement(1) elseif
-       mstate == 2 then Player:UnSetMovement(2) elseif
-       mstate == 3 then Player:UnSetMovement(3)
-    end
+    --if (mstate == 2 and 
+    --end
     return false
 end
 function e_stopcbmove:execute()
