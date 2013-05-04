@@ -14,7 +14,7 @@ wt_meshloader.meshlist = {
 	--PlainsofAshford:
 	[19] = "[1-15]AshfordPlains",
 	--BlazeridgeSteppes:
-	[20] = "",
+	[20] = "[40-50]BlazeridgeSteppes",
 	--FieldsofRuin:
 	[21] = "",
 	--FireheartRise:
@@ -26,19 +26,19 @@ wt_meshloader.meshlist = {
 	--IronMarches:
 	[25] = "",
 	--DredgehauntCliffs:
-	[26] = "DHC_Travelens_Savnir",
+	[26] = "",
 	--LornarsPass:
 	[27] = "",
 	--WayfarerFoothills:
 	[28] = "",
 	--TimberlineFalls:
-	[29] = "TLF_GentleRiver_Jotun",
+	[29] = "",
 	--FrostgorgeSound:
 	[30] = "",
 	--SnowdenDrifts:
 	[31] = "",
 	--DiessaPlateau:
-	[32] = "",
+	[32] = "[15-25]DiessaPlateau",
 	--AscalonianCatacombsStory:
 	[33] = "AC",
 	--CaledonForrest:
@@ -64,7 +64,7 @@ wt_meshloader.meshlist = {
 	--MalchorsLeap:
 	[65] = "",
 	--BloodtideCoast:
-	[73] = "BTC_ArchenForeland",
+	[73] = "",
 	--TheGrove:
 	[91] = "",
 	--BlueGreenRedBorderlands1:
@@ -74,7 +74,7 @@ wt_meshloader.meshlist = {
 	--BlueGreenRedBorderlands3:
 	[96] = "",
 	--RataSum:
-	[139] = "RataSupply",
+	[139] = "",
 	--BlackCitadel:
 	[218] = "",
 	--Hoelbrak:
