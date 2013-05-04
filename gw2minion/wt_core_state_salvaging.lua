@@ -35,7 +35,7 @@ function wt_core_state_salvaging.GetSalvageableItems()
 			if( TableSize(salvageItems) == 0 ) then
 				if (wt_core_state_salvaging.lastItemSlot == id and wt_core_state_salvaging.lastItemStacks == item.stackcount and wt_core_state_salvaging.lastItemContentID == item.contentID) then
 					-- add item to blacklist
-					wt_debug("Blacklisting item "..item.name.." for salvage")
+					wt_debug("Blacklisting item "..tostring(item.name).." for salvage")
 					wt_core_state_salvaging.salvageBlacklist[item.contentID] = true
 				else
 					-- have to save the itemlistslot so we can write it after the item is salvaged
