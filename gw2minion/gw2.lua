@@ -23,6 +23,7 @@ wt_global_information.InventoryFull = 0
 wt_global_information.FocusTarget = nil
 Settings.GW2MINION.TargetWaypointID = 0
 wt_global_information.stats_lastrun = 0
+wt_global_information.gamestatecheck_lastrun = 0
 
 
 gw2minion = { }
@@ -146,6 +147,11 @@ function wt_global_information.OnUpdate( event, tickcount )
 		wt_global_information.stats_lastrun = tickcount	
 		wt_global_information.UpdateMultiServerStatus()
 	end	
+		
+	if (gAutostartbot ~= nil and gAutostartbot == "1" and tickcount - wt_global_information.gamestatecheck_lastrun > 2000 and GetGameState() == 4) then
+		wt_global_information.gamestatecheck_lastrun = tickcount	
+		d(PressKey("RETURN"))	
+	end
 	
 	gGW2MiniondeltaT = tostring(tickcount - wt_global_information.lastrun)
 	if (tickcount - wt_global_information.lastrun > tonumber(gGW2MinionPulseTime)) then
