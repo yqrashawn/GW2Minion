@@ -14,7 +14,7 @@ wt_core_taskmanager.markerList = { }
 function wt_core_taskmanager:addCustomtask( task )
 	if ( task ~= nil and  type( task ) == "table") then
 		if (tostring(task.name) ~= "FarmSpot ") then
-			wt_debug( "Updated Task: " ..tostring(task.name).. "(UID: "..tostring(task.UID).." Prio: "..tostring(task.priority).." LifeTime: "..tostring(task.lifetime).."")
+			--wt_debug( "Updated Task: " ..tostring(task.name).. "(UID: "..tostring(task.UID).." Prio: "..tostring(task.priority).." LifeTime: "..tostring(task.lifetime).."")
 		end
 		if (wt_core_taskmanager.Customtask_list[task.UID] == nil or wt_core_taskmanager.Customtask_list[task.UID].lifetime < task.lifetime or wt_core_taskmanager.Customtask_list[task.UID].priority < task.priority) then
 			wt_core_taskmanager.Customtask_list[task.UID] = task
@@ -134,6 +134,9 @@ function wt_core_taskmanager:Update_Tasks( )
 		-- CLEAN TASKLIST, Kick out finished and expired Tasks
 		wt_core_taskmanager.CleanTasklist()
 		
+		-- CLEAN BLACKLIST, Kick out objects whose blacklist time rhas expired
+		wt_core_taskmanager.CleanBlacklist()
+		
 		
 		-- ADD NEW TASKS & Refresh existing Tasks
 			-- Add Zone specific Tasks		
@@ -179,14 +182,10 @@ function wt_core_taskmanager:Update_Tasks( )
 								end
 								
 							-- Events
-							elseif ( gdoEvents == "1" and mtype==6 and entry.onmesh and entry.eventID ~= 0) then
-							d("test1")
-							elseif ( gdoEvents == "1" and mtype==5 and entry.onmesh and entry.eventID ~= 0 ) then
-							d("test1")
+							elseif ( gdoEvents == "1" and mtype==6 and entry.onmesh and entry.eventID ~= 0 and wt_core_taskmanager.eventBlacklist[entry.eventID] == nil) then
 								local lastrun = wt_core_taskmanager.Customtask_history["Event"..tostring(entry.eventID)] or 0
 								if ((wt_global_information.Now - lastrun) > 450000) then
-									d("test2")
-									wt_core_taskmanager:addEventTask( i, entry , 950)
+									wt_core_taskmanager:addEventTask( i, entry , 4000)
 								end						
 							end
 							

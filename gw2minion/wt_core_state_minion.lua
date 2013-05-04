@@ -283,6 +283,9 @@ function wt_core_state_minion:initialize()
 	wt_core_state_minion:add( ke_deposit )
 	--salvaging 89
 	
+	local ke_revive_players = wt_kelement:create( "RevivePlayers", c_check_revive_players, e_revive_players, 89 )
+	wt_core_state_idle:add( ke_revive_players )
+	
 	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 88 )
 	wt_core_state_minion:add( ke_loot )
 	
@@ -297,9 +300,6 @@ function wt_core_state_minion:initialize()
 	
 	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 84 )
 	wt_core_state_minion:add( ke_repaircheck )
-		
-	local ke_doeventtasks = wt_kelement:create( "Event", c_doeventtask, e_doeventtask, 83 )
-	wt_core_state_idle:add( ke_doeventtasks )	
 		
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )
 	wt_core_state_minion:add( ke_revive )
