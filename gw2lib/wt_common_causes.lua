@@ -320,7 +320,8 @@ c_deposit = inheritsFrom( wt_cause )
 e_deposit = inheritsFrom( wt_effect )
 function c_deposit:evaluate()
 	local depositPercent = math.random(50, 90)
-	if ((( ItemList.freeSlotCount / ItemList.slotCount) * 100) > depositPercent ) then
+	local percentFull = ((ItemList.slotCount - ItemList.freeSlotCount)/ItemList.slotCount) * 100
+	if (percentFull > depositPercent or ItemList.freeSlotCount == 0) then
 		if ( wt_global_information.InventoryFull == 0 ) then
 			return true
 		else
