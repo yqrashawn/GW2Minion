@@ -11,13 +11,9 @@ wt_core_state_combat.combatMoveTmr = 0
 wt_core_state_combat.combatEvadeTmr = 0
 wt_core_state_combat.combatEvadeLastHP = 0
 wt_core_state_combat.combatJumpTmr = 0
-wt_core_state_combat.CMForward = 0
-wt_core_state_combat.CMBackward = 0
-wt_core_state_combat.CMLeft = 0
-wt_core_state_combat.CMRight = 0
 
 function wt_core_state_combat.IsCMActive()
-	if (wt_core_state_combat.CMForward ~= 0 or wt_core_state_combat.CMBackward ~= 0 or wt_core_state_combat.CMLeft ~= 0 or wt_core_state_combat.CMRight ~= 0 ) then
+	if (Player:GetMovement() ~= 0 ) then
 		return true
 	end
 	return false
@@ -29,17 +25,14 @@ function wt_core_state_combat.StopCM()
 	Player:UnSetMovement(1)
 	Player:UnSetMovement(2)
 	Player:UnSetMovement(3)
-	wt_core_state_combat.CMForward = 0
-	wt_core_state_combat.CMBackward = 0
-	wt_core_state_combat.CMLeft = 0
-	wt_core_state_combat.CMRight = 0
 	Player:StopMoving()
 end
 
 -- Thanks Havoc
 function OkToMove()
-    return Player.movementstate ~= GW2.MOVEMENTSTATE.GroundNotMoving
-        or Player:GetCurrentlyCastedSpell() == GW2.SKILLBARSLOT.Slot_1
+    return --Player.movementstate ~= GW2.MOVEMENTSTATE.GroundNotMoving
+        --or 
+		Player:GetCurrentlyCastedSpell() == GW2.SKILLBARSLOT.Slot_1
         or not Player:IsCasting()
 end
 
@@ -172,6 +165,7 @@ function c_combatmove:evaluate()
 		if ( T ~= nil ) then
 			local Tdist = T.distance					
 			local playerHP = Player.health.percent
+			local movedir = Player:GetMovement()
 			local s1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
 			if (s1 ~= nil) then
 				wt_global_information.AttackRange = s1.maxRange or 160
@@ -207,45 +201,37 @@ function c_combatmove:evaluate()
 			
 			--CONTROL CURRENT COMBAT MOVEMENT
 			if ( wt_core_state_combat.IsCMActive() ) then
-				if (not Player:IsFacingTarget()) then
+				if (wt_core_state_combat.CMactive and Player.inCombat and not Player:IsFacingTarget() and Tdist > 150) then
 					wt_core_state_combat.StopCM()
 					local Tpos = T.pos
-					Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,120)
+					Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,110)
 				end
 				
 				if (Tdist ~= nil) then
 					if (wt_global_information.AttackRange > 300) then
 						-- RANGE
-						if (Tdist < wt_global_information.AttackRange / 3 and wt_core_state_combat.CMForward ~= 0) then -- we are too close	and moving towards enemy						
+						if (Tdist < wt_global_information.AttackRange / 3 and (movedir == 0 or movedir == 13 or movedir == 14)) then -- we are too close	and moving towards enemy						
 							Player:UnSetMovement(0)	-- stop moving forward	
-							wt_core_state_combat.CMForward = 0
-						elseif ( Tdist > wt_global_information.AttackRange and wt_core_state_combat.CMBackward ~= 0) then -- we are too far away and moving backwards
+						elseif ( Tdist > wt_global_information.AttackRange and (movedir == 1 or movedir == 15 or movedir == 16)) then -- we are too far away and moving backwards
 							Player:UnSetMovement(1)	-- stop moving backward	
-							wt_core_state_combat.CMBackward = 0
-						elseif (Tdist > wt_global_information.AttackRange and (wt_core_state_combat.CMLeft ~= 0 or wt_core_state_combat.CMRight ~= 0)) then -- we are strafing outside the maxrange
-							if ( wt_core_state_combat.CMLeft ~= 0) then
+						elseif (Tdist > wt_global_information.AttackRange and (movedir == 2 or movedir == 13 or movedir == 15 or movedir == 3 or movedir == 14 or movedir == 16)) then -- we are strafing outside the maxrange
+							if ( movedir == 2 or movedir == 13 or movedir == 15) then
 								Player:UnSetMovement(2) -- stop moving Left	
-								wt_core_state_combat.CMLeft = 0
-							elseif( wt_core_state_combat.CMRight ~= 0) then
-								Player:UnSetMovement(3) -- stop moving Right	
-								wt_core_state_combat.CMRight = 0
+							elseif( movedir == 3 or movedir == 14 or movedir == 16) then
+								Player:UnSetMovement(3) -- stop moving Right
 							end
 						end	
 					else
 						-- MELEE
-						if ( Tdist < 85 and wt_core_state_combat.CMForward ~= 0) then -- we are too close	and moving towards enemy
+						if ( Tdist < 85 and (movedir == 0 or movedir == 13 or movedir == 14)) then -- we are too close	and moving towards enemy
 							Player:UnSetMovement(0)	-- stop moving forward	
-							wt_core_state_combat.CMForward = 0
-						elseif (Tdist > wt_global_information.AttackRange and wt_core_state_combat.CMBackward ~= 0) then -- we are too far away and moving backwards
+						elseif (Tdist > wt_global_information.AttackRange and (movedir == 1 or movedir == 15 or movedir == 16)) then -- we are too far away and moving backwards
 							Player:UnSetMovement(1)	-- stop moving backward	
-							wt_core_state_combat.CMBackward = 0
-						elseif (Tdist > wt_global_information.AttackRange + 50 and (wt_core_state_combat.CMLeft ~= 0 or wt_core_state_combat.CMRight ~= 0)) then -- we are strafing outside the maxrange
-							if ( wt_core_state_combat.CMLeft ~= 0) then
+						elseif (Tdist > wt_global_information.AttackRange + 50 and (movedir == 2 or movedir == 13 or movedir == 15 or movedir == 3 or movedir == 14 or movedir == 16)) then -- we are strafing outside the maxrange
+							if ( movedir == 2 or movedir == 13 or movedir == 15) then
 								Player:UnSetMovement(2) -- stop moving Left	
-								wt_core_state_combat.CMLeft = 0
-							elseif( wt_core_state_combat.CMRight ~= 0) then
-								Player:UnSetMovement(3) -- stop moving Right	
-								wt_core_state_combat.CMRight = 0
+							elseif( movedir == 3 or movedir == 14 or movedir == 16) then
+								Player:UnSetMovement(3) -- stop moving Right
 							end							
 						end
 					end
@@ -272,10 +258,10 @@ function c_combatmove:evaluate()
 						if (Tdist < 160) then 
 							table.remove(dirs,1) -- We are too close to walk forwards
 						end							
-						if (wt_core_state_combat.CMLeft ~= 0) then 
+						if (movedir == 2) then 
 							table.remove(dirs,4) -- We are moving left, so don't try to go right
 						end							
-						if (wt_core_state_combat.CMRight ~= 0) then
+						if (movedir == 3) then
 							table.remove(dirs,3) -- We are moving right, so don't try to go left
 						end							
 					end					
@@ -289,10 +275,10 @@ function c_combatmove:evaluate()
 						if (Tdist < 100) then 
 							table.remove(dirs,1) -- We are too close to walk forwards
 						end							
-						if (wt_core_state_combat.CMLeft ~= 0) then 
+						if (movedir == 2) then 
 							table.remove(dirs,4) -- We are moving left, so don't try to go right
 						end							
-						if (wt_core_state_combat.CMRight ~= 0) then
+						if (movedir == 3) then
 							table.remove(dirs,3) -- We are moving right, so don't try to go left
 						end							
 					end						
@@ -300,17 +286,9 @@ function c_combatmove:evaluate()
 				
 				-- MOVE
 				local dir = dirs[ math.random( #dirs ) ] 
+				wt_debug("MOVING DIR: "..tostring(dir))
 				if ( dir ~= 4) then				
-					-- I could have just used a table instead of 4 variables...too lazy to change it now lol
-					if (dir == 0) then
-						wt_core_state_combat.CMForward = 1
-					elseif(dir == 1) then
-						wt_core_state_combat.CMBackward = 1
-					elseif(dir == 2) then
-						wt_core_state_combat.CMLeft = 1
-					elseif(dir == 3) then
-						wt_core_state_combat.CMRight = 1
-					end
+					-- I could have just used a table instead of 4 variables...too lazy to change it now lol										
 					Player:SetMovement(dir)
 				else 
 					wt_core_state_combat.StopCM()

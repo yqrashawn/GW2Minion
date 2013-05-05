@@ -116,18 +116,16 @@ function wt_core_controller.Run()
 end
 
 -- on/off switch
-function wt_core_controller.ToggleRun()
-	wt_global_information.Reset()
-	wt_core_taskmanager.ClearTasks()
-	wt_core_state_combat.StopCM()
-	
+function wt_core_controller.ToggleRun()	
 	if ( NavigationManager:IsNavMeshLoaded() ) then	
 		wt_core_controller.shouldRun = not wt_core_controller.shouldRun
+		wt_global_information.Reset()
+		wt_core_taskmanager.ClearTasks()
+		wt_core_state_combat.StopCM()
 		wt_debug("Core Run State: ",tostring(wt_core_controller.shouldRun))
 	else
 		if (gAutostartbot == "1") then
 			mm.LoadMesh()
-			wt_core_controller.shouldRun = not wt_core_controller.shouldRun
 		else
 			wt_error("CAN'T START THE BOT, YOU NEED TO LOAD A NAVMESH FIRST!")
 		end

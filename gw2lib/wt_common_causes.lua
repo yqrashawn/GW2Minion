@@ -732,11 +732,24 @@ c_stopcbmove = inheritsFrom( wt_cause )
 e_stopcbmove = inheritsFrom( wt_effect )
 c_stopcbmove.throttle = 2000
 function c_stopcbmove:evaluate()
- local mstate = Player:GetMovementState()
-    --if (mstate == 2 and 
-    --end
+	local dir = Player:GetMovement()
+    if (dir == 1) then 
+		Player:UnSetMovement(1) 		
+	elseif (dir == 2) then 
+		Player:UnSetMovement(2)
+	elseif (dir == 3) then 
+		Player:UnSetMovement(3)
+	elseif (dir == 15) then
+		Player:UnSetMovement(1) 
+		Player:UnSetMovement(2)
+	elseif (dir == 16) then 
+		Player:UnSetMovement(1) 
+		Player:UnSetMovement(3)
+	end
     return false
 end
 function e_stopcbmove:execute()
 	
 end
+
+

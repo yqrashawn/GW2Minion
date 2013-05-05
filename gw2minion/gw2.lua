@@ -26,6 +26,8 @@ wt_global_information.stats_lastrun = 0
 wt_global_information.lastGameState = GetGameState()
 wt_global_information.Charscreen_lastrun = 0
 wt_global_information.Cinema_lastrun = 0
+wt_global_information.AutoRun = false
+wt_global_information.AutoRun_lastrun = 0
 
 gw2minion = { }
 
@@ -134,6 +136,7 @@ end
 if ( Settings.GW2MINION.gPlayerRevive == nil ) then
 	Settings.GW2MINION.gPlayerRevive = "1"
 end
+
 if ( Settings.GW2MINION.gEventTimeout == nil ) then
 	Settings.GW2MINION.gEventTimeout = "600"
 end
@@ -159,6 +162,17 @@ function wt_global_information.OnUpdate( event, tickcount )
 		gGW2MiniondeltaT = tostring(tickcount - wt_global_information.lastrun)
 		if (tickcount - wt_global_information.lastrun > tonumber(gGW2MinionPulseTime)) then
 			wt_global_information.lastrun = tickcount
+			if (wt_global_information.AutoRun == true and tickcount - wt_global_information.AutoRun_lastrun  > 3000 ) then
+				if ( wt_global_information.AutoRun_lastrun == 0 ) then
+					wt_global_information.AutoRun_lastrun = tickcount
+				else
+					wt_global_information.AutoRun_lastrun = 0
+					wt_global_information.AutoRun = false
+					if (wt_core_controller.shouldRun == false)then 
+						wt_core_controller.ToggleRun()
+					end
+				end
+			end			
 			wt_core_controller.Run()		
 		end	
 	elseif ( wt_global_information.lastGameState == 4) then -- 4 = Characterselectscreen
@@ -175,7 +189,6 @@ function wt_global_information.OnUpdate( event, tickcount )
 		end
 	elseif ( wt_global_information.lastGameState == 0) then
 		if ( tickcount - wt_global_information.Cinema_lastrun > 1000 ) then
-			wt_debug("FUCK")
 			wt_global_information.lastGameState = GetGameState()			
 		end
 	end
@@ -281,6 +294,7 @@ function gw2minion.HandleInit()
 		
 	if (gAutostartbot == "1" and wt_core_controller.shouldRun == false ) then	
 		wt_core_controller.ToggleRun()
+		wt_global_information.AutoRun = true
 	end
 end
 
