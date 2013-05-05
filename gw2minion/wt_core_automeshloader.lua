@@ -63,6 +63,8 @@ wt_meshloader.meshlist = {
 	[62] = "cs_chain_abob",
 	--MalchorsLeap:
 	[65] = "",
+	--CoF Story:
+	[66] = "CoF",
 	--BloodtideCoast:
 	[73] = "",
 	--TheGrove:

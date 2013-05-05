@@ -236,7 +236,6 @@ function tb.UnpackBags()
 					or itemid == 234200 --Small Bag Of Supplies
 					or itemid == 234138 --Small Stolen Supplies Bag
 					or itemid == 235338 --Small Bag Of Skritt Shinies
-					
 					) then --ADD MORE IDs HERE
 						wt_debug( "Opening Bag..")
 						opened = true

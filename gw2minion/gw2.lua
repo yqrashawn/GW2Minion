@@ -23,7 +23,9 @@ wt_global_information.InventoryFull = 0
 wt_global_information.FocusTarget = nil
 Settings.GW2MINION.TargetWaypointID = 0
 wt_global_information.stats_lastrun = 0
-wt_global_information.gamestatecheck_lastrun = 0
+wt_global_information.lastGameState = GetGameState()
+wt_global_information.Charscreen_lastrun = 0
+wt_global_information.Cinema_lastrun = 0
 
 gw2minion = { }
 
@@ -148,21 +150,35 @@ end
 function wt_global_information.OnUpdate( event, tickcount )
 	wt_global_information.Now = tickcount
 	
-	if ( (gStats_enabled == "1" or gMinionEnabled == "1") and tickcount - wt_global_information.stats_lastrun > 2000) then
-		wt_global_information.stats_lastrun = tickcount	
-		wt_global_information.UpdateMultiServerStatus()
-	end	
+	if (wt_global_information.lastGameState == 16) then -- 16 = in game
+		if ( (gStats_enabled == "1" or gMinionEnabled == "1") and tickcount - wt_global_information.stats_lastrun > 2000) then
+			wt_global_information.stats_lastrun = tickcount	
+			wt_global_information.UpdateMultiServerStatus()
+		end	
 		
-	if (gAutostartbot ~= nil and gAutostartbot == "1" and tickcount - wt_global_information.gamestatecheck_lastrun > 2000 and GetGameState() == 4) then
-		wt_global_information.gamestatecheck_lastrun = tickcount	
-		d(PressKey("RETURN"))	
+		gGW2MiniondeltaT = tostring(tickcount - wt_global_information.lastrun)
+		if (tickcount - wt_global_information.lastrun > tonumber(gGW2MinionPulseTime)) then
+			wt_global_information.lastrun = tickcount
+			wt_core_controller.Run()		
+		end	
+	elseif ( wt_global_information.lastGameState == 4) then -- 4 = Characterselectscreen
+		if ( gAutostartbot ~= nil and gAutostartbot == "1" and tickcount - wt_global_information.Charscreen_lastrun > 2000) then
+			wt_global_information.Charscreen_lastrun = tickcount
+			wt_debug("Pressing PLAY")
+			PressKey("RETURN")
+		end
+	elseif ( wt_global_information.lastGameState == 10) then -- 10 = Cinemasequence
+		if ( tickcount - wt_global_information.Cinema_lastrun > 1000 ) then
+			wt_global_information.Cinema_lastrun = tickcount
+			wt_debug("Skipping Cutscene...")
+			PressKey("ESC")
+		end
+	elseif ( wt_global_information.lastGameState == 0) then
+		if ( tickcount - wt_global_information.Cinema_lastrun > 1000 ) then
+			wt_debug("FUCK")
+			wt_global_information.lastGameState = GetGameState()			
+		end
 	end
-	
-	gGW2MiniondeltaT = tostring(tickcount - wt_global_information.lastrun)
-	if (tickcount - wt_global_information.lastrun > tonumber(gGW2MinionPulseTime)) then
-		wt_global_information.lastrun = tickcount
-		wt_core_controller.Run()		
-	end			
 end
 
 -- Module Event Handler
@@ -260,9 +276,10 @@ function gw2minion.HandleInit()
 	--gDoWaypoint = Settings.GW2MINION.gDoWaypoint
 	
 	wt_debug("GUI Setup done")
+	wt_global_information.Currentprofession = Player.profession
 	wt_core_controller.requestStateChange(wt_core_state_idle)
-	
-	if (gAutostartbot == "1") then
+		
+	if (gAutostartbot == "1" and wt_core_controller.shouldRun == false ) then	
 		wt_core_controller.ToggleRun()
 	end
 end
@@ -410,10 +427,17 @@ function wt_global_information.HandleCMDMultiBotMessages( event, message,channel
 	end
 end
 
+function wt_global_information.GameStateHandler(_,state)
+	d("New GameState= ".. tostring(state))
+	wt_global_information.lastGameState = tonumber(state)	
+end
+
+
 
 -- Register Event Handlers
 RegisterEventHandler("Module.Initalize",gw2minion.HandleInit)
 RegisterEventHandler("Gameloop.Update",wt_global_information.OnUpdate)
 RegisterEventHandler("GUI.Update",gw2minion.GUIVarUpdate)
 RegisterEventHandler("MULTIBOT.Message",wt_global_information.HandleCMDMultiBotMessages)
+RegisterEventHandler("Gameloop.ViewStateChanged",wt_global_information.GameStateHandler)
 

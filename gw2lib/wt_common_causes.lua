@@ -183,7 +183,7 @@ c_quicklootchest = inheritsFrom( wt_cause )
 e_quicklootchest = inheritsFrom( wt_effect )
 function c_quicklootchest:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then
-		c_lootchest.EList = GadgetList("nearest,maxdistance=120,onmesh") --old contentID=198260
+		c_lootchest.EList = GadgetList("nearest,maxdistance=100,onmesh") --old contentID=198260
 		if ( TableSize( c_lootchest.EList ) > 0 ) then			
 			local index, LT = next( c_lootchest.EList )
 			while ( index ~= nil and LT~=nil ) do
