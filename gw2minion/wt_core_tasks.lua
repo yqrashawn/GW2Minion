@@ -330,61 +330,98 @@ end
 
 -- Force Follow Leader - P:3750
 function wt_core_taskmanager:addFollowTask( ID, prio )
-		
-	local character = CharacterList:Get(tonumber(ID))
-	if ( character ~= nil ) then
-	
-		local newtask = inheritsFrom( wt_task )
-		newtask.UID = "Follow"
-		newtask.timestamp = wt_global_information.Now				
-		newtask.name = "Follow"	
-		newtask.ID = ID
-		newtask.priority = prio
-		newtask.spotreached = false
-		newtask.startingTime = 0
-		newtask.position = character.pos
-		newtask.maxduration = 300000 --max 5 min
-		newtask.done = false
-		newtask.last_execution = 0
-		newtask.throttle = 500
-		newtask.randomdist = math.random(130,700)
-		
-		function newtask:execute()
-			local Char = CharacterList:Get(tonumber(newtask.ID))
-			if ( Char ~= nil ) then
-				newtask.position = Char.pos
-				if ( not newtask.spotreached ) then
-					
-					if ( Char.distance > newtask.randomdist) then
-						if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
-							Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 120 )
-							newtask.last_execution = wt_global_information.Now
-						end
-					else
-						newtask.spotreached = true
-						newtask.startingTime = wt_global_information.Now
-					end
-					newtask.name = "Follow: "..(math.floor(Char.distance))
-				else
-					newtask.done = true
-				end
-			end
-		end
 
-		function newtask:isFinished()
-			if ( newtask.done ) then 
-				return true
-			end
-			return false
-		end		
-		wt_core_taskmanager:addCustomtask( newtask )	
-	end
+    local character = CharacterList:Get(tonumber(ID))
+    if ( character ~= nil ) then
+
+        local newtask = inheritsFrom( wt_task )
+        newtask.UID = "Follow"
+        newtask.timestamp = wt_global_information.Now
+        newtask.name = "Follow"
+        newtask.ID = ID
+        newtask.priority = prio
+        newtask.spotreached = false
+        newtask.startingTime = 0
+        newtask.position = character.pos
+        newtask.maxduration = 300000 --max 5 min
+        newtask.done = false
+        newtask.last_execution = 0
+        newtask.throttle = 500
+        newtask.randomdist = math.random(130,700)
+
+        function newtask:execute()
+            local Char = CharacterList:Get(tonumber(newtask.ID))
+            if ( Char ~= nil ) then
+                newtask.position = Char.pos
+                if ( not newtask.spotreached ) then
+                    if ( Char.distance > 5000 ) then
+                        if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+                            -- TELEPORT TO NEAREST WAYPOINT
+                            if ( gUseWaypoints == "1" ) then
+                                if  not (Player.inCombat) then
+                                    local wpID
+                                    local wpFollowdistance = 999999
+                                    local Waypoints = (WaypointList("onmesh,samezone,notcontested,mindistance=3500"))
+                                    local Followcheckdistance = 999999
+
+                                    if Waypoints then
+                                        i,wp = next(Waypoints)
+                                        while ( i ~= nil ) do
+                                            local newWP = WaypointList:Get(i)
+                                            local wpFollowdistanceex = Distance3D(newWP.pos.x, newWP.pos.y, newWP.pos.z, newtask.position.x, newtask.position.y, newtask.position.z)
+
+                                            if ( wpFollowdistanceex < Followcheckdistance ) then
+                                                wpFollowdistance = wpFollowdistanceex
+                                                Followcheckdistance = wpFollowdistanceex
+                                                wpID = newWP.contentID
+                                            end
+
+                                            i,wp = next(Waypoints,i)
+                                         end
+
+                                        -- TELEPORT
+                                        if ( Char.distance + 1000 > wpFollowdistance ) then
+                                            speed = Player:GetSpeed()
+                                            Player:SetSpeed(0)
+                                            Player:SetMovement(0)
+                                            Player:TeleportToWaypoint(wpID)
+                                            Player:UnSetMovement(0)
+                                            Player:SetSpeed(speed)
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    elseif ( Char.distance > newtask.randomdist) then
+                        if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+                            Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 120 )
+                            newtask.last_execution = wt_global_information.Now
+                        end
+                    else
+                        newtask.spotreached = true
+                        newtask.startingTime = wt_global_information.Now
+                    end
+                    newtask.name = "Follow: "..(math.floor(Char.distance))
+                else
+                    newtask.done = true
+                end
+            end
+        end
+
+        function newtask:isFinished()
+            if ( newtask.done ) then
+                return true
+            end
+            return false
+        end
+        wt_core_taskmanager:addCustomtask( newtask )
+    end
 end
 
 
 -- Go To Repair Task - P:4500
 function wt_core_taskmanager:addRepairTask( priority )
-	local EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
+	local EList = MapObjectList( "onmesh,nearest,alive,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
 	if ( TableSize( EList ) > 0 ) then
 		local nextTarget, E = next( EList )
 		if ( nextTarget ~= nil and nextTarget ~= 0 and E.characterID ~= nil and wt_core_taskmanager.npcBlacklist[E.characterID] == nil) then				
@@ -404,6 +441,41 @@ function wt_core_taskmanager:addRepairTask( priority )
 			function newtask:execute()				
 				mypos = Player.pos
 				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
+				 -- TELEPORT TO NEAREST WAYPOINT
+				if ( gUseWaypoints == "1" ) then
+					if ( distance > 6500 ) and not (Player.inCombat) then
+						local wpID
+						local wpvendordistance = 999999
+						local Waypoints = (WaypointList("onmesh,samezone,notcontested,mindistance=3500"))
+						local vendorcheckdistance = 999999
+
+						if Waypoints then
+							i,wp = next(Waypoints)
+							while ( i ~= nil ) do
+								local newWP = WaypointList:Get(i)
+								local wpvendordistanceex = Distance3D(newWP.pos.x, newWP.pos.y, newWP.pos.z, newtask.position.x, newtask.position.y, newtask.position.z)
+
+								if ( wpvendordistanceex < vendorcheckdistance ) then
+									wpvendordistance = wpvendordistanceex
+									vendorcheckdistance = wpvendordistanceex
+									wpID = newWP.contentID
+								end
+
+								i,wp = next(Waypoints,i)
+							 end
+
+							-- TELEPORT
+							if ( distance + 1000 > wpvendordistance ) then
+								speed = Player:GetSpeed()
+								Player:SetSpeed(0)
+								Player:SetMovement(0)
+								Player:TeleportToWaypoint(wpID)
+								Player:UnSetMovement(0)
+								Player:SetSpeed(speed)
+							end
+						end
+					end
+				end
 				if ( distance > 150 ) then
 					-- MAKE SURE ALL MINIONS ARE NEARBY
 					if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	
@@ -418,6 +490,11 @@ function wt_core_taskmanager:addRepairTask( priority )
 								index, player  = next( party,index )
 							end		
 						end						
+					end
+					-- HEAL if being attacked
+					if (Player.health.percent < wt_core_state_combat.RestHealthLimit and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6)) then
+						--wt_debug("e_heal_action")
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_6)
 					end
 					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 75 )
 					newtask.name = "Repair: "..(math.floor(distance))
@@ -457,17 +534,17 @@ function wt_core_taskmanager:addRepairTask( priority )
 							--TODO: LEADER SEND VENDOR MSG TO MINIONS							
 							-- TARGET VENDOR
 							local nearestID = Player:GetInteractableTarget()
-							if ( vendor.characterID ~= nil and vendor.characterID ~= 0 and nearestID ~= nil and vendor.characterID ~= nearestID ) then 
+							if ( vendor.characterID ~= nil and vendor.characterID ~= 0 and nearestID ~= nil and vendor.characterID ~= nearestID ) then
 								if ( Player:GetTarget() ~= vendor.characterID) then				
 									Player:SetTarget(vendor.characterID)
 									return
 								end
 							end
 							-- INTERACT WITH VENDOR
-							if ( not Player:IsConversationOpen() and newtask.repaired == false) then
+							if ( not Player:IsConversationOpen() and newtask.repaired == false ) then
 								wt_debug( "Repair: Opening Vendor.. " )
 								Player:Interact( vendor.characterID )
-								return
+								return		
 							end
 							-- CHAT WITH VENDOR
 							wt_debug( "Repair: Chatting with Vendor..." )
@@ -533,10 +610,10 @@ end
 
 -- Go To Vendor Task - P:5000
 function wt_core_taskmanager:addVendorTask( priority )
-	local EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
+	local EList = MapObjectList( "onmesh,nearest,alive,type="..GW2.MAPOBJECTTYPE.Merchant )
 	if ( TableSize( EList ) > 0 ) then
 		local nextTarget, E = next( EList )
-		if ( nextTarget ~= nil and nextTarget ~= 0 and E.characterID ~= nil and wt_core_taskmanager.npcBlacklist[E.characterID] == nil) then		
+		if ( nextTarget ~= nil and nextTarget ~= 0 and E.characterID ~= nil and wt_core_taskmanager.npcBlacklist[E.characterID] == nil) then	
 			
 			local newtask = inheritsFrom( wt_task )
 			newtask.UID = "VENDOR"
@@ -556,6 +633,41 @@ function wt_core_taskmanager:addVendorTask( priority )
 			function newtask:execute()				
 				mypos = Player.pos
 				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
+				 -- TELEPORT TO NEAREST WAYPOINT
+				if ( gUseWaypoints == "1" ) then
+					if ( distance > 6500 ) and not (Player.inCombat) then
+						local wpID
+						local wpvendordistance = 999999
+						local Waypoints = (WaypointList("onmesh,samezone,notcontested,mindistance=3500"))
+						local vendorcheckdistance = 999999
+
+						if Waypoints then
+							i,wp = next(Waypoints)
+							while ( i ~= nil ) do
+								local newWP = WaypointList:Get(i)
+								local wpvendordistanceex = Distance3D(newWP.pos.x, newWP.pos.y, newWP.pos.z, newtask.position.x, newtask.position.y, newtask.position.z)
+
+								if ( wpvendordistanceex < vendorcheckdistance ) then
+									wpvendordistance = wpvendordistanceex
+									vendorcheckdistance = wpvendordistanceex
+									wpID = newWP.contentID
+								end
+
+								i,wp = next(Waypoints,i)
+							 end
+
+							-- TELEPORT
+							if ( distance + 1000 > wpvendordistance ) then
+								speed = Player:GetSpeed()
+								Player:SetSpeed(0)
+								Player:SetMovement(0)
+								Player:TeleportToWaypoint(wpID)
+								Player:UnSetMovement(0)
+								Player:SetSpeed(speed)
+							end
+						end
+					end
+				end
 				if ( distance > 150 ) then
 					-- MAKE SURE ALL MINIONS ARE NEARBY
 					if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	
@@ -570,6 +682,11 @@ function wt_core_taskmanager:addVendorTask( priority )
 								index, player  = next( party,index )
 							end		
 						end						
+					end
+					-- HEAL if being attacked
+					if (Player.health.percent < wt_core_state_combat.RestHealthLimit and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6)) then
+						--wt_debug("e_heal_action")
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_6)
 					end
 					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 75 )
 					newtask.name = "Vendor: "..(math.floor(distance))
@@ -860,7 +977,7 @@ end
 -- totalStacks is NOT the amount to buy, it is the amount that the bot should have in inventory
 -- when the buy task is completed
 function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalStacks, quality)
-	local EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
+	local EList = MapObjectList( "onmesh,nearest,alive,type="..GW2.MAPOBJECTTYPE.Merchant)
 	if ( TableSize( EList ) > 0 ) then
 		local nextTarget, E = next( EList )
 		if ( nextTarget ~= nil and nextTarget ~= 0 and E.characterID ~= nil and wt_core_taskmanager.vendorBlacklist[E.characterID] == nil and wt_core_taskmanager.npcBlacklist[E.characterID] == nil) then
@@ -883,6 +1000,41 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 			function newtask:execute()				
 				mypos = Player.pos
 				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
+				 -- TELEPORT TO NEAREST WAYPOINT
+				if ( gUseWaypoints == "1" ) then
+					if ( distance > 6500 ) and not (Player.inCombat) then
+						local wpID
+						local wpvendordistance = 999999
+						local Waypoints = (WaypointList("onmesh,samezone,notcontested,mindistance=3500"))
+						local vendorcheckdistance = 999999
+
+						if Waypoints then
+							i,wp = next(Waypoints)
+							while ( i ~= nil ) do
+								local newWP = WaypointList:Get(i)
+								local wpvendordistanceex = Distance3D(newWP.pos.x, newWP.pos.y, newWP.pos.z, newtask.position.x, newtask.position.y, newtask.position.z)
+
+								if ( wpvendordistanceex < vendorcheckdistance ) then
+									wpvendordistance = wpvendordistanceex
+									vendorcheckdistance = wpvendordistanceex
+									wpID = newWP.contentID
+								end
+
+								i,wp = next(Waypoints,i)
+							 end
+
+							-- TELEPORT
+							if ( distance + 1000 > wpvendordistance ) then
+								speed = Player:GetSpeed()
+								Player:SetSpeed(0)
+								Player:SetMovement(0)
+								Player:TeleportToWaypoint(wpID)
+								Player:UnSetMovement(0)
+								Player:SetSpeed(speed)
+							end
+						end
+					end
+				end
 				if ( distance > 150 ) then
 					-- MAKE SURE ALL MINIONS ARE NEARBY
 					if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	
@@ -897,6 +1049,11 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 								index, player  = next( party,index )
 							end		
 						end						
+					end
+					-- HEAL if being attacked
+					if (Player.health.percent < wt_core_state_combat.RestHealthLimit and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6)) then
+						--wt_debug("e_heal_action")
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_6)
 					end
 					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 75 )
 					newtask.name = "Vendor: "..(math.floor(distance))
@@ -981,6 +1138,7 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 								end
 								if ( not found ) then
 									wt_core_taskmanager.npcBlacklist[vendor.characterID] = os.time()
+									newtask.done = true
 									wt_debug( "Vendoring: can't handle vendor, please report back to the developers" )
 								end
 								return
