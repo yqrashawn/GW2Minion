@@ -1,11 +1,5 @@
 -- This file contains warrior specific combat routines
-if (not Player) then
-return
-end
--- Load routine only if player is a warrior
-if ( 2 ~= Player.profession ) then
-	return
-end
+
 -- The following values have to get set ALWAYS for ALL professions!!
 wt_profession_warrior  =  inheritsFrom( nil )
 wt_profession_warrior.professionID = 2 -- needs to be set
@@ -342,68 +336,64 @@ function wt_profession_warrior.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_warrior:HandleInit() 	
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gWarSwapWeapons","Warrior-Settings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F1","gWarUseBurst","Warrior-Settings");
-	GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Warrior-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gWarSK7","Warrior-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gWarSK8","Warrior-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gWarSK9","Warrior-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gWarSK10","Warrior-Settings");
-	GUI_NewSeperator(wt_global_information.MainWindow.Name);
-	
-	
-	gWarSwapWeapons = Settings.GW2MINION.gWarSwapWeapons
-	gWarUseBurst = Settings.GW2MINION.gWarUseBurst
-	gWarSK7 = Settings.GW2MINION.gWarSK7
-	gWarSK8 = Settings.GW2MINION.gWarSK8
-	gWarSK9 = Settings.GW2MINION.gWarSK9
-	gWarSK10 = Settings.GW2MINION.gWarSK10
+	if ( wt_profession_warrior.professionID == Player.profession) then
+		wt_debug("Initalizing profession routine for Warrior")
+		
+		-- GUI Elements
+		if ( Settings.GW2MINION.gWarSwapWeapons == nil ) then
+			Settings.GW2MINION.gWarSwapWeapons = "0"
+		end
+		if ( Settings.GW2MINION.gWarUseBurst == nil ) then
+			Settings.GW2MINION.gWarUseBurst = "0"
+		end
+		if ( Settings.GW2MINION.gWarSK7 == nil ) then
+			Settings.GW2MINION.gWarSK7 = "0"
+		end
+		if ( Settings.GW2MINION.gWarSK8 == nil ) then
+			Settings.GW2MINION.gWarSK8 = "0"
+		end
+		if ( Settings.GW2MINION.gWarSK9 == nil ) then
+			Settings.GW2MINION.gWarSK9 = "0"
+		end
+		if ( Settings.GW2MINION.gWarSK10 == nil ) then
+			Settings.GW2MINION.gWarSK10 = "0"
+		end
+			
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gWarSwapWeapons","Warrior-Settings");
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F1","gWarUseBurst","Warrior-Settings");
+		GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Warrior-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gWarSK7","Warrior-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gWarSK8","Warrior-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gWarSK9","Warrior-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gWarSK10","Warrior-Settings");
+		GUI_NewSeperator(wt_global_information.MainWindow.Name);
+		
+		
+		gWarSwapWeapons = Settings.GW2MINION.gWarSwapWeapons
+		gWarUseBurst = Settings.GW2MINION.gWarUseBurst
+		gWarSK7 = Settings.GW2MINION.gWarSK7
+		gWarSK8 = Settings.GW2MINION.gWarSK8
+		gWarSK9 = Settings.GW2MINION.gWarSK9
+		gWarSK10 = Settings.GW2MINION.gWarSK10			
+					
+		-- Our C & E´s for Warrior combat:
+		-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
+		-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
+		-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua		
+			
+		local ke_Attack_default = wt_kelement:create("Attack",wt_profession_warrior.c_attack_default,wt_profession_warrior.e_attack_default, 45 )
+		wt_core_state_combat:add(ke_Attack_default)
+			
+
+		-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
+		wt_global_information.Currentprofession = wt_profession_warrior
+		wt_global_information.AttackRange = 130
+	end
 	
 end
--- We need to check if the players current profession is ours to only add our profession specific routines
-if ( wt_profession_warrior.professionID > -1 and wt_profession_warrior.professionID == Player.profession) then
 
-	wt_debug("Initalizing profession routine for Warrior")
-	
-	-- GUI Elements
-	if ( Settings.GW2MINION.gWarSwapWeapons == nil ) then
-		Settings.GW2MINION.gWarSwapWeapons = "0"
-	end
-	if ( Settings.GW2MINION.gWarUseBurst == nil ) then
-		Settings.GW2MINION.gWarUseBurst = "0"
-	end
-	if ( Settings.GW2MINION.gWarSK7 == nil ) then
-		Settings.GW2MINION.gWarSK7 = "0"
-	end
-	if ( Settings.GW2MINION.gWarSK8 == nil ) then
-		Settings.GW2MINION.gWarSK8 = "0"
-	end
-	if ( Settings.GW2MINION.gWarSK9 == nil ) then
-		Settings.GW2MINION.gWarSK9 = "0"
-	end
-	if ( Settings.GW2MINION.gWarSK10 == nil ) then
-		Settings.GW2MINION.gWarSK10 = "0"
-	end
-	RegisterEventHandler("Module.Initalize",wt_profession_warrior.HandleInit)
-	RegisterEventHandler("GUI.Update",wt_profession_warrior.GUIVarUpdate)
-	
-				
-	-- Our C & E´s for Warrior combat:
-	-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
-	-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
-	-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua		
-		
-	local ke_Attack_default = wt_kelement:create("Attack",wt_profession_warrior.c_attack_default,wt_profession_warrior.e_attack_default, 45 )
-	wt_core_state_combat:add(ke_Attack_default)
-		
-
-	-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
-	wt_global_information.Currentprofession = wt_profession_warrior
-	wt_global_information.AttackRange = 130
-end
------------------------------------------------------------------------------------
-
-
+RegisterEventHandler("Module.Initalize",wt_profession_warrior.HandleInit)
+RegisterEventHandler("GUI.Update",wt_profession_warrior.GUIVarUpdate)
 
 
 

@@ -1,7 +1,5 @@
 -- Load routine only if player is a Guardian
-if ( 1 ~= Player.profession ) then
-	return
-end
+
 -- The following values have to get set ALWAYS for ALL professions!!
 wt_profession_guardian  =  inheritsFrom( nil )
 wt_profession_guardian.professionID = 1 -- needs to be set
@@ -319,77 +317,74 @@ function wt_profession_guardian.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_guardian:HandleInit() 	
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gGuardSwapWeapons","Guardian-Settings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F1","gGuardF1","Guardian-Settings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F2","gGuardF2","Guardian-Settings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F3","gGuardF3","Guardian-Settings");
-	GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Guardian-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gGuardSK7","Guardian-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gGuardSK8","Guardian-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gGuardSK9","Guardian-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gGuardSK10","Guardian-Settings");
-	GUI_NewSeperator(wt_global_information.MainWindow.Name);
-	
-	
-	gGuardSwapWeapons = Settings.GW2MINION.gGuardSwapWeapons
-	gGuardF1 = Settings.GW2MINION.gGuardF1
-	gGuardF2 = Settings.GW2MINION.gGuardF2
-	gGuardF3 = Settings.GW2MINION.gGuardF3
-	gGuardSK7 = Settings.GW2MINION.gGuardSK7
-	gGuardSK8 = Settings.GW2MINION.gGuardSK8
-	gGuardSK9 = Settings.GW2MINION.gGuardSK9
-	gGuardSK10 = Settings.GW2MINION.gGuardSK10
-
-end
--- We need to check if the players current profession is ours to only add our profession specific routines
-if ( wt_profession_guardian.professionID > -1 and wt_profession_guardian.professionID == Player.profession) then
-
-	wt_debug("Initalizing profession routine for Guardian")
-	
-	-- GUI Elements
-	if ( Settings.GW2MINION.gGuardSwapWeapons == nil ) then
-		Settings.GW2MINION.gGuardSwapWeapons = "0"
-	end
-	if ( Settings.GW2MINION.gGuardF1 == nil ) then
-		Settings.GW2MINION.gGuardF1 = "0"
-	end
-	if ( Settings.GW2MINION.gGuardF2 == nil ) then
-		Settings.GW2MINION.gGuardF2 = "0"
-	end
-	if ( Settings.GW2MINION.gGuardF3 == nil ) then
-		Settings.GW2MINION.gGuardF3 = "0"
-	end
-	if ( Settings.GW2MINION.gGuardSK7 == nil ) then
-		Settings.GW2MINION.gGuardSK7 = "0"
-	end
-	if ( Settings.GW2MINION.gGuardSK8 == nil ) then
-		Settings.GW2MINION.gGuardSK8 = "0"
-	end
-	if ( Settings.GW2MINION.gGuardSK9 == nil ) then
-		Settings.GW2MINION.gGuardSK9 = "0"
-	end
-	if ( Settings.GW2MINION.gGuardSK10 == nil ) then
-		Settings.GW2MINION.gGuardSK10 = "0"
-	end
-	RegisterEventHandler("Module.Initalize",wt_profession_guardian.HandleInit)
-	RegisterEventHandler("GUI.Update",wt_profession_guardian.GUIVarUpdate)
-	
-				
-	-- Our C & E´s for Warrior combat:
-	-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
-	-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
-	-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua		
+	if ( wt_profession_guardian.professionID > -1 and wt_profession_guardian.professionID == Player.profession) then
+		wt_debug("Initalizing profession routine for Guardian")
 		
-	local ke_Attack_default = wt_kelement:create("Attack",wt_profession_guardian.c_attack_default,wt_profession_guardian.e_attack_default, 45 )
-	wt_core_state_combat:add(ke_Attack_default)
+		-- GUI Elements
+		if ( Settings.GW2MINION.gGuardSwapWeapons == nil ) then
+			Settings.GW2MINION.gGuardSwapWeapons = "1"
+		end
+		if ( Settings.GW2MINION.gGuardF1 == nil ) then
+			Settings.GW2MINION.gGuardF1 = "75"
+		end
+		if ( Settings.GW2MINION.gGuardF2 == nil ) then
+			Settings.GW2MINION.gGuardF2 = "75"
+		end
+		if ( Settings.GW2MINION.gGuardF3 == nil ) then
+			Settings.GW2MINION.gGuardF3 = "50"
+		end
+		if ( Settings.GW2MINION.gGuardSK7 == nil ) then
+			Settings.GW2MINION.gGuardSK7 = "80"
+		end
+		if ( Settings.GW2MINION.gGuardSK8 == nil ) then
+			Settings.GW2MINION.gGuardSK8 = "80"
+		end
+		if ( Settings.GW2MINION.gGuardSK9 == nil ) then
+			Settings.GW2MINION.gGuardSK9 = "80"
+		end
+		if ( Settings.GW2MINION.gGuardSK10 == nil ) then
+			Settings.GW2MINION.gGuardSK10 = "75"
+		end
 		
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gGuardSwapWeapons","Guardian-Settings");
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F1","gGuardF1","Guardian-Settings");
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F2","gGuardF2","Guardian-Settings");
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F3","gGuardF3","Guardian-Settings");
+		GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Guardian-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gGuardSK7","Guardian-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gGuardSK8","Guardian-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gGuardSK9","Guardian-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gGuardSK10","Guardian-Settings");
+		GUI_NewSeperator(wt_global_information.MainWindow.Name);
+		
+		
+		gGuardSwapWeapons = Settings.GW2MINION.gGuardSwapWeapons
+		gGuardF1 = Settings.GW2MINION.gGuardF1
+		gGuardF2 = Settings.GW2MINION.gGuardF2
+		gGuardF3 = Settings.GW2MINION.gGuardF3
+		gGuardSK7 = Settings.GW2MINION.gGuardSK7
+		gGuardSK8 = Settings.GW2MINION.gGuardSK8
+		gGuardSK9 = Settings.GW2MINION.gGuardSK9
+		gGuardSK10 = Settings.GW2MINION.gGuardSK10
+		
+					
+		-- Our C & E´s for Warrior combat:
+		-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
+		-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
+		-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua		
+			
+		local ke_Attack_default = wt_kelement:create("Attack",wt_profession_guardian.c_attack_default,wt_profession_guardian.e_attack_default, 45 )
+		wt_core_state_combat:add(ke_Attack_default)
+			
 
-	-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
-	wt_global_information.Currentprofession = wt_profession_guardian
-	wt_global_information.AttackRange = 120
+		-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
+		wt_global_information.Currentprofession = wt_profession_guardian
+		wt_global_information.AttackRange = 120
+	end
 end
------------------------------------------------------------------------------------
 
+RegisterEventHandler("Module.Initalize",wt_profession_guardian.HandleInit)
+RegisterEventHandler("GUI.Update",wt_profession_guardian.GUIVarUpdate)
 
 
 

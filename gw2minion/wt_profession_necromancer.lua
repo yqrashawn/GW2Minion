@@ -1,9 +1,5 @@
 -- This file contains Necromancer specific combat routines
 
--- load routine only if player is a Necromancer
-if ( 8 ~= Player.profession ) then
-	return
-end
 -- The following values have to get set ALWAYS for ALL professions!!
 wt_profession_necromancer  =  inheritsFrom( nil )
 wt_profession_necromancer.professionID = 8 -- needs to be set
@@ -377,78 +373,74 @@ function wt_profession_necromancer.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_necromancer:HandleInit() 	
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gNecroSwapWeapons","Necromancer-Settings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUsePets","gAutoUsePets","Necromancer-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gNecSK7","Necromancer-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gNecSK8","Necromancer-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gNecSK9","Necromancer-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gNecSK10","Necromancer-Settings");	
-	GUI_NewSeperator(wt_global_information.MainWindow.Name);
-	
-	
-	gNecroSwapWeapons = Settings.GW2MINION.gNecroSwapWeapons
-	gAutoUsePets = Settings.GW2MINION.gAutoUsePets
-	gNecSK7 = Settings.GW2MINION.gNecSK7
-	gNecSK8 = Settings.GW2MINION.gNecSK8
-	gNecSK9 = Settings.GW2MINION.gNecSK9
-	gNecSK10 = Settings.GW2MINION.gNecSK10
-end
--- We need to check if the players current profession is ours to only add our profession specific routines
-if ( wt_profession_necromancer.professionID > -1 and wt_profession_necromancer.professionID == Player.profession) then
-
-	wt_debug("Initalizing profession routine for Necromancer")
-	
-	-- GUI Elements
-	if ( Settings.GW2MINION.gNecroSwapWeapons == nil ) then
-		Settings.GW2MINION.gNecroSwapWeapons = "0"
-	end
-	if ( Settings.GW2MINION.gAutoUsePets == nil ) then
-		Settings.GW2MINION.gAutoUsePets = "1"
-	end
-		if ( Settings.GW2MINION.gNecSK7 == nil ) then
-		Settings.GW2MINION.gNecSK7 = "0"
-	end
-	if ( Settings.GW2MINION.gNecSK8 == nil ) then
-		Settings.GW2MINION.gNecSK8 = "0"
-	end
-	if ( Settings.GW2MINION.gNecSK9 == nil ) then
-		Settings.GW2MINION.gNecSK9 = "0"
-	end
-	if ( Settings.GW2MINION.gNecSK10 == nil ) then
-		Settings.GW2MINION.gNecSK10 = "0"
-	end
-	
-	RegisterEventHandler("Module.Initalize",wt_profession_necromancer.HandleInit)
-	RegisterEventHandler("GUI.Update",wt_profession_necromancer.GUIVarUpdate)
-	
+	if ( wt_profession_necromancer.professionID == Player.profession) then
+		wt_debug("Initalizing profession routine for Necromancer")
+		
+		-- GUI Elements
+		if ( Settings.GW2MINION.gNecroSwapWeapons == nil ) then
+			Settings.GW2MINION.gNecroSwapWeapons = "0"
+		end
+		if ( Settings.GW2MINION.gAutoUsePets == nil ) then
+			Settings.GW2MINION.gAutoUsePets = "1"
+		end
+			if ( Settings.GW2MINION.gNecSK7 == nil ) then
+			Settings.GW2MINION.gNecSK7 = "0"
+		end
+		if ( Settings.GW2MINION.gNecSK8 == nil ) then
+			Settings.GW2MINION.gNecSK8 = "0"
+		end
+		if ( Settings.GW2MINION.gNecSK9 == nil ) then
+			Settings.GW2MINION.gNecSK9 = "0"
+		end
+		if ( Settings.GW2MINION.gNecSK10 == nil ) then
+			Settings.GW2MINION.gNecSK10 = "0"
+		end
+		
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gNecroSwapWeapons","Necromancer-Settings");
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUsePets","gAutoUsePets","Necromancer-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gNecSK7","Necromancer-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gNecSK8","Necromancer-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gNecSK9","Necromancer-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gNecSK10","Necromancer-Settings");	
+		GUI_NewSeperator(wt_global_information.MainWindow.Name);
+		
+		
+		gNecroSwapWeapons = Settings.GW2MINION.gNecroSwapWeapons
+		gAutoUsePets = Settings.GW2MINION.gAutoUsePets
+		gNecSK7 = Settings.GW2MINION.gNecSK7
+		gNecSK8 = Settings.GW2MINION.gNecSK8
+		gNecSK9 = Settings.GW2MINION.gNecSK9
+		gNecSK10 = Settings.GW2MINION.gNecSK10
 				
-	-- Our C & E´s for Necromancer combat:
-	-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
-	-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
-	-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua		
+					
+		-- Our C & E´s for Necromancer combat:
+		-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
+		-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
+		-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua		
+			
+		local ke_Use_Slot_skills = wt_kelement:create("UseSlotSkills",wt_profession_necromancer.c_use_slot_skills,wt_profession_necromancer.e_use_slot_skills, 55 )
+		wt_core_state_combat:add(ke_Use_Slot_skills)
 		
-	local ke_Use_Slot_skills = wt_kelement:create("UseSlotSkills",wt_profession_necromancer.c_use_slot_skills,wt_profession_necromancer.e_use_slot_skills, 55 )
-	wt_core_state_combat:add(ke_Use_Slot_skills)
-	
-	local ke_summonPets = wt_kelement:create("Summon Pets",wt_profession_necromancer.c_pets,wt_profession_necromancer.e_pets, 50 )
-	wt_core_state_combat:add(ke_summonPets)
+		local ke_summonPets = wt_kelement:create("Summon Pets",wt_profession_necromancer.c_pets,wt_profession_necromancer.e_pets, 50 )
+		wt_core_state_combat:add(ke_summonPets)
+			
+		local ke_Attack_default = wt_kelement:create("Attack",wt_profession_necromancer.c_attack_default,wt_profession_necromancer.e_attack_default, 45 )
+		wt_core_state_combat:add(ke_Attack_default)
+			
+			
+		-- C & E`s for Idle state	
+		local ke_checkPets = wt_kelement:create("Summon Pets",wt_profession_necromancer.c_pets,wt_profession_necromancer.e_pets, 95 )
+		wt_core_state_idle:add(ke_checkPets)
+		wt_core_state_minion:add(ke_checkPets)
 		
-	local ke_Attack_default = wt_kelement:create("Attack",wt_profession_necromancer.c_attack_default,wt_profession_necromancer.e_attack_default, 45 )
-	wt_core_state_combat:add(ke_Attack_default)
-		
-		
-	-- C & E`s for Idle state	
-	local ke_checkPets = wt_kelement:create("Summon Pets",wt_profession_necromancer.c_pets,wt_profession_necromancer.e_pets, 95 )
-	wt_core_state_idle:add(ke_checkPets)
-	wt_core_state_minion:add(ke_checkPets)
-	
-	
-	
-		
-	-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
-	wt_global_information.Currentprofession = wt_profession_necromancer
-	wt_global_information.AttackRange = 450
+					
+		-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
+		wt_global_information.Currentprofession = wt_profession_necromancer
+		wt_global_information.AttackRange = 450
+	end
 end
+RegisterEventHandler("Module.Initalize",wt_profession_necromancer.HandleInit)
+RegisterEventHandler("GUI.Update",wt_profession_necromancer.GUIVarUpdate)
 
 
 

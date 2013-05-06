@@ -1,9 +1,5 @@
 -- This file contains Elementalist specific combat routines
 
--- load routine only if player is a Elementalist
-if ( 6 ~= Player.profession ) then
-	return
-end
 -- The following values have to get set ALWAYS for ALL professions!!
 wt_profession_elementalist  =  inheritsFrom( nil )
 wt_profession_elementalist.professionID = 6 -- needs to be set
@@ -501,64 +497,61 @@ function wt_profession_elementalist.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_elementalist:HandleInit() 	
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapAttunements","gEleSwap","Elementalist-Settings");
-	GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Elementalist-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gEleSK7","Elementalist-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gEleSK8","Elementalist-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gEleSK9","Elementalist-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gEleSK10","Elementalist-Settings");
-	GUI_NewSeperator(wt_global_information.MainWindow.Name);
-	
-	
-	gEleSwap = Settings.GW2MINION.gEleSwap
-	gEleSK7 = Settings.GW2MINION.gEleSK7
-	gEleSK8 = Settings.GW2MINION.gEleSK8
-	gEleSK9 = Settings.GW2MINION.gEleSK9
-	gEleSK10 = Settings.GW2MINION.gEleSK10
-	
-end
--- We need to check if the players current profession is ours to only add our profession specific routines
-if ( wt_profession_elementalist.professionID > -1 and wt_profession_elementalist.professionID == Player.profession) then
+	if ( wt_profession_elementalist.professionID == Player.profession) then
 
-	wt_debug("Initalizing profession routine for Elementalist")
-	
-	-- GUI Elements
-	if ( Settings.GW2MINION.gEleSwap == nil ) then
-		Settings.GW2MINION.gEleSwap = "0"
-	end
-	if ( Settings.GW2MINION.gEleSK7 == nil ) then
-		Settings.GW2MINION.gEleSK7 = "0"
-	end
-	if ( Settings.GW2MINION.gEleSK8 == nil ) then
-		Settings.GW2MINION.gEleSK8 = "0"
-	end
-	if ( Settings.GW2MINION.gEleSK9 == nil ) then
-		Settings.GW2MINION.gEleSK9 = "0"
-	end
-	if ( Settings.GW2MINION.gEleSK10 == nil ) then
-		Settings.GW2MINION.gEleSK10 = "0"
-	end
-	RegisterEventHandler("Module.Initalize",wt_profession_elementalist.HandleInit)
-	RegisterEventHandler("GUI.Update",wt_profession_elementalist.GUIVarUpdate)
-	
-	
-	-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
-	-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
-	-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua
-	
-	
-	-- Our C & E´s for Elementalist combat:
+		wt_debug("Initalizing profession routine for Elementalist")
 		
-	local ke_Attack_default = wt_kelement:create("Attack",wt_profession_elementalist.c_attack_default,wt_profession_elementalist.e_attack_default, 45 )
-		wt_core_state_combat:add(ke_Attack_default)
+		-- GUI Elements
+		if ( Settings.GW2MINION.gEleSwap == nil ) then
+			Settings.GW2MINION.gEleSwap = "80"
+		end
+		if ( Settings.GW2MINION.gEleSK7 == nil ) then
+			Settings.GW2MINION.gEleSK7 = "80"
+		end
+		if ( Settings.GW2MINION.gEleSK8 == nil ) then
+			Settings.GW2MINION.gEleSK8 = "80"
+		end
+		if ( Settings.GW2MINION.gEleSK9 == nil ) then
+			Settings.GW2MINION.gEleSK9 = "80"
+		end
+		if ( Settings.GW2MINION.gEleSK10 == nil ) then
+			Settings.GW2MINION.gEleSK10 = "75"
+		end
 		
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapAttunements","gEleSwap","Elementalist-Settings");
+		GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Elementalist-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gEleSK7","Elementalist-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gEleSK8","Elementalist-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gEleSK9","Elementalist-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gEleSK10","Elementalist-Settings");
+		GUI_NewSeperator(wt_global_information.MainWindow.Name);
+		
+		
+		gEleSwap = Settings.GW2MINION.gEleSwap
+		gEleSK7 = Settings.GW2MINION.gEleSK7
+		gEleSK8 = Settings.GW2MINION.gEleSK8
+		gEleSK9 = Settings.GW2MINION.gEleSK9
+		gEleSK10 = Settings.GW2MINION.gEleSK10
+		
+		-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
+		-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
+		-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua
+		
+		
+		-- Our C & E´s for Elementalist combat:
+			
+		local ke_Attack_default = wt_kelement:create("Attack",wt_profession_elementalist.c_attack_default,wt_profession_elementalist.e_attack_default, 45 )
+			wt_core_state_combat:add(ke_Attack_default)
+			
 
-	-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
-	wt_global_information.Currentprofession = wt_profession_elementalist
-	wt_global_information.AttackRange = 900
+		-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
+		wt_global_information.Currentprofession = wt_profession_elementalist
+		wt_global_information.AttackRange = 900
+	end	
 end
------------------------------------------------------------------------------------
 
+RegisterEventHandler("Module.Initalize",wt_profession_elementalist.HandleInit)
+RegisterEventHandler("GUI.Update",wt_profession_elementalist.GUIVarUpdate)
 
 
 

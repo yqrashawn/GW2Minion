@@ -607,7 +607,7 @@ function e_revive_players:execute()
 			if ( ((T.healthstate == GW2.HEALTHSTATE.Defeated and not Player.inCombat) or (T.healthstate == GW2.HEALTHSTATE.Downed)) and T.onmesh ) then		
 				if ( T.distance > 110 ) then
 					local TPOS = T.pos
-					Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 25 )
+					Player:MoveTo( TPOS.x, TPOS.y, TPOS.z , 50 )
 				elseif( T.distance <= 110 ) then
 					Player:StopMoving()
 					if (Player:GetTarget() ~= Player:GetInteractableTarget() or Player:GetInteractableTarget() ~= c_revivep.ID) then

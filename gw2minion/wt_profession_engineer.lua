@@ -1,9 +1,6 @@
 -- This file contains Engineer specific combat routines
 
--- load routine only if player is a Engineer
-if ( 3 ~= Player.profession ) then
-	return
-end
+
 -- The following values have to get set ALWAYS for ALL professions!!
 wt_profession_engineer  =  inheritsFrom( nil )
 wt_profession_engineer.professionID = 3 -- needs to be set
@@ -360,64 +357,57 @@ function wt_profession_engineer.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_engineer:HandleInit() 	
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapToKits","gEngSwapWeapons","Engineer-Settings");
-	GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Engineer-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gEngSK7","Engineer-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gEngSK8","Engineer-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gEngSK9","Engineer-Settings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gEngSK10","Engineer-Settings");
-	GUI_NewSeperator(wt_global_information.MainWindow.Name);
-	
-	gEngSwapWeapons = Settings.GW2MINION.gEngSwapWeapons
-	gEngSK7 = Settings.GW2MINION.gEngSK7
-	gEngSK8 = Settings.GW2MINION.gEngSK8
-	gEngSK9 = Settings.GW2MINION.gEngSK9
-	gEngSK10 = Settings.GW2MINION.gEngSK10
-	
-end
--- We need to check if the players current profession is ours to only add our profession specific routines
-if ( wt_profession_engineer.professionID > -1 and wt_profession_engineer.professionID == Player.profession) then
-
-	wt_debug("Initalizing profession routine for Engineer")
-	
-	-- GUI Elements
-	if ( Settings.GW2MINION.gEngSwapWeapons == nil ) then
-		Settings.GW2MINION.gEngSwapWeapons = "0"
-	end
-	if ( Settings.GW2MINION.gEngSK7 == nil ) then
-		Settings.GW2MINION.gEngSK7 = "0"
-	end
-	if ( Settings.GW2MINION.gEngSK8 == nil ) then
-		Settings.GW2MINION.gEngSK8 = "0"
-	end
-	if ( Settings.GW2MINION.gEngSK9 == nil ) then
-		Settings.GW2MINION.gEngSK9 = "0"
-	end
-	if ( Settings.GW2MINION.gEngSK10 == nil ) then
-		Settings.GW2MINION.gEngSK10 = "0"
-	end
-	RegisterEventHandler("Module.Initalize",wt_profession_engineer.HandleInit)
-	RegisterEventHandler("GUI.Update",wt_profession_engineer.GUIVarUpdate)
-	
-				
-	-- Our C & E´s for Engineer combat:
-	-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
-	-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
-	-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua		
+	if ( wt_profession_engineer.professionID == Player.profession) then
+		wt_debug("Initalizing profession routine for Engineer")
 		
-	local ke_Attack_default = wt_kelement:create("Attack",wt_profession_engineer.c_attack_default,wt_profession_engineer.e_attack_default, 45 )
-	wt_core_state_combat:add(ke_Attack_default)
+		-- GUI Elements
+		if ( Settings.GW2MINION.gEngSwapWeapons == nil ) then
+			Settings.GW2MINION.gEngSwapWeapons = "0"
+		end
+		if ( Settings.GW2MINION.gEngSK7 == nil ) then
+			Settings.GW2MINION.gEngSK7 = "0"
+		end
+		if ( Settings.GW2MINION.gEngSK8 == nil ) then
+			Settings.GW2MINION.gEngSK8 = "0"
+		end
+		if ( Settings.GW2MINION.gEngSK9 == nil ) then
+			Settings.GW2MINION.gEngSK9 = "0"
+		end
+		if ( Settings.GW2MINION.gEngSK10 == nil ) then
+			Settings.GW2MINION.gEngSK10 = "0"
+		end
 		
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapToKits","gEngSwapWeapons","Engineer-Settings");
+		GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Engineer-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gEngSK7","Engineer-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gEngSK8","Engineer-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gEngSK9","Engineer-Settings");
+		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gEngSK10","Engineer-Settings");
+		GUI_NewSeperator(wt_global_information.MainWindow.Name);
+		
+		gEngSwapWeapons = Settings.GW2MINION.gEngSwapWeapons
+		gEngSK7 = Settings.GW2MINION.gEngSK7
+		gEngSK8 = Settings.GW2MINION.gEngSK8
+		gEngSK9 = Settings.GW2MINION.gEngSK9
+		gEngSK10 = Settings.GW2MINION.gEngSK10
+					
+		-- Our C & E´s for Engineer combat:
+		-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
+		-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua
+		-- Combat Over Check 		- Priority 500      --> Can change state to wt_core_state_idle.lua		
+			
+		local ke_Attack_default = wt_kelement:create("Attack",wt_profession_engineer.c_attack_default,wt_profession_engineer.e_attack_default, 45 )
+		wt_core_state_combat:add(ke_Attack_default)
+			
 
-	-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
-	wt_global_information.Currentprofession = wt_profession_engineer
-	wt_global_information.AttackRange = 130
+		-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
+		wt_global_information.Currentprofession = wt_profession_engineer
+		wt_global_information.AttackRange = 130
+	end	
 end
------------------------------------------------------------------------------------
 
-
-
-
+RegisterEventHandler("Module.Initalize",wt_profession_engineer.HandleInit)
+RegisterEventHandler("GUI.Update",wt_profession_engineer.GUIVarUpdate)
 
 
 
