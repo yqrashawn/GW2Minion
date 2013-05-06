@@ -227,7 +227,7 @@ function wt_profession_thief.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_thief:HandleInit() 	
-	if ( wt_profession_thief.professionID == Player.profession) then
+	if ( Player.profession ~= nil and Player.profession == wt_profession_thief.professionID) then
 		wt_debug("Initalizing profession routine for Thief")
 		
 		-- GUI Elements
@@ -253,7 +253,6 @@ function wt_profession_thief:HandleInit()
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gThiefSK8","Thief-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gThiefSK9","Thief-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gThiefSK10","Thief-Settings");
-		GUI_NewSeperator(wt_global_information.MainWindow.Name);
 		
 		
 		gThiefSwapWeapons = Settings.GW2MINION.gThiefSwapWeapons

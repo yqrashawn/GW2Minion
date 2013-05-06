@@ -317,7 +317,7 @@ function wt_profession_guardian.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_guardian:HandleInit() 	
-	if ( wt_profession_guardian.professionID > -1 and wt_profession_guardian.professionID == Player.profession) then
+	if ( Player.profession ~= nil and Player.profession == wt_profession_guardian.professionID) then
 		wt_debug("Initalizing profession routine for Guardian")
 		
 		-- GUI Elements
@@ -355,7 +355,6 @@ function wt_profession_guardian:HandleInit()
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gGuardSK8","Guardian-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gGuardSK9","Guardian-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gGuardSK10","Guardian-Settings");
-		GUI_NewSeperator(wt_global_information.MainWindow.Name);
 		
 		
 		gGuardSwapWeapons = Settings.GW2MINION.gGuardSwapWeapons

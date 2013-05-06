@@ -336,7 +336,7 @@ function wt_profession_warrior.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_warrior:HandleInit() 	
-	if ( wt_profession_warrior.professionID == Player.profession) then
+	if ( Player.profession ~= nil and Player.profession == wt_profession_warrior.professionID) then
 		wt_debug("Initalizing profession routine for Warrior")
 		
 		-- GUI Elements
@@ -366,7 +366,6 @@ function wt_profession_warrior:HandleInit()
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gWarSK8","Warrior-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gWarSK9","Warrior-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gWarSK10","Warrior-Settings");
-		GUI_NewSeperator(wt_global_information.MainWindow.Name);
 		
 		
 		gWarSwapWeapons = Settings.GW2MINION.gWarSwapWeapons

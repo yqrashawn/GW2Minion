@@ -357,7 +357,7 @@ function wt_profession_engineer.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_engineer:HandleInit() 	
-	if ( wt_profession_engineer.professionID == Player.profession) then
+	if ( Player.profession ~= nil and Player.profession == wt_profession_engineer.professionID ) then
 		wt_debug("Initalizing profession routine for Engineer")
 		
 		-- GUI Elements
@@ -383,7 +383,6 @@ function wt_profession_engineer:HandleInit()
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gEngSK8","Engineer-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gEngSK9","Engineer-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gEngSK10","Engineer-Settings");
-		GUI_NewSeperator(wt_global_information.MainWindow.Name);
 		
 		gEngSwapWeapons = Settings.GW2MINION.gEngSwapWeapons
 		gEngSK7 = Settings.GW2MINION.gEngSK7

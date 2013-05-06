@@ -373,27 +373,27 @@ function wt_profession_necromancer.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_necromancer:HandleInit() 	
-	if ( wt_profession_necromancer.professionID == Player.profession) then
+	if ( Player.profession ~= nil and Player.profession == wt_profession_necromancer.professionID) then
 		wt_debug("Initalizing profession routine for Necromancer")
 		
 		-- GUI Elements
 		if ( Settings.GW2MINION.gNecroSwapWeapons == nil ) then
-			Settings.GW2MINION.gNecroSwapWeapons = "0"
+			Settings.GW2MINION.gNecroSwapWeapons = "1"
 		end
 		if ( Settings.GW2MINION.gAutoUsePets == nil ) then
 			Settings.GW2MINION.gAutoUsePets = "1"
 		end
 			if ( Settings.GW2MINION.gNecSK7 == nil ) then
-			Settings.GW2MINION.gNecSK7 = "0"
+			Settings.GW2MINION.gNecSK7 = "80"
 		end
 		if ( Settings.GW2MINION.gNecSK8 == nil ) then
-			Settings.GW2MINION.gNecSK8 = "0"
+			Settings.GW2MINION.gNecSK8 = "80"
 		end
 		if ( Settings.GW2MINION.gNecSK9 == nil ) then
-			Settings.GW2MINION.gNecSK9 = "0"
+			Settings.GW2MINION.gNecSK9 = "80"
 		end
 		if ( Settings.GW2MINION.gNecSK10 == nil ) then
-			Settings.GW2MINION.gNecSK10 = "0"
+			Settings.GW2MINION.gNecSK10 = "75"
 		end
 		
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gNecroSwapWeapons","Necromancer-Settings");
@@ -402,7 +402,6 @@ function wt_profession_necromancer:HandleInit()
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gNecSK8","Necromancer-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gNecSK9","Necromancer-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gNecSK10","Necromancer-Settings");	
-		GUI_NewSeperator(wt_global_information.MainWindow.Name);
 		
 		
 		gNecroSwapWeapons = Settings.GW2MINION.gNecroSwapWeapons

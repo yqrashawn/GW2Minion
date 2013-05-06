@@ -263,7 +263,7 @@ function wt_profession_mesmer.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_mesmer:HandleInit() 	
-	if ( wt_profession_mesmer.professionID == Player.profession) then
+	if ( Player.profession ~= nil and Player.profession == wt_profession_mesmer.professionID ) then
 		wt_debug("Initalizing profession routine for Mesmer")
 				
 		-- GUI Elements
@@ -293,7 +293,6 @@ function wt_profession_mesmer:HandleInit()
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gMesSK8","Mesmer-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gMesSK9","Mesmer-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gMesSK10","Mesmer-Settings");
-		GUI_NewSeperator(wt_global_information.MainWindow.Name);
 		
 		
 		gMesSwapWeapons = Settings.GW2MINION.gMesSwapWeapons

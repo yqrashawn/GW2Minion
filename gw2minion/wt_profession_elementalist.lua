@@ -497,7 +497,7 @@ function wt_profession_elementalist.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_elementalist:HandleInit() 	
-	if ( wt_profession_elementalist.professionID == Player.profession) then
+	if ( Player.profession ~= nil and Player.profession == wt_profession_elementalist.professionID) then
 
 		wt_debug("Initalizing profession routine for Elementalist")
 		
@@ -524,7 +524,6 @@ function wt_profession_elementalist:HandleInit()
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gEleSK8","Elementalist-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gEleSK9","Elementalist-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gEleSK10","Elementalist-Settings");
-		GUI_NewSeperator(wt_global_information.MainWindow.Name);
 		
 		
 		gEleSwap = Settings.GW2MINION.gEleSwap

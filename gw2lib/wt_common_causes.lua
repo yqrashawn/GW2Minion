@@ -476,13 +476,17 @@ function c_revivep:evaluate()
 	local party = Player:GetPartyMembers()
 	if (party ~= nil ) then
 		local index, player  = next( party )
-		while ( index ~= nil and player ~= nil ) do			
-			if (player.distance < 4000 and ((player.healthstate == GW2.HEALTHSTATE.Defeated and not Player.inCombat) or (player.healthstate == GW2.HEALTHSTATE.Downed)) and player.onmesh) then
-				c_revivep.ID = index
-				if ( wt_core_controller.state ~= nil and wt_core_controller.state.name == "Combat" ) then
-					wt_core_state_combat.CurrentTarget = 0 -- Leave combat state or it will never work :)
+		while ( index ~= nil and player ~= nil ) do	
+			--wt_debug("PARTY MEMBER CHECK: "..tostring(index).. "state: "..tostring(player.healthstate).." dist : "..tostring(player.distance) .. " M: "..tostring(player.onmesh))
+			if (player.distance < 4000 and ((player.healthstate == GW2.HEALTHSTATE.Defeated and not Player.inCombat) or (player.healthstate == GW2.HEALTHSTATE.Downed)) and player.onmesh ) then
+				if (Player.health.percent > 35) then
+					c_revivep.ID = index
+					if ( wt_core_controller.state ~= nil and wt_core_controller.state.name == "Combat" ) then
+						wt_debug("Leaving combat to rezz partymember...")
+						wt_core_state_combat.CurrentTarget = 0 -- Leave combat state or it will never work :)
+					end				
+					return true
 				end
-				return true
 			end
 			index, player  = next( party,index )
 		end		

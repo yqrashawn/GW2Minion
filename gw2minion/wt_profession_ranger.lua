@@ -356,7 +356,7 @@ function wt_profession_ranger.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_profession_ranger:HandleInit() 	
-	if ( wt_profession_ranger.professionID == Player.profession) then
+	if (Player.profession ~= nil and Player.profession == wt_profession_ranger.professionID ) then
 		wt_debug("Initalizing profession routine for Ranger")
 		
 		-- GUI Elements
@@ -382,7 +382,6 @@ function wt_profession_ranger:HandleInit()
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gRanSK8","Ranger-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gRanSK9","Ranger-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gRanSK10","Ranger-Settings");
-		GUI_NewSeperator(wt_global_information.MainWindow.Name);
 		
 		
 		gRanSwapWeapons = Settings.GW2MINION.gRanSwapWeapons
@@ -406,8 +405,7 @@ function wt_profession_ranger:HandleInit()
 		-- We need to set the Currentprofession to our profession , so that other parts of the framework can use it.
 		wt_global_information.Currentprofession = wt_profession_ranger
 		wt_global_information.AttackRange = 130
-	end
-	
+	end	
 end
 
 RegisterEventHandler("Module.Initalize",wt_profession_ranger.HandleInit)
