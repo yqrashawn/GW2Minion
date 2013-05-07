@@ -75,7 +75,7 @@ function wt_core_unstuck:CheckStuck()
 					wt_core_unstuck.State.IDLE.ticks = 0
 					wt_core_unstuck.State[state.name].stats = wt_core_unstuck.State[state.name].stats + 1
 					if (gDoUnstuck == "1") then
-						function wt_core_unstuck:addTeleportTask(state.name)
+						wt_core_unstuck:addTeleportTask(state.name)
 					end
 					break
 				end
