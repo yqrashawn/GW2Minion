@@ -65,7 +65,7 @@ function e_combat_over:execute()
 	Player:ClearTarget()
 	wt_core_controller.requestStateChange( wt_core_state_idle )
 	-- perform a random pause if players are nearby and there is no local aggro
-	if 	(gDoPause == "1" and TableSize(CharacterList("players,maxdistance=2500,los")) > 0) and 
+	if 	(TableSize(CharacterList("players,maxdistance=2500,los")) > 0) and 
 		(TableSize(CharacterList( "nearest,los,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose)) == 0) 
 	then
 		wt_core_taskmanager:addPauseTask(0,1000)
