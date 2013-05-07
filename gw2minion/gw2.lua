@@ -135,7 +135,6 @@ end
 if ( Settings.GW2MINION.gPlayerRevive == nil ) then
 	Settings.GW2MINION.gPlayerRevive = "1"
 end
-
 if ( Settings.GW2MINION.gEventTimeout == nil ) then
 	Settings.GW2MINION.gEventTimeout = "600"
 end
@@ -145,9 +144,6 @@ end
 if ( Settings.GW2MINION.gPrioritizeEvents == nil ) then
 	Settings.GW2MINION.gPrioritizeEvents = "0"
 end
---if ( Settings.GW2MINION.gDoWaypoint == nil ) then
---	Settings.GW2MINION.gDoWaypoint = "0"
---end
 
 function wt_global_information.OnUpdate( event, tickcount )
 	wt_global_information.Now = tickcount
@@ -215,7 +211,7 @@ function gw2minion.HandleInit()
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Events","gdoEvents","Settings");	
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Ignore Marker Level Cap","gIgnoreMarkerCap","Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Repair Equippment","gEnableRepair","Settings");
-	--GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Use WP Vendor/Repair", "gUseWaypoints","Settings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Use WP Vendor/Repair", "gUseWaypoints","AdvancedSettings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Max ItemSell Rarity","gMaxItemSellRarity","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Weapons","gVendor_Weapons","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Armor","gVendor_Armor","VendorSettings")
@@ -242,7 +238,6 @@ function gw2minion.HandleInit()
 	GUI_NewField(wt_global_information.MainWindow.Name,"Event Timeout", "gEventTimeout","AdvancedSettings");
 	GUI_NewButton(wt_global_information.MainWindow.Name,"Blacklist Current Event","wt_core_taskmanager.blacklistCurrentEvent","AdvancedSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Random Pause", "gDoPause","AdvancedSettings");
-	--GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Use Waypoints (SOLO)", "gDoWaypoint","AdvancedSettings");
 	gGW2MinionTask = "            "
 	
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,"BotStatus");
@@ -286,7 +281,6 @@ function gw2minion.HandleInit()
 	gEventTimeout = Settings.GW2MINION.gEventTimeout
 	gDoPause = Settings.GW2MINION.gDoPause
 	gPrioritizeEvents = Settings.GW2MINION.gPrioritizeEvents
-	--gDoWaypoint = Settings.GW2MINION.gDoWaypoint
 	
 	wt_debug("GUI Setup done")
 	wt_core_controller.requestStateChange(wt_core_state_idle)
@@ -331,7 +325,6 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "gEventTimeout" or
 				k == "gDoPause" or
 				k == "gPrioritizeEvents" or
-				--k == "gDoWaypoint" or
 				k == "gBuyBestSalvageKit")
 		then
 			Settings.GW2MINION[tostring(k)] = v
