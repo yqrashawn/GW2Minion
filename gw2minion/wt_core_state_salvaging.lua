@@ -123,6 +123,32 @@ function e_salvage_done:execute()
 	wt_core_controller.requestStateChange( wt_core_state_idle )
 end
 
+--use a local aggro check/state change request instead of kill task so we don't have
+--to deal with calling DoPrioTasks()
+--*************************************************************
+-- Aggro Cause & Effect
+--*************************************************************
+local c_aggro = inheritsFrom( wt_cause )
+local e_aggro = inheritsFrom( wt_effect )
+
+function c_aggro:evaluate()
+	c_aggro.TargetList = ( CharacterList( "nearest,los,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
+	if ( TableSize( c_aggro.TargetList ) > 0 ) then
+		return true
+	end
+	
+	return false
+end
+function e_aggro:execute()	
+	if ( TableSize( c_aggro.TargetList ) > 0 ) then
+		nextTarget, E  = next( c_aggro.TargetList )
+		if ( nextTarget ~= nil ) then
+			wt_debug( "Begin Combat, Possible aggro target found" )
+			wt_core_state_combat.setTarget( nextTarget )
+			wt_core_controller.requestStateChange( wt_core_state_combat )
+		end
+	end
+end
 -------------------------------------------------------------
 
 function wt_core_state_salvaging.GUIVarUpdate(Event, NewVals, OldVals)
