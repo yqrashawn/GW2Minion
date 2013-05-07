@@ -353,20 +353,6 @@ function e_doemergencytask:execute()
 	wt_core_taskmanager:DoTask()
 end
 
---************************************************************
--- Do Event Tasks Cause & Effect - Done after AggroCheck
---************************************************************
-c_doeventtask = inheritsFrom( wt_cause )
-e_doeventtask = inheritsFrom( wt_effect )
-function c_doeventtask:evaluate()
-	if (wt_core_taskmanager.current_task ~= nil and wt_core_taskmanager.current_task.priority > 900 and wt_core_taskmanager.current_task.priority <= 999 ) then
-		return true
-	end
-	return false
-end
-function e_doeventtask:execute()
-	wt_core_taskmanager:DoTask()
-end
 
 --************************************************************
 -- Do Prio Tasks Cause & Effect - Done after AggroCheck
@@ -657,7 +643,9 @@ function e_loot:execute()
 				if ( Player:GetCurrentlyCastedSpell() == 17 ) then					
 					wt_debug( "Looting Corpse" )					
 					Player:Interact( index )
-					if (gDoPause == "1" and TableSize(CharacterList("players,maxdistance=2500,los")) > 0 ) then
+					if 	(gDoPause == "1" and TableSize(CharacterList("players,maxdistance=2500,los")) > 0) and 
+						(TableSize(CharacterList( "nearest,los,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose)) == 0) 
+					then
 						wt_core_taskmanager:addPauseTask(0,1000)
 					end
 				end
