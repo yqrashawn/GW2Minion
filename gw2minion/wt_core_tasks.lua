@@ -6,6 +6,12 @@ wt_core_taskmanager.npcBlacklist = {}
 wt_core_taskmanager.vendorBlacklist = {}
 -- eventBlacklist is for events that the bot could not complete
 wt_core_taskmanager.eventBlacklist = {}
+-- userEventBlacklist is for events that the user has manually blacklisted; these are peristent via settings
+if ( Settings.GW2MINION.userEventBlacklist == nil) then
+	Settings.GW2MINION.userEventBlacklist = {}
+end
+wt_core_taskmanager.userEventBlacklist = Settings.GW2MINION.userEventBlacklist
+
 
 -- Tasks that can be added to the taskmanager
 
@@ -97,7 +103,7 @@ function wt_core_taskmanager:addHeartQuestTask( quest )
 	
 	local newtask = inheritsFrom( wt_task )
 	newtask.UID = "HeartQuest"..tostring(math.floor(quest.pos.x))
-	newtask.timestamp = wt_global_information.Now
+	newtask.timestamp = wt_global_information.Now				
 	newtask.name = "HeartQuest"
 	--[[if (quest.type == 137) then -- currently active/nearby HeartQuest
 		newtask.priority = 600
@@ -1195,7 +1201,6 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 						newtask.startingTime = wt_global_information.Now
 					end
 					newtask.name = "Event: "..(math.floor(myevent.distance))
-					newtask.name = "Event: "..(math.floor(distance))
 				else
 					if ( newtask.needPause and (wt_global_information.Now - newtask.pausestartingTime) < newtask.pausemaxduration) then
 						if (newtask.waiting == false) then
@@ -1378,10 +1383,10 @@ function wt_core_taskmanager:addPauseTask(low, high)
 	newtask.last_execution = 0
 	newtask.throttle = 250
 	newtask.pauseTime = math.random(low, high)
-	newtask.startTime = wt_global_information.NOW
+	newtask.startTime = wt_global_information.Now
    
 	function newtask:execute()
-		if (wt_global_information.NOW - newtask.startTime > newtask.pauseTime) then 
+		if (wt_global_information.Now - newtask.startTime > newtask.pauseTime) then 
 			newtask.done = true
 		end
 	end
@@ -1393,7 +1398,75 @@ function wt_core_taskmanager:addPauseTask(low, high)
 			return false
 	end    
 	wt_debug("Pausing "..newtask.pauseTime.." milliseconds")
-	wt_core_taskmanager:addCustomtask( newtask )]]
+	wt_core_taskmanager:addCustomtask( newtask )
+end
+
+--[[function wt_core_taskmanager.addWaypointTask(waypointID)
+	local newtask = inheritsFrom( wt_task )
+	newtask.UID = "USEWAYPOINT"
+	newtask.timestamp = 0
+	newtask.lifetime = 0
+	newtask.name = "Use Waypoint"
+	newtask.priority = 9999
+	newtask.done = false
+	newtask.last_execution = 0
+	newtask.throttle = 150
+	
+	function newtask:execute()
+		if not (Player.inCombat) then
+			Player:TeleportToWaypoint(waypointID)
+			newtask.done = true
+		end
+	end
+			
+	function newtask:isFinished()
+		if ( newtask.done ) then
+			return true
+		end
+		return false
+	end	
+	wt_debug("Waypoint Task Added..")
+	wt_core_taskmanager:addCustomtask( newtask )
+end]]--
+
+-- blacklist whatever the current event id is and write to settings
+function wt_core_taskmanager:BlacklistCurrentEvent()
+	if (wt_core_taskmanager.current_task ~= nil) then
+		if (string.find(wt_core_taskmanager.current_task.name, "Event") ~= nil) then
+			local event = wt_core_taskmanager.current_task
+			wt_core_taskmanager:BlacklistEvent(event.eventID)
+			
+			-- tell group to blacklist event
+			if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	
+				MultiBotSend( "23;"..tonumber(event.eventID),"gw2minion" )
+			-- tell leader to blacklist event
+			elseif (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() ~= 1) then
+				MultiBotSend( "22;"..tonumber(event.eventID),"gw2minion" )
+			end
+			
+		end
+	end
+end
+
+-- blacklist the specified event and write to settings
+function wt_core_taskmanager:BlacklistEvent(eventID)
+	if (wt_core_taskmanager.current_task ~= nil) then
+		if (string.find(wt_core_taskmanager.current_task.name, "Event") ~= nil) then
+			local event = wt_core_taskmanager.current_task
+			if (eventID == event.eventID) then
+				event.done = true
+			end
+		end
+	end
+	wt_debug("Blacklisting event "..eventID.." due to user request")
+	
+	-- write out blacklist to settings
+	wt_core_taskmanager.userEventBlacklist = Settings.GW2MINION.userEventBlacklist
+	if (wt_core_taskmanager.userEventBlacklist[eventID] == nil) then
+		wt_core_taskmanager.userEventBlacklist[eventID] = true
+		Settings.GW2MINION.userEventBlacklist = wt_core_taskmanager.userEventBlacklist
+		Settings.GW2MINION.version = 1.0
+	end
 end
 
 function wt_core_taskmanager:CleanBlacklist()
@@ -1419,3 +1492,5 @@ function wt_core_taskmanager:CleanBlacklist()
 		end
 	end
 end
+
+RegisterEventHandler("wt_core_taskmanager.blacklistCurrentEvent", wt_core_taskmanager.BlacklistCurrentEvent)
