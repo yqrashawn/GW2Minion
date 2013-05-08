@@ -75,7 +75,9 @@ function wt_core_unstuck:CheckStuck()
 					wt_core_unstuck.State.IDLE.ticks = 0
 					wt_core_unstuck.State[state.name].stats = wt_core_unstuck.State[state.name].stats + 1
 					if (gDoUnstuck == "1") then
-						wt_core_unstuck:addTeleportTask(state.name)
+						if (Player:RespawnAtClosestResShrine()) then
+							wt_core_unstuck.count = wt_core_unstuck.count + 1
+						end
 					end
 					break
 				end
@@ -88,6 +90,7 @@ function wt_core_unstuck:CheckStuck()
 
 end
 
+-- not used right now
 function wt_core_unstuck:addTeleportTask(reason)
 	local task = {}
 	local list = WaypointList("nearest,onmesh,samezone,notcontested")
