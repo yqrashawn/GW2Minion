@@ -66,7 +66,7 @@ function c_need_salvage:evaluate()
 	
 	if ( ItemList.freeSlotCount < 5) then
 		local items,tools = wt_core_state_salvaging.GetSalvageableItems()
-		if ( TableSize(items) > 0 and TableSize(tools) >0 ) then
+		if ( TableSize(items) > 0 and TableSize(tools) > 0 ) then
 			return true
 		end
 	end

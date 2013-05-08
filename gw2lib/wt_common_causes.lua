@@ -568,7 +568,7 @@ end
 c_check_revive_players = inheritsFrom( wt_cause )
 e_revive_players = inheritsFrom( wt_effect )
 function c_check_revive_players:evaluate()
-	if (gPlayerRevive == "0" or Player.health.percent < 60) then
+	if (Player.health.percent < 60) then
 		return false
 	end
 	local playerList = CharacterList("nearest,player,downed,maxdistance=2500,onmesh")
@@ -643,7 +643,7 @@ function e_loot:execute()
 				if ( Player:GetCurrentlyCastedSpell() == 17 ) then					
 					wt_debug( "Looting Corpse" )					
 					Player:Interact( index )
-					if 	(gDoPause == "1" and TableSize(CharacterList("players,maxdistance=2500,los")) > 0) and 
+					if 	(TableSize(CharacterList("players,maxdistance=2500,los")) > 0) and 
 						(TableSize(CharacterList( "nearest,los,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose)) == 0) 
 					then
 						wt_core_taskmanager:addPauseTask(0,1000)

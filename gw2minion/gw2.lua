@@ -132,17 +132,8 @@ end
 if ( Settings.GW2MINION.gUnstuckCount == nil ) then
 	Settings.GW2MINION.gUnstuckCount = "10"
 end
-if ( Settings.GW2MINION.gPlayerRevive == nil ) then
-	Settings.GW2MINION.gPlayerRevive = "1"
-end
 if ( Settings.GW2MINION.gEventTimeout == nil ) then
 	Settings.GW2MINION.gEventTimeout = "600"
-end
-if ( Settings.GW2MINION.gDoPause == nil ) then
-	Settings.GW2MINION.gDoPause = "0"
-end
-if ( Settings.GW2MINION.gPrioritizeEvents == nil ) then
-	Settings.GW2MINION.gPrioritizeEvents = "0"
 end
 
 function wt_global_information.OnUpdate( event, tickcount )
@@ -233,11 +224,8 @@ function gw2minion.HandleInit()
 	GUI_NewField(wt_global_information.MainWindow.Name,"Salvage Kit Stock","gSalvageKitStock","SalvageSettings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Unstuck", "gDoUnstuck","AdvancedSettings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Exit GW2 StuckCount","gUnstuckCount","AdvancedSettings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Revive Other Players", "gPlayerRevive","AdvancedSettings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Prioritize Events", "gPrioritizeEvents","AdvancedSettings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Event Timeout", "gEventTimeout","AdvancedSettings");
 	GUI_NewButton(wt_global_information.MainWindow.Name,"Blacklist Current Event","wt_core_taskmanager.blacklistCurrentEvent","AdvancedSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Random Pause", "gDoPause","AdvancedSettings");
 	gGW2MinionTask = "            "
 	
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,"BotStatus");
@@ -277,10 +265,7 @@ function gw2minion.HandleInit()
 	gBuyBestSalvageKit = Settings.GW2MINION.gBuyBestSalvageKit
 	gDoUnstuck = Settings.GW2MINION.gDoUnstuck
 	gUnstuckCount = Settings.GW2MINION.gUnstuckCount
-	gPlayerRevive = Settings.GW2MINION.gPlayerRevive
 	gEventTimeout = Settings.GW2MINION.gEventTimeout
-	gDoPause = Settings.GW2MINION.gDoPause
-	gPrioritizeEvents = Settings.GW2MINION.gPrioritizeEvents
 	
 	wt_debug("GUI Setup done")
 	wt_core_controller.requestStateChange(wt_core_state_idle)
@@ -321,10 +306,7 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "gBuyBestGatheringTool" or
 				k == "gDoUnstuck" or
 				k == "gUnstuckCount" or
-				k == "gPlayerRevive" or
 				k == "gEventTimeout" or
-				k == "gDoPause" or
-				k == "gPrioritizeEvents" or
 				k == "gBuyBestSalvageKit")
 		then
 			Settings.GW2MINION[tostring(k)] = v
