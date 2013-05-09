@@ -25,6 +25,7 @@ Settings.GW2MINION.TargetWaypointID = 0
 wt_global_information.stats_lastrun = 0
 wt_global_information.Charscreen_lastrun = 0
 wt_global_information.Cinema_lastrun = 0
+wt_global_information.MeshCheck_lastrun = 0
 wt_global_information.AutoRun = false
 wt_global_information.AutoRun_lastrun = 0
 
@@ -147,6 +148,33 @@ function wt_global_information.OnUpdate( event, tickcount )
 	gGW2MiniondeltaT = tostring(tickcount - wt_global_information.lastrun)
 	if (tickcount - wt_global_information.lastrun > tonumber(gGW2MinionPulseTime)) then
 		wt_global_information.lastrun = tickcount
+		
+		-- Check if we switched to a new map/zone
+		if ( wt_global_information.MeshCheck_lastrun == 0 or tickcount - wt_global_information.MeshCheck_lastrun > 3000 ) then
+			wt_global_information.MeshCheck_lastrun = tickcount
+			if ( mm.RefreshCurrentMapData() and gAutostartbot == "1" and wt_core_controller.shouldRun == false) then				
+				wt_core_controller.ToggleRun()				
+			end
+		end
+		
+		
+		--[[if (gAutostartbot == "1" and wt_core_controller.shouldRun == false ) then	
+			wt_core_controller.ToggleRun()
+			wt_global_information.AutoRun = true
+		end
+		if ( NavigationManager:IsNavMeshLoaded() ) then	
+			wt_core_controller.shouldRun = not wt_core_controller.shouldRun
+			wt_debug("Core Run State: ",tostring(wt_core_controller.shouldRun))
+		else
+			if (gAutostartbot == "1") then
+				wt_global_information.Reset()
+				wt_core_taskmanager.ClearTasks()
+				wt_core_state_combat.StopCM()
+				mm.LoadMesh()
+			else
+				wt_error("CAN'T START THE BOT, YOU NEED TO LOAD A NAVMESH FIRST!")
+			end
+		end
 		if (wt_global_information.AutoRun == true and tickcount - wt_global_information.AutoRun_lastrun  > 3000 ) then
 			if ( wt_global_information.AutoRun_lastrun == 0 ) then
 				wt_global_information.AutoRun_lastrun = tickcount
@@ -157,17 +185,23 @@ function wt_global_information.OnUpdate( event, tickcount )
 					wt_core_controller.ToggleRun()
 				end
 			end
-		end			
+		end		]]
+		
 		wt_core_controller.Run()		
 	end	
 end
 
 function wt_global_information.OnUpdateCharSelect(event, tickcount )
 	wt_global_information.Now = tickcount
-	if ( gAutostartbot ~= nil and gAutostartbot == "1" and tickcount - wt_global_information.Charscreen_lastrun > 2500) then
+	if (wt_global_information.Charscreen_lastrun == 0) then
 		wt_global_information.Charscreen_lastrun = tickcount
+	elseif ( gAutostartbot ~= nil and gAutostartbot == "1" and tickcount - wt_global_information.Charscreen_lastrun > 2500) then
+		wt_global_information.Charscreen_lastrun = tickcount
+		mm.currentmapdata.mapID = nil
+		wt_global_information.Reset()
+		wt_global_information.Charscreen_lastrun = 0
 		wt_debug("Pressing PLAY")
-		PressKey("RETURN")
+		PressKey("RETURN")				
 	end
 end
 
@@ -180,14 +214,14 @@ function wt_global_information.OnUpdateCutscene(event, tickcount )
 	end
 end
 
-
 -- Module Event Handler
 function gw2minion.HandleInit()
 	wt_debug("received Module.Initalize")
-	GUI_NewWindow(wt_global_information.MainWindow.Name,wt_global_information.MainWindow.x,wt_global_information.MainWindow.y,wt_global_information.MainWindow.width,wt_global_information.MainWindow.height)
+	local wnd = GUI_GetWindowInfo("GW2MINION")
+	GUI_NewWindow(wt_global_information.MainWindow.Name,wnd.x,wnd.y+wnd.height,wt_global_information.MainWindow.width,wt_global_information.MainWindow.height)
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnStart.Name , wt_global_information.BtnStart.Event)
 	GUI_NewButton(wt_global_information.MainWindow.Name,"ToolBox","TB.toggle")
-	GUI_NewButton(wt_global_information.MainWindow.Name,"NavMeshSwitcher","MM.toggle")
+	GUI_NewButton(wt_global_information.MainWindow.Name,"MeshManager","MM.toggle")
 	GUI_NewField(wt_global_information.MainWindow.Name,"MyTask","gGW2MinionTask");
 	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnPulse.Name , wt_global_information.BtnPulse.Event,"BotStatus")
@@ -269,11 +303,6 @@ function gw2minion.HandleInit()
 	
 	wt_debug("GUI Setup done")
 	wt_core_controller.requestStateChange(wt_core_state_idle)
-		
-	if (gAutostartbot == "1" and wt_core_controller.shouldRun == false ) then	
-		wt_core_controller.ToggleRun()
-		wt_global_information.AutoRun = true
-	end
 end
 
 function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
@@ -316,7 +345,8 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_global_information.Reset()
-	Player:StopMoving()	
+	wt_core_state_combat.StopCM()
+	wt_core_taskmanager.ClearTasks()
 	wt_global_information.CurrentMarkerList = nil
 	wt_global_information.SelectedMarker = nil
 	wt_global_information.AttackRange = 1200
@@ -324,9 +354,6 @@ function wt_global_information.Reset()
 	wt_global_information.lastrun = 0
 	wt_global_information.InventoryFull = 0
 	wt_core_state_combat.CurrentTarget = 0
-	wt_core_taskmanager.Customtask_list = { }
-	wt_core_taskmanager.current_task = nil
-	wt_core_taskmanager.markerList = { }
 	wt_global_information.FocusTarget = nil
 	gMapswitch = 0	
 	
@@ -415,11 +442,6 @@ function wt_global_information.HandleCMDMultiBotMessages( event, message,channel
 	end
 end
 
-function wt_global_information.GameStateHandler(_,state)
-	d("New GameState= ".. tostring(state))
-	wt_global_information.lastGameState = tonumber(state)	
-end
-
 
 -- Register Event Handlers
 RegisterEventHandler("Module.Initalize",gw2minion.HandleInit)
@@ -428,5 +450,4 @@ RegisterEventHandler("Gameloop.CharSelectUpdate",wt_global_information.OnUpdateC
 RegisterEventHandler("Gameloop.CutsceneUpdate",wt_global_information.OnUpdateCutscene)
 RegisterEventHandler("GUI.Update",gw2minion.GUIVarUpdate)
 RegisterEventHandler("MULTIBOT.Message",wt_global_information.HandleCMDMultiBotMessages)
-RegisterEventHandler("Gameloop.ViewStateChanged",wt_global_information.GameStateHandler)
 

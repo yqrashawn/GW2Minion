@@ -362,19 +362,19 @@ function wt_profession_engineer:HandleInit()
 		
 		-- GUI Elements
 		if ( Settings.GW2MINION.gEngSwapWeapons == nil ) then
-			Settings.GW2MINION.gEngSwapWeapons = "0"
+			Settings.GW2MINION.gEngSwapWeapons = "1"
 		end
 		if ( Settings.GW2MINION.gEngSK7 == nil ) then
-			Settings.GW2MINION.gEngSK7 = "0"
+			Settings.GW2MINION.gEngSK7 = "80"
 		end
 		if ( Settings.GW2MINION.gEngSK8 == nil ) then
-			Settings.GW2MINION.gEngSK8 = "0"
+			Settings.GW2MINION.gEngSK8 = "70"
 		end
 		if ( Settings.GW2MINION.gEngSK9 == nil ) then
-			Settings.GW2MINION.gEngSK9 = "0"
+			Settings.GW2MINION.gEngSK9 = "90"
 		end
 		if ( Settings.GW2MINION.gEngSK10 == nil ) then
-			Settings.GW2MINION.gEngSK10 = "0"
+			Settings.GW2MINION.gEngSK10 = "50"
 		end
 		
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapToKits","gEngSwapWeapons","Engineer-Settings");
