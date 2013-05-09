@@ -1329,7 +1329,7 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 				newtask.position = myevent.pos
 				if ( not newtask.spotreached ) then
 					 -- TELEPORT TO NEAREST WAYPOINT
-					if ( gUseWaypointsEvents == "1" and wt_core_taskmanager.OkayToWaypoint()) then
+					if ( gUseWaypointsEvents == "1" and wt_core_taskmanager:OkayToWaypoint()) then
 						if ( myevent.distance > 6500 ) and not (Player.inCombat) then
 							local wpID
 							local wpvendordistance = 999999
@@ -1683,6 +1683,7 @@ function wt_core_taskmanager:OkayToWaypoint()
 end
 
 function wt_core_taskmanager:TimedWaypoint(wpID)
+	wt_debug("Teleporting to contentID "..contentID)
 	wt_core_taskmanager.waypointTimer = os.time()
 	Player:TeleportToWaypoint(wpID)
 end
