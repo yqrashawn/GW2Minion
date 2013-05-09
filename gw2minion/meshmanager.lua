@@ -142,15 +142,14 @@ function mm.RefreshCurrentMapData()
 				else
 					wt_error("ERROR: Can't open the file: "..tostring(gmeshname))
 				end	
-			else
-				wt_error("Please select a NavMesh for this Zone in the MeshManager")
+			else				
+				wt_debug("Please select a NavMesh for this Zone in the MeshManager")
 				gmapname = tostring(Settings.GW2MINION.Zones[tostring(mapID)].mapname)
 				gmeshname = "none"
 			end				
 		else
 			gmapname = "none"
-			gmeshname = "none"
-			wt_error("Please select a NavMesh for this Zone in the MeshManager")
+			gmeshname = "none"						
 		end	
 	end
 	return false
