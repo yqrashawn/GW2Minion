@@ -191,11 +191,6 @@ function wt_core_state_idle:initialize()
 	local ke_doemertasks = wt_kelement:create( "EmergencyTask", c_doemergencytask, e_doemergencytask, 103 )
 	wt_core_state_idle:add( ke_doemertasks )
 	
-	-- have to put event check higher priority than aggro to provide possibility of changing event vs aggro priority
-	-- can modify event priority in task
-	local ke_event = wt_kelement:create("Event", c_event_check, e_event_check, 101 )
-	wt_core_state_idle:add( ke_event )
-	
 	local ke_aggro = wt_kelement:create( "AggroCheck", c_aggro, e_aggro, 100 )
 	wt_core_state_idle:add( ke_aggro )
 
@@ -228,6 +223,9 @@ function wt_core_state_idle:initialize()
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )
 	wt_core_state_idle:add( ke_revive )
 
+	local ke_event = wt_kelement:create("Event", c_event_check, e_event_check, 79 )
+	wt_core_state_idle:add( ke_event )
+	
 	--leave shroud from necro , prio 76
 	local ke_rest = wt_kelement:create( "Rest", c_rest, e_rest, 75 )
 	wt_core_state_idle:add( ke_rest )
