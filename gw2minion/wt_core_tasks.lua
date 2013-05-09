@@ -1327,6 +1327,41 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 			if ( myevent ~= nil and myevent.pos ~= nil) then
 				newtask.position = myevent.pos
 				if ( not newtask.spotreached ) then
+					 -- TELEPORT TO NEAREST WAYPOINT
+					if ( gUseWaypointsEvents == "1" ) then
+						if ( myevent.distance > 6500 ) and not (Player.inCombat) then
+							local wpID
+							local wpvendordistance = 999999
+							local Waypoints = (WaypointList("onmesh,samezone,notcontested,mindistance=3500"))
+							local vendorcheckdistance = 999999
+
+							if Waypoints then
+								i,wp = next(Waypoints)
+								while ( i ~= nil ) do
+									local newWP = WaypointList:Get(i)
+									local wpvendordistanceex = Distance3D(newWP.pos.x, newWP.pos.y, newWP.pos.z, newtask.position.x, newtask.position.y, newtask.position.z)
+
+									if ( wpvendordistanceex < vendorcheckdistance ) then
+										wpvendordistance = wpvendordistanceex
+										vendorcheckdistance = wpvendordistanceex
+										wpID = newWP.contentID
+									end
+
+									i,wp = next(Waypoints,i)
+								 end
+
+								-- TELEPORT
+								if ( distance + 1000 > wpvendordistance ) then
+									speed = Player:GetSpeed()
+									Player:SetSpeed(0)
+									Player:SetMovement(0)
+									Player:TeleportToWaypoint(wpID)
+									Player:UnSetMovement(0)
+									Player:SetSpeed(speed)
+								end
+							end
+						end
+					end
 					if ( myevent.distance > 1000 ) then
 						if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 							if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	

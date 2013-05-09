@@ -57,6 +57,9 @@ end
 if ( Settings.GW2MINION.gUseWaypoints == nil ) then
 	Settings.GW2MINION.gUseWaypoints = "0"
 end
+if ( Settings.GW2MINION.gUseWaypointsEvents == nil ) then
+	Settings.GW2MINION.gUseWaypointsEvents = "0"
+end
 if ( Settings.GW2MINION.gVendor_Weapons == nil ) then
 	Settings.GW2MINION.gVendor_Weapons = "1"
 end
@@ -203,6 +206,7 @@ function gw2minion.HandleInit()
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Ignore Marker Level Cap","gIgnoreMarkerCap","Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Repair Equippment","gEnableRepair","Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Use WP Vendor/Repair", "gUseWaypoints","AdvancedSettings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Use WP Events", "gUseWaypointsEvents","AdvancedSettings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Max ItemSell Rarity","gMaxItemSellRarity","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Weapons","gVendor_Weapons","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Armor","gVendor_Armor","VendorSettings")
@@ -245,6 +249,7 @@ function gw2minion.HandleInit()
 	gdoEvents = Settings.GW2MINION.gdoEvents	
 	gMapswitch = 0
 	gUseWaypoints = Settings.GW2MINION.gUseWaypoints
+	gUseWaypointsEvents = Settings.GW2MINION.gUseWaypointsEvents
 	gVendor_Weapons = Settings.GW2MINION.gVendor_Weapons
 	gVendor_Armor = Settings.GW2MINION.gVendor_Armor
 	gVendor_Junk = Settings.GW2MINION.gVendor_Junk
@@ -284,7 +289,8 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "gIgnoreMarkerCap" or 
 				k == "gMaxItemSellRarity" or 
 				k == "gAutostartbot" or
-				k == "gUseWaypoints" or 
+				k == "gUseWaypoints" or
+				k == "gUseWaypointsEvents" or 
 				k == "gVendor_Weapons" or
 				k == "gVendor_Armor" or
 				k == "gVendor_Trinkets" or
