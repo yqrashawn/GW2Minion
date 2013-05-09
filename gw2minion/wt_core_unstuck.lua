@@ -65,6 +65,10 @@ end
 --*************************************************************************************************************
 
 function wt_core_unstuck:CheckStuck()
+	if (gDoUnstuck == "0") then
+		return
+	end
+	
 	for i,state in pairs(wt_core_unstuck.State) do
 		if state.ticks ~= 0 then
 			if state.ticks > state.maxticks then

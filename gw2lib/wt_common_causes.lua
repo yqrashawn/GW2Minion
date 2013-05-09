@@ -744,4 +744,41 @@ function e_stopcbmove:execute()
 	
 end
 
-
+--************************************************************
+-- Check For Active Events and Queue Them
+--************************************************************
+-- cheating with this one also, similar to aggro, by doing action in cause
+c_event_check = inheritsFrom( wt_cause )
+e_event_check = inheritsFrom( wt_effect )
+function c_event_check:evaluate()
+	if ( gdoEvents == "0" ) then
+		return false
+	end
+	local MMList = MapMarkerList( "worldmarkertype=20" )
+	c_event_check.event = nil
+	if ( TableSize( MMList ) > 0 ) then
+		i, entry = next( MMList )
+		while ( i ~= nil and entry ~= nil ) do
+			local etype = entry.type
+			local mtype = entry.markertype
+			if ( mtype==6 and entry.onmesh and entry.eventID ~= 0 ) then
+				if (c_event_check.event == nil or entry.distance < c_event_check.event.distance) then
+					c_event_check.event = entry
+				end
+			end
+			i, entry = next( MMList, i )
+		end
+	end
+	if 	(c_event_check.event ~= nil) and 
+		(wt_core_taskmanager.eventBlacklist[c_event_check.event.eventID] == nil) and 
+		(wt_core_taskmanager.userEventBlacklist[c_event_check.event.eventID] == nil)
+	then
+		local lastrun = wt_core_taskmanager.Customtask_history["Event"..tostring(c_event_check.event.eventID)] or 0
+		if ((wt_global_information.Now - lastrun) > 450000) then
+			wt_core_taskmanager:addEventTask(i, c_event_check.event , 2500)
+		end
+	end
+	return false
+end
+function e_event_check:execute()
+end

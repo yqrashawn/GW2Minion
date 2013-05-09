@@ -179,18 +179,7 @@ function wt_core_taskmanager:Update_Tasks( )
 									if ((wt_global_information.Now - lastrun) > 650000) then
 										wt_core_taskmanager:addHeartQuestTask( entry )
 									end
-								end
-								
-							-- Events
-							elseif ( gdoEvents == "1" and mtype==6 and entry.onmesh and entry.eventID ~= 0 and 
-										wt_core_taskmanager.eventBlacklist[entry.eventID] == nil and 
-										wt_core_taskmanager.userEventBlacklist[entry.eventID] == nil) 
-							then
-								local lastrun = wt_core_taskmanager.Customtask_history["Event"..tostring(entry.eventID)] or 0
-								if ((wt_global_information.Now - lastrun) > 450000) then
-									local priority
-									wt_core_taskmanager:addEventTask( i, entry , 2500)
-								end						
+								end				
 							end
 							
 						i, entry = next( MMList, i )

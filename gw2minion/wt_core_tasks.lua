@@ -11,6 +11,7 @@ if ( Settings.GW2MINION.userEventBlacklist == nil) then
 	Settings.GW2MINION.userEventBlacklist = {}
 end
 wt_core_taskmanager.userEventBlacklist = Settings.GW2MINION.userEventBlacklist
+wt_core_taskmanager.waypointTimer = 0
 
 
 -- Tasks that can be added to the taskmanager
@@ -384,7 +385,7 @@ function wt_core_taskmanager:addFollowTask( ID, prio )
                                             speed = Player:GetSpeed()
                                             Player:SetSpeed(0)
                                             Player:SetMovement(0)
-                                            Player:TeleportToWaypoint(wpID)
+                                            wt_core_taskmanager:TimedWaypoint(wpID)
                                             Player:UnSetMovement(0)
                                             Player:SetSpeed(speed)
                                         end
@@ -469,7 +470,7 @@ function wt_core_taskmanager:addRepairTask( priority )
 								speed = Player:GetSpeed()
 								Player:SetSpeed(0)
 								Player:SetMovement(0)
-								Player:TeleportToWaypoint(wpID)
+								wt_core_taskmanager:TimedWaypoint(wpID)
 								Player:UnSetMovement(0)
 								Player:SetSpeed(speed)
 							end
@@ -661,7 +662,7 @@ function wt_core_taskmanager:addVendorTask( priority )
 								speed = Player:GetSpeed()
 								Player:SetSpeed(0)
 								Player:SetMovement(0)
-								Player:TeleportToWaypoint(wpID)
+								wt_core_taskmanager:TimedWaypoint(wpID)
 								Player:UnSetMovement(0)
 								Player:SetSpeed(speed)
 							end
@@ -1028,7 +1029,7 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 								speed = Player:GetSpeed()
 								Player:SetSpeed(0)
 								Player:SetMovement(0)
-								Player:TeleportToWaypoint(wpID)
+								wt_core_taskmanager:TimedWaypoint(wpID)
 								Player:UnSetMovement(0)
 								Player:SetSpeed(speed)
 							end
@@ -1328,11 +1329,11 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 				newtask.position = myevent.pos
 				if ( not newtask.spotreached ) then
 					 -- TELEPORT TO NEAREST WAYPOINT
-					if ( gUseWaypointsEvents == "1" ) then
+					if ( gUseWaypointsEvents == "1" and wt_core_taskmanager.OkayToWaypoint()) then
 						if ( myevent.distance > 6500 ) and not (Player.inCombat) then
 							local wpID
 							local wpvendordistance = 999999
-							local Waypoints = (WaypointList("onmesh,samezone,notcontested,mindistance=3500"))
+							local Waypoints = (WaypointList("onmesh,samezone,notcontested"))
 							local vendorcheckdistance = 999999
 
 							if Waypoints then
@@ -1351,11 +1352,11 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 								 end
 
 								-- TELEPORT
-								if ( distance + 1000 > wpvendordistance ) then
+								if ( myevent.distance + 2000 > wpvendordistance ) then
 									speed = Player:GetSpeed()
 									Player:SetSpeed(0)
 									Player:SetMovement(0)
-									Player:TeleportToWaypoint(wpID)
+									wt_core_taskmanager:TimedWaypoint(wpID)
 									Player:UnSetMovement(0)
 									Player:SetSpeed(speed)
 								end
@@ -1675,6 +1676,15 @@ function wt_core_taskmanager:CleanBlacklist()
 			end
 		end
 	end
+end
+
+function wt_core_taskmanager:OkayToWaypoint()
+	return(os.difftime(os.time(), wt_core_taskmanager.waypointTimer) > 300)
+end
+
+function wt_core_taskmanager:TimedWaypoint(wpID)
+	wt_core_taskmanager.waypointTimer = os.time()
+	Player:TeleportToWaypoint(wpID)
 end
 
 RegisterEventHandler("wt_core_taskmanager.blacklistCurrentEvent", wt_core_taskmanager.BlacklistCurrentEvent)

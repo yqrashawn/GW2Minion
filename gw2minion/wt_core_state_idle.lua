@@ -191,6 +191,11 @@ function wt_core_state_idle:initialize()
 	local ke_doemertasks = wt_kelement:create( "EmergencyTask", c_doemergencytask, e_doemergencytask, 103 )
 	wt_core_state_idle:add( ke_doemertasks )
 	
+	-- have to put event check higher priority than aggro to provide possibility of changing event vs aggro priority
+	-- can modify event priority in task
+	local ke_event = wt_kelement:create("Event", c_event_check, e_event_check, 101 )
+	wt_core_state_idle:add( ke_event )
+	
 	local ke_aggro = wt_kelement:create( "AggroCheck", c_aggro, e_aggro, 100 )
 	wt_core_state_idle:add( ke_aggro )
 

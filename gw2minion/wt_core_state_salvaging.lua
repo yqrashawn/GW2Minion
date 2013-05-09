@@ -39,6 +39,7 @@ function wt_core_state_salvaging.GetSalvageableItems()
 					wt_core_state_salvaging.salvageBlacklist[item.contentID] = true
 				else
 					-- have to save the itemlistslot so we can write it after the item is salvaged
+					wt_core_state_salvaging.itemSlotTable = {}
 					table.insert(wt_core_state_salvaging.itemSlotTable,id)
 					table.insert(salvageItems,item)
 				end
