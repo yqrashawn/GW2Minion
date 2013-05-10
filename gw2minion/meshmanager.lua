@@ -236,6 +236,5 @@ function mm.GenerateInfoFile( )
 end
 
 
-RegisterEventHandler("MM.Change", mm.ChangeMeshForZone)
 RegisterEventHandler("MM.toggle", mm.ToggleMenu)
 RegisterEventHandler("Module.Initalize",mm.ModuleInit)
