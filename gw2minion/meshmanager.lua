@@ -116,11 +116,10 @@ function mm.RefreshCurrentMapData()
 	local mapID = Player:GetLocalMapID()
 	if (((mm.currentmapdata.mapID == nil and mapID ~= nil) or mm.currentmapdata.mapID ~= mapID) and TableSize(Player.pos) >0 and tonumber(Player.pos.x) ~= nil) then			
 		-- Unload old mesh first
-		if (NavigationManager:IsNavMeshLoaded()) then
+		if (NavigationManager:IsNavMeshLoaded() and mm.currentmapdata.mapID ~= nil and mm.currentmapdata.mapID ~= mapID) then
 			wt_debug("Unloading old navmesh...")
 			wt_global_information.Reset()
 			NavigationManager:UnloadNavMesh()
-			mm.currentmapdata.mapID = nil
 			return false
 		end
 		-- Load the mesh for our Map
@@ -130,15 +129,20 @@ function mm.RefreshCurrentMapData()
 			if (gmeshname ~= nil and gmeshname ~= "" and gmeshname ~= "none") then				
 				local path = GetStartupPath().."\\Navigation\\"..tostring(gmeshname)
 				if (io.open(path..".obj")) then
-					wt_debug("Auto-Loading Navmesh " ..tostring(gmeshname))
-					wt_core_state_combat.StopCM()
-					wt_global_information.Reset()
-					wt_core_taskmanager.ClearTasks()
-					if (NavigationManager:LoadNavMesh(path)) then
-						mm.currentmapdata.mapID = mapID	
-						GUI_CloseMarkerInspector()	
-						return true
-					end													
+					if (NavigationManager:IsNavMeshLoaded()) then
+						wt_debug("Unloading Old Navmesh...")
+						NavigationManager:UnloadNavMesh()
+					else
+						wt_debug("Auto-Loading Navmesh " ..tostring(gmeshname))
+						wt_core_state_combat.StopCM()
+						wt_global_information.Reset()
+						wt_core_taskmanager.ClearTasks()
+						if (NavigationManager:LoadNavMesh(path)) then
+							mm.currentmapdata.mapID = mapID	
+							GUI_CloseMarkerInspector()	
+							return true
+						end
+					end
 				else
 					wt_error("ERROR: Can't open the file: "..tostring(gmeshname))
 				end	

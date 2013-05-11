@@ -197,7 +197,6 @@ function wt_global_information.OnUpdateCharSelect(event, tickcount )
 		wt_global_information.Charscreen_lastrun = tickcount
 	elseif ( gAutostartbot ~= nil and gAutostartbot == "1" and tickcount - wt_global_information.Charscreen_lastrun > 2500) then
 		wt_global_information.Charscreen_lastrun = tickcount
-		mm.currentmapdata.mapID = nil
 		wt_global_information.Reset()
 		wt_global_information.Charscreen_lastrun = 0
 		wt_debug("Pressing PLAY")

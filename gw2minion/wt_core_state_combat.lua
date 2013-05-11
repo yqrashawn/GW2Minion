@@ -204,8 +204,10 @@ function c_combatmove:evaluate()
 			
 			--CONTROL CURRENT COMBAT MOVEMENT
 			if ( wt_core_state_combat.IsCMActive() ) then
-				if (wt_core_state_combat.CMactive and Player.inCombat and not Player:IsFacingTarget() and Tdist > 150) then
-					wt_core_state_combat.StopCM()
+				if (Player.inCombat and not Player:IsFacingTarget() and Tdist > 150) then
+					Player:UnSetMovement(1)
+					Player:UnSetMovement(2)
+					Player:UnSetMovement(3)
 					local Tpos = T.pos
 					Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,110)
 				end
