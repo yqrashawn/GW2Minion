@@ -201,10 +201,10 @@ function wt_core_taskmanager:Update_Tasks( )
 				end
 				
 				-- if we have no task because the playerlevel is above the maplevel and the user forgot to check the ignore marker cap button:
-				if ( TableSize(wt_core_taskmanager.Customtask_list) == 0 and gIgnoreMarkerCap == "0") then
+				if ( TableSize(wt_core_taskmanager.Customtask_list) == 0 and gIgnoreMarkerCap == "0" and NavigationManager:IsNavMeshLoaded()) then
 					gIgnoreMarkerCap = "1"
 				end
-				if ( TableSize(wt_core_taskmanager.Customtask_list) == 0 and gIgnoreMarkerCap == "1") then
+				if ( TableSize(wt_core_taskmanager.Customtask_list) == 0 and gIgnoreMarkerCap == "1" and NavigationManager:IsNavMeshLoaded()) then
 					wt_error("No Tasks availiable! Check your navmesh! You need more than 1 Red Marker!")
 				end 
 			end

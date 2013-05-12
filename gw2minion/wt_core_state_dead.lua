@@ -70,6 +70,10 @@ end
 
 function ed_alive:execute()
 	Player:ClearTarget()
+	Player:UnSetMovement(0)
+	Player:UnSetMovement(1)
+	Player:UnSetMovement(2)
+	Player:UnSetMovement(3)
 	Player:StopMoving()
 	wt_core_controller.requestStateChange( wt_core_state_idle )
 end
