@@ -236,7 +236,6 @@ function wt_core_taskmanager:Update_Tasks( )
 		end
 		
 		-- Add repair/vendor/event/aggro tasks from wt_core_state_idle, wt_core_state_minion, and wt_core_state_leader
-		-- These are key, value pairs where key = the function to check and value = the throttle
 		local taskChecks = nil
 		if (gMinionEnabled == "0") then
 			taskChecks = wt_core_state_idle.TaskChecks

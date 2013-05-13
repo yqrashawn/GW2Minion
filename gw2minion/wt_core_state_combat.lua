@@ -81,7 +81,7 @@ local e_better_target_search = inheritsFrom( wt_effect )
 function c_better_target_search:evaluate()
 	local target = CharacterList:Get(wt_core_state_combat.CurrentTarget)
 	if (wt_core_taskmanager.current_task ~= nil) then
-		if (wt_core_taskmanager.current_task.name ~= "Event") then
+		if (string.find(wt_core_taskmanager.current_task.name, "Event") == nil) then
 			if (target ~= nil) then
 				if (target.isVeteran) then
 					return false
