@@ -51,6 +51,26 @@ function HandleMultiBotMessages( event, message, channel )
 							end						
 					end
 					
+					-- PARTYMANAGER
+					if ( tonumber(msgID) == 3 ) then -- Leader sends Minion his Name						
+						if (tostring(msg) ~= nil and Player:GetRole() ~= 1) then
+							--wt_debug("Recieved Partyleader Name :"..tostring(msg))
+							wt_core_partymanager.leaderName = tostring(msg)							
+						end
+					end
+					if ( tonumber(msgID) == 4 ) then -- Leader sends Minion his MapID						
+						if (tonumber(msg) ~= nil and Player:GetRole() ~= 1 ) then
+							--wt_debug("Recieved Partyleader's MapID :"..tostring(msg))
+							wt_core_partymanager.leaderMapID = tonumber(msg)							
+						end
+					end
+					if ( tonumber(msgID) == 5 ) then -- Leader sends Minion his closest WaypointID						
+						if (tonumber(msg) ~= nil and Player:GetRole() ~= 1 ) then
+							--wt_debug("Recieved Partyleader's WaypointID :"..tostring(msg))
+							wt_core_partymanager.leaderWPID = tonumber(msg)							
+						end
+					end						
+					
 					
 					
 					if ( wt_core_controller.shouldRun ) then

@@ -21,8 +21,8 @@ end
 
 function wt_core_state_combat.StopCM()
 	-- Stupid but Player:StopMoving() doesn't seem to do the job 
-	Player:UnSetMovement(0)
 	Player:UnSetMovement(1)
+	Player:UnSetMovement(0)
 	Player:UnSetMovement(2)
 	Player:UnSetMovement(3)
 	Player:StopMoving()
@@ -312,6 +312,8 @@ function c_combatmove:evaluate()
 				end	]]
 				
 			end	
+		else
+			wt_core_state_combat.StopCM()
 		end
 	end
 end

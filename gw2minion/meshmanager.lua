@@ -114,19 +114,20 @@ end
 
 function mm.RefreshCurrentMapData()
 	local mapID = Player:GetLocalMapID()
-	if (((mm.currentmapdata.mapID == nil and mapID ~= nil) or mm.currentmapdata.mapID ~= mapID) and TableSize(Player.pos) >0 and tonumber(Player.pos.x) ~= nil) then			
+	if (((mm.currentmapdata.mapID == nil and tonumber(mapID) ~= nil) or mm.currentmapdata.mapID ~= mapID) and TableSize(Player.pos) >0 and tonumber(Player.pos.x) ~= nil) then			
 		-- Unload old mesh first
 		if (NavigationManager:IsNavMeshLoaded() and mm.currentmapdata.mapID ~= nil and mm.currentmapdata.mapID ~= mapID) then
 			wt_debug("Unloading old navmesh...")
 			wt_global_information.Reset()
 			NavigationManager:UnloadNavMesh()
+			mm.currentmapdata.mapID = nil
 			return false
 		end
 		-- Load the mesh for our Map
-		if ( mapID ~= nil and Settings.GW2MINION.Zones~=nil and Settings.GW2MINION.Zones[tostring(mapID)] ~= nil ) then
+		if ( tonumber(mapID) ~= nil and Settings.GW2MINION.Zones~=nil and Settings.GW2MINION.Zones[tostring(mapID)] ~= nil ) then
 			gmapname = Settings.GW2MINION.Zones[tostring(mapID)].mapname
 			gmeshname = Settings.GW2MINION.Zones[tostring(mapID)].meshname			
-			if (gmeshname ~= nil and gmeshname ~= "" and gmeshname ~= "none") then				
+			if (gmeshname ~= nil and tostring(gmeshname) ~= "" and tostring(gmeshname) ~= "none") then				
 				local path = GetStartupPath().."\\Navigation\\"..tostring(gmeshname)
 				if (io.open(path..".obj")) then
 					if (NavigationManager:IsNavMeshLoaded()) then
