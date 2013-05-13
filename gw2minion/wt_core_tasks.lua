@@ -349,6 +349,7 @@ function wt_core_taskmanager:addFollowTask( ID, prio )
         newtask.last_execution = 0
         newtask.throttle = 500
         newtask.randomdist = math.random(130,700)
+		newtask.usedWP = false
 
         function newtask:execute()
             local Char = CharacterList:Get(tonumber(newtask.ID))
@@ -358,10 +359,11 @@ function wt_core_taskmanager:addFollowTask( ID, prio )
                     if ( Char.distance > 5000 ) then
                         if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
                             -- TELEPORT TO NEAREST WAYPOINT
-                            if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint()) then
+                            if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint() and not newtask.usedWP) then
 								local wp = wt_core_taskmanager:GetWaypoint(newtask.position, Char.distance)
 								if (wp ~= nil) then
 									wt_core_taskmanager:TimedWaypoint(wp.contentID)
+									newtask.usedWP = true
 								end
 							end
                         end
@@ -410,16 +412,18 @@ function wt_core_taskmanager:addRepairTask( priority )
 			newtask.throttle = 500
 			newtask.last_execution = 0			
 			newtask.repaired = false
+			newtask.usedWP = false
 			
 			function newtask:execute()				
 				mypos = Player.pos
 				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
 				 -- TELEPORT TO NEAREST WAYPOINT
-				if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint()) then
+				if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint() and not newtask.usedWP) then
 					if ( distance > 6500 ) then
 						local wp = wt_core_taskmanager:GetWaypoint(newtask.position, distance)
 						if (wp ~= nil) then
 							wt_core_taskmanager:TimedWaypoint(wp.contentID)
+							newtask.usedWP = true
 						end
 					end
 				end
@@ -576,16 +580,18 @@ function wt_core_taskmanager:addVendorTask( priority )
 			newtask.itemSlotID = nil
 			newtask.itemStackcount = nil
 			newtask.firstSell = true
+			newtask.usedWP = false
 			
 			function newtask:execute()				
 				mypos = Player.pos
 				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
 				 -- TELEPORT TO NEAREST WAYPOINT
-				if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint()) then
+				if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint() and not newtask.usedWP) then
 					if ( distance > 6500 ) then
 						local wp = wt_core_taskmanager:GetWaypoint(newtask.position, distance)
 						if (wp ~= nil) then
 							wt_core_taskmanager:TimedWaypoint(wp.contentID)
+							newtask.usedWP = true
 						end
 					end
 				end
@@ -917,16 +923,18 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 			newtask.totalStacks = tonumber(totalStacks)
 			newtask.wt_core_itemType = tonumber(wt_core_itemType)
 			newtask.quality = quality
+			newtask.usedWP = false
 			
 			function newtask:execute()				
 				mypos = Player.pos
 				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
 				 -- TELEPORT TO NEAREST WAYPOINT
-				if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint()) then
+				if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint() and not newtask.usedWP) then
 					if ( distance > 6500 ) then
 						local wp = wt_core_taskmanager:GetWaypoint(newtask.position, distance)
 						if (wp ~= nil) then
 							wt_core_taskmanager:TimedWaypoint(wp.contentID)
+							newtask.usedWP = true
 						end
 					end
 				end
@@ -1154,6 +1162,7 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 	newtask.EventComponents = {}
 	newtask.waiting = false
 	newtask.finishTimer = nil
+	newtask.usedWP = false
 	
 	function newtask:execute()
 
@@ -1223,11 +1232,12 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 				newtask.position = myevent.pos
 				if ( not newtask.spotreached ) then
 					 -- TELEPORT TO NEAREST WAYPOINT
-					if ( gUseWaypointsEvents == "1" and wt_core_taskmanager:OkayToWaypoint()) then
+					if ( gUseWaypointsEvents == "1" and wt_core_taskmanager:OkayToWaypoint() and not newtask.usedWP) then
 						if ( myevent.distance > 6500 ) then
 							local wp = wt_core_taskmanager:GetWaypoint(newtask.position, myevent.distance)
 							if (wp ~= nil) then
 								wt_core_taskmanager:TimedWaypoint(wp.contentID)
+								newtask.usedWP = true
 								if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	
 									MultiBotSend( "100;"..tonumber(Player.characterID),"gw2minion" ) -- Minions follow Leader
 								end
@@ -1508,8 +1518,8 @@ end
 -- returns the closest waypoint to a 3d position or nil if no suitable waypoint is found
 function wt_core_taskmanager:GetWaypoint(pos, currentDist)
 	local Waypoints = (WaypointList("onmesh,samezone,notcontested,mindistance=3500"))
-	local gotoWP = nil
-	local wpToPosDist = nil
+	local WP1, WP2, gotoWP = nil
+	local wpToPosDist,gotoDist = nil
 
 	if Waypoints then
 		i,wp = next(Waypoints)
@@ -1519,15 +1529,28 @@ function wt_core_taskmanager:GetWaypoint(pos, currentDist)
 
 			if ( wpToPosDist == nil or wpDist < wpToPosDist ) then
 				wpToPosDist = wpDist
-				gotoWP = newWP
+				WP2 = WP1
+				WP1 = newWP
 			end
 
 			i,wp = next(Waypoints,i)
 		 end
 	end
 	
+	-- check path distance to the two waypoints
+	local dist1 = PathDistance(GetPath(WP1.pos.x, WP1.pos.y, WP1.pos.z, pos.x, pos.y, pos.z))
+	local dist2 = PathDistance(GetPath(WP2.pos.x, WP2.pos.y, WP2.pos.z, pos.x, pos.y, pos.z))
+	
+	if (dist1 < dist2) then
+		gotoWP = WP1
+		gotoDist = dist1
+	else
+		gotoWP = WP2
+		gotoDist = dist2
+	end
+	
 	-- TELEPORT
-	if ( currentDist - 1000 > wpToPosDist ) then
+	if ( currentDist - 1000 >  gotoDist) then
 		return gotoWP
 	end
 	
@@ -1535,7 +1558,7 @@ function wt_core_taskmanager:GetWaypoint(pos, currentDist)
 end
 
 function wt_core_taskmanager:OkayToWaypoint()
-	return(os.difftime(os.time(), wt_core_taskmanager.waypointTimer) > 60) and not Player.inCombat
+	return(os.difftime(os.time(), wt_core_taskmanager.waypointTimer) > 180) and not Player.inCombat
 end
 
 function wt_core_taskmanager:TimedWaypoint(wpID)
