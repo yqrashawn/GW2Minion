@@ -227,6 +227,7 @@ function gw2minion.HandleInit()
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnStart.Name , wt_global_information.BtnStart.Event)
 	GUI_NewButton(wt_global_information.MainWindow.Name,"ToolBox","TB.toggle")
 	GUI_NewButton(wt_global_information.MainWindow.Name,"MeshManager","MM.toggle")
+	GUI_NewButton(wt_global_information.MainWindow.Name,"PartyManager","wt_core_partymanager.toggle")
 	GUI_NewField(wt_global_information.MainWindow.Name,"MyTask","gGW2MinionTask");
 	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnPulse.Name , wt_global_information.BtnPulse.Event,"BotStatus")
