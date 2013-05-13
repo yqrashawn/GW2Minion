@@ -4,7 +4,7 @@
 wt_core_state_idle = inheritsFrom( wt_core_state )
 wt_core_state_idle.name = "Idle"
 wt_core_state_idle.kelement_list = { }
-
+wt_core_state_idle.TaskChecks = {}
 
 ------------------------------------------------------------------------------
 -- MultiBotComServerConnect Cause & Effect
@@ -62,82 +62,6 @@ end
 
 
 ------------------------------------------------------------------------------
--- VendorSell Check Cause & Effect
-local c_vendorcheck = inheritsFrom( wt_cause )
-local e_vendorcheck = inheritsFrom( wt_effect )
-c_vendorcheck.throttle = 2500
-function c_vendorcheck:evaluate()
-	if ( ItemList.freeSlotCount <= 3 and wt_global_information.InventoryFull == 1) then
-		c_vendorcheck.EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
-		if ( TableSize( c_vendorcheck.EList ) > 0 ) then
-			local nextTarget
-			nextTarget, E = next( c_vendorcheck.EList )
-			if ( nextTarget ~= nil and nextTarget ~= 0 ) then
-				return true	
-			end
-		end
-	end
-	return false
-end
-function e_vendorcheck:execute()
-	wt_core_taskmanager:addVendorTask(5000)
-end
-
-------------------------------------------------------------------------------
--- VendorPurchase Check Cause & Effect
-local c_vendorbuycheck = inheritsFrom( wt_cause )
-local e_vendorbuycheck = inheritsFrom( wt_effect )
-c_vendorbuycheck.throttle = 2500
-function c_vendorbuycheck:evaluate()
-	if 	(gBuyGatheringTools == "1" and wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > tonumber(gGatheringToolStock)) or
-		(gBuySalvageKits == "1" and wt_core_items:NeedSalvageKits() and ItemList.freeSlotCount > tonumber(gSalvageKitStock)) then	
-		c_vendorbuycheck.EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
-		if ( TableSize( c_vendorbuycheck.EList ) > 0 ) then
-			local nextTarget
-			nextTarget, E = next( c_vendorbuycheck.EList )
-			if ( nextTarget ~= nil and nextTarget ~= 0 ) then
-				return true	
-			end
-		end
-	end
-	return false
-end
-function e_vendorbuycheck:execute()
-	if (wt_core_items:NeedGatheringTools() and gBuyGatheringTools == "1") then
-			wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ftool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-			wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ltool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-			wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.mtool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-	end
-	if (wt_core_items:NeedSalvageKits() and gBuySalvageKits == "1") then
-		wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality)
-	end
-end
-
-------------------------------------------------------------------------------
--- NeedRepair Check Cause & Effect
-local c_repaircheck = inheritsFrom( wt_cause )
-local e_repaircheck = inheritsFrom( wt_effect )
--- NeedRepair() is defined in /gw2lib/wt_utility.lua
-c_repaircheck.throttle = 2500
-function c_repaircheck:evaluate()
-	if ( gEnableRepair == "1" and NeedRepair() ) then
-		c_repaircheck.EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
-		if ( TableSize( c_repaircheck.EList ) > 0 ) then
-			local nextTarget
-			nextTarget, E = next( c_repaircheck.EList )
-			if ( nextTarget ~= nil and nextTarget ~= 0 ) then
-				return true
-			end
-		end
-	end	
-	return false
-end
-function e_repaircheck:execute()
-	wt_core_taskmanager:addRepairTask(4500)
-end
-
-
-------------------------------------------------------------------------------
 -- Gatherbale Cause & Effect
 local c_check_gatherable = inheritsFrom( wt_cause )
 local e_gather = inheritsFrom( wt_effect )
@@ -190,9 +114,6 @@ function wt_core_state_idle:initialize()
 	
 	local ke_doemertasks = wt_kelement:create( "EmergencyTask", c_doemergencytask, e_doemergencytask, 103 )
 	wt_core_state_idle:add( ke_doemertasks )
-	
-	local ke_aggro = wt_kelement:create( "AggroCheck", c_aggro, e_aggro, 100 )
-	wt_core_state_idle:add( ke_aggro )
 
 	local ke_deposit = wt_kelement:create( "DepositItems", c_deposit, e_deposit, 95 )
 	wt_core_state_idle:add( ke_deposit )
@@ -202,29 +123,17 @@ function wt_core_state_idle:initialize()
 	
 	--89 salvage
 	
-	local ke_revive_players = wt_kelement:create( "RevivePlayers", c_check_revive_players, e_revive_players, 89 )
+	local ke_revive_players = wt_kelement:create( "RevivePlayers", c_check_revive_players, e_revive_players, 88 )
 	wt_core_state_idle:add( ke_revive_players )
 	
-	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 88 )
+	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 87 )
 	wt_core_state_idle:add( ke_dopriotasks )
 	
-	local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 87 )
+	local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 86 )
 	wt_core_state_idle:add( ke_switchmesh )
-	
-	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 86 )
-	wt_core_state_idle:add( ke_vendorcheck )
-	
-	local ke_vendorbuycheck = wt_kelement:create( "VendorBuyCheck", c_vendorbuycheck, e_vendorbuycheck, 85 )
-	wt_core_state_idle:add( ke_vendorbuycheck )
-	
-	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 84 )
-	wt_core_state_idle:add( ke_repaircheck )
 	
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )
 	wt_core_state_idle:add( ke_revive )
-
-	local ke_event = wt_kelement:create("Event", c_event_check, e_event_check, 79 )
-	wt_core_state_idle:add( ke_event )
 	
 	--leave shroud from necro , prio 76
 	local ke_rest = wt_kelement:create( "Rest", c_rest, e_rest, 75 )
@@ -242,3 +151,93 @@ end
 wt_core_state_idle:initialize()
 -- register the State with the system
 wt_core_state_idle:register()
+
+--Only put tasks here which are solo bot specific...any other tasks that are shared
+--should go in wt_core_taskmanager:Update_Tasks()
+
+--UID = "REPAIR"
+--Throttle = 2500
+function wt_core_state_idle.repairCheck()
+	--wt_debug("repairCheck")
+	if ( gEnableRepair == "1" and NeedRepair() and not wt_core_taskmanager:CheckTaskQueue("REPAIR")) then
+		local repairList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
+		if ( TableSize( repairList ) > 0 ) then
+			local nextTarget
+			nextTarget, E = next( repairList )
+			if ( nextTarget ~= nil and nextTarget ~= 0 ) then
+				wt_core_taskmanager:addRepairTask(4500)
+			end
+		end
+	end	
+end
+table.insert(wt_core_state_idle.TaskChecks,{["func"]=wt_core_state_idle.repairCheck,["throttle"]=2500})
+
+--UID = "VENDORSELL"
+--Throttle = 2500
+function wt_core_state_idle.vendorSellCheck()
+	--wt_debug("vendorSellCheck")
+	if ( ItemList.freeSlotCount <= 3 and wt_global_information.InventoryFull == 1 and not wt_core_taskmanager:CheckTaskQueue("VENDORSELL")) then
+	local vendorList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
+		if ( TableSize( vendorList ) > 0 ) then
+			local nextTarget
+			nextTarget, E = next( vendorList )
+			if ( nextTarget ~= nil and nextTarget ~= 0 ) then
+				wt_core_taskmanager:addVendorTask(5000)
+			end
+		end
+	end
+end
+table.insert(wt_core_state_idle.TaskChecks,{["func"]=wt_core_state_idle.vendorSellCheck,["throttle"]=2500})
+
+--UID = "VENDORBUY..."
+--Throttle = 2500
+function wt_core_state_idle.vendorBuyCheck()
+	--wt_debug("vendorBuyCheck")
+	if 	(gBuyGatheringTools == "1" and wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > tonumber(gGatheringToolStock)) or
+		(gBuySalvageKits == "1" and wt_core_items:NeedSalvageKits() and ItemList.freeSlotCount > tonumber(gSalvageKitStock)) and
+		(not wt_core_taskmanager:CheckTaskQueue("VENDORBUY")) 
+	then	
+		local vendorList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
+		if ( TableSize( vendorList ) > 0 ) then
+			local nextTarget
+			nextTarget, E = next( vendorList )
+			if ( nextTarget ~= nil and nextTarget ~= 0 ) then
+				if (wt_core_items:NeedGatheringTools() and gBuyGatheringTools == "1") then
+					wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ftool, tonumber(gGatheringToolStock),gGatheringToolQuality)
+					wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ltool, tonumber(gGatheringToolStock),gGatheringToolQuality)
+					wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.mtool, tonumber(gGatheringToolStock),gGatheringToolQuality)
+				end
+				if (wt_core_items:NeedSalvageKits() and gBuySalvageKits == "1") then
+					wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality)
+				end
+			end
+		end
+	end
+end
+table.insert(wt_core_state_idle.TaskChecks,{["func"]=wt_core_state_idle.vendorBuyCheck,["throttle"]=2500})
+
+--Throttle = 500
+function wt_core_state_idle.aggroCheck()
+	--wt_debug("aggroCheck")
+	if ( Player.inCombat ) then
+		local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los,incombat,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
+		if ( TableSize( TList ) > 0 ) then
+			local id, E  = next( TList )
+			if ( id ~= nil and id ~= 0 and E ~= nil) then
+				wt_core_taskmanager:addKillTask( id, E, 3000 )
+				return false
+			end		
+		end
+	end
+	
+	local TList = ( CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil) then
+			wt_core_taskmanager:addKillTask( id, E, 2500 )
+			return false
+		end		
+	end	
+	return false
+end
+table.insert(wt_core_state_idle.TaskChecks,{["func"]=wt_core_state_idle.aggroCheck,["throttle"]=500})

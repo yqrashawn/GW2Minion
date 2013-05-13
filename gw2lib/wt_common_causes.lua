@@ -228,92 +228,6 @@ end
 
 
 --*************************************************************
--- GROUP BOTTING Aggro Cause & Effect
--- I'm abusing the C&E System a bit ;) by using the c_groupaggro:evaluate() to add "Kill Tasks" to the Tasklist
--- These Kill Tasks are then performing the state change to combat
---*************************************************************
-c_groupaggro = inheritsFrom( wt_cause )
-e_groupaggro = inheritsFrom( wt_effect )
-function c_groupaggro:evaluate()
-	-- GROUP BOTTING
-	if (gMinionEnabled == "1" and MultiBotIsConnected( )) then
-		
-		-- LEADER
-		if ( Player:GetRole() == 1 ) then	
-			local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los,incombat,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
-			if ( TableSize( TList ) > 0 ) then
-				local id, E  = next( TList )
-				if ( id ~= nil and id ~= 0 and E ~= nil) then
-					wt_core_taskmanager:addKillTask( id, E, 3000 )
-					return false
-				end		
-			end	
-			
-			local TList = ( CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
-			if ( TableSize( TList ) > 0 ) then
-				local id, E  = next( TList )
-				if ( id ~= nil and id ~= 0 and E ~= nil) then
-					wt_core_taskmanager:addKillTask( id, E, 2500 )
-					return false
-				end		
-			end	
-					
-		
-		-- MINION
-		else
-			local TList = ( CharacterList( "nearest,los,incombat,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
-			if ( TableSize( TList ) > 0 ) then
-				local id, E  = next( TList )
-				if ( id ~= nil and id ~= 0 and E ~= nil) then
-					wt_core_taskmanager:addKillTask( id, E, 3000 )
-					MultiBotSend( "6;"..tonumber(id),"gw2minion" )	-- Inform leader about our aggro target
-					return false
-				end		
-			end
-		end		
-	end	
-	return false
-end
-function e_groupaggro:execute()
-	return false
-end
-
-
---*************************************************************
--- SOLO Aggro Cause & Effect
---*************************************************************
-c_aggro = inheritsFrom( wt_cause )
-e_aggro = inheritsFrom( wt_effect )
-function c_aggro:evaluate()
-	-- SOLO BOTTING
-	if ( Player.inCombat ) then
-		local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los,incombat,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
-		if ( TableSize( TList ) > 0 ) then
-			local id, E  = next( TList )
-			if ( id ~= nil and id ~= 0 and E ~= nil) then
-				wt_core_taskmanager:addKillTask( id, E, 3000 )
-				return false
-			end		
-		end
-	end
-	
-	local TList = ( CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
-	if ( TableSize( TList ) > 0 ) then
-		local id, E  = next( TList )
-		if ( id ~= nil and id ~= 0 and E ~= nil) then
-			wt_core_taskmanager:addKillTask( id, E, 2500 )
-			return false
-		end		
-	end	
-	return false
-end
-function e_aggro:execute()	
-	return false
-end
-
-
-
---*************************************************************
 -- DepositItems Cause & Effect
 --*************************************************************
 c_deposit = inheritsFrom( wt_cause )
@@ -568,7 +482,7 @@ end
 c_check_revive_players = inheritsFrom( wt_cause )
 e_revive_players = inheritsFrom( wt_effect )
 function c_check_revive_players:evaluate()
-	if (Player.health.percent < 60) then
+	if (Player.health.percent < 60 or TableSize(CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose )) > 0 ) then
 		return false
 	end
 	local playerList = CharacterList("nearest,player,downed,maxdistance=2500,onmesh")
@@ -742,43 +656,4 @@ function c_stopcbmove:evaluate()
 end
 function e_stopcbmove:execute()
 	
-end
-
---************************************************************
--- Check For Active Events and Queue Them
---************************************************************
--- cheating with this one also, similar to aggro, by doing action in cause
-c_event_check = inheritsFrom( wt_cause )
-e_event_check = inheritsFrom( wt_effect )
-function c_event_check:evaluate()
-	if ( gdoEvents == "0" ) then
-		return false
-	end
-	local MMList = MapMarkerList( "worldmarkertype=20" )
-	c_event_check.event = nil
-	if ( TableSize( MMList ) > 0 ) then
-		i, entry = next( MMList )
-		while ( i ~= nil and entry ~= nil ) do
-			local etype = entry.type
-			local mtype = entry.markertype
-			if ( mtype==6 and entry.onmesh and entry.eventID ~= 0 ) then
-				if (c_event_check.event == nil or entry.distance < c_event_check.event.distance) then
-					c_event_check.event = entry
-				end
-			end
-			i, entry = next( MMList, i )
-		end
-	end
-	if 	(c_event_check.event ~= nil) and 
-		(wt_core_taskmanager.eventBlacklist[c_event_check.event.eventID] == nil) and 
-		(wt_core_taskmanager.userEventBlacklist[c_event_check.event.eventID] == nil)
-	then
-		local lastrun = wt_core_taskmanager.Customtask_history["Event"..tostring(c_event_check.event.eventID)] or 0
-		if ((wt_global_information.Now - lastrun) > 450000) then
-			wt_core_taskmanager:addEventTask(i, c_event_check.event , 2500)
-		end
-	end
-	return false
-end
-function e_event_check:execute()
 end

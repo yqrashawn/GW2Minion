@@ -358,40 +358,12 @@ function wt_core_taskmanager:addFollowTask( ID, prio )
                     if ( Char.distance > 5000 ) then
                         if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
                             -- TELEPORT TO NEAREST WAYPOINT
-                            if ( gUseWaypoints == "1" ) then
-                                if  not (Player.inCombat) then
-                                    local wpID
-                                    local wpFollowdistance = 999999
-                                    local Waypoints = (WaypointList("onmesh,samezone,notcontested,mindistance=3500"))
-                                    local Followcheckdistance = 999999
-
-                                    if Waypoints then
-                                        i,wp = next(Waypoints)
-                                        while ( i ~= nil ) do
-                                            local newWP = WaypointList:Get(i)
-                                            local wpFollowdistanceex = Distance3D(newWP.pos.x, newWP.pos.y, newWP.pos.z, newtask.position.x, newtask.position.y, newtask.position.z)
-
-                                            if ( wpFollowdistanceex < Followcheckdistance ) then
-                                                wpFollowdistance = wpFollowdistanceex
-                                                Followcheckdistance = wpFollowdistanceex
-                                                wpID = newWP.contentID
-                                            end
-
-                                            i,wp = next(Waypoints,i)
-                                         end
-
-                                        -- TELEPORT
-                                        if ( Char.distance + 1000 > wpFollowdistance ) then
-                                            speed = Player:GetSpeed()
-                                            Player:SetSpeed(0)
-                                            Player:SetMovement(0)
-                                            wt_core_taskmanager:TimedWaypoint(wpID)
-                                            Player:UnSetMovement(0)
-                                            Player:SetSpeed(speed)
-                                        end
-                                    end
-                                end
-                            end
+                            if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint()) then
+								local wp = wt_core_taskmanager:GetWaypoint(newtask.position, Char.distance)
+								if (wp ~= nil) then
+									wt_core_taskmanager:TimedWaypoint(wp.contentID)
+								end
+							end
                         end
                     elseif ( Char.distance > newtask.randomdist) then
                         if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
@@ -443,37 +415,11 @@ function wt_core_taskmanager:addRepairTask( priority )
 				mypos = Player.pos
 				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
 				 -- TELEPORT TO NEAREST WAYPOINT
-				if ( gUseWaypoints == "1" ) then
-					if ( distance > 6500 ) and not (Player.inCombat) then
-						local wpID
-						local wpvendordistance = 999999
-						local Waypoints = (WaypointList("onmesh,samezone,notcontested,mindistance=3500"))
-						local vendorcheckdistance = 999999
-
-						if Waypoints then
-							i,wp = next(Waypoints)
-							while ( i ~= nil ) do
-								local newWP = WaypointList:Get(i)
-								local wpvendordistanceex = Distance3D(newWP.pos.x, newWP.pos.y, newWP.pos.z, newtask.position.x, newtask.position.y, newtask.position.z)
-
-								if ( wpvendordistanceex < vendorcheckdistance ) then
-									wpvendordistance = wpvendordistanceex
-									vendorcheckdistance = wpvendordistanceex
-									wpID = newWP.contentID
-								end
-
-								i,wp = next(Waypoints,i)
-							 end
-
-							-- TELEPORT
-							if ( distance + 1000 > wpvendordistance ) then
-								speed = Player:GetSpeed()
-								Player:SetSpeed(0)
-								Player:SetMovement(0)
-								wt_core_taskmanager:TimedWaypoint(wpID)
-								Player:UnSetMovement(0)
-								Player:SetSpeed(speed)
-							end
+				if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint()) then
+					if ( distance > 6500 ) then
+						local wp = wt_core_taskmanager:GetWaypoint(newtask.position, distance)
+						if (wp ~= nil) then
+							wt_core_taskmanager:TimedWaypoint(wp.contentID)
 						end
 					end
 				end
@@ -617,7 +563,7 @@ function wt_core_taskmanager:addVendorTask( priority )
 		if ( nextTarget ~= nil and nextTarget ~= 0 and E.characterID ~= nil and wt_core_taskmanager.npcBlacklist[E.characterID] == nil) then	
 			
 			local newtask = inheritsFrom( wt_task )
-			newtask.UID = "VENDOR"
+			newtask.UID = "VENDORSELL"
 			newtask.timestamp = wt_global_information.Now
 			newtask.name = "GoTo Vendor"
 			newtask.priority = tonumber(priority)
@@ -635,37 +581,11 @@ function wt_core_taskmanager:addVendorTask( priority )
 				mypos = Player.pos
 				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
 				 -- TELEPORT TO NEAREST WAYPOINT
-				if ( gUseWaypoints == "1" ) then
-					if ( distance > 6500 ) and not (Player.inCombat) then
-						local wpID
-						local wpvendordistance = 999999
-						local Waypoints = (WaypointList("onmesh,samezone,notcontested,mindistance=3500"))
-						local vendorcheckdistance = 999999
-
-						if Waypoints then
-							i,wp = next(Waypoints)
-							while ( i ~= nil ) do
-								local newWP = WaypointList:Get(i)
-								local wpvendordistanceex = Distance3D(newWP.pos.x, newWP.pos.y, newWP.pos.z, newtask.position.x, newtask.position.y, newtask.position.z)
-
-								if ( wpvendordistanceex < vendorcheckdistance ) then
-									wpvendordistance = wpvendordistanceex
-									vendorcheckdistance = wpvendordistanceex
-									wpID = newWP.contentID
-								end
-
-								i,wp = next(Waypoints,i)
-							 end
-
-							-- TELEPORT
-							if ( distance + 1000 > wpvendordistance ) then
-								speed = Player:GetSpeed()
-								Player:SetSpeed(0)
-								Player:SetMovement(0)
-								wt_core_taskmanager:TimedWaypoint(wpID)
-								Player:UnSetMovement(0)
-								Player:SetSpeed(speed)
-							end
+				if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint()) then
+					if ( distance > 6500 ) then
+						local wp = wt_core_taskmanager:GetWaypoint(newtask.position, distance)
+						if (wp ~= nil) then
+							wt_core_taskmanager:TimedWaypoint(wp.contentID)
 						end
 					end
 				end
@@ -1002,37 +922,11 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 				mypos = Player.pos
 				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
 				 -- TELEPORT TO NEAREST WAYPOINT
-				if ( gUseWaypoints == "1" ) then
-					if ( distance > 6500 ) and not (Player.inCombat) then
-						local wpID
-						local wpvendordistance = 999999
-						local Waypoints = (WaypointList("onmesh,samezone,notcontested,mindistance=3500"))
-						local vendorcheckdistance = 999999
-
-						if Waypoints then
-							i,wp = next(Waypoints)
-							while ( i ~= nil ) do
-								local newWP = WaypointList:Get(i)
-								local wpvendordistanceex = Distance3D(newWP.pos.x, newWP.pos.y, newWP.pos.z, newtask.position.x, newtask.position.y, newtask.position.z)
-
-								if ( wpvendordistanceex < vendorcheckdistance ) then
-									wpvendordistance = wpvendordistanceex
-									vendorcheckdistance = wpvendordistanceex
-									wpID = newWP.contentID
-								end
-
-								i,wp = next(Waypoints,i)
-							 end
-
-							-- TELEPORT
-							if ( distance + 1000 > wpvendordistance ) then
-								speed = Player:GetSpeed()
-								Player:SetSpeed(0)
-								Player:SetMovement(0)
-								wt_core_taskmanager:TimedWaypoint(wpID)
-								Player:UnSetMovement(0)
-								Player:SetSpeed(speed)
-							end
+				if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint()) then
+					if ( distance > 6500 ) then
+						local wp = wt_core_taskmanager:GetWaypoint(newtask.position, distance)
+						if (wp ~= nil) then
+							wt_core_taskmanager:TimedWaypoint(wp.contentID)
 						end
 					end
 				end
@@ -1330,35 +1224,12 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 				if ( not newtask.spotreached ) then
 					 -- TELEPORT TO NEAREST WAYPOINT
 					if ( gUseWaypointsEvents == "1" and wt_core_taskmanager:OkayToWaypoint()) then
-						if ( myevent.distance > 6500 ) and not (Player.inCombat) then
-							local wpID
-							local wpvendordistance = 999999
-							local Waypoints = (WaypointList("onmesh,samezone,notcontested"))
-							local vendorcheckdistance = 999999
-
-							if Waypoints then
-								i,wp = next(Waypoints)
-								while ( i ~= nil ) do
-									local newWP = WaypointList:Get(i)
-									local wpvendordistanceex = Distance3D(newWP.pos.x, newWP.pos.y, newWP.pos.z, newtask.position.x, newtask.position.y, newtask.position.z)
-
-									if ( wpvendordistanceex < vendorcheckdistance ) then
-										wpvendordistance = wpvendordistanceex
-										vendorcheckdistance = wpvendordistanceex
-										wpID = newWP.contentID
-									end
-
-									i,wp = next(Waypoints,i)
-								 end
-
-								-- TELEPORT
-								if ( myevent.distance + 2000 > wpvendordistance ) then
-									speed = Player:GetSpeed()
-									Player:SetSpeed(0)
-									Player:SetMovement(0)
-									wt_core_taskmanager:TimedWaypoint(wpID)
-									Player:UnSetMovement(0)
-									Player:SetSpeed(speed)
+						if ( myevent.distance > 6500 ) then
+							local wp = wt_core_taskmanager:GetWaypoint(newtask.position, myevent.distance)
+							if (wp ~= nil) then
+								wt_core_taskmanager:TimedWaypoint(wp.contentID)
+								if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	
+									MultiBotSend( "100;"..tonumber(Player.characterID),"gw2minion" ) -- Minions follow Leader
 								end
 							end
 						end
@@ -1402,7 +1273,7 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 						
 						newtask.name = "Event: Waiting.."
 						-- Search for nearby enemies
-						local Elist = ( CharacterList( "nearest,attackable,alive,incombat,noCritter,onmesh,maxdistance=2500" ) )
+						local Elist = ( CharacterList( "nearest,attackable,alive,incombat,noCritter,onmesh,maxdistance=2000" ) )
 						if ( TableSize( Elist ) > 0 ) then
 							nextTarget, E  = next( Elist )
 							if ( nextTarget ~= nil and E ~= nil ) then
@@ -1418,7 +1289,7 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 								end
 							end
 						end
-						local npcList = CharacterList("nearest,npc,dead,maxdistance=2500,friendly,onmesh")
+						local npcList = CharacterList("nearest,npc,dead,maxdistance=2000,friendly,onmesh")
 						if ( TableSize( npcList ) > 0 ) then
 							local nextTarget, E  = next( npcList )
 							if ( nextTarget ~= nil and E ~= nil ) then
@@ -1450,7 +1321,7 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 							if ( myevent.distance > 3000 ) then	
 								Player:MoveToRandomPointAroundCircle(  newtask.position.x, newtask.position.y, newtask.position.z, 750 )
 							else
-								TargetList = ( CharacterList( "nearest,attackable,alive,maxdistance=2500,onmesh") )
+								TargetList = ( CharacterList( "nearest,attackable,alive,maxdistance=2000,onmesh") )
 								if ( TargetList ~= nil ) then 	
 									nextTarget, E  = next( TargetList )
 									if ( nextTarget ~= nil ) then
@@ -1513,50 +1384,6 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 	end
 
 	wt_core_taskmanager:addCustomtask( newtask )	
-end
-
--- Special task to open eggs
-function wt_core_taskmanager:addEggTask(egg)     
-                 --[[       local newtask = inheritsFrom( wt_task )
-                        newtask.name = "KillEggs"
-                        newtask.priority = 300
-                        newtask.position = egg.pos
-                        newtask.done = false
-                        newtask.last_execution = 0
-                        newtask.throttle = 500
-                       
-                        function newtask:execute()
-                                local mypos = Player.pos
-                                local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
-                                if ( distance > 100 ) then                                             
-                                        if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
-                                                Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 50 )
-                                                newtask.last_execution = wt_global_information.Now
-                                        end
-                                        newtask.name = "SquishEgg, dist: "..(math.floor(distance))
-                                else
-                                        local EList = GadgetList("contentID=227767, nearest,onmesh")
-                                        if ( TableSize( EList ) > 0 ) then
-                                                local nextTarget
-                                                nextTarget, E = next( EList )
-                                                if ( nextTarget ~= nil and nextTarget ~= 0 and E.distance < 150) then   
-													Player:Use( nextTarget )                                                                          
-                                                else
-													newtask.done = true
-                                                end
-                                        end
-                                        newtask.done = true
-                                end
-                        end
-                       
-                        function newtask:isFinished()
-                                if ( newtask.done ) then
-                                    return true
-                                end
-                                return false
-                        end    
-						wt_debug("ADDED EGG")
-                        wt_core_taskmanager:addCustomtask( newtask )]]
 end
 
 -- Pause task stops the bot for random tick count with EmergencyTask priority
@@ -1678,12 +1505,41 @@ function wt_core_taskmanager:CleanBlacklist()
 	end
 end
 
+-- returns the closest waypoint to a 3d position or nil if no suitable waypoint is found
+function wt_core_taskmanager:GetWaypoint(pos, currentDist)
+	local Waypoints = (WaypointList("onmesh,samezone,notcontested,mindistance=3500"))
+	local gotoWP = nil
+	local wpToPosDist = nil
+
+	if Waypoints then
+		i,wp = next(Waypoints)
+		while ( i ~= nil ) do
+			local newWP = WaypointList:Get(i)
+			local wpDist = Distance3D(newWP.pos.x, newWP.pos.y, newWP.pos.z, pos.x, pos.y, pos.z)
+
+			if ( wpToPosDist == nil or wpDist < wpToPosDist ) then
+				wpToPosDist = wpDist
+				gotoWP = newWP
+			end
+
+			i,wp = next(Waypoints,i)
+		 end
+	end
+	
+	-- TELEPORT
+	if ( currentDist - 1000 > wpToPosDist ) then
+		return gotoWP
+	end
+	
+	return nil
+end
+
 function wt_core_taskmanager:OkayToWaypoint()
-	return(os.difftime(os.time(), wt_core_taskmanager.waypointTimer) > 300)
+	return(os.difftime(os.time(), wt_core_taskmanager.waypointTimer) > 60) and not Player.inCombat
 end
 
 function wt_core_taskmanager:TimedWaypoint(wpID)
-	wt_debug("Teleporting to contentID "..contentID)
+	wt_debug("Teleporting to contentID "..tostring(wpID))
 	wt_core_taskmanager.waypointTimer = os.time()
 	Player:TeleportToWaypoint(wpID)
 end

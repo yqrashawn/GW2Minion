@@ -2,7 +2,7 @@
 -- HandleMultiBotMessages
 --**********************************************************
 function HandleMultiBotMessages( event, message, channel )	
-wt_debug("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
+--wt_debug("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
 		
 	if (tostring(channel) == "gw2minion" ) then
 		-- SET CLIENT ROLE, multibotcomserver sends this info when a bot enters/leaves the channel
@@ -170,6 +170,20 @@ wt_debug("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
 								wt_debug( "Leader said to blacklist event "..msg )
 							end		
 							
+						--  Do Event
+						elseif ( tonumber(msgID) == 24 and tonumber(msg) ~= nil) then -- Leader tells minions to do event
+							if ( Player:GetRole() ~= 1 ) then
+								local eventList = MapMarkerList("eventID="..tostring(msg))
+								if (TableSize(eventList) > 0) then
+									local _,event = next(eventList)
+									if (event ~= nil) then
+										local priority = 2500
+										if (gEventFarming == "1") then priority = 4000 end
+										wt_core_taskmanager:addEventTask(_,event,priority)
+										wt_debug( "Leader said to blacklist event "..msg )
+									end
+								end
+							end	
 							
 						-- DEV
 						elseif ( tonumber(msgID) == 50 ) then -- Tell Minions to Load a Mesh

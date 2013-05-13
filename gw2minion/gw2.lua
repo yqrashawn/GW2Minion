@@ -139,6 +139,9 @@ end
 if ( Settings.GW2MINION.gEventTimeout == nil ) then
 	Settings.GW2MINION.gEventTimeout = "600"
 end
+if ( Settings.GW2MINION.gEventFarming == nil ) then
+	Settings.GW2MINION.gEventFarming = "0"
+end
 
 function wt_global_information.OnUpdate( event, tickcount )
 	wt_global_information.Now = tickcount
@@ -263,6 +266,7 @@ function gw2minion.HandleInit()
 	GUI_NewField(wt_global_information.MainWindow.Name,"Exit GW2 StuckCount","gUnstuckCount","AdvancedSettings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Event Timeout", "gEventTimeout","AdvancedSettings");
 	GUI_NewButton(wt_global_information.MainWindow.Name,"Blacklist Current Event","wt_core_taskmanager.blacklistCurrentEvent","AdvancedSettings")
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Event Farming","gEventFarming","AdvancedSettings")
 	gGW2MinionTask = "            "
 	
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,"BotStatus");
@@ -304,6 +308,7 @@ function gw2minion.HandleInit()
 	gDoUnstuck = Settings.GW2MINION.gDoUnstuck
 	gUnstuckCount = Settings.GW2MINION.gUnstuckCount
 	gEventTimeout = Settings.GW2MINION.gEventTimeout
+	gEventFarming = Settings.GW2MINION.gEventFarming
 	
 	wt_debug("GUI Setup done")
 	wt_core_controller.requestStateChange(wt_core_state_idle)
@@ -341,6 +346,7 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "gDoUnstuck" or
 				k == "gUnstuckCount" or
 				k == "gEventTimeout" or
+				k == "gEventFarming" or
 				k == "gBuyBestSalvageKit")
 		then
 			Settings.GW2MINION[tostring(k)] = v

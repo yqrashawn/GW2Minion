@@ -3,9 +3,10 @@
 wt_core_taskmanager = { }
 wt_core_taskmanager.current_task = nil
 wt_core_taskmanager.last_task = nil
-wt_core_taskmanager.Customtask_list = { }
+wt_core_taskmanager.Customtask_list = {}
 wt_core_taskmanager.Customtask_history = {}
-wt_core_taskmanager.CustomLuaFunctions = { }
+wt_core_taskmanager.TaskCheck_history = {}
+wt_core_taskmanager.CustomLuaFunctions = {}
 wt_core_taskmanager.UpdateTaskListTmr = 0
 wt_core_taskmanager.markerList = { }
 
@@ -125,8 +126,11 @@ function wt_core_taskmanager.CleanTasklist()
 	end
 end
 
--------------------------------------------------------------------------
--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+--This is the BIG function for getting all the tasks in the task queue for
+--each pulse. All tasks that need to be checked should be queued here so
+--that they can be pulled by priority by the EmergencyTasks, PrioTasks CEs
+--------------------------------------------------------------------------
 function wt_core_taskmanager:Update_Tasks( )
 	if (wt_core_taskmanager.UpdateTaskListTmr == 0 or wt_global_information.Now - wt_core_taskmanager.UpdateTaskListTmr > 1000) then
 		wt_core_taskmanager.UpdateTaskListTmr = 0
@@ -137,82 +141,126 @@ function wt_core_taskmanager:Update_Tasks( )
 		-- CLEAN BLACKLIST, Kick out objects whose blacklist time rhas expired
 		wt_core_taskmanager.CleanBlacklist()
 		
-		
 		-- ADD NEW TASKS & Refresh existing Tasks
 			-- Add Zone specific Tasks		
 		--TODO: See if it makes sense to queue up CustomTasks for the minions too:
 		wt_core_taskmanager.AddCustomTasks()
 			
-			if (gMinionEnabled == "0" or (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1)) then
-				-- Add all default Tasks			
-				-- Updating Red-MarkerList-data if needed
-				if ( wt_core_taskmanager.markerList == nil or TableSize( wt_core_taskmanager.markerList ) == 0 or MarkersNeedUpdate() ) then				
-					wt_core_taskmanager.markerList = MarkerList()
-				end
-				
-				local MMList = MapMarkerList( "worldmarkertype=20" )
-				if ( TableSize( MMList ) > 0 ) then
-					i, entry = next( MMList )
-					while ( i ~= nil and entry ~= nil ) do
-						local etype = entry.type
-						local mtype = entry.markertype
-						
-							-- Locked Waypoints
-							if ( mtype==15 and etype == 36 and entry.onmesh) then
-								local mPos = entry.pos
-								if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
-									wt_core_taskmanager:addWaypointTask( entry )
-								end
-								
-							-- Point Of Interest
-							elseif( etype == 458 and entry.onmesh) then
-								local mPos = entry.pos
-								if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
-									wt_core_taskmanager:addPOITask( entry )
-								end
-							
-							-- Unfinished HeartQuests
-							elseif ( mtype==8 and (etype == 146 or etype == 143) and entry.onmesh) then
-								local mPos = entry.pos
-								if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
-									local lastrun = wt_core_taskmanager.Customtask_history["HeartQuest"..tostring(math.floor(entry.pos.x))] or 0
-									if ((wt_global_information.Now - lastrun) > 650000) then
-										wt_core_taskmanager:addHeartQuestTask( entry )
-									end
-								end				
+		-- First we grab all the tasks that issue from map markers and farmspots
+		-- These are queued by either a solo bot or the leader for group bots
+		if (gMinionEnabled == "0" or (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1)) then
+			-- Add all default Tasks			
+			-- Updating Red-MarkerList-data if needed
+			if ( wt_core_taskmanager.markerList == nil or TableSize( wt_core_taskmanager.markerList ) == 0 or MarkersNeedUpdate() ) then				
+				wt_core_taskmanager.markerList = MarkerList()
+			end
+			
+			-- MapMarker Tasks
+			local MMList = MapMarkerList( "worldmarkertype=20" )
+			if ( TableSize( MMList ) > 0 ) then
+				i, entry = next( MMList )
+				local eventIndex, event = nil
+				while ( i ~= nil and entry ~= nil ) do
+					local etype = entry.type
+					local mtype = entry.markertype
+					
+						-- Locked Waypoints
+						if ( mtype==15 and etype == 36 and entry.onmesh) then
+							local mPos = entry.pos
+							if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
+								wt_core_taskmanager:addWaypointTask( entry )
 							end
 							
-						i, entry = next( MMList, i )
-					end
-				end
-				
-				-- Red Markers as Farmspot
-				if ( wt_core_taskmanager.markerList ~= nil ) then
-					local we = Player
-					j, marker = next( wt_core_taskmanager.markerList )
-					while ( j ~= nil and marker ~= nil ) do
-						local myPos = we.pos
-						distance =  Distance3D( marker.x, marker.y, marker.z, myPos.x, myPos.y, myPos.z )
-						if ( distance > 1000 and marker.type == 0 and ( ( we.level >= marker.minlevel and we.level <= marker.maxlevel ) or gIgnoreMarkerCap == "1" ) ) then  --type 0 is farmspot						
-							wt_core_taskmanager:addFarmSpotTask( marker )
+						-- Point Of Interest
+						elseif( etype == 458 and entry.onmesh) then
+							local mPos = entry.pos
+							if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
+								wt_core_taskmanager:addPOITask( entry )
+							end
+						
+						-- Unfinished HeartQuests
+						elseif ( mtype==8 and (etype == 146 or etype == 143) and entry.onmesh) then
+							local mPos = entry.pos
+							if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
+								local lastrun = wt_core_taskmanager.Customtask_history["HeartQuest"..tostring(math.floor(entry.pos.x))] or 0
+								if ((wt_global_information.Now - lastrun) > 650000) then
+									wt_core_taskmanager:addHeartQuestTask( entry )
+								end
+							end				
+						
+						-- Events
+						-- Wait until we go through the entire MapMarkerList and only queue the closest event that is not blacklisted
+						elseif ( gdoEvents == "1" and mtype==6 and entry.onmesh and entry.eventID ~= 0 and 
+									wt_core_taskmanager.eventBlacklist[entry.eventID] == nil and 
+									wt_core_taskmanager.userEventBlacklist[entry.eventID] == nil and
+									(event == nil or entry.distance < event.distance)) 
+						then
+							event = entry
 						end
-						j, marker = next( wt_core_taskmanager.markerList, j )
+						
+					i, entry = next( MMList, i )
+					
+					if  ((i == nil or entry == nil) and event ~= nil) then
+						-- Add task for the closest event
+						local lastrun = wt_core_taskmanager.Customtask_history["Event"..tostring(event.eventID)] or 0
+						if ((wt_global_information.Now - lastrun) > 450000) then
+							local priority = 2500
+							if (gEventFarming == "1") then priority = 4000 end
+							wt_core_taskmanager:addEventTask( i, event, priority)
+						end	
 					end
 				end
-				
-				-- if we have no task because the playerlevel is above the maplevel and the user forgot to check the ignore marker cap button:
-				if ( TableSize(wt_core_taskmanager.Customtask_list) == 0 and gIgnoreMarkerCap == "0" and NavigationManager:IsNavMeshLoaded()) then
-					gIgnoreMarkerCap = "1"
-				end
-				if ( TableSize(wt_core_taskmanager.Customtask_list) == 0 and gIgnoreMarkerCap == "1" and NavigationManager:IsNavMeshLoaded()) then
-					wt_error("No Tasks availiable! Check your navmesh! You need more than 1 Red Marker!")
-				end 
 			end
+			
+			-- Farmspot Tasks
+			if ( wt_core_taskmanager.markerList ~= nil ) then
+				local we = Player
+				j, marker = next( wt_core_taskmanager.markerList )
+				while ( j ~= nil and marker ~= nil ) do
+					local myPos = we.pos
+					distance =  Distance3D( marker.x, marker.y, marker.z, myPos.x, myPos.y, myPos.z )
+					if ( distance > 1000 and marker.type == 0 and ( ( we.level >= marker.minlevel and we.level <= marker.maxlevel ) or gIgnoreMarkerCap == "1" ) ) then  --type 0 is farmspot						
+						wt_core_taskmanager:addFarmSpotTask( marker )
+					end
+					j, marker = next( wt_core_taskmanager.markerList, j )
+				end
+			end
+			
+			-- if we have no task because the playerlevel is above the maplevel and the user forgot to check the ignore marker cap button:
+			if ( TableSize(wt_core_taskmanager.Customtask_list) == 0 and gIgnoreMarkerCap == "0" and NavigationManager:IsNavMeshLoaded()) then
+				gIgnoreMarkerCap = "1"
+			end
+			if ( TableSize(wt_core_taskmanager.Customtask_list) == 0 and gIgnoreMarkerCap == "1" and NavigationManager:IsNavMeshLoaded()) then
+				wt_error("No Tasks availiable! Check your navmesh! You need more than 1 Red Marker!")
+			end 
+		end
 		
-		-- Pick Task with highest Prio
+		-- Add repair/vendor/event/aggro tasks from wt_core_state_idle, wt_core_state_minion, and wt_core_state_leader
+		-- These are key, value pairs where key = the function to check and value = the throttle
+		local taskChecks = nil
+		if (gMinionEnabled == "0") then
+			taskChecks = wt_core_state_idle.TaskChecks
+		elseif (gMinionEnabled == "1" and Player:GetRole() == 1) then
+			taskChecks = wt_core_state_leader.TaskChecks
+		else
+			taskChecks = wt_core_state_minion.TaskChecks
+		end
+		if (taskChecks ~= nil) then
+			local index, taskTable = next(taskChecks)
+			while (index ~= nil) do
+				if 	(wt_core_taskmanager.TaskCheck_history[taskTable.func] == nil) or
+					(wt_global_information.Now - wt_core_taskmanager.TaskCheck_history[taskTable.func] > taskTable.throttle)
+				then
+					wt_core_taskmanager.TaskCheck_history[taskTable.func] = wt_global_information.Now
+					taskTable.func()
+				end
+				index, taskTable = next(taskChecks, index)
+			end
+		end
+		
+		-- Now all tasks should be queued....pick the one with highest priority
 		wt_core_taskmanager.SelectNextTask()
 	end	
-	
 	
 	--wt_debug( "TasksInList : " .. TableSize( wt_core_taskmanager.Customtask_list))
 	--[[--------------------OLD:
@@ -266,4 +314,15 @@ function wt_core_taskmanager.ClearTasks()
 	--wt_core_taskmanager.CustomLuaFunctions = { }
 	wt_core_taskmanager.markerList = { }
 	wt_debug("All Tasks cleared...")
+end
+
+-- Check to see if this task already exists so we don't spam onmesh unnecessarily
+function wt_core_taskmanager:CheckTaskQueue(taskUID)
+	if (wt_core_taskmanager.Customtask_list ~= nil) then
+		for uid, task in pairs(wt_core_taskmanager.Customtask_list) do
+			if (string.find(uid, taskUID) ~= nil) then
+				return true
+			end
+		end
+	end
 end

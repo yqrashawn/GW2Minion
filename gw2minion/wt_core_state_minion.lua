@@ -4,8 +4,7 @@ wt_core_state_minion = inheritsFrom(wt_core_state)
 wt_core_state_minion.name = "Minion"
 wt_core_state_minion.kelement_list = { }
 wt_core_state_minion.IdleTmr = 0
-
-
+wt_core_state_minion.TaskChecks = {}
 
 ------------------------------------------------------------------------------
 -- NoLeader Cause & Effect
@@ -34,90 +33,6 @@ end
 -- Aggro is in wt_common_causes
 
 -- DepositItems is in wt_common_causes
-
-
- ------------------------------------------------------------------------------
--- Vendoring Check Cause & Effect
-local c_vendorcheck = inheritsFrom( wt_cause )
-local e_vendorcheck = inheritsFrom( wt_effect )
-c_vendorcheck.throttle = 2500
-function c_vendorcheck:evaluate()
-	if ( ItemList.freeSlotCount <= 3 and wt_global_information.InventoryFull == 1) then
-		c_vendorcheck.EList = MapObjectList( "onmesh,maxdistance=5000,type="..GW2.MAPOBJECTTYPE.Merchant )
-		if ( TableSize( c_vendorcheck.EList ) > 0 ) then
-			local nextTarget
-			nextTarget, E = next( c_vendorcheck.EList )
-			if ( nextTarget ~= nil and nextTarget ~= 0 ) then				
-				return true	
-			end
-		elseif ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
-			MultiBotSend( "10;0","gw2minion" )
-		end
-	end
-	return false
-end
-function e_vendorcheck:execute()
-	wt_core_taskmanager:addVendorTask(8000)
-end
-
-------------------------------------------------------------------------------
--- VendorPurchase Check Cause & Effect
-local c_vendorbuycheck = inheritsFrom( wt_cause )
-local e_vendorbuycheck = inheritsFrom( wt_effect )
-c_vendorbuycheck.throttle = 2500
-function c_vendorbuycheck:evaluate()
-	if ((gBuyGatheringTools == "1" and wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > tonumber(gGatheringToolStock)) or
-		(gBuySalvageKits == "1" and wt_core_items:NeedSalvageKits() and ItemList.freeSlotCount > tonumber(gSalvageKitStock))) 
-	then	
-		c_vendorcheck.EList = MapObjectList( "onmesh,maxdistance=5000,type="..GW2.MAPOBJECTTYPE.Merchant )
-		if ( TableSize( c_vendorcheck.EList ) > 0 ) then
-			local nextTarget
-			nextTarget, E = next( c_vendorcheck.EList )
-			if ( nextTarget ~= nil and nextTarget ~= 0 ) then				
-				return true	
-			end
-		elseif ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
-			MultiBotSend( "12;0","gw2minion" )
-		end
-	end
-	return false
-end
-function e_vendorbuycheck:execute()
-	if (wt_core_items:NeedGatheringTools()) then
-			wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ftool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-			wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ltool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-			wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.mtool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-	end
-	if (wt_core_items:NeedSalvageKits()) then
-		wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality)
-	end
-end
-
-------------------------------------------------------------------------------
--- NeedRepair Check Cause & Effect
-local c_repaircheck = inheritsFrom( wt_cause )
-local e_repaircheck = inheritsFrom( wt_effect )
--- NeedRepair() is defined in /gw2lib/wt_utility.lua
-c_repaircheck.throttle = 2500
-function c_repaircheck:evaluate()
-	if ( gEnableRepair == "1" and NeedRepair() ) then
-		c_repaircheck.EList = MapObjectList( "onmesh,maxdistance=5000,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
-		if ( TableSize( c_repaircheck.EList ) > 0 ) then
-			local nextTarget
-			nextTarget, E = next( c_repaircheck.EList )
-			if ( nextTarget ~= nil and nextTarget ~= 0 ) then
-				return true
-			end
-		elseif ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
-			MultiBotSend( "15;0","gw2minion" )
-		end
-	end	
-	return false
-end
-function e_repaircheck:execute()
-	wt_core_taskmanager:addRepairTask(8500)
-end
-
 
 -- Search for Reviveable Partymembers is in wt_common_causes
   
@@ -276,30 +191,19 @@ function wt_core_state_minion:initialize()
 	local ke_revparty = wt_kelement:create( "ReviveParty", c_revivep, e_revivep, 101 )
 	wt_core_state_minion:add( ke_revparty )
 	
-	local ke_maggro = wt_kelement:create( "AggroCheck", c_groupaggro, E_groupaggro, 100 )
-	wt_core_state_minion:add( ke_maggro )
-	
 	local ke_deposit = wt_kelement:create( "DepositItems", c_deposit, e_deposit, 90 )
 	wt_core_state_minion:add( ke_deposit )
 	--salvaging 89
+
 	
-	local ke_revive_players = wt_kelement:create( "RevivePlayers", c_check_revive_players, e_revive_players, 89 )
-	wt_core_state_minion:add( ke_revive_players )
-	
-	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 88 )
+	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 89 )
 	wt_core_state_minion:add( ke_loot )
 	
-	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 87 )
+	local ke_revive_players = wt_kelement:create( "RevivePlayers", c_check_revive_players, e_revive_players, 88 )
+	wt_core_state_minion:add( ke_revive_players )
+	
+	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 85 )
 	wt_core_state_minion:add( ke_dopriotasks )
-	
-	local ke_vendorcheck = wt_kelement:create( "VendoringCheck", c_vendorcheck, e_vendorcheck, 86 )
-	wt_core_state_minion:add( ke_vendorcheck )
-	
-	local ke_vendorbuycheck = wt_kelement:create( "VendorBuyCheck", c_vendorbuycheck, e_vendorbuycheck, 85 )
-	wt_core_state_minion:add( ke_vendorbuycheck )
-	
-	local ke_repaircheck = wt_kelement:create( "RepairCheck", c_repaircheck, e_repaircheck, 84 )
-	wt_core_state_minion:add( ke_repaircheck )
 		
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )
 	wt_core_state_minion:add( ke_revive )
@@ -320,3 +224,84 @@ end
 
 wt_core_state_minion:initialize()
 wt_core_state_minion:register()
+
+--Only put tasks here which are solo bot specific...any other tasks that are shared
+--should go in wt_core_taskmanager:Update_Tasks()
+
+--UID = "REPAIR"
+--Throttle = 2500
+function wt_core_state_minion:repairCheck()
+	if ( gEnableRepair == "1" and NeedRepair() and wt_core_taskmanager:CheckTaskQueue("REPAIR") == nil) then
+		local repairList = MapObjectList( "onmesh,maxdistance=5000,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
+		if ( TableSize( repairList ) > 0 ) then
+			local nextTarget
+			nextTarget, E = next( repairList )
+			if ( nextTarget ~= nil and nextTarget ~= 0 ) then
+				wt_core_taskmanager:addRepairTask(4500)
+			end
+		elseif ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
+			MultiBotSend( "15;0","gw2minion" )
+		end
+	end
+end
+table.insert(wt_core_state_minion.TaskChecks,{["func"]=wt_core_state_minion.repairCheck, ["throttle"]=2500})
+
+--UID = "VENDORSELL"
+--Throttle = 2500
+function wt_core_state_minion:vendorSellCheck()
+	if ( ItemList.freeSlotCount <= 3 and wt_global_information.InventoryFull == 1 and wt_core_taskmanager:CheckTaskQueue("VENDORSELL") == nil) then
+		local vendorList = MapObjectList( "onmesh,maxdistance=5000,type="..GW2.MAPOBJECTTYPE.Merchant )
+		if ( TableSize( vendorList ) > 0 ) then
+			local nextTarget
+			nextTarget, E = next( vendorList )
+			if ( nextTarget ~= nil and nextTarget ~= 0 ) then				
+				wt_core_taskmanager:addVendorTask(5000)
+			end
+		elseif ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
+			MultiBotSend( "10;0","gw2minion" )
+		end
+	end
+end
+table.insert(wt_core_state_minion.TaskChecks,{["func"]=wt_core_state_minion.vendorSellCheck, ["throttle"]=2500})
+
+--UID = "VENDORBUY..."
+--Throttle = 2500
+function wt_core_state_minion:vendorBuyCheck()
+	if 	(gBuyGatheringTools == "1" and wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > tonumber(gGatheringToolStock)) or
+		(gBuySalvageKits == "1" and wt_core_items:NeedSalvageKits() and ItemList.freeSlotCount > tonumber(gSalvageKitStock)) and
+		(wt_core_taskmanager:CheckTaskQueue("VENDORBUY") == nil) 
+	then	
+		local vendorList = MapObjectList( "onmesh,maxdistance=5000,type="..GW2.MAPOBJECTTYPE.Merchant )
+		if ( TableSize( vendorList ) > 0 ) then
+			local nextTarget
+			nextTarget, E = next( vendorList )
+			if ( nextTarget ~= nil and nextTarget ~= 0 ) then				
+				if (wt_core_items:NeedGatheringTools()) then
+				wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ftool, tonumber(gGatheringToolStock),gGatheringToolQuality)
+				wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ltool, tonumber(gGatheringToolStock),gGatheringToolQuality)
+				wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.mtool, tonumber(gGatheringToolStock),gGatheringToolQuality)
+				end
+				if (wt_core_items:NeedSalvageKits()) then
+					wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality)
+				end
+			end
+		elseif ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
+			MultiBotSend( "12;0","gw2minion" )
+		end
+	end
+end
+table.insert(wt_core_state_minion.TaskChecks,{["func"]=wt_core_state_minion.vendorBuyCheck, ["throttle"]=2500})
+
+--Throttle = 500
+function wt_core_state_minion:aggroCheck()
+	local TList = ( CharacterList( "nearest,los,incombat,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil) then
+			wt_core_taskmanager:addKillTask( id, E, 3000 )
+			MultiBotSend( "6;"..tonumber(id),"gw2minion" )	-- Inform leader about our aggro target
+			return false
+		end		
+	end
+end
+table.insert(wt_core_state_minion.TaskChecks,{["func"]=wt_core_state_minion.aggroCheck, ["throttle"]=500})
