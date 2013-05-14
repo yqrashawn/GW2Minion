@@ -359,15 +359,17 @@ function wt_core_taskmanager:addFollowTask( ID, prio )
                     if ( Char.distance > 5000 ) then
                         if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
                             -- TELEPORT TO NEAREST WAYPOINT
-                            if ( gUseWaypoints == "1" and wt_core_taskmanager:OkayToWaypoint() and not newtask.usedWP) then
+                            if ( (gUseWaypoints == "1" or gUseWaypointsEvents == "1") and wt_core_taskmanager:OkayToWaypoint() and not newtask.usedWP) then
 								local wp = wt_core_taskmanager:GetWaypoint(newtask.position, Char.distance)
 								if (wp ~= nil) then
 									wt_core_taskmanager:TimedWaypoint(wp.contentID)
 									newtask.usedWP = true
 								end
 							end
+							newtask.last_execution = wt_global_information.Now
                         end
-                    elseif ( Char.distance > newtask.randomdist) then
+					end
+                    if ( Char.distance > newtask.randomdist) then
                         if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
                             Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 120 )
                             newtask.last_execution = wt_global_information.Now
@@ -1538,20 +1540,27 @@ function wt_core_taskmanager:GetWaypoint(pos, currentDist)
 	end
 	
 	-- check path distance to the two waypoints
-	local dist1 = PathDistance(GetPath(WP1.pos.x, WP1.pos.y, WP1.pos.z, pos.x, pos.y, pos.z))
-	local dist2 = PathDistance(GetPath(WP2.pos.x, WP2.pos.y, WP2.pos.z, pos.x, pos.y, pos.z))
-	
-	if (dist1 < dist2) then
+	if (WP1 ~= nil and WP2 ~= nil) then
+		local dist1 = PathDistance(NavigationManager:GetPath(WP1.pos.x, WP1.pos.y, WP1.pos.z, pos.x, pos.y, pos.z))
+		local dist2 = PathDistance(NavigationManager:GetPath(WP2.pos.x, WP2.pos.y, WP2.pos.z, pos.x, pos.y, pos.z))
+		
+		if (dist1 < dist2) then
+			gotoWP = WP1
+			gotoDist = dist1
+		else
+			gotoWP = WP2
+			gotoDist = dist2
+		end
+	elseif (WP1 ~= nil) then
+		local dist1 = PathDistance(NavigationManager:GetPath(WP1.pos.x, WP1.pos.y, WP1.pos.z, pos.x, pos.y, pos.z))
 		gotoWP = WP1
 		gotoDist = dist1
-	else
-		gotoWP = WP2
-		gotoDist = dist2
 	end
-	
 	-- TELEPORT
-	if ( currentDist - 1000 >  gotoDist) then
-		return gotoWP
+	if (gotoDist ~= nil and gotoWP ~= nil) then
+		if ( currentDist - 1000 >  gotoDist) then
+			return gotoWP
+		end
 	end
 	
 	return nil
