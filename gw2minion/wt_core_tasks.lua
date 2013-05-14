@@ -365,9 +365,9 @@ function wt_core_taskmanager:addFollowTask( ID, prio )
 								if (wp ~= nil) then
 									wt_core_taskmanager:TimedWaypoint(wp.contentID)
 									newtask.usedWP = true
+									newtask.last_execution = wt_global_information.Now
 								end
 							end
-							newtask.last_execution = wt_global_information.Now
                         end
 					end
                     if ( Char.distance > newtask.randomdist) then
@@ -472,11 +472,13 @@ function wt_core_taskmanager:addRepairTask( priority )
 							end
 							if (not canvendor) then
 								wt_debug("Waiting for our whole party to get to me....")
-								MultiBotSend( "100;"..tonumber(Player.characterID),"gw2minion" ) -- Minions follow Leader									
+								MultiBotSend( "100;"..tonumber(Player.characterID),"gw2minion" ) -- Minions follow Leader
+								newtask.name = "Waiting..."
 								return
 							else
 								wt_debug("Telling Minions to repair")
 								MultiBotSend( "16;0","gw2minion" )
+								newtask.name = "Repairing"
 								
 								if (gEnableRepair == "0" or not NeedRepair()) then
 									newtask.done = true
@@ -640,10 +642,12 @@ function wt_core_taskmanager:addVendorTask( priority )
 							if (not canvendor) then
 								wt_debug("Waiting for our whole party to get to me....")
 								MultiBotSend( "100;"..tonumber(Player.characterID),"gw2minion" ) -- Minions follow Leader	
+								newtask.name = "Waiting..."
 								return
 							else
 								wt_debug("Telling Minions to vendor")
 								MultiBotSend( "11;0","gw2minion" )
+								newtask.name = "Vendoring(Sell)"
 							end
 						end						
 						
@@ -983,10 +987,12 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 							if (not canvendor) then
 								wt_debug("Waiting for our whole party to get to me....")
 								MultiBotSend( "100;"..tonumber(Player.characterID),"gw2minion" ) -- Minions follow Leader
+								newtask.name = "Waiting..."
 								return
 							else
 								wt_debug("Telling Minions to vendor")
 								MultiBotSend( "13;0","gw2minion" )
+								newtask.name = "Vendoring(Buy)"
 							end
 						end						
 						

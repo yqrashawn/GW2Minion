@@ -6,7 +6,7 @@ wt_core_unstuck.count = 0
 wt_core_unstuck.State = {
 	STUCK 	= { id = 0, name = "STUCK" 		, stats = 0, ticks = 0, maxticks = 5  },
 	OFFMESH = { id = 1, name = "OFFMESH" 	, stats = 0, ticks = 0, maxticks = 15 },
-	IDLE 	= { id = 2, name = "IDLE" 		, stats = 0, ticks = 0, maxticks = 65 },
+	IDLE 	= { id = 2, name = "IDLE" 		, stats = 0, ticks = 0, maxticks = 120 },
 }
 
 function wt_core_unstuck:Update()
@@ -52,12 +52,17 @@ function wt_core_unstuck:IsOffMesh()
 end
 
 function wt_core_unstuck:IsIdle()
+	local isWaiting = false
+	if (wt_core_taskmanager.current_task ~= nil) then
+		isWaiting = wt_core_taskmanager.current_task.name == "Waiting..."
+	end
 	return 	wt_core_unstuck.diffX == 0 and
 			wt_core_unstuck.diffY == 0 and
 			wt_core_unstuck.diffZ == 0 and
 			not Player:IsCasting() and
 			not Player:IsConversationOpen() and 
-			not Inventory:IsVendorOpened()
+			not Inventory:IsVendorOpened() and
+			not isWaiting
 end
 
 --*************************************************************************************************************
