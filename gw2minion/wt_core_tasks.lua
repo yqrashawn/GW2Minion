@@ -1285,7 +1285,7 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 						
 						newtask.name = "Event: Waiting.."
 						-- Search for nearby enemies
-						local Elist = ( CharacterList( "nearest,attackable,alive,incombat,noCritter,onmesh,maxdistance=2000" ) )
+						local Elist = ( CharacterList( "nearest,attackable,alive,incombat,noCritter,onmesh,maxdistance=2500" ) )
 						if ( TableSize( Elist ) > 0 ) then
 							nextTarget, E  = next( Elist )
 							if ( nextTarget ~= nil and E ~= nil ) then
@@ -1301,7 +1301,7 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 								end
 							end
 						end
-						local npcList = CharacterList("nearest,npc,dead,maxdistance=2000,friendly,onmesh")
+						local npcList = CharacterList("nearest,npc,dead,maxdistance=2500,friendly,onmesh")
 						if ( TableSize( npcList ) > 0 ) then
 							local nextTarget, E  = next( npcList )
 							if ( nextTarget ~= nil and E ~= nil ) then
@@ -1333,7 +1333,7 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 							if ( myevent.distance > 3000 ) then	
 								Player:MoveToRandomPointAroundCircle(  newtask.position.x, newtask.position.y, newtask.position.z, 750 )
 							else
-								TargetList = ( CharacterList( "nearest,attackable,alive,maxdistance=2000,onmesh") )
+								TargetList = ( CharacterList( "nearest,attackable,alive,maxdistance=2500,onmesh") )
 								if ( TargetList ~= nil ) then 	
 									nextTarget, E  = next( TargetList )
 									if ( nextTarget ~= nil ) then

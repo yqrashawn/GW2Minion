@@ -486,7 +486,9 @@ end
 c_check_revive_players = inheritsFrom( wt_cause )
 e_revive_players = inheritsFrom( wt_effect )
 function c_check_revive_players:evaluate()
-	if (Player.health.percent < 60 or TableSize(CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose )) > 0 ) then
+	if 	(Player.health.percent < 60 or 
+		(TableSize(CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose )) > 0 and gPrioritizeRevive == "0")) 
+	then
 		return false
 	end
 	local playerList = CharacterList("nearest,player,downed,maxdistance=2500,onmesh")
