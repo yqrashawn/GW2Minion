@@ -563,11 +563,11 @@ function e_loot:execute()
 				if ( Player:GetCurrentlyCastedSpell() == 17 ) then					
 					wt_debug( "Looting Corpse" )					
 					Player:Interact( index )
-					if 	(TableSize(CharacterList("players,maxdistance=2500,los")) > 0) and 
+					--[[if 	(TableSize(CharacterList("players,maxdistance=2500,los")) > 0) and 
 						(TableSize(CharacterList( "nearest,los,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose)) == 0) 
 					then
 						wt_core_taskmanager:addPauseTask(0,1000)
-					end
+					end]]
 				end
 			elseif (LT.distance < 100 and index ~= Player:GetInteractableTarget()) then
 				Player:StopMoving()

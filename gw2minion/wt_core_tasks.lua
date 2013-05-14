@@ -360,6 +360,7 @@ function wt_core_taskmanager:addFollowTask( ID, prio )
                         if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
                             -- TELEPORT TO NEAREST WAYPOINT
                             if ( (gUseWaypoints == "1" or gUseWaypointsEvents == "1") and wt_core_taskmanager:OkayToWaypoint() and not newtask.usedWP) then
+								wt_debug("follow debug - first conditional")
 								local wp = wt_core_taskmanager:GetWaypoint(newtask.position, Char.distance)
 								if (wp ~= nil) then
 									wt_core_taskmanager:TimedWaypoint(wp.contentID)
@@ -370,6 +371,7 @@ function wt_core_taskmanager:addFollowTask( ID, prio )
                         end
 					end
                     if ( Char.distance > newtask.randomdist) then
+						wt_debug("follow debug - second conditional")
                         if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
                             Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 120 )
                             newtask.last_execution = wt_global_information.Now
