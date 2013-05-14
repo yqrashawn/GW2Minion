@@ -133,7 +133,14 @@ end
 --------------------------------------------------------------------------
 function wt_core_taskmanager:Update_Tasks( )
 	if (wt_core_taskmanager.UpdateTaskListTmr == 0 or wt_global_information.Now - wt_core_taskmanager.UpdateTaskListTmr > 1000) then
-		wt_core_taskmanager.UpdateTaskListTmr = 0
+		wt_core_taskmanager.UpdateTaskListTmr = wt_global_information.Now
+		
+		if 	(wt_core_controller.state ~= wt_core_state_idle) and
+			(wt_core_controller.state ~= wt_core_state_leader) and
+			(wt_core_controller.state ~= wt_core_state_minion)
+		then
+			return
+		end
 				
 		-- CLEAN TASKLIST, Kick out finished and expired Tasks
 		wt_core_taskmanager.CleanTasklist()
