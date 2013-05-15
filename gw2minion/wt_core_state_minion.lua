@@ -175,6 +175,8 @@ function wt_core_state_minion:initialize()
 	
 	--local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 105 )
 	--wt_core_state_minion:add( ke_quicklootchest )
+	local ke_movecheck = wt_kelement:create( "MovementCheck", c_stopcbmove, e_stopcbmove, 107 )
+	wt_core_state_idle:add( ke_movecheck )
 		
 	local ke_lootchests = wt_kelement:create("LootChest", c_lootchest, e_lootchest, 105 )
 	wt_core_state_minion:add( ke_lootchests )

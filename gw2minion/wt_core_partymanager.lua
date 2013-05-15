@@ -14,12 +14,25 @@ function wt_core_partymanager.membercount()
 	local index, player  = next( Settings.GW2MINION.Party )
 	local myname = Player.name
 	while ( index ~= nil and player ~= nil ) do			
-		if (player ~= "none" and player ~= "" and player ~= myname) then
+		if (tostring(player) ~= "none" and tostring(player) ~= "" and tostring(player) ~= tostring(myname)) then
 			count = count + 1
 		end
 		index, player  = next( Settings.GW2MINION.Party,index )
 	end	
 	return count
+end
+
+function wt_core_partymanager.WeAreInPartyList()
+	local found = false
+	local index, player  = next( Settings.GW2MINION.Party )
+	local myname = Player.name
+	while ( index ~= nil and player ~= nil ) do			
+		if (tostring(player) ~= "none" and tostring(player) ~= "" and tostring(player) == tostring(myname)) then
+			found = true
+		end
+		index, player  = next( Settings.GW2MINION.Party,index )
+	end	
+	return found
 end
 
 RegisterEventHandler("Module.Initalize",
@@ -140,7 +153,7 @@ function wt_core_partymanager.SendGroupInfo()
 	-- Send Minions the Leader data
 	if (Player:GetRole() == 1 ) then		
 		local myname = Player.name
-		if (tostring(myname) ~= "") then
+		if (tostring(myname) ~= "" and tostring(myname) ~= "nil") then
 			MultiBotSend( "3;"..tostring(myname),"gw2minion" )
 		end
 		local mymapID = Player:GetLocalMapID()
@@ -165,7 +178,7 @@ end
 
 function wt_core_partymanager.CheckGroupStatus()		
 	local party = Player:GetPartyMembers()	
-	if (party ~= nil and TableSize(party) < wt_core_partymanager.membercount()-1 ) then					
+	if (party ~= nil and TableSize(party) < wt_core_partymanager.membercount()-1 and wt_core_partymanager.WeAreInPartyList()) then					
 		-- We are not in a Party
 		if (Player:GetRole() == 1 ) then
 			-- We are Leader, invite all members
@@ -196,7 +209,7 @@ function wt_core_partymanager.CheckGroupStatus()
 			dParty = tostring("Partymember missing..")
 			return 
 		else
-			-- We are Minion, trying to join our party			
+			-- We are Minion, trying to join our party		
 			if ( wt_core_partymanager.leaderName ~= nil and wt_core_partymanager.leaderName ~= "" ) then
 				if ( wt_core_partymanager.leaderMapID ~= nil ) then		
 					if ( Player:GetPartySize() == 0 ) then

@@ -101,7 +101,10 @@ function wt_core_state_idle:initialize()
 	wt_core_state_idle:add( ke_died )
 	
 	local ke_iamminion = wt_kelement:create( "MultiBotServerCheck", c_iamminion, e_iamminion, 250 )
-	wt_core_state_idle:add( ke_iamminion )	
+	wt_core_state_idle:add( ke_iamminion )
+	
+	local ke_movecheck = wt_kelement:create( "MovementCheck", c_stopcbmove, e_stopcbmove, 150 )
+	wt_core_state_idle:add( ke_movecheck )
 	
 	local ke_quickloot = wt_kelement:create( "QuickLoot", c_quickloot, e_quickloot, 110 )
 	wt_core_state_idle:add( ke_quickloot )
