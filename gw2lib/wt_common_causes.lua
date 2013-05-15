@@ -455,6 +455,7 @@ function c_check_revive:evaluate()
 	end
 	return false
 end
+e_revivep.throttle = 250
 function e_revive:execute()
  	local TID = Player:GetInteractableTarget()
 	if ( TID ~= nil ) then
@@ -485,6 +486,7 @@ end
 --****************************************************
 c_check_revive_players = inheritsFrom( wt_cause )
 e_revive_players = inheritsFrom( wt_effect )
+c_check_revive_players.throttle = 2000
 function c_check_revive_players:evaluate()
 	if 	(Player.health.percent < 60 or 
 		(TableSize(CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose )) > 0 and gPrioritizeRevive == "0")) 
