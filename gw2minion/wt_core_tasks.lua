@@ -1309,7 +1309,7 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 								end
 							end
 						end
-						local npcList = CharacterList("nearest,npc,dead,maxdistance=2500,friendly,onmesh")
+						--[[local npcList = CharacterList("nearest,npc,dead,maxdistance=2500,friendly,onmesh")
 						if ( TableSize( npcList ) > 0 ) then
 							local nextTarget, E  = next( npcList )
 							if ( nextTarget ~= nil and E ~= nil ) then
@@ -1329,7 +1329,7 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 									end
 								end
 							end
-						end
+						end]]
 						if (Player.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving and newtask.eventType ~= nil) then
 							if ( myevent.distance > 500 ) then	
 								Player:MoveToRandomPointAroundCircle(  newtask.position.x, newtask.position.y, newtask.position.z, 750 )
