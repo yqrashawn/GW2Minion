@@ -178,7 +178,7 @@ end
 
 function wt_core_partymanager.CheckGroupStatus()		
 	local party = Player:GetPartyMembers()	
-	if (party ~= nil and TableSize(party) < wt_core_partymanager.membercount()-1 and wt_core_partymanager.WeAreInPartyList()) then					
+	if (party ~= nil and TableSize(party) < wt_core_partymanager.membercount() and wt_core_partymanager.WeAreInPartyList()) then					
 		-- We are not in a Party
 		if (Player:GetRole() == 1 ) then
 			-- We are Leader, invite all members
