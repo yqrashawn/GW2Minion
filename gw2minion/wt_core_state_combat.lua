@@ -38,8 +38,8 @@ end
 
 --/////////////////////////////////////////////////////
 -- Combat over Check
-local c_combat_over = inheritsFrom( wt_cause )
-local e_combat_over = inheritsFrom( wt_effect )
+c_combat_over = inheritsFrom( wt_cause )
+e_combat_over = inheritsFrom( wt_effect )
 function c_combat_over:evaluate()
 	--local CurrentTarget = Player:GetTarget()
 	if ( wt_core_state_combat.CurrentTarget == nil or wt_core_state_combat.CurrentTarget == 0 ) then
@@ -113,8 +113,8 @@ end
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 -- NeedHeal Check
-local c_heal_action = inheritsFrom(wt_cause)
-local e_heal_action = inheritsFrom(wt_effect)
+c_heal_action = inheritsFrom(wt_cause)
+e_heal_action = inheritsFrom(wt_effect)
 function c_heal_action:evaluate()
 	return (Player.health.percent < wt_core_state_combat.RestHealthLimit and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6))
 end
