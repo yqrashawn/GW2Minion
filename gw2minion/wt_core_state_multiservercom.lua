@@ -216,9 +216,11 @@ function HandleMultiBotMessages( event, message, channel )
 						
 						-- FOLLOW
 						elseif ( tonumber(msgID) == 100 ) then -- Leader tells Minions to follow him
-							if ( Player:GetRole() ~= 1 and tonumber(msg) ~= nil ) then								
-								wt_debug( "Leader sais we should follow him.." )								
-								wt_core_taskmanager:addFollowTask( tonumber(msg), 3750 )
+							if ( Player:GetRole() ~= 1 and tonumber(msg) ~= nil ) then
+								if not wt_core_taskmanager:CheckTaskQueue("FOLLOW") then
+									wt_debug( "Leader sais we should follow him.." )								
+									wt_core_taskmanager:addFollowTask( tonumber(msg), 3750 )
+								end
 							end
 						end
 					end
