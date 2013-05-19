@@ -31,46 +31,72 @@ function HandleMultiBotMessages( event, message, channel )
 						end
 					
 					elseif ( tonumber(msgID) == 2 ) then -- Minion asks for LeaderID
-							if ( Player:GetRole() == 1) then
-								wt_debug( "Sending Minions my characterID" )
-								if (tonumber(Player.characterID) ~= nil) then
-									MultiBotSend( "1;"..tonumber(Player.characterID),"gw2minion" )
-								end
-								if ( gNavSwitchEnabled == "1" ) then									
-									local wp = WaypointList("nearest,samezone,notcontested,onmesh")									
-									if ( TableSize( wp ) > 0 ) then
-										i, entry = next( wp )
-										if ( i ~= nil and entry~= nil) then
-											wt_debug( "Sending Minions my mapID: "..tostring(Player:GetLocalMapID()) )									
-											MultiBotSend( "21;"..tostring(Player:GetLocalMapID()),"gw2minion" )
-											wt_debug( "Sending Minions nearest WaypointID: "..tostring(entry.contentID) )
-											MultiBotSend( "20;"..tostring(entry.contentID),"gw2minion" )											
-										end
+						if ( Player:GetRole() == 1) then
+							wt_debug( "Sending Minions my characterID" )
+							if (tonumber(Player.characterID) ~= nil) then
+								MultiBotSend( "1;"..tonumber(Player.characterID),"gw2minion" )
+							end
+							if ( gNavSwitchEnabled == "1" ) then									
+								local wp = WaypointList("nearest,samezone,notcontested,onmesh")									
+								if ( TableSize( wp ) > 0 ) then
+									i, entry = next( wp )
+									if ( i ~= nil and entry~= nil) then
+										wt_debug( "Sending Minions my mapID: "..tostring(Player:GetLocalMapID()) )									
+										MultiBotSend( "21;"..tostring(Player:GetLocalMapID()),"gw2minion" )
+										wt_debug( "Sending Minions nearest WaypointID: "..tostring(entry.contentID) )
+										MultiBotSend( "20;"..tostring(entry.contentID),"gw2minion" )											
 									end
-								end								
-							end						
-					end
+								end
+							end								
+						end						
+					
 					
 					-- PARTYMANAGER
-					if ( tonumber(msgID) == 3 ) then -- Leader sends Minion his Name						
+					elseif ( tonumber(msgID) == 300 ) then -- Leader sends Minion his Name						
 						if (tostring(msg) ~= nil and Player:GetRole() ~= 1) then
 							--wt_debug("Recieved Partyleader Name :"..tostring(msg))
 							wt_core_partymanager.leaderName = tostring(msg)							
 						end
-					end
-					if ( tonumber(msgID) == 4 ) then -- Leader sends Minion his MapID						
+					
+					elseif ( tonumber(msgID) == 301 ) then -- Leader sends Minion his MapID						
 						if (tonumber(msg) ~= nil and Player:GetRole() ~= 1 ) then
 							--wt_debug("Recieved Partyleader's MapID :"..tostring(msg))
 							wt_core_partymanager.leaderMapID = tonumber(msg)							
 						end
-					end
-					if ( tonumber(msgID) == 5 ) then -- Leader sends Minion his closest WaypointID						
+					
+					elseif ( tonumber(msgID) == 302 ) then -- Leader sends Minion his closest WaypointID						
 						if (tonumber(msg) ~= nil and Player:GetRole() ~= 1 ) then
 							--wt_debug("Recieved Partyleader's WaypointID :"..tostring(msg))
 							wt_core_partymanager.leaderWPID = tonumber(msg)							
 						end
-					end						
+					elseif ( tonumber(msgID) == 303 ) then -- Leader sends RebuildParty command						
+						if (Player:GetRole() ~= 1 ) then
+							wt_debug("Recieved RebuildParty Command")
+							wt_core_partymanager.RebuildParty()							
+						end						
 					
+					
+					
+					-- DUNGEONMANAGER
+					elseif ( tonumber(msgID) == 500 ) then -- Leader tells Minions that it's dungeontime ;)
+						if (tonumber(msg) ~= nil and Player:GetRole() ~= 1) then
+							--wt_debug("Recieved Partyleader Name :"..tostring(msg))
+							wt_core_dungeonmanager.ButtonHandler(tonumber(msg))
+						end
+						
+					elseif ( tonumber(msgID) == 501 ) then -- Leader tells Minions to leave dungeon
+						if (tonumber(msg) ~= nil and Player:GetRole() ~= 1) then
+							wt_debug("Leader sais to Leave Dungeon..")
+							if (Player:GetLocalMapID() == tonumber(msg)) then
+								wt_core_dungeonmanager.LeaveDungeon()
+							end
+						end
+					elseif ( tonumber(msgID) == 502 ) then -- Leader tells Minions to leave dungeon
+						if ( Player:GetRole() ~= 1) then
+							wt_debug("Leader sais to Stop Dungeon..")
+							wt_core_dungeonmanager.StopDungeon()
+						end
+					end
 					
 					
 					if ( wt_core_controller.shouldRun ) then
@@ -80,7 +106,12 @@ function HandleMultiBotMessages( event, message, channel )
 								if (tonumber(msg) ~= nil ) then
 									local char = CharacterList:Get(tonumber(msg))
 									if (char ~= nil and char.alive and char.distance < 4500 and char.onmesh) then
-										wt_core_taskmanager:addKillTask( tonumber(msg) , char, 3500 )
+										wt_core_taskmanager:addKillTask( tonumber(msg) , char, 3450 )
+									else
+										local gadget = GadgetList:Get(tonumber(msg))
+										if (gadget ~= nil and gadget.alive and gadget.distance < 4500 and gadget.onmesh) then
+											wt_core_taskmanager:addKillGadgetTask( tonumber(msg), gadget, 3550 )
+										end
 									end
 								end
 							end
@@ -93,7 +124,15 @@ function HandleMultiBotMessages( event, message, channel )
 									end
 								end
 							end
-							
+						elseif ( tonumber(msgID) == 7 ) then -- Leader sets FocusTarget - Gadget
+							if ( Player:GetRole() ~= 1) then
+								if (tonumber(msg) ~= nil ) then
+									local gadget = GadgetList:Get(tonumber(msg))
+									if (gadget ~= nil and gadget.hashpbar and gadget.iscombatant and gadget.distance < 4500 and gadget.onmesh) then
+										wt_core_taskmanager:addKillGadgetTask( tonumber(msg) , gadget, 3550 )
+									end
+								end
+							end
 
 						-- VENDORING
 						elseif ( tonumber(msgID) == 10 ) then -- A minion needs to Vendor, set our Primary task accordingly

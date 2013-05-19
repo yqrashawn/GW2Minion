@@ -37,6 +37,7 @@ mm.Zones = {
 	[62] = "CursedShore",
 	[65] = "MalchorsLeap",
 	[66] = "CitadelOfFlames(Story)",
+	[69] = "CitadelOfFlames(Exploration)",
 	[73] = "BloodtideCoast",
 	[91] = "TheGrove",
 	[94] = "BlueGreenRedBorderlands1",
@@ -132,56 +133,58 @@ function mm.ButtonHandler(event)
 end
 
 function mm.RefreshCurrentMapData()
-	local mapID = Player:GetLocalMapID()
-	if (((mm.currentmapdata.mapID == nil and tonumber(mapID) ~= nil) or mm.currentmapdata.mapID ~= mapID) and tonumber(mapID) ~= nil and TableSize(Player.pos) >0 and tonumber(Player.pos.x) ~= nil) then			
-		-- Unload old mesh first
-		if (NavigationManager:IsNavMeshLoaded() and mm.currentmapdata.mapID ~= nil and mm.currentmapdata.mapID ~= mapID) then
-			wt_debug("Unloading old navmesh...")
-			wt_global_information.Reset()
-			NavigationManager:UnloadNavMesh()
-			mm.currentmapdata.mapID = nil
-			return false
-		end
-		-- Load the mesh for our Map
-		if ( tonumber(mapID) ~= nil and Settings.GW2MINION.Zones~=nil and Settings.GW2MINION.Zones[tostring(mapID)] ~= nil ) then
-			gmapname = Settings.GW2MINION.Zones[tostring(mapID)].mapname
-			gmeshname = Settings.GW2MINION.Zones[tostring(mapID)].meshname
-			if (Settings.GW2MINION.Zones[tostring(mapID)].waypointid == nil) then
-				gwaypointid = "none"			
-			else
-				gwaypointid = tostring(Settings.GW2MINION.Zones[tostring(mapID)].waypointid)
-			end			
-			if (gmeshname ~= nil and tostring(gmeshname) ~= "" and tostring(gmeshname) ~= "none") then				
-				local path = GetStartupPath().."\\Navigation\\"..tostring(gmeshname)
-				if (io.open(path..".obj")) then
-					if (NavigationManager:IsNavMeshLoaded()) then
-						wt_debug("Unloading Old Navmesh...")
-						NavigationManager:UnloadNavMesh()
-					else
-						wt_debug("Auto-Loading Navmesh " ..tostring(gmeshname))
-						wt_core_state_combat.StopCM()
-						wt_global_information.Reset()
-						wt_core_taskmanager.ClearTasks()
-						if (NavigationManager:LoadNavMesh(path)) then
-							mm.currentmapdata.mapID = mapID	
-							GUI_CloseMarkerInspector()	
-							return true
-						end
-					end
+	if (gMeshMGR == "1") then 
+		local mapID = Player:GetLocalMapID()
+		if (((mm.currentmapdata.mapID == nil and tonumber(mapID) ~= nil) or mm.currentmapdata.mapID ~= mapID) and tonumber(mapID) ~= nil and TableSize(Player.pos) >0 and tonumber(Player.pos.x) ~= nil) then			
+			-- Unload old mesh first
+			if (NavigationManager:IsNavMeshLoaded() and mm.currentmapdata.mapID ~= nil and mm.currentmapdata.mapID ~= mapID) then
+				wt_debug("Unloading old navmesh...")
+				wt_global_information.Reset()
+				NavigationManager:UnloadNavMesh()
+				mm.currentmapdata.mapID = nil
+				return false
+			end
+			-- Load the mesh for our Map
+			if ( tonumber(mapID) ~= nil and Settings.GW2MINION.Zones~=nil and Settings.GW2MINION.Zones[tostring(mapID)] ~= nil ) then
+				gmapname = Settings.GW2MINION.Zones[tostring(mapID)].mapname
+				gmeshname = Settings.GW2MINION.Zones[tostring(mapID)].meshname
+				if (Settings.GW2MINION.Zones[tostring(mapID)].waypointid == nil) then
+					gwaypointid = "none"			
 				else
-					wt_error("ERROR: Can't open the file: "..tostring(gmeshname))
-				end	
-			else				
-				wt_debug("Please select a NavMesh for this Zone in the MeshManager")
-				gmapname = tostring(Settings.GW2MINION.Zones[tostring(mapID)].mapname)
+					gwaypointid = tostring(Settings.GW2MINION.Zones[tostring(mapID)].waypointid)
+				end			
+				if (gmeshname ~= nil and tostring(gmeshname) ~= "" and tostring(gmeshname) ~= "none") then				
+					local path = GetStartupPath().."\\Navigation\\"..tostring(gmeshname)
+					if (io.open(path..".obj")) then
+						if (NavigationManager:IsNavMeshLoaded()) then
+							wt_debug("Unloading Old Navmesh...")
+							NavigationManager:UnloadNavMesh()
+						else
+							wt_debug("Auto-Loading Navmesh " ..tostring(gmeshname))
+							wt_core_state_combat.StopCM()
+							wt_global_information.Reset()
+							wt_core_taskmanager.ClearTasks()
+							if (NavigationManager:LoadNavMesh(path)) then
+								mm.currentmapdata.mapID = mapID	
+								GUI_CloseMarkerInspector()	
+								return true
+							end
+						end
+					else
+						wt_error("ERROR: Can't open the file: "..tostring(gmeshname))
+					end	
+				else				
+					wt_debug("Please select a NavMesh for this Zone in the MeshManager")
+					gmapname = tostring(Settings.GW2MINION.Zones[tostring(mapID)].mapname)
+					gmeshname = "none"
+					gwaypointid = "none"
+				end				
+			else
+				gmapname = "none"
 				gmeshname = "none"
-				gwaypointid = "none"
-			end				
-		else
-			gmapname = "none"
-			gmeshname = "none"
-			gwaypointid	= "none"
-		end	
+				gwaypointid	= "none"
+			end	
+		end
 	end
 	return false
 end

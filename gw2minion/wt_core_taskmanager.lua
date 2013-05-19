@@ -155,7 +155,7 @@ function wt_core_taskmanager:Update_Tasks( )
 			
 		-- First we grab all the tasks that issue from map markers and farmspots
 		-- These are queued by either a solo bot or the leader for group bots
-		if (gMinionEnabled == "0" or (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1)) then
+		if ((gMinionEnabled == "0" or (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1)) and wt_core_dungeonmanager.CurrentDungeon["Active"] == nil) then
 			-- Add all default Tasks			
 			-- Updating Red-MarkerList-data if needed
 			if ( wt_core_taskmanager.markerList == nil or TableSize( wt_core_taskmanager.markerList ) == 0 or MarkersNeedUpdate() ) then				

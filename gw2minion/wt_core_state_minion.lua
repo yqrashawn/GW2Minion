@@ -107,8 +107,8 @@ end
 
 ------------------------------------------------------------------------------
 -- Follow Leader Cause & Effect
-local c_followLead = inheritsFrom( wt_cause )
-local e_followLead = inheritsFrom( wt_effect )
+c_followLead = inheritsFrom( wt_cause )
+e_followLead = inheritsFrom( wt_effect )
 function c_followLead:evaluate()
 	if (Player:GetRole() ~= 1 and Settings.GW2MINION.gLeaderID ~= nil) then
 		local party = Player:GetPartyMembers()
@@ -296,14 +296,32 @@ table.insert(wt_core_state_minion.TaskChecks,{["func"]=wt_core_state_minion.vend
 
 --Throttle = 500
 function wt_core_state_minion:aggroCheck()
-	local TList = ( CharacterList( "nearest,los,incombat,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
-	if ( TableSize( TList ) > 0 ) then
-		local id, E  = next( TList )
-		if ( id ~= nil and id ~= 0 and E ~= nil) then
-			wt_core_taskmanager:addKillTask( id, E, 3000 )
-			MultiBotSend( "6;"..tonumber(id),"gw2minion" )	-- Inform leader about our aggro target
-			return false
-		end		
+	if ( wt_global_information.DoAggroCheck ) then
+		local TList = ( CharacterList( "nearest,los,incombat,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
+		if ( TableSize( TList ) > 0 ) then
+			local id, E  = next( TList )
+			if ( id ~= nil and id ~= 0 and E ~= nil) then
+				wt_core_taskmanager:addKillTask( id, E, 3000 )
+				MultiBotSend( "6;"..tonumber(id),"gw2minion" )	-- Inform leader about our aggro target
+				return false
+			end		
+		end
 	end
 end
 table.insert(wt_core_state_minion.TaskChecks,{["func"]=wt_core_state_minion.aggroCheck, ["throttle"]=500})
+
+--Throttle = 500
+function wt_core_state_minion.aggroGadgetCheck()
+	--wt_debug("aggroCheck")
+	if ( wt_global_information.DoAggroCheck ) then
+		local GList = ( GadgetList( "attackable,alive,nearest,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
+		if ( TableSize( GList ) > 0 ) then
+			local id, E  = next( GList )
+			if ( id ~= nil and id ~= 0 and E ~= nil) then
+				wt_core_taskmanager:addKillGadgetTask( id, E, 3050 )
+				return false
+			end		
+		end	
+	end
+end
+table.insert(wt_core_state_minion.TaskChecks,{["func"]=wt_core_state_minion.aggroGadgetCheck,["throttle"]=1000})

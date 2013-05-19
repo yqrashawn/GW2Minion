@@ -11,6 +11,7 @@ wt_core_state_combat.combatMoveTmr = 0
 wt_core_state_combat.combatEvadeTmr = 0
 wt_core_state_combat.combatEvadeLastHP = 0
 wt_core_state_combat.combatJumpTmr = 0
+wt_core_state_combat.searchBetterTarget = true
 
 function wt_core_state_combat.IsCMActive()
 	if (Player:GetMovement() ~= 0 ) then
@@ -79,19 +80,23 @@ end
 local c_better_target_search = inheritsFrom( wt_cause )
 local e_better_target_search = inheritsFrom( wt_effect )
 function c_better_target_search:evaluate()
-	local target = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-	if (wt_core_taskmanager.current_task ~= nil) then
-		if (string.find(wt_core_taskmanager.current_task.name, "Event") == nil) then
-			if (target ~= nil) then
-				if (target.isVeteran) then
-					return false
+	if (wt_core_state_combat.searchBetterTarget) then
+		local target = CharacterList:Get(wt_core_state_combat.CurrentTarget)
+		if (wt_core_taskmanager.current_task ~= nil) then
+			if (string.find(wt_core_taskmanager.current_task.name, "Event") == nil) then
+				if (target ~= nil) then
+					if (target.isVeteran) then
+						return false
+					end
 				end
 			end
 		end
-	end
 
-	c_better_target_search.TargetList = CharacterList( "lowesthealth,los,attackable,alive,incombat,noCritter,onmesh,maxdistance="..wt_global_information.AttackRange..",exclude="..wt_core_state_combat.CurrentTarget )
-	return ( TableSize( c_better_target_search.TargetList ) > 0 )
+		c_better_target_search.TargetList = CharacterList( "lowesthealth,los,attackable,alive,incombat,noCritter,onmesh,maxdistance="..wt_global_information.AttackRange..",exclude="..wt_core_state_combat.CurrentTarget )
+		return ( TableSize( c_better_target_search.TargetList ) > 0 )
+	else
+		return false
+	end
 end
 function e_better_target_search:execute()
 	nextTarget, E  = next( c_better_target_search.TargetList )

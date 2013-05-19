@@ -328,6 +328,46 @@ function wt_core_taskmanager:addKillTask( ID, character, Prio )
 	wt_core_taskmanager:addCustomtask( newtask )
 end
 
+-- Kill Enemy Gadget Task - P:3000-3500
+function wt_core_taskmanager:addKillGadgetTask( ID, gadget, Prio )
+	local newtask = inheritsFrom( wt_task )
+	newtask.UID = "KILL"..tostring(ID)
+	newtask.timestamp = wt_global_information.Now
+	newtask.lifetime = 20000
+	newtask.name = "Attacking Gadget"
+	newtask.priority = tonumber(Prio)
+	newtask.position = gadget.pos
+	newtask.done = false
+	newtask.ID = ID			
+	function newtask:execute()				
+		local ntarget = GadgetList:Get(tonumber(newtask.ID))
+		if ( ntarget ~= nil and ntarget.distance < 4000 and ntarget.alive and (ntarget.attitude == 1 or ntarget.attitude == 2) and ntarget.onmesh) then
+			wt_debug(tostring(newtask.name))
+			if (tonumber(newtask.ID) ~= nil) then
+				if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then
+					MultiBotSend( "7;"..tonumber(newtask.ID),"gw2minion" ) -- Set FocusTarget for Minions
+				end
+				wt_core_state_gcombat.setTarget( tonumber(newtask.ID) )
+				wt_debug("GOING TO KILL THAT GADGET")
+				wt_core_controller.requestStateChange( wt_core_state_gcombat )
+				return
+			end				
+			newtask.done = true
+		else
+			newtask.done = true
+		end		
+	end
+			
+	function newtask:isFinished()
+		if ( newtask.done ) then 
+			return true
+		end
+		return false
+	end
+	
+	wt_core_taskmanager:addCustomtask( newtask )
+end
+
 
 -- Force Follow Leader - P:3750
 function wt_core_taskmanager:addFollowTask( ID, prio )
@@ -499,6 +539,7 @@ function wt_core_taskmanager:addRepairTask( priority )
 							if ( not Player:IsConversationOpen() and newtask.repaired == false ) then
 								wt_debug( "Repair: Opening Vendor.. " )
 								Player:Interact( vendor.characterID )
+								Player:Use( vendor.characterID )
 								return		
 							end
 							-- CHAT WITH VENDOR

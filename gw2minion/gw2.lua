@@ -18,6 +18,7 @@ wt_global_information.MaxGatherDistance = 4000
 wt_global_information.MaxAggroDistanceFar = 1200
 wt_global_information.MaxAggroDistanceClose = 500
 wt_global_information.MaxSearchEnemyDistance = 2500
+wt_global_information.DoAggroCheck = true
 wt_global_information.lastrun = 0
 wt_global_information.InventoryFull = 0
 wt_global_information.FocusTarget = nil
@@ -159,43 +160,16 @@ function wt_global_information.OnUpdate( event, tickcount )
 		wt_global_information.lastrun = tickcount
 		
 		-- Check if we switched to a new map/zone
-		if ( wt_global_information.MeshCheck_lastrun == 0 or tickcount - wt_global_information.MeshCheck_lastrun > 3000 ) then
+		if ( wt_global_information.MeshCheck_lastrun == 0 ) then 
+			wt_global_information.MeshCheck_lastrun = tickcount
+		elseif( tickcount - wt_global_information.MeshCheck_lastrun > 3000 ) then
 			wt_global_information.MeshCheck_lastrun = tickcount
 			if ( mm.RefreshCurrentMapData() and gAutostartbot == "1" and wt_core_controller.shouldRun == false) then				
-				wt_core_controller.ToggleRun()				
+				wt_core_controller.ToggleRun()
+				return				
 			end
 		end
-		
-		
-		--[[if (gAutostartbot == "1" and wt_core_controller.shouldRun == false ) then	
-			wt_core_controller.ToggleRun()
-			wt_global_information.AutoRun = true
-		end
-		if ( NavigationManager:IsNavMeshLoaded() ) then	
-			wt_core_controller.shouldRun = not wt_core_controller.shouldRun
-			wt_debug("Core Run State: ",tostring(wt_core_controller.shouldRun))
-		else
-			if (gAutostartbot == "1") then
-				wt_global_information.Reset()
-				wt_core_taskmanager.ClearTasks()
-				wt_core_state_combat.StopCM()
-				mm.LoadMesh()
-			else
-				wt_error("CAN'T START THE BOT, YOU NEED TO LOAD A NAVMESH FIRST!")
-			end
-		end
-		if (wt_global_information.AutoRun == true and tickcount - wt_global_information.AutoRun_lastrun  > 3000 ) then
-			if ( wt_global_information.AutoRun_lastrun == 0 ) then
-				wt_global_information.AutoRun_lastrun = tickcount
-			else
-				wt_global_information.AutoRun_lastrun = 0
-				wt_global_information.AutoRun = false
-				if (wt_core_controller.shouldRun == false)then 
-					wt_core_controller.ToggleRun()
-				end
-			end
-		end		]]
-		
+			
 		wt_core_controller.Run()		
 	end	
 end
@@ -231,6 +205,7 @@ function gw2minion.HandleInit()
 	GUI_NewButton(wt_global_information.MainWindow.Name,"ToolBox","TB.toggle")
 	GUI_NewButton(wt_global_information.MainWindow.Name,"MeshManager","MM.toggle")
 	GUI_NewButton(wt_global_information.MainWindow.Name,"PartyManager","wt_core_partymanager.toggle")
+	GUI_NewButton(wt_global_information.MainWindow.Name,"DungeonManager","wt_core_dungeonmanager.toggle")
 	GUI_NewField(wt_global_information.MainWindow.Name,"MyTask","gGW2MinionTask");
 	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnPulse.Name , wt_global_information.BtnPulse.Event,"BotStatus")
