@@ -12,6 +12,7 @@ wt_core_dungeonmanager.CurrentDungeon = {
 	["PortalWPID"] = nil,
 	["PortalNeedsNavMesh"] = false,
 	["PortalPosition"] = {x = nil, y = nil, z = nil},
+	["PortalReadyPosition"] = {x = nil, y = nil, z = nil},
 	["DungeonLevel"] = 0,
 		
 
@@ -86,24 +87,37 @@ RegisterEventHandler("Gameloop.Update",
 						if (tonumber(MyMapID) ~= nil ) then
 							if ( tonumber(MyMapID) == wt_core_dungeonmanager.CurrentDungeon["MapID_Outside"] ) then
 								if (not wt_core_dungeonmanager.CurrentDungeon["PortalNeedsNavMesh"] or NavigationManager:IsNavMeshLoaded()) then
-									if ( TableSize(Player:GetPartyMembers()) == tonumber(dPartysize)-1 ) then	
+									--if ( TableSize(Player:GetPartyMembers()) == tonumber(dPartysize)-1 ) then	
 										local mypos = Player.pos
 										if (TableSize(mypos) > 0) then
 											local distance =  Distance3D( tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].x), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].y), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].z), mypos.x, mypos.y, mypos.z )
-											if ( not Player:IsInstanceDialogShown() and distance >= 50 ) then
+											if ( (not Player:IsInstanceDialogShown() and distance >= 50) or wt_core_dungeonmanager.CurrentDungeon["Ready"] == false ) then
 											
 												if ( not wt_core_dungeonmanager.IsContested() ) then													
-													if ( wt_core_dungeonmanager.CurrentDungeon["PortalNeedsNavMesh"] ) then
-														Player:MoveTo(tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].x), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].y), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].z),25)
-														dStatus = "Navigating to Portal"
-													else
-														if ( distance < 4000 ) then
-															Player:MoveToStraight(tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].x), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].y), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].z),25)
-															dStatus = "Moving to Portal"
-														else															
-															dStatus = "BUG:We are not near the PortalWaypoint.."
+													-- walk away from portal first													
+													if(wt_core_dungeonmanager.CurrentDungeon["Ready"] == false) then
+														-- first time we start it 
+														local dist = Distance3D( tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalReadyPosition"].x), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalReadyPosition"].y), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalReadyPosition"].z), mypos.x, mypos.y, mypos.z )
+														if ( dist > 50 ) then
+															dStatus = "Moving to PortalReadyPosition"
+															Player:MoveToStraight(tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalReadyPosition"].x), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalReadyPosition"].y), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalReadyPosition"].z),35)
+														else
+															wt_core_dungeonmanager.CurrentDungeon["Ready"] = true
+															wt_core_dungeonmanager.lasttick = wt_core_dungeonmanager.lasttick + 5000
 														end
-													end													
+													else														
+														if ( wt_core_dungeonmanager.CurrentDungeon["PortalNeedsNavMesh"] ) then
+															Player:MoveTo(tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].x), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].y), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].z),25)
+															dStatus = "Navigating to Portal"
+														else
+															if ( distance < 4000 ) then
+																Player:MoveToStraight(tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].x), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].y), tonumber(wt_core_dungeonmanager.CurrentDungeon["PortalPosition"].z),25)
+																dStatus = "Moving to Portal"
+															else															
+																dStatus = "BUG:We are not near the PortalWaypoint.."
+															end
+														end
+													end
 												else
 													Player:StopMoving()
 													dStatus = "Dungeon is contested?..Waiting.."
@@ -113,9 +127,13 @@ RegisterEventHandler("Gameloop.Update",
 												dStatus = "Error:PortalDialog not shown?"
 											elseif( Player:IsInstanceDialogShown() ) then
 												if (Player:GetRole() == 1 ) then
-													dStatus = "Leader:Opening Instance.."
-													wt_core_dungeonmanager.lasttick = wt_core_dungeonmanager.lasttick + 5000
-													Player:OpenInstance(tonumber(wt_core_dungeonmanager.CurrentDungeon["DungeonLevel"]))
+													if ( TableSize(Player:GetPartyMembers()) == tonumber(dPartysize)-1 ) then
+														dStatus = "Leader:Opening Instance.."
+														wt_core_dungeonmanager.lasttick = wt_core_dungeonmanager.lasttick + 5000
+														Player:OpenInstance(tonumber(wt_core_dungeonmanager.CurrentDungeon["DungeonLevel"]))
+													else
+														dStatus = "Waiting for Partymemebers.."
+													end
 												else
 													wt_core_partymanager.leaderMapID = nil
 													wt_core_dungeonmanager.lasttick = wt_core_dungeonmanager.lasttick + 5000
@@ -127,9 +145,9 @@ RegisterEventHandler("Gameloop.Update",
 												dStatus = "Error:PortalDialog..no valid case"
 											end
 										end
-									else
-										dStatus = "Waiting for Partymemebers.."
-									end
+									--else
+									--	dStatus = "Waiting for Partymemebers.."
+									--end
 								else
 									dStatus = "Error: Outside, NoMeshLoaded!"
 								end
@@ -189,11 +207,13 @@ function wt_core_dungeonmanager.ButtonHandler(event)
 				if (tonumber(event) == 69) then
 					wt_debug("Citadel Of Flame Started...")
 					wt_core_dungeonmanager.CurrentDungeon["Active"] = 1
+					wt_core_dungeonmanager.CurrentDungeon["Ready"] = false
 					wt_core_dungeonmanager.CurrentDungeon["MapID_Outside"] = 22
 					wt_core_dungeonmanager.CurrentDungeon["MapID_Inside"] = 69
 					wt_core_dungeonmanager.CurrentDungeon["PortalWPID"] = 1344
 					wt_core_dungeonmanager.CurrentDungeon["PortalNeedsNavMesh"] = false			
 					wt_core_dungeonmanager.CurrentDungeon["PortalPosition"] = {x = 35412, y = 27721, z = -3049}
+					wt_core_dungeonmanager.CurrentDungeon["PortalReadyPosition"] = {x = 34915, y = 26853, z = -2706}
 					wt_core_dungeonmanager.CurrentDungeon["DungeonLevel"] = 0
 					if (Player:GetRole() == 1 ) then
 						MultiBotSend( "500;"..tostring(event),"gw2minion" )
@@ -223,11 +243,13 @@ function wt_core_dungeonmanager.ResetDungeon()
 	if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1 ) then
 		--MultiBotSend( "503;none","gw2minion" )
 	end
-	wt_core_dungeonmanager.CurrentDungeon["Active"] = nil
+	wt_core_dungeonmanager.CurrentDungeon["Ready"] = false	
 	Player:StopMoving()
 	wt_core_state_combat.searchBetterTarget = true
 	wt_global_information.DoAggroCheck = true
-	Player:ResetInstance()
+	--Player:ResetInstance()
+	wt_core_partymanager.RebuildParty()
+	wt_core_dungeonmanager.LeaveDungeon()
 	dStatus = "Reset Done"
 end
 
@@ -258,7 +280,8 @@ function wt_core_dungeonmanager.LeaveDungeon()
 		local id,name = next(wt_core_dungeonmanager.Instances)
 		while id~=nil and name~=nil do
 			if(tonumber(mapID) == id) then
-				wt_core_dungeonmanager.CurrentDungeon["Active"] = nil
+				--wt_core_dungeonmanager.CurrentDungeon["Active"] = nil
+				wt_core_dungeonmanager.CurrentDungeon["Ready"] = false
 				Player:StopMoving()
 				dStatus = "Stopped"
 				--pause partymanager else minions may reload into dungeon
@@ -429,8 +452,7 @@ function wt_core_dungeonmanager.Play_COF_Path1()
 					break
 				elseif( event.eventID == 2917 and event.type == 173) then 
 					
-					wt_core_partymanager.RebuildParty()
-					wt_core_dungeonmanager.LeaveDungeon()
+					wt_core_dungeonmanager.ResetDungeon()
 					
 					--[[if (event.distance > 75) then
 						local epos = event.pos
