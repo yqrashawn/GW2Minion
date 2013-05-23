@@ -182,15 +182,12 @@ function wt_core_state_leader.GUIVarUpdate(Event, NewVals, OldVals)
 	end
 end
 
-function wt_core_state_leader:HandleInit() 
-	GUI_NewLabel(wt_global_information.MainWindow.Name,"THE HOST NEEDS TO START THE","GroupBotting");
-	GUI_NewLabel(wt_global_information.MainWindow.Name,"MultiBotComServer.exe!!","GroupBotting");
+function wt_core_state_leader:HandleInit()
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable BrowserStats","gStats_enabled","GroupBotting");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Groupbotting","gMinionEnabled","GroupBotting");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer IP","gIP","GroupBotting");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Port","gPort","GroupBotting");
-	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Password","gPw","GroupBotting");
-	GUI_NewSeperator(wt_global_information.MainWindow.Name);
+	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Password","gPw","GroupBotting");	
 	--GUI_NewButton(wt_global_information.MainWindow.Name, "Claim Leadership" , "Claimlead.Event","GroupBotting")
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,"GroupBotting");
 	
@@ -390,7 +387,7 @@ function wt_core_state_leader.aggroGadgetCheck()
 		if ( TableSize( GList ) > 0 ) then
 			local id, E  = next( GList )
 			if ( id ~= nil and id ~= 0 and E ~= nil) then
-				wt_core_taskmanager:addKillGadgetTask( id, E, 3050 )
+				wt_core_taskmanager:addKillGadgetTask( id, E, 3500 )
 				return false
 			end		
 		end	

@@ -243,6 +243,49 @@ function wt_core_taskmanager:addFarmSpotTask( marker )
 end
 
 ------------------------------------------------------------------
+-- Explore Point Of Interest Task
+function wt_core_taskmanager:addSkillChallengeTask( char )
+	
+		local newtask = inheritsFrom( wt_task )
+		newtask.UID = "SkillCh"..tostring(char.agentID)
+		newtask.timestamp = wt_global_information.Now				
+		newtask.name = "SkillChallenge"
+		newtask.priority = 600
+		newtask.position = char.pos
+		newtask.done = false
+		newtask.last_execution = 0
+		newtask.throttle = 500
+		
+		function newtask:execute()
+			local mypos = Player.pos
+			local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
+			if ( distance > 100 ) then
+				--wt_debug("Walking towards new PointOfInterest ")
+				-- TODO: Update position
+				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 200 )
+					newtask.last_execution = wt_global_information.Now
+				end
+			else
+				-- TODO: Add chatshit
+				newtask.done = true
+			end
+			newtask.name = "SkillChallenge: "..(math.floor(distance))
+		end
+
+		function newtask:isFinished()
+			if ( newtask.done ) then
+				return true
+			end
+			return false
+		end	
+		wt_core_taskmanager:addCustomtask( newtask )
+end
+
+
+
+
+------------------------------------------------------------------
 -- Kill stuff nearby Task - NOTUSEDRIGHTNOW
 function wt_core_taskmanager:addSearchAndKillTask(  )
 	 

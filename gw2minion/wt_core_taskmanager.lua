@@ -193,7 +193,13 @@ function wt_core_taskmanager:Update_Tasks( )
 								if ((wt_global_information.Now - lastrun) > 650000) then
 									wt_core_taskmanager:addHeartQuestTask( entry )
 								end
-							end				
+							end	
+						-- Unfinished Skillchallenges
+						--elseif ( mtype==20 and (etype == 378) and entry.onmesh) then
+						--	local mPos = entry.pos
+						--	if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
+						--		wt_core_taskmanager:addSkillChallengeTask( entry )								
+						--	end
 						
 						-- Events
 						-- Wait until we go through the entire MapMarkerList and only queue the closest event that is not blacklisted

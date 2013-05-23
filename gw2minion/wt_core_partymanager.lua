@@ -1,6 +1,6 @@
 
 wt_core_partymanager = { }
-wt_core_partymanager.wnd = { name = "PartyManager", x = 350, y = 100, w = 290, h = 180}
+wt_core_partymanager.wnd = { name = "PartyManager", x = 350, y = 100, w = 290, h = 220}
 wt_core_partymanager.visible = false
 wt_core_partymanager.lasttick = 0
 wt_core_partymanager.leaderName = nil
@@ -66,8 +66,8 @@ RegisterEventHandler("Module.Initalize",
 		
 		local wnd = GUI_GetWindowInfo("GW2Minion")
 		GUI_NewWindow(wt_core_partymanager.wnd.name,wnd.x+wnd.width,wnd.y,wt_core_partymanager.wnd.w,wt_core_partymanager.wnd.h)
-		GUI_NewCheckbox(wt_core_partymanager.wnd.name,"Activated","gPartyMGR")
-		GUI_NewField(wt_core_partymanager.wnd.name,"Status","dParty")
+		GUI_NewCheckbox(wt_core_partymanager.wnd.name,"Activated","gPartyMGR","General Settings")
+		GUI_NewField(wt_core_partymanager.wnd.name,"Status","dParty","General Settings")
 		GUI_NewLabel(wt_core_partymanager.wnd.name,"Enter Character Names:","GroupInfo");
 		GUI_NewField(wt_core_partymanager.wnd.name,"Member1","dMember1","GroupInfo")
 		GUI_NewField(wt_core_partymanager.wnd.name,"Member2","dMember2","GroupInfo")
@@ -87,7 +87,7 @@ RegisterEventHandler("Module.Initalize",
 	end
 )
 
-RegisterEventHandler("wt_core_partymanager.toggle", 
+RegisterEventHandler("PartyManager.toggle", 
 	function ()
 		if (wt_core_partymanager.visible) then
 		GUI_WindowVisible(wt_core_partymanager.wnd.name,false)	
@@ -321,7 +321,6 @@ function wt_core_partymanager.RebuildParty()
 	SendChatMsg(8,towstring("/leave"))
 	wt_core_partymanager.lasttick = wt_core_partymanager.lasttick + 5000
 end
-
 
 
 

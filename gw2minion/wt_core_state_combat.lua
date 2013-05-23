@@ -148,7 +148,7 @@ function c_MoveCloser:evaluate()
 				end
 			end
 		end
-	end
+	end	
 	return false;
 end
 function e_MoveCloser:execute()
@@ -214,7 +214,7 @@ function c_combatmove:evaluate()
 					Player:UnSetMovement(2)
 					Player:UnSetMovement(3)
 					local Tpos = T.pos
-					Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,110)
+					Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,120)
 				end
 				
 				if (Tdist ~= nil) then
@@ -237,7 +237,7 @@ function c_combatmove:evaluate()
 							Player:UnSetMovement(0)	-- stop moving forward	
 						elseif (Tdist > wt_global_information.AttackRange and (movedir == 1 or movedir == 15 or movedir == 16)) then -- we are too far away and moving backwards
 							Player:UnSetMovement(1)	-- stop moving backward	
-						elseif (Tdist > wt_global_information.AttackRange + 50 and (movedir == 2 or movedir == 13 or movedir == 15 or movedir == 3 or movedir == 14 or movedir == 16)) then -- we are strafing outside the maxrange
+						elseif ((Tdist > wt_global_information.AttackRange + 50 or Tdist < 50) and (movedir == 2 or movedir == 13 or movedir == 15 or movedir == 3 or movedir == 14 or movedir == 16)) then -- we are strafing outside the maxrange
 							if ( movedir == 2 or movedir == 13 or movedir == 15) then
 								Player:UnSetMovement(2) -- stop moving Left	
 							elseif( movedir == 3 or movedir == 14 or movedir == 16) then
@@ -268,10 +268,10 @@ function c_combatmove:evaluate()
 						if (Tdist < 160) then 
 							table.remove(dirs,1) -- We are too close to walk forwards
 						end							
-						if (movedir == 2) then 
+						if (movedir == 2 or Tdist < 50) then 
 							table.remove(dirs,4) -- We are moving left, so don't try to go right
 						end							
-						if (movedir == 3) then
+						if (movedir == 3 or Tdist < 50) then
 							table.remove(dirs,3) -- We are moving right, so don't try to go left
 						end							
 					end					
@@ -285,10 +285,10 @@ function c_combatmove:evaluate()
 						if (Tdist < 100) then 
 							table.remove(dirs,1) -- We are too close to walk forwards
 						end							
-						if (movedir == 2) then 
+						if (movedir == 2 or Tdist < 50) then 
 							table.remove(dirs,4) -- We are moving left, so don't try to go right
 						end							
-						if (movedir == 3) then
+						if (movedir == 3 or Tdist < 50) then
 							table.remove(dirs,3) -- We are moving right, so don't try to go left
 						end							
 					end						

@@ -2,7 +2,7 @@
 mm = { }
 mm.version = "v1.2";
 mm.navmeshfilepath = GetStartupPath() .. [[\Navigation\]];
-mm.mainwindow = { name = "MeshManager", x = 350, y = 100, w = 220, h = 90}
+mm.mainwindow = { name = "MeshManager", x = 350, y = 100, w = 220, h = 250}
 mm.meshfiles = {}
 mm.currentmapdata = {}
 mm.visible = false
@@ -68,13 +68,14 @@ function mm.ModuleInit()
 	if (Settings.GW2MINION.gMeshMGR == nil) then
 		Settings.GW2MINION.gMeshMGR = "1"
 	end
-	
+	gmeshname = "none"
 	local wnd = GUI_GetWindowInfo("GW2Minion")
 	GUI_NewWindow(mm.mainwindow.name,wnd.x+wnd.width,wnd.y,mm.mainwindow.w,mm.mainwindow.h)
-	GUI_NewCheckbox(mm.mainwindow.name,"Activated","gMeshMGR")
-	GUI_NewField(mm.mainwindow.name,"Mapname","gmapname")
-	GUI_NewField(mm.mainwindow.name,"Navmesh","gmeshname")
-	GUI_NewField(mm.mainwindow.name,"Waypoint","gwaypointid")
+	GUI_NewCheckbox(mm.mainwindow.name,"Activated","gMeshMGR","General Settings")
+	GUI_NewField(mm.mainwindow.name,"Mapname","gmapname","General Settings")
+	GUI_NewComboBox(mm.mainwindow.name,"Navmesh","gmeshname","General Settings","");
+	--GUI_NewField(mm.mainwindow.name,"Navmesh","gmeshname","General Settings")
+	GUI_NewField(mm.mainwindow.name,"Waypoint","gwaypointid","General Settings")
 	local count = 0
 	-- Grab all meshfiles in our Navigation directory
 	for meshfile in io.popen('dir /b "' .. mm.navmeshfilepath ..'*.obj"'):lines() do
@@ -85,38 +86,103 @@ function mm.ModuleInit()
 				table.insert(mm.meshfiles, meshfile)
 				file:flush()
 				file:close()
-								
-				GUI_NewButton(mm.mainwindow.name, tostring(meshfile),tostring(meshfile),"Change_NavMesh_for_Zone")
-				RegisterEventHandler(tostring(meshfile),mm.ButtonHandler)						
+					
+				gmeshname = gmeshname..","..tostring(meshfile)								
 				count = count + 1
 			end
 		end
 	end
+		
+	gMeshEditor = "0"
+	if (Settings.GW2MINION.gnewmeshname == nil) then
+		Settings.GW2MINION.gnewmeshname = ""
+	end
+	GUI_NewCheckbox(mm.mainwindow.name,"Show Mesh","gMeshEditor","Editor")
+	GUI_NewField(mm.mainwindow.name,"New MeshName","gnewmeshname","Editor")
+	GUI_NewButton(mm.mainwindow.name,"New Mesh","newMeshEvent","Editor")
+	GUI_NewComboBox(mm.mainwindow.name,"RecordMode","grecMode","Editor","Mouse,Player");	
+	GUI_NewButton(mm.mainwindow.name,"Optimize Mesh","optimizeMeshEvent","Editor")
+	GUI_NewButton(mm.mainwindow.name,"Save Mesh","saveMeshEvent","Editor")
+	
+	
+	RegisterEventHandler("newMeshEvent",mm.CreateNewMesh)
+	RegisterEventHandler("optimizeMeshEvent",mm.OptimizeMesh)
+	RegisterEventHandler("saveMeshEvent",mm.SaveMesh)
+			
+	gmeshname_listitems = gmeshname
 	gmapname = ""
-	gmeshname = ""
 	gwaypointid = ""
 	gMeshMGR = Settings.GW2MINION.gMeshMGR
-	GUI_SizeWindow(mm.mainwindow.name,mm.mainwindow.w,mm.mainwindow.h+count*15)
-	GUI_FoldGroup( mm.mainwindow.name, "Change_NavMesh_for_Zone" ) 
-	mm.visible = false
-	GUI_WindowVisible(mm.mainwindow.name,false)	
+	gnewmeshname = Settings.GW2MINION.gMeshMGR
+	gnewmeshname = ""
+		
+	--mm.visible = false
+	--GUI_WindowVisible(mm.mainwindow.name,false)	
+
 end
 
-function mm.ButtonHandler(event)			
+function mm.CreateNewMesh()
+	wt_debug("Creating NEW MESH")
+	-- Unload old Mesh
+	if (NavigationManager:IsNavMeshLoaded()) then
+		wt_debug("Unloading old NavMesh...")
+		wt_debug("Result: "..tostring(NavigationManager:UnloadNavMesh()))
+	end
+	
+	if ( gnewmeshname ~= nil and gnewmeshname ~= "" ) then
+		-- Make sure file doesnt exist
+		local found = false
+		for meshfile in io.popen('dir /b "' .. mm.navmeshfilepath ..'*.obj"'):lines() do
+			meshfile = string.gsub(meshfile, ".obj", "")		
+			if (tostring(meshfile) == tostring(gnewmeshname)) then
+				wt_error("Mesh with that Name exists already...")
+				found = true
+				break
+			end			
+		end
+		if (not found) then
+			-- Setup everything for new mesh
+			gmeshname_listitems = gmeshname_listitems..","..tostring(gnewmeshname)
+			gmeshname = tostring(gnewmeshname)
+			
+		end
+	else
+		wt_error("Enter a new MeshName first!")
+	end
+end
+
+function mm.OptimizeMesh()
+	wt_debug("Optimizing Mesh...")
+	wt_debug("Result: "..tostring(NavigationManager:OptimizeMesh()))
+end
+
+function mm.SaveMesh()
+	wt_debug("Saving NavMesh...")
+	if (gmeshname ~= nil and tostring(gmeshname) ~= "") then
+		wt_debug("Result: "..tostring(NavigationManager:SaveNavMesh(gmeshname)))
+	else
+		wt_error("gmeshname is empty!?")
+	end	
+end
+
+function mm.ChangeNavMesh(newmesh)			
 	-- Set the new mesh for the local map
 	local mapID = Player:GetLocalMapID()
-	if ( Settings.GW2MINION.Zones[mapID] == nil) then
+	if ( Settings.GW2MINION.Zones[tostring(mapID)] == nil) then
 		if (mm.Zones[mapID] == nil) then
-			Settings.GW2MINION.Zones[tostring(mapID)] = { mapname="unknown", meshname=tostring(event), waypointid="none" } 
+			Settings.GW2MINION.Zones[tostring(mapID)] = { mapname="unknown", meshname=tostring(newmesh), waypointid="none" } 
 			gmapname = "Unknown"
 			gwaypointid = "none"
 		else
-			Settings.GW2MINION.Zones[tostring(mapID)] = { mapname=tostring(mm.Zones[mapID]), meshname=tostring(event), waypointid="none" } 
+			Settings.GW2MINION.Zones[tostring(mapID)] = { mapname=tostring(mm.Zones[mapID]), meshname=tostring(newmesh), waypointid="none" } 
 			gmapname = tostring(mm.Zones[mapID])
 			gwaypointid = "none"
 		end
-	else
-		Settings.GW2MINION.Zones[tostring(mapID)].meshname = tostring(event)		
+	else	
+		if (tostring(Settings.GW2MINION.Zones[tostring(mapID)].meshname) ~= tostring(newmesh)) then
+			mm.currentmapdata.mapID = nil -- make it reload the navmesh since it changed
+		end
+		Settings.GW2MINION.Zones[tostring(mapID)].meshname = tostring(newmesh)		
 		gmapname = Settings.GW2MINION.Zones[tostring(mapID)].mapname
 		if (Settings.GW2MINION.Zones[tostring(mapID)].waypointid == nil) then
 			Settings.GW2MINION.Zones[tostring(mapID)].waypointid = "none"
@@ -124,12 +190,11 @@ function mm.ButtonHandler(event)
 		else
 			gwaypointid = tostring(Settings.GW2MINION.Zones[tostring(mapID)].waypointid)
 		end
-	end		
-	gmeshname = tostring(event)
-	GUI_FoldGroup( mm.mainwindow.name, "Change_NavMesh_for_Zone" ) 
+	end	
+	gmeshname = tostring(newmesh)	
 	Settings.GW2MINION.Zones = Settings.GW2MINION.Zones -- save settings
+	
 	gMeshMGR = "1"
-	mm.visible = false
 end
 
 function mm.RefreshCurrentMapData()
@@ -147,7 +212,8 @@ function mm.RefreshCurrentMapData()
 			-- Load the mesh for our Map
 			if ( tonumber(mapID) ~= nil and Settings.GW2MINION.Zones~=nil and Settings.GW2MINION.Zones[tostring(mapID)] ~= nil ) then
 				gmapname = Settings.GW2MINION.Zones[tostring(mapID)].mapname
-				gmeshname = Settings.GW2MINION.Zones[tostring(mapID)].meshname
+				gmeshname = tostring(Settings.GW2MINION.Zones[tostring(mapID)].meshname)
+								
 				if (Settings.GW2MINION.Zones[tostring(mapID)].waypointid == nil) then
 					gwaypointid = "none"			
 				else
@@ -221,21 +287,27 @@ end
 
 
 function mm.GUIVarUpdate(Event, NewVals, OldVals)
-	for k,v in pairs(NewVals) do
-		for i,meshfile in pairs(mm.meshfilelist) do
-			if (i~=nil and meshfile ~= nil) then
-				if ( k == "Mesh_"..tostring(meshfile.name) ) then
-					
-					Settings.GW2MINION[tostring(k)] = v
-					meshfile.used = v
-				end
+	for k,v in pairs(NewVals) do		
+		if ( k == "gmeshname") then
+			mm.ChangeNavMesh(v)	
+		elseif( k == "gMeshEditor") then
+			if (v == "1") then
+				NavigationManager:ToggleNavEditor(true)
+			else
+				NavigationManager:ToggleNavEditor(false)
 			end
-		end
-		if ( k == "gNavSwitchEnabled" or k == "gNavSwitchTime") then
+		elseif( k == "grecMode") then
+			if (v == "Mouse") then
+				NavigationManager:RecordMode(false)
+			else
+				NavigationManager:RecordMode(true)
+			end
+			Settings.GW2MINION[tostring(k)] = v
+		elseif( k == "gMeshMGR" or k == "gnewmeshname") then
 			Settings.GW2MINION[tostring(k)] = v
 		end
 	end
-	GUI_RefreshWindow(wt_global_information.MainWindow.Name)
+	GUI_RefreshWindow(mm.mainwindow.name)
 end
 
 
@@ -270,5 +342,6 @@ function mm.GenerateInfoFile( )
 end
 
 
-RegisterEventHandler("MM.toggle", mm.ToggleMenu)
+RegisterEventHandler("NavigationManager.toggle", mm.ToggleMenu)
+RegisterEventHandler("GUI.Update",mm.GUIVarUpdate)
 RegisterEventHandler("Module.Initalize",mm.ModuleInit)
