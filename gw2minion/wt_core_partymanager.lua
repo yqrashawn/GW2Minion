@@ -154,11 +154,11 @@ function wt_core_partymanager.SendGroupInfo()
 	if (Player:GetRole() == 1 ) then		
 		local myname = Player.name
 		if (tostring(myname) ~= "" and tostring(myname) ~= "nil") then
-			MultiBotSend( "3;"..tostring(myname),"gw2minion" )
+			MultiBotSend( "300;"..tostring(myname),"gw2minion" )
 		end
 		local mymapID = Player:GetLocalMapID()
 		if (tonumber(mymapID) ~= nil) then
-			MultiBotSend( "4;"..tostring(mymapID),"gw2minion" )
+			MultiBotSend( "301;"..tostring(mymapID),"gw2minion" )
 		end	
 		local myWP = WaypointList("nearest,samezone,notcontested,onmesh")
 		if (TableSize(myWP) == 0) then
@@ -167,9 +167,12 @@ function wt_core_partymanager.SendGroupInfo()
 		if (TableSize(myWP) == 1) then
 			local id,e = next (myWP)
 			if ( id ~= nil) then
-				local WPID = WaypointList:Get(id).contentID
-				if ( tonumber(WPID) ~= nil) then
-					MultiBotSend( "5;"..tostring(WPID),"gw2minion" )
+				local WP = WaypointList:Get(id)
+				if (WP ~= nil) then
+					local wpID = WP.contentID
+					if ( tonumber(wpID) ~= nil) then
+						MultiBotSend( "302;"..tostring(wpID),"gw2minion" )
+					end
 				end
 			end
 		end	

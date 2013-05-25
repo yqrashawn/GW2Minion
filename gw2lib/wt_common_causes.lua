@@ -315,7 +315,7 @@ function c_rest:evaluate()
 		if (mybuffs ~= nil) then
 		  i,e = next(mybuffs)
 		  while (i ~= nil and e ~= nil) do		
-			if (tonumber(e.skillID) ~= nil and tonumber(e.contentID) ~= nil) then
+			if (tonumber(e.skillID) ~= nil) then
 				if (e.skillID == 737 or	--Burning
 					e.skillID == 723 or --Poison
 					e.skillID == 736 ) then	--Bleeding
