@@ -140,6 +140,9 @@ end
 
 -- checks to see if we need gathering tools and whether we can afford the stock we need
 function wt_core_items:NeedGatheringTools()
+	if (gBuyGatheringTools == "0") then
+		return false
+	end
 	local totalCost = 0
 	if (wt_core_items:GetItemStock(wt_core_items.ftool) == 0) then
 		local goldCostTable = wt_core_items.goldCost[wt_core_items.ftool]
@@ -157,8 +160,31 @@ function wt_core_items:NeedGatheringTools()
 	return (totalCost ~= 0 and Inventory:GetInventoryMoney() - (2*totalCost) > 0)
 end
 
+function wt_core_items:CanVendor()
+	local canVendor = false
+	if ( gVendor_Weapons == "1") then
+		local tmpR = tonumber(gMaxItemSellRarity)	
+		-- Sell Weapons	
+		while ( tmpR > 0) do
+			local sweapons = ItemList("itemtype=18,notsoulbound,rarity="..tmpR)	
+			local id,item = next(sweapons)
+			if (id ~=nil and item ~= nil) then
+				local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
+				if(blacklistCount == nil or blacklistCount < 3) then
+					
+				end
+			end
+			tmpR = tmpR - 1
+		end
+	end
+	
+end
+
 -- checks to see if we need salvage and whether we can afford the stock we need
 function wt_core_items:NeedSalvageKits()
+	if (gBuySalvageKits == "0") then
+		return false
+	end
 	local threshold
 	if (tonumber(gSalvageKitStock) == 1) then
 		threshold = 0

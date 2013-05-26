@@ -67,9 +67,6 @@ end
 if ( Settings.GW2MINION.gVendor_Armor == nil ) then
 	Settings.GW2MINION.gVendor_Armor = "1"
 end
-if ( Settings.GW2MINION.gVendor_Junk == nil ) then
-	Settings.GW2MINION.gVendor_Junk = "1"
-end
 if ( Settings.GW2MINION.gVendor_UpgradeComps == nil ) then
 	Settings.GW2MINION.gVendor_UpgradeComps = "0"
 end
@@ -254,7 +251,6 @@ function gw2minion.HandleInit()
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Upgrade Components","gVendor_UpgradeComps","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Crafting Materials","gVendor_CraftingMats","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Trophies","gVendor_Trophies","VendorSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Junk","gVendor_Junk","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Gathering", "gDoGathering","GatherSettings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Gathering Tools", "gBuyGatheringTools","GatherSettings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Best Tool Available", "gBuyBestGatheringTool","GatherSettings");
@@ -294,7 +290,6 @@ function gw2minion.HandleInit()
 	gUseWaypointsEvents = Settings.GW2MINION.gUseWaypointsEvents
 	gVendor_Weapons = Settings.GW2MINION.gVendor_Weapons
 	gVendor_Armor = Settings.GW2MINION.gVendor_Armor
-	gVendor_Junk = Settings.GW2MINION.gVendor_Junk
 	gVendor_UpgradeComps = Settings.GW2MINION.gVendor_UpgradeComps
 	gVendor_CraftingMats = Settings.GW2MINION.gVendor_CraftingMats
 	gVendor_Trinkets = Settings.GW2MINION.gVendor_Trinkets
@@ -335,7 +330,6 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "gVendor_UpgradeComps" or
 				k == "gVendor_CraftingMats" or
 				k == "gVendor_Trophies" or
-				k == "gVendor_Junk" or
 				k == "gCombatmovement" or
 				k == "gdoEvents" or
 				k == "gBuyGatheringTools" or

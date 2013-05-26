@@ -52,19 +52,19 @@ function HandleMultiBotMessages( event, message, channel )
 					end
 					
 					-- PARTYMANAGER
-					if ( tonumber(msgID) == 3 ) then -- Leader sends Minion his Name						
+					if ( tonumber(msgID) == 300 ) then -- Leader sends Minion his Name						
 						if (tostring(msg) ~= nil and Player:GetRole() ~= 1) then
 							--wt_debug("Recieved Partyleader Name :"..tostring(msg))
 							wt_core_partymanager.leaderName = tostring(msg)							
 						end
 					end
-					if ( tonumber(msgID) == 4 ) then -- Leader sends Minion his MapID						
+					if ( tonumber(msgID) == 301 ) then -- Leader sends Minion his MapID						
 						if (tonumber(msg) ~= nil and Player:GetRole() ~= 1 ) then
 							--wt_debug("Recieved Partyleader's MapID :"..tostring(msg))
 							wt_core_partymanager.leaderMapID = tonumber(msg)							
 						end
 					end
-					if ( tonumber(msgID) == 5 ) then -- Leader sends Minion his closest WaypointID						
+					if ( tonumber(msgID) == 302 ) then -- Leader sends Minion his closest WaypointID						
 						if (tonumber(msg) ~= nil and Player:GetRole() ~= 1 ) then
 							--wt_debug("Recieved Partyleader's WaypointID :"..tostring(msg))
 							wt_core_partymanager.leaderWPID = tonumber(msg)							
@@ -104,39 +104,18 @@ function HandleMultiBotMessages( event, message, channel )
 						elseif ( tonumber(msgID) == 11 ) then -- Leader tells Minions to Vendor
 							if ( Player:GetRole() ~= 1 ) then
 								wt_debug( "Leader sais we should Vendor now.." )
-								wt_core_taskmanager:addVendorTask(5000)		
+								wt_core_taskmanager:addVendorTask(5000)
 							end
 						
 						-- VENDORBUY
 						elseif ( tonumber(msgID) == 12 ) then -- A minion needs to Vendor, set our Primary task accordingly
 							if ( Player:GetRole() == 1) then
-								local taskSet = false
-								if (gBuyGatheringTools == "1" and wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > tonumber(gGatheringToolStock)) then
-									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ftool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ltool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.mtool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-									taskSet = true
-								end
-								if (gBuySalvageKits == "1" and wt_core_items:NeedSalvageKits() and ItemList.freeSlotCount > tonumber(gSalvageKitStock)) then
-									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality)
-									taskSet = true
-								end
-								-- add a vendor task anyway so that the bot will run to vendor
-								if (not taskSet) then
-									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality)
-								end
+								wt_core_state_leader:vendorBuyCheck()
 								wt_debug( "A Minion needs to purchase from vendor, going to Vendor" )
 							end
 						elseif ( tonumber(msgID) == 13 ) then -- Leader tells Minions to Vendor
 							if ( Player:GetRole() ~= 1 ) then
-								if (gBuyGatheringTools == "1" and wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > tonumber(gGatheringToolStock)) then
-										wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ftool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-										wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ltool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-										wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.mtool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-								end
-								if (gBuySalvageKits == "1" and wt_core_items:NeedSalvageKits() and ItemList.freeSlotCount > tonumber(gSalvageKitStock)) then
-									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality)
-								end
+								wt_core_state_leader:vendorBuyCheck()
 								wt_debug( "Leader sais we should Vendor now.." )
 							end
 						

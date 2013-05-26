@@ -415,8 +415,13 @@ function wt_core_taskmanager:addRepairTask( priority )
 			newtask.last_execution = 0			
 			newtask.repaired = false
 			newtask.usedWP = false
+			newtask.clearedVendor = false
 			
-			function newtask:execute()				
+			function newtask:execute()
+				if not (newtask.clearedVendor) then
+					Player:ClearTarget()
+					newtask.clearedVendor = true
+				end			
 				mypos = Player.pos
 				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
 				 -- TELEPORT TO NEAREST WAYPOINT
@@ -565,7 +570,10 @@ end
 
 -- Go To Vendor Task - P:5000
 function wt_core_taskmanager:addVendorTask( priority )
-	local EList = MapObjectList( "onmesh,nearest,alive,type="..GW2.MAPOBJECTTYPE.Merchant )
+	local EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
+	if ( TableSize( EList ) == 0 ) then
+		EList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
+	end
 	if ( TableSize( EList ) > 0 ) then
 		local nextTarget, E = next( EList )
 		if ( nextTarget ~= nil and nextTarget ~= 0 and E.characterID ~= nil and wt_core_taskmanager.npcBlacklist[E.characterID] == nil) then	
@@ -585,8 +593,14 @@ function wt_core_taskmanager:addVendorTask( priority )
 			newtask.itemStackcount = nil
 			newtask.firstSell = true
 			newtask.usedWP = false
+			newtask.clearedVendor = false
 			
-			function newtask:execute()				
+			function newtask:execute()
+				-- have to clear vendor target to reset buy/sell data
+				if not (newtask.clearedVendor) then
+					Player:ClearTarget()
+					newtask.clearedVendor = true
+				end
 				mypos = Player.pos
 				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
 				 -- TELEPORT TO NEAREST WAYPOINT
@@ -864,13 +878,11 @@ function wt_core_taskmanager:addVendorTask( priority )
 									end		
 								end
 								
-								if ( gVendor_Junk == "1") then
-									-- Sell Junk
-									if ( not sold ) then
-										wt_debug( "Vendoring: Selling Junk..." )
-										Inventory:SellJunk()
-										newtask.junksold = true
-									end
+								-- Sell Junk
+								if ( not sold ) then
+									wt_debug( "Vendoring: Selling Junk..." )
+									Inventory:SellJunk()
+									newtask.junksold = true
 								end
 								
 								newtask.throttle = math.random(500,1500)
@@ -930,8 +942,13 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 			newtask.wt_core_itemType = tonumber(wt_core_itemType)
 			newtask.quality = quality
 			newtask.usedWP = false
+			newtask.clearedVendor = false
 			
-			function newtask:execute()				
+			function newtask:execute()
+				if not (newtask.clearedVendor) then
+					Player:ClearTarget()
+					newtask.clearedVendor = true
+				end			
 				mypos = Player.pos
 				local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
 				 -- TELEPORT TO NEAREST WAYPOINT

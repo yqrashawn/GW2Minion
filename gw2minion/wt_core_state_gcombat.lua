@@ -56,15 +56,15 @@ end
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 -- Move Closer to Target Check
-c_MoveCloser = inheritsFrom(wt_cause)
-e_MoveCloser = inheritsFrom(wt_effect)
+local c_MoveCloser = inheritsFrom(wt_cause)
+local e_MoveCloser = inheritsFrom(wt_effect)
 function c_MoveCloser:evaluate()
 	if ( wt_core_state_gcombat.CurrentTarget ~= nil and wt_core_state_gcombat.CurrentTarget ~= 0 ) then
 		local T = GadgetList:Get(wt_core_state_gcombat.CurrentTarget)
 		if ( T ~= nil ) then
 			local Distance = T.distance or 0
 			local LOS = T.los or false
-			if (Distance >= wt_global_information.AttackRange or LOS~=true) then				
+			if (Distance >= wt_global_information.AttackRange) then				
 				return true
 			else
 				if( Player:GetTarget() ~= wt_core_state_gcombat.CurrentTarget) then
@@ -86,6 +86,31 @@ function e_MoveCloser:execute()
 	end
 end
 
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+-- Hit Shit
+local c_DefaultAttack = inheritsFrom(wt_cause)
+local e_DefaultAttack = inheritsFrom(wt_effect)
+function c_DefaultAttack:evaluate()
+	return wt_core_state_gcombat.CurrentTarget ~= 0
+end
+function e_DefaultAttack:execute()
+	wt_debug("attack")
+	TID = wt_core_state_gcombat.CurrentTarget
+	if ( TID ~= nil and TID ~= 0 ) then
+		local T = GadgetList:Get(TID)
+		if ( T ~= nil ) then		
+			--wt_debug("attacking " .. wt_core_state_combat.CurrentTarget .. " Distance " .. T.distance)
+			local TPos = T.pos
+			Player:SetFacing(TPos.x, TPos.y, TPos.z)
+			local s1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
+			if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and T.distance < s1.maxRange) then
+				Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+			end
+		end
+	end
+end
+
 
 --/////////////////////////////////////////////////////
 -- Sets our target for this combatstate
@@ -97,6 +122,8 @@ function wt_core_state_gcombat.setTarget( CurrentTarget )
 		wt_core_state_gcombat.CurrentTarget = 0
 	end
 end
+
+function
 
 
 --/////////////////////////////////////////////////////
@@ -124,6 +151,9 @@ function wt_core_state_gcombat:initialize()
 		
 		local ke_MoveClose_action = wt_kelement:create("Move closer",c_MoveCloser,e_MoveCloser, 75 )
 		wt_core_state_gcombat:add(ke_MoveClose_action)
+		
+		local ke_Attack_default = wt_kelement:create("Attack",c_DefaultAttack,e_DefaultAttack, 45 )
+		wt_core_state_gcombat:add(ke_Attack_default)
 end
 
 -- setup kelements for the state
