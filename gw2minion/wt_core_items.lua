@@ -140,6 +140,9 @@ end
 
 -- checks to see if we need gathering tools and whether we can afford the stock we need
 function wt_core_items:NeedGatheringTools()
+	if (gBuyGatheringTools == "0") then
+		return false
+	end
 	local totalCost = 0
 	if (wt_core_items:GetItemStock(wt_core_items.ftool) == 0) then
 		local goldCostTable = wt_core_items.goldCost[wt_core_items.ftool]
@@ -157,8 +160,106 @@ function wt_core_items:NeedGatheringTools()
 	return (totalCost ~= 0 and Inventory:GetInventoryMoney() - (2*totalCost) > 0)
 end
 
+function wt_core_items:CanVendor()
+	local canVendor = false
+	if ( gVendor_Weapons == "1") then
+		local tmpR = tonumber(gMaxItemSellRarity)	
+		while ( tmpR > 0) do
+			local sweapons = ItemList("itemtype=18,notsoulbound,rarity="..tmpR)	
+			local id,item = next(sweapons)
+			if (id ~=nil and item ~= nil) then
+				local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
+				if(blacklistCount == nil or blacklistCount < 3) then
+					return true
+				end
+			end
+			tmpR = tmpR - 1
+		end
+	end
+	
+	if ( gVendor_Armor == "1") then
+		local tmpR = tonumber(gMaxItemSellRarity)	
+		while ( tmpR > 0) do
+			local sarmor = ItemList("itemtype=0,notsoulbound,rarity="..tmpR)					
+			local id,item = next(sarmor)
+			if (id ~=nil and item ~= nil) then
+				local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
+				if(blacklistCount == nil or blacklistCount < 3) then
+					return true
+				end
+			end
+			tmpR = tmpR - 1
+		end		
+	end
+		
+	if ( gVendor_Trinkets == "1") then
+		local tmpR = tonumber(gMaxItemSellRarity)	
+		while ( tmpR > 0 ) do
+			local strinket = ItemList("itemtype=15,notsoulbound,rarity="..tmpR)					
+			local id,item = next(strinket)
+			if (id ~=nil and item ~= nil) then
+				local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
+				if(blacklistCount == nil or blacklistCount < 3) then
+					return true
+				end
+			end
+			tmpR = tmpR - 1
+		end			
+	end
+		
+	if ( gVendor_UpgradeComps == "1") then
+		local tmpR = tonumber(gMaxItemSellRarity)	
+		while ( tmpR > 0 ) do
+			local supgrade = ItemList("itemtype=17,notsoulbound,rarity="..tmpR)					
+			local id,item = next(supgrade)
+			if (id ~=nil and item ~= nil) then
+				local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
+				if(blacklistCount == nil or blacklistCount < 3) then
+					return true
+				end
+			end
+			tmpR = tmpR - 1
+		end		
+	end
+		
+	if ( gVendor_CraftingMats == "1") then
+		local tmpR = tonumber(gMaxItemSellRarity)	
+		while ( tmpR > 0 ) do
+			local scraftmats = ItemList("itemtype=5,notsoulbound,rarity="..tmpR)				
+			local id,item = next(scraftmats)
+			if (id ~=nil and item ~= nil) then
+				local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
+				if(blacklistCount == nil or blacklistCount < 3) then
+					return true
+				end
+			end
+			tmpR = tmpR - 1
+		end		
+	end
+		
+	if ( gVendor_Trophies == "1") then
+		local tmpR = tonumber(gMaxItemSellRarity)	
+		while ( tmpR > 0 ) do
+			local strophies = ItemList("itemtype=16,notsoulbound,rarity="..tmpR)					
+			local id,item = next(strophies)
+			if (id ~=nil and item ~= nil) then
+				local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
+				if(blacklistCount == nil or blacklistCount < 3) then
+					return true
+				end
+			end
+			tmpR = tmpR - 1
+		end			
+	end
+	
+	return false
+end
+
 -- checks to see if we need salvage and whether we can afford the stock we need
 function wt_core_items:NeedSalvageKits()
+	if (gBuySalvageKits == "0") then
+		return false
+	end
 	local threshold
 	if (tonumber(gSalvageKitStock) == 1) then
 		threshold = 0

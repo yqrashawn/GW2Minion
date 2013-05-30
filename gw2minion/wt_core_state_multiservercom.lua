@@ -138,43 +138,28 @@ function HandleMultiBotMessages( event, message, channel )
 						elseif ( tonumber(msgID) == 10 ) then -- A minion needs to Vendor, set our Primary task accordingly
 							if ( Player:GetRole() == 1) then
 								wt_debug( "A Minion needs to vendor, going to Vendor" )
-								wt_core_taskmanager:addVendorTask(5000)
+								wt_core_taskmanager:addVendorTask(4500, nil)
 							end
 						elseif ( tonumber(msgID) == 11 ) then -- Leader tells Minions to Vendor
 							if ( Player:GetRole() ~= 1 ) then
 								wt_debug( "Leader sais we should Vendor now.." )
-								wt_core_taskmanager:addVendorTask(5000)		
+								wt_core_taskmanager:addVendorTask(4500, nil)
 							end
 						
 						-- VENDORBUY
 						elseif ( tonumber(msgID) == 12 ) then -- A minion needs to Vendor, set our Primary task accordingly
 							if ( Player:GetRole() == 1) then
-								local taskSet = false
-								if (gBuyGatheringTools == "1" and wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > tonumber(gGatheringToolStock)) then
-									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ftool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ltool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.mtool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-									taskSet = true
-								end
-								if (gBuySalvageKits == "1" and wt_core_items:NeedSalvageKits() and ItemList.freeSlotCount > tonumber(gSalvageKitStock)) then
-									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality)
-									taskSet = true
-								end
-								-- add a vendor task anyway so that the bot will run to vendor
-								if (not taskSet) then
-									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality)
+								if not (wt_core_state_leader:vendorBuyCheck()) then
+									local vendor = wt_core_helpers:GetClosestBuyVendor(999999)
+									wt_core_taskmanager:addVendorTask(4500, vendor)
 								end
 								wt_debug( "A Minion needs to purchase from vendor, going to Vendor" )
 							end
 						elseif ( tonumber(msgID) == 13 ) then -- Leader tells Minions to Vendor
 							if ( Player:GetRole() ~= 1 ) then
-								if (gBuyGatheringTools == "1" and wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > tonumber(gGatheringToolStock)) then
-										wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ftool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-										wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ltool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-										wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.mtool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-								end
-								if (gBuySalvageKits == "1" and wt_core_items:NeedSalvageKits() and ItemList.freeSlotCount > tonumber(gSalvageKitStock)) then
-									wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality)
+								if not (wt_core_state_leader:vendorBuyCheck()) then
+									local vendor = wt_core_helpers:GetClosestBuyVendor(999999)
+									wt_core_taskmanager:addVendorTask(4500, vendor)
 								end
 								wt_debug( "Leader sais we should Vendor now.." )
 							end
@@ -184,12 +169,14 @@ function HandleMultiBotMessages( event, message, channel )
 						elseif ( tonumber(msgID) == 15 ) then -- A minion needs to Repair, set our Primary task accordingly
 							if ( Player:GetRole() == 1) then
 								wt_debug( "A Minion needs to repair, going to Merchant" )
-								wt_core_taskmanager:addRepairTask(4500)
+								wt_core_taskmanager:addRepairTask(5000, nil)
+								wt_core_taskmanager:addVendorTask(4500, nil)
 							end
 						elseif ( tonumber(msgID) == 16 ) then -- Leader tells Minions to Repair
 							if ( gEnableRepair == "1" and NeedRepair() and Player:GetRole() ~= 1 ) then
 								wt_debug( "Leader sais we should Repair now.." )
-								wt_core_taskmanager:addRepairTask(4500)		
+								wt_core_taskmanager:addRepairTask(5000, nil)
+								wt_core_taskmanager:addVendorTask(4500, nil)
 							end
 						
 						-- 	Blacklist Vendor

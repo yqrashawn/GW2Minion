@@ -289,58 +289,72 @@ wt_core_state_leader:register()
 --UID = "REPAIR"
 --Throttle = 2500
 function wt_core_state_leader:repairCheck()
-	if ( gEnableRepair == "1" and NeedRepair() and wt_core_taskmanager:CheckTaskQueue("REPAIR") == nil) then
-		local repairList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant )
-		if ( TableSize( repairList ) > 0 ) then
-			local nextTarget
-			nextTarget, E = next( repairList )
-			if ( nextTarget ~= nil and nextTarget ~= 0 ) then
-				wt_core_taskmanager:addRepairTask(4500)
-			end
+	if ( gEnableRepair == "1" and NeedRepair() and not wt_core_taskmanager:CheckTaskQueue("REPAIR")) then
+		local vendor = wt_core_helpers:GetClosestRepairVendor(999999)
+		if (vendor) then
+			wt_core_taskmanager:addRepairTask(5000, vendor)
+			wt_core_taskmanager:addVendorTask(4500, nil)
+			return true
 		end
 	end	
+	return false
 end
 table.insert(wt_core_state_leader.TaskChecks,{["func"]=wt_core_state_leader.repairCheck, ["throttle"]=2500})
 
 --UID = "VENDORSELL"
 --Throttle = 2500
 function wt_core_state_leader:vendorSellCheck()
-	if ( ItemList.freeSlotCount <= 3 and wt_global_information.InventoryFull == 1 and wt_core_taskmanager:CheckTaskQueue("VENDORSELL") == nil) then
-	local vendorList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
-		if ( TableSize( vendorList ) > 0 ) then
-			local nextTarget
-			nextTarget, E = next( vendorList )
-			if ( nextTarget ~= nil and nextTarget ~= 0 ) then
-				wt_core_taskmanager:addVendorTask(5000)
+	if ( ItemList.freeSlotCount <= 3 and wt_global_information.InventoryFull == 1 and not wt_core_taskmanager:CheckTaskQueue("VENDORSELL")) then
+		if (wt_core_items:CanVendor()) then
+			local vendor = wt_core_helpers:GetClosestSellVendor(999999)
+			if (vendor) then
+				wt_core_taskmanager:addVendorTask(4500, vendor)
+				return true
+			else
+				wt_debug("Need to vendor but no suitable vendor found on mesh - check your mesh to ensure it contains coins or broken shield icon")
 			end
+		else
+			wt_debug("Need to vendor but you have nothing that can be vendored - check your settings!")
 		end
 	end
+	return false
 end
 table.insert(wt_core_state_leader.TaskChecks,{["func"]=wt_core_state_leader.vendorSellCheck, ["throttle"]=2500})
 
 --UID = "VENDORBUY..."
 --Throttle = 2500
 function wt_core_state_leader:vendorBuyCheck()
-	if 	(gBuyGatheringTools == "1" and wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > tonumber(gGatheringToolStock)) or
-		(gBuySalvageKits == "1" and wt_core_items:NeedSalvageKits() and ItemList.freeSlotCount > tonumber(gSalvageKitStock)) and
-		(wt_core_taskmanager:CheckTaskQueue("VENDORBUY") == nil) 
-	then	
-		local vendorList = MapObjectList( "onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant )
-		if ( TableSize( vendorList ) > 0 ) then
-			local nextTarget
-			nextTarget, E = next( vendorList )
-			if ( nextTarget ~= nil and nextTarget ~= 0 ) then
-				if (wt_core_items:NeedGatheringTools() and gBuyGatheringTools == "1") then
-					wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ftool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-					wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ltool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-					wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.mtool, tonumber(gGatheringToolStock),gGatheringToolQuality)
-				end
-				if (wt_core_items:NeedSalvageKits() and gBuySalvageKits == "1") then
-					wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality)
-				end
+	--wt_debug("vendorBuyCheck")
+	if (wt_core_taskmanager:CheckTaskQueue("VENDORBUY")) then
+		return
+	end
+	
+	local buyTools, buyKits = false
+	local slotsLeft = ItemList.freeSlotCount
+	if 	(wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > tonumber(gGatheringToolStock)) then
+		buyTools = true
+		slotsLeft = ItemList.freeSlotCount - tonumber(gGatheringToolStock)
+	end
+	if (wt_core_items:NeedSalvageKits() and slotsLeft > tonumber(gSalvageKitStock)) then
+		buyKits = true
+	end
+
+	if (buyTools or buyKits) then
+		local vendor = wt_core_helpers:GetClosestBuyVendor(999999)
+		if (vendor) then
+			if (buyTools) then
+				wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ftool, tonumber(gGatheringToolStock),gGatheringToolQuality, vendor)
+				wt_core_taskmanager:addVendorBuyTask(4751, wt_core_items.ltool, tonumber(gGatheringToolStock),gGatheringToolQuality, vendor)
+				wt_core_taskmanager:addVendorBuyTask(4752, wt_core_items.mtool, tonumber(gGatheringToolStock),gGatheringToolQuality, vendor)
 			end
+			if (buyKits) then
+				wt_core_taskmanager:addVendorBuyTask(4753, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality, vendor)
+			end
+			wt_core_taskmanager:addVendorTask(4500, vendor)
+			return true
 		end
 	end
+	return false
 end
 table.insert(wt_core_state_leader.TaskChecks,{["func"]=wt_core_state_leader.vendorBuyCheck, ["throttle"]=2500})
 
@@ -352,7 +366,7 @@ function wt_core_state_leader:aggroCheck()
 			local id, E  = next( TList )
 			if ( id ~= nil and id ~= 0 and E ~= nil) then
 				wt_core_taskmanager:addKillTask( id, E, 3000 )
-				return false
+			return true
 			end		
 		end	
 		
@@ -361,9 +375,10 @@ function wt_core_state_leader:aggroCheck()
 			local id, E  = next( TList )
 			if ( id ~= nil and id ~= 0 and E ~= nil) then
 				wt_core_taskmanager:addKillTask( id, E, 2500 )
-				return false
+			return true
 			end		
 		end	
+	return false
 	end
 end
 table.insert(wt_core_state_leader.TaskChecks,{["func"]=wt_core_state_leader.aggroCheck, ["throttle"]=500})
