@@ -167,9 +167,12 @@ function wt_core_partymanager.SendGroupInfo()
 		if (TableSize(myWP) == 1) then
 			local id,e = next (myWP)
 			if ( id ~= nil) then
-				local WPID = WaypointList:Get(id).contentID
-				if ( tonumber(WPID) ~= nil) then
-					MultiBotSend( "302;"..tostring(WPID),"gw2minion" )
+				local WP = WaypointList:Get(id)
+				if (WP ~= nil) then
+					local wpID = WP.contentID
+					if ( tonumber(wpID) ~= nil) then
+						MultiBotSend( "302;"..tostring(wpID),"gw2minion" )
+					end
 				end
 			end
 		end	

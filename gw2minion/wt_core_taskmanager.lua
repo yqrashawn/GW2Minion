@@ -298,17 +298,17 @@ function wt_core_taskmanager:DoTask( )
 		end
 		wt_core_taskmanager.current_task.execute()
 	else
-		-- last_task is holding the last normal task (prio 0-999), this is needed so the bot doesnt switch the direction after each kill		
-		if ( wt_core_taskmanager.last_task ~= nil and not wt_core_taskmanager.last_task.isFinished() and not wt_core_taskmanager.last_task.expired() ) then
+		-- last_task is holding the last normal task (prio 0-999), this is needed so the bot doesnt switch the direction after each kill	
+		--[[if ( wt_core_taskmanager.last_task ~= nil and not wt_core_taskmanager.last_task.isFinished() and not wt_core_taskmanager.last_task.expired() ) then
 			if (gGW2MinionTask ~= nil ) then
 				gGW2MinionTask = wt_core_taskmanager.last_task.name
 			end
 			wt_core_taskmanager.last_task.execute()
-		else
+		else]]
 			-- Try to get next task in the List	
 			wt_core_taskmanager.CleanTasklist()
 			wt_core_taskmanager.SelectNextTask()
-		end
+		--end
 	end
 end
 
@@ -331,4 +331,5 @@ function wt_core_taskmanager:CheckTaskQueue(taskUID)
 			end
 		end
 	end
+	return false
 end

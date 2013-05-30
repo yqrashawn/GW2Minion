@@ -355,7 +355,7 @@ end
 
 function tb.DoSupplyRun()	
 	if (wt_core_taskmanager.current_task == nil) then
-		wt_core_taskmanager:addVendorTask(15000)
+		wt_core_taskmanager:addVendorTask(15000, nil)
 		tb.running = true		
 		wt_debug("Doing Supply Run")
 		if (TableSize(wt_core_taskmanager.Customtask_list) == 1) then
