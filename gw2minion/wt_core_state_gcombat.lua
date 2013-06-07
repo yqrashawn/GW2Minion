@@ -83,13 +83,14 @@ function e_gbetter_target_search:execute()
 		wt_debug( "Combat: Switching to better target " .. nextTarget )		
 		wt_core_state_gcombat.StopCM()
 		wt_core_state_gcombat.setTarget( nextTarget )
-		if (gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
+		-- CRASHES LIKE SHIT, DONT KNOW WHY
+		--[[if (gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
 			if ( Player:GetRole() == 1 ) then
 				MultiBotSend( "5;"..tonumber(nextTarget),"gw2minion" ) -- Set FocusTarget for Minions
 			else
 				MultiBotSend( "6;"..tonumber(nextTarget),"gw2minion" )	-- Inform leader about our aggro target
 			end
-		end
+		end]]
 	end
 end
 

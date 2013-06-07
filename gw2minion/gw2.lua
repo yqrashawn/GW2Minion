@@ -201,16 +201,12 @@ function gw2minion.HandleInit()
 	wt_debug("received Module.Initalize")
 	GUI_NewWindow(wt_global_information.MainWindow.Name,wt_global_information.MainWindow.x,wt_global_information.MainWindow.y,wt_global_information.MainWindow.width,wt_global_information.MainWindow.height)
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnStart.Name , wt_global_information.BtnStart.Event)
-	--GUI_NewButton(wt_global_information.MainWindow.Name,"ToolBox","TB.toggle")
-	--GUI_NewSeperator(wt_global_information.MainWindow.Name);
-	--GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnPulse.Name , wt_global_information.BtnPulse.Event,"BotStatus")
 	GUI_NewField(wt_global_information.MainWindow.Name,"Pulse Time (ms)","gGW2MinionPulseTime","BotStatus");	
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Log","gEnableLog","BotStatus");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MyTask","gGW2MinionTask","BotStatus");
 	GUI_NewField(wt_global_information.MainWindow.Name,"State","gGW2MinionState","BotStatus");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Effect","gGW2MinionEffect","BotStatus");		
 	--GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT","BotStatus");
-	--GUI_NewField(wt_global_information.MainWindow.Name,"MapSwitch in","gMapswitch","BotStatus");
 	
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoStartBot","gAutostartbot","Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"CombatMovement","gCombatmovement","Settings");
@@ -437,6 +433,10 @@ function wt_global_information.HandleCMDMultiBotMessages( event, message,channel
 end
 
 
+function wt_global_information.Test(event, arg)	
+	d(tostring(arg))
+end
+
 -- Register Event Handlers
 RegisterEventHandler("Module.Initalize",gw2minion.HandleInit)
 RegisterEventHandler("Gameloop.Update",wt_global_information.OnUpdate)
@@ -444,4 +444,6 @@ RegisterEventHandler("Gameloop.CharSelectUpdate",wt_global_information.OnUpdateC
 RegisterEventHandler("Gameloop.CutsceneUpdate",wt_global_information.OnUpdateCutscene)
 RegisterEventHandler("GUI.Update",gw2minion.GUIVarUpdate)
 RegisterEventHandler("MULTIBOT.Message",wt_global_information.HandleCMDMultiBotMessages)
+
+RegisterEventHandler("Gameloop.Input",wt_global_information.Test)
 

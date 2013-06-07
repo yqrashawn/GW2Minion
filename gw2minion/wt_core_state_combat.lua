@@ -296,7 +296,7 @@ function c_combatmove:evaluate()
 				
 				-- MOVE
 				local dir = dirs[ math.random( #dirs ) ] 
-				wt_debug("MOVING DIR: "..tostring(dir))
+				--wt_debug("MOVING DIR: "..tostring(dir))
 				if ( dir ~= 4) then				
 					-- I could have just used a table instead of 4 variables...too lazy to change it now lol										
 					Player:SetMovement(dir)
