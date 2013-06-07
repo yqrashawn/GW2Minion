@@ -166,7 +166,7 @@ function wt_core_state_idle:repairCheck()
 		local vendor = wt_core_helpers:GetClosestRepairVendor(999999)
 		if (vendor) then
 			wt_core_taskmanager:addRepairTask(5000, vendor)
-			wt_core_taskmanager:addVendorTask(4500, nil)
+			wt_core_taskmanager:addVendorTask(4500, vendor)
 			return true
 		end
 	end
