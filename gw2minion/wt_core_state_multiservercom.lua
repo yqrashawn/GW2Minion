@@ -2,7 +2,7 @@
 -- HandleMultiBotMessages
 --**********************************************************
 function HandleMultiBotMessages( event, message, channel )	
---wt_debug("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
+wt_debug("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
 		
 	if (tostring(channel) == "gw2minion" ) then
 		-- SET CLIENT ROLE, multibotcomserver sends this info when a bot enters/leaves the channel
@@ -107,11 +107,11 @@ function HandleMultiBotMessages( event, message, channel )
 									local char = CharacterList:Get(tonumber(msg))
 									if (char ~= nil and char.alive and char.distance < 4500 and char.onmesh) then
 										wt_core_taskmanager:addKillTask( tonumber(msg) , char, 3450 )
-									else
+									--[[else  -- CRASHES LIKE SHIT, DONT KNOW WHY
 										local gadget = GadgetList:Get(tonumber(msg))
 										if (gadget ~= nil and gadget.alive and gadget.distance < 4500 and gadget.onmesh) then
 											wt_core_taskmanager:addKillGadgetTask( tonumber(msg), gadget, 3550 )
-										end
+										end]]
 									end
 								end
 							end
@@ -128,7 +128,7 @@ function HandleMultiBotMessages( event, message, channel )
 							if ( Player:GetRole() ~= 1) then
 								if (tonumber(msg) ~= nil ) then
 									local gadget = GadgetList:Get(tonumber(msg))
-									if (gadget ~= nil and gadget.hashpbar and gadget.iscombatant and gadget.distance < 4500 and gadget.onmesh) then
+									if (gadget ~= nil and gadget.iscombatant and gadget.hashpbar and gadget.distance < 4500 and gadget.onmesh) then
 										wt_core_taskmanager:addKillGadgetTask( tonumber(msg) , gadget, 3550 )
 									end
 								end

@@ -46,6 +46,9 @@ local c_heal_action = inheritsFrom(wt_cause)
 local e_heal_action = inheritsFrom(wt_effect)
 function c_heal_action:evaluate()
 	return (Player.health.percent < wt_core_state_gcombat.RestHealthLimit and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6))
+		-- CRASHES LIKE SHIT, DONT KNOW WHY
+		--[[if (gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
+		end]]
 end
 e_heal_action.usesAbility = true
 function e_heal_action:execute()

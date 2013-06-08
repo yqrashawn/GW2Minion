@@ -361,7 +361,7 @@ function wt_core_dungeonmanager.Play_COF_Path1()
 			local i,event = next(mlist)
 			while (i~=nil and event~=nil) do				
 				-- Talk to Mallon to start the dungeon
-				if( event.eventID == 2915 and event.type == 165) then 	
+				if( event.eventID == 2909 and event.type == 165) then 	
 					if (event.distance > 75) then
 						local epos = event.pos
 						Player:MoveTo(epos.x,epos.y,epos.z,50)
@@ -384,7 +384,7 @@ function wt_core_dungeonmanager.Play_COF_Path1()
 					end
 					break
 				-- Speak with Commander Suma
-				elseif( event.eventID == 2913 and event.type == 338) then 	
+				elseif( event.eventID == 2907 and event.type == 338) then 	
 					if (event.distance > 75) then
 						local epos = event.pos
 						Player:MoveTo(epos.x,epos.y,epos.z,50)
@@ -394,7 +394,7 @@ function wt_core_dungeonmanager.Play_COF_Path1()
 					end					
 					break
 				-- Choose Path
-				elseif( event.eventID == 2914 and event.type == 338) then 	
+				elseif( event.eventID == 2908 and event.type == 338) then 	
 					if (event.distance > 75) then
 						local epos = event.pos
 						Player:MoveTo(epos.x,epos.y,epos.z,50)
@@ -416,16 +416,7 @@ function wt_core_dungeonmanager.Play_COF_Path1()
 						end	
 					end	
 					break
-				elseif( event.eventID == 2923 and event.type == 338) then 	
-					if (event.distance > 75) then
-						local epos = event.pos
-						if (not Player.inCombat) then
-							Player:MoveTo(epos.x,epos.y,epos.z,100)
-							dStatus = "Following Ferrah"
-						end
-					end
-					break
-				elseif( event.eventID == 2923 and event.type == 328) then 	
+				elseif( event.eventID == 2917 and event.type == 328) then 	
 					wt_core_state_combat.searchBetterTarget = false
 					if (event.distance > 75) then
 						local epos = event.pos
@@ -437,7 +428,7 @@ function wt_core_dungeonmanager.Play_COF_Path1()
 						dStatus = "Ferrah.."
 					end
 					break
-				elseif( event.eventID == 2916 and event.type == 330) then 						
+				elseif( event.eventID == 2910 and event.type == 330) then 						
 					wt_core_state_combat.searchBetterTarget = false
 					local epos = event.pos
 					local champ = CharacterList("nearest,isChampion,attackable,onmesh")
@@ -456,17 +447,17 @@ function wt_core_dungeonmanager.Play_COF_Path1()
 					end
 					dStatus = "Kill Slave Driver"					
 					break
-				elseif( event.eventID == 2928 and event.type == 338) then
+				elseif( event.eventID == 2922 and event.type == 338) then
 					wt_core_state_combat.searchBetterTarget = true
 					if (event.distance > 75) then
 						local epos = event.pos
 						if (wt_core_dungeonmanager.Good2MoveOn()) then
-							Player:MoveTo(epos.x,epods.y,epos.z,100)
+							Player:MoveTo(epos.x,epos.y,epos.z,100)
 							dStatus = "Follow Ferra"
 						end
 					end
 					break
-				elseif( event.eventID == 2917 and event.type == 173) then 
+				elseif( event.eventID == 2911 and event.type == 173) then 
 					
 					wt_core_dungeonmanager.ResetDungeon()
 					
@@ -560,14 +551,14 @@ function wt_core_dungeonmanager.Play_COF_Path1()
 				-- Selecting Path
 				wt_core_state_combat.searchBetterTarget = false
 				
-				if( event.eventID == 2914 and event.type == 338) then 
+				if( event.eventID == 2908 and event.type == 338) then 
 					if ( Player:IsConversationOpen() ) then						
 						dStatus = "Selecting Path.."
 						Player:SelectConversationOptionByIndex(0)
 						wt_core_dungeonmanager.Pause(6000)
 					end
 					break
-				elseif( event.eventID == 2916 and event.type == 330) then 	
+				elseif( event.eventID == 2910 and event.type == 330) then 	
 					wt_core_state_combat.searchBetterTarget = false
 					local champ = CharacterList("nearest,isChampion,attackable,onmesh")
 					if (TableSize(champ) > 0) then
@@ -580,7 +571,7 @@ function wt_core_dungeonmanager.Play_COF_Path1()
 					end	
 					dStatus = "Kill Slave Driver"
 					break
-				elseif( event.eventID == 2917 and event.type == 173) then				
+				elseif( event.eventID == 2911 and event.type == 173) then				
 					wt_core_state_combat.searchBetterTarget = true
 					dStatus = "Crossing Bridge"
 					--gCombatmovement = "0"
