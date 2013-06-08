@@ -1,4 +1,4 @@
-﻿-- Blacklists for unsellable items and contested NPCs
+-- Blacklists for unsellable items and contested NPCs
 wt_core_taskmanager.itemBlacklist = {}
 -- npcBlacklist is for contested npcs
 wt_core_taskmanager.npcBlacklist = {}
