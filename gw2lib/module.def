@@ -1,5 +1,5 @@
 [Module]
 Name=gw2lib
 Version=1
-Files=wt_misc_OO.lua,wt_cause.lua,wt_effect.lua,wt_core_state.lua,wt_kelement.lua,wt_misc_log.lua,wt_common_causes.lua,wt_utility.lua,wt_task.lua
+Files=wt_misc_OO.lua,wt_cause.lua,wt_effect.lua,wt_core_state.lua,wt_kelement.lua,wt_misc_log.lua,wt_common_causes.lua,wt_utility.lua,wt_task.lua,languages.lua
 

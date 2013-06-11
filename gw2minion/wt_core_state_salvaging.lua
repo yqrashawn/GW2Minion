@@ -173,21 +173,21 @@ function wt_core_state_salvaging:HandleInit()
 	
 	if (Settings.GW2MINION.salvagesettings == nil) then
 		Settings.GW2MINION.salvagesettings = {	
-		[1] = { desc="Common", salvage="0"},	
-		[2] = { desc="Fine", salvage="0"},	
-		[3] = { desc="Masterwork", salvage="0"},		
-		[4] = { desc="Rare", salvage="0"},		
-		--[5] = { desc="Exotic", salvage="0"},
+		[1] = { desc=strings[gCurrentLanguage].rarityCommon, salvage="0"},	
+		[2] = { desc=strings[gCurrentLanguage].rarityFine, salvage="0"},	
+		[3] = { desc=strings[gCurrentLanguage].rarityMasterwork, salvage="0"},		
+		[4] = { desc=strings[gCurrentLanguage].rarityRare, salvage="0"},		
+		--[5] = { desc=strings[gCurrentLanguage].rarityExotic, salvage="0"},
 		}
 	end
 	
 	for k,v in pairs(Settings.GW2MINION.salvagesettings) do
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Salvage " .. v.desc ,"gSalvage_" .. k,"SalvageSettings")
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].salvage .. v.desc ,"gSalvage_" .. k,strings[gCurrentLanguage].salvageSettings)
 		_G["gSalvage_"..k] = v.salvage
 	end
 	
 	-- Add to other states only after all files have been loaded
-	local ke_do_salvage = wt_kelement:create( "Do Salvage", c_need_salvage, e_need_salvage, 89 )
+	local ke_do_salvage = wt_kelement:create( strings[gCurrentLanguage].enableSalvage, c_need_salvage, e_need_salvage, 89 )
 	wt_core_state_idle:add( ke_do_salvage )
 	wt_core_state_minion:add( ke_do_salvage )
 	wt_core_state_leader:add( ke_do_salvage )
@@ -221,5 +221,3 @@ end
 wt_core_state_salvaging:initialize()
 -- register the State with the system
 wt_core_state_salvaging:register()
-
-

@@ -1,6 +1,6 @@
 
 wt_core_dungeonmanager = { }
-wt_core_dungeonmanager.wnd = { name = "DungeonManager", x = 350, y = 100, w = 250, h = 200}
+wt_core_dungeonmanager.wnd = { name = strings[gCurrentLanguage].dungeonManager, x = 350, y = 100, w = 250, h = 200}
 wt_core_dungeonmanager.lasttick = 0
 wt_core_dungeonmanager.visible = false
 wt_core_dungeonmanager.doublecheck = false
@@ -20,7 +20,7 @@ wt_core_dungeonmanager.CurrentDungeon = {
 }
 
 wt_core_dungeonmanager.Instances = {
-	[69] = "CitadelOfFlames(Exploration)",
+	[69] = strings[gCurrentLanguage].citadelOfFlamesExp,
 }
 
 RegisterEventHandler("Module.Initalize",
@@ -31,21 +31,21 @@ RegisterEventHandler("Module.Initalize",
 		
 		local wnd = GUI_GetWindowInfo("GW2Minion")
 		GUI_NewWindow(wt_core_dungeonmanager.wnd.name,wnd.x+wnd.width,wnd.y+180,wt_core_dungeonmanager.wnd.w,wt_core_dungeonmanager.wnd.h)
-		GUI_NewField(wt_core_dungeonmanager.wnd.name,"Status","dStatus","General Settings")
-		GUI_NewField(wt_core_dungeonmanager.wnd.name,"Set PartySize","dPartysize","General Settings")	
+		GUI_NewField(wt_core_dungeonmanager.wnd.name,strings[gCurrentLanguage].status,"dStatus",strings[gCurrentLanguage].generalSettings)
+		GUI_NewField(wt_core_dungeonmanager.wnd.name,strings[gCurrentLanguage].setPartySize,"dPartysize",strings[gCurrentLanguage].generalSettings)	
 		GUI_NewSeperator(wt_core_dungeonmanager.wnd.name)
 		if (wt_core_dungeonmanager.Instances) then
 		local id,name = next(wt_core_dungeonmanager.Instances)
 			while id~=nil and name~=nil do
-				GUI_NewButton(wt_core_dungeonmanager.wnd.name, tostring(name),tostring(id),"Dungeons")
+				GUI_NewButton(wt_core_dungeonmanager.wnd.name, tostring(name),tostring(id),strings[gCurrentLanguage].dungeons)
 				RegisterEventHandler(tostring(id),wt_core_dungeonmanager.ButtonHandler)
 				id,name = next(wt_core_dungeonmanager.Instances,id)
 			end
 		end
 		GUI_NewSeperator(wt_core_dungeonmanager.wnd.name)
-		GUI_NewButton(wt_core_dungeonmanager.wnd.name, "Leave Dungeon","wt_core_dungeonmanager.Leave")
-		GUI_NewButton(wt_core_dungeonmanager.wnd.name, "Reset Dungeon","wt_core_dungeonmanager.Reset")
-		GUI_NewButton(wt_core_dungeonmanager.wnd.name, "Stop DungeonManager","wt_core_dungeonmanager.Stop")
+		GUI_NewButton(wt_core_dungeonmanager.wnd.name, strings[gCurrentLanguage].leaveDungeon,"wt_core_dungeonmanager.Leave")
+		GUI_NewButton(wt_core_dungeonmanager.wnd.name, strings[gCurrentLanguage].resetDungeon,"wt_core_dungeonmanager.Reset")
+		GUI_NewButton(wt_core_dungeonmanager.wnd.name, strings[gCurrentLanguage].stopDungeonManager,"wt_core_dungeonmanager.Stop")
 		dPartysize = Settings.GW2MINION.dPartysize
 		dStatus = "                                "
 		GUI_WindowVisible(wt_core_dungeonmanager.wnd.name,false)

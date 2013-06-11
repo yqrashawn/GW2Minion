@@ -183,13 +183,13 @@ function wt_core_state_leader.GUIVarUpdate(Event, NewVals, OldVals)
 end
 
 function wt_core_state_leader:HandleInit()
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable BrowserStats","gStats_enabled","GroupBotting");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Groupbotting","gMinionEnabled","GroupBotting");
-	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer IP","gIP","GroupBotting");
-	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Port","gPort","GroupBotting");
-	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Password","gPw","GroupBotting");	
-	--GUI_NewButton(wt_global_information.MainWindow.Name, "Claim Leadership" , "Claimlead.Event","GroupBotting")
-	GUI_FoldGroup(wt_global_information.MainWindow.Name,"GroupBotting");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].browserStats,"gStats_enabled",strings[gCurrentLanguage].groupBotting);
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].groupBotting,"gMinionEnabled",strings[gCurrentLanguage].groupBotting);
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].serverIP,"gIP",strings[gCurrentLanguage].groupBotting);
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].serverPort,"gPort",strings[gCurrentLanguage].groupBotting);
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].serverPW,"gPw",strings[gCurrentLanguage].groupBotting);	
+	--GUI_NewButton(wt_global_information.MainWindow.Name, "Claim Leadership" , "Claimlead.Event",strings[gCurrentLanguage].groupBotting)
+	GUI_FoldGroup(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].groupBotting);
 	
 	gStats_enabled = Settings.GW2MINION.gStats_enabled
 	gMinionEnabled = Settings.GW2MINION.gMinionEnabled

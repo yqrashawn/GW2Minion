@@ -1,6 +1,6 @@
 
 wt_core_partymanager = { }
-wt_core_partymanager.wnd = { name = "PartyManager", x = 350, y = 100, w = 290, h = 220}
+wt_core_partymanager.wnd = { name = strings[gCurrentLanguage].partyManager, x = 350, y = 100, w = 290, h = 220}
 wt_core_partymanager.visible = false
 wt_core_partymanager.lasttick = 0
 wt_core_partymanager.leaderName = nil
@@ -66,14 +66,14 @@ RegisterEventHandler("Module.Initalize",
 		
 		local wnd = GUI_GetWindowInfo("GW2Minion")
 		GUI_NewWindow(wt_core_partymanager.wnd.name,wnd.x+wnd.width,wnd.y,wt_core_partymanager.wnd.w,wt_core_partymanager.wnd.h)
-		GUI_NewCheckbox(wt_core_partymanager.wnd.name,"Activated","gPartyMGR","General Settings")
-		GUI_NewField(wt_core_partymanager.wnd.name,"Status","dParty","General Settings")
-		GUI_NewLabel(wt_core_partymanager.wnd.name,"Enter Character Names:","GroupInfo");
-		GUI_NewField(wt_core_partymanager.wnd.name,"Member1","dMember1","GroupInfo")
-		GUI_NewField(wt_core_partymanager.wnd.name,"Member2","dMember2","GroupInfo")
-		GUI_NewField(wt_core_partymanager.wnd.name,"Member3","dMember3","GroupInfo")
-		GUI_NewField(wt_core_partymanager.wnd.name,"Member4","dMember4","GroupInfo")
-		GUI_NewField(wt_core_partymanager.wnd.name,"Member5","dMember5","GroupInfo")
+		GUI_NewCheckbox(wt_core_partymanager.wnd.name,strings[gCurrentLanguage].activated,"gPartyMGR",strings[gCurrentLanguage].generalSettings)
+		GUI_NewField(wt_core_partymanager.wnd.name,strings[gCurrentLanguage].status,"dParty",strings[gCurrentLanguage].generalSettings)
+		GUI_NewLabel(wt_core_partymanager.wnd.name,strings[gCurrentLanguage].enterCharNames,strings[gCurrentLanguage].groupInfo);
+		GUI_NewField(wt_core_partymanager.wnd.name,strings[gCurrentLanguage].member1,"dMember1",strings[gCurrentLanguage].groupInfo)
+		GUI_NewField(wt_core_partymanager.wnd.name,strings[gCurrentLanguage].member2,"dMember2",strings[gCurrentLanguage].groupInfo)
+		GUI_NewField(wt_core_partymanager.wnd.name,strings[gCurrentLanguage].member3,"dMember3",strings[gCurrentLanguage].groupInfo)
+		GUI_NewField(wt_core_partymanager.wnd.name,strings[gCurrentLanguage].member4,"dMember4",strings[gCurrentLanguage].groupInfo)
+		GUI_NewField(wt_core_partymanager.wnd.name,strings[gCurrentLanguage].member5,"dMember5",strings[gCurrentLanguage].groupInfo)
 					
 		dParty = "                            "
 		gPartyMGR = Settings.GW2MINION.gPartyMGR

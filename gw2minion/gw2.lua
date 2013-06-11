@@ -6,8 +6,8 @@ wt_global_information.Now = 0
 
 wt_global_information.PVP = false
 wt_global_information.MainWindow = { Name = "GW2Minion", x=50, y=50 , width=200, height=240 }
-wt_global_information.BtnStart = { Name="StartStop" ,Event = "GUI_REQUEST_RUN_TOGGLE" }
-wt_global_information.BtnPulse = { Name="Pulse(Debug)" ,Event = "Debug.Pulse" }
+wt_global_information.BtnStart = { Name=strings[gCurrentLanguage].startStop,Event = "GUI_REQUEST_RUN_TOGGLE" }
+wt_global_information.BtnPulse = { Name=strings[gCurrentLanguage].doPulse,Event = "Debug.Pulse" }
 wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel = 3  
 wt_global_information.CurrentMarkerList = nil
 wt_global_information.SelectedMarker = nil
@@ -201,58 +201,57 @@ function gw2minion.HandleInit()
 	wt_debug("received Module.Initalize")
 	GUI_NewWindow(wt_global_information.MainWindow.Name,wt_global_information.MainWindow.x,wt_global_information.MainWindow.y,wt_global_information.MainWindow.width,wt_global_information.MainWindow.height)
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnStart.Name , wt_global_information.BtnStart.Event)
-	GUI_NewField(wt_global_information.MainWindow.Name,"Pulse Time (ms)","gGW2MinionPulseTime","BotStatus");	
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Log","gEnableLog","BotStatus");
-	GUI_NewField(wt_global_information.MainWindow.Name,"MyTask","gGW2MinionTask","BotStatus");
-	GUI_NewField(wt_global_information.MainWindow.Name,"State","gGW2MinionState","BotStatus");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Effect","gGW2MinionEffect","BotStatus");		
-	--GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT","BotStatus");
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].pulseTime,"gGW2MinionPulseTime",strings[gCurrentLanguage].botStatus );	
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].enableLog,"gEnableLog",strings[gCurrentLanguage].botStatus );
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].task,"gGW2MinionTask",strings[gCurrentLanguage].botStatus );
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].state,"gGW2MinionState",strings[gCurrentLanguage].botStatus );
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].effect,"gGW2MinionEffect",strings[gCurrentLanguage].botStatus );		
+	--GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT",strings[gCurrentLanguage].botStatus );
 	
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoStartBot","gAutostartbot","Settings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"CombatMovement","gCombatmovement","Settings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Events","gdoEvents","Settings");		
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Repair Equippment","gEnableRepair","Settings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoStartBot,"gAutostartbot",strings[gCurrentLanguage].settings);
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].combatMovement,"gCombatmovement",strings[gCurrentLanguage].settings);
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].enableEvents,"gdoEvents",strings[gCurrentLanguage].settings);		
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].enableRepair,"gEnableRepair",strings[gCurrentLanguage].settings);
 	
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Ignore Marker Level Cap","gIgnoreMarkerCap","AdvancedSettings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Use WP Vendor/Repair", "gUseWaypoints","AdvancedSettings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Use WP Events", "gUseWaypointsEvents","AdvancedSettings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Unstuck", "gDoUnstuck","AdvancedSettings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Exit GW2 StuckCount","gUnstuckCount","AdvancedSettings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Event Timeout", "gEventTimeout","AdvancedSettings");
-	GUI_NewButton(wt_global_information.MainWindow.Name,"Blacklist Current Event","wt_core_taskmanager.blacklistCurrentEvent","AdvancedSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Event > Aggro","gEventFarming","AdvancedSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Revive > Aggro","gPrioritizeRevive","AdvancedSettings")
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].ignoreLevelMarker,"gIgnoreMarkerCap",strings[gCurrentLanguage].advancedSettings);
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].wpVendor, "gUseWaypoints",strings[gCurrentLanguage].advancedSettings);
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].wpEvents, "gUseWaypointsEvents",strings[gCurrentLanguage].advancedSettings);
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].enableUnstuck, "gDoUnstuck",strings[gCurrentLanguage].advancedSettings);
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].unstuckCount,"gUnstuckCount",strings[gCurrentLanguage].advancedSettings);
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].eventTimeout, "gEventTimeout",strings[gCurrentLanguage].advancedSettings);
+	GUI_NewButton(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].blacklistEvent,"wt_core_taskmanager.blacklistCurrentEvent",strings[gCurrentLanguage].advancedSettings)
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].prioEvent,"gEventFarming",strings[gCurrentLanguage].advancedSettings)
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].prioRevive,"gPrioritizeRevive",strings[gCurrentLanguage].advancedSettings)
 	
-	GUI_NewField(wt_global_information.MainWindow.Name,"Max ItemSell Rarity","gMaxItemSellRarity","VendorSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Weapons","gVendor_Weapons","VendorSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Armor","gVendor_Armor","VendorSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Trinkets","gVendor_Trinkets","VendorSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Upgrade Components","gVendor_UpgradeComps","VendorSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Crafting Materials","gVendor_CraftingMats","VendorSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Trophies","gVendor_Trophies","VendorSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Junk","gVendor_Junk","VendorSettings")
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].vendorRarity,"gMaxItemSellRarity",strings[gCurrentLanguage].vendorSettings)
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].sellWeapon,"gVendor_Weapons",strings[gCurrentLanguage].vendorSettings)
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].sellArmor,"gVendor_Armor",strings[gCurrentLanguage].vendorSettings)
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].sellTrinket,"gVendor_Trinkets",strings[gCurrentLanguage].vendorSettings)
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].sellUpgrade,"gVendor_UpgradeComps",strings[gCurrentLanguage].vendorSettings)
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].sellCrafting,"gVendor_CraftingMats",strings[gCurrentLanguage].vendorSettings)
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].sellTrophy,"gVendor_Trophies",strings[gCurrentLanguage].vendorSettings)
 	
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Gathering", "gDoGathering","GatherSettings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Gathering Tools", "gBuyGatheringTools","GatherSettings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Best Tool Available", "gBuyBestGatheringTool","GatherSettings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Set Tool Quality","gGatheringToolQuality","GatherSettings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Gathering Tool Stock","gGatheringToolStock","GatherSettings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].enableGather, "gDoGathering",strings[gCurrentLanguage].gatherSettings);
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].buyTools, "gBuyGatheringTools",strings[gCurrentLanguage].gatherSettings);
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].buyBestTool, "gBuyBestGatheringTool",strings[gCurrentLanguage].gatherSettings);
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].toolRarity,"gGatheringToolQuality",strings[gCurrentLanguage].gatherSettings);
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].toolStock,"gGatheringToolStock",strings[gCurrentLanguage].gatherSettings);
 	
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Salvaging", "gDoSalvaging","SalvageSettings");	
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Salvage Kits", "gBuySalvageKits","SalvageSettings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Best Kit Available", "gBuyBestSalvageKit","SalvageSettings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Set Kit Quality","gSalvageKitQuality","SalvageSettings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Salvage Kit Stock","gSalvageKitStock","SalvageSettings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Salvage Trophies", "gDoSalvageTrophies","SalvageSettings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].enableSalvage, "gDoSalvaging",strings[gCurrentLanguage].salvageSettings);	
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].buyKits, "gBuySalvageKits",strings[gCurrentLanguage].salvageSettings);
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].buyBestKit, "gBuyBestSalvageKit",strings[gCurrentLanguage].salvageSettings);
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].kitRarity,"gSalvageKitQuality",strings[gCurrentLanguage].salvageSettings);
+	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].kitStock,"gSalvageKitStock",strings[gCurrentLanguage].salvageSettings);
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].salvageTrophy, "gDoSalvageTrophies",strings[gCurrentLanguage].salvageSettings);
 
 	gGW2MinionTask = ""
 	
-	GUI_FoldGroup(wt_global_information.MainWindow.Name,"BotStatus");
-	GUI_FoldGroup(wt_global_information.MainWindow.Name,"Settings");
-	GUI_FoldGroup(wt_global_information.MainWindow.Name,"VendorSettings");	
-	GUI_FoldGroup(wt_global_information.MainWindow.Name,"SalvageSettings");
-	GUI_FoldGroup(wt_global_information.MainWindow.Name,"GatherSettings");
-	GUI_FoldGroup(wt_global_information.MainWindow.Name,"AdvancedSettings");
+	GUI_FoldGroup(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].botStatus );
+	GUI_FoldGroup(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].settings);
+	GUI_FoldGroup(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].vendorSettings);	
+	GUI_FoldGroup(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].salvageSettings);
+	GUI_FoldGroup(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].gatherSettings);
+	GUI_FoldGroup(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].advancedSettings);
 	
 	gEnableLog = Settings.GW2MINION.gEnableLog
 	gGW2MinionPulseTime = Settings.GW2MINION.gGW2MinionPulseTime 
