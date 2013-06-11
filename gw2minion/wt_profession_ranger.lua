@@ -376,12 +376,12 @@ function wt_profession_ranger:HandleInit()
 			Settings.GW2MINION.gRanSK10 = "75"
 		end
 				
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gRanSwapWeapons","Ranger-Settings");
-		GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Ranger-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gRanSK7","Ranger-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gRanSK8","Ranger-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gRanSK9","Ranger-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gRanSK10","Ranger-Settings");
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapWeaponSets,"gRanSwapWeapons",strings[gCurrentLanguage].rangerSettings);
+		GUI_NewLabel(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].allowedRange,strings[gCurrentLanguage].rangerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gRanSK7",strings[gCurrentLanguage].rangerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gRanSK8",strings[gCurrentLanguage].rangerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gRanSK9",strings[gCurrentLanguage].rangerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].eliteHP,"gRanSK10",strings[gCurrentLanguage].rangerSettings);
 		
 		
 		gRanSwapWeapons = Settings.GW2MINION.gRanSwapWeapons
