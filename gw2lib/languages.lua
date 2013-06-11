@@ -1,4 +1,4 @@
-gCurrentLanguage = "us"
+gCurrentLanguage = "us" 
 
 strings = 
 {
