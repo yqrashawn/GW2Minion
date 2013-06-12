@@ -452,5 +452,5 @@ RegisterEventHandler("Gameloop.CutsceneUpdate",wt_global_information.OnUpdateCut
 RegisterEventHandler("GUI.Update",gw2minion.GUIVarUpdate)
 RegisterEventHandler("MULTIBOT.Message",wt_global_information.HandleCMDMultiBotMessages)
 
-RegisterEventHandler("Gameloop.Input",wt_global_information.Test)
+--RegisterEventHandler("Gameloop.Input",wt_global_information.Test)
 

@@ -111,7 +111,7 @@ function mm.ModuleInit()
 	RegisterEventHandler("newMeshEvent",mm.CreateNewMesh)
 	RegisterEventHandler("optimizeMeshEvent",mm.OptimizeMesh)
 	RegisterEventHandler("saveMeshEvent",mm.SaveMesh)
-	RegisterEventHandler("buildMeshEvent",mm.SaveMesh)
+	RegisterEventHandler("buildMeshEvent",mm.BuildMesh)
 	
 			
 	gmeshname_listitems = meshlist
