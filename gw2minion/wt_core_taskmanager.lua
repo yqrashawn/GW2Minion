@@ -155,7 +155,7 @@ function wt_core_taskmanager:Update_Tasks( )
 			
 		-- First we grab all the tasks that issue from map markers and farmspots
 		-- These are queued by either a solo bot or the leader for group bots
-		if ((gMinionEnabled == "0" or (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1)) and wt_core_dungeonmanager.CurrentDungeon["Active"] == nil) then
+		if (gMinionEnabled == "0" or (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1)) then
 			-- Add all default Tasks			
 			-- Updating Red-MarkerList-data if needed
 			if ( wt_core_taskmanager.markerList == nil or TableSize( wt_core_taskmanager.markerList ) == 0 or MarkersNeedUpdate() ) then				
@@ -193,13 +193,7 @@ function wt_core_taskmanager:Update_Tasks( )
 								if ((wt_global_information.Now - lastrun) > 650000) then
 									wt_core_taskmanager:addHeartQuestTask( entry )
 								end
-							end	
-						-- Unfinished Skillchallenges
-						--elseif ( mtype==20 and (etype == 378) and entry.onmesh) then
-						--	local mPos = entry.pos
-						--	if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
-						--		wt_core_taskmanager:addSkillChallengeTask( entry )								
-						--	end
+							end				
 						
 						-- Events
 						-- Wait until we go through the entire MapMarkerList and only queue the closest event that is not blacklisted

@@ -1,6 +1,6 @@
 
 wt_core_partymanager = { }
-wt_core_partymanager.wnd = { name = "PartyManager", x = 350, y = 100, w = 290, h = 220}
+wt_core_partymanager.wnd = { name = "PartyManager", x = 350, y = 100, w = 290, h = 180}
 wt_core_partymanager.visible = false
 wt_core_partymanager.lasttick = 0
 wt_core_partymanager.leaderName = nil
@@ -16,20 +16,6 @@ function wt_core_partymanager.membercount()
 	while ( index ~= nil and player ~= nil ) do			
 		if (tostring(player) ~= "none" and tostring(player) ~= "" and tostring(player) ~= tostring(myname)) then
 			count = count + 1
-		end
-		index, player  = next( Settings.GW2MINION.Party,index )
-	end	
-	return count
-end
-
-function wt_core_partymanager.GetMyListIndex() 
-	local count = 0
-	local index, player  = next( Settings.GW2MINION.Party )
-	local myname = Player.name
-	while ( index ~= nil and player ~= nil ) do			
-		count = count + 1
-		if (tostring(player) == tostring(myname)) then
-			break
 		end
 		index, player  = next( Settings.GW2MINION.Party,index )
 	end	
@@ -66,8 +52,8 @@ RegisterEventHandler("Module.Initalize",
 		
 		local wnd = GUI_GetWindowInfo("GW2Minion")
 		GUI_NewWindow(wt_core_partymanager.wnd.name,wnd.x+wnd.width,wnd.y,wt_core_partymanager.wnd.w,wt_core_partymanager.wnd.h)
-		GUI_NewCheckbox(wt_core_partymanager.wnd.name,"Activated","gPartyMGR","General Settings")
-		GUI_NewField(wt_core_partymanager.wnd.name,"Status","dParty","General Settings")
+		GUI_NewCheckbox(wt_core_partymanager.wnd.name,"Activated","gPartyMGR")
+		GUI_NewField(wt_core_partymanager.wnd.name,"Status","dParty")
 		GUI_NewLabel(wt_core_partymanager.wnd.name,"Enter Character Names:","GroupInfo");
 		GUI_NewField(wt_core_partymanager.wnd.name,"Member1","dMember1","GroupInfo")
 		GUI_NewField(wt_core_partymanager.wnd.name,"Member2","dMember2","GroupInfo")
@@ -87,7 +73,7 @@ RegisterEventHandler("Module.Initalize",
 	end
 )
 
-RegisterEventHandler("PartyManager.toggle", 
+RegisterEventHandler("wt_core_partymanager.toggle", 
 	function ()
 		if (wt_core_partymanager.visible) then
 		GUI_WindowVisible(wt_core_partymanager.wnd.name,false)	
@@ -226,37 +212,29 @@ function wt_core_partymanager.CheckGroupStatus()
 			dParty = tostring("Partymember missing..")
 			return 
 		else
-			-- We are Minion, trying to join our party	
+			-- We are Minion, trying to join our party		
 			if ( wt_core_partymanager.leaderName ~= nil and wt_core_partymanager.leaderName ~= "" ) then
 				if ( wt_core_partymanager.leaderMapID ~= nil ) then		
-					if (not wt_core_dungeonmanager.MapIsDungeon(tonumber(wt_core_partymanager.leaderMapID))) then
-						if ( Player:GetPartySize() == 0 ) then
-							if ( wt_core_partymanager.leaderMapID == Player:GetLocalMapID() ) then
-								wt_debug("Trying to join "..tostring(wt_core_partymanager.leaderName).."'s Party...")
-								SendChatMsg(8,towstring("/join "..tostring(wt_core_partymanager.leaderName)))
-								dParty = tostring("Joining Party..")
-								return
-							else
-								-- Follow Leader to his Map & nearest Waypoint if possible
-								dParty = tostring("Following Leader to his Map..")
-								wt_core_partymanager.WaypointToLeadersMap()								
-							end
+					if ( Player:GetPartySize() == 0 ) then
+						if ( wt_core_partymanager.leaderMapID == Player:GetLocalMapID() ) then
+							wt_debug("Trying to join "..tostring(wt_core_partymanager.leaderName).."'s Party...")
+							SendChatMsg(8,towstring("/join "..tostring(wt_core_partymanager.leaderName)))
+							dParty = tostring("Joining Party..")
+							return
 						else
-							-- We are in a Party, follow the Leader..
-							if ( wt_core_partymanager.leaderMapID == Player:GetLocalMapID() ) then
-								dParty = tostring("In a Party")
-							else
-								-- Follow Leader to his Map & nearest Waypoint if possible
-								dParty = tostring("Following Leader to his Map..")
-								wt_core_partymanager.WaypointToLeadersMap()							
-							end						
+							-- Follow Leader to his Map & nearest Waypoint if possible
+							dParty = tostring("Following Leader to his Map..")
+							wt_core_partymanager.WaypointToLeadersMap()								
 						end
 					else
-						dParty = tostring("Leader is in a Dungeon..")
-						if (Player:GetPartySize() == 0) then
-							wt_debug("Trying to Join "..tostring(wt_core_partymanager.leaderName).."'s Party...")
-							SendChatMsg(8,towstring("/join "..tostring(wt_core_partymanager.leaderName)))
-						end
+						-- We are in a Party, follow the Leader..
+						if ( wt_core_partymanager.leaderMapID == Player:GetLocalMapID() ) then
+							dParty = tostring("In a Party")
+						else
+							-- Follow Leader to his Map & nearest Waypoint if possible
+							dParty = tostring("Following Leader to his Map..")
+							wt_core_partymanager.WaypointToLeadersMap()							
+						end						
 					end
 				else
 					dParty = tostring("Waiting for LeaderMapID")
@@ -291,17 +269,15 @@ function wt_core_partymanager.WaypointToLeadersMap()
 					end	
 				else
 					wt_debug("WaypointID was blacklisted, trying to Porting to random Waypoint near Leader")
-					if ( wt_core_mapdata[tonumber(wt_core_partymanager.leaderMapID)] ~= nil ) then
-						local id,name = next (wt_core_mapdata[tonumber(wt_core_partymanager.leaderMapID)].waypoint)
-						while (id ~= nil and name ~= nil) do
-							if (wt_core_partymanager.MSGblacklist[tostring(id)] == nil ) then											
-								wt_core_partymanager.MSGblacklist[tostring(id)] = wt_core_partymanager.lasttick
-								dParty = tostring("Porting to random Waypoint near Leader")
-								Player:TeleportToWaypoint(tonumber(id))									
-								break																																
-							end
-							id,name = next (wt_core_mapdata[tonumber(wt_core_partymanager.leaderMapID)].waypoint,id)
+					local id,name = next (wt_core_mapdata[tonumber(wt_core_partymanager.leaderMapID)].waypoint)
+					while (id ~= nil and name ~= nil) do
+						if (wt_core_partymanager.MSGblacklist[tostring(id)] == nil ) then											
+							wt_core_partymanager.MSGblacklist[tostring(id)] = wt_core_partymanager.lasttick
+							dParty = tostring("Porting to random Waypoint near Leader")
+							Player:TeleportToWaypoint(tonumber(id))									
+							break																																
 						end
+						id,name = next (wt_core_mapdata[tonumber(wt_core_partymanager.leaderMapID)].waypoint,id)
 					end
 					dParty = tostring("No random Waypoint near Leader found..")
 				end
@@ -316,14 +292,8 @@ function wt_core_partymanager.WaypointToLeadersMap()
 	end	
 end
 
-function wt_core_partymanager.RebuildParty()
-	if (Player:GetRole() == 1) then
-		MultiBotSend( "303;none","gw2minion" )
-	end
-	wt_debug("Leaving Party...")
-	SendChatMsg(8,towstring("/leave"))
-	wt_core_partymanager.lasttick = wt_core_partymanager.lasttick + 5000
-end
+
+
 
 
 

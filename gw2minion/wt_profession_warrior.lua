@@ -360,7 +360,8 @@ function wt_profession_warrior:HandleInit()
 		end
 			
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gWarSwapWeapons","Warrior-Settings");
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F1","gWarUseBurst","Warrior-Settings");		
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F1","gWarUseBurst","Warrior-Settings");
+		GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Warrior-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gWarSK7","Warrior-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gWarSK8","Warrior-Settings");
 		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gWarSK9","Warrior-Settings");

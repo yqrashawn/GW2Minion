@@ -134,12 +134,3 @@ function Distance3D( x, y, z, x1, y1, z1 )
 	return math.sqrt( math.pow( dx, 2 ) + math.pow( dy, 2 ) + math.pow( dz, 2 ) )
 
 end
-
-function toboolean ( input)
-	if ( input ~= nil )then
-		if (tostring(input) == "true") then
-			return 1
-		end
-	end
-	return 0
-end

@@ -60,8 +60,8 @@ end
  
 ------------------------------------------------------------------------------
 -- Try to hold the Group together Cause & Effect
-c_buildgrp = inheritsFrom( wt_cause )
-e_buildgrp = inheritsFrom( wt_effect )
+local c_buildgrp = inheritsFrom( wt_cause )
+local e_buildgrp = inheritsFrom( wt_effect )
 c_buildgrp.needtowait = false
 c_buildgrp.needtowaitTmr = 0
 function c_buildgrp:evaluate()
@@ -182,12 +182,15 @@ function wt_core_state_leader.GUIVarUpdate(Event, NewVals, OldVals)
 	end
 end
 
-function wt_core_state_leader:HandleInit()
+function wt_core_state_leader:HandleInit() 
+	GUI_NewLabel(wt_global_information.MainWindow.Name,"THE HOST NEEDS TO START THE","GroupBotting");
+	GUI_NewLabel(wt_global_information.MainWindow.Name,"MultiBotComServer.exe!!","GroupBotting");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable BrowserStats","gStats_enabled","GroupBotting");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Groupbotting","gMinionEnabled","GroupBotting");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer IP","gIP","GroupBotting");
 	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Port","gPort","GroupBotting");
-	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Password","gPw","GroupBotting");	
+	GUI_NewField(wt_global_information.MainWindow.Name,"MultiBotComServer Password","gPw","GroupBotting");
+	GUI_NewSeperator(wt_global_information.MainWindow.Name);
 	--GUI_NewButton(wt_global_information.MainWindow.Name, "Claim Leadership" , "Claimlead.Event","GroupBotting")
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,"GroupBotting");
 	
@@ -360,52 +363,23 @@ table.insert(wt_core_state_leader.TaskChecks,{["func"]=wt_core_state_leader.vend
 
 --Throttle = 500
 function wt_core_state_leader:aggroCheck()
-	if ( wt_global_information.DoAggroCheck ) then
-		local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los,incombat,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
-		if ( TableSize( TList ) > 0 ) then
-			local id, E  = next( TList )
-			if ( id ~= nil and id ~= 0 and E ~= nil) then
-				wt_core_taskmanager:addKillTask( id, E, 3000 )
+	local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los,incombat,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil) then
+			wt_core_taskmanager:addKillTask( id, E, 3000 )
 			return true
-			end		
-		end	
-		
-		local TList = ( CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
-		if ( TableSize( TList ) > 0 ) then
-			local id, E  = next( TList )
-			if ( id ~= nil and id ~= 0 and E ~= nil) then
-				wt_core_taskmanager:addKillTask( id, E, 2500 )
+		end		
+	end	
+	
+	local TList = ( CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil) then
+			wt_core_taskmanager:addKillTask( id, E, 2500 )
 			return true
-			end		
-		end	
+		end		
+	end	
 	return false
-	end
 end
 table.insert(wt_core_state_leader.TaskChecks,{["func"]=wt_core_state_leader.aggroCheck, ["throttle"]=500})
-
---Throttle = 500
-function wt_core_state_leader.aggroGadgetCheck()
-	--wt_debug("aggroCheck")
-	if ( wt_global_information.DoAggroCheck ) then
-		if ( Player.inCombat ) then
-			local GList = ( GadgetList( "attackable,alive,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
-			if ( TableSize( GList ) > 0 ) then
-				local id, E  = next( GList )
-				if ( id ~= nil and id ~= 0 and E ~= nil) then
-					wt_core_taskmanager:addKillGadgetTask( id, E, 3100 )
-					return false
-				end		
-			end
-		end
-		
-		local GList = ( GadgetList( "attackable,alive,nearest,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
-		if ( TableSize( GList ) > 0 ) then
-			local id, E  = next( GList )
-			if ( id ~= nil and id ~= 0 and E ~= nil) then
-				wt_core_taskmanager:addKillGadgetTask( id, E, 3500 )
-				return false
-			end		
-		end	
-	end
-end
-table.insert(wt_core_state_leader.TaskChecks,{["func"]=wt_core_state_leader.aggroGadgetCheck,["throttle"]=1000})

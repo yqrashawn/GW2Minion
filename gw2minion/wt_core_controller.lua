@@ -164,4 +164,3 @@ end
 RegisterEventHandler( "GUI.Item", wt_core_controller.HandleStateDebugButtons )
 RegisterEventHandler( "Debug.Pulse", wt_core_controller.DoState )
 RegisterEventHandler( "GUI_REQUEST_RUN_TOGGLE", wt_core_controller.ToggleRun )
-RegisterEventHandler( "GW2MINION.toggle", wt_core_controller.ToggleRun )
