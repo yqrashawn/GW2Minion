@@ -518,12 +518,12 @@ function wt_profession_elementalist:HandleInit()
 			Settings.GW2MINION.gEleSK10 = "75"
 		end
 		
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapAttunements","gEleSwap","Elementalist-Settings");
-		GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Elementalist-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gEleSK7","Elementalist-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gEleSK8","Elementalist-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gEleSK9","Elementalist-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gEleSK10","Elementalist-Settings");
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapAttunements,"gEleSwap",strings[gCurrentLanguage].elementalistSettings);
+		GUI_NewLabel(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].allowedRange,strings[gCurrentLanguage].elementalistSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gEleSK7",strings[gCurrentLanguage].elementalistSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gEleSK8",strings[gCurrentLanguage].elementalistSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gEleSK9",strings[gCurrentLanguage].elementalistSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].eliteHP,"gEleSK10",strings[gCurrentLanguage].elementalistSettings);
 		
 		
 		gEleSwap = Settings.GW2MINION.gEleSwap

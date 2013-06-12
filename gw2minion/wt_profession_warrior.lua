@@ -359,12 +359,12 @@ function wt_profession_warrior:HandleInit()
 			Settings.GW2MINION.gWarSK10 = "0"
 		end
 			
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gWarSwapWeapons","Warrior-Settings");
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F1","gWarUseBurst","Warrior-Settings");		
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gWarSK7","Warrior-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gWarSK8","Warrior-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gWarSK9","Warrior-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gWarSK10","Warrior-Settings");
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapWeaponSets,"gWarSwapWeapons",strings[gCurrentLanguage].warriorSettings);
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoF1,"gWarUseBurst",strings[gCurrentLanguage].warriorSettings);		
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gWarSK7",strings[gCurrentLanguage].warriorSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gWarSK8",strings[gCurrentLanguage].warriorSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gWarSK9",strings[gCurrentLanguage].warriorSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].eliteHP,"gWarSK10",strings[gCurrentLanguage].warriorSettings);
 		
 		
 		gWarSwapWeapons = Settings.GW2MINION.gWarSwapWeapons

@@ -2,7 +2,7 @@
 SkillMgr = { }
 SkillMgr.version = "v0.4";
 SkillMgr.profilepath = GetStartupPath() .. [[\LuaMods\gw2minion\SkillManagerProfiles\]];
-SkillMgr.mainwindow = { name = "SkillManager", x = 450, y = 50, w = 350, h = 350}
+SkillMgr.mainwindow = { name = strings[gCurrentLanguage].skillManager, x = 450, y = 50, w = 350, h = 350}
 SkillMgr.RecordSkillTmr = 0
 SkillMgr.SkillMgrTmr = 0
 SkillMgr.SkillSet = {}
@@ -25,14 +25,14 @@ function SkillMgr.ModuleInit()
 	
 	local wnd = GUI_GetWindowInfo("GW2Minion")
 	GUI_NewWindow(SkillMgr.mainwindow.name,SkillMgr.mainwindow.x,SkillMgr.mainwindow.y,SkillMgr.mainwindow.w,SkillMgr.mainwindow.h)
-	GUI_NewCheckbox(SkillMgr.mainwindow.name,"Activated","gSMactive","General Settings")
-	GUI_NewComboBox(SkillMgr.mainwindow.name,"Profile","gSMprofile","General Settings","Settings.GW2MINION.gSMlastprofile");
-	GUI_NewButton(SkillMgr.mainwindow.name,"Refresh Profiles","SMRefreshEvent","Skill Editor")
-	GUI_NewButton(SkillMgr.mainwindow.name,"Delete Profile","SMDeleteEvent","Skill Editor")
+	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].activated,"gSMactive",strings[gCurrentLanguage].generalSettings)
+	GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].profile,"gSMprofile",strings[gCurrentLanguage].generalSettings,"Settings.GW2MINION.gSMlastprofile");
+	GUI_NewButton(SkillMgr.mainwindow.name,strings[gCurrentLanguage].refreshProfiles,"SMRefreshEvent",strings[gCurrentLanguage].skillEditor)
+	GUI_NewButton(SkillMgr.mainwindow.name,strings[gCurrentLanguage].deleteProfile,"SMDeleteEvent",strings[gCurrentLanguage].skillEditor)
 	
-	GUI_NewField(SkillMgr.mainwindow.name,"New Profile Name","gSMnewname","Skill Editor")
-	GUI_NewButton(SkillMgr.mainwindow.name,"New Profile","newSMProfileEvent","Skill Editor")
-	GUI_NewCheckbox(SkillMgr.mainwindow.name,"Autodetect Skills","gSMRecactive","Skill Editor")
+	GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].newProfileName,"gSMnewname",strings[gCurrentLanguage].skillEditor)
+	GUI_NewButton(SkillMgr.mainwindow.name,strings[gCurrentLanguage].newProfile,"newSMProfileEvent",strings[gCurrentLanguage].skillEditor)
+	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].autoetectSkills,"gSMRecactive",strings[gCurrentLanguage].skillEditor)
 	
 	SkillMgr.UpdateProfiles()
 	
@@ -154,148 +154,148 @@ function SkillMgr.CreateNewSkillEntry(skill)
 			
 			-- ENABLED
 			local skON = "1"
-			GUI_NewCheckbox(SkillMgr.mainwindow.name,"Enabled","SKM_ON"..tostring(skID),tostring(skname))
+			GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].enabled,"SKM_ON"..tostring(skID),tostring(skname))
 			_G["SKM_ON"..tostring(skID)] = tostring(skON)
 			
 			-- PRIORITY
 			local skPrio = TableSize(SkillMgr.SkillSet)
-			GUI_NewField(SkillMgr.mainwindow.name,"Priority","SKM_Prio"..tostring(skID),tostring(skname))
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].priority,"SKM_Prio"..tostring(skID),tostring(skname))
 			_G["SKM_Prio"..tostring(skID)] = skPrio
 			
 			-- COOLDOWN
 			local skCD = skill.cooldown
-			GUI_NewField(SkillMgr.mainwindow.name,"Cooldown","SKM_CD"..tostring(skID),tostring(skname))
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].cooldown,"SKM_CD"..tostring(skID),tostring(skname))
 			_G["SKM_CD"..tostring(skID)] = skCD
 			
 			-- MINRANGE
 			local skMinR = skill.minRange
-			GUI_NewField(SkillMgr.mainwindow.name,"MinRange","SKM_MinR"..tostring(skID),tostring(skname))
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].minRange,"SKM_MinR"..tostring(skID),tostring(skname))
 			_G["SKM_MinR"..tostring(skID)] = skMinR
 			
 			-- MAXRANGE
 			local skMaxR = skill.maxRange
-			GUI_NewField(SkillMgr.mainwindow.name,"MaxRange","SKM_MaxR"..tostring(skID),tostring(skname))
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].maxRange,"SKM_MaxR"..tostring(skID),tostring(skname))
 			_G["SKM_MaxR"..tostring(skID)] = skMaxR
 			
 			-- IS GROUND TARGETED
 			local skGT = skill.isGroundTargeted
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"IsGroundTargeted","SKM_GT"..tostring(skID),tostring(skname),"false,true");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].isGroundTargeted,"SKM_GT"..tostring(skID),tostring(skname),"false,true");
 			_G["SKM_GT"..tostring(skID)] = tostring(skGT)
 			
 			-- TARGETTYPE
 			local skTType = "Enemy"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"TargetType","SKM_TType"..tostring(skID),tostring(skname),"Enemy,Self,Ally");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetType,"SKM_TType"..tostring(skID),tostring(skname),"Enemy,Self,Ally");
 			_G["SKM_TType"..tostring(skID)] = tostring(skTType)
 			
 			-- USEINCOMBAT
 			local skInCombat = "Yes"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"UseInCombat","SKM_InCombat"..tostring(skID),tostring(skname),"Either,Yes,No");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].useInCombat,"SKM_InCombat"..tostring(skID),tostring(skname),"Either,Yes,No");
 			_G["SKM_InCombat"..tostring(skID)] = tostring(skInCombat)
 			
 			-- PLAYER MOVING
 			local skPMove = "Either"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"Player Moving","SKM_PMove"..tostring(skID),tostring(skname),"Either,Yes,No");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerMoving,"SKM_PMove"..tostring(skID),tostring(skname),"Either,Yes,No");
 			_G["SKM_PMove"..tostring(skID)] = tostring(skPMove)
 			
 			-- PLAYER >HEALTH PERCENT
 			local skPHPLarger = 0
-			GUI_NewField(SkillMgr.mainwindow.name,"Player HP% >","SKM_PHPL"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerHPGT,"SKM_PHPL"..tostring(skID),tostring(skname));
 			_G["SKM_PHPL"..tostring(skID)] = skPHPLarger
 			
 			-- PLAYER <HEALTH PERCENT
 			local skPHPBelow = 0
-			GUI_NewField(SkillMgr.mainwindow.name,"Player HP% <","SKM_PHPB"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerHPLT,"SKM_PHPB"..tostring(skID),tostring(skname));
 			_G["SKM_PHPB"..tostring(skID)] = skPHPBelow
 			
 			-- PLAYER >POWER PERCENT
 			local skPPOWLarger = 0
-			GUI_NewField(SkillMgr.mainwindow.name,"Player Power% >","SKM_PPowL"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerPowerGT ,"SKM_PPowL"..tostring(skID),tostring(skname));
 			_G["SKM_PPowL"..tostring(skID)] = skPPOWLarger
 			
 			-- PLAYER HAS ANY EFFECT1
 			local skPEff1 = "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"Player has ","SKM_PEff1"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerHas,"SKM_PEff1"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_PEff1"..tostring(skID)] = tostring(skPEff1)			
 			-- PLAYER HAS ANY EFFECT2
 			local skPEff2 = "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"or Player has ","SKM_PEff2"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orPlayerHas,"SKM_PEff2"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_PEff2"..tostring(skID)] = tostring(skPEff2)			
 			
 			-- PLAYER HAS NOT EFFECT1
 			local skPNEff1 = "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"Player has NOT ","SKM_PNEff1"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerHasNot,"SKM_PNEff1"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_PNEff1"..tostring(skID)] = tostring(skPNEff1)			
 			-- PLAYER HAS NOT EFFECT2
 			local skPNEff2 = "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"or Player has NOT ","SKM_PNEff2"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orPlayerHasNot ,"SKM_PNEff2"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_PNEff2"..tostring(skID)] = tostring(skPNEff2)	
 						
 			-- PLAYER <POWER PERCENT
 			local skPPOWBelow = 0
-			GUI_NewField(SkillMgr.mainwindow.name,"Player Power% <","SKM_PPowB"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerPowerLT,"SKM_PPowB"..tostring(skID),tostring(skname));
 			_G["SKM_PPowB"..tostring(skID)] = skPPOWBelow			
 					
 			-- TARGET MOVING
 			local skTMove = "Either"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"Target Moving","SKM_TMove"..tostring(skID),tostring(skname),"Either,Yes,No");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetMoving,"SKM_TMove"..tostring(skID),tostring(skname),"Either,Yes,No");
 			_G["SKM_TMove"..tostring(skID)] = tostring(skTMove)
 			
 			-- TARGET >HEALTH PERCENT
 			local skTHPLarger = 0
-			GUI_NewField(SkillMgr.mainwindow.name,"Target HP% >","SKM_THPL"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetHPGT,"SKM_THPL"..tostring(skID),tostring(skname));
 			_G["SKM_THPL"..tostring(skID)] = skTHPLarger
 			
 			-- TARGET <HEALTH PERCENT
 			local skTHPBelow = 0
-			GUI_NewField(SkillMgr.mainwindow.name,"Target HP% <","SKM_THPB"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetHPLT,"SKM_THPB"..tostring(skID),tostring(skname));
 			_G["SKM_THPB"..tostring(skID)] = skTHPBelow
 			
 			-- TARGET > DISTANCE
 			local skTDistL = 0
-			GUI_NewField(SkillMgr.mainwindow.name,"Target Distance >","SKM_TDistL"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetDistanceGT,"SKM_TDistL"..tostring(skID),tostring(skname));
 			_G["SKM_TDistL"..tostring(skID)] = skTDistL
 			
 			-- TARGET > DISTANCE
 			local skTDistB = 0
-			GUI_NewField(SkillMgr.mainwindow.name,"Target Distance <","SKM_TDistB"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetDistanceLT,"SKM_TDistB"..tostring(skID),tostring(skname));
 			_G["SKM_TDistB"..tostring(skID)] = skTDistB
 			
 			-- NEAR TARGET ENEMIES COUNT
 			local skTECount = 0
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"Enemies Near Target(Count) >=","SKM_TECount"..tostring(skID),tostring(skname),"0,1,2,3,4,5,6");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].enemiesNearCount,"SKM_TECount"..tostring(skID),tostring(skname),"0,1,2,3,4,5,6");
 			_G["SKM_TECount"..tostring(skID)] = tostring(skTECount)
 			
 			-- NEAR TARGET ENEMIES RANGE
 			local skTERange = 0
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"Enemies Near Target(MaxRange) =","SKM_TERange"..tostring(skID),tostring(skname),"0,100,200,300,400,500,600");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].enemiesNearRange,"SKM_TERange"..tostring(skID),tostring(skname),"0,100,200,300,400,500,600");
 			_G["SKM_TERange"..tostring(skID)] = tostring(skTERange)
 			
 			-- NEAR TARGET ALLIES COUNT
 			local skTACount = 0
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"Allies Near Target(Count) >=","SKM_TACount"..tostring(skID),tostring(skname),"0,1,2,3,4,5,6");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].alliesNearCount,"SKM_TACount"..tostring(skID),tostring(skname),"0,1,2,3,4,5,6");
 			_G["SKM_TACount"..tostring(skID)] = tostring(skTACount)
 			
 			-- NEAR TARGET ALLIES RANGE
 			local skTARange = 0
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"Allies Near Target(MaxRange) =","SKM_TARange"..tostring(skID),tostring(skname),"0,100,200,300,400,500,600");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].alliesNearRange,"SKM_TARange"..tostring(skID),tostring(skname),"0,100,200,300,400,500,600");
 			_G["SKM_TARange"..tostring(skID)] = tostring(skTARange)
 			
 			-- TARGET HAS ANY EFFECT1
 			local skTEff1 = "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"Target has ","SKM_TEff1"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetHas,"SKM_TEff1"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_TEff1"..tostring(skID)] = tostring(skTEff1)			
 			-- TARGET HAS ANY EFFECT2
 			local skTEff2 = "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"or Target has ","SKM_TEff2"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orTargetHas,"SKM_TEff2"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_TEff2"..tostring(skID)] = tostring(skTEff2)			
 			
 			-- TARGET HAS NOT EFFECT1
 			local skTNEff1 = "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"Target has NOT ","SKM_TNEff1"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetHasNot,"SKM_TNEff1"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_TNEff1"..tostring(skID)] = tostring(skTNEff1)			
 			-- TARGET HAS NOT EFFECT2
 			local skTNEff2 = "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,"or Target has NOT ","SKM_TNEff2"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orTargetHasNot,"SKM_TNEff2"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_TNEff2"..tostring(skID)] = tostring(skTNEff2)
 			
 			

@@ -346,15 +346,15 @@ function wt_profession_guardian:HandleInit()
 			Settings.GW2MINION.gGuardSK10 = "75"
 		end
 		
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gGuardSwapWeapons","Guardian-Settings");
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F1","gGuardF1","Guardian-Settings");
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F2","gGuardF2","Guardian-Settings");
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F3","gGuardF3","Guardian-Settings");
-		GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Guardian-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gGuardSK7","Guardian-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gGuardSK8","Guardian-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gGuardSK9","Guardian-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gGuardSK10","Guardian-Settings");
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapWeaponSets,"gGuardSwapWeapons",strings[gCurrentLanguage].guardianSettings);
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoF1,"gGuardF1",strings[gCurrentLanguage].guardianSettings);
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoF2,"gGuardF2",strings[gCurrentLanguage].guardianSettings);
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoF3,"gGuardF3",strings[gCurrentLanguage].guardianSettings);
+		GUI_NewLabel(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].allowedRange,strings[gCurrentLanguage].guardianSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gGuardSK7",strings[gCurrentLanguage].guardianSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gGuardSK8",strings[gCurrentLanguage].guardianSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gGuardSK9",strings[gCurrentLanguage].guardianSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].eliteHP,"gGuardSK10",strings[gCurrentLanguage].guardianSettings);
 		
 		
 		gGuardSwapWeapons = Settings.GW2MINION.gGuardSwapWeapons

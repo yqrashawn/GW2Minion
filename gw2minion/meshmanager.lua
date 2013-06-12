@@ -2,51 +2,51 @@
 mm = { }
 mm.version = "v1.2";
 mm.navmeshfilepath = tostring(GetStartupPath()) .. [[\Navigation\]];
-mm.mainwindow = { name = "MeshManager", x = 350, y = 100, w = 220, h = 250}
+mm.mainwindow = { name = strings[gCurrentLanguage].meshManager, x = 350, y = 100, w = 220, h = 250}
 mm.meshfiles = {}
 mm.currentmapdata = {}
 mm.visible = false
 mm.Zones = {
-	[15] = "Queensdale",
-	[17] = "HarathiHinterlands",
-	[18] = "DivinitysReach",
-	[19] = "PlainsofAshford",
-	[20] = "BlazeridgeSteppes",
-	[21] = "FieldsofRuin",
-	[22] = "FireheartRise",
-	[23] = "KessexHills",
-	[24] = "GendarranFields",
-	[25] = "IronMarches",
-	[26] = "DredgehauntCliffs",
-	[27] = "LornarsPass",
-	[28] = "WayfarerFoothills",
-	[29] = "TimberlineFalls",
-	[30] = "FrostgorgeSound",
-	[31] = "SnowdenDrifts",
-	[32] = "DiessaPlateau",
-	[33] = "AscalonianCatacombs(Story)",
-	[34] = "CaledonForest",
-	[35] = "MetricaProvince",
-	[36] = "AscalonianCatacombs(Explo)",
-	[38] = "EternalBattlegrounds",
-	[39] = "MountMaelstrom",
-	[50] = "LionsArch",
-	[51] = "StraitsOfDevastation",
-	[53] = "SparkflyFen",
-	[54] = "BrisbanWildlands",
-	[62] = "CursedShore",
-	[65] = "MalchorsLeap",
-	[66] = "CitadelOfFlames(Story)",
-	[69] = "CitadelOfFlames(Exploration)",
-	[73] = "BloodtideCoast",
-	[91] = "TheGrove",
-	[94] = "BlueGreenRedBorderlands1",
-	[95] = "BlueGreenRedBorderlands2",
-	[96] = "BlueGreenRedBorderlands3",
-	[139] = "RataSum",
-	[218] = "BlackCitadel",
-	[326] = "Hoelbrak",
-	[873] = "SouthsunCove",
+	[15] = strings[gCurrentLanguage].queensdale,
+	[17] = strings[gCurrentLangauge].harathiHighlands,
+	[18] = strings[gCurrentLanguage].divinitysReach,
+	[19] = strings[gCurrentLanguage].plainsOfAshford,
+	[20] = strings[gCurrentLanguage].blazeridgeSteppes,
+	[21] = strings[gCurrentLanguage].fieldsOfRuin,
+	[22] = strings[gCurrentLanguage].fireheartRise,
+	[23] = strings[gCurrentLanguage].kessexHills,
+	[24] = strings[gCurrentLanguage].gendarranFields,
+	[25] = strings[gCurrentLanguage].ironMarches,
+	[26] = strings[gCurrentLanguage].dredgehauntCliffs,
+	[27] = strings[gCurrentLanguage].lornarsPass,
+	[28] = strings[gCurrentLanguage].wayfarerFoothills,
+	[29] = strings[gCurrentLanguage].timberlineFalls,
+	[30] = strings[gCurrentLanguage].frostgorgeSound,
+	[31] = strings[gCurrentLanguage].snowdenDrifts,
+	[32] = strings[gCurrentLanguage].diessaPlateau,
+	[33] = strings[gCurrentLanguage].ascalonianCatacombsStory,
+	[34] = strings[gCurrentLanguage].caledonForest,
+	[35] = strings[gCurrentLanguage].metricaProvince,
+	[36] = strings[gCurrentLanguage].ascalonianCatacombsExp,
+	[38] = strings[gCurrentLanguage].eternalBattlegrounds,
+	[39] = strings[gCurrentLanguage].mountMaelstrom,
+	[50] = strings[gCurrentLanguage].lionsArch,
+	[51] = strings[gCurrentLanguage].straightsOfDevastation,
+	[53] = strings[gCurrentLanguage].sparkflyFen,
+	[54] = strings[gCurrentLanguage].brisbanWildlands,
+	[62] = strings[gCurrentLanguage].cursedShore,
+	[65] = strings[gCurrentLanguage].malchorsLeap,
+	[66] = strings[gCurrentLanguage].citadelOfFlamesStory,
+	[69] = strings[gCurrentLanguage].citadelOfFlamesExp,
+	[73] = strings[gCurrentLanguage].bloodtideCoast,
+	[91] = strings[gCurrentLanguage].theGrove,
+	[94] = strings[gCurrentLanguage].borderlands1,
+	[95] = strings[gCurrentLanguage].borderlands2,
+	[96] = strings[gCurrentLanguage].borderlands3,
+	[139] = strings[gCurrentLanguage].rataSum,
+	[218] = strings[gCurrentLanguage].blackCitadel,
+	[326] = strings[gCurrentLanguage].hoelbrak ,
+	[873] = strings[gCurrentLanguage].southsunCove,
 }
 
 function mm.ModuleInit() 	
@@ -71,11 +71,11 @@ function mm.ModuleInit()
 	
 	local wnd = GUI_GetWindowInfo("GW2Minion")
 	GUI_NewWindow(mm.mainwindow.name,wnd.x+wnd.width,wnd.y,mm.mainwindow.w,mm.mainwindow.h)
-	GUI_NewCheckbox(mm.mainwindow.name,"Activated","gMeshMGR","General Settings")
-	GUI_NewField(mm.mainwindow.name,"Mapname","gmapname","General Settings")
-	GUI_NewComboBox(mm.mainwindow.name,"Navmesh","gmeshname","General Settings","");
-	--GUI_NewField(mm.mainwindow.name,"Navmesh","gmeshname","General Settings")
-	GUI_NewField(mm.mainwindow.name,"Waypoint","gwaypointid","General Settings")
+	GUI_NewCheckbox(mm.mainwindow.name,strings[gCurrentLanguage].activated,"gMeshMGR",strings[gCurrentLanguage].generalSettings)
+	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].mapName,"gmapname",strings[gCurrentLanguage].generalSettings)
+	GUI_NewComboBox(mm.mainwindow.name,strings[gCurrentLanguage].navmesh ,"gmeshname",strings[gCurrentLanguage].generalSettings,"");
+	--GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].navmesh ,"gmeshname",strings[gCurrentLanguage].generalSettings)
+	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].waypoint,"gwaypointid",strings[gCurrentLanguage].generalSettings)
 	
 	-- Grab all meshfiles in our Navigation directory
 	local count = 0
