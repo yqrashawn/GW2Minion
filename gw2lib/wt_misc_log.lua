@@ -1,7 +1,7 @@
--- Log and output functions
+﻿-- Log and output functions
 
 --require 'gui\\wt_logwindow'
-
+ 
 -- DumpTable : recursive print the passed table
 function DT( atable, intend )
 		if ( intend == nil ) then intend = 1 end

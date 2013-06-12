@@ -143,6 +143,10 @@ end
 if ( Settings.GW2MINION.gPrioritizeRevive == nil ) then
 	Settings.GW2MINION.gPrioritizeRevive = "0"
 end
+if ( Settings.GW2MINION.gDragonHoloFarming == nil ) then
+	Settings.GW2MINION.gDragonHoloFarming = "0"
+end
+
 
 function wt_global_information.OnUpdate( event, tickcount )
 	wt_global_information.Now = tickcount
@@ -219,6 +223,8 @@ function gw2minion.HandleInit()
 	GUI_NewButton(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].blacklistEvent,"wt_core_taskmanager.blacklistCurrentEvent",strings[gCurrentLanguage].advancedSettings)
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].prioEvent,"gEventFarming",strings[gCurrentLanguage].advancedSettings)
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].prioRevive,"gPrioritizeRevive",strings[gCurrentLanguage].advancedSettings)
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].dragonHoloFarming,"gDragonHoloFarming",strings[gCurrentLanguage].advancedSettings)
+	
 	
 	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].vendorRarity,"gMaxItemSellRarity",strings[gCurrentLanguage].vendorSettings)
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].sellWeapon,"gVendor_Weapons",strings[gCurrentLanguage].vendorSettings)
@@ -282,6 +288,7 @@ function gw2minion.HandleInit()
 	gUnstuckCount = Settings.GW2MINION.gUnstuckCount
 	gEventTimeout = Settings.GW2MINION.gEventTimeout
 	gEventFarming = Settings.GW2MINION.gEventFarming
+	gDragonHoloFarming = Settings.GW2MINION.gDragonHoloFarming
 	
 	wt_debug("GUI Setup done")
 	wt_core_controller.requestStateChange(wt_core_state_idle)
@@ -319,6 +326,7 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "gUnstuckCount" or
 				k == "gEventTimeout" or
 				k == "gEventFarming" or
+				k == "gDragonHoloFarming" or
 				k == "gPrioritizeRevive" or
 				k == "gBuyBestSalvageKit")
 		then
@@ -439,5 +447,5 @@ RegisterEventHandler("Gameloop.CutsceneUpdate",wt_global_information.OnUpdateCut
 RegisterEventHandler("GUI.Update",gw2minion.GUIVarUpdate)
 RegisterEventHandler("MULTIBOT.Message",wt_global_information.HandleCMDMultiBotMessages)
 
-RegisterEventHandler("Gameloop.Input",wt_global_information.Test)
+--RegisterEventHandler("Gameloop.Input",wt_global_information.Test)
 

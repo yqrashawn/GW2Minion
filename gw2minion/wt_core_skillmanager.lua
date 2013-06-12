@@ -1,7 +1,7 @@
 -- Skillmanager for adv. skill customization
 SkillMgr = { }
 SkillMgr.version = "v0.4";
-SkillMgr.profilepath = GetStartupPath() .. [[\LuaMods\gw2minion\SkillManagerProfiles\]];
+SkillMgr.profilepath = tostring(GetStartupPath()) .. [[\LuaMods\gw2minion\SkillManagerProfiles\]];
 SkillMgr.mainwindow = { name = strings[gCurrentLanguage].skillManager, x = 450, y = 50, w = 350, h = 350}
 SkillMgr.RecordSkillTmr = 0
 SkillMgr.SkillMgrTmr = 0
@@ -27,6 +27,7 @@ function SkillMgr.ModuleInit()
 	GUI_NewWindow(SkillMgr.mainwindow.name,SkillMgr.mainwindow.x,SkillMgr.mainwindow.y,SkillMgr.mainwindow.w,SkillMgr.mainwindow.h)
 	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].activated,"gSMactive",strings[gCurrentLanguage].generalSettings)
 	GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].profile,"gSMprofile",strings[gCurrentLanguage].generalSettings,"Settings.GW2MINION.gSMlastprofile");
+	GUI_NewButton(SkillMgr.mainwindow.name,strings[gCurrentLanguage].saveProfile,"SMSaveEvent",strings[gCurrentLanguage].skillEditor)
 	GUI_NewButton(SkillMgr.mainwindow.name,strings[gCurrentLanguage].refreshProfiles,"SMRefreshEvent",strings[gCurrentLanguage].skillEditor)
 	GUI_NewButton(SkillMgr.mainwindow.name,strings[gCurrentLanguage].deleteProfile,"SMDeleteEvent",strings[gCurrentLanguage].skillEditor)
 	
@@ -36,8 +37,9 @@ function SkillMgr.ModuleInit()
 	
 	SkillMgr.UpdateProfiles()
 	
-	SkillMgr.UpdateCurrentProfile()
-	
+	SkillMgr.UpdateCurrentProfileData()
+		
+	RegisterEventHandler("SMSaveEvent",SkillMgr.SaveProfile)
 	RegisterEventHandler("SMRefreshEvent",SkillMgr.UpdateProfiles)
 	RegisterEventHandler("SMDeleteEvent",SkillMgr.DeleteCurrentProfile)
 	RegisterEventHandler("newSMProfileEvent",SkillMgr.CreateNewProfile)
@@ -48,6 +50,8 @@ function SkillMgr.GUIVarUpdate(Event, NewVals, OldVals)
 		d(tostring(k).." "..tostring(v))
 		if ( k == "gSMactive") then			
 			Settings.GW2MINION[tostring(k)] = v
+		elseif ( k == "gSMprofile" ) then
+			SkillMgr.UpdateCurrentProfileData()
 		end
 	end
 	GUI_RefreshWindow(SkillMgr.mainwindow.name)
@@ -65,7 +69,10 @@ function SkillMgr.OnUpdate( event, tick )
 				SkillMgr.SkillMgrTmr = tick
 				SkillMgr.CheckForNewSkills()
 			end
-		end		
+		end	
+	end
+	if ( gSMactive == "1" ) then
+		SkillMgr.DoAction()
 	end
 end
 
@@ -87,18 +94,18 @@ function SkillMgr.CreateNewProfile()
 			local file = io.open(SkillMgr.profilepath..tostring(gSMnewname)..".lua", "w")
 			if file then
 				wt_debug("Creating Profile file..")	
-				
-				file:write("mapid=5 \n")
-				
+								
 				file:flush()
 				file:close()
+			else
+				wt_debug("Error creating new Profile file..")					
 			end
 		end			
 	end
 end
 
 function SkillMgr.UpdateProfiles()
-	-- Grab all Profiles
+	-- Grab all Profiles and enlist them in the dropdown field
 	local profiles = "None"
 	local found = "None"
 
@@ -118,7 +125,63 @@ function SkillMgr.UpdateProfiles()
 	gSMprofile = tostring(found)
 end
 
+function SkillMgr.SaveProfile()
+	-- Save current Profiledata into the Profile-file
+	if (gSMprofile ~= nil and tostring(gSMprofile) ~= "None" and tostring(gSMprofile) ~= "") then
+		local profile = io.open(SkillMgr.profilepath ..tostring(gSMprofile)..".lua", "w")
+		if ( profile ~= nil ) then	
+			d("Saving Profile Data into File: "..tostring(gSMprofile))
+			
+			local skID,skill = next (SkillMgr.SkillSet)
+			while skID and skill do
+				d("Saving SkillID :"..tostring(skID))				
+				if (_G["SKM_NAME"..tostring(skID)] ) then profile:write("SKM_NAME"..tostring(skID).."="..tostring(_G["SKM_NAME"..tostring(skID)]).."\n") end
+				if (_G["SKM_ID"..tostring(skID)] ) then profile:write("SKM_ID"..tostring(skID).."="..tostring(_G["SKM_ID"..tostring(skID)]).."\n") end				
+				if (_G["SKM_ON"..tostring(skID)] ) then profile:write("SKM_ON"..tostring(skID).."="..tostring(_G["SKM_ON"..tostring(skID)]).."\n") end
+				if (_G["SKM_Prio"..tostring(skID)] ) then profile:write("SKM_Prio"..tostring(skID).."="..tostring(_G["SKM_Prio"..tostring(skID)]).."\n") end
+				if (_G["SKM_CD"..tostring(skID)] ) then profile:write("SKM_CD"..tostring(skID).."="..tostring(_G["SKM_CD"..tostring(skID)]).."\n") end
+				if (_G["SKM_MinR"..tostring(skID)] ) then profile:write("SKM_MinR"..tostring(skID).."="..tostring(_G["SKM_MinR"..tostring(skID)]).."\n") end
+				if (_G["SKM_MaxR"..tostring(skID)] ) then profile:write("SKM_MaxR"..tostring(skID).."="..tostring(_G["SKM_MaxR"..tostring(skID)]).."\n") end
+				if (_G["SKM_GT"..tostring(skID)] ) then profile:write("SKM_GT"..tostring(skID).."="..tostring(_G["SKM_GT"..tostring(skID)]).."\n") end
+				if (_G["SKM_TType"..tostring(skID)] ) then profile:write("SKM_TType"..tostring(skID).."="..tostring(_G["SKM_TType"..tostring(skID)]).."\n") end
+				if (_G["SKM_InCombat"..tostring(skID)] ) then profile:write("SKM_InCombat"..tostring(skID).."="..tostring(_G["SKM_InCombat"..tostring(skID)]).."\n") end
+				
+				if (_G["SKM_PMove"..tostring(skID)] ) then profile:write("SKM_PMove"..tostring(skID).."="..tostring(_G["SKM_PMove"..tostring(skID)]).."\n") end
+				if (_G["SKM_PHPL"..tostring(skID)] ) then profile:write("SKM_PHPL"..tostring(skID).."="..tostring(_G["SKM_PHPL"..tostring(skID)]).."\n") end
+				if (_G["SKM_PHPB"..tostring(skID)] ) then profile:write("SKM_PHPB"..tostring(skID).."="..tostring(_G["SKM_PHPB"..tostring(skID)]).."\n") end
+				if (_G["SKM_PPowL"..tostring(skID)] ) then profile:write("SKM_PPowL"..tostring(skID).."="..tostring(_G["SKM_PPowL"..tostring(skID)]).."\n") end
+				if (_G["SKM_PEff1"..tostring(skID)] ) then profile:write("SKM_PEff1"..tostring(skID).."="..tostring(_G["SKM_PEff1"..tostring(skID)]).."\n") end
+				if (_G["SKM_PEff2"..tostring(skID)] ) then profile:write("SKM_PEff2"..tostring(skID).."="..tostring(_G["SKM_PEff2"..tostring(skID)]).."\n") end
+				if (_G["SKM_PNEff1"..tostring(skID)] ) then profile:write("SKM_PNEff1"..tostring(skID).."="..tostring(_G["SKM_PNEff1"..tostring(skID)]).."\n") end
+				if (_G["SKM_PNEff2"..tostring(skID)] ) then profile:write("SKM_PNEff2"..tostring(skID).."="..tostring(_G["SKM_PNEff2"..tostring(skID)]).."\n") end
+				if (_G["SKM_PPowB"..tostring(skID)] ) then profile:write("SKM_PPowB"..tostring(skID).."="..tostring(_G["SKM_PPowB"..tostring(skID)]).."\n") end
+				
+				if (_G["SKM_TMove"..tostring(skID)] ) then profile:write("SKM_TMove"..tostring(skID).."="..tostring(_G["SKM_TMove"..tostring(skID)]).."\n") end
+				if (_G["SKM_THPL"..tostring(skID)] ) then profile:write("SKM_THPL"..tostring(skID).."="..tostring(_G["SKM_THPL"..tostring(skID)]).."\n") end
+				if (_G["SKM_THPB"..tostring(skID)] ) then profile:write("SKM_THPB"..tostring(skID).."="..tostring(_G["SKM_THPB"..tostring(skID)]).."\n") end
+				if (_G["SKM_TDistL"..tostring(skID)] ) then profile:write("SKM_TDistL"..tostring(skID).."="..tostring(_G["SKM_TDistL"..tostring(skID)]).."\n") end
+				if (_G["SKM_TDistB"..tostring(skID)] ) then profile:write("SKM_TDistB"..tostring(skID).."="..tostring(_G["SKM_TDistB"..tostring(skID)]).."\n") end
+				if (_G["SKM_TECount"..tostring(skID)] ) then profile:write("SKM_TECount"..tostring(skID).."="..tostring(_G["SKM_TECount"..tostring(skID)]).."\n") end
+				if (_G["SKM_TERange"..tostring(skID)] ) then profile:write("SKM_TERange"..tostring(skID).."="..tostring(_G["SKM_TERange"..tostring(skID)]).."\n") end
+				if (_G["SKM_TACount"..tostring(skID)] ) then profile:write("SKM_TACount"..tostring(skID).."="..tostring(_G["SKM_TACount"..tostring(skID)]).."\n") end
+				if (_G["SKM_TARange"..tostring(skID)] ) then profile:write("SKM_TARange"..tostring(skID).."="..tostring(_G["SKM_TARange"..tostring(skID)]).."\n") end
+				if (_G["SKM_TEff1"..tostring(skID)] ) then profile:write("SKM_TEff1"..tostring(skID).."="..tostring(_G["SKM_TEff1"..tostring(skID)]).."\n") end
+				if (_G["SKM_TEff2"..tostring(skID)] ) then profile:write("SKM_TEff2"..tostring(skID).."="..tostring(_G["SKM_TEff2"..tostring(skID)]).."\n") end
+				if (_G["SKM_TNEff1"..tostring(skID)] ) then profile:write("SKM_TNEff1"..tostring(skID).."="..tostring(_G["SKM_TNEff1"..tostring(skID)]).."\n") end
+				if (_G["SKM_TNEff2"..tostring(skID)] ) then profile:write("SKM_TNEff2"..tostring(skID).."="..tostring(_G["SKM_TNEff2"..tostring(skID)]).."\n") end
+				skID,skill = next (SkillMgr.SkillSet,skID)
+			end			
+			
+			profile:flush()
+			profile:close()
+		else
+			d("Error saving Profile: File not found!!")
+		end
+	end	
+end
+
 function SkillMgr.DeleteCurrentProfile()	
+	-- Delete the currently selected Profile - file from the HDD
 	if (gSMprofile ~= nil and tostring(gSMprofile) ~= "None" and tostring(gSMprofile) ~= "") then
 		local profile = io.open(SkillMgr.profilepath ..tostring(gSMprofile)..".lua")
 		if ( profile ~= nil ) then	
@@ -130,6 +193,24 @@ function SkillMgr.DeleteCurrentProfile()
 			SkillMgr.UpdateProfiles()			
 		end
 	end	
+end
+
+function SkillMgr.UpdateCurrentProfileData()
+	if (gSMprofile ~= nil and tostring(gSMprofile) ~= "None" and tostring(gSMprofile) ~= "") then
+		local profile = io.open(SkillMgr.profilepath..tostring(gSMprofile)..".lua", "r")
+		if ( profile ) then
+			for line in profile:lines() do
+				d(line)
+				key, value = string.gmatch(tostring(line), "(^%w+)=(%w+)")
+				d("key: "..tostring(key).." val:"..tostring(value))
+				
+				
+				--SkillMgr.SkillSet[skID] = skID
+			end
+		else
+			d("Error: Can't read SkillProfile: "..tostring(gSMprofile))
+		end
+	end
 end
 
 function SkillMgr.CheckForNewSkills()
@@ -151,6 +232,10 @@ function SkillMgr.CreateNewSkillEntry(skill)
 		
 			GUI_NewField(SkillMgr.mainwindow.name,"ID","SKM_ID"..tostring(skID),tostring(skname))
 			_G["SKM_ID"..tostring(skID)] = skID
+			
+			-- NAME
+			GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].enabled,"SKM_NAME"..tostring(skID),tostring(skname))
+			_G["SKM_NAME"..tostring(skID)] = tostring(skname)
 			
 			-- ENABLED
 			local skON = "1"
@@ -316,15 +401,10 @@ function SkillMgr.ClearCurrentSkills()
 end
 
 
-function SkillMgr.UpdateCurrentProfile()
-	if (gSMprofile ~= nil and tostring(gSMprofile) ~= "None") then
-		if (io.open(SkillMgr.profilepath..tostring(gSMprofile)..".lua")) then
-			wt_debug("Updating profile: "..tostring(gSMprofile))
-			
-			
-			
-		end
-	end
+
+
+function SkillMgr.DoAction()
+
 end
 
 RegisterEventHandler("Gameloop.Update",SkillMgr.OnUpdate)
