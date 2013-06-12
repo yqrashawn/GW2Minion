@@ -1230,6 +1230,7 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 	end
 end
 
+
 -- Do Event Task - P:4000
 function wt_core_taskmanager:addEventTask( ID,event, prio )
 
@@ -1488,6 +1489,107 @@ function wt_core_taskmanager:addEventTask( ID,event, prio )
 	wt_core_taskmanager:addCustomtask( newtask )	
 end
 
+
+function wt_core_taskmanager:addDragonHologramTask( marker , prio)
+	local newtask = inheritsFrom( wt_task )
+	newtask.UID = "DragonHolo"..tostring(math.floor(marker.pos.x))
+	newtask.timestamp = wt_global_information.Now				
+	newtask.name = "DragonHolo"
+	newtask.agentID = marker.agentID
+	newtask.priority = prio
+	newtask.spotreached = false
+	newtask.startingTime = 0
+	newtask.position = marker.pos
+	newtask.maxduration = math.random(50000,60000)
+	newtask.done = false
+	newtask.last_execution = 0
+	newtask.throttle = 500
+	newtask.mapchecklast_execution = 0
+	newtask.mapmarkerthrottle = 2000
+	
+	function newtask:canRun()			
+		return true
+	end
+		
+	function newtask:execute()
+		if ( not newtask.spotreached ) then			
+			local me = Player
+			local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, me.pos.x, me.pos.y, me.pos.z )
+			if ( distance > 120 ) then
+				if ( (wt_global_information.Now - newtask.mapchecklast_execution) > newtask.mapmarkerthrottle ) then
+					newtask.mapchecklast_execution = wt_global_information.Now
+					local event = MapMarkerList("worldmarkertype=20,agentID="..newtask.agentID)
+					if event ~= nil then
+						local i,e = next(event)
+						if not i or not e then
+							d("DragonHologram is gone...")
+							Player:StopMoving()
+							newtask.done = true		
+						end
+					else
+						d("DragonHologram is gone...")
+						Player:StopMoving()
+						newtask.done = true
+					end
+				end	
+				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 75 )
+					newtask.last_execution = wt_global_information.Now
+				end
+			else
+				if ( Player:GetInteractableTarget() == newtask.agentID ) then
+					d("Activating Hologram")
+					Player:Use(newtask.agentID)
+					newtask.spotreached = true
+					newtask.startingTime = wt_global_information.Now
+					newtask.last_execution = wt_global_information.Now
+					newtask.throttle = 2000
+				end
+			end
+			newtask.name = "DragonHologram: "..(math.floor(distance))
+		else
+			local me = Player
+			local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, me.pos.x, me.pos.y, me.pos.z )
+			if ( distance > 2500 ) then
+				--wt_debug("Walking towards FarmSpot Marker ")	
+				Player:MoveTo(  newtask.position.x, newtask.position.y, newtask.position.z, 150 )
+			else
+				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+					TargetList = ( CharacterList( "noCritter,nearest,attackable,alive,maxdistance=1100,onmesh" ) )
+					if ( TargetList ~= nil ) then 	
+						nextTarget, E  = next( TargetList )
+						if ( nextTarget ~= nil and (wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then
+							--wt_debug( "TaskManager: Begin Combat, Found target "..nextTarget )						
+							wt_core_state_combat.setTarget( nextTarget )
+							wt_core_controller.requestStateChange( wt_core_state_combat )
+						else
+							d("Dragonhologram maxtime is up, moving on..")
+							Player:StopMoving()
+							newtask.done = true	
+						end
+					else
+						d("Dragonhologram, no enemies left, moving on..")
+						Player:StopMoving()
+						newtask.done = true
+					end
+				else
+					d("Waiting a bit...")
+				end
+			end
+			newtask.name = "Do DragonHologram "..(math.floor((newtask.maxduration-(wt_global_information.Now - newtask.startingTime))/1000)).." sec"
+		end		
+	end
+
+	function newtask:isFinished()
+		if ( newtask.done ) then			
+			return true
+		end
+		return false
+	end	
+	wt_core_taskmanager:addCustomtask( newtask )
+end
+
+
 -- Pause task stops the bot for random tick count with EmergencyTask priority
 function wt_core_taskmanager:addPauseTask(low, high)     
 	local newtask = inheritsFrom( wt_task )
@@ -1514,6 +1616,7 @@ function wt_core_taskmanager:addPauseTask(low, high)
 	wt_debug("Pausing "..newtask.pauseTime.." milliseconds")
 	wt_core_taskmanager:addCustomtask( newtask )
 end
+
 
 --[[function wt_core_taskmanager.addWaypointTask(waypointID)
 	local newtask = inheritsFrom( wt_task )
@@ -1542,6 +1645,11 @@ end
 	wt_debug("Waypoint Task Added..")
 	wt_core_taskmanager:addCustomtask( newtask )
 end]]--
+
+
+
+
+
 
 -- blacklist whatever the current event id is and write to settings
 function wt_core_taskmanager:BlacklistCurrentEvent()

@@ -49,7 +49,8 @@ strings =
         vendorSettings                  = "VendorSettings",
         salvageSettings                 = "SalvageSettings",
         gatherSettings                  = "GatherSettings",
-        
+        dragonHoloFarming				= "FarmDragonHolograms",
+		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
         queensdale                      = "Queensdale",
@@ -117,9 +118,10 @@ strings =
 
         -- skillmanager.lua
         skillManager                    = "SkillManager",
-        profile                         = "Profile",
-        refreshProfiles                 = "Refresh Profiles",
-        deleteProfile                   = "Delete Profile",
+        profile                         = "Profile",        
+		refreshProfiles                 = "Refresh Profile List",
+		saveProfile                 	= "Save Current Profile",
+        deleteProfile                   = "Delete Current Profile",
         newProfileName                  = "New Profile Name",
         newProfile                      = "New Profile",
         autoetectSkills                 = "Autodetect Skills",

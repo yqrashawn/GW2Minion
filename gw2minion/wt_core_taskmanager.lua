@@ -167,6 +167,7 @@ function wt_core_taskmanager:Update_Tasks( )
 			if ( TableSize( MMList ) > 0 ) then
 				i, entry = next( MMList )
 				local eventIndex, event = nil
+				local nearestdragonholo = nil
 				while ( i ~= nil and entry ~= nil ) do
 					local etype = entry.type
 					local mtype = entry.markertype
@@ -193,7 +194,14 @@ function wt_core_taskmanager:Update_Tasks( )
 								if ((wt_global_information.Now - lastrun) > 650000) then
 									wt_core_taskmanager:addHeartQuestTask( entry )
 								end
-							end	
+							end
+						-- Dragon Holograms
+						elseif ( etype == 630 and entry.onmesh) then		
+							if ( nearestdragonholo == nil or entry.distance < nearestdragonholo.distance) then
+								nearestdragonholo = entry
+							end						
+						
+						
 						-- Unfinished Skillchallenges
 						--elseif ( mtype==20 and (etype == 378) and entry.onmesh) then
 						--	local mPos = entry.pos
@@ -213,15 +221,24 @@ function wt_core_taskmanager:Update_Tasks( )
 						
 					i, entry = next( MMList, i )
 					
-					if  ((i == nil or entry == nil) and event ~= nil) then
-						-- Add task for the closest event
-						local lastrun = wt_core_taskmanager.Customtask_history["Event"..tostring(event.eventID)] or 0
-						if ((wt_global_information.Now - lastrun) > 450000) then
-							local priority = 2500
-							if (gEventFarming == "1") then priority = 4000 end
-							wt_core_taskmanager:addEventTask( i, event, priority)
-						end	
-					end
+					if  (i == nil or entry == nil) then
+						if ( event ~= nil ) then
+							-- Add task for the closest event
+							local lastrun = wt_core_taskmanager.Customtask_history["Event"..tostring(event.eventID)] or 0
+							if ((wt_global_information.Now - lastrun) > 450000) then
+								local priority = 2500
+								if (gEventFarming == "1") then priority = 4000 end
+								wt_core_taskmanager:addEventTask( i, event, priority)
+							end	
+						elseif ( nearestdragonholo ~= nil ) then
+							-- Add task for the closest dragonhologram						
+							if (gDragonHoloFarming == "1") then 
+								wt_core_taskmanager:addDragonHologramTask( nearestdragonholo , 4250  )
+							else
+								wt_core_taskmanager:addDragonHologramTask( nearestdragonholo , 650 )
+							end
+						end
+					end										
 				end
 			end
 			

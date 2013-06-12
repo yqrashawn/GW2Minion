@@ -1,15 +1,15 @@
--- Map & Meshmanager
+﻿-- Map & Meshmanager
 mm = { }
 mm.version = "v1.2";
 mm.navmeshfilepath = tostring(GetStartupPath()) .. [[\Navigation\]];
 mm.mainwindow = { name = strings[gCurrentLanguage].meshManager, x = 350, y = 100, w = 220, h = 250}
 mm.meshfiles = {}
-mm.currentmapdata = {}
+mm.currentmapdata = {} 
 mm.visible = false
 mm.Zones = {
 	[15] = strings[gCurrentLanguage].queensdale,
-	[17] = "HarathiHinterlands",
-	[18] = strings[gCurrentLanguage].harathiHinterlands,
+	[17] = strings[gCurrentLanguage].harathiHinterlands,
+	[18] = strings[gCurrentLanguage].divinitysReach,
 	[19] = strings[gCurrentLanguage].plainsOfAshford,
 	[20] = strings[gCurrentLanguage].blazeridgeSteppes,
 	[21] = strings[gCurrentLanguage].fieldsOfRuin,
@@ -105,11 +105,14 @@ function mm.ModuleInit()
 	GUI_NewComboBox(mm.mainwindow.name,"RecordMode","grecMode","Editor","Mouse,Player");	
 	GUI_NewButton(mm.mainwindow.name,"Optimize Mesh","optimizeMeshEvent","Editor")
 	GUI_NewButton(mm.mainwindow.name,"Save Mesh","saveMeshEvent","Editor")
+	GUI_NewButton(mm.mainwindow.name,"Build NAVMesh","buildMeshEvent","Editor")
 	
 	
 	RegisterEventHandler("newMeshEvent",mm.CreateNewMesh)
 	RegisterEventHandler("optimizeMeshEvent",mm.OptimizeMesh)
 	RegisterEventHandler("saveMeshEvent",mm.SaveMesh)
+	RegisterEventHandler("buildMeshEvent",mm.SaveMesh)
+	
 			
 	gmeshname_listitems = meshlist
 	gmapname = ""
@@ -142,7 +145,8 @@ function mm.CreateNewMesh()
 			-- Setup everything for new mesh
 			gmeshname_listitems = gmeshname_listitems..","..tostring(gnewmeshname)
 			gmeshname = tostring(gnewmeshname)
-			
+			mm.SaveMesh()
+			mm.ChangeNavMesh(gmeshname)
 		end
 	else
 		wt_error("Enter a new MeshName first!")
@@ -156,11 +160,20 @@ end
 
 function mm.SaveMesh()
 	wt_debug("Saving NavMesh...")
-	if (gmeshname ~= nil and tostring(gmeshname) ~= "") then
+	if (gmeshname ~= nil and tostring(gmeshname) ~= "" and tostring(gmeshname) ~= "none") then
 		wt_debug("Result: "..tostring(NavigationManager:SaveNavMesh(towstring(gmeshname))))
 	else
 		wt_error("gmeshname is empty!?")
 	end	
+end
+
+function mm.BuildMesh()
+	wt_debug("Building NAV-Meshfile...")
+	if (gmeshname ~= nil and tostring(gmeshname) ~= "" and tostring(gmeshname) ~= "none") then
+		wt_debug("Result: "..tostring(NavigationManager:LoadNavMesh(towstring(gmeshname))))
+	else
+		wt_error("gmeshname is empty!?")
+	end
 end
 
 function mm.ChangeNavMesh(newmesh)			
@@ -218,7 +231,7 @@ function mm.RefreshCurrentMapData()
 					gwaypointid = tostring(Settings.GW2MINION.Zones[tostring(mapID)].waypointid)
 				end			
 				if (gmeshname ~= nil and tostring(gmeshname) ~= "" and tostring(gmeshname) ~= "none") then				
-					local path = GetStartupPath()..L"\\Navigation\\"..towstring(gmeshname)
+					local path = GetStartupPath().."\\Navigation\\"..tostring(gmeshname)
 					if (io.open(tostring(path)..".obj")) then
 						if (NavigationManager:IsNavMeshLoaded()) then
 							wt_debug("Unloading Old Navmesh...")
@@ -272,8 +285,8 @@ function mm.UnloadNavMesh()
 end
 
 function mm.LoadNavMesh(filename)	
-	wt_debug("Loading Navmesh " ..tostring(filename))
-	local path = GetStartupPath()..L"\\Navigation\\"..towstring(filename)
+	wt_debug("Loading Navmesh: " ..tostring(filename))
+	local path = GetStartupPath().."\\Navigation\\"..tostring(filename)
 	if (io.open(tostring(path)..".obj")) then
 		NavigationManager:LoadNavMesh(path)
 		GUI_CloseMarkerInspector()
@@ -343,3 +356,4 @@ end
 RegisterEventHandler("NavigationManager.toggle", mm.ToggleMenu)
 RegisterEventHandler("GUI.Update",mm.GUIVarUpdate)
 RegisterEventHandler("Module.Initalize",mm.ModuleInit)
+
