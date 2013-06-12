@@ -182,7 +182,7 @@ function wt_core_state_salvaging:HandleInit()
 	end
 	
 	for k,v in pairs(Settings.GW2MINION.salvagesettings) do
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Salvage " .. v.desc ,"gSalvage_" .. k,"Settings")
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Salvage " .. v.desc ,"gSalvage_" .. k,"SalvageSettings")
 		_G["gSalvage_"..k] = v.salvage
 	end
 	

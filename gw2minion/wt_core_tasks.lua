@@ -243,6 +243,49 @@ function wt_core_taskmanager:addFarmSpotTask( marker )
 end
 
 ------------------------------------------------------------------
+-- Explore Point Of Interest Task
+function wt_core_taskmanager:addSkillChallengeTask( char )
+	
+		local newtask = inheritsFrom( wt_task )
+		newtask.UID = "SkillCh"..tostring(char.agentID)
+		newtask.timestamp = wt_global_information.Now				
+		newtask.name = "SkillChallenge"
+		newtask.priority = 600
+		newtask.position = char.pos
+		newtask.done = false
+		newtask.last_execution = 0
+		newtask.throttle = 500
+		
+		function newtask:execute()
+			local mypos = Player.pos
+			local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, mypos.x, mypos.y, mypos.z )
+			if ( distance > 100 ) then
+				--wt_debug("Walking towards new PointOfInterest ")
+				-- TODO: Update position
+				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 200 )
+					newtask.last_execution = wt_global_information.Now
+				end
+			else
+				-- TODO: Add chatshit
+				newtask.done = true
+			end
+			newtask.name = "SkillChallenge: "..(math.floor(distance))
+		end
+
+		function newtask:isFinished()
+			if ( newtask.done ) then
+				return true
+			end
+			return false
+		end	
+		wt_core_taskmanager:addCustomtask( newtask )
+end
+
+
+
+
+------------------------------------------------------------------
 -- Kill stuff nearby Task - NOTUSEDRIGHTNOW
 function wt_core_taskmanager:addSearchAndKillTask(  )
 	 
@@ -310,6 +353,46 @@ function wt_core_taskmanager:addKillTask( ID, character, Prio )
 				end
 				wt_core_state_combat.setTarget( tonumber(newtask.ID) )
 				wt_core_controller.requestStateChange( wt_core_state_combat )
+				return
+			end				
+			newtask.done = true
+		else
+			newtask.done = true
+		end		
+	end
+			
+	function newtask:isFinished()
+		if ( newtask.done ) then 
+			return true
+		end
+		return false
+	end
+	
+	wt_core_taskmanager:addCustomtask( newtask )
+end
+
+-- Kill Enemy Gadget Task - P:3000-3500
+function wt_core_taskmanager:addKillGadgetTask( ID, gadget, Prio )
+	local newtask = inheritsFrom( wt_task )
+	newtask.UID = "KILL"..tostring(ID)
+	newtask.timestamp = wt_global_information.Now
+	newtask.lifetime = 20000
+	newtask.name = "Attacking Gadget"
+	newtask.priority = tonumber(Prio)
+	newtask.position = gadget.pos
+	newtask.done = false
+	newtask.ID = ID			
+	function newtask:execute()				
+		local ntarget = GadgetList:Get(tonumber(newtask.ID))
+		if ( ntarget ~= nil and ntarget.distance < 4000 and ntarget.alive and (ntarget.attitude == 1 or ntarget.attitude == 2) and ntarget.onmesh) then
+			wt_debug(tostring(newtask.name))
+			if (tonumber(newtask.ID) ~= nil) then
+				if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then
+					MultiBotSend( "7;"..tonumber(newtask.ID),"gw2minion" ) -- Set FocusTarget for Minions
+				end
+				wt_core_state_gcombat.setTarget( tonumber(newtask.ID) )
+				wt_debug("GOING TO KILL THAT GADGET")
+				wt_core_controller.requestStateChange( wt_core_state_gcombat )
 				return
 			end				
 			newtask.done = true
@@ -545,6 +628,7 @@ function wt_core_taskmanager:addRepairTask(priority,vendor)
 						if ( not Player:IsConversationOpen() and newtask.repaired == false ) then
 							wt_debug( "Repair: Opening Vendor.. " )
 							Player:Interact( vendor.characterID )
+								Player:Use( vendor.characterID )
 							return		
 						end
 						-- CHAT WITH VENDOR

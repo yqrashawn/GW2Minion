@@ -5,7 +5,7 @@ wt_global_information.Currentprofession = nil
 wt_global_information.Now = 0
 
 wt_global_information.PVP = false
-wt_global_information.MainWindow = { Name = "GW2Minion", x=100, y=320 , width=200, height=220 }
+wt_global_information.MainWindow = { Name = "GW2Minion", x=50, y=50 , width=200, height=240 }
 wt_global_information.BtnStart = { Name="StartStop" ,Event = "GUI_REQUEST_RUN_TOGGLE" }
 wt_global_information.BtnPulse = { Name="Pulse(Debug)" ,Event = "Debug.Pulse" }
 wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel = 3  
@@ -18,6 +18,7 @@ wt_global_information.MaxGatherDistance = 4000
 wt_global_information.MaxAggroDistanceFar = 1200
 wt_global_information.MaxAggroDistanceClose = 500
 wt_global_information.MaxSearchEnemyDistance = 2500
+wt_global_information.DoAggroCheck = true
 wt_global_information.lastrun = 0
 wt_global_information.InventoryFull = 0
 wt_global_information.FocusTarget = nil
@@ -156,45 +157,18 @@ function wt_global_information.OnUpdate( event, tickcount )
 		wt_global_information.lastrun = tickcount
 		
 		-- Check if we switched to a new map/zone
-		if ( wt_global_information.MeshCheck_lastrun == 0 or tickcount - wt_global_information.MeshCheck_lastrun > 3000 ) then
+		if ( wt_global_information.MeshCheck_lastrun == 0 ) then 
+			wt_global_information.MeshCheck_lastrun = tickcount
+		elseif( tickcount - wt_global_information.MeshCheck_lastrun > 3000 ) then
 			wt_global_information.MeshCheck_lastrun = tickcount
 			if ( mm.RefreshCurrentMapData() and gAutostartbot == "1" and wt_core_controller.shouldRun == false) then				
-				wt_core_controller.ToggleRun()				
+				wt_core_controller.ToggleRun()
+				return				
 			end
 		end
-		
-		
-		--[[if (gAutostartbot == "1" and wt_core_controller.shouldRun == false ) then	
-			wt_core_controller.ToggleRun()
-			wt_global_information.AutoRun = true
-		end
-		if ( NavigationManager:IsNavMeshLoaded() ) then	
-			wt_core_controller.shouldRun = not wt_core_controller.shouldRun
-			wt_debug("Core Run State: ",tostring(wt_core_controller.shouldRun))
-		else
-			if (gAutostartbot == "1") then
-				wt_global_information.Reset()
-				wt_core_taskmanager.ClearTasks()
-				wt_core_state_combat.StopCM()
-				mm.LoadMesh()
-			else
-				wt_error("CAN'T START THE BOT, YOU NEED TO LOAD A NAVMESH FIRST!")
-			end
-		end
-		if (wt_global_information.AutoRun == true and tickcount - wt_global_information.AutoRun_lastrun  > 3000 ) then
-			if ( wt_global_information.AutoRun_lastrun == 0 ) then
-				wt_global_information.AutoRun_lastrun = tickcount
-			else
-				wt_global_information.AutoRun_lastrun = 0
-				wt_global_information.AutoRun = false
-				if (wt_core_controller.shouldRun == false)then 
-					wt_core_controller.ToggleRun()
-				end
-			end
-		end		]]
-		
+			
 		wt_core_controller.Run()		
-	end	
+	end
 end
 
 function wt_global_information.OnUpdateCharSelect(event, tickcount )
@@ -222,28 +196,30 @@ end
 -- Module Event Handler
 function gw2minion.HandleInit()
 	wt_debug("received Module.Initalize")
-	local wnd = GUI_GetWindowInfo("GW2MINION")
-	GUI_NewWindow(wt_global_information.MainWindow.Name,wnd.x,wnd.y+wnd.height,wt_global_information.MainWindow.width,wt_global_information.MainWindow.height)
+	GUI_NewWindow(wt_global_information.MainWindow.Name,wt_global_information.MainWindow.x,wt_global_information.MainWindow.y,wt_global_information.MainWindow.width,wt_global_information.MainWindow.height)
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnStart.Name , wt_global_information.BtnStart.Event)
-	GUI_NewButton(wt_global_information.MainWindow.Name,"ToolBox","TB.toggle")
-	GUI_NewButton(wt_global_information.MainWindow.Name,"MeshManager","MM.toggle")
-	GUI_NewButton(wt_global_information.MainWindow.Name,"PartyManager","wt_core_partymanager.toggle")
-	GUI_NewField(wt_global_information.MainWindow.Name,"MyTask","gGW2MinionTask");
-	GUI_NewSeperator(wt_global_information.MainWindow.Name);
-	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnPulse.Name , wt_global_information.BtnPulse.Event,"BotStatus")
 	GUI_NewField(wt_global_information.MainWindow.Name,"Pulse Time (ms)","gGW2MinionPulseTime","BotStatus");	
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Log","gEnableLog","BotStatus");
+	GUI_NewField(wt_global_information.MainWindow.Name,"MyTask","gGW2MinionTask","BotStatus");
 	GUI_NewField(wt_global_information.MainWindow.Name,"State","gGW2MinionState","BotStatus");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Effect","gGW2MinionEffect","BotStatus");		
-	GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT","BotStatus");
-	GUI_NewField(wt_global_information.MainWindow.Name,"MapSwitch in","gMapswitch","BotStatus");
+	--GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT","BotStatus");
+	
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoStartBot","gAutostartbot","Settings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"CombatMovement","gCombatmovement","Settings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Events","gdoEvents","Settings");	
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Ignore Marker Level Cap","gIgnoreMarkerCap","Settings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Events","gdoEvents","Settings");		
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Repair Equippment","gEnableRepair","Settings");
+	
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Ignore Marker Level Cap","gIgnoreMarkerCap","AdvancedSettings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Use WP Vendor/Repair", "gUseWaypoints","AdvancedSettings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Use WP Events", "gUseWaypointsEvents","AdvancedSettings");
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Unstuck", "gDoUnstuck","AdvancedSettings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Exit GW2 StuckCount","gUnstuckCount","AdvancedSettings");
+	GUI_NewField(wt_global_information.MainWindow.Name,"Event Timeout", "gEventTimeout","AdvancedSettings");
+	GUI_NewButton(wt_global_information.MainWindow.Name,"Blacklist Current Event","wt_core_taskmanager.blacklistCurrentEvent","AdvancedSettings")
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Event > Aggro","gEventFarming","AdvancedSettings")
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Revive > Aggro","gPrioritizeRevive","AdvancedSettings")
+	
 	GUI_NewField(wt_global_information.MainWindow.Name,"Max ItemSell Rarity","gMaxItemSellRarity","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Weapons","gVendor_Weapons","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Armor","gVendor_Armor","VendorSettings")
@@ -251,24 +227,21 @@ function gw2minion.HandleInit()
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Upgrade Components","gVendor_UpgradeComps","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Crafting Materials","gVendor_CraftingMats","VendorSettings")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Sell Trophies","gVendor_Trophies","VendorSettings")
+	
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Gathering", "gDoGathering","GatherSettings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Gathering Tools", "gBuyGatheringTools","GatherSettings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Best Tool Available", "gBuyBestGatheringTool","GatherSettings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Set Tool Quality","gGatheringToolQuality","GatherSettings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Gathering Tool Stock","gGatheringToolStock","GatherSettings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Salvaging", "gDoSalvaging","SalvageSettings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Salvage Trophies", "gDoSalvageTrophies","SalvageSettings");
+	
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Do Salvaging", "gDoSalvaging","SalvageSettings");	
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Salvage Kits", "gBuySalvageKits","SalvageSettings");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Buy Best Kit Available", "gBuyBestSalvageKit","SalvageSettings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Set Kit Quality","gSalvageKitQuality","SalvageSettings");
 	GUI_NewField(wt_global_information.MainWindow.Name,"Salvage Kit Stock","gSalvageKitStock","SalvageSettings");
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Enable Unstuck", "gDoUnstuck","AdvancedSettings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Exit GW2 StuckCount","gUnstuckCount","AdvancedSettings");
-	GUI_NewField(wt_global_information.MainWindow.Name,"Event Timeout", "gEventTimeout","AdvancedSettings");
-	GUI_NewButton(wt_global_information.MainWindow.Name,"Blacklist Current Event","wt_core_taskmanager.blacklistCurrentEvent","AdvancedSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Event > Aggro","gEventFarming","AdvancedSettings")
-	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Revive > Aggro","gPrioritizeRevive","AdvancedSettings")
-	gGW2MinionTask = "            "
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,"Salvage Trophies", "gDoSalvageTrophies","SalvageSettings");
+
+	gGW2MinionTask = ""
 	
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,"BotStatus");
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,"Settings");
@@ -454,6 +427,10 @@ function wt_global_information.HandleCMDMultiBotMessages( event, message,channel
 end
 
 
+function wt_global_information.Test(event, arg)	
+	d(tostring(arg))
+end
+
 -- Register Event Handlers
 RegisterEventHandler("Module.Initalize",gw2minion.HandleInit)
 RegisterEventHandler("Gameloop.Update",wt_global_information.OnUpdate)
@@ -461,4 +438,6 @@ RegisterEventHandler("Gameloop.CharSelectUpdate",wt_global_information.OnUpdateC
 RegisterEventHandler("Gameloop.CutsceneUpdate",wt_global_information.OnUpdateCutscene)
 RegisterEventHandler("GUI.Update",gw2minion.GUIVarUpdate)
 RegisterEventHandler("MULTIBOT.Message",wt_global_information.HandleCMDMultiBotMessages)
+
+RegisterEventHandler("Gameloop.Input",wt_global_information.Test)
 

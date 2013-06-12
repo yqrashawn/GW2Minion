@@ -11,6 +11,7 @@ wt_core_state_combat.combatMoveTmr = 0
 wt_core_state_combat.combatEvadeTmr = 0
 wt_core_state_combat.combatEvadeLastHP = 0
 wt_core_state_combat.combatJumpTmr = 0
+wt_core_state_combat.searchBetterTarget = true
 
 function wt_core_state_combat.IsCMActive()
 	if (Player:GetMovement() ~= 0 ) then
@@ -79,19 +80,23 @@ end
 local c_better_target_search = inheritsFrom( wt_cause )
 local e_better_target_search = inheritsFrom( wt_effect )
 function c_better_target_search:evaluate()
-	local target = CharacterList:Get(wt_core_state_combat.CurrentTarget)
-	if (wt_core_taskmanager.current_task ~= nil) then
-		if (string.find(wt_core_taskmanager.current_task.name, "Event") == nil) then
-			if (target ~= nil) then
-				if (target.isVeteran) then
-					return false
+	if (wt_core_state_combat.searchBetterTarget) then
+		local target = CharacterList:Get(wt_core_state_combat.CurrentTarget)
+		if (wt_core_taskmanager.current_task ~= nil) then
+			if (string.find(wt_core_taskmanager.current_task.name, "Event") == nil) then
+				if (target ~= nil) then
+					if (target.isVeteran) then
+						return false
+					end
 				end
 			end
 		end
-	end
 
-	c_better_target_search.TargetList = CharacterList( "lowesthealth,los,attackable,alive,incombat,noCritter,onmesh,maxdistance="..wt_global_information.AttackRange..",exclude="..wt_core_state_combat.CurrentTarget )
-	return ( TableSize( c_better_target_search.TargetList ) > 0 )
+		c_better_target_search.TargetList = CharacterList( "lowesthealth,los,attackable,alive,incombat,noCritter,onmesh,maxdistance="..wt_global_information.AttackRange..",exclude="..wt_core_state_combat.CurrentTarget )
+		return ( TableSize( c_better_target_search.TargetList ) > 0 )
+	else
+		return false
+	end
 end
 function e_better_target_search:execute()
 	nextTarget, E  = next( c_better_target_search.TargetList )
@@ -143,7 +148,7 @@ function c_MoveCloser:evaluate()
 				end
 			end
 		end
-	end
+	end	
 	return false;
 end
 function e_MoveCloser:execute()
@@ -209,7 +214,7 @@ function c_combatmove:evaluate()
 					Player:UnSetMovement(2)
 					Player:UnSetMovement(3)
 					local Tpos = T.pos
-					Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,110)
+					Player:MoveTo(Tpos.x,Tpos.y,Tpos.z,120)
 				end
 				
 				if (Tdist ~= nil) then
@@ -232,7 +237,7 @@ function c_combatmove:evaluate()
 							Player:UnSetMovement(0)	-- stop moving forward	
 						elseif (Tdist > wt_global_information.AttackRange and (movedir == 1 or movedir == 15 or movedir == 16)) then -- we are too far away and moving backwards
 							Player:UnSetMovement(1)	-- stop moving backward	
-						elseif (Tdist > wt_global_information.AttackRange + 50 and (movedir == 2 or movedir == 13 or movedir == 15 or movedir == 3 or movedir == 14 or movedir == 16)) then -- we are strafing outside the maxrange
+						elseif ((Tdist > wt_global_information.AttackRange + 50 or Tdist < 50) and (movedir == 2 or movedir == 13 or movedir == 15 or movedir == 3 or movedir == 14 or movedir == 16)) then -- we are strafing outside the maxrange
 							if ( movedir == 2 or movedir == 13 or movedir == 15) then
 								Player:UnSetMovement(2) -- stop moving Left	
 							elseif( movedir == 3 or movedir == 14 or movedir == 16) then
@@ -263,10 +268,10 @@ function c_combatmove:evaluate()
 						if (Tdist < 160) then 
 							table.remove(dirs,1) -- We are too close to walk forwards
 						end							
-						if (movedir == 2) then 
+						if (movedir == 2 or Tdist < 50) then 
 							table.remove(dirs,4) -- We are moving left, so don't try to go right
 						end							
-						if (movedir == 3) then
+						if (movedir == 3 or Tdist < 50) then
 							table.remove(dirs,3) -- We are moving right, so don't try to go left
 						end							
 					end					
@@ -280,10 +285,10 @@ function c_combatmove:evaluate()
 						if (Tdist < 100) then 
 							table.remove(dirs,1) -- We are too close to walk forwards
 						end							
-						if (movedir == 2) then 
+						if (movedir == 2 or Tdist < 50) then 
 							table.remove(dirs,4) -- We are moving left, so don't try to go right
 						end							
-						if (movedir == 3) then
+						if (movedir == 3 or Tdist < 50) then
 							table.remove(dirs,3) -- We are moving right, so don't try to go left
 						end							
 					end						
@@ -291,7 +296,7 @@ function c_combatmove:evaluate()
 				
 				-- MOVE
 				local dir = dirs[ math.random( #dirs ) ] 
-				wt_debug("MOVING DIR: "..tostring(dir))
+				--wt_debug("MOVING DIR: "..tostring(dir))
 				if ( dir ~= 4) then				
 					-- I could have just used a table instead of 4 variables...too lazy to change it now lol										
 					Player:SetMovement(dir)
