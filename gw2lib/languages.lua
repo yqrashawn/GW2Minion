@@ -176,45 +176,45 @@ strings =
         enableSalvage                   = "EnableSalvage",
         
         -- common profession
-        allowedRange                    = "Allowed Range [0-100], 0=Disabled"
-        skill7HP                        = "Use Skill7 at HP%"
-        skill8HP                        = "Use Skill8 at HP%"
-        skill9HP                        = "Use Skill9 at HP%"
-        eliteHP                         = "Use Elite  at HP%"
-        autoF1                          = "AutoUse F1"
-        autoF2                          = "AutoUse F2"
-        autoF3                          = "AutoUse F3"
+        allowedRange                    = "Allowed Range [0-100], 0=Disabled",
+        skill7HP                        = "Use Skill7 at HP%",
+        skill8HP                        = "Use Skill8 at HP%",
+        skill9HP                        = "Use Skill9 at HP%",
+        eliteHP                         = "Use Elite  at HP%",
+        autoF1                          = "AutoUse F1",
+        autoF2                          = "AutoUse F2",
+        autoF3                          = "AutoUse F3",
         
         -- elementalist.lua
-        autoSwapAttunements             = "AutoSwapAttunements"
-        elementalistSettings            = "Elementalist-Settings"
+        autoSwapAttunements             = "AutoSwapAttunements",
+        elementalistSettings            = "Elementalist-Settings",
         
         -- engineer.lua
-        autoSwapToKits                  = "AutoSwapToKits"
-        engineerSettings                = "Engineer-Settings"
+        autoSwapToKits                  = "AutoSwapToKits",
+        engineerSettings                = "Engineer-Settings",
         
         -- guardian.lua
-        autoSwapWeaponSets              = "AutoSwapWeaponSets"
-        guardianSettings                = "Guardian-Settings"
+        autoSwapWeaponSets              = "AutoSwapWeaponSets",
+        guardianSettings                = "Guardian-Settings",
         
         -- mesmer.lua
-        mesmerSettings                  = "Mesmer-Settings"
+        mesmerSettings                  = "Mesmer-Settings",
         
         -- necromancer.lua
-        autoUsePets                     = "AutoUsePets"
-        necromancerSettings             = "Necromancer-Settings"
+        autoUsePets                     = "AutoUsePets",
+        necromancerSettings             = "Necromancer-Settings",
         
         -- ranger.lua
-        rangerSettings                  = "Ranger-Settings"
+        rangerSettings                  = "Ranger-Settings",
         
         -- thief.lua
-        thiefSettings                   = "Thief-Settings"
+        thiefSettings                   = "Thief-Settings",
         
         -- warrior.lua
         warriorSettings                 = "Warrior-Settings"
-    }
+    },
     ["de"] = 
-    { 
+        { 
         -- gw2.lua
         startStop                       = "StartStop",
         doPulse                         = "Pulse(Debug)",
@@ -260,7 +260,8 @@ strings =
         vendorSettings                  = "VendorSettings",
         salvageSettings                 = "SalvageSettings",
         gatherSettings                  = "GatherSettings",
-        
+        dragonHoloFarming				= "FarmDragonHolograms",
+		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
         queensdale                      = "Queensdale",
@@ -328,9 +329,10 @@ strings =
 
         -- skillmanager.lua
         skillManager                    = "SkillManager",
-        profile                         = "Profile",
-        refreshProfiles                 = "Refresh Profiles",
-        deleteProfile                   = "Delete Profile",
+        profile                         = "Profile",        
+		refreshProfiles                 = "Refresh Profile List",
+		saveProfile                 	= "Save Current Profile",
+        deleteProfile                   = "Delete Current Profile",
         newProfileName                  = "New Profile Name",
         newProfile                      = "New Profile",
         autoetectSkills                 = "Autodetect Skills",
@@ -385,45 +387,45 @@ strings =
         enableSalvage                   = "EnableSalvage",
         
         -- common profession
-        allowedRange                    = "Allowed Range [0-100], 0=Disabled"
-        skill7HP                        = "Use Skill7 at HP%"
-        skill8HP                        = "Use Skill8 at HP%"
-        skill9HP                        = "Use Skill9 at HP%"
-        eliteHP                         = "Use Elite  at HP%"
-        autoF1                          = "AutoUse F1"
-        autoF2                          = "AutoUse F2"
-        autoF3                          = "AutoUse F3"
+        allowedRange                    = "Allowed Range [0-100], 0=Disabled",
+        skill7HP                        = "Use Skill7 at HP%",
+        skill8HP                        = "Use Skill8 at HP%",
+        skill9HP                        = "Use Skill9 at HP%",
+        eliteHP                         = "Use Elite  at HP%",
+        autoF1                          = "AutoUse F1",
+        autoF2                          = "AutoUse F2",
+        autoF3                          = "AutoUse F3",
         
         -- elementalist.lua
-        autoSwapAttunements             = "AutoSwapAttunements"
-        elementalistSettings            = "Elementalist-Settings"
+        autoSwapAttunements             = "AutoSwapAttunements",
+        elementalistSettings            = "Elementalist-Settings",
         
         -- engineer.lua
-        autoSwapToKits                  = "AutoSwapToKits"
-        engineerSettings                = "Engineer-Settings"
+        autoSwapToKits                  = "AutoSwapToKits",
+        engineerSettings                = "Engineer-Settings",
         
         -- guardian.lua
-        autoSwapWeaponSets              = "AutoSwapWeaponSets"
-        guardianSettings                = "Guardian-Settings"
+        autoSwapWeaponSets              = "AutoSwapWeaponSets",
+        guardianSettings                = "Guardian-Settings",
         
         -- mesmer.lua
-        mesmerSettings                  = "Mesmer-Settings"
+        mesmerSettings                  = "Mesmer-Settings",
         
         -- necromancer.lua
-        autoUsePets                     = "AutoUsePets"
-        necromancerSettings             = "Necromancer-Settings"
+        autoUsePets                     = "AutoUsePets",
+        necromancerSettings             = "Necromancer-Settings",
         
         -- ranger.lua
-        rangerSettings                  = "Ranger-Settings"
+        rangerSettings                  = "Ranger-Settings",
         
         -- thief.lua
-        thiefSettings                   = "Thief-Settings"
+        thiefSettings                   = "Thief-Settings",
         
         -- warrior.lua
         warriorSettings                 = "Warrior-Settings"
-    }
+    },
     ["fr"] = 
-    { 
+       { 
         -- gw2.lua
         startStop                       = "StartStop",
         doPulse                         = "Pulse(Debug)",
@@ -469,7 +471,8 @@ strings =
         vendorSettings                  = "VendorSettings",
         salvageSettings                 = "SalvageSettings",
         gatherSettings                  = "GatherSettings",
-        
+        dragonHoloFarming				= "FarmDragonHolograms",
+		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
         queensdale                      = "Queensdale",
@@ -537,9 +540,10 @@ strings =
 
         -- skillmanager.lua
         skillManager                    = "SkillManager",
-        profile                         = "Profile",
-        refreshProfiles                 = "Refresh Profiles",
-        deleteProfile                   = "Delete Profile",
+        profile                         = "Profile",        
+		refreshProfiles                 = "Refresh Profile List",
+		saveProfile                 	= "Save Current Profile",
+        deleteProfile                   = "Delete Current Profile",
         newProfileName                  = "New Profile Name",
         newProfile                      = "New Profile",
         autoetectSkills                 = "Autodetect Skills",
@@ -594,45 +598,45 @@ strings =
         enableSalvage                   = "EnableSalvage",
         
         -- common profession
-        allowedRange                    = "Allowed Range [0-100], 0=Disabled"
-        skill7HP                        = "Use Skill7 at HP%"
-        skill8HP                        = "Use Skill8 at HP%"
-        skill9HP                        = "Use Skill9 at HP%"
-        eliteHP                         = "Use Elite  at HP%"
-        autoF1                          = "AutoUse F1"
-        autoF2                          = "AutoUse F2"
-        autoF3                          = "AutoUse F3"
+        allowedRange                    = "Allowed Range [0-100], 0=Disabled",
+        skill7HP                        = "Use Skill7 at HP%",
+        skill8HP                        = "Use Skill8 at HP%",
+        skill9HP                        = "Use Skill9 at HP%",
+        eliteHP                         = "Use Elite  at HP%",
+        autoF1                          = "AutoUse F1",
+        autoF2                          = "AutoUse F2",
+        autoF3                          = "AutoUse F3",
         
         -- elementalist.lua
-        autoSwapAttunements             = "AutoSwapAttunements"
-        elementalistSettings            = "Elementalist-Settings"
+        autoSwapAttunements             = "AutoSwapAttunements",
+        elementalistSettings            = "Elementalist-Settings",
         
         -- engineer.lua
-        autoSwapToKits                  = "AutoSwapToKits"
-        engineerSettings                = "Engineer-Settings"
+        autoSwapToKits                  = "AutoSwapToKits",
+        engineerSettings                = "Engineer-Settings",
         
         -- guardian.lua
-        autoSwapWeaponSets              = "AutoSwapWeaponSets"
-        guardianSettings                = "Guardian-Settings"
+        autoSwapWeaponSets              = "AutoSwapWeaponSets",
+        guardianSettings                = "Guardian-Settings",
         
         -- mesmer.lua
-        mesmerSettings                  = "Mesmer-Settings"
+        mesmerSettings                  = "Mesmer-Settings",
         
         -- necromancer.lua
-        autoUsePets                     = "AutoUsePets"
-        necromancerSettings             = "Necromancer-Settings"
+        autoUsePets                     = "AutoUsePets",
+        necromancerSettings             = "Necromancer-Settings",
         
         -- ranger.lua
-        rangerSettings                  = "Ranger-Settings"
+        rangerSettings                  = "Ranger-Settings",
         
         -- thief.lua
-        thiefSettings                   = "Thief-Settings"
+        thiefSettings                   = "Thief-Settings",
         
         -- warrior.lua
         warriorSettings                 = "Warrior-Settings"
-    }
+    },
     ["ru"] = 
-    { 
+        { 
         -- gw2.lua
         startStop                       = "StartStop",
         doPulse                         = "Pulse(Debug)",
@@ -678,7 +682,8 @@ strings =
         vendorSettings                  = "VendorSettings",
         salvageSettings                 = "SalvageSettings",
         gatherSettings                  = "GatherSettings",
-        
+        dragonHoloFarming				= "FarmDragonHolograms",
+		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
         queensdale                      = "Queensdale",
@@ -746,9 +751,10 @@ strings =
 
         -- skillmanager.lua
         skillManager                    = "SkillManager",
-        profile                         = "Profile",
-        refreshProfiles                 = "Refresh Profiles",
-        deleteProfile                   = "Delete Profile",
+        profile                         = "Profile",        
+		refreshProfiles                 = "Refresh Profile List",
+		saveProfile                 	= "Save Current Profile",
+        deleteProfile                   = "Delete Current Profile",
         newProfileName                  = "New Profile Name",
         newProfile                      = "New Profile",
         autoetectSkills                 = "Autodetect Skills",
@@ -803,45 +809,45 @@ strings =
         enableSalvage                   = "EnableSalvage",
         
         -- common profession
-        allowedRange                    = "Allowed Range [0-100], 0=Disabled"
-        skill7HP                        = "Use Skill7 at HP%"
-        skill8HP                        = "Use Skill8 at HP%"
-        skill9HP                        = "Use Skill9 at HP%"
-        eliteHP                         = "Use Elite  at HP%"
-        autoF1                          = "AutoUse F1"
-        autoF2                          = "AutoUse F2"
-        autoF3                          = "AutoUse F3"
+        allowedRange                    = "Allowed Range [0-100], 0=Disabled",
+        skill7HP                        = "Use Skill7 at HP%",
+        skill8HP                        = "Use Skill8 at HP%",
+        skill9HP                        = "Use Skill9 at HP%",
+        eliteHP                         = "Use Elite  at HP%",
+        autoF1                          = "AutoUse F1",
+        autoF2                          = "AutoUse F2",
+        autoF3                          = "AutoUse F3",
         
         -- elementalist.lua
-        autoSwapAttunements             = "AutoSwapAttunements"
-        elementalistSettings            = "Elementalist-Settings"
+        autoSwapAttunements             = "AutoSwapAttunements",
+        elementalistSettings            = "Elementalist-Settings",
         
         -- engineer.lua
-        autoSwapToKits                  = "AutoSwapToKits"
-        engineerSettings                = "Engineer-Settings"
+        autoSwapToKits                  = "AutoSwapToKits",
+        engineerSettings                = "Engineer-Settings",
         
         -- guardian.lua
-        autoSwapWeaponSets              = "AutoSwapWeaponSets"
-        guardianSettings                = "Guardian-Settings"
+        autoSwapWeaponSets              = "AutoSwapWeaponSets",
+        guardianSettings                = "Guardian-Settings",
         
         -- mesmer.lua
-        mesmerSettings                  = "Mesmer-Settings"
+        mesmerSettings                  = "Mesmer-Settings",
         
         -- necromancer.lua
-        autoUsePets                     = "AutoUsePets"
-        necromancerSettings             = "Necromancer-Settings"
+        autoUsePets                     = "AutoUsePets",
+        necromancerSettings             = "Necromancer-Settings",
         
         -- ranger.lua
-        rangerSettings                  = "Ranger-Settings"
+        rangerSettings                  = "Ranger-Settings",
         
         -- thief.lua
-        thiefSettings                   = "Thief-Settings"
+        thiefSettings                   = "Thief-Settings",
         
         -- warrior.lua
         warriorSettings                 = "Warrior-Settings"
-    }
+    },
     ["cn"] = 
-    { 
+        { 
         -- gw2.lua
         startStop                       = "StartStop",
         doPulse                         = "Pulse(Debug)",
@@ -887,7 +893,8 @@ strings =
         vendorSettings                  = "VendorSettings",
         salvageSettings                 = "SalvageSettings",
         gatherSettings                  = "GatherSettings",
-        
+        dragonHoloFarming				= "FarmDragonHolograms",
+		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
         queensdale                      = "Queensdale",
@@ -955,9 +962,10 @@ strings =
 
         -- skillmanager.lua
         skillManager                    = "SkillManager",
-        profile                         = "Profile",
-        refreshProfiles                 = "Refresh Profiles",
-        deleteProfile                   = "Delete Profile",
+        profile                         = "Profile",        
+		refreshProfiles                 = "Refresh Profile List",
+		saveProfile                 	= "Save Current Profile",
+        deleteProfile                   = "Delete Current Profile",
         newProfileName                  = "New Profile Name",
         newProfile                      = "New Profile",
         autoetectSkills                 = "Autodetect Skills",
@@ -1012,39 +1020,39 @@ strings =
         enableSalvage                   = "EnableSalvage",
         
         -- common profession
-        allowedRange                    = "Allowed Range [0-100], 0=Disabled"
-        skill7HP                        = "Use Skill7 at HP%"
-        skill8HP                        = "Use Skill8 at HP%"
-        skill9HP                        = "Use Skill9 at HP%"
-        eliteHP                         = "Use Elite  at HP%"
-        autoF1                          = "AutoUse F1"
-        autoF2                          = "AutoUse F2"
-        autoF3                          = "AutoUse F3"
+        allowedRange                    = "Allowed Range [0-100], 0=Disabled",
+        skill7HP                        = "Use Skill7 at HP%",
+        skill8HP                        = "Use Skill8 at HP%",
+        skill9HP                        = "Use Skill9 at HP%",
+        eliteHP                         = "Use Elite  at HP%",
+        autoF1                          = "AutoUse F1",
+        autoF2                          = "AutoUse F2",
+        autoF3                          = "AutoUse F3",
         
         -- elementalist.lua
-        autoSwapAttunements             = "AutoSwapAttunements"
-        elementalistSettings            = "Elementalist-Settings"
+        autoSwapAttunements             = "AutoSwapAttunements",
+        elementalistSettings            = "Elementalist-Settings",
         
         -- engineer.lua
-        autoSwapToKits                  = "AutoSwapToKits"
-        engineerSettings                = "Engineer-Settings"
+        autoSwapToKits                  = "AutoSwapToKits",
+        engineerSettings                = "Engineer-Settings",
         
         -- guardian.lua
-        autoSwapWeaponSets              = "AutoSwapWeaponSets"
-        guardianSettings                = "Guardian-Settings"
+        autoSwapWeaponSets              = "AutoSwapWeaponSets",
+        guardianSettings                = "Guardian-Settings",
         
         -- mesmer.lua
-        mesmerSettings                  = "Mesmer-Settings"
+        mesmerSettings                  = "Mesmer-Settings",
         
         -- necromancer.lua
-        autoUsePets                     = "AutoUsePets"
-        necromancerSettings             = "Necromancer-Settings"
+        autoUsePets                     = "AutoUsePets",
+        necromancerSettings             = "Necromancer-Settings",
         
         -- ranger.lua
-        rangerSettings                  = "Ranger-Settings"
+        rangerSettings                  = "Ranger-Settings",
         
         -- thief.lua
-        thiefSettings                   = "Thief-Settings"
+        thiefSettings                   = "Thief-Settings",
         
         -- warrior.lua
         warriorSettings                 = "Warrior-Settings"
