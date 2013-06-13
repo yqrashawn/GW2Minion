@@ -118,7 +118,8 @@ strings =
 
         -- skillmanager.lua
         skillManager                    = "SkillManager",
-        profile                         = "Profile",        
+        profile                         = "Profile",  
+		sMmode							= "Mode",
 		refreshProfiles                 = "Refresh Profile List",
 		saveProfile                 	= "Save Current Profile",
         deleteProfile                   = "Delete Current Profile",

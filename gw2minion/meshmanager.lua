@@ -74,9 +74,7 @@ function mm.ModuleInit()
 	GUI_NewCheckbox(mm.mainwindow.name,strings[gCurrentLanguage].activated,"gMeshMGR",strings[gCurrentLanguage].generalSettings)
 	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].mapName,"gmapname",strings[gCurrentLanguage].generalSettings)
 	GUI_NewComboBox(mm.mainwindow.name,strings[gCurrentLanguage].navmesh ,"gmeshname",strings[gCurrentLanguage].generalSettings,"");
-	--GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].navmesh ,"gmeshname",strings[gCurrentLanguage].generalSettings)
 	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].waypoint,"gwaypointid",strings[gCurrentLanguage].generalSettings)
-	
 	-- Grab all meshfiles in our Navigation directory
 	local count = 0
 	local meshlist = "none"
@@ -87,8 +85,7 @@ function mm.ModuleInit()
 			if ( file ) then					
 				table.insert(mm.meshfiles, meshfile)
 				file:flush()
-				file:close()
-					
+				file:close()					
 				meshlist = meshlist..","..tostring(meshfile)								
 				count = count + 1
 			end
@@ -119,7 +116,7 @@ function mm.ModuleInit()
 	gwaypointid = ""	
 	gnewmeshname = ""
 	gMeshMGR = Settings.GW2MINION.gMeshMGR
-	
+		
 end
 
 function mm.CreateNewMesh()
@@ -139,7 +136,9 @@ function mm.CreateNewMesh()
 				wt_error("Mesh with that Name exists already...")
 				found = true
 				break
-			end			
+			end
+			meshfile.flush()
+			meshfile.close()
 		end
 		if (not found) then
 			-- Setup everything for new mesh
