@@ -396,12 +396,12 @@ function wt_profession_necromancer:HandleInit()
 			Settings.GW2MINION.gNecSK10 = "75"
 		end
 		
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gNecroSwapWeapons","Necromancer-Settings");
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUsePets","gAutoUsePets","Necromancer-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gNecSK7","Necromancer-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gNecSK8","Necromancer-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gNecSK9","Necromancer-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gNecSK10","Necromancer-Settings");	
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapWeaponSets,"gNecroSwapWeapons",strings[gCurrentLanguage].necromancerSettings);
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoUsePets,"gAutoUsePets",strings[gCurrentLanguage].necromancerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gNecSK7",strings[gCurrentLanguage].necromancerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gNecSK8",strings[gCurrentLanguage].necromancerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gNecSK9",strings[gCurrentLanguage].necromancerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].eliteHP,"gNecSK10",strings[gCurrentLanguage].necromancerSettings);	
 		
 		
 		gNecroSwapWeapons = Settings.GW2MINION.gNecroSwapWeapons

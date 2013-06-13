@@ -286,13 +286,13 @@ function wt_profession_mesmer:HandleInit()
 			Settings.GW2MINION.gMesSK10 = "0"
 		end
 		
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapWeaponSets","gMesSwapWeapons","Mesmer-Settings");
-		--GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoUse F1","gWarUseBurst","Mesmer-Settings");
-		GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Mesmer-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gMesSK7","Mesmer-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gMesSK8","Mesmer-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gMesSK9","Mesmer-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gMesSK10","Mesmer-Settings");
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapWeaponSets,"gMesSwapWeapons",strings[gCurrentLanguage].mesmerSettings);
+		--GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoF1,"gWarUseBurst",strings[gCurrentLanguage].mesmerSettings);
+		GUI_NewLabel(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].allowedRange,strings[gCurrentLanguage].mesmerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gMesSK7",strings[gCurrentLanguage].mesmerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gMesSK8",strings[gCurrentLanguage].mesmerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gMesSK9",strings[gCurrentLanguage].mesmerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].eliteHP,"gMesSK10",strings[gCurrentLanguage].mesmerSettings);
 		
 		
 		gMesSwapWeapons = Settings.GW2MINION.gMesSwapWeapons

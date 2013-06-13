@@ -377,12 +377,12 @@ function wt_profession_engineer:HandleInit()
 			Settings.GW2MINION.gEngSK10 = "50"
 		end
 		
-		GUI_NewCheckbox(wt_global_information.MainWindow.Name,"AutoSwapToKits","gEngSwapWeapons","Engineer-Settings");
-		GUI_NewLabel(wt_global_information.MainWindow.Name,"Allowed Range [0-100], 0=Disabled","Engineer-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill7 at HP%","gEngSK7","Engineer-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill8 at HP%","gEngSK8","Engineer-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Skill9 at HP%","gEngSK9","Engineer-Settings");
-		GUI_NewField(wt_global_information.MainWindow.Name,"Use Elite  at HP%","gEngSK10","Engineer-Settings");
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapToKits,"gEngSwapWeapons",strings[gCurrentLanguage].engineerSettings);
+		GUI_NewLabel(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].allowedRange,strings[gCurrentLanguage].engineerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gEngSK7",strings[gCurrentLanguage].engineerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gEngSK8",strings[gCurrentLanguage].engineerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gEngSK9",strings[gCurrentLanguage].engineerSettings);
+		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].eliteHP,"gEngSK10",strings[gCurrentLanguage].engineerSettings);
 		
 		gEngSwapWeapons = Settings.GW2MINION.gEngSwapWeapons
 		gEngSK7 = Settings.GW2MINION.gEngSK7
