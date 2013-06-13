@@ -29,6 +29,11 @@ wt_global_information.Cinema_lastrun = 0
 wt_global_information.MeshCheck_lastrun = 0
 wt_global_information.AutoRun = false
 wt_global_information.AutoRun_lastrun = 0
+wt_global_information.MapObjectList = 
+{
+    ["list"] = {},
+    ["lastRun"] = 0
+}
 
 gw2minion = { }
 
@@ -171,7 +176,12 @@ function wt_global_information.OnUpdate( event, tickcount )
 			end
 		end
 			
-		wt_core_controller.Run()		
+		wt_core_controller.Run()
+
+        if (wt_global_information.Now - wt_global_information.MapObjectList["lastRun"] > 30000) then
+            wt_global_information.MapObjectList["list"] = MapObjectList( "onmesh")
+            wt_global_information.MapObjectList["lastRun"] = wt_global_information.Now
+        end
 	end
 end
 

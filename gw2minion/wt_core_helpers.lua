@@ -62,25 +62,16 @@ end
 -- returns the closest vendor 
 -- currently only recognizes merchants (coins) and repair merchants (broken red shield)
 function wt_core_helpers:GetClosestSellVendor(maxDistance)
-	local id,vendor,repairVendor,bestVendor
-	local vendorList = MapObjectList( "onmesh,maxdistance="..tostring(maxDistance)..",type="..GW2.MAPOBJECTTYPE.Merchant )
+	local id,vendor,bestVendor
+	local vendorList = wt_global_information.MapObjectList["list"]
 	if ( TableSize (vendorList) > 0 ) then
 		id, vendor = next(vendorList)
 		while (id ~= nil) do
-			if ((bestVendor == nil or vendor.distance < bestVendor.distance) and wt_core_taskmanager.npcBlacklist[vendor.characterID] == nil) then
-				bestVendor = vendor
-			end
-			id, vendor = next(vendorList,id)
-		end
-	end
-	
-	vendorList = MapObjectList( "onmesh,maxdistance="..tostring(maxDistance)..",type="..GW2.MAPOBJECTTYPE.RepairMerchant )
-	if ( TableSize (vendorList) > 0 ) then
-		id, vendor = next(vendorList)
-		while (id ~= nil) do
-			if ((bestVendor == nil or vendor.distance < bestVendor.distance) and wt_core_taskmanager.npcBlacklist[vendor.characterID] == nil) then
-				bestVendor = vendor
-			end
+            if ((vendor.type == GW2.MAPOBJECTTYPE.RepairMerchant or vendor.type == GW2.MAPOBJECTTYPE.Merchant) and vendor.distance < maxDistance) then
+                if ((bestVendor == nil or vendor.distance < bestVendor.distance) and wt_core_taskmanager.npcBlacklist[vendor.characterID] == nil) then
+                    bestVendor = vendor
+                end
+            end
 			id, vendor = next(vendorList,id)
 		end
 	end
@@ -94,13 +85,15 @@ end
 
 function wt_core_helpers:GetClosestBuyVendor(maxDistance)
 	local id,vendor,bestVendor
-	local vendorList = MapObjectList( "onmesh,maxdistance="..tostring(maxDistance)..",type="..GW2.MAPOBJECTTYPE.Merchant )
+	local vendorList = wt_global_information.MapObjectList["list"]
 	if ( TableSize (vendorList) > 0 ) then
 		id, vendor = next(vendorList)
 		while (id ~= nil) do
-			if ((bestVendor == nil or vendor.distance < bestVendor.distance) and (wt_core_taskmanager.npcBlacklist[vendor.characterID] == nil and wt_core_taskmanager.vendorBlacklist[vendor.characterID] == nil )) then
-				bestVendor = vendor
-			end
+            if (vendor.type == GW2.MAPOBJECTTYPE.Merchant and vendor.distance < maxDistance) then
+                if ((bestVendor == nil or vendor.distance < bestVendor.distance) and (wt_core_taskmanager.npcBlacklist[vendor.characterID] == nil and wt_core_taskmanager.vendorBlacklist[vendor.characterID] == nil )) then
+                    bestVendor = vendor
+                end
+             end
 			id, vendor = next(vendorList,id)
 		end
 	end
@@ -113,14 +106,16 @@ function wt_core_helpers:GetClosestBuyVendor(maxDistance)
 end
 
 function wt_core_helpers:GetClosestRepairVendor(maxDistance)
-	local id,vendor,repairVendor,bestVendor,bestID
-	local vendorList = MapObjectList( "onmesh,maxdistance="..tostring(maxDistance)..",type="..GW2.MAPOBJECTTYPE.RepairMerchant )
+	local id,vendor,bestVendor
+	local vendorList = wt_global_information.MapObjectList["list"]
 	if ( TableSize (vendorList) > 0 ) then
 		id, vendor = next(vendorList)
 		while (id ~= nil) do
-			if ((bestVendor == nil or vendor.distance < bestVendor.distance) and wt_core_taskmanager.npcBlacklist[vendor.characterID] == nil) then
-				bestVendor = vendor
-			end
+            if (vendor.type == GW2.MAPOBJECTTYPE.RepairMerchant and vendor.distance < maxDistance) then
+                if ((bestVendor == nil or vendor.distance < bestVendor.distance) and wt_core_taskmanager.npcBlacklist[vendor.characterID] == nil) then
+                    bestVendor = vendor
+                end
+            end
 			id, vendor = next(vendorList,id)
 		end
 	end
@@ -154,4 +149,9 @@ function wt_core_helpers:GetClosestEvent(maxDistance)
 	else
 		return false
 	end
+end
+
+function wt_core_helpers:UpdateMapObjectList()
+    wt_global_information.MapObjectList["list"] = MapObjectList( "onmesh")
+    wt_global_information.MapObjectList["lastRun"] = wt_global_information.Now
 end
