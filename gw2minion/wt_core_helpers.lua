@@ -104,7 +104,7 @@ function wt_core_helpers:GetClosestSellVendor(maxDistance)
 end
 
 function wt_core_helpers:GetClosestBuyVendor(maxDistance)
-	if (wt_global_informatio.Now - wt_core_helpers.MapObjects["lastrun"] > 30000) then
+	if (wt_global_information.Now - wt_core_helpers.MapObjects["lastrun"] > 30000) then
        wt_core_helpers:UpdateMapObject("buyMerchant")
     end
     
@@ -117,7 +117,7 @@ function wt_core_helpers:GetClosestBuyVendor(maxDistance)
 end
 
 function wt_core_helpers:GetClosestRepairVendor(maxDistance)
-	if (wt_global_informatio.Now - wt_core_helpers.MapObjects["lastrun"] > 30000) then
+	if (wt_global_information.Now - wt_core_helpers.MapObjects["lastrun"] > 30000) then
        wt_core_helpers:UpdateMapObject("repairMerchant")
     end
     
