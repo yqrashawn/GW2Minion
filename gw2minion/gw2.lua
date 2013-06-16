@@ -150,7 +150,6 @@ end
 
 function wt_global_information.OnUpdate( event, tickcount )
 	wt_global_information.Now = tickcount
-	
 	if ( (gStats_enabled == "1" or gMinionEnabled == "1") and tickcount - wt_global_information.stats_lastrun > 2000) then
 		wt_global_information.stats_lastrun = tickcount	
 		wt_global_information.UpdateMultiServerStatus()

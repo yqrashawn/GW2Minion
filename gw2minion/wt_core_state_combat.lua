@@ -174,9 +174,12 @@ function c_combatmove:evaluate()
 			local Tdist = T.distance					
 			local playerHP = Player.health.percent
 			local movedir = Player:GetMovement()
-			local s1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
-			if (s1 ~= nil) then
-				wt_global_information.AttackRange = s1.maxRange or 160
+			
+			if ( gSMactive and gSMactive == "0" ) then -- update wt_global_information.AttackRange if skillmanager is OFF
+				local s1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
+				if (s1 ~= nil) then
+					wt_global_information.AttackRange = s1.maxRange or 160
+				end
 			end
 			
 			
