@@ -75,7 +75,7 @@ function mm.ModuleInit()
 	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].mapName,"gmapname",strings[gCurrentLanguage].generalSettings)
 	GUI_NewComboBox(mm.mainwindow.name,strings[gCurrentLanguage].navmesh ,"gmeshname",strings[gCurrentLanguage].generalSettings,"");
 	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].waypoint,"gwaypointid",strings[gCurrentLanguage].generalSettings)
-	-- Grab all meshfiles in our Navigation directory
+	--Grab all meshfiles in our Navigation directory
 	local count = 0
 	local meshlist = "none"
 	for meshfile in io.popen('dir /b "' .. mm.navmeshfilepath ..'*.obj"'):lines() do
@@ -109,8 +109,10 @@ function mm.ModuleInit()
 	RegisterEventHandler("optimizeMeshEvent",mm.OptimizeMesh)
 	RegisterEventHandler("saveMeshEvent",mm.SaveMesh)
 	RegisterEventHandler("buildMeshEvent",mm.BuildMesh)
-	
-			
+
+	--d(meshlist)
+	--local meshlist = dirlist(GetStartupPath() .. [[\Navigation\]],".*obj")	
+	--d(meshlist)
 	gmeshname_listitems = meshlist
 	gmapname = ""
 	gwaypointid = ""	
