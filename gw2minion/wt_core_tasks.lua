@@ -627,7 +627,6 @@ function wt_core_taskmanager:addRepairTask(priority,vendor)
 						if ( not Player:IsConversationOpen() and newtask.repaired == false ) then
 							wt_debug( "Repair: Opening Vendor.. " )
 							Player:Interact( vendor.characterID )
-								Player:Use( vendor.characterID )
 							return		
 						end
 						-- CHAT WITH VENDOR

@@ -77,7 +77,11 @@ function wt_core_helpers:GetClosestSellVendor(maxDistance)
     local repairMerchant = wt_core_helpers.MapObjects["repairMerchant"]
     local sellMerchant = wt_core_helpers.MapObjects["sellMerchant"]
     
-    if (repairMerchant ~= nil and sellMerchant ~= nil) then
+	
+    if (repairMerchant ~= nil and sellMerchant ~= nil and
+		wt_core_taskmanager.npcBlacklist[repairMerchant.characterID] == nil and
+		wt_core_taskmanager.npcBlacklist[sellMerchant.characterID] == nil) 
+	then
         if (repairMerchant.distance < sellMerchant.distance) then
             if (repairMerchant.distance <= maxDistance) then
                 return repairMerchant
@@ -87,11 +91,11 @@ function wt_core_helpers:GetClosestSellVendor(maxDistance)
                 return sellMerchant
             end
         end
-    elseif (repairMerchant ~= nil) then
+    elseif (repairMerchant ~= nil and wt_core_taskmanager.npcBlacklist[repairMerchant.characterID] == nil) then
         if (repairMerchant.distance <= maxDistance) then
             return repairMerchant
         end
-    elseif (sellMerchant ~= nil) then
+    elseif (sellMerchant ~= nil and wt_core_taskmanager.npcBlacklist[sellMerchant.characterID] == nil) then
         if (sellMerchant.distance <= maxDistance) then
             return sellMerchant
         end
@@ -106,7 +110,10 @@ function wt_core_helpers:GetClosestBuyVendor(maxDistance)
     end
     
     local buyMerchant = wt_core_helpers.MapObjects["buyMerchant"]
-    if (buyMerchant ~= nil and buyMerchant.distance < maxDistance) then
+    if (buyMerchant ~= nil and buyMerchant.distance < maxDistance and 
+		wt_core_taskmanager.vendorBlacklist[buyMerchant.characterID] == nil and
+		wt_core_taskmanager.npcBlacklist[buyMerchant.characterID] == nil) 
+	then
         return buyMerchant
     else
         return false
@@ -119,7 +126,7 @@ function wt_core_helpers:GetClosestRepairVendor(maxDistance)
     end
     
     local repairMerchant = wt_core_helpers.MapObjects["repairMerchant"]
-    if (repairMerchant ~= nil and repairMerchant.distance < maxDistance) then
+    if (repairMerchant ~= nil and repairMerchant.distance < maxDistance and wt_core_taskmanager.npcBlacklist[repairMerchant.characterID] == nil) then
         return repairMerchant
     else
         return false
