@@ -412,7 +412,6 @@ function wt_core_taskmanager:addKillGadgetTask( ID, gadget, Prio )
 end
 
 function wt_core_taskmanager:addGotoPosTask( pos, prio )
-
 	if (NavigationManager:IsOnMesh(pos)) then
 		local newtask = inheritsFrom( wt_task )
 		newtask.UID = "GOTOPOS"

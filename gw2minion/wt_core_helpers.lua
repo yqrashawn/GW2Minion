@@ -77,9 +77,6 @@ function wt_core_helpers:GetClosestSellVendor(maxDistance)
     local repairMerchant = wt_core_helpers.MapObjects["repairMerchant"]
     local sellMerchant = wt_core_helpers.MapObjects["sellMerchant"]
     
-    d(repairMerchant)
-    d(sellMerchant)
-    
     if (repairMerchant ~= nil and sellMerchant ~= nil) then
         if (repairMerchant.distance < sellMerchant.distance) then
             if (repairMerchant.distance <= maxDistance) then
@@ -155,10 +152,7 @@ function wt_core_helpers:GetClosestEvent(maxDistance)
 end
 
 function wt_core_helpers:UpdateMapObject(objectType)
-    d(objectType)
-    d(tostring(objectType))
     if (objectType == "sellMerchant") then
-        d("test")
         local list = MapObjectList("onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
         if (TableSize(list) > 0) then
             local id, object = next(list)
@@ -168,7 +162,7 @@ function wt_core_helpers:UpdateMapObject(objectType)
         end
     elseif (objectType == "buyMerchant") then
         local bestMerchant = nil
-        local list = MapObjectList("onmesh,maxdistance=99999,type="..GW2.MAPOBJECTTYPE.Merchant)
+        local list = MapObjectList("onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
         if (TableSize(list) > 0) then
             local id, object = next(list)
             while (id ~= nil) do
@@ -182,7 +176,7 @@ function wt_core_helpers:UpdateMapObject(objectType)
         end
         
         if (bestMerchant ~= nil) then
-            wt_core_helpers.MapObjects["buyMerchant"] = object
+            wt_core_helpers.MapObjects["buyMerchant"] = bestMerchant
         end
     elseif (objectType == "repairMerchant") then
         local list = MapObjectList("onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant)
