@@ -412,7 +412,6 @@ function wt_core_taskmanager:addKillGadgetTask( ID, gadget, Prio )
 end
 
 function wt_core_taskmanager:addGotoPosTask( pos, prio )
-
 	if (NavigationManager:IsOnMesh(pos)) then
 		local newtask = inheritsFrom( wt_task )
 		newtask.UID = "GOTOPOS"
@@ -668,6 +667,7 @@ function wt_core_taskmanager:addRepairTask(priority,vendor)
 					else
 						-- Reget closest Vendor
 						wt_debug("Vendor changed, trying to get new NPC..")
+                        wt_core_helpers:UpdateMapObjectList()
 						local vendor = wt_core_helpers:GetClosestRepairVendor(999999)
 						if (vendor ~= nil) then
 							newtask.position = vendor.pos
@@ -965,6 +965,7 @@ function wt_core_taskmanager:addVendorTask(priority, vendor)
 					else
 						-- Reget closest Vendor
 						wt_debug("Vendor changed, trying to get new NPC..")
+                        wt_core_helpers:UpdateMapObjectList()
 						local vendor = wt_core_helpers:GetClosestSellVendor(999999)
 						if (vendor ~= nil) then
 							newtask.position = vendor.pos
@@ -1152,6 +1153,7 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 				else
 					-- Reget closest Vendor
 					wt_debug("Vendor changed, trying to get new NPC..")
+                    wt_core_helpers:UpdateMapObjectList()
 					local vendor = wt_core_helpers:GetClosestBuyVendor(999999)
 					if (vendor ~= nil) then
 						newtask.position = vendor.pos

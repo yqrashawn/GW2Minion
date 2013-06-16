@@ -338,7 +338,6 @@ function wt_core_state_leader:vendorBuyCheck()
 	if (wt_core_items:NeedSalvageKits() and slotsLeft > tonumber(gSalvageKitStock)) then
 		buyKits = true
 	end
-
 	if (buyTools or buyKits) then
 		local vendor = wt_core_helpers:GetClosestBuyVendor(999999)
 		if (vendor) then

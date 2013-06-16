@@ -170,7 +170,7 @@ function wt_global_information.OnUpdate( event, tickcount )
 			end
 		end
 			
-		wt_core_controller.Run()		
+		wt_core_controller.Run()
 	end
 end
 

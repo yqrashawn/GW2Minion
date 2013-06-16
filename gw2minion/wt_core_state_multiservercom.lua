@@ -2,7 +2,7 @@
 -- HandleMultiBotMessages
 --**********************************************************
 function HandleMultiBotMessages( event, message, channel )	
-wt_debug("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
+--wt_debug("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
 		
 	if (tostring(channel) == "gw2minion" ) then
 		-- SET CLIENT ROLE, multibotcomserver sends this info when a bot enters/leaves the channel
