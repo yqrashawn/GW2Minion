@@ -192,16 +192,12 @@ function HandleMultiBotMessages( event, message, channel )
 							end		
 						
 						
-						-- NAVMESHSWITCH
+						-- SwitcherData
 						elseif ( tonumber(msgID) == 20 and tonumber(msg) ~= nil) then -- Tell Minions to Teleport - Set TargetWaypointID
 							if ( Player:GetRole() ~= 1) then
-								wt_debug( "Recieved Leader's TargetWaypointID : "..tostring(msg) )
-								Settings.GW2MINION.TargetWaypointID = tonumber(msg)
-							end
-						elseif ( tonumber(msgID) == 21 and tonumber(msg) ~= nil) then -- Tell Minions to Teleport - Set TargetMapID
-							if ( Player:GetRole() ~= 1) then
-								wt_debug( "Recieved Leader's MapID : "..tostring(msg) )
-								NavigationManager:SetTargetMapID(tonumber(msg))
+								wt_debug( "Recieved Leader's MeshSwitcher Time: "..tostring(msg) )
+								mm.switchTime = tonumber(msg)
+                                gEnableSwitcher = "1"
 							end
 							
 						-- 	Blacklist Event

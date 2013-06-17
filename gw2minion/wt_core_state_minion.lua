@@ -176,13 +176,10 @@ function wt_core_state_minion:initialize()
 	--local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 105 )
 	--wt_core_state_minion:add( ke_quicklootchest )
 	local ke_movecheck = wt_kelement:create( "MovementCheck", c_stopcbmove, e_stopcbmove, 107 )
-	wt_core_state_idle:add( ke_movecheck )
+	wt_core_state_minion:add( ke_movecheck )
 		
 	local ke_lootchests = wt_kelement:create("LootChest", c_lootchest, e_lootchest, 105 )
 	wt_core_state_minion:add( ke_lootchests )
-
-	local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 104)
-	wt_core_state_minion:add( ke_switchmesh )
 	
 	local ke_doemertasks = wt_kelement:create( "EmergencyTask", c_doemergencytask, e_doemergencytask, 103 )
 	wt_core_state_minion:add( ke_doemertasks )

@@ -6,6 +6,7 @@ mm.mainwindow = { name = strings[gCurrentLanguage].meshManager, x = 350, y = 100
 mm.meshfiles = {}
 mm.currentmapdata = {} 
 mm.visible = false
+mm.switchTime = 0
 mm.Zones = {
 	[15] = strings[gCurrentLanguage].queensdale,
 	[17] = strings[gCurrentLanguage].harathiHinterlands,
@@ -58,8 +59,10 @@ function mm.ModuleInit()
 		while id~=nil and name~=nil do
 			if (Settings.GW2MINION.Zones[tostring(id)] == nil) then
 				wt_debug("ADD")
-				Settings.GW2MINION.Zones[tostring(id)] = { mapname=tostring(name), meshname="none", waypointid="none"}
-			end
+				Settings.GW2MINION.Zones[tostring(id)] = { mapname=tostring(name), meshname="none", waypointid="none", useinswitcher = "0"}
+            elseif (Settings.GW2MINION.Zones[tostring(id)].useinswitcher == nil) then
+                Settings.GW2MINION.Zones[tostring(id)].useinswitcher = "0"
+            end
 			id,name = next(mm.Zones,id)
 		end
 		Settings.GW2MINION.Zones = Settings.GW2MINION.Zones
@@ -68,13 +71,30 @@ function mm.ModuleInit()
 	if (Settings.GW2MINION.gMeshMGR == nil) then
 		Settings.GW2MINION.gMeshMGR = "1"
 	end
-	
+    if (Settings.GW2MINION.gEnableSwitcher == nil) then
+        Settings.GW2MINION.gEnableSwitcher = "0"
+    end
+    if (Settings.GW2MINION.gminswitchtime == nil) then
+        Settings.GW2MINION.gminswitchtime = "1800"
+    end
+    if (Settings.GW2MINION.gmaxswitchtime == nil) then
+        Settings.GW2MINION.gmaxswitchtime = "3600"
+    end
+    
 	local wnd = GUI_GetWindowInfo("GW2Minion")
 	GUI_NewWindow(mm.mainwindow.name,wnd.x+wnd.width,wnd.y,mm.mainwindow.w,mm.mainwindow.h)
 	GUI_NewCheckbox(mm.mainwindow.name,strings[gCurrentLanguage].activated,"gMeshMGR",strings[gCurrentLanguage].generalSettings)
 	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].mapName,"gmapname",strings[gCurrentLanguage].generalSettings)
-	GUI_NewComboBox(mm.mainwindow.name,strings[gCurrentLanguage].navmesh ,"gmeshname",strings[gCurrentLanguage].generalSettings,"");
+	GUI_NewComboBox(mm.mainwindow.name,strings[gCurrentLanguage].navmesh ,"gmeshname",strings[gCurrentLanguage].generalSettings,"")
 	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].waypoint,"gwaypointid",strings[gCurrentLanguage].generalSettings)
+	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].getWaypoint,"getWaypointEvent",strings[gCurrentLanguage].generalSettings)
+    GUI_NewCheckbox(mm.mainwindow.name,strings[gCurrentLanguage].useInSwitcher,"guseinswitcher",strings[gCurrentLanguage].generalSettings)
+	GUI_NewCheckbox(mm.mainwindow.name,strings[gCurrentLanguage].enableSwitcher,"gEnableSwitcher",strings[gCurrentLanguage].switcherSettings)
+	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].minSwitchTime,"gminswitchtime",strings[gCurrentLanguage].switcherSettings)
+	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].maxSwitchTime,"gmaxswitchtime",strings[gCurrentLanguage].switcherSettings)
+	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].switchTimer,"gswitchtimer",strings[gCurrentLanguage].switcherSettings)
+	
+	
 	--Grab all meshfiles in our Navigation directory
 	local count = 0
 	local meshlist = "none"
@@ -96,29 +116,37 @@ function mm.ModuleInit()
 	if (Settings.GW2MINION.gnewmeshname == nil) then
 		Settings.GW2MINION.gnewmeshname = ""
 	end
-	GUI_NewCheckbox(mm.mainwindow.name,"Show Mesh","gMeshEditor","Editor")
-	GUI_NewField(mm.mainwindow.name,"New MeshName","gnewmeshname","Editor")
-	GUI_NewButton(mm.mainwindow.name,"New Mesh","newMeshEvent","Editor")
-	GUI_NewComboBox(mm.mainwindow.name,"RecordMode","grecMode","Editor","Mouse,Player");	
-	GUI_NewButton(mm.mainwindow.name,"Optimize Mesh","optimizeMeshEvent","Editor")
-	GUI_NewButton(mm.mainwindow.name,"Save Mesh","saveMeshEvent","Editor")
-	GUI_NewButton(mm.mainwindow.name,"Build NAVMesh","buildMeshEvent","Editor")
+	GUI_NewCheckbox(mm.mainwindow.name,strings[gCurrentLanguage].showMesh,"gMeshEditor",strings[gCurrentLanguage].editor)
+	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].newMeshName,"gnewmeshname",strings[gCurrentLanguage].editor)
+	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].newMesh,"newMeshEvent",strings[gCurrentLanguage].editor)
+	GUI_NewComboBox(mm.mainwindow.name,strings[gCurrentLanguage].recordMode,"grecMode",strings[gCurrentLanguage].editor,strings[gCurrentLanguage].mousePlayer);	
+	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].optimizeMesh,"optimizeMeshEvent",strings[gCurrentLanguage].editor)
+	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].saveMesh,"saveMeshEvent",strings[gCurrentLanguage].editor)
+	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].buildNAVMesh,"buildMeshEvent",strings[gCurrentLanguage].editor)
 	
 	
 	RegisterEventHandler("newMeshEvent",mm.CreateNewMesh)
 	RegisterEventHandler("optimizeMeshEvent",mm.OptimizeMesh)
 	RegisterEventHandler("saveMeshEvent",mm.SaveMesh)
 	RegisterEventHandler("buildMeshEvent",mm.BuildMesh)
+    RegisterEventHandler("getWaypointEvent",mm.GetWaypoint)
 
 	--d(meshlist)
 	--local meshlist = dirlist(GetStartupPath() .. [[\Navigation\]],".*obj")	
 	--d(meshlist)
 	gmeshname_listitems = meshlist
 	gmapname = ""
-	gwaypointid = ""	
+	gwaypointid = ""
+    gEnableSwitcher = Settings.GW2MINION.gEnableSwitcher
+    gminswitchtime = Settings.GW2MINION.gminswitchtime
+    gmaxswitchtime = Settings.GW2MINION.gmaxswitchtime
+    gswitchtimer = ""
+    guseinswitcher = "0"
 	gnewmeshname = ""
 	gMeshMGR = Settings.GW2MINION.gMeshMGR
-		
+	
+    
+    
 end
 
 function mm.CreateNewMesh()
@@ -182,13 +210,15 @@ function mm.ChangeNavMesh(newmesh)
 	local mapID = Player:GetLocalMapID()
 	if ( Settings.GW2MINION.Zones[tostring(mapID)] == nil) then
 		if (mm.Zones[mapID] == nil) then
-			Settings.GW2MINION.Zones[tostring(mapID)] = { mapname="unknown", meshname=tostring(newmesh), waypointid="none" } 
+			Settings.GW2MINION.Zones[tostring(mapID)] = { mapname="unknown", meshname=tostring(newmesh), waypointid="none", useinswitcher = "0"} 
 			gmapname = "Unknown"
 			gwaypointid = "none"
+            guseinswitcher = "0"
 		else
-			Settings.GW2MINION.Zones[tostring(mapID)] = { mapname=tostring(mm.Zones[mapID]), meshname=tostring(newmesh), waypointid="none" } 
+			Settings.GW2MINION.Zones[tostring(mapID)] = { mapname=tostring(mm.Zones[mapID]), meshname=tostring(newmesh), waypointid="none", useinswitcher = "0" } 
 			gmapname = tostring(mm.Zones[mapID])
 			gwaypointid = "none"
+            guseinswitcher = "0"
 		end
 	else	
 		if (tostring(Settings.GW2MINION.Zones[tostring(mapID)].meshname) ~= tostring(newmesh)) then
@@ -201,6 +231,12 @@ function mm.ChangeNavMesh(newmesh)
 			gwaypointid = "none"			
 		else
 			gwaypointid = tostring(Settings.GW2MINION.Zones[tostring(mapID)].waypointid)
+		end
+        if (Settings.GW2MINION.Zones[tostring(mapID)].useinswitcher == nil) then
+			Settings.GW2MINION.Zones[tostring(mapID)].useinswitcher = "0"
+			guseinswitcher = "0"	
+		else
+			guseinswitcher = tostring(Settings.GW2MINION.Zones[tostring(mapID)].useinswitcher)
 		end
 	end	
 	gmeshname = tostring(newmesh)	
@@ -230,7 +266,12 @@ function mm.RefreshCurrentMapData()
 					gwaypointid = "none"			
 				else
 					gwaypointid = tostring(Settings.GW2MINION.Zones[tostring(mapID)].waypointid)
-				end			
+				end
+                if (Settings.GW2MINION.Zones[tostring(mapID)].useinswitcher == nil) then
+					guseinswitcher = "0"			
+				else
+					guseinswitcher = tostring(Settings.GW2MINION.Zones[tostring(mapID)].useinswitcher)
+				end		
 				if (gmeshname ~= nil and tostring(gmeshname) ~= "" and tostring(gmeshname) ~= "none") then				
 					local path = GetStartupPath().."\\Navigation\\"..tostring(gmeshname)
 					if (io.open(tostring(path)..".obj")) then
@@ -256,11 +297,13 @@ function mm.RefreshCurrentMapData()
 					gmapname = tostring(Settings.GW2MINION.Zones[tostring(mapID)].mapname)
 					gmeshname = "none"
 					gwaypointid = "none"
+                    guseinswitcher = "0"
 				end				
 			else
 				gmapname = "none"
 				gmeshname = "none"
 				gwaypointid	= "none"
+                guseinswitcher = "0"
 			end	
 		end
 	end
@@ -296,12 +339,24 @@ function mm.LoadNavMesh(filename)
 	return false
 end
 
-
+function mm.GetWaypoint()
+    local wpList = WaypointList("onmesh,nearest")
+    if (TableSize(wpList) > 0) then
+        local id, wp = next(wpList)
+        if (id ~= nil) then
+            local newWP = WaypointList:Get(id)
+            gwaypointid = tostring(newWP.contentID)
+            d(gwaypointid)
+            Settings.GW2MINION.Zones[tostring(Player:GetLocalMapID())].waypointid = gwaypointid
+            Settings.GW2MINION.Zones = Settings.GW2MINION.Zones
+        end
+    end
+end
 
 function mm.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do		
 		if ( k == "gmeshname") then
-			mm.ChangeNavMesh(v)	
+			mm.ChangeNavMesh(v)
 		elseif( k == "gMeshEditor") then
 			if (v == "1") then
 				NavigationManager:ToggleNavEditor(true)
@@ -315,9 +370,16 @@ function mm.GUIVarUpdate(Event, NewVals, OldVals)
 				NavigationManager:RecordMode(true)
 			end
 			Settings.GW2MINION[tostring(k)] = v
-		elseif( k == "gMeshMGR" or k == "gnewmeshname") then
+		elseif( k == "gMeshMGR" or k == "gnewmeshname" or k == "gEnableSwitcher" or
+                k == "gminswitchtime" or k == "gmaxswitchtime" ) then
 			Settings.GW2MINION[tostring(k)] = v
-		end
+        elseif( k == "guseinswitcher" ) then
+            Settings.GW2MINION.Zones[tostring(Player:GetLocalMapID())].useinswitcher = guseinswitcher
+            Settings.GW2MINION.Zones = Settings.GW2MINION.Zones
+        elseif( k == "gwaypointid" ) then
+            Settings.GW2MINION.Zones[tostring(Player:GetLocalMapID())].waypointid = gwaypointid
+            Settings.GW2MINION.Zones = Settings.GW2MINION.Zones
+        end
 	end
 	GUI_RefreshWindow(mm.mainwindow.name)
 end
@@ -353,6 +415,111 @@ function mm.GenerateInfoFile( )
 	end
 end
 
+--*************************************************************************************************************
+-- ChangeMap Cause/Effect
+--*************************************************************************************************************
+c_mapchange = inheritsFrom( wt_cause )
+e_mapchange = inheritsFrom( wt_effect )
+
+c_mapchange.nextMap         = 0
+c_mapchange.nextWp          = 0
+e_mapchange.throttle 		= 5000
+e_mapchange.attempts 		= 0
+
+function c_mapchange:evaluate()
+    if  (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() ~= 1) then
+        gminswitchtime = "***"
+        gmaxswitchtime = "***"
+        return false
+    end
+	if 	(gEnableSwitcher == "1" and mm.switchTime == 0) then
+        mm.switchTime = wt_global_information.Now + (math.random(tonumber(gminswitchtime),tonumber(gmaxswitchtime)) * 1000)
+        if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then
+            MultiBotSend( "20;"..tostring(mm.switchTime),"gw2minion" )
+        end
+    elseif (gEnableSwitcher == "1" and mm.switchTime ~= 0) then
+        local ticksLeft = mm.switchTime - wt_global_information.Now
+        if (ticksLeft <= 0) then
+            if 	c_mapchange.nextMap and
+                c_mapchange.nextMap ~= 0 and
+                c_mapchange.nextWp and
+                c_mapchange.nextWp ~= 0
+            then
+                return true
+            else
+                local maps = {}
+                if (Settings.GW2MINION.Zones ~= nil and TableSize(Settings.GW2MINION.Zones) > 0) then
+                    mapid, zone = next(Settings.GW2MINION.Zones)
+                    while (mapid ~= nil and zone ~= nil) do
+                        if (zone.useinswitcher == "1" and zone.waypointid ~= nil and zone.waypointid ~= "") then
+                            table.insert(maps, {wpid=tonumber(zone.waypointid),mapid=tonumber(mapid)})
+                        end
+                        mapid, zone = next(Settings.GW2MINION.Zones,mapid)
+                    end
+                end
+                local rnd = math.random(1,#maps)
+                local map = maps[rnd]
+                if 	map.mapid and map.wpid and
+                    map.mapid ~= Player:GetLocalMapID()
+                then
+                    wt_debug("Selecting New Map")
+                    c_mapchange.nextMap = map.mapid
+                    c_mapchange.nextWp = map.wpid
+                    return true
+                end
+            end
+        end
+	end
+
+	return false
+end
+
+function e_mapchange:execute()
+	if Player.inCombat then
+	wt_debug("inCombat")
+		return
+	end
+	
+	if 	c_mapchange.nextMap and
+		c_mapchange.nextMap ~= 0 and
+		c_mapchange.nextWp and
+		c_mapchange.nextWp ~= 0 and
+		e_mapchange.attempts < 10 and
+		Inventory:GetInventoryMoney() > 500
+	then
+		if c_mapchange.nextMap ~= Player:GetLocalMapID() then
+			wt_debug("Attempt to Change Map: " ..tostring(c_mapchange.nextMap).." | "..tostring(c_mapchange.nextWp))
+			Player:StopMoving()
+			Player:TeleportToWaypoint(c_mapchange.nextWp)
+			e_mapchange.attempts = e_mapchange.attempts + 1
+			return
+		else
+            mm.switchTime = 0
+			wt_debug("Success Changing Map: " ..tostring(c_mapchange.nextMap).." | "..tostring(c_mapchange.nextWp))
+		end
+	else
+		wt_debug("Error Changing Map: " ..tostring(c_mapchange.nextMap).." | "..tostring(c_mapchange.nextWp))
+	end
+	
+	c_mapchange.nextMap = 0
+	c_mapchange.nextWp = 0
+	e_mapchange.attempts = 0
+
+end
+
+local ke_mapchange = wt_kelement:create( "MapChange", c_mapchange, e_mapchange, 86 )
+wt_core_state_idle:add( ke_mapchange )
+wt_core_state_leader:add( ke_mapchange )
+
+RegisterEventHandler( "Gameloop.Update",
+	function(module, tickcount)
+		if (gEnableSwitcher == "1" and mm.switchTime ~= 0) then
+            gswitchtimer = tostring((tonumber(mm.switchTime) - tickcount) / 1000)
+        elseif (gEnableSwitcher == "0") then
+            gswitchtimer = ""
+        end
+	end
+)
 
 RegisterEventHandler("NavigationManager.toggle", mm.ToggleMenu)
 RegisterEventHandler("GUI.Update",mm.GUIVarUpdate)

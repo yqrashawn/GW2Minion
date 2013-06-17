@@ -132,9 +132,6 @@ function wt_core_state_idle:initialize()
 	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 87 )
 	wt_core_state_idle:add( ke_dopriotasks )
 	
-	local ke_switchmesh = wt_kelement:create( "SwitchNavMesh", c_navswitch, e_navswitch, 86 )
-	wt_core_state_idle:add( ke_switchmesh )
-	
 	local ke_revive = wt_kelement:create( "Revive", c_check_revive, e_revive, 80 )
 	wt_core_state_idle:add( ke_revive )
 	
