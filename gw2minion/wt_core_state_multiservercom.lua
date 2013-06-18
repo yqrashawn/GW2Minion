@@ -26,13 +26,13 @@ function HandleMultiBotMessages( event, message, channel )
 					-- SET LEADER
 					if ( tonumber(msgID) == 1 ) then -- Leader sends Minion LeaderID						
 						if (tonumber(msg) ~= nil ) then
-							wt_debug("Setting leader :"..tostring(msg))
+							--wt_debug("Setting leader :"..tostring(msg))
 							Settings.GW2MINION.gLeaderID = tonumber(msg)							
 						end
 					
 					elseif ( tonumber(msgID) == 2 ) then -- Minion asks for LeaderID
 						if ( Player:GetRole() == 1) then
-							wt_debug( "Sending Minions my characterID" )
+							--wt_debug( "Sending Minions my characterID" )
 							if (tonumber(Player.characterID) ~= nil) then
 								MultiBotSend( "1;"..tonumber(Player.characterID),"gw2minion" )
 							end
@@ -41,9 +41,9 @@ function HandleMultiBotMessages( event, message, channel )
 								if ( TableSize( wp ) > 0 ) then
 									i, entry = next( wp )
 									if ( i ~= nil and entry~= nil) then
-										wt_debug( "Sending Minions my mapID: "..tostring(Player:GetLocalMapID()) )									
+										--wt_debug( "Sending Minions my mapID: "..tostring(Player:GetLocalMapID()) )									
 										MultiBotSend( "21;"..tostring(Player:GetLocalMapID()),"gw2minion" )
-										wt_debug( "Sending Minions nearest WaypointID: "..tostring(entry.contentID) )
+										--wt_debug( "Sending Minions nearest WaypointID: "..tostring(entry.contentID) )
 										MultiBotSend( "20;"..tostring(entry.contentID),"gw2minion" )											
 									end
 								end
@@ -71,7 +71,7 @@ function HandleMultiBotMessages( event, message, channel )
 						end
 					elseif ( tonumber(msgID) == 303 ) then -- Leader sends RebuildParty command						
 						if (Player:GetRole() ~= 1 ) then
-							wt_debug("Recieved RebuildParty Command")
+							--wt_debug("Recieved RebuildParty Command")
 							wt_core_partymanager.RebuildParty()							
 						end						
 					
@@ -86,14 +86,14 @@ function HandleMultiBotMessages( event, message, channel )
 						
 					elseif ( tonumber(msgID) == 501 ) then -- Leader tells Minions to leave dungeon
 						if (tonumber(msg) ~= nil and Player:GetRole() ~= 1) then
-							wt_debug("Leader sais to Leave Dungeon..")
+							--wt_debug("Leader sais to Leave Dungeon..")
 							if (Player:GetLocalMapID() == tonumber(msg)) then
 								wt_core_dungeonmanager.LeaveDungeon()
 							end
 						end
 					elseif ( tonumber(msgID) == 502 ) then -- Leader tells Minions to leave dungeon
 						if ( Player:GetRole() ~= 1) then
-							wt_debug("Leader sais to Stop Dungeon..")
+							--wt_debug("Leader sais to Stop Dungeon..")
 							wt_core_dungeonmanager.StopDungeon()
 						end
 					end
@@ -137,12 +137,12 @@ function HandleMultiBotMessages( event, message, channel )
 						-- VENDORING
 						elseif ( tonumber(msgID) == 10 ) then -- A minion needs to Vendor, set our Primary task accordingly
 							if ( Player:GetRole() == 1) then
-								wt_debug( "A Minion needs to vendor, going to Vendor" )
+								--wt_debug( "A Minion needs to vendor, going to Vendor" )
 								wt_core_taskmanager:addVendorTask(4500, nil)
 							end
 						elseif ( tonumber(msgID) == 11 ) then -- Leader tells Minions to Vendor
 							if ( Player:GetRole() ~= 1 ) then
-								wt_debug( "Leader sais we should Vendor now.." )
+								--wt_debug( "Leader sais we should Vendor now.." )
 								wt_core_taskmanager:addVendorTask(4500, nil)
 							end
 						
@@ -153,7 +153,7 @@ function HandleMultiBotMessages( event, message, channel )
 									local vendor = wt_core_helpers:GetClosestBuyVendor(999999)
 									wt_core_taskmanager:addVendorTask(4500, vendor)
 								end
-								wt_debug( "A Minion needs to purchase from vendor, going to Vendor" )
+								--wt_debug( "A Minion needs to purchase from vendor, going to Vendor" )
 							end
 						elseif ( tonumber(msgID) == 13 ) then -- Leader tells Minions to Vendor
 							if ( Player:GetRole() ~= 1 ) then
@@ -161,20 +161,20 @@ function HandleMultiBotMessages( event, message, channel )
 									local vendor = wt_core_helpers:GetClosestBuyVendor(999999)
 									wt_core_taskmanager:addVendorTask(4500, vendor)
 								end
-								wt_debug( "Leader sais we should Vendor now.." )
+								--wt_debug( "Leader sais we should Vendor now.." )
 							end
 						
 							
 						-- REPAIR
 						elseif ( tonumber(msgID) == 15 ) then -- A minion needs to Repair, set our Primary task accordingly
 							if ( Player:GetRole() == 1) then
-								wt_debug( "A Minion needs to repair, going to Merchant" )
+								--wt_debug( "A Minion needs to repair, going to Merchant" )
 								wt_core_taskmanager:addRepairTask(5000, nil)
 								wt_core_taskmanager:addVendorTask(4500, nil)
 							end
 						elseif ( tonumber(msgID) == 16 ) then -- Leader tells Minions to Repair
 							if ( gEnableRepair == "1" and NeedRepair() and Player:GetRole() ~= 1 ) then
-								wt_debug( "Leader sais we should Repair now.." )
+								--wt_debug( "Leader sais we should Repair now.." )
 								wt_core_taskmanager:addRepairTask(5000, nil)
 								wt_core_taskmanager:addVendorTask(4500, nil)
 							end
@@ -183,19 +183,19 @@ function HandleMultiBotMessages( event, message, channel )
 						elseif ( tonumber(msgID) == 17 and tonumber(msg) ~= nil) then -- A minion wants leader to blacklist vendor
 							if ( Player:GetRole() == 1) then
 								wt_core_taskmanager.vendorBlacklist[tonumber(msg)] = true
-								wt_debug( "A minion said to blacklist vendor "..msg )
+								--wt_debug( "A minion said to blacklist vendor "..msg )
 							end
 						elseif ( tonumber(msgID) == 18 and tonumber(msg) ~= nil) then -- Leader tells minions to blacklist vendor
 							if ( Player:GetRole() ~= 1 ) then
 								wt_core_taskmanager.vendorBlacklist[tonumber(msg)] = true
-								wt_debug( "Leader said to blacklist vendor "..msg )
+								--wt_debug( "Leader said to blacklist vendor "..msg )
 							end		
 						
 						
 						-- SwitcherData
 						elseif ( tonumber(msgID) == 20 and tonumber(msg) ~= nil) then -- Tell Minions to Teleport - Set TargetWaypointID
 							if ( Player:GetRole() ~= 1) then
-								wt_debug( "Recieved Leader's MeshSwitcher Time: "..tostring(msg) )
+								--wt_debug( "Recieved Leader's MeshSwitcher Time: "..tostring(msg) )
 								mm.switchTime = tonumber(msg)
                                 gEnableSwitcher = "1"
 							end
@@ -204,12 +204,12 @@ function HandleMultiBotMessages( event, message, channel )
 						elseif ( tonumber(msgID) == 22 and tonumber(msg) ~= nil) then -- A minion wants leader to blacklist event
 							if ( Player:GetRole() == 1) then
 								wt_core_taskmanager:BlacklistEvent(tonumber(msg))
-								wt_debug( "A minion said to blacklist event "..msg )
+								--wt_debug( "A minion said to blacklist event "..msg )
 							end
 						elseif ( tonumber(msgID) == 23 and tonumber(msg) ~= nil) then -- Leader tells minions to blacklist event
 							if ( Player:GetRole() ~= 1 ) then
 								wt_core_taskmanager:BlacklistEvent(tonumber(msg))
-								wt_debug( "Leader said to blacklist event "..msg )
+								--wt_debug( "Leader said to blacklist event "..msg )
 							end		
 							
 						--  Do Event
@@ -222,7 +222,7 @@ function HandleMultiBotMessages( event, message, channel )
 										local priority = 2500
 										if (gEventFarming == "1") then priority = 4000 end
 										wt_core_taskmanager:addEventTask(_,event,priority)
-										wt_debug( "Leader said to blacklist event "..msg )
+										--wt_debug( "Leader said to blacklist event "..msg )
 									end
 								end
 							end	
@@ -230,7 +230,7 @@ function HandleMultiBotMessages( event, message, channel )
 						-- DEV
 						elseif ( tonumber(msgID) == 50 ) then -- Tell Minions to Load a Mesh
 							if ( Player:GetRole() ~= 1 ) then
-								wt_debug( "Leader sais we need should (re)load our navmesh :"..tostring(msg) )
+								--wt_debug( "Leader sais we need should (re)load our navmesh :"..tostring(msg) )
 								mm.UnloadNavMesh()
 								mm.LoadNavMesh(tostring(msg))
 							end	
@@ -240,7 +240,7 @@ function HandleMultiBotMessages( event, message, channel )
 						elseif ( tonumber(msgID) == 100 ) then -- Leader tells Minions to follow him
 							if ( Player:GetRole() ~= 1 and tonumber(msg) ~= nil ) then
 								if not wt_core_taskmanager:CheckTaskQueue("FOLLOW") then
-									wt_debug( "Leader sais we should follow him.." )								
+									--wt_debug( "Leader sais we should follow him.." )								
 									wt_core_taskmanager:addFollowTask( tonumber(msg), 3750 )
 								end
 							end

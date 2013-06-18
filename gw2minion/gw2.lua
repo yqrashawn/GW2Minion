@@ -255,7 +255,7 @@ function gw2minion.HandleInit()
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].gatherSettings);
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].advancedSettings);
 	
-	gEnableLog = Settings.GW2MINION.gEnableLog
+	gEnableLog = "0"
 	gGW2MinionPulseTime = Settings.GW2MINION.gGW2MinionPulseTime 
 	gEnableRepair = Settings.GW2MINION.gEnableRepair
 	gIgnoreMarkerCap = Settings.GW2MINION.gIgnoreMarkerCap

@@ -101,7 +101,7 @@ end
 function e_better_target_search:execute()
 	nextTarget, E  = next( c_better_target_search.TargetList )
 	if ( nextTarget ~= nil ) then
-		wt_debug( "Combat: Switching to better target " .. nextTarget )		
+		--wt_debug( "Combat: Switching to better target " .. nextTarget )		
 		wt_core_state_combat.StopCM()
 		wt_core_state_combat.setTarget( nextTarget )
 		if (gMinionEnabled == "1" and MultiBotIsConnected( ) ) then

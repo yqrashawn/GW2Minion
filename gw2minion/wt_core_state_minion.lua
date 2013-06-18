@@ -65,7 +65,7 @@ function e_focus:execute()
 	if ( wt_global_information.FocusTarget ~= nil ) then
 		local target = CharacterList:Get(tonumber(wt_global_information.FocusTarget))
 		if ( target ~= nil and target.distance < 4000 and target.alive and target.onmesh) then
-			wt_debug( "Attacking Focustarget" )
+			--wt_debug( "Attacking Focustarget" )
 			wt_core_state_combat.setTarget( wt_global_information.FocusTarget )
 			wt_core_controller.requestStateChange( wt_core_state_combat )
 		end
