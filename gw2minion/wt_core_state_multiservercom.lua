@@ -27,7 +27,11 @@ function HandleMultiBotMessages( event, message, channel )
 					if ( tonumber(msgID) == 1 ) then -- Leader sends Minion LeaderID						
 						if (tonumber(msg) ~= nil ) then
 							wt_debug("Setting leader :"..tostring(msg))
-							Settings.GW2MINION.gLeaderID = tonumber(msg)							
+							Settings.GW2MINION.gLeaderID = tonumber(msg)
+                            if ( Player:GetRole() ~= 1) then
+                                -- Minion send request for meshswitcher time
+                                MultiBotSend( "21;","gw2minion" )
+                            end
 						end
 					
 					elseif ( tonumber(msgID) == 2 ) then -- Minion asks for LeaderID
@@ -35,20 +39,8 @@ function HandleMultiBotMessages( event, message, channel )
 							wt_debug( "Sending Minions my characterID" )
 							if (tonumber(Player.characterID) ~= nil) then
 								MultiBotSend( "1;"..tonumber(Player.characterID),"gw2minion" )
-							end
-							if ( gNavSwitchEnabled == "1" ) then									
-								local wp = WaypointList("nearest,samezone,notcontested,onmesh")									
-								if ( TableSize( wp ) > 0 ) then
-									i, entry = next( wp )
-									if ( i ~= nil and entry~= nil) then
-										wt_debug( "Sending Minions my mapID: "..tostring(Player:GetLocalMapID()) )									
-										MultiBotSend( "21;"..tostring(Player:GetLocalMapID()),"gw2minion" )
-										wt_debug( "Sending Minions nearest WaypointID: "..tostring(entry.contentID) )
-										MultiBotSend( "20;"..tostring(entry.contentID),"gw2minion" )											
-									end
-								end
-							end								
-						end						
+							end					
+						end				
 					
 					
 					-- PARTYMANAGER
@@ -193,11 +185,18 @@ function HandleMultiBotMessages( event, message, channel )
 						
 						
 						-- SwitcherData
-						elseif ( tonumber(msgID) == 20 and tonumber(msg) ~= nil) then -- Tell Minions to Teleport - Set TargetWaypointID
+						elseif ( tonumber(msgID) == 20 and tonumber(msg) ~= nil) then
 							if ( Player:GetRole() ~= 1) then
 								wt_debug( "Recieved Leader's MeshSwitcher Time: "..tostring(msg) )
 								mm.switchTime = tonumber(msg)
                                 gEnableSwitcher = "1"
+							end
+                        elseif ( tonumber(msgID) == 21 ) then
+							if ( Player:GetRole() == 1) then
+                                if ( gEnableSwitcher == "1" ) then
+                                    wt_debug( "Sending Leader's MeshSwitcher Time: "..tostring(msg) )
+                                    MultiBotSend( "20;"..tostring(mm.switchTime),"gw2minion" )						
+                                end
 							end
 							
 						-- 	Blacklist Event

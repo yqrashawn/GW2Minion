@@ -197,3 +197,29 @@ function wt_core_helpers:UpdateMapObject(objectType)
     
     wt_core_helpers.MapObjects["lastrun"] = wt_global_information.Now
 end
+
+function wt_core_helpers:IsInPartyList(name)
+	local index, player  = next( Settings.GW2MINION.Party )
+	while ( index ~= nil and player ~= nil ) do			
+		if (tostring(player) ~= "none" and tostring(player) ~= "") then
+			if (tostring(player) == tostring(name)) then
+				return true
+			end
+		end
+		index, player  = next( Settings.GW2MINION.Party,index )
+	end
+	return false
+end
+
+function wt_core_helpers:IsInAvoidList(name)
+	local index, player  = next( Settings.GW2MINION.MSAvoidList )
+	while ( index ~= nil and player ~= nil ) do			
+		if (tostring(player) ~= "none" and tostring(player) ~= "") then
+			if (tostring(player) == tostring(name)) then
+				return true
+			end
+		end
+		index, player  = next( Settings.GW2MINION.MSAvoidList,index )
+	end
+	return false
+end

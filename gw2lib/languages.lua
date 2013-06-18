@@ -103,7 +103,7 @@ strings =
 		enableSwitcher					= "EnableSwitcher",
 		minSwitchTime			        = "MinSwitchTime",
 		maxSwitchTime					= "MaxSwitchTime",
-		switchTimer						= "SwitchTimer",
+		switchTimer						= "TimeUntilSwitch",
 		switcherSettings				= "SwitcherSettings",
 		showMesh						= "Show Mesh",
 		newMeshName						= "New MeshName",
@@ -114,6 +114,8 @@ strings =
 		buildNAVMesh					= "Build NAVMesh",
 		editor							= "Editor",
 		mousePlayer						= "Mouse,Player",
+        enablePSwitch					= "EnableParanoiaSwitch",
+        pSwitchCount                    = "ParanoiaPlayerCount",
 		
 		-- dungeonmanager.lua
         dungeonManager                  = "DungeonManager",
