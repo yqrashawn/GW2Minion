@@ -341,7 +341,7 @@ table.insert(wt_core_state_minion.TaskChecks,{["func"]=wt_core_state_minion.aggr
 function wt_core_state_minion.aggroGadgetCheck()
 	--wt_debug("aggroCheck")
 	if ( wt_global_information.DoAggroCheck ) then
-		local GList = ( GadgetList( "attackable,alive,nearest,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
+		local GList = ( GadgetList( "attackable,alive,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 		if ( TableSize( GList ) > 0 ) then
 			local id, E  = next( GList )
 			if ( id ~= nil and id ~= 0 and E ~= nil) then

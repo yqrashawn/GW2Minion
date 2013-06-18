@@ -346,7 +346,7 @@ function mm.GetWaypoint()
         if (id ~= nil) then
             local newWP = WaypointList:Get(id)
             gwaypointid = tostring(newWP.contentID)
-            d(gwaypointid)
+            --d(gwaypointid)
             Settings.GW2MINION.Zones[tostring(Player:GetLocalMapID())].waypointid = gwaypointid
             Settings.GW2MINION.Zones = Settings.GW2MINION.Zones
         end

@@ -268,7 +268,7 @@ function c_combatmove:evaluate()
 						if (Tdist > (wt_global_information.AttackRange * 0.85)) then 
 							table.remove(dirs,2) -- We are too far away to walk backwards
 						end
-						if (Tdist < 160) then 
+						if (Tdist < 360) then 
 							table.remove(dirs,1) -- We are too close to walk forwards
 						end							
 						if (movedir == 2 or Tdist < 50) then 

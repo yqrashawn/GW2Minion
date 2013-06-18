@@ -39,7 +39,7 @@ end
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 -- Randomly switch Weaponset
-function wt_profession_mesmer.SwitchWeapon(current)
+function wt_profession_mesmer.SwitchWeapon()
 	if (wt_profession_mesmer.switchweaponTmr == 0 or wt_global_information.Now - wt_profession_mesmer.switchweaponTmr > math.random(1500,5000)) then	
 		wt_profession_mesmer.switchweaponTmr = wt_global_information.Now
 		if ( gMesSwapWeapons == "1" and Player:CanSwapWeaponSet() ) then
@@ -61,6 +61,7 @@ end
 
 wt_profession_mesmer.e_attack_default.usesAbility = true
 function wt_profession_mesmer.e_attack_default:execute()
+	if (gSMactive == "0") then
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= 0 ) then
 		local T = CharacterList:Get(TID)
@@ -248,6 +249,7 @@ function wt_profession_mesmer.e_attack_default:execute()
 			end	
 		end
 	end
+	end
 end
 
 
@@ -288,7 +290,6 @@ function wt_profession_mesmer:HandleInit()
 		
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapWeaponSets,"gMesSwapWeapons",strings[gCurrentLanguage].mesmerSettings);
 		--GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoF1,"gWarUseBurst",strings[gCurrentLanguage].mesmerSettings);
-		GUI_NewLabel(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].allowedRange,strings[gCurrentLanguage].mesmerSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gMesSK7",strings[gCurrentLanguage].mesmerSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gMesSK8",strings[gCurrentLanguage].mesmerSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gMesSK9",strings[gCurrentLanguage].mesmerSettings);

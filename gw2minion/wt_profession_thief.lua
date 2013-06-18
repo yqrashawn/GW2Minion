@@ -60,6 +60,7 @@ end
 
 wt_profession_thief.e_attack_default.usesAbility = true
 function wt_profession_thief.e_attack_default:execute()	
+	if (gSMactive == "0") then
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= 0 ) then
 		local T = CharacterList:Get(TID)
@@ -212,6 +213,7 @@ function wt_profession_thief.e_attack_default:execute()
 			end	
 		end
 	end
+	end
 end
 
 
@@ -248,7 +250,6 @@ function wt_profession_thief:HandleInit()
 		end
 		
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapWeaponSets,"gThiefSwapWeapons",strings[gCurrentLanguage].thiefSettings);
-		GUI_NewLabel(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].allowedRange,strings[gCurrentLanguage].thiefSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gThiefSK7",strings[gCurrentLanguage].thiefSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gThiefSK8",strings[gCurrentLanguage].thiefSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gThiefSK9",strings[gCurrentLanguage].thiefSettings);

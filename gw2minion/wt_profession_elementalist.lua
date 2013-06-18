@@ -74,6 +74,7 @@ end
 wt_profession_elementalist.e_attack_default.usesAbility = true
 
 function wt_profession_elementalist.e_attack_default:execute()
+	if (gSMactive == "0") then
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= 0 ) then
 		local T = CharacterList:Get(TID)
@@ -482,6 +483,7 @@ function wt_profession_elementalist.e_attack_default:execute()
 			end	
 		end
 	end
+	end
 end
 
 
@@ -519,7 +521,6 @@ function wt_profession_elementalist:HandleInit()
 		end
 		
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapAttunements,"gEleSwap",strings[gCurrentLanguage].elementalistSettings);
-		GUI_NewLabel(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].allowedRange,strings[gCurrentLanguage].elementalistSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gEleSK7",strings[gCurrentLanguage].elementalistSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gEleSK8",strings[gCurrentLanguage].elementalistSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gEleSK9",strings[gCurrentLanguage].elementalistSettings);

@@ -64,6 +64,7 @@ end
 
 wt_profession_guardian.e_attack_default.usesAbility = true
 function wt_profession_guardian.e_attack_default:execute()	
+	if (gSMactive == "0") then
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= 0 ) then
 		local T = CharacterList:Get(TID)
@@ -302,6 +303,7 @@ function wt_profession_guardian.e_attack_default:execute()
 			end	
 		end
 	end
+	end
 end
 
 
@@ -350,7 +352,6 @@ function wt_profession_guardian:HandleInit()
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoF1,"gGuardF1",strings[gCurrentLanguage].guardianSettings);
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoF2,"gGuardF2",strings[gCurrentLanguage].guardianSettings);
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoF3,"gGuardF3",strings[gCurrentLanguage].guardianSettings);
-		GUI_NewLabel(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].allowedRange,strings[gCurrentLanguage].guardianSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gGuardSK7",strings[gCurrentLanguage].guardianSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gGuardSK8",strings[gCurrentLanguage].guardianSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gGuardSK9",strings[gCurrentLanguage].guardianSettings);
