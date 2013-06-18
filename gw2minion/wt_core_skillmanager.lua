@@ -149,6 +149,7 @@ function SkillMgr.ModuleInit()
 	gSMSwapRange = Settings.GW2MINION.gSMSwapRange
 	gSMPrioKit = Settings.GW2MINION.gSMPrioKit
 	gSMPrioAtt = Settings.GW2MINION.gSMPrioAtt
+    gSMactive = Settings.GW2MINION.gSMactive
 	
 	SkillMgr.UpdateProfiles()
 	
@@ -158,7 +159,8 @@ function SkillMgr.ModuleInit()
 	RegisterEventHandler("SMRefreshEvent",SkillMgr.UpdateProfiles)
 	RegisterEventHandler("SMDeleteEvent",SkillMgr.DeleteCurrentProfile)
 	RegisterEventHandler("newSMProfileEvent",SkillMgr.CreateNewProfile)
-	RegisterEventHandler("refreshSMSkillListEvent",SkillMgr.RefreshCurrentSkillList)	
+	RegisterEventHandler("refreshSMSkillListEvent",SkillMgr.RefreshCurrentSkillList)
+    
 end
 
 function SkillMgr.GUIVarUpdate(Event, NewVals, OldVals)
