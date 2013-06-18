@@ -148,7 +148,7 @@ end
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 -- Randomly switch Weaponset
-function wt_profession_necromancer.SwitchWeapon(current)
+function wt_profession_necromancer.SwitchWeapon()
 	if (wt_profession_necromancer.switchweaponTmr == 0 or wt_global_information.Now - wt_profession_necromancer.switchweaponTmr > math.random(1500,5000)) then	
 		wt_profession_necromancer.switchweaponTmr = wt_global_information.Now
 		if ( gNecroSwapWeapons == "1" and Player:CanSwapWeaponSet() ) then
@@ -171,6 +171,7 @@ end
 
 wt_profession_necromancer.e_attack_default.usesAbility = true
 function wt_profession_necromancer.e_attack_default:execute()
+	if (gSMactive == "0") then
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= 0 ) then
 		local T = CharacterList:Get(TID)
@@ -357,6 +358,7 @@ function wt_profession_necromancer.e_attack_default:execute()
 				end
 			end	
 		end
+	end
 	end
 end
 

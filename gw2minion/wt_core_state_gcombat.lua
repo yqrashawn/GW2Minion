@@ -80,7 +80,7 @@ end
 function e_gbetter_target_search:execute()
 	nextTarget, E  = next( c_gbetter_target_search.TargetList )
 	if ( nextTarget ~= nil ) then
-		wt_debug( "Combat: Switching to better target " .. nextTarget )		
+		--wt_debug( "Combat: Switching to better target " .. nextTarget )		
 		wt_core_state_gcombat.StopCM()
 		wt_core_state_gcombat.setTarget( nextTarget )
 		-- CRASHES LIKE SHIT, DONT KNOW WHY
@@ -307,7 +307,7 @@ function e_gattack_default:execute()
 	if ( TID ~= nil and TID ~= 0 ) then
 		local T = GadgetList:Get(TID)
 		if ( T ~= nil ) then		
-			wt_debug("attacking " .. wt_core_state_gcombat.CurrentTarget .. " Distance " .. T.distance)
+			--wt_debug("attacking " .. wt_core_state_gcombat.CurrentTarget .. " Distance " .. T.distance)
 			local TPos = T.pos
 			Player:SetFacing(TPos.x, TPos.y, TPos.z)
 			local s1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)

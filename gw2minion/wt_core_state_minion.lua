@@ -65,7 +65,7 @@ function e_focus:execute()
 	if ( wt_global_information.FocusTarget ~= nil ) then
 		local target = CharacterList:Get(tonumber(wt_global_information.FocusTarget))
 		if ( target ~= nil and target.distance < 4000 and target.alive and target.onmesh) then
-			wt_debug( "Attacking Focustarget" )
+			--wt_debug( "Attacking Focustarget" )
 			wt_core_state_combat.setTarget( wt_global_information.FocusTarget )
 			wt_core_controller.requestStateChange( wt_core_state_combat )
 		end
@@ -341,7 +341,7 @@ table.insert(wt_core_state_minion.TaskChecks,{["func"]=wt_core_state_minion.aggr
 function wt_core_state_minion.aggroGadgetCheck()
 	--wt_debug("aggroCheck")
 	if ( wt_global_information.DoAggroCheck ) then
-		local GList = ( GadgetList( "attackable,alive,nearest,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
+		local GList = ( GadgetList( "attackable,alive,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 		if ( TableSize( GList ) > 0 ) then
 			local id, E  = next( GList )
 			if ( id ~= nil and id ~= 0 and E ~= nil) then

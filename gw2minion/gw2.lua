@@ -255,7 +255,7 @@ function gw2minion.HandleInit()
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].gatherSettings);
 	GUI_FoldGroup(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].advancedSettings);
 	
-	gEnableLog = Settings.GW2MINION.gEnableLog
+	gEnableLog = "0"
 	gGW2MinionPulseTime = Settings.GW2MINION.gGW2MinionPulseTime 
 	gEnableRepair = Settings.GW2MINION.gEnableRepair
 	gIgnoreMarkerCap = Settings.GW2MINION.gIgnoreMarkerCap
@@ -433,9 +433,13 @@ function wt_global_information.HandleCMDMultiBotMessages( event, message,channel
 	end
 end
 
-
 function wt_global_information.Test(event, arg)	
 	d(tostring(arg))
+	if ( arg.message == 513) then
+		d("TEST")
+		local m = MeshManager:GetMousePos() 
+		d(GetMarker(m.x,m.y,m.z))
+	end	
 end
 
 -- Register Event Handlers

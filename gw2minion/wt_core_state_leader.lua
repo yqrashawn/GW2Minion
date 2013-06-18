@@ -394,14 +394,14 @@ function wt_core_state_leader.aggroGadgetCheck()
 			end
 		end
 		
-		local GList = ( GadgetList( "attackable,alive,nearest,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
+		--[[local GList = ( GadgetList( "attackable,alive,nearest,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 		if ( TableSize( GList ) > 0 ) then
 			local id, E  = next( GList )
 			if ( id ~= nil and id ~= 0 and E ~= nil) then
 				wt_core_taskmanager:addKillGadgetTask( id, E, 3500 )
 				return false
 			end		
-		end	
+		end	]]
 	end
 end
 table.insert(wt_core_state_leader.TaskChecks,{["func"]=wt_core_state_leader.aggroGadgetCheck,["throttle"]=1000})

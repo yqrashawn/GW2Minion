@@ -101,7 +101,7 @@ end
 function e_better_target_search:execute()
 	nextTarget, E  = next( c_better_target_search.TargetList )
 	if ( nextTarget ~= nil ) then
-		wt_debug( "Combat: Switching to better target " .. nextTarget )		
+		--wt_debug( "Combat: Switching to better target " .. nextTarget )		
 		wt_core_state_combat.StopCM()
 		wt_core_state_combat.setTarget( nextTarget )
 		if (gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
@@ -268,7 +268,7 @@ function c_combatmove:evaluate()
 						if (Tdist > (wt_global_information.AttackRange * 0.85)) then 
 							table.remove(dirs,2) -- We are too far away to walk backwards
 						end
-						if (Tdist < 160) then 
+						if (Tdist < 360) then 
 							table.remove(dirs,1) -- We are too close to walk forwards
 						end							
 						if (movedir == 2 or Tdist < 50) then 

@@ -63,6 +63,7 @@ function wt_profession_ranger.c_attack_default:evaluate()
 end
 wt_profession_ranger.e_attack_default.usesAbility = true
 function wt_profession_ranger.e_attack_default:execute()
+	if (gSMactive == "0") then
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= nil and TID ~= 0 ) then
 		local T = CharacterList:Get(TID)
@@ -316,6 +317,7 @@ function wt_profession_ranger.e_attack_default:execute()
 			end	
 		end
 	end
+	end
 end
 
 wt_profession_ranger.c_switch_pet_action = inheritsFrom( wt_cause )
@@ -377,7 +379,6 @@ function wt_profession_ranger:HandleInit()
 		end
 				
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapWeaponSets,"gRanSwapWeapons",strings[gCurrentLanguage].rangerSettings);
-		GUI_NewLabel(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].allowedRange,strings[gCurrentLanguage].rangerSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gRanSK7",strings[gCurrentLanguage].rangerSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gRanSK8",strings[gCurrentLanguage].rangerSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gRanSK9",strings[gCurrentLanguage].rangerSettings);

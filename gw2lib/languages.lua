@@ -180,7 +180,14 @@ strings =
         orTargetHas                     = "or Target has ",
         targetHasNot                    = "Target has NOT ",
         orTargetHasNot                  = "or Target has NOT ",
-
+		AdvancedSettings				= "Advanced Settings",
+		SwapA							= "Swap Weapons",
+		SwapR							= "Swap Randomly",
+		SwapCD							= "Swap when Skill 2-5 on CD",
+		SwapRange						= "Swap when Target out of Range",
+		PriorizeKit						= "Priorize Kit",
+		PriorizeAttunement				= "Priorize Attunement",
+		
         -- leader.lua
         browserStats                    = "Enable BrowserStats",
         groupBotting                    = "Enable Groupbotting",
@@ -920,7 +927,7 @@ strings =
         dragonHoloFarming				= "FarmDragonHolograms",
 		
         -- meshmanager.lua
-        meshManager                     = "MeshManager",
+        meshManager                     = "网格脚本管理器",
         queensdale                      = "Queensdale",
         harathiHinterlands              = "HarathiHinterlands",
         divinitysReach                  = "DivinitysReach",
@@ -966,7 +973,7 @@ strings =
         navmesh                         = "Navmesh",
         waypoint                        = "Waypoint",
         generalSettings                 = "GeneralSettings",
-        dungeonManager                  = "DungeonManager",
+        dungeonManager                  = "副本管理器",
         status                          = "Status",
         setPartySize                    = "Set PartySize",
         dungeons                        = "Dungeons",
@@ -975,7 +982,7 @@ strings =
         stopDungeonManager              = "Stop DungeonManager",
 
         -- partymanager.lua
-        partyManager                    = "PartyManager",
+        partyManager                    = "组队管理器",
         enterCharNames                  = "Enter Character Names:",
         member1                         = "Member1",
         member2                         = "Member2",
@@ -1024,7 +1031,7 @@ strings =
         orTargetHas                     = "or Target has ",
         targetHasNot                    = "Target has NOT ",
         orTargetHasNot                  = "or Target has NOT ",
-
+		
         -- leader.lua
         browserStats                    = "Enable BrowserStats",
         groupBotting                    = "Enable Groupbotting",
@@ -1082,4 +1089,10 @@ strings =
         warriorSettings                 = "Warrior-Settings"
     }
 }
-    
+  
+ function SetLanguage(event, arg)	
+	d(tostring(arg))
+	
+end
+
+RegisterEventHandler("GW2MINION.setlanguage", SetLanguage)

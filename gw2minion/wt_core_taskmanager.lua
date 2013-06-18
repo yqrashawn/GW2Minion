@@ -100,7 +100,7 @@ function wt_core_taskmanager.SelectNextTask()
 		if ( wt_core_taskmanager.current_task == nil or wt_core_taskmanager.current_task.priority < highestPrioTask.priority or wt_core_taskmanager.current_task.isFinished() or wt_core_taskmanager.current_task.expired()) then
 			-- Save our current task if it is a default task
 			if ( wt_core_taskmanager.current_task ~= nil and wt_core_taskmanager.current_task.priority <= 999 and not wt_core_taskmanager.current_task.isFinished() and not wt_core_taskmanager.current_task.expired() ) then
-				wt_debug( "Saving last Task: " ..tostring(wt_core_taskmanager.current_task.name).. "(UID: "..tostring(wt_core_taskmanager.current_task.UID).." Prio: "..tostring(wt_core_taskmanager.current_task.priority).." LifeTime: "..tostring(wt_core_taskmanager.current_task.lifetime).."")
+				--wt_debug( "Saving last Task: " ..tostring(wt_core_taskmanager.current_task.name).. "(UID: "..tostring(wt_core_taskmanager.current_task.UID).." Prio: "..tostring(wt_core_taskmanager.current_task.priority).." LifeTime: "..tostring(wt_core_taskmanager.current_task.lifetime).."")
 				wt_core_taskmanager.last_task = wt_core_taskmanager.current_task
 			end
 			-- Set new task
@@ -119,7 +119,7 @@ function wt_core_taskmanager.CleanTasklist()
 	local i, task  = next( wt_core_taskmanager.Customtask_list )
 	while ( i ~= nil and task ~= nil) do			
 		if ( task:isFinished() or task:expired() ) then
-			wt_debug( "Removing Task: " ..tostring(task.name).. " (UID: "..tostring(task.UID).." Prio: "..tostring(task.priority).." LifeTime: "..tostring(task.lifetime).."")
+			--wt_debug( "Removing Task: " ..tostring(task.name).. " (UID: "..tostring(task.UID).." Prio: "..tostring(task.priority).." LifeTime: "..tostring(task.lifetime).."")
 			wt_core_taskmanager.Customtask_list[i] = nil
 		end
 		i, task  = next( wt_core_taskmanager.Customtask_list, i )

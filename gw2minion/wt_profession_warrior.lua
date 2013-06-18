@@ -66,6 +66,7 @@ function wt_profession_warrior.c_attack_default:evaluate()
 end
 wt_profession_warrior.e_attack_default.usesAbility = true
 function wt_profession_warrior.e_attack_default:execute()
+	if (gSMactive == "0") then
 	TID = wt_core_state_combat.CurrentTarget
 	if ( TID ~= nil and TID ~= 0 ) then
 		local T = CharacterList:Get(TID)
@@ -320,6 +321,7 @@ function wt_profession_warrior.e_attack_default:execute()
 				end
 			end	
 		end
+	end
 	end
 end
 
