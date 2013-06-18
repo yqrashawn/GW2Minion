@@ -446,15 +446,42 @@ function c_mapchange:evaluate()
         return false
     end
     
-    if (c_mapchange.doSwitch) then
-		return true
-	end
-	
-	if 	(gEnableSwitcher == "1" and mm.switchTime == 0) then
+    if 	(gEnableSwitcher == "1" and mm.switchTime == 0) then
         mm.switchTime = wt_global_information.Now + (math.random(tonumber(gminswitchtime),tonumber(gmaxswitchtime)) * 1000)
         if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then
             MultiBotSend( "20;"..tostring(mm.switchTime),"gw2minion" )
         end
+	end
+	
+    if (c_mapchange.doSwitch) then
+		if 	c_mapchange.nextMap and
+			c_mapchange.nextMap ~= 0 and
+			c_mapchange.nextWp and
+			c_mapchange.nextWp ~= 0
+		then
+			return true
+		else
+			local maps = {}
+			if (Settings.GW2MINION.Zones ~= nil and TableSize(Settings.GW2MINION.Zones) > 0) then
+				mapid, zone = next(Settings.GW2MINION.Zones)
+				while (mapid ~= nil and zone ~= nil) do
+					if (zone.useinswitcher == "1" and zone.waypointid ~= nil and zone.waypointid ~= "") then
+						table.insert(maps, {wpid=tonumber(zone.waypointid),mapid=tonumber(mapid)})
+					end
+					mapid, zone = next(Settings.GW2MINION.Zones,mapid)
+				end
+			end
+			local rnd = math.random(1,#maps)
+			local map = maps[rnd]
+			if 	map.mapid and map.wpid and
+				map.mapid ~= Player:GetLocalMapID()
+			then
+				wt_debug("Selecting New Map")
+				c_mapchange.nextMap = map.mapid
+				c_mapchange.nextWp = map.wpid
+				return true
+			end
+		end
 	end
 	
 	if (gEnableSwitcher == "1" and mm.switchTime ~= 0) then
@@ -488,37 +515,6 @@ function c_mapchange:evaluate()
                 c_mapchange.tickCount = 0
 			end
         end
-	end
-	
-	if (c_mapchange.doSwitch) then
-		if 	c_mapchange.nextMap and
-			c_mapchange.nextMap ~= 0 and
-			c_mapchange.nextWp and
-			c_mapchange.nextWp ~= 0
-		then
-			return true
-		else
-			local maps = {}
-			if (Settings.GW2MINION.Zones ~= nil and TableSize(Settings.GW2MINION.Zones) > 0) then
-				mapid, zone = next(Settings.GW2MINION.Zones)
-				while (mapid ~= nil and zone ~= nil) do
-					if (zone.useinswitcher == "1" and zone.waypointid ~= nil and zone.waypointid ~= "") then
-						table.insert(maps, {wpid=tonumber(zone.waypointid),mapid=tonumber(mapid)})
-					end
-					mapid, zone = next(Settings.GW2MINION.Zones,mapid)
-				end
-			end
-			local rnd = math.random(1,#maps)
-			local map = maps[rnd]
-			if 	map.mapid and map.wpid and
-				map.mapid ~= Player:GetLocalMapID()
-			then
-				wt_debug("Selecting New Map")
-				c_mapchange.nextMap = map.mapid
-				c_mapchange.nextWp = map.wpid
-				return true
-			end
-		end
 	end
 
 	return false
