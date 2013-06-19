@@ -353,7 +353,6 @@ function mm.GetWaypoint()
         if (id ~= nil) then
             local newWP = WaypointList:Get(id)
             gwaypointid = tostring(newWP.contentID)
-            --d(gwaypointid)
             Settings.GW2MINION.Zones[tostring(Player:GetLocalMapID())].waypointid = gwaypointid
             Settings.GW2MINION.Zones = Settings.GW2MINION.Zones
         end
@@ -444,6 +443,9 @@ function c_mapchange:evaluate()
         gminswitchtime = "***"
         gmaxswitchtime = "***"
         return false
+    elseif (gminswitchtime == "***" or gmaxswitchtime == "***") then
+        gminswitchtime = tonumber(Settings.GW2MINION.gminswitchtime)
+        gmaxswitchtime = tonumber(Settings.GW2MINION.gmaxswitchtime)
     end
     
     if 	(gEnableSwitcher == "1" and mm.switchTime == 0) then
@@ -501,7 +503,7 @@ function c_mapchange:evaluate()
 					if not (wt_core_helpers:IsInPartyList(char.name)) then
 						c_mapchange.tickCount = math.random(30000,90000) + wt_global_information.Now
                         c_mapchange.playerCount = c_mapchange.playerCount + 1
-                        wt_debug("Player detected - Count: "..tostring(c_mapchange.playerCount))
+                        wt_debug("Player detected: "..tostring(char.name).. " - Count: "..tostring(c_mapchange.playerCount))
                         if (c_mapchange.playerCount >= tonumber(gparanoiaswitchcount)) then
                             wt_debug("Paranoia count exceeded - switching maps")
                             c_mapchange.doSwitch = true
@@ -512,7 +514,6 @@ function c_mapchange:evaluate()
 					end
 					id, char = next(charList, id)
 				end
-                c_mapchange.tickCount = 0
 			end
         end
 	end
