@@ -556,7 +556,7 @@ function e_mapchange:execute()
 end
 
 local ke_mapchange = wt_kelement:create( "MapChange", c_mapchange, e_mapchange, 86 )
---wt_core_state_idle:add( ke_mapchange )
+wt_core_state_idle:add( ke_mapchange )
 wt_core_state_leader:add( ke_mapchange )
 wt_core_state_minion:add( ke_mapchange )
 
