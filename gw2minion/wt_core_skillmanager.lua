@@ -129,6 +129,9 @@ function SkillMgr.ModuleInit()
 			-- Elementalist
 			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].PriorizeAttunement,"gSMPrioAtt",strings[gCurrentLanguage].AdvancedSettings,"Fire,Water,Air,Earth")
 		end
+		
+		local SM_Attack_default = wt_kelement:create("Attack(SM)",SkillMgr.c_SMattack_default,SkillMgr.e_SMattack_default, 46 )
+		wt_core_state_combat:add(SM_Attack_default)
 	end
 
 	--GUI_UnFoldGroup(SkillMgr.mainwindow.name,strings[gCurrentLanguage].generalSettings) crashes still
@@ -160,7 +163,7 @@ function SkillMgr.ModuleInit()
 	RegisterEventHandler("SMDeleteEvent",SkillMgr.DeleteCurrentProfile)
 	RegisterEventHandler("newSMProfileEvent",SkillMgr.CreateNewProfile)
 	RegisterEventHandler("refreshSMSkillListEvent",SkillMgr.RefreshCurrentSkillList)
-    
+  	
 end
 
 function SkillMgr.GUIVarUpdate(Event, NewVals, OldVals)
@@ -192,12 +195,11 @@ function SkillMgr.OnUpdate( event, tick )
 			end
 		end	
 	end
-	if ( gSMactive == "1" ) then		
+	if ( not wt_core_controller.shouldRun and gSMactive == "1" ) then		
 		if	( tick - SkillMgr.DoActionTmr > 250 ) then
 			SkillMgr.DoActionTmr = tick
 			if ( Player.healthstate == GW2.HEALTHSTATE.Defeated ) then return end
 			SkillMgr.SelectTarget()
-			SkillMgr.SwapWeaponCheck("Pulse")
 			SkillMgr.DoAction()
 		end
 	end
@@ -245,7 +247,7 @@ function SkillMgr.UpdateProfiles()
 	-- Grab all Profiles and enlist them in the dropdown field
 	local profiles = "None"
 	local found = "None"
-	local profilelist = io.popen("dir /b ".. SkillMgr.profilepath .."*.lua")
+	local profilelist = io.popen("dir /b ".. tostring(SkillMgr.profilepath) .."*.lua")
 	if ( profilelist ~= nil ) then
 		for profile in profilelist:lines() do
 			profile = string.gsub(profile, ".lua", "")		
@@ -256,6 +258,7 @@ function SkillMgr.UpdateProfiles()
 			end
 		end
 		profilelist:close()
+	else 
 	end
 	wt_debug("ALL PROFILES: "..tostring(profiles))
 	gSMprofile_listitems = profiles
@@ -614,7 +617,7 @@ end
 
 function SkillMgr.SelectTarget()
 	--TODO: Hook into combat and gcombat state!
-	if ( not wt_core_controller.shouldRun and sMtargetmode ~= "No Autotarget" ) then
+	if ( gsMtargetmode ~= "No Autotarget" ) then
 		local TargetList
 		if (gSMmode == "Attack Everything") then
 			if ( gsMtargetmode == "Autotarget Weakest" )then 
@@ -742,7 +745,7 @@ function SkillMgr.DoAction()
 	local target, tid = nil, Player:GetTarget()
 	if tid and tid ~= 0 then
 		target = CharacterList:Get(tid)
-		if target and target.attitude ~= GW2.ATTITUDE.Friendly then
+		if target then
 			target.id = tid
 		else
 			target = GadgetList:Get(tid)
@@ -753,6 +756,8 @@ function SkillMgr.DoAction()
 	end
 	if ( target and (target.attitude == GW2.ATTITUDE.Friendly or target.attitude == Unattackable)) then
 		target = nil
+	else
+		--SkillMgr.SwapWeaponCheck("Pulse")
 	end
 
 	local skillID = SkillMgr.GetNextBestSkillID(-999999)
@@ -869,14 +874,14 @@ function SkillMgr.DoAction()
 							Player:CastSpell(SkillMgr.cskills[i].slot)
 							--	Player:LeaveCombatState()
 						end
-						--d("Casting on Self: "..tostring(cskills[i].name))
+						--d("Casting on Self: "..tostring(SkillMgr.cskills[i].name))
 						return
 					else
 						if ( target and target.id ) then							
 							if ( not Player:IsCasting() or sp ~= SkillMgr.cskills[i].slot ) then							
 								Player:CastSpell(SkillMgr.cskills[i].slot,target.id)								
 							end
-							 --d("Casting on Enemy: "..tostring(SkillMgr.cskills[i].name))
+							--d("Casting on Enemy: "..tostring(SkillMgr.cskills[i].name))
 							return
 						end
 					end					
@@ -886,7 +891,7 @@ function SkillMgr.DoAction()
 		skillID = SkillMgr.GetNextBestSkillID(tonumber(_G["SKM_Prio_"..tostring(skillID)]))
 	end
 	-- swap weapons if target but out of range
-	if ( target and target.distance > wt_global_information.AttackRange ) then
+	if ( target and target.distance > wt_global_information.AttackRange and target.attitude ~= GW2.ATTITUDE.Friendly) then
 		SkillMgr.SwapWeaponCheck("Range")
 	end	
 end
@@ -989,6 +994,21 @@ function SkillMgr.GetNextBestSkillID(startingprio)
 	end
 	return skillID
 end
+
+-- C&E for usage with normal bot
+SkillMgr.c_SMattack_default = inheritsFrom(wt_cause)
+SkillMgr.e_SMattack_default = inheritsFrom(wt_effect)
+function SkillMgr.c_SMattack_default:evaluate()
+	if ( wt_core_controller.shouldRun and gSMactive == "1" ) then
+		return wt_core_state_combat.CurrentTarget ~= 0
+	end
+	return false
+end
+function SkillMgr.e_SMattack_default:execute()
+	--SkillMgr.SelectTarget() TODO: handle multibottargetselect
+	SkillMgr.DoAction()
+end
+
 
 function SkillMgr.ToggleMenu()
 	if (SkillMgr.visible) then

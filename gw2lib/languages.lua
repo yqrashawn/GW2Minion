@@ -185,8 +185,8 @@ strings =
 		SwapR							= "Swap Randomly",
 		SwapCD							= "Swap when Skill 2-5 on CD",
 		SwapRange						= "Swap when Target out of Range",
-		PriorizeKit						= "Priorize Kit",
-		PriorizeAttunement				= "Priorize Attunement",
+		PriorizeKit						= "Prioritize Kit",
+		PriorizeAttunement				= "Prioritize Attunement",
 		
         -- leader.lua
         browserStats                    = "Enable BrowserStats",

@@ -11,41 +11,56 @@ wt_core_partymanager.WPblacklist = {}
 
 function wt_core_partymanager.membercount()
 	local count = 0
-	local index, player  = next( Settings.GW2MINION.Party )
-	local myname = Player.name
-	while ( index ~= nil and player ~= nil ) do			
-		if (tostring(player) ~= "none" and tostring(player) ~= "" and tostring(player) ~= tostring(myname)) then
-			count = count + 1
+	if ( Settings.GW2MINION.Party ) then
+		local partylist = Settings.GW2MINION.Party
+		if ( TableSize(partylist) > 0 ) then
+			local index, player  = next( partylist )
+			local myname = Player.name
+			while ( index ~= nil and player ~= nil ) do			
+				if (tostring(player) ~= "none" and tostring(player) ~= "" and tostring(player) ~= tostring(myname)) then
+					count = count + 1
+				end
+				index, player  = next( partylist,index )
+			end	
 		end
-		index, player  = next( Settings.GW2MINION.Party,index )
-	end	
+	end
 	return count
 end
 
 function wt_core_partymanager.GetMyListIndex() 
 	local count = 0
-	local index, player  = next( Settings.GW2MINION.Party )
-	local myname = Player.name
-	while ( index ~= nil and player ~= nil ) do			
-		count = count + 1
-		if (tostring(player) == tostring(myname)) then
-			break
+	if ( Settings.GW2MINION.Party ) then
+		local partylist = Settings.GW2MINION.Party
+		if ( TableSize(partylist) > 0 ) then
+			local index, player  = next( partylist )
+			local myname = Player.name
+			while ( index ~= nil and player ~= nil ) do			
+				count = count + 1
+				if (tostring(player) == tostring(myname)) then
+					break
+				end
+				index, player  = next( partylist,index )
+			end	
 		end
-		index, player  = next( Settings.GW2MINION.Party,index )
-	end	
+	end
 	return count
 end
 
 function wt_core_partymanager.WeAreInPartyList()
 	local found = false
-	local index, player  = next( Settings.GW2MINION.Party )
-	local myname = Player.name
-	while ( index ~= nil and player ~= nil ) do			
-		if (tostring(player) ~= "none" and tostring(player) ~= "" and tostring(player) == tostring(myname)) then
-			found = true
+	if ( Settings.GW2MINION.Party ) then
+		local partylist = Settings.GW2MINION.Party
+		if ( TableSize(partylist) > 0 ) then
+			local index, player  = next( partylist )
+			local myname = Player.name
+			while ( index ~= nil and player ~= nil ) do			
+				if (tostring(player) ~= "none" and tostring(player) ~= "" and tostring(player) == tostring(myname)) then
+					found = true
+				end
+				index, player  = next( partylist,index )
+			end	
 		end
-		index, player  = next( Settings.GW2MINION.Party,index )
-	end	
+	end
 	return found
 end
 

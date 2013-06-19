@@ -380,7 +380,6 @@ function wt_profession_engineer:HandleInit()
 		end
 		
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapToKits,"gEngSwapWeapons",strings[gCurrentLanguage].engineerSettings);
-		GUI_NewLabel(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].allowedRange,strings[gCurrentLanguage].engineerSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gEngSK7",strings[gCurrentLanguage].engineerSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gEngSK8",strings[gCurrentLanguage].engineerSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gEngSK9",strings[gCurrentLanguage].engineerSettings);

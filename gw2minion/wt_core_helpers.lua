@@ -13,26 +13,30 @@ function wt_core_helpers:GetWaypoint(pos, currentDist)
 	local WP1, WP2, gotoWP = nil
 	local wpToPosDist,gotoDist = nil
 
-	if Waypoints then
+	if (TableSize(Waypoints) > 0 and pos )then
 		i,wp = next(Waypoints)
-		while ( i ~= nil ) do
+		while ( i ~= nil and wp ~= nil) do
 			local newWP = WaypointList:Get(i)
-			local wpDist = Distance3D(newWP.pos.x, newWP.pos.y, newWP.pos.z, pos.x, pos.y, pos.z)
+			if ( newWP ) then
+				local wpPos = newWP.pos
+				local wpDist = Distance3D(wpPos.x, wpPos.y, wpPos.z, pos.x, pos.y, pos.z)
 
-			if ( wpToPosDist == nil or wpDist < wpToPosDist ) then
-				wpToPosDist = wpDist
-				WP2 = WP1
-				WP1 = newWP
+				if ( wpToPosDist == nil or wpDist < wpToPosDist ) then
+					wpToPosDist = wpDist
+					WP2 = WP1
+					WP1 = newWP
+				end
 			end
-
 			i,wp = next(Waypoints,i)
-		 end
+		end
 	end
 	
 	-- check path distance to the two waypoints
-	if (WP1 ~= nil and WP2 ~= nil) then
-		local dist1 = PathDistance(NavigationManager:GetPath(WP1.pos.x, WP1.pos.y, WP1.pos.z, pos.x, pos.y, pos.z))
-		local dist2 = PathDistance(NavigationManager:GetPath(WP2.pos.x, WP2.pos.y, WP2.pos.z, pos.x, pos.y, pos.z))
+	if (WP1 ~= nil and WP2 ~= nil and pos) then
+		local WP1Pos = WP1.pos
+		local WP2Pos = WP2.pos
+		local dist1 = PathDistance(NavigationManager:GetPath(WP1Pos.x, WP1Pos.y, WP1Pos.z, pos.x, pos.y, pos.z))
+		local dist2 = PathDistance(NavigationManager:GetPath(WP2Pos.x, WP2Pos.y, WP2Pos.z, pos.x, pos.y, pos.z))
 		
 		if (dist1 < dist2) then
 			gotoWP = WP1
@@ -41,18 +45,18 @@ function wt_core_helpers:GetWaypoint(pos, currentDist)
 			gotoWP = WP2
 			gotoDist = dist2
 		end
-	elseif (WP1 ~= nil) then
-		local dist1 = PathDistance(NavigationManager:GetPath(WP1.pos.x, WP1.pos.y, WP1.pos.z, pos.x, pos.y, pos.z))
+	elseif (WP1 ~= nil and pos) then
+		local WP1Pos = WP1.pos
+		local dist1 = PathDistance(NavigationManager:GetPath(WP1Pos.x, WP1Pos.y, WP1Pos.z, pos.x, pos.y, pos.z))
 		gotoWP = WP1
 		gotoDist = dist1
 	end
 	-- TELEPORT
-	if (gotoDist ~= nil and gotoWP ~= nil) then
+	if (gotoDist ~= nil and gotoWP ~= nil and currentDist) then
 		if ( currentDist - 1000 >  gotoDist) then
 			return gotoWP
 		end
-	end
-	
+	end	
 	return nil
 end
 
@@ -138,7 +142,7 @@ function wt_core_helpers:GetClosestEvent(maxDistance)
 	local MMList = MapMarkerList("worldmarkertype=20,maxdistance="..tostring(maxDistance))
 	local event = nil
 	if ( TableSize( MMList ) > 0 ) then
-		i, entry = next( MMList )
+		local i, entry = next( MMList )
 		while ( i ~= nil and entry ~= nil ) do
 			local etype = entry.type
 			local mtype = entry.markertype
@@ -163,7 +167,7 @@ function wt_core_helpers:UpdateMapObject(objectType)
         local list = MapObjectList("onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
         if (TableSize(list) > 0) then
             local id, object = next(list)
-            if (object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
+            if (id and object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
                 wt_core_helpers.MapObjects["sellMerchant"] = object
             end
         end
@@ -189,7 +193,7 @@ function wt_core_helpers:UpdateMapObject(objectType)
         local list = MapObjectList("onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant)
         if (TableSize(list) > 0) then
             local id, object = next(list)
-            if (object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
+            if (id and object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
                 wt_core_helpers.MapObjects["repairMerchant"] = object
             end
         end
@@ -199,27 +203,37 @@ function wt_core_helpers:UpdateMapObject(objectType)
 end
 
 function wt_core_helpers:IsInPartyList(name)
-	local index, player  = next( Settings.GW2MINION.Party )
-	while ( index ~= nil and player ~= nil ) do			
-		if (tostring(player) ~= "none" and tostring(player) ~= "") then
-			if (tostring(player) == tostring(name)) then
-				return true
+	if ( Settings.GW2MINION.Party ) then
+		local partylist = Settings.GW2MINION.Party
+		if ( TableSize(partylist) > 0 ) then	
+			local index, player  = next( partylist )
+			while ( index ~= nil and player ~= nil ) do			
+				if (tostring(player) ~= "none" and tostring(player) ~= "") then
+					if (tostring(player) == tostring(name)) then
+						return true
+					end
+				end
+				index, player  = next( partylist,index )
 			end
 		end
-		index, player  = next( Settings.GW2MINION.Party,index )
 	end
 	return false
 end
 
 function wt_core_helpers:IsInAvoidList(name)
-	local index, player  = next( Settings.GW2MINION.MSAvoidList )
-	while ( index ~= nil and player ~= nil ) do			
-		if (tostring(player) ~= "none" and tostring(player) ~= "") then
-			if (tostring(player) == tostring(name)) then
-				return true
+	if ( Settings.GW2MINION.MSAvoidList ) then
+		local avoidlist = Settings.GW2MINION.MSAvoidList
+		if ( TableSize(avoidlist) > 0 ) then	
+			local index, player  = next( avoidlist )
+			while ( index ~= nil and player ~= nil ) do			
+				if (tostring(player) ~= "none" and tostring(player) ~= "") then
+					if (tostring(player) == tostring(name)) then
+						return true
+					end
+				end
+				index, player  = next( avoidlist,index )
 			end
 		end
-		index, player  = next( Settings.GW2MINION.MSAvoidList,index )
 	end
 	return false
 end

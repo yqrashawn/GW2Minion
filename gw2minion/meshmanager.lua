@@ -58,7 +58,7 @@ function mm.ModuleInit()
 		local id,name = next(mm.Zones)
 		while id~=nil and name~=nil do
 			if (Settings.GW2MINION.Zones[tostring(id)] == nil) then
-				wt_debug("ADD")
+				--wt_debug("ADD")
 				Settings.GW2MINION.Zones[tostring(id)] = { mapname=tostring(name), meshname="none", waypointid="none", useinswitcher = "0"}
             elseif (Settings.GW2MINION.Zones[tostring(id)].useinswitcher == nil) then
                 Settings.GW2MINION.Zones[tostring(id)].useinswitcher = "0"
@@ -556,7 +556,7 @@ function e_mapchange:execute()
 end
 
 local ke_mapchange = wt_kelement:create( "MapChange", c_mapchange, e_mapchange, 86 )
-wt_core_state_idle:add( ke_mapchange )
+--wt_core_state_idle:add( ke_mapchange )
 wt_core_state_leader:add( ke_mapchange )
 wt_core_state_minion:add( ke_mapchange )
 
