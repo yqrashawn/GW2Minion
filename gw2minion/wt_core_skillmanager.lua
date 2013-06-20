@@ -325,7 +325,7 @@ function SkillMgr.SaveProfile()
 				if (_G["SKM_TNEff1_"..tostring(skID)] ) then string2write = string2write..("SKM_TNEff1_"..tostring(skID).."="..tostring(_G["SKM_TNEff1_"..tostring(skID)]).."\n") end
 				if (_G["SKM_TNEff2_"..tostring(skID)] ) then string2write = string2write..("SKM_TNEff2_"..tostring(skID).."="..tostring(_G["SKM_TNEff2_"..tostring(skID)]).."\n") end
 				
-				string2write = string2write..("SKM_END_"..tostring(skID).."="..tostring(0))
+				string2write = string2write..("SKM_END_"..tostring(skID).."="..tostring(0).."\n")
 				skID,skill = next (SkillMgr.SkillSet,skID)
 			end	
 			d(filewrite(SkillMgr.profilepath ..gSMprofile..".lua",string2write))
