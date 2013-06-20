@@ -1,7 +1,7 @@
 ﻿-- Skillmanager for adv. skill customization
 SkillMgr = { }
 SkillMgr.version = "v0.4";
-SkillMgr.profilepath = tostring(GetStartupPath()) .. [[\LuaMods\gw2minion\SkillManagerProfiles\]];
+SkillMgr.profilepath = GetStartupPath() .. [[\LuaMods\gw2minion\SkillManagerProfiles\]];
 SkillMgr.mainwindow = { name = strings[gCurrentLanguage].skillManager, x = 450, y = 50, w = 350, h = 350}
 SkillMgr.RecordSkillTmr = 0
 SkillMgr.SkillMgrTmr = 0
@@ -153,6 +153,7 @@ function SkillMgr.ModuleInit()
 	gSMPrioKit = Settings.GW2MINION.gSMPrioKit
 	gSMPrioAtt = Settings.GW2MINION.gSMPrioAtt
     gSMactive = Settings.GW2MINION.gSMactive
+	gSMnewname = ""
 	
 	SkillMgr.UpdateProfiles()
 	
@@ -186,7 +187,7 @@ function SkillMgr.OnUpdate( event, tick )
 		if (SkillMgr.RecordSkillTmr == 0 ) then
 			SkillMgr.RecordSkillTmr = tick
 		else
-			if ( tick - SkillMgr.RecordSkillTmr > 60000 or gSMprofile == nil or tostring(gSMprofile) == "None" or tostring(gSMprofile) == "") then -- max record 60seconds, to compensate smart users who leave it on -.-
+			if ( tick - SkillMgr.RecordSkillTmr > 60000 or gSMprofile == nil or gSMprofile == "None" or gSMprofile == "") then -- max record 60seconds, to compensate smart users who leave it on -.-
 				SkillMgr.RecordSkillTmr = 0
 				gSMRecactive = "0"
 			elseif ( tick - SkillMgr.SkillMgrTmr > 500 ) then
@@ -218,19 +219,31 @@ end
 --**** UI FUNCTIONS ****
 
 function SkillMgr.CreateNewProfile()
-	if ( gSMnewname ~= nil and tostring(gSMnewname) ~= "" and tostring(gSMnewname) ~= "None") then
-		-- Delete existing Skills
-		SkillMgr.ClearCurrentSkills()
+	if ( gSMnewname ~= nil and gSMnewname ~= "" and gSMnewname ~= "None") then		
 		-- Make sure Profile doesnt exist		
-		local profile = io.open(SkillMgr.profilepath ..tostring(gSMnewname)..".lua")
-		if ( profile ~= nil ) then				
-			wt_error("Profile with that Name exists already...")
-		else
-			-- Setup everything for new mesh
-			gSMprofile_listitems = gSMprofile_listitems..","..tostring(gSMnewname)
-			gSMprofile = tostring(gSMnewname)	
-			-- Create new profile-file
-			local file = io.open(SkillMgr.profilepath..tostring(gSMnewname)..".lua", "w")
+		local found = false		
+		local profilelist = dirlist(SkillMgr.profilepath,".*lua")
+		if ( TableSize(profilelist) > 0) then			
+			local i,profile = next ( profilelist)
+			while i and profile do				
+				profile = string.gsub(profile, ".lua", "")
+				--d("X: "..tostring(profile).." == "..tostring(gSMnewname))
+				if (profile == gSMnewname) then
+					wt_error("Profile with that Name exists already...")
+					found = true
+					break
+				end
+				i,profile = next ( profilelist,i)
+			end
+		end
+		
+		if not found then
+			-- Delete existing Skills
+			SkillMgr.ClearCurrentSkills()
+			gSMprofile_listitems = gSMprofile_listitems..","..gSMnewname
+			gSMprofile = gSMnewname	
+			-- Create new profile-file TODO: REPLACE WITH HANS's SAVING FUNCTION
+			local file = io.open(SkillMgr.profilepath..gSMnewname..".lua", "w")
 			if file then
 				wt_debug("Creating Profile file..")	
 								
@@ -239,118 +252,116 @@ function SkillMgr.CreateNewProfile()
 			else
 				wt_debug("Error creating new Profile file..")					
 			end
-		end			
+		end		
 	end
 end
 
 function SkillMgr.UpdateProfiles()
 	-- Grab all Profiles and enlist them in the dropdown field
 	local profiles = "None"
-	local found = "None"
-	local profilelist = io.popen("dir /b ".. tostring(SkillMgr.profilepath) .."*.lua")
-	if ( profilelist ~= nil ) then
-		for profile in profilelist:lines() do
-			profile = string.gsub(profile, ".lua", "")		
-			profiles = profiles..","..tostring(profile)			
-			if ( tostring(Settings.GW2MINION.gSMlastprofile) ~= nil and tostring(Settings.GW2MINION.gSMlastprofile) == tostring(profile) ) then
-				d("Last Profile found : "..tostring(profile))
+	local found = "None"	
+	local profilelist = dirlist(SkillMgr.profilepath,".*lua")
+	if ( TableSize(profilelist) > 0) then			
+		local i,profile = next ( profilelist)
+		while i and profile do				
+			profile = string.gsub(profile, ".lua", "")
+			--d("X: "..tostring(profile).." == "..tostring(gSMnewname))
+			profiles = profiles..","..profile
+			if ( Settings.GW2MINION.gSMlastprofile ~= nil and Settings.GW2MINION.gSMlastprofile == profile ) then
+				d("Last Profile found : "..profile)
 				found = profile
+				break
 			end
+			i,profile = next ( profilelist,i)
 		end
-		profilelist:close()
-	else 
+		
+	else
+		d("No Skillmanager profiles found")
 	end
-	wt_debug("ALL PROFILES: "..tostring(profiles))
 	gSMprofile_listitems = profiles
-	gSMprofile = tostring(found)
+	gSMprofile = found
 end
 
 function SkillMgr.SaveProfile()
-	-- Save current Profiledata into the Profile-file
-	if (gSMprofile ~= nil and tostring(gSMprofile) ~= "None" and tostring(gSMprofile) ~= "") then
-		local profile = io.open(SkillMgr.profilepath ..tostring(gSMprofile)..".lua", "w")
-		if ( profile ~= nil ) then	
-			d("Saving Profile Data into File: "..tostring(gSMprofile))
-			
+--TODO: SAVE FILE WITH C++
+	-- Save current Profiledata into the Profile-file 
+	if (gSMprofile ~= nil and gSMprofile ~= "None" and gSMprofile ~= "") then
+
+		d("Saving Profile Data into File: "..gSMprofile)
+			local string2write = ""
 			local skID,skill = next (SkillMgr.SkillSet)
 			while skID and skill do
 				--d("Saving SkillID :"..tostring(skID))				
-				if (_G["SKM_NAME_"..tostring(skID)] ) then profile:write("SKM_NAME_"..tostring(skID).."="..tostring(_G["SKM_NAME_"..tostring(skID)]).."\n") end
-				if (_G["SKM_ID_"..tostring(skID)] ) then profile:write("SKM_ID_"..tostring(skID).."="..tostring(_G["SKM_ID_"..tostring(skID)]).."\n") end				
-				if (_G["SKM_ON_"..tostring(skID)] ) then profile:write("SKM_ON_"..tostring(skID).."="..tostring(_G["SKM_ON_"..tostring(skID)]).."\n") end
-				if (_G["SKM_Prio_"..tostring(skID)] ) then profile:write("SKM_Prio_"..tostring(skID).."="..tostring(_G["SKM_Prio_"..tostring(skID)]).."\n") end
-				if (_G["SKM_LOS_"..tostring(skID)] ) then profile:write("SKM_LOS_"..tostring(skID).."="..tostring(_G["SKM_LOS_"..tostring(skID)]).."\n") end
-				if (_G["SKM_MinR_"..tostring(skID)] ) then profile:write("SKM_MinR_"..tostring(skID).."="..tostring(_G["SKM_MinR_"..tostring(skID)]).."\n") end
-				if (_G["SKM_MaxR_"..tostring(skID)] ) then profile:write("SKM_MaxR_"..tostring(skID).."="..tostring(_G["SKM_MaxR_"..tostring(skID)]).."\n") end
-				if (_G["SKM_GT_"..tostring(skID)] ) then profile:write("SKM_GT_"..tostring(skID).."="..tostring(_G["SKM_GT_"..tostring(skID)]).."\n") end
-				if (_G["SKM_TType_"..tostring(skID)] ) then profile:write("SKM_TType_"..tostring(skID).."="..tostring(_G["SKM_TType_"..tostring(skID)]).."\n") end
-				if (_G["SKM_OutOfCombat_"..tostring(skID)] ) then profile:write("SKM_OutOfCombat_"..tostring(skID).."="..tostring(_G["SKM_OutOfCombat_"..tostring(skID)]).."\n") end
+				if (_G["SKM_NAME_"..tostring(skID)] ) then string2write = string2write..("SKM_NAME_"..tostring(skID).."="..tostring(_G["SKM_NAME_"..tostring(skID)]).."\n") end
+				if (_G["SKM_ID_"..tostring(skID)] ) then string2write = string2write..("SKM_ID_"..tostring(skID).."="..tostring(_G["SKM_ID_"..tostring(skID)]).."\n") end				
+				if (_G["SKM_ON_"..tostring(skID)] ) then string2write = string2write..("SKM_ON_"..tostring(skID).."="..tostring(_G["SKM_ON_"..tostring(skID)]).."\n") end
+				if (_G["SKM_Prio_"..tostring(skID)] ) then string2write = string2write..("SKM_Prio_"..tostring(skID).."="..tostring(_G["SKM_Prio_"..tostring(skID)]).."\n") end
+				if (_G["SKM_LOS_"..tostring(skID)] ) then string2write = string2write..("SKM_LOS_"..tostring(skID).."="..tostring(_G["SKM_LOS_"..tostring(skID)]).."\n") end
+				if (_G["SKM_MinR_"..tostring(skID)] ) then string2write = string2write..("SKM_MinR_"..tostring(skID).."="..tostring(_G["SKM_MinR_"..tostring(skID)]).."\n") end
+				if (_G["SKM_MaxR_"..tostring(skID)] ) then string2write = string2write..("SKM_MaxR_"..tostring(skID).."="..tostring(_G["SKM_MaxR_"..tostring(skID)]).."\n") end
+				if (_G["SKM_GT_"..tostring(skID)] ) then string2write = string2write..("SKM_GT_"..tostring(skID).."="..tostring(_G["SKM_GT_"..tostring(skID)]).."\n") end
+				if (_G["SKM_TType_"..tostring(skID)] ) then string2write = string2write..("SKM_TType_"..tostring(skID).."="..tostring(_G["SKM_TType_"..tostring(skID)]).."\n") end
+				if (_G["SKM_OutOfCombat_"..tostring(skID)] ) then string2write = string2write..("SKM_OutOfCombat_"..tostring(skID).."="..tostring(_G["SKM_OutOfCombat_"..tostring(skID)]).."\n") end
 				
-				if (_G["SKM_PMove_"..tostring(skID)] ) then profile:write("SKM_PMove_"..tostring(skID).."="..tostring(_G["SKM_PMove_"..tostring(skID)]).."\n") end
-				if (_G["SKM_PHPL_"..tostring(skID)] ) then profile:write("SKM_PHPL_"..tostring(skID).."="..tostring(_G["SKM_PHPL_"..tostring(skID)]).."\n") end
-				if (_G["SKM_PHPB_"..tostring(skID)] ) then profile:write("SKM_PHPB_"..tostring(skID).."="..tostring(_G["SKM_PHPB_"..tostring(skID)]).."\n") end
-				if (_G["SKM_PPowL_"..tostring(skID)] ) then profile:write("SKM_PPowL_"..tostring(skID).."="..tostring(_G["SKM_PPowL_"..tostring(skID)]).."\n") end
-				if (_G["SKM_PEff1_"..tostring(skID)] ) then profile:write("SKM_PEff1_"..tostring(skID).."="..tostring(_G["SKM_PEff1_"..tostring(skID)]).."\n") end
-				if (_G["SKM_PEff2_"..tostring(skID)] ) then profile:write("SKM_PEff2_"..tostring(skID).."="..tostring(_G["SKM_PEff2_"..tostring(skID)]).."\n") end
-				if (_G["SKM_PNEff1_"..tostring(skID)] ) then profile:write("SKM_PNEff1_"..tostring(skID).."="..tostring(_G["SKM_PNEff1_"..tostring(skID)]).."\n") end
-				if (_G["SKM_PNEff2_"..tostring(skID)] ) then profile:write("SKM_PNEff2_"..tostring(skID).."="..tostring(_G["SKM_PNEff2_"..tostring(skID)]).."\n") end
-				if (_G["SKM_PPowB_"..tostring(skID)] ) then profile:write("SKM_PPowB_"..tostring(skID).."="..tostring(_G["SKM_PPowB_"..tostring(skID)]).."\n") end
+				if (_G["SKM_PMove_"..tostring(skID)] ) then string2write = string2write..("SKM_PMove_"..tostring(skID).."="..tostring(_G["SKM_PMove_"..tostring(skID)]).."\n") end
+				if (_G["SKM_PHPL_"..tostring(skID)] ) then string2write = string2write..("SKM_PHPL_"..tostring(skID).."="..tostring(_G["SKM_PHPL_"..tostring(skID)]).."\n") end
+				if (_G["SKM_PHPB_"..tostring(skID)] ) then string2write = string2write..("SKM_PHPB_"..tostring(skID).."="..tostring(_G["SKM_PHPB_"..tostring(skID)]).."\n") end
+				if (_G["SKM_PPowL_"..tostring(skID)] ) then string2write = string2write..("SKM_PPowL_"..tostring(skID).."="..tostring(_G["SKM_PPowL_"..tostring(skID)]).."\n") end
+				if (_G["SKM_PEff1_"..tostring(skID)] ) then string2write = string2write..("SKM_PEff1_"..tostring(skID).."="..tostring(_G["SKM_PEff1_"..tostring(skID)]).."\n") end
+				if (_G["SKM_PEff2_"..tostring(skID)] ) then string2write = string2write..("SKM_PEff2_"..tostring(skID).."="..tostring(_G["SKM_PEff2_"..tostring(skID)]).."\n") end
+				if (_G["SKM_PNEff1_"..tostring(skID)] ) then string2write = string2write..("SKM_PNEff1_"..tostring(skID).."="..tostring(_G["SKM_PNEff1_"..tostring(skID)]).."\n") end
+				if (_G["SKM_PNEff2_"..tostring(skID)] ) then string2write = string2write..("SKM_PNEff2_"..tostring(skID).."="..tostring(_G["SKM_PNEff2_"..tostring(skID)]).."\n") end
+				if (_G["SKM_PPowB_"..tostring(skID)] ) then string2write = string2write..("SKM_PPowB_"..tostring(skID).."="..tostring(_G["SKM_PPowB_"..tostring(skID)]).."\n") end
 				
-				if (_G["SKM_TMove_"..tostring(skID)] ) then profile:write("SKM_TMove_"..tostring(skID).."="..tostring(_G["SKM_TMove_"..tostring(skID)]).."\n") end
-				if (_G["SKM_THPL_"..tostring(skID)] ) then profile:write("SKM_THPL_"..tostring(skID).."="..tostring(_G["SKM_THPL_"..tostring(skID)]).."\n") end
-				if (_G["SKM_THPB_"..tostring(skID)] ) then profile:write("SKM_THPB_"..tostring(skID).."="..tostring(_G["SKM_THPB_"..tostring(skID)]).."\n") end
-				if (_G["SKM_TECount_"..tostring(skID)] ) then profile:write("SKM_TECount_"..tostring(skID).."="..tostring(_G["SKM_TECount_"..tostring(skID)]).."\n") end
-				if (_G["SKM_TERange_"..tostring(skID)] ) then profile:write("SKM_TERange_"..tostring(skID).."="..tostring(_G["SKM_TERange_"..tostring(skID)]).."\n") end
-				if (_G["SKM_TACount_"..tostring(skID)] ) then profile:write("SKM_TACount_"..tostring(skID).."="..tostring(_G["SKM_TACount_"..tostring(skID)]).."\n") end
-				if (_G["SKM_TARange_"..tostring(skID)] ) then profile:write("SKM_TARange_"..tostring(skID).."="..tostring(_G["SKM_TARange_"..tostring(skID)]).."\n") end
-				if (_G["SKM_TEff1_"..tostring(skID)] ) then profile:write("SKM_TEff1_"..tostring(skID).."="..tostring(_G["SKM_TEff1_"..tostring(skID)]).."\n") end
-				if (_G["SKM_TEff2_"..tostring(skID)] ) then profile:write("SKM_TEff2_"..tostring(skID).."="..tostring(_G["SKM_TEff2_"..tostring(skID)]).."\n") end
-				if (_G["SKM_TNEff1_"..tostring(skID)] ) then profile:write("SKM_TNEff1_"..tostring(skID).."="..tostring(_G["SKM_TNEff1_"..tostring(skID)]).."\n") end
-				if (_G["SKM_TNEff2_"..tostring(skID)] ) then profile:write("SKM_TNEff2_"..tostring(skID).."="..tostring(_G["SKM_TNEff2_"..tostring(skID)]).."\n") end
+				if (_G["SKM_TMove_"..tostring(skID)] ) then string2write = string2write..("SKM_TMove_"..tostring(skID).."="..tostring(_G["SKM_TMove_"..tostring(skID)]).."\n") end
+				if (_G["SKM_THPL_"..tostring(skID)] ) then string2write = string2write..("SKM_THPL_"..tostring(skID).."="..tostring(_G["SKM_THPL_"..tostring(skID)]).."\n") end
+				if (_G["SKM_THPB_"..tostring(skID)] ) then string2write = string2write..("SKM_THPB_"..tostring(skID).."="..tostring(_G["SKM_THPB_"..tostring(skID)]).."\n") end
+				if (_G["SKM_TECount_"..tostring(skID)] ) then string2write = string2write..("SKM_TECount_"..tostring(skID).."="..tostring(_G["SKM_TECount_"..tostring(skID)]).."\n") end
+				if (_G["SKM_TERange_"..tostring(skID)] ) then string2write = string2write..("SKM_TERange_"..tostring(skID).."="..tostring(_G["SKM_TERange_"..tostring(skID)]).."\n") end
+				if (_G["SKM_TACount_"..tostring(skID)] ) then string2write = string2write..("SKM_TACount_"..tostring(skID).."="..tostring(_G["SKM_TACount_"..tostring(skID)]).."\n") end
+				if (_G["SKM_TARange_"..tostring(skID)] ) then string2write = string2write..("SKM_TARange_"..tostring(skID).."="..tostring(_G["SKM_TARange_"..tostring(skID)]).."\n") end
+				if (_G["SKM_TEff1_"..tostring(skID)] ) then string2write = string2write..("SKM_TEff1_"..tostring(skID).."="..tostring(_G["SKM_TEff1_"..tostring(skID)]).."\n") end
+				if (_G["SKM_TEff2_"..tostring(skID)] ) then string2write = string2write..("SKM_TEff2_"..tostring(skID).."="..tostring(_G["SKM_TEff2_"..tostring(skID)]).."\n") end
+				if (_G["SKM_TNEff1_"..tostring(skID)] ) then string2write = string2write..("SKM_TNEff1_"..tostring(skID).."="..tostring(_G["SKM_TNEff1_"..tostring(skID)]).."\n") end
+				if (_G["SKM_TNEff2_"..tostring(skID)] ) then string2write = string2write..("SKM_TNEff2_"..tostring(skID).."="..tostring(_G["SKM_TNEff2_"..tostring(skID)]).."\n") end
 				
-				profile:write("SKM_END_"..tostring(skID).."="..tostring(0).."\n")
+				string2write = string2write..("SKM_END_"..tostring(skID).."="..tostring(0))
 				skID,skill = next (SkillMgr.SkillSet,skID)
-			end			
-			
-			profile:flush()
-			profile:close()
-		else
-			d("Error saving Profile: File not found!!")
-		end
+			end	
+			d(filewrite(SkillMgr.profilepath ..gSMprofile..".lua",string2write))
+
 	end	
 end
 
 function SkillMgr.DeleteCurrentProfile()	
 	-- Delete the currently selected Profile - file from the HDD
-	if (gSMprofile ~= nil and tostring(gSMprofile) ~= "None" and tostring(gSMprofile) ~= "") then
-		local profile = io.open(SkillMgr.profilepath ..tostring(gSMprofile)..".lua")
-		if ( profile ~= nil ) then	
-			d("Deleting current Profile: "..tostring(gSMprofile))
-			profile:flush()
-			profile:close()
-			os.remove(SkillMgr.profilepath ..tostring(gSMprofile)..".lua")	
-			-- updating dropdown list
-			SkillMgr.UpdateProfiles()			
-		end
+	if (gSMprofile ~= nil and gSMprofile ~= "None" and gSMprofile ~= "") then
+		d("Deleting current Profile: "..gSMprofile)
+		os.remove(SkillMgr.profilepath ..gSMprofile..".lua")	
+		SkillMgr.UpdateProfiles()	
 	end	
 end
 
 function SkillMgr.UpdateCurrentProfileData()
-	if ( gSMprofile ~= nil and tostring(gSMprofile) ~= "" and tostring(gSMprofile) ~= "None" ) then --and (tostring(gSMprofile) ~= tostring(Settings.GW2MINION.gSMlastprofile) or TableSize(SkillMgr.SkillSet) == 0)) then
-		local profile = io.open(SkillMgr.profilepath..tostring(gSMprofile)..".lua", "r")
-		if ( profile ) then	
+	if ( gSMprofile ~= nil and gSMprofile ~= "" and gSMprofile ~= "None" ) then --and (tostring(gSMprofile) ~= tostring(Settings.GW2MINION.gSMlastprofile) or TableSize(SkillMgr.SkillSet) == 0)) then
+		
+		local profile = fileread(SkillMgr.profilepath..gSMprofile..".lua")
+		if ( TableSize(profile) > 0) then
 			local unsortedSkillList = {}			
 			local newskill = {}
-			for line in profile:lines() do				
-				local _, key, skillID, value = string.match(tostring(line), "(%w+)_(%w+)_(%d+)=([%w%s]*)")
+	
+			local i, line = next (profile)
+			while i and line do
+				local _, key, skillID, value = string.match(line, "(%w+)_(%w+)_(%d+)=(.*)")
 				--d("key: "..tostring(key).." skillID:"..tostring(skillID) .." value:"..tostring(value))
 				if ( key and skillID and value ) then
+					value = string.gsub(value, "\r", "")
 					if ( key == "END" ) then
-						--d("Adding Skill :"..tostring(newskill.name).."Prio:"..tostring(newskill.Prio))
+						--d("Adding Skill :"..newskill.name.."Prio:"..tostring(newskill.Prio))
 						table.insert(unsortedSkillList,tonumber(newskill.Prio),newskill)						
 						newskill = {}
 					elseif ( key == "ID" )then newskill.contentID = tonumber(value)
-					elseif ( key == "NAME" )then newskill.name = tostring(value)
+					elseif ( key == "NAME" )then newskill.name = value
 					elseif ( key == "ON" )then newskill.ON = tostring(value)
 					elseif ( key == "Prio" )then newskill.Prio = tonumber(value)
 					elseif ( key == "LOS" )then newskill.los = tonumber(value)
@@ -384,11 +395,11 @@ function SkillMgr.UpdateCurrentProfileData()
 					
 					end
 				else
-					d("Error loading inputline: Key: "..tostring(key).." skillID:"..tostring(skillID) .." value:"..tostring(value))
-				end			
+					d("Error loading inputline: Key: "..(key).." skillID:"..tostring(skillID) .." value:"..tostring(value))
+				end
+				
+				i, line = next (profile,i)
 			end
-			profile:flush()
-			profile:close()
 			
 			-- Create UI Fields
 			local sortedSkillList = {}
@@ -407,8 +418,8 @@ function SkillMgr.UpdateCurrentProfileData()
 				end
 			end
 		else
-			d("Error: Can't read SkillProfile: "..tostring(gSMprofile))
-		end
+			d("Profile is empty..")
+		end		
 	else
 		d("No new SkillProfile selected!")		
 	end
@@ -430,68 +441,69 @@ function SkillMgr.CheckForNewSkills()
 		end
 	end
 end
-
+--TODO: CHANGE GUI ELEMENT FUNCTIONS TO WSTRING!
 function SkillMgr.CreateNewSkillEntry(skill)	
 	if (skill ~= nil ) then
 		local skname
 		if ( tonumber(skill.Prio) ~= nil and SkillMgr.CheckIfPriorityExists(skill.Prio) ) then
-			skname = "PRIORITY CONFLICT!!: "..tostring((skill.Prio or TableSize(SkillMgr.SkillSet)*100))..": "..tostring(skill.name)
+			skname = "PRIORITY CONFLICT!!: "..tostring(skill.Prio or TableSize(SkillMgr.SkillSet)*100)..": "..skill.name
 		else
-			skname = "Priority: "..tostring((skill.Prio or TableSize(SkillMgr.SkillSet)*100))..": "..tostring(skill.name)
+			skname = "Priority: "..tostring(skill.Prio or TableSize(SkillMgr.SkillSet)*100)..": "..skill.name
 		end
+		
 		local skID = skill.contentID
-		if ( tostring(skill.name) ~= "" and tonumber(skID) ~= nil) then			
+		if ( skill.name ~= "" and tonumber(skID) ~= nil) then			
 			
-			GUI_NewField(SkillMgr.mainwindow.name,"ID","SKM_ID_"..tostring(skID),tostring(skname))
+			GUI_NewField(SkillMgr.mainwindow.name,"ID","SKM_ID_"..tostring(skID),skname)
 			_G["SKM_ID_"..tostring(skID)] = skID
 			
 			-- NAME,
 			--GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].enabled,"SKM_NAME_"..tostring(skID),tostring(skname))
-			_G["SKM_NAME_"..tostring(skID)] = tostring(skill.name)
+			_G["SKM_NAME_"..tostring(skID)] = skill.name
 			
 			-- ENABLED
 			local skON = skill.ON or "1"
-			GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].enabled,"SKM_ON_"..tostring(skID),tostring(skname))
+			GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].enabled,"SKM_ON_"..tostring(skID),skname)
 			_G["SKM_ON_"..tostring(skID)] = tostring(skON)
 			
 			-- PRIORITY
 			local skPrio = skill.Prio or TableSize(SkillMgr.SkillSet)*100
-			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].priority,"SKM_Prio_"..tostring(skID),tostring(skname))
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].priority,"SKM_Prio_"..tostring(skID),skname)
 			_G["SKM_Prio_"..tostring(skID)] = skPrio
 			
 			-- REQUIRES LOS
 			local skLOS = skill.los or "Yes"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].los,"SKM_LOS_"..tostring(skID),tostring(skname),"Yes,No");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].los,"SKM_LOS_"..tostring(skID),skname,"Yes,No");
 			_G["SKM_LOS_"..tostring(skID)] = tostring(skLOS)
 			
 			-- MINRANGE
 			local skMinR = skill.minRange
-			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].minRange,"SKM_MinR_"..tostring(skID),tostring(skname))
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].minRange,"SKM_MinR_"..tostring(skID),skname)
 			_G["SKM_MinR_"..tostring(skID)] = skMinR
 			
 			-- MAXRANGE
 			local skMaxR = skill.maxRange
-			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].maxRange,"SKM_MaxR_"..tostring(skID),tostring(skname))
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].maxRange,"SKM_MaxR_"..tostring(skID),skname)
 			_G["SKM_MaxR_"..tostring(skID)] = skMaxR
 			
 			-- IS GROUND TARGETED
 			local skGT = skill.isGroundTargeted
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].isGroundTargeted,"SKM_GT_"..tostring(skID),tostring(skname),"false,true");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].isGroundTargeted,"SKM_GT_"..tostring(skID),skname,"false,true");
 			_G["SKM_GT_"..tostring(skID)] = tostring(skGT)
 			
 			-- TARGETTYPE
 			local skTType = skill.TType or "Enemy"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetType,"SKM_TType_"..tostring(skID),tostring(skname),"Enemy,Self");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetType,"SKM_TType_"..tostring(skID),skname,"Enemy,Self");
 			_G["SKM_TType_"..tostring(skID)] = tostring(skTType)
 			
 			-- USEOUTOFCOMBAT
 			local skOutOfCombat = skill.OutOfCombat or "No"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].useOutOfCombat,"SKM_OutOfCombat_"..tostring(skID),tostring(skname),"No,Yes,Either");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].useOutOfCombat,"SKM_OutOfCombat_"..tostring(skID),skname,"No,Yes,Either");
 			_G["SKM_OutOfCombat_"..tostring(skID)] = tostring(skOutOfCombat)
 			
 			-- PLAYER MOVING
 			local skPMove = skill.PMove or "Either"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerMoving,"SKM_PMove_"..tostring(skID),tostring(skname),"Either,Yes,No");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerMoving,"SKM_PMove_"..tostring(skID),skname,"Either,Yes,No");
 			_G["SKM_PMove_"..tostring(skID)] = tostring(skPMove)
 			
 			-- PLAYER >HEALTH PERCENT
@@ -516,25 +528,25 @@ function SkillMgr.CreateNewSkillEntry(skill)
 			
 			-- PLAYER HAS ANY EFFECT1
 			local skPEff1 = skill.PEff1 or "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerHas,"SKM_PEff1_"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerHas,"SKM_PEff1_"..tostring(skID),skname,"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_PEff1_"..tostring(skID)] = tostring(skPEff1)			
 			-- PLAYER HAS ANY EFFECT2
 			local skPEff2 = skill.PEff2 or "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orPlayerHas,"SKM_PEff2_"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orPlayerHas,"SKM_PEff2_"..tostring(skID),skname,"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_PEff2_"..tostring(skID)] = tostring(skPEff2)			
 			
 			-- PLAYER HAS NOT EFFECT1
 			local skPNEff1 = skill.PNEff1 or "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerHasNot,"SKM_PNEff1_"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerHasNot,"SKM_PNEff1_"..tostring(skID),skname,"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_PNEff1_"..tostring(skID)] = tostring(skPNEff1)			
 			-- PLAYER HAS NOT EFFECT2
 			local skPNEff2 = skill.PNEff2 or "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orPlayerHasNot ,"SKM_PNEff2_"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orPlayerHasNot ,"SKM_PNEff2_"..tostring(skID),skname,"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_PNEff2_"..tostring(skID)] = tostring(skPNEff2)	
 				
 			-- TARGET MOVING
 			local skTMove = skill.TMove or "Either"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetMoving,"SKM_TMove_"..tostring(skID),tostring(skname),"Either,Yes,No");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetMoving,"SKM_TMove_"..tostring(skID),skname,"Either,Yes,No");
 			_G["SKM_TMove_"..tostring(skID)] = tostring(skTMove)
 			
 			-- TARGET >HEALTH PERCENT
@@ -549,46 +561,46 @@ function SkillMgr.CreateNewSkillEntry(skill)
 			
 			-- NEAR TARGET ENEMIES COUNT
 			local skTECount = skill.TECount or 0
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].enemiesNearCount,"SKM_TECount_"..tostring(skID),tostring(skname),"0,1,2,3,4,5,6");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].enemiesNearCount,"SKM_TECount_"..tostring(skID),skname,"0,1,2,3,4,5,6");
 			_G["SKM_TECount_"..tostring(skID)] = tostring(skTECount)
 			
 			-- NEAR TARGET ENEMIES RANGE
 			local skTERange = skill.TERange or 0
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].enemiesNearRange,"SKM_TERange_"..tostring(skID),tostring(skname),"0,100,150,200,250,350,500,750");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].enemiesNearRange,"SKM_TERange_"..tostring(skID),skname,"0,100,150,200,250,350,500,750");
 			_G["SKM_TERange_"..tostring(skID)] = tostring(skTERange)
 			
 			-- NEAR TARGET ALLIES COUNT
 			local skTACount = skill.TACount or 0
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].alliesNearCount,"SKM_TACount_"..tostring(skID),tostring(skname),"0,1,2,3,4,5,6");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].alliesNearCount,"SKM_TACount_"..tostring(skID),skname,"0,1,2,3,4,5,6");
 			_G["SKM_TACount_"..tostring(skID)] = tostring(skTACount)
 			
 			-- NEAR TARGET ALLIES RANGE
 			local skTARange = skill.TARange or 0
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].alliesNearRange,"SKM_TARange_"..tostring(skID),tostring(skname),"0,100,200,300,400,500,600");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].alliesNearRange,"SKM_TARange_"..tostring(skID),skname,"0,100,200,300,400,500,600");
 			_G["SKM_TARange_"..tostring(skID)] = tostring(skTARange)
 			
 			-- TARGET HAS ANY EFFECT1
 			local skTEff1 = skill.TEff1 or "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetHas,"SKM_TEff1_"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetHas,"SKM_TEff1_"..tostring(skID),skname,"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_TEff1_"..tostring(skID)] = tostring(skTEff1)			
 			-- TARGET HAS ANY EFFECT2
 			local skTEff2 = skill.TEff2 or "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orTargetHas,"SKM_TEff2_"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orTargetHas,"SKM_TEff2_"..tostring(skID),skname,"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_TEff2_"..tostring(skID)] = tostring(skTEff2)			
 			
 			-- TARGET HAS NOT EFFECT1
 			local skTNEff1 = skill.TNEff1 or "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetHasNot,"SKM_TNEff1_"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetHasNot,"SKM_TNEff1_"..tostring(skID),skname,"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_TNEff1_"..tostring(skID)] = tostring(skTNEff1)			
 			-- TARGET HAS NOT EFFECT2
 			local skTNEff2 = skill.TNEff2 or "None"
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orTargetHasNot,"SKM_TNEff2_"..tostring(skID),tostring(skname),"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orTargetHasNot,"SKM_TNEff2_"..tostring(skID),skname,"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_TNEff2_"..tostring(skID)] = tostring(skTNEff2)
 			
 			
 			-- ADD MORE HERE
 			
-			SkillMgr.SkillSet[skID] = { name = tostring(skname) , prio = skPrio}
+			SkillMgr.SkillSet[skID] = { name = skname , prio = skPrio}
 		end
 	end
 end
@@ -608,7 +620,7 @@ function SkillMgr.ClearCurrentSkills()
 	local id,skill = next (SkillMgr.SkillSet)
 	while id and skill do
 		--d("Removing :"..tostring(skill.name))
-		GUI_Delete("SkillManager",tostring(skill.name))		
+		GUI_Delete("SkillManager",skill.name)		
 		id,skill = next (SkillMgr.SkillSet,id)
 	end
 	SkillMgr.SkillSet = {}
@@ -757,7 +769,7 @@ function SkillMgr.DoAction()
 	if ( target and (target.attitude == GW2.ATTITUDE.Friendly or target.attitude == Unattackable)) then
 		target = nil
 	else
-		--SkillMgr.SwapWeaponCheck("Pulse")
+		SkillMgr.SwapWeaponCheck("Pulse")
 	end
 
 	local skillID = SkillMgr.GetNextBestSkillID(-999999)
