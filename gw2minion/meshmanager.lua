@@ -267,8 +267,8 @@ function mm.RefreshCurrentMapData()
 			-- Load the mesh for our Map
 			if ( tonumber(mapID) ~= nil and Settings.GW2MINION.Zones~=nil and Settings.GW2MINION.Zones[tostring(mapID)] ~= nil ) then
 				gmapname = Settings.GW2MINION.Zones[tostring(mapID)].mapname
-				gmeshname = tostring(Settings.GW2MINION.Zones[tostring(mapID)].meshname)
-								
+				gmeshname = Settings.GW2MINION.Zones[tostring(mapID)].meshname
+				
 				if (Settings.GW2MINION.Zones[tostring(mapID)].waypointid == nil) then
 					gwaypointid = "none"			
 				else
