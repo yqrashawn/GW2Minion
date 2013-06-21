@@ -1,7 +1,7 @@
 ﻿-- Map & Meshmanager
 mm = { }
 mm.version = "v1.2";
-mm.navmeshfilepath = tostring(GetStartupPath()) .. [[\Navigation\]];
+mm.navmeshfilepath = GetStartupPath() .. [[\Navigation\]];
 mm.mainwindow = { name = strings[gCurrentLanguage].meshManager, x = 350, y = 100, w = 220, h = 250}
 mm.meshfiles = {}
 mm.currentmapdata = {} 
@@ -105,7 +105,18 @@ function mm.ModuleInit()
 	--Grab all meshfiles in our Navigation directory
 	local count = 0
 	local meshlist = "none"
-	for meshfile in io.popen('dir /b "' .. mm.navmeshfilepath ..'*.obj"'):lines() do
+	local meshfilelist = dirlist(mm.navmeshfilepath,".*obj")
+	if ( TableSize(meshfilelist) > 0) then
+		local i,meshname = next ( meshfilelist)
+		while i and meshname do
+			meshname = string.gsub(meshname, ".obj", "")
+			table.insert(mm.meshfiles, meshname)
+			meshlist = meshlist..","..meshname
+			i,meshname = next ( meshfilelist,i)
+		end
+	end
+	
+	--[[for meshfile in io.popen('dir /b "' .. mm.navmeshfilepath ..'*.obj"'):lines() do
 		meshfile = string.gsub(meshfile, ".obj", "")		
 		if (io.open(mm.navmeshfilepath..tostring(meshfile)..".obj")) then
 			local file = io.open(mm.navmeshfilepath..tostring(meshfile)..".obj", "r")
@@ -117,7 +128,7 @@ function mm.ModuleInit()
 				count = count + 1
 			end
 		end
-	end
+	end]]
 		
 	gMeshEditor = "0"
 	if (Settings.GW2MINION.gnewmeshname == nil) then
@@ -127,20 +138,18 @@ function mm.ModuleInit()
 	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].newMeshName,"gnewmeshname",strings[gCurrentLanguage].editor)
 	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].newMesh,"newMeshEvent",strings[gCurrentLanguage].editor)
 	GUI_NewComboBox(mm.mainwindow.name,strings[gCurrentLanguage].recordMode,"grecMode",strings[gCurrentLanguage].editor,strings[gCurrentLanguage].mousePlayer);	
-	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].optimizeMesh,"optimizeMeshEvent",strings[gCurrentLanguage].editor)
+	--GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].optimizeMesh,"optimizeMeshEvent",strings[gCurrentLanguage].editor)
 	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].saveMesh,"saveMeshEvent",strings[gCurrentLanguage].editor)
 	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].buildNAVMesh,"buildMeshEvent",strings[gCurrentLanguage].editor)
 	
 	
 	RegisterEventHandler("newMeshEvent",mm.CreateNewMesh)
-	RegisterEventHandler("optimizeMeshEvent",mm.OptimizeMesh)
+	--RegisterEventHandler("optimizeMeshEvent",mm.OptimizeMesh)
 	RegisterEventHandler("saveMeshEvent",mm.SaveMesh)
 	RegisterEventHandler("buildMeshEvent",mm.BuildMesh)
     RegisterEventHandler("getWaypointEvent",mm.GetWaypoint)
 
-	--d(meshlist)
-	--local meshlist = dirlist(GetStartupPath() .. [[\Navigation\]],".*obj")	
-	--d(meshlist)
+
 	gmeshname_listitems = meshlist
 	gmapname = ""
 	gwaypointid = ""
@@ -166,21 +175,24 @@ function mm.CreateNewMesh()
 	
 	if ( gnewmeshname ~= nil and gnewmeshname ~= "" ) then
 		-- Make sure file doesnt exist
-		local found = false
-		for meshfile in io.popen('dir /b "' .. mm.navmeshfilepath ..'*.obj"'):lines() do
-			meshfile = string.gsub(meshfile, ".obj", "")		
-			if (tostring(meshfile) == tostring(gnewmeshname)) then
-				wt_error("Mesh with that Name exists already...")
-				found = true
-				break
+		local found = false		
+		local meshfilelist = dirlist(mm.navmeshfilepath,".*obj")
+		if ( TableSize(meshfilelist) > 0) then
+			local i,meshname = next ( meshfilelist)
+			while i and meshname do
+				meshname = string.gsub(meshname, ".obj", "")
+				if (meshname == gnewmeshname) then
+					wt_error("Mesh with that Name exists already...")
+					found = true
+					break
+				end
+				i,meshname = next ( meshfilelist,i)
 			end
-			meshfile.flush()
-			meshfile.close()
 		end
 		if (not found) then
 			-- Setup everything for new mesh
-			gmeshname_listitems = gmeshname_listitems..","..tostring(gnewmeshname)
-			gmeshname = tostring(gnewmeshname)
+			gmeshname_listitems = gmeshname_listitems..","..gnewmeshname
+			gmeshname = gnewmeshname
 			mm.SaveMesh()
 			mm.ChangeNavMesh(gmeshname)
 		end
@@ -189,15 +201,16 @@ function mm.CreateNewMesh()
 	end
 end
 
+--[[ obsolete with meshassistant
 function mm.OptimizeMesh()
 	wt_debug("Optimizing Mesh...")
 	wt_debug("Result: "..tostring(NavigationManager:OptimizeMesh()))
-end
+end]]
 
 function mm.SaveMesh()
 	wt_debug("Saving NavMesh...")
-	if (gmeshname ~= nil and tostring(gmeshname) ~= "" and tostring(gmeshname) ~= "none") then
-		wt_debug("Result: "..tostring(NavigationManager:SaveNavMesh(towstring(gmeshname))))
+	if (gmeshname ~= nil and gmeshname ~= "" and gmeshname ~= "none") then
+		wt_debug("Result: "..tostring(NavigationManager:SaveNavMesh(gmeshname)))
 	else
 		wt_error("gmeshname is empty!?")
 	end	
@@ -205,8 +218,8 @@ end
 
 function mm.BuildMesh()
 	wt_debug("Building NAV-Meshfile...")
-	if (gmeshname ~= nil and tostring(gmeshname) ~= "" and tostring(gmeshname) ~= "none") then
-		wt_debug("Result: "..tostring(NavigationManager:LoadNavMesh(towstring(gmeshname))))
+	if (gmeshname ~= nil and gmeshname ~= "" and gmeshname ~= "none") then
+		wt_debug("Result: "..tostring(NavigationManager:LoadNavMesh(gmeshname)))
 	else
 		wt_error("gmeshname is empty!?")
 	end
@@ -217,21 +230,21 @@ function mm.ChangeNavMesh(newmesh)
 	local mapID = Player:GetLocalMapID()
 	if ( Settings.GW2MINION.Zones[tostring(mapID)] == nil) then
 		if (mm.Zones[mapID] == nil) then
-			Settings.GW2MINION.Zones[tostring(mapID)] = { mapname="unknown", meshname=tostring(newmesh), waypointid="none", useinswitcher = "0"} 
+			Settings.GW2MINION.Zones[tostring(mapID)] = { mapname="unknown", meshname=newmesh, waypointid="none", useinswitcher = "0"} 
 			gmapname = "Unknown"
 			gwaypointid = "none"
             guseinswitcher = "0"
 		else
-			Settings.GW2MINION.Zones[tostring(mapID)] = { mapname=tostring(mm.Zones[mapID]), meshname=tostring(newmesh), waypointid="none", useinswitcher = "0" } 
-			gmapname = tostring(mm.Zones[mapID])
+			Settings.GW2MINION.Zones[tostring(mapID)] = { mapname=mm.Zones[mapID], meshname=newmesh, waypointid="none", useinswitcher = "0" } 
+			gmapname = mm.Zones[mapID]
 			gwaypointid = "none"
             guseinswitcher = "0"
 		end
 	else	
-		if (tostring(Settings.GW2MINION.Zones[tostring(mapID)].meshname) ~= tostring(newmesh)) then
+		if (Settings.GW2MINION.Zones[tostring(mapID)].meshname ~= newmesh) then
 			mm.currentmapdata.mapID = nil -- make it reload the navmesh since it changed
 		end
-		Settings.GW2MINION.Zones[tostring(mapID)].meshname = tostring(newmesh)		
+		Settings.GW2MINION.Zones[tostring(mapID)].meshname = newmesh		
 		gmapname = Settings.GW2MINION.Zones[tostring(mapID)].mapname
 		if (Settings.GW2MINION.Zones[tostring(mapID)].waypointid == nil) then
 			Settings.GW2MINION.Zones[tostring(mapID)].waypointid = "none"
@@ -246,7 +259,7 @@ function mm.ChangeNavMesh(newmesh)
 			guseinswitcher = tostring(Settings.GW2MINION.Zones[tostring(mapID)].useinswitcher)
 		end
 	end	
-	gmeshname = tostring(newmesh)	
+	gmeshname = newmesh	
 	Settings.GW2MINION.Zones = Settings.GW2MINION.Zones -- save settings
 	
 	gMeshMGR = "1"
@@ -279,29 +292,27 @@ function mm.RefreshCurrentMapData()
 				else
 					guseinswitcher = tostring(Settings.GW2MINION.Zones[tostring(mapID)].useinswitcher)
 				end		
-				if (gmeshname ~= nil and tostring(gmeshname) ~= "" and tostring(gmeshname) ~= "none") then				
-					local path = GetStartupPath().."\\Navigation\\"..tostring(gmeshname)
-					if (io.open(tostring(path)..".obj")) then
-						if (NavigationManager:IsNavMeshLoaded()) then
-							wt_debug("Unloading Old Navmesh...")
-							NavigationManager:UnloadNavMesh()
-						else
-							wt_debug("Auto-Loading Navmesh " ..tostring(gmeshname))
-							wt_core_state_combat.StopCM()
-							wt_global_information.Reset()
-							wt_core_taskmanager.ClearTasks()
-							if (NavigationManager:LoadNavMesh(path)) then
-								mm.currentmapdata.mapID = mapID	
-								GUI_CloseMarkerInspector()	
-								return true
-							end
-						end
+				if (gmeshname ~= nil and gmeshname ~= "" and gmeshname ~= "none") then				
+					local path = mm.navmeshfilepath..gmeshname
+					if (NavigationManager:IsNavMeshLoaded()) then
+						wt_debug("Unloading Old Navmesh...")
+						NavigationManager:UnloadNavMesh()
 					else
-						wt_error("ERROR: Can't open the file: "..tostring(gmeshname))
+						wt_debug("Auto-Loading Navmesh " ..gmeshname)
+						wt_core_state_combat.StopCM()
+						wt_global_information.Reset()
+						wt_core_taskmanager.ClearTasks()
+						if (NavigationManager:LoadNavMesh(path)) then
+							mm.currentmapdata.mapID = mapID	
+							GUI_CloseMarkerInspector()	
+							return true
+						else
+							d("Error loading Navmesh: "..path)
+						end
 					end	
 				else				
 					wt_debug("Please select a NavMesh for this Zone in the MeshManager")
-					gmapname = tostring(Settings.GW2MINION.Zones[tostring(mapID)].mapname)
+					gmapname = Settings.GW2MINION.Zones[tostring(mapID)].mapname
 					gmeshname = "none"
 					gwaypointid = "none"
                     guseinswitcher = "0"
@@ -336,14 +347,12 @@ function mm.UnloadNavMesh()
 end
 
 function mm.LoadNavMesh(filename)	
-	wt_debug("Loading Navmesh: " ..tostring(filename))
-	local path = GetStartupPath().."\\Navigation\\"..tostring(filename)
-	if (io.open(tostring(path)..".obj")) then
-		NavigationManager:LoadNavMesh(path)
-		GUI_CloseMarkerInspector()
-		return true
-	end
-	return false
+	wt_debug("Loading Navmesh: " ..filename)
+	local path = mm.navmeshfilepath..filename
+	local result = false
+	result = NavigationManager:LoadNavMesh(path)
+	GUI_CloseMarkerInspector()
+	return result
 end
 
 function mm.GetWaypoint()
@@ -352,9 +361,18 @@ function mm.GetWaypoint()
         local id, wp = next(wpList)
         if (id ~= nil) then
             local newWP = WaypointList:Get(id)
-            gwaypointid = tostring(newWP.contentID)
-            Settings.GW2MINION.Zones[tostring(Player:GetLocalMapID())].waypointid = gwaypointid
-            Settings.GW2MINION.Zones = Settings.GW2MINION.Zones
+			if ( newWP ) then
+				gwaypointid = tostring(newWP.contentID)
+				local lmapID = Player:GetLocalMapID()
+				if (tonumber(lmapID ~= nil) ) then
+					if ( Settings.GW2MINION.Zones[tostring(lmapID)] ) then
+						Settings.GW2MINION.Zones[tostring(lmapID)].waypointid = gwaypointid
+						Settings.GW2MINION.Zones = Settings.GW2MINION.Zones
+					else
+						Settings.GW2MINION.Zones[tostring(lmapID)] = { mapname="unknown", meshname="none", waypointid=gwaypointid, useinswitcher = "0"}
+					end
+				end
+			end
         end
     end
 end
@@ -391,7 +409,7 @@ function mm.GUIVarUpdate(Event, NewVals, OldVals)
 	GUI_RefreshWindow(mm.mainwindow.name)
 end
 
-
+--[[ not used anymore 
 function mm.GenerateInfoFile( )	
 	if (gnewmeshname ~= nil and NavigationManager:IsNavMeshLoaded()) then
 		if (io.open(mm.navmeshfilepath..tostring(gnewmeshname)..".obj")) then
@@ -420,7 +438,7 @@ function mm.GenerateInfoFile( )
 	else
 		wt_debug("YOU NEED TO LOAD THE NAVMESH FIRST, AND LEARN TO READ LOL")
 	end
-end
+end]]
 
 --*************************************************************************************************************
 -- ChangeMap Cause/Effect
