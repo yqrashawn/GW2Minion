@@ -231,12 +231,8 @@ function wt_core_taskmanager:Update_Tasks( )
 								wt_core_taskmanager:addEventTask( i, event, priority)
 							end	
 						elseif ( nearestdragonholo ~= nil ) then
-							-- Add task for the closest dragonhologram						
-							if (gDragonHoloFarming == "1") then 
-								wt_core_taskmanager:addDragonHologramTask( nearestdragonholo , 4250  )
-							else
-								wt_core_taskmanager:addDragonHologramTask( nearestdragonholo , 650 )
-							end
+							-- Add task for the closest dragonhologram	
+							wt_core_taskmanager:addDragonHologramTask( nearestdragonholo , 650 )							
 						end
 					end										
 				end

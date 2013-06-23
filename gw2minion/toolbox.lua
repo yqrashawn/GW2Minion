@@ -5,18 +5,25 @@ tb.running = false
 tb.visible = false
 tb.lastrun = 0
 
-function tb.ModuleInit() 	
+function tb.ModuleInit() 
+
+	if (Settings.GW2MINION.WvW_Loot == nil) then
+		Settings.GW2MINION.WvW_Loot = "0"
+	end
+	
 	GUI_NewWindow("ToolBox", 450, 100, 200, 300)	
 	GUI_NewButton("ToolBox","AutoUnpackAllBags","TB.unpack", "Bags_Supplies")
 	GUI_NewButton("ToolBox","AutoSalvageAllItems","TB.salvage", "Bags_Supplies")
 	GUI_NewButton("ToolBox","SupplyRun","TB.supplyRun","Bags_Supplies")
-	GUI_NewSeperator("ToolBox")
+
+	GUI_NewCheckbox("ToolBox","AutoLoot WvW Bags","WvW_Loot","WvWvW")
+	
 	GUI_NewButton("ToolBox","devmonitor","TB.eventmon","Dev")
 	GUI_NewButton("ToolBox","Minions,(Re)load Mesh","TB.reload","Dev")
 	GUI_NewField("ToolBox","Meshname:","greloadmesh", "Dev");
 	GUI_NewButton("ToolBox","PrintItemDataID","TB.printID","Dev")
 	GUI_NewField("ToolBox","ItemName:","tb_itemname","Dev")
-	GUI_NewSeperator("ToolBox")
+
 	GUI_NewButton("ToolBox","GetInteractableTarget","TB.getInteractableTarget","NPC")
 	GUI_NewButton("ToolBox","GetTarget","TB.getTarget","NPC")
 	GUI_NewButton("ToolBox","SetTarget","TB.setTarget","NPC")
@@ -25,7 +32,7 @@ function tb.ModuleInit()
 	GUI_NewButton("ToolBox","GetConversationOptions","TB.getConversationOptions","NPC")
 	GUI_NewButton("ToolBox","SelectConversationOption","TB.selectConversationOption","NPC")
 	GUI_NewField("ToolBox","Option Number:","tb_option","NPC")
-	GUI_NewSeperator("ToolBox")
+
 	GUI_NewButton("ToolBox","PlayerPosition","TB.playerPosition","Movement")
 	GUI_NewButton("ToolBox","MoveTo","TB.moveTo","Movement")
 	GUI_NewButton("ToolBox","Teleport","TB.teleport","Movement")
@@ -36,9 +43,11 @@ function tb.ModuleInit()
 	GUI_FoldGroup("ToolBox","Dev")
 	GUI_FoldGroup("ToolBox","NPC")
 	GUI_WindowVisible("ToolBox",false)
-	tb_itemname = "          "
-	tb_target = "            "
+	tb_itemname = ""
+	tb_target = ""
 
+	WvW_Loot = Settings.GW2MINION.WvW_Loot
+	
 end
 
 function tb.ToggleMenu()
@@ -148,13 +157,17 @@ end
 
 function tb.OnUpdate( event, tickcount )
 	if (tb.running ) then	
-		if (tickcount - tb.lastrun > 150) then
+		if (tickcount - tb.lastrun > 250) then
 			tb.lastrun = tickcount				
 			if (wt_core_taskmanager.current_task ~= nil) then
 				wt_core_taskmanager:DoTask()								
 			else			
 				tb.running = false				
-			end			
+			end	
+
+			if ( WvW_Loot == "1" ) then
+				tb.CheckForWvWLoot()
+			end
 		end	
 	end
 end
@@ -376,6 +389,28 @@ function tb.MinionsloadMesh()
 		MultiBotSend( "50;"..greloadmesh,"gw2minion" )
 	end
 end
+
+-- <3 Urguwno
+function tb.CheckForWvWLoot()
+    loot = (GadgetList("maxdistance=160"))
+    if (loot ~= nil ) then
+        id,gadgettableentry = next(loot, nil)
+        while id do
+            if (id ~= nil) and (id ~= 0) then
+                if (gadgettableentry ~= nil) and (gadgettableentry ~= 0) then
+                    if (gadgettableentry.gatherable ~= true) and (gadgettableentry.type == 3) then
+                        if (CharacterList:Get(id) == nil) then
+                            Player:Use(id)
+                            return
+                        end
+                    end
+                end
+            end
+        id,gadgettableentry = next(loot, id)
+        end
+    end
+end
+
 
 RegisterEventHandler("TB.printID", tb.PrintDataID)
 RegisterEventHandler("TB.toggle", tb.ToggleMenu)

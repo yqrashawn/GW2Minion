@@ -115,21 +115,7 @@ function mm.ModuleInit()
 			i,meshname = next ( meshfilelist,i)
 		end
 	end
-	
-	--[[for meshfile in io.popen('dir /b "' .. mm.navmeshfilepath ..'*.obj"'):lines() do
-		meshfile = string.gsub(meshfile, ".obj", "")		
-		if (io.open(mm.navmeshfilepath..tostring(meshfile)..".obj")) then
-			local file = io.open(mm.navmeshfilepath..tostring(meshfile)..".obj", "r")
-			if ( file ) then					
-				table.insert(mm.meshfiles, meshfile)
-				file:flush()
-				file:close()					
-				meshlist = meshlist..","..tostring(meshfile)								
-				count = count + 1
-			end
-		end
-	end]]
-		
+			
 	gMeshEditor = "0"
 	if (Settings.GW2MINION.gnewmeshname == nil) then
 		Settings.GW2MINION.gnewmeshname = ""

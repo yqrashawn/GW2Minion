@@ -8,6 +8,7 @@ SkillMgr.SkillMgrTmr = 0
 SkillMgr.DoActionTmr = 0
 SkillMgr.SwapTmr = 0
 SkillMgr.SwapRTmr = 0
+SkillMgr.SwapCDTmr = 0
 SkillMgr.SwapWeaponTable = {}
 SkillMgr.UIRefreshTmr = 0
 SkillMgr.UIneedsRefresh = false
@@ -165,6 +166,8 @@ function SkillMgr.ModuleInit()
 	RegisterEventHandler("newSMProfileEvent",SkillMgr.CreateNewProfile)
 	RegisterEventHandler("refreshSMSkillListEvent",SkillMgr.RefreshCurrentSkillList)
   	
+	GUI_WindowVisible(SkillMgr.mainwindow.name,false)
+	SetZoom(3000)
 end
 
 function SkillMgr.GUIVarUpdate(Event, NewVals, OldVals)
@@ -364,7 +367,7 @@ function SkillMgr.UpdateCurrentProfileData()
 					elseif ( key == "NAME" )then newskill.name = value
 					elseif ( key == "ON" )then newskill.ON = tostring(value)
 					elseif ( key == "Prio" )then newskill.Prio = tonumber(value)
-					elseif ( key == "LOS" )then newskill.los = tonumber(value)
+					elseif ( key == "LOS" )then newskill.los = tostring(value)
 					elseif ( key == "MinR" )then newskill.minRange = tonumber(value)
 					elseif ( key == "MaxR" )then newskill.maxRange = tonumber(value)
 					elseif ( key == "GT" )then newskill.isGroundTargeted = tostring(value)
@@ -879,22 +882,21 @@ function SkillMgr.DoAction()
 						SkillMgr.SwapWeaponCheck("CoolDown")
 					end
 					
-					local sp = Player:GetCurrentlyCastedSpell()
 					-- CAST Self check
 					if ( tostring(_G["SKM_TType_"..tostring(skillID)]) == "Self" ) then						
-						if ( not Player:IsCasting() or sp ~= SkillMgr.cskills[i].slot ) then
+						if (SkillMgr.CanCast()) then
 							Player:CastSpell(SkillMgr.cskills[i].slot)
+							--d("Casting on Self: "..tostring(SkillMgr.cskills[i].name))
+							return
 							--	Player:LeaveCombatState()
-						end
-						--d("Casting on Self: "..tostring(SkillMgr.cskills[i].name))
-						return
+						end		
 					else
 						if ( target and target.id ) then							
-							if ( not Player:IsCasting() or sp ~= SkillMgr.cskills[i].slot ) then							
+							if (SkillMgr.CanCast()) then--sp ~= SkillMgr.cskills[i].slot ) then							
 								Player:CastSpell(SkillMgr.cskills[i].slot,target.id)								
-							end
-							--d("Casting on Enemy: "..tostring(SkillMgr.cskills[i].name))
-							return
+								--d("Casting on Enemy: "..tostring(SkillMgr.cskills[i].name))
+								return
+							end		
 						end
 					end					
 				end
@@ -908,31 +910,39 @@ function SkillMgr.DoAction()
 	end	
 end
 
+function SkillMgr.CanCast()	
+	local currspellslot = Player:GetCurrentlyCastedSpell()	
+	if ( (not Player:IsCasting() or currspellslot == GW2.SKILLBARSLOT.Slot_1 or currspellslot == GW2.SKILLBARSLOT.None ) and currspellslot ~= GW2.SKILLBARSLOT.Slot_6) then 
+		return true
+	end	
+	return false
+end
+
 function SkillMgr.SwapWeaponCheck(swaptype)
-	
 	if ( gSMSwapA == "1" and (SkillMgr.SwapTmr == 0 or SkillMgr.DoActionTmr - SkillMgr.SwapTmr > 500) ) then -- prevent hammering
-		
+				
 		-- Swap after random Time
-		if ( swaptype == "Pulse" and gSMSwapR == "1" and (SkillMgr.SwapRTmr == 0 or SkillMgr.DoActionTmr - SkillMgr.SwapRTmr > math.random(2000,5000))) then
+		if ( swaptype == "Pulse" and gSMSwapR == "1" and (SkillMgr.SwapRTmr == 0 or SkillMgr.DoActionTmr - SkillMgr.SwapRTmr > math.random(2000,5000)) and SkillMgr.CanCast()) then
 			SkillMgr.SwapRTmr = SkillMgr.DoActionTmr
 			SkillMgr.SwapWeapon(swaptype)
-			--d(swaptype)
+			d(swaptype)
 			return
 		end
 		
 		-- Swap when skills 2-5 are on CD
-		if ( swaptype == "CoolDown" and gSMSwapCD == "1" and math.random(0,1) == 1) then
+		if ( swaptype == "CoolDown" and gSMSwapCD == "1" and math.random(0,1) == 1 and (SkillMgr.SwapCDTmr == 0 or SkillMgr.DoActionTmr - SkillMgr.SwapCDTmr > math.random(2000,5000))and SkillMgr.CanCast())  then
+			SkillMgr.SwapCDTmr = SkillMgr.DoActionTmr
 			SkillMgr.SwapRTmr = SkillMgr.DoActionTmr
 			SkillMgr.SwapWeapon(swaptype)
-			--d(swaptype)
+			d(swaptype)
 			return
 		end
 		
 		-- Swap when our target is out of range for the current weapon
-		if ( swaptype == "Range" and gSMSwapRange == "1" and math.random(0,1) == 1) then
+		if ( swaptype == "Range" and gSMSwapRange == "1" and math.random(0,1) == 1 and SkillMgr.CanCast()) then
 			SkillMgr.SwapRTmr = SkillMgr.DoActionTmr
 			SkillMgr.SwapWeapon(swaptype)
-			--d(swaptype)
+			d(swaptype)
 			return
 		end
 		
@@ -967,7 +977,7 @@ function SkillMgr.SwapWeapon(swaptype)
 			end
 		end		
 		local key = math.random(#availableKits)
-		--d("KEYSIZE "..tostring(#availableKits).. " choosen: "..tostring(key))
+		d("KEYSIZE "..tostring(#availableKits).. " choosen: "..tostring(key))
 		--d("Slot: " ..tostring(availableKits[key]))
 		if ( key ~= 1 ) then
 			Player:CastSpell(availableKits[key])
@@ -1018,7 +1028,8 @@ function SkillMgr.c_SMattack_default:evaluate()
 end
 function SkillMgr.e_SMattack_default:execute()
 	--SkillMgr.SelectTarget() TODO: handle multibottargetselect
-	SkillMgr.DoAction()
+	SkillMgr.DoActionTmr = wt_global_information.Now 
+	SkillMgr.DoAction()	
 end
 
 

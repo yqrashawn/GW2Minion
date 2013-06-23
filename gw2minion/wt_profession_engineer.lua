@@ -101,7 +101,7 @@ function wt_profession_engineer.e_attack_default:execute()
 		if ( TID ~= 0 ) then
 			local T = CharacterList:Get(TID)
 			if ( T ~= nil ) then		
-				--wt_debug("attacking " .. wt_core_state_combat.CurrentTarget .. " Distance " .. T.distance)
+				wt_debug("attacking " .. wt_core_state_combat.CurrentTarget .. " Distance " .. T.distance)
 				local TPos = T.pos
 				Player:SetFacing(TPos.x, TPos.y, TPos.z)
 				local s1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
