@@ -8,8 +8,8 @@ SkillMgr.SkillMgrTmr = 0
 SkillMgr.DoActionTmr = 0
 SkillMgr.SwapTmr = 0
 SkillMgr.SwapRTmr = 0
-SkillMgr.SwapCDTmr = 0
 SkillMgr.SwapWeaponTable = {}
+SkillMgr.SpellIsCast = false
 SkillMgr.UIRefreshTmr = 0
 SkillMgr.UIneedsRefresh = false
 SkillMgr.visible = false
@@ -200,7 +200,7 @@ function SkillMgr.OnUpdate( event, tick )
 		end	
 	end
 	if ( not wt_core_controller.shouldRun and gSMactive == "1" ) then		
-		if	( tick - SkillMgr.DoActionTmr > 250 ) then
+		if	( tick - SkillMgr.DoActionTmr > 150 ) then
 			SkillMgr.DoActionTmr = tick
 			if ( Player.healthstate == GW2.HEALTHSTATE.Defeated ) then return end
 			SkillMgr.SelectTarget()
@@ -636,19 +636,19 @@ function SkillMgr.SelectTarget()
 		local TargetList
 		if (gSMmode == "Attack Everything") then
 			if ( gsMtargetmode == "Autotarget Weakest" )then 
-				TargetList = CharacterList( "lowesthealth,los,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+150)			
+				TargetList = CharacterList( "lowesthealth,los,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)			
 			elseif( gsMtargetmode == "Autotarget Closest" ) then
 				TargetList = CharacterList( "nearest,los,attackable,alive,noCritter,maxdistance=1500")--..wt_global_information.AttackRange)
 			elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
-				TargetList = CharacterList( "clustered=300,los,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+150)				
+				TargetList = CharacterList( "clustered=300,los,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)				
 			end
 		else
 			if ( gsMtargetmode == "Autotarget Weakest" )then 
-				TargetList = CharacterList( "lowesthealth,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+150)			
+				TargetList = CharacterList( "lowesthealth,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)			
 			elseif( gsMtargetmode == "Autotarget Closest" ) then
-				TargetList = CharacterList( "nearest,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+150)
+				TargetList = CharacterList( "nearest,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)
 			elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
-				TargetList = CharacterList( "clustered=300,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+150)				
+				TargetList = CharacterList( "clustered=300,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)				
 			end
 		end
 		if ( TableSize ( TargetList ) > 0 )then
@@ -688,19 +688,19 @@ function SkillMgr.SelectTarget()
 				-- No LOS
 				if (gSMmode == "Attack Everything") then
 					if ( gsMtargetmode == "Autotarget Weakest" )then 
-						TargetList = CharacterList( "lowesthealth,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+150)			
+						TargetList = CharacterList( "lowesthealth,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)			
 					elseif( gsMtargetmode == "Autotarget Closest" ) then
 						TargetList = CharacterList( "nearest,attackable,alive,noCritter,maxdistance=1500")--..wt_global_information.AttackRange)
 					elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
-						TargetList = CharacterList( "clustered=300,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+150)				
+						TargetList = CharacterList( "clustered=300,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)				
 					end
 				else
 					if ( gsMtargetmode == "Autotarget Weakest" )then 
-						TargetList = CharacterList( "lowesthealth,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+150)			
+						TargetList = CharacterList( "lowesthealth,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)			
 					elseif( gsMtargetmode == "Autotarget Closest" ) then
-						TargetList = CharacterList( "nearest,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+150)
+						TargetList = CharacterList( "nearest,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)
 					elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
-						TargetList = CharacterList( "clustered=300,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+150)				
+						TargetList = CharacterList( "clustered=300,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)				
 					end
 				end
 				if ( TableSize ( TargetList ) > 0 )then
@@ -776,10 +776,13 @@ function SkillMgr.DoAction()
 	end
 
 	local skillID = SkillMgr.GetNextBestSkillID(-999999)
-	while skillID do
+	local mybuffs = Player.buffs
+	SkillMgr.SpellIsCast = SkillMgr.IsOtherSpellCurrentlyCast()
+	
+	while not SkillMgr.SpellIsCast and skillID do
 		for i = 1, 16, 1 do		
 			if (SkillMgr.cskills[i] and SkillMgr.cskills[i].contentID == tonumber(skillID) and tostring(_G["SKM_ON_"..tostring(skillID)]) == "1" ) then -- we have the skill in our current skilldeck				
-				--d(tostring(Player:GetCurrentlyCastedSpell()).." IC: "..tostring(Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1)).." IS1cast: "..tostring(Player:IsSpellCurrentlyCast(GW2.SKILLBARSLOT.Slot_1)).." X:"..tostring(Player:IsCasting()))
+				--d(tostring(Player:GetCurrentlyCastedSpell()).." IC: "..tostring(Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3)).." IS1cast: "..tostring(Player:IsSpellCurrentlyCast(GW2.SKILLBARSLOT.Slot_3)).." X:"..tostring(Player:IsCasting()))
 	
 				local castable = true
 				
@@ -798,7 +801,7 @@ function SkillMgr.DoAction()
 					and (not target
 						or (tostring(_G["SKM_LOS_"..tostring(skillID)]) == "Yes" and not target.los)
 						or (tonumber(_G["SKM_MinR_"..tostring(skillID)]) > 0 and target.distance < tonumber(_G["SKM_MinR_"..tostring(skillID)]))
-						or (tonumber(_G["SKM_MaxR_"..tostring(skillID)]) > 0 and target.distance > tonumber(_G["SKM_MaxR_"..tostring(skillID)]))
+						or (tonumber(_G["SKM_MaxR_"..tostring(skillID)]) > 0 and target.distance > tonumber(_G["SKM_MaxR_"..tostring(skillID)])+25)
 						or (tostring(_G["SKM_TMove_"..tostring(skillID)]) == "No" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving)
 						or (tostring(_G["SKM_PMove_"..tostring(skillID)]) == "Yes" and target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving)
 						or (tonumber(_G["SKM_THPL_"..tostring(skillID)]) > 0 and tonumber(_G["SKM_THPL_"..tostring(skillID)]) > target.health.percent)
@@ -815,7 +818,7 @@ function SkillMgr.DoAction()
 				
 				-- PLAYER BUFF CHECKS
 				if ( castable and (tostring(_G["SKM_PEff1_"..tostring(skillID)]) ~= "None" or tostring(_G["SKM_PEff2_"..tostring(skillID)]) ~= "None" or tostring(_G["SKM_PNEff1_"..tostring(skillID)]) ~= "None" or tostring(_G["SKM_PNEff2_"..tostring(skillID)]) ~= "None") )then 
-					local mybuffs = Player.buffs
+					
 					if ( mybuffs ) then
 						local E1 = SkillMgr.BuffEnum[tostring(_G["SKM_PEff1_"..tostring(skillID)])]
 						local E2 = SkillMgr.BuffEnum[tostring(_G["SKM_PEff2_"..tostring(skillID)])]
@@ -884,7 +887,7 @@ function SkillMgr.DoAction()
 					
 					-- CAST Self check
 					if ( tostring(_G["SKM_TType_"..tostring(skillID)]) == "Self" ) then						
-						if (SkillMgr.CanCast()) then
+						if (SkillMgr.CanCast() and SkillMgr.cskills[i].slot ) then
 							Player:CastSpell(SkillMgr.cskills[i].slot)
 							--d("Casting on Self: "..tostring(SkillMgr.cskills[i].name))
 							return
@@ -912,9 +915,20 @@ end
 
 function SkillMgr.CanCast()	
 	local currspellslot = Player:GetCurrentlyCastedSpell()	
-	if ( (not Player:IsCasting() or currspellslot == GW2.SKILLBARSLOT.Slot_1 or currspellslot == GW2.SKILLBARSLOT.None ) and currspellslot ~= GW2.SKILLBARSLOT.Slot_6) then 
+	if ( (not Player:IsCasting() or currspellslot == GW2.SKILLBARSLOT.Slot_1 or currspellslot == GW2.SKILLBARSLOT.None) and currspellslot ~= GW2.SKILLBARSLOT.Slot_6 and not SkillMgr.SpellIsCast) then 
 		return true
 	end	
+	return false
+end
+
+-- This is needed b/c this check is more precise than Player:IsCasting()
+function SkillMgr.IsOtherSpellCurrentlyCast()	
+	for i = 0, 15, 1 do
+		--if ( i ~= 5 and Player:IsSpellCurrentlyCast(i)) then		
+		if ( Player:IsSpellCurrentlyCast(i)) then		
+			return true
+		end
+	end
 	return false
 end
 
@@ -922,27 +936,27 @@ function SkillMgr.SwapWeaponCheck(swaptype)
 	if ( gSMSwapA == "1" and (SkillMgr.SwapTmr == 0 or SkillMgr.DoActionTmr - SkillMgr.SwapTmr > 500) ) then -- prevent hammering
 				
 		-- Swap after random Time
-		if ( swaptype == "Pulse" and gSMSwapR == "1" and (SkillMgr.SwapRTmr == 0 or SkillMgr.DoActionTmr - SkillMgr.SwapRTmr > math.random(2000,5000)) and SkillMgr.CanCast()) then
+		if ( swaptype == "Pulse" and gSMSwapR == "1" and (SkillMgr.SwapRTmr == 0 or SkillMgr.DoActionTmr - SkillMgr.SwapRTmr > math.random(3000,6000)) and SkillMgr.CanCast()) then
 			SkillMgr.SwapRTmr = SkillMgr.DoActionTmr
+			SkillMgr.SwapTmr = SkillMgr.DoActionTmr			
 			SkillMgr.SwapWeapon(swaptype)
-			d(swaptype)
+			--d(swaptype)
 			return
 		end
 		
 		-- Swap when skills 2-5 are on CD
-		if ( swaptype == "CoolDown" and gSMSwapCD == "1" and math.random(0,1) == 1 and (SkillMgr.SwapCDTmr == 0 or SkillMgr.DoActionTmr - SkillMgr.SwapCDTmr > math.random(2000,5000))and SkillMgr.CanCast())  then
-			SkillMgr.SwapCDTmr = SkillMgr.DoActionTmr
-			SkillMgr.SwapRTmr = SkillMgr.DoActionTmr
+		if ( swaptype == "CoolDown" and gSMSwapCD == "1" and math.random(0,1) == 1 and SkillMgr.CanCast())  then
+			SkillMgr.SwapTmr = SkillMgr.DoActionTmr
 			SkillMgr.SwapWeapon(swaptype)
-			d(swaptype)
+			--d(swaptype)
 			return
 		end
 		
 		-- Swap when our target is out of range for the current weapon
-		if ( swaptype == "Range" and gSMSwapRange == "1" and math.random(0,1) == 1 and SkillMgr.CanCast()) then
-			SkillMgr.SwapRTmr = SkillMgr.DoActionTmr
+		if ( swaptype == "Range" and gSMSwapRange == "1" and SkillMgr.CanCast()) then
+			SkillMgr.SwapTmr = SkillMgr.DoActionTmr
 			SkillMgr.SwapWeapon(swaptype)
-			d(swaptype)
+			--d(swaptype)
 			return
 		end
 		
@@ -1027,7 +1041,7 @@ function SkillMgr.c_SMattack_default:evaluate()
 	return false
 end
 function SkillMgr.e_SMattack_default:execute()
-	--SkillMgr.SelectTarget() TODO: handle multibottargetselect
+	--SkillMgr.SelectTarget() TODO: handle multibottargetselect, Player:SetFacing(TPos.x, TPos.y, TPos.z) `??
 	SkillMgr.DoActionTmr = wt_global_information.Now 
 	SkillMgr.DoAction()	
 end
