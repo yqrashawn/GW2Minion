@@ -267,7 +267,7 @@ function mm.RefreshCurrentMapData()
 			if ( tonumber(mapID) ~= nil and Settings.GW2MINION.Zones~=nil and Settings.GW2MINION.Zones[tostring(mapID)] ~= nil ) then
 				gmapname = Settings.GW2MINION.Zones[tostring(mapID)].mapname
 				gmeshname = Settings.GW2MINION.Zones[tostring(mapID)].meshname
-								
+				
 				if (Settings.GW2MINION.Zones[tostring(mapID)].waypointid == nil) then
 					gwaypointid = "none"			
 				else
@@ -357,6 +357,7 @@ function mm.GetWaypoint()
 					else
 						Settings.GW2MINION.Zones[tostring(lmapID)] = { mapname="unknown", meshname="none", waypointid=gwaypointid, useinswitcher = "0"}
 					end
+					Settings.GW2MINION.Zones = Settings.GW2MINION.Zones
 				end
 			end
         end
@@ -442,6 +443,9 @@ e_mapchange.throttle 		= 5000
 e_mapchange.attempts 		= 0
 
 function c_mapchange:evaluate()
+	if (gEnableSwitcher == "0") then
+		return false
+	end
     -- If we are minion then our min/max switch time is irrelevant and we do not control switching
 	if  (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() ~= 1) then
         gminswitchtime = "***"
