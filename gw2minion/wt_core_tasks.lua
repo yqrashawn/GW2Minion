@@ -101,7 +101,9 @@ end
 ------------------------------------------------------------------
 -- Fight at HeartQuest Task
 function wt_core_taskmanager:addHeartQuestTask( quest )
-	
+	if not quest or quest == nil then
+		return
+	end
 	local newtask = inheritsFrom( wt_task )
 	newtask.UID = "HeartQuest"..tostring(math.floor(quest.pos.x))
 	newtask.timestamp = wt_global_information.Now				
@@ -245,7 +247,9 @@ end
 ------------------------------------------------------------------
 -- Explore Point Of Interest Task
 function wt_core_taskmanager:addSkillChallengeTask( char )
-	
+	if not char or char == nil then
+		return
+	end
 		local newtask = inheritsFrom( wt_task )
 		newtask.UID = "SkillCh"..tostring(char.agentID)
 		newtask.timestamp = wt_global_information.Now				
@@ -334,6 +338,9 @@ end
 
 -- Kill Enemy Character Task - P:3000-3500
 function wt_core_taskmanager:addKillTask( ID, character, Prio )
+	if not character or character == nil then
+		return
+	end
 	local newtask = inheritsFrom( wt_task )
 	newtask.UID = "KILL"..tostring(ID)
 	newtask.timestamp = wt_global_information.Now
@@ -373,6 +380,9 @@ end
 
 -- Kill Enemy Gadget Task - P:3000-3500
 function wt_core_taskmanager:addKillGadgetTask( ID, gadget, Prio )
+	if not gadget or gadget == nil then
+		return
+	end
 	local newtask = inheritsFrom( wt_task )
 	newtask.UID = "KILL"..tostring(ID)
 	newtask.timestamp = wt_global_information.Now
@@ -1178,8 +1188,10 @@ end
 
 
 -- Do Event Task - P:4000
-function wt_core_taskmanager:addEventTask( ID,event, prio )
-
+function wt_core_taskmanager:addEventTask( ID, event, prio )
+	if not event or event == nil then
+		return
+	end
 	local newtask = inheritsFrom( wt_task )
 	newtask.UID = "Event"..tostring(event.eventID)
 	newtask.timestamp = wt_global_information.Now				
@@ -1437,6 +1449,9 @@ end
 
 
 function wt_core_taskmanager:addDragonHologramTask( marker , prio)
+	if not marker or marker == nil then
+		return
+	end
 	local newtask = inheritsFrom( wt_task )
 	newtask.UID = "DragonHolo"..tostring(math.floor(marker.pos.x))
 	newtask.timestamp = wt_global_information.Now				
