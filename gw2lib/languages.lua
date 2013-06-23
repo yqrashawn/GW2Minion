@@ -304,7 +304,9 @@ strings =
         maMarkerSelectToEdit            = "Select To Edit",
         maMarkerNewName                 = "NewMarker",
         maMarkerGroupDetails            = "Details",
-        maMarkerGroupAllMarkers         = "All Markers"
+        maMarkerGroupAllMarkers         = "All Markers",
+        maDontTouchLoadedMesh           = "Don't Touch Loaded Mesh",
+        maEdgeHitCheckPoints            = "Edge Hit Check Points"
     },
     ["de"] = 
         { 
@@ -577,7 +579,9 @@ strings =
         maMarkerSelectToEdit            = "Select To Edit",
         maMarkerNewName                 = "NewMarker",
         maMarkerGroupDetails            = "Details",
-        maMarkerGroupAllMarkers         = "All Markers"
+        maMarkerGroupAllMarkers         = "All Markers",
+        maDontTouchLoadedMesh           = "Don't Touch Loaded Mesh",
+        maEdgeHitCheckPoints            = "Edge Hit Check Points"
     },
     ["fr"] = 
        { 
@@ -850,7 +854,9 @@ strings =
         maMarkerSelectToEdit            = "Select To Edit",
         maMarkerNewName                 = "NewMarker",
         maMarkerGroupDetails            = "Details",
-        maMarkerGroupAllMarkers         = "All Markers"
+        maMarkerGroupAllMarkers         = "All Markers",
+        maDontTouchLoadedMesh           = "Don't Touch Loaded Mesh",
+        maEdgeHitCheckPoints            = "Edge Hit Check Points"
     },
     ["ru"] = 
         { 
@@ -1123,7 +1129,9 @@ strings =
         maMarkerSelectToEdit            = "Select To Edit",
         maMarkerNewName                 = "NewMarker",
         maMarkerGroupDetails            = "Details",
-        maMarkerGroupAllMarkers         = "All Markers"
+        maMarkerGroupAllMarkers         = "All Markers",
+        maDontTouchLoadedMesh           = "Don't Touch Loaded Mesh",
+        maEdgeHitCheckPoints            = "Edge Hit Check Points"
     },
     ["cn"] = 
         { 
@@ -1396,7 +1404,9 @@ strings =
         maMarkerSelectToEdit            = "Select To Edit",
         maMarkerNewName                 = "NewMarker",
         maMarkerGroupDetails            = "Details",
-        maMarkerGroupAllMarkers         = "All Markers"
+        maMarkerGroupAllMarkers         = "All Markers",
+        maDontTouchLoadedMesh           = "Don't Touch Loaded Mesh",
+        maEdgeHitCheckPoints            = "Edge Hit Check Points"
     }
 }
   
