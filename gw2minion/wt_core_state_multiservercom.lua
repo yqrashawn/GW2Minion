@@ -196,7 +196,7 @@ function HandleMultiBotMessages( event, message, channel )
                         elseif ( tonumber(msgID) == 21 ) then
 							if ( Player:GetRole() == 1) then
                                 if ( gEnableSwitcher == "1" ) then
-                                    wt_debug( "Sending Leader's MeshSwitcher Time: "..tostring(msg) )
+                                    --wt_debug( "Sending Leader's MeshSwitcher Time: "..tostring(mm.switchTime) )
                                     MultiBotSend( "20;"..tostring(mm.switchTime),"gw2minion" )						
                                 end
 							end
