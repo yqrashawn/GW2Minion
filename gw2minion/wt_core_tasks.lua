@@ -353,10 +353,10 @@ function wt_core_taskmanager:addKillTask( ID, character, Prio )
 	function newtask:execute()				
 		local ntarget = CharacterList:Get(tonumber(newtask.ID))
 		if ( ntarget ~= nil and ntarget.distance < 4000 and ntarget.alive and ntarget.onmesh) then
-			wt_debug(tostring(newtask.name))
+			--wt_debug(newtask.name)
 			if (tonumber(newtask.ID) ~= nil) then
 				if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then
-					MultiBotSend( "5;"..tonumber(newtask.ID),"gw2minion" ) -- Set FocusTarget for Minions
+					MultiBotSend( "5;"..tostring(newtask.ID),"gw2minion" ) -- Set FocusTarget for Minions
 				end
 				wt_core_state_combat.setTarget( tonumber(newtask.ID) )
 				wt_core_controller.requestStateChange( wt_core_state_combat )
@@ -395,10 +395,10 @@ function wt_core_taskmanager:addKillGadgetTask( ID, gadget, Prio )
 	function newtask:execute()				
 		local ntarget = GadgetList:Get(tonumber(newtask.ID))
 		if ( ntarget ~= nil and ntarget.distance < 4000 and ntarget.alive and (ntarget.attitude == 1 or ntarget.attitude == 2) and ntarget.onmesh) then
-			wt_debug(tostring(newtask.name))
+			--wt_debug((newtask.name))
 			if (tonumber(newtask.ID) ~= nil) then
 				if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then
-					MultiBotSend( "7;"..tonumber(newtask.ID),"gw2minion" ) -- Set FocusTarget for Minions
+					MultiBotSend( "7;"..tostring(newtask.ID),"gw2minion" ) -- Set FocusTarget for Minions
 				end
 				wt_core_state_gcombat.setTarget( tonumber(newtask.ID) )
 				wt_debug("GOING TO KILL THAT GADGET")
@@ -460,7 +460,7 @@ function wt_core_taskmanager:addGotoPosTask( pos, prio )
 						local index, player  = next( party )
 						while ( index ~= nil and player ~= nil ) do			
 							if (player.distance > 1500 and player.onmesh) then
-								MultiBotSend( "100;"..tonumber(Player.characterID),"gw2minion" ) -- Minions follow Leader									
+								MultiBotSend( "100;"..tostring(Player.characterID),"gw2minion" ) -- Minions follow Leader									
 								break
 							end
 							index, player  = next( party,index )
@@ -492,7 +492,7 @@ function wt_core_taskmanager:addGotoPosTask( pos, prio )
 					end
 					if (not canvendor) then
 						wt_debug("Waiting for our whole party to get to me....")
-						MultiBotSend( "100;"..tonumber(Player.characterID),"gw2minion" ) -- Minions follow Leader
+						MultiBotSend( "100;"..tostring(Player.characterID),"gw2minion" ) -- Minions follow Leader
 						newtask.name = "Waiting..."
 						return
 					else
@@ -1364,7 +1364,7 @@ function wt_core_taskmanager:addEventTask( ID, event, prio )
 										newtask.waiting = false
 										if( Player:GetCurrentlyCastedSpell() == 17 ) then
 											Player:Interact(npcID)
-											wt_debug("Reviving NPC: "..tostring(E.name))
+											wt_debug("Reviving NPC: "..(E.name))
 											return
 										end
 									end

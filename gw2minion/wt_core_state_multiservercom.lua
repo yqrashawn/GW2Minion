@@ -47,9 +47,9 @@ function HandleMultiBotMessages( event, message, channel )
 					
 					-- PARTYMANAGER
 					elseif ( tonumber(msgID) == 300 ) then -- Leader sends Minion his Name						
-						if (tostring(msg) ~= nil and Player:GetRole() ~= 1) then
+						if (msg ~= nil and Player:GetRole() ~= 1) then
 							--wt_debug("Recieved Partyleader Name :"..tostring(msg))
-							wt_core_partymanager.leaderName = tostring(msg)							
+							wt_core_partymanager.leaderName = msg						
 						end
 					
 					elseif ( tonumber(msgID) == 301 ) then -- Leader sends Minion his MapID						
@@ -229,11 +229,11 @@ function HandleMultiBotMessages( event, message, channel )
 							end	
 							
 						-- DEV
-						elseif ( tonumber(msgID) == 50 ) then -- Tell Minions to Load a Mesh
+						elseif ( tonumber(msgID) == 50 and msg ~= nil) then -- Tell Minions to Load a Mesh
 							if ( Player:GetRole() ~= 1 ) then
 								--wt_debug( "Leader sais we need should (re)load our navmesh :"..tostring(msg) )
 								mm.UnloadNavMesh()
-								mm.LoadNavMesh(tostring(msg))
+								mm.LoadNavMesh(msg)
 							end	
 						
 						

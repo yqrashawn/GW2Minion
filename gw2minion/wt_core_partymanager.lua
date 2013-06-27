@@ -219,16 +219,16 @@ function wt_core_partymanager.CheckGroupStatus()
 			local idx, pname  = next( setupparty )
 			while ( idx ~= nil and pname ~= nil ) do
 				local found = false
-				if (tostring(pname) ~= tostring(myname) and tostring(pname) ~= "none" and tostring(pname) ~= "") then
+				if ((pname) ~= (myname) and (pname) ~= "none" and (pname) ~= "") then
 					local index, player  = next( party )
 					while ( index ~= nil and player ~= nil ) do			
-						if (tostring(player.name) == tostring(pname)) then
+						if ((player.name) == (pname)) then
 							found = true
 							break
 						end
 						index, player  = next( party,index )
 					end
-					if ( not found and wt_core_partymanager.MSGblacklist[tostring(pname)] == nil) then	
+					if ( not found and wt_core_partymanager.MSGblacklist[(pname)] == nil) then	
 						SendChatMsg(8,"/invite "..pname)
 						dParty = "Inviting "..pname
 						wt_debug("Inviting "..pname)
@@ -292,15 +292,15 @@ function wt_core_partymanager.WaypointToLeadersMap()
 				if (wt_core_partymanager.MSGblacklist[tostring(wt_core_partymanager.leaderWPID)] == nil) then
 					if ( wt_core_mapdata[tonumber(wt_core_partymanager.leaderMapID)] ~= nil ) then
 						if ( wt_core_mapdata[tonumber(wt_core_partymanager.leaderMapID)].waypoint[tonumber(wt_core_partymanager.leaderWPID)] ~= nil) then
-							local wpname = tostring(wt_core_mapdata[tonumber(wt_core_partymanager.leaderMapID)].waypoint[tonumber(wt_core_partymanager.leaderWPID)].name)
-							wt_debug("Porting to Waypoint :"..tostring(wpname))
-							dParty = tostring("Porting to Waypoint :"..tostring(wpname))
+							local wpname = (wt_core_mapdata[tonumber(wt_core_partymanager.leaderMapID)].waypoint[tonumber(wt_core_partymanager.leaderWPID)].name)
+							wt_debug("Porting to Waypoint :"..(wpname))
+							dParty = ("Porting to Waypoint :"..(wpname))
 							wt_core_partymanager.MSGblacklist[tostring(wt_core_partymanager.leaderWPID)] = wt_core_partymanager.lasttick
 							Player:TeleportToWaypoint(tonumber(wt_core_partymanager.leaderWPID))
 						end
 					else
 						wt_debug("Unknown MapID found :"..tostring(wt_core_partymanager.leaderMapID))
-						dParty = tostring("Porting to Unknown Waypoint :"..tostring(wpname))
+						dParty = ("Porting to Unknown Waypoint :"..(wpname))
 						wt_core_partymanager.MSGblacklist[tostring(wt_core_partymanager.leaderWPID)] = wt_core_partymanager.lasttick
 						Player:TeleportToWaypoint(tonumber(wt_core_partymanager.leaderWPID))
 					end	

@@ -106,7 +106,21 @@ function devmonitor.ClearFields()
 	GUI_NewField("devmonitor","UKNH","UH","EventInfo")
 	GUI_NewField("devmonitor","UKNI","UI","EventInfo")
 	GUI_FoldGroup("devmonitor","EventInfo");
+	
+
+	GUI_NewField("devmonitor","Type","mtype","MarkerInfo")
+	GUI_NewField("devmonitor","Markertype","Markermtype","MarkerInfo")
+	GUI_NewField("devmonitor","WorldMType","Markerwmtype","MarkerInfo")	
+	GUI_NewField("devmonitor","Agent ID","MarkercharID","MarkerInfo")
+	GUI_NewField("devmonitor","Marker ID","MarkerID","MarkerInfo")
+	GUI_NewField("devmonitor","Quest ID","MarkerquestID","MarkerInfo")
+	GUI_NewField("devmonitor","pos.x","MPosX","MarkerInfo")
+	GUI_NewField("devmonitor","pos.y","MPosY","MarkerInfo")
+	GUI_NewField("devmonitor","pos.z","MPosZ","MarkerInfo")
+	GUI_NewField("devmonitor","Distance","Mdist","MarkerInfo")
+	
 	GUI_WindowVisible("devmonitor",false)
+	
 end
 			
 function devmonitor.UpdateWindow()
@@ -274,6 +288,25 @@ function devmonitor.UpdateWindow()
 				EG = "none"
 			end
 			
+
+		end
+	end
+	
+	--local mlist = MapMarkerList("nearest")
+	local mlist = MapObjectList("nearest")
+	if (mlist ~= nil) then	
+		local i,event = next(mlist)
+		if (i~=nil and event~=nil) then			
+			mtype = tostring(event.type)
+			Markermtype = tostring(event.markertype)
+			Markerwmtype = tostring(event.worldmarkertype)			
+			MarkercharID = tostring(event.characterID)
+			MarkerEventID = tostring(event.eventID)
+			MarkerquestID = tostring(event.questID)
+			MPosX = math.floor(event.pos.x)
+			MPosY = math.floor(event.pos.y)
+			MPosZ = math.floor(event.pos.z)
+			Mdist = math.floor(event.distance)
 
 		end
 	end

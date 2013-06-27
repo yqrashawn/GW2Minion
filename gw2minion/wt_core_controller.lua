@@ -88,6 +88,7 @@ function wt_core_controller:execute()
 			effect.first_execution = 0					
 			if ( gGW2MinionEffect ~= nil ) then
 			gGW2MinionEffect = effect.name
+			GUI_SetStatusBar(effect.name)
 			end
 			--wt_debug( "execute:" .. effect.name .. " (P:"..effect.priority..")" )
 			effect:execute()

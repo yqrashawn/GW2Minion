@@ -20,8 +20,7 @@ end
 
 function wt_debug( OutString )
 	if ( gEnableLog ~= nil and gEnableLog == "1" ) then
-		d( tostring( OutString ) )
-		GUI_SetStatusBar(tostring(OutString))
+		d( tostring( OutString ) )		
 	end
 end
 

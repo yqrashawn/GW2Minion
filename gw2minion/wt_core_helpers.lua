@@ -164,7 +164,7 @@ end
 
 function wt_core_helpers:UpdateMapObject(objectType)
     if (objectType == "sellMerchant") then
-        local list = MapObjectList("onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
+        local list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
         if (TableSize(list) > 0) then
             local id, object = next(list)
             if (id and object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
@@ -173,7 +173,7 @@ function wt_core_helpers:UpdateMapObject(objectType)
         end
     elseif (objectType == "buyMerchant") then
         local bestMerchant = nil
-        local list = MapObjectList("onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
+        local list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
         if (TableSize(list) > 0) then
             local id, object = next(list)
             while (id ~= nil) do
@@ -190,7 +190,7 @@ function wt_core_helpers:UpdateMapObject(objectType)
             wt_core_helpers.MapObjects["buyMerchant"] = bestMerchant
         end
     elseif (objectType == "repairMerchant") then
-        local list = MapObjectList("onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant)
+        local list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant)
         if (TableSize(list) > 0) then
             local id, object = next(list)
             if (id and object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
@@ -208,8 +208,8 @@ function wt_core_helpers:IsInPartyList(name)
 		if ( TableSize(partylist) > 0 ) then	
 			local index, player  = next( partylist )
 			while ( index ~= nil and player ~= nil ) do			
-				if (tostring(player) ~= "none" and tostring(player) ~= "") then
-					if (tostring(player) == tostring(name)) then
+				if (player ~= "none" and player ~= "") then
+					if (player == name) then
 						return true
 					end
 				end
@@ -226,8 +226,8 @@ function wt_core_helpers:IsInAvoidList(name)
 		if ( TableSize(avoidlist) > 0 ) then	
 			local index, player  = next( avoidlist )
 			while ( index ~= nil and player ~= nil ) do			
-				if (tostring(player) ~= "none" and tostring(player) ~= "") then
-					if (tostring(player) == tostring(name)) then
+				if (player ~= "none" and player ~= "") then
+					if (player == name) then
 						return true
 					end
 				end

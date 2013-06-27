@@ -622,7 +622,7 @@ end
 function SkillMgr.ClearCurrentSkills()
 	local id,skill = next (SkillMgr.SkillSet)
 	while id and skill do
-		--d("Removing :"..tostring(skill.name))
+		--d("Removing :"..(skill.name))
 		GUI_Delete("SkillManager",skill.name)		
 		id,skill = next (SkillMgr.SkillSet,id)
 	end

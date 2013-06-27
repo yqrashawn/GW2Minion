@@ -194,8 +194,8 @@ function wt_global_information.OnUpdateCutscene(event, tickcount )
 end
 
 -- Module Event Handler
-function gw2minion.HandleInit()
-	wt_debug("received Module.Initalize")
+function gw2minion.HandleInit()	
+	GUI_SetStatusBar("Initalizing Modules...")
 	GUI_NewWindow(wt_global_information.MainWindow.Name,wt_global_information.MainWindow.x,wt_global_information.MainWindow.y,wt_global_information.MainWindow.width,wt_global_information.MainWindow.height)
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnStart.Name , wt_global_information.BtnStart.Event)
 	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].pulseTime,"gGW2MinionPulseTime",strings[gCurrentLanguage].botStatus );	
@@ -287,6 +287,7 @@ function gw2minion.HandleInit()
 	
 	
 	wt_debug("GUI Setup done")
+	GUI_SetStatusBar("Ready...")
 	wt_core_controller.requestStateChange(wt_core_state_idle)
 end
 
@@ -351,7 +352,7 @@ end
 function wt_global_information.UpdateMultiServerStatus() 
 	if ( MultiBotIsConnected()) then
 		if (gStats_enabled == "1") then
-			MultiBotSend("name=" .. tostring(Player.name) .."("..tostring(Player.level)..")","setval");
+			MultiBotSend("name=" .. (Player.name) .."("..tostring(Player.level)..")","setval");
 			MultiBotSend("health=" .. tostring(math.floor(Player.health.current)),"setval");
 			MultiBotSend("maxhealth=" .. tostring(Player.health.max),"setval");
 			MultiBotSend("healthstate=" .. tostring(Player.healthstate),"setval");
@@ -366,7 +367,7 @@ function wt_global_information.UpdateMultiServerStatus()
 			if (TID ~= nil and TID ~= 0 and wt_core_controller.shouldRun ~=nil and wt_core_controller.shouldRun==true) then
 				local Target = CharacterList:Get(TID)
 				if ( Target ~= nil ) then
-					MultiBotSend("target=" ..tostring(Target.name) .."("..tostring(Target.health.percent).."%)","setval");
+					MultiBotSend("target=" ..(Target.name) .."("..tostring(Target.health.percent).."%)","setval");
 				end			
 			else
 				MultiBotSend("target=None","setval");
@@ -429,14 +430,6 @@ function wt_global_information.HandleCMDMultiBotMessages( event, message,channel
 	end
 end
 
-function wt_global_information.Test(event, arg)	
-	d(tostring(arg))
-	if ( arg.message == 513) then
-		d("TEST")
-		local m = MeshManager:GetMousePos() 
-		d(GetMarker(m.x,m.y,m.z))
-	end	
-end
 
 -- Register Event Handlers
 RegisterEventHandler("Module.Initalize",gw2minion.HandleInit)
@@ -445,6 +438,3 @@ RegisterEventHandler("Gameloop.CharSelectUpdate",wt_global_information.OnUpdateC
 RegisterEventHandler("Gameloop.CutsceneUpdate",wt_global_information.OnUpdateCutscene)
 RegisterEventHandler("GUI.Update",gw2minion.GUIVarUpdate)
 RegisterEventHandler("MULTIBOT.Message",wt_global_information.HandleCMDMultiBotMessages)
-
---RegisterEventHandler("Gameloop.Input",wt_global_information.Test)
-
