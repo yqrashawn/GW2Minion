@@ -691,7 +691,9 @@ function wt_core_taskmanager:addRepairTask(priority,vendor)
 		
 		function newtask:isFinished()
 			if ( newtask.done ) then
-				Player:ClearTarget()
+                if (Player:IsConversationOpen()) then
+                    Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Close )
+                end
 				return true
 			end
 			return false
@@ -989,7 +991,9 @@ function wt_core_taskmanager:addVendorTask(priority, vendor)
 		
 		function newtask:isFinished()
 			if ( newtask.done ) then
-				Player:ClearTarget()
+				if (Player:IsConversationOpen()) then
+                    Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Close )
+                end
 				return true
 			end
 			return false
@@ -1176,6 +1180,9 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 		
 		function newtask:isFinished()
 			if ( newtask.done ) then 
+                if (Player:IsConversationOpen()) then
+                    Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Close )
+                end
 				return true
 			end
 			return false
