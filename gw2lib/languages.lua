@@ -49,8 +49,9 @@ strings =
         vendorSettings                  = "VendorSettings",
         salvageSettings                 = "SalvageSettings",
         gatherSettings                  = "GatherSettings",
-        dragonHoloFarming				= "FarmDragonHolograms",
-
+        skipcutscene					= "Skip Cutscenes",
+		depositItems					= "Deposit Items",
+		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
         queensdale                      = "Queensdale",
@@ -166,6 +167,7 @@ strings =
         playerHas                       = "Player has ",
         orPlayerHas                     = "or Player has ",
         playerHasNot                    = "Player has NOT ",
+		orPlayerCond					= "Player has #Conditions >",
         orPlayerHasNot                  = "or Player has NOT ",
         targetMoving                    = "Target Moving",
         targetHPGT                      = "Target HP% >",
@@ -187,7 +189,9 @@ strings =
 		SwapRange						= "Swap when Target out of Range",
 		PriorizeKit						= "Prioritize Kit",
 		PriorizeAttunement				= "Prioritize Attunement",
-
+		AutoStomp						= "Finish Enemy",
+		AutoRezz						= "Rezz Friendly",
+		
         -- leader.lua
         browserStats                    = "Enable BrowserStats",
         groupBotting                    = "Enable Groupbotting",
@@ -357,7 +361,7 @@ strings =
         vendorSettings                  = "VendorSettings",
         salvageSettings                 = "SalvageSettings",
         gatherSettings                  = "GatherSettings",
-        dragonHoloFarming				= "FarmDragonHolograms",
+        skipcutscene					= "Skip Cutscenes",
 
         -- meshmanager.lua
         meshManager                     = "MeshManager",
@@ -634,7 +638,7 @@ strings =
         vendorSettings                  = "VendorSettings",
         salvageSettings                 = "SalvageSettings",
         gatherSettings                  = "GatherSettings",
-        dragonHoloFarming				= "FarmDragonHolograms",
+        skipcutscene					= "Skip Cutscenes",
 
         -- meshmanager.lua
         meshManager                     = "MeshManager",
@@ -911,7 +915,7 @@ strings =
         vendorSettings                  = "VendorSettings",
         salvageSettings                 = "SalvageSettings",
         gatherSettings                  = "GatherSettings",
-        dragonHoloFarming				= "FarmDragonHolograms",
+        skipcutscene					= "Skip Cutscenes",
 
         -- meshmanager.lua
         meshManager                     = "MeshManager",
@@ -1188,7 +1192,7 @@ strings =
         vendorSettings                  = "VendorSettings",
         salvageSettings                 = "SalvageSettings",
         gatherSettings                  = "GatherSettings",
-        dragonHoloFarming				= "FarmDragonHolograms",
+        skipcutscene					= "Skip Cutscenes",
 
         -- meshmanager.lua
         meshManager                     = "网格脚本管理器",
@@ -1280,6 +1284,7 @@ strings =
         playerPowerLT                   = "Player Power% <",
         playerHas                       = "Player has ",
         orPlayerHas                     = "or Player has ",
+		orPlayerCond					= "Player has #Conditions >",
         playerHasNot                    = "Player has NOT ",
         orPlayerHasNot                  = "or Player has NOT ",
         targetMoving                    = "Target Moving",

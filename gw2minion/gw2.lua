@@ -143,6 +143,14 @@ end
 if ( Settings.GW2MINION.gPrioritizeRevive == nil ) then
 	Settings.GW2MINION.gPrioritizeRevive = "0"
 end
+if ( Settings.GW2MINION.gskipcutscene == nil ) then
+	Settings.GW2MINION.gskipcutscene = "1"
+end
+if ( Settings.GW2MINION.gDepositItems == nil ) then
+	Settings.GW2MINION.gDepositItems = "1"
+end
+
+
 
 
 function wt_global_information.OnUpdate( event, tickcount )
@@ -186,7 +194,7 @@ end
 
 function wt_global_information.OnUpdateCutscene(event, tickcount )
 	wt_global_information.Now = tickcount
-	if ( tickcount - wt_global_information.Cinema_lastrun > 2000 ) then
+	if ( gskipcutscene == "1" and tickcount - wt_global_information.Cinema_lastrun > 2000 ) then
 		wt_global_information.Cinema_lastrun = tickcount
 		wt_debug("Skipping Cutscene...")
 		PressKey("ESC")
@@ -209,7 +217,8 @@ function gw2minion.HandleInit()
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].combatMovement,"gCombatmovement",strings[gCurrentLanguage].settings);
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].enableEvents,"gdoEvents",strings[gCurrentLanguage].settings);		
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].enableRepair,"gEnableRepair",strings[gCurrentLanguage].settings);
-	
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].depositItems,"gDepositItems",strings[gCurrentLanguage].settings);
+		
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].ignoreLevelMarker,"gIgnoreMarkerCap",strings[gCurrentLanguage].advancedSettings);
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].wpVendor, "gUseWaypoints",strings[gCurrentLanguage].advancedSettings);
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].wpEvents, "gUseWaypointsEvents",strings[gCurrentLanguage].advancedSettings);
@@ -219,7 +228,8 @@ function gw2minion.HandleInit()
 	GUI_NewButton(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].blacklistEvent,"wt_core_taskmanager.blacklistCurrentEvent",strings[gCurrentLanguage].advancedSettings)
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].prioEvent,"gEventFarming",strings[gCurrentLanguage].advancedSettings)
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].prioRevive,"gPrioritizeRevive",strings[gCurrentLanguage].advancedSettings)
-
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skipcutscene,"gskipcutscene",strings[gCurrentLanguage].advancedSettings)
+	
 	
 	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].vendorRarity,"gMaxItemSellRarity",strings[gCurrentLanguage].vendorSettings)
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].sellWeapon,"gVendor_Weapons",strings[gCurrentLanguage].vendorSettings)
@@ -284,7 +294,8 @@ function gw2minion.HandleInit()
 	gEventTimeout = Settings.GW2MINION.gEventTimeout
 	gEventFarming = Settings.GW2MINION.gEventFarming
 	gPrioritizeRevive = Settings.GW2MINION.gPrioritizeRevive
-	
+	gskipcutscene = Settings.GW2MINION.gskipcutscene
+	gDepositItems = Settings.GW2MINION.gDepositItems
 	
 	wt_debug("GUI Setup done")
 	GUI_SetStatusBar("Ready...")
@@ -324,6 +335,8 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "gEventTimeout" or
 				k == "gEventFarming" or
 				k == "gPrioritizeRevive" or
+				k == "gskipcutscene" or		
+				k == "gDepositItems" or						
 				k == "gBuyBestSalvageKit")
 		then
 			Settings.GW2MINION[tostring(k)] = v

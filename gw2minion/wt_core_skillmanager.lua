@@ -44,6 +44,7 @@ SkillMgr.BuffEnum = {
 		["Vulnerability"] = 738,
 		["Weakness"] = 742,
 		["Poison"] = 723,
+		["Any Condition"] = 99999,
 		--boons
 		["Aegis"] = 743,
 		["Fury"] = 725,
@@ -74,6 +75,32 @@ SkillMgr.BuffEnum = {
 		["Svanir Ice Block"] = 9636,
 	};
 
+SkillMgr.ConditionsEnum = {
+		[736] = "Bleeding",
+		[720] = "Blind",
+		[737] = "Burning",
+		[722] = "Chilled",
+		[861] = "Confusion",
+		[721] = "Crippled",
+		[791] = "Fear",
+		[727] = "Immobilized",
+		[738] = "Vulnerability",
+		[742] = "Weakness",
+		[723] = "Poison",		
+	};
+	
+SkillMgr.BoonsEnum = {
+		[743] = "Aegis",
+		[725] = "Fury",
+		[740] = "Might",
+		[717] = "Protection",
+		[718] = "Regeneration",
+		[873] = "Retaliation",
+		[1122] = "Stability",
+		[719] = "Swiftness",
+		[726] = "Vigor",		
+	};
+	
 function SkillMgr.ModuleInit() 	
 	if (Settings.GW2MINION.gSMactive == nil) then
 		Settings.GW2MINION.gSMactive = "0"
@@ -108,7 +135,13 @@ function SkillMgr.ModuleInit()
 	if (Settings.GW2MINION.gSMPrioAtt == nil) then
 		Settings.GW2MINION.gSMPrioAtt = "Fire"
 	end	
-	
+	if (Settings.GW2MINION.gSMAutoStomp == nil) then
+		Settings.GW2MINION.gSMAutoStomp = "1"
+	end	
+	if (Settings.GW2MINION.gSMAutoRezz == nil) then
+		Settings.GW2MINION.gSMAutoRezz = "1"
+	end	
+		
 	local wnd = GUI_GetWindowInfo("GW2Minion")
 	GUI_NewWindow(SkillMgr.mainwindow.name,SkillMgr.mainwindow.x,SkillMgr.mainwindow.y,SkillMgr.mainwindow.w,SkillMgr.mainwindow.h)
 	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].activated,"gSMactive",strings[gCurrentLanguage].generalSettings)
@@ -120,6 +153,8 @@ function SkillMgr.ModuleInit()
 	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].SwapR,"gSMSwapR",strings[gCurrentLanguage].AdvancedSettings)
 	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].SwapCD,"gSMSwapCD",strings[gCurrentLanguage].AdvancedSettings)
 	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].SwapRange,"gSMSwapRange",strings[gCurrentLanguage].AdvancedSettings)
+	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].AutoStomp,"gSMAutoStomp",strings[gCurrentLanguage].AdvancedSettings)
+	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].AutoRezz,"gSMAutoRezz",strings[gCurrentLanguage].AdvancedSettings)
 	
 	if ( wt_global_information.Currentprofession ~= nil ) then
 		if (wt_global_information.Currentprofession.professionID == 3) then
@@ -154,6 +189,9 @@ function SkillMgr.ModuleInit()
 	gSMPrioKit = Settings.GW2MINION.gSMPrioKit
 	gSMPrioAtt = Settings.GW2MINION.gSMPrioAtt
     gSMactive = Settings.GW2MINION.gSMactive
+	gSMAutoStomp = Settings.GW2MINION.gSMAutoStomp
+	gSMAutoRezz = Settings.GW2MINION.gSMAutoRezz
+	
 	gSMnewname = ""
 	
 	SkillMgr.UpdateProfiles()
@@ -312,6 +350,7 @@ function SkillMgr.SaveProfile()
 				if (_G["SKM_PPowL_"..tostring(skID)] ) then string2write = string2write..("SKM_PPowL_"..tostring(skID).."="..tostring(_G["SKM_PPowL_"..tostring(skID)]).."\n") end
 				if (_G["SKM_PEff1_"..tostring(skID)] ) then string2write = string2write..("SKM_PEff1_"..tostring(skID).."="..tostring(_G["SKM_PEff1_"..tostring(skID)]).."\n") end
 				if (_G["SKM_PEff2_"..tostring(skID)] ) then string2write = string2write..("SKM_PEff2_"..tostring(skID).."="..tostring(_G["SKM_PEff2_"..tostring(skID)]).."\n") end
+				if (_G["SKM_PCondC_"..tostring(skID)] ) then string2write = string2write..("SKM_PCondC_"..tostring(skID).."="..tostring(_G["SKM_PCondC_"..tostring(skID)]).."\n") end				
 				if (_G["SKM_PNEff1_"..tostring(skID)] ) then string2write = string2write..("SKM_PNEff1_"..tostring(skID).."="..tostring(_G["SKM_PNEff1_"..tostring(skID)]).."\n") end
 				if (_G["SKM_PNEff2_"..tostring(skID)] ) then string2write = string2write..("SKM_PNEff2_"..tostring(skID).."="..tostring(_G["SKM_PNEff2_"..tostring(skID)]).."\n") end
 				if (_G["SKM_PPowB_"..tostring(skID)] ) then string2write = string2write..("SKM_PPowB_"..tostring(skID).."="..tostring(_G["SKM_PPowB_"..tostring(skID)]).."\n") end
@@ -381,6 +420,7 @@ function SkillMgr.UpdateCurrentProfileData()
 					elseif ( key == "PEff2" )then newskill.PEff2 = tostring(value)
 					elseif ( key == "PNEff1" )then newskill.PNEff1 = tostring(value)
 					elseif ( key == "PNEff2" )then newskill.PNEff2 = tostring(value)
+					elseif ( key == "PCondC" )then newskill.PCondC = tostring(value)
 					
 					elseif ( key == "PPowB" )then newskill.PPowB = tonumber(value)
 					elseif ( key == "TMove" )then newskill.TMove = tostring(value)
@@ -511,22 +551,22 @@ function SkillMgr.CreateNewSkillEntry(skill)
 			
 			-- PLAYER >HEALTH PERCENT
 			local skPHPLarger = skill.PHPL or 0
-			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerHPGT,"SKM_PHPL_"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerHPGT,"SKM_PHPL_"..tostring(skID),skname);
 			_G["SKM_PHPL_"..tostring(skID)] = skPHPLarger
 			
 			-- PLAYER <HEALTH PERCENT
 			local skPHPBelow = skill.PHPB or 0
-			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerHPLT,"SKM_PHPB_"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerHPLT,"SKM_PHPB_"..tostring(skID),skname);
 			_G["SKM_PHPB_"..tostring(skID)] = skPHPBelow
 			
 			-- PLAYER >POWER PERCENT
 			local skPPOWLarger = skill.PPowL or 0
-			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerPowerGT ,"SKM_PPowL_"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerPowerGT ,"SKM_PPowL_"..tostring(skID),skname);
 			_G["SKM_PPowL_"..tostring(skID)] = skPPOWLarger
 			
 			-- PLAYER <POWER PERCENT
 			local skPPOWBelow = skill.PPowB or 0
-			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerPowerLT,"SKM_PPowB_"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].playerPowerLT,"SKM_PPowB_"..tostring(skID),skname);
 			_G["SKM_PPowB_"..tostring(skID)] = skPPOWBelow	
 			
 			-- PLAYER HAS ANY EFFECT1
@@ -537,6 +577,10 @@ function SkillMgr.CreateNewSkillEntry(skill)
 			local skPEff2 = skill.PEff2 or "None"
 			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orPlayerHas,"SKM_PEff2_"..tostring(skID),skname,"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_PEff2_"..tostring(skID)] = tostring(skPEff2)			
+			-- PLAYER HAS #CONDITIONS
+			local skPCondC = skill.PCondC or 0
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orPlayerCond,"SKM_PCondC_"..tostring(skID),skname);
+			_G["SKM_PCondC_"..tostring(skID)] = skPCondC
 			
 			-- PLAYER HAS NOT EFFECT1
 			local skPNEff1 = skill.PNEff1 or "None"
@@ -546,7 +590,7 @@ function SkillMgr.CreateNewSkillEntry(skill)
 			local skPNEff2 = skill.PNEff2 or "None"
 			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orPlayerHasNot ,"SKM_PNEff2_"..tostring(skID),skname,"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_PNEff2_"..tostring(skID)] = tostring(skPNEff2)	
-				
+									
 			-- TARGET MOVING
 			local skTMove = skill.TMove or "Either"
 			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetMoving,"SKM_TMove_"..tostring(skID),skname,"Either,Yes,No");
@@ -554,12 +598,12 @@ function SkillMgr.CreateNewSkillEntry(skill)
 			
 			-- TARGET >HEALTH PERCENT
 			local skTHPLarger = skill.THPL or 0
-			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetHPGT,"SKM_THPL_"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetHPGT,"SKM_THPL_"..tostring(skID),skname);
 			_G["SKM_THPL_"..tostring(skID)] = skTHPLarger
 			
 			-- TARGET <HEALTH PERCENT
 			local skTHPBelow = skill.THPB or 0
-			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetHPLT,"SKM_THPB_"..tostring(skID),tostring(skname));
+			GUI_NewField(SkillMgr.mainwindow.name,strings[gCurrentLanguage].targetHPLT,"SKM_THPB_"..tostring(skID),skname);
 			_G["SKM_THPB_"..tostring(skID)] = skTHPBelow
 			
 			-- NEAR TARGET ENEMIES COUNT
@@ -636,19 +680,19 @@ function SkillMgr.SelectTarget()
 		local TargetList
 		if (gSMmode == "Attack Everything") then
 			if ( gsMtargetmode == "Autotarget Weakest" )then 
-				TargetList = CharacterList( "lowesthealth,los,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)			
+				TargetList = CharacterList( "lowesthealth,los,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)			
 			elseif( gsMtargetmode == "Autotarget Closest" ) then
 				TargetList = CharacterList( "nearest,los,attackable,alive,noCritter,maxdistance=1500")--..wt_global_information.AttackRange)
 			elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
-				TargetList = CharacterList( "clustered=300,los,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)				
+				TargetList = CharacterList( "clustered=300,los,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)				
 			end
 		else
 			if ( gsMtargetmode == "Autotarget Weakest" )then 
-				TargetList = CharacterList( "lowesthealth,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)			
+				TargetList = CharacterList( "lowesthealth,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)			
 			elseif( gsMtargetmode == "Autotarget Closest" ) then
-				TargetList = CharacterList( "nearest,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)
+				TargetList = CharacterList( "nearest,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)
 			elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
-				TargetList = CharacterList( "clustered=300,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)				
+				TargetList = CharacterList( "clustered=300,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)				
 			end
 		end
 		if ( TableSize ( TargetList ) > 0 )then
@@ -688,19 +732,19 @@ function SkillMgr.SelectTarget()
 				-- No LOS
 				if (gSMmode == "Attack Everything") then
 					if ( gsMtargetmode == "Autotarget Weakest" )then 
-						TargetList = CharacterList( "lowesthealth,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)			
+						TargetList = CharacterList( "lowesthealth,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)			
 					elseif( gsMtargetmode == "Autotarget Closest" ) then
 						TargetList = CharacterList( "nearest,attackable,alive,noCritter,maxdistance=1500")--..wt_global_information.AttackRange)
 					elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
-						TargetList = CharacterList( "clustered=300,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)				
+						TargetList = CharacterList( "clustered=300,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)				
 					end
 				else
 					if ( gsMtargetmode == "Autotarget Weakest" )then 
-						TargetList = CharacterList( "lowesthealth,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)			
+						TargetList = CharacterList( "lowesthealth,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)			
 					elseif( gsMtargetmode == "Autotarget Closest" ) then
-						TargetList = CharacterList( "nearest,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)
+						TargetList = CharacterList( "nearest,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)
 					elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
-						TargetList = CharacterList( "clustered=300,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange+100)				
+						TargetList = CharacterList( "clustered=300,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)				
 					end
 				end
 				if ( TableSize ( TargetList ) > 0 )then
@@ -746,16 +790,22 @@ end
 function SkillMgr.DoAction()
 	
 	SkillMgr.cskills = {}
+	local maxrange = nil
 	for i = 1, 16, 1 do
 		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
 		if ( skill ~= nil ) then			
 			SkillMgr.cskills[i] = skill
 			SkillMgr.cskills[i].slot = GW2.SKILLBARSLOT["Slot_" .. i]
-			if (i == 1) then
-				wt_global_information.AttackRange = skill.maxRange or 160
+			if ( i > 0 and i < 6 ) then
+				local smaxR = skill.maxRange
+				if ( not maxrange or smaxR > maxrange) then
+					maxrange = smaxR				
+				end
 			end
 		end
 	end
+	wt_global_information.AttackRange = maxrange or 160
+	
 	
 	local target, tid = nil, Player:GetTarget()
 	if tid and tid ~= 0 then
@@ -769,10 +819,16 @@ function SkillMgr.DoAction()
 			end
 		end
 	end
-	if ( target and (target.attitude == GW2.ATTITUDE.Friendly or target.attitude == Unattackable)) then
+	
+	if ( target and ( gSMAutoStomp == "1" or gSMAutoRezz == "1") and target.distance < 180 and target.healthstate == GW2.HEALTHSTATE.Downed ) then
+		Player:Interact(tid)
+		return
+	end
+	
+	if ( target and (target.attitude == GW2.ATTITUDE.Friendly or target.attitude == GW2.ATTITUDE.Unattackable)) then		
 		target = nil
-	else
-		SkillMgr.SwapWeaponCheck("Pulse")
+	else	
+		SkillMgr.SwapWeaponCheck("Pulse")		
 	end
 
 	local skillID = SkillMgr.GetNextBestSkillID(-999999)
@@ -780,7 +836,7 @@ function SkillMgr.DoAction()
 	SkillMgr.SpellIsCast = SkillMgr.IsOtherSpellCurrentlyCast()
 	
 	while not SkillMgr.SpellIsCast and skillID do
-		for i = 1, 16, 1 do		
+		for i = 16, 1, -1 do		
 			if (SkillMgr.cskills[i] and SkillMgr.cskills[i].contentID == tonumber(skillID) and tostring(_G["SKM_ON_"..tostring(skillID)]) == "1" ) then -- we have the skill in our current skilldeck				
 				--d(tostring(Player:GetCurrentlyCastedSpell()).." IC: "..tostring(Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3)).." IS1cast: "..tostring(Player:IsSpellCurrentlyCast(GW2.SKILLBARSLOT.Slot_3)).." X:"..tostring(Player:IsCasting()))
 	
@@ -823,12 +879,13 @@ function SkillMgr.DoAction()
 						local E1 = SkillMgr.BuffEnum[tostring(_G["SKM_PEff1_"..tostring(skillID)])]
 						local E2 = SkillMgr.BuffEnum[tostring(_G["SKM_PEff2_"..tostring(skillID)])]
 						local NE1 = SkillMgr.BuffEnum[tostring(_G["SKM_PNEff1_"..tostring(skillID)])]
-						local NE2 = SkillMgr.BuffEnum[tostring(_G["SKM_PNEff2_"..tostring(skillID)])]						
+						local NE2 = SkillMgr.BuffEnum[tostring(_G["SKM_PNEff2_"..tostring(skillID)])]
+						
 						local bufffound = false
 						local i,buff = next(mybuffs)
 						while i and buff do							
 							local bskID = buff.skillID
-							if ( bskID == NE1 or bskID == NE2 or bskID == E1 or bskID == E2) then
+							if ( bskID == NE1 or bskID == NE2 or bskID == E1 or bskID == E2 ) then
 								bufffound = true
 								break
 							end
@@ -838,6 +895,24 @@ function SkillMgr.DoAction()
 						if (bufffound and (NE1 or NE2))then castable = false end											
 					end					
 				end
+				if ( castable and (tonumber(_G["SKM_PCondC_"..tostring(skillID)]) > 0 )) then
+					if ( mybuffs ) then												
+						local condcount = 0
+						local i,buff = next(mybuffs)
+						while i and buff do							
+							local bskID = buff.skillID
+							if ( bskID and SkillMgr.ConditionsEnum[bskID] ~= nil) then
+								condcount = condcount + 1
+								if (condcount > tonumber(_G["SKM_PCondC_"..tostring(skillID)])) then
+									break
+								end
+							end
+							i,buff = next(mybuffs,i)
+						end
+						if (condcount <= tonumber(_G["SKM_PCondC_"..tostring(skillID)])) then castable = false end
+					end						
+				end
+				
 				
 				-- ALLIE AE CHECK
 				if ( castable and (tonumber(_G["SKM_TACount_"..tostring(skillID)]) > 1 and tonumber(_G["SKM_TARange_"..tostring(skillID)]) > 0)) then
@@ -991,7 +1066,7 @@ function SkillMgr.SwapWeapon(swaptype)
 			end
 		end		
 		local key = math.random(#availableKits)
-		d("KEYSIZE "..tostring(#availableKits).. " choosen: "..tostring(key))
+		--d("KEYSIZE "..tostring(#availableKits).. " choosen: "..tostring(key))
 		--d("Slot: " ..tostring(availableKits[key]))
 		if ( key ~= 1 ) then
 			Player:CastSpell(availableKits[key])

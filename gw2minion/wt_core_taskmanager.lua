@@ -196,10 +196,10 @@ function wt_core_taskmanager:Update_Tasks( )
 								end
 							end
 						-- Dragon Holograms
-						--[[elseif ( etype == 630 and entry.onmesh) then		
+						elseif ( etype == 630 and entry.onmesh) then		
 							if ( nearestdragonholo == nil or entry.distance < nearestdragonholo.distance) then
 								nearestdragonholo = entry
-							end	]]
+							end	
 						
 						
 						-- Unfinished Skillchallenges

@@ -15,7 +15,8 @@ function devmonitor.ToggleMenu()
 	end
 end
 
-function devmonitor.ClearFields()
+function devmonitor.ModuleInit()
+	GUI_NewWindow("devmonitor",400,50,250,430)
 	GUI_NewField("devmonitor","Get Type","TargetGetType","TargetInfo")
 	GUI_NewField("devmonitor","ID","TargetID","TargetInfo")
 	GUI_NewField("devmonitor","health.current","TargetHealthCurrent","TargetInfo")
@@ -321,6 +322,5 @@ function devmonitor.OnUpdateHandler( Event, ticks )
 	end
 end
 
-RegisterEventHandler("Gameloop.Update",devmonitor.OnUpdateHandler)
-GUI_NewWindow("devmonitor",400,50,250,430)
-devmonitor.ClearFields()
+RegisterEventHandler("Gameloop.Update", devmonitor.OnUpdateHandler)
+RegisterEventHandler("Module.Initalize", devmonitor.ModuleInit)

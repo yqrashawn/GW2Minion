@@ -224,7 +224,7 @@ function c_combatmove:evaluate()
 				if (Tdist ~= nil) then
 					if (wt_global_information.AttackRange > 300) then
 						-- RANGE
-						if (Tdist < wt_global_information.AttackRange / 3 and (movedir == 0 or movedir == 13 or movedir == 14)) then -- we are too close	and moving towards enemy						
+						if (Tdist < wt_global_information.AttackRange / 2 and (movedir == 0 or movedir == 13 or movedir == 14)) then -- we are too close	and moving towards enemy						
 							Player:UnSetMovement(0)	-- stop moving forward	
 						elseif ( Tdist > wt_global_information.AttackRange and (movedir == 1 or movedir == 15 or movedir == 16)) then -- we are too far away and moving backwards
 							Player:UnSetMovement(1)	-- stop moving backward	
@@ -269,7 +269,7 @@ function c_combatmove:evaluate()
 						if (Tdist > (wt_global_information.AttackRange * 0.85)) then 
 							table.remove(dirs,2) -- We are too far away to walk backwards
 						end
-						if (Tdist < 360) then 
+						if (Tdist < 600) then 
 							table.remove(dirs,1) -- We are too close to walk forwards
 						end							
 						if (movedir == 2 or Tdist < 50) then 

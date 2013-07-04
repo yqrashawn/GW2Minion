@@ -172,7 +172,9 @@ e_deposit.throttle = 1000
 function e_deposit:execute()
 	wt_debug( "Idle: Deposing Collectables.." )
 	wt_global_information.InventoryFull = 1
-	Inventory:DepositCollectables()
+	if ( gDepositItems == "1" ) then
+		Inventory:DepositCollectables()
+	end
 end
 
 
