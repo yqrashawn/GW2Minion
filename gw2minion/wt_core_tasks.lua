@@ -623,7 +623,8 @@ function wt_core_taskmanager:addRepairTask(priority,vendor)
 						return
 					end
 					
-					local vendor = newtask.vendor
+					-- grab the vendor again in case the pointer has become invalid
+					local vendor = wt_core_helpers:GetClosestRepairVendor(999999)
 					if ( vendor ~= nil and vendor.distance < 150 and vendor.characterID ~= nil and vendor.characterID ~= 0) then						
 						-- TARGET VENDOR
 						local nearestID = Player:GetInteractableTarget()
@@ -676,7 +677,7 @@ function wt_core_taskmanager:addRepairTask(priority,vendor)
 					else
 						-- Reget closest Vendor
 						wt_debug("Vendor changed, trying to get new NPC..")
-                        wt_core_helpers:UpdateMapObjectList()
+                        wt_core_helpers:UpdateMapObject("repairMerchant")
 						local vendor = wt_core_helpers:GetClosestRepairVendor(999999)
 						if (vendor ~= nil) then
 							newtask.position = vendor.pos
@@ -745,7 +746,7 @@ function wt_core_taskmanager:addVendorTask(priority, vendor)
 						newtask.sendMessage = false
 					end						
 					
-					local vendor = newtask.vendor
+					local vendor = wt_core_helpers:GetClosestSellVendor(999999)
 					if ( vendor ~= nil and vendor.distance < 150 and vendor.characterID ~= nil and vendor.characterID ~= 0) then													
 						-- TARGET VENDOR
 						local nearestID = Player:GetInteractableTarget()
@@ -976,7 +977,7 @@ function wt_core_taskmanager:addVendorTask(priority, vendor)
 					else
 						-- Reget closest Vendor
 						wt_debug("Vendor changed, trying to get new NPC..")
-                        wt_core_helpers:UpdateMapObjectList()
+                        wt_core_helpers:UpdateMapObject("sellMerchant")
 						local vendor = wt_core_helpers:GetClosestSellVendor(999999)
 						if (vendor ~= nil) then
 							newtask.position = vendor.pos
@@ -1044,7 +1045,7 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 					newtask.sendMessage = false
 				end						
 				
-				local vendor = newtask.vendor
+				local vendor = wt_core_helpers:GetClosestBuyVendor(999999)
 				if ( vendor ~= nil and vendor.distance < 150 and vendor.characterID ~= nil and vendor.characterID ~= 0) then										
 					-- TARGET VENDOR
 					local nearestID = Player:GetInteractableTarget()
@@ -1166,7 +1167,7 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 				else
 					-- Reget closest Vendor
 					wt_debug("Vendor changed, trying to get new NPC..")
-                    wt_core_helpers:UpdateMapObjectList()
+                    wt_core_helpers:UpdateMapObject("buyMerchant")
 					local vendor = wt_core_helpers:GetClosestBuyVendor(999999)
 					if (vendor ~= nil) then
 						newtask.position = vendor.pos

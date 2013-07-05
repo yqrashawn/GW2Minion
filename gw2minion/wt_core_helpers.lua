@@ -1,11 +1,4 @@
 wt_core_helpers = {}
-wt_core_helpers.MapObjects =
-{
-    ["sellMerchant"] = nil,
-    ["buyMerchant"] = nil,
-    ["repairMerchant"] = nil,
-    ["lastrun"] = 0
-}
 
 -- returns the closest waypoint to a 3d position or nil if no suitable waypoint is found
 function wt_core_helpers:GetWaypoint(pos, currentDist)
@@ -73,14 +66,22 @@ end
 -- returns the closest vendor 
 -- currently only recognizes merchants (coins) and repair merchants (broken red shield)
 function wt_core_helpers:GetClosestSellVendor(maxDistance)
-    if (wt_global_information.Now - wt_core_helpers.MapObjects["lastrun"] > 30000) then
-       wt_core_helpers:UpdateMapObject("repairMerchant")
-       wt_core_helpers:UpdateMapObject("sellMerchant")
-    end
-    
-    local repairMerchant = wt_core_helpers.MapObjects["repairMerchant"]
-    local sellMerchant = wt_core_helpers.MapObjects["sellMerchant"]
-    
+	local repairMerchant, sellMerchant = nil
+	local list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
+	if (TableSize(list) > 0) then
+		local id, object = next(list)
+		if (id and object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
+			sellMerchant = object
+		end
+	end
+	
+	list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant)
+	if (TableSize(list) > 0) then
+		local id, object = next(list)
+		if (id and object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
+			repairMerchant = object
+		end
+	end
 	
     if (repairMerchant ~= nil and sellMerchant ~= nil and
 		wt_core_taskmanager.npcBlacklist[repairMerchant.characterID] == nil and
@@ -109,11 +110,20 @@ function wt_core_helpers:GetClosestSellVendor(maxDistance)
 end
 
 function wt_core_helpers:GetClosestBuyVendor(maxDistance)
-	if (wt_global_information.Now - wt_core_helpers.MapObjects["lastrun"] > 30000) then
-       wt_core_helpers:UpdateMapObject("buyMerchant")
-    end
-    
-    local buyMerchant = wt_core_helpers.MapObjects["buyMerchant"]
+	local buyMerchant = nil
+	local list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
+	if (TableSize(list) > 0) then
+		local id, object = next(list)
+		while (id ~= nil) do
+			if (object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil and wt_core_taskmanager.vendorBlacklist[object.characterID] == nil) then
+				if (buyMerchant == nil or buyMerchant.distance > object.distance) then
+					buyMerchant = object
+				end
+			end
+			id, object = next(list, id)
+		end
+	end
+	
     if (buyMerchant ~= nil and buyMerchant.distance < maxDistance and 
 		wt_core_taskmanager.vendorBlacklist[buyMerchant.characterID] == nil and
 		wt_core_taskmanager.npcBlacklist[buyMerchant.characterID] == nil) 
@@ -125,11 +135,14 @@ function wt_core_helpers:GetClosestBuyVendor(maxDistance)
 end
 
 function wt_core_helpers:GetClosestRepairVendor(maxDistance)
-	if (wt_global_information.Now - wt_core_helpers.MapObjects["lastrun"] > 30000) then
-       wt_core_helpers:UpdateMapObject("repairMerchant")
-    end
-    
-    local repairMerchant = wt_core_helpers.MapObjects["repairMerchant"]
+	local list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant)
+	if (TableSize(list) > 0) then
+		local id, object = next(list)
+		if (id and object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
+			repairMerchant = object
+		end
+	end
+   
     if (repairMerchant ~= nil and repairMerchant.distance < maxDistance and wt_core_taskmanager.npcBlacklist[repairMerchant.characterID] == nil) then
         return repairMerchant
     else
@@ -137,7 +150,8 @@ function wt_core_helpers:GetClosestRepairVendor(maxDistance)
     end
 end
 
--- probably not working properly, don't trust it (it's a trap!)
+-- everything below here is untested and probably doesn't work properly
+
 function wt_core_helpers:GetClosestEvent(maxDistance)
 	local MMList = MapMarkerList("worldmarkertype=20,maxdistance="..tostring(maxDistance))
 	local event = nil
@@ -160,46 +174,6 @@ function wt_core_helpers:GetClosestEvent(maxDistance)
 	else
 		return false
 	end
-end
-
-function wt_core_helpers:UpdateMapObject(objectType)
-    if (objectType == "sellMerchant") then
-        local list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
-        if (TableSize(list) > 0) then
-            local id, object = next(list)
-            if (id and object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
-                wt_core_helpers.MapObjects["sellMerchant"] = object
-            end
-        end
-    elseif (objectType == "buyMerchant") then
-        local bestMerchant = nil
-        local list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
-        if (TableSize(list) > 0) then
-            local id, object = next(list)
-            while (id ~= nil) do
-                if (object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil and wt_core_taskmanager.vendorBlacklist[object.characterID] == nil) then
-                    if (bestMerchant == nil or bestMerchant.distance > object.distance) then
-                        bestMerchant = object
-                    end
-                end
-                id, object = next(list, id)
-            end
-        end
-        
-        if (bestMerchant ~= nil) then
-            wt_core_helpers.MapObjects["buyMerchant"] = bestMerchant
-        end
-    elseif (objectType == "repairMerchant") then
-        local list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant)
-        if (TableSize(list) > 0) then
-            local id, object = next(list)
-            if (id and object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
-                wt_core_helpers.MapObjects["repairMerchant"] = object
-            end
-        end
-    end
-    
-    wt_core_helpers.MapObjects["lastrun"] = wt_global_information.Now
 end
 
 function wt_core_helpers:IsInPartyList(name)
