@@ -196,7 +196,7 @@ function wt_core_taskmanager:Update_Tasks( )
 								end
 							end
 						-- Dragon Holograms
-						elseif ( etype == 630 and entry.onmesh) then		
+						elseif ( etype == 630 and entry.onmesh and entry.distance < 4000) then		
 							if ( nearestdragonholo == nil or entry.distance < nearestdragonholo.distance) then
 								nearestdragonholo = entry
 							end	
@@ -234,9 +234,10 @@ function wt_core_taskmanager:Update_Tasks( )
 							-- Add task for the closest dragonhologram	
 							wt_core_taskmanager:addDragonHologramTask( nearestdragonholo , 650 )							
 						end
-					end										
+					end	
 				end
 			end
+			
 			
 			-- Farmspot Tasks
 			if ( wt_core_taskmanager.markerList ~= nil ) then
@@ -249,6 +250,14 @@ function wt_core_taskmanager:Update_Tasks( )
 						wt_core_taskmanager:addFarmSpotTask( marker )
 					end
 					j, marker = next( wt_core_taskmanager.markerList, j )
+				end
+			end
+			
+			if (wt_core_taskmanager.Customtask_list["GOTOPOS"] == nil) then
+				local randPt = Player:GetRandomPoint(10000)
+				if ( randPt) then
+					d("Adding a GoToRandomPoint-Taks..")
+					wt_core_taskmanager:addGotoPosTask( randPt,500 )
 				end
 			end
 			

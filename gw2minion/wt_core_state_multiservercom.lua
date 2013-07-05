@@ -123,7 +123,7 @@ function HandleMultiBotMessages( event, message, channel )
 								if (tonumber(msg) ~= nil ) then
 									local gadget = GadgetList:Get(tonumber(msg))
 									if (gadget ~= nil and gadget.iscombatant and gadget.hashpbar and gadget.distance < 4500 and gadget.onmesh) then
-										wt_core_taskmanager:addKillGadgetTask( tonumber(msg) , gadget, 3550 )
+										wt_core_taskmanager:addKillGadgetTask( tonumber(msg) , gadget, 3200 )
 									end
 								end
 							end

@@ -53,7 +53,6 @@ function c_combat_over:evaluate()
 		local T = CharacterList:Get( wt_core_state_combat.CurrentTarget )
 		if ( T == nil or not T.alive or not T.onmesh or T.attitude == 0 or T.attitude == 3 ) then
 			Player:ClearTarget()
-			wt_core_state_combat.StopCM()
 			return true
 		end
 	end
@@ -64,13 +63,7 @@ function e_combat_over:execute()
 	wt_core_state_combat.CurrentTarget = 0
 	wt_core_state_combat.StopCM()
 	Player:ClearTarget()
-	wt_core_controller.requestStateChange( wt_core_state_idle )
-	-- perform a random pause if players are nearby and there is no local aggro
-	--[[if 	(TableSize(CharacterList("players,maxdistance=2500,los")) > 0) and 
-		(TableSize(CharacterList( "nearest,los,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose)) == 0) 
-	then
-		wt_core_taskmanager:addPauseTask(0,1000)
-	end]]
+	wt_core_controller.requestStateChange( wt_core_state_idle )	
 	return
 end
 
