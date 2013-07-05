@@ -101,16 +101,18 @@ function randomize(val)
 end
 
 function PathDistance(posTable)
-	if (posTable ~= nil) then
+	if ( TableSize(posTable) > 0) then
 		local distance = 0
 		local id1, pos1 = next(posTable)
-		local id2, pos2 = next(posTable, id1)
-		if (id1 ~= nil and id2 ~= nil) then
-			while (id2 ~= nil) do
-				local posDistance = math.sqrt(math.pow(pos2.x-pos1.x,2) + math.pow(pos2.y-pos1.y,2) + math.pow(pos2.z-pos1.z,2))
-				distance = distance + posDistance
-				pos1 = pos2
-				id2, pos2 = next(posTable,id2)
+		if (id1 ~= nil and pos1 ~= nil) then
+			local id2, pos2 = next(posTable, id1)
+			if (id1 ~= nil and pos2 ~= nil) then
+				while (id2 ~= nil and pos2 ~= nil) do
+					local posDistance = math.sqrt(math.pow(pos2.x-pos1.x,2) + math.pow(pos2.y-pos1.y,2) + math.pow(pos2.z-pos1.z,2))
+					distance = distance + posDistance
+					pos1 = pos2
+					id2, pos2 = next(posTable,id2)
+				end
 			end
 		end
 		return distance

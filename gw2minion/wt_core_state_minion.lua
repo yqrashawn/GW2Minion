@@ -190,15 +190,15 @@ function wt_core_state_minion:initialize()
 	local ke_revparty = wt_kelement:create( "ReviveParty", c_revivep, e_revivep, 101 )
 	wt_core_state_minion:add( ke_revparty )
 	
-	local ke_deposit = wt_kelement:create( "DepositItems", c_deposit, e_deposit, 90 )
+	local ke_deposit = wt_kelement:create( "DepositItems", c_deposit, e_deposit, 91 )
 	wt_core_state_minion:add( ke_deposit )
 	--salvaging 89
 
 	
-	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 89 )
+	local ke_loot = wt_kelement:create("Loot", c_check_loot, e_loot, 88 )
 	wt_core_state_minion:add( ke_loot )
 	
-	local ke_revive_players = wt_kelement:create( "RevivePlayers", c_check_revive_players, e_revive_players, 88 )
+	local ke_revive_players = wt_kelement:create( "RevivePlayers", c_check_revive_players, e_revive_players, 87 )
 	wt_core_state_minion:add( ke_revive_players )
 	
 	local ke_dopriotasks = wt_kelement:create( "PrioTask", c_dopriotask, e_dopriotask, 85 )
@@ -345,7 +345,7 @@ function wt_core_state_minion.aggroGadgetCheck()
 		if ( TableSize( GList ) > 0 ) then
 			local id, E  = next( GList )
 			if ( id ~= nil and id ~= 0 and E ~= nil) then
-				wt_core_taskmanager:addKillGadgetTask( id, E, 3500 )
+				wt_core_taskmanager:addKillGadgetTask( id, E, 3000 )
 				return false
 			end		
 		end	

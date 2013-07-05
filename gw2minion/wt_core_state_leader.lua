@@ -388,7 +388,7 @@ function wt_core_state_leader.aggroGadgetCheck()
 			if ( TableSize( GList ) > 0 ) then
 				local id, E  = next( GList )
 				if ( id ~= nil and id ~= 0 and E ~= nil) then
-					wt_core_taskmanager:addKillGadgetTask( id, E, 3100 )
+					wt_core_taskmanager:addKillGadgetTask( id, E, 3000 )
 					return false
 				end		
 			end

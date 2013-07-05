@@ -123,14 +123,11 @@ function mm.ModuleInit()
 	GUI_NewCheckbox(mm.mainwindow.name,strings[gCurrentLanguage].showMesh,"gMeshEditor",strings[gCurrentLanguage].editor)
 	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].newMeshName,"gnewmeshname",strings[gCurrentLanguage].editor)
 	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].newMesh,"newMeshEvent",strings[gCurrentLanguage].editor)
-	GUI_NewComboBox(mm.mainwindow.name,strings[gCurrentLanguage].recordMode,"grecMode",strings[gCurrentLanguage].editor,strings[gCurrentLanguage].mousePlayer);	
-	--GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].optimizeMesh,"optimizeMeshEvent",strings[gCurrentLanguage].editor)
 	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].saveMesh,"saveMeshEvent",strings[gCurrentLanguage].editor)
 	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].buildNAVMesh,"buildMeshEvent",strings[gCurrentLanguage].editor)
 	
 	
 	RegisterEventHandler("newMeshEvent",mm.CreateNewMesh)
-	--RegisterEventHandler("optimizeMeshEvent",mm.OptimizeMesh)
 	RegisterEventHandler("saveMeshEvent",mm.SaveMesh)
 	RegisterEventHandler("buildMeshEvent",mm.BuildMesh)
     RegisterEventHandler("getWaypointEvent",mm.GetWaypoint)
@@ -186,12 +183,6 @@ function mm.CreateNewMesh()
 		wt_error("Enter a new MeshName first!")
 	end
 end
-
---[[ obsolete with meshassistant
-function mm.OptimizeMesh()
-	wt_debug("Optimizing Mesh...")
-	wt_debug("Result: "..tostring(NavigationManager:OptimizeMesh()))
-end]]
 
 function mm.SaveMesh()
 	wt_debug("Saving NavMesh...")
@@ -374,13 +365,6 @@ function mm.GUIVarUpdate(Event, NewVals, OldVals)
 			else
 				NavigationManager:ToggleNavEditor(false)
 			end
-		elseif( k == "grecMode") then
-			if (v == "Mouse") then
-				NavigationManager:RecordMode(false)
-			else
-				NavigationManager:RecordMode(true)
-			end
-			Settings.GW2MINION[tostring(k)] = v
 		elseif( k == "gMeshMGR" or k == "gnewmeshname" or k == "gEnableSwitcher" or
                 k == "gminswitchtime" or k == "gmaxswitchtime" or k == "gparanoiaswitch" or 
                 k == "gparanoiaswitchcount" ) then

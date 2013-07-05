@@ -449,6 +449,7 @@ function wt_core_taskmanager:addGotoPosTask( pos, prio )
 					if (wp ~= nil) then
 						wt_core_helpers:TimedWaypoint(wp.contentID)
 						newtask.usedWP = true
+						return
 					end
 				end
 			end
@@ -456,7 +457,7 @@ function wt_core_taskmanager:addGotoPosTask( pos, prio )
 				-- MAKE SURE ALL MINIONS ARE NEARBY
 				if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then
 					local party = Player:GetPartyMembers()
-					if (party ~= nil ) then
+					if (TableSize(party) > 0) then
 						local index, player  = next( party )
 						while ( index ~= nil and player ~= nil ) do			
 							if (player.distance > 1500 and player.onmesh) then
@@ -471,6 +472,7 @@ function wt_core_taskmanager:addGotoPosTask( pos, prio )
 				if (Player.health.percent < wt_core_state_combat.RestHealthLimit and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6)) then
 					--wt_debug("e_heal_action")
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_6)
+					return					
 				end
 				Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 75 )
 				newtask.name = "GotoPos: "..(math.floor(distance))
@@ -481,11 +483,12 @@ function wt_core_taskmanager:addGotoPosTask( pos, prio )
 				if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then	
 					local party = Player:GetPartyMembers()
 					local canvendor = true							
-					if (party ~= nil) then
+					if (TableSize(party) > 0) then
 						local i,p = next (party)
 						while (i~= nil and p~= nil) do
 							if (p.distance > 1500) then
 								canvendor = false
+								break
 							end
 							i,p = next(party,i)
 						end
@@ -676,7 +679,7 @@ function wt_core_taskmanager:addRepairTask(priority,vendor)
 					else
 						-- Reget closest Vendor
 						wt_debug("Vendor changed, trying to get new NPC..")
-                        wt_core_helpers:UpdateMapObjectList()
+                       -- FIX THIS !!!!!!! wt_core_helpers:UpdateMapObjectList()
 						local vendor = wt_core_helpers:GetClosestRepairVendor(999999)
 						if (vendor ~= nil) then
 							newtask.position = vendor.pos
@@ -976,7 +979,7 @@ function wt_core_taskmanager:addVendorTask(priority, vendor)
 					else
 						-- Reget closest Vendor
 						wt_debug("Vendor changed, trying to get new NPC..")
-                        wt_core_helpers:UpdateMapObjectList()
+                       -- FIX THIS !!!!!!! wt_core_helpers:UpdateMapObjectList()
 						local vendor = wt_core_helpers:GetClosestSellVendor(999999)
 						if (vendor ~= nil) then
 							newtask.position = vendor.pos
@@ -1049,9 +1052,15 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 					-- TARGET VENDOR
 					local nearestID = Player:GetInteractableTarget()
 					if ( vendor.characterID ~= nil and vendor.characterID ~= 0 and nearestID ~= nil and vendor.characterID ~= nearestID ) then 
-						if ( Player:GetTarget() ~= vendor.characterID) then				
-							Player:SetTarget(vendor.characterID)
-							return
+						if ( Player:GetTarget() ~= vendor.characterID) then	
+							if ( CharacterList:Get(vendor.characterID) ~= nil ) then
+								Player:SetTarget(vendor.characterID)
+								return
+							else
+								d("Something really odd happened, ...")
+								newtask.vendor = nil
+								return
+							end
 						end
 					end
 					-- INTERACT WITH VENDOR
@@ -1166,7 +1175,7 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 				else
 					-- Reget closest Vendor
 					wt_debug("Vendor changed, trying to get new NPC..")
-                    wt_core_helpers:UpdateMapObjectList()
+                    -- FIX THIS !!!!!!! wt_core_helpers:UpdateMapObjectList()
 					local vendor = wt_core_helpers:GetClosestBuyVendor(999999)
 					if (vendor ~= nil) then
 						newtask.position = vendor.pos

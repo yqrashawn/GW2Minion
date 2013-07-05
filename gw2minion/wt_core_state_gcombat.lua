@@ -50,7 +50,7 @@ function c_gcombat_over:evaluate()
 			wt_core_state_gcombat.StopCM()
 		end
 		local T = GadgetList:Get( wt_core_state_gcombat.CurrentTarget )
-		if ( T == nil or not T.alive or not T.onmesh or T.attitude == 0 or T.attitude == 3) then
+		if ( T == nil or not T.alive or not T.onmesh or T.attitude == 0 or T.attitude == 3 ) then
 			Player:ClearTarget()
 			wt_core_state_gcombat.StopCM()
 			return true
@@ -284,6 +284,7 @@ function c_gcombatmove:evaluate()
 				
 			end	
 		else
+			d("GadgetID is invalid!?")
 			wt_core_state_gcombat.StopCM()
 		end
 	end
