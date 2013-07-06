@@ -255,8 +255,8 @@ function wt_core_taskmanager:Update_Tasks( )
 			
 			if (wt_core_taskmanager.Customtask_list["GOTOPOS"] == nil) then
 				local randPt = Player:GetRandomPoint(10000)
-				if ( randPt) then
-					d("Adding a GoToRandomPoint-Taks..")
+				if ( randPt and NavigationManager:IsOnMesh(randPt)) then
+					d("Adding a GoToRandomPoint-Taks.. ")
 					wt_core_taskmanager:addGotoPosTask( randPt,400 )
 				end
 			end

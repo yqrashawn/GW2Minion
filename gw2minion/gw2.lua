@@ -152,7 +152,7 @@ if ( Settings.GW2MINION.gDepositItems == nil ) then
 	Settings.GW2MINION.gDepositItems = "1"
 end
 if ( Settings.GW2MINION.gCheckChat == nil ) then
-	Settings.GW2MINION.gCheckChat = "Off"
+	Settings.GW2MINION.gCheckChat = "Both"
 end
 
 
