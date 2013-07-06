@@ -188,6 +188,7 @@ strings =
 		PriorizeAttunement				= "Prioritize Attunement",
 		AutoStomp						= "Finish Enemy",
 		AutoRezz						= "Rezz Friendly",
+		Fightstyle						= "Fightstyle",
 		
         -- leader.lua
         browserStats                    = "Enable BrowserStats",

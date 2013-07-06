@@ -141,6 +141,9 @@ function SkillMgr.ModuleInit()
 	if (Settings.GW2MINION.gSMAutoRezz == nil) then
 		Settings.GW2MINION.gSMAutoRezz = "1"
 	end	
+	if (Settings.GW2MINION.gFightstyle == nil) then
+		Settings.GW2MINION.gFightstyle = "Melee"
+	end	
 		
 	local wnd = GUI_GetWindowInfo("GW2Minion")
 	GUI_NewWindow(SkillMgr.mainwindow.name,SkillMgr.mainwindow.x,SkillMgr.mainwindow.y,SkillMgr.mainwindow.w,SkillMgr.mainwindow.h)
@@ -149,6 +152,7 @@ function SkillMgr.ModuleInit()
 	GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].sMtargetmode,"gsMtargetmode",strings[gCurrentLanguage].generalSettings,"No Autotarget,Autotarget Weakest,Autotarget Closest,Autotarget Biggest Crowd");
 	GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].sMmode,"gSMmode",strings[gCurrentLanguage].generalSettings,"Attack Everything,Attack Players Only");
 	
+	GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].Fightstyle,"gFightstyle",strings[gCurrentLanguage].AdvancedSettings,"Melee,Range")
 	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].SwapA,"gSMSwapA",strings[gCurrentLanguage].AdvancedSettings)
 	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].SwapR,"gSMSwapR",strings[gCurrentLanguage].AdvancedSettings)
 	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].SwapCD,"gSMSwapCD",strings[gCurrentLanguage].AdvancedSettings)
@@ -191,6 +195,7 @@ function SkillMgr.ModuleInit()
     gSMactive = Settings.GW2MINION.gSMactive
 	gSMAutoStomp = Settings.GW2MINION.gSMAutoStomp
 	gSMAutoRezz = Settings.GW2MINION.gSMAutoRezz
+	gFightstyle = Settings.GW2MINION.gFightstyle
 	
 	gSMnewname = ""
 	
@@ -675,10 +680,31 @@ end
 
 
 function SkillMgr.SelectTarget()
-	--TODO: Hook into combat and gcombat state!
+	
+	local TargetList
+	
+	-- Stomp/Rezz nearby players 
+	if ( gSMAutoStomp == "1" or gSMAutoRezz == "1") then
+		if (Player.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving) then
+			TargetList = CharacterList("downed,player,maxdistance=180")
+			if ( TableSize ( TargetList ) > 0 )then
+				local TID, Target = next ( TargetList )
+				if ( TID and TID ~= 0 and Target ) then
+					if ( Player:GetTarget() ~= TID ) then
+						Player:SetTarget(TID)
+						return
+					else
+						Player:Interact(TID)
+						return
+					end
+				end
+			end
+		end
+	end	
+	
 	if ( gsMtargetmode ~= "No Autotarget" ) then
-		local TargetList
-		if (gSMmode == "Attack Everything") then
+		
+		if (gSMmode == "Attack Everything") then		
 			if ( gsMtargetmode == "Autotarget Weakest" )then 
 				TargetList = CharacterList( "lowesthealth,los,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)			
 			elseif( gsMtargetmode == "Autotarget Closest" ) then
@@ -796,15 +822,21 @@ function SkillMgr.DoAction()
 		if ( skill ~= nil ) then			
 			SkillMgr.cskills[i] = skill
 			SkillMgr.cskills[i].slot = GW2.SKILLBARSLOT["Slot_" .. i]
-			if ( i > 0 and i < 6 ) then
-				local smaxR = skill.maxRange
-				if ( not maxrange or smaxR > maxrange) then
-					maxrange = smaxR				
+			if ( gFightstyle == "Range" ) then
+				if ( i > 0 and i < 6 ) then
+					local smaxR = skill.maxRange
+					if ( not maxrange or smaxR > maxrange) then
+						maxrange = smaxR				
+					end
+				end
+			else
+				if ( i == 1 ) then
+					maxrange = skill.maxRange or 180
 				end
 			end
 		end
 	end
-	wt_global_information.AttackRange = maxrange or 160
+	wt_global_information.AttackRange = maxrange or 180
 	
 	
 	local target, tid = nil, Player:GetTarget()
@@ -819,12 +851,7 @@ function SkillMgr.DoAction()
 			end
 		end
 	end
-	
-	if ( target and ( gSMAutoStomp == "1" or gSMAutoRezz == "1") and target.distance < 180 and target.healthstate == GW2.HEALTHSTATE.Downed ) then
-		Player:Interact(tid)
-		return
-	end
-	
+		
 	if ( target and (target.attitude == GW2.ATTITUDE.Friendly or target.attitude == GW2.ATTITUDE.Unattackable)) then		
 		target = nil
 	else	

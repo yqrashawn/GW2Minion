@@ -155,20 +155,19 @@ function tb.PrintDataID()
 	end
 end
 
-function tb.OnUpdate( event, tickcount )
-	if (tb.running ) then	
-		if (tickcount - tb.lastrun > 250) then
-			tb.lastrun = tickcount				
+function tb.OnUpdate( event, tickcount )		
+	if (tickcount - tb.lastrun > 250) then
+		tb.lastrun = tickcount	
+		if (tb.running ) then
 			if (wt_core_taskmanager.current_task ~= nil) then
 				wt_core_taskmanager:DoTask()								
 			else			
 				tb.running = false				
 			end	
-
-			if ( WvW_Loot == "1" ) then
-				tb.CheckForWvWLoot()
-			end
-		end	
+		end
+		if ( WvW_Loot == "1" ) then
+			tb.CheckForWvWLoot()
+		end
 	end
 end
 
@@ -392,15 +391,17 @@ end
 
 -- <3 Urguwno
 function tb.CheckForWvWLoot()
-    loot = (GadgetList("maxdistance=160"))
+    loot = (GadgetList("maxdistance=180"))
     if (loot ~= nil ) then
         id,gadgettableentry = next(loot, nil)
         while id do
             if (id ~= nil) and (id ~= 0) then
                 if (gadgettableentry ~= nil) and (gadgettableentry ~= 0) then
                     if (gadgettableentry.gatherable ~= true) and (gadgettableentry.type == 3) then
-                        if (CharacterList:Get(id) == nil) then
+                        if (CharacterList:Get(id) == nil) then							
                             Player:Use(id)
+							--Player:Interact(id)
+							--Player:PressF()
                             return
                         end
                     end
