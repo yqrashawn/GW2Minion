@@ -12,36 +12,34 @@ function tb.ModuleInit()
 	end
 	
 	GUI_NewWindow("ToolBox", 450, 100, 200, 300)	
-	GUI_NewButton("ToolBox","AutoUnpackAllBags","TB.unpack", "Bags_Supplies")
-	GUI_NewButton("ToolBox","AutoSalvageAllItems","TB.salvage", "Bags_Supplies")
-	GUI_NewButton("ToolBox","SupplyRun","TB.supplyRun","Bags_Supplies")
+	GUI_NewButton("ToolBox","AutoUnpackAllBags","TB.unpack", "Utility")
+	GUI_NewButton("ToolBox","AutoSalvageAllItems","TB.salvage", "Utility")
+	GUI_NewButton("ToolBox","SupplyRun","TB.supplyRun","Utility")
 
 	GUI_NewCheckbox("ToolBox","AutoLoot WvW Bags","WvW_Loot","WvWvW")
 	
-	GUI_NewButton("ToolBox","devmonitor","TB.eventmon","Dev")
-	GUI_NewButton("ToolBox","Minions,(Re)load Mesh","TB.reload","Dev")
-	GUI_NewField("ToolBox","Meshname:","greloadmesh", "Dev");
-	GUI_NewButton("ToolBox","PrintItemDataID","TB.printID","Dev")
-	GUI_NewField("ToolBox","ItemName:","tb_itemname","Dev")
+	GUI_NewButton("ToolBox","devmonitor","TB.eventmon","DevTools")
+	GUI_NewButton("ToolBox","Minions,(Re)load Mesh","TB.reload","DevTools")
+	GUI_NewField("ToolBox","Meshname:","greloadmesh", "DevTools");
+	GUI_NewButton("ToolBox","PrintItemDataID","TB.printID","DevTools")
+	GUI_NewField("ToolBox","ItemName:","tb_itemname","DevTools")
 
-	GUI_NewButton("ToolBox","GetInteractableTarget","TB.getInteractableTarget","NPC")
-	GUI_NewButton("ToolBox","GetTarget","TB.getTarget","NPC")
-	GUI_NewButton("ToolBox","SetTarget","TB.setTarget","NPC")
-	GUI_NewButton("ToolBox","InteractTarget","TB.interactTarget","NPC")
-	GUI_NewField("ToolBox","Target: ","tb_target","NPC")
-	GUI_NewButton("ToolBox","GetConversationOptions","TB.getConversationOptions","NPC")
-	GUI_NewButton("ToolBox","SelectConversationOption","TB.selectConversationOption","NPC")
-	GUI_NewField("ToolBox","Option Number:","tb_option","NPC")
+	GUI_NewButton("ToolBox","GetInteractableTarget","TB.getInteractableTarget","DevTools")
+	GUI_NewButton("ToolBox","GetTarget","TB.getTarget","DevTools")
+	GUI_NewButton("ToolBox","SetTarget","TB.setTarget","DevTools")
+	GUI_NewButton("ToolBox","InteractTarget","TB.interactTarget","DevTools")
+	GUI_NewField("ToolBox","Target: ","tb_target","DevTools")
+	GUI_NewButton("ToolBox","GetConversationOptions","TB.getConversationOptions","DevTools")
+	GUI_NewButton("ToolBox","SelectConversationOption","TB.selectConversationOption","DevTools")
+	GUI_NewField("ToolBox","Option Number:","tb_option","DevTools")
 
-	GUI_NewButton("ToolBox","PlayerPosition","TB.playerPosition","Movement")
-	GUI_NewButton("ToolBox","MoveTo","TB.moveTo","Movement")
-	GUI_NewButton("ToolBox","Teleport","TB.teleport","Movement")
-	GUI_NewField("ToolBox","X: ","tb_xPos","Movement")
-	GUI_NewField("ToolBox","Y: ","tb_yPos","Movement")
-	GUI_NewField("ToolBox","Z: ","tb_zPos","Movement")
-	GUI_FoldGroup("ToolBox","Movement")
-	GUI_FoldGroup("ToolBox","Dev")
-	GUI_FoldGroup("ToolBox","NPC")
+	GUI_NewButton("ToolBox","PlayerPosition","TB.playerPosition","DevTools")
+	GUI_NewButton("ToolBox","MoveTo","TB.moveTo","DevTools")
+	GUI_NewButton("ToolBox","Teleport","TB.teleport","DevTools")
+	GUI_NewField("ToolBox","X: ","tb_xPos","DevTools")
+	GUI_NewField("ToolBox","Y: ","tb_yPos","DevTools")
+	GUI_NewField("ToolBox","Z: ","tb_zPos","DevTools")
+	GUI_FoldGroup("ToolBox","DevTools")
 	GUI_WindowVisible("ToolBox",false)
 	tb_itemname = ""
 	tb_target = ""
@@ -57,117 +55,6 @@ function tb.ToggleMenu()
 	else
 		GUI_WindowVisible("ToolBox",true)	
 		tb.visible = true
-	end
-end
-
-function tb.GetInteractableTarget()
-	local t = Player:GetInteractableTarget()
-	if t ~= 0 then
-		local char = CharacterList:Get(t)
-		tb_target = tostring(t)
-		GUI_RefreshWindow()
-		d("Interactable Target: "..(char.name).." "..tostring(t))
-	else
-		d("No Interactable Target")
-	end
-end
-
-function tb.GetTarget()
-	local t = Player:GetTarget()
-	if t ~= 0 then
-		local char = CharacterList:Get(t)
-		tb_target = tostring(t)
-		GUI_RefreshWindow()
-		d("Current Target: "..(char.name).." "..tostring(t))
-	else
-		d("No Current Target")
-	end
-end
-
-function tb.SetTarget()
-	local t = Player:SetTarget(tonumber(tb_target))
-	if t == true then
-		local char = CharacterList:Get(tb_target)
-		d("Target Set: "..(char.name).. " "..tostring(tb_target))
-	elseif t == false then
-		d("Target Set Error")
-	else
-		d("t = nil")
-	end
-end
-
-function tb.InteractTarget()
-	local t = Player:Interact(tonumber(tb_target))
-	local char = CharacterList:Get(tb_target)
-	if t == true and char ~= nil then
-		d("Interact with: "..(char.name).." "..tb_target.." successful")
-	elseif t == false and char ~= nil then
-		d("Interact with: "..(char.name).." "..tb_target.." failed")
-	else
-		d("No target selected or could not get target")
-	end
-end
-
-function tb.GetConversationOptions()
-	local t = Player:GetConversationOptions()
-	if t ~= nil then
-		for key, option in pairs(t) do
-			d("Option Index (For Selection): "..tostring(key)..", Option Number (GW2.Enum): "..tostring(option))
-		end
-	else
-		d("No conversation options")
-	end
-end
-
-function tb.SelectConversationOption()
-	local t = nil
-	t = Player:SelectConversationOptionByIndex(tonumber(tb_option))
-	if t ~=  false then
-		d("Conversation option "..tb_option.." selected")
-	else
-		d("Could not select conversation option")
-	end
-end
-
-function tb.PlayerPosition()
-	d(Player.pos)
-	tb_xPos = tostring(Player.pos.x)
-	tb_yPos = tostring(Player.pos.y)
-	tb_zPos = tostring(Player.pos.z)
-	GUI_RefreshWindow()
-end
-
-function tb.MoveTo()
-	wt_debug("Moving to target..")
-	Player:MoveTo(tonumber(tb_xPos),tonumber(tb_yPos),tonumber(tb_zPos))
-end
-
-function tb.Teleport()
-	Player:Teleport(tonumber(tb_xPos),tonumber(tb_yPos),tonumber(tb_zPos))
-end
-
-function tb.PrintDataID()
-	for id, item in pairs(ItemList("")) do
-		if((item.name) == tb_itemname) then
-			d(tostring(id))
-			d(item.name..": "..tostring(item.dataID))
-		end
-	end
-end
-
-function tb.OnUpdate( event, tickcount )		
-	if (tickcount - tb.lastrun > 250) then
-		tb.lastrun = tickcount	
-		if (tb.running ) then
-			if (wt_core_taskmanager.current_task ~= nil) then
-				wt_core_taskmanager:DoTask()								
-			else			
-				tb.running = false				
-			end	
-		end
-		if ( WvW_Loot == "1" ) then
-			tb.CheckForWvWLoot()
-		end
 	end
 end
 
@@ -411,6 +298,134 @@ function tb.CheckForWvWLoot()
         end
     end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- STUFF
+function tb.GetInteractableTarget()
+	local t = Player:GetInteractableTarget()
+	if t ~= 0 then
+		local char = CharacterList:Get(t)
+		tb_target = tostring(t)
+		GUI_RefreshWindow()
+		d("Interactable Target: "..(char.name).." "..tostring(t))
+	else
+		d("No Interactable Target")
+	end
+end
+
+function tb.GetTarget()
+	local t = Player:GetTarget()
+	if t ~= 0 then
+		local char = CharacterList:Get(t)
+		tb_target = tostring(t)
+		GUI_RefreshWindow()
+		d("Current Target: "..(char.name).." "..tostring(t))
+	else
+		d("No Current Target")
+	end
+end
+
+function tb.SetTarget()
+	local t = Player:SetTarget(tonumber(tb_target))
+	if t == true then
+		local char = CharacterList:Get(tb_target)
+		d("Target Set: "..(char.name).. " "..tostring(tb_target))
+	elseif t == false then
+		d("Target Set Error")
+	else
+		d("t = nil")
+	end
+end
+
+function tb.InteractTarget()
+	local t = Player:Interact(tonumber(tb_target))
+	local char = CharacterList:Get(tb_target)
+	if t == true and char ~= nil then
+		d("Interact with: "..(char.name).." "..tb_target.." successful")
+	elseif t == false and char ~= nil then
+		d("Interact with: "..(char.name).." "..tb_target.." failed")
+	else
+		d("No target selected or could not get target")
+	end
+end
+
+function tb.GetConversationOptions()
+	local t = Player:GetConversationOptions()
+	if t ~= nil then
+		for key, option in pairs(t) do
+			d("Option Index (For Selection): "..tostring(key)..", Option Number (GW2.Enum): "..tostring(option))
+		end
+	else
+		d("No conversation options")
+	end
+end
+
+function tb.SelectConversationOption()
+	local t = nil
+	t = Player:SelectConversationOptionByIndex(tonumber(tb_option))
+	if t ~=  false then
+		d("Conversation option "..tb_option.." selected")
+	else
+		d("Could not select conversation option")
+	end
+end
+
+function tb.PlayerPosition()
+	d(Player.pos)
+	tb_xPos = tostring(Player.pos.x)
+	tb_yPos = tostring(Player.pos.y)
+	tb_zPos = tostring(Player.pos.z)
+	GUI_RefreshWindow()
+end
+
+function tb.MoveTo()
+	wt_debug("Moving to target..")
+	Player:MoveTo(tonumber(tb_xPos),tonumber(tb_yPos),tonumber(tb_zPos))
+end
+
+function tb.Teleport()
+	Player:Teleport(tonumber(tb_xPos),tonumber(tb_yPos),tonumber(tb_zPos))
+end
+
+function tb.PrintDataID()
+	for id, item in pairs(ItemList("")) do
+		if((item.name) == tb_itemname) then
+			d(tostring(id))
+			d(item.name..": "..tostring(item.dataID))
+		end
+	end
+end
+
+function tb.OnUpdate( event, tickcount )		
+	if (tickcount - tb.lastrun > 250) then
+		tb.lastrun = tickcount	
+		if (tb.running ) then
+			if (wt_core_taskmanager.current_task ~= nil) then
+				wt_core_taskmanager:DoTask()								
+			else			
+				tb.running = false				
+			end	
+		end
+		if ( WvW_Loot == "1" ) then
+			tb.CheckForWvWLoot()
+		end
+	end
+end
+
+
 
 
 RegisterEventHandler("TB.printID", tb.PrintDataID)

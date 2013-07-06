@@ -51,6 +51,8 @@ strings =
         gatherSettings                  = "GatherSettings",
         skipcutscene					= "Skip Cutscenes",
 		depositItems					= "Deposit Items",
+		checkChat						= "Chat Alert",
+		
 		
         -- meshmanager.lua
         meshManager                     = "MeshManager",

@@ -257,7 +257,7 @@ function wt_core_taskmanager:Update_Tasks( )
 				local randPt = Player:GetRandomPoint(10000)
 				if ( randPt) then
 					d("Adding a GoToRandomPoint-Taks..")
-					wt_core_taskmanager:addGotoPosTask( randPt,500 )
+					wt_core_taskmanager:addGotoPosTask( randPt,400 )
 				end
 			end
 			

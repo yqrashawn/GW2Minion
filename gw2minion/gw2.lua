@@ -1,10 +1,9 @@
 -- Main config file of GW2Minion
 
 wt_global_information = {}
+wt_global_information.path = GetStartupPath()
 wt_global_information.Currentprofession = nil
 wt_global_information.Now = 0
-
-wt_global_information.PVP = false
 wt_global_information.MainWindow = { Name = "GW2Minion", x=50, y=50 , width=200, height=240 }
 wt_global_information.BtnStart = { Name=strings[gCurrentLanguage].startStop,Event = "GUI_REQUEST_RUN_TOGGLE" }
 wt_global_information.BtnPulse = { Name=strings[gCurrentLanguage].doPulse,Event = "Debug.Pulse" }
@@ -29,6 +28,9 @@ wt_global_information.Cinema_lastrun = 0
 wt_global_information.MeshCheck_lastrun = 0
 wt_global_information.AutoRun = false
 wt_global_information.AutoRun_lastrun = 0
+wt_global_information.ChatCheck_lastrun = 0
+wt_global_information.OldLastchatline = ""
+wt_global_information.OldLastwhisperline = ""
 
 gw2minion = { }
 
@@ -149,7 +151,9 @@ end
 if ( Settings.GW2MINION.gDepositItems == nil ) then
 	Settings.GW2MINION.gDepositItems = "1"
 end
-
+if ( Settings.GW2MINION.gCheckChat == nil ) then
+	Settings.GW2MINION.gCheckChat = "Off"
+end
 
 
 
@@ -173,6 +177,11 @@ function wt_global_information.OnUpdate( event, tickcount )
 				wt_core_controller.ToggleRun()
 				return				
 			end
+		end
+		
+		if ( gCheckChat ~= "Off" and wt_global_information.ChatCheck_lastrun == 0 or tickcount - wt_global_information.ChatCheck_lastrun > 3000 ) then
+			wt_global_information.ChatCheck_lastrun = tickcount
+			wt_global_information.WhisperWarningCheck()
 		end
 			
 		wt_core_controller.Run()
@@ -219,6 +228,8 @@ function gw2minion.HandleInit()
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].enableRepair,"gEnableRepair",strings[gCurrentLanguage].settings);
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].depositItems,"gDepositItems",strings[gCurrentLanguage].settings);
 		
+	
+	GUI_NewComboBox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].checkChat,"gCheckChat",strings[gCurrentLanguage].advancedSettings,"Off,Whisper,Say,Both");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].ignoreLevelMarker,"gIgnoreMarkerCap",strings[gCurrentLanguage].advancedSettings);
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].wpVendor, "gUseWaypoints",strings[gCurrentLanguage].advancedSettings);
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].wpEvents, "gUseWaypointsEvents",strings[gCurrentLanguage].advancedSettings);
@@ -296,6 +307,8 @@ function gw2minion.HandleInit()
 	gPrioritizeRevive = Settings.GW2MINION.gPrioritizeRevive
 	gskipcutscene = Settings.GW2MINION.gskipcutscene
 	gDepositItems = Settings.GW2MINION.gDepositItems
+	gCheckChat = Settings.GW2MINION.gCheckChat
+	
 	
 	wt_debug("GUI Setup done")
 	GUI_SetStatusBar("Ready...")
@@ -336,7 +349,8 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "gEventFarming" or
 				k == "gPrioritizeRevive" or
 				k == "gskipcutscene" or		
-				k == "gDepositItems" or						
+				k == "gDepositItems" or	
+				k == "gCheckChat" or
 				k == "gBuyBestSalvageKit")
 		then
 			Settings.GW2MINION[tostring(k)] = v
@@ -439,6 +453,28 @@ function wt_global_information.HandleCMDMultiBotMessages( event, message,channel
 		elseif (tostring(message) == "ExitGW2" ) then			
 			wt_debug("ExitGW2 Button Pressed")
 			ExitGW()
+		end
+	end
+end
+
+-- Whisperwarning, thanks Jorith :)
+function wt_global_information.WhisperWarningCheck()
+	if ( gCheckChat == "Whisper" or gCheckChat == "Both" ) then
+		local NewWhisper = GetChatMsg(14, 100) --14 = Whisperchannel
+		if ( TableSize(NewWhisper) > 0 ) then
+			if (NewWhisper[1] ~= wt_global_information.OldLastwhisperline) and not (wt_global_information.OldLastwhisperline == "") then
+				PlaySound(wt_global_information.path.."\\LuaMods\\gw2lib\\Alarm1.wav")
+			end
+			wt_global_information.OldLastwhisperline = NewWhisper[1]
+		end
+	end	
+	if ( gCheckChat == "Say" or gCheckChat == "Both" ) then
+		local NewWhisper = GetChatMsg(8, 100) --8 = Saychannel
+		if ( TableSize(NewWhisper) > 0 ) then
+			if (NewWhisper[1] ~= wt_global_information.OldLastchatline) and not (wt_global_information.OldLastchatline == "") then
+				PlaySound(wt_global_information.path.."\\LuaMods\\gw2lib\\Alarm1.wav")
+			end
+			wt_global_information.OldLastchatline = NewWhisper[1]
 		end
 	end
 end
