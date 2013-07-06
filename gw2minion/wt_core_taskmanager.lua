@@ -253,21 +253,13 @@ function wt_core_taskmanager:Update_Tasks( )
 				end
 			end
 			
-			if (wt_core_taskmanager.Customtask_list["GOTOPOS"] == nil) then
-				local randPt = Player:GetRandomPoint(10000)
-				if ( randPt and NavigationManager:IsOnMesh(randPt)) then
+			if (wt_core_taskmanager.Customtask_list["GOTOPOS"] == nil) then				
+				local randPt = Player:GetRandomPoint(7500)
+				if ( randPt and NavigationManager:IsOnMeshExact(randPt)) then
 					d("Adding a GoToRandomPoint-Taks.. ")
 					wt_core_taskmanager:addGotoPosTask( randPt,400 )
 				end
-			end
-			
-			-- if we have no task because the playerlevel is above the maplevel and the user forgot to check the ignore marker cap button:
-			if ( TableSize(wt_core_taskmanager.Customtask_list) == 0 and gIgnoreMarkerCap == "0" and NavigationManager:IsNavMeshLoaded()) then
-				gIgnoreMarkerCap = "1"
-			end
-			if ( TableSize(wt_core_taskmanager.Customtask_list) == 0 and gIgnoreMarkerCap == "1" and NavigationManager:IsNavMeshLoaded()) then
-				wt_error("No Tasks availiable! Check your navmesh! You need more than 1 Red Marker!")
-			end 
+			end			
 		end
 		
 		-- Add repair/vendor/event/aggro tasks from wt_core_state_idle, wt_core_state_minion, and wt_core_state_leader

@@ -10,6 +10,9 @@ function tb.ModuleInit()
 	if (Settings.GW2MINION.WvW_Loot == nil) then
 		Settings.GW2MINION.WvW_Loot = "0"
 	end
+	if (Settings.GW2MINION.WvW_Speed == nil) then
+		Settings.GW2MINION.WvW_Speed = "0"
+	end
 	
 	GUI_NewWindow("ToolBox", 450, 100, 200, 300)	
 	GUI_NewButton("ToolBox","UnpackAllBags","TB.unpack", "Utility")
@@ -17,6 +20,7 @@ function tb.ModuleInit()
 	GUI_NewButton("ToolBox","SupplyRun","TB.supplyRun","Utility")
 
 	GUI_NewCheckbox("ToolBox","AutoLoot WvW Bags","WvW_Loot","WvWvW")
+	GUI_NewCheckbox("ToolBox","+33%Speed","WvW_Speed","WvWvW")
 	
 	GUI_NewButton("ToolBox","devmonitor","TB.eventmon","DevTools")
 	GUI_NewButton("ToolBox","Minions,(Re)load Mesh","TB.reload","DevTools")
@@ -57,6 +61,28 @@ function tb.ToggleMenu()
 		tb.visible = true
 	end
 end
+
+
+function tb.OnUpdate( event, tickcount )		
+	if (tickcount - tb.lastrun > 750) then
+		tb.lastrun = tickcount	
+		if (tb.running ) then
+			if (wt_core_taskmanager.current_task ~= nil) then
+				wt_core_taskmanager:DoTask()								
+			else			
+				tb.running = false				
+			end	
+		end
+		if ( WvW_Loot == "1" ) then
+			tb.CheckForWvWLoot()
+		end
+		if ( WvW_Speed == "1") then
+			tb.CheckWvWSpeed()
+		end
+	end
+end
+
+
 
 function tb.UnpackBags()
 	if (wt_core_taskmanager.current_task == nil) then
@@ -299,19 +325,17 @@ function tb.CheckForWvWLoot()
     end
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+function tb.CheckWvWSpeed()
+    -- ooc = 294
+	-- ooc + 33% = 391
+	-- ic = 210
+	-- ic + 33% = 279
+	if ( Player.inCombat ) then		
+		Player:SetSpeed(279)
+	else 		
+		Player:SetSpeed(391)
+	end
+end
 
 -- STUFF
 function tb.GetInteractableTarget()
@@ -405,22 +429,6 @@ function tb.PrintDataID()
 		if((item.name) == tb_itemname) then
 			d(tostring(id))
 			d(item.name..": "..tostring(item.dataID))
-		end
-	end
-end
-
-function tb.OnUpdate( event, tickcount )		
-	if (tickcount - tb.lastrun > 250) then
-		tb.lastrun = tickcount	
-		if (tb.running ) then
-			if (wt_core_taskmanager.current_task ~= nil) then
-				wt_core_taskmanager:DoTask()								
-			else			
-				tb.running = false				
-			end	
-		end
-		if ( WvW_Loot == "1" ) then
-			tb.CheckForWvWLoot()
 		end
 	end
 end

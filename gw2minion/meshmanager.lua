@@ -47,7 +47,9 @@ mm.Zones = {
 	[139] = strings[gCurrentLanguage].rataSum,
 	[218] = strings[gCurrentLanguage].blackCitadel,
 	[326] = strings[gCurrentLanguage].hoelbrak ,
+	[795] = strings[gCurrentLanguage].legacyofthefoefire,
 	[873] = strings[gCurrentLanguage].southsunCove,
+	[894] = strings[gCurrentLanguage].spiritwatch,
 }
 
 function mm.ModuleInit() 	
@@ -196,7 +198,7 @@ end
 function mm.BuildMesh()
 	wt_debug("Building NAV-Meshfile...")
 	if (gmeshname ~= nil and gmeshname ~= "" and gmeshname ~= "none") then
-		wt_debug("Result: "..tostring(NavigationManager:LoadNavMesh(gmeshname)))
+		wt_debug("Result: "..tostring(NavigationManager:LoadNavMesh(mm.navmeshfilepath..gmeshname)))
 	else
 		wt_error("gmeshname is empty!?")
 	end

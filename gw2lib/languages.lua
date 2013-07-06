@@ -96,7 +96,9 @@ strings =
         blackCitadel                    = "BlackCitadel",
         hoelbrak                        = "Hoelbrak",
         southsunCove                    = "SouthsunCove",
-        activated                       = "Activated",
+        spiritwatch						= "Spirit Watch",
+		legacyofthefoefire				= "Legacy of the Forefire",		
+		activated                       = "Activated",
         mapName                         = "Map",
         navmesh                         = "Navmesh",
         waypoint                        = "Waypoint",
@@ -116,7 +118,8 @@ strings =
 		editor							= "Editor",
         enablePSwitch					= "EnableParanoiaSwitch",
         pSwitchCount                    = "ParanoiaPlayerCount",
-
+		
+		
 		-- dungeonmanager.lua
         dungeonManager                  = "DungeonManager",
         status                          = "Status",
