@@ -12,8 +12,8 @@ function tb.ModuleInit()
 	end
 	
 	GUI_NewWindow("ToolBox", 450, 100, 200, 300)	
-	GUI_NewButton("ToolBox","AutoUnpackAllBags","TB.unpack", "Utility")
-	GUI_NewButton("ToolBox","AutoSalvageAllItems","TB.salvage", "Utility")
+	GUI_NewButton("ToolBox","UnpackAllBags","TB.unpack", "Utility")
+	GUI_NewButton("ToolBox","SalvageAllItems","TB.salvage", "Utility")
 	GUI_NewButton("ToolBox","SupplyRun","TB.supplyRun","Utility")
 
 	GUI_NewCheckbox("ToolBox","AutoLoot WvW Bags","WvW_Loot","WvWvW")

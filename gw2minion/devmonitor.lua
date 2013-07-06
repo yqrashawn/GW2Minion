@@ -2,6 +2,7 @@ devmonitor = { }
 devmonitor.running = false
 devmonitor.lastticks = 0
 devmonitor.visible = false
+devmonitor.initialized = false
 
 function devmonitor.ToggleMenu()
 	if (devmonitor.visible) then
@@ -9,6 +10,10 @@ function devmonitor.ToggleMenu()
 		devmonitor.visible = false
 		devmonitor.running = false
 	else
+		if ( not devmonitor.initialized ) then
+			devmonitor.ModuleInit()
+			devmonitor.initialized = true
+		end
 		GUI_WindowVisible("devmonitor",true)	
 		devmonitor.visible = true
 		devmonitor.running = true
@@ -316,11 +321,10 @@ function devmonitor.UpdateWindow()
 end
 
 function devmonitor.OnUpdateHandler( Event, ticks ) 	
-	if ( devmonitor.running and ticks - devmonitor.lastticks > 1000 ) then
+	if ( devmonitor.initialized and devmonitor.running and ticks - devmonitor.lastticks > 1000 ) then
 		devmonitor.lastticks = ticks
 		devmonitor.UpdateWindow()
 	end
 end
 
 RegisterEventHandler("Gameloop.Update", devmonitor.OnUpdateHandler)
-RegisterEventHandler("Module.Initalize", devmonitor.ModuleInit)
