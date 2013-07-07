@@ -216,7 +216,18 @@ end
 function SkillMgr.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
 		--d(tostring(k).." = "..tostring(v))
-		if ( k == "gSMactive" or k == "gSMmode" or k == "gsMtargetmode" or k == "gSMSwapA" or k == "gSMSwapR" or k == "gSMSwapCD" or k == "gSMPrioKit") then			
+		if ( k == "gSMactive" or 
+			 k == "gSMmode" or 
+			 k == "gsMtargetmode" or 
+			 k == "gSMSwapA" or 
+			 k == "gSMSwapR" or 
+			 k == "gSMSwapCD" or 
+			 k == "gSMSwapRange" or 
+			 k == "gSMPrioAtt" or
+			 k == "gSMAutoStomp" or
+			 k == "gSMAutoRezz" or
+			 k == "gFightstyle" or			 
+			 k == "gSMPrioKit") then			
 			Settings.GW2MINION[tostring(k)] = v
 		elseif ( k == "gSMprofile" ) then	
 			gSMactive = "0"

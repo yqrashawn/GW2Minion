@@ -245,6 +245,71 @@ function wt_core_taskmanager:addFarmSpotTask( marker )
 end
 
 ------------------------------------------------------------------
+-- Fight at Random Point Task
+function wt_core_taskmanager:addRandomFarmSpotTask( marker )
+	
+	local newtask = inheritsFrom( wt_task )	
+	newtask.UID = "RANDOMPT"
+	newtask.name = "Random FarmSpot "
+	newtask.timestamp = wt_global_information.Now
+	newtask.priority = 400
+	newtask.spotreached = false
+	newtask.startingTime = 0
+	newtask.position = {}
+	newtask.position.x = marker.x
+	newtask.position.y = marker.y
+	newtask.position.z = marker.z
+	newtask.maxduration = math.random(60000,600000)
+	newtask.done = false
+	newtask.last_execution = 0
+	newtask.throttle = 500
+		
+	function newtask:execute()
+		if ( not newtask.spotreached ) then
+			local me = Player
+			local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, me.pos.x, me.pos.y, me.pos.z )
+			if ( distance > 350 ) then
+				--wt_debug("Walking towards FarmSpot Marker ")	
+				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
+					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 100 )
+					newtask.last_execution = wt_global_information.Now
+				end
+			else
+				newtask.spotreached = true
+				newtask.startingTime = wt_global_information.Now
+			end
+			newtask.name = "Random FarmSpot: "..(math.floor(distance))
+		else
+			TargetList = ( CharacterList( "shortestpath,onmesh,noCritter,attackable,alive,maxdistance="..wt_global_information.MaxSearchEnemyDistance..",maxlevel="..( Player.level + wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel ) ) )
+			if ( TargetList ~= nil ) then 	
+				nextTarget, E  = next( TargetList )
+				if ( nextTarget ~= nil and (wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then
+					--wt_debug( "TaskManager: Begin Combat, Found target "..nextTarget )					
+					wt_core_state_combat.setTarget( nextTarget )
+					wt_core_controller.requestStateChange( wt_core_state_combat )
+				else
+					Player:StopMoving()
+					newtask.done = true
+				end
+			else
+				Player:StopMoving()
+				newtask.done = true
+			end
+			newtask.name = "Fight Random FarmSpot "..(math.floor((newtask.maxduration-(wt_global_information.Now - newtask.startingTime))/1000)).." sec"	
+		end		
+	end
+
+	function newtask:isFinished()
+		if ( newtask.done ) then 
+			return true
+		end
+		return false
+	end	
+	wt_core_taskmanager:addCustomtask( newtask )
+	
+end
+
+------------------------------------------------------------------
 -- Explore Point Of Interest Task
 function wt_core_taskmanager:addSkillChallengeTask( char )
 	if not char or char == nil then

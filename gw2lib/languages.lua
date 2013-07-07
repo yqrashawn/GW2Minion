@@ -52,7 +52,7 @@ strings =
         skipcutscene					= "Skip Cutscenes",
 		depositItems					= "Deposit Items",
 		checkChat						= "Chat Alert",
-		
+		randomfarmspot 					= "Use Random Farmspots",
 		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
@@ -367,7 +367,7 @@ strings =
         skipcutscene					= "Skip Cutscenes",
 		depositItems					= "Deposit Items",
 		checkChat						= "Chat Alert",
-		
+		randomfarmspot 					= "Use Random Farmspots",
 		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
@@ -682,7 +682,7 @@ strings =
         skipcutscene					= "Skip Cutscenes",
 		depositItems					= "Deposit Items",
 		checkChat						= "Chat Alert",
-		
+		randomfarmspot 					= "Use Random Farmspots",
 		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
@@ -997,7 +997,7 @@ strings =
         skipcutscene					= "Skip Cutscenes",
 		depositItems					= "Deposit Items",
 		checkChat						= "Chat Alert",
-		
+		randomfarmspot 					= "Use Random Farmspots",
 		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
@@ -1312,7 +1312,7 @@ strings =
         skipcutscene					= "Skip Cutscenes",
 		depositItems					= "Deposit Items",
 		checkChat						= "Chat Alert",
-		
+		randomfarmspot 					= "Use Random Farmspots",
 		
         -- meshmanager.lua
         meshManager                     = "MeshManager",

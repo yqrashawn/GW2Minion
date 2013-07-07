@@ -253,13 +253,15 @@ function wt_core_taskmanager:Update_Tasks( )
 				end
 			end
 			
-			if (wt_core_taskmanager.Customtask_list["GOTOPOS"] == nil) then				
-				local randPt = Player:GetRandomPoint(7500)
-				if ( randPt and NavigationManager:IsOnMeshExact(randPt)) then
-					d("Adding a GoToRandomPoint-Taks.. ")
-					wt_core_taskmanager:addGotoPosTask( randPt,400 )
+			if ( gRandomFarmspot == "1" ) then
+				if (wt_core_taskmanager.Customtask_list["RANDOMPT"] == nil) then				
+					local randPt = Player:GetRandomPoint(7500)
+					if ( randPt and NavigationManager:IsOnMeshExact(randPt)) then
+						d("Adding a GoToRandomPoint-Taks.. ")
+						wt_core_taskmanager:addRandomFarmSpotTask( randPt )
+					end
 				end
-			end			
+			end
 		end
 		
 		-- Add repair/vendor/event/aggro tasks from wt_core_state_idle, wt_core_state_minion, and wt_core_state_leader

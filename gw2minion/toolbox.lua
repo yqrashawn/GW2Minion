@@ -64,7 +64,7 @@ end
 
 
 function tb.OnUpdate( event, tickcount )		
-	if (tickcount - tb.lastrun > 750) then
+	if (tickcount - tb.lastrun > 500) then
 		tb.lastrun = tickcount	
 		if (tb.running ) then
 			if (wt_core_taskmanager.current_task ~= nil) then
