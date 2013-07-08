@@ -247,7 +247,7 @@ function c_rest:evaluate()
 			 i,e = next(mybuffs,i)
 		  end
 		end
-		if (not hazardfound) then
+		if (not hazardfound and not Player.inCombat) then
 			return true
 		end
 	end	

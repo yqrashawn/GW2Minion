@@ -21,7 +21,6 @@ wt_global_information.DoAggroCheck = true
 wt_global_information.lastrun = 0
 wt_global_information.InventoryFull = 0
 wt_global_information.FocusTarget = nil
-Settings.GW2MINION.TargetWaypointID = 0
 wt_global_information.stats_lastrun = 0
 wt_global_information.Charscreen_lastrun = 0
 wt_global_information.Cinema_lastrun = 0
@@ -33,134 +32,6 @@ wt_global_information.OldLastchatline = ""
 wt_global_information.OldLastwhisperline = ""
 
 gw2minion = { }
-
-if (Settings.GW2MINION.version == nil ) then
-	-- Init Settings for Version 1
-	Settings.GW2MINION.version = 1.0
-	Settings.GW2MINION.gEnableLog = "0"
-end
-
-if ( Settings.GW2MINION.gGW2MinionPulseTime == nil ) then
-	Settings.GW2MINION.gGW2MinionPulseTime = "150"
-end
-if ( Settings.GW2MINION.gEnableRepair == nil ) then
-	Settings.GW2MINION.gEnableRepair = "1"
-end
-if ( Settings.GW2MINION.gIgnoreMarkerCap == nil ) then
-	Settings.GW2MINION.gIgnoreMarkerCap = "0"
-end
-if ( Settings.GW2MINION.gMaxItemSellRarity == nil ) then
-	Settings.GW2MINION.gMaxItemSellRarity = "2"
-end
-if ( Settings.GW2MINION.gNavSwitchEnabled == nil ) then
-	Settings.GW2MINION.gNavSwitchEnabled = "0"
-end
-if ( Settings.GW2MINION.gNavSwitchTime == nil ) then
-	Settings.GW2MINION.gNavSwitchTime = "20"
-end
-if ( Settings.GW2MINION.gUseWaypoints == nil ) then
-	Settings.GW2MINION.gUseWaypoints = "0"
-end
-if ( Settings.GW2MINION.gUseWaypointsEvents == nil ) then
-	Settings.GW2MINION.gUseWaypointsEvents = "0"
-end
-if ( Settings.GW2MINION.gVendor_Weapons == nil ) then
-	Settings.GW2MINION.gVendor_Weapons = "1"
-end
-if ( Settings.GW2MINION.gVendor_Armor == nil ) then
-	Settings.GW2MINION.gVendor_Armor = "1"
-end
-if ( Settings.GW2MINION.gVendor_UpgradeComps == nil ) then
-	Settings.GW2MINION.gVendor_UpgradeComps = "0"
-end
-if ( Settings.GW2MINION.gVendor_CraftingMats == nil ) then
-	Settings.GW2MINION.gVendor_CraftingMats = "0"
-end
-if ( Settings.GW2MINION.gVendor_Trinkets == nil ) then
-	Settings.GW2MINION.gVendor_Trinkets = "0"
-end
-if ( Settings.GW2MINION.gVendor_Trophies == nil ) then
-	Settings.GW2MINION.gVendor_Trophies = "0"
-end
-if ( Settings.GW2MINION.gBuyGatheringTools == nil ) then
-	Settings.GW2MINION.gBuyGatheringTools = "1"
-end
-if ( Settings.GW2MINION.gBuySalvageKits == nil ) then
-	Settings.GW2MINION.gBuySalvageKits = "1"
-end
-if ( Settings.GW2MINION.gDoGathering == nil ) then
-	Settings.GW2MINION.gDoGathering = "1"
-end
-if ( Settings.GW2MINION.gDoSalvaging == nil ) then
-	Settings.GW2MINION.gDoSalvaging = "1"
-end
-if ( Settings.GW2MINION.gDoSalvageTrophies == nil ) then
-	Settings.GW2MINION.gDoSalvageTrophies = "0"
-end
-if ( Settings.GW2MINION.gGatheringToolStock == nil ) then
-	Settings.GW2MINION.gGatheringToolStock = "1"
-end
-if ( Settings.GW2MINION.gGatheringToolQuality == nil ) then
-	Settings.GW2MINION.gGatheringToolQuality = "5"
-end
-if ( Settings.GW2MINION.gSalvageKitStock == nil ) then
-	Settings.GW2MINION.gSalvageKitStock = "1"
-end
-if ( Settings.GW2MINION.gSalvageKitQuality == nil ) then
-	Settings.GW2MINION.gSalvageKitQuality = "2"
-end
-if ( Settings.GW2MINION.gBuyBestGatheringTool == nil ) then
-	Settings.GW2MINION.gBuyBestGatheringTool = "1"
-end
-if ( Settings.GW2MINION.gBuyBestSalvageKit == nil ) then
-	Settings.GW2MINION.gBuyBestSalvageKit = "1"
-end
-if ( Settings.GW2MINION.gStats_enabled == nil ) then
-	Settings.GW2MINION.gStats_enabled = "0"
-end
-if ( Settings.GW2MINION.gEnableLog == nil ) then
-	Settings.GW2MINION.gEnableLog = "0"
-end
-if ( Settings.GW2MINION.gAutostartbot == nil ) then
-	Settings.GW2MINION.gAutostartbot = "0"
-end
-if ( Settings.GW2MINION.gCombatmovement == nil ) then
-	Settings.GW2MINION.gCombatmovement = "1"
-end
-if ( Settings.GW2MINION.gdoEvents == nil ) then
-	Settings.GW2MINION.gdoEvents = "1"
-end
-if ( Settings.GW2MINION.gDoUnstuck == nil ) then
-	Settings.GW2MINION.gDoUnstuck = "1"
-end
-if ( Settings.GW2MINION.gUnstuckCount == nil ) then
-	Settings.GW2MINION.gUnstuckCount = "10"
-end
-if ( Settings.GW2MINION.gEventTimeout == nil ) then
-	Settings.GW2MINION.gEventTimeout = "600"
-end
-if ( Settings.GW2MINION.gEventFarming == nil ) then
-	Settings.GW2MINION.gEventFarming = "0"
-end
-if ( Settings.GW2MINION.gPrioritizeRevive == nil ) then
-	Settings.GW2MINION.gPrioritizeRevive = "0"
-end
-if ( Settings.GW2MINION.gskipcutscene == nil ) then
-	Settings.GW2MINION.gskipcutscene = "1"
-end
-if ( Settings.GW2MINION.gDepositItems == nil ) then
-	Settings.GW2MINION.gDepositItems = "1"
-end
-if ( Settings.GW2MINION.gCheckChat == nil ) then
-	Settings.GW2MINION.gCheckChat = "Both"
-end
-if ( Settings.GW2MINION.gRandomFarmspot == nil ) then
-	Settings.GW2MINION.gRandomFarmspot = "1"
-end
-if ( Settings.GW2MINION.gAttackGadgets == nil ) then
-	Settings.GW2MINION.gAttackGadgets = "0"
-end
-
 
 
 function wt_global_information.OnUpdate( event, tickcount )
@@ -220,7 +91,136 @@ end
 
 -- Module Event Handler
 function gw2minion.HandleInit()	
-	GUI_SetStatusBar("Initalizing Modules...")
+	GUI_SetStatusBar("Initalizing gw2 Module...")
+	
+	Settings.GW2MINION.TargetWaypointID = 0
+	if (Settings.GW2MINION.version == nil ) then
+		-- Init Settings for Version 1
+		Settings.GW2MINION.version = 1.0
+		Settings.GW2MINION.gEnableLog = "0"
+	end
+
+	if ( Settings.GW2MINION.gGW2MinionPulseTime == nil ) then
+		Settings.GW2MINION.gGW2MinionPulseTime = "150"
+	end
+	if ( Settings.GW2MINION.gEnableRepair == nil ) then
+		Settings.GW2MINION.gEnableRepair = "1"
+	end
+	if ( Settings.GW2MINION.gIgnoreMarkerCap == nil ) then
+		Settings.GW2MINION.gIgnoreMarkerCap = "0"
+	end
+	if ( Settings.GW2MINION.gMaxItemSellRarity == nil ) then
+		Settings.GW2MINION.gMaxItemSellRarity = "2"
+	end
+	if ( Settings.GW2MINION.gNavSwitchEnabled == nil ) then
+		Settings.GW2MINION.gNavSwitchEnabled = "0"
+	end
+	if ( Settings.GW2MINION.gNavSwitchTime == nil ) then
+		Settings.GW2MINION.gNavSwitchTime = "20"
+	end
+	if ( Settings.GW2MINION.gUseWaypoints == nil ) then
+		Settings.GW2MINION.gUseWaypoints = "0"
+	end
+	if ( Settings.GW2MINION.gUseWaypointsEvents == nil ) then
+		Settings.GW2MINION.gUseWaypointsEvents = "0"
+	end
+	if ( Settings.GW2MINION.gVendor_Weapons == nil ) then
+		Settings.GW2MINION.gVendor_Weapons = "1"
+	end
+	if ( Settings.GW2MINION.gVendor_Armor == nil ) then
+		Settings.GW2MINION.gVendor_Armor = "1"
+	end
+	if ( Settings.GW2MINION.gVendor_UpgradeComps == nil ) then
+		Settings.GW2MINION.gVendor_UpgradeComps = "0"
+	end
+	if ( Settings.GW2MINION.gVendor_CraftingMats == nil ) then
+		Settings.GW2MINION.gVendor_CraftingMats = "0"
+	end
+	if ( Settings.GW2MINION.gVendor_Trinkets == nil ) then
+		Settings.GW2MINION.gVendor_Trinkets = "0"
+	end
+	if ( Settings.GW2MINION.gVendor_Trophies == nil ) then
+		Settings.GW2MINION.gVendor_Trophies = "0"
+	end
+	if ( Settings.GW2MINION.gBuyGatheringTools == nil ) then
+		Settings.GW2MINION.gBuyGatheringTools = "1"
+	end
+	if ( Settings.GW2MINION.gBuySalvageKits == nil ) then
+		Settings.GW2MINION.gBuySalvageKits = "1"
+	end
+	if ( Settings.GW2MINION.gDoGathering == nil ) then
+		Settings.GW2MINION.gDoGathering = "1"
+	end
+	if ( Settings.GW2MINION.gDoSalvaging == nil ) then
+		Settings.GW2MINION.gDoSalvaging = "1"
+	end
+	if ( Settings.GW2MINION.gDoSalvageTrophies == nil ) then
+		Settings.GW2MINION.gDoSalvageTrophies = "0"
+	end
+	if ( Settings.GW2MINION.gGatheringToolStock == nil ) then
+		Settings.GW2MINION.gGatheringToolStock = "1"
+	end
+	if ( Settings.GW2MINION.gGatheringToolQuality == nil ) then
+		Settings.GW2MINION.gGatheringToolQuality = "5"
+	end
+	if ( Settings.GW2MINION.gSalvageKitStock == nil ) then
+		Settings.GW2MINION.gSalvageKitStock = "1"
+	end
+	if ( Settings.GW2MINION.gSalvageKitQuality == nil ) then
+		Settings.GW2MINION.gSalvageKitQuality = "2"
+	end
+	if ( Settings.GW2MINION.gBuyBestGatheringTool == nil ) then
+		Settings.GW2MINION.gBuyBestGatheringTool = "1"
+	end
+	if ( Settings.GW2MINION.gBuyBestSalvageKit == nil ) then
+		Settings.GW2MINION.gBuyBestSalvageKit = "1"
+	end
+	if ( Settings.GW2MINION.gStats_enabled == nil ) then
+		Settings.GW2MINION.gStats_enabled = "0"
+	end
+	if ( Settings.GW2MINION.gEnableLog == nil ) then
+		Settings.GW2MINION.gEnableLog = "0"
+	end
+	if ( Settings.GW2MINION.gAutostartbot == nil ) then
+		Settings.GW2MINION.gAutostartbot = "0"
+	end
+	if ( Settings.GW2MINION.gCombatmovement == nil ) then
+		Settings.GW2MINION.gCombatmovement = "1"
+	end
+	if ( Settings.GW2MINION.gdoEvents == nil ) then
+		Settings.GW2MINION.gdoEvents = "1"
+	end
+	if ( Settings.GW2MINION.gDoUnstuck == nil ) then
+		Settings.GW2MINION.gDoUnstuck = "1"
+	end
+	if ( Settings.GW2MINION.gUnstuckCount == nil ) then
+		Settings.GW2MINION.gUnstuckCount = "10"
+	end
+	if ( Settings.GW2MINION.gEventTimeout == nil ) then
+		Settings.GW2MINION.gEventTimeout = "600"
+	end
+	if ( Settings.GW2MINION.gEventFarming == nil ) then
+		Settings.GW2MINION.gEventFarming = "0"
+	end
+	if ( Settings.GW2MINION.gPrioritizeRevive == nil ) then
+		Settings.GW2MINION.gPrioritizeRevive = "0"
+	end
+	if ( Settings.GW2MINION.gskipcutscene == nil ) then
+		Settings.GW2MINION.gskipcutscene = "1"
+	end
+	if ( Settings.GW2MINION.gDepositItems == nil ) then
+		Settings.GW2MINION.gDepositItems = "1"
+	end
+	if ( Settings.GW2MINION.gCheckChat == nil ) then
+		Settings.GW2MINION.gCheckChat = "Both"
+	end
+	if ( Settings.GW2MINION.gRandomFarmspot == nil ) then
+		Settings.GW2MINION.gRandomFarmspot = "1"
+	end
+	if ( Settings.GW2MINION.gAttackGadgets == nil ) then
+		Settings.GW2MINION.gAttackGadgets = "0"
+	end
+	
 	GUI_NewWindow(wt_global_information.MainWindow.Name,wt_global_information.MainWindow.x,wt_global_information.MainWindow.y,wt_global_information.MainWindow.width,wt_global_information.MainWindow.height)
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnStart.Name , wt_global_information.BtnStart.Event)
 	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].pulseTime,"gGW2MinionPulseTime",strings[gCurrentLanguage].botStatus );	
