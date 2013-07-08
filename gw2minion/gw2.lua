@@ -167,7 +167,7 @@ function wt_global_information.OnUpdate( event, tickcount )
 		wt_global_information.stats_lastrun = tickcount	
 		wt_global_information.UpdateMultiServerStatus()
 	end	
-	
+		
 	gGW2MiniondeltaT = tostring(tickcount - wt_global_information.lastrun)
 	if (tickcount - wt_global_information.lastrun > tonumber(gGW2MinionPulseTime)) then
 		wt_global_information.lastrun = tickcount
@@ -191,6 +191,8 @@ function wt_global_information.OnUpdate( event, tickcount )
 		wt_core_controller.Run()
 	end
 end
+
+
 
 function wt_global_information.OnUpdateCharSelect(event, tickcount )
 	wt_global_information.Now = tickcount

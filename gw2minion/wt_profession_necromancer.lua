@@ -248,9 +248,9 @@ function wt_profession_necromancer.e_attack_default:execute()
 			if ( myOHWeap == "Staff") then				
 				if (s1 ~= nil) then
 					wt_global_information.AttackRange = s1.maxRange
-					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < s5.maxRange and T.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving) then
+					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < s5.maxRange ) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange and T.movementstate ~= GW2.MOVEMENTSTATE.GroundMoving) then
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange ) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
 					end
 				end

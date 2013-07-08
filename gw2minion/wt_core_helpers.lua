@@ -105,7 +105,7 @@ function wt_core_helpers:GetClosestSellVendor(maxDistance)
             return sellMerchant
         end
     else
-        return false
+        return nil
     end
 end
 
@@ -130,7 +130,7 @@ function wt_core_helpers:GetClosestBuyVendor(maxDistance)
 	then
         return buyMerchant
     else
-        return false
+        return nil
     end
 end
 
@@ -146,7 +146,7 @@ function wt_core_helpers:GetClosestRepairVendor(maxDistance)
     if (repairMerchant ~= nil and repairMerchant.distance < maxDistance and wt_core_taskmanager.npcBlacklist[repairMerchant.characterID] == nil) then
         return repairMerchant
     else
-        return false
+        return nil
     end
 end
 
@@ -172,7 +172,7 @@ function wt_core_helpers:GetClosestEvent(maxDistance)
 	if (event ~= nil) then
 		return event
 	else
-		return false
+		return nil
 	end
 end
 

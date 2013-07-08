@@ -115,7 +115,11 @@ end
 c_heal_action = inheritsFrom(wt_cause)
 e_heal_action = inheritsFrom(wt_effect)
 function c_heal_action:evaluate()
-	return (Player.health.percent < wt_core_state_combat.RestHealthLimit and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6))
+	if (gSMactive == "0") then
+		return (Player.health.percent < wt_core_state_combat.RestHealthLimit and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_6))
+	else
+		return false
+	end
 end
 e_heal_action.usesAbility = true
 function e_heal_action:execute()

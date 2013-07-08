@@ -96,92 +96,93 @@ function c_downed_combat:evaluate()
 end
 
 function e_downed_combat:execute()
-	-- wt_debug( "e_downed_combat" )
-	for i = 4, 1, -1 do
-		if ( type( e_downed_combat[ "s" .. i ] ) ~= "table" ) then
-			e_downed_combat[ "s" .. i ] = { }
-		end
-		local slot = Player:GetSpellInfo( GW2.SKILLBARSLOT["Slot_" .. i] )
-		if ( not e_downed_combat[ "s" .. i ].skillID ) then
-			
-			
-			-- TODO: FIX THAT CRAPCODE
-			--[[while ( slot.name == "" ) do
-				slot = Player:GetSpellInfo( GW2.SKILLBARSLOT["Slot_" .. i] )
+	if (gSMactive == "0") then
+		for i = 4, 1, -1 do
+			if ( type( e_downed_combat[ "s" .. i ] ) ~= "table" ) then
+				e_downed_combat[ "s" .. i ] = { }
 			end
-			local sname, _ = string.gsub( tostring( slot.name ), "\"", "" )
-			if ( sname ~= nil ) then slot.name = sname else slot.name = tostring( slot.name ) end
-			slot.msg = string.format( "Downed: Use %s (s%u) on ", slot.name, tostring( i ) )]]
-			e_downed_combat[ "s" .. i ] = slot
-		end
-	end
-
-	local function D_Msg( i, E, OoC )
-		--[[if ( e_downed_combat.dMaster ) then
-			local msg = e_downed_combat[ "s" .. i ].msg
-			if ( i < 4 ) then msg = msg .. E.name
-			elseif ( i == 4 ) then msg = msg .. "Ranger" end
-			if ( OoC ) then msg = msg .. " .. OutOfCombat" end
-			if ( e_downed_combat.dSpam ) then wt_debug( msg )
-			else if ( e_downed_combat.Lslot ~= i ) then wt_debug( msg ) end
-			end
-		end]]
-	end
-
-	if ( Player.inCombat ) then
-		-- wt_debug( "e_downed_combat Player.inCombat = true" )
-		TargetList = ( CharacterList( "lowesthealth,los,attackable,alive,incombat,noCritter,maxdistance=" .. wt_global_information.MaxAggroDistanceFar ) )
-		if ( TableSize( TargetList ) > 0 ) then
-			targetID, E  = next( TargetList )
-			--E.name = tostring( E.name )
-			if ( targetID ~= nil ) then
-				if ( Player:GetTarget() ~= targetID ) then Player:SetTarget( targetID ) end
-				if ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_4 ) ) then
-					-- Ranger: Bandage
-					D_Msg( 4, E, false )
-					Player:CastSpell( GW2.SKILLBARSLOT.Slot_4 ) -- No need for TargetID player is the target
-					e_downed_combat.Lslot = 4
-					return
-				-- Slot 4
-
-				elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_3 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) and ( Player.profession ~= 4 )  and ( Player.profession ~= 2 )then
-					-- Ranger skill slot_3 is disabled until pet attack (F1) have been fixed
-					-- Ranger: Lick Wounds
-					D_Msg( 3, E, false )
-					Player:CastSpell( GW2.SKILLBARSLOT.Slot_3, targetID )
-					e_downed_combat.Lslot = 3
-					return
-				-- Slot 3
-
-				elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_2 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) then
-					-- Ranger: Thunderclap
-					D_Msg( 2, E, false )
-					Player:CastSpell( GW2.SKILLBARSLOT.Slot_2, targetID )
-					e_downed_combat.Lslot = 2
-					return
-				-- Slot 2
-
-				elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_1 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) then
-					-- Ranger: Throw Dirt
-					D_Msg( 1, E, false )
-					Player:CastSpell( GW2.SKILLBARSLOT.Slot_1, targetID )
-					e_downed_combat.Lslot = 1
-					return
-				-- Slot 1
+			local slot = Player:GetSpellInfo( GW2.SKILLBARSLOT["Slot_" .. i] )
+			if ( not e_downed_combat[ "s" .. i ].skillID ) then
+				
+				
+				-- TODO: FIX THAT CRAPCODE
+				--[[while ( slot.name == "" ) do
+					slot = Player:GetSpellInfo( GW2.SKILLBARSLOT["Slot_" .. i] )
 				end
-			-- targetID = nil
+				local sname, _ = string.gsub( tostring( slot.name ), "\"", "" )
+				if ( sname ~= nil ) then slot.name = sname else slot.name = tostring( slot.name ) end
+				slot.msg = string.format( "Downed: Use %s (s%u) on ", slot.name, tostring( i ) )]]
+				e_downed_combat[ "s" .. i ] = slot
 			end
-		-- TableSize( TargetList ) > 0
 		end
-	-- Player.inCombat
-	end
-	if ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_4 ) ) then
-		-- Ranger: Bandage
-		D_Msg( 4, E, true )
-		Player:CastSpell( GW2.SKILLBARSLOT.Slot_4 ) -- No need for TargetID player is the target
-		e_downed_combat.Lslot = nil
-		return
-	-- Slot 4
+
+		local function D_Msg( i, E, OoC )
+			--[[if ( e_downed_combat.dMaster ) then
+				local msg = e_downed_combat[ "s" .. i ].msg
+				if ( i < 4 ) then msg = msg .. E.name
+				elseif ( i == 4 ) then msg = msg .. "Ranger" end
+				if ( OoC ) then msg = msg .. " .. OutOfCombat" end
+				if ( e_downed_combat.dSpam ) then wt_debug( msg )
+				else if ( e_downed_combat.Lslot ~= i ) then wt_debug( msg ) end
+				end
+			end]]
+		end
+
+		if ( Player.inCombat ) then
+			-- wt_debug( "e_downed_combat Player.inCombat = true" )
+			TargetList = ( CharacterList( "lowesthealth,los,attackable,alive,incombat,noCritter,maxdistance=" .. wt_global_information.MaxAggroDistanceFar ) )
+			if ( TableSize( TargetList ) > 0 ) then
+				targetID, E  = next( TargetList )
+				--E.name = tostring( E.name )
+				if ( targetID ~= nil ) then
+					if ( Player:GetTarget() ~= targetID ) then Player:SetTarget( targetID ) end
+					if ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_4 ) ) then
+						-- Ranger: Bandage
+						D_Msg( 4, E, false )
+						Player:CastSpell( GW2.SKILLBARSLOT.Slot_4 ) -- No need for TargetID player is the target
+						e_downed_combat.Lslot = 4
+						return
+					-- Slot 4
+
+					elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_3 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) and ( Player.profession ~= 4 )  and ( Player.profession ~= 2 )then
+						-- Ranger skill slot_3 is disabled until pet attack (F1) have been fixed
+						-- Ranger: Lick Wounds
+						D_Msg( 3, E, false )
+						Player:CastSpell( GW2.SKILLBARSLOT.Slot_3, targetID )
+						e_downed_combat.Lslot = 3
+						return
+					-- Slot 3
+
+					elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_2 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) then
+						-- Ranger: Thunderclap
+						D_Msg( 2, E, false )
+						Player:CastSpell( GW2.SKILLBARSLOT.Slot_2, targetID )
+						e_downed_combat.Lslot = 2
+						return
+					-- Slot 2
+
+					elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_1 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) then
+						-- Ranger: Throw Dirt
+						D_Msg( 1, E, false )
+						Player:CastSpell( GW2.SKILLBARSLOT.Slot_1, targetID )
+						e_downed_combat.Lslot = 1
+						return
+					-- Slot 1
+					end
+				-- targetID = nil
+				end
+			-- TableSize( TargetList ) > 0
+			end
+		-- Player.inCombat
+		end
+		if ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_4 ) ) then
+			-- Ranger: Bandage
+			D_Msg( 4, E, true )
+			Player:CastSpell( GW2.SKILLBARSLOT.Slot_4 ) -- No need for TargetID player is the target
+			e_downed_combat.Lslot = nil
+			return
+		-- Slot 4
+		end
 	end
 	return
 end
