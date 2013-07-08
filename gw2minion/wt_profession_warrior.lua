@@ -360,9 +360,14 @@ function wt_profession_warrior:HandleInit()
 		if ( Settings.GW2MINION.gWarSK10 == nil ) then
 			Settings.GW2MINION.gWarSK10 = "0"
 		end
+		if ( Settings.GW2MINION.gWarUseVeng == nil ) then
+			Settings.GW2MINION.gWarUseVeng = "0"
+		end
+		
 			
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoSwapWeaponSets,"gWarSwapWeapons",strings[gCurrentLanguage].warriorSettings);
 		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoF1,"gWarUseBurst",strings[gCurrentLanguage].warriorSettings);		
+		GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].warrveng,"gWarUseVeng",strings[gCurrentLanguage].warriorSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill7HP,"gWarSK7",strings[gCurrentLanguage].warriorSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill8HP,"gWarSK8",strings[gCurrentLanguage].warriorSettings);
 		GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].skill9HP,"gWarSK9",strings[gCurrentLanguage].warriorSettings);
@@ -375,7 +380,8 @@ function wt_profession_warrior:HandleInit()
 		gWarSK8 = Settings.GW2MINION.gWarSK8
 		gWarSK9 = Settings.GW2MINION.gWarSK9
 		gWarSK10 = Settings.GW2MINION.gWarSK10			
-					
+		gWarUseVeng	= Settings.GW2MINION.gWarUseVeng
+		
 		-- Our C & E´s for Warrior combat:
 		-- Default Causes & Effects that are already in the wt_core_state_combat for all classes:
 		-- Death Check 				- Priority 10000   --> Can change state to wt_core_state_dead.lua

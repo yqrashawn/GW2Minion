@@ -150,6 +150,13 @@ function e_downed_combat:execute()
 						Player:CastSpell( GW2.SKILLBARSLOT.Slot_3, targetID )
 						e_downed_combat.Lslot = 3
 						return
+						
+					elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_3 ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) and ( Player.profession == 2 ) and gWarUseVeng == "1" )then
+						-- Warrior vengenance skill
+						D_Msg( 3, E, false )
+						Player:CastSpell( GW2.SKILLBARSLOT.Slot_3, targetID )
+						e_downed_combat.Lslot = 3
+						return
 					-- Slot 3
 
 					elseif ( not Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_2 ) ) and ( Player:GetCurrentlyCastedSpell() ~= GW2.SKILLBARSLOT.Slot_4 ) then

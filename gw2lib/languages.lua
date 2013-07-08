@@ -251,7 +251,8 @@ strings =
 
         -- warrior.lua
         warriorSettings                 = "Warrior-Settings",
-
+		warrveng						= "Use Vengenance",
+		
         -- meshassistant.lua
         maModuleName                    = "MeshAssistant",
         maMarkerInspector               = "MarkerInspector",
