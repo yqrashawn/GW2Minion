@@ -340,6 +340,7 @@ table.insert(wt_core_state_minion.TaskChecks,{["func"]=wt_core_state_minion.aggr
 --Throttle = 500
 function wt_core_state_minion.aggroGadgetCheck()
 	--wt_debug("aggroCheck")
+	if ( gAttackGadgets == "1")then
 	if ( wt_global_information.DoAggroCheck ) then
 		local GList = ( GadgetList( "attackable,alive,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 		if ( TableSize( GList ) > 0 ) then
@@ -349,6 +350,7 @@ function wt_core_state_minion.aggroGadgetCheck()
 				return false
 			end		
 		end	
+	end
 	end
 end
 table.insert(wt_core_state_minion.TaskChecks,{["func"]=wt_core_state_minion.aggroGadgetCheck,["throttle"]=1000})

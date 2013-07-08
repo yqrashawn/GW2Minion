@@ -171,7 +171,8 @@ function SkillMgr.ModuleInit()
 		end
 		
 		local SM_Attack_default = wt_kelement:create("Attack(SM)",SkillMgr.c_SMattack_default,SkillMgr.e_SMattack_default, 46 )
-		wt_core_state_combat:add(SM_Attack_default)
+		wt_core_state_combat:add(SM_Attack_default)	
+		
 	end
 
 	--GUI_UnFoldGroup(SkillMgr.mainwindow.name,strings[gCurrentLanguage].generalSettings) crashes still

@@ -382,6 +382,7 @@ table.insert(wt_core_state_leader.TaskChecks,{["func"]=wt_core_state_leader.aggr
 --Throttle = 500
 function wt_core_state_leader.aggroGadgetCheck()
 	--wt_debug("aggroCheck")
+	if ( gAttackGadgets == "1")then
 	if ( wt_global_information.DoAggroCheck ) then
 		if ( Player.inCombat ) then
 			local GList = ( GadgetList( "attackable,alive,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
@@ -402,6 +403,7 @@ function wt_core_state_leader.aggroGadgetCheck()
 				return false
 			end		
 		end	]]
+	end
 	end
 end
 table.insert(wt_core_state_leader.TaskChecks,{["func"]=wt_core_state_leader.aggroGadgetCheck,["throttle"]=1000})

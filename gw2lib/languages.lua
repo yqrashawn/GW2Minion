@@ -53,6 +53,7 @@ strings =
 		depositItems					= "Deposit Items",
 		checkChat						= "Chat Alert",
 		randomfarmspot 					= "Use Random Farmspots",
+		AttackGadgets					= "Attack Objects",
 		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
@@ -368,6 +369,7 @@ strings =
 		depositItems					= "Deposit Items",
 		checkChat						= "Chat Alert",
 		randomfarmspot 					= "Use Random Farmspots",
+		AttackGadgets					= "Attack Objects",
 		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
@@ -683,6 +685,7 @@ strings =
 		depositItems					= "Deposit Items",
 		checkChat						= "Chat Alert",
 		randomfarmspot 					= "Use Random Farmspots",
+		AttackGadgets					= "Attack Objects",
 		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
@@ -998,6 +1001,7 @@ strings =
 		depositItems					= "Deposit Items",
 		checkChat						= "Chat Alert",
 		randomfarmspot 					= "Use Random Farmspots",
+		AttackGadgets					= "Attack Objects",
 		
         -- meshmanager.lua
         meshManager                     = "MeshManager",
@@ -1313,6 +1317,7 @@ strings =
 		depositItems					= "Deposit Items",
 		checkChat						= "Chat Alert",
 		randomfarmspot 					= "Use Random Farmspots",
+		AttackGadgets					= "Attack Objects",
 		
         -- meshmanager.lua
         meshManager                     = "MeshManager",

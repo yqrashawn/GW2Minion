@@ -259,26 +259,28 @@ table.insert(wt_core_state_idle.TaskChecks,{["func"]=wt_core_state_idle.aggroChe
 --Throttle = 500
 function wt_core_state_idle.aggroGadgetCheck()
 	--wt_debug("aggroCheck")
-	if ( wt_global_information.DoAggroCheck ) then
-		if ( Player.inCombat ) then
-			local GList = ( GadgetList( "attackable,alive,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
+	if ( gAttackGadgets == "1") then
+		if ( wt_global_information.DoAggroCheck ) then
+			if ( Player.inCombat ) then
+				local GList = ( GadgetList( "attackable,alive,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
+				if ( TableSize( GList ) > 0 ) then
+					local id, E  = next( GList )
+					if ( id ~= nil and id ~= 0 and E ~= nil) then
+						wt_core_taskmanager:addKillGadgetTask( id, E, 3000 )
+					return false
+					end		
+				end
+			end
+			
+			--[[local GList = ( GadgetList( "attackable,alive,nearest,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 			if ( TableSize( GList ) > 0 ) then
 				local id, E  = next( GList )
 				if ( id ~= nil and id ~= 0 and E ~= nil) then
-					wt_core_taskmanager:addKillGadgetTask( id, E, 3000 )
-				return false
+					wt_core_taskmanager:addKillGadgetTask( id, E, 2550 )
+					return false
 				end		
-			end
+			end	]]
 		end
-		
-		--[[local GList = ( GadgetList( "attackable,alive,nearest,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
-		if ( TableSize( GList ) > 0 ) then
-			local id, E  = next( GList )
-			if ( id ~= nil and id ~= 0 and E ~= nil) then
-				wt_core_taskmanager:addKillGadgetTask( id, E, 2550 )
-				return false
-			end		
-		end	]]
 	end
 end
 table.insert(wt_core_state_idle.TaskChecks,{["func"]=wt_core_state_idle.aggroGadgetCheck,["throttle"]=1000})

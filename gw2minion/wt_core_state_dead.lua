@@ -96,7 +96,6 @@ function c_downed_combat:evaluate()
 end
 
 function e_downed_combat:execute()
-	if (gSMactive == "0") then
 		for i = 4, 1, -1 do
 			if ( type( e_downed_combat[ "s" .. i ] ) ~= "table" ) then
 				e_downed_combat[ "s" .. i ] = { }
@@ -183,7 +182,6 @@ function e_downed_combat:execute()
 			return
 		-- Slot 4
 		end
-	end
 	return
 end
 

@@ -273,6 +273,8 @@ function wt_core_taskmanager:Update_Tasks( )
 		else
 			taskChecks = wt_core_state_minion.TaskChecks
 		end
+		-- ^LOL ? a totally useless if else end here ? Y U CODE DRUNK!
+		
 		if (taskChecks ~= nil) then
 			local index, taskTable = next(taskChecks)
 			while (index ~= nil) do

@@ -157,7 +157,9 @@ end
 if ( Settings.GW2MINION.gRandomFarmspot == nil ) then
 	Settings.GW2MINION.gRandomFarmspot = "1"
 end
-
+if ( Settings.GW2MINION.gAttackGadgets == nil ) then
+	Settings.GW2MINION.gAttackGadgets = "0"
+end
 
 
 
@@ -237,6 +239,7 @@ function gw2minion.HandleInit()
 	
 	GUI_NewComboBox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].checkChat,"gCheckChat",strings[gCurrentLanguage].advancedSettings,"Off,Whisper,Say,Both");
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].randomfarmspot,"gRandomFarmspot",strings[gCurrentLanguage].advancedSettings);
+	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].AttackGadgets,"gAttackGadgets",strings[gCurrentLanguage].advancedSettings);	
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].ignoreLevelMarker,"gIgnoreMarkerCap",strings[gCurrentLanguage].advancedSettings);
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].wpVendor, "gUseWaypoints",strings[gCurrentLanguage].advancedSettings);
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].wpEvents, "gUseWaypointsEvents",strings[gCurrentLanguage].advancedSettings);
@@ -316,6 +319,7 @@ function gw2minion.HandleInit()
 	gDepositItems = Settings.GW2MINION.gDepositItems
 	gCheckChat = Settings.GW2MINION.gCheckChat
 	gRandomFarmspot = Settings.GW2MINION.gRandomFarmspot
+	gAttackGadgets = Settings.GW2MINION.gAttackGadgets
 	
 	wt_debug("GUI Setup done")
 	GUI_SetStatusBar("Ready...")
@@ -358,7 +362,8 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "gskipcutscene" or		
 				k == "gDepositItems" or	
 				k == "gCheckChat" or
-				k == "gRandomFarmspot" or				
+				k == "gRandomFarmspot" or	
+				k == "gAttackGadgets" or
 				k == "gBuyBestSalvageKit")
 		then
 			Settings.GW2MINION[tostring(k)] = v
