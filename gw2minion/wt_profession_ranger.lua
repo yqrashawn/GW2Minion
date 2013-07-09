@@ -324,18 +324,15 @@ wt_profession_ranger.c_switch_pet_action = inheritsFrom( wt_cause )
 wt_profession_ranger.e_switch_pet_action = inheritsFrom( wt_effect )
 function wt_profession_ranger.c_switch_pet_action:evaluate()
 	local pet = Player:GetPet()
-	if ( Player:CanSwitchPet() and Player.healthstate == GW2.HEALTHSTATE.Alive) then
-		if ( pet ~= nil ) then
-			local PetLowHPSwitch = wt_global_information.Currentprofession.PetLowHPSwitch
-			local pet_hp_percent = tonumber( pet.health.percent )
-			if ( pet.alive == 0 ) then
-				return true
-			elseif ( pet_hp_percent < PetLowHPSwitch ) then
-				return true
-			end
-			return false
+	if ( pet ~= nil and Player:CanSwitchPet() and Player.healthstate == GW2.HEALTHSTATE.Alive) then		
+		local PetLowHPSwitch = wt_global_information.Currentprofession.PetLowHPSwitch
+		local pet_hp_percent = tonumber( pet.health.percent )
+		if ( pet.alive == 0 ) then
+			return true
+		elseif ( pet_hp_percent < PetLowHPSwitch ) then
+			return true
 		end
-		return true
+		return false		
 	end
 	return false
 end
