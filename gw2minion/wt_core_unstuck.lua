@@ -48,7 +48,7 @@ function wt_core_unstuck:IsStuck()
 end
 
 function wt_core_unstuck:IsOffMesh()
-	return not Player.onmeshexact and not Player:IsCasting()
+	return not Player.onmesh and not Player:IsCasting()
 end
 
 function wt_core_unstuck:IsIdle()

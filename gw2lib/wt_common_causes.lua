@@ -46,7 +46,7 @@ c_quickloot = inheritsFrom( wt_cause )
 e_quickloot = inheritsFrom( wt_effect )
 function c_quickloot:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then
-		c_quickloot.EList = CharacterList( "nearest,lootable,onmesh,maxdistance=120" )
+		c_quickloot.EList = CharacterList( "nearest,lootable,onmesh,maxdistance=110" )
 		NextIndex, LootTarget = next( c_quickloot.EList )
 		if ( NextIndex ~= nil ) then
 			if ( NextIndex == Player:GetInteractableTarget() ) then
