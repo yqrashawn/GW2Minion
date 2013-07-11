@@ -331,7 +331,7 @@ end
 -----------------------------------------------------------------------------------
 function wt_profession_warrior.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
-		if ( k == "gWarSwapWeapons" or k == "gWarUseBurst" or k == "gWarSK7" or k == "gWarSK8" or k == "gWarSK9" or k == "gWarSK10") then
+		if ( k == "gWarSwapWeapons" or k == "gWarUseBurst" or k == "gWarSK7" or k == "gWarSK8" or k == "gWarSK9" or k == "gWarSK10" or k == "gWarUseVeng") then
 			Settings.GW2MINION[tostring(k)] = v
 		end
 	end

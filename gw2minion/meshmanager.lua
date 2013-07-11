@@ -119,10 +119,12 @@ function mm.ModuleInit()
 	end
 			
 	gMeshEditor = "0"
+	gMeshEditor2 = "0"
 	if (Settings.GW2MINION.gnewmeshname == nil) then
 		Settings.GW2MINION.gnewmeshname = ""
 	end
 	GUI_NewCheckbox(mm.mainwindow.name,strings[gCurrentLanguage].showMesh,"gMeshEditor",strings[gCurrentLanguage].editor)
+	GUI_NewCheckbox(mm.mainwindow.name,strings[gCurrentLanguage].showrealMesh,"gMeshEditor2",strings[gCurrentLanguage].editor)
 	GUI_NewField(mm.mainwindow.name,strings[gCurrentLanguage].newMeshName,"gnewmeshname",strings[gCurrentLanguage].editor)
 	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].newMesh,"newMeshEvent",strings[gCurrentLanguage].editor)
 	GUI_NewButton(mm.mainwindow.name,strings[gCurrentLanguage].saveMesh,"saveMeshEvent",strings[gCurrentLanguage].editor)
@@ -366,6 +368,12 @@ function mm.GUIVarUpdate(Event, NewVals, OldVals)
 				NavigationManager:ToggleNavEditor(true)
 			else
 				NavigationManager:ToggleNavEditor(false)
+			end
+		elseif( k == "gMeshEditor2") then
+			if (v == "1") then
+				NavigationManager:ShowNavMesh(true)
+			else
+				NavigationManager:ShowNavMesh(false)
 			end
 		elseif( k == "gMeshMGR" or k == "gnewmeshname" or k == "gEnableSwitcher" or
                 k == "gminswitchtime" or k == "gmaxswitchtime" or k == "gparanoiaswitch" or 
