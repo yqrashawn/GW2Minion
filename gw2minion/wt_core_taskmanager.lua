@@ -167,7 +167,7 @@ function wt_core_taskmanager:Update_Tasks( )
 			if ( TableSize( MMList ) > 0 ) then
 				i, entry = next( MMList )
 				local eventIndex, event = nil
-				local nearestdragonholo = nil
+				local nearestbasked = nil
 				while ( i ~= nil and entry ~= nil ) do
 					local etype = entry.type
 					local mtype = entry.markertype
@@ -195,10 +195,10 @@ function wt_core_taskmanager:Update_Tasks( )
 									wt_core_taskmanager:addHeartQuestTask( entry )
 								end
 							end
-						-- Dragon Holograms
-						elseif ( etype == 630 and entry.onmesh and entry.distance < 4000) then		
-							if ( nearestdragonholo == nil or entry.distance < nearestdragonholo.distance) then
-								nearestdragonholo = entry
+						-- Crystal Baskets
+						elseif ( etype == 645 and entry.onmesh and entry.distance < 15000) then		
+							if ( nearestbasked == nil or entry.distance < nearestbasked.distance) then
+								nearestbasked = entry
 							end	
 						
 						
@@ -230,9 +230,9 @@ function wt_core_taskmanager:Update_Tasks( )
 								if (gEventFarming == "1") then priority = 4000 end
 								wt_core_taskmanager:addEventTask( i, event, priority)
 							end	
-						elseif ( nearestdragonholo ~= nil ) then
+						elseif ( nearestbasked ~= nil ) then
 							-- Add task for the closest dragonhologram	
-							wt_core_taskmanager:addDragonHologramTask( nearestdragonholo , 650 )							
+							wt_core_taskmanager:addQuarzBasketTask( nearestbasked , 650 )							
 						end
 					end	
 				end

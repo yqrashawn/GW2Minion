@@ -200,7 +200,12 @@ end
 function mm.BuildMesh()
 	wt_debug("Building NAV-Meshfile...")
 	if (gmeshname ~= nil and gmeshname ~= "" and gmeshname ~= "none") then
-		wt_debug("Result: "..tostring(NavigationManager:LoadNavMesh(mm.navmeshfilepath..gmeshname)))
+		if (NavigationManager:IsNavMeshLoaded()) then			
+			d("Unloading current Navmesh first....")
+			NavigationManager:UnloadNavMesh()
+		else
+			wt_debug("Result: "..tostring(NavigationManager:LoadNavMesh(mm.navmeshfilepath..gmeshname)))
+		end
 	else
 		wt_error("gmeshname is empty!?")
 	end

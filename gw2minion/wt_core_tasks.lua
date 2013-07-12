@@ -1527,14 +1527,14 @@ function wt_core_taskmanager:addEventTask( ID, event, prio )
 end
 
 
-function wt_core_taskmanager:addDragonHologramTask( marker , prio)
+function wt_core_taskmanager:addQuarzBasketTask( marker , prio)
 	if not marker or marker == nil then
 		return
 	end
 	local newtask = inheritsFrom( wt_task )
-	newtask.UID = "DragonHolo"..tostring(math.floor(marker.pos.x))
+	newtask.UID = "Quartzbasket"..tostring(math.floor(marker.pos.x))
 	newtask.timestamp = wt_global_information.Now				
-	newtask.name = "DragonHolo"
+	newtask.name = "Quartzbasket"
 	newtask.agentID = marker.agentID
 	newtask.priority = prio
 	newtask.spotreached = false
@@ -1562,12 +1562,12 @@ function wt_core_taskmanager:addDragonHologramTask( marker , prio)
 					if event ~= nil then
 						local i,e = next(event)
 						if not i or not e then
-							d("DragonHologram is gone...")
+							d("Quartzbasket is gone...")
 							Player:StopMoving()
 							newtask.done = true		
 						end
 					else
-						d("DragonHologram is gone...")
+						d("Quartzbasket is gone...")
 						Player:StopMoving()
 						newtask.done = true
 					end
@@ -1578,7 +1578,7 @@ function wt_core_taskmanager:addDragonHologramTask( marker , prio)
 				end
 			else
 				if ( Player:GetInteractableTarget() == newtask.agentID ) then
-					d("Activating Hologram")
+					d("Grabbing Basket")
 					Player:Use(newtask.agentID)
 					newtask.spotreached = true
 					newtask.startingTime = wt_global_information.Now
@@ -1586,37 +1586,9 @@ function wt_core_taskmanager:addDragonHologramTask( marker , prio)
 					newtask.throttle = 2000
 				end
 			end
-			newtask.name = "DragonHologram: "..(math.floor(distance))
+			newtask.name = "Quartzbasket: "..(math.floor(distance))
 		else
-			local me = Player
-			local distance =  Distance3D( newtask.position.x, newtask.position.y, newtask.position.z, me.pos.x, me.pos.y, me.pos.z )
-			if ( distance > 2500 ) then
-				--wt_debug("Walking towards FarmSpot Marker ")	
-				Player:MoveTo(  newtask.position.x, newtask.position.y, newtask.position.z, 150 )
-			else
-				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
-					TargetList = ( CharacterList( "noCritter,nearest,attackable,alive,maxdistance=1100,onmesh" ) )
-					if ( TargetList ~= nil ) then 	
-						nextTarget, E  = next( TargetList )
-						if ( nextTarget ~= nil and (wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then
-							--wt_debug( "TaskManager: Begin Combat, Found target "..nextTarget )						
-							wt_core_state_combat.setTarget( nextTarget )
-							wt_core_controller.requestStateChange( wt_core_state_combat )
-						else
-							d("Dragonhologram maxtime is up, moving on..")
-							Player:StopMoving()
-							newtask.done = true	
-						end
-					else
-						d("Dragonhologram, no enemies left, moving on..")
-						Player:StopMoving()
-						newtask.done = true
-					end
-				else
-					d("Waiting a bit...")
-				end
-			end
-			newtask.name = "Do DragonHologram "..(math.floor((newtask.maxduration-(wt_global_information.Now - newtask.startingTime))/1000)).." sec"
+			newtask.done = true	
 		end		
 	end
 
