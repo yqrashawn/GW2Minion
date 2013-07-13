@@ -111,7 +111,7 @@ function c_quicklootchest:evaluate()
 		if ( TableSize( c_lootchest.EList ) > 0 ) then			
 			local index, LT = next( c_lootchest.EList )
 			while ( index ~= nil and LT~=nil ) do
-				if ( LT.isselectable == 1 and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194)) then
+				if ( LT.isselectable == 1 and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 )) then --or LT.contentID == 232193 or LT.contentID == 232194)) then
 					return true
 				end
 				index, LT = next( c_lootchest.EList,index )
@@ -127,7 +127,7 @@ function e_quicklootchest:execute()
 		local chest,ID = nil
 		local index, LT = next( c_lootchest.EList )
 		while ( index ~= nil and LT~=nil ) do
-			if ( LT.isselectable == 1 and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194)) then
+			if ( LT.isselectable == 1 and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 )) then --or LT.contentID == 232193 or LT.contentID == 232194)) then
 				chest = LT
 				ID = index
 				break
