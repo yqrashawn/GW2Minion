@@ -196,10 +196,10 @@ function wt_core_taskmanager:Update_Tasks( )
 								end
 							end
 						-- Crystal Baskets
-						elseif ( etype == 645 and entry.onmesh and entry.distance < 15000) then		
+						--[[elseif ( etype == 645 and entry.onmesh and entry.distance < 15000) then		
 							if ( nearestbasked == nil or entry.distance < nearestbasked.distance) then
 								nearestbasked = entry
-							end	
+							end	]]
 						
 						
 						-- Unfinished Skillchallenges
