@@ -510,7 +510,7 @@ function c_mapchange:evaluate()
 					if not (wt_core_helpers:IsInPartyList(char.name)) then
 						c_mapchange.tickCount = math.random(30000,90000) + wt_global_information.Now
                         c_mapchange.playerCount = c_mapchange.playerCount + 1
-                        wt_debug("Player detected: "..tostring(char.name).. " - Count: "..tostring(c_mapchange.playerCount))
+                        --wt_debug("Player detected: "..char.name.. " - Count: "..tostring(c_mapchange.playerCount))
                         if (c_mapchange.playerCount >= tonumber(gparanoiaswitchcount)) then
                             wt_debug("Paranoia count exceeded - switching maps")
                             c_mapchange.doSwitch = true
