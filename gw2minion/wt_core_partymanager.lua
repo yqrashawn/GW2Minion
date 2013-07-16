@@ -17,7 +17,7 @@ function wt_core_partymanager.membercount()
 			local index, player  = next( partylist )
 			local myname = Player.name
 			while ( index ~= nil and player ~= nil ) do			
-				if (tostring(player) ~= "none" and tostring(player) ~= "" and tostring(player) ~= tostring(myname)) then
+				if (player ~= "none" and player ~= "" and player ~= myname) then
 					count = count + 1
 				end
 				index, player  = next( partylist,index )
@@ -36,7 +36,7 @@ function wt_core_partymanager.GetMyListIndex()
 			local myname = Player.name
 			while ( index ~= nil and player ~= nil ) do			
 				count = count + 1
-				if (tostring(player) == tostring(myname)) then
+				if (player == myname) then
 					break
 				end
 				index, player  = next( partylist,index )
@@ -54,7 +54,7 @@ function wt_core_partymanager.WeAreInPartyList()
 			local index, player  = next( partylist )
 			local myname = Player.name
 			while ( index ~= nil and player ~= nil ) do			
-				if (tostring(player) ~= "none" and tostring(player) ~= "" and tostring(player) == tostring(myname)) then
+				if (player ~= "none" and player ~= "" and player == myname) then
 					found = true
 				end
 				index, player  = next( partylist,index )
@@ -92,11 +92,11 @@ RegisterEventHandler("Module.Initalize",
 					
 		dParty = "                            "
 		gPartyMGR = Settings.GW2MINION.gPartyMGR
-		dMember1 = tostring(Settings.GW2MINION.Party[1])
-		dMember2 = tostring(Settings.GW2MINION.Party[2])
-		dMember3 = tostring(Settings.GW2MINION.Party[3])
-		dMember4 = tostring(Settings.GW2MINION.Party[4])
-		dMember5 = tostring(Settings.GW2MINION.Party[5])
+		dMember1 = (Settings.GW2MINION.Party[1])
+		dMember2 = (Settings.GW2MINION.Party[2])
+		dMember3 = (Settings.GW2MINION.Party[3])
+		dMember4 = (Settings.GW2MINION.Party[4])
+		dMember5 = (Settings.GW2MINION.Party[5])
 		
 		GUI_WindowVisible(wt_core_partymanager.wnd.name,false)
 	end
@@ -162,8 +162,8 @@ function wt_core_partymanager.UpdateBlacklists()
 	local playername, timestamp  = next( wt_core_partymanager.MSGblacklist )	
 	while ( playername ~= nil and tonumber(timestamp) ~= nil ) do			
 		if ( wt_core_partymanager.lasttick - tonumber(timestamp) > math.random(45000,75000)) then
-			wt_debug("Removing "..tostring(playername).." from the MessageBlacklist")
-			wt_core_partymanager.MSGblacklist[tostring(playername)] = nil
+			wt_debug("Removing "..playername.." from the MessageBlacklist")
+			wt_core_partymanager.MSGblacklist[playername] = nil
 		end
 		playername, timestamp  = next( wt_core_partymanager.MSGblacklist,playername )
 	end	
@@ -182,8 +182,8 @@ function wt_core_partymanager.SendGroupInfo()
 	-- Send Minions the Leader data
 	if (Player:GetRole() == 1 ) then		
 		local myname = Player.name
-		if (tostring(myname) ~= "" and tostring(myname) ~= "nil") then
-			MultiBotSend( "300;"..tostring(myname),"gw2minion" )
+		if (myname ~= "" and myname ~= "nil") then
+			MultiBotSend( "300;"..myname,"gw2minion" )
 		end
 		local mymapID = Player:GetLocalMapID()
 		if (tonumber(mymapID) ~= nil) then
@@ -269,7 +269,7 @@ function wt_core_partymanager.CheckGroupStatus()
 					else
 						dParty = tostring("Leader is in a Dungeon..")
 						if (Player:GetPartySize() == 0) then
-							wt_debug("Trying to Join "..tostring(wt_core_partymanager.leaderName).."'s Party...")
+							wt_debug("Trying to Join "..wt_core_partymanager.leaderName.."'s Party...")
 							SendChatMsg(8,"/join "..wt_core_partymanager.leaderName)
 						end
 					end

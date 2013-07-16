@@ -1,4 +1,4 @@
-gCurrentLanguage = "us"
+﻿gCurrentLanguage = "us"
 
 strings =
 {
@@ -1274,6 +1274,325 @@ strings =
     ["cn"] =
         {
         -- gw2.lua
+        startStop                       = "开始/停止",
+        doPulse                         = "暂停(调试)",
+        pulseTime                       = "暂停时间 (ms)",
+        enableLog                       = "日志",
+        task                            = "任务",
+        state                           = "状态",
+        effect                          = "效果",
+        autoStartBot                    = "自动开始",
+        combatMovement                  = "拟人战斗移动",
+        enableEvents                    = "动态事件",
+        enableRepair                    = "自动修理",
+        ignoreLevelMarker               = "忽略地图等级",
+        wpVendor                        = "传送到商人",
+        wpEvents                        = "传送到动态事件",
+        enableUnstuck                   = "防卡",
+        unstuckCount                    = "防卡退出次数",
+        eventTimeout                    = "动态事件延迟",
+        blacklistEvent                  = "列入动态事件黑名单",
+        prioEvent                       = "动态事件>主动怪",
+        prioRevive                      = "复活他人>主动怪",
+        vendorRarity                    = "最大售卖程度",
+        sellWeapon                      = "卖武器",
+        sellArmor                       = "卖防具",
+        sellTrinket                     = "卖首饰",
+        sellUpgrade                     = "卖升级组件",
+        sellCrafting                    = "卖采集材料",
+        sellTrophy                      = "卖锻造材料",
+        enableGather                    = "开启采集",
+        buyTools                        = "买采集工具",
+        buyBestTool                     = "买最好的工具",
+        toolRarity                      = "工具等级",
+        toolStock                       = "工具数量",
+        enableSalvage                   = "开启分解",
+        buyKits                         = "买分解套件",
+        buyBestKit                      = "买最好的套件",
+        kitRarity                       = "套件等级",
+        kitStock                        = "套件数量",
+        salvageTrophy                   = "分解锻造材料",
+        botStatus                       = "状态",
+        settings                        = "设置",
+        advancedSettings                = "高级设置",
+        vendorSettings                  = "售卖设置",
+        salvageSettings                 = "分解设置",
+        gatherSettings                  = "采集设置",
+        skipcutscene					= "跳过过场动画",
+		depositItems					= "存仓",
+		checkChat						= "聊天报警",
+		randomfarmspot 					= "随机挂机",
+		AttackGadgets					= "攻击物体",
+		
+        -- meshmanager.lua
+        meshManager                     = "网格脚本管理器",
+        queensdale                      = "Queensdale",
+        harathiHinterlands              = "HarathiHinterlands",
+        divinitysReach                  = "DivinitysReach",
+        plainsOfAshford                 = "PlainsofAshford",
+        blazeridgeSteppes               = "BlazeridgeSteppes",
+        fieldsOfRuin                    = "FieldsofRuin",
+        fireheartRise                   = "FireheartRise",
+        kessexHills                     = "KessexHills",
+        gendarranFields                 = "GendarranFields",
+        ironMarches                     = "IronMarches",
+        dredgehauntCliffs               = "DredgehauntCliffs",
+        lornarsPass                     = "LornarsPass",
+        wayfarerFoothills               = "WayfarerFoothills",
+        timberlineFalls                 = "TimberlineFalls",
+        frostgorgeSound                 = "FrostgorgeSound",
+        snowdenDrifts                   = "SnowdenDrifts",
+        diessaPlateau                   = "DiessaPlateau",
+        ascalonianCatacombsStory        = "AscalonianCatacombs(Story)",
+        caledonForest                   = "CaledonForest",
+        metricaProvince                 = "MetricaProvince",
+        ascalonianCatacombsExp          = "AscalonianCatacombs(Explo)",
+        eternalBattlegrounds            = "EternalBattlegrounds",
+        mountMaelstrom                  = "MountMaelstrom",
+        lionsArch                       = "LionsArch",
+        straightsOfDevastation          = "StraitsOfDevastation",
+        sparkflyFen                     = "SparkflyFen",
+        brisbanWildlands                = "BrisbanWildlands",
+        cursedShore                     = "CursedShore",
+        malchorsLeap                    = "MalchorsLeap",
+        citadelOfFlamesStory            = "CitadelOfFlames(Story)",
+        citadelOfFlamesExp              = "CitadelOfFlames(Explo)",
+        bloodtideCoast                  = "BloodtideCoast",
+        theGrove                        = "TheGrove",
+        borderlands1                    = "BlueGreenRedBorderlands1",
+        borderlands2                    = "BlueGreenRedBorderlands2",
+        borderlands3                    = "BlueGreenRedBorderlands3",
+        rataSum                         = "RataSum",
+        blackCitadel                    = "BlackCitadel",
+        hoelbrak                        = "Hoelbrak",
+        southsunCove                    = "SouthsunCove",
+        spiritwatch						= "Spirit Watch",
+		legacyofthefoefire				= "Legacy of the Forefire",		
+		activated                       = "激活",
+        mapName                         = "地图",
+        navmesh                         = "网格脚本",
+        waypoint                        = "坐标",
+        generalSettings                 = "普通设置",
+		getWaypoint						= "获取网格坐标",
+		useInSwitcher					= "使用切换",
+		enableSwitcher					= "开启切换",
+		minSwitchTime			        = "最小切换时间",
+		maxSwitchTime					= "最大切换时间",
+		switchTimer						= "切换的时间",
+		switcherSettings				= "切换设置",
+		showMesh						= "显示三角网格",
+		showrealMesh					= "显示实际网格",
+		newMeshName						= "新网格文件名字",
+		newMesh							= "创建新的网格文件",
+		saveMesh						= "保存网格到文件",
+		buildNAVMesh					= "建一个导航网格",
+		editor							= "编辑",
+        enablePSwitch					= "EnableParanoiaSwitch",
+        pSwitchCount                    = "ParanoiaPlayerCount",
+	
+		
+		-- dungeonmanager.lua
+        dungeonManager                  = "副本管理器",
+        status                          = "状态",
+        setPartySize                    = "设置组队人数",
+        dungeons                        = "副本",
+        leaveDungeon                    = "离开副本",
+        resetDungeon                    = "重置副本",
+        stopDungeonManager              = "停止副本管理器",
+
+        -- partymanager.lua
+        partyManager                    = "组队管理器",
+        enterCharNames                  = "输入角色名字：",
+        member1                         = "队员1",
+        member2                         = "队员2",
+        member3                         = "队员3",
+        member4                         = "队员4",
+        member5                         = "队员5",
+        groupInfo                       = "队伍信息",
+
+        -- skillmanager.lua
+        skillManager                    = "技能管理器",
+        profile                         = "配置文件",
+		sMmode							= "攻击模式",
+		sMtargetmode					= "目标模式",
+		refreshProfiles                 = "刷新配置文件列表",
+		saveProfile                 	= "保存当前配置",
+        deleteProfile                   = "删除当前配置",
+        newProfileName                  = "新配置文件名字",
+        newProfile                      = "新配置文件",
+        autoetectSkills                 = "自动检测技能",
+		refreshSkillList                 = "清除 & 刷新技能列表",
+        skillEditor                     = "技能编辑器",
+        enabled                         = "开启",
+        priority                        = "优先权",
+        los                  		    = "需要视线",
+		cooldown                        = "冷却",
+        minRange                        = "最小范围",
+        maxRange                        = "最大范围",
+        isGroundTargeted                = "地面目标",
+        targetType                      = "目标类型",
+        useOutOfCombat                  = "战斗外使用",
+        playerMoving                    = "角色移动",
+        playerHPGT                      = "角色 HP% >",
+        playerHPLT                      = "角色 HP% <",
+        playerPowerGT                   = "角色 Power% >",
+        playerPowerLT                   = "角色 Power% <",
+        playerHas                       = "角色有 ",
+        orPlayerHas                     = "或者角色有 ",
+        playerHasNot                    = "角色没有 ",
+		orPlayerCond					= "角色有 #Conditions >",
+        orPlayerHasNot                  = "或者角色没有 ",
+        targetMoving                    = "目标移动",
+        targetHPGT                      = "目标 HP% >",
+        targetHPLT                      = "目标 HP% <",
+        targetDistanceGT                = "目标距离 >",
+        targetDistanceLT                = "目标距离 <",
+        enemiesNearCount                = "目标周围的敌人(数量) >=",
+        enemiesNearRange                = "目标周围的敌人(最大范围) =",
+        alliesNearCount                 = "盟军附近的目标(数量) >=",
+        alliesNearRange                 = "盟军附近的目标(最大范围) =",
+        targetHas                       = "目标有 ",
+        orTargetHas                     = "或者目标有 ",
+        targetHasNot                    = "目标没有 ",
+        orTargetHasNot                  = "或者目标没有 ",
+		AdvancedSettings				= "高级设置",
+		SwapA							= "切换武器",
+		SwapR							= "随机切换",
+		SwapCD							= "切换当技能2-5在冷却（CD）",
+		SwapRange						= "切换当目标超出范围",
+		PriorizeKit						= "优先套件",
+		PriorizeAttunement				= "Prioritize Attunement",
+		AutoStomp						= "Finish Enemy",
+		AutoRezz						= "Rezz Friendly",
+		Fightstyle						= "战斗风格",
+
+		
+        -- leader.lua
+        browserStats                    = "启用浏览器统计",
+        groupBotting                    = "启用组队",
+        serverIP                        = "组队服务器IP",
+        serverPort                      = "组队服务器 端口（Port）",
+        serverPW                        = "组队服务器密码",
+        groupBotting                    = "组队挂机",
+
+        -- salvaging.lua
+        rarityJunk                      = "Junk",
+        rarityCommon                    = "Common",
+        rarityFine                      = "Fine",
+        rarityMasterwork                = "Masterwork",
+        rarityRare                      = "Rare",
+        rarityExotic                    = "Exotic",
+        salvage                         = "分解 ",
+        enableSalvage                   = "启用分解",
+
+        -- common profession
+        allowedRange                    = "允许范围 [0-100], 0=禁用",
+        skill7HP                        = "使用 技能7 at HP%",
+        skill8HP                        = "使用 技能8 at HP%",
+        skill9HP                        = "使用 技能9 at HP%",
+        eliteHP                         = "使用 技能0（精英） at HP%",
+        autoF1                          = "自动使用 F1",
+        autoF2                          = "自动使用 F2",
+        autoF3                          = "自动使用 F3",
+
+        -- elementalist.lua
+        autoSwapAttunements             = "自动切换各种元素",
+        elementalistSettings            = "元素-设置",
+
+        -- engineer.lua
+        autoSwapToKits                  = "自动切换套件",
+        engineerSettings                = "工程师-设置",
+
+        -- guardian.lua
+        autoSwapWeaponSets              = "自动切换武器",
+        guardianSettings                = "守护-设置",
+
+        -- mesmer.lua
+        mesmerSettings                  = "幻术师-设置",
+
+        -- necromancer.lua
+        autoUsePets                     = "自动使用宝宝",
+        necromancerSettings             = "死灵法师-设置",
+
+        -- ranger.lua
+        rangerSettings                  = "游侠-设置",
+
+        -- thief.lua
+        thiefSettings                   = "盗贼-设置",
+
+        -- warrior.lua
+        warriorSettings                 = "战士-设置",
+
+        -- meshassistant.lua
+        maModuleName                    = "网格脚本助手",
+        maMarkerInspector               = "标记检查",
+        maMarkerTypeNone                = "没有",
+        maMarkerTypeFarmSpot            = "挂机点",
+        maMarkerTypeWaypoint            = "坐标",
+        maMarkerTypePointOfInterest     = "兴趣点",
+        maMarkerTypeVista               = "远景",
+        maMarkerTypeSkillPoint          = "技能点",
+        maMarkerTypeHeartQuest          = "心任务",
+        maMarkerTypeRepairVendor        = "修理商",
+        maStartStopAutoMeshing          = "开始/停止 自动网格",
+        maEditMesh                      = "编辑网格模式",
+        maLoadExistingMesh              = "加载现有网格",
+        maNewResetMesh                  = "新/重置 网格",
+        maShowHideMesh                  = "显示/隐藏 网格",
+        maVersion                       = "版本",
+        maTrianglesTotal                = "#三角形总计",
+        maVerticesTotal                 = "#顶点总计",
+        maVerticesCreatedThisSession    = "#顶点创建此会话",
+        maQueueSize                     = "队列大小",
+        maOpenMarkerInspector           = "打开标记检察",
+        maUndoCells1                    = "取消 100 单元 (+stop)",
+        maUndoCells2                    = "取消 500 单元 (+stop)",
+        maUndoCells3                    = "取消 1000 单元 (+stop)",
+        maToggleSteepSettings           = "切换陡峭设置",
+        maToggleWideSettings            = "切换范围的设置",
+        maHideUnselectedVertices        = "隐藏未选择顶点",
+        maUseQueue                      = "使用队列",
+        maUpdateInterval                = "更新间隔",
+        maNormalDistance                = "垂直距离",
+        maForceWideAreaDistance         = "强制宽度距离",
+        maForceRadiusNormal             = "强制垂直范围",
+        maForceRadiusWide               = "强制宽度范围",
+        maForceCellDistance             = "强制单元距离",
+        maQueueElementsPerTick          = "每点的队列元素",
+        maQueueElementsPerTickInc       = "每点的队列元素增量",
+        maAngleThreshold                = "角度阈值",
+        maCellWidth                     = "单元距离",
+        maSingleZThresholdNormal        = "Single Height Threshold Normal",
+        maSingleZThresholdSteep         = "Single Height Threshold Steep",
+        maHeightThresholdHigh           = "High Hight Threshold",
+        maHeightThresholdLow            = "Low Hight Threshold",
+        maPointGridDistance             = "Cloud Point Distance",
+        maGroupInfo                     = "信息",
+        maGroupToolbox                  = "工具箱",
+        maGroupInputSettings            = "输入设置",
+        maGroupDisplaySettings          = "显示设置",
+        maGroupBasicSettings            = "基本设置",
+        maGroupAdvancedSettings         = "高级设置",
+        maGroupExpertSettings           = "专家设置",
+        maMarkerID                      = "ID",
+        maMarkerName                    = "名字",
+        maMarkerType                    = "类型",
+        maMarkerMinLevel                = "最小等级",
+        maMarkerMaxLevel                = "最大等级",
+        maMarkerDeleteMarker            = "删掉标示",
+        maMarkerSelectToEdit            = "选择去编辑",
+        maMarkerNewName                 = "新标示",
+        maMarkerGroupDetails            = "细节",
+        maMarkerGroupAllMarkers         = "所有标示",
+        maDontTouchLoadedMesh           = "不要碰加载的网格",
+        maEdgeHitCheckPoints            = "Edge Hit Check Points",
+        maMeshWaterSurfaces             = "水面网格化",
+        maDisableShowDebugMessages      = "禁用调试控制台消息"
+
+    },
+	["tr"] =
+    {
+        -- gw2.lua
         startStop                       = "StartStop",
         doPulse                         = "Pulse(Debug)",
         pulseTime                       = "Pulse Time (ms)",
@@ -1521,7 +1840,8 @@ strings =
 
         -- warrior.lua
         warriorSettings                 = "Warrior-Settings",
-
+		warrveng						= "Use Vengenance",
+		
         -- meshassistant.lua
         maModuleName                    = "MeshAssistant",
         maMarkerInspector               = "MarkerInspector",
@@ -1590,8 +1910,18 @@ strings =
     }
 }
 
+
 function SetLanguage(event, arg)
-	d(tostring(arg))
+	d("Switching language "..tostring(arg))	
+	if ( tonumber(arg) ~= nil ) then
+		if ( arg == "0" ) then gCurrentLanguage = "us"
+		elseif ( arg == "1" ) then gCurrentLanguage = "de" 
+		elseif ( arg == "2" ) then gCurrentLanguage = "cn" 
+		elseif ( arg == "3" ) then gCurrentLanguage = "ru" 
+		elseif ( arg == "4" ) then gCurrentLanguage = "fr" 
+		elseif ( arg == "5" ) then gCurrentLanguage = "tr" 
+		end
+	end	
 end
 
 -- returns a string in the current language or an indicator that the string does not exist in the language file
