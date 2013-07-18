@@ -1,11 +1,8 @@
 -- Main config file of GW2Minion
 
 wt_radar = {}
-wt_radar.path = GetStartupPath()
-wt_radar.Currentprofession = nil
-wt_radar.Now = 0
-wt_radar.MainWindow = { Name = "Radar", x=250, y=250 , width=200, height=200 }
-
+wt_radar.MainWindow = { Name = "Radar", x=250, y=200 , width=200, height=200 }
+wt_radar.visible = false
 
 function wt_radar.OnUpdate( event, tickcount )
 	
@@ -19,7 +16,7 @@ function wt_radar.HandleInit()
 		Settings.GW2MINION.g2DRadar = "0"
 	end		
 	if ( Settings.GW2MINION.g2DZoom == nil ) then
-		Settings.GW2MINION.g2DZoom = 0
+		Settings.GW2MINION.g2DZoom = 5
 	end	
 	if ( Settings.GW2MINION.g2DHostile == nil ) then
 		Settings.GW2MINION.g2DHostile = "0"
@@ -58,7 +55,7 @@ function wt_radar.HandleInit()
 	GUI_NewWindow(wt_radar.MainWindow.Name,wt_radar.MainWindow.x,wt_radar.MainWindow.y,wt_radar.MainWindow.width,wt_radar.MainWindow.height)	
 	GUI_NewCheckbox(wt_radar.MainWindow.Name,"Enabled","g2DRadar","2D Radar" );
 	GUI_NewNumeric(wt_radar.MainWindow.Name,"Zoom","g2DZoom","2D Radar" );
-	GUI_NewCheckbox(wt_radar.MainWindow.Name,"Ambilight","g2DAmbi","2D Radar" );
+	GUI_NewCheckbox(wt_radar.MainWindow.Name,"Fullscreen","g2DAmbi","2D Radar" );
 	GUI_NewCheckbox(wt_radar.MainWindow.Name,"Show Hostile","g2DHostile","2D Radar" );
 	GUI_NewCheckbox(wt_radar.MainWindow.Name,"Show Neutral","g2DNeutral","2D Radar" );
 	GUI_NewCheckbox(wt_radar.MainWindow.Name,"Show Friendly","g2DFriendly","2D Radar" );
@@ -84,7 +81,7 @@ function wt_radar.HandleInit()
 	g3DFriendly = Settings.GW2MINION.g3DFriendly
 	g3DPlayerOnly = Settings.GW2MINION.g3DPlayerOnly
 
-	--[[if ( g2DRadar == "0") then SetRadarSettings("g2DRadar",false) else SetRadarSettings("g2DRadar",true) end
+	if ( g2DRadar == "0") then SetRadarSettings("g2DRadar",false) else SetRadarSettings("g2DRadar",true) end
 	if ( tonumber(g2DZoom) ~= nil) then SetRadarSettings("g2DZoom",tonumber(g2DZoom)) end
 	if ( g2DAmbi == "0") then SetRadarSettings("g2DAmbi",false) else SetRadarSettings("g2DAmbi",true) end
 	if ( g2DHostile == "0") then SetRadarSettings("g2DHostile",false) else SetRadarSettings("g2DHostile",true) end
@@ -95,13 +92,12 @@ function wt_radar.HandleInit()
 	if ( g3DHostile == "0") then SetRadarSettings("g3DHostile",false) else SetRadarSettings("g3DHostile",true) end
 	if ( g3DNeutral == "0") then SetRadarSettings("g3DNeutral",false) else SetRadarSettings("g3DNeutral",true) end
 	if ( g3DFriendly == "0") then SetRadarSettings("g3DFriendly",false) else SetRadarSettings("g3DFriendly",true) end
-	if ( g3DPlayerOnly == "0") then SetRadarSettings("g3DPlayerOnly",false) else SetRadarSettings("g3DPlayerOnly",true) end]]
+	if ( g3DPlayerOnly == "0") then SetRadarSettings("g3DPlayerOnly",false) else SetRadarSettings("g3DPlayerOnly",true) end
 	
+	GUI_WindowVisible(wt_radar.MainWindow.Name,false)
 end
 
 function wt_radar.GUIVarUpdate(Event, NewVals, OldVals)
-	d(v)
-	d(tonumber(v))
 	for k,v in pairs(NewVals) do
 		if (k == "g2DRadar" or 			
 			k == "g2DAmbi" or
@@ -123,14 +119,24 @@ function wt_radar.GUIVarUpdate(Event, NewVals, OldVals)
 			end
 		end
 		if ( k == "g2DZoom" and tonumber(v) ~= nil) then
+			Settings.GW2MINION[tostring(k)] = v
 			SetRadarSettings(k,tonumber(v))
 		end
 	end
 	GUI_RefreshWindow(wt_radar.MainWindow.Name)
 end
 
+function wt_radar.ToggleMenu()
+	if (wt_radar.visible) then
+		GUI_WindowVisible(wt_radar.MainWindow.Name,false)	
+		wt_radar.visible = false
+	else		 
+		GUI_WindowVisible(wt_radar.MainWindow.Name,true)	
+		wt_radar.visible = true
+	end
+end
 
 -- Register Event Handlers
 RegisterEventHandler("Module.Initalize",wt_radar.HandleInit)
-RegisterEventHandler("Gameloop.Update",wt_radar.OnUpdate)
+RegisterEventHandler("Radar.toggle", wt_radar.ToggleMenu)
 RegisterEventHandler("GUI.Update",wt_radar.GUIVarUpdate)
