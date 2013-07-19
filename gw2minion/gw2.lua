@@ -1,4 +1,3 @@
--- Test Commit
 -- Main config file of GW2Minion
 
 wt_global_information = {}
@@ -76,6 +75,30 @@ function wt_global_information.OnUpdateCharSelect(event, tickcount )
 		wt_global_information.Charscreen_lastrun = tickcount
 		wt_global_information.Reset()
 		wt_global_information.Charscreen_lastrun = 0
+		
+		if ( gGuestServer ~= nil and gGuestServer ~= "None" ) then
+			local serverlist = {}
+			local homeserverid = GetHomeServer()
+			if ( homeserverid > 1000 and homeserverid < 2000 ) then
+				serverlist = wt_global_information.ServersUS
+			elseif ( homeserverid > 2000 and homeserverid < 3000 ) then
+				serverlist = wt_global_information.ServersEU
+			end	
+			if ( TableSize(serverlist) > 0) then
+				local i,entry = next ( serverlist)
+				while i and entry do			
+					if ( gGuestServer == entry.name ) then
+						SetServer(entry.id)
+						d("Selecting Guestserver: "..tostring(entry.name) .." ID: ".. tostring(entry.id))
+						break
+					end
+					i,entry = next ( serverlist,i)
+				end
+			end
+			gGuestServer_listitems = newserverlist
+			gGuestServer = Settings.GW2MINION.gGuestServer
+			
+		end		
 		wt_debug("Pressing PLAY")
 		PressKey("RETURN")				
 	end
@@ -221,6 +244,9 @@ function gw2minion.HandleInit()
 	if ( Settings.GW2MINION.gAttackGadgets == nil ) then
 		Settings.GW2MINION.gAttackGadgets = "0"
 	end
+	if ( Settings.GW2MINION.gGuestServer == nil ) then
+		Settings.GW2MINION.gGuestServer = "None"
+	end
 	
 	GUI_NewWindow(wt_global_information.MainWindow.Name,wt_global_information.MainWindow.x,wt_global_information.MainWindow.y,wt_global_information.MainWindow.width,wt_global_information.MainWindow.height)
 	GUI_NewButton(wt_global_information.MainWindow.Name, wt_global_information.BtnStart.Name , wt_global_information.BtnStart.Event)
@@ -231,6 +257,7 @@ function gw2minion.HandleInit()
 	GUI_NewField(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].effect,"gGW2MinionEffect",strings[gCurrentLanguage].botStatus );		
 	--GUI_NewField(wt_global_information.MainWindow.Name,"dT","gGW2MiniondeltaT",strings[gCurrentLanguage].botStatus );
 	
+	GUI_NewComboBox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].guestingServer,"gGuestServer",strings[gCurrentLanguage].settings,"None")
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].autoStartBot,"gAutostartbot",strings[gCurrentLanguage].settings);
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].combatMovement,"gCombatmovement",strings[gCurrentLanguage].settings);
 	GUI_NewCheckbox(wt_global_information.MainWindow.Name,strings[gCurrentLanguage].enableEvents,"gdoEvents",strings[gCurrentLanguage].settings);		
@@ -321,6 +348,24 @@ function gw2minion.HandleInit()
 	gCheckChat = Settings.GW2MINION.gCheckChat
 	gRandomFarmspot = Settings.GW2MINION.gRandomFarmspot
 	gAttackGadgets = Settings.GW2MINION.gAttackGadgets
+		
+	local newserverlist = "None"
+	local homeserverid = GetHomeServer()
+	local serverlist = {}	
+	if ( homeserverid > 1000 and homeserverid < 2000 ) then
+		serverlist = wt_global_information.ServersUS
+	elseif ( homeserverid > 2000 and homeserverid < 3000 ) then
+		serverlist = wt_global_information.ServersEU
+	end	
+	if ( TableSize(serverlist) > 0) then
+		local i,entry = next ( serverlist)
+		while i and entry do			
+			newserverlist = newserverlist..","..entry.name
+			i,entry = next ( serverlist,i)
+		end
+	end
+	gGuestServer_listitems = newserverlist
+	gGuestServer = Settings.GW2MINION.gGuestServer
 	
 	wt_debug("GUI Setup done")
 	GUI_SetStatusBar("Ready...")
@@ -365,6 +410,7 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "gCheckChat" or
 				k == "gRandomFarmspot" or	
 				k == "gAttackGadgets" or
+				k == "gGuestServer" or				
 				k == "gBuyBestSalvageKit")
 		then
 			Settings.GW2MINION[tostring(k)] = v
@@ -453,6 +499,63 @@ function wt_global_information.UpdateMultiServerStatus()
 		end	
 	end
 end
+
+wt_global_information.ServersUS = {		
+	{id=1010,name="Ehmry Bay"},
+	{id=1018,name="Northern Shiverpeaks"},
+	{id=1002,name="Borlis Pass"},
+	{id=1008,name="Jade Quarry"},
+	{id=1005,name="Maguuma"},
+	{id=1015,name="Isle of Janthir"},
+	{id=1009,name="Fort Aspenwood"},
+	{id=1013,name="Sanctum of Rall"},
+	{id=1007,name="Gate of Madness"},
+	{id=1006,name="Sorrow's Furnace"},
+	{id=1019,name="Blackgate"},
+	{id=1021,name="Dragonbrand"},
+	{id=1012,name="Darkhaven"},
+	{id=1003,name="Yak's Bend"},
+	{id=1014,name="Crystal Desert"},
+	{id=1001,name="Anvil Rock"},
+	{id=1011,name="Stormbluff Isle"},
+	{id=1020,name="Ferguson's Crossing"},
+	{id=1016,name="Sea of Sorrows"},
+	{id=1022,name="Kaineng"},
+	{id=1023,name="Devona's Rest"},
+	{id=1017,name="Tarnished Coast"},
+	{id=1024,name="Eredon Terrace"},
+	{id=1004,name="Henge of Denravi"}
+	}	
+wt_global_information.ServersEU = {
+	{id=2012,name="Piken Square"},
+	{id=2003,name="Gandara"},
+	{id=2007,name="Far Shiverpeaks"},
+	{id=2204,name="Abaddon's Mouth [DE]"},
+	{id=2201,name="Kodash [DE]"},
+	{id=2010,name="Seafarer's Rest"},
+	{id=2301,name="Baruch Bay [SP]"},
+	{id=2205,name="Drakkar Lake [DE]"},
+	{id=2002,name="Desolation"},
+	{id=2202,name="Riverside [DE]"},
+	{id=2008,name="Whiteside Ridge"},
+	{id=2203,name="Elona Reach [DE]"},
+	{id=2206,name="Miller's Sound [DE]"},
+	{id=2004,name="Blacktide"},
+	{id=2207,name="Dzagonur [DE]"},
+	{id=2105,name="Arborstone [FR]"},
+	{id=2101,name="Jade Sea [FR]"},
+	{id=2013,name="Aurora Glade"},
+	{id=2103,name="Augury Rock [FR]"},
+	{id=2102,name="Fort Ranik [FR]"},
+	{id=2104,name="Vizunah Square [FR]"},
+	{id=2009,name="Ruins of Surmia"},
+	{id=2014,name="Gunnar's Hold"},
+	{id=2005,name="Ring of Fire"},
+	{id=2006,name="Underworld"},
+	{id=2011,name="Vabbi"},
+	{id=2001,name="Fissure of Woe"}
+}
+
 
 -- Handler for the Buttons in the GW2 Minion Server Browser
 function wt_global_information.HandleCMDMultiBotMessages( event, message,channel )
