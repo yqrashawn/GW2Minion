@@ -1,3 +1,4 @@
+-- Test Commit Change
 -- Main config file of GW2Minion
 
 wt_global_information = {}
