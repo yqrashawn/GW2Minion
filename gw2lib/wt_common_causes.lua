@@ -34,6 +34,10 @@ function e_died:execute()
 	Player:UnSetMovement(2)
 	Player:UnSetMovement(3)
 	Player:StopMoving()
+	wt_core_state_gcombat.AttackTmr = 0
+	wt_core_state_combat.AttackTmr = 0
+	wt_core_state_gcombat.LastTargetHP = 0
+	wt_core_state_combat.LastTargetHP = 0
 	wt_core_controller.requestStateChange( wt_core_state_dead )
 end
 
@@ -46,7 +50,7 @@ c_quickloot = inheritsFrom( wt_cause )
 e_quickloot = inheritsFrom( wt_effect )
 function c_quickloot:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then
-		c_quickloot.EList = CharacterList( "nearest,lootable,onmesh,maxdistance=110" )
+		c_quickloot.EList = CharacterList( "nearest,lootable,onmesh,maxdistance=120" )
 		NextIndex, LootTarget = next( c_quickloot.EList )
 		if ( NextIndex ~= nil ) then
 			if ( NextIndex == Player:GetInteractableTarget() ) then
@@ -67,7 +71,7 @@ function c_quickloot:evaluate()
 	return false
 end
 e_quickloot.n_index = nil
-e_quickloot.throttle = math.random( 150, 450 )
+e_quickloot.throttle = math.random( 350, 550 )
 function e_quickloot:execute()
  	local NextIndex = 0
 	local LootTarget = nil
@@ -79,6 +83,7 @@ function e_quickloot:execute()
 				wt_debug( "QuickLooting" )
 			end
 			Player:Interact( NextIndex )
+			return
 		else
 			local e = Player:GetInteractableTarget()
 			if ( e ~= nil ) then
@@ -96,6 +101,8 @@ function e_quickloot:execute()
 			end
 		end
 	end
+	-- idiotic fix for loot problems...
+	Player:PressF()
 	wt_debug( "No Target to Quick-Loot" )
 end
 
@@ -512,7 +519,7 @@ c_lootchest = inheritsFrom( wt_cause )
 e_lootchest = inheritsFrom( wt_effect )
 function c_lootchest:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then
-		c_lootchest.EList = GadgetList("nearest,maxdistance=" .. wt_global_information.MaxLootDistance..",onmesh") --old contentID=198260
+		c_lootchest.EList = GadgetList("maxdistance=" .. wt_global_information.MaxLootDistance..",onmesh") --old contentID=198260
 		if ( TableSize( c_lootchest.EList ) > 0 ) then			
 			local index, LT = next( c_lootchest.EList )
 			while ( index ~= nil and LT~=nil ) do
@@ -586,4 +593,29 @@ function c_stopcbmove:evaluate()
 end
 function e_stopcbmove:execute()
 	
+end
+
+c_skillstuckcheck = inheritsFrom( wt_cause )
+e_skillstuckcheck = inheritsFrom( wt_effect )
+c_skillstuckcheck.throttle = 1000
+c_skillstuckcheck.lastskillSlot = 0
+c_skillstuckcheck.lastTmr = 0
+function c_skillstuckcheck:evaluate()
+	if ( c_skillstuckcheck.lastTmr == 0 or wt_global_information.Now - c_skillstuckcheck.lastTmr > 3000 ) then
+		c_skillstuckcheck.lastTmr = wt_global_information.Now
+		local sk = Player:GetCurrentlyCastedSpell()
+		if ( sk and sk < 16 and sk ~= 5) then
+			if ( sk == c_skillstuckcheck.lastskillSlot ) then
+				d("Skill ist stuck? trying to release skill in slot "..tostring(sk))
+				return true
+			else
+				c_skillstuckcheck.lastskillSlot = sk
+			end
+		end
+	end
+    return false
+end
+e_skillstuckcheck.throttle = 1000
+function e_skillstuckcheck:execute()
+	Player:CastSpellNoChecks(c_skillstuckcheck.lastskillSlot)
 end

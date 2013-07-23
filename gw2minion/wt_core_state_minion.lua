@@ -180,6 +180,9 @@ function wt_core_state_minion:initialize()
 		
 	local ke_lootchests = wt_kelement:create("LootChest", c_lootchest, e_lootchest, 105 )
 	wt_core_state_minion:add( ke_lootchests )
+		
+	local ke_skillstuckcheck = wt_kelement:create( "UnStuckSkill", c_skillstuckcheck, e_skillstuckcheck, 104 )
+	wt_core_state_minion:add( ke_skillstuckcheck )
 	
 	local ke_doemertasks = wt_kelement:create( "EmergencyTask", c_doemergencytask, e_doemergencytask, 103 )
 	wt_core_state_minion:add( ke_doemertasks )
@@ -326,7 +329,7 @@ function wt_core_state_minion:aggroCheck()
 		local TList = ( CharacterList( "nearest,los,incombat,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 		if ( TableSize( TList ) > 0 ) then
 			local id, E  = next( TList )
-			if ( id ~= nil and id ~= 0 and E ~= nil) then
+			if ( id ~= nil and id ~= 0 and E ~= nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
 				wt_core_taskmanager:addKillTask( id, E, 3000 )
 				MultiBotSend( "6;"..tonumber(id),"gw2minion" )	-- Inform leader about our aggro target
 			return true
@@ -345,7 +348,7 @@ function wt_core_state_minion.aggroGadgetCheck()
 		local GList = ( GadgetList( "attackable,alive,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 		if ( TableSize( GList ) > 0 ) then
 			local id, E  = next( GList )
-			if ( id ~= nil and id ~= 0 and E ~= nil) then
+			if ( id ~= nil and id ~= 0 and E ~= nil and wt_core_state_gcombat.Blacklist[E.contentID] == nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
 				wt_core_taskmanager:addKillGadgetTask( id, E, 3000 )
 				return false
 			end		

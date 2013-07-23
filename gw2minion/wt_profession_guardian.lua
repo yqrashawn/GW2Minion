@@ -27,12 +27,13 @@ function wt_profession_guardian.GetMainHandWeapon(MainHand)
 end
 -- Determine our weapon
 function wt_profession_guardian.GetOffHandWeapon(OffHand)
+--d(Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_4).contentID)
 	if (OffHand ~= nil ) then
 		if     (OffHand.skillID == 9124 ) then return ("Hammer") 
 		elseif (OffHand.skillID == 9146 ) then return ("Greatsword")
 		elseif (OffHand.skillID == 9265 ) then return ("Staff")
 		elseif (OffHand.skillID == 9112 ) then return ("Focus")
-		elseif (OffHand.skillID == 9104 ) then return ("Torch")
+		elseif (OffHand.skillID == 9104 or OffHand.skillID == 9089) then return ("Torch")
 		elseif (OffHand.skillID == 15834 ) then return ("Shield")
 		end
 	end
@@ -104,28 +105,28 @@ function wt_profession_guardian.e_attack_default:execute()
 			end
 			
 			-- Skill 7,8,9,Elite
-			if ( tonumber(gGuardSK7) > 0 ) then
+			if ( tonumber(gGuardSK7) ~= nil and tonumber(gGuardSK7) > 0 ) then
 				local SK7 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_7)
 				if ( SK7 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_7) and Player.health.percent < randomize(tonumber(gGuardSK7)) and (T.distance < SK7.maxRange or T.distance < 140 or SK7.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_7)
 					return
 				end
 			end
-			if ( tonumber(gGuardSK8) > 0 ) then
+			if ( tonumber(gGuardSK8) ~= nil and tonumber(gGuardSK8) > 0 ) then
 				local SK8 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_8)
 				if ( SK8 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_8) and Player.health.percent < randomize(tonumber(gGuardSK8)) and (T.distance < SK8.maxRange or T.distance < 140 or SK8.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_8)
 					return
 				end
 			end
-			if ( tonumber(gGuardSK9) > 0 ) then
+			if ( tonumber(gGuardSK9) ~= nil and tonumber(gGuardSK9) > 0 ) then
 				local SK9 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_9)
 				if ( SK9 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_9) and Player.health.percent < randomize(tonumber(gGuardSK9)) and (T.distance < SK9.maxRange or T.distance < 140 or SK9.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_9)
 					return
 				end
 			end
-			if ( tonumber(gGuardSK10) > 0 ) then
+			if ( tonumber(gGuardSK10) ~= nil and tonumber(gGuardSK10) > 0 ) then
 				local SK10 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_10)
 				if ( SK10 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_10) ) then
 					if ( SK10.skillID == 9154 and Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_13) and Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_14) and Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_15)) then
@@ -199,7 +200,7 @@ function wt_profession_guardian.e_attack_default:execute()
 					wt_global_information.AttackRange = s1.maxRange
 					if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and T.distance < s5.maxRange) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID) return
-					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and T.distance < s4.maxRange) then
+					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and (T.distance < s4.maxRange or T.distance < 200 )) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID) return					
 					end
 				end
@@ -297,7 +298,9 @@ function wt_profession_guardian.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						if (not wt_profession_guardian.SwitchWeapon()) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
 					end
 				end
 			end	

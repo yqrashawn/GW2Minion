@@ -12,6 +12,8 @@ wt_core_state_combat.combatEvadeTmr = 0
 wt_core_state_combat.combatEvadeLastHP = 0
 wt_core_state_combat.combatJumpTmr = 0
 wt_core_state_combat.searchBetterTarget = true
+wt_core_state_combat.AttackTmr = 0
+wt_core_state_combat.LastTargetHP = 0
 
 function wt_core_state_combat.IsCMActive()
 	if (Player:GetMovement() ~= 0 ) then
@@ -51,7 +53,7 @@ function c_combat_over:evaluate()
 			wt_core_state_combat.StopCM()
 		end
 		local T = CharacterList:Get( wt_core_state_combat.CurrentTarget )
-		if ( T == nil or not T.alive or not T.onmesh or T.attitude == 0 or T.attitude == 3 ) then
+		if ( T == nil or not T.alive or not T.onmesh or T.attitude == 0 or T.attitude == 3 or (wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[wt_core_state_combat.CurrentTarget] ~= nil )) then
 			Player:ClearTarget()
 			return true
 		end
@@ -63,9 +65,44 @@ function e_combat_over:execute()
 	wt_core_state_combat.CurrentTarget = 0
 	wt_core_state_combat.StopCM()
 	Player:ClearTarget()
+	wt_core_state_combat.AttackTmr = 0
 	wt_core_controller.requestStateChange( wt_core_state_idle )	
 	return
 end
+
+--/////////////////////////////////////////////////////
+-- Invincible Check
+c_invi_check = inheritsFrom( wt_cause )
+e_invi_check = inheritsFrom( wt_effect )
+c_invi_check.throttle = 5000
+function c_invi_check:evaluate()
+	if ( wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then		
+		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
+		if ( T ~= nil ) then	
+			-- Check for Determined buff
+			local tbuffs = T.buffs
+			if (tbuffs ~= nil) then
+			  i,e = next(tbuffs)
+			  while (i ~= nil and e ~= nil) do		
+				if (tonumber(e.skillID) ~= nil) then
+					if (e.skillID == 762)then --Determined					
+						return true
+					end
+				end
+				 i,e = next(tbuffs,i)
+			  end
+			end
+		end
+	end
+	return false
+end
+
+e_invi_check.throttle = 5000
+function e_invi_check:execute()
+	d("Blacklisting Enemy, he got the Determined boon")
+	wt_global_information.TargetBlacklist[wt_core_state_combat.CurrentTarget] = wt_global_information.Now
+end
+
 
 
 --/////////////////////////////////////////////////////
@@ -87,7 +124,12 @@ function c_better_target_search:evaluate()
 		
 		if ( wt_global_information.AttackRange and wt_core_state_combat.CurrentTarget ) then
 			c_better_target_search.TargetList = CharacterList( "lowesthealth,los,attackable,alive,incombat,noCritter,onmesh,maxdistance="..wt_global_information.AttackRange..",exclude="..wt_core_state_combat.CurrentTarget )
-			return ( TableSize( c_better_target_search.TargetList ) > 0 )
+			local nextTarget, E  = next( c_better_target_search.TargetList )
+			if ( nextTarget ~= nil and E ~= nil) then
+				if ( E.alive and E.onmesh and (E.attitude == 1 or E.attitude == 2) and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil) then
+					return true
+				end
+			end			
 		end
 	end
 	return false	
@@ -98,6 +140,7 @@ function e_better_target_search:execute()
 		--wt_debug( "Combat: Switching to better target " .. nextTarget )		
 		wt_core_state_combat.StopCM()
 		wt_core_state_combat.setTarget( nextTarget )
+		wt_core_state_combat.AttackTmr = 0
 		if (gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
 			if ( Player:GetRole() == 1 ) then
 				MultiBotSend( "5;"..tonumber(nextTarget),"gw2minion" ) -- Set FocusTarget for Minions
@@ -167,11 +210,41 @@ c_combatmove = inheritsFrom(wt_cause)
 e_combatmove = inheritsFrom(wt_effect)
 function c_combatmove:evaluate()	
 	if ( gCombatmovement == "1" and wt_core_state_combat.CurrentTarget ~= nil and wt_core_state_combat.CurrentTarget ~= 0 ) then
+		
+		-- Check for knockdown & immobilized buffs
+		local mybuffs = Player.buffs
+		if (mybuffs ~= nil) then
+		  i,e = next(mybuffs)
+		  while (i ~= nil and e ~= nil) do		
+			if (tonumber(e.skillID) ~= nil) then
+				if (e.skillID == 791 or	--Fear
+					e.skillID == 727 )then --Immobilized					
+					return false
+				end
+			end
+			 i,e = next(mybuffs,i)
+		  end
+		end
+		
 		local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)
 		if ( T ~= nil ) then
 			local Tdist = T.distance					
 			local playerHP = Player.health.percent
 			local movedir = Player:GetMovement()
+			
+			-- I know this should get an own state, but I'm too lazy now
+			if ( T.distance < wt_global_information.AttackRange and (Player:GetCurrentlyCastedSpell() == 17)) then
+				if ( wt_core_state_combat.AttackTmr == 0 or wt_core_state_combat.LastTargetHP == 0 or T.health.percent ~= wt_core_state_combat.LastTargetHP) then 
+					wt_core_state_combat.LastTargetHP = T.health.percent
+					wt_core_state_combat.AttackTmr = wt_global_information.Now
+				elseif ( wt_global_information.Now - wt_core_state_combat.AttackTmr > 10000 and T.health.percent == wt_core_state_combat.LastTargetHP) then
+					d("Cant attack Target??? Going to ignore it for some time...")
+					wt_core_state_combat.AttackTmr = 0
+					wt_core_state_combat.LastTargetHP = 0
+					wt_global_information.TargetBlacklist[wt_core_state_combat.CurrentTarget] = wt_global_information.Now
+				end
+			end
+			
 			
 			if ( gSMactive and gSMactive == "0" ) then -- update wt_global_information.AttackRange if skillmanager is OFF
 				local s1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
@@ -355,11 +428,17 @@ function wt_core_state_combat:initialize()
 		local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 144 )
 		wt_core_state_combat:add( ke_quicklootchest )	
 		
+		local ke_skillstuckcheck = wt_kelement:create( "UnStuckSkill", c_skillstuckcheck, e_skillstuckcheck, 135 )
+		wt_core_state_combat:add( ke_skillstuckcheck )	
+		
 		local ke_revivparty = wt_kelement:create( "ReviveParty", c_revivep, e_revivep, 130 )
 		wt_core_state_combat:add( ke_revivparty )	
 		
-		--groupbotting, focustargetbroadcast @ prio 126
+		local ke_invincibleCheck = wt_kelement:create( "InvincibleCheck", c_invi_check, e_invi_check, 128 )
+		wt_core_state_combat:add( ke_invincibleCheck )
 		
+		--groupbotting, focustargetbroadcast @ prio 126
+				
 		local ke_better_target_search = wt_kelement:create( "better_target_search", c_better_target_search, e_better_target_search, 125 )
 		wt_core_state_combat:add( ke_better_target_search )
 		

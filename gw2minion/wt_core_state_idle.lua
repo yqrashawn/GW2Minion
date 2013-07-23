@@ -111,6 +111,8 @@ function wt_core_state_idle:initialize()
 	
 	--local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 105 )
 	--wt_core_state_idle:add( ke_quicklootchest )
+	local ke_skillstuckcheck = wt_kelement:create( "UnStuckSkill", c_skillstuckcheck, e_skillstuckcheck, 105 )
+	wt_core_state_idle:add( ke_skillstuckcheck )	
 	
 	local ke_lootchests = wt_kelement:create("LootChest", c_lootchest, e_lootchest, 104 )
 	wt_core_state_idle:add( ke_lootchests )
@@ -237,7 +239,7 @@ function wt_core_state_idle:aggroCheck()
 			local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los,incombat,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
 			if ( TableSize( TList ) > 0 ) then
 				local id, E  = next( TList )
-				if ( id ~= nil and id ~= 0 and E ~= nil) then
+				if ( id ~= nil and id ~= 0 and E ~= nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
 					wt_core_taskmanager:addKillTask( id, E, 3000 )
 				return true
 				end		
@@ -247,7 +249,7 @@ function wt_core_state_idle:aggroCheck()
 		local TList = ( CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 		if ( TableSize( TList ) > 0 ) then
 			local id, E  = next( TList )
-			if ( id ~= nil and id ~= 0 and E ~= nil) then
+			if ( id ~= nil and id ~= 0 and E ~= nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
 				wt_core_taskmanager:addKillTask( id, E, 2500 )
 			return true
 			end		
@@ -265,7 +267,7 @@ function wt_core_state_idle.aggroGadgetCheck()
 				local GList = ( GadgetList( "attackable,alive,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
 				if ( TableSize( GList ) > 0 ) then
 					local id, E  = next( GList )
-					if ( id ~= nil and id ~= 0 and E ~= nil) then
+					if ( id ~= nil and id ~= 0 and E ~= nil and wt_core_state_gcombat.Blacklist[E.contentID] == nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
 						wt_core_taskmanager:addKillGadgetTask( id, E, 3000 )
 					return false
 					end		
