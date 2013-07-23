@@ -16,7 +16,7 @@ wt_profession_ranger.switchweaponTmr = 0
 -- Determine our weapon
 function wt_profession_ranger.getWeapons(MainHand,OffHand)
 	-- A bit stoopid but failsafe way to always get the correct weapons
-	--local MainHand = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
+	--local MainHand = d(Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1).contentID)
 	if (MainHand ~= nil ) then
 		if     (MainHand.skillID == 12474 ) then return ("GreatSword") 
 		elseif (MainHand.skillID == 12607 ) then return ("Longbow") 
@@ -79,28 +79,28 @@ function wt_profession_ranger.e_attack_default:execute()
 			
 			
 			-- Skill 7,8,9,Elite
-			if ( tonumber(gRanSK7) > 0 ) then
+			if ( tonumber(gRanSK7) ~= nil and tonumber(gRanSK7) > 0 ) then
 				local SK7 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_7)
 				if ( SK7 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_7) and Player.health.percent < randomize(tonumber(gRanSK7)) and (T.distance < SK7.maxRange or T.distance < 140 or SK7.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_7)
 					return
 				end
 			end
-			if ( tonumber(gRanSK8) > 0 ) then
+			if ( tonumber(gRanSK8) ~= nil and tonumber(gRanSK8) > 0 ) then
 				local SK8 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_8)
 				if ( SK8 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_8) and Player.health.percent < randomize(tonumber(gRanSK8)) and (T.distance < SK8.maxRange or T.distance < 140 or SK8.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_8)
 					return
 				end
 			end
-			if ( tonumber(gRanSK9) > 0 ) then
+			if ( tonumber(gRanSK9) ~= nil and tonumber(gRanSK9) > 0 ) then
 				local SK9 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_9)
 				if ( SK9 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_9) and Player.health.percent < randomize(tonumber(gRanSK9)) and (T.distance < SK9.maxRange or T.distance < 140 or SK9.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_9)
 					return
 				end
 			end
-			if ( tonumber(gRanSK10) > 0 ) then
+			if ( tonumber(gRanSK10) ~= nil and tonumber(gRanSK10) > 0 ) then
 				local SK10 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_10)
 				if ( SK10 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_10) and Player.health.percent < randomize(tonumber(gRanSK10)) and (T.distance < SK10.maxRange or T.distance < 140 or SK10.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_10)
@@ -311,7 +311,9 @@ function wt_profession_ranger.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						if (not wt_profession_ranger.SwitchWeapon()) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
 					end
 				end
 			end	

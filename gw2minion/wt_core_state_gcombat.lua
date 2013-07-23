@@ -11,6 +11,16 @@ wt_core_state_gcombat.combatMoveTmr = 0
 wt_core_state_gcombat.combatEvadeTmr = 0
 wt_core_state_gcombat.combatEvadeLastHP = 0
 wt_core_state_gcombat.combatJumpTmr = 0
+wt_core_state_gcombat.AttackTmr = 0
+wt_core_state_gcombat.LastTargetHP = 0
+
+
+-- ADD gadget.contentID to this list if the bot should not attack them, better is to PM me the ID + screenshot ;)
+wt_core_state_gcombat.Blacklist = {
+	[288] = { type = 14, name = "Centaur Test Dummy"},
+}
+
+
 
 function wt_core_state_gcombat.IsCMActive()
 	if (Player:GetMovement() ~= 0 ) then
@@ -50,7 +60,7 @@ function c_gcombat_over:evaluate()
 			wt_core_state_gcombat.StopCM()
 		end
 		local T = GadgetList:Get( wt_core_state_gcombat.CurrentTarget )
-		if ( T == nil or not T.alive or not T.onmesh or T.attitude == 0 or T.attitude == 3 ) then
+		if ( T == nil or not T.alive or not T.onmesh or T.attitude == 0 or T.attitude == 3 or (wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[wt_core_state_gcombat.CurrentTarget] ~= nil )) then
 			Player:ClearTarget()
 			wt_core_state_gcombat.StopCM()
 			return true
@@ -63,6 +73,8 @@ function e_gcombat_over:execute()
 	wt_core_state_gcombat.CurrentTarget = 0
 	wt_core_state_gcombat.StopCM()
 	Player:ClearTarget()
+	wt_core_state_gcombat.AttackTmr = 0
+	wt_core_state_gcombat.LastTargetHP = 0
 	wt_core_controller.requestStateChange( wt_core_state_idle )	
 	return
 end
@@ -83,6 +95,8 @@ function e_gbetter_target_search:execute()
 		--wt_debug( "Combat: Switching to better target " .. nextTarget )		
 		wt_core_state_gcombat.StopCM()
 		wt_core_state_gcombat.setTarget( nextTarget )
+		wt_core_state_gcombat.AttackTmr = 0
+		wt_core_state_gcombat.LastTargetHP = 0
 		-- CRASHES LIKE SHIT, DONT KNOW WHY
 		--[[if (gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
 			if ( Player:GetRole() == 1 ) then
@@ -135,6 +149,23 @@ c_gcombatmove = inheritsFrom(wt_cause)
 e_gcombatmove = inheritsFrom(wt_effect)
 function c_gcombatmove:evaluate()	
 	if ( gCombatmovement == "1" and wt_core_state_gcombat.CurrentTarget ~= nil and wt_core_state_gcombat.CurrentTarget ~= 0 ) then
+		
+		-- Check for knockdown & immobilized buffs
+		local mybuffs = Player.buffs
+		if (mybuffs ~= nil) then
+		  i,e = next(mybuffs)
+		  while (i ~= nil and e ~= nil) do		
+			if (tonumber(e.skillID) ~= nil) then
+				if (e.skillID == 791 or	--Fear
+					e.skillID == 727 )then --Immobilized
+					return false
+				end
+			end
+			 i,e = next(mybuffs,i)
+		  end
+		end
+		
+		
 		local T = GadgetList:Get(wt_core_state_gcombat.CurrentTarget)
 		if ( T ~= nil ) then
 			local Tdist = T.distance					
@@ -143,6 +174,20 @@ function c_gcombatmove:evaluate()
 			local s1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
 			if (s1 ~= nil) then
 				wt_global_information.AttackRange = s1.maxRange or 160
+			end
+			
+			
+			-- I know this should get an own state, but I'm too lazy now
+			if ( T.distance < wt_global_information.AttackRange and (Player:GetCurrentlyCastedSpell() == 17)) then
+				if ( wt_core_state_gcombat.AttackTmr == 0 or wt_core_state_gcombat.LastTargetHP == 0 or T.health.percent ~= wt_core_state_gcombat.LastTargetHP) then 
+					wt_core_state_gcombat.LastTargetHP = T.health.percent
+					wt_core_state_gcombat.AttackTmr = wt_global_information.Now
+				elseif ( wt_global_information.Now - wt_core_state_gcombat.AttackTmr > 10000 and T.health.percent == wt_core_state_gcombat.LastTargetHP) then
+					d("Cant attack Target??? Going to ignore it for some time...")
+					wt_core_state_gcombat.AttackTmr = 0
+					wt_core_state_gcombat.LastTargetHP = 0
+					wt_global_information.TargetBlacklist[wt_core_state_gcombat.CurrentTarget] = wt_global_information.Now
+				end
 			end
 			
 			
@@ -362,6 +407,9 @@ function wt_core_state_gcombat:initialize()
 		
 		local ke_quicklootchest = wt_kelement:create( "QuickLootChest", c_quicklootchest, e_quicklootchest, 144 )
 		wt_core_state_gcombat:add( ke_quicklootchest )	
+		
+		local ke_skillstuckcheck = wt_kelement:create( "UnStuckSkill", c_skillstuckcheck, e_skillstuckcheck, 135 )
+		wt_core_state_gcombat:add( ke_skillstuckcheck )	
 		
 		local ke_revivparty = wt_kelement:create( "ReviveParty", c_revivep, e_revivep, 130 )
 		wt_core_state_gcombat:add( ke_revivparty )	

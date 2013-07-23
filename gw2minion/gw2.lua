@@ -31,6 +31,8 @@ wt_global_information.AutoRun_lastrun = 0
 wt_global_information.ChatCheck_lastrun = 0
 wt_global_information.OldLastchatline = ""
 wt_global_information.OldLastwhisperline = ""
+wt_global_information.TargetBlacklist = {}
+wt_global_information.TargetBlacklistTmr = 0
 
 gw2minion = { }
 
@@ -60,6 +62,12 @@ function wt_global_information.OnUpdate( event, tickcount )
 		if ( gCheckChat ~= "Off" and wt_global_information.ChatCheck_lastrun == 0 or tickcount - wt_global_information.ChatCheck_lastrun > 3000 ) then
 			wt_global_information.ChatCheck_lastrun = tickcount
 			wt_global_information.WhisperWarningCheck()
+		end
+		
+		-- I know I'm lazy
+		if ( wt_global_information.TargetBlacklistTmr == 0 or tickcount - wt_global_information.TargetBlacklistTmr > 60000 ) then
+			wt_global_information.TargetBlacklistTmr = tickcount
+			wt_global_information.TargetBlacklist = {}
 		end
 			
 		wt_core_controller.Run()
