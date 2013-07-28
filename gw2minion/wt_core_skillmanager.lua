@@ -15,6 +15,9 @@ SkillMgr.UIneedsRefresh = false
 SkillMgr.visible = false
 SkillMgr.SkillSet = {}
 SkillMgr.cskills = {}
+SkillMgr.SkillStuckTmr = 0
+SkillMgr.SkillStuckSlot = 0
+
 SkillMgr.EngineerKits = {
 	[38304] = "BombKit",
 	[38472] = "FlameThrower",
@@ -98,7 +101,8 @@ SkillMgr.BoonsEnum = {
 		[873] = "Retaliation",
 		[1122] = "Stability",
 		[719] = "Swiftness",
-		[726] = "Vigor",		
+		[726] = "Vigor",
+		[762] = "Determined",
 	};
 	
 function SkillMgr.ModuleInit() 	
@@ -149,7 +153,7 @@ function SkillMgr.ModuleInit()
 	GUI_NewWindow(SkillMgr.mainwindow.name,SkillMgr.mainwindow.x,SkillMgr.mainwindow.y,SkillMgr.mainwindow.w,SkillMgr.mainwindow.h)
 	GUI_NewCheckbox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].activated,"gSMactive",strings[gCurrentLanguage].generalSettings)
 	GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].profile,"gSMprofile",strings[gCurrentLanguage].generalSettings,"")
-	GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].sMtargetmode,"gsMtargetmode",strings[gCurrentLanguage].generalSettings,"No Autotarget,Autotarget Weakest,Autotarget Closest,Autotarget Biggest Crowd");
+	GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].sMtargetmode,"gsMtargetmode",strings[gCurrentLanguage].generalSettings,"No Autotarget,Autotarget Weakest,Autotarget Closest,Autotarget Biggest Crowd,Least Conditions,Most Conditions,Least Boons,Most Boons");	
 	GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].sMmode,"gSMmode",strings[gCurrentLanguage].generalSettings,"Attack Everything,Attack Players Only")
 	
 	GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].Fightstyle,"gFightstyle",strings[gCurrentLanguage].AdvancedSettings,"Melee,Range")
@@ -171,8 +175,8 @@ function SkillMgr.ModuleInit()
 		end
 		
 		local SM_Attack_default = wt_kelement:create("Attack(SM)",SkillMgr.c_SMattack_default,SkillMgr.e_SMattack_default, 46 )
-		wt_core_state_combat:add(SM_Attack_default)	
-		
+		wt_core_state_combat:add(SM_Attack_default)
+				
 	end
 
 	--GUI_UnFoldGroup(SkillMgr.mainwindow.name,strings[gCurrentLanguage].generalSettings) crashes still
@@ -383,6 +387,10 @@ function SkillMgr.SaveProfile()
 				if (_G["SKM_TEff2_"..tostring(skID)] ) then string2write = string2write..("SKM_TEff2_"..tostring(skID).."="..tostring(_G["SKM_TEff2_"..tostring(skID)]).."\n") end
 				if (_G["SKM_TNEff1_"..tostring(skID)] ) then string2write = string2write..("SKM_TNEff1_"..tostring(skID).."="..tostring(_G["SKM_TNEff1_"..tostring(skID)]).."\n") end
 				if (_G["SKM_TNEff2_"..tostring(skID)] ) then string2write = string2write..("SKM_TNEff2_"..tostring(skID).."="..tostring(_G["SKM_TNEff2_"..tostring(skID)]).."\n") end
+				if (_G["SKM_TCondC_"..tostring(skID)] ) then string2write = string2write..("SKM_TCondC_"..tostring(skID).."="..tostring(_G["SKM_TCondC_"..tostring(skID)]).."\n") end				
+				if (_G["SKM_PBoonC_"..tostring(skID)] ) then string2write = string2write..("SKM_PBoonC_"..tostring(skID).."="..tostring(_G["SKM_PBoonC_"..tostring(skID)]).."\n") end				
+				if (_G["SKM_TBoonC_"..tostring(skID)] ) then string2write = string2write..("SKM_TBoonC_"..tostring(skID).."="..tostring(_G["SKM_TBoonC_"..tostring(skID)]).."\n") end				
+				
 				
 				string2write = string2write..("SKM_END_"..tostring(skID).."="..tostring(0).."\n")
 				skID,skill = next (SkillMgr.SkillSet,skID)
@@ -452,6 +460,10 @@ function SkillMgr.UpdateCurrentProfileData()
 					elseif ( key == "TEff2" )then newskill.TEff2 = tostring(value)
 					elseif ( key == "TNEff1" )then newskill.TNEff1 = tostring(value)
 					elseif ( key == "TNEff2" )then newskill.TNEff2 = tostring(value)
+					
+					elseif ( key == "TCondC" )then newskill.TCondC = tostring(value)
+					elseif ( key == "PBoonC" )then newskill.PBoonC = tostring(value)
+					elseif ( key == "TBoonC" )then newskill.TBoonC = tostring(value)
 					
 					end
 				else
@@ -661,9 +673,24 @@ function SkillMgr.CreateNewSkillEntry(skill)
 			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].orTargetHasNot,"SKM_TNEff2_"..tostring(skID),skname,"None,Bleeding,Blind,Burning,Chilled,Confusion,Crippled,Fear,Immobilized,Vulnerability,Weakness,Poison,Aegis,Fury,Might,Protection,Regeneration,Retaliation,Stability,Swiftness,Vigor,Stealth,Stun");
 			_G["SKM_TNEff2_"..tostring(skID)] = tostring(skTNEff2)
 			
+			-- TARGET HAS #CONDITIONS
+			local skTCondC = skill.TCondC or 0
+			GUI_NewField(SkillMgr.mainwindow.name,"Target has #Conditions >","SKM_TCondC_"..tostring(skID),skname);
+			_G["SKM_TCondC_"..tostring(skID)] = skTCondC
+
 			
 			-- ADD MORE HERE
 			
+			-- PLAYER HAS #BOONS
+			local skPBoonC = skill.PBoonC or 0
+			GUI_NewField(SkillMgr.mainwindow.name,"Player has #Boons >","SKM_PBoonC_"..tostring(skID),skname);
+			_G["SKM_PBoonC_"..tostring(skID)] = skPBoonC
+
+			-- TARGET HAS #BOONS
+			local skTBoonC = skill.TBoonC or 0
+			GUI_NewField(SkillMgr.mainwindow.name,"Target has #Boons >","SKM_TBoonC_"..tostring(skID),skname);
+			_G["SKM_TBoonC_"..tostring(skID)] = skTBoonC
+            
 			SkillMgr.SkillSet[skID] = { name = skname , prio = skPrio}
 		end
 	end
@@ -690,6 +717,97 @@ function SkillMgr.ClearCurrentSkills()
 	SkillMgr.SkillSet = {}
 end
 
+function SkillMgr.CountCondition(target)
+    local tbuffs = target.buffs
+    if ( tbuffs ) then												
+        local condcount = 0
+        local i,buff = next(tbuffs)
+        while i and buff do							
+            local bskID = buff.skillID
+            if ( bskID and SkillMgr.ConditionsEnum[bskID] ~= nil) then
+                condcount = condcount + 1
+            end
+            i,buff = next(tbuffs,i)
+        end
+        return condcount
+    else
+        return 0
+    end
+end
+
+function SkillMgr.CountBoon(target)
+    local tbuffs = target.buffs
+    if ( tbuffs ) then												
+        local booncount = 0
+        local i,buff = next(tbuffs)
+        while i and buff do							
+            local bskID = buff.skillID
+            if ( bskID and SkillMgr.BoonsEnum[bskID] ~= nil) then
+                booncount = booncount + 1
+            end
+            i,buff = next(tbuffs,i)
+        end
+        return booncount
+    else
+        return 0
+    end
+end
+function SkillMgr.SelectTargetExtended(check_range, need_los, only_players)
+    local TargetList
+    if (need_los == "1" and only_players == "1") then
+        TargetList = CharacterList( "attackable,los,player,alive,noCritter,maxdistance="..check_range)			
+    elseif (need_los == "0" and only_players == "0") then
+        TargetList = CharacterList( "attackable,alive,noCritter,maxdistance="..check_range)			
+    elseif (need_los == "0" and only_players == "1") then
+        TargetList = CharacterList( "attackable,player,alive,noCritter,maxdistance="..check_range)			
+    elseif (need_los == "1" and only_players == "0") then
+        TargetList = CharacterList( "attackable,los,alive,noCritter,maxdistance="..check_range)			
+    end
+    
+    if ( TableSize ( TargetList ) > 0 )then
+        local target_list
+        target_list = {}
+        local compare_to
+        local chosen_tid
+        local chosen_target
+        
+        if (gSMmode == "Least Conditions" or gSMmode == "Least Boons") then
+            compare_to = 9999
+        elseif (gSMmode == "Most Conditions" or gSMmode == "Most Boons") then
+            compare_to = 0
+        end
+        
+        local tid, target
+        tid,target = next(TargetList)
+        while ( tid ~= nil and target ~= nil) do
+            local compare_with
+            
+            if (gSMmode == "Least Conditions" or gSMmode == "Most Conditions") then
+                compare_with = SkillMgr.CountCondition(target) 
+            elseif (gSMmode == "Least Boons" or gSMmode == "Most Boons") then
+                compare_with = SkillMgr.CountBoon(target) 
+            end
+            
+            if (gSMmode == "Least Conditions" or gSMmode == "Least Boons") then
+                if (compare_to >= compare_with) then
+                    chosen_tid = tid
+                    chosen_target = target
+                end
+            elseif (gSMmode == "Most Conditions" or gSMmode == "Most Boons") then
+                if (compare_to <= compare_with) then
+                    chosen_tid = tid
+                    chosen_target = target
+                end
+            end
+            
+            tid,target = next(TargetList, tid)
+        end
+        target_list[chosen_tid] = chosen_target
+        return target_list        
+    else
+        return TargetList
+    end
+end
 
 function SkillMgr.SelectTarget()
 	
@@ -723,6 +841,8 @@ function SkillMgr.SelectTarget()
 				TargetList = CharacterList( "nearest,los,attackable,alive,noCritter,maxdistance=1500")--..wt_global_information.AttackRange)
 			elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
 				TargetList = CharacterList( "clustered=300,los,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)				
+            else
+                TargetList = SkillMgr.SelectTargetExtended(wt_global_information.AttackRange, "1", "0")
 			end
 		else
 			if ( gsMtargetmode == "Autotarget Weakest" )then 
@@ -731,6 +851,8 @@ function SkillMgr.SelectTarget()
 				TargetList = CharacterList( "nearest,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)
 			elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
 				TargetList = CharacterList( "clustered=300,los,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)				
+            else
+                TargetList = SkillMgr.SelectTargetExtended(wt_global_information.AttackRange, "1", "1")
 			end
 		end
 		if ( TableSize ( TargetList ) > 0 )then
@@ -749,6 +871,8 @@ function SkillMgr.SelectTarget()
 					TargetList = CharacterList( "nearest,los,attackable,alive,noCritter,maxdistance=1500")
 				elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
 					TargetList = CharacterList( "clustered=300,los,attackable,alive,noCritter,maxdistance=1500")				
+                else
+                    TargetList = SkillMgr.SelectTargetExtended("1500", "1", "0")
 				end
 			else
 				if ( gsMtargetmode == "Autotarget Weakest" )then 
@@ -757,6 +881,8 @@ function SkillMgr.SelectTarget()
 					TargetList = CharacterList( "nearest,los,player,attackable,alive,noCritter,maxdistance=1500")
 				elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
 					TargetList = CharacterList( "clustered=300,los,player,attackable,alive,noCritter,maxdistance=1500")				
+                else
+                    TargetList = SkillMgr.SelectTargetExtended("1500", "1", "1")
 				end
 			end
 			if ( TableSize ( TargetList ) > 0 )then
@@ -774,7 +900,9 @@ function SkillMgr.SelectTarget()
 					elseif( gsMtargetmode == "Autotarget Closest" ) then
 						TargetList = CharacterList( "nearest,attackable,alive,noCritter,maxdistance=1500")--..wt_global_information.AttackRange)
 					elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
-						TargetList = CharacterList( "clustered=300,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)				
+						TargetList = CharacterList( "clustered=300,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)
+                    else
+                        TargetList = SkillMgr.SelectTargetExtended(wt_global_information.AttackRange, "0", "0")
 					end
 				else
 					if ( gsMtargetmode == "Autotarget Weakest" )then 
@@ -783,6 +911,8 @@ function SkillMgr.SelectTarget()
 						TargetList = CharacterList( "nearest,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)
 					elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
 						TargetList = CharacterList( "clustered=300,player,attackable,alive,noCritter,maxdistance="..wt_global_information.AttackRange)				
+                    else
+                        TargetList = SkillMgr.SelectTargetExtended(wt_global_information.AttackRange, "0", "1")
 					end
 				end
 				if ( TableSize ( TargetList ) > 0 )then
@@ -801,6 +931,8 @@ function SkillMgr.SelectTarget()
 							TargetList = CharacterList( "nearest,attackable,alive,noCritter,maxdistance=1500")
 						elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
 							TargetList = CharacterList( "clustered=300,attackable,alive,noCritter,maxdistance=1500")				
+                        else
+                            TargetList = SkillMgr.SelectTargetExtended("1500", "0", "0")
 						end
 					else
 						if ( gsMtargetmode == "Autotarget Weakest" )then 
@@ -809,6 +941,8 @@ function SkillMgr.SelectTarget()
 							TargetList = CharacterList( "nearest,player,attackable,alive,noCritter,maxdistance=1500")
 						elseif( gsMtargetmode == "Autotarget Biggest Crowd" ) then
 							TargetList = CharacterList( "clustered=300,player,attackable,alive,noCritter,maxdistance=1500")				
+                        else
+                            TargetList = SkillMgr.SelectTargetExtended("1500", "0", "1")
 						end
 					end
 					if ( TableSize ( TargetList ) > 0 )then
@@ -992,7 +1126,64 @@ function SkillMgr.DoAction()
 						castable = false
 					end
 				end
-									
+				-- TARGET #CONDITIONS CHECK
+				if ( castable and target and (tonumber(_G["SKM_TCondC_"..tostring(skillID)]) > 0 )) then
+                    local tbuffs2 = target.buffs
+					if ( tbuffs2 ) then												
+						local condcount = 0
+						local i,buff = next(tbuffs2)
+						while i and buff do							
+							local bskID = buff.skillID
+							if ( bskID and SkillMgr.ConditionsEnum[bskID] ~= nil) then
+								condcount = condcount + 1
+								if (condcount > tonumber(_G["SKM_TCondC_"..tostring(skillID)])) then
+									break
+								end
+							end
+							i,buff = next(tbuffs2,i)
+						end
+						if (condcount <= tonumber(_G["SKM_TCondC_"..tostring(skillID)])) then castable = false end
+					end						
+				end
+								
+				-- PLAYER #BOON CHECK
+				if ( castable and (tonumber(_G["SKM_PBoonC_"..tostring(skillID)]) > 0 )) then
+					if ( mybuffs ) then												
+						local booncount = 0
+						local i,buff = next(mybuffs)
+						while i and buff do							
+							local bskID = buff.skillID
+							if ( bskID and SkillMgr.BoonsEnum[bskID] ~= nil) then
+								booncount = booncount + 1
+								if (booncount > tonumber(_G["SKM_PBoonC_"..tostring(skillID)])) then
+									break
+								end
+							end
+							i,buff = next(mybuffs,i)
+						end
+						if (booncount <= tonumber(_G["SKM_PBoonC_"..tostring(skillID)])) then castable = false end
+					end						
+				end
+
+                -- TARGET #BOON CHECK
+				if ( castable and target and (tonumber(_G["SKM_TBoonC_"..tostring(skillID)]) > 0 )) then
+                    local tbuffs2 = target.buffs
+					if ( tbuffs2 ) then												
+						local booncount = 0
+						local i,buff = next(tbuffs2)
+						while i and buff do							
+							local bskID = buff.skillID
+							if ( bskID and SkillMgr.BoonsEnum[bskID] ~= nil) then
+								booncount = booncount + 1
+								if (booncount > tonumber(_G["SKM_TBoonC_"..tostring(skillID)])) then
+									break
+								end
+							end
+							i,buff = next(tbuffs2,i)
+						end
+						if (booncount <= tonumber(_G["SKM_TBoonC_"..tostring(skillID)])) then castable = false end
+					end						
+				end
 				if ( castable ) then
 					-- Swap Weapon check
 					if ( SkillMgr.cskills[i].slot == GW2.SKILLBARSLOT.Slot_1 ) then
@@ -1002,7 +1193,14 @@ function SkillMgr.DoAction()
 					-- CAST Self check
 					if ( tostring(_G["SKM_TType_"..tostring(skillID)]) == "Self" ) then						
 						if (SkillMgr.CanCast() and SkillMgr.cskills[i].slot ) then
-							Player:CastSpell(SkillMgr.cskills[i].slot)
+							--[[if ( SkillMgr.SkillStuckSlot ~= SkillMgr.cskills[i].slot ) then
+								SkillMgr.SkillStuckSlot == SkillMgr.cskills[i].slot
+							else
+								if (SkillMgr.SkillStuckTmr == 0 or wt_core_information.Now - SkillMgr.SkillStuckTmr > 4000 ) then
+									
+								end
+							end	]]													
+							Player:CastSpellNoChecks(SkillMgr.cskills[i].slot)							
 							--d("Casting on Self: "..tostring(SkillMgr.cskills[i].name))
 							return
 							--	Player:LeaveCombatState()
@@ -1010,7 +1208,7 @@ function SkillMgr.DoAction()
 					else
 						if ( target and target.id ) then							
 							if (SkillMgr.CanCast()) then--sp ~= SkillMgr.cskills[i].slot ) then							
-								Player:CastSpell(SkillMgr.cskills[i].slot,target.id)								
+								Player:CastSpellNoChecks(SkillMgr.cskills[i].slot,target.id)								
 								--d("Casting on Enemy: "..tostring(SkillMgr.cskills[i].name))
 								return
 							end		

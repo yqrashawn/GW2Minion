@@ -13,25 +13,26 @@ wt_profession_mesmer.switchweaponTmr = 0
 -- Determine our weapons
 function wt_profession_mesmer.GetMainHandWeapon(MainHand)
 	-- A bit stoopid but failsafe way to always get the correct weapons
-	--d(Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1).skillID)
+	--d(Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1).contentID)
 	if (MainHand ~= nil ) then
-		if     (MainHand.skillID == 10352 ) then return ("Staff") 
-		elseif (MainHand.skillID == 10219 ) then return ("GreatSword") 
-		elseif (MainHand.skillID == 10170 ) then return ("Sword")
-		elseif (MainHand.skillID == 10289 ) then return ("Scepter")	
+		if     (MainHand.contentID == 239167 or MainHand.contentID == 243626) then return ("Staff") 
+		elseif (MainHand.contentID == 39963 ) then return ("GreatSword") 
+		elseif (MainHand.contentID == 39877 ) then return ("Sword")
+		elseif (MainHand.contentID == 72704 ) then return ("Scepter")	
 		end
 	end
 	return "default"
 end
 -- Determine our weapon
 function wt_profession_mesmer.GetOffHandWeapon(OffHand)
+--d(Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_4).contentID)
 	if (OffHand ~= nil ) then
-		if     (OffHand.skillID == 10331 ) then return ("Staff") 
-		elseif (OffHand.skillID == 10221 ) then return ("GreatSword") 		
-		elseif (OffHand.skillID == 10280 ) then return ("Sword")
-		elseif (OffHand.skillID == 10175 ) then return ("Pistol")
-		elseif (OffHand.skillID == 10186 ) then return ("Focus")		
-		elseif (OffHand.skillID == 10285 ) then return ("Torch")
+		if     (OffHand.contentID == 248354 ) then return ("Staff") 
+		elseif (OffHand.contentID == 39967 ) then return ("GreatSword") 		
+		elseif (OffHand.contentID == 75463 ) then return ("Sword")
+		elseif (OffHand.contentID == 39892 ) then return ("Pistol")
+		elseif (OffHand.contentID == 39910 ) then return ("Focus")		
+		elseif (OffHand.contentID == 132431 ) then return ("Torch")
 		end
 	end
 	return "default"
@@ -83,28 +84,28 @@ function wt_profession_mesmer.e_attack_default:execute()
 			--		return
 			--end
 			-- Skill 7,8,9,Elite
-			if ( tonumber(gMesSK7) > 0 ) then
+			if ( tonumber(gMesSK7) ~= nil and tonumber(gMesSK7) > 0 ) then
 				local SK7 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_7)
 				if ( SK7 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_7) and Player.health.percent < randomize(tonumber(gMesSK7)) and (T.distance < SK7.maxRange or T.distance < 140 or SK7.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_7)
 					return
 				end
 			end
-			if ( tonumber(gMesSK8) > 0 ) then
+			if ( tonumber(gMesSK8) ~= nil and tonumber(gMesSK8) > 0 ) then
 				local SK8 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_8)
 				if ( SK8 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_8) and Player.health.percent < randomize(tonumber(gMesSK8)) and (T.distance < SK8.maxRange or T.distance < 140 or SK8.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_8)
 					return
 				end
 			end
-			if ( tonumber(gMesSK9) > 0 ) then
+			if ( tonumber(gMesSK9) ~= nil and tonumber(gMesSK9) > 0 ) then
 				local SK9 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_9)
 				if ( SK9 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_9) and Player.health.percent < randomize(tonumber(gMesSK9)) and (T.distance < SK9.maxRange or T.distance < 140 or SK9.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_9)
 					return
 				end
 			end
-			if ( tonumber(gMesSK10) > 0 ) then
+			if ( tonumber(gMesSK10) ~= nil and tonumber(gMesSK10) > 0 ) then
 				local SK10 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_10)
 				if ( SK10 ~= nil and not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_10) and Player.health.percent < randomize(tonumber(gMesSK10)) and (T.distance < SK10.maxRange or T.distance < 140 or SK10.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_10)
@@ -243,7 +244,9 @@ function wt_profession_mesmer.e_attack_default:execute()
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID)
 					elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
-						Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						if (not wt_profession_mesmer.SwitchWeapon()) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID)
+						end
 					end
 				end
 			end	

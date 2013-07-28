@@ -41,6 +41,10 @@ function wt_core_taskmanager:addWaypointTask( waypoint )
 				--wt_debug("Walking towards new Waypoint ")	
 				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 200 )
+					if ( gSMactive == "1" ) then
+						SkillMgr.DoActionTmr = wt_global_information.Now 
+						SkillMgr.DoAction()	
+					end
 					newtask.last_execution = wt_global_information.Now
 				end
 			else
@@ -80,6 +84,10 @@ function wt_core_taskmanager:addPOITask( poi )
 				--wt_debug("Walking towards new PointOfInterest ")	
 				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 200 )
+					if ( gSMactive == "1" ) then
+						SkillMgr.DoActionTmr = wt_global_information.Now 
+						SkillMgr.DoAction()	
+					end
 					newtask.last_execution = wt_global_information.Now
 				end
 			else
@@ -134,6 +142,10 @@ function wt_core_taskmanager:addHeartQuestTask( quest )
 				--wt_debug("Walking towards FarmSpot Marker ")	
 				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 					Player:MoveToRandomPointAroundCircle( newtask.position.x, newtask.position.y, newtask.position.z, 500 )
+					if ( gSMactive == "1" ) then
+						SkillMgr.DoActionTmr = wt_global_information.Now 
+						SkillMgr.DoAction()	
+					end
 					newtask.last_execution = wt_global_information.Now
 				end
 			else
@@ -151,7 +163,7 @@ function wt_core_taskmanager:addHeartQuestTask( quest )
 				TargetList = ( CharacterList( "noCritter,attackable,alive,maxdistance="..wt_global_information.MaxSearchEnemyDistance..",onmesh,maxlevel="..( Player.level + wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel ) ) )
 				if ( TargetList ~= nil ) then 	
 					nextTarget, E  = next( TargetList )
-					if ( nextTarget ~= nil and (wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then
+					if ( nextTarget ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil and (wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then
 						--wt_debug( "TaskManager: Begin Combat, Found target "..nextTarget )						
 						wt_core_state_combat.setTarget( nextTarget )
 						wt_core_controller.requestStateChange( wt_core_state_combat )
@@ -207,6 +219,10 @@ function wt_core_taskmanager:addFarmSpotTask( marker )
 				--wt_debug("Walking towards FarmSpot Marker ")	
 				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 100 )
+					if ( gSMactive == "1" ) then
+						SkillMgr.DoActionTmr = wt_global_information.Now 
+						SkillMgr.DoAction()	
+					end
 					newtask.last_execution = wt_global_information.Now
 				end
 			else
@@ -218,7 +234,7 @@ function wt_core_taskmanager:addFarmSpotTask( marker )
 			TargetList = ( CharacterList( "shortestpath,onmesh,noCritter,attackable,alive,maxdistance="..wt_global_information.MaxSearchEnemyDistance..",maxlevel="..( Player.level + wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel ) ) )
 			if ( TargetList ~= nil ) then 	
 				nextTarget, E  = next( TargetList )
-				if ( nextTarget ~= nil and (wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then
+				if ( nextTarget ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil and (wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then
 					--wt_debug( "TaskManager: Begin Combat, Found target "..nextTarget )					
 					wt_core_state_combat.setTarget( nextTarget )
 					wt_core_controller.requestStateChange( wt_core_state_combat )
@@ -272,6 +288,10 @@ function wt_core_taskmanager:addRandomFarmSpotTask( marker )
 				--wt_debug("Walking towards FarmSpot Marker ")	
 				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 100 )
+					if ( gSMactive == "1" ) then
+						SkillMgr.DoActionTmr = wt_global_information.Now 
+						SkillMgr.DoAction()	
+					end
 					newtask.last_execution = wt_global_information.Now
 				end
 			else
@@ -283,7 +303,7 @@ function wt_core_taskmanager:addRandomFarmSpotTask( marker )
 			TargetList = ( CharacterList( "shortestpath,onmesh,noCritter,attackable,alive,maxdistance="..wt_global_information.MaxSearchEnemyDistance..",maxlevel="..( Player.level + wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel ) ) )
 			if ( TargetList ~= nil ) then 	
 				nextTarget, E  = next( TargetList )
-				if ( nextTarget ~= nil and (wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then
+				if ( nextTarget ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil and (wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then
 					--wt_debug( "TaskManager: Begin Combat, Found target "..nextTarget )					
 					wt_core_state_combat.setTarget( nextTarget )
 					wt_core_controller.requestStateChange( wt_core_state_combat )
@@ -333,6 +353,10 @@ function wt_core_taskmanager:addSkillChallengeTask( char )
 				-- TODO: Update position
 				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 200 )
+					if ( gSMactive == "1" ) then
+						SkillMgr.DoActionTmr = wt_global_information.Now 
+						SkillMgr.DoAction()	
+					end
 					newtask.last_execution = wt_global_information.Now
 				end
 			else
@@ -369,7 +393,7 @@ function wt_core_taskmanager:addSearchAndKillTask(  )
 		TargetList = ( CharacterList( "shortestpath,onmesh,noCritter,attackable,alive,maxdistance=4000,maxlevel="..( Player.level + wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel ) ) )
 		if ( TargetList ~= nil ) then 	
 			nextTarget, E  = next( TargetList )
-			if ( nextTarget ~= nil and (wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then
+			if ( nextTarget ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil and (wt_global_information.Now - newtask.startingTime) < newtask.maxduration) then
 				--wt_debug( "TaskManager: Begin Combat, Found target "..nextTarget )				
 				wt_core_state_combat.setTarget( nextTarget )
 				wt_core_controller.requestStateChange( wt_core_state_combat )
@@ -417,7 +441,7 @@ function wt_core_taskmanager:addKillTask( ID, character, Prio )
 	newtask.ID = ID			
 	function newtask:execute()				
 		local ntarget = CharacterList:Get(tonumber(newtask.ID))
-		if ( ntarget ~= nil and ntarget.distance < 4000 and ntarget.alive and ntarget.onmesh) then
+		if ( ntarget ~= nil and ntarget.distance < 4000 and ntarget.alive and ntarget.onmesh and (ntarget.attitude == 1 or ntarget.attitude == 2 ) and wt_global_information.TargetBlacklist[tonumber(newtask.ID)] == nil) then
 			--wt_debug(newtask.name)
 			if (tonumber(newtask.ID) ~= nil) then
 				if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then
@@ -459,7 +483,7 @@ function wt_core_taskmanager:addKillGadgetTask( ID, gadget, Prio )
 	newtask.ID = ID			
 	function newtask:execute()				
 		local ntarget = GadgetList:Get(tonumber(newtask.ID))
-		if ( ntarget ~= nil and ntarget.distance < 4000 and ntarget.alive and (ntarget.attitude == 1 or ntarget.attitude == 2) and ntarget.onmesh) then
+		if ( ntarget ~= nil and ntarget.los and ntarget.distance < 4000 and ntarget.alive and (ntarget.attitude == 1 or ntarget.attitude == 2) and ntarget.onmesh and wt_global_information.TargetBlacklist[tonumber(newtask.ID)] == nil) then
 			--wt_debug((newtask.name))
 			if (tonumber(newtask.ID) ~= nil) then
 				if (gMinionEnabled == "1" and MultiBotIsConnected( ) and Player:GetRole() == 1) then
@@ -540,6 +564,10 @@ function wt_core_taskmanager:addGotoPosTask( pos, prio )
 					return					
 				end
 				Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 75 )
+				if ( gSMactive == "1" ) then
+					SkillMgr.DoActionTmr = wt_global_information.Now 
+					SkillMgr.DoAction()	
+				end
 				newtask.name = "GotoPos: "..(math.floor(distance))
 			elseif ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 				newtask.last_execution = wt_global_information.Now
@@ -625,7 +653,11 @@ function wt_core_taskmanager:addFollowTask( ID, prio )
                     if ( Char.distance > newtask.randomdist) then
                         if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
                             Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 120 )
-                            newtask.last_execution = wt_global_information.Now
+							if ( gSMactive == "1" ) then
+								SkillMgr.DoActionTmr = wt_global_information.Now 
+								SkillMgr.DoAction()	
+							end
+							newtask.last_execution = wt_global_information.Now
                         end
                     else
                         newtask.spotreached = true
@@ -1390,6 +1422,10 @@ function wt_core_taskmanager:addEventTask( ID, event, prio )
 								end						
 							end
 							Player:MoveToRandomPointAroundCircle( newtask.position.x, newtask.position.y, newtask.position.z, 500 )
+							if ( gSMactive == "1" ) then
+								SkillMgr.DoActionTmr = wt_global_information.Now 
+								SkillMgr.DoAction()	
+							end
 							newtask.last_execution = wt_global_information.Now
 						end
 					else
@@ -1416,7 +1452,7 @@ function wt_core_taskmanager:addEventTask( ID, event, prio )
 						local Elist = ( CharacterList( "nearest,attackable,alive,incombat,noCritter,onmesh,maxdistance=2500" ) )
 						if ( TableSize( Elist ) > 0 ) then
 							nextTarget, E  = next( Elist )
-							if ( nextTarget ~= nil and E ~= nil ) then
+							if ( nextTarget ~= nil and E ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil) then
 								newtask.waiting = false
 								if (E.distance > 500) then
 									local Epos = E.pos
@@ -1461,16 +1497,25 @@ function wt_core_taskmanager:addEventTask( ID, event, prio )
 							if ( myevent.distance > 3000 ) then	
 								Player:MoveToRandomPointAroundCircle(  newtask.position.x, newtask.position.y, newtask.position.z, 750 )
 							else
-								TargetList = ( CharacterList( "nearest,attackable,alive,maxdistance=2500,onmesh") )
+								TargetList = ( CharacterList( "attackable,nearest,alive,maxdistance=2500,onmesh") )
 								if ( TargetList ~= nil ) then 	
-									nextTarget, E  = next( TargetList )
-									if ( nextTarget ~= nil ) then
+									local nextTarget, E  = next( TargetList )									
+									if ( nextTarget ~= nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil) then
 										wt_core_state_combat.setTarget( nextTarget )
-										wt_core_controller.requestStateChange( wt_core_state_combat )
+										wt_core_controller.requestStateChange( wt_core_state_combat )																
 									else
+										TargetList = GadgetList( "attackable,alive,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar )
+										if ( TargetList ~= nil ) then 	
+											local nextTarget, E  = next( TargetList )
+											if ( nextTarget ~= nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil) then
+												wt_core_state_gcombat.setTarget( nextTarget )
+												wt_core_controller.requestStateChange( wt_core_state_gcombat )
+												return
+											end
+										end
 										newtask.needPause = true
-										newtask.pausestartingTime = wt_global_information.Now
-									end
+										newtask.pausestartingTime = wt_global_information.Now										
+									end								
 								else
 									newtask.needPause = true
 									newtask.pausestartingTime = wt_global_information.Now
@@ -1574,6 +1619,10 @@ function wt_core_taskmanager:addQuarzBasketTask( marker , prio)
 				end	
 				if ( (wt_global_information.Now - newtask.last_execution) > newtask.throttle ) then
 					Player:MoveTo( newtask.position.x, newtask.position.y, newtask.position.z, 75 )
+					if ( gSMactive == "1" ) then
+						SkillMgr.DoActionTmr = wt_global_information.Now 
+						SkillMgr.DoAction()	
+					end
 					newtask.last_execution = wt_global_information.Now
 				end
 			else

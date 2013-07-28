@@ -167,6 +167,9 @@ function wt_core_state_gathering:initialize()
 
 	local ke_movetogatherable = wt_kelement:create( "MoveToGatherable", c_movetogatherable, e_movetogatherable, 25 )
 	wt_core_state_gathering:add( ke_movetogatherable )
+	
+	local ke_skillstuckcheck = wt_kelement:create( "UnStuckSkill", c_skillstuckcheck, e_skillstuckcheck, 10 )
+	wt_core_state_gathering:add( ke_skillstuckcheck )	
 
 	local ke_gather = wt_kelement:create( "Gathering", c_gather, e_gather, 5 )
 	wt_core_state_gathering:add( ke_gather )
