@@ -434,7 +434,7 @@ function wt_core_taskmanager:addKillTask( ID, character, Prio )
 	newtask.UID = "KILL"..tostring(ID)
 	newtask.timestamp = wt_global_information.Now
 	newtask.lifetime = 20000
-	newtask.name = "Attacking "..tostring(character.name)
+	newtask.name = "Attacking "..character.name
 	newtask.priority = tonumber(Prio)
 	newtask.position = character.pos
 	newtask.done = false
@@ -1649,6 +1649,46 @@ function wt_core_taskmanager:addQuarzBasketTask( marker , prio)
 	end	
 	wt_core_taskmanager:addCustomtask( newtask )
 end
+
+-- Kill Contested Trial Bag Carrier P:6000
+function wt_core_taskmanager:addContestedTrialKillTask( event )	
+	local newtask = inheritsFrom( wt_task )
+	newtask.UID = "KILLBAG"..tostring(event.agentID)
+	newtask.timestamp = wt_global_information.Now
+	newtask.lifetime = 20000
+	newtask.name = "Attacking Bag Carrier"
+	newtask.priority = 6000
+	newtask.position = event.pos
+	newtask.done = false
+	newtask.ID = event.agentID			
+	function newtask:execute()
+		if ( newtask.ID ~= nil and newtask.ID ~= 0 ) then
+			local ntarget = CharacterList:Get(tonumber(newtask.ID))
+			if ( ntarget ~= nil and ntarget.alive and ntarget.distance < wt_global_information.AttackRange and (ntarget.attitude == 1 or ntarget.attitude == 2 )) then
+				if (tonumber(newtask.ID) ~= nil) then
+					wt_core_state_combat.setTarget( tonumber(newtask.ID) )
+					wt_core_controller.requestStateChange( wt_core_state_combat )
+					return
+				end				
+				newtask.done = true
+			else
+				newtask.done = true
+			end	
+		else
+			newtask.done = true
+		end	
+	end
+			
+	function newtask:isFinished()
+		if ( newtask.done ) then 
+			return true
+		end
+		return false
+	end
+	
+	wt_core_taskmanager:addCustomtask( newtask )
+end
+
 
 
 -- Pause task stops the bot for random tick count with EmergencyTask priority

@@ -13,6 +13,12 @@ function tb.ModuleInit()
 	if (Settings.GW2MINION.WvW_Speed == nil) then
 		Settings.GW2MINION.WvW_Speed = "0"
 	end
+	if (Settings.GW2MINION.WvW_NoClip == nil) then
+		Settings.GW2MINION.WvW_NoClip = "0"
+	end
+	if (Settings.GW2MINION.WvW_Gravity == nil) then
+		Settings.GW2MINION.WvW_Gravity = "0"
+	end
 	
 	GUI_NewWindow("ToolBox", 450, 100, 200, 300)	
 	GUI_NewButton("ToolBox","UnpackAllBags","TB.unpack", "Utility")
@@ -20,7 +26,10 @@ function tb.ModuleInit()
 	GUI_NewButton("ToolBox","SupplyRun","TB.supplyRun","Utility")
 
 	GUI_NewCheckbox("ToolBox","AutoLoot WvW Bags","WvW_Loot","WvWvW")
-	GUI_NewCheckbox("ToolBox","+33%Speed","WvW_Speed","WvWvW")
+	GUI_NewComboBox("ToolBox","Speed","WvW_Speed","WvWvW","0,+25,+33")	
+	GUI_NewCheckbox("ToolBox","NoClip","WvW_NoClip","WvWvW")
+	GUI_NewCheckbox("ToolBox","NoGravity","WvW_Gravity","WvWvW")
+	
 	
 	GUI_NewButton("ToolBox","devmonitor","TB.eventmon","DevTools")
 	GUI_NewButton("ToolBox","Minions,(Re)load Mesh","TB.reload","DevTools")
@@ -47,9 +56,9 @@ function tb.ModuleInit()
 	GUI_WindowVisible("ToolBox",false)
 	tb_itemname = ""
 	tb_target = ""
-
-	WvW_Loot = Settings.GW2MINION.WvW_Loot
 	
+	WvW_Speed = Settings.GW2MINION.WvW_Speed
+	WvW_Loot = Settings.GW2MINION.WvW_Loot
 end
 
 function tb.ToggleMenu()
@@ -76,13 +85,31 @@ function tb.OnUpdate( event, tickcount )
 		if ( WvW_Loot == "1" ) then
 			tb.CheckForWvWLoot()
 		end
-		if ( WvW_Speed == "1") then
-			tb.CheckWvWSpeed()
-		end
+		
+		tb.CheckWvWSpeed()			
 	end
 end
 
-
+function tb.GUIVarUpdate(Event, NewVals, OldVals)
+	for k,v in pairs(NewVals) do	
+		if ( k == "WvW_NoClip") then			
+			if ( v == "1" ) then
+				Player:NoClip(true)
+			else
+				Player:NoClip(false)
+			end
+        end
+		if ( k == "WvW_Gravity") then			
+			if ( v == "1" ) then
+				Player:SetGravity(50)
+			else
+				Player:SetGravity(1000)
+			end
+        end
+		
+	end
+	GUI_RefreshWindow(mm.mainwindow.name)
+end
 
 function tb.UnpackBags()
 	if (wt_core_taskmanager.current_task == nil) then
@@ -331,9 +358,17 @@ function tb.CheckWvWSpeed()
 	-- ic = 210
 	-- ic + 33% = 279
 	if ( Player.inCombat ) then		
-		Player:SetSpeed(279)
+		if ( WvW_Speed == "+25") then
+			Player:SetSpeed(262.5)
+		elseif ( WvW_Speed == "+33") then
+			Player:SetSpeed(279.3)
+		end
 	else 		
-		Player:SetSpeed(391)
+		if ( WvW_Speed == "+25") then
+			Player:SetSpeed(367.5)
+		elseif ( WvW_Speed == "+33") then
+			Player:SetSpeed(391)
+		end
 	end
 end
 
@@ -454,3 +489,4 @@ RegisterEventHandler("TB.moveTo", tb.MoveTo)
 RegisterEventHandler("TB.teleport", tb.Teleport)
 RegisterEventHandler("Gameloop.Update",tb.OnUpdate)
 RegisterEventHandler("Module.Initalize",tb.ModuleInit)
+RegisterEventHandler("GUI.Update",tb.GUIVarUpdate)

@@ -114,14 +114,14 @@ c_quicklootchest = inheritsFrom( wt_cause )
 e_quicklootchest = inheritsFrom( wt_effect )
 function c_quicklootchest:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then
-		c_lootchest.EList = GadgetList("nearest,maxdistance=100,onmesh") --old contentID=198260
-		if ( TableSize( c_lootchest.EList ) > 0 ) then			
-			local index, LT = next( c_lootchest.EList )
+		c_quicklootchest.EList = GadgetList("nearest,maxdistance=100,onmesh") --old contentID=198260
+		if ( TableSize( c_quicklootchest.EList ) > 0 ) then			
+			local index, LT = next( c_quicklootchest.EList )
 			while ( index ~= nil and LT~=nil ) do
-				if ( LT.isselectable == 1 and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 )) then --or LT.contentID == 232193 or LT.contentID == 232194)) then
+				if ( LT.isselectable == 1 and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194 or LT.contentID == 262863 or LT.contentID == 236384)) then				
 					return true
 				end
-				index, LT = next( c_lootchest.EList,index )
+				index, LT = next( c_quicklootchest.EList,index )
 			end
 		end	
 	end
@@ -130,22 +130,23 @@ end
 e_quicklootchest.n_index = nil
 e_quicklootchest.throttle = math.random( 150, 450 )
 function e_quicklootchest:execute()
- 	if ( TableSize( c_lootchest.EList ) > 0 ) then
+ 	if ( TableSize( c_quicklootchest.EList ) > 0 ) then
 		local chest,ID = nil
-		local index, LT = next( c_lootchest.EList )
+		local index, LT = next( c_quicklootchest.EList )
 		while ( index ~= nil and LT~=nil ) do
-			if ( LT.isselectable == 1 and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 )) then --or LT.contentID == 232193 or LT.contentID == 232194)) then
+			if ( LT.isselectable == 1 and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194 or LT.contentID == 262863 or LT.contentID == 236384)) then
 				chest = LT
 				ID = index
 				break
 			end
-			index, LT = next( c_lootchest.EList,index )
+			index, LT = next( c_quicklootchest.EList,index )
 		end
 		
 		if ( chest ~= nil and ID ~= nil ) then	
 			if ( ID == Player:GetInteractableTarget() ) then					
 				wt_debug( "QuickLooting Chest ID:"..tostring(ID))					
-				Player:Use( ID )				
+				Player:Use( ID )
+				Player:PressF()
 			elseif (ID ~= Player:GetInteractableTarget()) then
 				Player:StopMoving()
 				wt_debug( "Targeting Chest" )					
@@ -523,7 +524,8 @@ function c_lootchest:evaluate()
 		if ( TableSize( c_lootchest.EList ) > 0 ) then			
 			local index, LT = next( c_lootchest.EList )
 			while ( index ~= nil and LT~=nil ) do
-				if ( LT.isselectable == 1 and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194 or LT.contentID == 41638 or LT.contentID == 262863)) then
+				if ( LT.isselectable == 1 and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194 or LT.contentID == 262863 or LT.contentID == 236384)) then --or LT.contentID == 41638
+					--d("CHEST: "..tostring(LT.name).." "..tostring(LT.distance).." "..tostring(LT.contentID).." "..tostring(index))
 					return true
 				end
 				index, LT = next( c_lootchest.EList,index )
@@ -532,13 +534,13 @@ function c_lootchest:evaluate()
 	end
 	return false
 end
-e_lootchest.throttle = math.random( 250, 500 )
+e_lootchest.throttle = math.random( 450, 650 )
 function e_lootchest:execute()
 	if ( TableSize( c_lootchest.EList ) > 0 ) then
 		local chest,ID = nil
 		local index, LT = next( c_lootchest.EList )
 		while ( index ~= nil and LT~=nil ) do
-			if ( LT.isselectable == 1 and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194 or LT.contentID == 41638 or LT.contentID == 262863)) then
+			if ( LT.isselectable == 1 and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194 or LT.contentID == 262863 or LT.contentID == 236384)) then --or LT.contentID == 41638 
 				chest = LT
 				ID = index
 				break
@@ -555,6 +557,7 @@ function e_lootchest:execute()
 				if ( Player:GetCurrentlyCastedSpell() == 17 ) then					
 					wt_debug( "Looting Chest ID:"..tostring(ID))					
 					Player:Use( ID )
+					Player:PressF()
 				end
 			elseif (chest.distance < 100 and ID ~= Player:GetInteractableTarget()) then
 				Player:StopMoving()
@@ -617,5 +620,6 @@ function c_skillstuckcheck:evaluate()
 end
 e_skillstuckcheck.throttle = 1000
 function e_skillstuckcheck:execute()
-	Player:CastSpellNoChecks(c_skillstuckcheck.lastskillSlot)
+	--Player:CastSpellNoChecks(c_skillstuckcheck.lastskillSlot)
+	Player:CastSpellNoChecks(5)
 end

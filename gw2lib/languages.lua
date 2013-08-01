@@ -144,6 +144,7 @@ strings =
 
         -- skillmanager.lua
         skillManager                    = "SkillManager",
+		skillEditor                  	= "SkillEditor",
         profile                         = "Profile",
 		sMmode							= "Attack Mode",
 		sMtargetmode					= "Target Mode",
@@ -153,11 +154,13 @@ strings =
         newProfileName                  = "New Profile Name",
         newProfile                      = "New Profile",
         autoetectSkills                 = "Autodetect Skills",
-		refreshSkillList                 = "Clear & Refresh SkillList",
+		refreshSkillList                = "Clear & Refresh SkillList",
         skillEditor                     = "Skill Editor",
         enabled                         = "Enabled",
         priority                        = "Priority",
         los                  		    = "Needs LineOfSight",
+		instacast            		    = "Instant Skill",
+		channeled            		    = "Channel Skill",		
 		cooldown                        = "Cooldown",
         minRange                        = "MinRange",
         maxRange                        = "MaxRange",
@@ -463,20 +466,23 @@ strings =
 
         -- skillmanager.lua
         skillManager                    = "SkillManager",
+		skillEditor                  	= "SkillEditor",
         profile                         = "Profile",
 		sMmode							= "Attack Mode",
 		sMtargetmode					= "Target Mode",
 		refreshProfiles                 = "Refresh Profile List",
 		saveProfile                 	= "Save Current Profile",
         deleteProfile                   = "Delete Current Profile",
-        newProfileName                  = "New Profile Name",
-        newProfile                      = "New Profile",
+        newProfileName                  = "New ProfileName",
+        newProfile                      = "Create New Profile",
         autoetectSkills                 = "Autodetect Skills",
 		refreshSkillList                 = "Clear & Refresh SkillList",
         skillEditor                     = "Skill Editor",
         enabled                         = "Enabled",
         priority                        = "Priority",
         los                  		    = "Needs LineOfSight",
+		instacast            		    = "Instant Skill",
+		channeled            		    = "Channel Skill",	
 		cooldown                        = "Cooldown",
         minRange                        = "MinRange",
         maxRange                        = "MaxRange",
@@ -781,6 +787,7 @@ strings =
 
         -- skillmanager.lua
         skillManager                    = "SkillManager",
+		skillEditor                  	= "SkillEditor",
         profile                         = "Profile",
 		sMmode							= "Attack Mode",
 		sMtargetmode					= "Target Mode",
@@ -795,6 +802,8 @@ strings =
         enabled                         = "Enabled",
         priority                        = "Priority",
         los                  		    = "Needs LineOfSight",
+		instacast            		    = "Instant Skill",
+		channeled            		    = "Channel Skill",	
 		cooldown                        = "Cooldown",
         minRange                        = "MinRange",
         maxRange                        = "MaxRange",
@@ -1099,6 +1108,7 @@ strings =
 
         -- skillmanager.lua
         skillManager                    = "SkillManager",
+		skillEditor                  	= "SkillEditor",
         profile                         = "Profile",
 		sMmode							= "Attack Mode",
 		sMtargetmode					= "Target Mode",
@@ -1113,6 +1123,8 @@ strings =
         enabled                         = "Enabled",
         priority                        = "Priority",
         los                  		    = "Needs LineOfSight",
+		instacast            		    = "Instant Skill",
+		channeled            		    = "Channel Skill",	
 		cooldown                        = "Cooldown",
         minRange                        = "MinRange",
         maxRange                        = "MaxRange",
@@ -1392,8 +1404,8 @@ strings =
 		saveMesh						= "保存网格到文件",
 		buildNAVMesh					= "建一个导航网格",
 		editor							= "编辑",
-        enablePSwitch					= "EnableParanoiaSwitch",
-        pSwitchCount                    = "ParanoiaPlayerCount",
+        enablePSwitch					= "启用四周检测",
+        pSwitchCount                    = "四周人数数量",
 	
 		
 		-- dungeonmanager.lua
@@ -1417,6 +1429,7 @@ strings =
 
         -- skillmanager.lua
         skillManager                    = "技能管理器",
+		skillEditor                  	= "SkillEditor",
         profile                         = "配置文件",
 		sMmode							= "攻击模式",
 		sMtargetmode					= "目标模式",
@@ -1431,6 +1444,8 @@ strings =
         enabled                         = "开启",
         priority                        = "优先权",
         los                  		    = "需要视线",
+		instacast            		    = "Instant Skill",
+		channeled            		    = "Channel Skill",	
 		cooldown                        = "冷却",
         minRange                        = "最小范围",
         maxRange                        = "最大范围",
@@ -1466,9 +1481,9 @@ strings =
 		SwapCD							= "切换当技能2-5在冷却（CD）",
 		SwapRange						= "切换当目标超出范围",
 		PriorizeKit						= "优先套件",
-		PriorizeAttunement				= "Prioritize Attunement",
-		AutoStomp						= "Finish Enemy",
-		AutoRezz						= "Rezz Friendly",
+		PriorizeAttunement				= "元素优先级",
+		AutoStomp						= "复活敌方",
+		AutoRezz						= "复活敌方",
 		Fightstyle						= "战斗风格",
 
 		
@@ -1527,7 +1542,7 @@ strings =
 
         -- warrior.lua
         warriorSettings                 = "战士-设置",
-
+		warrveng                        = "使用 Vengenance",
         -- meshassistant.lua
         maModuleName                    = "网格脚本助手",
         maMarkerInspector               = "标记检查",
@@ -1567,11 +1582,11 @@ strings =
         maQueueElementsPerTickInc       = "每点的队列元素增量",
         maAngleThreshold                = "角度阈值",
         maCellWidth                     = "单元距离",
-        maSingleZThresholdNormal        = "Single Height Threshold Normal",
-        maSingleZThresholdSteep         = "Single Height Threshold Steep",
-        maHeightThresholdHigh           = "High Hight Threshold",
-        maHeightThresholdLow            = "Low Hight Threshold",
-        maPointGridDistance             = "Cloud Point Distance",
+        maSingleZThresholdNormal        = "复活敌方",
+        maSingleZThresholdSteep         = "复活敌方",
+        maHeightThresholdHigh           = "复活敌方",
+        maHeightThresholdLow            = "复活敌方",
+        maPointGridDistance             = "复活敌方",
         maGroupInfo                     = "信息",
         maGroupToolbox                  = "工具箱",
         maGroupInputSettings            = "输入设置",
@@ -1737,6 +1752,7 @@ strings =
 
         -- skillmanager.lua
         skillManager                    = "SkillManager",
+		skillEditor                  	= "SkillEditor",
         profile                         = "Profile",
 		sMmode							= "Attack Mode",
 		sMtargetmode					= "Target Mode",
@@ -1751,6 +1767,8 @@ strings =
         enabled                         = "Enabled",
         priority                        = "Priority",
         los                  		    = "Needs LineOfSight",
+		instacast            		    = "Instant Skill",
+		channeled            		    = "Channel Skill",	
 		cooldown                        = "Cooldown",
         minRange                        = "MinRange",
         maxRange                        = "MaxRange",

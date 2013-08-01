@@ -12,7 +12,7 @@ wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel = 3
 wt_global_information.CurrentMarkerList = nil
 wt_global_information.SelectedMarker = nil
 wt_global_information.AttackRange = 1200
-wt_global_information.MaxLootDistance = 2000 
+wt_global_information.MaxLootDistance = 3000 
 wt_global_information.MaxReviveDistance = 1500 
 wt_global_information.MaxGatherDistance = 4000
 wt_global_information.MaxAggroDistanceFar = 1200
@@ -434,7 +434,7 @@ function wt_global_information.Reset()
 	wt_global_information.CurrentMarkerList = nil
 	wt_global_information.SelectedMarker = nil
 	wt_global_information.AttackRange = 1200
-	wt_global_information.MaxLootDistance = 1200
+	wt_global_information.MaxLootDistance = 4000
 	wt_global_information.lastrun = 0
 	wt_global_information.InventoryFull = 0
 	wt_core_state_combat.CurrentTarget = 0
