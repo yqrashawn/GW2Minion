@@ -200,7 +200,9 @@ function wt_core_taskmanager:Update_Tasks( )
 							if ( nearestbasked == nil or entry.distance < nearestbasked.distance) then
 								nearestbasked = entry
 							end	]]
-						
+						-- Contested Trial guys with bags
+						elseif ( etype == 665 or etype == 664 and entry.onmesh) then
+							wt_core_taskmanager:addContestedTrialKillTask( entry )
 						
 						-- Unfinished Skillchallenges
 						--elseif ( mtype==20 and (etype == 378) and entry.onmesh) then

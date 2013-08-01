@@ -364,13 +364,13 @@ function e_gattack_default:execute()
 			
 			if (s1 ~= nil) then
 				wt_global_information.AttackRange = s1.maxRange
-				if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange or s5.maxRange < 100)) then
+				if (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_5) and s5~=nil and (T.distance < s5.maxRange or s5.maxRange < 100) and not s5.isGroundTargeted) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_5,TID,gadget)
-				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and (T.distance < s4.maxRange or s4.maxRange < 100)) then
+				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_4) and s4~=nil and (T.distance < s4.maxRange or s4.maxRange < 100)and not s5.isGroundTargeted) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_4,TID,gadget)
-				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)) then
+				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_3) and s3~=nil and (T.distance < s3.maxRange or s3.maxRange < 100)and not s5.isGroundTargeted) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_3,TID,gadget)
-				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)) then
+				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_2) and s2~=nil and (T.distance < s2.maxRange or s2.maxRange < 100)and not s5.isGroundTargeted) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_2,TID,gadget)
 				elseif (not Player:IsSpellOnCooldown(GW2.SKILLBARSLOT.Slot_1) and s1~=nil and (T.distance < s1.maxRange or s1.maxRange < 100)) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_1,TID,gadget)

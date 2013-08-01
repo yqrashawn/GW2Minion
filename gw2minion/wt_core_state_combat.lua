@@ -107,8 +107,8 @@ end
 
 --/////////////////////////////////////////////////////
 -- Search for a better target Check
-local c_better_target_search = inheritsFrom( wt_cause )
-local e_better_target_search = inheritsFrom( wt_effect )
+c_better_target_search = inheritsFrom( wt_cause )
+e_better_target_search = inheritsFrom( wt_effect )
 function c_better_target_search:evaluate()
 	if (wt_core_state_combat.searchBetterTarget) then
 		local target = CharacterList:Get(wt_core_state_combat.CurrentTarget)
@@ -249,7 +249,9 @@ function c_combatmove:evaluate()
 			if ( gSMactive and gSMactive == "0" ) then -- update wt_global_information.AttackRange if skillmanager is OFF
 				local s1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
 				if (s1 ~= nil) then
-					wt_global_information.AttackRange = s1.maxRange or 160
+					local newrange = s1.maxRange
+					if ( newrange < 110 ) then newrange = 160 end
+					wt_global_information.AttackRange = newrange
 				end
 			end
 			
