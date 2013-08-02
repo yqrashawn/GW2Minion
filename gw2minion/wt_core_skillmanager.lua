@@ -1453,7 +1453,7 @@ function SkillMgr.SwapWeapon(swaptype)
 			else
 				d("WHOOOPPSS, You have a unknown weapon! Please report back to us what kind of weapon you are using!")
 			end					
-			d("TEST:"..tostring(switch) .. " " ..tostring(sID))
+			--d("TEST:"..tostring(switch) .. " " ..tostring(sID))
 			if ( switch ) then
 				Player:CastSpell(switch)
 				SkillMgr.SwapTmr = SkillMgr.DoActionTmr		
