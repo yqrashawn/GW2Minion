@@ -33,7 +33,7 @@ SkillMgr.EngineerKits = {
 SkillMgr.ElementarAttunements = {
 	["Fire"] = 12,
 	["Water"] = 13,
-	["Ait"] = 14,
+	["Air"] = 14,
 	["Earth"] = 15,
 };
 
@@ -130,7 +130,7 @@ function SkillMgr.ModuleInit()
 		Settings.GW2MINION.gSMSwapA = "1"
 	end
 	if (Settings.GW2MINION.gSMSwapR == nil) then
-		Settings.GW2MINION.gSMSwapR = "1"
+		Settings.GW2MINION.gSMSwapR = "0"
 	end
 	if (Settings.GW2MINION.gSMSwapCD == nil) then
 		Settings.GW2MINION.gSMSwapCD = "1"
@@ -144,6 +144,15 @@ function SkillMgr.ModuleInit()
 	if (Settings.GW2MINION.gSMPrioAtt == nil) then
 		Settings.GW2MINION.gSMPrioAtt = "Fire"
 	end	
+	if (Settings.GW2MINION.gSMPrioAtt2 == nil) then
+		Settings.GW2MINION.gSMPrioAtt2 = "Water"
+	end	
+	if (Settings.GW2MINION.gSMPrioAtt3 == nil) then
+		Settings.GW2MINION.gSMPrioAtt3 = "Air"
+	end	
+	if (Settings.GW2MINION.gSMPrioAtt4 == nil) then
+		Settings.GW2MINION.gSMPrioAtt4 = "Earth"
+	end		
 	if (Settings.GW2MINION.gSMAutoStomp == nil) then
 		Settings.GW2MINION.gSMAutoStomp = "1"
 	end	
@@ -175,7 +184,10 @@ function SkillMgr.ModuleInit()
 		
 		elseif( wt_global_information.Currentprofession.professionID == 6 ) then
 			-- Elementalist
-			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].PriorizeAttunement,"gSMPrioAtt",strings[gCurrentLanguage].AdvancedSettings,"Fire,Water,Air,Earth")
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].PriorizeAttunement1,"gSMPrioAtt",strings[gCurrentLanguage].AdvancedSettings,"None,Fire,Water,Air,Earth")
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].PriorizeAttunement2,"gSMPrioAtt2",strings[gCurrentLanguage].AdvancedSettings,"None,Fire,Water,Air,Earth")
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].PriorizeAttunement3,"gSMPrioAtt3",strings[gCurrentLanguage].AdvancedSettings,"None,Fire,Water,Air,Earth")
+			GUI_NewComboBox(SkillMgr.mainwindow.name,strings[gCurrentLanguage].PriorizeAttunement4,"gSMPrioAtt4",strings[gCurrentLanguage].AdvancedSettings,"None,Fire,Water,Air,Earth")
 		end
 		
 		local SM_Attack_default = wt_kelement:create("Attack(SM)",SkillMgr.c_SMattack_default,SkillMgr.e_SMattack_default, 46 )
@@ -202,6 +214,9 @@ function SkillMgr.ModuleInit()
 	gSMSwapRange = Settings.GW2MINION.gSMSwapRange
 	gSMPrioKit = Settings.GW2MINION.gSMPrioKit
 	gSMPrioAtt = Settings.GW2MINION.gSMPrioAtt
+	gSMPrioAtt2 = Settings.GW2MINION.gSMPrioAtt2
+	gSMPrioAtt3 = Settings.GW2MINION.gSMPrioAtt3
+	gSMPrioAtt4 = Settings.GW2MINION.gSMPrioAtt4
     gSMactive = Settings.GW2MINION.gSMactive
 	gSMAutoStomp = Settings.GW2MINION.gSMAutoStomp
 	gSMAutoRezz = Settings.GW2MINION.gSMAutoRezz
@@ -295,6 +310,7 @@ function SkillMgr.ModuleInit()
 		
 	SkillMgr.SkillSet = {}
 	SkillMgr.UpdateProfiles()	
+	GUI_Delete(SkillMgr.mainwindow.name,"SkillList")
 	SkillMgr.UpdateCurrentProfileData()	
 	GUI_WindowVisible(SkillMgr.editwindow.name,false)
 	SetZoom(3000)
@@ -311,6 +327,9 @@ function SkillMgr.GUIVarUpdate(Event, NewVals, OldVals)
 			 k == "gSMSwapCD" or 
 			 k == "gSMSwapRange" or 
 			 k == "gSMPrioAtt" or
+			 k == "gSMPrioAtt2" or
+			 k == "gSMPrioAtt3" or
+			 k == "gSMPrioAtt4" or
 			 k == "gSMAutoStomp" or
 			 k == "gSMAutoRezz" or
 			 k == "gFightstyle" or			 
@@ -318,9 +337,9 @@ function SkillMgr.GUIVarUpdate(Event, NewVals, OldVals)
 			Settings.GW2MINION[tostring(k)] = v
 		elseif ( k == "gSMprofile" ) then			
 			gSMactive = "0"
-			gSMRecactive = "0"		
-			GUI_Delete(SkillMgr.mainwindow.name,"SkillList")
+			gSMRecactive = "0"				
 			GUI_WindowVisible(SkillMgr.editwindow.name,false)
+			GUI_Delete(SkillMgr.mainwindow.name,"SkillList")
 			SkillMgr.SkillSet = {}
 			SkillMgr.UpdateCurrentProfileData()
 			Settings.GW2MINION.gSMlastprofile = tostring(v)
@@ -602,10 +621,6 @@ function SkillMgr.UpdateCurrentProfileData()
 						SkillMgr.CreateNewSkillEntry(sortedSkillList[i])
 					end
 				end
-				
-				GUI_Delete(SkillMgr.mainwindow.name,"SkillList")
-				SkillMgr.UIRefreshTmr = 0	
-				SkillMgr.UIneedsRefresh = true
 			end
 		else
 			d("Profile is empty..")
@@ -640,8 +655,7 @@ function SkillMgr.EditorButtonHandler(event)
 				i,s = next ( SkillMgr.SkillSet, i)
 			end
 			SkillMgr.SkillSet[SKM_Prio] = nil
-			SkillMgr.UIRefreshTmr = 0	
-			SkillMgr.UIneedsRefresh = true	
+			SkillMgr.RefreshSkillList()	
 			GUI_WindowVisible(SkillMgr.editwindow.name,false)
 		end
 	elseif (event == "SMESkillUPEvent") then		
@@ -654,8 +668,7 @@ function SkillMgr.EditorButtonHandler(event)
 				SkillMgr.SkillSet[SKM_Prio] = tmp
 				SkillMgr.SkillSet[SKM_Prio].prio = SkillMgr.SkillSet[SKM_Prio].prio + 1
 				SKM_Prio = SKM_Prio-1
-				SkillMgr.UIRefreshTmr = 0	
-				SkillMgr.UIneedsRefresh = true							
+				SkillMgr.RefreshSkillList()				
 			end
 		end
 	elseif ( event == "SMESkillDOWNEvent") then			
@@ -668,8 +681,7 @@ function SkillMgr.EditorButtonHandler(event)
 				SkillMgr.SkillSet[SKM_Prio] = tmp
 				SkillMgr.SkillSet[SKM_Prio].prio = SkillMgr.SkillSet[SKM_Prio].prio - 1
 				SKM_Prio = SKM_Prio+1
-				SkillMgr.UIRefreshTmr = 0	
-				SkillMgr.UIneedsRefresh = true							
+				SkillMgr.RefreshSkillList()						
 			end
 		end
 	end
@@ -1060,7 +1072,7 @@ function SkillMgr.DoAction()
 	SkillMgr.cskills = {}
 	local fastcastcount = 0
 	local maxrange = nil
-	for i = 1, 16, 1 do
+	for i = 1, 9, 1 do
 		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
 		if ( skill ~= nil ) then			
 			SkillMgr.cskills[i] = skill
@@ -1105,7 +1117,7 @@ function SkillMgr.DoAction()
 	if ( target and (target.attitude == GW2.ATTITUDE.Friendly or target.attitude == GW2.ATTITUDE.Unattackable)) then		
 		target = nil
 	else
-		if (Player.inCombat)then
+		if (Player.inCombat and wt_core_controller.shouldRun)then
 			SkillMgr.SwapWeaponCheck("Pulse")		
 		end
 	end
@@ -1325,8 +1337,8 @@ function SkillMgr.DoAction()
 										end
 										if ( skill.channel == "1" ) then
 											-- Add a tiny delay so "iscasting" gets true for this spell, not interrupting it on the next pulse
-											SkillMgr.DoActionTmr = SkillMgr.DoActionTmr + 550
-											wt_global_information.lastrun = wt_global_information.lastrun + 500
+											SkillMgr.DoActionTmr = SkillMgr.DoActionTmr + 1000
+											wt_global_information.lastrun = wt_global_information.lastrun + 1000
 											return
 										else										
 											fastcastcount = fastcastcount + 1 
@@ -1352,7 +1364,8 @@ function SkillMgr.DoAction()
 		end
 		
 		-- swap weapons if target but out of range
-		if ( target and target.distance > wt_global_information.AttackRange and target.attitude ~= GW2.ATTITUDE.Friendly) then
+		--if ( target and target.distance > wt_global_information.AttackRange and target.attitude ~= GW2.ATTITUDE.Friendly) then
+		if ( target and target.attitude ~= GW2.ATTITUDE.Friendly) then
 			SkillMgr.SwapWeaponCheck("Range")
 		end
 	else
@@ -1362,7 +1375,7 @@ end
 
 function SkillMgr.CanCast()
 	local currspellslot = Player:GetCurrentlyCastedSpell()	
-	if ( (not Player:IsCasting() or currspellslot == GW2.SKILLBARSLOT.Slot_1 or currspellslot == GW2.SKILLBARSLOT.None) and currspellslot ~= GW2.SKILLBARSLOT.Slot_6 and currspellslot ~= GW2.SKILLBARSLOT.Slot_17 and not SkillMgr.SpellIsCast) then 
+	if ( (not Player:IsCasting() or currspellslot == GW2.SKILLBARSLOT.Slot_1 or currspellslot == GW2.SKILLBARSLOT.None) and currspellslot ~= GW2.SKILLBARSLOT.Slot_6 and currspellslot ~= GW2.SKILLBARSLOT.Slot_16 and not SkillMgr.SpellIsCast) then 
 		return true
 	end	
 	return false
@@ -1371,8 +1384,8 @@ end
 -- This is needed b/c this check is more precise than Player:IsCasting()
 function SkillMgr.IsOtherSpellCurrentlyCast()	
 	for i = 0, 15, 1 do
-		--if ( i ~= 5 and Player:IsSpellCurrentlyCast(i)) then		
-		if ( Player:IsSpellCurrentlyCast(i)) then		
+		if ( i ~= 5 and Player:IsSpellCurrentlyCast(i)) then		
+		--if ( Player:IsSpellCurrentlyCast(i)) then		
 			return true
 		end
 	end
@@ -1412,18 +1425,40 @@ end
 
 function SkillMgr.SwapWeapon(swaptype)	
 	if ( wt_global_information.Currentprofession.professionID == 6 ) then 
-		--Elementalist
-		if ( swaptype == "Pulse" and gSMPrioAtt and tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt)])~= nil and not Player:IsSpellOnCooldown(tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt)]))) then
-			--d("Switching to our prio attunement: "..tostring(gSMPrioAtt))
-			Player:CastSpell(tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt)]))
-			SkillMgr.SwapTmr = SkillMgr.DoActionTmr
-		else
-			local switch = math.random(12,15)			
-			if ( not Player:IsSpellOnCooldown(switch) ) then
-				Player:CastSpell(switch)
-				SkillMgr.SwapTmr = SkillMgr.DoActionTmr
+		--Elementalist		
+		local switch
+		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
+		if ( skill ~= nil ) then
+			local sID = skill.skillID			
+			local currentAttunement
+			if ( sID==5491 or sID==15718 or sID==5508 ) then
+				currentAttunement = 12
+			elseif (sID==5549 or sID==15716 or sID==5693) then
+				currentAttunement = 13
+			elseif (sID==5489 or sID==5518 or sID==5526 ) then
+				currentAttunement = 14
+			elseif (sID==15717 or sID==5519 or sID==5500 ) then
+				currentAttunement = 15
 			end
-		end	
+			if ( currentAttunement ) then
+				if ( tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt)]) and currentAttunement ~= tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt)]) and not Player:IsSpellOnCooldown(tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt)]))) then
+					switch = tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt)])
+				elseif ( tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt2)]) and currentAttunement ~= tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt2)]) and not Player:IsSpellOnCooldown(tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt2)]))) then
+					switch = tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt2)])
+				elseif ( tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt3)]) and currentAttunement ~= tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt3)]) and not Player:IsSpellOnCooldown(tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt3)]))) then
+					switch = tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt3)])
+				elseif ( tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt4)]) and currentAttunement ~= tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt4)]) and not Player:IsSpellOnCooldown(tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt4)]))) then
+					switch = tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt4)])
+				end				
+			else
+				d("WHOOOPPSS, You have a unknown weapon! Please report back to us what kind of weapon you are using!")
+			end					
+			d("TEST:"..tostring(switch) .. " " ..tostring(sID))
+			if ( switch ) then
+				Player:CastSpell(switch)
+				SkillMgr.SwapTmr = SkillMgr.DoActionTmr		
+			end
+		end
 		
 	elseif( wt_global_information.Currentprofession.professionID == 3 ) then 		
 		-- Engineer		
