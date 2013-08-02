@@ -1072,7 +1072,7 @@ function SkillMgr.DoAction()
 	SkillMgr.cskills = {}
 	local fastcastcount = 0
 	local maxrange = nil
-	for i = 1, 9, 1 do
+	for i = 1, 15, 1 do
 		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
 		if ( skill ~= nil ) then			
 			SkillMgr.cskills[i] = skill
@@ -1142,8 +1142,7 @@ function SkillMgr.DoAction()
 						if ( SkillMgr.cskills[skill.slot].slot ~= GW2.SKILLBARSLOT.Slot_1 and Player:IsSpellOnCooldown(SkillMgr.cskills[skill.slot].slot)) then castable = false end
 						-- OUTOFCOMBAT CHECK
 						if ( castable and skill.ooc == "No" and not Player.inCombat) then castable = false end
-						-- TARGETTYPE + LOS + RANGE + MOVEMENT + HEALTH CHECK
-						if ( type(skill.maxRange) == "string" ) then d("WTFFFFFFFFFF : "..tostring(skill.name).." " ..tostring(skill.maxRange)) end
+						-- TARGETTYPE + LOS + RANGE + MOVEMENT + HEALTH CHECK						
 						if ( castable and skill.ttype == "Enemy" 
 							and (not target
 								or (skill.los == "Yes" and not target.los)
@@ -1453,7 +1452,7 @@ function SkillMgr.SwapWeapon(swaptype)
 			else
 				d("WHOOOPPSS, You have a unknown weapon! Please report back to us what kind of weapon you are using!")
 			end					
-			d("TEST:"..tostring(switch) .. " " ..tostring(sID))
+			--d("TEST:"..tostring(switch) .. " " ..tostring(sID))
 			if ( switch ) then
 				Player:CastSpell(switch)
 				SkillMgr.SwapTmr = SkillMgr.DoActionTmr		

@@ -348,7 +348,7 @@ function wt_core_state_minion.aggroGadgetCheck()
 		local GList = ( GadgetList( "attackable,alive,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 		if ( TableSize( GList ) > 0 ) then
 			local id, E  = next( GList )
-			if ( id ~= nil and id ~= 0 and E ~= nil and wt_core_state_gcombat.Blacklist[E.contentID] == nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
+			if ( id ~= nil and id ~= 0 and E ~= nil and wt_core_state_gcombat.Blacklist[E.contentID2] == nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
 				wt_core_taskmanager:addKillGadgetTask( id, E, 3000 )
 				return false
 			end		
