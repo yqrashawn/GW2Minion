@@ -50,6 +50,7 @@ mm.Zones = {
 	[795] = strings[gCurrentLanguage].legacyofthefoefire,
 	[873] = strings[gCurrentLanguage].southsunCove,
 	[894] = strings[gCurrentLanguage].spiritwatch,
+	[929] = "Pavillion",
 }
 
 function mm.ModuleInit() 	

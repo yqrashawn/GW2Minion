@@ -51,7 +51,7 @@ e_quickloot = inheritsFrom( wt_effect )
 function c_quickloot:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then
 		c_quickloot.EList = CharacterList( "nearest,lootable,onmesh,maxdistance=120" )
-		NextIndex, LootTarget = next( c_quickloot.EList )
+		local NextIndex, LootTarget = next( c_quickloot.EList )
 		if ( NextIndex ~= nil ) then
 			if ( NextIndex == Player:GetInteractableTarget() ) then
 				return true
@@ -76,13 +76,14 @@ function e_quickloot:execute()
  	local NextIndex = 0
 	local LootTarget = nil
 	if (c_quickloot.EList ~= nil ) then
-		NextIndex, LootTarget = next( c_quickloot.EList )
+		local NextIndex, LootTarget = next( c_quickloot.EList )
 		if ( NextIndex ~= nil and NextIndex == Player:GetInteractableTarget() ) then
 			if ( e_quickloot.n_index  ~= NextIndex ) then
 				e_quickloot.n_index  = NextIndex
 				wt_debug( "QuickLooting" )
 			end
-			Player:Interact( NextIndex )
+			Player:PressF()
+			--Player:Interact( NextIndex )
 			return
 		else
 			local e = Player:GetInteractableTarget()
@@ -114,7 +115,7 @@ c_quicklootchest = inheritsFrom( wt_cause )
 e_quicklootchest = inheritsFrom( wt_effect )
 function c_quicklootchest:evaluate()
 	if ( ItemList.freeSlotCount > 0 ) then
-		c_quicklootchest.EList = GadgetList("nearest,maxdistance=100,onmesh") --old contentID=198260
+		c_quicklootchest.EList = GadgetList("nearest,maxdistance=120,onmesh") --old contentID=198260
 		if ( TableSize( c_quicklootchest.EList ) > 0 ) then			
 			local index, LT = next( c_quicklootchest.EList )
 			while ( index ~= nil and LT~=nil ) do
@@ -127,8 +128,7 @@ function c_quicklootchest:evaluate()
 	end
 	return false
 end
-e_quicklootchest.n_index = nil
-e_quicklootchest.throttle = math.random( 150, 450 )
+e_quicklootchest.throttle = 500 
 function e_quicklootchest:execute()
  	if ( TableSize( c_quicklootchest.EList ) > 0 ) then
 		local chest,ID = nil
@@ -534,7 +534,7 @@ function c_lootchest:evaluate()
 	end
 	return false
 end
-e_lootchest.throttle = math.random( 450, 650 )
+e_lootchest.throttle = 500
 function e_lootchest:execute()
 	if ( TableSize( c_lootchest.EList ) > 0 ) then
 		local chest,ID = nil
@@ -556,9 +556,9 @@ function e_lootchest:execute()
 				Player:StopMoving()
 				if ( Player:GetCurrentlyCastedSpell() == 17 ) then					
 					wt_debug( "Looting Chest ID:"..tostring(ID))					
-					Player:Use( ID )
-					Player:PressF()
+					Player:Use( ID )					
 				end
+				Player:PressF()
 			elseif (chest.distance < 100 and ID ~= Player:GetInteractableTarget()) then
 				Player:StopMoving()
 				wt_debug( "Targeting Chest" )					
