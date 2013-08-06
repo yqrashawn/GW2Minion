@@ -191,7 +191,7 @@ function wt_core_taskmanager:Update_Tasks( )
 							local mPos = entry.pos
 							if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
 								local lastrun = wt_core_taskmanager.Customtask_history["HeartQuest"..tostring(math.floor(entry.pos.x))] or 0
-								if ((wt_global_information.Now - lastrun) > 650000) then
+								if ((wt_global_information.Now - lastrun) > 1200000) then
 									wt_core_taskmanager:addHeartQuestTask( entry )
 								end
 							end
