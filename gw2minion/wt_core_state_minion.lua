@@ -285,28 +285,52 @@ function wt_core_state_minion:vendorBuyCheck()
 		return false
 	end
 	
-	local buyTools, buyKits = false
+	local buyfTools, buylTools, buymTools, buyKits = false
 	local slotsLeft = ItemList.freeSlotCount
-	if 	(wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > tonumber(gGatheringToolStock)) then
-		buyTools = true
-		slotsLeft = ItemList.freeSlotCount - tonumber(gGatheringToolStock)
+	
+	if 	(wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.ftool))) then
+		local fetool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool)
+		if (fetool == nil) or (fetool.contentID ~= 01) then
+			buyfTools = true
+			slotsLeft = ItemList.freeSlotCount - (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.ftool))
+		end
 	end
+	
+	if 	(wt_core_items:NeedGatheringTools() and slotsLeft > (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.ltool))) then
+		local letool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool)
+		if (letool == nil) or (letool.contentID ~= 01) then
+			buylTools = true
+			slotsLeft = slotsLeft - (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.ltool))
+		end
+	end
+	
+	if 	(wt_core_items:NeedGatheringTools() and slotsLeft > (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.mtool))) then
+		local metool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool)
+		if (metool == nil) or (metool.contentID ~= 248409) then
+			buymTools = true
+			slotsLeft = slotsLeft - (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.mtool))
+		end
+	end
+	
 	if (wt_core_items:NeedSalvageKits() and slotsLeft > tonumber(gSalvageKitStock)) then
 		buyKits = true
 	end
 
-	if (buyTools or buyKits) then
+	if (buyfTools or buylTools or buymTools or buyKits) then
 		local vendor = wt_core_helpers:GetClosestBuyVendor(5000)
 		if (vendor) then
-			if (buyTools) then
-				wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ftool, tonumber(gGatheringToolStock),gGatheringToolQuality,vendor)
-				wt_core_taskmanager:addVendorBuyTask(4751, wt_core_items.ltool, tonumber(gGatheringToolStock),gGatheringToolQuality,vendor)
-				wt_core_taskmanager:addVendorBuyTask(4752, wt_core_items.mtool, tonumber(gGatheringToolStock),gGatheringToolQuality,vendor)
+			if (buyfTools) then
+				wt_core_taskmanager:addVendorBuyTask(4750, wt_core_items.ftool, tonumber(gGatheringToolStock),gGatheringToolQuality, vendor)
+			end
+			if (buylTools) then
+				wt_core_taskmanager:addVendorBuyTask(4751, wt_core_items.ltool, tonumber(gGatheringToolStock),gGatheringToolQuality, vendor)
+			end
+			if (buymTools) then
+				wt_core_taskmanager:addVendorBuyTask(4752, wt_core_items.mtool, tonumber(gGatheringToolStock),gGatheringToolQuality, vendor)
 			end
 			if (buyKits) then
-				wt_core_taskmanager:addVendorBuyTask(4753, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality,vendor)
+				wt_core_taskmanager:addVendorBuyTask(4753, wt_core_items.skit, tonumber(gSalvageKitStock),gSalvageKitQuality, vendor)
 			end
-			wt_core_taskmanager:addVendorTask(4500, vendor)
 			return true
 		elseif ( gMinionEnabled == "1" and MultiBotIsConnected( ) ) then
 			vendor = wt_core_helpers:GetClosestBuyVendor(999999)
