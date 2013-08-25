@@ -1202,7 +1202,7 @@ function SkillMgr.DoAction()
 							end						
 						end
 						--ALLIE AE CHECK
-						if ( castable and (skill.tacount > 1 and skill.tarange > 0)) then
+						if ( castable and (skill.tacount > 0 and skill.tarange > 0)) then
 							if ( not target 
 								or not target.id
 								or ( TableSize(CharacterList("friendly,maxdistance="..skill.tarange..",distanceto="..target.id)) < skill.tacount)) then
