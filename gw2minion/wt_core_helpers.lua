@@ -67,7 +67,7 @@ end
 -- currently only recognizes merchants (coins) and repair merchants (broken red shield)
 function wt_core_helpers:GetClosestSellVendor(maxDistance)
 	local repairMerchant, sellMerchant = nil
-	local list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
+	local list = MapObjectList("worldmarkertype=23,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
 	if (TableSize(list) > 0) then
 		local id, object = next(list)
 		if (id and object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
@@ -75,7 +75,7 @@ function wt_core_helpers:GetClosestSellVendor(maxDistance)
 		end
 	end
 	
-	list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant)
+	list = MapObjectList("worldmarkertype=23,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant)
 	if (TableSize(list) > 0) then
 		local id, object = next(list)
 		if (id and object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
@@ -111,7 +111,7 @@ end
 
 function wt_core_helpers:GetClosestBuyVendor(maxDistance)
 	local buyMerchant = nil
-	local list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
+	local list = MapObjectList("worldmarkertype=23,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.Merchant)
 	if (TableSize(list) > 0) then
 		local id, object = next(list)
 		while (id ~= nil) do
@@ -135,7 +135,7 @@ function wt_core_helpers:GetClosestBuyVendor(maxDistance)
 end
 
 function wt_core_helpers:GetClosestRepairVendor(maxDistance)
-	local list = MapObjectList("worldmarkertype=20,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant)
+	local list = MapObjectList("worldmarkertype=23,onmesh,nearest,type="..GW2.MAPOBJECTTYPE.RepairMerchant)
 	if (TableSize(list) > 0) then
 		local id, object = next(list)
 		if (id and object ~= nil and wt_core_taskmanager.npcBlacklist[object.characterID] == nil) then
@@ -153,7 +153,7 @@ end
 -- everything below here is untested and probably doesn't work properly
 
 function wt_core_helpers:GetClosestEvent(maxDistance)
-	local MMList = MapMarkerList("worldmarkertype=20,maxdistance="..tostring(maxDistance))
+	local MMList = MapMarkerList("worldmarkertype=23,maxdistance="..tostring(maxDistance))
 	local event = nil
 	if ( TableSize( MMList ) > 0 ) then
 		local i, entry = next( MMList )
