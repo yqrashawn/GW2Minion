@@ -163,7 +163,7 @@ function wt_core_taskmanager:Update_Tasks( )
 			end
 			
 			-- MapMarker Tasks
-			local MMList = MapMarkerList( "worldmarkertype=20" )
+			local MMList = MapMarkerList( "worldmarkertype=23" )
 			if ( TableSize( MMList ) > 0 ) then
 				i, entry = next( MMList )
 				local eventIndex, event = nil
