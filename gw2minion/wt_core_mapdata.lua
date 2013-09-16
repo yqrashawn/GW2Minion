@@ -78,7 +78,6 @@
                             [813] = { name = "Ossan Waypoint" },
                             [814] = { name = "Salma Waypoint" },
                             [1278] = { name = "Ministers Waypoint" },
-							[797] = {name = "Crown Pavilion Waypoint" },
                     },
             },
            
