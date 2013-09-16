@@ -1603,7 +1603,7 @@ function wt_core_taskmanager:addQuarzBasketTask( marker , prio)
 			if ( distance > 120 ) then
 				if ( (wt_global_information.Now - newtask.mapchecklast_execution) > newtask.mapmarkerthrottle ) then
 					newtask.mapchecklast_execution = wt_global_information.Now
-					local event = MapMarkerList("worldmarkertype=20,agentID="..newtask.agentID)
+					local event = MapMarkerList("worldmarkertype=23,agentID="..newtask.agentID)
 					if event ~= nil then
 						local i,e = next(event)
 						if not i or not e then

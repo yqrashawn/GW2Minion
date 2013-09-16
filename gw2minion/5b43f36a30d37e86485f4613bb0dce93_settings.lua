@@ -41,7 +41,7 @@ GW2MINION_raw =
 			mapname = "DivinitysReach",
 			meshname = "none",
 			useinswitcher = "0",
-			waypointid = "797",
+			waypointid = "none",
 		},
 		["19"] = 
 		{
@@ -230,7 +230,7 @@ GW2MINION_raw =
 			mapname = "CursedShore",
 			meshname = "CursedShore",
 			useinswitcher = "1",
-			waypointid = "797",
+			waypointid = "801",
 		},
 		["65"] = 
 		{
@@ -364,7 +364,7 @@ GW2MINION_raw =
 	gGuestServer = "None",
 	gIP = "127.0.0.1",
 	gIgnoreMarkerCap = "1",
-	gLeaderID = 4279,
+	gLeaderID = 3760,
 	gMaxItemSellRarity = "3",
 	gMeshMGR = "1",
 	gMinionEnabled = "1",
@@ -392,7 +392,7 @@ GW2MINION_raw =
 	gSMSwapCD = "1",
 	gSMSwapR = "0",
 	gSMSwapRange = "0",
-	gSMactive = "0",
+	gSMactive = "1",
 	gSMlastprofile = "Jorith Necro",
 	gSMmode = "Attack Everything",
 	gSalvageKitQuality = "1",
