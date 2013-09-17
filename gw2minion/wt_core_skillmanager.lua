@@ -1140,8 +1140,11 @@ function SkillMgr.DoAction()
 							
 						-- COOLDOWN CHECK
 						if ( SkillMgr.cskills[skill.slot].slot ~= GW2.SKILLBARSLOT.Slot_1 and Player:IsSpellOnCooldown(SkillMgr.cskills[skill.slot].slot)) then castable = false end
-						-- OUTOFCOMBAT CHECK
-						if ( castable and skill.ooc == "No" and not Player.inCombat) then castable = false end
+						-- USEOUTOFCOMBAT CHECK
+						if ( castable and (
+							(skill.ooc == "No" and not Player.inCombat)
+							or (skill.ooc == "Yes" and Player.inCombat)
+							))then castable = false end
 						-- TARGETTYPE + LOS + RANGE + MOVEMENT + HEALTH CHECK						
 						if ( castable and skill.ttype == "Enemy" 
 							and (not target
@@ -1199,7 +1202,7 @@ function SkillMgr.DoAction()
 							end						
 						end
 						--ALLIE AE CHECK
-						if ( castable and (skill.tacount > 1 and skill.tarange > 0)) then
+						if ( castable and (skill.tacount > 0 and skill.tarange > 0)) then
 							if ( not target 
 								or not target.id
 								or ( TableSize(CharacterList("friendly,maxdistance="..skill.tarange..",distanceto="..target.id)) < skill.tacount)) then
@@ -1228,7 +1231,7 @@ function SkillMgr.DoAction()
 							end					
 						end
 						-- TARGET AE CHECK
-						if ( castable and skill.tecount > 1 and skill.terange > 0) then
+						if ( castable and skill.tecount > 0 and skill.terange > 0) then
 							if ( not target 
 								or not target.id
 								or ( TableSize(CharacterList("alive,attackable,maxdistance="..skill.terange..",distanceto="..target.id)) < skill.tecount)) then
