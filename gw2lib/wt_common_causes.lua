@@ -609,7 +609,7 @@ function c_skillstuckcheck:evaluate()
 		local sk = Player:GetCurrentlyCastedSpell()
 		if ( sk and sk < 16 and sk ~= 5) then
 			if ( sk == c_skillstuckcheck.lastskillSlot ) then
-				d("Skill ist stuck? trying to release skill in slot "..tostring(sk))
+				wt_debug("Skill appears stuck. Trying to release skill.")
 				return true
 			else
 				c_skillstuckcheck.lastskillSlot = sk

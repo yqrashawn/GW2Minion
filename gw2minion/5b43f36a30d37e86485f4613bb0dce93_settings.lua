@@ -172,9 +172,9 @@ GW2MINION_raw =
 		["35"] = 
 		{
 			mapname = "MetricaProvince",
-			meshname = "none",
-			useinswitcher = "0",
-			waypointid = "none",
+			meshname = "MetricaProvince",
+			useinswitcher = "1",
+			waypointid = "66",
 		},
 		["36"] = 
 		{

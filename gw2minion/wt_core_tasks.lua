@@ -490,7 +490,7 @@ function wt_core_taskmanager:addKillGadgetTask( ID, gadget, Prio )
 					MultiBotSend( "7;"..tostring(newtask.ID),"gw2minion" ) -- Set FocusTarget for Minions
 				end
 				wt_core_state_gcombat.setTarget( tonumber(newtask.ID) )
-				wt_debug("GOING TO KILL THAT GADGET")
+				wt_debug("Attacking target: Gadget")
 				wt_core_controller.requestStateChange( wt_core_state_gcombat )
 				return
 			end				
@@ -767,7 +767,7 @@ function wt_core_taskmanager:addRepairTask(priority,vendor)
 							if ( not found ) then
 								wt_core_taskmanager.npcBlacklist[vendor.characterID] = os.time()
 								newtask.done = true
-								wt_debug( "Repair: can't handle repairvendor, please report back to the developers" )
+								wt_error( "Repair: can't handle repairvendor, please report back to the developers" )
 							end
 						end							
 						-- DONE LOL
@@ -901,7 +901,7 @@ function wt_core_taskmanager:addVendorTask(priority, vendor)
 							if ( not found ) then
 								wt_core_taskmanager.npcBlacklist[vendor.characterID] = os.time()
 								newtask.done = true
-								wt_debug( "Vendoring: can't handle vendor, please report back to the developers" )
+								wt_error( "Vendoring: can't handle vendor, please report back to the developers" )
 							end
 							return
 						end
@@ -1205,7 +1205,7 @@ function wt_core_taskmanager:addVendorBuyTask(priority, wt_core_itemType, totalS
 						if ( not found ) then
 							wt_core_taskmanager.npcBlacklist[vendor.characterID] = os.time()
 							newtask.done = true
-							wt_debug( "Vendoring: can't handle vendor, please report back to the developers" )
+							wt_error( "Vendoring: can't handle vendor, please report back to the developers" )
 						end
 						return
 					end

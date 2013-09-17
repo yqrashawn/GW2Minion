@@ -69,7 +69,7 @@ function c_gcombat_over:evaluate()
 	return false
 end
 function e_gcombat_over:execute()
-	wt_debug( "GCombat finished" )
+	wt_debug( "Gadget Combat finished" )
 	wt_core_state_gcombat.CurrentTarget = 0
 	wt_core_state_gcombat.StopCM()
 	Player:ClearTarget()
@@ -183,7 +183,7 @@ function c_gcombatmove:evaluate()
 					wt_core_state_gcombat.LastTargetHP = T.health.percent
 					wt_core_state_gcombat.AttackTmr = wt_global_information.Now
 				elseif ( wt_global_information.Now - wt_core_state_gcombat.AttackTmr > 10000 and T.health.percent == wt_core_state_gcombat.LastTargetHP) then
-					d("Cant attack Target??? Going to ignore it for some time...")
+					wt_debug("Cant attack Target. Going to ignore it for now.")
 					wt_core_state_gcombat.AttackTmr = 0
 					wt_core_state_gcombat.LastTargetHP = 0
 					wt_global_information.TargetBlacklist[wt_core_state_gcombat.CurrentTarget] = wt_global_information.Now
@@ -329,7 +329,7 @@ function c_gcombatmove:evaluate()
 				
 			end	
 		else
-			d("GadgetID is invalid!?")
+			wt_error("GadgetID is invalid.")
 			wt_core_state_gcombat.StopCM()
 		end
 	end

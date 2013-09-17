@@ -99,7 +99,7 @@ end
 
 e_invi_check.throttle = 5000
 function e_invi_check:execute()
-	d("Blacklisting Enemy, he got the Determined boon")
+	wt_debug("Blacklisting Enemy, detected the Determined boon")
 	wt_global_information.TargetBlacklist[wt_core_state_combat.CurrentTarget] = wt_global_information.Now
 end
 
@@ -238,7 +238,7 @@ function c_combatmove:evaluate()
 					wt_core_state_combat.LastTargetHP = T.health.percent
 					wt_core_state_combat.AttackTmr = wt_global_information.Now
 				elseif ( wt_global_information.Now - wt_core_state_combat.AttackTmr > 10000 and T.health.percent == wt_core_state_combat.LastTargetHP) then
-					d("Cant attack Target??? Going to ignore it for some time...")
+					wt_error("Cant attack Target. Going to ignore it for now.")
 					wt_core_state_combat.AttackTmr = 0
 					wt_core_state_combat.LastTargetHP = 0
 					wt_global_information.TargetBlacklist[wt_core_state_combat.CurrentTarget] = wt_global_information.Now

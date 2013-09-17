@@ -446,7 +446,7 @@ function SkillMgr.CreateNewProfile()
 				file:flush()
 				file:close()
 			else
-				wt_debug("Error creating new Profile file..")					
+				wt_error("Error creating new Profile file..")					
 			end
 		end		
 	end
@@ -465,14 +465,14 @@ function SkillMgr.UpdateProfiles()
 			--d("X: "..tostring(profile).." == "..tostring(gSMnewname))
 			profiles = profiles..","..profile
 			if ( Settings.GW2MINION.gSMlastprofile ~= nil and Settings.GW2MINION.gSMlastprofile == profile ) then
-				d("Last Profile found : "..profile)
+				wt_debug("Last Profile found : "..profile)
 				found = profile
 			end
 			i,profile = next ( profilelist,i)
 		end
 		
 	else
-		d("No Skillmanager profiles found")
+		wt_error("No Skillmanager profiles found")
 	end
 	gSMprofile_listitems = profiles
 	gSMprofile = found
@@ -483,7 +483,7 @@ function SkillMgr.SaveProfile()
 	-- Save current Profiledata into the Profile-file 
 	if (gSMprofile ~= nil and gSMprofile ~= "None" and gSMprofile ~= "") then
 	
-		d("Saving Profile Data into File: "..gSMprofile)
+		wt_debug("Saving Profile Data into File: "..gSMprofile)
 		local string2write = "SKM_SMVersion_2=2\n"
 		local skID,skill = next (SkillMgr.SkillSet)
 		while skID and skill do
@@ -524,7 +524,7 @@ function SkillMgr.SaveProfile()
 		
 			skID,skill = next (SkillMgr.SkillSet,skID)
 		end	
-		d(filewrite(SkillMgr.profilepath ..gSMprofile..".lua",string2write))
+		wt_debug(filewrite(SkillMgr.profilepath ..gSMprofile..".lua",string2write))
 	end	
 end
 
@@ -601,7 +601,7 @@ function SkillMgr.UpdateCurrentProfileData()
 							elseif ( key == "TBoonC" )then newskill.tboonc = tonumber(value)	
 						end
 					else
-						d("Error loading inputline: Key: "..(tostring(key)).." value:"..tostring(value))
+						wt_error("Error loading inputline: Key: "..(tostring(key)).." value:"..tostring(value))
 					end				
 					i, line = next (profile,i)
 				end
@@ -623,10 +623,10 @@ function SkillMgr.UpdateCurrentProfileData()
 				end
 			end
 		else
-			d("Profile is empty..")
+			wt_error("Profile is empty..")
 		end		
 	else
-		d("No new SkillProfile selected!")		
+		wt_debug("No new SkillProfile selected!")		
 	end
 end
 
@@ -636,7 +636,7 @@ function SkillMgr.EditorButtonHandler(event)
 	if ( event == "SMDeleteEvent" ) then
 		-- Delete the currently selected Profile - file from the HDD
 		if (gSMprofile ~= nil and gSMprofile ~= "None" and gSMprofile ~= "") then
-			d("Deleting current Profile: "..gSMprofile)
+			wt_debug("Deleting current Profile: "..gSMprofile)
 			os.remove(SkillMgr.profilepath ..gSMprofile..".lua")	
 			SkillMgr.UpdateProfiles()	
 		end		
@@ -1371,7 +1371,7 @@ function SkillMgr.DoAction()
 			SkillMgr.SwapWeaponCheck("Range")
 		end
 	else
-		d("LOL U HAVE NO SKILLPROFILE LOADED GO READ THE MANUAL ;D !")
+		wt_error("LOL U HAVE NO SKILLPROFILE LOADED GO READ THE MANUAL ;D !")
 	end
 end
 
@@ -1453,7 +1453,7 @@ function SkillMgr.SwapWeapon(swaptype)
 					switch = tonumber(SkillMgr.ElementarAttunements[tostring(gSMPrioAtt4)])
 				end				
 			else
-				d("WHOOOPPSS, You have a unknown weapon! Please report back to us what kind of weapon you are using!")
+				wt_error("WHOOOPPSS, You have a unknown weapon! Please report back to us what kind of weapon you are using!")
 			end					
 			--d("TEST:"..tostring(switch) .. " " ..tostring(sID))
 			if ( switch ) then
