@@ -173,14 +173,14 @@ function wt_core_taskmanager:Update_Tasks( )
 					local mtype = entry.markertype
 					
 						-- Locked Waypoints
-						if ( mtype==15 and etype == 36 and entry.onmesh) then
+						if ( (mtype==17 or mtype==15) and etype == 36 and entry.onmesh) then
 							local mPos = entry.pos
 							if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
 								wt_core_taskmanager:addWaypointTask( entry )
 							end
 							
 						-- Point Of Interest
-						elseif( etype == 458 and entry.onmesh) then
+						elseif( (etype == 410 or etype == 458) and entry.onmesh) then
 							local mPos = entry.pos
 							if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
 								wt_core_taskmanager:addPOITask( entry )
