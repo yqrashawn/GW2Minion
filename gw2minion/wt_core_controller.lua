@@ -121,9 +121,9 @@ function wt_core_controller.ToggleRun()
 	wt_core_controller.shouldRun = not wt_core_controller.shouldRun
 	wt_global_information.Reset()
 	if (wt_core_controller.shouldRun) then
-		wt_debug("GW2Minion main bot status: ON"))
+		wt_debug("GW2Minion main bot status: ON")
 	else
-		wt_debug("GW2Minion main bot status: OFF"))
+		wt_debug("GW2Minion main bot status: OFF")
 	end
 end
 
