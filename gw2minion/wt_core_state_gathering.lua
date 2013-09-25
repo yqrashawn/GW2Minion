@@ -57,7 +57,7 @@ function e_movetogatherable:execute()
 		if ( T ~= nil ) then
 			if ( e_gather_d_index ~= wt_core_state_gathering.CurrentTargetID ) then
 				e_gather_d_index = wt_core_state_gathering.CurrentTargetID
-				wt_debug("Gather: moving to gatherable...%u"..T.distance ))
+				wt_debug(string.format("Gather: moving to gatherable...%u", T.distance))
 			end
 			local TPOS = T.pos
 			Player:LeaveCombatState()

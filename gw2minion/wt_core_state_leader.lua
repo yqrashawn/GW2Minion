@@ -350,7 +350,7 @@ function wt_core_state_leader:vendorBuyCheck()
 	
 	if 	(wt_core_items:NeedGatheringTools() and slotsLeft > (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.mtool))) then
 		local metool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool)
-		if (metool == nil) or (metool.contentID ~= 248409) then
+		if (metool == nil) or (metool.contentID ~= 248409) and (metool.contentID ~= 242106) then
 			buymTools = true
 			slotsLeft = slotsLeft - (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.mtool))
 		end

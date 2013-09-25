@@ -172,9 +172,9 @@ GW2MINION_raw =
 		["35"] = 
 		{
 			mapname = "MetricaProvince",
-			meshname = "none",
-			useinswitcher = "0",
-			waypointid = "none",
+			meshname = "MetricaProvince",
+			useinswitcher = "1",
+			waypointid = "66",
 		},
 		["36"] = 
 		{
@@ -323,7 +323,7 @@ GW2MINION_raw =
 	g2DHostile = "1",
 	g2DNeutral = "1",
 	g2DPlayerOnly = "0",
-	g2DRadar = "1",
+	g2DRadar = "0",
 	g2DZoom = "17",
 	g3DFriendly = "0",
 	g3DHostile = "0",
@@ -361,7 +361,7 @@ GW2MINION_raw =
 	gGuestServer = "None",
 	gIP = "127.0.0.1",
 	gIgnoreMarkerCap = "1",
-	gLeaderID = 8102,
+	gLeaderID = 4178,
 	gMaxItemSellRarity = "3",
 	gMeshMGR = "1",
 	gMinionEnabled = "1",
@@ -402,7 +402,7 @@ GW2MINION_raw =
 	gVendor_CraftingMats = "0",
 	gVendor_Trinkets = "1",
 	gVendor_Trophies = "1",
-	gVendor_UpgradeComps = "0",
+	gVendor_UpgradeComps = "1",
 	gVendor_Weapons = "1",
 	gdoEvents = "1",
 	gmaxswitchtime = "3600",
@@ -444,8 +444,11 @@ GW2MINION_raw =
 		[3536] = true,
 		[3548] = true,
 		[3863] = true,
+		[4134] = true,
 		[4165] = true,
 		[4194] = true,
+		[4965] = true,
+		[6253] = true,
 	},
 	version = 1,
 }
