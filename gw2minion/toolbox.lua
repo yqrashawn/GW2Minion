@@ -188,6 +188,58 @@ function tb.UnpackBags()
 					or itemid == 234200 --Small Bag Of Supplies
 					or itemid == 234138 --Small Stolen Supplies Bag
 					or itemid == 235338 --Small Bag Of Skritt Shinies
+					or itemid == 102481 --Light miner's bag
+					or itemid == 234185 --Medium Bag of trinkets
+					or itemid == 234154 --Medium Stolen Supplies Bag
+					or itemid == 319078 --Medium Ritual Bag
+					or itemid == 234826 --Sack of Booty
+					or itemid == 175480 --Miner´s Sack
+					or itemid == 234181 --Sack of Trinkets
+					or itemid == 342335 --Medium Moldy Bag
+					or itemid == 342329 --Moldy Sack
+					or itemid == 190763 --Medium Loot Bag
+					or itemid == 190762 --Loot Sack
+					or itemid == 234216 --Medium Bag of Supplies
+					or itemid == 190348 --Small Loot Bag
+					or itemid == 186113 --Tiny Loot Bag                    
+					or itemid == 190764 --Large Loot Bag
+					or itemid == 190761 --Loot Bag
+					or itemid == 342347 --Large Moldy Bag                                         
+					or itemid == 234177 --Bag of Trinkets
+					or itemid == 342302 --Icy Bag
+					or itemid == 57102 --Hidden Cache
+					or itemid == 346215 --Treat Sack
+					or itemid == 310404 --tiny icy bag
+					or itemid == 310406 --small icy bag
+					or itemid == 57090 --hidden stash
+					or itemid == 234150 --Stolen Supplies Sacks
+					or itemid == 234248 --Bags of Exploratory Materials
+					or itemid == 342308 --Large Icy Bags
+					or itemid == 234757 --Medium Thorned Bags
+					or itemid == 340718 --Hidden Treasure
+					or itemid == 319104 --Pilfered
+					or itemid == 319106 --Purloined
+					or itemid == 342322 --Light Moldy
+					or itemid == 319090 --Supply
+					or itemid == 319088 --Light Supply
+					or itemid == 234142 --Light Stolen Supplies Sacks
+					or itemid == 342365 --Tiny Treats
+					or itemid == 342308
+					or itemid == 175863
+					or itemid == 263423
+					or itemid == 247018
+					or itemid == 234196
+					or itemid == 234816
+					or itemid == 267236
+					or itemid == 267249
+					or itemid == 234228
+					or itemid == 267250
+					or itemid == 267251
+					or itemid == 234146
+					or itemid == 235350
+					or itemid == 267237
+					or itemid == 267243					
+					
 					) then --ADD MORE IDs HERE
 						wt_debug( "Opening Bag..")
 						opened = true
