@@ -334,7 +334,7 @@ function wt_core_state_leader:vendorBuyCheck()
 	
 	if 	(wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.ftool))) then
 		local fetool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool)
-		if (fetool == nil) or (fetool.contentID ~= 217549) then
+		if (fetool == nil) or (fetool.contentID ~= 217549 and fetool.contentID ~= 275764) then
 			buyfTools = true
 			slotsLeft = ItemList.freeSlotCount - (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.ftool))
 		end
