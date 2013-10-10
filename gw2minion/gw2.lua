@@ -33,6 +33,7 @@ wt_global_information.OldLastchatline = ""
 wt_global_information.OldLastwhisperline = ""
 wt_global_information.TargetBlacklist = {}
 wt_global_information.TargetBlacklistTmr = 0
+wt_global_information.TargetIgnorelist = {}
 
 gw2minion = { }
 
