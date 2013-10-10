@@ -264,7 +264,12 @@ function wt_core_state_idle:aggroCheck()
 			local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los,incombat,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
 			if ( TableSize( TList ) > 0 ) then
 				local id, E  = next( TList )
-				if ( id ~= nil and id ~= 0 and E ~= nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
+				if ( id ~= nil and id ~= 0 and E ~= nil and
+				wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil and
+				wt_global_information.TargetIgnorelist ~= nil) then
+					if (wt_global_information.TargetIgnorelist[E.contentID] ~= nil and wt_global_information.TargetIgnorelist[E.contentID] > E.health.percent) then
+						return false
+					end
 					wt_core_taskmanager:addKillTask( id, E, 3000 )
 				return true
 				end		
@@ -274,7 +279,12 @@ function wt_core_state_idle:aggroCheck()
 		local TList = ( CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 		if ( TableSize( TList ) > 0 ) then
 			local id, E  = next( TList )
-			if ( id ~= nil and id ~= 0 and E ~= nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
+			if ( id ~= nil and id ~= 0 and E ~= nil and
+			wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil and
+			wt_global_information.TargetIgnorelist ~= nil) then
+				if (wt_global_information.TargetIgnorelist[E.contentID] ~= nil and wt_global_information.TargetIgnorelist[E.contentID] > E.health.percent) then
+					return false
+				end
 				wt_core_taskmanager:addKillTask( id, E, 2500 )
 			return true
 			end		
@@ -292,7 +302,12 @@ function wt_core_state_idle.aggroGadgetCheck()
 				local GList = ( GadgetList( "attackable,alive,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
 				if ( TableSize( GList ) > 0 ) then
 					local id, E  = next( GList )
-					if ( id ~= nil and id ~= 0 and E ~= nil and wt_core_state_gcombat.Blacklist[E.contentID2] == nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
+					if ( id ~= nil and id ~= 0 and E ~= nil and wt_core_state_gcombat.Blacklist[E.contentID2] == nil and
+					wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil and
+					wt_global_information.TargetIgnorelist ~= nil) then
+						if (wt_global_information.TargetIgnorelist[E.contentID] ~= nil and wt_global_information.TargetIgnorelist[E.contentID] > E.health.percent) then
+							return true
+						end
 						wt_core_taskmanager:addKillGadgetTask( id, E, 3000 )
 					return false
 					end		

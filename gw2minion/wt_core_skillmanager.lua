@@ -442,13 +442,13 @@ function SkillMgr.CreateNewProfile()
 			local file = io.open(SkillMgr.profilepath..gSMnewname..".lua", "w")
 			if file then
 				wt_debug("Creating Profile file..")	
-								
+				
 				file:flush()
 				file:close()
 			else
-				wt_error("Error creating new Profile file..")					
+				wt_error("Error creating new Profile file..")
 			end
-		end		
+		end
 	end
 end
 
@@ -1142,8 +1142,8 @@ function SkillMgr.DoAction()
 						if ( SkillMgr.cskills[skill.slot].slot ~= GW2.SKILLBARSLOT.Slot_1 and Player:IsSpellOnCooldown(SkillMgr.cskills[skill.slot].slot)) then castable = false end
 						-- USEOUTOFCOMBAT CHECK
 						if ( castable and (
-							(skill.ooc == "No" and not Player.inCombat)
-							or (skill.ooc == "Yes" and Player.inCombat)
+							(skill.ooc == "No" and (not Player.inCombat or wt_core_state_combat.CurrentTarget == 0))
+							or (skill.ooc == "Yes" and (Player.inCombat or wt_core_state_combat.CurrentTarget ~= 0))
 							))then castable = false end
 						-- TARGETTYPE + LOS + RANGE + MOVEMENT + HEALTH CHECK						
 						if ( castable and skill.ttype == "Enemy" 
