@@ -334,7 +334,7 @@ function wt_core_state_leader:vendorBuyCheck()
 	
 	if 	(wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.ftool))) then
 		local fetool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool)
-		if (fetool == nil) or (fetool.contentID ~= 217549) then
+		if (fetool == nil) or (fetool.contentID ~= 217549 and fetool.contentID ~= 275764) then
 			buyfTools = true
 			slotsLeft = ItemList.freeSlotCount - (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.ftool))
 		end
@@ -389,30 +389,18 @@ function wt_core_state_leader:aggroCheck()
 		local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los,incombat,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
 		if ( TableSize( TList ) > 0 ) then
 			local id, E  = next( TList )
-			if ( id ~= nil and id ~= 0 and E ~= nil and
-			wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil and
-			wt_global_information.TargetIgnorelist ~= nil) then
-				if (wt_global_information.TargetIgnorelist[E.contentID] ~= nil and wt_global_information.TargetIgnorelist[E.contentID] > E.health.percent) then
-					
-				else
-					wt_core_taskmanager:addKillTask( id, E, 3000 )
-					return true
-				end
+			if ( id ~= nil and id ~= 0 and E ~= nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
+				wt_core_taskmanager:addKillTask( id, E, 3000 )
+			return true
 			end		
 		end	
 		
 		local TList = ( CharacterList( "nearest,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
 		if ( TableSize( TList ) > 0 ) then
 			local id, E  = next( TList )
-			if ( id ~= nil and id ~= 0 and E ~= nil and
-			wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil and
-			wt_global_information.TargetIgnorelist ~= nil) then
-				if (wt_global_information.TargetIgnorelist[E.contentID] ~= nil and wt_global_information.TargetIgnorelist[E.contentID] > E.health.percent) then
-					
-				else
-					wt_core_taskmanager:addKillTask( id, E, 2500 )
-					return true
-				end
+			if ( id ~= nil and id ~= 0 and E ~= nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
+				wt_core_taskmanager:addKillTask( id, E, 2500 )
+			return true
 			end		
 		end	
 	return false
@@ -429,15 +417,9 @@ function wt_core_state_leader.aggroGadgetCheck()
 			local GList = ( GadgetList( "attackable,alive,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
 			if ( TableSize( GList ) > 0 ) then
 				local id, E  = next( GList )
-				if ( id ~= nil and id ~= 0 and E ~= nil and wt_core_state_gcombat.Blacklist[E.contentID2] == nil and
-				wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil and
-				wt_global_information.TargetIgnorelist ~= nil) then
-					if (wt_global_information.TargetIgnorelist[E.contentID] ~= nil and wt_global_information.TargetIgnorelist[E.contentID] > E.health.percent) then
-						
-					else
-						wt_core_taskmanager:addKillGadgetTask( id, E, 3000 )
-						return false
-					end
+				if ( id ~= nil and id ~= 0 and E ~= nil and wt_core_state_gcombat.Blacklist[E.contentID2] == nil and wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[id] == nil) then
+					wt_core_taskmanager:addKillGadgetTask( id, E, 3000 )
+					return false
 				end		
 			end
 		end
