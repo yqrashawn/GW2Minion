@@ -207,7 +207,7 @@ function wt_core_state_idle:vendorBuyCheck()
 	
 	if 	(wt_core_items:NeedGatheringTools() and ItemList.freeSlotCount > (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.ftool))) then
 		local fetool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool)
-		if (fetool == nil) or (fetool.contentID ~= 217549 and fetool.contentID ~= 275764) then
+		if (fetool == nil) or (fetool.contentID ~= 217549) then
 			buyfTools = true
 			slotsLeft = ItemList.freeSlotCount - (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.ftool))
 		end
@@ -223,7 +223,7 @@ function wt_core_state_idle:vendorBuyCheck()
 	
 	if 	(wt_core_items:NeedGatheringTools() and slotsLeft > (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.mtool))) then
 		local metool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool)
-		if (metool == nil) or (metool.contentID ~= 248409 and metool.contentID ~= 242106) then
+		if (metool == nil) or (metool.contentID ~= 248409) and (metool.contentID ~= 242106) then
 			buymTools = true
 			slotsLeft = slotsLeft - (tonumber(gGatheringToolStock) - wt_core_items:GetItemStock(wt_core_items.mtool))
 		end

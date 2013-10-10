@@ -364,7 +364,11 @@ GW2MINION_raw =
 	gGuestServer = "None",
 	gIP = "127.0.0.1",
 	gIgnoreMarkerCap = "1",
+<<<<<<< HEAD
 	gLeaderID = 5676,
+=======
+	gLeaderID = 2842,
+>>>>>>> parent of f2cf4d9... Adde new Unlimited tools ID
 	gMaxItemSellRarity = "3",
 	gMeshMGR = "1",
 	gMinionEnabled = "0",
