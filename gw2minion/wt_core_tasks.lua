@@ -508,7 +508,7 @@ function wt_core_taskmanager:addKillGadgetTask( ID, gadget, Prio )
 	function newtask:execute()				
 		local ntarget = GadgetList:Get(tonumber(newtask.ID))
 		if ( ntarget ~= nil and ntarget.los and ntarget.distance < 4000 and ntarget.alive and (ntarget.attitude == 1 or ntarget.attitude == 2) and ntarget.onmesh ) then
-			if (wt_global_information.TargetIgnorelist ~= nil and (wt_global_information.TargetIgnorelist[ntarget.contentID] == nil or wt_global_information.TargetIgnorelist[ntarget.contentID] > ntarget.health.state)) and
+			if (wt_global_information.TargetIgnorelist ~= nil and (wt_global_information.TargetIgnorelist[ntarget.contentID] == nil or wt_global_information.TargetIgnorelist[ntarget.contentID] > ntarget.health.percent)) and
 			(wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[tonumber(newtask.ID)] == nil) then
 				--wt_debug((newtask.name))
 				if (tonumber(newtask.ID) ~= nil) then
@@ -1481,7 +1481,7 @@ function wt_core_taskmanager:addEventTask( ID, event, prio )
 						if ( TableSize( Elist ) > 0 ) then
 							nextTarget, E  = next( Elist )
 							if ( nextTarget ~= nil and E ~= nil) then
-								if (wt_global_information.TargetIgnorelist ~= nil and (wt_global_information.TargetIgnorelist[E.contentID] == nil or wt_global_information.TargetIgnorelist[E.contentID] > E.health.state)) and
+								if (wt_global_information.TargetIgnorelist ~= nil and (wt_global_information.TargetIgnorelist[E.contentID] == nil or wt_global_information.TargetIgnorelist[E.contentID] > E.health.percent)) and
 								(wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil) then
 									newtask.waiting = false
 									if (E.distance > 500) then
@@ -1530,28 +1530,26 @@ function wt_core_taskmanager:addEventTask( ID, event, prio )
 							else
 								TargetList = ( CharacterList( "attackable,nearest,alive,maxdistance=2500,onmesh") )
 								if ( TargetList ~= nil ) then 	
-									local nextTarget, E  = next( TargetList )									
-									if ( nextTarget ~= nil) then
-										if (wt_global_information.TargetIgnorelist ~= nil and (wt_global_information.TargetIgnorelist[E.contentID] == nil or wt_global_information.TargetIgnorelist[E.contentID] > E.health.state)) and
-										(wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil) then
-											wt_core_state_combat.setTarget( nextTarget )
-											wt_core_controller.requestStateChange( wt_core_state_combat )																
-										else
-											TargetList = GadgetList( "attackable,alive,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar )
-											if ( TargetList ~= nil ) then 	
-												local nextTarget, E  = next( TargetList )
-												if ( nextTarget ~= nil) then
-													if (wt_global_information.TargetIgnorelist ~= nil and (wt_global_information.TargetIgnorelist[E.contentID] == nil or wt_global_information.TargetIgnorelist[E.contentID] > E.health.state)) and
-													(wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil) then
-														wt_core_state_gcombat.setTarget( nextTarget )
-														wt_core_controller.requestStateChange( wt_core_state_gcombat )
-														return
-													end
-												end
+									local nextTarget, E  = next( TargetList )
+									if ( nextTarget ~= nil and E ~= nil) and
+									(wt_global_information.TargetIgnorelist ~= nil and (wt_global_information.TargetIgnorelist[E.contentID] == nil or wt_global_information.TargetIgnorelist[E.contentID] > E.health.percent)) and
+									(wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil) then
+										wt_core_state_combat.setTarget( nextTarget )
+										wt_core_controller.requestStateChange( wt_core_state_combat )
+									else
+										TargetList = GadgetList( "attackable,alive,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar )
+										if ( TargetList ~= nil ) then 	
+											local nextTarget, E  = next( TargetList )
+											if ( nextTarget ~= nil and E ~= nil) and
+											(wt_global_information.TargetIgnorelist ~= nil and (wt_global_information.TargetIgnorelist[E.contentID] == nil or wt_global_information.TargetIgnorelist[E.contentID] > E.health.percent)) and
+											(wt_global_information.TargetBlacklist ~= nil and wt_global_information.TargetBlacklist[nextTarget] == nil) then
+												wt_core_state_gcombat.setTarget( nextTarget )
+												wt_core_controller.requestStateChange( wt_core_state_gcombat )
+												return
 											end
-											newtask.needPause = true
-											newtask.pausestartingTime = wt_global_information.Now										
 										end
+										newtask.needPause = true
+										newtask.pausestartingTime = wt_global_information.Now
 									end
 								else
 									newtask.needPause = true

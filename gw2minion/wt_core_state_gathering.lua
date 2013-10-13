@@ -123,7 +123,9 @@ local e_aggro = inheritsFrom( wt_effect )
 
 function c_aggro:evaluate()
 	c_aggro.TargetList = ( CharacterList( "nearest,los,attackable,alive,noCritter,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceClose ) )
-	if ( TableSize( c_aggro.TargetList ) > 0 ) then
+	local i, v = next(c_aggro.TargetList)
+	if ( i ~= nil and v ~= nil and wt_global_information.TargetIgnorelist ~= nil and
+	(wt_global_information.TargetIgnorelist[v.contentID] == nil or wt_global_information.TargetIgnorelist[v.contentID] > v.health.percent)) then
 		return true
 	end
 	

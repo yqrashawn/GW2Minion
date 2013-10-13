@@ -313,7 +313,6 @@ function SkillMgr.ModuleInit()
 	GUI_Delete(SkillMgr.mainwindow.name,"SkillList")
 	SkillMgr.UpdateCurrentProfileData()	
 	GUI_WindowVisible(SkillMgr.editwindow.name,false)
-	SetZoom(3000)
 end
 
 function SkillMgr.GUIVarUpdate(Event, NewVals, OldVals)
