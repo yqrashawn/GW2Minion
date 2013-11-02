@@ -10,7 +10,7 @@ wt_core_items.contentIDs =
 		[2] = 188002,
 		[3] = 234459,
 		[4] = 226329,
-		[5] = 60920
+		[5] = 60920,
 	},
 	[1] = 
 	{
@@ -148,6 +148,7 @@ function wt_core_items:NeedGatheringTools()
 		local fetool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool)
 		if (fetool == nil) or (fetool.contentID ~= 217549 and fetool.contentID ~= 275764) then
 			local goldCostTable = wt_core_items.goldCost[wt_core_items.ftool]
+			d("SHIT1 "..tostring(goldCostTable))
 			totalCost = totalCost + (tonumber(gGatheringToolStock) * goldCostTable[tonumber(gGatheringToolQuality)])
 		end
 	end
@@ -166,6 +167,7 @@ function wt_core_items:NeedGatheringTools()
 		end
 	end
 	-- use 2*totalcost just to be safe
+	d("totalcost "..tostring(totalCost))
 	return (totalCost ~= 0 and Inventory:GetInventoryMoney() - (2*totalCost) > 0)
 end
 

@@ -55,8 +55,8 @@ wt_core_state_dead.CurrentTarget = 0
 
 ------------------------------------------------------------------------------
 -- Alive again Check
-local cd_check_alive = inheritsFrom( wt_cause )
-local ed_alive = inheritsFrom( wt_effect )
+cd_check_alive = inheritsFrom( wt_cause )
+ed_alive = inheritsFrom( wt_effect )
 
 function cd_check_alive:evaluate()
 	if ( not wt_core_taskmanager.behavior == "default" ) then
@@ -80,8 +80,8 @@ end
 
 ------------------------------------------------------------------------------
 -- Downed Combat Check
-local c_downed_combat = inheritsFrom( wt_cause )
-local e_downed_combat = inheritsFrom( wt_effect )
+c_downed_combat = inheritsFrom( wt_cause )
+e_downed_combat = inheritsFrom( wt_effect )
 
 e_downed_combat.dMaster = true -- Master switch for debug messages
 e_downed_combat.Lslot = nil -- debug index, no reason to print debug message over and over unless you are debugging ite_downed_combat.Lslot = nil
@@ -194,8 +194,8 @@ end
 
 ------------------------------------------------------------------------------
 -- Dead Check
-local cd_dead_check = inheritsFrom( wt_cause )
-local ed_dead = inheritsFrom( wt_effect )
+cd_dead_check = inheritsFrom( wt_cause )
+ed_dead = inheritsFrom( wt_effect )
 
 function cd_dead_check:evaluate()	
 	if ( Player.healthstate == GW2.HEALTHSTATE.Defeated ) then
