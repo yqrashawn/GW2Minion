@@ -146,7 +146,9 @@ function wt_core_items:NeedGatheringTools()
 	local totalCost = 0
 	if (wt_core_items:GetItemStock(wt_core_items.ftool) == 0) then
 		local fetool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool)
-		if (fetool == nil) or (fetool.contentID ~= 217549 and fetool.contentID ~= 275764) then
+		--if (fetool == nil) or (fetool.contentID ~= 217549 and fetool.contentID ~= 275764) then
+		-- made problems, dont know why
+		if (fetool == nil) or (fetool.contentID ~= 217549) then
 			local goldCostTable = wt_core_items.goldCost[wt_core_items.ftool]
 			d("SHIT1 "..tostring(goldCostTable))
 			totalCost = totalCost + (tonumber(gGatheringToolStock) * goldCostTable[tonumber(gGatheringToolQuality)])
@@ -161,7 +163,8 @@ function wt_core_items:NeedGatheringTools()
 	end
 	if (wt_core_items:GetItemStock(wt_core_items.mtool) == 0) then
 		local metool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool)
-		if (metool == nil) or (metool.contentID ~= 248409 and metool.contentID ~= 242106) then
+		--if (metool == nil) or (metool.contentID ~= 248409 and metool.contentID ~= 242106) then
+		if (metool == nil) or (metool.contentID ~= 248409) then
 			local goldCostTable = wt_core_items.goldCost[wt_core_items.mtool]
 			totalCost = totalCost + (tonumber(gGatheringToolStock) * goldCostTable[tonumber(gGatheringToolQuality)])
 		end
