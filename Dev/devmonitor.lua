@@ -1294,6 +1294,7 @@ function Dev.OnUpdateHandler( Event, ticks )
 	end
 end
 
+
 RegisterEventHandler("Module.Initalize",Dev.ModuleInit)
 RegisterEventHandler("Gameloop.Update", Dev.OnUpdateHandler)
 RegisterEventHandler("GUI.Update",Dev.GUIVarUpdate)
