@@ -173,21 +173,21 @@ function wt_core_taskmanager:Update_Tasks( )
 					local mtype = entry.markertype
 					
 						-- Locked Waypoints
-						if ( (mtype==17 or mtype==15) and etype == 36 and entry.onmesh) then
+						if ( (mtype==17 or mtype==15) and etype == 38 and entry.onmesh) then
 							local mPos = entry.pos
 							if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
 								wt_core_taskmanager:addWaypointTask( entry )
 							end
 							
 						-- Point Of Interest
-						elseif( (etype == 410 or etype == 458) and entry.onmesh) then
+						elseif( (etype == 412 or etype == 460) and entry.onmesh) then
 							local mPos = entry.pos
 							if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
 								wt_core_taskmanager:addPOITask( entry )
 							end
 						
 						-- Unfinished HeartQuests
-						elseif ( mtype==8 and (etype == 146 or etype == 143) and entry.onmesh) then
+						elseif ( mtype==8 and (etype == 148 or etype == 145) and entry.onmesh) then
 							local mPos = entry.pos
 							if ( wt_core_taskmanager:checkLevelRange( mPos.x, mPos.y, mPos.z ) ) then
 								local lastrun = wt_core_taskmanager.Customtask_history["HeartQuest"..tostring(math.floor(entry.pos.x))] or 0
@@ -201,8 +201,8 @@ function wt_core_taskmanager:Update_Tasks( )
 								nearestbasked = entry
 							end	]]
 						-- Contested Trial guys with bags
-						elseif ( etype == 665 or etype == 664 and entry.onmesh) then
-							wt_core_taskmanager:addContestedTrialKillTask( entry )
+						--elseif ( etype == 665 or etype == 664 and entry.onmesh) then
+							--wt_core_taskmanager:addContestedTrialKillTask( entry )
 						
 						-- Unfinished Skillchallenges
 						--elseif ( mtype==20 and (etype == 378) and entry.onmesh) then

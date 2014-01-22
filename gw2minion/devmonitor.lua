@@ -37,6 +37,7 @@ function devmonitor.ModuleInit()
 	GUI_NewField("devmonitor","isPlayer","TargetIsPlayer","TargetInfo")
 	GUI_NewField("devmonitor","isControlled","TargetIsControlled","TargetInfo")
 	GUI_NewField("devmonitor","attitude","TargetAttitude","TargetInfo")
+	GUI_NewField("devmonitor","isAggro","TargetAggro","TargetInfo")
 	GUI_NewField("devmonitor","swiming","TargetSwimming","TargetInfo")
 	GUI_NewField("devmonitor","level","TargetLevel","TargetInfo")
 	GUI_NewField("devmonitor","profession","TargetProfession","TargetInfo")
@@ -152,6 +153,7 @@ function devmonitor.UpdateWindow()
 			TargetIsPlayer = tostring(mytarget.isPlayer)
 			TargetIsControlled = tostring(mytarget.isControlled)
 			TargetAttitude = mytarget.attitude
+			TargetAggro = tostring(mytarget.isAggro)
 			TargetSwimming = mytarget.swimming
 			TargetLevel = mytarget.level
 			TargetProfession = mytarget.profession

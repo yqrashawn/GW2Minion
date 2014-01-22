@@ -279,6 +279,17 @@ function wt_core_items:CanVendor()
 		end			
 	end
 	
+	local junk = ItemList("rarity=0,notsoulbound")
+	if ( junk ~= nil) then
+		local id,item = next(junk)
+		if (id ~=nil and item ~= nil) then
+			local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
+			if(blacklistCount == nil or blacklistCount < 3) then
+				return true
+			end
+		end
+	end
+	
 	return false
 end
 
