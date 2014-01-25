@@ -88,6 +88,8 @@ function mc_radar.HandleInit()
     if ( tonumber(gRadarX) ~= nil) then HackManager:SetRadarSettings("gRadarX",tonumber(gRadarX)) end
     if ( tonumber(gRadarY) ~= nil) then HackManager:SetRadarSettings("gRadarY",tonumber(gRadarY)) end
     
+	GUI_NewButton(mc_radar.MainWindow.Name,"Cant See Radar? Press Me","Dev.ChangeMDepth")
+	
     GUI_WindowVisible(mc_radar.MainWindow.Name,false)
 end
 

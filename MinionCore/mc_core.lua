@@ -149,7 +149,7 @@ end
 
 mc_core.RandomSelector = mc_core.inheritsFrom(mc_core.Container)
 function mc_core.RandomSelector:Execute(pTreeWalker)
-   self.children = shuffle(self.children)
+   self.children = mc_core.shuffle(self.children)
    for i,comp in ipairs(self.children) do
       comp:Start()
       while comp:Tick(pTreeWalker) == "Running" do
@@ -286,7 +286,7 @@ function mc_core.RepeatUntil:new(predicate, child, timeout)
     o.timeout = timeout
     return o
 end
-
+-- repeat child() until predicate() true or targettime passed, 
 function mc_core.RepeatUntil:Execute(pTreeWalker)
     local time_start = GetCurrentTime()
     --d("EXEC Wait: "..tostring( time_start ) .. " || "..tostring(GetCurrentTime() ) .." || " ..tostring(self.timeout))
@@ -327,7 +327,7 @@ function mc_core.Sleep(timeout)
     return mc_core.WaitContinue:new(function() return false end, nil, timeout)
 end
 
-local function shuffle(t)
+function mc_core.shuffle(t)
   local n = #t
 
   while n >= 2 do

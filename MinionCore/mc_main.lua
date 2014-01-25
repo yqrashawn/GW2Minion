@@ -16,6 +16,7 @@ function mc_global.moduleinit()
 	GUI_NewButton(mc_global.window.name,mc_getstring("radar"),"Radar.toggle")
 	RegisterEventHandler("mc_global.startStop", mc_global.eventhandler)
 	GUI_NewCheckbox(mc_global.window.name,mc_getstring("botEnabled"),"gBotRunning",mc_getstring("botStatus"));
+	GUI_NewCheckbox(mc_global.window.name,mc_getstring("botMode"),"gBotMode",mc_getstring("botStatus"));
 	GUI_NewNumeric(mc_global.window.name,mc_getstring("pulseTime"),"gPulseTime",mc_getstring("settings"),"10","2000");	
 	GUI_NewButton(mc_global.window.name, mc_getstring("meshManager"), "ToggleMeshmgr")
 	
@@ -24,51 +25,8 @@ function mc_global.moduleinit()
 	
 	GUI_UnFoldGroup(mc_global.window.name,mc_getstring("botStatus") );
 	
-	
-	mc_global.ai_grind = mc_core.TreeWalker:new("MainBot",nil,    
-					mc_core.PrioritySelector:new(	
-							-- we have a target
-							mc_core.Decorator:new( function() return Player:GetTarget() ~= 0 end, mc_global.Attack ),							
-							
-							-- try to get a new target					
-							mc_core.Decorator:new( function() return Player:GetTarget() == 0 end, mc_global.PickNewTarget )
-							-- move on to the next marker/spot
-							
-						)
-				)
-	
-end
 
-function mc_global.PickNewTarget()	
-	local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los,onmesh,maxdistance="..wt_global_information.MaxAggroDistanceFar ) )
-	if ( TableSize( TList ) > 0 ) then
-		local id, E  = next( TList )
-		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("New Target: "..tostring(E.name).." "..tostring(id))
-			return Player:SetTarget(id)			
-		end		
-	end
-	return false
 end
-
-function mc_global.hastarget()
-	d("Hastarget check")
-	
-	return Player:GetTarget() ~= 0
-end
-function mc_global.Attack()
-	d("ATTACK")
-	return false
-end	
-function mc_global.Waiting()
-	d("Wait")
-	return true
-end	
-
-function mc_global.Waitover()
-	d("Wait is overrr")
-	return false
-end	
 
 
 function mc_global.onupdate( event, tickcount )
@@ -123,6 +81,49 @@ function mc_global.togglebot(arg)
 		gBotRunning = "1"
 	end
 end
+
+
+
+
+-- Just some test functions for the BT
+function mc_global.FALSE()
+	return false
+end
+function mc_global.TRUE()
+	return true
+end
+
+function mc_global.PickNewTarget()	
+	local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los" ) )
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil ) then
+			d("New Target: "..tostring(E.name).." "..tostring(id))
+			return Player:SetTarget(id)			
+		end		
+	end
+	return false
+end
+
+function mc_global.Attack()
+	d("ATTACK")
+	return false
+end	
+function mc_global.Waiting()
+	d("Wait")
+	return false
+end	
+
+function mc_global.Waitover()
+	d("Wait is overrr")
+	return false
+end	
+
+function mc_global.Something()
+	d("Doing Something")
+	return true
+end	
+
 
 RegisterEventHandler("Module.Initalize",mc_global.moduleinit)
 RegisterEventHandler("Gameloop.Update",mc_global.onupdate)
