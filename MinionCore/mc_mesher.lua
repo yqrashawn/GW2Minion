@@ -575,7 +575,7 @@ function mm.SaveMesh()
         gnewmeshname = ""
         gmeshname = filename
     else
-        ml_error("Enter a proper Navmesh name!")
+        mc_error("Enter a proper Navmesh name!")
     end
 end
 
@@ -821,23 +821,8 @@ end
 function mm.CreateSingleCell()
 	d("Creating a single cell outside the raster!")
 	local pPos = Player.pos
-	local cwidth = 75/2
-	local newVertex = { x = pPos.x-cwidth , y = pPos.y , z = pPos.z}
-	local newVertex2 = { x = pPos.x , y = pPos.y+cwidth , z = pPos.z}
-	local newVertex3 = { x = pPos.x+cwidth , y = pPos.y , z = pPos.z}
-	local newVertex4 = { x = pPos.x , y = pPos.y-cwidth , z = pPos.z}
-	
-	--adding vertices
-	newVertex = d(MeshManager:AddVertex(newVertex))
-	newVertex2 = d(MeshManager:AddVertex(newVertex2))
-	newVertex3 = d(MeshManager:AddVertex(newVertex3))
-	newVertex4 = d(MeshManager:AddVertex(newVertex4))
-	
-	--defining triangles
-	local tri1 = { a= newVertex, b = newVertex2 , c= newVertex3}
-	local tri2 = { a= newVertex, b = newVertex4 , c= newVertex3}
-	d(MeshManager:AddTriangle( tri1))
-	d(MeshManager:AddTriangle( tri2))
+	local newVertexCenter = { x=pPos.x, y=pPos.y, z=pPos.z }
+	d(MeshManager:CreateSingleCell( newVertexCenter))
 end
 
 

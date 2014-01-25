@@ -425,7 +425,9 @@ function Dev.ModuleInit()
 	GUI_NewButton("Dev","SwitchPet","Dev.SwitchP","PetInfo")
 	RegisterEventHandler("Dev.SwitchP", Dev.Func)
 	
-	-- PlayerInfo	
+	-- PlayerInfo
+	GUI_NewField("Dev","Test1","PIUnk1","PlayerInfo")
+	GUI_NewField("Dev","Test2","PIUnk2","PlayerInfo")
 	GUI_NewField("Dev","Power/Initiative/Clones","PlPower","PlayerInfo")
 	GUI_NewField("Dev","Karma","PlKarma","PlayerInfo")
 	GUI_NewField("Dev","Endurance","PlEndura","PlayerInfo")
@@ -441,7 +443,11 @@ function Dev.ModuleInit()
 	
 		
 	
-	-- Diverse Functions
+	-- Diverse Functions	
+	GUI_NewButton("Dev","Interact/Use","Dev.Interact","Functions")
+	RegisterEventHandler("Dev.Interact", Dev.Func)
+	GUI_NewButton("Dev","Gather","Dev.Gather","Functions")
+	RegisterEventHandler("Dev.Gather", Dev.Func)
 	GUI_NewButton("Dev","LeaveCombatState","Dev.LeaveCmb","Functions")
 	RegisterEventHandler("Dev.LeaveCmb", Dev.Func)	
 	GUI_NewField("Dev","Entered ID","devstringid","Functions")
@@ -570,8 +576,21 @@ function Dev.Func ( arg )
 		d(Player:ClaimReward())
 	elseif ( arg == "Dev.ChangeMDepth") then
 		d(RenderManager:ChangeMeshDepth())
+	elseif ( arg == "Dev.Interact") then		
+		local t = Player:GetTarget()
+		if ( t ) then
+			d(Player:Interact(t.id))
+		else
+			d(Player:Interact())
+		end	
+	elseif ( arg == "Dev.Gather") then		
+		local t = Player:GetTarget()
+		if ( t ) then
+			d(Player:Gather(t.id))
+		else
+			d(Player:Gather())
+		end	
 	end	
-	
 end
 
 
@@ -1265,7 +1284,9 @@ function Dev.UpdateWindow()
 	-- PlayerInfo
 	myplayer = Player
 	if (myplayer ~= nil) then
-		PlPower = Player.power
+		PIUnk1 = tostring(Player.isUnknown1)
+		PIUnk2 = tostring(Player.isUnknown2)
+		PlPower = Player.power		
 		PlKarma = Player.karma
 		PlEndura = Player.endurance
 		TXp = tostring(myplayer.XPTotal)
