@@ -4,24 +4,44 @@ mc_global.path = GetStartupPath()
 mc_global.now = 0
 mc_global.lasttick = 0
 mc_global.running = false
+mc_global.BotModes = {}
 
 function mc_global.moduleinit()
 	
 	if ( Settings.MinionCore.gPulseTime == nil ) then
 		Settings.MinionCore.gPulseTime = "150"
 	end
+	if ( Settings.MinionCore.gBotMode == nil ) then
+        Settings.MinionCore.gBotMode = mc_getstring("grindMode")
+    end
 	
 	GUI_NewWindow(mc_global.window.name,mc_global.window.x,mc_global.window.y,mc_global.window.width,mc_global.window.height)
 	GUI_NewButton(mc_global.window.name,mc_getstring("startStop"),"mc_global.startStop")
 	GUI_NewButton(mc_global.window.name,mc_getstring("radar"),"Radar.toggle")
 	RegisterEventHandler("mc_global.startStop", mc_global.eventhandler)
 	GUI_NewCheckbox(mc_global.window.name,mc_getstring("botEnabled"),"gBotRunning",mc_getstring("botStatus"));
-	GUI_NewCheckbox(mc_global.window.name,mc_getstring("botMode"),"gBotMode",mc_getstring("botStatus"));
+	GUI_NewComboBox(mc_global.window.name,mc_getstring("botMode"),"gBotMode",mc_getstring("botStatus"),"None");
 	GUI_NewNumeric(mc_global.window.name,mc_getstring("pulseTime"),"gPulseTime",mc_getstring("settings"),"10","2000");	
 	GUI_NewButton(mc_global.window.name, mc_getstring("meshManager"), "ToggleMeshmgr")
 	
+	-- setup bot mode
+    local botModes = "None"
+    if ( TableSize(mc_global.BotModes) > 0) then
+        local i,entry = next ( mc_global.BotModes )
+        while i and entry do
+            botModes = botModes..","..i
+            i,entry = next ( mc_global.BotModes,i)
+        end
+    end
+    
+    gBotMode_listitems = botModes    
+    gBotMode = Settings.MinionCore.gBotMode	
+	
 	gBotRunning = "0"
 	gPulseTime = Settings.MinionCore.gPulseTime
+	
+	
+	
 	
 	GUI_UnFoldGroup(mc_global.window.name,mc_getstring("botStatus") );
 	
@@ -36,9 +56,9 @@ function mc_global.onupdate( event, tickcount )
 		if ( tickcount - mc_global.lasttick > tonumber(gPulseTime) ) then
 			mc_global.lasttick = tickcount
 		
-			--d("Pulsing...")
-			mc_global.ai_grind:Tick()
-			 --d("ticknum:"..mc_global.bht.ticknum)
+			if ( mc_global.BotModes[gBotMode] ) then
+				d(mc_global.BotModes[gBotMode]:Tick())
+			end
 		end
 	end
 	
