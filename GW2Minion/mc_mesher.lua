@@ -13,12 +13,12 @@ mm.OMC = 0
 
 function mm.ModuleInit() 	
         
-    if (Settings.MinionCore.gMeshMGR == nil) then
-        Settings.MinionCore.gMeshMGR = "1"
+    if (Settings.GW2Minion.gMeshMGR == nil) then
+        Settings.GW2Minion.gMeshMGR = "1"
     end
 	
-    if (Settings.MinionCore.Maps == nil) then
-        Settings.MinionCore.Maps = {
+    if (Settings.GW2Minion.Maps == nil) then
+        Settings.GW2Minion.Maps = {
 			[15] = mc_getstring("queensdale"),
 			[17] = mc_getstring("harathiHinterlands"),
 			[18] = mc_getstring("divinitysReach"),
@@ -85,8 +85,8 @@ function mm.ModuleInit()
         end
     end
         
-    if (Settings.MinionCore.gnewmeshname == nil) then
-        Settings.MinionCore.gnewmeshname = ""
+    if (Settings.GW2Minion.gnewmeshname == nil) then
+        Settings.GW2Minion.gnewmeshname = ""
     end
     GUI_NewCheckbox(mm.mainwindow.name,mc_getstring("showMesh"),"gShowMesh",mc_getstring("editor"))
     GUI_NewField(mm.mainwindow.name,mc_getstring("newMeshName"),"gnewmeshname",mc_getstring("editor"))
@@ -132,7 +132,7 @@ function mm.ModuleInit()
 
     gmeshname_listitems = meshlist
     gnewmeshname = ""
-    gMeshMGR = Settings.MinionCore.gMeshMGR 
+    gMeshMGR = Settings.GW2Minion.gMeshMGR 
     
     
 	GUI_NewButton(mm.mainwindow.name,"ChangeMeshRenderDepth","Dev.ChangeMDepth")
@@ -244,14 +244,14 @@ function mm.ChangeNavMesh(newmesh)
                 local mapid = Player:GetLocalMapID()
                 if ( mapid ~= nil and mapid~=0 ) then
                     d("Setting default Mesh for this Zone..(ID :"..tostring(mapid).." Meshname: "..newmesh)
-                    Settings.MinionCore.Maps[mapid] = newmesh
+                    Settings.GW2Minion.Maps[mapid] = newmesh
                     mm.mapID = mapid
                 end				
             end
         end
     end
     gmeshname = newmesh
-    Settings.MinionCore.gmeshname = newmesh
+    Settings.GW2Minion.gmeshname = newmesh
     gMeshMGR = "1"
 end
 
@@ -327,14 +327,14 @@ function mm.GUIVarUpdate(Event, NewVals, OldVals)
         elseif( k == "gChangeAreaSize") then
             MeshManager:SetChangeToRadius(tonumber(gChangeAreaSize))
         elseif( k == "gMeshMGR" or k == "gnewmeshname" ) then
-            Settings.MinionCore[tostring(k)] = v    
+            Settings.GW2Minion[tostring(k)] = v    
         end
     end
     GUI_RefreshWindow(mm.mainwindow.name)
 end
 
 function mm.OnUpdate( tickcount )
-    if ( tickcount - mm.lasttick > 500 ) then
+    if ( tickcount - mm.lasttick > 250 ) then
         mm.lasttick = tickcount
         
         if ( gMeshrec == "1") then
@@ -379,11 +379,11 @@ function mm.OnUpdate( tickcount )
         -- Check if we switched maps
         local mapid = Player.localmapid
         if ( not mm.reloadMeshPending and mapid ~= nil and mm.mapID ~= mapid ) then			
-            if (Settings.MinionCore.Maps[mapid] ~= nil) then
-                d("Autoloading Navmesh for this Zone: "..Settings.MinionCore.Maps[mapid])
+            if (Settings.GW2Minion.Maps[mapid] ~= nil) then
+                d("Autoloading Navmesh for this Zone: "..Settings.GW2Minion.Maps[mapid])
                 mm.reloadMeshPending = true
                 mm.reloadMeshTmr = mm.lasttick
-                mm.reloadMeshName = Settings.MinionCore.Maps[mapid]				
+                mm.reloadMeshName = Settings.GW2Minion.Maps[mapid]				
             end
         end
     end

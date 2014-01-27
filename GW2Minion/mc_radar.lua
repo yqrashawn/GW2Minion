@@ -12,41 +12,41 @@ end
 function mc_radar.HandleInit()	
     GUI_SetStatusBar("Initalizing GW2 Radar...")
         
-    if ( Settings.MinionCore.gRadar == nil ) then
-        Settings.MinionCore.gRadar = "0"
+    if ( Settings.GW2Minion.gRadar == nil ) then
+        Settings.GW2Minion.gRadar = "0"
     end		
-    if ( Settings.MinionCore.g2dRadar == nil ) then
-        Settings.MinionCore.g2dRadar = "0"
+    if ( Settings.GW2Minion.g2dRadar == nil ) then
+        Settings.GW2Minion.g2dRadar = "0"
     end	
-    if ( Settings.MinionCore.g3dRadar == nil ) then
-        Settings.MinionCore.g3dRadar = "0"
+    if ( Settings.GW2Minion.g3dRadar == nil ) then
+        Settings.GW2Minion.g3dRadar = "0"
     end	
-    if ( Settings.MinionCore.g2dRadarFullScreen == nil ) then
-        Settings.MinionCore.g2dRadarFullScreen = "0"
+    if ( Settings.GW2Minion.g2dRadarFullScreen == nil ) then
+        Settings.GW2Minion.g2dRadarFullScreen = "0"
     end	
-    if ( Settings.MinionCore.gRadarShowNode == nil ) then
-        Settings.MinionCore.gRadarShowNode = "0"
+    if ( Settings.GW2Minion.gRadarShowNode == nil ) then
+        Settings.GW2Minion.gRadarShowNode = "0"
     end		
-    if ( Settings.MinionCore.gRadarShowPlayers == nil ) then
-        Settings.MinionCore.gRadarShowPlayers = "0"
+    if ( Settings.GW2Minion.gRadarShowPlayers == nil ) then
+        Settings.GW2Minion.gRadarShowPlayers = "0"
     end	
-    if ( Settings.MinionCore.gRadarShowBattleNPCs == nil ) then
-        Settings.MinionCore.gRadarShowBattleNPCs = "0"
+    if ( Settings.GW2Minion.gRadarShowBattleNPCs == nil ) then
+        Settings.GW2Minion.gRadarShowBattleNPCs = "0"
     end	
-    if ( Settings.MinionCore.gRadarShowEventNPCs == nil ) then
-        Settings.MinionCore.gRadarShowEventNPCs = "0"
+    if ( Settings.GW2Minion.gRadarShowEventNPCs == nil ) then
+        Settings.GW2Minion.gRadarShowEventNPCs = "0"
     end	
-    if ( Settings.MinionCore.gRadarShowEventObjs == nil ) then
-        Settings.MinionCore.gRadarShowEventObjs = "0"
+    if ( Settings.GW2Minion.gRadarShowEventObjs == nil ) then
+        Settings.GW2Minion.gRadarShowEventObjs = "0"
     end
-	if ( Settings.MinionCore.gRadarZoom == nil ) then
-        Settings.MinionCore.gRadarZoom = "10"
+	if ( Settings.GW2Minion.gRadarZoom == nil ) then
+        Settings.GW2Minion.gRadarZoom = "10"
     end	
-    if ( Settings.MinionCore.gRadarX == nil ) then
-        Settings.MinionCore.gRadarX = 5
+    if ( Settings.GW2Minion.gRadarX == nil ) then
+        Settings.GW2Minion.gRadarX = 5
     end		
-    if ( Settings.MinionCore.gRadarY == nil ) then
-        Settings.MinionCore.gRadarY = 5
+    if ( Settings.GW2Minion.gRadarY == nil ) then
+        Settings.GW2Minion.gRadarY = 5
     end	
     
     GUI_NewWindow(mc_radar.MainWindow.Name,mc_radar.MainWindow.x,mc_radar.MainWindow.y,mc_radar.MainWindow.width,mc_radar.MainWindow.height)	
@@ -62,18 +62,18 @@ function mc_radar.HandleInit()
     GUI_NewNumeric(mc_radar.MainWindow.Name,mc_getstring("xPos"),"gRadarX","RadarSettings" );
     GUI_NewNumeric(mc_radar.MainWindow.Name,mc_getstring("yPos"),"gRadarY","RadarSettings" );
     
-    gRadar = Settings.MinionCore.gRadar
-    g2dRadar = Settings.MinionCore.g2dRadar
-    g3dRadar = Settings.MinionCore.g3dRadar
-    g2dRadarFullScreen = Settings.MinionCore.g2dRadarFullScreen
-	gRadarZoom = Settings.MinionCore.gRadarZoom
-    gRadarShowNode = Settings.MinionCore.gRadarShowNode
-    gRadarShowPlayers = Settings.MinionCore.gRadarShowPlayers
-    gRadarShowBattleNPCs = Settings.MinionCore.gRadarShowBattleNPCs
-    gRadarShowEventNPCs = Settings.MinionCore.gRadarShowEventNPCs
-    gRadarShowEventObjs = Settings.MinionCore.gRadarShowEventObjs
-    gRadarX = Settings.MinionCore.gRadarX
-    gRadarY = Settings.MinionCore.gRadarY
+    gRadar = Settings.GW2Minion.gRadar
+    g2dRadar = Settings.GW2Minion.g2dRadar
+    g3dRadar = Settings.GW2Minion.g3dRadar
+    g2dRadarFullScreen = Settings.GW2Minion.g2dRadarFullScreen
+	gRadarZoom = Settings.GW2Minion.gRadarZoom
+    gRadarShowNode = Settings.GW2Minion.gRadarShowNode
+    gRadarShowPlayers = Settings.GW2Minion.gRadarShowPlayers
+    gRadarShowBattleNPCs = Settings.GW2Minion.gRadarShowBattleNPCs
+    gRadarShowEventNPCs = Settings.GW2Minion.gRadarShowEventNPCs
+    gRadarShowEventObjs = Settings.GW2Minion.gRadarShowEventObjs
+    gRadarX = Settings.GW2Minion.gRadarX
+    gRadarY = Settings.GW2Minion.gRadarY
     
     if ( gRadar == "0") then HackManager:SetRadarSettings("gRadar",false) else HackManager:SetRadarSettings("gRadar",true) end
     if ( g2dRadar == "0") then HackManager:SetRadarSettings("g2dRadar",false) else HackManager:SetRadarSettings("g2dRadar",true) end
@@ -106,7 +106,7 @@ function mc_radar.GUIVarUpdate(Event, NewVals, OldVals)
             k == "gRadarShowEventObjs" or			
             k == "gRadarShowAetherytes")
         then
-            Settings.MinionCore[tostring(k)] = v
+            Settings.GW2Minion[tostring(k)] = v
             if ( v == "0") then
                 HackManager:SetRadarSettings(k,false)
             else
@@ -114,15 +114,15 @@ function mc_radar.GUIVarUpdate(Event, NewVals, OldVals)
             end
         end
         if ( k == "gRadarX" and tonumber(v) ~= nil) then
-            Settings.MinionCore[tostring(k)] = v*10
+            Settings.GW2Minion[tostring(k)] = v*10
             HackManager:SetRadarSettings(k,tonumber(v*10))
         end
         if ( k == "gRadarY" and tonumber(v) ~= nil) then
-            Settings.MinionCore[tostring(k)] = v*10
+            Settings.GW2Minion[tostring(k)] = v*10
             HackManager:SetRadarSettings(k,tonumber(v*10))
         end
 		if ( k == "gRadarZoom" and tonumber(v) ~= nil) then
-            Settings.MinionCore[tostring(k)] = v
+            Settings.GW2Minion[tostring(k)] = v
             HackManager:SetRadarSettings(k,tonumber(v))
         end
 		
@@ -134,8 +134,10 @@ function mc_radar.ToggleMenu()
     if (mc_radar.visible) then
         GUI_WindowVisible(mc_radar.MainWindow.Name,false)	
         mc_radar.visible = false
-    else		 
-        GUI_WindowVisible(mc_radar.MainWindow.Name,true)	
+    else
+		local wnd = GUI_GetWindowInfo("MinionBot")	
+        GUI_MoveWindow( mc_radar.MainWindow.Name, wnd.x,wnd.y+wnd.height)
+		GUI_WindowVisible(mc_radar.MainWindow.Name,true)	
         mc_radar.visible = true
     end
 end

@@ -105,6 +105,19 @@ function Dev.ModuleInit()
 	GUI_NewField("Dev","IsUnknown12","GTIsUnknown12","GadgetInfo")
 	GUI_NewField("Dev","IsUnknown13","GTIsUnknown13","GadgetInfo")
 	
+	-- Buffinfo
+	GUI_NewComboBox("Dev","BuffSource","bufftarg","BuffInfo","Player,Target");
+	GUI_NewNumeric("Dev","ListEntry","buffSlot","BuffInfo","0","999");
+	GUI_NewField("Dev","Ptr","BPtr","BuffInfo")
+	GUI_NewField("Dev","Name","BIName","BuffInfo")
+	GUI_NewField("Dev","BuffID","BIID","BuffInfo")
+	GUI_NewField("Dev","ContentID","BICID","BuffInfo")	
+	GUI_NewField("Dev","Stacks","BIStack","BuffInfo")
+	GUI_NewField("Dev","Flags","BIFlag","BuffInfo")	
+	bufftarg = "Player"
+	buffSlot = 0	
+	
+	
 	-- Inventory
 	GUI_NewComboBox("Dev","Inventory/Equipped","iSource","InventoryInfo","Inventory,Equipped");
 	GUI_NewNumeric("Dev","ItemSlot","invSlot","InventoryInfo","0","999");
@@ -307,7 +320,6 @@ function Dev.ModuleInit()
 	tb_min = 0
 	tb_max = 500
 	GUI_NewButton("Dev","Teleport","Dev.teleport","NavigationSystem")
-	RegisterEventHandler("Dev.teleport", Dev.Move)	
 	tb_nPoints = 0
 	Nmovetype = "Straight"
 	Nnavitype = "Normal"
@@ -444,6 +456,8 @@ function Dev.ModuleInit()
 		
 	
 	-- Diverse Functions	
+	GUI_NewButton("Dev","AoELoot","Dev.aoeloot","Functions")
+	RegisterEventHandler("Dev.aoeloot", Dev.Func)
 	GUI_NewButton("Dev","Interact/Use","Dev.Interact","Functions")
 	RegisterEventHandler("Dev.Interact", Dev.Func)
 	GUI_NewButton("Dev","Gather","Dev.Gather","Functions")
@@ -547,11 +561,11 @@ function Dev.Func ( arg )
 	elseif ( arg == "Dev.CastSPN") then		
 		d(Player:CastSpellNoChecks(tonumber(SCindex)))
 	elseif ( arg == "Dev.Teleport") then
-		if (tonumber(tb_xPos) >= 0 ) then
+		if (tonumber(tb_xPos) ~= nil ) then
 			d(Player:Teleport(tonumber(tb_xPos),tonumber(tb_yPos),tonumber(tb_zPos)))
 		end		
 	elseif ( arg == "Dev.Resync") then		
-		if (tonumber(tb_xPos) >= 0 ) then
+		if (tonumber(tb_xPos) ~= nil ) then
 			d(Player:Resync())
 		end	
 	elseif ( arg == "Dev.SelConvIndex") then		
@@ -589,7 +603,9 @@ function Dev.Func ( arg )
 			d(Player:Gather(t.id))
 		else
 			d(Player:Gather())
-		end	
+		end
+	elseif ( arg == "Dev.aoeloot") then
+		d(Player:AoELoot())		
 	end	
 end
 
@@ -786,6 +802,48 @@ function Dev.UpdateWindow()
 		TType = "NONE"
 		GTType = "NONE"
 	end	
+	
+	-- Buffinfo	
+	local blist
+	local binfo
+	if ( bufftarg == "Player" ) then
+		blist = Player.buffs
+	else
+		local t = Player:GetTarget()
+		if ( t ) then
+			blist = t.buffs
+		end
+	end	
+	if ( blist ) then
+		local count = 0
+		local i,b = next (blist)
+		while i and b do
+			if ( count == tonumber(buffSlot)) then
+				binfo = b
+				break
+			end
+			count = count + 1
+			i,b = next (blist,i)
+		end		
+	end
+	
+	if (binfo) then
+		BPtr = string.format( "%x",tonumber(binfo.ptr ))
+		BIID = binfo.buffID
+		BICID = binfo.contentID
+		BIName = binfo.name
+		BIStack = binfo.stacks
+		BIFlag = binfo.flags
+	else
+		BPtr = 0
+		BIID = 0
+		BICID = 0
+		BIName = 0
+		BIStack = 0
+		BIFlag =0
+	end
+	
+	
 	
 	-- Inventory		
 	local myinv = Inventory("")
@@ -1284,8 +1342,8 @@ function Dev.UpdateWindow()
 	-- PlayerInfo
 	myplayer = Player
 	if (myplayer ~= nil) then
-		PIUnk1 = tostring(Player.isUnknown1)
-		PIUnk2 = tostring(Player.isUnknown2)
+		PIUnk1 = 0
+		PIUnk2 = 0
 		PlPower = Player.power		
 		PlKarma = Player.karma
 		PlEndura = Player.endurance

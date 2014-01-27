@@ -7,6 +7,16 @@ if not mc_core then
   mc_core={}
 end
 
+function mc_core.FALSE()
+	return false
+end
+function mc_core.TRUE()
+	return true
+end
+function mc_core.RUNNING()
+	return "Running"
+end
+
 function mc_core.inheritsFrom( baseClass )
     local new_class = {}
     local class_mt = { __index = new_class }

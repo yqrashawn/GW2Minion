@@ -21,7 +21,7 @@ function mc_debug( OutString )
 end
 
 function mc_error( text )
-	GUI_WindowMinimized("GW2Console",false)
-	GUI_WindowVisible("GW2Console", true)
 	mc_debug( "**ERROR**: " .. tostring( text ) )
+	GUI_WindowMinimized("GW2Console",false)
+	GUI_WindowVisible("GW2Console", true)	
 end

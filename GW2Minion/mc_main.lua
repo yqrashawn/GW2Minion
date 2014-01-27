@@ -6,13 +6,14 @@ mc_global.lasttick = 0
 mc_global.running = false
 mc_global.BotModes = {}
 
+
 function mc_global.moduleinit()
 	
-	if ( Settings.MinionCore.gPulseTime == nil ) then
-		Settings.MinionCore.gPulseTime = "150"
+	if ( Settings.GW2Minion.gPulseTime == nil ) then
+		Settings.GW2Minion.gPulseTime = "150"
 	end
-	if ( Settings.MinionCore.gBotMode == nil ) then
-        Settings.MinionCore.gBotMode = mc_getstring("grindMode")
+	if ( Settings.GW2Minion.gBotMode == nil ) then
+        Settings.GW2Minion.gBotMode = mc_getstring("grindMode")
     end
 	
 	GUI_NewWindow(mc_global.window.name,mc_global.window.x,mc_global.window.y,mc_global.window.width,mc_global.window.height)
@@ -22,6 +23,7 @@ function mc_global.moduleinit()
 	GUI_NewCheckbox(mc_global.window.name,mc_getstring("botEnabled"),"gBotRunning",mc_getstring("botStatus"));
 	GUI_NewComboBox(mc_global.window.name,mc_getstring("botMode"),"gBotMode",mc_getstring("botStatus"),"None");
 	GUI_NewNumeric(mc_global.window.name,mc_getstring("pulseTime"),"gPulseTime",mc_getstring("settings"),"10","2000");	
+	GUI_NewButton(mc_global.window.name, mc_getstring("skillManager"), "SkillManager.toggle")
 	GUI_NewButton(mc_global.window.name, mc_getstring("meshManager"), "ToggleMeshmgr")
 	
 	-- setup bot mode
@@ -35,10 +37,10 @@ function mc_global.moduleinit()
     end
     
     gBotMode_listitems = botModes    
-    gBotMode = Settings.MinionCore.gBotMode	
+    gBotMode = Settings.GW2Minion.gBotMode	
 	
 	gBotRunning = "0"
-	gPulseTime = Settings.MinionCore.gPulseTime
+	gPulseTime = Settings.GW2Minion.gPulseTime
 	
 	
 	
@@ -50,21 +52,28 @@ end
 
 
 function mc_global.onupdate( event, tickcount )
+	mc_global.now = tickcount
 	
-	if ( mc_global.running ) then
-	
+	if ( mc_global.running ) then		
 		if ( tickcount - mc_global.lasttick > tonumber(gPulseTime) ) then
 			mc_global.lasttick = tickcount
-		
+			
+			-- Update global variables
+			mc_global.UpdateGlobals()
+			
+			
+			-- Let the bot tick ;)
 			if ( mc_global.BotModes[gBotMode] ) then
 				d(mc_global.BotModes[gBotMode]:Tick())
 			end
 		end
 	end
 	
-	-- Mesherupdate
-	mm.OnUpdate(tickcount)
+	-- Mesher OnUpdate
+	mm.OnUpdate( tickcount )
 	
+	-- SkillManager OnUpdate
+	mc_skillmanager.OnUpdate( tickcount )
 end
 
 
@@ -83,7 +92,7 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
 		if (k == "gEnableLog" )			
 		then
-			Settings.FFXIVMINION[tostring(k)] = v
+			Settings.GW2Minion[tostring(k)] = v
 		
 		elseif ( k == "gBotRunning" ) then
 			mc_global.togglebot(v)			
@@ -96,6 +105,7 @@ function mc_global.togglebot(arg)
 	if arg == "0" then	
 		mc_global.running = false
 		gBotRunning = "0"
+		Player:StopMovement()
 	else
 		mc_global.running = true
 		gBotRunning = "1"
@@ -103,15 +113,13 @@ function mc_global.togglebot(arg)
 end
 
 
+function mc_global.UpdateGlobals()
+	mc_global.AttackRange = mc_skillmanager.GetAttackRange()
+	
 
+end
 
 -- Just some test functions for the BT
-function mc_global.FALSE()
-	return false
-end
-function mc_global.TRUE()
-	return true
-end
 
 function mc_global.PickNewTarget()	
 	local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los" ) )
