@@ -137,7 +137,7 @@ function mc_skillmanager.ModuleInit()
 	GUI_NewWindow(mc_skillmanager.mainwindow.name,mc_skillmanager.mainwindow.x,mc_skillmanager.mainwindow.y,mc_skillmanager.mainwindow.w,mc_skillmanager.mainwindow.h)
 	GUI_NewComboBox(mc_skillmanager.mainwindow.name,mc_getstring("profile"),"gSMprofile",mc_getstring("generalSettings"),"None")
 		
-	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,mc_getstring("SwapR"),"gSMSwapR",mc_getstring("AdvancedSettings"))
+	--GUI_NewCheckbox(mc_skillmanager.mainwindow.name,mc_getstring("SwapR"),"gSMSwapR",mc_getstring("AdvancedSettings"))
 	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,mc_getstring("SwapCD"),"gSMSwapCD",mc_getstring("AdvancedSettings"))
 	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,mc_getstring("SwapRange"),"gSMSwapRange",mc_getstring("AdvancedSettings"))
 	
@@ -920,6 +920,11 @@ function mc_skillmanager.AttackTarget( TargetID )
 						end						
 					end						
 				end				
+			end
+			
+			-- If we hit this then we were not able to cast anything
+			if ( mc_global.AttackRange < 300 and target.distance > mc_global.AttackRange ) then
+				mc_skillmanager.SwapWeaponCheck("Range")
 			end
 		end
 	end
