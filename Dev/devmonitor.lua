@@ -319,7 +319,7 @@ function Dev.ModuleInit()
 	RegisterEventHandler("Dev.ranPT", Dev.Move)
 	tb_min = 0
 	tb_max = 500
-	GUI_NewButton("Dev","Teleport","Dev.teleport","NavigationSystem")
+	GUI_NewButton("Dev","Teleport","Dev.Teleport","NavigationSystem")
 	tb_nPoints = 0
 	Nmovetype = "Straight"
 	Nnavitype = "Normal"

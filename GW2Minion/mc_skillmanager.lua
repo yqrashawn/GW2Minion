@@ -788,21 +788,22 @@ end
 
 function mc_skillmanager.AttackTarget( TargetID )	
 	local fastcastcount = 0
-	
+	d("CHECK "..tostring(TargetID) )
 	--Valid Target?
 	local target
 	if ( not TargetID or TargetID == 0) then
 		target = Player:GetTarget()
 		if ( target ) then TargetID = target.id end
 	else
+	d("CHECK1")
 		target = CharacterList:Get(TargetID)
 		if ( not target ) then 			 
 			target = GadgetList:Get(TargetID)
 		end		
 	end
-	
+	d("CHECK2")
 	if ( target and TargetID and target.attackable ) then
-		
+		d("CHECK3")
 		local mybuffs = Player.buffs
 		local targetbuffs = target.buffs
 		if ( TableSize(mc_skillmanager.SkillProfile) > 0 and Player:CanCast()) then
@@ -897,7 +898,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 					
 					if ( skill.ttype == "Self" ) then
 						if ( Player:CastSpell(mc_skillmanager.cskills[currentSlot].slot) ) then
-							d("Casting on Self: "..tostring(mc_skillmanager.cskills[currentSlot].name))
+							--d("Casting on Self: "..tostring(mc_skillmanager.cskills[currentSlot].name))
 							if (currentSlot ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.cskills[currentSlot].skillID end
 							return true
 						end
@@ -906,7 +907,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 						if ( mc_skillmanager.cskills[currentSlot].isGroundTargeted ) then											
 							if ( target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving ) then
 									if ( Player:CastSpell(mc_skillmanager.cskills[currentSlot].slot,TargetID) ) then
-									d("Casting AE on Target: "..tostring(mc_skillmanager.cskills[currentSlot].name))
+									--d("Casting AE on Target: "..tostring(mc_skillmanager.cskills[currentSlot].name))
 									if (currentSlot ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.cskills[currentSlot].skillID end
 								end
 							else							
@@ -917,14 +918,14 @@ function mc_skillmanager.AttackTarget( TargetID )
 								tpos.y = tpos.y + tpos.hy * target.distance / 4.5
 								
 								if ( Player:CastSpell(mc_skillmanager.cskills[currentSlot].slot,tpos.x,tpos.y,tpos.z) ) then
-									d("Casting AE on moving Target: "..tostring(mc_skillmanager.cskills[currentSlot].name))
+									--d("Casting AE on moving Target: "..tostring(mc_skillmanager.cskills[currentSlot].name))
 									if (currentSlot ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.cskills[currentSlot].skillID end
 								end
 							end									
 						else
 																	
 							if ( Player:CastSpell(mc_skillmanager.cskills[currentSlot].slot,TargetID) ) then
-								d("Casting on Target: "..tostring(mc_skillmanager.cskills[currentSlot].name))
+								--d("Casting on Target: "..tostring(mc_skillmanager.cskills[currentSlot].name))
 								if (currentSlot ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.cskills[currentSlot].skillID end															
 							end									
 						end

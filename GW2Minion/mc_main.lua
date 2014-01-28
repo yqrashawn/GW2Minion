@@ -1,5 +1,5 @@
 mc_global = { }
-mc_global.window = { name="MinionBot", x=50, y=50, width=200, height=200 }
+mc_global.window = { name="MinionBot", x=50, y=50, width=200, height=250 }
 mc_global.path = GetStartupPath()
 mc_global.now = 0
 mc_global.lasttick = 0
@@ -89,7 +89,9 @@ end
 
 function mc_global.guivarupdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
-		if (k == "gEnableLog" )			
+		if (k == "gEnableLog" or
+			k == "sMmode" or 
+			k == "sMtargetmode" )			
 		then
 			Settings.GW2Minion[tostring(k)] = v
 		

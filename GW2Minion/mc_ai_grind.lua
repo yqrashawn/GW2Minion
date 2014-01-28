@@ -13,7 +13,7 @@ function mc_ai_grind.moduleinit()
 			mc_core.Decorator:new( function() return Player.dead end, mc_ai_death.BT ),
 						
 			-- AoELooting Characters
-			mc_core.Decorator:new( function() return TableSize(CharacterList( "nearest,lootable,onmesh,maxdistance=900" )) > 0 end, function() return Player:AoELoot() end ),
+			mc_core.Decorator:new( function() return TableSize(CharacterList( "nearest,lootable,maxdistance=900" )) > 0 end, function() return Player:AoELoot() end ),
 			
 			-- AoELooting Gadgets/Chests needed?
 			
