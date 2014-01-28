@@ -102,7 +102,6 @@ function mc_ai_combat.KillTarget()
 	end
 	
 	DoCombatMovement()
-	d("KillTarget")
 	
 	return true
 end

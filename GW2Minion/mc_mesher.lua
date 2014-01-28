@@ -1,7 +1,7 @@
 -- Map & Meshmanager
 mm = { }
 mm.navmeshfilepath = GetStartupPath() .. [[\Navigation\]];
-mm.mainwindow = { name = mc_getstring("meshManager"), x = 350, y = 100, w = 250, h = 400}
+mm.mainwindow = { name = mc_getstring("meshManager"), x = 350, y = 100, w = 275, h = 400}
 mm.meshfiles = {}
 mm.visible = false
 mm.lasttick = 0
@@ -12,68 +12,27 @@ mm.reloadMeshName = ""
 mm.OMC = 0
 
 function mm.ModuleInit() 	
-        
-    if (Settings.GW2Minion.gMeshMGR == nil) then
-        Settings.GW2Minion.gMeshMGR = "1"
-    end
-	
-    if (Settings.GW2Minion.Maps == nil) then
-        Settings.GW2Minion.Maps = {
-			[15] = mc_getstring("queensdale"),
-			[17] = mc_getstring("harathiHinterlands"),
-			[18] = mc_getstring("divinitysReach"),
-			[19] = mc_getstring("plainsOfAshford"),
-			[20] = mc_getstring("blazeridgeSteppes"),
-			[21] = mc_getstring("fieldsOfRuin"),
-			[22] = mc_getstring("fireheartRise"),
-			[23] = mc_getstring("kessexHills"),
-			[24] = mc_getstring("gendarranFields"),
-			[25] = mc_getstring("ironMarches"),
-			[26] = mc_getstring("dredgehauntCliffs"),
-			[27] = mc_getstring("lornarsPass"),
-			[28] = mc_getstring("wayfarerFoothills"),
-			[29] = mc_getstring("timberlineFalls"),
-			[30] = mc_getstring("frostgorgeSound"),
-			[31] = mc_getstring("snowdenDrifts"),
-			[32] = mc_getstring("diessaPlateau"),
-			[33] = mc_getstring("ascalonianCatacombsStory"),
-			[34] = mc_getstring("caledonForest"),
-			[35] = mc_getstring("metricaProvince"),
-			[36] = mc_getstring("ascalonianCatacombsExp"),
-			[38] = mc_getstring("eternalBattlegrounds"),
-			[39] = mc_getstring("mountMaelstrom"),
-			[50] = mc_getstring("lionsArch"),
-			[51] = mc_getstring("straightsOfDevastation"),
-			[53] = mc_getstring("sparkflyFen"),
-			[54] = mc_getstring("brisbanWildlands"),
-			[62] = mc_getstring("cursedShore"),
-			[65] = mc_getstring("malchorsLeap"),
-			[66] = mc_getstring("citadelOfFlamesStory"),
-			[69] = mc_getstring("citadelOfFlamesExp"),
-			[73] = mc_getstring("bloodtideCoast"),
-			[91] = mc_getstring("theGrove"),
-			[94] = mc_getstring("borderlands1"),
-			[95] = mc_getstring("borderlands2"),
-			[96] = mc_getstring("borderlands3"),
-			[139] = mc_getstring("rataSum"),
-			[218] = mc_getstring("blackCitadel"),
-			[326] = mc_getstring("hoelbrak"),
-			[795] = mc_getstring("legacyofthefoefire"),
-			[873] = mc_getstring("southsunCove"),
-			[894] = mc_getstring("spiritwatch"),
+
+    if (Settings.GW2Minion.DefaultMaps == nil) then
+        Settings.GW2Minion.DefaultMaps = {			
 			[929] = "Pavillion",
 		}
     end
     
+	if (Settings.GW2Minion.gnewmeshname == nil) then
+        Settings.GW2Minion.gnewmeshname = ""
+    end
+	
     local wnd = GUI_GetWindowInfo("MinionBot")
     GUI_NewWindow(mm.mainwindow.name,wnd.x+wnd.width,wnd.y,mm.mainwindow.w,mm.mainwindow.h)
-    GUI_NewCheckbox(mm.mainwindow.name,mc_getstring("activated"),"gMeshMGR",mc_getstring("generalSettings"))
     GUI_NewComboBox(mm.mainwindow.name,mc_getstring("navmesh"),"gmeshname",mc_getstring("generalSettings"),"")
     GUI_NewCheckbox(mm.mainwindow.name,mc_getstring("showrealMesh"),"gShowRealMesh",mc_getstring("generalSettings"))
     GUI_NewCheckbox(mm.mainwindow.name,mc_getstring("showPath"),"gShowPath",mc_getstring("generalSettings"))
-    --Grab all meshfiles in our Navigation directory
-    local count = 0
+    GUI_UnFoldGroup(mm.mainwindow.name,mc_getstring("generalSettings"))
+	
+	--Grab all meshfiles in our Navigation directory
     local meshlist = "none"
+	local mapid = Player:GetLocalMapID()
     local meshfilelist = dirlist(mm.navmeshfilepath,".*obj")
     if ( TableSize(meshfilelist) > 0) then
         local i,meshname = next ( meshfilelist)
@@ -83,14 +42,12 @@ function mm.ModuleInit()
             meshlist = meshlist..","..meshname
             i,meshname = next ( meshfilelist,i)
         end
-    end
-        
-    if (Settings.GW2Minion.gnewmeshname == nil) then
-        Settings.GW2Minion.gnewmeshname = ""
-    end
+    end        
+
     GUI_NewCheckbox(mm.mainwindow.name,mc_getstring("showMesh"),"gShowMesh",mc_getstring("editor"))
     GUI_NewField(mm.mainwindow.name,mc_getstring("newMeshName"),"gnewmeshname",mc_getstring("editor"))
     GUI_NewButton(mm.mainwindow.name,mc_getstring("newMesh"),"newMeshEvent",mc_getstring("editor"))
+	RegisterEventHandler("newMeshEvent",mm.ClearNavMesh)
     GUI_NewCheckbox(mm.mainwindow.name,mc_getstring("recmesh"),"gMeshrec",mc_getstring("editor"))
     GUI_NewComboBox(mm.mainwindow.name,mc_getstring("recAreaType"),"gRecAreaType",mc_getstring("editor"),"Road,Lowdanger,Highdanger")-- enum 1,2,3
     GUI_NewNumeric(mm.mainwindow.name,mc_getstring("recAreaSize"),"gRecAreaSize",mc_getstring("editor"),"1","500")
@@ -125,26 +82,28 @@ function mm.ModuleInit()
     MeshManager:Record(false)
     
     GUI_NewButton(mm.mainwindow.name,mc_getstring("saveMesh"),"saveMeshEvent",mc_getstring("editor"))
+    RegisterEventHandler("saveMeshEvent",mm.SaveMesh)   
+    	
     
-    
-    RegisterEventHandler("newMeshEvent",mm.ClearNavMesh)	
-    RegisterEventHandler("saveMeshEvent",mm.SaveMesh)
 
     gmeshname_listitems = meshlist
     gnewmeshname = ""
-    gMeshMGR = Settings.GW2Minion.gMeshMGR 
     
     
 	GUI_NewButton(mm.mainwindow.name,"ChangeMeshRenderDepth","Dev.ChangeMDepth")
 	    
     GUI_SizeWindow(mm.mainwindow.name,mm.mainwindow.w,mm.mainwindow.h)
     GUI_WindowVisible(mm.mainwindow.name,false)
+	
+	-- load default mesh if available
+	if ( Settings.GW2Minion.DefaultMaps[tonumber(mapid)] ) then
+		mm.ChangeNavMesh(Settings.GW2Minion.DefaultMaps[tonumber(mapid)])
+	end
 end
 
 ---------
 --Mesh
 ---------
-
 
 function mm.ClearNavMesh()
     -- Unload old Mesh
@@ -152,30 +111,15 @@ function mm.ClearNavMesh()
         d("Unloading ".. NavigationManager:GetNavMeshName() .." NavMesh.")        
     end
 	d("Result: "..tostring(NavigationManager:UnloadNavMesh()))
-    -- Remove Renderdata
-    --RenderManager:RemoveAllObjects()
-    --for key,e in pairs(mm.MarkerRenderList) do	
-     ----   if ( key ~= nil ) then			
-     --       mm.MarkerRenderList[key] = nil
-    --    end
-    --end
-    -- Delete Markers
-    --for tag, list in pairs(mm.MarkerList) do
-    --    mm.MarkerList[tag] = {}
-   -- end
 end
 
 function mm.SaveMesh()
-    d("Saving NavMesh...")
-    --[[gShowRealMesh = "0"
-    NavigationManager:ShowNavMesh(false)
-    gShowPath = "0"
-    NavigationManager:ShowNavPath(false)
-    gShowMesh = "0"
-    MeshManager:ShowTriMesh(false)]]
+    d("Saving NavMesh...")    
     gMeshrec = "0"
+	gMeshChange = "0"
     MeshManager:Record(false)
-            
+    MeshManager:SetChangeAreaMode(false)
+			
     local filename = ""
     -- If a new Meshname is given, create a new file and save it in there
     if ( gnewmeshname ~= nil and gnewmeshname ~= "" ) then
@@ -222,12 +166,7 @@ function mm.ChangeNavMesh(newmesh)
     -- Set the new mesh for the local map	
     if ( NavigationManager:GetNavMeshName() ~= newmesh and NavigationManager:GetNavMeshName() ~= "") then
         d("Unloading current Navmesh: "..tostring(NavigationManager:UnloadNavMesh()))		
-        --RenderManager:RemoveAllObjects()
-        --for key,e in pairs(mm.MarkerRenderList) do	
-        --    if ( key ~= nil ) then
-        --        mm.MarkerRenderList[key] = nil
-       --     end
-        --end
+
         mm.reloadMeshPending = true
         mm.reloadMeshTmr = mm.lasttick
         mm.reloadMeshName = newmesh
@@ -239,12 +178,11 @@ function mm.ChangeNavMesh(newmesh)
             if (not NavigationManager:LoadNavMesh(mm.navmeshfilepath..newmesh)) then
                 d("Error loading Navmesh: "..path)
             else
-                mm.reloadMeshPending = false
-               -- mm.ReadMarkerList(newmesh)				
+                mm.reloadMeshPending = false				
                 local mapid = Player:GetLocalMapID()
                 if ( mapid ~= nil and mapid~=0 ) then
                     d("Setting default Mesh for this Zone..(ID :"..tostring(mapid).." Meshname: "..newmesh)
-                    Settings.GW2Minion.Maps[mapid] = newmesh
+                    Settings.GW2Minion.DefaultMaps[mapid] = newmesh
                     mm.mapID = mapid
                 end				
             end
@@ -252,7 +190,6 @@ function mm.ChangeNavMesh(newmesh)
     end
     gmeshname = newmesh
     Settings.GW2Minion.gmeshname = newmesh
-    gMeshMGR = "1"
 end
 
 
@@ -272,8 +209,7 @@ end
 function mm.GUIVarUpdate(Event, NewVals, OldVals)
     for k,v in pairs(NewVals) do		
         if ( k == "gmeshname") then
-            mm.ChangeNavMesh(v)
-            mm.ReadMarkerList(v)
+            mm.ChangeNavMesh(v)            
         elseif( k == "gShowRealMesh") then
             if (v == "1") then
                 NavigationManager:ShowNavMesh(true)
@@ -326,7 +262,7 @@ function mm.GUIVarUpdate(Event, NewVals, OldVals)
             end
         elseif( k == "gChangeAreaSize") then
             MeshManager:SetChangeToRadius(tonumber(gChangeAreaSize))
-        elseif( k == "gMeshMGR" or k == "gnewmeshname" ) then
+        elseif( k == "gnewmeshname" ) then
             Settings.GW2Minion[tostring(k)] = v    
         end
     end
@@ -379,11 +315,11 @@ function mm.OnUpdate( tickcount )
         -- Check if we switched maps
         local mapid = Player.localmapid
         if ( not mm.reloadMeshPending and mapid ~= nil and mm.mapID ~= mapid ) then			
-            if (Settings.GW2Minion.Maps[mapid] ~= nil) then
-                d("Autoloading Navmesh for this Zone: "..Settings.GW2Minion.Maps[mapid])
+            if (Settings.GW2Minion.DefaultMaps[mapid] ~= nil) then
+                d("Autoloading Navmesh for this Zone: "..Settings.GW2Minion.DefaultMaps[mapid])
                 mm.reloadMeshPending = true
                 mm.reloadMeshTmr = mm.lasttick
-                mm.reloadMeshName = Settings.GW2Minion.Maps[mapid]				
+                mm.reloadMeshName = Settings.GW2Minion.DefaultMaps[mapid]				
             end
         end
     end

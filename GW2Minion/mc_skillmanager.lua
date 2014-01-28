@@ -8,6 +8,10 @@ mc_skillmanager.SkillProfile = {}
 mc_skillmanager.SkillRecordingActive = false
 mc_skillmanager.RecordSkillTmr = 0
 mc_skillmanager.RegisteredButtonEventList = {}
+mc_skillmanager.cskills = {} -- Current List of Skills, gets constantly updated each pulse
+mc_skillmanager.prevSkillID = 0
+mc_skillmanager.SwapTmr = 0 -- General WeaponSwap Timer
+
 
 --Enums
 mc_skillmanager.EngineerKits = {
@@ -104,9 +108,6 @@ function mc_skillmanager.ModuleInit()
 	if (Settings.GW2Minion.gSMprofile == nil) then
 		Settings.GW2Minion.gSMprofile = "None"
 	end
-	if (Settings.GW2Minion.gSMSwapA == nil) then
-		Settings.GW2Minion.gSMSwapA = "1"
-	end
 	if (Settings.GW2Minion.gSMSwapR == nil) then
 		Settings.GW2Minion.gSMSwapR = "0"
 	end
@@ -136,7 +137,6 @@ function mc_skillmanager.ModuleInit()
 	GUI_NewWindow(mc_skillmanager.mainwindow.name,mc_skillmanager.mainwindow.x,mc_skillmanager.mainwindow.y,mc_skillmanager.mainwindow.w,mc_skillmanager.mainwindow.h)
 	GUI_NewComboBox(mc_skillmanager.mainwindow.name,mc_getstring("profile"),"gSMprofile",mc_getstring("generalSettings"),"None")
 		
-	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,mc_getstring("SwapA"),"gSMSwapA",mc_getstring("AdvancedSettings"))
 	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,mc_getstring("SwapR"),"gSMSwapR",mc_getstring("AdvancedSettings"))
 	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,mc_getstring("SwapCD"),"gSMSwapCD",mc_getstring("AdvancedSettings"))
 	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,mc_getstring("SwapRange"),"gSMSwapRange",mc_getstring("AdvancedSettings"))
@@ -163,7 +163,6 @@ function mc_skillmanager.ModuleInit()
 	RegisterEventHandler("SMCreateNewProfile",mc_skillmanager.CreateNewProfile)
 			
 		
-	gSMSwapA = Settings.GW2Minion.gSMSwapA
 	gSMSwapR = Settings.GW2Minion.gSMSwapR
 	gSMSwapCD = Settings.GW2Minion.gSMSwapCD
 	gSMSwapRange = Settings.GW2Minion.gSMSwapRange
@@ -206,8 +205,10 @@ function mc_skillmanager.ModuleInit()
 	GUI_NewField(mc_skillmanager.editwindow.name,mc_getstring("targetHas"),"SKM_TEff1","SkillDetails");	
 	GUI_NewField(mc_skillmanager.editwindow.name,mc_getstring("targetHasNot"),"SKM_TNEff1","SkillDetails");	
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Target has #Conditions >","SKM_TCondC","SkillDetails");
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Player has #Boons >","SKM_PBoonC","SkillDetails");
+	--GUI_NewNumeric(mc_skillmanager.editwindow.name,"Player has #Boons >","SKM_PBoonC","SkillDetails");
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Target has #Boons >","SKM_TBoonC","SkillDetails");
+	GUI_NewField(mc_skillmanager.editwindow.name,mc_getstring("prevSkillID"),"SKM_PrevID","SkillDetails");	
+	
 	
 	GUI_UnFoldGroup(mc_skillmanager.editwindow.name,"SkillDetails")
 	GUI_SizeWindow(mc_skillmanager.editwindow.name,mc_skillmanager.editwindow.w,mc_skillmanager.editwindow.h)
@@ -268,82 +269,80 @@ function mc_skillmanager.UpdateCurrentProfileData()
             if ( tostring(key) == "Profession" and tonumber(id) == Player.profession) then
                 d("Skillprofile Profession matches Playerprofession, loading profile")
 				
+				if ( line ) then                
+					while i and line do
+						local _, key, value = string.match(line, "(%w+)_(%w+)=(.*)")
+						--d("key: "..tostring(key).." value:"..tostring(value))
+						
+						if ( key and value ) then
+							value = string.gsub(value, "\r", "")					
+							if ( key == "END" ) then
+								--d("Adding Skill :"..newskill.name.."Prio:"..tostring(newskill.prio))
+								table.insert(unsortedSkillList,tonumber(newskill.prio),newskill)						
+								newskill = {}
+								elseif ( key == "ID" )then newskill.skillID = tonumber(value)
+								elseif ( key == "NAME" )then newskill.name = value
+								elseif ( key == "ON" )then newskill.used = tostring(value)
+								elseif ( key == "Prio" )then newskill.prio = tonumber(value)
+								elseif ( key == "LOS" )then 
+									if ( tostring(value) == "Yes" ) then newskill.los = "1" 
+									elseif ( tostring(value) == "No" ) then newskill.los = "0" 
+									else	newskill.los = tostring(value)
+									end
+								elseif ( key == "CHAN" )then newskill.channel = tostring(value)	
+								elseif ( key == "MinR" )then newskill.minRange = tonumber(value)
+								elseif ( key == "MaxR" )then newskill.maxRange = tonumber(value)
+								elseif ( key == "TType" )then newskill.ttype = tostring(value)
+								elseif ( key == "OutOfCombat" )then newskill.ooc = tostring(value)
+								elseif ( key == "PHPL" )then newskill.phpl = tonumber(value)
+								elseif ( key == "PHPB" )then newskill.phpb = tonumber(value)
+								elseif ( key == "PPowL" )then newskill.ppowl = tonumber(value)
+								elseif ( key == "PPowB" )then newskill.ppowb = tonumber(value)
+								elseif ( key == "PEff1" )then newskill.peff1 = tostring(value)
+								elseif ( key == "PNEff1" )then newskill.pneff1 = tostring(value)
+								elseif ( key == "PCondC" )then newskill.pcondc = tonumber(value)												
+								elseif ( key == "TMove" )then newskill.tmove = tostring(value)
+								elseif ( key == "THPL" )then newskill.thpl = tonumber(value)
+								elseif ( key == "THPB" )then newskill.thpb = tonumber(value)						
+								elseif ( key == "TECount" )then newskill.tecount = tonumber(value)
+								elseif ( key == "TERange" )then newskill.terange = tonumber(value)
+								elseif ( key == "TACount" )then newskill.tacount = tonumber(value)
+								elseif ( key == "TARange" )then newskill.tarange = tonumber(value)
+								elseif ( key == "TEff1" )then newskill.teff1 = tostring(value)
+								elseif ( key == "TNEff1" )then newskill.tneff1 = tostring(value)						
+								elseif ( key == "TCondC" )then newskill.tcondc = tonumber(value)
+								elseif ( key == "PBoonC" )then newskill.pboonc = tonumber(value)
+								elseif ( key == "TBoonC" )then newskill.tboonc = tonumber(value)
+								elseif ( key == "PrevID" )then newskill.previd = tostring(value)		
+							end
+						else
+							mc_error("Error loading inputline: Key: "..(tostring(key)).." value:"..tostring(value))
+						end				
+						i, line = next (profile,i)
+					end
+				end
 				
-				
+				-- Create UI Fields
+				local sortedSkillList = {}
+				if ( TableSize(unsortedSkillList) > 0 ) then
+					local i,skill = next (unsortedSkillList)
+					while i and skill do
+						sortedSkillList[#sortedSkillList+1] = skill
+						i,skill = next (unsortedSkillList,i)
+					end
+					table.sort(sortedSkillList, function(a,b) return a.prio < b.prio end )	
+					for i = 1,TableSize(sortedSkillList),1 do					
+						if (sortedSkillList[i] ~= nil ) then
+							sortedSkillList[i].prio = i						
+							mc_skillmanager.CreateNewSkillEntry(sortedSkillList[i])
+						end
+					end
+				end			
 				
 			else
 				d("Skillprofile Profession DOES NOT match Playerprofession")
 				d("key: "..tostring(key).." id:"..tostring(id))
-            end
-			
-            if ( line ) then                
-                while i and line do
-                    local _, key, value = string.match(line, "(%w+)_(%w+)=(.*)")
-                   	--d("key: "..tostring(key).." value:"..tostring(value))
-                    
-                    if ( key and value ) then
-						value = string.gsub(value, "\r", "")					
-						if ( key == "END" ) then
-							--d("Adding Skill :"..newskill.name.."Prio:"..tostring(newskill.prio))
-							table.insert(unsortedSkillList,tonumber(newskill.prio),newskill)						
-							newskill = {}
-							elseif ( key == "ID" )then newskill.skillID = tonumber(value)
-							elseif ( key == "NAME" )then newskill.name = value
-							elseif ( key == "ON" )then newskill.used = tostring(value)
-							elseif ( key == "Prio" )then newskill.prio = tonumber(value)
-							elseif ( key == "LOS" )then 
-								if ( tostring(value) == "Yes" ) then newskill.los = "1" 
-								elseif ( tostring(value) == "No" ) then newskill.los = "0" 
-								else	newskill.los = tostring(value)
-								end
-							elseif ( key == "CHAN" )then newskill.channel = tostring(value)	
-							elseif ( key == "MinR" )then newskill.minRange = tonumber(value)
-							elseif ( key == "MaxR" )then newskill.maxRange = tonumber(value)
-							elseif ( key == "TType" )then newskill.ttype = tostring(value)
-							elseif ( key == "OutOfCombat" )then newskill.ooc = tostring(value)
-							elseif ( key == "PHPL" )then newskill.phpl = tonumber(value)
-							elseif ( key == "PHPB" )then newskill.phpb = tonumber(value)
-							elseif ( key == "PPowL" )then newskill.ppowl = tonumber(value)
-							elseif ( key == "PPowB" )then newskill.ppowb = tonumber(value)
-							elseif ( key == "PEff1" )then newskill.peff1 = tostring(value)
-							elseif ( key == "PNEff1" )then newskill.pneff1 = tostring(value)
-							elseif ( key == "PCondC" )then newskill.pcondc = tonumber(value)												
-							elseif ( key == "TMove" )then newskill.tmove = tostring(value)
-							elseif ( key == "THPL" )then newskill.thpl = tonumber(value)
-							elseif ( key == "THPB" )then newskill.thpb = tonumber(value)						
-							elseif ( key == "TECount" )then newskill.tecount = tonumber(value)
-							elseif ( key == "TERange" )then newskill.terange = tonumber(value)
-							elseif ( key == "TACount" )then newskill.tacount = tonumber(value)
-							elseif ( key == "TARange" )then newskill.tarange = tonumber(value)
-							elseif ( key == "TEff1" )then newskill.teff1 = tostring(value)
-							elseif ( key == "TNEff1" )then newskill.tneff1 = tostring(value)						
-							elseif ( key == "TCondC" )then newskill.tcondc = tonumber(value)
-							elseif ( key == "PBoonC" )then newskill.pboonc = tonumber(value)
-							elseif ( key == "TBoonC" )then newskill.tboonc = tonumber(value)	
-						end
-					else
-						mc_error("Error loading inputline: Key: "..(tostring(key)).." value:"..tostring(value))
-					end				
-					i, line = next (profile,i)
-                end
-            end
-            
-            -- Create UI Fields
-            local sortedSkillList = {}
-            if ( TableSize(unsortedSkillList) > 0 ) then
-                local i,skill = next (unsortedSkillList)
-                while i and skill do
-                    sortedSkillList[#sortedSkillList+1] = skill
-                    i,skill = next (unsortedSkillList,i)
-                end
-                table.sort(sortedSkillList, function(a,b) return a.prio < b.prio end )	
-                for i = 1,TableSize(sortedSkillList),1 do					
-                    if (sortedSkillList[i] ~= nil ) then
-                        sortedSkillList[i].prio = i						
-                        mc_skillmanager.CreateNewSkillEntry(sortedSkillList[i])
-                    end
-                end
-            end
+            end            
         else
             d("Profile is empty..")			
         end		
@@ -357,8 +356,7 @@ end
 function mc_skillmanager.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
 		--d(tostring(k).." = "..tostring(v))
-		if (  k == "gSMSwapA" or 
-			 k == "gSMSwapR" or 
+		if ( k == "gSMSwapR" or 
 			 k == "gSMSwapCD" or 
 			 k == "gSMSwapRange" or 
 			 k == "gSMPrioAtt" or
@@ -401,7 +399,8 @@ function mc_skillmanager.GUIVarUpdate(Event, NewVals, OldVals)
 		elseif ( k == "SKM_TNEff1" ) then mc_skillmanager.SkillProfile[SKM_Prio].tneff1 = v				
 		elseif ( k == "SKM_TCondC" ) then mc_skillmanager.SkillProfile[SKM_Prio].tcondc = tonumber(v)
 		elseif ( k == "SKM_PBoonC" ) then mc_skillmanager.SkillProfile[SKM_Prio].pboonc = tonumber(v)
-		elseif ( k == "SKM_TBoonC" ) then mc_skillmanager.SkillProfile[SKM_Prio].tboonc = tonumber(v)					
+		elseif ( k == "SKM_TBoonC" ) then mc_skillmanager.SkillProfile[SKM_Prio].tboonc = tonumber(v)
+		elseif ( k == "SKM_PrevID" ) then mc_skillmanager.SkillProfile[SKM_Prio].previd = v		
 		end
 	end
 end
@@ -517,7 +516,8 @@ function mc_skillmanager.SaveProfile()
 			string2write = string2write.."SKM_TNEff1="..skill.tneff1.."\n" 
 			string2write = string2write.."SKM_TCondC="..skill.tcondc.."\n" 
 			string2write = string2write.."SKM_PBoonC="..skill.pboonc.."\n" 
-			string2write = string2write.."SKM_TBoonC="..skill.tboonc.."\n"					
+			string2write = string2write.."SKM_TBoonC="..skill.tboonc.."\n"
+			string2write = string2write.."SKM_PrevID="..skill.previd.."\n"			
 			string2write = string2write.."SKM_END=0\n"
 		
 			skID,skill = next (mc_skillmanager.SkillProfile,skID)
@@ -650,7 +650,8 @@ function mc_skillmanager.CreateNewSkillEntry(skill)
 				tneff1 = skill.tneff1 or "",
 				tcondc = skill.condc or 0,
 				pboonc = skill.pboonc or 0,
-				tboonc = skill.tboonc or 0
+				tboonc = skill.tboonc or 0,
+				previd = skill.previd or ""				
 			}		
 		end		
 	end
@@ -691,6 +692,7 @@ function mc_skillmanager.EditSkill(event)
 		SKM_TCondC = tonumber(skill.tcondc) or 0
 		SKM_PBoonC = tonumber(skill.pboonc) or 0
 		SKM_TBoonC = tonumber(skill.tboonc) or 0
+		SKM_PrevID = skill.previd or ""
 	end
 end
 
@@ -722,48 +724,49 @@ function mc_skillmanager.ToggleMenu()
 end
 
 
---DOTO: Check if SM profile is loaded and go through all spells which are set to be used as opener
+-- Updates the MaxAttackRange and our cskills List
 function mc_skillmanager.GetAttackRange()
 	local maxrange = 180
-	for i = 1, 9, 1 do
-		if ( i ~= 4 ) then -- dont use elite 
-			local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
-			if ( skill ~= nil ) then				
+	mc_skillmanager.cskills = {}
+	
+	for i = 1, 16, 1 do	
+		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
+		if ( skill ~= nil ) then			
 
-				if ( i == 1 ) then
-					maxrange = skill.maxRange or 180
-				else
-					if ( not skill.cooldown and skill.maxRange > maxrange) then
-						maxrange = skill.maxRange
+			--Find this skill in our SkillProfile and get its prio into the CurrentListOfSkills
+			if ( TableSize(mc_skillmanager.SkillProfile) > 0 ) then				
+				local sID = skill.skillID
+				for k,v in pairs(mc_skillmanager.SkillProfile) do					
+					if ( v.used == "1" and v.skillID == sID) then						
+						--d("Adding skill "..tostring(sID) .." WTF "..tostring(v.skillID) .." to index "..tostring(i))						
+						mc_skillmanager.cskills[i] = skill
+						mc_skillmanager.cskills[i].slot = GW2.SKILLBARSLOT["Slot_" .. i]
+						mc_skillmanager.cskills[i].prio = v.prio						
+						-- Get Max Attack Range for global use
+						if ( i ~= 6 and i <= 9 ) then -- dont use elite or heal or F1-F4							
+							if ( i == 1 ) then
+								if( skill.maxRange < 180 ) then
+									maxrange = 180
+								else
+									maxrange = skill.maxRange
+								end
+							else								
+								if ( skill.cooldown == 0 and skill.maxRange > maxrange) then
+									maxrange = skill.maxRange
+								end
+							end				
+						end						
+						break
 					end
-				end				
-			end
-		end
+				end
+			end		
+		end		
 	end
 	return maxrange
 end
 
-function mc_skillmanager.AttackTarget( TargetID )
-	mc_skillmanager.cskills = {} -- Current List of Skills
-
-d("CHECK0")	
-
-	for i = 1, 16, 1 do
-		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
-		if ( skill ~= nil ) then			
-			mc_skillmanager.cskills[i] = skill
-			mc_skillmanager.cskills[i].slot = GW2.SKILLBARSLOT["Slot_" .. i]
-			
-			--Find this skill in our SkillProfile and get its prio into the CurrentListOfSkills
-			for k,v in pairs(mc_skillmanager.SkillProfile) do
-				if v.skillID == mc_skillmanager.cskills[i].skillID then
-					mc_skillmanager.cskills[i].prio = v.prio					
-					break
-				end
-			end			
-		end
-	end
-d("CHECK1")
+function mc_skillmanager.AttackTarget( TargetID )	
+	local fastcastcount = 0
 	
 	--Valid Target?
 	local target
@@ -777,31 +780,286 @@ d("CHECK1")
 		end		
 	end
 	
-	d("CHECK2")
 	if ( target and TargetID and target.attackable ) then
 		
 		local mybuffs = Player.buffs
 		local targetbuffs = target.buffs
-		d("CHECK3")
-		if ( TableSize(mc_skillmanager.SkillProfile) > 0 ) then
+		if ( TableSize(mc_skillmanager.SkillProfile) > 0 and Player:CanCast()) then
 			for prio,skill in pairs(mc_skillmanager.SkillProfile) do
 				
 				--Try to find this skill in our current Skill List
 				local currentSlot = 0
-				for i = 0, 16, 1 do
-					if ( mc_skillmanager.cskills[i] and mc_skillmanager.cskills[i].skillID == skill.skillID and mc_skillmanager.cskills[i].cooldown == 0) then
-						currentSlot = i
+				for i = 1, 16, 1 do					
+					if ( mc_skillmanager.cskills[i] and mc_skillmanager.cskills[i].skillID == skill.skillID and mc_skillmanager.cskills[i].cooldown == 0) then						
+						--d("Found Matching Skill, Cast Slot "..tostring(i) .. " Name "..tostring(mc_skillmanager.cskills[i].name))
+						currentSlot = i						
 						break
 					end
 				end
 				if ( currentSlot > 0 ) then
-					d("Cast Slot "..tostring(currentSlot))
+					--d("Checking Conditions for Cast Slot "..tostring(currentSlot))
+												
+					-- TARGETTYPE + LOS + RANGE + MOVEMENT + HEALTH CHECK						
+					if (skill.ttype == "Enemy" and ( (skill.tmove == "No" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving)
+							or (skill.tmove == "Yes" and target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving)
+							or (skill.minRange > 0 and target.distance < skill.minRange)
+							or (skill.maxRange > 0 and target.distance > skill.maxRange)
+							or (skill.thpl > 0 and skill.thpl > target.health.percent)
+							or (skill.thpb > 0 and skill.thpb < target.health.percent)
+							or (skill.los == "Yes" and not target.los)
+							)) then continue end	
+							
+					-- PLAYER HEALTH,POWER,ENDURANCE CHECK				
+					if ( (skill.phpl > 0 and skill.phpl > Player.health.percent)
+						or (skill.phpb > 0 and skill.phpb < Player.health.percent)
+						or (skill.ppowl > 0 and skill.ppowl > Player.power)
+						or (skill.ppowb > 0 and skill.ppowb < Player.power)					
+						) then continue end
+						
+					-- PLAYER BUFF AND CONDITION CHECKS
+					if ( skill.peff1 ~= "" and mybuffs )then 	
+						--Possible value in peff1: "134,245+123,552+123+531"
+						--d("Buffcheck : "..tostring(mc_helper.BufflistHasBuffs(mybuffs, skill.peff1)))
+						if ( not mc_helper.BufflistHasBuffs(mybuffs, skill.peff1) ) then continue end											
+					end
+					if ( skill.pneff1 ~= "" and mybuffs )then 	
+						--Possible value in pneff1: "134,245+123,552+123+531"
+						--d("Not Buffcheck : "..tostring(mc_helper.BufflistHasBuffs(mybuffs, skill.pneff1)))
+						if ( mc_helper.BufflistHasBuffs(mybuffs, skill.pneff1) ) then continue end
+					end						
+					if ( skill.pcondc > 0 and mybuffs ) then																		
+						if (CountConditions(targetbuffs) <= skill.pcondc) then continue end								
+					end
 					
-				
+					--ALLIE AE CHECK
+					if ( skill.tacount > 0 and skill.tarange > 0) then
+						--d("ALLIE AE CHECK "..tostring(TableSize(CharacterList("friendly,maxdistance="..skill.tarange..",distanceto="..target.id))))
+						if (  TableSize(CharacterList("friendly,maxdistance="..skill.tarange..",distanceto="..target.id)) < skill.tacount) then continue end
+					end	
+					
+					-- TARGET BUFF CHECKS 
+					if ( skill.teff1 ~= "" and targetbuffs )then 
+						--Possible value in teff1: "134,245+123,552+123+531"
+						--d("Target Buffcheck : "..tostring(mc_helper.BufflistHasBuffs(mybuffs, skill.teff1)))
+						if ( not mc_helper.BufflistHasBuffs(mybuffs, skill.teff1) ) then continue end	
+					end						
+					if ( skill.tneff1 ~= "" and targetbuffs )then 
+						--Possible value in tneff1: "134,245+123,552+123+531"
+						--d("Not Target Buffcheck : "..tostring(mc_helper.BufflistHasBuffs(mybuffs, skill.tneff1)))
+						if ( mc_helper.BufflistHasBuffs(mybuffs, skill.tneff1) ) then continue end
+					end
+					-- TARGET AE CHECK
+					if ( skill.tecount > 0 and skill.terange > 0) then
+						if ( TableSize(CharacterList("alive,attackable,maxdistance="..skill.terange..",distanceto="..target.id)) < skill.tecount) then continue end
+					end
+					-- TARGET #CONDITIONS CHECK
+					if ( skill.tcondc > 0 and targetbuffs ) then
+						if (CountConditions(targetbuffs) <= skill.tcondc) then continue end			
+					end	
+					-- TARGET #BOON CHECK
+					if ( skill.tboonc > 0 and targetbuffs ) then
+						if (CountBoons(targetbuffs) <= skill.tboonc) then continue end						
+					end	
+												
+					 -- PREVIOUS SKILL					
+                    if ( mc_skillmanager.prevSkillID ~= 0 and skill.previd ~= "" ) then
+                        --d("Previous SkillID "..tostring(mc_skillmanager.prevSkillID))
+						if ( not StringContains(skill.previd, mc_skillmanager.prevSkillID) ) then continue end
+                    end
+					
+					-- Swap Weapon check
+					if ( currentSlot == GW2.SKILLBARSLOT.Slot_1 ) then
+						mc_skillmanager.SwapWeaponCheck("CoolDown")
+					end
+					
+					--d("Cast Slot "..tostring(currentSlot))
+					
+					if ( skill.ttype == "Self" ) then
+						if ( Player:CastSpell(mc_skillmanager.cskills[currentSlot].slot) ) then
+							d("Casting on Self: "..tostring(mc_skillmanager.cskills[currentSlot].name))
+							if (currentSlot ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.cskills[currentSlot].skillID end
+							return true
+						end
+					else					
+
+						if ( mc_skillmanager.cskills[currentSlot].isGroundTargeted ) then											
+							if ( target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving ) then
+									if ( Player:CastSpell(mc_skillmanager.cskills[currentSlot].slot,TargetID) ) then
+									d("Casting AE on Target: "..tostring(mc_skillmanager.cskills[currentSlot].name))
+									if (currentSlot ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.cskills[currentSlot].skillID end
+								end
+							else							
+								-- some simple movement prediction
+								-- TODO: add chilled modificator
+								local tpos = target.pos
+								tpos.x = tpos.x + tpos.hx * target.distance / 4.5
+								tpos.y = tpos.y + tpos.hy * target.distance / 4.5
+								
+								if ( Player:CastSpell(mc_skillmanager.cskills[currentSlot].slot,tpos.x,tpos.y,tpos.z) ) then
+									d("Casting AE on moving Target: "..tostring(mc_skillmanager.cskills[currentSlot].name))
+									if (currentSlot ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.cskills[currentSlot].skillID end
+								end
+							end									
+						else
+																	
+							if ( Player:CastSpell(mc_skillmanager.cskills[currentSlot].slot,TargetID) ) then
+								d("Casting on Target: "..tostring(mc_skillmanager.cskills[currentSlot].name))
+								if (currentSlot ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.cskills[currentSlot].skillID end															
+							end									
+						end
+							
+						if ( skill.channel == "1" ) then
+							-- Add a tiny delay so "iscasting" gets true for this spell, not interrupting it on the next pulse
+							mc_global.now = mc_global.now + 1000
+							return true
+						else										
+							fastcastcount = fastcastcount + 1 
+							if ( fastcastcount >= 2) then
+								return true
+							end
+						end						
+					end						
 				end				
 			end
 		end
 	end
+	return false
+end
+
+function CountConditions(bufflist)
+	local count = 0
+	if ( bufflist ) then	
+		local i,buff = next(bufflist)
+		while i and buff do							
+			local bskID = buff.skillID
+			if ( bskID and mc_skillmanager.ConditionsEnum[bskID] ~= nil) then
+				count = count + 1
+			end
+			i,buff = next(bufflist,i)
+		end		
+	end
+	return count
+end
+function CountBoons(bufflist)
+	local count = 0
+	if ( bufflist ) then	
+		local i,buff = next(bufflist)
+		while i and buff do							
+			local bskID = buff.skillID
+			if ( bskID and mc_skillmanager.BoonsEnum[bskID] ~= nil) then
+				count = count + 1
+			end
+			i,buff = next(bufflist,i)
+		end		
+	end
+	return count
+end
+
+function mc_skillmanager.SwapWeaponCheck(swaptype)
+	if ( mc_global.now - mc_skillmanager.SwapTmr > 750 ) then
+				
+		-- Swap after random Time
+		if ( swaptype == "Pulse" and gSMSwapR == "1" and (mc_global.now - mc_skillmanager.SwapRTmr > math.random(3000,6000))) then
+			mc_skillmanager.SwapRTmr = mc_global.now
+			mc_skillmanager.SwapTmr = mc_global.now			
+			mc_skillmanager.SwapWeapon(swaptype)
+			--d(swaptype)
+			return
+		end
+		
+		-- Swap when skills 2-5 are on CD
+		if ( swaptype == "CoolDown" and gSMSwapCD == "1" and math.random(0,1) == 1)  then
+			mc_skillmanager.SwapTmr = mc_global.now
+			mc_skillmanager.SwapWeapon(swaptype)
+			--d(swaptype)
+			return
+		end
+		
+		-- Swap when our target is out of range for the current weapon
+		if ( swaptype == "Range" and gSMSwapRange == "1") then
+			mc_skillmanager.SwapTmr = mc_global.now
+			mc_skillmanager.SwapWeapon(swaptype)
+			--d(swaptype)
+			return
+		end		
+	end	
+end
+
+function mc_skillmanager.SwapWeapon(swaptype)	
+	if ( wt_global_information.Currentprofession.professionID == 6 ) then 
+		--Elementalist		
+		local switch
+		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
+		if ( skill ~= nil ) then
+			local sID = skill.skillID			
+			local currentAttunement
+			if ( sID==5491 or sID==15718 or sID==5508 ) then
+				currentAttunement = 12
+			elseif (sID==5549 or sID==15716 or sID==5693) then
+				currentAttunement = 13
+			elseif (sID==5489 or sID==5518 or sID==5526 ) then
+				currentAttunement = 14
+			elseif (sID==15717 or sID==5519 or sID==5500 ) then
+				currentAttunement = 15
+			end
+			if ( currentAttunement ) then
+				if ( tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt)]) and currentAttunement ~= tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt)]) and not Player:IsSpellOnCooldown(tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt)]))) then
+					switch = tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt)])
+				elseif ( tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt2)]) and currentAttunement ~= tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt2)]) and not Player:IsSpellOnCooldown(tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt2)]))) then
+					switch = tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt2)])
+				elseif ( tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt3)]) and currentAttunement ~= tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt3)]) and not Player:IsSpellOnCooldown(tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt3)]))) then
+					switch = tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt3)])
+				elseif ( tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt4)]) and currentAttunement ~= tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt4)]) and not Player:IsSpellOnCooldown(tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt4)]))) then
+					switch = tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt4)])
+				end				
+			else
+				wt_error("WHOOOPPSS, You have a unknown weapon! Please report back to us what kind of weapon you are using!")
+			end					
+			--d("TEST:"..tostring(switch) .. " " ..tostring(sID))
+			if ( switch ) then
+				Player:CastSpell(switch)
+				mc_skillmanager.SwapTmr = mc_global.now		
+			end
+		end
+		
+	elseif( wt_global_information.Currentprofession.professionID == 3 ) then 		
+		-- Engineer		
+		local availableKits = { [1] = 0 }-- Leave Kit Placeholder
+		for i = 1, 16, 1 do
+			if (mc_skillmanager.cskills[i]) then 
+				if ( mc_skillmanager.EngineerKits[mc_skillmanager.cskills[i].skillID] ~= nil and not Player:IsSpellOnCooldown(mc_skillmanager.cskills[i].slot)) then
+					if ( mc_skillmanager.SwapWeaponTable[mc_skillmanager.cskills[i].slot] == nil or (mc_global.now - mc_skillmanager.SwapWeaponTable[mc_skillmanager.cskills[i].slot].lastused or 0) > 1000) then
+						availableKits[#availableKits+1] = mc_skillmanager.cskills[i].slot												
+					end
+				end				
+			end
+		end		
+		local key = math.random(#availableKits)
+		--d("KEYSIZE "..tostring(#availableKits).. " choosen: "..tostring(key))
+		--d("Slot: " ..tostring(availableKits[key]))
+		if ( key ~= 1 ) then
+			Player:CastSpell(availableKits[key])
+			if (gSMPrioKit ~= "None" and tostring(mc_skillmanager.EngineerKits[Player:GetSpellInfo(availableKits[key]).skillID]) ~= tostring(gSMPrioKit))then
+				--d(tostring(mc_skillmanager.EngineerKits[Player:GetSpellInfo(availableKits[key]).skillID]).." is not our priokit: "..tostring(gSMPrioKit).." extending time")
+				mc_skillmanager.SwapWeaponTable[availableKits[key]] = { lastused = mc_global.now + 5000 }
+			else
+				mc_skillmanager.SwapWeaponTable[availableKits[key]] = { lastused = mc_global.now }
+			end
+		else				
+			if ( Player:CanSwapWeaponSet() ) then
+				if (gSMPrioKit == "None" or swaptype == "Pulse") then
+					Player:SwapWeaponSet()
+					mc_skillmanager.SwapTmr = mc_global.now
+				end
+			end
+		end
+	else 
+		-- All other professions
+		if ( Player:CanSwapWeaponSet() ) then
+			Player:SwapWeaponSet()
+			mc_skillmanager.SwapTmr = mc_global.now
+		end
+	end	
 end
 
 

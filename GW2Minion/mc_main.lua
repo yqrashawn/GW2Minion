@@ -50,7 +50,6 @@ function mc_global.moduleinit()
 
 end
 
-
 function mc_global.onupdate( event, tickcount )
 	mc_global.now = tickcount
 	
@@ -119,40 +118,19 @@ function mc_global.UpdateGlobals()
 
 end
 
--- Just some test functions for the BT
+mc_global.stuckpos = {}
+function mc_global.stuckhandler()
+	d("We are stuck!?")
+	mc_global.stuckpos = Player.pos
+	--TODO: add proper antistuck handler
+	d(Player:StopMovement())
+	d(Player:SetMovement(2))
+	
 
-function mc_global.PickNewTarget()	
-	local TList = ( CharacterList( "attackable,alive,noCritter,nearest,los" ) )
-	if ( TableSize( TList ) > 0 ) then
-		local id, E  = next( TList )
-		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("New Target: "..tostring(E.name).." "..tostring(id))
-			return Player:SetTarget(id)			
-		end		
-	end
-	return false
 end
-
-function mc_global.Attack()
-	d("ATTACK")
-	return false
-end	
-function mc_global.Waiting()
-	d("Wait")
-	return false
-end	
-
-function mc_global.Waitover()
-	d("Wait is overrr")
-	return false
-end	
-
-function mc_global.Something()
-	d("Doing Something")
-	return true
-end	
 
 
 RegisterEventHandler("Module.Initalize",mc_global.moduleinit)
 RegisterEventHandler("Gameloop.Update",mc_global.onupdate)
+RegisterEventHandler("Gameloop.Stuck",mc_global.stuckhandler)
 RegisterEventHandler("GUI.Update",mc_global.guivarupdate)
