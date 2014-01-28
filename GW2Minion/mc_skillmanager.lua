@@ -12,6 +12,10 @@ mc_skillmanager.cskills = {} -- Current List of Skills, gets constantly updated 
 mc_skillmanager.prevSkillID = 0
 mc_skillmanager.SwapTmr = 0 -- General WeaponSwap Timer
 
+mc_skillmanager.DefaultProfiles = {
+	[3] = "Engineer",
+
+}
 
 --Enums
 mc_skillmanager.EngineerKits = {
@@ -568,16 +572,33 @@ function mc_skillmanager.UpdateProfiles()
 					profiles = profiles..","..profile
 					if ( Settings.GW2Minion.gSMprofile ~= nil and Settings.GW2Minion.gSMprofile == profile ) then
 						d("Last Profile found : "..profile)
-						found = profile
+						found = profile					
 					end					
 				end
 			end
 			i,profile = next ( profilelist,i)
 		end		
 	else
-		mc_error("No Skillmanager profiles for our current Profession found")
+		mc_error("No Skillmanager profiles for our current Profession found")		
 	end
 	gSMprofile_listitems = profiles
+	
+	-- try to load default profiles
+	if ( found == "None" ) then
+		local defaultprofile = mc_skillmanager.DefaultProfiles[tonumber(Player.profession)]
+		if ( defaultprofile ) then
+			d("Loading default Profile for our profession")	
+			mc_skillmanager.SkillRecordingActive = false				
+			GUI_WindowVisible(mc_skillmanager.editwindow.name,false)
+			GUI_DeleteGroup(mc_skillmanager.mainwindow.name,"ProfileSkills")
+			mc_skillmanager.SkillProfile = {}
+			mc_skillmanager.UpdateCurrentProfileData()
+			Settings.GW2Minion.gSMprofile = tostring(defaultprofile)
+			gSMprofile = defaultprofile
+			return
+		end
+	end
+	
 	gSMprofile = found
 end
 
