@@ -788,22 +788,21 @@ end
 
 function mc_skillmanager.AttackTarget( TargetID )	
 	local fastcastcount = 0
-	d("CHECK "..tostring(TargetID) )
+	
 	--Valid Target?
 	local target
 	if ( not TargetID or TargetID == 0) then
 		target = Player:GetTarget()
 		if ( target ) then TargetID = target.id end
 	else
-	d("CHECK1")
 		target = CharacterList:Get(TargetID)
 		if ( not target ) then 			 
 			target = GadgetList:Get(TargetID)
 		end		
 	end
-	d("CHECK2")
+	
 	if ( target and TargetID and target.attackable ) then
-		d("CHECK3")
+		
 		local mybuffs = Player.buffs
 		local targetbuffs = target.buffs
 		if ( TableSize(mc_skillmanager.SkillProfile) > 0 and Player:CanCast()) then

@@ -10,7 +10,7 @@ function mc_ai_assist.SelectTargetExtended(maxrange, los)
 	if (sMmode == "Players Only") then filterstring = filterstring..",player" end
 	if (sMtargetmode == "LowestHealth") then filterstring = filterstring..",lowesthealth" end
 	if (sMtargetmode == "Closest") then filterstring = filterstring..",nearest" end
-	if (sMtargetmode == "Biggest Crowd") then filterstring = filterstring..",clustered" end
+	if (sMtargetmode == "Biggest Crowd") then filterstring = filterstring..",clustered=600" end
 	
 	local TargetList = CharacterList(filterstring)
 	if ( TargetList ) then
