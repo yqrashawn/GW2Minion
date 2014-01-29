@@ -753,7 +753,14 @@ function mc_skillmanager.GetAttackRange()
 	for i = 1, 16, 1 do	
 		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
 		if ( skill ~= nil ) then			
-
+			if ( i == 1 ) then
+				if( skill.maxRange < 180 ) then
+					maxrange = 180
+				else
+					maxrange = skill.maxRange
+				end
+			end
+			
 			--Find this skill in our SkillProfile and get its prio into the CurrentListOfSkills
 			if ( TableSize(mc_skillmanager.SkillProfile) > 0 ) then				
 				local sID = skill.skillID
@@ -765,13 +772,7 @@ function mc_skillmanager.GetAttackRange()
 						mc_skillmanager.cskills[i].prio = v.prio						
 						-- Get Max Attack Range for global use
 						if ( i ~= 6 and i <= 9 ) then -- dont use elite or heal or F1-F4							
-							if ( i == 1 ) then
-								if( skill.maxRange < 180 ) then
-									maxrange = 180
-								else
-									maxrange = skill.maxRange
-								end
-							else								
+							if ( i ~= 1 ) then							
 								if ( skill.cooldown == 0 and skill.maxRange > maxrange) then
 									maxrange = skill.maxRange
 								end
@@ -931,7 +932,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 							
 						if ( skill.channel == "1" ) then
 							-- Add a tiny delay so "iscasting" gets true for this spell, not interrupting it on the next pulse
-							mc_global.now = mc_global.now + 1000
+							mc_global.lasttick = mc_global.lasttick + 1000
 							return true
 						else										
 							fastcastcount = fastcastcount + 1 

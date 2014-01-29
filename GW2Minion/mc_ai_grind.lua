@@ -1,62 +1,61 @@
 -- GrindMode Behavior
 mc_ai_grind = {}
 mc_ai_grind.BT = {}
+mc_ai_grind.SearchAndKillBT = {}
+
+
 
 
 function mc_ai_grind.moduleinit()
 	-- Never add a predicate or child function like this "mc_core.FALSE()" , always "mc_core.FALSE", or you will call the function instead of passing its name  !!
+	
+	-- PrioritySelector:Goes top to bottom, picks the first node where the predicate returns "true", then it calls its childnode until a false or true is returned
+	-- If a child node reports 'failure', the PrioritySelector moves to the next child node, and asks for its status. 
+	-- If a child node reports 'success', the PrioritySelector reports 'success' to the tree-walker, and the rest of the PrioritySelector's children will not be evaluated. 
+	mc_ai_grind.SearchAndKillBT = mc_core.PrioritySelector:new(
+		
+		-- If the Decorator's predicate evaluates to false, then 'failure' is reported to the tree-walker. 
+		-- If the Decorator's predicate evaluates to 'true', then the associated child node is evaluated, and the child node's return value is reported to the tree-walker. 
+		-- In general, a Decorator is used in conjunction with some form of Selector container. 
+		-- Dead?
+		mc_core.Decorator:new( function() return Player.dead end, mc_ai_death.BT ),
+					
+		-- AoELooting Characters
+		mc_core.Decorator:new( function() return TableSize(CharacterList( "nearest,lootable,maxdistance=900" )) > 0 end, function() return Player:AoELoot() end ),
+		
+		-- AoELooting Gadgets/Chests needed
+		
+		-- Normal Looting
+		
+		-- Aggro
+		mc_core.Decorator:new( function() return TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 end, mc_ai_combat.DefendBT ),
+		
+		-- Gathering
+		mc_core.Decorator:new( function() return (Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,gatherable,maxdistance=4000")) > 0) end, mc_ai_gathering.gatheringBT ),
+		
+		
+		-- Repair
+			
+		-- Vendoring
+		
+		-- Killsomething nearby					
+		mc_core.Decorator:new( function() return TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500")) > 0 end, mc_ai_combat.SearchAndKillBT )
+		
+	)
+		
+	
 	mc_ai_grind.BT = mc_core.TreeWalker:new("MainBot",nil,    
 		
-		-- PrioritySelector:Goes top to bottom, picks the first node that returns "true" or "Running" and calls its childnode
-		mc_core.PrioritySelector:new(
-			-- Dead?
-			mc_core.Decorator:new( function() return Player.dead end, mc_ai_death.BT ),
-						
-			-- AoELooting Characters
-			mc_core.Decorator:new( function() return TableSize(CharacterList( "nearest,lootable,maxdistance=900" )) > 0 end, function() return Player:AoELoot() end ),
-			
-			-- AoELooting Gadgets/Chests needed?
-			
-			-- Aggro?
-			mc_core.Decorator:new( function() return TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 end, mc_ai_combat.DefendBT ),
-			
-			-- Looting
-									
-			-- Repair
-			
-			-- Vendoring
-			
-			-- Randomly pick next maingoal and pursue it			
-			mc_core.RandomSelector:new(	
+		-- Randomly pick next maingoal and pursue it			
+		mc_core.RandomSelector:new(	
 				
-				-- Events
+			-- Events
+							
+			-- Explore
 				
-				-- Gathering
-				
-				-- Explore
-				
-				-- Killsomething nearby		(RepeatUntil(predicate,child,targettime): repeat child() until predicate() true or targettime (in seconds) passed)				
-				mc_core.RepeatUntil:new( function() return TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500")) == 0 end, mc_ai_combat.SeachAndKillBT, math.random(60,240))
-				
-				
-				
-				
-				--[[-- random choice 2
-				mc_core.PrioritySelector:new(
-				
-					-- we have a target
-					mc_core.Decorator:new( function() return Player:GetTarget() ~= nil end, mc_global.Attack ),							
-													
-					-- we wait 3 seconds
-					mc_core.Wait:new( mc_core.FALSE , mc_core.TRUE , 3),
-						
-					-- try to get a new target					
-					mc_core.Decorator:new( function() return Player:GetTarget() == nil end, mc_global.PickNewTarget )
-					-- move on to the next marker/spot
-					
-				)
-				]]
-			)
+			-- Killsomething nearby		(RepeatUntil(predicate,child,targettime): repeat child() until predicate() true or targettime (in seconds) passed)				
+			mc_core.RepeatUntil:new( function() return TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500")) == 0 end, mc_ai_grind.SearchAndKillBT, math.random(60,240))
+		
 		)
 	)
 	-- Updating the botmode

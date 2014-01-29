@@ -600,9 +600,9 @@ function Dev.Func ( arg )
 	elseif ( arg == "Dev.Gather") then		
 		local t = Player:GetTarget()
 		if ( t ) then
-			d(Player:Gather(t.id))
+			d(Player:Interact(t.id))
 		else
-			d(Player:Gather())
+			d(Player:Interact())
 		end
 	elseif ( arg == "Dev.aoeloot") then
 		d(Player:AoELoot())		

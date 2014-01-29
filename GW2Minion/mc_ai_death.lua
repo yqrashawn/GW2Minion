@@ -8,6 +8,7 @@ function mc_ai_death.moduleinit()
 end
 
 function mc_ai_death.todo()
+	mc_log("Death")
 	d("TODO: handle death")
 	return true
 end

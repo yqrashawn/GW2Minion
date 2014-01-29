@@ -10,27 +10,26 @@ function mc_ai_combat.moduleinit()
 
 end
 
-function mc_ai_combat.todo()
-	d("TODO: handle Combat")
-	return true
-end
-
-function mc_ai_combat.NoValidTarget()
+function mc_ai_combat.NeedNewTarget()	
+	mc_log("NeedNewTarget")
 	local target = Player:GetTarget()
-	if ( TableSize( target ) > 0 ) then
-		return (not target.alive and not target.attackable and not target.onmesh)
-	end
-	return true
+	if ( TableSize( target ) > 0 ) then	
+		--d("NeedValidTarget "..tostring(not target.alive and not target.attackable and not target.onmesh))
+		return mc_log(not target.alive and not target.attackable and not target.onmesh)
+	end	
+	return mc_log(true)
 end
 
 function mc_ai_combat.SetAggroTarget()
+	mc_log("SetAggroTarget")
 	-- lowesthealth in CombatRange first	
 	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,nearest,onmesh,maxdistance="..mc_global.AttackRange) )
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
 			d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
-			return Player:SetTarget(id)			
+			Player:SetTarget(id)
+			return mc_log(true)	
 		end		
 	end
 	
@@ -40,20 +39,23 @@ function mc_ai_combat.SetAggroTarget()
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
 			d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
-			return Player:SetTarget(id)			
+			Player:SetTarget(id)
+			return mc_log(true)	
 		end		
 	end
-	return false
+	--d("SetAggroTarget False")
+	return mc_log(false)
 end
 
 function mc_ai_combat.FindAndSetTarget()
+	mc_log("FindAndSetTarget")
 	-- Weakest Aggro in CombatRange first	
 	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,nearest,onmesh,maxdistance="..mc_global.AttackRange) )
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("Found Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
-			return Player:SetTarget(id)			
+			d("Found Aggro Target: "..(E.name).." ID:"..tostring(id))
+			return mc_log(Player:SetTarget(id))			
 		end		
 	end
 	
@@ -62,48 +64,64 @@ function mc_ai_combat.FindAndSetTarget()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("New Target: "..tostring(E.name).." ID:"..tostring(id))
-			return Player:SetTarget(id)			
+			d("New Target: "..(E.name).." ID:"..tostring(id))			
+			return mc_log(Player:SetTarget(id))
 		end		
 	end
-	return false
-
+	return mc_log(false)
 end
 
 function mc_ai_combat.NotInCombatRange() 
+	--d("NotInCombatRange")
 	local t = Player:GetTarget()
 	if ( t ) then
+		--d("NotInCombatRange "..tostring(t.distance >= mc_global.AttackRange or not t.los))
 		return (t.distance >= mc_global.AttackRange or not t.los)
 	end
-	return true
+	return mc_log(true)
 end
-
 
 function mc_ai_combat.MoveIntoCombatRange()		
+	mc_log("MoveIntoCombatRange")
 	local t = Player:GetTarget()
-	if ( t ) then
-		local tPos = t.pos
-		-- moveto(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)
-		local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,130,false,false,true))		
-		if (tonumber(navResult) < 0) then
-			mc_error("mc_ai_combat.MoveIntoCombatRange result: "..tostring(navResult))
-			
+	if ( t ) then	
+		if ( t.distance >= mc_global.AttackRange or not t.los)then
+			local tPos = t.pos
+			-- moveto(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)		
+			if ( tPos ) then
+				--d("MoveIntoCombatRange..Running")
+				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,130,false,false,true))		
+				if (tonumber(navResult) < 0) then
+					mc_error("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
+				end
+				return "Running"
+			end
+		else
+			Player:StopMovement()			
+			return mc_log(true)
 		end
 	end	
-	return true
+	return mc_log(false)
 end
 
-function mc_ai_combat.KillTarget()
+
+function mc_ai_combat.KillTarget()	
+	mc_log("KillTarget")
 	local t = Player:GetTarget()
 	if ( t ) then
-		local pos = t.pos	
-		Player:SetFacing(pos.x,pos.y,pos.z)
-		mc_skillmanager.AttackTarget( t.id )
-	end
-	
-	DoCombatMovement()
-	
-	return true
+		local pos = t.pos
+		if ( pos ) then
+			Player:SetFacing(pos.x,pos.y,pos.z)
+			mc_skillmanager.AttackTarget( t.id )
+			
+			DoCombatMovement()
+			
+			return mc_log(true)
+		end
+	else
+		Player:StopMovement()		 
+	end	
+	return mc_log(false)
 end
 
 function DoCombatMovement()
@@ -136,7 +154,7 @@ function DoCombatMovement()
 					local tries = 0
 					while (tries < 4) do
 						local direction = math.random(0,7)
-						if (Player:CanEvade(direction)) then
+						if (Player:CanEvade(direction,100)) then
 							Player:Evade(direction)
 							mc_ai_combat.combatEvadeLastHP = 0
 							return
@@ -152,13 +170,22 @@ function DoCombatMovement()
 			if ( Player:IsMoving() ) then
 			
 				if ( not Player.onmeshexact and (movedir.backward or movedir.left or movedir.right) ) then
-					d("OutOfMesh! Stopping CombatMovement")
-					Player:StopMovement()
-					
+					d("We ran outside the NavMesh!")
+					Player:UnSetMovement(1)
+					Player:UnSetMovement(2)
+					Player:UnSetMovement(3)
+					local pPos = Player.pos
+					if (pPos) then
+						local mPos = NavigationManager:GetClosestPointOnMesh(pPos)
+						if ( mPos ) then
+							d("Moving back onto the NavMesh..")
+							Player:MoveTo(mPos.x,mPos.y,mPos.z,50,false,false,false)
+						end
+					end
 					return
 				end
 				
-				if (Player.inCombat and not Player:IsFacingTarget() and Tdist > 180) then
+				--[[if (Player.inCombat and not Player:IsFacingTarget() and Tdist < 180) then
 					Player:StopMovement()
 					local Tpos = T.pos
 					-- moveto(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)
@@ -166,7 +193,7 @@ function DoCombatMovement()
 					if (tonumber(navResult) < 0) then
 						mc_error("mc_ai_combat.CombatMovement result: "..tostring(navResult))
 					end
-				end
+				end]]
 				
 				if (tonumber(Tdist) ~= nil) then
 					if (mc_global.AttackRange > 300) then
@@ -200,8 +227,9 @@ function DoCombatMovement()
 			end
 			
 			--Set New Movement
-			--d("PRECHECK "..tostring(Tdist ~= nil) .." Timer"..tostring(mc_global.now - mc_ai_combat.combatMoveTmr > 0) .."  cancast: "..tostring(Player:CanCast()).."  oOM: "..tostring(Player.onmeshexact).."  Tlos: "..tostring(T.los) .."  Icom: "..tostring(Player.inCombat and T.inCombat))
-			if ( Tdist ~= nil and mc_global.now - mc_ai_combat.combatMoveTmr > 0 and Player:CanCast() and Player.onmesh and Player:IsFacingTarget() and T.los and Player.inCombat and T.inCombat) then	
+			--d("PRECHECK "..tostring(Tdist ~= nil) .." Timer"..tostring(mc_global.now - mc_ai_combat.combatMoveTmr > 0) .."  cancast: "..tostring(Player:CanCast()).."  oOM: "..tostring(Player.onmesh).." Tlos: "..tostring(T.los) .."  Icom: "..tostring(Player.inCombat and T.inCombat))
+			if ( Tdist ~= nil and mc_global.now - mc_ai_combat.combatMoveTmr > 0 and Player:CanCast() and Player.onmesh and T.los and Player.inCombat and T.inCombat) then	
+				d("DoCMBMove")
 				mc_ai_combat.combatMoveTmr = mc_global.now + math.random(1000,2000)
 				--tablecount:  1, 2, 3, 4, 5   --Table index starts at 1, not 0 
 				local dirs = { 0, 1, 2, 3, 4 } --Forward = 0, Backward = 1, Left = 2, Right = 3, + stop
@@ -246,15 +274,13 @@ function DoCombatMovement()
 				
 				-- MOVE				
 				local dir = dirs[ math.random( #dirs ) ] 
-				d("MOVING DIR: "..tostring(dir))
+				d("New MOVING DIR: "..tostring(dir))
 				if ( dir ~= 4) then										
 					Player:SetMovement(dir)
 				else 
 					Player:StopMovement()
-				end
-				
+				end				
 			end
-
 	else
 		Player:StopMovement()
 	end	
@@ -263,13 +289,15 @@ end
 
 -- Functions used in the BT need to be defined "above" it!
 -- DefendBT Tree: Kill aggro targets
-mc_ai_combat.DefendBT = mc_core.PrioritySelector:new(
+mc_ai_combat.DefendBT = mc_core.Sequence:new(
 	
+	--If the DecoratorContinue's predicate evaluates to false, then 'success' is reported to the tree-walker, and the associated child node is never evaluated and Seq continued 
+	--If the DecoratorContinue's predicate evaluates to 'true', then the associated child node is evaluated, and the child node's return value is reported to the tree-walker.	
 	-- Valid Target? -> Select Aggro Target TODO:Invincible Check
-	mc_core.Decorator:new( mc_ai_combat.NoValidTarget, mc_ai_combat.SetAggroTarget ),
+	mc_core.DecoratorContinue:new( mc_ai_combat.NeedNewTarget, mc_core.Action:new(mc_ai_combat.SetAggroTarget)),
 	
 	-- Move into combatrange
-	mc_core.Decorator:new( mc_ai_combat.NotInCombatRange, mc_ai_combat.MoveIntoCombatRange ),
+	mc_core.DecoratorContinue:new( mc_ai_combat.NotInCombatRange, mc_ai_combat.MoveIntoCombatRange ),
 	
 	-- Fight
 	mc_core.Action:new( mc_ai_combat.KillTarget )
@@ -277,13 +305,13 @@ mc_ai_combat.DefendBT = mc_core.PrioritySelector:new(
 
 
 --SeachAndKillBT: Search enemies nearby and kill them
-mc_ai_combat.SeachAndKillBT = mc_core.PrioritySelector:new(
+mc_ai_combat.SearchAndKillBT = mc_core.Sequence:new(
 	
 	-- Valid Target? -> Select Aggro Target TODO:Invincible Check
-	mc_core.Decorator:new( mc_ai_combat.NoValidTarget, mc_ai_combat.FindAndSetTarget ),
+	mc_core.DecoratorContinue:new( mc_ai_combat.NeedNewTarget, mc_core.Action:new(mc_ai_combat.FindAndSetTarget )),
 	
 	-- Move into combatrange
-	mc_core.Decorator:new( mc_ai_combat.NotInCombatRange , mc_ai_combat.MoveIntoCombatRange ),
+	mc_core.DecoratorContinue:new( mc_ai_combat.NotInCombatRange , mc_ai_combat.MoveIntoCombatRange ),
 	
 	-- Fight
 	mc_core.Action:new( mc_ai_combat.KillTarget )

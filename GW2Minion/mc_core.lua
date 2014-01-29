@@ -52,7 +52,7 @@ function mc_core.Node:Tick(pTreeWalker)
    else
       self.last_status = "Running"
    end
-	--d(tostring(self.last_status))
+	
    return self.last_status
 end
 

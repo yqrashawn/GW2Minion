@@ -22,6 +22,11 @@ function mc_global.moduleinit()
 	RegisterEventHandler("mc_global.startStop", mc_global.eventhandler)
 	GUI_NewCheckbox(mc_global.window.name,mc_getstring("botEnabled"),"gBotRunning",mc_getstring("botStatus"));
 	GUI_NewComboBox(mc_global.window.name,mc_getstring("botMode"),"gBotMode",mc_getstring("botStatus"),"None");
+	-- Debug fields
+	GUI_NewField(mc_global.window.name,"Trace","dTrace",mc_getstring("botStatus"));
+	GUI_NewField(mc_global.window.name,"AttackRange","dAttackRange",mc_getstring("botStatus"));
+	
+	
 	GUI_NewNumeric(mc_global.window.name,mc_getstring("pulseTime"),"gPulseTime",mc_getstring("settings"),"10","2000");	
 	GUI_NewButton(mc_global.window.name, mc_getstring("skillManager"), "SkillManager.toggle")
 	GUI_NewButton(mc_global.window.name, mc_getstring("meshManager"), "ToggleMeshmgr")
@@ -63,7 +68,8 @@ function mc_global.onupdate( event, tickcount )
 			
 			-- Let the bot tick ;)
 			if ( mc_global.BotModes[gBotMode] ) then
-				d(mc_global.BotModes[gBotMode]:Tick())
+				mc_global.BotModes[gBotMode]:Tick()
+				dTrace = mc_GetTraceString()
 			end
 		end
 	end
@@ -117,7 +123,10 @@ end
 function mc_global.UpdateGlobals()
 	mc_global.AttackRange = mc_skillmanager.GetAttackRange()
 	
-
+	
+	
+	-- Update Debug fields	
+	dAttackRange = mc_global.AttackRange	
 end
 
 mc_global.stuckpos = {}
