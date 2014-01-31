@@ -248,7 +248,8 @@ mc_strings =
         groupBotting                    = "GroupBotting",
 
         -- salvaging.lua
-        rarityJunk                      = "Junk",
+        rarityMax                       = "Max Rarity",
+		rarityJunk                      = "Junk",
         rarityCommon                    = "Common",
         rarityFine                      = "Fine",
         rarityMasterwork                = "Masterwork",
@@ -256,6 +257,7 @@ mc_strings =
         rarityExotic                    = "Exotic",
         salvage                         = "Salvage ",
         enableSalvage                   = "EnableSalvage",
+		salvageItems                    = "Items",
 
         -- common profession
         allowedRange                    = "Allowed Range [0-100], 0=Disabled",
@@ -475,6 +477,7 @@ mc_strings =
         notAttackable                   = "Invalid Target",
         targetName                      = "Target Name",
         monsters                        = "Monsters",
+		event                      		= "Event",
         fates                           = "Fates",
         startCombat                     = "Start Combat",
 		onlySolo						= "Only solo",
@@ -745,6 +748,7 @@ mc_strings =
         groupBotting                    = "GroupBotting",
 
         -- salvaging.lua
+		rarityMax                       = "Max Rarity",
         rarityJunk                      = "Junk",
         rarityCommon                    = "Common",
         rarityFine                      = "Fine",
@@ -753,7 +757,8 @@ mc_strings =
         rarityExotic                    = "Exotic",
         salvage                         = "Salvage ",
         enableSalvage                   = "EnableSalvage",
-
+		salvageItems                    = "Items",
+		
         -- common profession
         allowedRange                    = "Allowed Range [0-100], 0=Disabled",
         skill7HP                        = "Use Skill7 at HP%",
@@ -973,6 +978,7 @@ mc_strings =
         notAttackable                   = "Invalid Target",
         targetName                      = "Target Name",
         monsters                        = "Monsters",
+		event                      		= "Event",
         fates                           = "Fates",
         startCombat                     = "Start Combat",
 		onlySolo						= "Only solo",
@@ -1243,6 +1249,7 @@ mc_strings =
         groupBotting                    = "GroupBotting",
 
         -- salvaging.lua
+		rarityMax                       = "Max Rarity",
         rarityJunk                      = "Junk",
         rarityCommon                    = "Common",
         rarityFine                      = "Fine",
@@ -1251,7 +1258,8 @@ mc_strings =
         rarityExotic                    = "Exotic",
         salvage                         = "Salvage ",
         enableSalvage                   = "EnableSalvage",
-
+		salvageItems                    = "Items",
+		
         -- common profession
         allowedRange                    = "Allowed Range [0-100], 0=Disabled",
         skill7HP                        = "Use Skill7 at HP%",
@@ -1471,6 +1479,7 @@ mc_strings =
         notAttackable                   = "Invalid Target",
         targetName                      = "Target Name",
         monsters                        = "Monsters",
+		event                      		= "Event",
         fates                           = "Fates",
         startCombat                     = "Start Combat",
 		onlySolo						= "Only solo",
@@ -1742,6 +1751,7 @@ mc_strings =
         groupBotting                    = "GroupBotting",
 
         -- salvaging.lua
+		rarityMax                       = "Max Rarity",
         rarityJunk                      = "Хлам / Серое",
         rarityCommon                    = "Обычное / Белое",
         rarityFine                      = "Хорошее / Синее",
@@ -1750,7 +1760,8 @@ mc_strings =
         rarityExotic                    = "Экзотическое / Оранжевое",
         salvage                         = "Разбор ",
         enableSalvage                   = "Включить разбор",
-
+		salvageItems                    = "Items",
+		
         allowedRange                    = "Допустимый радиус [0-100], 0=Отключено",
         skill7HP                        = "Использовать скилл 7 при HP%",
         skill8HP                        = "Использовать скилл 8 при HP%",
@@ -1970,6 +1981,7 @@ mc_strings =
         notAttackable                   = "Invalid Target",
         targetName                      = "Target Name",
         monsters                        = "Monsters",
+		event                      		= "Event",
         fates                           = "Fates",
         startCombat                     = "Start Combat",
 		onlySolo						= "Only solo",
@@ -2239,6 +2251,7 @@ mc_strings =
         groupBotting                    = "组队挂机",
 
         -- salvaging.lua
+		rarityMax                       = "Max Rarity",
         rarityJunk                      = "Junk",
         rarityCommon                    = "Common",
         rarityFine                      = "Fine",
@@ -2247,7 +2260,8 @@ mc_strings =
         rarityExotic                    = "Exotic",
         salvage                         = "分解 ",
         enableSalvage                   = "启用分解",
-
+		salvageItems                    = "Items",
+		
         -- common profession
         allowedRange                    = "允许范围 [0-100], 0=禁用",
         skill7HP                        = "使用 技能7 at HP%",
@@ -2467,6 +2481,7 @@ mc_strings =
         notAttackable                   = "Invalid Target",
         targetName                      = "Target Name",
         monsters                        = "Monsters",
+		event                      		= "Event",
         fates                           = "Fates",
         startCombat                     = "Start Combat",
 		onlySolo						= "Only solo",
@@ -2737,6 +2752,7 @@ mc_strings =
         groupBotting                    = "GroupBotting",
 
         -- salvaging.lua
+		rarityMax                       = "Max Rarity",
         rarityJunk                      = "Junk",
         rarityCommon                    = "Common",
         rarityFine                      = "Fine",
@@ -2745,7 +2761,8 @@ mc_strings =
         rarityExotic                    = "Exotic",
         salvage                         = "Salvage ",
         enableSalvage                   = "EnableSalvage",
-
+		salvageItems                    = "Items",
+		
         -- common profession
         allowedRange                    = "Allowed Range [0-100], 0=Disabled",
         skill7HP                        = "Use Skill7 at HP%",
@@ -2965,6 +2982,7 @@ mc_strings =
         notAttackable                   = "Invalid Target",
         targetName                      = "Target Name",
         monsters                        = "Monsters",
+		event                      		= "Event",
         fates                           = "Fates",
         startCombat                     = "Start Combat",
 		onlySolo						= "Only solo",

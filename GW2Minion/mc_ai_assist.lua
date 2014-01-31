@@ -1,6 +1,42 @@
 -- GrindMode Behavior
-mc_ai_assist = {}
-mc_ai_assist.BT = {}
+mc_ai_assist = inheritsFrom(ml_task)
+mc_ai_assist.name = "AssistMode"
+
+function mc_ai_assist.Create()
+	local newinst = inheritsFrom(mc_ai_assist)
+    
+    --ml_task members
+    newinst.valid = true
+    newinst.completed = false
+    newinst.subtask = nil
+    newinst.process_elements = {}
+    newinst.overwatch_elements = {}
+            
+    return newinst
+end
+
+function mc_ai_assist:Init()
+
+end
+
+function mc_ai_assist:Process()
+	--mc_log("AssistMode_Process->")
+		
+	if ( not Player.dead ) then
+		if ( TableSize(CharacterList( "nearest,lootable,maxdistance=900" )) > 0 ) then
+			Player:AoELoot()
+		else
+			if ( sMtargetmode == "None" ) then 
+				mc_skillmanager.AttackTarget( nil ) 
+			
+			elseif ( sMtargetmode ~= "None" ) then 
+				mc_ai_assist.SetTargetAssist()
+			end
+		end
+	end				
+	
+end
+
 
 function mc_ai_assist.SelectTargetExtended(maxrange, los)
     
@@ -16,7 +52,7 @@ function mc_ai_assist.SelectTargetExtended(maxrange, los)
 	if ( TargetList ) then
 		local id,entry = next(TargetList)
 		if (id and entry ) then
-			d("Target found "..tostring(entry.id) .. " name "..entry.name)
+			mc_log("Attacking "..tostring(entry.id) .. " name "..entry.name)
 			return entry
 		end
 	end	
@@ -27,7 +63,7 @@ function mc_ai_assist.SetTargetAssist()
 	-- Try to get Enemy with los in range first
 	local target = mc_ai_assist.SelectTargetExtended(mc_global.AttackRange, 1)	
 	if ( not target ) then target = mc_ai_assist.SelectTargetExtended(mc_global.AttackRange, 0) end
-	if ( not target ) then target = mc_ai_assist.SelectTargetExtended(mc_global.AttackRange +250, 0) end
+	if ( not target ) then target = mc_ai_assist.SelectTargetExtended(mc_global.AttackRange + 250, 0) end
 	
 	if ( target ) then 
 		Player:SetTarget(target.id)
@@ -51,34 +87,12 @@ function mc_ai_assist.moduleinit()
 	sMtargetmode = Settings.GW2Minion.sMtargetmode
 	sMmode = Settings.GW2Minion.sMmode
 	
-
-	
-	mc_ai_assist.BT = mc_core.TreeWalker:new("MainBot",nil,    
-		
-		-- PrioritySelector:Goes top to bottom, picks the first node that returns "true" or "Running" and calls its childnode
-		mc_core.PrioritySelector:new(
-			-- Dead?
-			mc_core.Decorator:new( function() return Player.dead end, mc_core.TRUE ),
-						
-			-- AoELooting Characters
-			mc_core.Decorator:new( function() return TableSize(CharacterList( "nearest,lootable,maxdistance=900" )) > 0 end, function() return Player:AoELoot() end ),
-			
-			-- AoELooting Gadgets/Chests needed?
-			
-			-- Valid Target & Attack without target assist
-			mc_core.Decorator:new( function() return sMtargetmode == "None" end, function() return mc_skillmanager.AttackTarget( nil ) end ),
-			
-			mc_core.Decorator:new( function() return sMtargetmode ~= "None" end, mc_ai_assist.SetTargetAssist )
-						
-		)
-	)
-	-- Updating the botmode
-	mc_global.BotModes[mc_getstring("assistMode")] = mc_ai_assist.BT
 end
+
 
 -- Adding it to our botmodes
 if ( mc_global.BotModes ) then
-	mc_global.BotModes[mc_getstring("assistMode")] = mc_ai_assist.BT
+	mc_global.BotModes[mc_getstring("assistMode")] = mc_ai_assist
 end 
 
 RegisterEventHandler("Module.Initalize",mc_ai_assist.moduleinit)

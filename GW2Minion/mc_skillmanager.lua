@@ -12,6 +12,7 @@ mc_skillmanager.cskills = {} -- Current List of Skills, gets constantly updated 
 mc_skillmanager.prevSkillID = 0
 mc_skillmanager.SwapTmr = 0 -- General WeaponSwap Timer
 
+
 mc_skillmanager.DefaultProfiles = {
 	[3] = "Engineer",
 
@@ -802,6 +803,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 		end		
 	end
 	
+		
 	if ( target and TargetID and target.attackable ) then
 		
 		local mybuffs = Player.buffs
@@ -820,7 +822,16 @@ function mc_skillmanager.AttackTarget( TargetID )
 				end
 				if ( currentSlot > 0 ) then
 					--d("Checking Conditions for Cast Slot "..tostring(currentSlot))
-												
+					
+					-- re-get Target, since this is a long loop and gw2 runs on several threads, in rare occasions it seems to happen that a target gets invalid while we are still in that for loop
+					-- so making sure it is valid in each round, performance impact huge ? 
+					if ( CharacterList:Get(TargetID) == nil and GadgetList:Get(TargetID) == nil) then
+						mc_error("For-Loop in Skillmanager lost its target!!!!!!!!!!!!")
+						return
+					else
+						mybuffs = Player.buffs
+						targetbuffs = target.buffs
+					end
 					-- TARGETTYPE + LOS + RANGE + MOVEMENT + HEALTH CHECK						
 					if (skill.ttype == "Enemy" and ( (skill.tmove == "No" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving)
 							or (skill.tmove == "Yes" and target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving)
@@ -1013,7 +1024,7 @@ function mc_skillmanager.SwapWeaponCheck(swaptype)
 end
 
 function mc_skillmanager.SwapWeapon(swaptype)	
-	if ( wt_global_information.Currentprofession.professionID == 6 ) then 
+	if ( Player.profession == 6 ) then 
 		--Elementalist		
 		local switch
 		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
@@ -1049,7 +1060,7 @@ function mc_skillmanager.SwapWeapon(swaptype)
 			end
 		end
 		
-	elseif( wt_global_information.Currentprofession.professionID == 3 ) then 		
+	elseif( Player.profession == 3 ) then 		
 		-- Engineer		
 		local availableKits = { [1] = 0 }-- Leave Kit Placeholder
 		for i = 1, 16, 1 do

@@ -1,29 +1,205 @@
--- Handles Death, respawn and downed fighting
 mc_ai_combat = {}
-mc_ai_combat.DefendBT = {}
-mc_ai_combat.SeachAndKillBT = {}
 mc_ai_combat.combatMoveTmr = 0
 mc_ai_combat.combatEvadeTmr = 0
 mc_ai_combat.combatEvadeLastHP = 0
 
-function mc_ai_combat.moduleinit()
+-- Attack Task
+mc_ai_combatAttack = inheritsFrom(ml_task)
+mc_ai_combatAttack.name = "CombatAttack"
+function mc_ai_combatAttack.Create()
+    mc_log("combatAttack:Create")
+	local newinst = inheritsFrom(mc_ai_combatAttack)
+    
+    --ml_task members
+    newinst.valid = true
+    newinst.completed = false
+    newinst.subtask = nil
+    newinst.process_elements = {}
+    newinst.overwatch_elements = {} 
+	newinst.duration = mc_global.now + math.random(60000,240000)
+	
+    return newinst
+end
+function mc_ai_combatAttack:Init()
+    mc_log("combatAttack_Init->")
+	
+	-- Dead?
+	self:add(ml_element:create( "Dead", c_dead, e_dead, 225 ), self.process_elements)
+	
+	-- Downed
+	self:add(ml_element:create( "Downed", c_downed, e_downed, 200 ), self.process_elements)
+	
+	-- AoELooting Characters
+	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 175 ), self.process_elements)
+		
+	-- AoELooting Gadgets/Chests needed ?
+		
+		
+	-- Aggro
+	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 150 ), self.process_elements) --reactive queue
+		
+	-- Normal Chests	
+	self:add(ml_element:create( "LootingChest", c_LootChest, e_LootChest, 125 ), self.process_elements)
+	
+	-- Normal Looting
+	self:add(ml_element:create( "Looting", c_Loot, e_Loot, 100 ), self.process_elements)
 
+	-- Deposit Items
+	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 90 ), self.process_elements)	
+	
+	-- Salvaging
+	self:add(ml_element:create( "Salvaging", c_salvage, e_salvage, 85 ), self.process_elements)
+	
+	-- Gathering
+	self:add(ml_element:create( "Gathering", c_Gathering, e_Gathering, 75 ), self.process_elements)
+				
+	-- Repair & Vendoring
+	
+		
+	-- Killsomething nearby					
+	-- Valid Target
+	self:add(ml_element:create( "SearchingTarget", c_NeedValidTarget, e_SearchTarget, 50 ), self.process_elements)
+		
+	-- Get into Combat Range
+	self:add(ml_element:create( "MovingIntoCombatRange", c_MoveIntoCombatRange, e_MoveIntoCombatRange, 25 ), self.process_elements)
+	
+	-- Kill Target
+	self:add(ml_element:create( "KillTarget", c_KillTarget, e_KillTarget, 10 ), self.process_elements)
+		
+	
+    self:AddTaskCheckCEs()
+end
+function mc_ai_grind:task_complete_eval()
+	mc_log("combatAttack:Complete?->")
+	if ( mc_global.now - newinst.duration > 0 or TableSize(CharacterList("attackable,alive,nearest,onmesh,maxdistance=4000,exclude_contentid="..mc_blacklist.GetExcludeString(mc_getstring("monsters")))) == 0) then 
+		Player:StopMovement()
+		return mc_log(true)
+	end
+	return mc_log(false)
+end
+function mc_ai_grind:task_complete_execute()
+   self.completed = true
 end
 
-function mc_ai_combat.NeedNewTarget()	
-	mc_log("NeedNewTarget")
+
+------------
+c_Aggro = inheritsFrom( ml_cause )
+e_Aggro = inheritsFrom( ml_effect )
+function c_Aggro:evaluate()
+   -- mc_log("c_Aggro")
+    return TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0
+end
+function e_Aggro:execute()
+	mc_log("e_Aggro")
+	local newTask = mc_ai_combatDefend.Create()
+	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
+end
+
+
+
+e_SearchTarget = inheritsFrom( ml_effect )
+function e_SearchTarget:execute()
+	mc_log("e_SearchTarget")
+	-- Weakest Aggro in CombatRange first	
+	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,nearest,onmesh,maxdistance="..mc_global.AttackRange) )
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil ) then
+			d("Found Aggro Target: "..(E.name).." ID:"..tostring(id))
+			return mc_log(Player:SetTarget(id))			
+		end		
+	end
+	
+	-- Then nearest attackable Target
+	TList = ( CharacterList("attackable,alive,nearest,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(mc_getstring("monsters"))))
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil ) then
+			d("New Target: "..(E.name).." ID:"..tostring(id))			
+			return mc_log(Player:SetTarget(id))
+		end		
+	end
+	return mc_log(false)
+end
+
+
+
+
+
+
+-- Defend Against Aggro Task
+mc_ai_combatDefend = inheritsFrom(ml_task)
+mc_ai_combatDefend.name = "CombatDefend"
+function mc_ai_combatDefend.Create()    
+	local newinst = inheritsFrom(mc_ai_combatDefend)
+    
+    --ml_task members
+    newinst.valid = true
+    newinst.completed = false
+    newinst.subtask = nil
+    newinst.process_elements = {}
+    newinst.overwatch_elements = {} 
+	
+    return newinst
+end
+function mc_ai_combatDefend:Init()
+    mc_log("combatDef:Init->")
+    
+    -- Dead?
+	self:add(ml_element:create( "Dead", c_dead, e_dead, 225 ), self.process_elements)
+	
+	-- Downed
+	self:add(ml_element:create( "Downed", c_downed, e_downed, 200 ), self.process_elements)
+	
+	-- AoELooting Characters
+	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 125 ), self.process_elements)
+		
+	-- AoELooting Gadgets/Chests needed
+    
+	-- Deposit Items
+	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 90 ), self.process_elements)	
+	
+	-- Valid Target
+	self:add(ml_element:create( "NeedValidTarget", c_NeedValidTarget, e_SetAggroTarget, 75 ), self.process_elements)
+		
+	-- Get into Combat Range
+	self:add(ml_element:create( "MovingIntoCombatRange", c_MoveIntoCombatRange, e_MoveIntoCombatRange, 50 ), self.process_elements)
+	
+	-- Kill Target
+	self:add(ml_element:create( "MovingIntoCombatRange", c_KillTarget, e_KillTarget, 25 ), self.process_elements)
+		
+  
+    self:AddTaskCheckCEs()
+end
+function mc_ai_combatDefend:task_complete_eval()
+	mc_log("combatDefend:Complete?->")
+	if ( TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh"))== 0) then 
+		Player:StopMovement()
+		return mc_log(true)
+	end
+	return mc_log(false)
+end
+
+function mc_ai_combatDefend:task_complete_execute()
+   self.completed = true
+end
+
+
+c_NeedValidTarget = inheritsFrom( ml_cause )
+e_SetAggroTarget = inheritsFrom( ml_effect )
+function c_NeedValidTarget:evaluate()
+   -- mc_log("c_NeedValidTarget")
 	local target = Player:GetTarget()
 	if ( TableSize( target ) > 0 ) then	
 		--d("NeedValidTarget "..tostring(not target.alive and not target.attackable and not target.onmesh))
-		return mc_log(not target.alive and not target.attackable and not target.onmesh)
+		return mc_log(not target.alive or not target.attackable or not target.onmesh)
 	end	
 	return mc_log(true)
 end
-
-function mc_ai_combat.SetAggroTarget()
+function e_SetAggroTarget:execute()
 	mc_log("SetAggroTarget")
 	-- lowesthealth in CombatRange first	
-	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,nearest,onmesh,maxdistance="..mc_global.AttackRange) )
+	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,onmesh,maxdistance="..mc_global.AttackRange) )
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
@@ -43,46 +219,29 @@ function mc_ai_combat.SetAggroTarget()
 			return mc_log(true)	
 		end		
 	end
-	--d("SetAggroTarget False")
 	return mc_log(false)
 end
 
-function mc_ai_combat.FindAndSetTarget()
-	mc_log("FindAndSetTarget")
-	-- Weakest Aggro in CombatRange first	
-	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,nearest,onmesh,maxdistance="..mc_global.AttackRange) )
-	if ( TableSize( TList ) > 0 ) then
-		local id, E  = next( TList )
-		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("Found Aggro Target: "..(E.name).." ID:"..tostring(id))
-			return mc_log(Player:SetTarget(id))			
-		end		
-	end
-	
-	-- Then nearest attackable Target
-	TList = ( CharacterList("attackable,alive,nearest,onmesh,maxdistance=3500") )
-	if ( TableSize( TList ) > 0 ) then
-		local id, E  = next( TList )
-		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("New Target: "..(E.name).." ID:"..tostring(id))			
-			return mc_log(Player:SetTarget(id))
-		end		
+c_MoveIntoCombatRange = inheritsFrom( ml_cause )
+e_MoveIntoCombatRange = inheritsFrom( ml_effect )
+c_MoveIntoCombatRange.running = false
+function c_MoveIntoCombatRange:evaluate()
+    --mc_log("c_MoveIntoCombRng")
+    local t = Player:GetTarget()
+	if ( t ) then	
+		if (t.distance >= mc_global.AttackRange or not t.los) then
+			return true
+		else
+			if ( c_MoveIntoCombatRange.running ) then 
+				c_MoveIntoCombatRange.running = false
+				Player:StopMovement()
+			end
+		end
 	end
 	return mc_log(false)
 end
-
-function mc_ai_combat.NotInCombatRange() 
-	--d("NotInCombatRange")
-	local t = Player:GetTarget()
-	if ( t ) then
-		--d("NotInCombatRange "..tostring(t.distance >= mc_global.AttackRange or not t.los))
-		return (t.distance >= mc_global.AttackRange or not t.los)
-	end
-	return mc_log(true)
-end
-
-function mc_ai_combat.MoveIntoCombatRange()		
-	mc_log("MoveIntoCombatRange")
+function e_MoveIntoCombatRange:execute()
+	mc_log("e_MoveIntoCombRng")
 	local t = Player:GetTarget()
 	if ( t ) then	
 		if ( t.distance >= mc_global.AttackRange or not t.los)then
@@ -94,18 +253,21 @@ function mc_ai_combat.MoveIntoCombatRange()
 				if (tonumber(navResult) < 0) then
 					mc_error("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
 				end
-				return "Running"
+				c_MoveIntoCombatRange.running = true
+				return true
 			end
-		else
-			Player:StopMovement()			
-			return mc_log(true)
 		end
 	end	
 	return mc_log(false)
 end
 
 
-function mc_ai_combat.KillTarget()	
+c_KillTarget = inheritsFrom( ml_cause )
+e_KillTarget = inheritsFrom( ml_effect )
+function c_KillTarget()
+	return true
+end
+function e_KillTarget:execute()
 	mc_log("KillTarget")
 	local t = Player:GetTarget()
 	if ( t ) then
@@ -150,12 +312,12 @@ function DoCombatMovement()
 					mc_ai_combat.combatEvadeLastHP = playerHP
 				elseif (mc_ai_combat.combatEvadeLastHP - playerHP > math.random(5,10) and Player.endurance >= 50 and Player:IsFacingTarget()) then
 				-- we lost 5-10% hp in the last 2,5seconds, evade!
-					d("Evade!");
+					
 					local tries = 0
 					while (tries < 4) do
 						local direction = math.random(0,7)
-						if (Player:CanEvade(direction,100)) then
-							Player:Evade(direction)
+						if (Player:CanEvade(direction,100)) then							
+							d("Evade! :"..tostring(Player:Evade(direction)));
 							mc_ai_combat.combatEvadeLastHP = 0
 							return
 						end
@@ -187,7 +349,7 @@ function DoCombatMovement()
 				
 				--[[if (Player.inCombat and not Player:IsFacingTarget() and Tdist < 180) then
 					Player:StopMovement()
-					local Tpos = T.pos
+					local tpos = T.pos
 					-- moveto(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,130,false,true,false))
 					if (tonumber(navResult) < 0) then
@@ -229,7 +391,7 @@ function DoCombatMovement()
 			--Set New Movement
 			--d("PRECHECK "..tostring(Tdist ~= nil) .." Timer"..tostring(mc_global.now - mc_ai_combat.combatMoveTmr > 0) .."  cancast: "..tostring(Player:CanCast()).."  oOM: "..tostring(Player.onmesh).." Tlos: "..tostring(T.los) .."  Icom: "..tostring(Player.inCombat and T.inCombat))
 			if ( Tdist ~= nil and mc_global.now - mc_ai_combat.combatMoveTmr > 0 and Player:CanCast() and Player.onmesh and T.los and Player.inCombat and T.inCombat) then	
-				d("DoCMBMove")
+
 				mc_ai_combat.combatMoveTmr = mc_global.now + math.random(1000,2000)
 				--tablecount:  1, 2, 3, 4, 5   --Table index starts at 1, not 0 
 				local dirs = { 0, 1, 2, 3, 4 } --Forward = 0, Backward = 1, Left = 2, Right = 3, + stop
@@ -274,7 +436,7 @@ function DoCombatMovement()
 				
 				-- MOVE				
 				local dir = dirs[ math.random( #dirs ) ] 
-				d("New MOVING DIR: "..tostring(dir))
+				--d("New MOVING DIR: "..tostring(dir))
 				if ( dir ~= 4) then										
 					Player:SetMovement(dir)
 				else 
@@ -286,35 +448,3 @@ function DoCombatMovement()
 	end	
 	return false
 end
-
--- Functions used in the BT need to be defined "above" it!
--- DefendBT Tree: Kill aggro targets
-mc_ai_combat.DefendBT = mc_core.Sequence:new(
-	
-	--If the DecoratorContinue's predicate evaluates to false, then 'success' is reported to the tree-walker, and the associated child node is never evaluated and Seq continued 
-	--If the DecoratorContinue's predicate evaluates to 'true', then the associated child node is evaluated, and the child node's return value is reported to the tree-walker.	
-	-- Valid Target? -> Select Aggro Target TODO:Invincible Check
-	mc_core.DecoratorContinue:new( mc_ai_combat.NeedNewTarget, mc_core.Action:new(mc_ai_combat.SetAggroTarget)),
-	
-	-- Move into combatrange
-	mc_core.DecoratorContinue:new( mc_ai_combat.NotInCombatRange, mc_ai_combat.MoveIntoCombatRange ),
-	
-	-- Fight
-	mc_core.Action:new( mc_ai_combat.KillTarget )
-)
-
-
---SeachAndKillBT: Search enemies nearby and kill them
-mc_ai_combat.SearchAndKillBT = mc_core.Sequence:new(
-	
-	-- Valid Target? -> Select Aggro Target TODO:Invincible Check
-	mc_core.DecoratorContinue:new( mc_ai_combat.NeedNewTarget, mc_core.Action:new(mc_ai_combat.FindAndSetTarget )),
-	
-	-- Move into combatrange
-	mc_core.DecoratorContinue:new( mc_ai_combat.NotInCombatRange , mc_ai_combat.MoveIntoCombatRange ),
-	
-	-- Fight
-	mc_core.Action:new( mc_ai_combat.KillTarget )
-) 
-	
-RegisterEventHandler("Module.Initalize",mc_ai_combat.moduleinit)
