@@ -22,10 +22,13 @@ end
 function mc_ai_grind:Process()
 	--mc_log("Grind_Process->")
 		
+		
 	-- Randomly pick next maingoal and pursue it			
 	local i = math.random(0,1)
 	
+	
 	-- Events
+	
 	
 	-- Killsomething nearby
 	if ( i == 0 and function() return TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(mc_getstring("monsters")))) == 0 end ) then

@@ -64,13 +64,14 @@ function e_Loot:execute()
 				-- Grab that thing
 				Player:StopMovement()
 				local t = Player:GetTarget()
-				if ( entity.selectable and t.id ~= id ) then
+				if ( not t or t.id ~= id ) then
 					Player:SetTarget( id )
 				else
 					-- yeah I know, but this usually doesnt break ;)
 					if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
 						Player:Interact( id )
 						mc_log("Looting..")
+						mc_global.Wait(1000)
 						return true
 					end	
 				end
@@ -123,13 +124,14 @@ function e_LootChests:execute()
 					-- Grab that thing
 					Player:StopMovement()
 					local t = Player:GetTarget()
-					if ( LT.selectable and t.id ~= id ) then
+					if ( not t or t.id ~= id ) then
 						Player:SetTarget( id )
 					else
 						-- yeah I know, but this usually doesnt break ;)
 						if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
-							mc_log("Looting Chest..")
-							Player:Interact( id )							
+							Player:Interact( id )
+							mc_log("Looting..")
+							mc_global.Wait(1000)
 							return true
 						end	
 					end
@@ -179,8 +181,7 @@ function e_Gathering:execute()
 						mc_global.Wait(1000)
 						return true
 					end	
-				end	
-			
+				end			
 			end
 		end
 	end

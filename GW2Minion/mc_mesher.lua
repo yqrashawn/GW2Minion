@@ -107,10 +107,14 @@ end
 
 function mm.ClearNavMesh()
     -- Unload old Mesh
-    if (NavigationManager:GetNavMeshName() ~= "") then
-        d("Unloading ".. NavigationManager:GetNavMeshName() .." NavMesh.")        
-    end
-	d("Result: "..tostring(NavigationManager:UnloadNavMesh()))
+	if ( gnewmeshname ~= nil and gnewmeshname ~= "" ) then
+		if (NavigationManager:GetNavMeshName() ~= "") then
+			d("Unloading ".. NavigationManager:GetNavMeshName() .." NavMesh.")        
+		end
+		d("Result: "..tostring(NavigationManager:UnloadNavMesh()))
+	else
+		mc_error("Please enter a NEW navmesh-filename first!")
+	end
 end
 
 function mm.SaveMesh()

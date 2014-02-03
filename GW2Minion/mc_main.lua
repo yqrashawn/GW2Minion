@@ -186,6 +186,12 @@ function mc_global.Wait( seconds )
 	mc_global.lasttick = mc_global.lasttick + seconds
 end
 
+--test
+function mc_global.test()
+	local path = GetStartupPath() .. [[\LuaMods\GW2Minion\maps.data]]
+	local data = persistence.load(path)
+	d(TableSize(data))
+end
 
 RegisterEventHandler("Module.Initalize",mc_global.moduleinit)
 RegisterEventHandler("Gameloop.Update",mc_global.onupdate)

@@ -964,6 +964,72 @@ function mc_skillmanager.AttackTarget( TargetID )
 	return false
 end
 
+function mc_skillmanager.HealMe()	
+		
+	--Valid Target?
+	local mybuffs = Player.buffs	
+	if ( mybuffs ) then
+				
+		if ( TableSize(mc_skillmanager.SkillProfile) > 0 and Player:CanCast()) then
+			for prio,skill in pairs(mc_skillmanager.SkillProfile) do
+				
+				--Try to find a "healskill" in our current Skill List
+				local currentSlot = 0
+				for i = 1, 16, 1 do					
+					if ( mc_skillmanager.cskills[i] and mc_skillmanager.cskills[i].skillID == skill.skillID and mc_skillmanager.cskills[i].cooldown == 0 and skill.ttype == "Self") then						
+						--d("Found Matching Skill, Cast Slot "..tostring(i) .. " Name "..tostring(mc_skillmanager.cskills[i].name))
+						currentSlot = i						
+						break
+					end
+				end
+				if ( currentSlot > 0 ) then
+					--d("Checking Conditions for Cast Slot "..tostring(currentSlot))
+							
+					-- PLAYER HEALTH,POWER,ENDURANCE CHECK				
+					if ( (skill.phpl > 0 and skill.phpl > Player.health.percent)
+						or (skill.phpb > 0 and skill.phpb < Player.health.percent)
+						or (skill.ppowl > 0 and skill.ppowl > Player.power)
+						or (skill.ppowb > 0 and skill.ppowb < Player.power)					
+						) then continue end
+						
+					-- PLAYER BUFF AND CONDITION CHECKS
+					if ( skill.peff1 ~= "" and mybuffs )then 	
+						--Possible value in peff1: "134,245+123,552+123+531"
+						--d("Buffcheck : "..tostring(mc_helper.BufflistHasBuffs(mybuffs, skill.peff1)))
+						if ( not mc_helper.BufflistHasBuffs(mybuffs, skill.peff1) ) then continue end											
+					end
+					if ( skill.pneff1 ~= "" and mybuffs )then 	
+						--Possible value in pneff1: "134,245+123,552+123+531"
+						--d("Not Buffcheck : "..tostring(mc_helper.BufflistHasBuffs(mybuffs, skill.pneff1)))
+						if ( mc_helper.BufflistHasBuffs(mybuffs, skill.pneff1) ) then continue end
+					end						
+					if ( skill.pcondc > 0 and mybuffs ) then																		
+						if (CountConditions(targetbuffs) <= skill.pcondc) then continue end								
+					end
+																						
+					 -- PREVIOUS SKILL					
+                    if ( mc_skillmanager.prevSkillID ~= 0 and skill.previd ~= "" ) then
+                        --d("Previous SkillID "..tostring(mc_skillmanager.prevSkillID))
+						if ( not StringContains(skill.previd, mc_skillmanager.prevSkillID) ) then continue end
+                    end
+					
+					
+					--d("Cast Slot "..tostring(currentSlot))
+					
+					if ( Player:CastSpell(mc_skillmanager.cskills[currentSlot].slot) ) then
+						--d("Casting on Self: "..tostring(mc_skillmanager.cskills[currentSlot].name))
+						if (currentSlot ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.cskills[currentSlot].skillID end
+						mc_global.lasttick = mc_global.lasttick + 750
+						return true
+					end						
+				end				
+			end
+		end
+	end
+	return false
+end
+
+
 function CountConditions(bufflist)
 	local count = 0
 	if ( bufflist ) then	

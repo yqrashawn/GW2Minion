@@ -33,13 +33,22 @@ function mc_ai_combatAttack:Init()
 	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 175 ), self.process_elements)
 		
 	-- AoELooting Gadgets/Chests needed ?
-		
+	
+	
+	-- Revive PartyMember
+	
 		
 	-- Aggro
 	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 150 ), self.process_elements) --reactive queue
 		
 	-- Normal Chests	
 	self:add(ml_element:create( "LootingChest", c_LootChest, e_LootChest, 125 ), self.process_elements)
+	
+	-- Resting
+	self:add(ml_element:create( "Resting", c_resting, e_resting, 115 ), self.process_elements)	
+	
+	-- ReviveNPCs
+	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 105 ), self.process_elements)	
 	
 	-- Normal Looting
 	self:add(ml_element:create( "Looting", c_Loot, e_Loot, 100 ), self.process_elements)
@@ -158,7 +167,7 @@ function mc_ai_combatDefend:Init()
     
 	-- Deposit Items
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 90 ), self.process_elements)	
-	
+		
 	-- Valid Target
 	self:add(ml_element:create( "NeedValidTarget", c_NeedValidTarget, e_SetAggroTarget, 75 ), self.process_elements)
 		
@@ -285,6 +294,86 @@ function e_KillTarget:execute()
 	end	
 	return mc_log(false)
 end
+
+
+c_resting = inheritsFrom( ml_cause )
+e_resting = inheritsFrom( ml_effect )
+function c_resting:evaluate()	
+	if ( not Player.inCombat and HPt and HPt.percent < math.random(55,75) ) then		
+		local mybuffs = Player.buffs
+		return not mc_helper.BufflistHasBuffs(mybuffs, "737,723,736") --burning,poison,bleeding		
+	end	
+	return false
+end
+function e_resting:execute()
+	if (Player.profession == 8 ) then -- Necro, leave shroud
+		local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
+		if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17) then
+			Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
+			mc_global.Wait(500)
+			return
+		end
+	end
+	
+	-- check Skillmanager if he can heal first
+	if not mc_skillmanager.HealMe() then
+	
+		-- else cast our normal heal skill if possible
+		local s6 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_6 )
+		if( s6 and Player:GetCurrentlyCastedSpell() == 17 and s6.cooldown == 0 ) then
+			Player:CastSpell( GW2.SKILLBARSLOT.Slot_6 )
+			mc_global.Wait(750)
+		end		
+	end
+	return
+end
+
+------------
+c_reviveNPC = inheritsFrom( ml_cause )
+e_reviveNPC = inheritsFrom( ml_effect )
+function c_reviveNPC:evaluate()
+   -- mc_log("c_reviveNPC")
+    return (not Player.inCombat and TableSize(CharacterList("nearest,selectable,interactable,dead,friendly,npc,onmesh")) > 0)
+end
+function e_reviveNPC:execute()
+	mc_log("e_reviveNPC")
+	local CharList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh")
+	if ( TableSize(CharList) > 0 ) then
+		local id,entity = next (CharList)
+		if ( id and entity ) then
+			
+			if (not entity.isInInteractRange) then
+				-- MoveIntoInteractRange
+				local tPos = entity.pos
+				if ( tPos ) then
+					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+					if (tonumber(navResult) < 0) then
+						mc_error("e_reviveNPC.MoveIntoCombatRange result: "..tonumber(navResult))					
+					end
+					mc_log("MoveToReviveNPC..")
+					return true
+				end
+			else
+				-- Grab that thing
+				Player:StopMovement()
+				local t = Player:GetTarget()
+				if ( not t or t.id ~= id ) then
+					Player:SetTarget( id )
+				else
+					-- yeah I know, but this usually doesnt break ;)
+					if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
+						Player:Interact( id )
+						mc_log("Looting..")
+						mc_global.Wait(1000)
+						return true
+					end	
+				end
+			end
+		end
+	end
+	return mc_log(false)	
+end
+
 
 function DoCombatMovement()
 	
@@ -448,3 +537,4 @@ function DoCombatMovement()
 	end	
 	return false
 end
+
