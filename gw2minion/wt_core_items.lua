@@ -1,42 +1,42 @@
--- contentIDs for vendor purchase items (key = rarity, value = contentID)
+-- itemIDs for vendor purchase items (key = rarity, value = itemID)
 wt_core_items = {}
 wt_core_items.itemBlacklist = {}
 wt_core_items.contentIDs =
 {
 	[0] = 
 	{
-		[0] = 91433,
-		[1] = 25389,
-		[2] = 188002,
-		[3] = 234459,
-		[4] = 226329,
-		[5] = 60920,
+		[0] = 23029,
+		[1] = 22992,
+		[2] = 23004,
+		[3] = 23005,
+		[4] = 23008,
+		[5] = 22997,
 	},
 	[1] = 
 	{
-		[0] = 91435,
-		[1] = 25393,
-		[2] = 25400,
-		[3] = 188003,
-		[4] = 234463,
-		[5] = 60921
+		[0] = 23030,
+		[1] = 22994,
+		[2] = 23002,
+		[3] = 23006,
+		[4] = 23009,
+		[5] = 23000
 	},
 	[2] =
 	{
-		[0] = 91437,
-		[1] = 25394,
-		[2] = 25401,
-		[3] = 188004,
-		[4] = 226330,
-		[5] = 60923
+		[0] = 23031,
+		[1] = 22995,
+		[2] = 23003,
+		[3] = 23007,
+		[4] = 23010,
+		[5] = 23001
 	},
 	[3] = 
 	{
-		[0] = 25403,
-		[1] = 25406,
-		[2] = 25408,
-		[3] = 25410,
-		[4] = 25412
+		[0] = 23038,
+		[1] = 23040,
+		[2] = 23041,
+		[3] = 23042,
+		[4] = 23043
 	}
 }
 
@@ -94,8 +94,10 @@ function wt_core_items:GetBestQualityItem(itemList, wt_core_itemType)
 	if (itemList ~= nil) then
 		local id, item = next(itemList)
 		while (id ~= nil) do
-			if (qualityTable[item.contentID] ~= nil) then
-				if (bestItem == nil or qualityTable[item.contentID] > qualityTable[bestItem.contentID]) then
+		--d("CHECK1 "..tostring(item.name).." "..tostring(item.itemID))
+			if (qualityTable[item.itemID] ~= nil) then
+				--d("CHECK "..tostring(item.itemID))
+				if (bestItem == nil or qualityTable[item.itemID] > qualityTable[bestItem.itemID]) then
 					bestItem = item
 				end
 			end
@@ -113,7 +115,7 @@ function wt_core_items:GetItemStock(wt_core_itemType)
 	if (myStock ~= nil) then
 		id, item = next(myStock)
 		while (id ~= nil) do
-			if (qualityTable[item.contentID] ~= nil) then
+			if (qualityTable[item.itemID] ~= nil) then
 				myStacks = myStacks + 1
 			end
 			id,item = next(myStock, id)
@@ -124,8 +126,8 @@ function wt_core_items:GetItemStock(wt_core_itemType)
 end
 
 -- returns total amount of items in inventory
-function wt_core_items:GetItemStockByContentID(contentID)
-	local myStock = ItemList("contentID="..contentID)
+function wt_core_items:GetItemStockByitemID(itemID)
+	local myStock = ItemList("itemID="..itemID)
 	local myStacks = 0
 	if (myStock ~= nil) then
 		id, item = next(myStock)
@@ -146,31 +148,31 @@ function wt_core_items:NeedGatheringTools()
 	local totalCost = 0
 	if (wt_core_items:GetItemStock(wt_core_items.ftool) == 0) then
 		local fetool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool)
-		--if (fetool == nil) or (fetool.contentID ~= 217549 and fetool.contentID ~= 275764) then
+		--if (fetool == nil) or (fetool.itemID ~= 217549 and fetool.itemID ~= 275764) then
 		-- made problems, dont know why
-		if (fetool == nil) or (fetool.contentID ~= 217549) then
+		if (fetool == nil)  then
 			local goldCostTable = wt_core_items.goldCost[wt_core_items.ftool]
-			d("SHIT1 "..tostring(goldCostTable))
+			--d("C "..tostring(goldCostTable))
 			totalCost = totalCost + (tonumber(gGatheringToolStock) * goldCostTable[tonumber(gGatheringToolQuality)])
 		end
 	end
 	if (wt_core_items:GetItemStock(wt_core_items.ltool) == 0) then
 		local letool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool)
-		if (letool == nil) or (letool.contentID ~= 242480) then
+		if (letool == nil)  then
 			local goldCostTable = wt_core_items.goldCost[wt_core_items.ltool]
 			totalCost = totalCost + (tonumber(gGatheringToolStock) * goldCostTable[tonumber(gGatheringToolQuality)])
 		end
 	end
 	if (wt_core_items:GetItemStock(wt_core_items.mtool) == 0) then
 		local metool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool)
-		--if (metool == nil) or (metool.contentID ~= 248409 and metool.contentID ~= 242106) then
-		if (metool == nil) or (metool.contentID ~= 248409) then
+		--if (metool == nil) or (metool.itemID ~= 248409 and metool.itemID ~= 242106) then
+		if (metool == nil)  then
 			local goldCostTable = wt_core_items.goldCost[wt_core_items.mtool]
 			totalCost = totalCost + (tonumber(gGatheringToolStock) * goldCostTable[tonumber(gGatheringToolQuality)])
 		end
 	end
 	-- use 2*totalcost just to be safe
-	d("totalcost "..tostring(totalCost))
+	--d("totalcost "..tostring(totalCost))
 	return (totalCost ~= 0 and Inventory:GetInventoryMoney() - (2*totalCost) > 0)
 end
 
@@ -277,17 +279,6 @@ function wt_core_items:CanVendor()
 			end
 			tmpR = tmpR - 1
 		end			
-	end
-	
-	local junk = ItemList("rarity=0,notsoulbound")
-	if ( junk ~= nil) then
-		local id,item = next(junk)
-		if (id ~=nil and item ~= nil) then
-			local blacklistCount = wt_core_taskmanager.itemBlacklist[item.dataID]
-			if(blacklistCount == nil or blacklistCount < 3) then
-				return true
-			end
-		end
 	end
 	
 	return false
