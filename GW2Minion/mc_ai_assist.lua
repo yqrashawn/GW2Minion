@@ -20,7 +20,7 @@ function mc_ai_assist:Init()
 end
 
 function mc_ai_assist:Process()
-	--mc_log("AssistMode_Process->")
+	--ml_log("AssistMode_Process->")
 		
 	if ( not Player.dead ) then
 		if ( TableSize(CharacterList( "nearest,lootable,maxdistance=900" )) > 0 ) then
@@ -52,7 +52,7 @@ function mc_ai_assist.SelectTargetExtended(maxrange, los)
 	if ( TargetList ) then
 		local id,entry = next(TargetList)
 		if (id and entry ) then
-			mc_log("Attacking "..tostring(entry.id) .. " name "..entry.name)
+			ml_log("Attacking "..tostring(entry.id) .. " name "..entry.name)
 			return entry
 		end
 	end	

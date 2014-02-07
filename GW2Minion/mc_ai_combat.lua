@@ -7,7 +7,7 @@ mc_ai_combat.combatEvadeLastHP = 0
 mc_ai_combatAttack = inheritsFrom(ml_task)
 mc_ai_combatAttack.name = "CombatAttack"
 function mc_ai_combatAttack.Create()
-    mc_log("combatAttack:Create")
+    ml_log("combatAttack:Create")
 	local newinst = inheritsFrom(mc_ai_combatAttack)
     
     --ml_task members
@@ -21,7 +21,7 @@ function mc_ai_combatAttack.Create()
     return newinst
 end
 function mc_ai_combatAttack:Init()
-    mc_log("combatAttack_Init->")
+    ml_log("combatAttack_Init->")
 	
 	-- Dead?
 	self:add(ml_element:create( "Dead", c_dead, e_dead, 225 ), self.process_elements)
@@ -79,12 +79,12 @@ function mc_ai_combatAttack:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_grind:task_complete_eval()
-	mc_log("combatAttack:Complete?->")
+	ml_log("combatAttack:Complete?->")
 	if ( mc_global.now - newinst.duration > 0 or TableSize(CharacterList("attackable,alive,nearest,onmesh,maxdistance=4000,exclude_contentid="..mc_blacklist.GetExcludeString(mc_getstring("monsters")))) == 0) then 
 		Player:StopMovement()
-		return mc_log(true)
+		return ml_log(true)
 	end
-	return mc_log(false)
+	return ml_log(false)
 end
 function mc_ai_grind:task_complete_execute()
    self.completed = true
@@ -95,11 +95,11 @@ end
 c_Aggro = inheritsFrom( ml_cause )
 e_Aggro = inheritsFrom( ml_effect )
 function c_Aggro:evaluate()
-   -- mc_log("c_Aggro")
+   -- ml_log("c_Aggro")
     return TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0
 end
 function e_Aggro:execute()
-	mc_log("e_Aggro")
+	ml_log("e_Aggro")
 	local newTask = mc_ai_combatDefend.Create()
 	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
 end
@@ -108,14 +108,14 @@ end
 
 e_SearchTarget = inheritsFrom( ml_effect )
 function e_SearchTarget:execute()
-	mc_log("e_SearchTarget")
+	ml_log("e_SearchTarget")
 	-- Weakest Aggro in CombatRange first	
 	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,nearest,onmesh,maxdistance="..mc_global.AttackRange) )
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
 			d("Found Aggro Target: "..(E.name).." ID:"..tostring(id))
-			return mc_log(Player:SetTarget(id))			
+			return ml_log(Player:SetTarget(id))			
 		end		
 	end
 	
@@ -125,10 +125,10 @@ function e_SearchTarget:execute()
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
 			d("New Target: "..(E.name).." ID:"..tostring(id))			
-			return mc_log(Player:SetTarget(id))
+			return ml_log(Player:SetTarget(id))
 		end		
 	end
-	return mc_log(false)
+	return ml_log(false)
 end
 
 
@@ -152,7 +152,7 @@ function mc_ai_combatDefend.Create()
     return newinst
 end
 function mc_ai_combatDefend:Init()
-    mc_log("combatDef:Init->")
+    ml_log("combatDef:Init->")
     
     -- Dead?
 	self:add(ml_element:create( "Dead", c_dead, e_dead, 225 ), self.process_elements)
@@ -181,12 +181,12 @@ function mc_ai_combatDefend:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_combatDefend:task_complete_eval()
-	mc_log("combatDefend:Complete?->")
+	ml_log("combatDefend:Complete?->")
 	if ( TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh"))== 0) then 
 		Player:StopMovement()
-		return mc_log(true)
+		return ml_log(true)
 	end
-	return mc_log(false)
+	return ml_log(false)
 end
 
 function mc_ai_combatDefend:task_complete_execute()
@@ -197,16 +197,16 @@ end
 c_NeedValidTarget = inheritsFrom( ml_cause )
 e_SetAggroTarget = inheritsFrom( ml_effect )
 function c_NeedValidTarget:evaluate()
-   -- mc_log("c_NeedValidTarget")
+   -- ml_log("c_NeedValidTarget")
 	local target = Player:GetTarget()
 	if ( TableSize( target ) > 0 ) then	
 		--d("NeedValidTarget "..tostring(not target.alive and not target.attackable and not target.onmesh))
-		return mc_log(not target.alive or not target.attackable or not target.onmesh)
+		return ml_log(not target.alive or not target.attackable or not target.onmesh)
 	end	
-	return mc_log(true)
+	return ml_log(true)
 end
 function e_SetAggroTarget:execute()
-	mc_log("SetAggroTarget")
+	ml_log("SetAggroTarget")
 	-- lowesthealth in CombatRange first	
 	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,onmesh,maxdistance="..mc_global.AttackRange) )
 	if ( TableSize( TList ) > 0 ) then
@@ -214,7 +214,7 @@ function e_SetAggroTarget:execute()
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
 			d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
 			Player:SetTarget(id)
-			return mc_log(true)	
+			return ml_log(true)	
 		end		
 	end
 	
@@ -225,17 +225,17 @@ function e_SetAggroTarget:execute()
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
 			d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
 			Player:SetTarget(id)
-			return mc_log(true)	
+			return ml_log(true)	
 		end		
 	end
-	return mc_log(false)
+	return ml_log(false)
 end
 
 c_MoveIntoCombatRange = inheritsFrom( ml_cause )
 e_MoveIntoCombatRange = inheritsFrom( ml_effect )
 c_MoveIntoCombatRange.running = false
 function c_MoveIntoCombatRange:evaluate()
-    --mc_log("c_MoveIntoCombRng")
+    --ml_log("c_MoveIntoCombRng")
     local t = Player:GetTarget()
 	if ( t ) then	
 		if (t.distance >= mc_global.AttackRange or not t.los) then
@@ -247,10 +247,10 @@ function c_MoveIntoCombatRange:evaluate()
 			end
 		end
 	end
-	return mc_log(false)
+	return ml_log(false)
 end
 function e_MoveIntoCombatRange:execute()
-	mc_log("e_MoveIntoCombRng")
+	ml_log("e_MoveIntoCombRng")
 	local t = Player:GetTarget()
 	if ( t ) then	
 		if ( t.distance >= mc_global.AttackRange or not t.los)then
@@ -260,14 +260,14 @@ function e_MoveIntoCombatRange:execute()
 				--d("MoveIntoCombatRange..Running")
 				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,130,false,false,true))		
 				if (tonumber(navResult) < 0) then
-					mc_error("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
+					ml_error("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
 				end
 				c_MoveIntoCombatRange.running = true
 				return true
 			end
 		end
 	end	
-	return mc_log(false)
+	return ml_log(false)
 end
 
 
@@ -277,7 +277,7 @@ function c_KillTarget()
 	return true
 end
 function e_KillTarget:execute()
-	mc_log("KillTarget")
+	ml_log("KillTarget")
 	local t = Player:GetTarget()
 	if ( t ) then
 		local pos = t.pos
@@ -287,12 +287,12 @@ function e_KillTarget:execute()
 			
 			DoCombatMovement()
 			
-			return mc_log(true)
+			return ml_log(true)
 		end
 	else
 		Player:StopMovement()		 
 	end	
-	return mc_log(false)
+	return ml_log(false)
 end
 
 
@@ -332,11 +332,11 @@ end
 c_reviveNPC = inheritsFrom( ml_cause )
 e_reviveNPC = inheritsFrom( ml_effect )
 function c_reviveNPC:evaluate()
-   -- mc_log("c_reviveNPC")
+   -- ml_log("c_reviveNPC")
     return (not Player.inCombat and TableSize(CharacterList("nearest,selectable,interactable,dead,friendly,npc,onmesh")) > 0)
 end
 function e_reviveNPC:execute()
-	mc_log("e_reviveNPC")
+	ml_log("e_reviveNPC")
 	local CharList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh")
 	if ( TableSize(CharList) > 0 ) then
 		local id,entity = next (CharList)
@@ -348,9 +348,9 @@ function e_reviveNPC:execute()
 				if ( tPos ) then
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then
-						mc_error("e_reviveNPC.MoveIntoCombatRange result: "..tonumber(navResult))					
+						ml_error("e_reviveNPC.MoveIntoCombatRange result: "..tonumber(navResult))					
 					end
-					mc_log("MoveToReviveNPC..")
+					ml_log("MoveToReviveNPC..")
 					return true
 				end
 			else
@@ -363,7 +363,7 @@ function e_reviveNPC:execute()
 					-- yeah I know, but this usually doesnt break ;)
 					if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
 						Player:Interact( id )
-						mc_log("Looting..")
+						ml_log("Looting..")
 						mc_global.Wait(1000)
 						return true
 					end	
@@ -371,7 +371,7 @@ function e_reviveNPC:execute()
 			end
 		end
 	end
-	return mc_log(false)	
+	return ml_log(false)	
 end
 
 
@@ -442,7 +442,7 @@ function DoCombatMovement()
 					-- moveto(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,130,false,true,false))
 					if (tonumber(navResult) < 0) then
-						mc_error("mc_ai_combat.CombatMovement result: "..tostring(navResult))
+						ml_error("mc_ai_combat.CombatMovement result: "..tostring(navResult))
 					end
 				end]]
 				

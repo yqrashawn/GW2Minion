@@ -509,6 +509,7 @@ mc_strings =
         delayLeave                      = "Delay Leave",
         defaultProfile                  = "Default Profile",
 		useHQMats						= "Craft HQ Mats",
+		
     },
     ["de"] =
         {

@@ -39,6 +39,8 @@ function mc_global.moduleinit()
 
 	GUI_NewCheckbox(mc_global.window.name,mc_getstring("depositItems"),"gDepositItems",mc_getstring("settings"));
 	
+	
+	GUI_NewButton(mc_global.window.name, GetString("questManager"), "QuestManager.toggle")
 	GUI_NewButton(mc_global.window.name, mc_getstring("skillManager"), "SkillManager.toggle")
 	GUI_NewButton(mc_global.window.name, mc_getstring("meshManager"), "ToggleMeshmgr")
 
@@ -80,13 +82,13 @@ function mc_global.onupdate( event, tickcount )
 			if ( mc_global.BotModes[gBotMode] ) then
 												
 				if( ml_task_hub:CurrentTask() ~= nil) then
-					mc_log("TASK:"..ml_task_hub:CurrentTask().name.." :")
+					ml_log("TASK:"..ml_task_hub:CurrentTask().name.." :")
 				end
 				
 				if (not ml_task_hub:Update() and ml_task_hub.shouldRun) then
 					ml_error("No task queued, please select a valid bot mode in the Settings drop-down menu")
 				end
-				dTrace = mc_GetTraceString()
+				dTrace = ml_GetTraceString()
 			end
 		end
 	end

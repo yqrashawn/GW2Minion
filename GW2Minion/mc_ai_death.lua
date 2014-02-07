@@ -3,11 +3,11 @@
 c_dead = inheritsFrom( ml_cause )
 e_dead = inheritsFrom( ml_effect )
 function c_dead:evaluate()
-   -- mc_log("c_dead")
+    --ml_log("c_dead")
     return Player.dead
 end
 function e_dead:execute()
-	mc_log("e_dead")
+	ml_log("e_dead")
 	Player:ClearTarget()
 	Player:StopMoving()	
 	d( "Downed: RESPAWN AT NEAREST WAYPOINT " )
@@ -22,11 +22,11 @@ end
 c_downed = inheritsFrom( ml_cause )
 e_downed = inheritsFrom( ml_effect )
 function c_downed:evaluate()
-   -- mc_log("c_downed")
+   -- ml_log("c_downed")
     return Player.healthstate == GW2.HEALTHSTATE.Defeated
 end
 function e_downed:execute()
-	mc_log("e_downed")
+	ml_log("e_downed")
 	if ( Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_4 ) ) then
 		-- Fight
 		local TList = ( CharacterList("lowesthealth,attackable,aggro,alive,los,onmesh,maxdistance="..mc_global.AttackRange) )
@@ -37,12 +37,12 @@ function e_downed:execute()
 				local t = Player:GetTarget()
 				if ( not t or t.id ~= id ) then
 					Player:SetTarget(id)
-					return mc_log(true)				
+					return ml_log(true)				
 				else
 					local pos = t.pos
 					if ( pos ) then
 						Player:SetFacing(pos.x,pos.y,pos.z)
-						return mc_log(mc_skillmanager.AttackTarget( t.id ))					
+						return ml_log(mc_skillmanager.AttackTarget( t.id ))					
 					end
 				end			
 			end
@@ -56,12 +56,12 @@ function e_downed:execute()
 				local t = Player:GetTarget()
 				if ( not t or t.id ~= id ) then
 					Player:SetTarget(id)
-					return mc_log(true)				
+					return ml_log(true)				
 				else
 					local pos = t.pos
 					if ( pos ) then
 						Player:SetFacing(pos.x,pos.y,pos.z)
-						return mc_log(mc_skillmanager.AttackTarget( t.id ))					
+						return ml_log(mc_skillmanager.AttackTarget( t.id ))					
 					end
 				end	
 			end

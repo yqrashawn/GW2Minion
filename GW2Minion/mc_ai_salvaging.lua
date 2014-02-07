@@ -57,7 +57,7 @@ function c_salvage:evaluate()
 	return (gSalvage == "1" and Inventory.freeSlotCount < 5 and Inventory.freeSlotCount > 0 and mc_ai_salvaging.CanSalvage() )
 end
 function e_salvage:execute()
-	mc_log("e_need_salvage")
+	ml_log("e_need_salvage")
 	local rarity = mc_ai_salvaging.Rarity[gMaxSalvageRarity]
 	if ( tonumber(rarity) ) then
 		local TList = Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool)
@@ -77,7 +77,7 @@ function e_salvage:execute()
 							d("Salvaging "..item.name.." with "..tool.name)
 							tool:Use(item)				
 						end
-						return mc_log(true)
+						return ml_log(true)
 					end
 					if ( not besttool or besttool.rarity < tool.rarity ) then
 						besttool = tool
@@ -92,13 +92,13 @@ function e_salvage:execute()
 						d("Salvaging "..item.name.." with "..besttool.name)
 						besttool:Use(item)
 					end
-					return mc_log(true)
+					return ml_log(true)
 				end			
 				id , item = next(IList, id)
 			end	
 		end
 	end
-	return mc_log(false)
+	return ml_log(false)
 end
 
 	

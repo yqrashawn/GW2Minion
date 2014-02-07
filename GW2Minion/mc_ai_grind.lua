@@ -20,7 +20,7 @@ function mc_ai_grind:Init()
 end
 
 function mc_ai_grind:Process()
-	--mc_log("Grind_Process->")
+	--ml_log("Grind_Process->")
 		
 		
 	-- Randomly pick next maingoal and pursue it			
@@ -58,11 +58,11 @@ end
 
 -- Gets called after the CnEs are evaluated, if true, calls directly task_complete_execute()
 function mc_ai_grind:task_complete_eval()
-	mc_log("mc_ai_grind:task_complete_eval->")
+	ml_log("mc_ai_grind:task_complete_eval->")
 	return false
 end
 function mc_ai_grind:task_complete_execute()
-    mc_log("mc_ai_grind:task_complete_execute->")
+    ml_log("mc_ai_grind:task_complete_execute->")
 end
 
 

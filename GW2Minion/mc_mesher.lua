@@ -113,7 +113,7 @@ function mm.ClearNavMesh()
 		end
 		d("Result: "..tostring(NavigationManager:UnloadNavMesh()))
 	else
-		mc_error("Please enter a NEW navmesh-filename first!")
+		ml_error("Please enter a NEW navmesh-filename first!")
 	end
 end
 
@@ -161,7 +161,7 @@ function mm.SaveMesh()
         gnewmeshname = ""
         gmeshname = filename
     else
-        mc_error("Enter a proper Navmesh name!")
+        ml_error("Enter a proper Navmesh name!")
     end
 end
 

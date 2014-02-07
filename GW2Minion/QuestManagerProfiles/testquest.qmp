@@ -1,0 +1,88 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	[1] = {
+		["map"] = "";
+		["prio"] = 1;
+		["name"] = "QuestOne";
+		["maxlevel"] = 77;
+		["minlevel"] = 2;
+		["done"] = "0";
+		["steps"] = {
+			[1] = {
+				["done"] = "0";
+				["prio"] = 1;
+				["script"] = {
+					["name"] = "KillSpecificEnemiesAtPos";
+					["data"] = {
+						["_Field"] = "oneonetwo";
+					};
+				};
+				["name"] = "QuestOneStepTwo";
+			};
+			[2] = {
+				["done"] = "0";
+				["prio"] = 2;
+				["script"] = {
+					["name"] = "KillSpecificEnemiesAtPos";
+					["data"] = {
+						["_Numeric"] = "2";
+						["_Checkbox"] = "1";
+						["_Field"] = "oneoneone1";
+					};
+				};
+				["name"] = "QestOneStepOne";
+			};
+		};
+		["repeatable"] = "1";
+	};
+	[2] = {
+		["map"] = "";
+		["prio"] = 2;
+		["name"] = "QuestTwo";
+		["maxlevel"] = 73;
+		["minlevel"] = 5;
+		["done"] = "0";
+		["steps"] = {
+			[1] = {
+				["name"] = "QuestTwoStepOne";
+				["done"] = "0";
+				["script"] = {
+					["name"] = "KillSpecificEnemiesAtPos";
+					["data"] = {
+						["_Field"] = "twooneone";
+					};
+				};
+				["prio"] = 1;
+			};
+			[2] = {
+				["name"] = "q2s2";
+				["done"] = "0";
+				["script"] = {
+					["name"] = "KillSpecificEnemiesAtPos";
+					["data"] = {
+						["_Checkbox"] = "0";
+						["_Field"] = "123g";
+					};
+				};
+				["prio"] = 2;
+			};
+			[3] = {
+				["name"] = "step3";
+				["done"] = "0";
+				["script"] = {
+					["name"] = "KillSpecificEnemiesAtPos";
+					["data"] = {
+						["_Checkbox"] = "1";
+						["_Field"] = "stepthree";
+					};
+				};
+				["prio"] = 3;
+			};
+		};
+		["repeatable"] = "1";
+	};
+}
+return obj1

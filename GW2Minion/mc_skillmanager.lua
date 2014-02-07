@@ -321,7 +321,7 @@ function mc_skillmanager.UpdateCurrentProfileData()
 								elseif ( key == "PrevID" )then newskill.previd = tostring(value)		
 							end
 						else
-							mc_error("Error loading inputline: Key: "..(tostring(key)).." value:"..tostring(value))
+							ml_error("Error loading inputline: Key: "..(tostring(key)).." value:"..tostring(value))
 						end				
 						i, line = next (profile,i)
 					end
@@ -399,7 +399,7 @@ function mc_skillmanager.GUIVarUpdate(Event, NewVals, OldVals)
 		elseif ( k == "SKM_TECount" ) then mc_skillmanager.SkillProfile[SKM_Prio].tecount = tonumber(v)
 		elseif ( k == "SKM_TERange" ) then mc_skillmanager.SkillProfile[SKM_Prio].terange = tonumber(v)
 		elseif ( k == "SKM_TACount" ) then mc_skillmanager.SkillProfile[SKM_Prio].tacount = tonumber(v)
-		elseif ( k == "SKM_TARange" ) then mc_skillmanager.SkillProfile[SKM_Prio].terange = tonumber(v)
+		elseif ( k == "SKM_TARange" ) then mc_skillmanager.SkillProfile[SKM_Prio].tarange = tonumber(v)
 		elseif ( k == "SKM_TEff1" ) then mc_skillmanager.SkillProfile[SKM_Prio].teff1 = v
 		elseif ( k == "SKM_TNEff1" ) then mc_skillmanager.SkillProfile[SKM_Prio].tneff1 = v				
 		elseif ( k == "SKM_TCondC" ) then mc_skillmanager.SkillProfile[SKM_Prio].tcondc = tonumber(v)
@@ -516,7 +516,7 @@ function mc_skillmanager.SaveProfile()
 			string2write = string2write.."SKM_TECount="..skill.tecount.."\n" 
 			string2write = string2write.."SKM_TERange="..skill.terange.."\n" 
 			string2write = string2write.."SKM_TACount="..skill.tacount.."\n" 
-			string2write = string2write.."SKM_TARange="..skill.terange.."\n" 	
+			string2write = string2write.."SKM_TARange="..skill.tarange.."\n" 	
 			string2write = string2write.."SKM_TEff1="..skill.teff1.."\n" 
 			string2write = string2write.."SKM_TNEff1="..skill.tneff1.."\n" 
 			string2write = string2write.."SKM_TCondC="..skill.tcondc.."\n" 
@@ -535,7 +535,7 @@ function mc_skillmanager.SaveProfile()
             Settings.GW2Minion.gSMprofile = filename
         end
 	else
-		mc_error("You need to enter a new Filename first!!")
+		ml_error("You need to enter a new Filename first!!")
 	end
 end
 
@@ -580,7 +580,7 @@ function mc_skillmanager.UpdateProfiles()
 			i,profile = next ( profilelist,i)
 		end		
 	else
-		mc_error("No Skillmanager profiles for our current Profession found")		
+		ml_error("No Skillmanager profiles for our current Profession found")		
 	end
 	gSMprofile_listitems = profiles
 	
@@ -708,7 +708,7 @@ function mc_skillmanager.EditSkill(event)
 		SKM_TECount = tonumber(skill.tecount) or 0
 		SKM_TERange = tonumber(skill.terange) or 0
 		SKM_TACount = tonumber(skill.tacount) or 0
-		SKM_TARange = tonumber(skill.terange) or 0
+		SKM_TARange = tonumber(skill.tarange) or 0
 		SKM_TEff1 = skill.teff1 or ""
 		SKM_TNEff1 = skill.tneff1 or ""
 		SKM_TCondC = tonumber(skill.tcondc) or 0
@@ -826,7 +826,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 					-- re-get Target, since this is a long loop and gw2 runs on several threads, in rare occasions it seems to happen that a target gets invalid while we are still in that for loop
 					-- so making sure it is valid in each round, performance impact huge ? 
 					if ( CharacterList:Get(TargetID) == nil and GadgetList:Get(TargetID) == nil) then
-						mc_error("For-Loop in Skillmanager lost its target!!!!!!!!!!!!")
+						ml_error("For-Loop in Skillmanager lost its target!!!!!!!!!!!!")
 						return
 					else
 						mybuffs = Player.buffs

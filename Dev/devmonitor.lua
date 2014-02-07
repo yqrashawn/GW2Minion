@@ -700,7 +700,7 @@ function Dev.UpdateWindow()
 			TCID = mytarget.contentID
 			TType = "Character"
 			TName = tostring(mytarget.name)
-			TSName = tostring(mytarget.specname)
+			--TSName = tostring(mytarget.specname)
 			THP = tostring(mytarget.health.current.." / "..mytarget.health.max.." / "..mytarget.health.percent.."%")
 			TPos = (math.floor(mytarget.pos.x * 10) / 10).." / "..(math.floor(mytarget.pos.y * 10) / 10).." / "..(math.floor(mytarget.pos.z * 10) / 10)
 			THead = (math.floor(mytarget.pos.hx * 10) / 10).." / "..(math.floor(mytarget.pos.hy * 10) / 10).." / "..(math.floor(mytarget.pos.hz * 10) / 10)
@@ -893,7 +893,7 @@ function Dev.UpdateWindow()
 		ISalv = 0
 	end
 	
-	-- Vendorinfo
+	--Vendorinfo
 	local vitem = VendorItemList:Get(tonumber(vendSlot))
 	VOpen = tostring(Inventory:IsVendorOpened())
 	if ( vitem ) then
