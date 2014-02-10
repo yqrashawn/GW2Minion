@@ -510,6 +510,38 @@ mc_strings =
         defaultProfile                  = "Default Profile",
 		useHQMats						= "Craft HQ Mats",
 		
+		--sellmanager
+		sellmanager						= "SellManager",
+		selleditor						= "SellEditor",
+		active							= "Active",
+		newfiltername					= "New Filter Name",
+		newfilter						= "New Filter",
+		generalSettings					= "General Settings",
+		sellfilters						= "Sell Filters",
+		name							= "Name",
+		itemtype						= "Itemtype",
+		rarity							= "Rarity",
+		weapontype						= "Weapontype",
+		itemid							= "Item ID",
+		delete							= "DELETE",
+		filterdetails					= "Filter Details",
+		
+		--sellmanager
+		sellmanager						= "SellManager",
+		selleditor						= "SellEditor",
+		active							= "Active",
+		newfiltername					= "New Filter Name",
+		newfilter						= "New Filter",
+		generalSettings					= "General Settings",
+		sellfilters						= "Sell Filters",
+		name							= "Name",
+		itemtype						= "Itemtype",
+		rarity							= "Rarity",
+		weapontype						= "Weapontype",
+		itemid							= "Item ID",
+		delete							= "DELETE",
+		filterdetails					= "Filter Details",
+		
     },
     ["de"] =
         {
@@ -1010,6 +1042,23 @@ mc_strings =
         delayLeave                      = "Delay Leave",
         defaultProfile                  = "Default Profile",
 		useHQMats						= "Craft HQ Mats",
+		
+		--sellmanager
+		sellmanager						= "SellManager",
+		selleditor						= "SellEditor",
+		active							= "Active",
+		newfiltername					= "New Filter Name",
+		newfilter						= "New Filter",
+		generalSettings					= "General Settings",
+		sellfilters						= "Sell Filters",
+		name							= "Name",
+		itemtype						= "Itemtype",
+		rarity							= "Rarity",
+		weapontype						= "Weapontype",
+		itemid							= "Item ID",
+		delete							= "DELETE",
+		filterdetails					= "Filter Details",
+		
     },
     ["fr"] =
        {
@@ -1251,6 +1300,7 @@ mc_strings =
 
         -- salvaging.lua
 		rarityMax                       = "Max Rarity",
+		rarityNone                      = "None",
         rarityJunk                      = "Junk",
         rarityCommon                    = "Common",
         rarityFine                      = "Fine",
@@ -1511,6 +1561,23 @@ mc_strings =
         delayLeave                      = "Delay Leave",
         defaultProfile                  = "Default Profile",
 		useHQMats						= "Craft HQ Mats",
+		
+		--sellmanager
+		sellmanager						= "SellManager",
+		selleditor						= "SellEditor",
+		active							= "Active",
+		newfiltername					= "New Filter Name",
+		newfilter						= "New Filter",
+		generalSettings					= "General Settings",
+		sellfilters						= "Sell Filters",
+		name							= "Name",
+		itemtype						= "Itemtype",
+		rarity							= "Rarity",
+		weapontype						= "Weapontype",
+		itemid							= "Item ID",
+		delete							= "DELETE",
+		filterdetails					= "Filter Details",
+		
     },
     ["ru"] =
         {
@@ -2013,6 +2080,23 @@ mc_strings =
         delayLeave                      = "Delay Leave",
         defaultProfile                  = "Default Profile",
 		useHQMats						= "Craft HQ Mats",
+		
+		--sellmanager
+		sellmanager						= "SellManager",
+		selleditor						= "SellEditor",
+		active							= "Active",
+		newfiltername					= "New Filter Name",
+		newfilter						= "New Filter",
+		generalSettings					= "General Settings",
+		sellfilters						= "Sell Filters",
+		name							= "Name",
+		itemtype						= "Itemtype",
+		rarity							= "Rarity",
+		weapontype						= "Weapontype",
+		itemid							= "Item ID",
+		delete							= "DELETE",
+		filterdetails					= "Filter Details",
+		
     },
     ["cn"] =
         {
@@ -2513,6 +2597,23 @@ mc_strings =
         delayLeave                      = "Delay Leave",
         defaultProfile                  = "Default Profile",
 		useHQMats						= "Craft HQ Mats",
+		
+		--sellmanager
+		sellmanager						= "SellManager",
+		selleditor						= "SellEditor",
+		active							= "Active",
+		newfiltername					= "New Filter Name",
+		newfilter						= "New Filter",
+		generalSettings					= "General Settings",
+		sellfilters						= "Sell Filters",
+		name							= "Name",
+		itemtype						= "Itemtype",
+		rarity							= "Rarity",
+		weapontype						= "Weapontype",
+		itemid							= "Item ID",
+		delete							= "DELETE",
+		filterdetails					= "Filter Details",
+		
     },
 	["tr"] =
     {
@@ -3014,6 +3115,22 @@ mc_strings =
         delayLeave                      = "Delay Leave",
         defaultProfile                  = "Default Profile",
 		useHQMats						= "Craft HQ Mats",
+		
+		--sellmanager
+		sellmanager						= "SellManager",
+		selleditor						= "SellEditor",
+		active							= "Active",
+		newfiltername					= "New Filter Name",
+		newfilter						= "New Filter",
+		generalSettings					= "General Settings",
+		sellfilters						= "Sell Filters",
+		name							= "Name",
+		itemtype						= "Itemtype",
+		rarity							= "Rarity",
+		weapontype						= "Weapontype",
+		itemid							= "Item ID",
+		delete							= "DELETE",
+		filterdetails					= "Filter Details",
 	}
 }
 

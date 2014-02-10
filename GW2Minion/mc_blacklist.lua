@@ -18,8 +18,11 @@ function mc_blacklist.HandleInit()
     
 	GUI_NewButton(mc_blacklist.mainwindow.name, mc_getstring("blacklistEvent"), "bBlackListEvent")
 	RegisterEventHandler("bBlackListEvent", mc_blacklist.eventhandler)
+	GUI_NewButton(mc_blacklist.mainwindow.name, GetString("blacklistVendor"), "bBlackListVendor")
+	RegisterEventHandler("bBlackListVendor", mc_blacklist.eventhandler)
 	GUI_NewButton(mc_blacklist.mainwindow.name, mc_getstring("blacklistTarget"), "bBlackListTarget")
 	RegisterEventHandler("bBlackListTarget", mc_blacklist.eventhandler)
+	
 	
     GUI_SizeWindow(mc_blacklist.mainwindow.name, mc_blacklist.mainwindow.w, mc_blacklist.mainwindow.h)
     GUI_UnFoldGroup(mc_blacklist.mainwindow.name, mc_getstring("generalSettings"))
@@ -34,6 +37,12 @@ function mc_blacklist.HandleInit()
     end
 	if not mc_blacklist.BlacklistExists(mc_getstring("salvageItems")) then
         mc_blacklist.CreateBlacklist(mc_getstring("salvageItems"))
+    end
+	if not mc_blacklist.BlacklistExists(mc_getstring("vendors")) then
+        mc_blacklist.CreateBlacklist(mc_getstring("vendors"))
+    end
+	if not mc_blacklist.BlacklistExists(mc_getstring("vendorsbuy")) then
+        mc_blacklist.CreateBlacklist(mc_getstring("vendorsbuy"))
     end
 	
 	mc_blacklist.ReadBlacklistFile(mc_blacklist.path)
@@ -290,7 +299,15 @@ function mc_blacklist.eventhandler( arg )
 			else
 				d("Invalid Event or no Event nearby")
 			end
-		end	
+		end
+	elseif ( arg == "bBlackListVendor" ) then
+		local t = Player:GetTarget()
+		if ( t ) then			   
+			d("Blacklisted "..t.name)
+			mc_blacklist.AddBlacklistEntry(GetString("vendors"), t.id, t.name, true)			
+		else
+			d("Invalid target or no target selected")
+		end
 	end
 end
 

@@ -7,7 +7,7 @@ mc_ai_combat.combatEvadeLastHP = 0
 mc_ai_combatAttack = inheritsFrom(ml_task)
 mc_ai_combatAttack.name = "CombatAttack"
 function mc_ai_combatAttack.Create()
-    ml_log("combatAttack:Create")
+    --ml_log("combatAttack:Create")
 	local newinst = inheritsFrom(mc_ai_combatAttack)
     
     --ml_task members
@@ -21,7 +21,7 @@ function mc_ai_combatAttack.Create()
     return newinst
 end
 function mc_ai_combatAttack:Init()
-    ml_log("combatAttack_Init->")
+   -- ml_log("combatAttack_Init->")
 	
 	-- Dead?
 	self:add(ml_element:create( "Dead", c_dead, e_dead, 225 ), self.process_elements)
@@ -46,25 +46,25 @@ function mc_ai_combatAttack:Init()
 	
 	-- Resting
 	self:add(ml_element:create( "Resting", c_resting, e_resting, 115 ), self.process_elements)	
-	
-	-- ReviveNPCs
-	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 105 ), self.process_elements)	
-	
+
 	-- Normal Looting
 	self:add(ml_element:create( "Looting", c_Loot, e_Loot, 100 ), self.process_elements)
 
 	-- Deposit Items
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 90 ), self.process_elements)	
 	
-	-- Salvaging
-	self:add(ml_element:create( "Salvaging", c_salvage, e_salvage, 85 ), self.process_elements)
-	
-	-- Gathering
-	self:add(ml_element:create( "Gathering", c_Gathering, e_Gathering, 75 ), self.process_elements)
-				
 	-- Repair & Vendoring
-	
+	self:add(ml_element:create( "Vendoring", c_vendor, e_vendor, 85 ), self.process_elements)	
 		
+	-- Salvaging
+	self:add(ml_element:create( "Salvaging", c_salvage, e_salvage, 75 ), self.process_elements)
+
+	-- ReviveNPCs
+	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 70 ), self.process_elements)	
+		
+	-- Gathering
+	self:add(ml_element:create( "Gathering", c_Gathering, e_Gathering, 65 ), self.process_elements)
+			
 	-- Killsomething nearby					
 	-- Valid Target
 	self:add(ml_element:create( "SearchingTarget", c_NeedValidTarget, e_SearchTarget, 50 ), self.process_elements)
@@ -78,8 +78,7 @@ function mc_ai_combatAttack:Init()
 	
     self:AddTaskCheckCEs()
 end
-function mc_ai_grind:task_complete_eval()
-	ml_log("combatAttack:Complete?->")
+function mc_ai_grind:task_complete_eval()	
 	if ( mc_global.now - newinst.duration > 0 or TableSize(CharacterList("attackable,alive,nearest,onmesh,maxdistance=4000,exclude_contentid="..mc_blacklist.GetExcludeString(mc_getstring("monsters")))) == 0) then 
 		Player:StopMovement()
 		return ml_log(true)
@@ -99,7 +98,7 @@ function c_Aggro:evaluate()
     return TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0
 end
 function e_Aggro:execute()
-	ml_log("e_Aggro")
+	ml_log("e_Aggro ")
 	local newTask = mc_ai_combatDefend.Create()
 	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
 end
@@ -114,7 +113,7 @@ function e_SearchTarget:execute()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("Found Aggro Target: "..(E.name).." ID:"..tostring(id))
+			--d("Found Aggro Target: "..(E.name).." ID:"..tostring(id))
 			return ml_log(Player:SetTarget(id))			
 		end		
 	end
@@ -124,7 +123,7 @@ function e_SearchTarget:execute()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("New Target: "..(E.name).." ID:"..tostring(id))			
+			--d("New Target: "..(E.name).." ID:"..tostring(id))			
 			return ml_log(Player:SetTarget(id))
 		end		
 	end
@@ -181,7 +180,7 @@ function mc_ai_combatDefend:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_combatDefend:task_complete_eval()
-	ml_log("combatDefend:Complete?->")
+	--ml_log("combatDefend:Complete?->")
 	if ( TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh"))== 0) then 
 		Player:StopMovement()
 		return ml_log(true)
@@ -206,7 +205,7 @@ function c_NeedValidTarget:evaluate()
 	return ml_log(true)
 end
 function e_SetAggroTarget:execute()
-	ml_log("SetAggroTarget")
+	ml_log("e_SetAggroTarget")
 	-- lowesthealth in CombatRange first	
 	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,onmesh,maxdistance="..mc_global.AttackRange) )
 	if ( TableSize( TList ) > 0 ) then
@@ -277,7 +276,7 @@ function c_KillTarget()
 	return true
 end
 function e_KillTarget:execute()
-	ml_log("KillTarget")
+	ml_log("e_KillTarget")
 	local t = Player:GetTarget()
 	if ( t ) then
 		local pos = t.pos
@@ -306,6 +305,7 @@ function c_resting:evaluate()
 	return false
 end
 function e_resting:execute()
+	ml_log("e_resting")
 	if (Player.profession == 8 ) then -- Necro, leave shroud
 		local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
 		if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17) then

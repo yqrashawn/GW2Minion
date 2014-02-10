@@ -7,20 +7,20 @@ function c_deposit:evaluate()
 	if ( gDepositItems == "1" ) then
 		if ( Inventory.freeSlotCount <= 3 ) then
 			if ( not c_deposit.LastCount or c_deposit.LastCount ~= Inventory.freeSlotCount ) then			
-				return true
+				return ml_log(true)
 			else
-				return false
+				return ml_log(false)
 			end
 		else
 			c_deposit.LastCount = 0
 		end
 	end
-	return false
+	return ml_log(false)
 end
 function e_deposit:execute()
 	ml_log( "e_deposit" )
 	c_deposit.LastCount = Inventory.freeSlotCount
-	Inventory:DepositCollectables()	
+	ml_log(Inventory:DepositCollectables())
 end
 
 ------------
@@ -32,7 +32,7 @@ function c_AoELoot:evaluate()
 end
 function e_AoELoot:execute()
 	ml_log("e_AoELoot")
-	return Player:AoELoot()
+	return ml_log(Player:AoELoot())
 end
 
 ------------
@@ -58,7 +58,7 @@ function e_Loot:execute()
 						ml_error("e_Loot.MoveIntoCombatRange result: "..tonumber(navResult))					
 					end
 					ml_log("MoveToLootable..")
-					return true
+					return ml_log(true)
 				end
 			else
 				-- Grab that thing
@@ -72,7 +72,7 @@ function e_Loot:execute()
 						Player:Interact( id )
 						ml_log("Looting..")
 						mc_global.Wait(1000)
-						return true
+						return ml_log(true)
 					end	
 				end
 			end
@@ -151,6 +151,7 @@ function c_Gathering:evaluate()
 	return ml_log(Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,gatherable,maxdistance=4000")) > 0)
 end
 function e_Gathering:execute()
+	ml_log("e_Gathering")
 	local GatherableList = GadgetList( "gatherable,shortestpath,onmesh")
 	if ( GatherableList ) then
 		local id,node = next (GatherableList)

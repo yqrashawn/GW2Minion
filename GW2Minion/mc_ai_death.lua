@@ -4,15 +4,22 @@ c_dead = inheritsFrom( ml_cause )
 e_dead = inheritsFrom( ml_effect )
 function c_dead:evaluate()
     --ml_log("c_dead")
-    return Player.dead
+	if ( Player.dead ) then
+		mc_global.Wait(1500)
+		return true
+	end
+	return false
 end
 function e_dead:execute()
 	ml_log("e_dead")
+	mc_ai_vendor.isSelling = false
+	mc_ai_vendor.isBuying = false
+	mc_ai_vendor.isRepairing = false
 	Player:ClearTarget()
-	Player:StopMoving()	
-	d( "Downed: RESPAWN AT NEAREST WAYPOINT " )
+	Player:StopMovement()	
+	d( "Dead: RESPAWN AT NEAREST WAYPOINT " )
 	mc_global.Wait(3000)
-	d( Player:RespawnAtClosestResShrine() )	
+	d( Player:RespawnAtClosestWaypoint() )	
 end
 
 
@@ -22,8 +29,7 @@ end
 c_downed = inheritsFrom( ml_cause )
 e_downed = inheritsFrom( ml_effect )
 function c_downed:evaluate()
-   -- ml_log("c_downed")
-    return Player.healthstate == GW2.HEALTHSTATE.Defeated
+	return Player.healthstate == GW2.HEALTHSTATE.Downed
 end
 function e_downed:execute()
 	ml_log("e_downed")
@@ -33,7 +39,7 @@ function e_downed:execute()
 		if ( TableSize( TList ) > 0 ) then
 			local id, E  = next( TList )
 			if ( id ~= nil and id ~= 0 and E ~= nil ) then
-				d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+				--d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
 				local t = Player:GetTarget()
 				if ( not t or t.id ~= id ) then
 					Player:SetTarget(id)
@@ -52,7 +58,7 @@ function e_downed:execute()
 		if ( TableSize( TList ) > 0 ) then
 			local id, E  = next( TList )
 			if ( id ~= nil and id ~= 0 and E ~= nil ) then
-				d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+				--d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
 				local t = Player:GetTarget()
 				if ( not t or t.id ~= id ) then
 					Player:SetTarget(id)

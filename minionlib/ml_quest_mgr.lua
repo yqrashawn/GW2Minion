@@ -310,7 +310,7 @@ function ml_quest_mgr.AddNewQuest( quest )
 end
 
 function ml_quest_mgr.RefreshQuestList()	
-	GUI_Delete(ml_quest_mgr.mainwindow.name,GetString("quests"))
+	GUI_DeleteGroup(ml_quest_mgr.mainwindow.name,GetString("quests"))
 	if ( TableSize( ml_quest_mgr.QuestList ) > 0 ) then
 		local i,s = next ( ml_quest_mgr.QuestList )
 		while i and s do
@@ -389,6 +389,7 @@ function ml_quest_mgr.EditQuest( arg )
 	local wnd = GUI_GetWindowInfo(ml_quest_mgr.mainwindow.name)
 	GUI_MoveWindow( ml_quest_mgr.editwindow.name, wnd.x+wnd.width,wnd.y) 
 	GUI_WindowVisible(ml_quest_mgr.editwindow.name,true)
+	GUI_SizeWindow(ml_quest_mgr.editwindow.name,ml_quest_mgr.editwindow.w,ml_quest_mgr.editwindow.h)
 	
 	local quest = ml_quest_mgr.QuestList[tonumber(ml_quest_mgr.editwindow.currentPrio)]	
 	if ( quest ) then
@@ -414,7 +415,8 @@ function ml_quest_mgr.ToggleEditorMenu( arg )
 	else
 		local wnd = GUI_GetWindowInfo(ml_quest_mgr.mainwindow.name)
 		GUI_MoveWindow( ml_quest_mgr.editwindow.name, wnd.x+wnd.width,wnd.y)
-		GUI_WindowVisible(ml_quest_mgr.editwindow.name,true)	
+		GUI_WindowVisible(ml_quest_mgr.editwindow.name,true)
+		GUI_SizeWindow(ml_quest_mgr.editwindow.name,ml_quest_mgr.editwindow.w,ml_quest_mgr.editwindow.h)
 	end
 end
 
@@ -465,7 +467,7 @@ function ml_quest_mgr.AddNewStep( step )
 end
 
 function ml_quest_mgr.RefreshStepList()	
-	GUI_Delete(ml_quest_mgr.editwindow.name,GetString("questSteps"))
+	GUI_DeleteGroup(ml_quest_mgr.editwindow.name,GetString("questSteps"))
 	if ( TableSize( ml_quest_mgr.QuestList ) > 0 and TableSize( ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].steps ) > 0) then
 			
 		local i,s = next ( ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].steps )
@@ -538,6 +540,7 @@ function ml_quest_mgr.EditStep( arg )
 	local wnd = GUI_GetWindowInfo(ml_quest_mgr.editwindow.name)
 	GUI_MoveWindow( ml_quest_mgr.stepwindow.name, wnd.x+wnd.width,wnd.y) 
 	GUI_WindowVisible(ml_quest_mgr.stepwindow.name,true)
+	GUI_SizeWindow(ml_quest_mgr.stepwindow.name,ml_quest_mgr.stepwindow.w,ml_quest_mgr.stepwindow.h)
 	
 	if ( TableSize(ml_quest_mgr.QuestList) > 0 and TableSize( ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].steps) > 0) then
 		local step = ml_quest_mgr.QuestList[tonumber(ml_quest_mgr.editwindow.currentPrio)].steps[tonumber(ml_quest_mgr.stepwindow.currentPrio)]	
@@ -560,6 +563,7 @@ function ml_quest_mgr.ToggleStepEditorMenu( arg )
 		local wnd = GUI_GetWindowInfo(ml_quest_mgr.editwindow.name)
 		GUI_MoveWindow( ml_quest_mgr.stepwindow.name, wnd.x+wnd.width,wnd.y)
 		GUI_WindowVisible(ml_quest_mgr.stepwindow.name,true)	
+		GUI_SizeWindow(ml_quest_mgr.stepwindow.name,ml_quest_mgr.stepwindow.w,ml_quest_mgr.stepwindow.h)
 	end
 end
 
@@ -569,7 +573,7 @@ end
 -- Refreshes the currently shown ScriptUI and loads the corresponding scriptdata into the UI fields
 function ml_quest_mgr.RefreshScript()
 	-- Clear old scriptUI
-	GUI_Delete(ml_quest_mgr.stepwindow.name,GetString("questStepDetails"))
+	GUI_DeleteGroup(ml_quest_mgr.stepwindow.name,GetString("questStepDetails"))
 	
 	-- Load the UI elements of the selected script
 	if ( gQMS_Script ~= nil and gQMS_Script ~= "" and gQMS_Script ~= "None" ) then

@@ -1,0 +1,25 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	["Items"] = {
+	};
+	["Vendors"] = {
+		[2671] = {
+			["time"] = true;
+			["name"] = "Explorer Casta";
+		};
+	};
+	["Monsters"] = {
+		[42661] = {
+			["time"] = true;
+			["name"] = "Rat";
+		};
+	};
+	["VendorsBuyTools"] = {
+	};
+	["Event"] = {
+	};
+}
+return obj1
