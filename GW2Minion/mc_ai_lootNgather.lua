@@ -7,15 +7,15 @@ function c_deposit:evaluate()
 	if ( gDepositItems == "1" ) then
 		if ( Inventory.freeSlotCount <= 3 ) then
 			if ( not c_deposit.LastCount or c_deposit.LastCount ~= Inventory.freeSlotCount ) then			
-				return ml_log(true)
+				return true
 			else
-				return ml_log(false)
+				return false
 			end
 		else
 			c_deposit.LastCount = 0
 		end
 	end
-	return ml_log(false)
+	return false
 end
 function e_deposit:execute()
 	ml_log( "e_deposit" )
@@ -92,13 +92,13 @@ function c_LootChests:evaluate()
 			while ( index ~= nil and LT~=nil ) do
 				if ( LT.selectable and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194 or LT.contentID == 262863 or LT.contentID == 236384)) then --or LT.contentID == 41638
 					d("CHEST: "..tostring(LT.name).." "..tostring(LT.distance).." "..tostring(LT.contentID).." "..tostring(LT.lootable).." "..tostring(index))
-					return ml_log(true)
+					return true
 				end
 				index, LT = next( GList,index )
 			end
 		end	
 	end
-	return ml_log(false)
+	return false
 end
 e_LootChests.throttle = 500
 function e_LootChests:execute()
@@ -148,7 +148,7 @@ end
 c_Gathering = inheritsFrom( ml_cause )
 e_Gathering = inheritsFrom( ml_effect )
 function c_Gathering:evaluate()
-	return ml_log(Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,gatherable,maxdistance=4000")) > 0)
+	return (Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,gatherable,maxdistance=4000")) > 0)
 end
 function e_Gathering:execute()
 	ml_log("e_Gathering")

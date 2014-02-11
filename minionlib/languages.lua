@@ -346,6 +346,9 @@ strings =
 		delete							= "DELETE",
 		filterdetails					= "Filter Details",
 		buyGroup						= "Buy Settings",
+		repairDamaged					= "Repair Damaged >",
+		repairBroken					= "Repair Broken >",
+		
     },                                  
     ["cn"] =                            
     {                               

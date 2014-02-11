@@ -14,7 +14,6 @@ function e_dead:execute()
 	ml_log("e_dead")
 	mc_ai_vendor.isSelling = false
 	mc_ai_vendor.isBuying = false
-	mc_ai_vendor.isRepairing = false
 	Player:ClearTarget()
 	Player:StopMovement()	
 	d( "Dead: RESPAWN AT NEAREST WAYPOINT " )

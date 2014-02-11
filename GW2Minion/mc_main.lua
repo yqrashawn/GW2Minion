@@ -31,11 +31,11 @@ function mc_global.moduleinit()
 	GUI_NewCheckbox(mc_global.window.name,mc_getstring("botEnabled"),"gBotRunning",mc_getstring("botStatus"));
 	GUI_NewComboBox(mc_global.window.name,mc_getstring("botMode"),"gBotMode",mc_getstring("botStatus"),"None");
 	-- Debug fields
-	GUI_NewField(mc_global.window.name,"Trace","dTrace",mc_getstring("botStatus"));
+	GUI_NewField(mc_global.window.name,"Task","dTrace",mc_getstring("botStatus"));
 	GUI_NewField(mc_global.window.name,"AttackRange","dAttackRange",mc_getstring("botStatus"));
 	
 	
-	GUI_NewNumeric(mc_global.window.name,mc_getstring("pulseTime"),"gPulseTime",mc_getstring("settings"),"10","2000");
+	GUI_NewNumeric(mc_global.window.name,mc_getstring("pulseTime"),"gPulseTime",mc_getstring("settings"),"10","10000");
 
 	GUI_NewCheckbox(mc_global.window.name,mc_getstring("depositItems"),"gDepositItems",mc_getstring("settings"));
 	
@@ -82,7 +82,7 @@ function mc_global.onupdate( event, tickcount )
 			if ( mc_global.BotModes[gBotMode] ) then
 												
 				if( ml_task_hub:CurrentTask() ~= nil) then
-					ml_log("TASK:"..ml_task_hub:CurrentTask().name.." :")
+					ml_log(ml_task_hub:CurrentTask().name.." :")
 				end
 				
 				if (not ml_task_hub:Update() and ml_task_hub.shouldRun) then
@@ -114,6 +114,7 @@ function mc_global.eventhandler(arg)
 	end
 end
 
+	
 function mc_global.guivarupdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
 		if (k == "gEnableLog" or
@@ -122,7 +123,9 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 			k == "sMtargetmode" or
 			k == "gSalvage" or
 			k == "gMaxSalvageRarity" or
-			k == "gSalvageTrophies" )			
+			k == "gSalvageTrophies" or 
+			k == "gRepairBrokenLimit" or
+			k == "gRepairDamageLimit")			
 		then
 			Settings.GW2Minion[tostring(k)] = v
 		
@@ -154,7 +157,6 @@ function mc_global.togglebot(arg)
 		ml_task_hub.shouldRun = false
 		mc_ai_vendor.isSelling = false
 		mc_ai_vendor.isBuying = false
-		mc_ai_vendor.isRepairing = false
 		gBotRunning = "0"
 		Player:StopMovement()
 		ml_task_hub:ClearQueues()

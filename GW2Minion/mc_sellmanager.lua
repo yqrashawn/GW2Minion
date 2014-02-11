@@ -39,7 +39,7 @@ function mc_sellmanager.ModuleInit()
 		
 		{
 			itemID = "None",
-			itemtype = "None",
+			itemtype = "Weapon",
 			name = "Weapons_Fine",
 			rarity = "Fine",
 			soulbound = "false",
@@ -87,11 +87,18 @@ function mc_sellmanager.ModuleInit()
 	if (Settings.GW2Minion.SellManager_Active == nil ) then
 		Settings.GW2Minion.SellManager_Active = "1"
 	end
+	if (Settings.GW2Minion.gRepairDamageLimit == nil ) then
+		Settings.GW2Minion.gRepairDamageLimit = "5" -- Repair when more than 5 damaged items
+	end
+	if (Settings.GW2Minion.gRepairBrokenLimit == nil ) then
+		Settings.GW2Minion.gRepairBrokenLimit = "2" -- Repair when more than 5 broken items
+	end
 	
 	
 	-- MANAGER WINDOW
 	GUI_NewButton(mc_global.window.name, GetString("sellGroup"), "sellManager.toggle",GetString("vendorSettings"))
-	
+	GUI_NewNumeric(mc_global.window.name,GetString("repairDamaged"),"gRepairDamageLimit",mc_getstring("vendorSettings"),"0","15");
+	GUI_NewNumeric(mc_global.window.name,GetString("repairBroken"),"gRepairBrokenLimit",mc_getstring("vendorSettings"),"0","15");
 	
 	-- SELL SETTINGS
 	GUI_NewWindow(mc_sellmanager.mainwindow.name,mc_sellmanager.mainwindow.x,mc_sellmanager.mainwindow.y,mc_sellmanager.mainwindow.w,mc_sellmanager.mainwindow.h)
@@ -139,6 +146,9 @@ function mc_sellmanager.ModuleInit()
 	
 	SellManager_Active = Settings.GW2Minion.SellManager_Active
 	mc_sellmanager.filterList = Settings.GW2Minion.SellManager_FilterList
+	gRepairDamageLimit = Settings.GW2Minion.gRepairDamageLimit
+	gRepairBrokenLimit = Settings.GW2Minion.gRepairBrokenLimit
+	
 	mc_sellmanager.refreshFilterlist()
 end
 

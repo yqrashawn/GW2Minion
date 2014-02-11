@@ -39,22 +39,25 @@ function mc_ai_combatAttack:Init()
 	
 		
 	-- Aggro
-	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 150 ), self.process_elements) --reactive queue
+	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 160 ), self.process_elements) --reactive queue
 		
 	-- Normal Chests	
-	self:add(ml_element:create( "LootingChest", c_LootChest, e_LootChest, 125 ), self.process_elements)
+	self:add(ml_element:create( "LootingChest", c_LootChest, e_LootChest, 155 ), self.process_elements)
 	
 	-- Resting
-	self:add(ml_element:create( "Resting", c_resting, e_resting, 115 ), self.process_elements)	
+	self:add(ml_element:create( "Resting", c_resting, e_resting, 145 ), self.process_elements)	
 
 	-- Normal Looting
-	self:add(ml_element:create( "Looting", c_Loot, e_Loot, 100 ), self.process_elements)
+	self:add(ml_element:create( "Looting", c_Loot, e_Loot, 130 ), self.process_elements)
 
 	-- Deposit Items
-	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 90 ), self.process_elements)	
+	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 120 ), self.process_elements)	
+	
+	-- Quick-Repair & Vendoring (when a vendor is nearby)	
+	self:add(ml_element:create( "QuickVendoring", c_quickvendor, e_quickvendor, 100 ), self.process_elements)
 	
 	-- Repair & Vendoring
-	self:add(ml_element:create( "Vendoring", c_vendor, e_vendor, 85 ), self.process_elements)	
+	self:add(ml_element:create( "Vendoring", c_vendor, e_vendor, 90 ), self.process_elements)	
 		
 	-- Salvaging
 	self:add(ml_element:create( "Salvaging", c_salvage, e_salvage, 75 ), self.process_elements)
@@ -81,9 +84,9 @@ end
 function mc_ai_grind:task_complete_eval()	
 	if ( mc_global.now - newinst.duration > 0 or TableSize(CharacterList("attackable,alive,nearest,onmesh,maxdistance=4000,exclude_contentid="..mc_blacklist.GetExcludeString(mc_getstring("monsters")))) == 0) then 
 		Player:StopMovement()
-		return ml_log(true)
+		return true
 	end
-	return ml_log(false)
+	return false
 end
 function mc_ai_grind:task_complete_execute()
    self.completed = true
@@ -183,9 +186,9 @@ function mc_ai_combatDefend:task_complete_eval()
 	--ml_log("combatDefend:Complete?->")
 	if ( TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh"))== 0) then 
 		Player:StopMovement()
-		return ml_log(true)
+		return true
 	end
-	return ml_log(false)
+	return false
 end
 
 function mc_ai_combatDefend:task_complete_execute()
@@ -200,9 +203,9 @@ function c_NeedValidTarget:evaluate()
 	local target = Player:GetTarget()
 	if ( TableSize( target ) > 0 ) then	
 		--d("NeedValidTarget "..tostring(not target.alive and not target.attackable and not target.onmesh))
-		return ml_log(not target.alive or not target.attackable or not target.onmesh)
+		return (not target.alive or not target.attackable or not target.onmesh)
 	end	
-	return ml_log(true)
+	return true
 end
 function e_SetAggroTarget:execute()
 	ml_log("e_SetAggroTarget")
@@ -246,7 +249,7 @@ function c_MoveIntoCombatRange:evaluate()
 			end
 		end
 	end
-	return ml_log(false)
+	return false
 end
 function e_MoveIntoCombatRange:execute()
 	ml_log("e_MoveIntoCombRng")

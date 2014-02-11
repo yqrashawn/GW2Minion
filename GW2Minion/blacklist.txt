@@ -6,10 +6,6 @@ local obj1 = {
 	["Items"] = {
 	};
 	["Vendors"] = {
-		[2671] = {
-			["time"] = true;
-			["name"] = "Explorer Casta";
-		};
 	};
 	["Monsters"] = {
 		[42661] = {
