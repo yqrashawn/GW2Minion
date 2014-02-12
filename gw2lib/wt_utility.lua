@@ -34,23 +34,20 @@ function NeedRepair()
 end
 
 
-function IsEquipmentBroken( )
-	local chest = Inventory:GetEquippedItemBySlot( GW2.EQUIPMENTSLOT.Chest )
-	local boots = Inventory:GetEquippedItemBySlot( GW2.EQUIPMENTSLOT.Boots )
-	local gloves = Inventory:GetEquippedItemBySlot( GW2.EQUIPMENTSLOT.Gloves )
-	local headgear = Inventory:GetEquippedItemBySlot( GW2.EQUIPMENTSLOT.Headgear )
-	local leggings = Inventory:GetEquippedItemBySlot( GW2.EQUIPMENTSLOT.Leggings )
-	local shoulders = Inventory:GetEquippedItemBySlot( GW2.EQUIPMENTSLOT.Shoulders )
-	
-	if ( ( chest ~= nil and chest.durability == GW2.ITEMDURABILITY.Broken ) or
-		( boots ~= nil and boots.durability == GW2.ITEMDURABILITY.Broken ) or
-		( gloves ~= nil and gloves.durability == GW2.ITEMDURABILITY.Broken ) or
-		( headgear ~= nil and headgear.durability == GW2.ITEMDURABILITY.Broken ) or
-		( leggings ~= nil and leggings.durability == GW2.ITEMDURABILITY.Broken ) or
-		( shoulders ~= nil and shoulders.durability == GW2.ITEMDURABILITY.Broken ) ) then
-		return true
+function GetEquippedItemStatus( )
+	local damaged = 0
+	local broken = 0
+	for (i=1,24,1) do 
+		if ( i < 8 or i > 18 ) then
+			local eqItem = Inventory:GetEquippedItemBySlot( i )
+			if ( eqItem ~= nil ) then
+				local dur = eqItem.durability 
+				if ( dur == GW2.ITEMDURABILITY.Broken) then broken = broken + 1 end
+				if ( dur == GW2.ITEMDURABILITY.Damaged) then damaged = damaged + 1 end
+			end
+		end
 	end
-	return false
+	return {damaged,broken}
 end
 
 function IsEquipmentDamaged( )

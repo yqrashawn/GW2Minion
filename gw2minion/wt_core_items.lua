@@ -3,6 +3,7 @@ wt_core_items = {}
 wt_core_items.itemBlacklist = {}
 wt_core_items.contentIDs =
 {
+	-- sickles 0= lowest quality , 5 = orichalcum
 	[0] = 
 	{
 		[0] = 23029,
@@ -12,6 +13,7 @@ wt_core_items.contentIDs =
 		[4] = 23008,
 		[5] = 22997,
 	},
+	-- logging 0= lowest quality , 5 = orichalcum
 	[1] = 
 	{
 		[0] = 23030,
@@ -21,6 +23,7 @@ wt_core_items.contentIDs =
 		[4] = 23009,
 		[5] = 23000
 	},
+	-- mining 0= lowest quality , 5 = orichalcum
 	[2] =
 	{
 		[0] = 23031,
@@ -30,6 +33,7 @@ wt_core_items.contentIDs =
 		[4] = 23010,
 		[5] = 23001
 	},
+	-- salvagingkits 0= lowest quality 
 	[3] = 
 	{
 		[0] = 23038,
