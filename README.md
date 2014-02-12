@@ -1,7 +1,4 @@
-GW2Minion
-=========
-
-The most awesome Bot for guild wars 2 from mmominion.com
+GW2Minion - The most awesome Bot for guild wars 2 from mmominion.com
 
 ## [GW2Minion 2.0 API Documentation] (https://github.com/MMOMinion/GW2Minion/wiki)
 
