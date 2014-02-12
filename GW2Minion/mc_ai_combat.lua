@@ -260,7 +260,7 @@ function e_MoveIntoCombatRange:execute()
 			-- moveto(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)		
 			if ( tPos ) then
 				--d("MoveIntoCombatRange..Running")
-				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,130,false,false,true))		
+				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,100+t.radius,false,false,true))		
 				if (tonumber(navResult) < 0) then
 					ml_error("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
 				end
@@ -300,8 +300,9 @@ end
 
 c_resting = inheritsFrom( ml_cause )
 e_resting = inheritsFrom( ml_effect )
-function c_resting:evaluate()	
-	if ( not Player.inCombat and HPt and HPt.percent < math.random(55,75) ) then		
+c_resting.hpPercent = math.random(45,85)
+function c_resting:evaluate()
+	if ( not Player.inCombat and Player.health.percent < c_resting.hpPercent ) then		
 		local mybuffs = Player.buffs
 		return not mc_helper.BufflistHasBuffs(mybuffs, "737,723,736") --burning,poison,bleeding		
 	end	
@@ -309,6 +310,7 @@ function c_resting:evaluate()
 end
 function e_resting:execute()
 	ml_log("e_resting")
+	c_resting.hpPercent = math.random(45,85)
 	if (Player.profession == 8 ) then -- Necro, leave shroud
 		local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
 		if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17) then
@@ -432,7 +434,7 @@ function DoCombatMovement()
 					if (pPos) then
 						local mPos = NavigationManager:GetClosestPointOnMesh(pPos)
 						if ( mPos ) then
-							d("Moving back onto the NavMesh..")
+							--d("Moving back onto the NavMesh..")
 							Player:MoveTo(mPos.x,mPos.y,mPos.z,50,false,false,false)
 						end
 					end

@@ -348,7 +348,25 @@ strings =
 		buyGroup						= "Buy Settings",
 		repairDamaged					= "Repair Damaged >",
 		repairBroken					= "Repair Broken >",
+		--buymanager
+		buymanager						= "Buy Manager",
+		buyAllKits						= "Buy all Kits",
+		buyBestKits						= "Buy best Kit",
+		salvageKits						= "Buy Salvage Kits",
+		gatherTools						= "Buy Gathering Tools",
+		kitStock						= "Kit Stock",
+		toolStock						= "Tool Stock",
+		copperTools						= "Copper Tools",
+		ironTools						= "Iron Tools",
+		steelTools						= "Steel Tools",
+		darksteelTools					= "Darksteel Tools",
+		mithrilTools					= "Mithril Tools",
+		orichalcumTools					= "Orichalcum Tools",
 		
+		
+		--mc_ai_event.lua
+		events							= "Events",
+		doEvents						= "Do Events",
     },                                  
     ["cn"] =                            
     {                               

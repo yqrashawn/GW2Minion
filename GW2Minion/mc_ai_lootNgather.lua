@@ -26,12 +26,14 @@ end
 ------------
 c_AoELoot = inheritsFrom( ml_cause )
 e_AoELoot = inheritsFrom( ml_effect )
+c_AoELoot.lastused = 0
 function c_AoELoot:evaluate()
     --ml_log("c_AoELoot")
-    return Inventory.freeSlotCount > 0 and TableSize(CharacterList("nearest,lootable,maxdistance=900")) > 0
+    return ( mc_global.now - c_AoELoot.lastused >1000 and Inventory.freeSlotCount > 0 and TableSize(CharacterList("nearest,lootable,maxdistance=900")) > 0)
 end
 function e_AoELoot:execute()
 	ml_log("e_AoELoot")
+	c_AoELoot.lastused = mc_global.now
 	return ml_log(Player:AoELoot())
 end
 
@@ -144,7 +146,7 @@ function e_LootChests:execute()
 end
 
 
-------------fck that, I'm lazy
+------------fck that, I'm lazy and this works like a god
 c_Gathering = inheritsFrom( ml_cause )
 e_Gathering = inheritsFrom( ml_effect )
 function c_Gathering:evaluate()

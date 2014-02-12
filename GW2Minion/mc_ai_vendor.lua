@@ -1,5 +1,5 @@
 -- Handles Selling,Buying,Repairing
--- UI is in mc_Sellmanager.lua
+-- UI is in mc_vendormanager.lua
 mc_ai_vendor = {}
 
 --************
@@ -10,9 +10,9 @@ function mc_ai_vendor.NeedToSell( vendornearby )
 	if ( mc_ai_vendor.isSelling ) then return true end
 	
 	if ( vendornearby ) then
-		return (TableSize(mc_sellmanager.createItemList()) > 2)
+		return (TableSize(mc_vendormanager.createItemList()) > 2)
 	end
-	return mc_sellmanager.canSell()
+	return TableSize(mc_vendormanager.createItemList()) > 0
 end
 function mc_ai_vendor.GetClosestVendorMarker()	
 	if ( mc_ai_vendor.isSelling ) then return true end
@@ -199,7 +199,7 @@ function mc_ai_vendor.InteractWithVendor( vendor , nearbyvendor)
 			end
 		else
 			-- SELL HERE
-			local sList = mc_sellmanager.createItemList()
+			local sList = mc_vendormanager.createItemList()
 			if ( TableSize(sList) > 0 ) then
 				local i,item = next (sList)
 				if ( i and item ) then

@@ -1,5 +1,7 @@
 mc_global = { }
 mc_global.window = { name="MinionBot", x=50, y=50, width=200, height=350 }
+mc_global.advwindow = { name="AdvandedSettings", x=250, y=200 , width=200, height=200 }
+mc_global.advwindowvisible = false
 mc_global.path = GetStartupPath()
 mc_global.now = 0
 mc_global.lasttick = 0
@@ -18,14 +20,15 @@ function mc_global.moduleinit()
 	if ( Settings.GW2Minion.gDepositItems == nil ) then
         Settings.GW2Minion.gDepositItems = "1"
     end
+	if ( Settings.GW2Minion.gDoEvents == nil ) then
+        Settings.GW2Minion.gDoEvents = "1"
+    end
 	
 	
+	-- MAIN WINDOW
 	GUI_NewWindow(mc_global.window.name,mc_global.window.x,mc_global.window.y,mc_global.window.width,mc_global.window.height)
 	GUI_NewButton(mc_global.window.name,mc_getstring("startStop"),"mc_global.startStop")
-	
-	GUI_NewButton(mc_global.window.name, mc_getstring("blacklistManager"), "bToggleBlacklistMgr")
-	RegisterEventHandler("bToggleBlacklistMgr", mc_blacklist.ToggleMenu)
-	
+		
 	GUI_NewButton(mc_global.window.name,mc_getstring("radar"),"Radar.toggle")
 	RegisterEventHandler("mc_global.startStop", mc_global.eventhandler)
 	GUI_NewCheckbox(mc_global.window.name,mc_getstring("botEnabled"),"gBotRunning",mc_getstring("botStatus"));
@@ -33,18 +36,27 @@ function mc_global.moduleinit()
 	-- Debug fields
 	GUI_NewField(mc_global.window.name,"Task","dTrace",mc_getstring("botStatus"));
 	GUI_NewField(mc_global.window.name,"AttackRange","dAttackRange",mc_getstring("botStatus"));
-	
-	
+		
 	GUI_NewNumeric(mc_global.window.name,mc_getstring("pulseTime"),"gPulseTime",mc_getstring("settings"),"10","10000");
 
-	GUI_NewCheckbox(mc_global.window.name,mc_getstring("depositItems"),"gDepositItems",mc_getstring("settings"));
+	GUI_NewCheckbox(mc_global.window.name,mc_getstring("depositItems"),"gDepositItems",mc_getstring("settings"));	
+	GUI_NewCheckbox(mc_global.window.name,mc_getstring("doEvents"),"gDoEvents",mc_getstring("settings"));
+	
+
+	
+	GUI_NewButton(mc_global.window.name, GetString("advancedSettings"), "AdvancedSettings.toggle")
+	RegisterEventHandler("AdvancedSettings.toggle", mc_global.ToggleAdvMenu)
+	
+	-- ADVANCED SETTINGS WINDOW
+	GUI_NewWindow(mc_global.advwindow.name,mc_global.advwindow.x,mc_global.advwindow.y,mc_global.advwindow.width,mc_global.advwindow.height)
+	GUI_NewButton(mc_global.advwindow.name, mc_getstring("blacklistManager"), "bToggleBlacklistMgr")
+	RegisterEventHandler("bToggleBlacklistMgr", mc_blacklist.ToggleMenu)
+	GUI_NewButton(mc_global.advwindow.name, GetString("questManager"), "QuestManager.toggle")
+	GUI_NewButton(mc_global.advwindow.name, mc_getstring("skillManager"), "SkillManager.toggle")
+	GUI_NewButton(mc_global.advwindow.name, mc_getstring("meshManager"), "ToggleMeshmgr")
 	
 	
-	GUI_NewButton(mc_global.window.name, GetString("questManager"), "QuestManager.toggle")
-	GUI_NewButton(mc_global.window.name, mc_getstring("skillManager"), "SkillManager.toggle")
-	GUI_NewButton(mc_global.window.name, mc_getstring("meshManager"), "ToggleMeshmgr")
-
-
+	GUI_WindowVisible(mc_global.advwindow.name,false)
 	
 	-- setup bot mode
     local botModes = "None"
@@ -119,6 +131,7 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
 		if (k == "gEnableLog" or
 			k == "gDepositItems" or
+			k == "doEvents" or 
 			k == "sMmode" or 
 			k == "sMtargetmode" or
 			k == "gSalvage" or
@@ -198,6 +211,18 @@ function mc_global.test()
 	local path = GetStartupPath() .. [[\LuaMods\GW2Minion\maps.data]]
 	local data = persistence.load(path)
 	d(TableSize(data))
+end
+
+function mc_global.ToggleAdvMenu()
+    if (mc_global.advwindowvisible) then
+        GUI_WindowVisible(mc_global.advwindow.name,false)	
+        mc_global.advwindowvisible = false
+    else
+		local wnd = GUI_GetWindowInfo("MinionBot")	
+        GUI_MoveWindow( mc_global.advwindow.name, wnd.x,wnd.y+wnd.height)
+		GUI_WindowVisible(mc_global.advwindow.name,true)	
+        mc_global.advwindowvisible = true
+    end
 end
 
 RegisterEventHandler("Module.Initalize",mc_global.moduleinit)

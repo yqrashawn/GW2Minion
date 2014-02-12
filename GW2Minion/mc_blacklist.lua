@@ -32,8 +32,8 @@ function mc_blacklist.HandleInit()
 	if not mc_blacklist.BlacklistExists(mc_getstring("monsters")) then
         mc_blacklist.CreateBlacklist(mc_getstring("monsters"))
     end
-	if not mc_blacklist.BlacklistExists(mc_getstring("event")) then
-        mc_blacklist.CreateBlacklist(mc_getstring("event"))
+	if not mc_blacklist.BlacklistExists(GetString("event")) then
+        mc_blacklist.CreateBlacklist(GetString("event"))
     end
 	if not mc_blacklist.BlacklistExists(mc_getstring("salvageItems")) then
         mc_blacklist.CreateBlacklist(mc_getstring("salvageItems"))
