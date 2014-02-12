@@ -218,7 +218,7 @@ function mc_vendormanager.ModuleInit()
 	end
 	
 	if (Settings.GW2Minion.BuyManager_Masterkit == nil ) then
-		Settings.GW2Minion.BuyManager_Masterkit = "1"
+		Settings.GW2Minion.BuyManager_Masterkit = "0"
 	end
 	
 	if (Settings.GW2Minion.BuyManager_sStacks == nil ) then
@@ -479,8 +479,8 @@ function mc_vendormanager.GetGatheringToolsCount()
 	-- Check for unlimited tools -> we dont need to buy these
 	for invTools = 7, 8, 1 do
 		if (fTool and fTool.itemID == mc_vendormanager.tools[0][invTools]) then buyList[1] = 999 end
-		if (lTool and fTool.itemID == mc_vendormanager.tools[1][invTools]) then buyList[2] = 999 end
-		if (mTool and fTool.itemID == mc_vendormanager.tools[2][invTools]) then buyList[3] = 999 end
+		if (lTool and lTool.itemID == mc_vendormanager.tools[1][invTools]) then buyList[2] = 999 end
+		if (mTool and mTool.itemID == mc_vendormanager.tools[2][invTools]) then buyList[3] = 999 end
 	end
 	
 	local sTools = Inventory("itemtype=" .. GW2.ITEMTYPE.Gathering)

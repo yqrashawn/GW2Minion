@@ -53,6 +53,9 @@ function mc_ai_combatAttack:Init()
 	-- Deposit Items
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 120 ), self.process_elements)	
 	
+	-- Re-Equip Gathering Tools
+	self:add(ml_element:create( "EquippingGatherTool", c_GatherToolsCheck, e_GatherToolsCheck, 110 ), self.process_elements)	
+	
 	-- Quick-Repair & Vendoring (when a vendor is nearby)	
 	self:add(ml_element:create( "QuickVendoring", c_quickvendor, e_quickvendor, 100 ), self.process_elements)
 	
@@ -64,7 +67,7 @@ function mc_ai_combatAttack:Init()
 
 	-- ReviveNPCs
 	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 70 ), self.process_elements)	
-		
+	
 	-- Gathering
 	self:add(ml_element:create( "Gathering", c_Gathering, e_Gathering, 65 ), self.process_elements)
 			
@@ -384,7 +387,7 @@ function DoCombatMovement()
 	
 	-- Check for knockdown & immobilized buffs
 	if ( mc_helper.HasBuffs(Player, "791,727") ) then --Fear and Immobilized
-		d("No CombatMovement : We got Fear/Immobilized debuff")
+		--d("No CombatMovement : We got Fear/Immobilized debuff")
 		return false
 	end
 	

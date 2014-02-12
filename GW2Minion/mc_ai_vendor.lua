@@ -246,7 +246,8 @@ function mc_ai_vendor.InteractWithVendor( vendor , nearbyvendor)
 					return
 				end				
 			else
-				d("Selling finished..")
+				d("Selling finished..")				
+				Inventory:SellJunk()
 				mc_ai_vendor.isSelling = false				
 			end
 		end
@@ -526,7 +527,7 @@ function c_vendor:evaluate()
 	return (SellManager_Active == "1" and ( 
 		( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying or mc_ai_vendor.isSelling) )
 		or
-		( Inventory.freeSlotCount == 0 and mc_ai_vendor.NeedToSell() and TableSize(mc_ai_vendor.GetClosestVendorMarker()) > 0 )
+		( Inventory.freeSlotCount <= 2 and mc_ai_vendor.NeedToSell() and TableSize(mc_ai_vendor.GetClosestVendorMarker()) > 0 )
 		or 
 		( mc_ai_vendor.NeedToBuyGatheringTools() and TableSize(mc_ai_vendor.GetClosestBuyVendorMarker()) > 0)
 		or 

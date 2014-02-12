@@ -191,3 +191,42 @@ function e_Gathering:execute()
 	return ml_log(false)
 end
 
+c_GatherToolsCheck = inheritsFrom( ml_cause )
+e_GatherToolsCheck = inheritsFrom( ml_effect )
+function c_GatherToolsCheck:evaluate()
+	local toolList = mc_vendormanager.GetGatheringToolsCount()
+	return ((Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and toolList[1] > 0 ) or 
+		(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil  and toolList[1] > 0) or 
+		(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil   and toolList[1] > 0))
+end
+function e_GatherToolsCheck:execute()
+	ml_log("e_GatherToolsCheck")
+	local tSlot = nil
+	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil) then tSlot = 0 end
+	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil) then tSlot = 1 end
+	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil) then tSlot = 2 end
+	
+	if ( tSlot ~= nil) then
+		local sTools = Inventory("itemtype=" .. GW2.ITEMTYPE.Gathering)
+		if (sTools) then
+			local id,item = next(sTools)
+			while (id and item) do
+				local itemID = item.itemID
+				for invTools = 1, 8, 1 do				
+					if (itemID == mc_vendormanager.tools[tSlot][invTools]) then 
+						-- We found a tool to equip into our empty gatherable slot
+						if ( tSlot == 0 ) then d("Equipping Sickle ..") item:Equip(GW2.EQUIPMENTSLOT.ForagingTool) end
+						if ( tSlot == 1 ) then d("Equipping Sickle ..") item:Equip(GW2.EQUIPMENTSLOT.LoggingTool) end
+						if ( tSlot == 2 ) then d("Equipping Sickle ..") item:Equip(GW2.EQUIPMENTSLOT.MiningTool) end						
+						mc_global.Wait(750)
+						return ml_log(true)
+					end
+				end
+				id,item = next(sTools, id)
+			end
+		end
+	else
+		ml_error("e_GatherToolsCheck -> tType ==nil!")
+	end	
+	return ml_log(false)
+end
