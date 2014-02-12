@@ -8,7 +8,7 @@ mc_vendormanager.sellwindowVisible = false
 mc_vendormanager.buymainwindow = { name = GetString("buymanager"), x = 350, y = 50, w = 250, h = 350}
 mc_vendormanager.buywindowvisible = false
 mc_vendormanager.tools = {
-	 -- sickles 0= lowest quality , 5 = orichalcum
+	 -- sickles 1= lowest quality , 6 = orichalcum
 	 [0] = 
 	 {
 	  [1] = 23029,
@@ -20,7 +20,7 @@ mc_vendormanager.tools = {
 	  [7] = 44876, -- Jack-in-the-Box Scythe
 	  [8] = 42594 -- Consortium Harvesting Sickle
 	 },
-	 -- logging 0= lowest quality , 5 = orichalcum
+	 -- logging 1= lowest quality , 6 = orichalcum
 	 [1] = 
 	 {
 	  [1] = 23030,
@@ -32,7 +32,7 @@ mc_vendormanager.tools = {
 	  [7] = 48955, -- DreamCleaver Logging Axe
 	  [8] = 42931 -- Chop-It-All Logging Axe
 	 },
-	 -- mining 0= lowest quality , 5 = orichalcum
+	 -- mining 1= lowest quality , 6 = orichalcum
 	 [2] =
 	 {
 	  [1] = 23031,
@@ -47,11 +47,11 @@ mc_vendormanager.tools = {
 	 -- salvagingkits 0= lowest quality 
 	 [3] = 
 	 {
-	  [0] = 23038,
-	  [1] = 23040,
-	  [2] = 23041,
-	  [3] = 23042,
-	  [4] = 23043
+	  [0] = 23038, -- Crude Salvage Kit
+	  [1] = 23040, -- Basic Salvage Kit
+	  [2] = 23041, -- Fine 
+	  [3] = 23042, -- Journeyman
+	  [4] = 23043  -- Master
 	 }
  }
 
@@ -145,9 +145,7 @@ function mc_vendormanager.ModuleInit()
 	end
 		
 	-- SELLMANAGER WINDOW
-	GUI_NewButton(mc_global.window.name, GetString("sellGroup"), "sellManager.toggle",GetString("vendorSettings"))
-	GUI_NewNumeric(mc_global.window.name,GetString("repairDamaged"),"gRepairDamageLimit",mc_getstring("vendorSettings"),"0","15");
-	GUI_NewNumeric(mc_global.window.name,GetString("repairBroken"),"gRepairBrokenLimit",mc_getstring("vendorSettings"),"0","15");	
+	GUI_NewButton(mc_global.window.name, GetString("sellGroup"), "sellManager.toggle",GetString("vendorSettings"))	
 	-- SELL SETTINGS
 	GUI_NewWindow(mc_vendormanager.sellmainwindow.name,mc_vendormanager.sellmainwindow.x,mc_vendormanager.sellmainwindow.y,mc_vendormanager.sellmainwindow.w,mc_vendormanager.sellmainwindow.h)
 	GUI_NewCheckbox(mc_vendormanager.sellmainwindow.name,GetString("active"),"SellManager_Active",GetString("sellGroup"))
@@ -189,8 +187,6 @@ function mc_vendormanager.ModuleInit()
 		
 	SellManager_Active = Settings.GW2Minion.SellManager_Active
 	mc_vendormanager.filterList = Settings.GW2Minion.SellManager_FilterList
-	gRepairDamageLimit = Settings.GW2Minion.gRepairDamageLimit
-	gRepairBrokenLimit = Settings.GW2Minion.gRepairBrokenLimit
 	
 	mc_vendormanager.refreshFilterlist()
 	
@@ -205,28 +201,28 @@ function mc_vendormanager.ModuleInit()
 		Settings.GW2Minion.BuyManager_buyAllKits = "0"
 	end
 	
-	if (Settings.GW2Minion.BuyManager_sCommon == nil ) then
-		Settings.GW2Minion.BuyManager_sCommon = "1"
+	if (Settings.GW2Minion.BuyManager_Crudekit == nil ) then
+		Settings.GW2Minion.BuyManager_Crudekit = "1"
 	end
 	
-	if (Settings.GW2Minion.BuyManager_sFine == nil ) then
-		Settings.GW2Minion.BuyManager_sFine = "1"
+	if (Settings.GW2Minion.BuyManager_Basickit == nil ) then
+		Settings.GW2Minion.BuyManager_Basickit = "1"
 	end
 	
-	if (Settings.GW2Minion.BuyManager_sMasterwork == nil ) then
-		Settings.GW2Minion.BuyManager_sMasterwork = "1"
+	if (Settings.GW2Minion.BuyManager_Finekit == nil ) then
+		Settings.GW2Minion.BuyManager_Finekit = "1"
 	end
 	
-	if (Settings.GW2Minion.BuyManager_sRare == nil ) then
-		Settings.GW2Minion.BuyManager_sRare = "1"
+	if (Settings.GW2Minion.BuyManager_Journeymankit == nil ) then
+		Settings.GW2Minion.BuyManager_Journeymankit = "1"
 	end
 	
-	if (Settings.GW2Minion.BuyManager_sExotic == nil ) then
-		Settings.GW2Minion.BuyManager_sExotic = "1"
+	if (Settings.GW2Minion.BuyManager_Masterkit == nil ) then
+		Settings.GW2Minion.BuyManager_Masterkit = "1"
 	end
 	
 	if (Settings.GW2Minion.BuyManager_sStacks == nil ) then
-		Settings.GW2Minion.BuyManager_sStacks = 2
+		Settings.GW2Minion.BuyManager_sStacks = 1
 	end
 	
 	if (Settings.GW2Minion.BuyManager_copperTools == nil ) then
@@ -254,7 +250,7 @@ function mc_vendormanager.ModuleInit()
 	end
 	
 	if (Settings.GW2Minion.BuyManager_toolStacks == nil ) then
-		Settings.GW2Minion.BuyManager_toolStacks = 2
+		Settings.GW2Minion.BuyManager_toolStacks = 1
 	end
 	
 	-- BUYMANAGER WINDOW
@@ -263,15 +259,14 @@ function mc_vendormanager.ModuleInit()
 	-- BUY SETTINGS
 	GUI_NewWindow(mc_vendormanager.buymainwindow.name,mc_vendormanager.buymainwindow.x,mc_vendormanager.buymainwindow.y,mc_vendormanager.buymainwindow.w,mc_vendormanager.buymainwindow.h)
 	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("active"),"BuyManager_Active",GetString("buyGroup"))
-	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("buyAllKits"),"BuyManager_buyAllKits",GetString("buyGroup"))
+	--GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("buyAllKits"),"BuyManager_buyAllKits",GetString("buyGroup"))
 	
-	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("rarityCommon"),"BuyManager_sCommon",GetString("salvageKits"))
-	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("rarityFine"),"BuyManager_sFine",GetString("salvageKits"))
-	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("rarityMasterwork"),"BuyManager_sMasterwork",GetString("salvageKits"))
-	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("rarityRare"),"BuyManager_sRare",GetString("salvageKits"))
-	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("rarityExotic"),"BuyManager_sExotic",GetString("salvageKits"))
+	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("buyCrude"),"BuyManager_Crudekit",GetString("salvageKits"))
+	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("buyBasic"),"BuyManager_Basickit",GetString("salvageKits"))
+	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("buyFine"),"BuyManager_Finekit",GetString("salvageKits"))
+	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("buyJourneyman"),"BuyManager_Journeymankit",GetString("salvageKits"))
+	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("buyMaster"),"BuyManager_Masterkit",GetString("salvageKits"))
 	GUI_NewNumeric(mc_vendormanager.buymainwindow.name,GetString("kitStock"),"BuyManager_sStacks",GetString("salvageKits"),"1","100")
-	
 	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("copperTools"),"BuyManager_copperTools",GetString("gatherTools"))
 	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("ironTools"),"BuyManager_ironTools",GetString("gatherTools"))
 	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("steelTools"),"BuyManager_steelTools",GetString("gatherTools"))
@@ -286,12 +281,11 @@ function mc_vendormanager.ModuleInit()
 	
 	BuyManager_Active = Settings.GW2Minion.BuyManager_Active
 	BuyManager_buyAllKits = Settings.GW2Minion.BuyManager_buyAllKits
-	BuyManager_sCommon = Settings.GW2Minion.BuyManager_sCommon
-	BuyManager_sFine = Settings.GW2Minion.BuyManager_sFine
-	BuyManager_sMasterwork = Settings.GW2Minion.BuyManager_sMasterwork
-	BuyManager_sRare = Settings.GW2Minion.BuyManager_sRare
-	BuyManager_sExotic = Settings.GW2Minion.BuyManager_sExotic
-	BuyManager_sStacks = Settings.GW2Minion.BuyManager_sStacks
+	BuyManager_Crudekit = Settings.GW2Minion.BuyManager_Crudekit
+	BuyManager_Basickit = Settings.GW2Minion.BuyManager_Basickit
+	BuyManager_Finekit = Settings.GW2Minion.BuyManager_Finekit
+	BuyManager_Journeymankit = Settings.GW2Minion.BuyManager_Journeymankit
+	BuyManager_Masterkit = Settings.GW2Minion.BuyManager_Masterkit
 	BuyManager_sStacks = Settings.GW2Minion.BuyManager_sStacks
 	
 	BuyManager_copperTools = Settings.GW2Minion.BuyManager_copperTools
@@ -302,6 +296,11 @@ function mc_vendormanager.ModuleInit()
 	BuyManager_orichalcumTools = Settings.GW2Minion.BuyManager_orichalcumTools
 	BuyManager_toolStacks = Settings.GW2Minion.BuyManager_toolStacks
 	
+	--REPAIR
+	GUI_NewNumeric(mc_global.window.name,GetString("repairDamaged"),"gRepairDamageLimit",mc_getstring("vendorSettings"),"0","15");
+	GUI_NewNumeric(mc_global.window.name,GetString("repairBroken"),"gRepairBrokenLimit",mc_getstring("vendorSettings"),"0","15");
+	gRepairDamageLimit = Settings.GW2Minion.gRepairDamageLimit
+	gRepairBrokenLimit = Settings.GW2Minion.gRepairBrokenLimit
 end
 
 --Create filtered Sell-Itemlist of Items we can sell
@@ -414,9 +413,33 @@ end
 --*************
 --BUY FUNCTIONS
 --*************
+function mc_vendormanager.GetSalvageKitCount()
+	local count = 0
+	local sKits = Inventory("itemtype=" .. GW2.ITEMTYPE.SalvageTool)
+	if (sKits) then
+		local id,item = next(sKits)
+		while (id and item) do
+			count = count + 1
+			id,item = next(sKits, id)
+		end
+	end
+	return count
+end
 
--- Need to buy kits
-function mc_vendormanager.needKits()
+function mc_vendormanager.NeedSalvageKitInfo()
+	local kitInfo = { count=0, kits={} }
+	kitInfo.count = mc_vendormanager.GetSalvageKitCount()
+	
+	if (BuyManager_Crudekit == "1") then table.insert(kitInfo.kits, mc_vendormanager.tools[3][0]) end
+	if (BuyManager_Basickit == "1") then table.insert(kitInfo.kits, mc_vendormanager.tools[3][1]) end
+	if (BuyManager_Finekit == "1") then table.insert(kitInfo.kits, mc_vendormanager.tools[3][2]) end
+	if (BuyManager_Journeymankit == "1") then table.insert(kitInfo.kits, mc_vendormanager.tools[3][3]) end
+	if (BuyManager_Masterkit == "1") then table.insert(kitInfo.kits, mc_vendormanager.tools[3][4]) end
+	return kitInfo
+end
+
+-- Need to buy kits / not used right now, maybe later..
+function mc_vendormanager.GetNeedSalvageKitInfo()
 	-- itemtype = GW2.ITEMTYPE.SalvalteTool = 13
 	local kitsOwned = {[1]=0,[2]=0,[3]=0,[4]=0,[5]=0}
 	local buyList = {}
@@ -428,44 +451,81 @@ function mc_vendormanager.needKits()
 			if (item.itemID == 44602) then kitsOwned[1] = false end
 			id,item = next(sKits, id)
 		end
-		if (BuyManager_sCommon == "0") then kitsOwned[1] = false end
-		if (BuyManager_sFine == "0") then kitsOwned[2] = false end
-		if (BuyManager_sMasterwork == "0") then kitsOwned[3] = false end
-		if (BuyManager_sRare == "0") then kitsOwned[4] = false end
-		if (BuyManager_sExotic == "0") then kitsOwned[5] = false end
-		for rarity = #kitsOwned, 1, -1 do
-			if (kitsOwned[rarity] ~= false and kitsOwned[rarity] < 1) then
-				table.insert(buyList, {count = tonumber(BuyManager_sStacks) - kitsOwned[rarity], itemID = mc_vendormanager.tools[3][rarity - 1]})
-			elseif (BuyManager_buyAllKits == "0") then
-				table.insert(buyList, {count = false, itemID = mc_vendormanager.tools[3][rarity - 1]})
+		if (BuyManager_Crudekit == "0") then kitsOwned[1] = false end
+		if (BuyManager_Basickit == "0") then kitsOwned[2] = false end
+		if (BuyManager_Finekit == "0") then kitsOwned[3] = false end
+		if (BuyManager_Journeymankit == "0") then kitsOwned[4] = false end
+		if (BuyManager_Masterkit == "0") then kitsOwned[5] = false end
+		for rarity = #kitsOwned, 1, -1 do			
+			if (kitsOwned[rarity] ~= false) then			
+				table.insert(buyList, {count = tonumber(BuyManager_sStacks) - kitsOwned[rarity], itemID = mc_vendormanager.tools[3][rarity-1]})
 			end
 		end
-		if (ValidTable(buyList)) then
-			return buyList
-		end
 	end
-	return false
+	return buyList
 end
 
-function mc_vendormanager.needTools()
-	-- itemtype = GW2.ITEMTYPE.Gathering = 6
-	local buyList = {[1]={},[2]={},[3]={}}
-	for set = 1, 3, 1 do
-		for _,v in pairs(mc_vendormanager.tools[set]) do
-			buyList[set][v] = 0
+
+function mc_vendormanager.GetGatheringToolsCount()
+	local buyList = {[1]=0,[2]=0,[3]=0}
+	
+	local fTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool)
+	local lTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool)
+	local mTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool)
+	if (fTool) then buyList[1] = 1 end
+	if (lTool) then buyList[2] = 1 end
+	if (mTool) then buyList[3] = 1 end
+	
+	-- Check for unlimited tools -> we dont need to buy these
+	for invTools = 7, 8, 1 do
+		if (fTool and fTool.itemID == mc_vendormanager.tools[0][invTools]) then buyList[1] = 999 end
+		if (lTool and fTool.itemID == mc_vendormanager.tools[1][invTools]) then buyList[2] = 999 end
+		if (mTool and fTool.itemID == mc_vendormanager.tools[2][invTools]) then buyList[3] = 999 end
+	end
+	
+	local sTools = Inventory("itemtype=" .. GW2.ITEMTYPE.Gathering)
+	if (sTools) then
+		local id,item = next(sTools)
+		while (id and item) do
+			local itemID = item.itemID
+			for invTools = 1, 6, 1 do				
+				if (itemID == mc_vendormanager.tools[0][invTools]) then buyList[1] = buyList[1] + 1  break end
+				if (itemID == mc_vendormanager.tools[1][invTools]) then buyList[2] = buyList[2] + 1  break end
+				if (itemID == mc_vendormanager.tools[2][invTools]) then buyList[3] = buyList[3] + 1  break end
+			end
+			id,item = next(sTools, id)
 		end
 	end
-	local fTool = nil
-	local lTool = nil
-	local mTool = nil
-	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool)) then fTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool).itemID else fTool = 0 end
-	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool)) then lTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool).itemID else lTool = 0 end
-	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool)) then mTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool).itemID else mTool = 0 end
+	return buyList
+end
+
+function mc_vendormanager.GetNeededGatheringToolsInfo()
+	-- itemtype = GW2.ITEMTYPE.Gathering = 6
+	local buyList = {[1]={},[2]={},[3]={}}
+	for set = 0, 2, 1 do
+		for _,v in pairs(mc_vendormanager.tools[set]) do
+			buyList[set+1][v] = 0
+		end
+	end
+	local fTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool)
+	local lTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool)
+	local mTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool)
+	if (fTool) then fTool = fTool.itemID else fTool = 0 end
+	if (lTool) then lTool = lTool.itemID else lTool = 0 end
+	if (mTool) then mTool = mTool.itemID else mTool = 0 end
 	local toolsInUse = {
 						[1] = fTool,
 						[2] = lTool,
 						[3] = mTool
 	}
+	
+	-- Substract the one we still have in use from the stacksize wanted
+	for invTools = 1, 6, 1 do
+		if (toolsInUse[1] == mc_vendormanager.tools[0][invTools]) then buyList[1][toolsInUse[1]] = buyList[1][toolsInUse[1]] + 1 end
+		if (toolsInUse[2] == mc_vendormanager.tools[1][invTools]) then buyList[2][toolsInUse[2]] = buyList[2][toolsInUse[2]] + 1 end
+		if (toolsInUse[3] == mc_vendormanager.tools[2][invTools]) then buyList[3][toolsInUse[3]] = buyList[3][toolsInUse[3]] + 1 end
+	end
+	
 	-- Check for unlimited tools -> we dont need to buy these
 	for invTools = 7, 8, 1 do
 		if (toolsInUse[1] == mc_vendormanager.tools[0][invTools]) then buyList[1] = false end
@@ -495,10 +555,7 @@ function mc_vendormanager.needTools()
 			end
 		end
 	end
-	if (buyList[1] or buyList[2] or buyList[3]) then
-		return buyList
-	end
-	return false
+	return buyList
 end
 
 function mc_vendormanager.checkBuyFilters(buyList)
@@ -530,11 +587,11 @@ function mc_vendormanager.GUIVarUpdate(Event, NewVals, OldVals)
 		if (k == "SellManager_Active" or 
 			-- Salvage Kits
 			k == "BuyManager_Active" or
-			k == "BuyManager_sCommon" or
-			k == "BuyManager_sFine" or
-			k == "BuyManager_sMasterwork" or
-			k == "BuyManager_sRare" or
-			k == "BuyManager_sExotic" or
+			k == "BuyManager_Crudekit" or
+			k == "BuyManager_Basickit" or
+			k == "BuyManager_Finekit" or
+			k == "BuyManager_Journeymankit" or
+			k == "BuyManager_Masterkit" or
 			k == "BuyManager_sStacks" or
 			-- Gathering Tools
 			k == "BuyManager_copperTools" or

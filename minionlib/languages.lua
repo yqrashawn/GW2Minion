@@ -354,16 +354,20 @@ strings =
 		buyBestKits						= "Buy best Kit",
 		salvageKits						= "Buy Salvage Kits",
 		gatherTools						= "Buy Gathering Tools",
-		kitStock						= "Kit Stock",
-		toolStock						= "Tool Stock",
+		kitStock						= "Max Kit Stock",
+		toolStock						= "Max Tool Stock",
 		copperTools						= "Copper Tools",
 		ironTools						= "Iron Tools",
 		steelTools						= "Steel Tools",
 		darksteelTools					= "Darksteel Tools",
 		mithrilTools					= "Mithril Tools",
 		orichalcumTools					= "Orichalcum Tools",
-		
-		
+		buyCrude						= "Crude Kit",
+		buyBasic						= "Basic Kit",
+		buyFine							= "Fine Kit",
+		buyJourneyman					= "Journeyman Kit",
+		buyMaster						= "Master Kit",
+
 		--mc_ai_event.lua
 		events							= "Events",
 		doEvents						= "Do Events",
