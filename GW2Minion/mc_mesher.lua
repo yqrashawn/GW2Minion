@@ -1,7 +1,7 @@
 -- Map & Meshmanager
 mm = { }
 mm.navmeshfilepath = GetStartupPath() .. [[\Navigation\]];
-mm.mainwindow = { name = mc_getstring("meshManager"), x = 350, y = 100, w = 275, h = 400}
+mm.mainwindow = { name = GetString("meshManager"), x = 350, y = 100, w = 275, h = 400}
 mm.meshfiles = {}
 mm.visible = false
 mm.lasttick = 0
@@ -25,10 +25,10 @@ function mm.ModuleInit()
 	
     local wnd = GUI_GetWindowInfo("MinionBot")
     GUI_NewWindow(mm.mainwindow.name,wnd.x+wnd.width,wnd.y,mm.mainwindow.w,mm.mainwindow.h)
-    GUI_NewComboBox(mm.mainwindow.name,mc_getstring("navmesh"),"gmeshname",mc_getstring("generalSettings"),"")
-    GUI_NewCheckbox(mm.mainwindow.name,mc_getstring("showrealMesh"),"gShowRealMesh",mc_getstring("generalSettings"))
-    GUI_NewCheckbox(mm.mainwindow.name,mc_getstring("showPath"),"gShowPath",mc_getstring("generalSettings"))
-    GUI_UnFoldGroup(mm.mainwindow.name,mc_getstring("generalSettings"))
+    GUI_NewComboBox(mm.mainwindow.name,GetString("navmesh"),"gmeshname",GetString("generalSettings"),"")
+    GUI_NewCheckbox(mm.mainwindow.name,GetString("showrealMesh"),"gShowRealMesh",GetString("generalSettings"))
+    GUI_NewCheckbox(mm.mainwindow.name,GetString("showPath"),"gShowPath",GetString("generalSettings"))
+    GUI_UnFoldGroup(mm.mainwindow.name,GetString("generalSettings"))
 	
 	--Grab all meshfiles in our Navigation directory
     local meshlist = "none"
@@ -44,22 +44,22 @@ function mm.ModuleInit()
         end
     end        
 
-    GUI_NewCheckbox(mm.mainwindow.name,mc_getstring("showMesh"),"gShowMesh",mc_getstring("editor"))
-    GUI_NewField(mm.mainwindow.name,mc_getstring("newMeshName"),"gnewmeshname",mc_getstring("editor"))
-    GUI_NewButton(mm.mainwindow.name,mc_getstring("newMesh"),"newMeshEvent",mc_getstring("editor"))
+    GUI_NewCheckbox(mm.mainwindow.name,GetString("showMesh"),"gShowMesh",GetString("editor"))
+    GUI_NewField(mm.mainwindow.name,GetString("newMeshName"),"gnewmeshname",GetString("editor"))
+    GUI_NewButton(mm.mainwindow.name,GetString("newMesh"),"newMeshEvent",GetString("editor"))
 	RegisterEventHandler("newMeshEvent",mm.ClearNavMesh)
-    GUI_NewCheckbox(mm.mainwindow.name,mc_getstring("recmesh"),"gMeshrec",mc_getstring("editor"))
-    GUI_NewComboBox(mm.mainwindow.name,mc_getstring("recAreaType"),"gRecAreaType",mc_getstring("editor"),"Road,Lowdanger,Highdanger")-- enum 1,2,3
-    GUI_NewNumeric(mm.mainwindow.name,mc_getstring("recAreaSize"),"gRecAreaSize",mc_getstring("editor"),"1","500")
-    GUI_NewCheckbox(mm.mainwindow.name,mc_getstring("changeMesh"),"gMeshChange",mc_getstring("editor"))
-    GUI_NewComboBox(mm.mainwindow.name,mc_getstring("changeAreaType"),"gChangeAreaType",mc_getstring("editor"),"Delete,Road,Lowdanger,Highdanger")
-    GUI_NewNumeric(mm.mainwindow.name,mc_getstring("changeAreaSize"),"gChangeAreaSize",mc_getstring("editor"),"1","10")	
-    GUI_NewButton(mm.mainwindow.name,mc_getstring("addOffMeshSpot"),"offMeshSpotEvent",mc_getstring("editor"))
+    GUI_NewCheckbox(mm.mainwindow.name,GetString("recmesh"),"gMeshrec",GetString("editor"))
+    GUI_NewComboBox(mm.mainwindow.name,GetString("recAreaType"),"gRecAreaType",GetString("editor"),"Road,Lowdanger,Highdanger")-- enum 1,2,3
+    GUI_NewNumeric(mm.mainwindow.name,GetString("recAreaSize"),"gRecAreaSize",GetString("editor"),"1","500")
+    GUI_NewCheckbox(mm.mainwindow.name,GetString("changeMesh"),"gMeshChange",GetString("editor"))
+    GUI_NewComboBox(mm.mainwindow.name,GetString("changeAreaType"),"gChangeAreaType",GetString("editor"),"Delete,Road,Lowdanger,Highdanger")
+    GUI_NewNumeric(mm.mainwindow.name,GetString("changeAreaSize"),"gChangeAreaSize",GetString("editor"),"1","10")	
+    GUI_NewButton(mm.mainwindow.name,GetString("addOffMeshSpot"),"offMeshSpotEvent",GetString("editor"))
     RegisterEventHandler("offMeshSpotEvent", mm.AddOMC)
-    GUI_NewButton(mm.mainwindow.name,mc_getstring("delOffMeshSpot"),"deleteoffMeshEvent",mc_getstring("editor"))
+    GUI_NewButton(mm.mainwindow.name,GetString("delOffMeshSpot"),"deleteoffMeshEvent",GetString("editor"))
     RegisterEventHandler("deleteoffMeshEvent", mm.DeleteOMC)
-    GUI_NewCheckbox(mm.mainwindow.name,mc_getstring("biDirOffMesh"),"gBiDirOffMesh",mc_getstring("editor"))
-    GUI_NewButton(mm.mainwindow.name,"CreateSingleCell","createSingleCell",mc_getstring("editor"))
+    GUI_NewCheckbox(mm.mainwindow.name,GetString("biDirOffMesh"),"gBiDirOffMesh",GetString("editor"))
+    GUI_NewButton(mm.mainwindow.name,"CreateSingleCell","createSingleCell",GetString("editor"))
 	RegisterEventHandler("createSingleCell", mm.CreateSingleCell)
     
     
@@ -81,7 +81,7 @@ function mm.ModuleInit()
     MeshManager:SetChangeAreaMode(false)
     MeshManager:Record(false)
     
-    GUI_NewButton(mm.mainwindow.name,mc_getstring("saveMesh"),"saveMeshEvent",mc_getstring("editor"))
+    GUI_NewButton(mm.mainwindow.name,GetString("saveMesh"),"saveMeshEvent",GetString("editor"))
     RegisterEventHandler("saveMeshEvent",mm.SaveMesh)   
     	
     

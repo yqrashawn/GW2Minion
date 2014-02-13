@@ -1,6 +1,6 @@
 -- <3 f3re
 mc_blacklist = {}
-mc_blacklist.mainwindow = { name = mc_getstring("blacklistManager"), x = 350, y = 100, w = 250, h = 400}
+mc_blacklist.mainwindow = { name = GetString("blacklistManager"), x = 350, y = 100, w = 250, h = 400}
 mc_blacklist.path = GetStartupPath() .. [[\LuaMods\GW2Minion\blacklist.txt]]
 mc_blacklist.currentID = ""
 mc_blacklist.UIList = {}
@@ -10,39 +10,39 @@ mc_blacklist.blacklist = {}
 
 function mc_blacklist.HandleInit()
     GUI_NewWindow(mc_blacklist.mainwindow.name,mc_blacklist.mainwindow.x,mc_blacklist.mainwindow.y,mc_blacklist.mainwindow.w,mc_blacklist.mainwindow.h)
-    GUI_NewComboBox(mc_blacklist.mainwindow.name,mc_getstring("blacklistName"),"gBlacklistName",mc_getstring("generalSettings"),"")
-    GUI_NewComboBox(mc_blacklist.mainwindow.name,mc_getstring("blacklistEntry"),"gBlacklistEntry",mc_getstring("generalSettings"),"")
-    GUI_NewField(mc_blacklist.mainwindow.name,mc_getstring("entryTime"),"gBlacklistEntryTime",mc_getstring("generalSettings"))
-    GUI_NewButton(mc_blacklist.mainwindow.name,mc_getstring("deleteEntry"),"mc_blacklist.DeleteEntry",mc_getstring("generalSettings"))
+    GUI_NewComboBox(mc_blacklist.mainwindow.name,GetString("blacklistName"),"gBlacklistName",GetString("generalSettings"),"")
+    GUI_NewComboBox(mc_blacklist.mainwindow.name,GetString("blacklistEntry"),"gBlacklistEntry",GetString("generalSettings"),"")
+    GUI_NewField(mc_blacklist.mainwindow.name,GetString("entryTime"),"gBlacklistEntryTime",GetString("generalSettings"))
+    GUI_NewButton(mc_blacklist.mainwindow.name,GetString("deleteEntry"),"mc_blacklist.DeleteEntry",GetString("generalSettings"))
     RegisterEventHandler("mc_blacklist.DeleteEntry",mc_blacklist.UIDeleteEntry)
     
-	GUI_NewButton(mc_blacklist.mainwindow.name, mc_getstring("blacklistEvent"), "bBlackListEvent")
+	GUI_NewButton(mc_blacklist.mainwindow.name, GetString("blacklistEvent"), "bBlackListEvent")
 	RegisterEventHandler("bBlackListEvent", mc_blacklist.eventhandler)
 	GUI_NewButton(mc_blacklist.mainwindow.name, GetString("blacklistVendor"), "bBlackListVendor")
 	RegisterEventHandler("bBlackListVendor", mc_blacklist.eventhandler)
-	GUI_NewButton(mc_blacklist.mainwindow.name, mc_getstring("blacklistTarget"), "bBlackListTarget")
+	GUI_NewButton(mc_blacklist.mainwindow.name, GetString("blacklistTarget"), "bBlackListTarget")
 	RegisterEventHandler("bBlackListTarget", mc_blacklist.eventhandler)
 	
 	
     GUI_SizeWindow(mc_blacklist.mainwindow.name, mc_blacklist.mainwindow.w, mc_blacklist.mainwindow.h)
-    GUI_UnFoldGroup(mc_blacklist.mainwindow.name, mc_getstring("generalSettings"))
+    GUI_UnFoldGroup(mc_blacklist.mainwindow.name, GetString("generalSettings"))
     GUI_WindowVisible(mc_blacklist.mainwindow.name,false)
 	
 		
-	if not mc_blacklist.BlacklistExists(mc_getstring("monsters")) then
-        mc_blacklist.CreateBlacklist(mc_getstring("monsters"))
+	if not mc_blacklist.BlacklistExists(GetString("monsters")) then
+        mc_blacklist.CreateBlacklist(GetString("monsters"))
     end
 	if not mc_blacklist.BlacklistExists(GetString("event")) then
         mc_blacklist.CreateBlacklist(GetString("event"))
     end
-	if not mc_blacklist.BlacklistExists(mc_getstring("salvageItems")) then
-        mc_blacklist.CreateBlacklist(mc_getstring("salvageItems"))
+	if not mc_blacklist.BlacklistExists(GetString("salvageItems")) then
+        mc_blacklist.CreateBlacklist(GetString("salvageItems"))
     end
-	if not mc_blacklist.BlacklistExists(mc_getstring("vendors")) then
-        mc_blacklist.CreateBlacklist(mc_getstring("vendors"))
+	if not mc_blacklist.BlacklistExists(GetString("vendors")) then
+        mc_blacklist.CreateBlacklist(GetString("vendors"))
     end
-	if not mc_blacklist.BlacklistExists(mc_getstring("vendorsbuy")) then
-        mc_blacklist.CreateBlacklist(mc_getstring("vendorsbuy"))
+	if not mc_blacklist.BlacklistExists(GetString("vendorsbuy")) then
+        mc_blacklist.CreateBlacklist(GetString("vendorsbuy"))
     end
 	
 	mc_blacklist.ReadBlacklistFile(mc_blacklist.path)
@@ -80,11 +80,11 @@ end
 
 function mc_blacklist.UpdateAddEntry()
     -- init the correct "Add Entry" controls
-    GUI_DeleteGroup(mc_blacklist.mainwindow.name, mc_getstring("addEntry"))
+    GUI_DeleteGroup(mc_blacklist.mainwindow.name, GetString("addEntry"))
     local initUI = mc_blacklist.UIList[gBlacklistName]
     if (initUI) then
         initUI()
-        GUI_UnFoldGroup(mc_blacklist.mainwindow.name, mc_getstring("addEntry"))
+        GUI_UnFoldGroup(mc_blacklist.mainwindow.name, GetString("addEntry"))
     end
     
     GUI_SizeWindow(mc_blacklist.mainwindow.name, mc_blacklist.mainwindow.w, mc_blacklist.mainwindow.h)
@@ -285,7 +285,7 @@ function mc_blacklist.eventhandler( arg )
 		local t = Player:GetTarget()
 		if ( t ) then			   
 			d("Blacklisted "..t.name)
-			mc_blacklist.AddBlacklistEntry(mc_getstring("monsters"), t.contentID, t.name, true)			
+			mc_blacklist.AddBlacklistEntry(GetString("monsters"), t.contentID, t.name, true)			
 		else
 			d("Invalid target or no target selected")
 		end
@@ -295,7 +295,7 @@ function mc_blacklist.eventhandler( arg )
 			local id,ev = next(event)
 			if ( id and ev ) then
 				d("Blacklisted closest Event, ID "..id)
-				mc_blacklist.AddBlacklistEntry(mc_getstring("event"), ev.eventID, id, true)				
+				mc_blacklist.AddBlacklistEntry(GetString("event"), ev.eventID, id, true)				
 			else
 				d("Invalid Event or no Event nearby")
 			end

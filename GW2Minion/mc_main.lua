@@ -15,7 +15,7 @@ function mc_global.moduleinit()
 		Settings.GW2Minion.gPulseTime = "150"
 	end
 	if ( Settings.GW2Minion.gBotMode == nil ) then
-        Settings.GW2Minion.gBotMode = mc_getstring("grindMode")
+        Settings.GW2Minion.gBotMode = GetString("grindMode")
     end
 	if ( Settings.GW2Minion.gDepositItems == nil ) then
         Settings.GW2Minion.gDepositItems = "1"
@@ -27,20 +27,20 @@ function mc_global.moduleinit()
 	
 	-- MAIN WINDOW
 	GUI_NewWindow(mc_global.window.name,mc_global.window.x,mc_global.window.y,mc_global.window.width,mc_global.window.height)
-	GUI_NewButton(mc_global.window.name,mc_getstring("startStop"),"mc_global.startStop")
+	GUI_NewButton(mc_global.window.name,GetString("startStop"),"mc_global.startStop")
 		
-	GUI_NewButton(mc_global.window.name,mc_getstring("radar"),"Radar.toggle")
+	GUI_NewButton(mc_global.window.name,GetString("showradar"),"Radar.toggle")
 	RegisterEventHandler("mc_global.startStop", mc_global.eventhandler)
-	GUI_NewCheckbox(mc_global.window.name,mc_getstring("botEnabled"),"gBotRunning",mc_getstring("botStatus"));
-	GUI_NewComboBox(mc_global.window.name,mc_getstring("botMode"),"gBotMode",mc_getstring("botStatus"),"None");
+	GUI_NewCheckbox(mc_global.window.name,GetString("botEnabled"),"gBotRunning",GetString("botStatus"));
+	GUI_NewComboBox(mc_global.window.name,GetString("botMode"),"gBotMode",GetString("botStatus"),"None");
 	-- Debug fields
-	GUI_NewField(mc_global.window.name,"Task","dTrace",mc_getstring("botStatus"));
-	GUI_NewField(mc_global.window.name,"AttackRange","dAttackRange",mc_getstring("botStatus"));
+	GUI_NewField(mc_global.window.name,"Task","dTrace",GetString("botStatus"));
+	GUI_NewField(mc_global.window.name,"AttackRange","dAttackRange",GetString("botStatus"));
 		
-	GUI_NewNumeric(mc_global.window.name,mc_getstring("pulseTime"),"gPulseTime",mc_getstring("settings"),"10","10000");
+	GUI_NewNumeric(mc_global.window.name,GetString("pulseTime"),"gPulseTime",GetString("settings"),"10","10000");
 
-	GUI_NewCheckbox(mc_global.window.name,mc_getstring("depositItems"),"gDepositItems",mc_getstring("settings"));	
-	GUI_NewCheckbox(mc_global.window.name,mc_getstring("doEvents"),"gDoEvents",mc_getstring("settings"));
+	GUI_NewCheckbox(mc_global.window.name,GetString("depositItems"),"gDepositItems",GetString("settings"));	
+	GUI_NewCheckbox(mc_global.window.name,GetString("doEvents"),"gDoEvents",GetString("settings"));
 	
 
 	
@@ -49,11 +49,11 @@ function mc_global.moduleinit()
 	
 	-- ADVANCED SETTINGS WINDOW
 	GUI_NewWindow(mc_global.advwindow.name,mc_global.advwindow.x,mc_global.advwindow.y,mc_global.advwindow.width,mc_global.advwindow.height)
-	GUI_NewButton(mc_global.advwindow.name, mc_getstring("blacklistManager"), "bToggleBlacklistMgr")
+	GUI_NewButton(mc_global.advwindow.name, GetString("blacklistManager"), "bToggleBlacklistMgr")
 	RegisterEventHandler("bToggleBlacklistMgr", mc_blacklist.ToggleMenu)
 	GUI_NewButton(mc_global.advwindow.name, GetString("questManager"), "QuestManager.toggle")
-	GUI_NewButton(mc_global.advwindow.name, mc_getstring("skillManager"), "SkillManager.toggle")
-	GUI_NewButton(mc_global.advwindow.name, mc_getstring("meshManager"), "ToggleMeshmgr")
+	GUI_NewButton(mc_global.advwindow.name, GetString("skillManager"), "SkillManager.toggle")
+	GUI_NewButton(mc_global.advwindow.name, GetString("meshManager"), "ToggleMeshmgr")
 	
 	
 	GUI_WindowVisible(mc_global.advwindow.name,false)
@@ -76,7 +76,7 @@ function mc_global.moduleinit()
 	gPulseTime = Settings.GW2Minion.gPulseTime	
 	gDepositItems = Settings.GW2Minion.gDepositItems	
 	
-	GUI_UnFoldGroup(mc_global.window.name,mc_getstring("botStatus") );		
+	GUI_UnFoldGroup(mc_global.window.name,GetString("botStatus") );		
 end
 
 function mc_global.onupdate( event, tickcount )
@@ -100,6 +100,10 @@ function mc_global.onupdate( event, tickcount )
 				if (not ml_task_hub:Update() and ml_task_hub.shouldRun) then
 					ml_error("No task queued, please select a valid bot mode in the Settings drop-down menu")
 				end
+				
+				-- Unstuck OnUpdate
+				mc_ai_unstuck:OnUpdate( tickcount )
+				
 				dTrace = ml_GetTraceString()
 			end
 		end
@@ -189,17 +193,6 @@ function mc_global.UpdateGlobals()
 	dAttackRange = mc_global.AttackRange	
 end
 
-mc_global.stuckpos = {}
-function mc_global.stuckhandler()
-	d("We are stuck!?")
-	mc_global.stuckpos = Player.pos
-	--TODO: add proper antistuck handler
-	d(Player:StopMovement())
-	d(Player:SetMovement(2))
-	
-
-end
-
 function mc_global.Wait( seconds ) 
 	mc_global.lasttick = mc_global.lasttick + seconds
 end
@@ -225,5 +218,4 @@ end
 
 RegisterEventHandler("Module.Initalize",mc_global.moduleinit)
 RegisterEventHandler("Gameloop.Update",mc_global.onupdate)
-RegisterEventHandler("Gameloop.Stuck",mc_global.stuckhandler)
 RegisterEventHandler("GUI.Update",mc_global.guivarupdate)

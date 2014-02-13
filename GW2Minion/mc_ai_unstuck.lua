@@ -1,0 +1,108 @@
+mc_ai_unstuck = {}
+mc_ai_unstuck.stucktimer = 0
+mc_ai_unstuck.stuckcounter = 0
+mc_ai_unstuck.idletimer = 0
+mc_ai_unstuck.idlecounter = 0
+mc_ai_unstuck.respawntimer = 0
+
+mc_ai_unstuck.lastpos = nil
+
+
+function mc_ai_unstuck:OnUpdate( tick )
+	
+	if ( not Player.alive ) then return end
+	
+	if 	(mc_ai_unstuck.lastpos == nil) or (mc_ai_unstuck.lastpos and type(mc_ai_unstuck.lastpos) ~= "table") then
+		mc_ai_unstuck.lastpos = Player.pos
+		return	
+	end
+	
+	
+	-- Stuck check for movement stucks
+	if ( Player:IsMoving() ) then
+		if ( tick - mc_ai_unstuck.stucktimer > 500 ) then
+			mc_ai_unstuck.stucktimer = tick
+			local pPos = Player.pos
+			if ( pPos ) then
+				--d(Distance2D ( pPos.x, pPos.y, mc_ai_unstuck.lastpos.x, mc_ai_unstuck.lastpos.y))
+				if ( Distance2D ( pPos.x, pPos.y, mc_ai_unstuck.lastpos.x,  mc_ai_unstuck.lastpos.y) < 75 ) then					
+					if ( mc_ai_unstuck.stuckcounter > 1 ) then
+						d("Seems we are stuck?")
+						if ( Player:CanMove() ) then
+							Player:Jump()
+						end
+					end
+					if ( mc_ai_unstuck.stuckcounter > 6 ) then
+						mc_ai_unstuck.HandleStuck()
+					end
+					mc_ai_unstuck.stuckcounter = mc_ai_unstuck.stuckcounter + 1
+				else
+					mc_ai_unstuck.stuckcounter = 0
+				end
+				mc_ai_unstuck.lastpos = Player.pos
+			end
+		end
+	else
+		mc_ai_unstuck.stuckcounter = 0
+		
+		-- Idle stuck check	
+		if ( tick - mc_ai_unstuck.idletimer > 6000 ) then
+			mc_ai_unstuck.idletimer = tick
+			if ( not Player:IsCasting() and not Player:IsConversationOpen() and not Inventory:IsVendorOpened() ) then
+				local pPos = Player.pos
+				
+				if ( pPos ) then				
+					if ( Distance2D ( pPos.x, pPos.y, mc_ai_unstuck.lastpos.x,  mc_ai_unstuck.lastpos.y) < 75 ) then
+						mc_ai_unstuck.idlecounter = mc_ai_unstuck.idlecounter + 1
+						if ( mc_ai_unstuck.idlecounter > 10 ) then -- 60 seconds of doing nothing
+							d("Our bot seems to be doing nothing anymore...")
+							mc_ai_unstuck.idlecounter = 0
+							mc_ai_unstuck.HandleStuck()							
+						end
+					else
+						mc_ai_unstuck.idlecounter = 0
+					end
+				end
+				mc_ai_unstuck.lastpos = Player.pos
+			end
+		end
+	end	
+end
+
+function mc_ai_unstuck.HandleStuck()
+	if ( mc_global.now - mc_ai_unstuck.respawntimer < 30000 ) then
+		ml_error("We used a waypoint within the last 30 seconds already but are stuck again !?")
+		ml_error("Stopping bot...")
+		mc_global.togglebot("0")
+			--ExitGW()
+	else
+		d("Trying to teleport to nearest waypoint for unstuck..")
+		if ( Player:RespawnAtClosestWaypoint() ) then
+			mc_global.Wait(3000)
+			mc_ai_unstuck.respawntimer = mc_global.now
+		end
+	end	
+	mc_ai_unstuck.stuckcounter = 0	
+end
+
+function mc_ai_unstuck.stuckhandler( event, distmoved, stuckcount )
+
+	d("STUCK! Distance Moved: "..tostring(distmoved) .. " Count: "..tostring(stuckcount) )
+	--d(Player:StopMovement())
+	local i = math.random(0,2)
+	if ( i == 0 ) then
+		Player:SetMovement(2)
+	elseif ( i == 1 ) then
+		Player:SetMovement(2)
+	elseif ( i == 2 ) then
+		Player:Jump()
+	end
+	
+	
+	if ( tonumber(stuckcount) > 20 ) then
+		ml_error("We are STUCK!")
+		mc_ai_unstuck.HandleStuck()
+	end
+end
+
+RegisterEventHandler("Gameloop.Stuck",mc_ai_unstuck.stuckhandler) -- gets called by c++ when using the navigationsystem

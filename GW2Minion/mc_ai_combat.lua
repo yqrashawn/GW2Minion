@@ -85,7 +85,7 @@ function mc_ai_combatAttack:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_combatAttack:task_complete_eval()	
-	if ( mc_global.now - self.duration > 0 or TableSize(CharacterList("attackable,alive,nearest,onmesh,maxdistance=4000,exclude_contentid="..mc_blacklist.GetExcludeString(mc_getstring("monsters")))) == 0) then 
+	if ( mc_global.now - self.duration > 0 or TableSize(CharacterList("attackable,alive,nearest,onmesh,maxdistance=4000,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) == 0) then 
 		Player:StopMovement()
 		return true
 	end
@@ -116,7 +116,7 @@ e_SearchTarget = inheritsFrom( ml_effect )
 function e_SearchTarget:execute()
 	ml_log("e_SearchTarget")
 	-- Weakest Aggro in CombatRange first	
-	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,nearest,onmesh,maxdistance="..mc_global.AttackRange) )
+	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,onmesh,maxdistance="..mc_global.AttackRange) )
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
@@ -125,12 +125,22 @@ function e_SearchTarget:execute()
 		end		
 	end
 	
-	-- Then nearest attackable Target
-	TList = ( CharacterList("attackable,alive,nearest,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(mc_getstring("monsters"))))
+	-- Then nearest attackable Gadget
+	local TList = ( GadgetList("nearest,attackable,alive,onmesh,maxdistance="..mc_global.AttackRange..",exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))) )
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			--d("New Target: "..(E.name).." ID:"..tostring(id))			
+			d("Found Gadget Target: "..(E.name).." ID:"..tostring(id))
+			return ml_log(Player:SetTarget(id))			
+		end		
+	end
+	
+	-- Then nearest attackable Target
+	TList = ( CharacterList("attackable,alive,nearest,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))))
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil ) then
+			d("New Target: "..(E.name).." ID:"..tostring(id))			
 			return ml_log(Player:SetTarget(id))
 		end		
 	end
@@ -223,7 +233,7 @@ function e_SetAggroTarget:execute()
 			return ml_log(true)	
 		end		
 	end
-	
+		
 	-- Then nearest Aggro Target
 	TList = ( CharacterList("attackable,alive,aggro,nearest,onmesh") )
 	if ( TableSize( TList ) > 0 ) then
@@ -234,6 +244,8 @@ function e_SetAggroTarget:execute()
 			return ml_log(true)	
 		end		
 	end
+	
+	
 	return ml_log(false)
 end
 
@@ -243,8 +255,8 @@ c_MoveIntoCombatRange.running = false
 function c_MoveIntoCombatRange:evaluate()
     --ml_log("c_MoveIntoCombRng")
     local t = Player:GetTarget()
-	if ( t ) then	
-		if (t.distance >= mc_global.AttackRange or not t.los) then
+	if ( t ) then		
+		if (t.distance >= mc_global.AttackRange or (t.isCharacter and not t.los) or (t.isGadget and not t.los and t.distance > mc_global.AttackRange)) then
 			return true
 		else
 			if ( c_MoveIntoCombatRange.running ) then 
@@ -285,7 +297,7 @@ end
 function e_KillTarget:execute()
 	ml_log("e_KillTarget")
 	local t = Player:GetTarget()
-	if ( t ) then
+	if ( t and t.alive and t.attackable) then
 		local pos = t.pos
 		if ( pos ) then
 			Player:SetFacing(pos.x,pos.y,pos.z)

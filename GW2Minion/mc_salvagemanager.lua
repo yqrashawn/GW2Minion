@@ -212,7 +212,7 @@ end
 
 --Create filtered salvage item list.
 function mc_salvagemanager.createItemList()
-	local items = Inventory("salvagable,exclude_contentid="..mc_blacklist.GetExcludeString(mc_getstring("salvageItems")))
+	local items = Inventory("salvagable,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("salvageItems")))
 	local filteredItems = {}
 	if (items) then
 		local id, item = next(items)

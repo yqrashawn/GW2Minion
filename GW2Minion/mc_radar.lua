@@ -50,17 +50,17 @@ function mc_radar.HandleInit()
     end	
     
     GUI_NewWindow(mc_radar.MainWindow.Name,mc_radar.MainWindow.x,mc_radar.MainWindow.y,mc_radar.MainWindow.width,mc_radar.MainWindow.height)	
-    GUI_NewCheckbox(mc_radar.MainWindow.Name,mc_getstring("enableRadar"),"gRadar","Radar" );
-    GUI_NewCheckbox(mc_radar.MainWindow.Name,mc_getstring("enable2DRadar"),"g2dRadar","Radar" );
-    GUI_NewCheckbox(mc_radar.MainWindow.Name,mc_getstring("enable3DRadar"),"g3dRadar","Radar" );
-    GUI_NewCheckbox(mc_radar.MainWindow.Name,mc_getstring("fullscreenRadar"),"g2dRadarFullScreen","Radar" );
+    GUI_NewCheckbox(mc_radar.MainWindow.Name,GetString("enableRadar"),"gRadar","Radar" );
+    GUI_NewCheckbox(mc_radar.MainWindow.Name,GetString("enable2DRadar"),"g2dRadar","Radar" );
+    GUI_NewCheckbox(mc_radar.MainWindow.Name,GetString("enable3DRadar"),"g3dRadar","Radar" );
+    GUI_NewCheckbox(mc_radar.MainWindow.Name,GetString("fullscreenRadar"),"g2dRadarFullScreen","Radar" );
 	GUI_NewNumeric(mc_radar.MainWindow.Name,"Zoom","gRadarZoom","Radar","1","200");
-    GUI_NewCheckbox(mc_radar.MainWindow.Name,mc_getstring("showNodes"),"gRadarShowNode","RadarSettings" );
-    GUI_NewCheckbox(mc_radar.MainWindow.Name,mc_getstring("showPlayers"),"gRadarShowPlayers","RadarSettings" );
-    GUI_NewCheckbox(mc_radar.MainWindow.Name,mc_getstring("showBattleNPCs"),"gRadarShowBattleNPCs","RadarSettings" );
+    GUI_NewCheckbox(mc_radar.MainWindow.Name,GetString("showNodes"),"gRadarShowNode","RadarSettings" );
+    GUI_NewCheckbox(mc_radar.MainWindow.Name,GetString("showPlayers"),"gRadarShowPlayers","RadarSettings" );
+    GUI_NewCheckbox(mc_radar.MainWindow.Name,GetString("showBattleNPCs"),"gRadarShowBattleNPCs","RadarSettings" );
         
-    GUI_NewNumeric(mc_radar.MainWindow.Name,mc_getstring("xPos"),"gRadarX","RadarSettings" );
-    GUI_NewNumeric(mc_radar.MainWindow.Name,mc_getstring("yPos"),"gRadarY","RadarSettings" );
+    GUI_NewNumeric(mc_radar.MainWindow.Name,GetString("xPos"),"gRadarX","RadarSettings" );
+    GUI_NewNumeric(mc_radar.MainWindow.Name,GetString("yPos"),"gRadarY","RadarSettings" );
     
     gRadar = Settings.GW2Minion.gRadar
     g2dRadar = Settings.GW2Minion.g2dRadar

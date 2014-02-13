@@ -81,8 +81,8 @@ function mc_ai_assist.moduleinit()
 	if (Settings.GW2Minion.sMmode == nil) then
 		Settings.GW2Minion.sMmode = "Everything"
 	end
-	GUI_NewComboBox(mc_global.window.name,mc_getstring("sMtargetmode"),"sMtargetmode",mc_getstring("assistMode"),"None,LowestHealth,Closest,Biggest Crowd");
-	GUI_NewComboBox(mc_global.window.name,mc_getstring("sMmode"),"sMmode",mc_getstring("assistMode"),"Everything,Players Only")
+	GUI_NewComboBox(mc_global.window.name,GetString("sMtargetmode"),"sMtargetmode",GetString("assistMode"),"None,LowestHealth,Closest,Biggest Crowd");
+	GUI_NewComboBox(mc_global.window.name,GetString("sMmode"),"sMmode",GetString("assistMode"),"Everything,Players Only")
 	
 	sMtargetmode = Settings.GW2Minion.sMtargetmode
 	sMmode = Settings.GW2Minion.sMmode
@@ -92,7 +92,7 @@ end
 
 -- Adding it to our botmodes
 if ( mc_global.BotModes ) then
-	mc_global.BotModes[mc_getstring("assistMode")] = mc_ai_assist
+	mc_global.BotModes[GetString("assistMode")] = mc_ai_assist
 end 
 
 RegisterEventHandler("Module.Initalize",mc_ai_assist.moduleinit)

@@ -31,11 +31,14 @@ function mc_ai_grind:Process()
 	
 	
 	-- Killsomething nearby
-	if ( i == 0 and function() return TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(mc_getstring("monsters")))) == 0 end ) then
+	if ( i == 0 and function() return TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) == 0 end ) then
 		local newTask = mc_ai_combatAttack.Create()
 		ml_task_hub:CurrentTask():AddSubTask(newTask)
-		
+	
 	elseif ( i == 1 ) then
+		d("BANANA")
+	
+	elseif ( i == 2 ) then
 		d("BANANA")
 	end
 							
@@ -73,6 +76,6 @@ function mc_ai_grind.moduleinit()
 	
 end
 if ( mc_global.BotModes) then
-	mc_global.BotModes[mc_getstring("grindMode")] = mc_ai_grind
+	mc_global.BotModes[GetString("grindMode")] = mc_ai_grind
 end
 RegisterEventHandler("Module.Initalize",mc_ai_grind.moduleinit)

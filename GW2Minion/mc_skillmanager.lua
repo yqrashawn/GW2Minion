@@ -1,8 +1,8 @@
 mc_skillmanager = {}
 -- Skillmanager for adv. skill customization
 mc_skillmanager.profilepath = GetStartupPath() .. [[\LuaMods\GW2Minion\SkillManagerProfiles\]];
-mc_skillmanager.mainwindow = { name = mc_getstring("skillManager"), x = 350, y = 50, w = 250, h = 350}
-mc_skillmanager.editwindow = { name = mc_getstring("skillEditor"), w = 250, h = 550}
+mc_skillmanager.mainwindow = { name = GetString("skillManager"), x = 350, y = 50, w = 250, h = 350}
+mc_skillmanager.editwindow = { name = GetString("skillEditor"), w = 250, h = 550}
 mc_skillmanager.visible = false
 mc_skillmanager.SkillProfile = {}
 mc_skillmanager.SkillRecordingActive = false
@@ -140,31 +140,31 @@ function mc_skillmanager.ModuleInit()
 
 		
 	GUI_NewWindow(mc_skillmanager.mainwindow.name,mc_skillmanager.mainwindow.x,mc_skillmanager.mainwindow.y,mc_skillmanager.mainwindow.w,mc_skillmanager.mainwindow.h)
-	GUI_NewComboBox(mc_skillmanager.mainwindow.name,mc_getstring("profile"),"gSMprofile",mc_getstring("generalSettings"),"None")
+	GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("profile"),"gSMprofile",GetString("generalSettings"),"None")
 		
-	--GUI_NewCheckbox(mc_skillmanager.mainwindow.name,mc_getstring("SwapR"),"gSMSwapR",mc_getstring("AdvancedSettings"))
-	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,mc_getstring("SwapCD"),"gSMSwapCD",mc_getstring("AdvancedSettings"))
-	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,mc_getstring("SwapRange"),"gSMSwapRange",mc_getstring("AdvancedSettings"))
+	--GUI_NewCheckbox(mc_skillmanager.mainwindow.name,GetString("SwapR"),"gSMSwapR",GetString("AdvancedSettings"))
+	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,GetString("SwapCD"),"gSMSwapCD",GetString("AdvancedSettings"))
+	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,GetString("SwapRange"),"gSMSwapRange",GetString("AdvancedSettings"))
 	
 	local prof = Player.profession
 	if ( prof ~= nil ) then
 		if (prof == 3) then	-- Engineer
-		GUI_NewComboBox(mc_skillmanager.mainwindow.name,mc_getstring("PriorizeKit"),"gSMPrioKit",mc_getstring("AdvancedSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
+		GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeKit"),"gSMPrioKit",GetString("AdvancedSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
 		
 		elseif( prof == 6 ) then -- Elementalist
-			GUI_NewComboBox(mc_skillmanager.mainwindow.name,mc_getstring("PriorizeAttunement1"),"gSMPrioAtt",mc_getstring("AdvancedSettings"),"None,Fire,Water,Air,Earth")
-			GUI_NewComboBox(mc_skillmanager.mainwindow.name,mc_getstring("PriorizeAttunement2"),"gSMPrioAtt2",mc_getstring("AdvancedSettings"),"None,Fire,Water,Air,Earth")
-			GUI_NewComboBox(mc_skillmanager.mainwindow.name,mc_getstring("PriorizeAttunement3"),"gSMPrioAtt3",mc_getstring("AdvancedSettings"),"None,Fire,Water,Air,Earth")
-			GUI_NewComboBox(mc_skillmanager.mainwindow.name,mc_getstring("PriorizeAttunement4"),"gSMPrioAtt4",mc_getstring("AdvancedSettings"),"None,Fire,Water,Air,Earth")
+			GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeAttunement1"),"gSMPrioAtt",GetString("AdvancedSettings"),"None,Fire,Water,Air,Earth")
+			GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeAttunement2"),"gSMPrioAtt2",GetString("AdvancedSettings"),"None,Fire,Water,Air,Earth")
+			GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeAttunement3"),"gSMPrioAtt3",GetString("AdvancedSettings"),"None,Fire,Water,Air,Earth")
+			GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeAttunement4"),"gSMPrioAtt4",GetString("AdvancedSettings"),"None,Fire,Water,Air,Earth")
 		end				
 	end
 	
-	GUI_NewButton(mc_skillmanager.mainwindow.name,mc_getstring("autoetectSkills"),"SMAutodetect",mc_getstring("skillEditor"))
+	GUI_NewButton(mc_skillmanager.mainwindow.name,GetString("autoetectSkills"),"SMAutodetect",GetString("skillEditor"))
 	RegisterEventHandler("SMAutodetect",mc_skillmanager.AutoDetectSkills)	
-	GUI_NewButton(mc_skillmanager.mainwindow.name,mc_getstring("saveProfile"),"SMSaveEvent")	
+	GUI_NewButton(mc_skillmanager.mainwindow.name,GetString("saveProfile"),"SMSaveEvent")	
 	RegisterEventHandler("SMSaveEvent",mc_skillmanager.SaveProfile)	
-	GUI_NewField(mc_skillmanager.mainwindow.name,mc_getstring("newProfileName"),"gSMnewname",mc_getstring("skillEditor"))
-	GUI_NewButton(mc_skillmanager.mainwindow.name,mc_getstring("newProfile"),"SMCreateNewProfile",mc_getstring("skillEditor"))
+	GUI_NewField(mc_skillmanager.mainwindow.name,GetString("newProfileName"),"gSMnewname",GetString("skillEditor"))
+	GUI_NewButton(mc_skillmanager.mainwindow.name,GetString("newProfile"),"SMCreateNewProfile",GetString("skillEditor"))
 	RegisterEventHandler("SMCreateNewProfile",mc_skillmanager.CreateNewProfile)
 			
 		
@@ -180,39 +180,39 @@ function mc_skillmanager.ModuleInit()
 	gSMnewname = ""
   		
 	GUI_SizeWindow(mc_skillmanager.mainwindow.name,mc_skillmanager.mainwindow.w,mc_skillmanager.mainwindow.h)
-	GUI_UnFoldGroup(mc_skillmanager.mainwindow.name,mc_getstring("generalSettings"))
+	GUI_UnFoldGroup(mc_skillmanager.mainwindow.name,GetString("generalSettings"))
 	GUI_WindowVisible(mc_skillmanager.mainwindow.name,false)
 	
 	
 	-- EDITOR WINDOW
 	GUI_NewWindow(mc_skillmanager.editwindow.name,mc_skillmanager.mainwindow.x+mc_skillmanager.mainwindow.w,mc_skillmanager.mainwindow.y,mc_skillmanager.editwindow.w,mc_skillmanager.editwindow.h)		
-	GUI_NewField(mc_skillmanager.editwindow.name,mc_getstring("maMarkerName"),"SKM_NAME","SkillDetails")
-	GUI_NewCheckbox(mc_skillmanager.editwindow.name,mc_getstring("initFight"),"SKM_ON","SkillDetails")
-	GUI_NewCheckbox(mc_skillmanager.editwindow.name,mc_getstring("los"),"SKM_LOS","SkillDetails")
-	GUI_NewCheckbox(mc_skillmanager.editwindow.name,mc_getstring("channeled"),"SKM_CHAN","SkillDetails")
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,mc_getstring("minRange"),"SKM_MinR","SkillDetails")
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,mc_getstring("maxRange"),"SKM_MaxR","SkillDetails")
-	GUI_NewComboBox(mc_skillmanager.editwindow.name,mc_getstring("targetType"),"SKM_TType","SkillDetails","Enemy,Self");
-	GUI_NewComboBox(mc_skillmanager.editwindow.name,mc_getstring("useOutOfCombat"),"SKM_OutOfCombat","SkillDetails","No,Yes,Either");
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,mc_getstring("playerHPGT"),"SKM_PHPL","SkillDetails");
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,mc_getstring("playerHPLT"),"SKM_PHPB","SkillDetails");
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,mc_getstring("playerPowerGT"),"SKM_PPowL","SkillDetails");
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,mc_getstring("playerPowerLT"),"SKM_PPowB","SkillDetails");
-	GUI_NewField(mc_skillmanager.editwindow.name,mc_getstring("playerHas"),"SKM_PEff1","SkillDetails");	
-	GUI_NewField(mc_skillmanager.editwindow.name,mc_getstring("playerHasNot"),"SKM_PNEff1","SkillDetails");	
-	GUI_NewComboBox(mc_skillmanager.editwindow.name,mc_getstring("targetMoving"),"SKM_TMove","SkillDetails","Either,Yes,No");
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,mc_getstring("targetHPGT"),"SKM_THPL","SkillDetails");
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,mc_getstring("targetHPLT"),"SKM_THPB","SkillDetails");
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,mc_getstring("enemiesNearCount"),"SKM_TECount","SkillDetails");
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,mc_getstring("enemiesNearRange"),"SKM_TERange","SkillDetails");
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,mc_getstring("alliesNearCount"),"SKM_TACount","SkillDetails");
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,mc_getstring("alliesNearRange"),"SKM_TARange","SkillDetails");
-	GUI_NewField(mc_skillmanager.editwindow.name,mc_getstring("targetHas"),"SKM_TEff1","SkillDetails");	
-	GUI_NewField(mc_skillmanager.editwindow.name,mc_getstring("targetHasNot"),"SKM_TNEff1","SkillDetails");	
+	GUI_NewField(mc_skillmanager.editwindow.name,GetString("maMarkerName"),"SKM_NAME","SkillDetails")
+	GUI_NewCheckbox(mc_skillmanager.editwindow.name,GetString("initFight"),"SKM_ON","SkillDetails")
+	GUI_NewCheckbox(mc_skillmanager.editwindow.name,GetString("los"),"SKM_LOS","SkillDetails")
+	GUI_NewCheckbox(mc_skillmanager.editwindow.name,GetString("channeled"),"SKM_CHAN","SkillDetails")
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("minRange"),"SKM_MinR","SkillDetails")
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("maxRange"),"SKM_MaxR","SkillDetails")
+	GUI_NewComboBox(mc_skillmanager.editwindow.name,GetString("targetType"),"SKM_TType","SkillDetails","Enemy,Self");
+	GUI_NewComboBox(mc_skillmanager.editwindow.name,GetString("useOutOfCombat"),"SKM_OutOfCombat","SkillDetails","No,Yes,Either");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("playerHPGT"),"SKM_PHPL","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("playerHPLT"),"SKM_PHPB","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("playerPowerGT"),"SKM_PPowL","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("playerPowerLT"),"SKM_PPowB","SkillDetails");
+	GUI_NewField(mc_skillmanager.editwindow.name,GetString("playerHas"),"SKM_PEff1","SkillDetails");	
+	GUI_NewField(mc_skillmanager.editwindow.name,GetString("playerHasNot"),"SKM_PNEff1","SkillDetails");	
+	GUI_NewComboBox(mc_skillmanager.editwindow.name,GetString("targetMoving"),"SKM_TMove","SkillDetails","Either,Yes,No");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("targetHPGT"),"SKM_THPL","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("targetHPLT"),"SKM_THPB","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("enemiesNearCount"),"SKM_TECount","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("enemiesNearRange"),"SKM_TERange","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("alliesNearCount"),"SKM_TACount","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("alliesNearRange"),"SKM_TARange","SkillDetails");
+	GUI_NewField(mc_skillmanager.editwindow.name,GetString("targetHas"),"SKM_TEff1","SkillDetails");	
+	GUI_NewField(mc_skillmanager.editwindow.name,GetString("targetHasNot"),"SKM_TNEff1","SkillDetails");	
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Target has #Conditions >","SKM_TCondC","SkillDetails");
 	--GUI_NewNumeric(mc_skillmanager.editwindow.name,"Player has #Boons >","SKM_PBoonC","SkillDetails");
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Target has #Boons >","SKM_TBoonC","SkillDetails");
-	GUI_NewField(mc_skillmanager.editwindow.name,mc_getstring("prevSkillID"),"SKM_PrevID","SkillDetails");	
+	GUI_NewField(mc_skillmanager.editwindow.name,GetString("prevSkillID"),"SKM_PrevID","SkillDetails");	
 	
 	
 	GUI_UnFoldGroup(mc_skillmanager.editwindow.name,"SkillDetails")
@@ -804,10 +804,12 @@ function mc_skillmanager.AttackTarget( TargetID )
 	end
 	
 		
-	if ( target and TargetID and target.attackable ) then
-		
-		local mybuffs = Player.buffs
-		local targetbuffs = target.buffs
+	if ( target and TargetID and target.attackable ) then	
+		local mybuffs = Player.buffs		
+		local targetbuffs = nil
+		if ( target.isCharacter) then
+			targetbuffs = target.buffs
+		end
 		if ( TableSize(mc_skillmanager.SkillProfile) > 0 and Player:CanCast()) then
 			for prio,skill in pairs(mc_skillmanager.SkillProfile) do
 				
@@ -830,11 +832,13 @@ function mc_skillmanager.AttackTarget( TargetID )
 						return
 					else
 						mybuffs = Player.buffs
-						targetbuffs = target.buffs
+						if ( target.isCharacter) then
+							targetbuffs = target.buffs
+						end
 					end
 					-- TARGETTYPE + LOS + RANGE + MOVEMENT + HEALTH CHECK						
 					if (skill.ttype == "Enemy" and ( (skill.tmove == "No" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving)
-							or (skill.tmove == "Yes" and target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving)
+							or (skill.tmove == "Yes" and target.isCharacter and target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving)
 							or (skill.minRange > 0 and target.distance < skill.minRange)
 							or (skill.maxRange > 0 and target.distance > skill.maxRange)
 							or (skill.thpl > 0 and skill.thpl > target.health.percent)
@@ -861,7 +865,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 						if ( mc_helper.BufflistHasBuffs(mybuffs, skill.pneff1) ) then continue end
 					end						
 					if ( skill.pcondc > 0 and mybuffs ) then																		
-						if (CountConditions(targetbuffs) <= skill.pcondc) then continue end								
+						if (CountConditions(mybuffs) <= skill.pcondc) then continue end								
 					end
 					
 					--ALLIE AE CHECK
@@ -874,12 +878,12 @@ function mc_skillmanager.AttackTarget( TargetID )
 					if ( skill.teff1 ~= "" and targetbuffs )then 
 						--Possible value in teff1: "134,245+123,552+123+531"
 						--d("Target Buffcheck : "..tostring(mc_helper.BufflistHasBuffs(mybuffs, skill.teff1)))
-						if ( not mc_helper.BufflistHasBuffs(mybuffs, skill.teff1) ) then continue end	
+						if ( not mc_helper.BufflistHasBuffs(targetbuffs, skill.teff1) ) then continue end	
 					end						
 					if ( skill.tneff1 ~= "" and targetbuffs )then 
 						--Possible value in tneff1: "134,245+123,552+123+531"
 						--d("Not Target Buffcheck : "..tostring(mc_helper.BufflistHasBuffs(mybuffs, skill.tneff1)))
-						if ( mc_helper.BufflistHasBuffs(mybuffs, skill.tneff1) ) then continue end
+						if ( mc_helper.BufflistHasBuffs(targetbuffs, skill.tneff1) ) then continue end
 					end
 					-- TARGET AE CHECK
 					if ( skill.tecount > 0 and skill.terange > 0) then
@@ -914,9 +918,9 @@ function mc_skillmanager.AttackTarget( TargetID )
 							return true
 						end
 					else					
-
+						
 						if ( mc_skillmanager.cskills[currentSlot].isGroundTargeted ) then											
-							if ( target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving ) then
+							if ( (target.isCharacter and target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving) or target.isGadget) then
 									if ( Player:CastSpell(mc_skillmanager.cskills[currentSlot].slot,TargetID) ) then
 									--d("Casting AE on Target: "..tostring(mc_skillmanager.cskills[currentSlot].name))
 									if (currentSlot ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.cskills[currentSlot].skillID end
@@ -1004,7 +1008,7 @@ function mc_skillmanager.HealMe()
 						if ( mc_helper.BufflistHasBuffs(mybuffs, skill.pneff1) ) then continue end
 					end						
 					if ( skill.pcondc > 0 and mybuffs ) then																		
-						if (CountConditions(targetbuffs) <= skill.pcondc) then continue end								
+						if (CountConditions(mybuffs) <= skill.pcondc) then continue end								
 					end
 																						
 					 -- PREVIOUS SKILL					
