@@ -192,7 +192,7 @@ function mc_ai_vendor.OpenSellWindow()
 					found = true
 					break
 				elseif( entry.type == 13 ) then
-					Player:SelectConversationOption( 23 )
+					Player:SelectConversationOption( 13 )
 					mc_global.Wait(math.random(150,400))
 					found = true
 					break

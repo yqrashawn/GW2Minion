@@ -216,8 +216,8 @@ function e_GatherToolsCheck:execute()
 					if (itemID == mc_vendormanager.tools[tSlot][invTools]) then 
 						-- We found a tool to equip into our empty gatherable slot
 						if ( tSlot == 0 ) then d("Equipping Sickle ..") item:Equip(GW2.EQUIPMENTSLOT.ForagingTool) end
-						if ( tSlot == 1 ) then d("Equipping Sickle ..") item:Equip(GW2.EQUIPMENTSLOT.LoggingTool) end
-						if ( tSlot == 2 ) then d("Equipping Sickle ..") item:Equip(GW2.EQUIPMENTSLOT.MiningTool) end						
+						if ( tSlot == 1 ) then d("Equipping Axe ..") item:Equip(GW2.EQUIPMENTSLOT.LoggingTool) end
+						if ( tSlot == 2 ) then d("Equipping Pick ..") item:Equip(GW2.EQUIPMENTSLOT.MiningTool) end						
 						mc_global.Wait(750)
 						return ml_log(true)
 					end

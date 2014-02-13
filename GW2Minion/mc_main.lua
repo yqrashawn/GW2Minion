@@ -134,9 +134,7 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 			k == "doEvents" or 
 			k == "sMmode" or 
 			k == "sMtargetmode" or
-			k == "gSalvage" or
-			k == "gMaxSalvageRarity" or
-			k == "gSalvageTrophies" or 
+			k == "SalvageManager_Active" or
 			k == "gRepairBrokenLimit" or
 			k == "gRepairDamageLimit")			
 		then

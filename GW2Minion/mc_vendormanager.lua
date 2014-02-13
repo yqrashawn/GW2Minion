@@ -137,13 +137,22 @@ function mc_vendormanager.ModuleInit()
 	if (Settings.GW2Minion.SellManager_Active == nil ) then
 		Settings.GW2Minion.SellManager_Active = "1"
 	end
+	if (Settings.GW2Minion.SellManager_ItemIDInfo == nil ) then
+		Settings.GW2Minion.SellManager_ItemIDInfo = {}
+	end
 	if (Settings.GW2Minion.gRepairDamageLimit == nil ) then
 		Settings.GW2Minion.gRepairDamageLimit = "5" -- Repair when more than 5 damaged items
 	end
 	if (Settings.GW2Minion.gRepairBrokenLimit == nil ) then
 		Settings.GW2Minion.gRepairBrokenLimit = "2" -- Repair when more than 5 broken items
 	end
-		
+	
+		--REPAIR
+	GUI_NewNumeric(mc_global.window.name,GetString("repairDamaged"),"gRepairDamageLimit",GetString("vendorSettings"),"0","15");
+	GUI_NewNumeric(mc_global.window.name,GetString("repairBroken"),"gRepairBrokenLimit",GetString("vendorSettings"),"0","15");
+	gRepairDamageLimit = Settings.GW2Minion.gRepairDamageLimit
+	gRepairBrokenLimit = Settings.GW2Minion.gRepairBrokenLimit
+	
 	-- SELLMANAGER WINDOW
 	GUI_NewButton(mc_global.window.name, GetString("sellGroup"), "sellManager.toggle",GetString("vendorSettings"))	
 	-- SELL SETTINGS
@@ -156,14 +165,22 @@ function mc_vendormanager.ModuleInit()
 	GUI_UnFoldGroup(mc_vendormanager.sellmainwindow.name,GetString("sellGroup"))
 	GUI_WindowVisible(mc_vendormanager.sellmainwindow.name,false)	
 	GUI_UnFoldGroup(mc_vendormanager.sellmainwindow.name,GetString("sellfilters"))	
+	-- SELL BY ID FILTER
+	GUI_NewComboBox(mc_vendormanager.sellmainwindow.name,GetString("sellByIDtems"),"SellManager_ItemToSell",GetString("sellByID"),"")
+	mc_vendormanager.UpdateSellSingleItemList()
+	GUI_NewButton(mc_vendormanager.sellmainwindow.name,GetString("sellByIDAddItem"),"SellManager_AdditemID",GetString("sellByID"))
+	RegisterEventHandler("SellManager_AdditemID",mc_vendormanager.AddItemID)
+	GUI_NewComboBox(mc_vendormanager.sellmainwindow.name,GetString("sellItemList"),"SellManager_ItemIDList",GetString("sellByID"),"")
+	SellManager_ItemIDList = "None"
+	GUI_NewButton(mc_vendormanager.sellmainwindow.name,GetString("sellByIDRemoveItem"),"SellManager_RemoveitemID",GetString("sellByID"))
+	RegisterEventHandler("SellManager_RemoveitemID",mc_vendormanager.RemoveItemID)
 	-- SELLEDITOR WINDOW
 	GUI_NewWindow(mc_vendormanager.selleditwindow.name,mc_vendormanager.sellmainwindow.x+mc_vendormanager.sellmainwindow.w,mc_vendormanager.sellmainwindow.y,mc_vendormanager.selleditwindow.w,mc_vendormanager.selleditwindow.h)
 	GUI_NewField(mc_vendormanager.selleditwindow.name,GetString("name"),"SellManager_Name",GetString("filterdetails"))
 	GUI_NewComboBox(mc_vendormanager.selleditwindow.name,GetString("soulbound"),"SellManager_Soulbound",GetString("filterdetails"),"true,false,either")
 	GUI_NewComboBox(mc_vendormanager.selleditwindow.name,GetString("itemtype"),"SellManager_Itemtype",GetString("filterdetails"),"")
 	GUI_NewComboBox(mc_vendormanager.selleditwindow.name,GetString("rarity"),"SellManager_Rarity",GetString("filterdetails"),GetString("rarityNone")..","..GetString("rarityJunk")..","..GetString("rarityCommon")..","..GetString("rarityFine")..","..GetString("rarityMasterwork")..","..GetString("rarityRare")..","..GetString("rarityExotic"));
-	GUI_NewComboBox(mc_vendormanager.selleditwindow.name,GetString("weapontype"),"SellManager_Weapontype",GetString("filterdetails"),"")
-	GUI_NewField(mc_vendormanager.selleditwindow.name,GetString("itemid"),"SellManager_ItemID",GetString("filterdetails"))
+	GUI_NewComboBox(mc_vendormanager.selleditwindow.name,GetString("weapontype"),"SellManager_Weapontype",GetString("filterdetails"),"")	
 	GUI_NewButton(mc_vendormanager.selleditwindow.name,GetString("delete"),"SellManager_DeleteFilter")
 	RegisterEventHandler("SellManager_DeleteFilter",mc_vendormanager.deleteFilter)	
 	GUI_SizeWindow(mc_vendormanager.selleditwindow.name,mc_vendormanager.selleditwindow.w,mc_vendormanager.selleditwindow.h)
@@ -186,8 +203,8 @@ function mc_vendormanager.ModuleInit()
 	SellManager_Weapontype_listitems = list
 		
 	SellManager_Active = Settings.GW2Minion.SellManager_Active
-	mc_vendormanager.filterList = Settings.GW2Minion.SellManager_FilterList
-	
+	SellManager_ItemIDInfo = Settings.GW2Minion.SellManager_ItemIDInfo
+	mc_vendormanager.filterList = Settings.GW2Minion.SellManager_FilterList	
 	mc_vendormanager.refreshFilterlist()
 	
 	--********
@@ -296,11 +313,24 @@ function mc_vendormanager.ModuleInit()
 	BuyManager_orichalcumTools = Settings.GW2Minion.BuyManager_orichalcumTools
 	BuyManager_toolStacks = Settings.GW2Minion.BuyManager_toolStacks
 	
-	--REPAIR
-	GUI_NewNumeric(mc_global.window.name,GetString("repairDamaged"),"gRepairDamageLimit",mc_getstring("vendorSettings"),"0","15");
-	GUI_NewNumeric(mc_global.window.name,GetString("repairBroken"),"gRepairBrokenLimit",mc_getstring("vendorSettings"),"0","15");
-	gRepairDamageLimit = Settings.GW2Minion.gRepairDamageLimit
-	gRepairBrokenLimit = Settings.GW2Minion.gRepairBrokenLimit
+	mc_vendormanager.UpdateSellSingleItemList()
+	mc_vendormanager.updateItemIDList()
+end
+
+--Fill the "Sell Single Item"-dropdownlist
+function mc_vendormanager.UpdateSellSingleItemList()
+	local list = "None"
+	local iList = Inventory("")
+	if (TableSize(iList)>0)then
+		local i,item = next(iList)
+		while (i and item) do
+			if (item.name and item.name ~= "" )then
+				list = list .. "," .. item.name
+			end		
+			i,item=next(iList,i)
+		end
+	end
+	SellManager_ItemToSell_listitems = list
 end
 
 --Create filtered Sell-Itemlist of Items we can sell
@@ -311,19 +341,28 @@ function mc_vendormanager.createItemList()
 		local id, item = next(items)
 		while (id and item) do
 			local addItem = false
-			local _, filter = next(mc_vendormanager.filterList)
-			while (filter) do
+			local iid, filter = next(mc_vendormanager.filterList)
+			while (iid and filter) do
 				if (mc_vendormanager.validFilter(filter)) then
 					if ((filter.rarity == "None" or filter.rarity == nil or GW2.ITEMRARITY[filter.rarity] == item.rarity) and
 					(filter.itemtype == "None" or filter.itemtype == nil or GW2.ITEMTYPE[filter.itemtype] == item.itemtype) and
-					(filter.weapontype == "None" or filter.weapontype == nil or GW2.WEAPONTYPE[filter.weapontype] == item.weapontype) and
-					(filter.itemID == "None" or filter.itemID == nil or tonumber(filter.itemID) == item.itemID) and
+					(filter.weapontype == "None" or filter.weapontype == nil or GW2.WEAPONTYPE[filter.weapontype] == item.weapontype) and					
 					(filter.soulbound == "either" or (filter.soulbound == nil and item.soulbound == false) or filter.soulbound == tostring(item.soulbound))) then
 						addItem = true
 					end
-				end
-				_, filter = next(mc_vendormanager.filterList, _)
+				end				
+				iid, filter = next(mc_vendormanager.filterList, iid)
 			end
+			-- Check for single filtered list
+			local iID,lItem = next(SellManager_ItemIDInfo)
+			while (iID and lItem) do
+				if (item.itemID == lItem.itemID) then
+					addItem = true
+					break
+				end
+				iID,lItem = next(SellManager_ItemIDInfo, iID)
+			end
+			
 			if (addItem) then
 				table.insert(filteredItems, item)
 			end
@@ -343,6 +382,9 @@ function mc_vendormanager.validFilter(filter)
 		return true
 	elseif (filter.itemID ~= "None" and filter.itemID ~= nil) then
 		return true
+
+	elseif (filter.rarity == "Junk") then
+		return true
 	end
 	return false
 end
@@ -351,7 +393,7 @@ end
 function mc_vendormanager.filterWindow(filterNumber)
 	if (mc_vendormanager.filterList[filterNumber] == nil and not mc_vendormanager.filterExcists() and SellManager_NewFilterName ~= nil and SellManager_NewFilterName ~= "") then
 		filterNumber = TableSize(mc_vendormanager.filterList) + 1
-		mc_vendormanager.filterList[filterNumber] = {name = SellManager_NewFilterName, soulbound = "false", rarity = "None", itemtype = "None", weapontype = "None", itemID = "None"}
+		mc_vendormanager.filterList[filterNumber] = {name = SellManager_NewFilterName, soulbound = "false", rarity = "None", itemtype = "None", weapontype = "None"}
 		mc_vendormanager.refreshFilterlist()
 		Settings.GW2Minion.SellManager_FilterList = mc_vendormanager.filterList
 	end
@@ -364,8 +406,7 @@ function mc_vendormanager.filterWindow(filterNumber)
 		SellManager_Soulbound = mc_vendormanager.filterList[filterNumber].soulbound or "false"
 		SellManager_Rarity = mc_vendormanager.filterList[filterNumber].rarity or "None"
 		SellManager_Itemtype = mc_vendormanager.filterList[filterNumber].itemtype or "None"
-		SellManager_Weapontype = mc_vendormanager.filterList[filterNumber].weapontype or "None"
-		SellManager_ItemID = mc_vendormanager.filterList[filterNumber].itemID or "None"
+		SellManager_Weapontype = mc_vendormanager.filterList[filterNumber].weapontype or "None"		
 		GUI_WindowVisible(mc_vendormanager.selleditwindow.name,true)
 	end
 	SellManager_CurFilter = filterNumber
@@ -404,11 +445,78 @@ function mc_vendormanager.refreshFilterlist()
 	SellManager_Rarity = nil
 	SellManager_Itemtype = nil
 	SellManager_Weapontype = nil
-	SellManager_ItemID = nil
+	
 	GUI_WindowVisible(mc_vendormanager.selleditwindow.name,false)
 	GUI_UnFoldGroup(mc_vendormanager.sellmainwindow.name,GetString("sellfilters"))
 end
 
+-- Add a single new Item to our SellList
+function mc_vendormanager.AddItemID()
+	if ( SellManager_ItemToSell and SellManager_ItemToSell ~= "None" and SellManager_ItemToSell ~= "" ) then
+		-- Make sure this item is not already in our SellList
+			local id,lItem = next(SellManager_ItemIDInfo)
+			local found = false
+			while (id and lItem) do
+				if (SellManager_ItemToSell == lItem.name) then
+					return
+				end
+				id,lItem = next(SellManager_ItemIDInfo, id)
+			end
+		
+		-- Find Item by Name in Inventory
+		local iList = Inventory("")
+		local iItem = nil
+		if (TableSize(iList)>0)then
+			local i,item = next(iList)
+			while (i and item) do				
+				if (item.name and item.name ~= "" and item.name == SellManager_ItemToSell)then
+					iItem = item
+					break
+				end		
+				i,item=next(iList,i)
+			end
+		end
+		if (iItem) then		
+			table.insert(SellManager_ItemIDInfo, {name = iItem.name, itemID = iItem.itemID})		
+		end
+		Settings.GW2Minion.SellManager_ItemIDInfo = SellManager_ItemIDInfo
+		mc_vendormanager.updateItemIDList()		
+		SellManager_ItemToSell = "None"
+	end	
+end
+
+function mc_vendormanager.RemoveItemID()
+	if ( SellManager_ItemIDList and SellManager_ItemIDList ~= "None" and SellManager_ItemIDList~="") then
+		_,start = string.find(SellManager_ItemIDList, "-")
+		local itemID = string.sub(SellManager_ItemIDList, start + 2, -1)
+		local id,item = next(SellManager_ItemIDInfo)
+		while (id and item) do
+			if (item.itemID == tonumber(itemID)) then
+				table.remove(SellManager_ItemIDInfo, id)
+			end
+			id,item = next(SellManager_ItemIDInfo, id)
+		end
+		Settings.GW2Minion.SellManager_ItemIDInfo = SellManager_ItemIDInfo
+		mc_vendormanager.updateItemIDList()
+	end
+end
+-- Update the Sell Single ItemList Dropdownfield
+function mc_vendormanager.updateItemIDList()
+	local list = "None"
+	SellManager_ItemIDs = ""
+	local _,item = next(SellManager_ItemIDInfo)
+	while (item) do
+		list = list .. "," .. item.name .. " - " .. item.itemID
+		if (SellManager_ItemIDs == "") then
+			SellManager_ItemIDs = item.itemID
+		else
+			SellManager_ItemIDs = SellManager_ItemIDs .. "," .. item.itemID
+		end
+		_,item = next(SellManager_ItemIDInfo, _)
+	end
+	SellManager_ItemIDList = "None"
+	SellManager_ItemIDList_listitems = list
+end
 
 --*************
 --BUY FUNCTIONS
@@ -608,15 +716,13 @@ function mc_vendormanager.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "SellManager_Soulbound"  or
 				k == "SellManager_Rarity" or
 				k == "SellManager_Itemtype" or
-				k == "SellManager_Weapontype" or
-				k == "SellManager_ItemID"
+				k == "SellManager_Weapontype"				
 				)
 		then
 			mc_vendormanager.filterList[SellManager_CurFilter].soulbound = SellManager_Soulbound
 			mc_vendormanager.filterList[SellManager_CurFilter].rarity = SellManager_Rarity
 			mc_vendormanager.filterList[SellManager_CurFilter].itemtype = SellManager_Itemtype
-			mc_vendormanager.filterList[SellManager_CurFilter].weapontype = SellManager_Weapontype
-			mc_vendormanager.filterList[SellManager_CurFilter].itemID = SellManager_ItemID
+			mc_vendormanager.filterList[SellManager_CurFilter].weapontype = SellManager_Weapontype			
 		end
 		Settings.GW2Minion.SellManager_FilterList = mc_vendormanager.filterList
 	end
