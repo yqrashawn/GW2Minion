@@ -83,8 +83,8 @@ function e_Loot:execute()
 	return ml_log(false)	
 end
 
-c_LootChests = inheritsFrom( wt_cause )
-e_LootChests = inheritsFrom( wt_effect )
+c_LootChests = inheritsFrom( ml_cause )
+e_LootChests = inheritsFrom( ml_effect )
 function c_LootChests:evaluate()
 	--ml_log("c_LootChests")
 	if ( Inventory.freeSlotCount > 0 ) then

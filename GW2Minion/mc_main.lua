@@ -1,6 +1,6 @@
 mc_global = { }
-mc_global.window = { name="MinionBot", x=50, y=50, width=200, height=350 }
-mc_global.advwindow = { name="AdvandedSettings", x=250, y=200 , width=200, height=200 }
+mc_global.window = { name="MinionBot", x=50, y=50, width=200, height=300 }
+mc_global.advwindow = { name="AdvandedSettings", x=250, y=200 , width=200, height=150 }
 mc_global.advwindowvisible = false
 mc_global.path = GetStartupPath()
 mc_global.now = 0

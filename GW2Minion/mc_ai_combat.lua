@@ -42,7 +42,7 @@ function mc_ai_combatAttack:Init()
 	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 160 ), self.process_elements) --reactive queue
 		
 	-- Normal Chests	
-	self:add(ml_element:create( "LootingChest", c_LootChest, e_LootChest, 155 ), self.process_elements)
+	self:add(ml_element:create( "LootingChest", c_LootChests, e_LootChests, 155 ), self.process_elements)
 	
 	-- Resting
 	self:add(ml_element:create( "Resting", c_resting, e_resting, 145 ), self.process_elements)	
@@ -84,14 +84,14 @@ function mc_ai_combatAttack:Init()
 	
     self:AddTaskCheckCEs()
 end
-function mc_ai_grind:task_complete_eval()	
-	if ( mc_global.now - newinst.duration > 0 or TableSize(CharacterList("attackable,alive,nearest,onmesh,maxdistance=4000,exclude_contentid="..mc_blacklist.GetExcludeString(mc_getstring("monsters")))) == 0) then 
+function mc_ai_combatAttack:task_complete_eval()	
+	if ( mc_global.now - self.duration > 0 or TableSize(CharacterList("attackable,alive,nearest,onmesh,maxdistance=4000,exclude_contentid="..mc_blacklist.GetExcludeString(mc_getstring("monsters")))) == 0) then 
 		Player:StopMovement()
 		return true
 	end
 	return false
 end
-function mc_ai_grind:task_complete_execute()
+function mc_ai_combatAttack:task_complete_execute()
    self.completed = true
 end
 
@@ -265,7 +265,7 @@ function e_MoveIntoCombatRange:execute()
 			if ( tPos ) then
 				--d("MoveIntoCombatRange..Running")
 				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,100+t.radius,false,false,true))		
-				if (tonumber(navResult) < 0) then
+				if (tonumber(navResult) < 0) then					
 					ml_error("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
 				end
 				c_MoveIntoCombatRange.running = true
@@ -337,16 +337,65 @@ function e_resting:execute()
 	return
 end
 
+
+-- Revive Task
+mc_ai_combatRevive = inheritsFrom(ml_task)
+mc_ai_combatRevive.name = "CombatRevive"
+function mc_ai_combatRevive.Create()
+    --ml_log("combatAttack:Create")
+	local newinst = inheritsFrom(mc_ai_combatRevive)
+    
+    --ml_task members
+    newinst.valid = true
+    newinst.completed = false
+    newinst.subtask = nil
+    newinst.process_elements = {}
+    newinst.overwatch_elements = {} 
+	
+    return newinst
+end
+function mc_ai_combatRevive:Init()
+	
+	-- ReviveNPCs
+	self:add(ml_element:create( "ReviveNPC", c_revive, e_revive, 70 ), self.process_elements)	
+		
+    self:AddTaskCheckCEs()
+end
+function mc_ai_combatRevive:task_complete_eval()	
+	if ( c_dead:evaluate() or c_downed:evaluate() or c_Aggro:evaluate() or c_LootChests:evaluate() or c_Loot:evaluate() or c_reviveNPC:evaluate() == false) then 
+		Player:StopMovement()
+		return true
+	end
+	return false
+end
+function mc_ai_combatRevive:task_complete_execute()
+   self.completed = true
+end
+
 ------------
 c_reviveNPC = inheritsFrom( ml_cause )
 e_reviveNPC = inheritsFrom( ml_effect )
 function c_reviveNPC:evaluate()
    -- ml_log("c_reviveNPC")
-    return (not Player.inCombat and TableSize(CharacterList("nearest,selectable,interactable,dead,friendly,npc,onmesh")) > 0)
+    return (not Player.inCombat and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500")) > 0)
 end
 function e_reviveNPC:execute()
 	ml_log("e_reviveNPC")
-	local CharList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh")
+	Player:StopMovement()
+	local newTask = mc_ai_combatRevive.Create()
+	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
+	return ml_log(true)	
+end
+
+------------
+c_revive = inheritsFrom( ml_cause )
+e_revive = inheritsFrom( ml_effect )
+function c_revive:evaluate()
+    return (not Player.inCombat and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500")) > 0)
+end
+function e_revive:execute()
+	ml_log("e_revive")
+	local CharList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500")
 	if ( TableSize(CharList) > 0 ) then
 		local id,entity = next (CharList)
 		if ( id and entity ) then
@@ -357,9 +406,9 @@ function e_reviveNPC:execute()
 				if ( tPos ) then
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then
-						ml_error("e_reviveNPC.MoveIntoCombatRange result: "..tonumber(navResult))					
+						ml_error("e_revive.MoveIntoCombatRange result: "..tonumber(navResult))					
 					end
-					ml_log("MoveToReviveNPC..")
+					ml_log("MoveToRevive..")
 					return true
 				end
 			else
@@ -372,7 +421,7 @@ function e_reviveNPC:execute()
 					-- yeah I know, but this usually doesnt break ;)
 					if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
 						Player:Interact( id )
-						ml_log("Looting..")
+						ml_log("Reviving..")
 						mc_global.Wait(1000)
 						return true
 					end	
@@ -382,6 +431,8 @@ function e_reviveNPC:execute()
 	end
 	return ml_log(false)	
 end
+
+
 
 
 function DoCombatMovement()
