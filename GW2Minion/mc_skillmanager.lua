@@ -748,7 +748,7 @@ end
 
 -- Updates the MaxAttackRange and our cskills List
 function mc_skillmanager.GetAttackRange()
-	local maxrange = 180
+	local maxrange = 120
 	mc_skillmanager.cskills = {}
 	
 	for i = 1, 16, 1 do	
@@ -774,8 +774,8 @@ function mc_skillmanager.GetAttackRange()
 						-- Get Max Attack Range for global use
 						if ( i ~= 6 and i <= 9 ) then -- dont use elite or heal or F1-F4							
 							if ( i ~= 1 ) then							
-								if ( skill.cooldown == 0 and skill.maxRange > maxrange) then
-									maxrange = skill.maxRange
+								if ( skill.cooldown == 0 and v.maxRange > maxrange) then
+									maxrange = v.maxRange
 								end
 							end				
 						end						
