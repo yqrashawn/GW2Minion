@@ -72,7 +72,7 @@ function mc_ai_vendor.NeedToBuyGatheringTools( vendornearby )
 			
 			-- Check for SalvageKits to buy
 			local kitsToBuy = mc_vendormanager.NeedSalvageKitInfo()
-			if ( kitsToBuy.count == 0 and BuyManager_sStacks > 0 and Inventory.freeSlotCount >= kitsToBuy.count and TableSize(kitsToBuy.kits)>0 ) then
+			if ( kitsToBuy.count == 0 and tonumber(BuyManager_sStacks) > 0 and Inventory.freeSlotCount >= kitsToBuy.count and TableSize(kitsToBuy.kits)>0 ) then
 			-- We have no Kits left, we should buy some and have enought space in Inv to buy them
 				return true					
 			end	
