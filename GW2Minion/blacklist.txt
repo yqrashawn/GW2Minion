@@ -8,14 +8,18 @@ local obj1 = {
 	["Vendors"] = {
 	};
 	["Monsters"] = {
-		[42661] = {
+		[131693] = {
 			["time"] = true;
-			["name"] = "Rat";
+			["name"] = "Raccoon";
 		};
 	};
 	["VendorsBuyTools"] = {
 	};
 	["Event"] = {
+		[3176] = {
+			["time"] = true;
+			["name"] = 27;
+		};
 	};
 }
 return obj1

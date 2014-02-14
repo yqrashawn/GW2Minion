@@ -31,15 +31,23 @@ function mc_ai_grind:Process()
 	
 	
 	-- Killsomething nearby
-	if ( i == 0 and function() return TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) == 0 end ) then
+	if ( i == 1 and function() return TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) == 0 end ) then
 		local newTask = mc_ai_combatAttack.Create()
 		ml_task_hub:CurrentTask():AddSubTask(newTask)
 	
-	elseif ( i == 1 ) then
-		d("BANANA")
+	-- Do Events
+	elseif ( i == 4 and gDoEvents == "1") then
+		local evList = MapMarkerList("nearest,isevent,onmesh,worldmarkertype="..mc_global.WorldMarkerType..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
+		local id,ev = next(evList)
+		if ( id and ev ) then
+			local evi = ev.eventinfo
+			if ( evi and evi.level <= Player.level + 3 ) then
+				local newTask = mc_ai_event.Create()
+				newTask.eventID = ev.eventID
+				ml_task_hub:CurrentTask():AddSubTask(newTask)
+			end
+		end
 	
-	elseif ( i == 2 ) then
-		d("BANANA")
 	end
 							
 	-- Explore

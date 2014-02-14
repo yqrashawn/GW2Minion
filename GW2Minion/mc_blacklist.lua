@@ -102,7 +102,10 @@ end
 
 function mc_blacklist.ReadBlacklistFile(path)
     if path and path ~= "" then
-        mc_blacklist.blacklist = persistence.load(path) or {}
+		local loadedlist = persistence.load(path) or {}
+		if ( TableSize(loadedlist) > 0 ) then
+			mc_blacklist.blacklist = loadedlist
+		end
 		mc_blacklist.RefreshNames()
     end
 end

@@ -17,10 +17,12 @@ function mc_ai_unstuck:OnUpdate( tick )
 		return	
 	end
 	
+	if ( gBotMode == "AssistMode") then return end
 	
 	-- Stuck check for movement stucks
-	if ( Player:IsMoving() ) then
-		if ( tick - mc_ai_unstuck.stucktimer > 500 ) then
+	if ( Player:IsMoving()) then
+		local movedirs = Player:GetMovement()
+		if ( not movedirs.backward and tick - mc_ai_unstuck.stucktimer > 500 ) then
 			mc_ai_unstuck.stucktimer = tick
 			local pPos = Player.pos
 			if ( pPos ) then

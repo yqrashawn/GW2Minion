@@ -334,7 +334,7 @@ strings =
 		vendors							= "Vendors",
 		vendorEnabled					= "Sell Items",
 		vendorsbuy						= "VendorsBuyTools",
-		blacklistVendor					= "Blacklist Vendor",
+		blacklistVendor					= "Blacklist Vendor",		
 		
 		rarityMax                       = "Max Rarity",
 		rarityNone                      = "None",
@@ -403,7 +403,9 @@ strings =
 
 		--mc_ai_event.lua
 		events							= "Events",
+		event							= "Event",
 		doEvents						= "Do Events",
+		blacklistEvent					= "Blacklist Event",
     },                                  
     ["cn"] =                            
     {                               
@@ -1764,7 +1766,7 @@ strings =
 		newMarker						= "New Marker",
 		markerList						= "Marker List",
 		setupList						= "Setup List",
-        blacklistName                   = "Blacklist Name",
+        blacklistName                   = "Blacklist",
         blacklistEntry                  = "Blacklist Entry",
         entryTime                       = "Entry Time",
         deleteEntry                     = "Delete Entry",

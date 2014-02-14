@@ -8,6 +8,8 @@ mc_global.lasttick = 0
 mc_global.running = false
 mc_global.BotModes = {}
 
+mc_global.WorldMarkerType = 23 -- enum for "in current map", changes on larger patches sometimes
+
 
 function mc_global.moduleinit()
 	

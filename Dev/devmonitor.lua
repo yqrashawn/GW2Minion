@@ -253,9 +253,14 @@ function Dev.ModuleInit()
 	GUI_NewField("Dev","ObjectiveCount","EVOC","EventInfo")
 	GUI_NewNumeric("Dev","ObjectiveListIndex","evoindex","EventInfo","0","9999");
 	GUI_NewField("Dev","ObjectivePtr","EVOPtr","EventInfo")
+	GUI_NewField("Dev","Type","EVOType","EventInfo")
 	GUI_NewField("Dev","ID","EVOID","EventInfo")
-	GUI_NewField("Dev","IsUnknown0","EVOIsUnknown0","EventInfo")
-	GUI_NewField("Dev","IsUnknown1","EVOIsUnknown1","EventInfo")	
+	GUI_NewField("Dev","Ob_Value1","EVO1","EventInfo")
+	GUI_NewField("Dev","Ob_Value2","EVO2","EventInfo")
+	GUI_NewField("Dev","Ob_Value3","EVO3","EventInfo")
+	GUI_NewField("Dev","Ob_Value4","EVO4","EventInfo")
+	GUI_NewField("Dev","Ob_Value5","EVO5","EventInfo")
+	
 	evindex = 0
 	evselection = "Closest"
 	evoindex = 0
@@ -1025,10 +1030,10 @@ function Dev.UpdateWindow()
 	else
 		local mml = MapMarkerList("isevent")
 		local count = 0
-		if ( mml and tonumber(mmindex)~=nil) then
+		if ( mml and tonumber(evindex)~=nil) then
 			id,ev = next(mml)
 			while ( id and ev ) do
-				if (count == tonumber(mmindex)) then
+				if (count == tonumber(evindex)) then
 					break
 				end
 				count = count + 1
@@ -1085,7 +1090,7 @@ function Dev.UpdateWindow()
 			local count = 0
 			if ( evo and tonumber(evoindex)~=nil) then
 				oid,ob = next(evo)
-				while ( id and ev ) do
+				while ( oid and ob ) do
 					if (count == tonumber(evoindex)) then
 						break
 					end
@@ -1097,18 +1102,52 @@ function Dev.UpdateWindow()
 				EVOPtr = string.format( "%x",tonumber(ob.ptr ))
 				EVOID = ob.id
 				EVOIsUnknown0 = ob.isUnknown0
-				EVOIsUnknown1 = ob.isUnknown1
+				local ot = ob.type
+				if ( ot == 0  ) then EVOType = "0-BreakMoral" end
+				if ( ot == 1  ) then EVOType = "1-CaptureLcoation" end
+				if ( ot == 2  ) then EVOType = "2-CollectItems" end
+				if ( ot == 3  ) then EVOType = "3-Counter" end
+				if ( ot == 4  ) then EVOType = "4-KillCount" end
+				if ( ot == 5  ) then EVOType = "5-Cull" end
+				if ( ot == 8  ) then EVOType = "8-DefendGadget" end
+				if ( ot == 10 ) then EVOType = "10-Escort" end
+				if ( ot == 11 ) then EVOType = "11-EventStatus" end
+				if ( ot == 12 ) then EVOType = "12-InteractWithGadget" end
+				if ( ot == 13 ) then EVOType = "13-Intimidate" end
+				if ( ot == 14 ) then EVOType = "14-IntimidateScaled" end
+				if ( ot == 17 ) then EVOType = "17-RepairGadget" end
+				if ( ot == 18 ) then EVOType = "18-Timer" end
+				if ( ot == 19 ) then EVOType = "19-Tripwire" end
+				if ( ot == 20 ) then EVOType = "20-WvwHold" end
+				if ( ot == 21 ) then EVOType = "21-WvwOrbResetTimer" end
+				if ( ot == 22 ) then EVOType = "22-WvwUpgrade" end
+				
+				EVO1 = ob.value1
+				EVO2 = ob.value2
+				EVO3 = ob.value3
+				EVO4 = ob.value4
+				EVO5 = ob.value5
 			else
 				EVOPtr = 0
 				EVOID = 0
 				EVOIsUnknown0 = 0
-				EVOIsUnknown1 = 0
+				EVOType = 0
+				EVO1 = 0
+				EVO2 = 0
+				EVO3 = 0
+				EVO4 = 0
+				EVO5 = 0
 			end
 		else		
 			EVOPtr = 0
 			EVOID = 0
 			EVOIsUnknown0 = 0
-			EVOIsUnknown1 = 0
+			EVOType = 0
+			EVO1 = 0
+			EVO2 = 0
+			EVO3 = 0
+			EVO4 = 0
+			EVO5 = 0
 		end		
 	else
 		EVEPtr = 0

@@ -15,7 +15,7 @@ mc_skillmanager.SwapTmr = 0 -- General WeaponSwap Timer
 
 mc_skillmanager.DefaultProfiles = {
 	[3] = "Engineer",
-
+	[8] = "Necromancer",
 }
 
 --Enums
@@ -748,7 +748,7 @@ end
 
 -- Updates the MaxAttackRange and our cskills List
 function mc_skillmanager.GetAttackRange()
-	local maxrange = 120
+	local maxrange = 130
 	mc_skillmanager.cskills = {}
 	
 	for i = 1, 16, 1 do	
