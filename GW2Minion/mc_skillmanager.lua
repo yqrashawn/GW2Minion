@@ -15,6 +15,7 @@ mc_skillmanager.SwapTmr = 0 -- General WeaponSwap Timer
 
 mc_skillmanager.DefaultProfiles = {
 	[3] = "Engineer",
+	[4] = "Ranger",
 	[8] = "Necromancer",
 }
 
@@ -755,8 +756,8 @@ function mc_skillmanager.GetAttackRange()
 		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
 		if ( skill ~= nil ) then			
 			if ( i == 1 ) then
-				if( skill.maxRange < 180 ) then
-					maxrange = 180
+				if( skill.maxRange < 130 ) then
+					maxrange = 130
 				else
 					maxrange = skill.maxRange
 				end

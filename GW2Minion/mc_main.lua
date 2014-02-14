@@ -142,7 +142,8 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 			k == "sMtargetmode" or
 			k == "SalvageManager_Active" or
 			k == "gRepairBrokenLimit" or
-			k == "gRepairDamageLimit")			
+			k == "gRepairDamageLimit" or
+			k == "gDoEvents")			
 		then
 			Settings.GW2Minion[tostring(k)] = v
 		
