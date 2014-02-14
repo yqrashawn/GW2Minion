@@ -252,43 +252,7 @@ function mc_ai_vendor.InteractWithVendor( vendor , nearbyvendor)
 			end
 		end
 	
-	-- REPAIR 
-	elseif ( mc_ai_vendor.NeedToRepair() or ( nearbyvendor and mc_ai_vendor.NeedToRepair( true ) ) ) then
-		if ( Player:IsConversationOpen() ) then
-			local options = Player:GetConversationOptions()
-			if ( TableSize(options) > 0 ) then
-				nextOption, entry  = next( options )
-				local found = false
-				while ( nextOption and entry ) do
-					--d(entry.type)
-					if( entry.type == GW2.CONVERSATIONOPTIONS.Repair ) then
-						Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Repair )
-						mc_global.Wait(math.random(500,1000))
-						found = true
-						break
-					elseif( entry.type == GW2.CONVERSATIONOPTIONS.Continue ) then
-						Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Continue )
-						mc_global.Wait(math.random(150,400))
-						found = true
-						break
-					elseif( entry.type == GW2.CONVERSATIONOPTIONS.Return ) then
-						Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Return )
-						mc_global.Wait(math.random(150,400))
-						found = true
-						break
-						end
-					nextOption, entry  = next( options, nextOption )
-				end
-			
-				if ( not found ) then
-					ml_error( "Vendoring: can't Repair at vendor, please report back to the developers" )
-					ml_error("Blacklisted RepairVendor"..vendor.name)
-					mc_blacklist.AddBlacklistEntry(GetString("vendors"), vendor.id, vendor.name, true)	
-				end
-			else
-				ml_error("No conversation options ???")
-			end
-		end		
+	
 	
 	-- BUY TOOLS
 	elseif ( mc_ai_vendor.NeedToBuyGatheringTools() or ( nearbyvendor and mc_ai_vendor.NeedToBuyGatheringTools( true ) )) then
@@ -319,7 +283,7 @@ function mc_ai_vendor.InteractWithVendor( vendor , nearbyvendor)
 				end				
 				
 				if ( kitsToBuy.count < tonumber(BuyManager_sStacks)) then
-					for i=#kitsToBuy.kits,1,-1 do
+					for i=#kitsToBuy.kits,1,-1 do						
 						local id,item = next(VList)
 						while (id and item) do
 							local itemID = item.itemID							
@@ -336,7 +300,7 @@ function mc_ai_vendor.InteractWithVendor( vendor , nearbyvendor)
 				
 				-- Buy GatheringTools
 				local toolsToBuy = mc_vendormanager.GetNeededGatheringToolsInfo()
-				
+				d("BuyingTools")
 				-- Buy FTools
 				if ( tonumber(BuyManager_toolStacks) > toolCount[1] and TableSize(toolsToBuy[1])>0) then					
 					for i=#mc_vendormanager.tools[0],1,-1 do
@@ -418,6 +382,44 @@ function mc_ai_vendor.InteractWithVendor( vendor , nearbyvendor)
 				ml_error( "VendorList Empty??" )
 			end			
 		end
+	
+		-- REPAIR 
+	elseif ( mc_ai_vendor.NeedToRepair() or ( nearbyvendor and mc_ai_vendor.NeedToRepair( true ) ) ) then
+		if ( Player:IsConversationOpen() ) then
+			local options = Player:GetConversationOptions()
+			if ( TableSize(options) > 0 ) then
+				nextOption, entry  = next( options )
+				local found = false
+				while ( nextOption and entry ) do
+					--d(entry.type)
+					if( entry.type == GW2.CONVERSATIONOPTIONS.Repair ) then
+						Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Repair )
+						mc_global.Wait(math.random(500,1000))
+						found = true
+						break
+					elseif( entry.type == GW2.CONVERSATIONOPTIONS.Continue ) then
+						Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Continue )
+						mc_global.Wait(math.random(150,400))
+						found = true
+						break
+					elseif( entry.type == GW2.CONVERSATIONOPTIONS.Return ) then
+						Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Return )
+						mc_global.Wait(math.random(150,400))
+						found = true
+						break
+						end
+					nextOption, entry  = next( options, nextOption )
+				end
+			
+				if ( not found ) then
+					ml_error( "Vendoring: can't Repair at vendor, please report back to the developers" )
+					ml_error("Blacklisted RepairVendor"..vendor.name)
+					mc_blacklist.AddBlacklistEntry(GetString("vendors"), vendor.id, vendor.name, true)	
+				end
+			else
+				ml_error("No conversation options ???")
+			end
+		end	
 	end
 end
 
