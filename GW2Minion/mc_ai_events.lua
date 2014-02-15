@@ -260,7 +260,7 @@ function e_DoEventObjectives:execute()
 						if ( c_NeedValidTarget:evaluate() ) then 
 							e_SearchTarget:execute()
 						else
-							if ( c_MoveIntoCombatRange:evaluate() then
+							if ( c_MoveIntoCombatRange:evaluate() ) then
 								e_MoveIntoCombatRange:execute()
 							else
 								e_KillTarget:execute()

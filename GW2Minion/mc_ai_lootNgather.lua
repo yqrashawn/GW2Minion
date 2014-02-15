@@ -1,5 +1,67 @@
 -- Handles Looting, Gathering and so on
 
+-- Gather Task
+mc_ai_Gather = inheritsFrom(ml_task)
+mc_ai_Gather.name = "Gathering"
+function mc_ai_Gather.Create()
+    --ml_log("combatAttack:Create")
+	local newinst = inheritsFrom(mc_ai_Gather)
+    
+    --ml_task members
+    newinst.valid = true
+    newinst.completed = false
+    newinst.subtask = nil
+    newinst.process_elements = {}
+    newinst.overwatch_elements = {} 
+	
+    return newinst
+end
+function mc_ai_Gather:Init()
+	
+	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 175 ), self.process_elements)
+	
+	-- Resting
+	self:add(ml_element:create( "Resting", c_resting, e_resting, 145 ), self.process_elements)
+	
+	-- Deposit Items
+	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 120 ), self.process_elements)	
+	
+	-- Re-Equip Gathering Tools
+	self:add(ml_element:create( "EquippingGatherTool", c_GatherToolsCheck, e_GatherToolsCheck, 110 ), self.process_elements)
+		
+	-- Gathering
+	self:add(ml_element:create( "Gathering", c_Gathering, e_Gathering, 65 ), self.process_elements)
+		
+    self:AddTaskCheckCEs()
+end
+function mc_ai_Gather:task_complete_eval()	
+	if ( c_dead:evaluate() or c_downed:evaluate() or c_Aggro:evaluate() or c_LootChests:evaluate() or c_Loot:evaluate() or c_Gathering:evaluate() == false) then 
+		Player:StopMovement()
+		return true
+	end
+	return false
+end
+function mc_ai_Gather:task_complete_execute()
+   self.completed = true
+end
+
+
+------------
+c_gatherTask = inheritsFrom( ml_cause )
+e_gatherTask = inheritsFrom( ml_effect )
+function c_gatherTask:evaluate()
+   -- ml_log("c_gatherTask")
+    return (Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,gatherable,maxdistance=4000")) > 0)
+end
+function e_gatherTask:execute()
+	ml_log("e_gatherTask")
+	Player:StopMovement()
+	local newTask = mc_ai_Gather.Create()
+	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
+	return ml_log(true)	
+end
+
+
 c_deposit = inheritsFrom( ml_cause )
 e_deposit = inheritsFrom( ml_effect )
 c_deposit.LastCount = nil

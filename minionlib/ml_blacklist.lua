@@ -5,12 +5,12 @@ ml_blacklist.lastClearTime = 0
 
 -- checks for temporarily blacklisted entries and removed them if time is up
 function ml_blacklist.ClearBlacklists()
-    if (TimeSince(ml_blacklist.lastClearTime) > 500) then
+    if (mc_global.now -ml_blacklist.lastClearTime > 500) then
         ml_blacklist.lastClearTime = mc_global.now
     
         for name, blacklist in pairs(ml_blacklist.blacklist) do
             for id, entry in pairs (blacklist) do
-                if entry.time ~= true and TimeSince(entry.time) > 0 then
+                if entry.time ~= true and mc_global.now -entry.time > 0 then
                     ml_blacklist.DeleteEntry(name, id)
                 end
             end

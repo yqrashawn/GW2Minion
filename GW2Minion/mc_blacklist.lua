@@ -163,7 +163,7 @@ function mc_blacklist.OnUpdate(tickcount)
 		-- checks for temporarily blacklisted entries and removed them if time is up
 		for name, blacklist in pairs(mc_blacklist.blacklist) do
             for id, entry in pairs (blacklist) do
-                if entry.time ~= true and TimeSince(entry.time) > 0 then
+                if entry.time ~= true and mc_global.now - entry.time > 0 then
                     mc_blacklist.DeleteEntry(name, id)
                 end
             end
