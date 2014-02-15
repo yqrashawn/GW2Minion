@@ -65,9 +65,9 @@ function mc_ai_combatAttack:Init()
 	-- Salvaging
 	self:add(ml_element:create( "Salvaging", c_salvage, e_salvage, 75 ), self.process_elements)
 
-	self:add(ml_element:create( "DoEvent", c_doEvents, e_doEvents, 72 ), self.process_elements)
-	
-	
+	-- DoEvents
+	--self:add(ml_element:create( "DoEvent", c_doEvents, e_doEvents, 72 ), self.process_elements)
+		
 	-- ReviveNPCs
 	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 70 ), self.process_elements)	
 	
