@@ -102,6 +102,7 @@ end
 function e_doEvents:execute()
 	ml_log("e_doEvents")
 	local evList = MapMarkerList("nearest,isevent,onmesh,worldmarkertype="..mc_global.WorldMarkerType..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
+	local i,e = next(evList)
 	if ( i and e ) then
 		local evi = e.eventinfo
 		if ( evi and evi.level <= Player.level + 3 ) then
@@ -151,12 +152,15 @@ function e_MoveInEventRange:execute()
 			local pPos = Player.pos
 			local ePos = e.pos
 			if (pPos and ePos) then
+				--d(Distance2D ( pPos.x, pPos.y, ePos.x, ePos.y))
 				if ( Distance2D ( pPos.x, pPos.y, ePos.x, ePos.y) > 1500 ) then
 					c_MoveInEventRange.reached = false
 					local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,math.random(100,1000),false,false,true))		
 					if (tonumber(navResult) < 0) then					
 						ml_error("mc_ai_events.MoveInEventRange result: "..tonumber(navResult))					
 					end
+					ml_log(tostring(math.floor(Distance2D( pPos.x, pPos.y, ePos.x, ePos.y))))
+					return
 				else
 					c_MoveInEventRange.reached = true
 				end
