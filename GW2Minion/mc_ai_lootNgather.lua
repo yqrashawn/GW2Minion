@@ -35,7 +35,7 @@ function mc_ai_Gather:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_Gather:task_complete_eval()	
-	if ( c_dead:evaluate() or c_downed:evaluate() or c_Aggro:evaluate() or c_LootChests:evaluate() or c_Loot:evaluate() or c_Gathering:evaluate() == false) then 
+	if ( c_dead:evaluate() or c_downed:evaluate() or c_Aggro:evaluate() or c_LootChests:evaluate() or c_LootCheck:evaluate() or c_Gathering:evaluate() == false) then 
 		Player:StopMovement()
 		return true
 	end
@@ -44,7 +44,6 @@ end
 function mc_ai_Gather:task_complete_execute()
    self.completed = true
 end
-
 
 ------------
 c_gatherTask = inheritsFrom( ml_cause )
@@ -99,6 +98,58 @@ function e_AoELoot:execute()
 	return ml_log(Player:AoELoot())
 end
 
+
+-- Loot Task
+mc_ai_Looting = inheritsFrom(ml_task)
+mc_ai_Looting.name = "Looting"
+function mc_ai_Looting.Create()
+    --ml_log("combatAttack:Create")
+	local newinst = inheritsFrom(mc_ai_Looting)
+    
+    --ml_task members
+    newinst.valid = true
+    newinst.completed = false
+    newinst.subtask = nil
+    newinst.process_elements = {}
+    newinst.overwatch_elements = {} 
+	
+    return newinst
+end
+function mc_ai_Looting:Init()
+	
+	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 175 ), self.process_elements)
+			
+	self:add(ml_element:create( "Looting", c_Loot, e_Loot, 65 ), self.process_elements)
+		
+    self:AddTaskCheckCEs()
+end
+function mc_ai_Looting:task_complete_eval()	
+	if ( c_dead:evaluate() or c_downed:evaluate() or c_Loot:evaluate() == false) then 
+		Player:StopMovement()
+		return true
+	end
+	return false
+end
+function mc_ai_Looting:task_complete_execute()
+   self.completed = true
+end
+
+------------
+c_LootCheck = inheritsFrom( ml_cause )
+e_LootCheck = inheritsFrom( ml_effect )
+function c_LootCheck:evaluate()
+   -- ml_log("c_Loot")
+    return Inventory.freeSlotCount > 0 and TableSize(CharacterList("nearest,lootable,onmesh")) > 0
+end
+function e_LootCheck:execute()
+	ml_log("e_LootCheck")
+	Player:StopMovement()
+	local newTask = mc_ai_Looting.Create()
+	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
+	return ml_log(true)	
+end
+
+
 ------------
 c_Loot = inheritsFrom( ml_cause )
 e_Loot = inheritsFrom( ml_effect )
@@ -144,6 +195,7 @@ function e_Loot:execute()
 	end
 	return ml_log(false)	
 end
+	
 
 c_LootChests = inheritsFrom( ml_cause )
 e_LootChests = inheritsFrom( ml_effect )
@@ -208,6 +260,11 @@ function e_LootChests:execute()
 end
 
 
+
+
+
+
+
 ------------fck that, I'm lazy and this works like a god
 c_Gathering = inheritsFrom( ml_cause )
 e_Gathering = inheritsFrom( ml_effect )
@@ -257,24 +314,30 @@ c_GatherToolsCheck = inheritsFrom( ml_cause )
 e_GatherToolsCheck = inheritsFrom( ml_effect )
 function c_GatherToolsCheck:evaluate()
 	local toolList = mc_vendormanager.GetGatheringToolsCount()
-	return ((Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and toolList[1] > 0 ) or 
-		(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil  and toolList[1] > 0) or 
-		(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil   and toolList[1] > 0))
+	return (not Player.inCombat and (
+			(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and toolList[1] > 0) or 
+			(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil  and toolList[2] > 0) or 
+			(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil   and toolList[3] > 0)
+		)
+	)
 end
 function e_GatherToolsCheck:execute()
 	ml_log("e_GatherToolsCheck")
 	local tSlot = nil
-	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil) then tSlot = 0 end
-	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil) then tSlot = 1 end
-	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil) then tSlot = 2 end
+	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil) then tSlot = 0
+	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil) then tSlot = 1
+	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil) then tSlot = 2 
+	end
 	
 	if ( tSlot ~= nil) then
 		local sTools = Inventory("itemtype=" .. GW2.ITEMTYPE.Gathering)
 		if (sTools) then
 			local id,item = next(sTools)
 			while (id and item) do
+				
 				local itemID = item.itemID
-				for invTools = 1, 8, 1 do				
+				for invTools = 1, 8, 1 do
+					--d(tostring(itemID).." / "..tostring(mc_vendormanager.tools[tSlot][invTools]))
 					if (itemID == mc_vendormanager.tools[tSlot][invTools]) then 
 						-- We found a tool to equip into our empty gatherable slot
 						if ( tSlot == 0 ) then d("Equipping Sickle ..") item:Equip(GW2.EQUIPMENTSLOT.ForagingTool) end

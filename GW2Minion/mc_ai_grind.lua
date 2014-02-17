@@ -36,7 +36,7 @@ function mc_ai_grind:Process()
 		ml_task_hub:CurrentTask():AddSubTask(newTask)
 	
 	-- Do Events
-	elseif ( i == 2 and gDoEvents == "1") then
+	elseif ( i == 1 and gDoEvents == "1") then
 		local evList = MapMarkerList("nearest,isevent,onmesh,worldmarkertype="..mc_global.WorldMarkerType..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
 		local id,ev = next(evList)
 		if ( id and ev ) then

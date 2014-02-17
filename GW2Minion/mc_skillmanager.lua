@@ -14,8 +14,10 @@ mc_skillmanager.SwapTmr = 0 -- General WeaponSwap Timer
 
 
 mc_skillmanager.DefaultProfiles = {
+	[2] = "Warrior",
 	[3] = "Engineer",
 	[4] = "Ranger",
+	[7] = "Mesmer",
 	[8] = "Necromancer",
 }
 
@@ -140,7 +142,7 @@ function mc_skillmanager.ModuleInit()
 	end		
 
 		
-	GUI_NewWindow(mc_skillmanager.mainwindow.name,mc_skillmanager.mainwindow.x,mc_skillmanager.mainwindow.y,mc_skillmanager.mainwindow.w,mc_skillmanager.mainwindow.h)
+	GUI_NewWindow(mc_skillmanager.mainwindow.name,mc_skillmanager.mainwindow.x,mc_skillmanager.mainwindow.y,mc_skillmanager.mainwindow.w,mc_skillmanager.mainwindow.h,true)
 	GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("profile"),"gSMprofile",GetString("generalSettings"),"None")
 		
 	--GUI_NewCheckbox(mc_skillmanager.mainwindow.name,GetString("SwapR"),"gSMSwapR",GetString("AdvancedSettings"))
@@ -186,7 +188,7 @@ function mc_skillmanager.ModuleInit()
 	
 	
 	-- EDITOR WINDOW
-	GUI_NewWindow(mc_skillmanager.editwindow.name,mc_skillmanager.mainwindow.x+mc_skillmanager.mainwindow.w,mc_skillmanager.mainwindow.y,mc_skillmanager.editwindow.w,mc_skillmanager.editwindow.h)		
+	GUI_NewWindow(mc_skillmanager.editwindow.name,mc_skillmanager.mainwindow.x+mc_skillmanager.mainwindow.w,mc_skillmanager.mainwindow.y,mc_skillmanager.editwindow.w,mc_skillmanager.editwindow.h,true)		
 	GUI_NewField(mc_skillmanager.editwindow.name,GetString("maMarkerName"),"SKM_NAME","SkillDetails")
 	GUI_NewCheckbox(mc_skillmanager.editwindow.name,GetString("initFight"),"SKM_ON","SkillDetails")
 	GUI_NewCheckbox(mc_skillmanager.editwindow.name,GetString("los"),"SKM_LOS","SkillDetails")

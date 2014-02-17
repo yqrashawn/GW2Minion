@@ -156,7 +156,7 @@ function mc_vendormanager.ModuleInit()
 	-- SELLMANAGER WINDOW
 	GUI_NewButton(mc_global.window.name, GetString("sellGroup"), "sellManager.toggle",GetString("vendorSettings"))	
 	-- SELL SETTINGS
-	GUI_NewWindow(mc_vendormanager.sellmainwindow.name,mc_vendormanager.sellmainwindow.x,mc_vendormanager.sellmainwindow.y,mc_vendormanager.sellmainwindow.w,mc_vendormanager.sellmainwindow.h)
+	GUI_NewWindow(mc_vendormanager.sellmainwindow.name,mc_vendormanager.sellmainwindow.x,mc_vendormanager.sellmainwindow.y,mc_vendormanager.sellmainwindow.w,mc_vendormanager.sellmainwindow.h,true)
 	GUI_NewCheckbox(mc_vendormanager.sellmainwindow.name,GetString("active"),"SellManager_Active",GetString("sellGroup"))
 	GUI_NewField(mc_vendormanager.sellmainwindow.name,GetString("newfiltername"),"SellManager_NewFilterName",GetString("sellGroup"))
 	GUI_NewButton(mc_vendormanager.sellmainwindow.name,GetString("newfilter"),"SellManager_NewFilter",GetString("sellGroup"))
@@ -175,7 +175,7 @@ function mc_vendormanager.ModuleInit()
 	GUI_NewButton(mc_vendormanager.sellmainwindow.name,GetString("sellByIDRemoveItem"),"SellManager_RemoveitemID",GetString("sellByID"))
 	RegisterEventHandler("SellManager_RemoveitemID",mc_vendormanager.RemoveItemID)
 	-- SELLEDITOR WINDOW
-	GUI_NewWindow(mc_vendormanager.selleditwindow.name,mc_vendormanager.sellmainwindow.x+mc_vendormanager.sellmainwindow.w,mc_vendormanager.sellmainwindow.y,mc_vendormanager.selleditwindow.w,mc_vendormanager.selleditwindow.h)
+	GUI_NewWindow(mc_vendormanager.selleditwindow.name,mc_vendormanager.sellmainwindow.x+mc_vendormanager.sellmainwindow.w,mc_vendormanager.sellmainwindow.y,mc_vendormanager.selleditwindow.w,mc_vendormanager.selleditwindow.h,true)
 	GUI_NewField(mc_vendormanager.selleditwindow.name,GetString("name"),"SellManager_Name",GetString("filterdetails"))
 	GUI_NewComboBox(mc_vendormanager.selleditwindow.name,GetString("soulbound"),"SellManager_Soulbound",GetString("filterdetails"),"true,false,either")
 	GUI_NewComboBox(mc_vendormanager.selleditwindow.name,GetString("itemtype"),"SellManager_Itemtype",GetString("filterdetails"),"")
@@ -274,7 +274,7 @@ function mc_vendormanager.ModuleInit()
 	GUI_NewButton(mc_global.window.name, GetString("buyGroup"), "buymanager.toggle",GetString("vendorSettings"))
 	
 	-- BUY SETTINGS
-	GUI_NewWindow(mc_vendormanager.buymainwindow.name,mc_vendormanager.buymainwindow.x,mc_vendormanager.buymainwindow.y,mc_vendormanager.buymainwindow.w,mc_vendormanager.buymainwindow.h)
+	GUI_NewWindow(mc_vendormanager.buymainwindow.name,mc_vendormanager.buymainwindow.x,mc_vendormanager.buymainwindow.y,mc_vendormanager.buymainwindow.w,mc_vendormanager.buymainwindow.h,true)
 	GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("active"),"BuyManager_Active",GetString("buyGroup"))
 	--GUI_NewCheckbox(mc_vendormanager.buymainwindow.name,GetString("buyAllKits"),"BuyManager_buyAllKits",GetString("buyGroup"))
 	

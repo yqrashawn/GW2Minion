@@ -33,7 +33,7 @@ function ml_quest_mgr.ModuleInit( name , path)
 		Settings[ml_quest_mgr.ModuleName].gQMprofile = "None"
 	end
 		
-	GUI_NewWindow(ml_quest_mgr.mainwindow.name,ml_quest_mgr.mainwindow.x,ml_quest_mgr.mainwindow.y,ml_quest_mgr.mainwindow.w,ml_quest_mgr.mainwindow.h)
+	GUI_NewWindow(ml_quest_mgr.mainwindow.name,ml_quest_mgr.mainwindow.x,ml_quest_mgr.mainwindow.y,ml_quest_mgr.mainwindow.w,ml_quest_mgr.mainwindow.h,true)
 	GUI_NewComboBox(ml_quest_mgr.mainwindow.name,GetString("profile"),"gQMprofile",GetString("generalSettings"),"None")
 	GUI_NewField(ml_quest_mgr.mainwindow.name,GetString("newProfileName"),"gQMnewname",GetString("generalSettings"))
 	GUI_NewButton(ml_quest_mgr.mainwindow.name,GetString("newProfile"),"QMCreateNewProfile",GetString("generalSettings"))
@@ -55,7 +55,7 @@ function ml_quest_mgr.ModuleInit( name , path)
 	
 	
 	-- EDITOR WINDOW
-	GUI_NewWindow(ml_quest_mgr.editwindow.name,ml_quest_mgr.mainwindow.x+ml_quest_mgr.mainwindow.w,ml_quest_mgr.mainwindow.y,ml_quest_mgr.editwindow.w,ml_quest_mgr.editwindow.h)		
+	GUI_NewWindow(ml_quest_mgr.editwindow.name,ml_quest_mgr.mainwindow.x+ml_quest_mgr.mainwindow.w,ml_quest_mgr.mainwindow.y,ml_quest_mgr.editwindow.w,ml_quest_mgr.editwindow.h,true)		
 	GUI_NewField(ml_quest_mgr.editwindow.name,GetString("questName"),"QME_Name",GetString("questInfo"))
 	GUI_NewCheckbox(ml_quest_mgr.editwindow.name,GetString("questDone"),"QME_Done",GetString("questInfo"))	
 	GUI_NewNumeric(ml_quest_mgr.editwindow.name,GetString("questMinLevel"),"QME_MinLevel",GetString("questInfo"),"0","80")
@@ -82,7 +82,7 @@ function ml_quest_mgr.ModuleInit( name , path)
 	
 	
 	-- STEP EDITOR WINDOW
-	GUI_NewWindow(ml_quest_mgr.stepwindow.name,ml_quest_mgr.editwindow.x+ml_quest_mgr.editwindow.w,ml_quest_mgr.editwindow.y,ml_quest_mgr.stepwindow.w,ml_quest_mgr.stepwindow.h)		
+	GUI_NewWindow(ml_quest_mgr.stepwindow.name,ml_quest_mgr.editwindow.x+ml_quest_mgr.editwindow.w,ml_quest_mgr.editwindow.y,ml_quest_mgr.stepwindow.w,ml_quest_mgr.stepwindow.h,true)		
 	GUI_NewField(ml_quest_mgr.stepwindow.name,GetString("questName"),"QMS_Name",GetString("questStepInfo"))
 	GUI_NewCheckbox(ml_quest_mgr.stepwindow.name,GetString("questStepDone"),"QMS_Done",GetString("questStepInfo"))	
 	GUI_NewComboBox(ml_quest_mgr.stepwindow.name,GetString("questStepScript"),"gQMS_Script",GetString("questStepInfo"),"None")

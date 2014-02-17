@@ -73,7 +73,7 @@ function mc_salvagemanager.ModuleInit()
 	GUI_NewButton(mc_global.window.name, GetString("salvage"), "SalvageManager.toggle",GetString("vendorSettings"))
 	
 	-- SELL SETTINGS
-	GUI_NewWindow(mc_salvagemanager.mainwindow.name,mc_salvagemanager.mainwindow.x,mc_salvagemanager.mainwindow.y,mc_salvagemanager.mainwindow.w,mc_salvagemanager.mainwindow.h)
+	GUI_NewWindow(mc_salvagemanager.mainwindow.name,mc_salvagemanager.mainwindow.x,mc_salvagemanager.mainwindow.y,mc_salvagemanager.mainwindow.w,mc_salvagemanager.mainwindow.h,true)
 	GUI_NewCheckbox(mc_salvagemanager.mainwindow.name,GetString("active"),"SalvageManager_Active",GetString("salvage"))
 	GUI_NewField(mc_salvagemanager.mainwindow.name,GetString("newfiltername"),"SalvageManager_NewFilterName",GetString("salvage"))
 	GUI_NewButton(mc_salvagemanager.mainwindow.name,GetString("newfilter"),"SalvageManager_NewFilter",GetString("salvage"))
@@ -97,7 +97,7 @@ function mc_salvagemanager.ModuleInit()
 	GUI_UnFoldGroup(mc_salvagemanager.mainwindow.name,GetString("salvagefilters"))
 	
 	-- EDITOR WINDOW
-	GUI_NewWindow(mc_salvagemanager.editwindow.name,mc_salvagemanager.mainwindow.x+mc_salvagemanager.mainwindow.w,mc_salvagemanager.mainwindow.y,mc_salvagemanager.editwindow.w,mc_salvagemanager.editwindow.h)
+	GUI_NewWindow(mc_salvagemanager.editwindow.name,mc_salvagemanager.mainwindow.x+mc_salvagemanager.mainwindow.w,mc_salvagemanager.mainwindow.y,mc_salvagemanager.editwindow.w,mc_salvagemanager.editwindow.h,true)
 	GUI_NewField(mc_salvagemanager.editwindow.name,GetString("name"),"SalvageManager_Name",GetString("filterdetails"))
 	GUI_NewComboBox(mc_salvagemanager.editwindow.name,GetString("itemtype"),"SalvageManager_Itemtype",GetString("filterdetails"),"")
 	GUI_NewComboBox(mc_salvagemanager.editwindow.name,GetString("rarity"),"SalvageManager_Rarity",GetString("filterdetails"),GetString("rarityNone")..","..GetString("rarityJunk")..","..GetString("rarityCommon")..","..GetString("rarityFine")..","..GetString("rarityMasterwork")..","..GetString("rarityRare")..","..GetString("rarityExotic"))

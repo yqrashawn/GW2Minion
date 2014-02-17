@@ -39,6 +39,204 @@ function mc_ai_vendor.GetClosestVendor()
 	end
 	return nil
 end
+--************
+-- Close-Range-Sell-Taks
+-- For going to vendor when it is not yet needed but since we are nearby, we can as well go pay him a visit
+--************
+c_quickvendorsell = inheritsFrom( ml_cause )
+e_quickvendorsell = inheritsFrom( ml_effect )
+c_quickvendorsell.inventoryLimit = math.random(4,6)/10
+function c_quickvendorsell:evaluate()	
+	return (SellManager_Active == "1" and 
+		( 
+			( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isSelling) ) -- so we wont leave the vendor after we sold 1 item ;)
+			or
+			( (Inventory.freeSlotCount / Inventory.slotCount < c_quickvendorsell.inventoryLimit) and mc_ai_vendor.NeedToSell( true ) and TableSize(mc_ai_vendor.GetClosestVendor()) > 0 ) -- Our bags are more than half full and we have stuff to sell 
+		)
+	)
+end
+function e_quickvendorsell:execute()
+	ml_log("e_quickvendorsell")	
+	-- We are already at a vendor
+	if ( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isSelling) ) then
+		local t = Player:GetTarget()
+		if ( t ) then
+			return mc_ai_vendor.SellAtVendor( t , true)
+		else
+			ml_error("We are at a sell-vendor but dont have him targeted!?!")
+			mc_ai_vendor.isSelling = false
+		end
+	else
+	
+		local vendor = mc_ai_vendor.GetClosestVendor()
+		if ( vendor ~= nil ) then	
+			
+				if ( vendor ) then				
+					-- We are close enough and the vendor is in CharList
+					if (not vendor.isInInteractRange) then
+						-- MoveIntoInteractRange
+						local tPos = vendor.pos
+						if ( tPos ) then
+							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+							if (tonumber(navResult) < 0) then
+								ml_error("e_quickvendorsell.MoveIntoInteractRange result: "..tonumber(navResult))					
+							end
+							ml_log("MoveToSellVendor..")
+							return true
+						end
+					else
+						-- Interact
+						Player:StopMovement()
+						local t = Player:GetTarget()
+						if ( vendor.selectable and (not t or t.id ~= vendor.id )) then
+							Player:SetTarget( vendor.id )
+						else
+							
+							if ( not Inventory:IsVendorOpened() and not Player:IsConversationOpen() ) then
+								ml_log( " Opening Sell Vendor.. " )
+								Player:Interact( vendor.id )
+								mc_global.Wait(1500)
+								return true
+							else
+								return mc_ai_vendor.SellAtVendor( vendor, true )
+							end					 
+						end			
+					end
+					
+				else
+					-- We are not close enought, vendor is not yet in Charlist
+					local pos = vendor.pos
+					if ( pos ) then
+						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
+						if (tonumber(navResult) < 0) then
+							ml_error("e_quickvendorsell.MoveInto Vendor Range result: "..tonumber(navResult))					
+						end
+						ml_log("MoveToSellVendor..")
+						return true
+					else
+						ml_error("Sellvendor Position table of Vendor is empty!")
+					end
+				end
+		else
+			ml_error("No Sell Vendor found! TODO: Get Vendor from MapData List")
+			
+		end
+	end
+	return ml_log(false)		
+end
+c_vendorsell = inheritsFrom( ml_cause )
+e_vendorsell = inheritsFrom( ml_effect )
+function c_vendorsell:evaluate()	
+	return (SellManager_Active == "1" and 
+		( 
+			( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isSelling) )
+			or
+			( Inventory.freeSlotCount <= 2 and mc_ai_vendor.NeedToSell() and TableSize(mc_ai_vendor.GetClosestVendorMarker()) > 0 )
+		)		
+	)
+end
+function e_vendorsell:execute()
+	ml_log("e_vendorsell")
+	
+	-- We are already at a vendor
+	if ( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isSelling) ) then
+		local t = Player:GetTarget()
+		if ( t ) then
+			return mc_ai_vendor.SellAtVendor( t )
+		else
+			ml_error("We are at a vendor but dont have him targeted!?!")
+			mc_ai_vendor.isSelling = false
+		end
+	else
+	
+		local vMarker = mc_ai_vendor.GetClosestVendorMarker()		
+		if ( vMarker ~= nil ) then	
+			if ( vMarker.characterID ~= nil and vMarker.characterID ~= 0 and vMarker.characterID ~= "") then			
+				local char = CharacterList:Get(vMarker.characterID)
+				if ( char ) then				
+					-- We are close enough and the char is in CharList
+					if (not char.isInInteractRange) then
+						-- MoveIntoInteractRange
+						local tPos = char.pos
+						if ( tPos ) then
+							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+							if (tonumber(navResult) < 0) then
+								ml_error("e_vendorsell.MoveIntoInteractRange result: "..tonumber(navResult))					
+							end
+							ml_log("MoveToSellVendor..")
+							return true
+						end
+					else
+						-- Interact
+						Player:StopMovement()
+						local t = Player:GetTarget()
+						if ( char.selectable and (not t or t.id ~= char.id )) then
+							Player:SetTarget( char.id )
+						else
+							
+							if ( not Inventory:IsVendorOpened() and not Player:IsConversationOpen() ) then
+								ml_log( " Opening Vendor.. " )
+								Player:Interact( char.id )
+								mc_global.Wait(1500)
+								return true
+							else
+								return mc_ai_vendor.SellAtVendor( char )
+							end					 
+						end			
+					end
+					
+				else
+					-- We are not close enought, char is not yet in Charlist
+					local pos = vMarker.pos
+					if ( pos ) then
+						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
+						if (tonumber(navResult) < 0) then
+							ml_error("e_vendorsell.MoveIntovMarkerRange result: "..tonumber(navResult))					
+						end
+						ml_log("MoveToSellVendorMarker..")
+						return true
+					else
+						ml_error("vMarker Position table of VendorMarker is empty!")
+					end
+				end
+			end
+		else
+			ml_error("No Sell-VendorMarker found! TODO: Get Vendor from MapData List")
+			
+		end
+	end
+	return ml_log(false)		
+end
+function mc_ai_vendor.SellAtVendor( vendor , nearbyvendor)
+	-- Sell stuff	
+	if ( mc_ai_vendor.NeedToSell() or ( nearbyvendor and mc_ai_vendor.NeedToSell( true ) )) then
+		if ( not Inventory:IsVendorOpened() and Player:IsConversationOpen() ) then
+			if ( not mc_ai_vendor.OpenSellWindow() ) then
+				ml_error( "Vendoring: can't Sell at vendor, please report back to the developers" )
+				ml_error("Blacklisted Sell-Vendor"..vendor.name)
+				mc_blacklist.AddBlacklistEntry(GetString("vendors"), vendor.id, vendor.name, true)	
+			end
+		else
+			-- SELL HERE
+			local sList = mc_vendormanager.createItemList()
+			if ( TableSize(sList) > 0 ) then
+				local i,item = next (sList)
+				if ( i and item ) then
+					mc_ai_vendor.isSelling = true
+					d("Selling :"..tostring(item.name))
+					item:Sell()
+					return
+				end				
+			else
+				d("Selling finished..")				
+				Inventory:SellJunk()
+				mc_ai_vendor.isSelling = false				
+			end
+		end
+	end
+end
+
+
 
 
 --************
@@ -115,147 +313,172 @@ function mc_ai_vendor.GetClosestBuyVendor()
 	end
 	return nil
 end
-
-
---************
--- REPAIR
---************
-function mc_ai_vendor.NeedToRepair( vendornearby )	
-	
-	local damaged = 0
-	local broken = 0
-	for i=1 ,24 ,1  do 
-		if ( i < 8 or i > 18 ) then -- no need to check other slots but those who can break
-			local eqItem = Inventory:GetEquippedItemBySlot( i )
-			if ( eqItem ~= nil ) then
-				local dur = eqItem.durability 
-				if ( dur == GW2.ITEMDURABILITY.Broken) then broken = broken + 1 end
-				if ( dur == GW2.ITEMDURABILITY.Damaged) then damaged = damaged + 1 end
-			end
-		end
-	end
-	
-	if ( vendornearby ) then
-		return broken > tonumber(gRepairBrokenLimit)/2 or damaged > tonumber(gRepairDamageLimit)/2 --half the settings in case we are nearby a repairguy
-	end
-	
-	return broken > tonumber(gRepairBrokenLimit) or damaged > tonumber(gRepairDamageLimit)	
+c_quickbuy = inheritsFrom( ml_cause )
+e_quickbuy = inheritsFrom( ml_effect )
+function c_quickbuy:evaluate()	
+	return (SellManager_Active == "1" and Inventory.freeSlotCount > 0 and ( 
+		( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) ) -- so we wont leave the vendor after we sold 1 item ;)
+		or 
+		( mc_ai_vendor.NeedToBuyGatheringTools( true ) and TableSize(mc_ai_vendor.GetClosestBuyVendor()) > 0) -- We need new gathering tools
+		)		
+	)
 end
-function mc_ai_vendor.GetClosestRepairVendorMarker()	
-	if ( mc_ai_vendor.isSelling ) then return true end
-	local mList = MapMarkerList("worldmarkertype=23,nearest,onmesh,type="..GW2.MAPMARKERTYPE.RepairMerchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendors"))) 
-	if ( TableSize(mList) > 0 )  then
-		local i,marker = next (mList)
-		if ( i and marker) then
-			return marker
+function e_quickbuy:execute()
+	ml_log("e_quickbuy")	
+	-- We are already at a vendor
+	if ( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) ) then
+		local t = Player:GetTarget()
+		if ( t ) then
+			return mc_ai_vendor.BuyAtVendor( t , true)
+		else
+			ml_error("We are at a buy-vendor but dont have him targeted!?!")
+			mc_ai_vendor.isBuying = false
 		end
-	end
-	return nil
-end
-function mc_ai_vendor.GetClosestRepairVendor()	
-	if ( mc_ai_vendor.isSelling ) then return true end
-	local mList = MapMarkerList("worldmarkertype=23,nearest,onmesh,type="..GW2.MAPMARKERTYPE.RepairMerchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendors"))) 
-	if ( TableSize(mList) > 0 )  then
-		local i,marker = next (mList)
-		if ( i and marker) then
-			local vendor = CharacterList:Get(marker.characterID)
-			if ( vendor and vendor.alive ) then
-				return vendor
-			end
-		end
-	end
-	return nil
-end
-
-
-function mc_ai_vendor.OpenSellWindow()
+	else
 	
-		ml_log( " Chatting with Vendor.." )							
-		local options = Player:GetConversationOptions()
-		if ( TableSize(options) > 0 ) then
-			nextOption, entry  = next( options )
-			local found = false
-			while ( nextOption and entry ) do			
-				if( entry.type == GW2.CONVERSATIONOPTIONS.Shop ) then
-					Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Shop )
-					mc_global.Wait(math.random(150,400))
-					found = true
-					break
-				elseif( entry.type == GW2.CONVERSATIONOPTIONS.KarmaShop ) then
-					Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.KarmaShop )
-					mc_global.Wait(math.random(150,400))
-					found = true
-					break
-				elseif( entry.type == 23 ) then
-					Player:SelectConversationOption( 23 )
-					mc_global.Wait(math.random(150,400))
-					found = true
-					break
-				elseif( entry.type == 13 ) then
-					Player:SelectConversationOption( 13 )
-					mc_global.Wait(math.random(150,400))
-					found = true
-					break
-				end			
-				nextOption, entry  = next( options, nextOption )
-			end
-			if ( not found ) then
-				nextOption, entry  = next( options )
-				while ( nextOption and entry ) do
-					if( entry.type == GW2.CONVERSATIONOPTIONS.Continue ) then
-						Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Continue )
-						mc_global.Wait(math.random(150,400))
-						found = true
-						break
-					elseif( entry.type == GW2.CONVERSATIONOPTIONS.Story ) then
-						Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Story )
-						mc_global.Wait(math.random(150,400))
-						found = true
-						break
+		local vendor = mc_ai_vendor.GetClosestBuyVendor()		
+		if ( vendor ~= nil ) then	
+			
+				if ( vendor ) then				
+					-- We are close enough and the vendor is in CharList
+					if (not vendor.isInInteractRange) then
+						-- MoveIntoInteractRange
+						local tPos = vendor.pos
+						if ( tPos ) then
+							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+							if (tonumber(navResult) < 0) then
+								ml_error("e_quickbuy.MoveIntoInteractRange result: "..tonumber(navResult))					
+							end
+							ml_log("MoveToBuyVendor..")
+							return true
+						end
+					else
+						-- Interact
+						Player:StopMovement()
+						local t = Player:GetTarget()
+						if ( vendor.selectable and (not t or t.id ~= vendor.id )) then
+							Player:SetTarget( vendor.id )
+						else
+							
+							if ( not Inventory:IsVendorOpened() and not Player:IsConversationOpen() ) then
+								ml_log( "Opening Vendor.. " )
+								Player:Interact( vendor.id )
+								mc_global.Wait(1500)
+								return true
+							else
+								return mc_ai_vendor.BuyAtVendor( vendor, true )
+							end					 
+						end			
 					end
-					nextOption, entry  = next( options, nextOption )
+					
+				else
+					-- We are not close enought, vendor is not yet in Charlist
+					local pos = vendor.pos
+					if ( pos ) then
+						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
+						if (tonumber(navResult) < 0) then
+							ml_error("e_quickbuy.MoveInto Vendor Range result: "..tonumber(navResult))					
+						end
+						ml_log("MoveToBuyVendor..")
+						return true
+					else
+						ml_error("vendor Position table of Vendor is empty!")
+					end
+				end
+		else
+			ml_error("No Vendor found! TODO: Get Vendor from MapData List")
+			
+		end
+	end
+	return ml_log(false)		
+end
+c_vendorbuy = inheritsFrom( ml_cause )
+e_vendorbuy = inheritsFrom( ml_effect )
+function c_vendorbuy:evaluate()	
+	return (SellManager_Active == "1" and Inventory.freeSlotCount > 0 and ( 
+		( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) )
+		or 
+		( mc_ai_vendor.NeedToBuyGatheringTools() and TableSize(mc_ai_vendor.GetClosestBuyVendorMarker()) > 0)
+		)		
+	)
+end
+function e_vendorbuy:execute()
+	ml_log("e_vendorbuy")
+	
+	-- We are already at a vendor
+	if ( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying or mc_ai_vendor.isSelling) ) then
+		local t = Player:GetTarget()
+		if ( t ) then
+			return mc_ai_vendor.BuyAtVendor( t )
+		else
+			ml_error("We are at a vendor but dont have him targeted!?!")
+			mc_ai_vendor.isBuying = false
+			mc_ai_vendor.isSelling = false
+		end
+	else
+	
+		local vMarker = mc_ai_vendor.GetClosestBuyVendorMarker()		
+		if ( vMarker ~= nil ) then	
+			if ( vMarker.characterID ~= nil and vMarker.characterID ~= 0 and vMarker.characterID ~= "") then			
+				local char = CharacterList:Get(vMarker.characterID)
+				if ( char ) then				
+					-- We are close enough and the char is in CharList
+					if (not char.isInInteractRange) then
+						-- MoveIntoInteractRange
+						local tPos = char.pos
+						if ( tPos ) then
+							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+							if (tonumber(navResult) < 0) then
+								ml_error("e_vendorbuy.MoveIntoInteractRange result: "..tonumber(navResult))					
+							end
+							ml_log("MoveToBuyVendor..")
+							return true
+						end
+					else
+						-- Interact
+						Player:StopMovement()
+						local t = Player:GetTarget()
+						if ( char.selectable and (not t or t.id ~= char.id )) then
+							Player:SetTarget( char.id )
+						else
+							
+							if ( not Inventory:IsVendorOpened() and not Player:IsConversationOpen() ) then
+								ml_log( " Opening Vendor.. " )
+								Player:Interact( char.id )
+								mc_global.Wait(1500)
+								return true
+							else
+								return mc_ai_vendor.BuyAtVendor( char )
+							end					 
+						end			
+					end
+					
+				else
+					-- We are not close enought, char is not yet in Charlist
+					local pos = vMarker.pos
+					if ( pos ) then
+						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
+						if (tonumber(navResult) < 0) then
+							ml_error("e_vendorbuy.MoveIntovMarkerRange result: "..tonumber(navResult))					
+						end
+						ml_log("MoveToVendorBuyMarker..")
+						return true
+					else
+						ml_error("vMarker Position table of VendorMarker is empty!")
+					end
 				end
 			end
-		end	
-		
-		if ( not found ) then
-			return false
-		end
-		
-	return true
-end
-
-function mc_ai_vendor.InteractWithVendor( vendor , nearbyvendor)
-	-- Sell stuff first
-	if ( mc_ai_vendor.NeedToSell() or ( nearbyvendor and mc_ai_vendor.NeedToSell( true ) )) then
-		if ( not Inventory:IsVendorOpened() and Player:IsConversationOpen() ) then
-			if ( not mc_ai_vendor.OpenSellWindow() ) then
-				ml_error( "Vendoring: can't Sell at vendor, please report back to the developers" )
-				ml_error("Blacklisted Vendor"..vendor.name)
-				mc_blacklist.AddBlacklistEntry(GetString("vendors"), vendor.id, vendor.name, true)	
-			end
 		else
-			-- SELL HERE
-			local sList = mc_vendormanager.createItemList()
-			if ( TableSize(sList) > 0 ) then
-				local i,item = next (sList)
-				if ( i and item ) then
-					mc_ai_vendor.isSelling = true
-					d("Selling :"..tostring(item.name))
-					item:Sell()
-					return
-				end				
-			else
-				d("Selling finished..")				
-				Inventory:SellJunk()
-				mc_ai_vendor.isSelling = false				
-			end
+			ml_error("No VendorMarker found! TODO: Get Vendor from MapData List")
+			
 		end
-	
-	
+	end
+	return ml_log(false)		
+end
+function mc_ai_vendor.BuyAtVendor( vendor , nearbyvendor)
 	
 	-- BUY TOOLS
-	elseif ( mc_ai_vendor.NeedToBuyGatheringTools() or ( nearbyvendor and mc_ai_vendor.NeedToBuyGatheringTools( true ) )) then
+	if ( mc_ai_vendor.NeedToBuyGatheringTools() or ( nearbyvendor and mc_ai_vendor.NeedToBuyGatheringTools( true ) )) then
 		if ( not Inventory:IsVendorOpened() and Player:IsConversationOpen() ) then
 			if ( not mc_ai_vendor.OpenSellWindow() ) then
 				ml_error( "Vendoring: can't Buy Tools at vendor.." )
@@ -265,6 +488,11 @@ function mc_ai_vendor.InteractWithVendor( vendor , nearbyvendor)
 		else
 			-- BUY TOOLS HERE
 			--set mc_ai_vendor.isBuying treu/false			
+			if ( Inventory:GetVendorServiceType() ~= GW2.VENDORSERVICETYPE.VendorBuy ) then
+				d("Switching to Buy Window")
+				Inventory:SetVendorServiceType(GW2.VENDORSERVICETYPE.VendorBuy)
+				return
+			end
 			local VList = VendorItemList("")
 			if ( TableSize(VList)>0 )then
 				local kitsToBuy = mc_vendormanager.NeedSalvageKitInfo()
@@ -382,9 +610,195 @@ function mc_ai_vendor.InteractWithVendor( vendor , nearbyvendor)
 				ml_error( "VendorList Empty??" )
 			end			
 		end
+	end
+end
+
+
+
+--************
+-- REPAIR
+--************
+function mc_ai_vendor.NeedToRepair( vendornearby )	
 	
-		-- REPAIR 
-	elseif ( mc_ai_vendor.NeedToRepair() or ( nearbyvendor and mc_ai_vendor.NeedToRepair( true ) ) ) then
+	local damaged = 0
+	local broken = 0
+	for i=1 ,24 ,1  do 
+		if ( i < 8 or i > 18 ) then -- no need to check other slots but those who can break
+			local eqItem = Inventory:GetEquippedItemBySlot( i )
+			if ( eqItem ~= nil ) then
+				local dur = eqItem.durability 
+				if ( dur == GW2.ITEMDURABILITY.Broken) then broken = broken + 1 end
+				if ( dur == GW2.ITEMDURABILITY.Damaged) then damaged = damaged + 1 end
+			end
+		end
+	end
+	
+	if ( vendornearby ) then
+		return broken > tonumber(gRepairBrokenLimit)/2 or damaged > tonumber(gRepairDamageLimit)/2 --half the settings in case we are nearby a repairguy
+	end
+	
+	return broken > tonumber(gRepairBrokenLimit) or damaged > tonumber(gRepairDamageLimit)	
+end
+function mc_ai_vendor.GetClosestRepairVendorMarker()	
+	if ( mc_ai_vendor.isSelling ) then return true end
+	local mList = MapMarkerList("worldmarkertype=23,nearest,onmesh,type="..GW2.MAPMARKERTYPE.RepairMerchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendors"))) 
+	if ( TableSize(mList) > 0 )  then
+		local i,marker = next (mList)
+		if ( i and marker) then
+			return marker
+		end
+	end
+	return nil
+end
+function mc_ai_vendor.GetClosestRepairVendor()	
+	if ( mc_ai_vendor.isSelling ) then return true end
+	local mList = MapMarkerList("worldmarkertype=23,nearest,onmesh,type="..GW2.MAPMARKERTYPE.RepairMerchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendors"))) 
+	if ( TableSize(mList) > 0 )  then
+		local i,marker = next (mList)
+		if ( i and marker) then
+			local vendor = CharacterList:Get(marker.characterID)
+			if ( vendor and vendor.alive ) then
+				return vendor
+			end
+		end
+	end
+	return nil
+end
+c_quickrepair = inheritsFrom( ml_cause )
+e_quickrepair = inheritsFrom( ml_effect )
+function c_quickrepair:evaluate()	
+	return ( mc_ai_vendor.NeedToRepair( true ) and TableSize(mc_ai_vendor.GetClosestRepairVendor()) > 0)
+end
+function e_quickrepair:execute()
+	ml_log("e_quickrepair")	
+	-- We are already at a vendor
+	if ( Player:IsConversationOpen() ) then
+		local t = Player:GetTarget()
+		if ( t ) then
+			return mc_ai_vendor.RepairAtVendor( t , true)
+		else			
+			ml_error("We are at a vendor but dont have him targeted!?!")
+		end
+	else
+	
+		local vendor = mc_ai_vendor.GetClosestRepairVendor()		
+		if ( vendor ~= nil ) then				
+					-- We are close enough and the vendor is in CharList
+					if (not vendor.isInInteractRange) then
+						-- MoveIntoInteractRange
+						local tPos = vendor.pos
+						if ( tPos ) then
+							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+							if (tonumber(navResult) < 0) then
+								ml_error("e_quickrepair.MoveIntoInteractRange result: "..tonumber(navResult))					
+							end
+							ml_log("MoveToRepairVendor..")
+							return true
+						end
+					else
+						-- Interact
+						Player:StopMovement()
+						local t = Player:GetTarget()
+						if ( vendor.selectable and (not t or t.id ~= vendor.id )) then
+							Player:SetTarget( vendor.id )
+						else
+							
+							if ( not Inventory:IsVendorOpened() and not Player:IsConversationOpen() ) then
+								ml_log( " Opening Vendor.. " )
+								Player:Interact( vendor.id )
+								mc_global.Wait(1500)
+								return true
+							else
+								return mc_ai_vendor.RepairAtVendor( vendor, true )
+							end					 
+						end			
+					end	
+		else
+			ml_error("No Repair Vendor found! TODO: Get Vendor from MapData List")
+			
+		end
+	end
+	return ml_log(false)		
+end
+c_vendorrepair = inheritsFrom( ml_cause )
+e_vendorrepair = inheritsFrom( ml_effect )
+function c_vendorrepair:evaluate()	
+	return ( mc_ai_vendor.NeedToRepair() and TableSize(mc_ai_vendor.GetClosestRepairVendorMarker()) > 0)
+end
+function e_vendorrepair:execute()
+	ml_log("e_vendorrepair")
+	
+	-- We are already at a vendor
+	if ( Player:IsConversationOpen() ) then
+		local t = Player:GetTarget()
+		if ( t ) then
+			return mc_ai_vendor.RepairAtVendor( t )
+		else
+			ml_error("We are at a vendor but dont have him targeted!?!")
+		end
+	else
+	
+		local vMarker = mc_ai_vendor.GetClosestRepairVendorMarker()		
+		if ( vMarker ~= nil ) then	
+			if ( vMarker.characterID ~= nil and vMarker.characterID ~= 0 and vMarker.characterID ~= "") then			
+				local char = CharacterList:Get(vMarker.characterID)
+				if ( char ) then				
+					-- We are close enough and the char is in CharList
+					if (not char.isInInteractRange) then
+						-- MoveIntoInteractRange
+						local tPos = char.pos
+						if ( tPos ) then
+							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+							if (tonumber(navResult) < 0) then
+								ml_error("e_vendorrepair.MoveIntoInteractRange result: "..tonumber(navResult))					
+							end
+							ml_log("MoveToRepairVendor..")
+							return true
+						end
+					else
+						-- Interact
+						Player:StopMovement()
+						local t = Player:GetTarget()
+						if ( char.selectable and (not t or t.id ~= char.id )) then
+							Player:SetTarget( char.id )
+						else
+							
+							if ( not Player:IsConversationOpen() ) then
+								ml_log( " Opening Repair Vendor.. " )
+								Player:Interact( char.id )
+								mc_global.Wait(1500)
+								return true
+							else
+								return mc_ai_vendor.RepairAtVendor( char )
+							end					 
+						end			
+					end
+					
+				else
+					-- We are not close enought, char is not yet in Charlist
+					local pos = vMarker.pos
+					if ( pos ) then
+						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
+						if (tonumber(navResult) < 0) then
+							ml_error("e_vendorrepair.MoveIntovMarkerRange result: "..tonumber(navResult))					
+						end
+						ml_log("MoveToRepairVendorMarker..")
+						return true
+					else
+						ml_error("vMarker Position table of VendorMarker is empty!")
+					end
+				end
+			end
+		else
+			ml_error("No VendorMarker found! TODO: Get Vendor from MapData List")
+			
+		end
+	end
+	return ml_log(false)		
+end
+function mc_ai_vendor.RepairAtVendor( vendor , nearbyvendor)
+	-- REPAIR
+	if ( mc_ai_vendor.NeedToRepair() or ( nearbyvendor and mc_ai_vendor.NeedToRepair( true ) ) ) then
 		if ( Player:IsConversationOpen() ) then
 			local options = Player:GetConversationOptions()
 			if ( TableSize(options) > 0 ) then
@@ -424,193 +838,50 @@ function mc_ai_vendor.InteractWithVendor( vendor , nearbyvendor)
 end
 
 
---************
--- Close-Range-Vendor-Taks
--- For going to vendor when it is not yet needed but since we are nearby, we can as well go pay him a visit
---************
-c_quickvendor = inheritsFrom( ml_cause )
-e_quickvendor = inheritsFrom( ml_effect )
-function c_quickvendor:evaluate()	
-	return (SellManager_Active == "1" and ( 
-		( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying or mc_ai_vendor.isSelling) ) -- so we wont leave the vendor after we sold 1 item ;)
-		or
-		( (Inventory.freeSlotCount / Inventory.slotCount < 0.5) and mc_ai_vendor.NeedToSell( true ) and TableSize(mc_ai_vendor.GetClosestVendor()) > 0 ) -- Our bags are more than half full and we have stuff to sell 
-		or 
-		( mc_ai_vendor.NeedToBuyGatheringTools( true ) and TableSize(mc_ai_vendor.GetClosestBuyVendor()) > 0) -- We need new gathering tools
-		or 
-		( mc_ai_vendor.NeedToRepair( true ) and TableSize(mc_ai_vendor.GetClosestRepairVendor()) > 0)  -- We need to repair
-		)		
-	)
-end
-function e_quickvendor:execute()
-	ml_log("e_quickvendor")	
-	-- We are already at a vendor
-	if ( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying or mc_ai_vendor.isSelling) ) then
-		local t = Player:GetTarget()
-		if ( t ) then
-			return mc_ai_vendor.InteractWithVendor( t )
-		else
-			ml_error("We are at a vendor but dont have him targeted!?!")
-			mc_ai_vendor.isBuying = false
-			mc_ai_vendor.isSelling = false
-		end
+
+function mc_ai_vendor.OpenSellWindow()
+	
+	ml_log( "Chatting with Vendor.." )							
+	local options = Player:GetConversationOptions()
+	if ( TableSize(options) > 0 ) then
+		nextOption, entry  = next( options )
+		local found = false
+		while ( nextOption and entry ) do
+			if( entry.type == GW2.CONVERSATIONOPTIONS.Shop ) then
+				Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Shop )
+				found = true
+				break
+			elseif( entry.type == GW2.CONVERSATIONOPTIONS.KarmaShop ) then
+				Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.KarmaShop )
+				found = true
+				break
+			elseif( entry.type == 23 ) then
+				Player:SelectConversationOption( 23 )
+				found = true
+				break
+			elseif( entry.type == 13 ) then
+				Player:SelectConversationOption( 13 )
+				found = true
+				break
+			elseif( entry.type == GW2.CONVERSATIONOPTIONS.Continue ) then
+				Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Continue )
+				found = true
+				break
+			elseif( entry.type == GW2.CONVERSATIONOPTIONS.Story ) then
+				Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Story )
+				found = true
+				break
+			end		
+			nextOption, entry  = next( options, nextOption )
+		end			
 	else
-	
-		local vendor = nil
-		if ( (Inventory.freeSlotCount / Inventory.slotCount < 0.5) and mc_ai_vendor.NeedToSell() ) then vendor = mc_ai_vendor.GetClosestVendor() end
-		if ( vendor == nil and mc_ai_vendor.NeedToBuyGatheringTools( true ) ) then vendor = mc_ai_vendor.GetClosestBuyVendor() end
-		if ( vendor == nil and mc_ai_vendor.NeedToRepair( true ) ) then vendor = mc_ai_vendor.GetClosestRepairVendor() end
+		ml_error("No Conversation Options at Vendor")
+	end	
 		
-		if ( vendor ~= nil ) then	
-			
-				if ( vendor ) then				
-					-- We are close enough and the vendor is in CharList
-					if (not vendor.isInInteractRange) then
-						-- MoveIntoInteractRange
-						local tPos = vendor.pos
-						if ( tPos ) then
-							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
-							if (tonumber(navResult) < 0) then
-								ml_error("e_quickvendor.MoveIntoInteractRange result: "..tonumber(navResult))					
-							end
-							ml_log("MoveToVendor..")
-							return true
-						end
-					else
-						-- Interact
-						Player:StopMovement()
-						local t = Player:GetTarget()
-						if ( vendor.selectable and (not t or t.id ~= vendor.id )) then
-							Player:SetTarget( vendor.id )
-						else
-							
-							if ( not Inventory:IsVendorOpened() and not Player:IsConversationOpen() ) then
-								ml_log( " Opening Vendor.. " )
-								Player:Interact( vendor.id )
-								mc_global.Wait(1000)
-								return true
-							else
-								return mc_ai_vendor.InteractWithVendor( vendor, true )
-							end					 
-						end			
-					end
-					
-				else
-					-- We are not close enought, vendor is not yet in Charlist
-					local pos = vendor.pos
-					if ( pos ) then
-						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
-						if (tonumber(navResult) < 0) then
-							ml_error("e_quickvendor.MoveInto Vendor Range result: "..tonumber(navResult))					
-						end
-						ml_log("MoveToVendor..")
-						return true
-					else
-						ml_error("vendor Position table of Vendor is empty!")
-					end
-				end
-		else
-			ml_error("No Vendor found! TODO: Get Vendor from MapData List")
-			
+		if ( found == false ) then
+			return false
 		end
-	end
-	return ml_log(false)		
+	mc_global.Wait(2500)
+	return true
 end
 
-
-
-
---************
--- Vendor-Taks
---************
-c_vendor = inheritsFrom( ml_cause )
-e_vendor = inheritsFrom( ml_effect )
-function c_vendor:evaluate()	
-	return (SellManager_Active == "1" and ( 
-		( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying or mc_ai_vendor.isSelling) )
-		or
-		( Inventory.freeSlotCount <= 2 and mc_ai_vendor.NeedToSell() and TableSize(mc_ai_vendor.GetClosestVendorMarker()) > 0 )
-		or 
-		( mc_ai_vendor.NeedToBuyGatheringTools() and TableSize(mc_ai_vendor.GetClosestBuyVendorMarker()) > 0)
-		or 
-		( mc_ai_vendor.NeedToRepair() and TableSize(mc_ai_vendor.GetClosestRepairVendorMarker()) > 0)
-		)		
-	)
-end
-function e_vendor:execute()
-	ml_log("e_vendor")
-	
-	-- We are already at a vendor
-	if ( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying or mc_ai_vendor.isSelling) ) then
-		local t = Player:GetTarget()
-		if ( t ) then
-			return mc_ai_vendor.InteractWithVendor( t )
-		else
-			ml_error("We are at a vendor but dont have him targeted!?!")
-			mc_ai_vendor.isBuying = false
-			mc_ai_vendor.isSelling = false
-		end
-	else
-	
-		local vMarker = nil
-		if ( Inventory.freeSlotCount == 0 and mc_ai_vendor.NeedToSell() ) then vMarker = mc_ai_vendor.GetClosestVendorMarker() end
-		if ( vMarker == nil and mc_ai_vendor.NeedToBuyGatheringTools() ) then vMarker = mc_ai_vendor.GetClosestBuyVendorMarker() end
-		if ( vMarker == nil and mc_ai_vendor.NeedToRepair() ) then vMarker = mc_ai_vendor.GetClosestRepairVendorMarker() end
-		
-		if ( vMarker ~= nil ) then	
-			if ( vMarker.characterID ~= nil and vMarker.characterID ~= 0 and vMarker.characterID ~= "") then			
-				local char = CharacterList:Get(vMarker.characterID)
-				if ( char ) then				
-					-- We are close enough and the char is in CharList
-					if (not char.isInInteractRange) then
-						-- MoveIntoInteractRange
-						local tPos = char.pos
-						if ( tPos ) then
-							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
-							if (tonumber(navResult) < 0) then
-								ml_error("mc_ai_vendoring.MoveIntoInteractRange result: "..tonumber(navResult))					
-							end
-							ml_log("MoveToVendor..")
-							return true
-						end
-					else
-						-- Interact
-						Player:StopMovement()
-						local t = Player:GetTarget()
-						if ( char.selectable and (not t or t.id ~= char.id )) then
-							Player:SetTarget( char.id )
-						else
-							
-							if ( not Inventory:IsVendorOpened() and not Player:IsConversationOpen() ) then
-								ml_log( " Opening Vendor.. " )
-								Player:Interact( char.id )
-								mc_global.Wait(1000)
-								return true
-							else
-								return mc_ai_vendor.InteractWithVendor( char )
-							end					 
-						end			
-					end
-					
-				else
-					-- We are not close enought, char is not yet in Charlist
-					local pos = vMarker.pos
-					if ( pos ) then
-						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
-						if (tonumber(navResult) < 0) then
-							ml_error("mc_ai_vendoring.MoveIntovMarkerRange result: "..tonumber(navResult))					
-						end
-						ml_log("MoveToVendorMarker..")
-						return true
-					else
-						ml_error("vMarker Position table of VendorMarker is empty!")
-					end
-				end
-			end
-		else
-			ml_error("No VendorMarker found! TODO: Get Vendor from MapData List")
-			
-		end
-	end
-	return ml_log(false)		
-end

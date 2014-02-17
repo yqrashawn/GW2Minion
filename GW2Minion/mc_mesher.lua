@@ -24,7 +24,7 @@ function mm.ModuleInit()
     end
 	
     local wnd = GUI_GetWindowInfo("MinionBot")
-    GUI_NewWindow(mm.mainwindow.name,wnd.x+wnd.width,wnd.y,mm.mainwindow.w,mm.mainwindow.h)
+    GUI_NewWindow(mm.mainwindow.name,wnd.x+wnd.width,wnd.y,mm.mainwindow.w,mm.mainwindow.h,true)
     GUI_NewComboBox(mm.mainwindow.name,GetString("navmesh"),"gmeshname",GetString("generalSettings"),"")
     GUI_NewCheckbox(mm.mainwindow.name,GetString("showrealMesh"),"gShowRealMesh",GetString("generalSettings"))
     GUI_NewCheckbox(mm.mainwindow.name,GetString("showPath"),"gShowPath",GetString("generalSettings"))

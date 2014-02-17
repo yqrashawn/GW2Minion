@@ -2,23 +2,25 @@
 -----------
 c_dead = inheritsFrom( ml_cause )
 e_dead = inheritsFrom( ml_effect )
+c_dead.dead = false
 function c_dead:evaluate()
     --ml_log("c_dead")
 	if ( Player.dead ) then
-		mc_global.Wait(1500)
 		return true
 	end
 	return false
 end
 function e_dead:execute()
-	ml_log("e_dead")
-	mc_ai_vendor.isSelling = false
-	mc_ai_vendor.isBuying = false
-	Player:ClearTarget()
-	Player:StopMovement()	
-	d( "Dead: RESPAWN AT NEAREST WAYPOINT " )
-	mc_global.Wait(3000)
-	d( Player:RespawnAtClosestWaypoint() )	
+	ml_log("e_dead")	
+	if ( c_dead.dead ) then
+		c_dead.dead = true
+		mc_global.Wait(3000)
+	else
+		c_dead.dead = false
+		d( "Dead: RESPAWN AT NEAREST WAYPOINT " )
+		d( Player:RespawnAtClosestWaypoint() )
+		mc_global.ResetBot()
+	end
 end
 
 

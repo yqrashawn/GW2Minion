@@ -9,7 +9,7 @@ mc_blacklist.currentEntryCount = 0
 mc_blacklist.blacklist = {}
 
 function mc_blacklist.HandleInit()
-    GUI_NewWindow(mc_blacklist.mainwindow.name,mc_blacklist.mainwindow.x,mc_blacklist.mainwindow.y,mc_blacklist.mainwindow.w,mc_blacklist.mainwindow.h)
+    GUI_NewWindow(mc_blacklist.mainwindow.name,mc_blacklist.mainwindow.x,mc_blacklist.mainwindow.y,mc_blacklist.mainwindow.w,mc_blacklist.mainwindow.h,true)
     GUI_NewComboBox(mc_blacklist.mainwindow.name,GetString("blacklistName"),"gBlacklistName",GetString("generalSettings"),"")
     GUI_NewComboBox(mc_blacklist.mainwindow.name,GetString("blacklistEntry"),"gBlacklistEntry",GetString("generalSettings"),"")
     GUI_NewField(mc_blacklist.mainwindow.name,GetString("entryTime"),"gBlacklistEntryTime",GetString("generalSettings"))

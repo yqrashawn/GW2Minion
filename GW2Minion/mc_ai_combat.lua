@@ -48,7 +48,7 @@ function mc_ai_combatAttack:Init()
 	self:add(ml_element:create( "Resting", c_resting, e_resting, 145 ), self.process_elements)	
 
 	-- Normal Looting
-	self:add(ml_element:create( "Looting", c_Loot, e_Loot, 130 ), self.process_elements)
+	self:add(ml_element:create( "Looting", c_LootCheck, e_LootCheck, 130 ), self.process_elements)
 
 	-- Deposit Items
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 120 ), self.process_elements)	
@@ -57,16 +57,20 @@ function mc_ai_combatAttack:Init()
 	self:add(ml_element:create( "EquippingGatherTool", c_GatherToolsCheck, e_GatherToolsCheck, 110 ), self.process_elements)	
 	
 	-- Quick-Repair & Vendoring (when a vendor is nearby)	
-	self:add(ml_element:create( "QuickVendoring", c_quickvendor, e_quickvendor, 100 ), self.process_elements)
+	self:add(ml_element:create( "QuickSellItems", c_quickvendorsell, e_quickvendorsell, 100 ), self.process_elements)
+	self:add(ml_element:create( "QuickBuyItems", c_quickbuy, e_quickbuy, 99 ), self.process_elements)
+	self:add(ml_element:create( "QuickRepairItems", c_quickrepair, e_quickrepair, 98 ), self.process_elements)
 	
 	-- Repair & Vendoring
-	self:add(ml_element:create( "Vendoring", c_vendor, e_vendor, 90 ), self.process_elements)	
-		
+	self:add(ml_element:create( "SellItems", c_vendorsell, e_vendorsell, 90 ), self.process_elements)	
+	self:add(ml_element:create( "BuyItems", c_vendorbuy, e_vendorbuy, 89 ), self.process_elements)
+	self:add(ml_element:create( "RepairItems", c_vendorrepair, e_vendorrepair, 88 ), self.process_elements)
+	
 	-- Salvaging
 	self:add(ml_element:create( "Salvaging", c_salvage, e_salvage, 75 ), self.process_elements)
 
 	-- DoEvents
-	--self:add(ml_element:create( "DoEvent", c_doEvents, e_doEvents, 72 ), self.process_elements)
+	self:add(ml_element:create( "DoEvent", c_doEvents, e_doEvents, 72 ), self.process_elements)
 		
 	-- ReviveNPCs
 	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 70 ), self.process_elements)	
@@ -321,7 +325,7 @@ c_resting = inheritsFrom( ml_cause )
 e_resting = inheritsFrom( ml_effect )
 c_resting.hpPercent = math.random(45,85)
 function c_resting:evaluate()
-	if ( not Player.inCombat and Player.health.percent < c_resting.hpPercent ) then		
+	if ( Player.inCombat == false and Player.health.percent < c_resting.hpPercent ) then		
 		local mybuffs = Player.buffs
 		return not mc_helper.BufflistHasBuffs(mybuffs, "737,723,736") --burning,poison,bleeding		
 	end	
@@ -377,7 +381,7 @@ function mc_ai_combatRevive:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_combatRevive:task_complete_eval()	
-	if ( c_dead:evaluate() or c_downed:evaluate() or c_Aggro:evaluate() or c_LootChests:evaluate() or c_Loot:evaluate() or c_reviveNPC:evaluate() == false) then 
+	if ( c_dead:evaluate() or c_downed:evaluate() or c_Aggro:evaluate() or c_LootChests:evaluate() or c_LootCheck:evaluate() or c_reviveNPC:evaluate() == false) then 
 		Player:StopMovement()
 		return true
 	end
@@ -511,7 +515,7 @@ function DoCombatMovement()
 					return
 				end
 				
-				--[[if (Player.inCombat and not Player:IsFacingTarget() and Tdist < 180) then
+				--[[if (Player.inCombat and not Player:IsFacingTarget() >0and Tdist < 180) then
 					Player:StopMovement()
 					local tpos = T.pos
 					-- moveto(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)

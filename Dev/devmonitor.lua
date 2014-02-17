@@ -389,7 +389,7 @@ function Dev.ModuleInit()
 	GUI_NewField("Dev","ListIndex","COIdx","ConversationInfo")	
 	GUI_NewField("Dev","ID","COID","ConversationInfo")
 	GUI_NewField("Dev","Type","COType","ConversationInfo")
-	GUI_NewButton("Dev","SelectConversationByID","Dev.SelConvID","ConversationInfo")
+	GUI_NewButton("Dev","SelectConversationByType","Dev.SelConvID","ConversationInfo")
 	RegisterEventHandler("Dev.SelConvID", Dev.Func)	
 	GUI_NewButton("Dev","SelectConversationByIndex","Dev.SelConvIndex","ConversationInfo")
 	RegisterEventHandler("Dev.SelConvIndex", Dev.Func)	
@@ -582,11 +582,11 @@ function Dev.Func ( arg )
 		end	
 	elseif ( arg == "Dev.SelConvIndex") then		
 		if ( Player:IsConversationOpen() ) then
-			d(Player:SelectConversationOptionByIndex(tonumber(convindex)))
+			d(Player:SelectConversationOptionByIndex(tonumber(COID)))
 		end	
 	elseif ( arg == "Dev.SelConvID") then		
-		if ( Player:IsConversationOpen() and tonumber(COID)) then			
-			d(Player:SelectConversationOption(tonumber(COID)))
+		if ( Player:IsConversationOpen() and tonumber(COType)) then			
+			d(Player:SelectConversationOption(tonumber(COType)))
 		end
 	elseif ( arg == "Dev.SwitchP") then				
 		d(Player:SwitchPet())
@@ -1230,7 +1230,16 @@ function Dev.UpdateWindow()
 	if (movdirs.backward) then movstr = movstr.." backward" end
 	midirect = movstr
 	micanevdir = tostring(Player:CanEvade(tonumber(mievdir)))	
-	mifacet = tostring(Player:IsFacingTarget())
+	local facedir = Player:IsFacingTarget()
+	if ( facedir == 1 ) then
+		mifacet = "InFront"
+	elseif( facedir == 2) then
+		mifacet = "Flanking"
+	elseif( facedir == 3) then
+		mifacet = "Behind"
+	elseif( facedir == false) then
+		mifacet = "Not Facing"
+	end
 	
 	-- Spell&CastingInfo
 	SCIsCast = tostring(Player:IsCasting())

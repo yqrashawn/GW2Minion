@@ -50,7 +50,7 @@ function mc_global.moduleinit()
 	RegisterEventHandler("AdvancedSettings.toggle", mc_global.ToggleAdvMenu)
 	
 	-- ADVANCED SETTINGS WINDOW
-	GUI_NewWindow(mc_global.advwindow.name,mc_global.advwindow.x,mc_global.advwindow.y,mc_global.advwindow.width,mc_global.advwindow.height)
+	GUI_NewWindow(mc_global.advwindow.name,mc_global.advwindow.x,mc_global.advwindow.y,mc_global.advwindow.width,mc_global.advwindow.height,true)
 	GUI_NewButton(mc_global.advwindow.name, GetString("blacklistManager"), "bToggleBlacklistMgr")
 	RegisterEventHandler("bToggleBlacklistMgr", mc_blacklist.ToggleMenu)
 	GUI_NewButton(mc_global.advwindow.name, GetString("questManager"), "QuestManager.toggle")
@@ -172,12 +172,9 @@ function mc_global.togglebot(arg)
 	if arg == "0" then	
 		d("Stopping Bot..")
 		mc_global.running = false
-		ml_task_hub.shouldRun = false
-		mc_ai_vendor.isSelling = false
-		mc_ai_vendor.isBuying = false
+		ml_task_hub.shouldRun = false		
 		gBotRunning = "0"
-		Player:StopMovement()
-		ml_task_hub:ClearQueues()
+		mc_global.ResetBot()
 		mc_global.UpdateMode()
 	else
 		d("Starting Bot..")
@@ -194,6 +191,14 @@ function mc_global.UpdateGlobals()
 	
 	-- Update Debug fields	
 	dAttackRange = mc_global.AttackRange	
+end
+
+function mc_global.ResetBot()
+	mc_ai_vendor.isSelling = false
+	mc_ai_vendor.isBuying = false
+	Player:StopMovement()
+	Player:ClearTarget()
+	--ml_task_hub:ClearQueues()
 end
 
 function mc_global.Wait( seconds ) 
