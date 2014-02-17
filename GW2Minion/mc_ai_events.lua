@@ -84,6 +84,7 @@ end
 c_doEvents = inheritsFrom( ml_cause )
 e_doEvents = inheritsFrom( ml_effect )
 function c_doEvents:evaluate()	
+	if ( gDoEvents == "0" ) then return false end
 	local evList = MapMarkerList("nearest,isevent,onmesh,worldmarkertype="..mc_global.WorldMarkerType..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
 	local i,e = next(evList)
 	if ( i and e ) then
