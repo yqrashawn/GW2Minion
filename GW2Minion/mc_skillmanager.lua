@@ -820,7 +820,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 				local currentSlot = 0
 				for i = 1, 16, 1 do					
 					if ( mc_skillmanager.cskills[i] and mc_skillmanager.cskills[i].skillID == skill.skillID and mc_skillmanager.cskills[i].cooldown == 0) then						
-						--d("Found Matching Skill, Cast Slot "..tostring(i) .. " Name "..tostring(mc_skillmanager.cskills[i].name))
+						--d("Found Matching Skill, Cast Slot "..tostring(i) .. " Name "..tostring(mc_skillmanager.cskills[i].name).. " Name "..tostring(mc_skillmanager.cskills[i].cooldown) )
 						currentSlot = i						
 						break
 					end
@@ -832,7 +832,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 					-- so making sure it is valid in each round, performance impact huge ? 
 					if ( CharacterList:Get(TargetID) == nil and GadgetList:Get(TargetID) == nil) then
 						ml_error("For-Loop in Skillmanager lost its target!!!!!!!!!!!!")
-						return
+						break
 					else
 						mybuffs = Player.buffs
 						if ( target.isCharacter) then
@@ -907,11 +907,6 @@ function mc_skillmanager.AttackTarget( TargetID )
 						if ( not StringContains(skill.previd, mc_skillmanager.prevSkillID) ) then continue end
                     end
 					
-					-- Swap Weapon check
-					if ( currentSlot == GW2.SKILLBARSLOT.Slot_1 ) then
-						mc_skillmanager.SwapWeaponCheck("CoolDown")
-					end
-					
 					--d("Cast Slot "..tostring(currentSlot))
 					
 					if ( skill.ttype == "Self" ) then
@@ -961,10 +956,13 @@ function mc_skillmanager.AttackTarget( TargetID )
 					end						
 				end				
 			end
-			
-			-- If we hit this then we were not able to cast anything
+						
+			-- If we hit this then we were not able to cast anything			
+			-- Swap Weapon check			
 			if ( mc_global.AttackRange < 300 and target.distance > mc_global.AttackRange ) then
 				mc_skillmanager.SwapWeaponCheck("Range")
+			else	 
+				mc_skillmanager.SwapWeaponCheck("CoolDown")
 			end
 		end
 	end

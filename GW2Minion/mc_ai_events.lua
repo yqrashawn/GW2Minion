@@ -151,7 +151,7 @@ function e_MoveInEventRange:execute()
 				ml_log(tostring(math.floor(Distance2D( pPos.x, pPos.y, ePos.x, ePos.y))))
 				if ( c_MoveInEventRange.reached == false) then
 					-- 1st time get into event range
-					if ( Distance2D ( pPos.x, pPos.y, ePos.x, ePos.y) > 150 ) then
+					if ( Distance2D ( pPos.x, pPos.y, ePos.x, ePos.y) > 350 ) then
 						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
 						if (tonumber(navResult) < 0) then					
 							ml_error("mc_ai_events.MoveInEventRange result: "..tonumber(navResult))					
@@ -212,16 +212,22 @@ function e_DoEventObjectives:execute()
 						-- Add seperate SubTasks here...if you want lol
 						if ( objType == GW2.OBJECTIVETYPE.BreakMoral ) then 
 						ml_log("OBJECTIVETYPE.BreakMoral")
+						c_MoveInEventRange.range = 3000
+						
 						elseif ( objType == GW2.OBJECTIVETYPE.CaptureLocation ) then
 						ml_log("OBJECTIVETYPE.CaptureLocation")
+						c_MoveInEventRange.range = 2500
+						
 						elseif ( objType == GW2.OBJECTIVETYPE.CollectItems ) then 
 						ml_log("OBJECTIVETYPE.CollectItems")
+						c_MoveInEventRange.range = 4000
+						
 						elseif ( objType == GW2.OBJECTIVETYPE.Counter ) then 
 						ml_log("OBJECTIVETYPE.Counter")
 						-- obj.value1 = 0 when multiple enemies, when 1 enemy then it is the ID of that
 						-- obj.value2 = countermax
 						-- obj.value4 = currentcount
-						c_MoveInEventRange.range = 2500
+						c_MoveInEventRange.range = 3000
 						-- Kill Main Boss
 						local target = nil						
 						if ( obj.value1 and obj.value1 ~= 0 ) then
@@ -239,13 +245,18 @@ function e_DoEventObjectives:execute()
 						return ml_log(true)
 						elseif ( objType == GW2.OBJECTIVETYPE.KillCount ) then 
 						ml_log("OBJECTIVETYPE.KillCount")
+						-- value 4 = kills left ?
+						
 						elseif ( objType == GW2.OBJECTIVETYPE.Cull ) then 
 						ml_log("OBJECTIVETYPE.Cull")
 						-- valie 1 and 2 , possibly scaling values ?
 						-- value 4 = amount of objects/enemies remaining 
+						c_MoveInEventRange.range = 3000
 						
 						elseif ( objType == GW2.OBJECTIVETYPE.DefendGadget ) then 
 						ml_log("OBJECTIVETYPE.DefendGadget")
+						c_MoveInEventRange.range = 2500
+						
 						elseif ( objType == GW2.OBJECTIVETYPE.Escort ) then 
 						c_MoveInEventRange.range = 1500
 						ml_log("OBJECTIVETYPE.Escort")
@@ -284,26 +295,47 @@ function e_DoEventObjectives:execute()
 						
 						elseif ( objType == GW2.OBJECTIVETYPE.EventStatus ) then 
 						ml_log("OBJECTIVETYPE.EventStatus")
+						c_MoveInEventRange.range = 2500
+						
 						elseif ( objType == GW2.OBJECTIVETYPE.InteractWithGadget ) then 
 						ml_log("OBJECTIVETYPE.InteractWithGadget")
+						c_MoveInEventRange.range = 3500
+						
 						elseif ( objType == GW2.OBJECTIVETYPE.Intimidate ) then 
 						ml_log("OBJECTIVETYPE.Intimidate")
+						c_MoveInEventRange.range = 3500
+						-- value1 == ID of enemy to "intimidate" if there is only 1 
+						-- value2 = amount of enemies to intimidate (?)
 						elseif ( objType == GW2.OBJECTIVETYPE.IntimidateScaled ) then 
 						ml_log("OBJECTIVETYPE.IntimidateScaled")
+						c_MoveInEventRange.range = 3500
+						
 						elseif ( objType == GW2.OBJECTIVETYPE.RepairGadget ) then 
 						ml_log("OBJECTIVETYPE.RepairGadget")
+						c_MoveInEventRange.range = 3500
+						
 						elseif ( objType == GW2.OBJECTIVETYPE.Timer ) then 
 						ml_log("OBJECTIVETYPE.Timer")
+						c_MoveInEventRange.range = 3500
+						
 						-- value2 = current timer (counting down from value3 to 0 in ms)
 						-- value3 = start timer value 
 						elseif ( objType == GW2.OBJECTIVETYPE.Tripwire ) then 
 						ml_log("OBJECTIVETYPE.Tripwire")
+						c_MoveInEventRange.range = 2500
+						
 						elseif ( objType == GW2.OBJECTIVETYPE.WvwHold ) then 
 						ml_log("OBJECTIVETYPE.WvwHold")
+						c_MoveInEventRange.range = 2500
+						
 						elseif ( objType == GW2.OBJECTIVETYPE.WvwOrbResetTimer ) then 
 						ml_log("OBJECTIVETYPE.WvwOrbResetTimer")
+						c_MoveInEventRange.range = 4500
+						
 						elseif ( objType == GW2.OBJECTIVETYPE.WvwUpgrade ) then 
 						ml_log("OBJECTIVETYPE.WvwUpgrade")
+						c_MoveInEventRange.range = 4500
+						
 						else
 							ml_error("Unhandled EventType !!!! : "..tostring(objType))
 						end

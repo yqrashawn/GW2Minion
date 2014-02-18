@@ -603,9 +603,9 @@ function DoCombatMovement()
 				end
 				
 				-- MOVE				
-				local dir = dirs[ math.random( #dirs ) ] 
-				--d("New MOVING DIR: "..tostring(dir))
-				if ( dir ~= 4) then										
+				local dir = dirs[ math.random( #dirs ) ] 				
+				if ( dir ~= 4) then
+					--d("New MOVING DIR: "..tostring(dir))
 					Player:SetMovement(dir)
 				else 
 					Player:StopMovement()
