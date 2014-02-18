@@ -61,7 +61,7 @@ function ml_quest_mgr.ModuleInit( name , path)
 	GUI_NewNumeric(ml_quest_mgr.editwindow.name,GetString("questMinLevel"),"QME_MinLevel",GetString("questInfo"),"0","80")
 	GUI_NewNumeric(ml_quest_mgr.editwindow.name,GetString("questMaxLevel"),"QME_MaxLevel",GetString("questInfo"),"0","80")
 	GUI_NewField(ml_quest_mgr.editwindow.name,GetString("questMap"),"QME_Map",GetString("questInfo"))
-	--GUI_NewCheckbox(ml_quest_mgr.editwindow.name,GetString("questPreQuest"),"QME_PrevQuest",GetString("questInfo")) 
+	GUI_NewField(ml_quest_mgr.editwindow.name,GetString("questPreQuest"),"QME_PrevQuest",GetString("questInfo")) 	
 	GUI_NewCheckbox(ml_quest_mgr.editwindow.name,GetString("questRepeat"),"QME_Repeat",GetString("questInfo"))
 	
 	
@@ -288,8 +288,9 @@ function ml_quest_mgr.AddNewQuest( quest )
 			done = "0",
 			minlevel = 0,
 			maxlevel = 80,		
-			map = Player:GetLocalMapID(), -- TODO: get currentmap name from the maps.data file here
-			--prequest = "0",
+			map = mc_datamanager.GetMapName( Player:GetLocalMapID()),
+			mapid = Player:GetLocalMapID(),
+			prequest = "None",
 			repeatable = "1",
 			steps = {}
 		}
@@ -302,7 +303,8 @@ function ml_quest_mgr.AddNewQuest( quest )
 			minlevel = quest.minlevel,
 			maxlevel = quest.maxlevel,		
 			map = quest.map,
-			--prequest = quest.prequest,
+			mapid = quest.mapid,
+			prequest = quest.prequest,
 			repeatable = quest.repeatable,
 			steps = quest.steps
 		}
@@ -373,7 +375,7 @@ function ml_quest_mgr.EditorButtonHandler(event)
 		end
 	elseif ( event == "QMResetQuest") then
 		if ( TableSize(ml_quest_mgr.QuestList) > 0 and TableSize(ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio]) > 0) then
-			ml_quest_mgr.ResetQuest( ml_quest_mgr.editwindow.currentPrio )
+			ml_quest_mgr.ResetQuest( ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio] )
 			ml_quest_mgr.RefreshQuestList()
 			GUI_WindowVisible(ml_quest_mgr.editwindow.name,false)
 			GUI_WindowVisible(ml_quest_mgr.stepwindow.name,false)		
@@ -397,8 +399,8 @@ function ml_quest_mgr.EditQuest( arg )
 		QME_Done = quest.done
 		QME_MinLevel = tonumber(quest.minlevel)
 		QME_MaxLevel = tonumber(quest.maxlevel)
-		QME_Map = quest.map
-		--QME_PrevQuest = quest.prequest
+		QME_Map = quest.map.."("..tostring(quest.mapid)..")"
+		QME_PrevQuest = quest.prequest
 		QME_Repeat = quest.repeatable
 	else
 		ml_error("QuestList[prio] is nil!")		
@@ -703,7 +705,7 @@ function ml_quest_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 		elseif ( k == "QME_Done" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].done = v
 		elseif ( k == "QME_MinLevel" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].minlevel = tonumber(v)
 		elseif ( k == "QME_MaxLevel" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].maxlevel = tonumber(v)
-		--elseif ( k == "QME_Map" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].map = v
+		elseif ( k == "QME_Map" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].map = v
 		elseif ( k == "QME_PrevQuest" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].prequest = v
 		elseif ( k == "QME_Repeat" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].repeatable = v
 		
@@ -748,100 +750,138 @@ function ml_quest_mgr.ResetProfile( questprofile )
 	return profil
 end
 
--- Resets all "done" to 0 in the Quest
-function ml_quest_mgr.ResetQuest( questprio )
+-- Resets all "done" to 0 in the Quest's Steps
+function ml_quest_mgr.ResetQuest( myquest )
 
-	profil = ml_quest_mgr.QuestList
-
-	if ( TableSize( profil ) > 0 ) then
-	
-		local qprio,quest = next ( profil )
-		while qprio and quest do
-			if ( qprio == questprio ) then
-				quest.done = "0"
-				if ( TableSize( profil[qprio].steps ) > 0 ) then
-					local sprio, step = next ( profil[qprio].steps )
-					while sprio and step do
-						step.done = "0"									
-						sprio,step = next ( profil[qprio].steps , sprio )
-					end
-				end
-			end
-			qprio,quest = next ( profil , qprio )
-		end		
-	end
-	return profil
-end
-
-function ml_quest_mgr.GetNextIncompleteQuest()
 	if ( TableSize( ml_quest_mgr.QuestList ) > 0 ) then
 	
 		local qprio,quest = next ( ml_quest_mgr.QuestList )
 		while qprio and quest do
-			
-			if ( quest.done == "0" and TableSize( ml_quest_mgr.QuestList[qprio].steps ) > 0 ) then
-				local sprio, step = next ( ml_quest_mgr.QuestList[qprio].steps )
-				while sprio and step do
-					
-					if ( step.done == "0" and ml_quest_mgr.QuestList[qprio].steps[sprio].script.name and ml_quest_mgr.QuestList[qprio].steps[sprio].script.name ~= "" and ml_quest_mgr.QuestList[qprio].steps[sprio].script.name ~= "None") then
-					
-						local loadedFunction, cError = loadfile(ml_quest_mgr.profilepath..ml_quest_mgr.QuestList[qprio].steps[sprio].script.name..".lua")
-						if ( loadedFunction == nil) then
-							ml_error(" in loading scriptfile: "..tostring(ml_quest_mgr.QuestList[qprio].steps[sprio].script.name))
-						else			
-							local script = loadedFunction()
-							local ident = "QPrio"..tostring(qprio).."_QStep"..tostring(sprio).."_QName_"
-							
-							-- Create an instance of the Script with its Data and define the global variables
-							
-							d("GetNextIncompleteQuest "..ml_quest_mgr.QuestList[qprio].steps[sprio].script.name)
-							script:SetData( ident, ml_quest_mgr.QuestList[qprio].steps[sprio].script.data )
-							
-							return { qprio, sprio, script } -- returns prios too, so this script can be accessed from the "outside" later, for loading / saving stuff for ex
-						end
+			if ( qprio == myquest.prio ) then
+				quest.done = "0"
+				if ( TableSize( ml_quest_mgr.QuestList[qprio].steps ) > 0 ) then
+					local sprio, step = next ( ml_quest_mgr.QuestList[qprio].steps )
+					while sprio and step do
+						step.done = "0"									
+						sprio,step = next ( ml_quest_mgr.QuestList[qprio].steps , sprio )
 					end
-				
-					sprio,step = next ( ml_quest_mgr.QuestList[qprio].steps , sprio )
 				end
 			end
-			
 			qprio,quest = next ( ml_quest_mgr.QuestList , qprio )
 		end		
+	end
+	return ml_quest_mgr.QuestList
+end
+
+function ml_quest_mgr.GetQuestByName( qname )
+	if ( TableSize( ml_quest_mgr.QuestList ) > 0 ) then
+	
+		local qprio,quest = next ( ml_quest_mgr.QuestList )
+		while qprio and quest do
+			if ( quest.name == qname ) then				
+				return quest
+			end
+			qprio,quest = next ( ml_quest_mgr.QuestList , qprio )
+		end	
 	end
 	return nil
 end
 
--- to update the quest/step/script data 
-function ml_quest_mgr.SetQuestData( qprio, sprio, script, variablename, data )
-	if ( TableSize( ml_quest_mgr.QuestList ) > 0 and variablename and data ) then
-		if (qprio and TableSize( ml_quest_mgr.QuestList[qprio] ) > 0 ) then
+-- gives bakc a random quest 
+function ml_quest_mgr.GetNewQuest()	
+	if ( TableSize( ml_quest_mgr.QuestList ) > 0 ) then
+		local validQuests = {}
+		local qprio,quest = next ( ml_quest_mgr.QuestList )
+		while qprio and quest do
 			
-			if ( sprio ) then 
-				if ( TableSize( ml_quest_mgr.QuestList[qprio].steps[sprio] ) > 0 ) then
+			if ( quest.done == "0" and tonumber(quest.mapid) == Player:GetLocalMapID() and tonumber(quest.minlevel) <= Player.level and tonumber(quest.maxlevel) >= Player.level and TableSize( ml_quest_mgr.QuestList[qprio].steps ) > 0 ) then
+				-- Check if this quest needs a prequest to be done first
+				if ( quest.prequest ~= "" and quest.prequest ~= "None" ) then
+					local preQuest = ml_quest_mgr.GetQuestByName( quest.prequest )
+					if ( preQuest ~= nil and preQuest.done == "1") then						
+						table.insert(validQuests,quest)
+					end
+				else					
+					table.insert(validQuests,quest)
+				end
+			end
+			
+			qprio,quest = next ( ml_quest_mgr.QuestList , qprio )
+		end
+		
+		if ( TableSize(validQuests) > 0 ) then
+			local r = math.random (1,TableSize(validQuests))			
+			d("Next Quest Selected: "..tostring(validQuests[r].name))
+			return validQuests[r]
+		end
+	end
+	return nil
+end
+
+function ml_quest_mgr.GetNextQuestStep( currentQuest )
+	if ( currentQuest ~= nil and TableSize( ml_quest_mgr.QuestList[currentQuest.prio].steps ) > 0 ) then
+	
+		local sprio, step = next ( ml_quest_mgr.QuestList[currentQuest.prio].steps )
+		while sprio and step do
+					
+			if ( step.done == "0" and ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name and ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name ~= "" and ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name ~= "None") then
+			
+				local loadedFunction, cError = loadfile(ml_quest_mgr.profilepath..ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name..".lua")
+				if ( loadedFunction == nil) then
+					ml_error(" in loading scriptfile: "..tostring(ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name))
+				else			
+					local script = loadedFunction()
+					local ident = "QPrio"..tostring(currentQuest.prio).."_QStep"..tostring(sprio).."_QName_"
+					
+					-- Create an instance of the Script with its Data and define the global variables							
+					d("Selecting Next QuestStep "..ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name)
+					script:SetData( ident, ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.data )
+					
+					-- Adding the script to the steptable, we need to make a copy here, else the saving would save the script with it ;)
+					stepcopy = deepcopy(step)					
+					stepcopy.script = script
+					
+					return stepcopy
+				end
+			end
+		
+			sprio,step = next ( ml_quest_mgr.QuestList[currentQuest.prio].steps , sprio )
+		end
+	end
+	return nil
+end
+
+
+-- to update the quest/step/script data 
+function ml_quest_mgr.SetQuestData( quest, step, script, variablename, data )
+	if ( TableSize( ml_quest_mgr.QuestList ) > 0 and variablename and data ) then
+		if (quest and TableSize( ml_quest_mgr.QuestList[quest.prio] ) > 0 ) then
+			
+			if ( step ) then 
+				if ( TableSize( ml_quest_mgr.QuestList[quest.prio].steps[step.prio] ) > 0 ) then
 										
 					if ( script ) then
-						if ( ml_quest_mgr.QuestList[qprio].steps[sprio].script ) then
+						if ( ml_quest_mgr.QuestList[quest.prio].steps[step.prio].script ) then
 							-- data change should happen in script.data table
-							ml_quest_mgr.QuestList[qprio].steps[sprio].script.data[variablename] = data
+							ml_quest_mgr.QuestList[quest.prio].steps[step.prio].script.data[variablename] = data
 						else
-							ml_error("ml_quest_mgr.SetQuestData: QuestList[qprio].steps[sprio].script nil")
+							ml_error("ml_quest_mgr.SetQuestData: QuestList[quest.prio].steps[step.prio].script nil")
 						end
 					
 					else
 						-- data change should happen in step table
-						ml_quest_mgr.QuestList[qprio].steps[sprio][variablename] = data
+						ml_quest_mgr.QuestList[quest.prio].steps[step.prio][variablename] = data
 					end				
 				else
-					ml_error("ml_quest_mgr.SetQuestData: QuestList[qprio].steps[sprio] nil")
+					ml_error("ml_quest_mgr.SetQuestData: QuestList[quest.prio].steps[step.prio] nil")
 				end
 			else
 				-- data change should happen in quest table
-				ml_quest_mgr.QuestList[qprio][variablename] = data
-				
+				ml_quest_mgr.QuestList[quest.prio][variablename] = data
 			end
 			
 		else
-			ml_error("ml_quest_mgr.SetQuestData: QuestPrio arg is nil or  ml_quest_mgr.QuestList[qprio] nil")
+			ml_error("ml_quest_mgr.SetQuestData: QuestPrio arg is nil or  ml_quest_mgr.QuestList[quest.prio] nil")
 		end
 	else
 		ml_error("ml_quest_mgr.SetQuestData: QuestList nil or !variablename or !data")

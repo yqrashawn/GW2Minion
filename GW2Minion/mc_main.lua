@@ -205,13 +205,6 @@ function mc_global.Wait( seconds )
 	mc_global.lasttick = mc_global.lasttick + seconds
 end
 
---test
-function mc_global.test()
-	local path = GetStartupPath() .. [[\LuaMods\GW2Minion\maps.data]]
-	local data = persistence.load(path)
-	d(TableSize(data))
-end
-
 function mc_global.ToggleAdvMenu()
     if (mc_global.advwindowvisible) then
         GUI_WindowVisible(mc_global.advwindow.name,false)	

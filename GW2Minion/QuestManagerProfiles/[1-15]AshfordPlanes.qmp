@@ -1,0 +1,111 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	[1] = {
+		["map"] = "Plains of Ashford";
+		["minlevel"] = 0;
+		["done"] = "0";
+		["prequest"] = "None";
+		["mapid"] = 19;
+		["prio"] = 1;
+		["name"] = "Quest1";
+		["maxlevel"] = 80;
+		["steps"] = {
+			[1] = {
+				["done"] = "0";
+				["prio"] = 1;
+				["script"] = {
+					["name"] = "GotoPosition";
+					["data"] = {
+						["GotoZ"] = -1387.6373291016;
+						["GotoY"] = -2774.7641601563;
+						["GotoX"] = -12055.158203125;
+					};
+				};
+				["name"] = "Quest1Step1";
+			};
+			[2] = {
+				["done"] = "0";
+				["prio"] = 2;
+				["script"] = {
+					["name"] = "GotoPosition";
+					["data"] = {
+						["GotoZ"] = -1340.4990234375;
+						["GotoY"] = -3038.8784179688;
+						["GotoX"] = -10807.01953125;
+					};
+				};
+				["name"] = "qust1Step2";
+			};
+		};
+		["repeatable"] = "0";
+	};
+	[2] = {
+		["map"] = "Plains of Ashford";
+		["minlevel"] = 0;
+		["done"] = "0";
+		["prequest"] = "None";
+		["mapid"] = 19;
+		["prio"] = 2;
+		["name"] = "Quest2";
+		["maxlevel"] = 80;
+		["steps"] = {
+			[1] = {
+				["done"] = "0";
+				["prio"] = 1;
+				["script"] = {
+					["name"] = "GotoPosition";
+					["data"] = {
+						["GotoZ"] = -1400.5853271484;
+						["GotoY"] = -1938.8161621094;
+						["GotoX"] = -11437.053710938;
+					};
+				};
+				["name"] = "";
+			};
+		};
+		["repeatable"] = "0";
+	};
+	[3] = {
+		["map"] = "Plains of Ashford";
+		["minlevel"] = 0;
+		["done"] = "0";
+		["prequest"] = "Quest2";
+		["mapid"] = 19;
+		["prio"] = 3;
+		["name"] = "Quest3";
+		["maxlevel"] = 80;
+		["steps"] = {
+			[1] = {
+				["done"] = "0";
+				["prio"] = 1;
+				["script"] = {
+					["name"] = "GotoPosition";
+					["data"] = {
+						["GotoZ"] = -1456.2453613281;
+						["GotoY"] = -1169.9176025391;
+						["GotoX"] = -11028.559570313;
+					};
+				};
+				["name"] = "";
+			};
+			[2] = {
+				["done"] = "0";
+				["prio"] = 2;
+				["script"] = {
+					["name"] = "GotoPosition";
+					["data"] = {
+						["GotoZ"] = -1366.2768554688;
+						["GotoY"] = -1036.859375;
+						["GotoX"] = -10170.331054688;
+					};
+				};
+				["name"] = "";
+			};
+		};
+		["repeatable"] = "1";
+	};
+}
+return obj1

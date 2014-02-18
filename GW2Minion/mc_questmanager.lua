@@ -24,11 +24,9 @@ function mc_ai_questprofile.Create()
     newinst.subtask = nil
     newinst.process_elements = {}
     newinst.overwatch_elements = {}
-	newinst.currentQuestPrio = 0
-	newinst.currentStepPrio = 0
-	newinst.currentScript = nil
-
-	
+	newinst.currentQuest = nil
+	newinst.currentStep = nil
+		
     return newinst
 end
 
@@ -37,35 +35,54 @@ function mc_ai_questprofile:Init()
 end
 
 function mc_ai_questprofile:Process()
-		
-	if ( self.currentScript == nil ) then
-		local t = ml_quest_mgr.GetNextIncompleteQuest()
-		if ( TableSize(t) == 3) then
-			self.currentQuestPrio = t[1]
-			self.currentStepPrio = t[2]
-			self.currentScript = t[3]		
-			
-		else
-			mc_log("No QuestProfile loaded or Profile completed!")			
+	
+	-- Get a Quest
+	if ( self.currentQuest == nil ) then
+		self.currentQuest = ml_quest_mgr.GetNewQuest()		
+		if ( self.currentQuest == nil ) then
+			d("No more Quests in Questprofile left, terminating task")
+			self.completed = true
 		end
+	
 	else
-		
-		if ( self.currentScript.completed == true ) then
-			d("Script finished: "..tostring(self.currentScript.name))
+		-- Get next QuestStep
+		if ( self.currentStep == nil or self.currentStep.done == "1" or ( self.currentStep.script ~= nil and self.currentStep.script.completed == true)) then
 			
 			-- Set this step to "Finished" in our character's questprofile progress			-- 									
-			ml_quest_mgr.SetQuestData( self.currentQuestPrio, self.currentStepPrio, nil, "done", "1" )
-			
-			-- TODO: Saving the Quest progress logic has to be done from here too...just call  ml_quest_mgr.SaveProfile() to save it
-			
-
-			
-			self.currentScript = nil
+			if ( self.currentStep~=nil and self.currentStep.script ~= nil ) then 
+				d("QuestStep "..tostring(self.currentStep.name).." completed!") 				
+				ml_quest_mgr.SetQuestData( self.currentQuest, self.currentStep, nil, "done", "1" )
+				self.currentStep = nil
+			end
+						
+			-- Getting next questStep
+			self.currentStep = ml_quest_mgr.GetNextQuestStep( self.currentQuest )				
+			if ( self.currentStep == nil ) then
+				d("All steps of current Quest "..tostring( self.currentQuest.name).." are finished!")
+				ml_quest_mgr.SetQuestData( self.currentQuest, nil, nil, "done", "1" )
+								
+				-- Reset QuestSteps for repeatable Quests
+				if ( self.currentQuest.repeatable == "1" ) then
+					d("Resetting QuestSteps for "..tostring( self.currentQuest.name))
+					ml_quest_mgr.ResetQuest( self.currentQuest )
+				end
+				
+				d("Saving QuestProgress..")
+				ml_quest_mgr.SaveProfile()		
+				self.currentQuest = nil
+			end			
 		else
-			--Run quest-Task
-			ml_task_hub:CurrentTask():AddSubTask(self.currentScript)
-		end		
-	end
+			-- Execute currentStep Task
+			if ( self.currentStep.script ~= nil ) then
+								
+				ml_task_hub:CurrentTask():AddSubTask(self.currentStep.script)
+				
+			else
+				ml_error("QuestStep "..tostring(self.currentStep.name).." has NO script selected!!!!!")
+			end			
+		end
+		
+	end	
 end
 
 function mc_ai_questprofile:task_complete_eval()

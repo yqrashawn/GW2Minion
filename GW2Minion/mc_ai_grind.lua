@@ -26,10 +26,7 @@ function mc_ai_grind:Process()
 	-- Randomly pick next maingoal and pursue it			
 	local i = math.random(0,1)
 	
-	
-	-- Events
-	
-	
+		
 	-- Killsomething nearby
 	if ( i == 0 and function() return TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) == 0 end ) then
 		local newTask = mc_ai_combatAttack.Create()

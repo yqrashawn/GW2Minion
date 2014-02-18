@@ -12,7 +12,7 @@ function c_dead:evaluate()
 end
 function e_dead:execute()
 	ml_log("e_dead")	
-	if ( c_dead.dead ) then
+	if ( c_dead.dead == false ) then
 		c_dead.dead = true
 		mc_global.Wait(3000)
 	else
