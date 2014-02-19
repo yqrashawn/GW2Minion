@@ -89,8 +89,11 @@ c_AoELoot = inheritsFrom( ml_cause )
 e_AoELoot = inheritsFrom( ml_effect )
 c_AoELoot.lastused = 0
 function c_AoELoot:evaluate()
-    --ml_log("c_AoELoot")
-    return ( mc_global.now - c_AoELoot.lastused >1000 and Inventory.freeSlotCount > 0 and TableSize(CharacterList("nearest,lootable,maxdistance=900")) > 0)
+    if ( mc_global.now - c_AoELoot.lastused >1050 and Inventory.freeSlotCount > 0) then
+		c_AoELoot.lastused = mc_global.now
+		Player:AoELoot()
+	end
+	return false
 end
 function e_AoELoot:execute()
 	ml_log("e_AoELoot")

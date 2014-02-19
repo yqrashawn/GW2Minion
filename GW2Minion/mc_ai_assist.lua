@@ -19,19 +19,21 @@ function mc_ai_assist:Init()
 
 end
 
+
 function mc_ai_assist:Process()
 	--ml_log("AssistMode_Process->")
 		
 	if ( not Player.dead ) then
-		if ( TableSize(CharacterList( "nearest,lootable,maxdistance=900" )) > 0 ) then
+		if ( mc_global.now - c_AoELoot.lastused >1050 and Inventory.freeSlotCount > 0) then
+			c_AoELoot.lastused = mc_global.now
 			Player:AoELoot()
-		else
-			if ( sMtargetmode == "None" ) then 
-				mc_skillmanager.AttackTarget( nil ) 
+		end
+		
+		if ( sMtargetmode == "None" ) then 
+			mc_skillmanager.AttackTarget( nil ) 
 			
-			elseif ( sMtargetmode ~= "None" ) then 
-				mc_ai_assist.SetTargetAssist()
-			end
+		elseif ( sMtargetmode ~= "None" ) then 
+			mc_ai_assist.SetTargetAssist()
 		end
 	end				
 	

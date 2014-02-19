@@ -246,6 +246,7 @@ function e_DoEventObjectives:execute()
 						elseif ( objType == GW2.OBJECTIVETYPE.KillCount ) then 
 						ml_log("OBJECTIVETYPE.KillCount")
 						-- value 4 = kills left ?
+						c_MoveInEventRange.range = 3000
 						
 						elseif ( objType == GW2.OBJECTIVETYPE.Cull ) then 
 						ml_log("OBJECTIVETYPE.Cull")
@@ -272,7 +273,7 @@ function e_DoEventObjectives:execute()
 									if (not target.isInInteractRange) then
 										local tPos = target.pos
 										if ( tPos ) then
-											Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true)
+											Player:MoveTo(tPos.x,tPos.y,tPos.z,130,false,true,true)
 											return true
 										end
 									else

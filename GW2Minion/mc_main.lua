@@ -175,6 +175,7 @@ function mc_global.togglebot(arg)
 		ml_task_hub.shouldRun = false		
 		gBotRunning = "0"
 		mc_global.ResetBot()
+		ml_task_hub:ClearQueues()
 		mc_global.UpdateMode()
 	else
 		d("Starting Bot..")
@@ -198,7 +199,6 @@ function mc_global.ResetBot()
 	mc_ai_vendor.isBuying = false
 	Player:StopMovement()
 	Player:ClearTarget()
-	--ml_task_hub:ClearQueues()
 end
 
 function mc_global.Wait( seconds ) 

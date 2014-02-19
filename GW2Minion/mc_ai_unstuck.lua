@@ -17,7 +17,7 @@ function mc_ai_unstuck:OnUpdate( tick )
 		return	
 	end
 	
-	if ( gBotMode == "AssistMode") then return end
+	if ( gBotMode == "Assist") then return end
 	
 	-- Stuck check for movement stucks
 	if ( Player:IsMoving()) then
