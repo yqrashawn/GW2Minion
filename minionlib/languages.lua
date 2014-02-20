@@ -406,6 +406,23 @@ strings =
 		event							= "Event",
 		doEvents						= "Do Events",
 		blacklistEvent					= "Blacklist Event",
+		
+		--mc_multibot		
+		multibotmanager					= "MultiBotManager",
+		groupInfo						= "MyParty",
+		member1							= "Partymember1",
+		member2							= "Partymember2",
+		member3							= "Partymember3",
+		member4							= "Partymember4",
+		status							= "PartyStatus",
+		serverInfo						= "MultibotServer",
+		MBSIP							= "Server IP",
+		MBSPort							= "Server Port",
+		MBSPW							= "Server Password",
+		MBSGroup						= "Bot Group Name",
+		partymember						= "Partymember",
+		partyrole						= "Role",
+		usecurrentparty					= "Use Current Partynames",
     },                                  
     ["cn"] =                            
     {                               

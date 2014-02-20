@@ -44,6 +44,9 @@ function mc_blacklist.HandleInit()
 	if not mc_blacklist.BlacklistExists(GetString("vendorsbuy")) then
         mc_blacklist.CreateBlacklist(GetString("vendorsbuy"))
     end
+	if not mc_blacklist.BlacklistExists(GetString("partymember")) then
+        mc_blacklist.CreateBlacklist(GetString("partymember"))
+    end
 	
 	mc_blacklist.ReadBlacklistFile(mc_blacklist.path)
 end
@@ -106,6 +109,27 @@ function mc_blacklist.ReadBlacklistFile(path)
 		if ( TableSize(loadedlist) > 0 ) then
 			mc_blacklist.blacklist = loadedlist
 		end
+		
+			if not mc_blacklist.BlacklistExists(GetString("monsters")) then
+        mc_blacklist.CreateBlacklist(GetString("monsters"))
+    end
+	if not mc_blacklist.BlacklistExists(GetString("event")) then
+        mc_blacklist.CreateBlacklist(GetString("event"))
+    end
+	if not mc_blacklist.BlacklistExists(GetString("salvageItems")) then
+        mc_blacklist.CreateBlacklist(GetString("salvageItems"))
+    end
+	if not mc_blacklist.BlacklistExists(GetString("vendors")) then
+        mc_blacklist.CreateBlacklist(GetString("vendors"))
+    end
+	if not mc_blacklist.BlacklistExists(GetString("vendorsbuy")) then
+        mc_blacklist.CreateBlacklist(GetString("vendorsbuy"))
+    end
+	if not mc_blacklist.BlacklistExists(GetString("partymember")) then
+        mc_blacklist.CreateBlacklist(GetString("partymember"))
+    end
+		
+		
 		mc_blacklist.RefreshNames()
     end
 end

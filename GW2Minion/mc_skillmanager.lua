@@ -739,6 +739,8 @@ end
 function mc_skillmanager.ToggleMenu()
 	if (mc_skillmanager.visible) then
 		GUI_WindowVisible(mc_skillmanager.mainwindow.name,false)	
+		GUI_WindowVisible(mc_skillmanager.editwindow.name,false)
+		
 		mc_skillmanager.visible = false
 	else
 		local wnd = GUI_GetWindowInfo("MinionBot")	

@@ -7,10 +7,20 @@ local obj1 = {
 	};
 	["Vendors"] = {
 	};
+	["Partymember"] = {
+	};
 	["Monsters"] = {
+		[42635] = {
+			["time"] = true;
+			["name"] = "Rabbit";
+		};
 		[131693] = {
 			["time"] = true;
 			["name"] = "Raccoon";
+		};
+		[167078] = {
+			["time"] = true;
+			["name"] = "Armadillo";
 		};
 	};
 	["VendorsBuyTools"] = {

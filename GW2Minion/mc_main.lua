@@ -51,11 +51,14 @@ function mc_global.moduleinit()
 	
 	-- ADVANCED SETTINGS WINDOW
 	GUI_NewWindow(mc_global.advwindow.name,mc_global.advwindow.x,mc_global.advwindow.y,mc_global.advwindow.width,mc_global.advwindow.height,true)
+	GUI_NewButton(mc_global.advwindow.name, GetString("multibotmanager"), "MultiBotManager.toggle")
 	GUI_NewButton(mc_global.advwindow.name, GetString("blacklistManager"), "bToggleBlacklistMgr")
 	RegisterEventHandler("bToggleBlacklistMgr", mc_blacklist.ToggleMenu)
-	GUI_NewButton(mc_global.advwindow.name, GetString("questManager"), "QuestManager.toggle")
+	GUI_NewButton(mc_global.advwindow.name, GetString("questManager"), "QuestManager.toggle")	
 	GUI_NewButton(mc_global.advwindow.name, GetString("skillManager"), "SkillManager.toggle")
 	GUI_NewButton(mc_global.advwindow.name, GetString("meshManager"), "ToggleMeshmgr")
+	
+	
 	
 	
 	GUI_WindowVisible(mc_global.advwindow.name,false)
@@ -77,6 +80,7 @@ function mc_global.moduleinit()
 	gBotRunning = "0"
 	gPulseTime = Settings.GW2Minion.gPulseTime	
 	gDepositItems = Settings.GW2Minion.gDepositItems	
+	gDoEvents = Settings.GW2Minion.gDoEvents	
 	
 	GUI_UnFoldGroup(mc_global.window.name,GetString("botStatus") );		
 end
@@ -105,7 +109,7 @@ function mc_global.onupdate( event, tickcount )
 				
 				-- Unstuck OnUpdate
 				mc_ai_unstuck:OnUpdate( tickcount )
-				
+												
 				dTrace = ml_GetTraceString()
 			end
 		end
@@ -116,6 +120,9 @@ function mc_global.onupdate( event, tickcount )
 		
 	-- SkillManager OnUpdate
 	mc_skillmanager.OnUpdate( tickcount )
+	
+	-- PartyManager OnUpdate
+	mc_multibotmanager.OnUpdate( tickcount )
 	
 	-- BlackList OnUpdate
 	mc_blacklist.OnUpdate( tickcount )
@@ -137,16 +144,20 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
 		if (k == "gEnableLog" or
 			k == "gDepositItems" or
-			k == "doEvents" or 
+			k == "gDoEvents" or 
 			k == "sMmode" or 
 			k == "sMtargetmode" or
 			k == "SalvageManager_Active" or
 			k == "gRepairBrokenLimit" or
-			k == "gRepairDamageLimit" or
-			k == "gDoEvents")			
+			k == "gRepairDamageLimit" or 
+			k == "gMultiBotEnabled" )			
 		then
 			Settings.GW2Minion[tostring(k)] = v
-		
+		elseif (k == "dMember1") then Settings.GW2Minion.Party[1] = v Settings.GW2Minion.Party = Settings.GW2Minion.Party
+		elseif (k == "dMember2") then Settings.GW2Minion.Party[2] = v Settings.GW2Minion.Party = Settings.GW2Minion.Party
+		elseif (k == "dMember3") then Settings.GW2Minion.Party[3] = v Settings.GW2Minion.Party = Settings.GW2Minion.Party
+		elseif (k == "dMember4") then Settings.GW2Minion.Party[4] = v Settings.GW2Minion.Party = Settings.GW2Minion.Party		
+			
 		elseif ( k == "gBotRunning" ) then
 			mc_global.togglebot(v)			
 		elseif ( k == "gBotMode") then        

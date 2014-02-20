@@ -396,7 +396,6 @@ function Dev.ModuleInit()
 	convindex = 0
 	
 	--PartyInfo
-	GUI_NewField("Dev","IsInParty","PartyIsIn","PartyInfo")
 	GUI_NewField("Dev","PartySize","PartySiz","PartyInfo")
 	GUI_NewNumeric("Dev","ListIndex","partyindex","PartyInfo","0","5");
 	GUI_NewField("Dev","Ptr","ParPtr","PartyInfo")
@@ -404,14 +403,16 @@ function Dev.ModuleInit()
 	GUI_NewField("Dev","CharacterID","ParID","PartyInfo")	
 	GUI_NewField("Dev","Name","ParName","PartyInfo")
 	GUI_NewField("Dev","MapID","ParMap","PartyInfo")
-	GUI_NewField("Dev","ConnectionStatus","ParCon","PartyInfo")	
+	GUI_NewField("Dev","ConnectionStatus","ParCon","PartyInfo")
+	GUI_NewField("Dev","InvitationStatus","ParInv","PartyInfo")	
+	GUI_NewField("Dev","IsInAParty","ParPar","PartyInfo")
 	GUI_NewField("Dev","Profession","ParProf","PartyInfo")
 	GUI_NewField("Dev","Level","ParLvl","PartyInfo")
 	GUI_NewField("Dev","HomeServerID","ParHSI","PartyInfo")
 	GUI_NewField("Dev","CurrentServerID","ParCSI","PartyInfo")
-	GUI_NewField("Dev","InstanceServerID","ParISI","PartyInfo")
-	GUI_NewField("Dev","HasOpenedADungeon?","ParDOw","PartyInfo")
+	GUI_NewField("Dev","InstanceServerID","ParISI","PartyInfo")	
 	GUI_NewField("Dev","Unknown","ParUnk","PartyInfo")	
+	GUI_NewField("Dev","Unknown1","ParUnk1","PartyInfo")
 	partyindex = 0
 	
 	--DungeonInfo
@@ -483,7 +484,7 @@ function Dev.ModuleInit()
 	nRenderDepth = 2
 	
 	
-	--GUI_WindowVisible("Dev",false)	
+	GUI_WindowVisible("Dev",false)	
 	GUI_NewButton("Dev","TOGGLE DEVMONITOR ON_OFF","Dev.Test1")
 	RegisterEventHandler("Dev.Test1", Dev.Test1)
 	GUI_SizeWindow("Dev",250,550)		
@@ -1318,13 +1319,13 @@ function Dev.UpdateWindow()
 	local party = Player:GetParty()	
 	local p,i
 	if ( party ) then
-		PartyIsIn = tostring(true)
 		local count = 0
 		i,p = next(party)
 		while i and p do
 			if ( count == tonumber(partyindex) ) then
 				break
-			end		
+			end
+			count = count + 1
 			i,p = next(party,i)
 		end
 	end	
@@ -1334,28 +1335,33 @@ function Dev.UpdateWindow()
 		ParName = p.name
 		ParMap = p.mapid
 		ParCon = p.connectstatus
+		ParInv = p.invitestatus
+		ParPar = tostring(p.hasparty)
 		ParDOw = p.instanceopen
 		ParProf = p.profession
 		ParLvl = p.level
 		ParHSI = p.homeserverid
 		ParCSI = p.currentserverid
-		ParISI = p.instanceserverid
-		ParUnk = p.isUnknown0	
+		ParISI = p.instanceserverid		
+		ParUnk = p.isUnknown0
+		ParUnk1 = p.isUnknown1		
 		ParID = p.id
 	else
-		PartyIsIn = tostring(false)
 		ParPtr = 0
 		ParIdx = 0
 		ParName = 0
 		ParMap = 0
 		ParCon = 0
+		ParInv = 0
+		ParPar = 0
 		ParDOw = 0
 		ParProf = 0
 		ParLvl = 0
 		ParHSI = 0
 		ParCSI = 0
 		ParISI = 0
-		ParUnk = 0	
+		ParUnk = 0
+		ParUnk1	= 0
 		ParID = 0
 	end
 	

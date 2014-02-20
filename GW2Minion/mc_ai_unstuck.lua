@@ -4,7 +4,7 @@ mc_ai_unstuck.stuckcounter = 0
 mc_ai_unstuck.idletimer = 0
 mc_ai_unstuck.idlecounter = 0
 mc_ai_unstuck.respawntimer = 0
-
+mc_ai_unstuck.ismoving = false
 mc_ai_unstuck.lastpos = nil
 
 
@@ -40,6 +40,11 @@ function mc_ai_unstuck:OnUpdate( tick )
 					mc_ai_unstuck.stuckcounter = mc_ai_unstuck.stuckcounter + 1
 				else
 					mc_ai_unstuck.stuckcounter = 0
+					if ( mc_ai_unstuck.ismoving == true ) then
+						Player:UnSetMovement(2)
+						Player:UnSetMovement(3)
+						mc_ai_unstuck.ismoving = false
+					end
 				end
 				mc_ai_unstuck.lastpos = Player.pos
 			end
@@ -94,8 +99,10 @@ function mc_ai_unstuck.stuckhandler( event, distmoved, stuckcount )
 	local i = math.random(0,2)
 	if ( i == 0 ) then
 		Player:SetMovement(2)
+		mc_ai_unstuck.ismoving = true
 	elseif ( i == 1 ) then
-		Player:SetMovement(2)
+		Player:SetMovement(3)
+		mc_ai_unstuck.ismoving = true
 	elseif ( i == 2 ) then
 		Player:Jump()
 	end
