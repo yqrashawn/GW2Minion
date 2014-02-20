@@ -78,18 +78,7 @@ function script:Init()
 	
 	-- Defend
 	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 50 ), self.process_elements) --reactive queue
-	
-	-- DoEvents
-	self:add(ml_element:create( "DoEvent", c_doEvents, e_doEvents, 40 ), self.process_elements)
-	
-	-- Valid Target
-	self:add(ml_element:create( "SearchingTarget", c_NeedValidTarget, e_SearchTarget, 30 ), self.process_elements)
 		
-	-- Get into Combat Range
-	self:add(ml_element:create( "MovingIntoCombatRange", c_MoveIntoCombatRange, e_MoveIntoCombatRange, 25 ), self.process_elements)
-	
-	-- Kill Target
-	self:add(ml_element:create( "KillTarget", c_KillTarget, e_KillTarget, 10 ), self.process_elements)	
 	self:AddTaskCheckCEs()
 end
 
