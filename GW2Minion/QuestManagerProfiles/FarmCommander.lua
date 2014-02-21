@@ -99,7 +99,7 @@ script.e_gotoComm = inheritsFrom( ml_effect )
 script.commanderReached = false
 function script.c_gotoComm:evaluate()
 	local commList = MapMarkerList("iscommander,onmesh,nearest")
-	id, commander = next(commList)
+	local id, commander = next(commList)
 	if (id and commander and (commander.distance > 2500 or script.commanderReached == false)) then
 		script.commanderReached = false
 		return true
@@ -123,7 +123,7 @@ function script.e_gotoComm:execute()
 	ml_log("c_gotoComm")
 	if (not mc_skillmanager.HealMe()) then
 		local commList = MapMarkerList("iscommander,onmesh,nearest")
-		id, commander = next(commList)
+		local id, commander = next(commList)
 		if (id and commander and commander.distance > 250) then
 			-- Player:MoveTo(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)
 			Player:MoveTo(commander.pos.x, commander.pos.y, commander.pos.z, 200, false, false, true)

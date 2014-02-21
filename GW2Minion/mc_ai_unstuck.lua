@@ -114,4 +114,14 @@ function mc_ai_unstuck.stuckhandler( event, distmoved, stuckcount )
 	end
 end
 
+function mc_ai_unstuck.Reset()
+	mc_ai_unstuck.stucktimer = 0
+	mc_ai_unstuck.stuckcounter = 0
+	mc_ai_unstuck.idletimer = 0
+	mc_ai_unstuck.idlecounter = 0
+	mc_ai_unstuck.respawntimer = 0
+	mc_ai_unstuck.ismoving = false
+	mc_ai_unstuck.lastpos = nil
+end
+
 RegisterEventHandler("Gameloop.Stuck",mc_ai_unstuck.stuckhandler) -- gets called by c++ when using the navigationsystem

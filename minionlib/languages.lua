@@ -423,6 +423,8 @@ strings =
 		partymember						= "Partymember",
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
+		minionmode						= "MinionMode",
+		
     },                                  
     ["cn"] =                            
     {                               

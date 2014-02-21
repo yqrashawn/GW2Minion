@@ -1108,9 +1108,9 @@ function mc_skillmanager.SwapWeapon(swaptype)
 				currentAttunement = 12
 			elseif (sID==5549 or sID==15716 or sID==5693) then
 				currentAttunement = 13
-			elseif (sID==5489 or sID==5518 or sID==5526 ) then
+			elseif (sID==5518 or sID==5489 or sID==5526 ) then
 				currentAttunement = 14
-			elseif (sID==15717 or sID==5519 or sID==5500 ) then
+			elseif (sID==5519 or sID==15717 or sID==5500 ) then
 				currentAttunement = 15
 			end
 			if ( currentAttunement ) then
@@ -1124,7 +1124,7 @@ function mc_skillmanager.SwapWeapon(swaptype)
 					switch = tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt4)])
 				end				
 			else
-				wt_error("WHOOOPPSS, You have a unknown weapon! Please report back to us what kind of weapon you are using!")
+				ml_error("WHOOOPPSS, You have a unknown weapon! Please report back to us what kind of weapon you are using! "..sID)
 			end					
 			--d("TEST:"..tostring(switch) .. " " ..tostring(sID))
 			if ( switch ) then

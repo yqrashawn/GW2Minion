@@ -66,6 +66,7 @@ function mc_multibotmanager.ModuleInit()
 	gMultiIP = Settings.GW2Minion.gMultiIP
 	gMultiPort = Settings.GW2Minion.gMultiPort
 	gMultiPw = Settings.GW2Minion.gMultiPw
+	gMultiBotEnabled = Settings.GW2Minion.gMultiBotEnabled
 		
     GUI_UnFoldGroup(mc_multibotmanager.mainwindow.name,GetString("generalSettings"))		
     GUI_UnFoldGroup(mc_multibotmanager.mainwindow.name,GetString("groupInfo"))
@@ -211,7 +212,7 @@ function mc_multibotmanager.UpdatePartyStatus()
 						if ( player.hasparty == false and player.connectstatus == 2 and player.invitestatus == 2 ) then
 							d("Accepting Party invitation.")
 							SendChatMsg(19,"/join "..mc_multibotmanager.leadername)
-							dPartyStatus = "Joining "..mc_multibotmanager.leadername
+							dPartyStatus = "Joining "..mc_multibotmanager.leadername							
 							return
 						end
 					end
@@ -238,6 +239,19 @@ function mc_multibotmanager.membercount()
 	return count
 end
 
+function mc_multibotmanager.GetPlayerPartyData()	
+	local partylist = Player:GetParty()
+	if ( TableSize(partylist) > 0 ) then
+		local index, player  = next( partylist )		
+		while ( index ~= nil and player ~= nil ) do
+			if (player.id == Player.id) then
+				return player
+			end
+			index, player  = next( partylist,index )
+		end	
+	end
+	return nil
+end
 --**********************************************************
 -- HandleMultiBotMessages
 --**********************************************************

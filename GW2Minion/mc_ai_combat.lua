@@ -230,6 +230,7 @@ function c_NeedValidTarget:evaluate()
 end
 function e_SetAggroTarget:execute()
 	ml_log("e_SetAggroTarget")
+	
 	-- lowesthealth in CombatRange first	
 	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,onmesh,maxdistance="..mc_global.AttackRange) )
 	if ( TableSize( TList ) > 0 ) then
@@ -251,7 +252,6 @@ function e_SetAggroTarget:execute()
 			return ml_log(true)	
 		end		
 	end
-	
 	
 	return ml_log(false)
 end
@@ -471,19 +471,18 @@ function DoCombatMovement()
 			local movedir = Player:GetMovement()
 						
 			-- EVADE
-			if (mc_ai_combat.combatEvadeTmr == 0 or mc_global.now - mc_ai_combat.combatEvadeTmr > 2000) then
+			if (mc_global.now - mc_ai_combat.combatEvadeTmr > 2000) then
 				mc_ai_combat.combatEvadeTmr = mc_global.now			
 				mc_ai_combat.combatEvadeLastHP = 0
-			end				
+			end
 			if (mc_ai_combat.combatEvadeLastHP > 0 ) then				
 				if (mc_ai_combat.combatEvadeLastHP <= playerHP) then
 					mc_ai_combat.combatEvadeLastHP = playerHP
-				elseif (mc_ai_combat.combatEvadeLastHP - playerHP > math.random(5,10) and Player.endurance >= 50 and Player:IsFacingTarget()) then
-				-- we lost 5-10% hp in the last 2,5seconds, evade!
-					
+				elseif (mc_ai_combat.combatEvadeLastHP - playerHP > math.random(5,10) and Player.endurance >= 50 ) then
+				-- we lost 5-10% hp in the last 2,5seconds, evade!					
 					local tries = 0
 					while (tries < 4) do
-						local direction = math.random(0,7)
+						local direction = math.random(0,7)						
 						if (Player:CanEvade(direction,100)) then							
 							d("Evade! :"..tostring(Player:Evade(direction)));
 							mc_ai_combat.combatEvadeLastHP = 0

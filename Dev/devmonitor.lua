@@ -1230,7 +1230,7 @@ function Dev.UpdateWindow()
 	if (movdirs.right) then movstr = movstr.." right" end
 	if (movdirs.backward) then movstr = movstr.." backward" end
 	midirect = movstr
-	micanevdir = tostring(Player:CanEvade(tonumber(mievdir)))	
+	micanevdir = tostring(Player:CanEvade(tonumber(mievdir),100))	
 	local facedir = Player:IsFacingTarget()
 	if ( facedir == 1 ) then
 		mifacet = "InFront"

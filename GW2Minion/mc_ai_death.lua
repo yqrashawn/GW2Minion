@@ -2,28 +2,28 @@
 -----------
 c_dead = inheritsFrom( ml_cause )
 e_dead = inheritsFrom( ml_effect )
-c_dead.dead = false
+c_dead.deadTmr = 0
 function c_dead:evaluate()
-    --ml_log("c_dead")
 	if ( Player.dead ) then
 		return true
 	end
+	c_dead.deadTmr = 0
 	return false
 end
 function e_dead:execute()
 	ml_log("e_dead")	
-	if ( c_dead.dead == false ) then
-		c_dead.dead = true
-		mc_global.Wait(3000)
+	if ( c_dead.deadTmr == 0 ) then
+		c_dead.deadTmr = mc_global.now
 	else
-		c_dead.dead = false
-		d( "Dead: RESPAWN AT NEAREST WAYPOINT " )
-		d( Player:RespawnAtClosestWaypoint() )
-		mc_global.ResetBot()
+		if ( mc_global.now - c_dead.deadTmr > 3500 ) then
+			c_dead.deadTmr = 0
+			d( "Dead: RESPAWN AT NEAREST WAYPOINT " )
+			d( Player:RespawnAtClosestWaypoint() )
+			mc_global.ResetBot()
+			mc_ai_unstuck.Reset()
+		end
 	end
 end
-
-
 
 
 -----------
