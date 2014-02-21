@@ -168,7 +168,7 @@ function e_memberdown:execute()
 			local char = CharacterList:Get(pmember.id)
 			if ( char ) then
 				local cPos = char.pos
-				if ( cPos and Distance2D ( pPos.x, pPos.y, char.x, char.y) < 4000 and char.alive == true) then
+				if ( cPos and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and char.alive == true) then
 					pchar = char
 					break
 				end
