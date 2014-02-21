@@ -193,8 +193,8 @@ function e_memberdown:execute()
 			-- Grab that thing
 			Player:StopMovement()
 			local t = Player:GetTarget()
-			if ( not t or t.id ~= id ) then
-				Player:SetTarget( id )
+			if ( not t or t.id ~= pchar.id ) then
+				Player:SetTarget( pchar.id )
 			else
 				if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
 					Player:Interact( pchar.id )
