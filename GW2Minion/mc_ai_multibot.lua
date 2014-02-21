@@ -112,7 +112,7 @@ function e_dead_mb:execute()
 			local char = CharacterList:Get(pmember.id)
 			if ( char ) then
 				local cPos = char.pos
-				if ( cPos and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and cPos.alive == true) then
+				if ( cPos and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and char.alive == true) then
 					found = true
 					break
 				end
@@ -148,7 +148,7 @@ function c_memberdown:evaluate()
 			local char = CharacterList:Get(pmember.id)
 			if ( char ) then
 				local cPos = char.pos
-				if ( cPos and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and (cPos.downed == true or cPos.dead == true) and Player.health.percent > 50) then
+				if ( cPos ~= nil and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and char.onmesh and (char.downed == true or char.dead == true) and Player.health.percent > 50) then
 					return true
 				end
 			end
@@ -168,7 +168,7 @@ function e_memberdown:execute()
 			local char = CharacterList:Get(pmember.id)
 			if ( char ) then
 				local cPos = char.pos
-				if ( cPos and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and cPos.alive == true) then
+				if ( cPos and Distance2D ( pPos.x, pPos.y, char.x, char.y) < 4000 and char.alive == true) then
 					pchar = char
 					break
 				end
