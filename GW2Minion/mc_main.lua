@@ -139,7 +139,6 @@ function mc_global.eventhandler(arg)
 	end
 end
 
-	
 function mc_global.guivarupdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
 		if (k == "gEnableLog" or
@@ -150,6 +149,10 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 			k == "SalvageManager_Active" or
 			k == "gRepairBrokenLimit" or
 			k == "gRepairDamageLimit" or 
+			k == "MBSGroup" or 
+			k == "gMultiPort" or 
+			k == "gMultiPw" or 
+			k == "gMultiIP" or 
 			k == "gMultiBotEnabled" )			
 		then
 			Settings.GW2Minion[tostring(k)] = v

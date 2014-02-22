@@ -15,7 +15,9 @@ function mm.ModuleInit()
 
     if (Settings.GW2Minion.DefaultMaps == nil) then
         Settings.GW2Minion.DefaultMaps = {			
-			[929] = "Pavillion",
+			[27] = "LonarsPass",
+			[50] = "LionsArchUnderAttack",
+			[929] = "Pavillion",			
 		}
     end
     

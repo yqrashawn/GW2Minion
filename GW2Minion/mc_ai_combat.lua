@@ -39,8 +39,11 @@ function mc_ai_combatAttack:Init()
 	
 		
 	-- Aggro
-	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 160 ), self.process_elements) --reactive queue
-		
+	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 165 ), self.process_elements) --reactive queue
+	
+	-- Dont Dive lol
+	self:add(ml_element:create( "SwimUP", c_SwimUp, e_SwimUp, 160 ), self.process_elements)
+	
 	-- Normal Chests	
 	self:add(ml_element:create( "LootingChest", c_LootChests, e_LootChests, 155 ), self.process_elements)
 	
@@ -118,6 +121,17 @@ function e_Aggro:execute()
 end
 
 
+c_SwimUp = inheritsFrom( ml_cause )
+e_SwimUp = inheritsFrom( ml_effect )
+function c_SwimUp:evaluate()
+	local pPos = Player.pos	
+	return pPos ~= nil and pPos.z > 60 and Player.swimming == 1
+end
+function e_SwimUp:execute()
+	ml_log("e_SwimUp ")
+	Player:SetMovement(10)
+end
+
 
 e_SearchTarget = inheritsFrom( ml_effect )
 function e_SearchTarget:execute()
@@ -190,7 +204,10 @@ function mc_ai_combatDefend:Init()
     
 	-- Deposit Items
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 90 ), self.process_elements)	
-		
+	
+	-- Dont Dive lol
+	self:add(ml_element:create( "SwimUP", c_SwimUp, e_SwimUp, 80 ), self.process_elements)
+	
 	-- Valid Target
 	self:add(ml_element:create( "NeedValidTarget", c_NeedValidTarget, e_SetAggroTarget, 75 ), self.process_elements)
 		

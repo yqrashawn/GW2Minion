@@ -871,6 +871,10 @@ function mc_ai_vendor.OpenSellWindow()
 				Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Story )
 				found = true
 				break
+			elseif( entry.type == 20 ) then
+				Player:SelectConversationOption( 20 )
+				found = true
+				break
 			end		
 			nextOption, entry  = next( options, nextOption )
 		end			

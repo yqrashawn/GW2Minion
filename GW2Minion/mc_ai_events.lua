@@ -68,8 +68,9 @@ end
 function mc_ai_event:task_complete_eval()
 	local eID = ml_task_hub:CurrentTask().eventID
 	if ( eID == nil or TableSize(MapMarkerList("onmesh,eventID="..eID))==0 ) then
-		c_MoveInEventRange.range = 150
+		c_MoveInEventRange.range = 350
 		c_MoveInEventRange.reached = false
+		d("Event Done..")
 		return true
 	end
 	return false

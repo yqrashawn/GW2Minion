@@ -34,7 +34,7 @@ function mc_ai_unstuck:OnUpdate( tick )
 							Player:Jump()
 						end
 					end
-					if ( mc_ai_unstuck.stuckcounter > 6 ) then
+					if ( mc_ai_unstuck.stuckcounter > 8 ) then
 						mc_ai_unstuck.HandleStuck()
 					end
 					mc_ai_unstuck.stuckcounter = mc_ai_unstuck.stuckcounter + 1

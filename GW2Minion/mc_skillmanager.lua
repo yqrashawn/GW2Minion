@@ -944,7 +944,15 @@ function mc_skillmanager.AttackTarget( TargetID )
 								if (currentSlot ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.cskills[currentSlot].skillID end															
 							end									
 						end
-							
+						
+						-- If we hit this then we were not able to cast anything			
+			-- Swap Weapon check			
+			if ( mc_global.AttackRange < 300 and target.distance > mc_global.AttackRange ) then
+				mc_skillmanager.SwapWeaponCheck("Range")
+			else	 
+				mc_skillmanager.SwapWeaponCheck("CoolDown")
+			end
+						
 						if ( skill.channel == "1" ) then
 							-- Add a tiny delay so "iscasting" gets true for this spell, not interrupting it on the next pulse
 							mc_global.lasttick = mc_global.lasttick + 1000
@@ -959,13 +967,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 				end				
 			end
 						
-			-- If we hit this then we were not able to cast anything			
-			-- Swap Weapon check			
-			if ( mc_global.AttackRange < 300 and target.distance > mc_global.AttackRange ) then
-				mc_skillmanager.SwapWeaponCheck("Range")
-			else	 
-				mc_skillmanager.SwapWeaponCheck("CoolDown")
-			end
+			
 		end
 	end
 	return false
