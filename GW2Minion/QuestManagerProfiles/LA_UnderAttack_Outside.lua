@@ -23,7 +23,7 @@ function script:SetData( identifier, tData )
 end
 
 function script:EventHandler( identifier, event )
-	-- for extended UI event handling, gets called when a scriptUI element is pressed	
+	-- for extended UI event handling, gets called when a scriptUI element is pressed
 	
 end
 
@@ -63,6 +63,11 @@ function script:Init()
 	self:add(ml_element:create( "Salvaging", c_salvage, e_salvage, 110 ), self.process_elements)
 	
 	-- Repair & Vendoring
+	self:add(ml_element:create( "SellItems", c_vendorsell, e_vendorsell, 105 ), self.process_elements)
+	self:add(ml_element:create( "BuyItems", c_vendorbuy, e_vendorbuy, 104 ), self.process_elements)
+	self:add(ml_element:create( "RepairItems", c_vendorrepair, e_vendorrepair, 103 ), self.process_elements)
+	
+	-- Repair & Vendoring
 	self:add(ml_element:create( "QuickSellItems", c_quickvendorsell, e_quickvendorsell, 100 ), self.process_elements)
 	self:add(ml_element:create( "QuickBuyItems", c_quickbuy, e_quickbuy, 99 ), self.process_elements)
 	self:add(ml_element:create( "QuickRepairItems", c_quickrepair, e_quickrepair, 98 ), self.process_elements)
@@ -89,7 +94,10 @@ end
 
 
 function script:task_complete_eval()
-	return Player:GetLocalMapID() ~= 27
+	local mapid = Player:GetLocalMapID()
+	local b = (mapid ~= 27 and mapid ~= 24 and mapid ~= 73)
+	d(b)
+	return b
 end
 function script:task_complete_execute()
    self.completed = true
@@ -98,9 +106,15 @@ end
 
 
 -- Cause&Effect
+-- goto portal
 script.c_gotoPortal = inheritsFrom( ml_cause )
 script.e_gotoPortal = inheritsFrom( ml_effect )
-script.portalEntry = { x=-18071, y=14552, z=-5197 }
+script.localMapID = Player:GetLocalMapID()
+script.portalEntry = {
+						[27] = { x=-18071, y=14552, z=-5197 }, -- lornar
+						[24] = { x=9431, y=-21749, z= -108 }, -- gendaren - 9375.4 / -21710.6 / -165.1
+						[73] = { x=9174, y=38746, z=-856 }, -- bloodtide
+}
 function script.c_gotoPortal:evaluate()
 	local pPos = Player.pos
 	if ( pPos and Player.inCombat == false and script.c_eventDone == true ) then
@@ -113,14 +127,22 @@ function script.e_gotoPortal:execute()
 	local pPos = Player.pos
 	if ( pPos ) then
 		if (script.c_eventDone == true) then
-			if ( Distance3D( pPos.x, pPos.y, pPos.z, script.portalEntry.x,script.portalEntry.y,script.portalEntry.z)< 35 ) then
-				d("Trying to enter Portal")
-				script.c_eventDone = false				
+			if ( Distance3D( pPos.x, pPos.y, pPos.z, script.portalEntry[script.localMapID].x,script.portalEntry[script.localMapID].y,script.portalEntry[script.localMapID].z) < 200 ) then
+				local gadgets = GadgetList("maxdistance=250,contentID2=8388608")
+				local _,portal = next(gadgets)
+				if (portal and portal.isUnknown1 == 463) then
+					if (tonumber(Player:MoveTo(script.portalEntry[script.localMapID].x,script.portalEntry[script.localMapID].y,script.portalEntry[script.localMapID].z, 20, false, false, false)) < 0) then
+						ml_error("e_gotoPortal result: ")
+					end 
+				else
+					d("Trying to enter Portal")
+					script.c_eventDone = false
+				end
 			else
 				-- Player:MoveTo(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)
-				if (tonumber(Player:MoveTo(script.portalEntry.x,script.portalEntry.y,script.portalEntry.z, 25, false, false, true)) < 0) then
-					ml_error("e_gotoPortal result: ")					
-				end 
+				if (tonumber(Player:MoveTo(script.portalEntry[script.localMapID].x,script.portalEntry[script.localMapID].y,script.portalEntry[script.localMapID].z, 50, false, false, true)) < 0) then
+					ml_error("e_gotoPortal result: ")
+				end
 			end
 		end
 	end
@@ -158,7 +180,7 @@ function script.e_revivePlayers:execute()
 					Player:SetTarget( id )
 				else
 					-- yeah I know, but this usually doesnt break ;)
-					if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
+					if ( Player:GetCurrentlyCastedSpell() == 17 ) then
 						Player:Interact( id )
 						ml_log("Reviving..")
 						mc_global.Wait(1000)
@@ -168,16 +190,22 @@ function script.e_revivePlayers:execute()
 			end
 		end
 	end
-	return ml_log(false)	
+	return ml_log(false)
 end
 
 
+-- eventcheck
 script.c_eventCheck = inheritsFrom( ml_cause )
 script.c_eventDone = true
 script.c_eventRunning = false
+script.eventID = {
+					[27] = {id = 3156}, --lornar
+					[24] = {id = 5757}, --gendarren
+					[73] = {id = 5289}, --bloodtide
+}
 script.e_eventCheck = inheritsFrom( ml_effect )
 function script.c_eventCheck:evaluate()
-	if ( TableSize(MapMarkerList("nearest,isevent,eventID=3156,onmesh,worldmarkertype="..mc_global.WorldMarkerType))>0) then 
+	if ( TableSize(MapMarkerList("nearest,isevent,eventID="..script.eventID[script.localMapID].id..",onmesh,worldmarkertype="..mc_global.WorldMarkerType))>0) then 
 	    script.c_eventRunning = true
 		return (not Player.inCombat and (script.c_eventRunning == true ))
 	end
@@ -188,7 +216,7 @@ function script.c_eventCheck:evaluate()
 end
 function script.e_eventCheck:execute()
 	ml_log("e_eventCheck")
-	local event = MapMarkerList("nearest,isevent,eventID=3156,onmesh,worldmarkertype="..mc_global.WorldMarkerType)
+	local event = MapMarkerList("nearest,isevent,eventID="..script.eventID[script.localMapID].id..",onmesh,worldmarkertype="..mc_global.WorldMarkerType)
 	if ( TableSize(event) > 0 ) then
 		script.c_eventRunning = true
 		
@@ -201,19 +229,22 @@ function script.e_eventCheck:execute()
 		script.c_eventDone = true
 		script.c_eventRunning = false
 	end
-	return ml_log(false)	
+	return ml_log(false)
 end
-
-
 
 -- stay near portal 
 script.portalReached = false
-script.portalPos = { x=-18071, y=14552, z=-5197 }
+script.portalPos = {
+					[27] = { x=-18071, y=14552, z=-5197 }, --lornarspass
+					[24] = { x=9031, y=-18248, z=-109 }, --gendarren
+					[73] = { x=8474, y=38266, z=-684 }, --bloodtide
+}
 script.c_staynearPortal = inheritsFrom( ml_cause )
 script.e_staynearPortal = inheritsFrom( ml_effect )
 function script.c_staynearPortal:evaluate()
 	local pPos = Player.pos
-	if ( pPos and Player.inCombat == false and (script.portalReached == false or Distance2D( pPos.x, pPos.y, pPos.z, script.portalPos.x,script.portalPos.y,script.portalPos.z)> 1500 ) ) then
+	if ( pPos and Player.inCombat == false and (script.portalReached == false
+	or Distance2D( pPos.x, pPos.y, pPos.z, script.portalPos[script.localMapID].x,script.portalPos[script.localMapID].y,script.portalPos[script.localMapID].z)> 1500 ) ) then
 		mc_ai_unstuck.idlecounter = 0
 		return true
 	end
@@ -225,7 +256,7 @@ function script.e_staynearPortal:execute()
 	if ( pPos ) then
 		if (script.portalReached == false or Distance2D( pPos.x, pPos.y, pPos.z, script.portalPos.x,script.portalPos.y,script.portalPos.z)> 1500 ) then
 			-- Player:MoveTo(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)
-			Player:MoveTo(script.portalPos.x,script.portalPos.y,script.portalPos.z, 200, false, false, true)
+			Player:MoveTo(script.portalPos[script.localMapID].x,script.portalPos[script.localMapID].y,script.portalPos[script.localMapID].z, 200, false, false, true)
 			script.portalReached = false
 		else
 			script.portalReached = true
