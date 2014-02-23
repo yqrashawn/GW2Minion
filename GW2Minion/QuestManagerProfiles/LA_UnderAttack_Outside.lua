@@ -94,10 +94,7 @@ end
 
 
 function script:task_complete_eval()
-	local mapid = Player:GetLocalMapID()
-	local b = (mapid ~= 27 and mapid ~= 24 and mapid ~= 73)
-	d(b)
-	return b
+	return (Player:GetLocalMapID() ~= 27 and Player:GetLocalMapID() ~= 24 and Player:GetLocalMapID() ~= 73)
 end
 function script:task_complete_execute()
    self.completed = true
@@ -127,9 +124,13 @@ function script.e_gotoPortal:execute()
 	local pPos = Player.pos
 	if ( pPos ) then
 		if (script.c_eventDone == true) then
-			if ( Distance3D( pPos.x, pPos.y, pPos.z, script.portalEntry[script.localMapID].x,script.portalEntry[script.localMapID].y,script.portalEntry[script.localMapID].z) < 200 ) then
-				local gadgets = GadgetList("maxdistance=250,contentID2=8388608")
+			if ( Distance3D( pPos.x, pPos.y, pPos.z, script.portalEntry[script.localMapID].x,script.portalEntry[script.localMapID].y,script.portalEntry[script.localMapID].z) < 4000 ) then
+				local gadgets = GadgetList("maxdistance=4500,contentID2=8388608")
 				local _,portal = next(gadgets)
+				if not (portal) then
+					gadgets = GadgetList("maxdistance=4500,contentID2=8388609")
+					_,portal = next(gadgets)
+				end
 				if (portal and portal.isUnknown1 == 463) then
 					if (tonumber(Player:MoveTo(script.portalEntry[script.localMapID].x,script.portalEntry[script.localMapID].y,script.portalEntry[script.localMapID].z, 20, false, false, false)) < 0) then
 						ml_error("e_gotoPortal result: ")
@@ -235,7 +236,7 @@ end
 -- stay near portal 
 script.portalReached = false
 script.portalPos = {
-					[27] = { x=-18071, y=14552, z=-5197 }, --lornarspass
+					[27] = { x=-17534, y=14418, z=-5020 }, --lornarspass
 					[24] = { x=9031, y=-18248, z=-109 }, --gendarren
 					[73] = { x=8474, y=38266, z=-684 }, --bloodtide
 }
