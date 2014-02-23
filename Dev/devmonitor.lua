@@ -69,9 +69,9 @@ function Dev.ModuleInit()
 	
 	-- GadgetInfo
 	GUI_NewField("Dev","Ptr","GTargetPtr","GadgetInfo")
-	GUI_NewField("Dev","ID","GTID","GadgetInfo")
-	GUI_NewField("Dev","ContentID","GTCID2","GadgetInfo")
-	GUI_NewField("Dev","InteractionID","GTCID","GadgetInfo")
+	GUI_NewField("Dev","ID","GTID","GadgetInfo")	
+	GUI_NewField("Dev","ContentID","GTCID","GadgetInfo")
+	GUI_NewField("Dev","ContentID2","GTCID2","GadgetInfo")
 	GUI_NewField("Dev","Type","GTType","GadgetInfo")	
 	GUI_NewField("Dev","Type2","GTType2","GadgetInfo")	
 	GUI_NewField("Dev","Name","GTName","GadgetInfo")
