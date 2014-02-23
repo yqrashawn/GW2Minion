@@ -48,7 +48,7 @@ function script:Init()
 	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 175 ), self.process_elements)
 	
 	-- Dont Dive lol
-	self:add(ml_element:create( "SwimUP", c_SwimUp, c_SwimUp, 165 ), self.process_elements)
+	self:add(ml_element:create( "SwimUP", c_SwimUp, e_SwimUp, 165 ), self.process_elements)
 	
 	-- Normal Chests
 	self:add(ml_element:create( "LootingChest", c_LootChests, e_LootChests, 155 ), self.process_elements)
