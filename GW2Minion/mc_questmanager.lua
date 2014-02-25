@@ -105,11 +105,77 @@ function mc_questmanager.GenerateMapExploreProfile()
 	local mdata = mc_datamanager.GetLocalMapData( Player:GetLocalMapID() )
 	if ( TableSize(mdata) > 0 and TableSize(mdata["floors"]) > 0 and TableSize(mdata["floors"][0]) > 0) then
 		local data = mdata["floors"][0]
+		-- tasks & sectors have 2D Map coords and level info
 		local sectors = mdata["floors"][0]["sectors"]
-		d(sectors)
-		--local id,entry = next (sectors)
+		local tasks = mdata["floors"][0]["tasks"]
+		
+		local pois = mdata["floors"][0]["points_of_interest"]
+		local skillpoints = mdata["floors"][0]["skill_challenges"]
+		
+		
+		
+		-- Create a "2D - Levelmap/Table" to hopefully get an avg level of the whole area for all other things on the map
+		local levelmap = {}
+		local id,entry = next (sectors)
+		while id and entry do			
+			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
+			-- CREATE GOTO QUEST
+			
+			table.insert(levelmap, { pos = realpos, level = entry["level"] } )			
+			id,entry = next(sectors,id)
+		end
+		--Add Task-level-info
+		local id,entry = next (tasks)
+		while id and entry do			
+			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
+			table.insert(levelmap, { pos = realpos, level = entry["level"] } )			
+			id,entry = next(tasks,id)
+		end
+				
+		-- POIs
+		local id,entry = next (pois)
+		while id and entry do
+			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
+			d(entry["name"].." : "..realpos[1].." "..realpos[2].. " Level: "..tostring(mc_questmanager.GetApproxLevel( levelmap, realpos )))
+			--CREATE Quest for each
+			
+			id,entry = next(pois,id)
+		end		
+		
+		-- Skillpoints
+		local id,entry = next (skillpoints)
+		while id and entry do
+			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
+			d(entry["name"].." : "..realpos[1].." "..realpos[2].. " Level: "..tostring(mc_questmanager.GetApproxLevel( levelmap, realpos )))
+			--CREATE Quest for each skillpoint
+			
+			id,entry = next(skillpoints,id)
+		end	
 		
 	else
 		ml_error("No Mapdata for our current map found!")
 	end
+end
+
+
+function mc_questmanager.GetApproxLevel( levelmap, pPos )
+	local level = { 0 , 80 }
+	local dist = 999999999
+	local idx = 0
+	if ( TableSize(levelmap) > 0 and TableSize(pPos) > 0) then
+		local i, e = next ( levelmap )
+		while i and e do
+			local dis = Distance2D(e.pos[1], e.pos[2], pPos[1], pPos[2])
+			--d(tostring(dis).." "..tostring(idx).." "..tostring(levelmap[idx]))
+			if ( dis < dist ) then
+				dist = dis
+				idx = i
+			end
+			i,e = next( levelmap,i)
+		end
+	end
+	if ( idx ~= 0 ) then
+		level = levelmap[idx].level
+	end
+	return level
 end

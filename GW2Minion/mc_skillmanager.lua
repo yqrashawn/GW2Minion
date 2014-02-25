@@ -1129,7 +1129,7 @@ function mc_skillmanager.SwapWeapon(swaptype)
 					switch = tonumber(mc_skillmanager.ElementarAttunements[tostring(gSMPrioAtt4)])
 				end				
 			else
-				ml_error("WHOOOPPSS, You have a unknown weapon! Please report back to us what kind of weapon you are using! "..sID)
+				--ml_error("WHOOOPPSS, You have a unknown weapon! Please report back to us what kind of weapon you are using! "..sID)
 			end					
 			--d("TEST:"..tostring(switch) .. " " ..tostring(sID))
 			if ( switch ) then

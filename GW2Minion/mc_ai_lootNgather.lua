@@ -66,7 +66,7 @@ e_deposit = inheritsFrom( ml_effect )
 c_deposit.LastCount = nil
 function c_deposit:evaluate()
 	if ( gDepositItems == "1" ) then
-		if ( Inventory.freeSlotCount <= 3 ) then
+		if ( Inventory.freeSlotCount <= 5 ) then
 			if ( not c_deposit.LastCount or c_deposit.LastCount ~= Inventory.freeSlotCount ) then			
 				return true
 			else

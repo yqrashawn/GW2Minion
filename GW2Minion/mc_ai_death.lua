@@ -34,6 +34,7 @@ function c_downed:evaluate()
 end
 function e_downed:execute()
 	ml_log("e_downed")
+	Player:StopMovement()
 	if ( Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_4 ) ) then
 		-- Fight
 		local TList = ( CharacterList("lowesthealth,attackable,aggro,alive,los,maxdistance="..mc_global.AttackRange) )
