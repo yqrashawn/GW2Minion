@@ -20,7 +20,7 @@ function e_salvage:execute()
 
 	
 	if ((mc_ai_needToSalvage == true and TableSize(TList)==0 or TableSize(IList)==0 )
-	or (Inventory.freeSlotCount < 3)) then
+	or (Inventory.freeSlotCount == 0)) then
 		mc_ai_needToSalvage = false
 	end
 	local slowdown = math.random(0,3)
