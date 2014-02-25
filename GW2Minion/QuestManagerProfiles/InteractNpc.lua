@@ -23,15 +23,15 @@ function script:SetData( identifier, tData )
 	end
 end
 
-function script:EventHandler( identifier, event )
+function script:EventHandler( identifier, event, value )
 	if ( event == "SetNpcId" ) then
 	local t = Player:GetTarget()
 		if ( t ) then
 			-- Set Data
-			self.Data["InteractNpc"] = t.id		
+			self.Data["InteractNpc"] = t.contentID
 
 			-- Update UI fields
-			_G[tostring(identifier).."InteractNpc"] = t.id
+			_G[tostring(identifier).."InteractNpc"] = t.contentID
 	
 		end
 	end
@@ -79,8 +79,35 @@ end
 
 function script.e_Interact:execute()
 	ml_log("c_Interact")
-	d(Player:Interact(ml_task_hub:CurrentTask().Data["InteractNpc"]))
-	ml_task_hub:CurrentTask().completed = true
+	local nID = ml_task_hub:CurrentTask().Data["InteractNpc"]
+	local npcList = CharacterList("onmesh,interactable,contentID="..nID)
+		
+		if ( TableSize(npcList) > 0) then
+			local i, npc = next (npcList)
+			if (i and npc) then
+			
+				if (not npc.isInInteractRange) then
+				-- Move into range of npc
+					local tPos = npc.pos
+					if ( tPos ) then
+						local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+						if (tonumber(navResult) < 0) then
+							ml_error("move to object result: "..tonumber(navResult))					
+						end
+						ml_log("Move To npc..")
+						return true
+					end
+				else
+	
+			
+					-- talk to object
+					Player:StopMovement()
+					Player:Interact(nID)
+					ml_task_hub:CurrentTask().completed = true
+				end
+			end
+		end
+		return false
 end	
 
 

@@ -11,12 +11,15 @@ mc_skillmanager.RegisteredButtonEventList = {}
 mc_skillmanager.cskills = {} -- Current List of Skills, gets constantly updated each pulse
 mc_skillmanager.prevSkillID = 0
 mc_skillmanager.SwapTmr = 0 -- General WeaponSwap Timer
-
+mc_skillmanager.SwapWeaponTable = {}
 
 mc_skillmanager.DefaultProfiles = {
+	[1] = "Guardian",
 	[2] = "Warrior",
 	[3] = "Engineer",
 	[4] = "Ranger",
+	
+	[6] = "Elementalist",
 	[7] = "Mesmer",
 	[8] = "Necromancer",
 }
@@ -946,12 +949,6 @@ function mc_skillmanager.AttackTarget( TargetID )
 						end
 						
 						-- If we hit this then we were not able to cast anything			
-			-- Swap Weapon check			
-			if ( mc_global.AttackRange < 300 and target.distance > mc_global.AttackRange ) then
-				mc_skillmanager.SwapWeaponCheck("Range")
-			else	 
-				mc_skillmanager.SwapWeaponCheck("CoolDown")
-			end
 						
 						if ( skill.channel == "1" ) then
 							-- Add a tiny delay so "iscasting" gets true for this spell, not interrupting it on the next pulse
@@ -966,7 +963,13 @@ function mc_skillmanager.AttackTarget( TargetID )
 					end						
 				end				
 			end
-						
+			
+			-- Swap Weapon check			
+			if ( mc_global.AttackRange < 300 and target.distance > mc_global.AttackRange ) then
+				mc_skillmanager.SwapWeaponCheck("Range")
+			else	 
+				mc_skillmanager.SwapWeaponCheck("CoolDown")
+			end			
 			
 		end
 	end
@@ -1140,6 +1143,7 @@ function mc_skillmanager.SwapWeapon(swaptype)
 		local availableKits = { [1] = 0 }-- Leave Kit Placeholder
 		for i = 1, 16, 1 do
 			if (mc_skillmanager.cskills[i]) then 
+				--d(tostring(mc_skillmanager.cskills[i].skillID) .. " / "..tostring(mc_skillmanager.EngineerKits[mc_skillmanager.cskills[i].skillID]))
 				if ( mc_skillmanager.EngineerKits[mc_skillmanager.cskills[i].skillID] ~= nil and not Player:IsSpellOnCooldown(mc_skillmanager.cskills[i].slot)) then
 					if ( mc_skillmanager.SwapWeaponTable[mc_skillmanager.cskills[i].slot] == nil or (mc_global.now - mc_skillmanager.SwapWeaponTable[mc_skillmanager.cskills[i].slot].lastused or 0) > 1000) then
 						availableKits[#availableKits+1] = mc_skillmanager.cskills[i].slot												
@@ -1147,8 +1151,8 @@ function mc_skillmanager.SwapWeapon(swaptype)
 				end				
 			end
 		end		
-		local key = math.random(#availableKits)
-		--d("KEYSIZE "..tostring(#availableKits).. " choosen: "..tostring(key))
+		local key = math.random(#availableKits)		
+		--d("MAx "..tostring(#availableKits).."..KEYSIZE "..tostring(#availableKits).. " choosen: "..tostring(key))
 		--d("Slot: " ..tostring(availableKits[key]))
 		if ( key ~= 1 ) then
 			Player:CastSpell(availableKits[key])

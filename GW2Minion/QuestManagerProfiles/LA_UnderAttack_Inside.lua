@@ -8,7 +8,7 @@ script.Data = {}
 --******************
 function script:UIInit( identifier )
 	-- You need to create the ScriptUI Elements exactly like you see here, the "event" needs to start with "tostring(identifier).." and the group needs to be GetString("questStepDetails")
-	
+	GUI_NewCheckbox(ml_quest_mgr.stepwindow.name,"Follow Commanders",tostring(identifier).."_btFollowCMD",GetString("questStepDetails"))
 end
 
 function script:SetData( identifier, tData )
@@ -18,11 +18,12 @@ function script:SetData( identifier, tData )
 		self.Data = tData
 		
 		-- Update the script UI (make sure the Data assigning to a _G is NOT nil! else crashboooombang!)
+		if ( self.Data["_btFollowCMD"] ) then _G[tostring(identifier).."_btFollowCMD"] = self.Data["_btFollowCMD"] end
 		
 	end
 end
 
-function script:EventHandler( identifier, event )
+function script:EventHandler( identifier, event, value )
 	-- for extended UI event handling, gets called when a scriptUI element is pressed	
 	
 end
@@ -110,22 +111,26 @@ script.c_gotoCommNoAggro = inheritsFrom( ml_cause )
 script.e_gotoComm = inheritsFrom( ml_effect )
 script.commanderReached = false
 function script.c_gotoComm:evaluate()
-	local commList = MapMarkerList("iscommander,onmesh,nearest,exclude_characterid="..mc_blacklist.GetExcludeString(GetString("monsters")))
-	local id, commander = next(commList)
-	if (id and commander and (commander.distance > 2500 or script.commanderReached == false)) then
-		script.commanderReached = false
-		return true
+	if ( ml_task_hub:CurrentTask().Data["_btFollowCMD"] == "1" ) then
+		local commList = MapMarkerList("iscommander,onmesh,nearest,exclude_characterid="..mc_blacklist.GetExcludeString(GetString("monsters")))
+		local id, commander = next(commList)
+		if (id and commander and (commander.distance > 2500 or script.commanderReached == false)) then
+			script.commanderReached = false
+			return true
+		end
 	end
 	return false
 end
 function script.c_gotoCommNoAggro:evaluate()
-	if ( TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) == 0) then
-		mc_ai_unstuck.idlecounter = 0
-		local commList = MapMarkerList("iscommander,onmesh,nearest,exclude_characterid="..mc_blacklist.GetExcludeString(GetString("monsters")))
-		id, commander = next(commList)
-		if (id and commander and (commander.distance > 750 or script.commanderReached == false)) then
-			script.commanderReached = false
-			return true
+	if ( ml_task_hub:CurrentTask().Data["_btFollowCMD"] == "1" ) then
+		if ( TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) == 0) then
+			mc_ai_unstuck.idlecounter = 0
+			local commList = MapMarkerList("iscommander,onmesh,nearest,exclude_characterid="..mc_blacklist.GetExcludeString(GetString("monsters")))
+			id, commander = next(commList)
+			if (id and commander and (commander.distance > 750 or script.commanderReached == false)) then
+				script.commanderReached = false
+				return true
+			end
 		end
 	end
 	return false
@@ -168,31 +173,33 @@ script.c_GoToEvent = inheritsFrom( ml_cause )
 script.e_GoToEvent = inheritsFrom( ml_effect )
 script.c_gotoEventreached = false
 function script.c_GoToEvent:evaluate()
-	local commList = MapMarkerList("iscommander,onmesh,nearest,exclude_characterid="..mc_blacklist.GetExcludeString(GetString("monsters")))
-	local id, commander = next(commList)
-	if (id and commander) then	
-		return false
-	else
-		local evList = MapMarkerList("nearest,isevent,onmesh,worldmarkertype="..mc_global.WorldMarkerType..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
-		local i,e = next(evList)
-		if ( i and e ) then
-			if ( script.c_gotoEventreached == false) then
-				return true
-			else
-				-- Check if we moved too far away from the event
-				local pPos = Player.pos
-				local ePos = e.pos
-				if (pPos and ePos) then
-					if ( Distance3D ( pPos.x, pPos.y, pPos.z, ePos.x, ePos.y, ePos.z) > 3000 ) then						
-						return true					
-					else
-						if ( Player.inCombat == false and Distance3D ( pPos.x, pPos.y, pPos.z, ePos.x, ePos.y, ePos.z) > 450) then
-							return true
-						end
-					end
-				end			
-			end			
+	if ( ml_task_hub:CurrentTask().Data["_btFollowCMD"] == "1" ) then
+		local commList = MapMarkerList("iscommander,onmesh,nearest,exclude_characterid="..mc_blacklist.GetExcludeString(GetString("monsters")))
+		local id, commander = next(commList)
+		if (id and commander) then	
+			return false
 		end
+	end
+	
+	local evList = MapMarkerList("nearest,isevent,onmesh,worldmarkertype="..mc_global.WorldMarkerType..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
+	local i,e = next(evList)
+	if ( i and e ) then
+		if ( script.c_gotoEventreached == false) then
+			return true
+		else
+			-- Check if we moved too far away from the event
+			local pPos = Player.pos
+			local ePos = e.pos
+			if (pPos and ePos) then
+				if ( Distance3D ( pPos.x, pPos.y, pPos.z, ePos.x, ePos.y, ePos.z) > 3000 ) then						
+					return true					
+				else
+					if ( Player.inCombat == false and Distance3D ( pPos.x, pPos.y, pPos.z, ePos.x, ePos.y, ePos.z) > 450) then
+						return true
+					end
+				end
+			end			
+		end			
 	end
 	return false
 end
@@ -392,15 +399,17 @@ script.c_MrUselessCheck = inheritsFrom( ml_cause )
 script.e_MrUselessCheck = inheritsFrom( ml_effect )
 script.c_MrUselessCheck.Tmr = 0
 function script.c_MrUselessCheck:evaluate()
-	local commList = MapMarkerList("iscommander,onmesh,nearest,exclude_characterid="..mc_blacklist.GetExcludeString(GetString("monsters")))
-	local id, commander = next(commList)
-	if (id and commander and commander.characterID ~= 0 and commander.distance < 750 and script.commanderReached == true) then		
-		local cmd = CharacterList:Get(commander.characterID)
-		if ( cmd and cmd.inCombat == false and Player.inCombat == false and cmd.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving) then
-			return true
+	if ( ml_task_hub:CurrentTask().Data["_btFollowCMD"] == "1" ) then
+		local commList = MapMarkerList("iscommander,onmesh,nearest,exclude_characterid="..mc_blacklist.GetExcludeString(GetString("monsters")))
+		local id, commander = next(commList)
+		if (id and commander and commander.characterID ~= 0 and commander.distance < 750 and script.commanderReached == true) then		
+			local cmd = CharacterList:Get(commander.characterID)
+			if ( cmd and cmd.inCombat == false and Player.inCombat == false and cmd.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving) then
+				return true
+			end
 		end
+		script.c_MrUselessCheck.Tmr = 0
 	end
-	script.c_MrUselessCheck.Tmr = 0
 	return false
 end
 function script.e_MrUselessCheck:execute()

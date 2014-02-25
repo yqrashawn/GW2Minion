@@ -329,6 +329,8 @@ strings =
 		questRepeat						= "Repeatable",
 		questStepDone					= "Step Done",
 		questReset						= "Reset Questprogress",
+		questsaveStep					= "Save Step",
+		questGenMapExplo				= "Generate Map Exploration Profile",
 		
 		--mc_ai_vendor.lua
 		vendors							= "Vendors",

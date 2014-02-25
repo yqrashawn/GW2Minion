@@ -27,7 +27,7 @@ function script:SetData( identifier, tData )
 	end
 end
 
-function script:EventHandler( identifier, event )
+function script:EventHandler( identifier, event, value )
 	
 end
 

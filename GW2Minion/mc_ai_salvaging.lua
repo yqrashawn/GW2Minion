@@ -1,18 +1,30 @@
 -- Handles Death, respawn and downed fighting
 mc_ai_salvaging = {}
+mc_ai_needToSalvage = false
 
 c_salvage = inheritsFrom( ml_cause )
 e_salvage = inheritsFrom( ml_effect )
 function c_salvage:evaluate()
-	return (SalvageManager_Active == "1" and Inventory.freeSlotCount < 5 and Inventory.freeSlotCount > 0 and TableSize(Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool))>0 and TableSize(mc_salvagemanager.createItemList())>0 )
+	if (SalvageManager_Active == "1" and (Inventory.freeSlotCount < 5 or mc_ai_needToSalvage == true) and Inventory.freeSlotCount > 0
+	and TableSize(Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool))>0 and TableSize(mc_salvagemanager.createItemList())>0 ) then
+		mc_ai_needToSalvage = true
+		return true
+	end
+	return false
 end
 function e_salvage:execute()
 	ml_log("e_need_salvage")
 
 	local TList = Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool)
 	local IList = mc_salvagemanager.createItemList()
-		
-	if ( TList and IList ) then 
+
+	
+	if ((mc_ai_needToSalvage == true and TableSize(TList)==0 or TableSize(IList)==0 )
+	or (Inventory.freeSlotCount < 3)) then
+		mc_ai_needToSalvage = false
+	end
+	local slowdown = math.random(0,3)
+	if ( TList and IList and mc_ai_needToSalvage == true and slowdown == 0 ) then 
 		local tid , tool = next(TList)	
 		local id , item = next(IList)
 		while id and item do 

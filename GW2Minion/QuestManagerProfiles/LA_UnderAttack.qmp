@@ -14,14 +14,14 @@ local obj1 = {
 		["maxlevel"] = 80;
 		["steps"] = {
 			[1] = {
+				["name"] = "Sell_Repair_Event_EnterPortal";
 				["done"] = "0";
-				["prio"] = 1;
 				["script"] = {
 					["name"] = "LA_UnderAttack_Outside";
 					["data"] = {
 					};
 				};
-				["name"] = "Sell_Repair_Event_EnterPortal";
+				["prio"] = 1;
 			};
 		};
 		["repeatable"] = "1";
@@ -37,14 +37,14 @@ local obj1 = {
 		["maxlevel"] = 80;
 		["steps"] = {
 			[1] = {
+				["name"] = "Sell_Repair_Event_EnterPortal";
 				["done"] = "0";
-				["prio"] = 1;
 				["script"] = {
 					["name"] = "LA_UnderAttack_Outside";
 					["data"] = {
 					};
 				};
-				["name"] = "Sell_Repair_Event_EnterPortal";
+				["prio"] = 1;
 			};
 		};
 		["repeatable"] = "1";
@@ -60,14 +60,14 @@ local obj1 = {
 		["maxlevel"] = 80;
 		["steps"] = {
 			[1] = {
+				["name"] = "Sell_Repair_Event_EnterPortal";
 				["done"] = "0";
-				["prio"] = 1;
 				["script"] = {
 					["name"] = "LA_UnderAttack_Outside";
 					["data"] = {
 					};
 				};
-				["name"] = "Sell_Repair_Event_EnterPortal";
+				["prio"] = 1;
 			};
 		};
 		["repeatable"] = "1";
@@ -88,9 +88,11 @@ local obj1 = {
 				["script"] = {
 					["name"] = "LA_UnderAttack_Inside";
 					["data"] = {
+						["GotoZ"] = "123";
+						["_btFollowCMD"] = "0";
 					};
 				};
-				["name"] = "FollowCommander";
+				["name"] = "FarmFarmFarm";
 			};
 		};
 		["repeatable"] = "1";

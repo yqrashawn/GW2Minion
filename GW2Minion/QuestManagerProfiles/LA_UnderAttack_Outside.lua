@@ -22,7 +22,7 @@ function script:SetData( identifier, tData )
 	end
 end
 
-function script:EventHandler( identifier, event )
+function script:EventHandler( identifier, event, value )
 	-- for extended UI event handling, gets called when a scriptUI element is pressed
 	
 end
@@ -72,13 +72,12 @@ function script:Init()
 	self:add(ml_element:create( "QuickBuyItems", c_quickbuy, e_quickbuy, 99 ), self.process_elements)
 	self:add(ml_element:create( "QuickRepairItems", c_quickrepair, e_quickrepair, 98 ), self.process_elements)
 	
+	--Revive Other Players
+	self:add(ml_element:create( "RevivePlayers", self.c_revivePlayers, self.e_revivePlayers, 80 ), self.process_elements)
 	
 	-- Goto Portal
-	self:add(ml_element:create( "GoToPortal", self.c_gotoPortal, self.e_gotoPortal, 80 ), self.process_elements)
+	self:add(ml_element:create( "GoToPortal", self.c_gotoPortal, self.e_gotoPortal, 70 ), self.process_elements)
 	
-	--Revive Other Players
-	self:add(ml_element:create( "RevivePlayers", self.c_revivePlayers, self.e_revivePlayers, 55 ), self.process_elements)
-
 	-- Defend
 	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 35 ), self.process_elements) --reactive queue
 	
@@ -107,7 +106,7 @@ end
 script.c_gotoPortal = inheritsFrom( ml_cause )
 script.e_gotoPortal = inheritsFrom( ml_effect )
 script.localMapID = Player:GetLocalMapID()
-script.portalEntry = {
+script.gateEntry = {
 						[27] = { x=-18071, y=14552, z=-5197 }, -- lornar
 						[24] = { x=9431, y=-21749, z= -108 }, -- gendaren - 9375.4 / -21710.6 / -165.1
 						[73] = { x=9174, y=38746, z=-856 }, -- bloodtide
@@ -122,9 +121,10 @@ end
 function script.e_gotoPortal:execute()
 	ml_log("e_gotoPortal")
 	local pPos = Player.pos
+	local gPos = script.gateEntry[script.localMapID] --GatePosition, entry point
 	if ( pPos ) then
 		if (script.c_eventDone == true) then
-			if ( Distance3D( pPos.x, pPos.y, pPos.z, script.portalEntry[script.localMapID].x,script.portalEntry[script.localMapID].y,script.portalEntry[script.localMapID].z) < 4000 ) then
+			if ( Distance3D( pPos.x, pPos.y, pPos.z, gPos.x,gPos.y,gPos.z) < 4000 ) then
 				local gadgets = GadgetList("maxdistance=4500,contentID2=8388608")
 				local _,portal = next(gadgets)
 				if not (portal) then
@@ -132,16 +132,17 @@ function script.e_gotoPortal:execute()
 					_,portal = next(gadgets)
 				end
 				if (portal and portal.isUnknown1 == 463) then
-					if (tonumber(Player:MoveTo(script.portalEntry[script.localMapID].x,script.portalEntry[script.localMapID].y,script.portalEntry[script.localMapID].z, 20, false, false, false)) < 0) then
+					if (tonumber(Player:MoveTo(gPos.x,gPos.y,gPos.z, 20, false, false, false)) < 0) then
 						ml_error("e_gotoPortal result: ")
 					end 
 				else
-					d("Trying to enter Portal")
+					d("Checking if portal is ready..")
+					d("Event is not done yet, portal not ready, waiting..")
 					script.c_eventDone = false
 				end
 			else
 				-- Player:MoveTo(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)
-				if (tonumber(Player:MoveTo(script.portalEntry[script.localMapID].x,script.portalEntry[script.localMapID].y,script.portalEntry[script.localMapID].z, 50, false, false, true)) < 0) then
+				if (tonumber(Player:MoveTo(gPos.x,gPos.y,gPos.z, 50, false, false, true)) < 0) then
 					ml_error("e_gotoPortal result: ")
 				end
 			end
@@ -235,29 +236,33 @@ end
 
 -- stay near portal 
 script.portalReached = false
-script.portalPos = {
+script.waitPos = {
 					[27] = { x=-17534, y=14418, z=-5020 }, --lornarspass
 					[24] = { x=9031, y=-18248, z=-109 }, --gendarren
 					[73] = { x=8474, y=38266, z=-684 }, --bloodtide
 }
+script.randomWaitPos = nil -- Will hold random place around waitPos.
 script.c_staynearPortal = inheritsFrom( ml_cause )
 script.e_staynearPortal = inheritsFrom( ml_effect )
 function script.c_staynearPortal:evaluate()
 	local pPos = Player.pos
-	if ( pPos and Player.inCombat == false and (script.portalReached == false
-	or Distance2D( pPos.x, pPos.y, pPos.z, script.portalPos[script.localMapID].x,script.portalPos[script.localMapID].y,script.portalPos[script.localMapID].z)> 1500 ) ) then
-		mc_ai_unstuck.idlecounter = 0
+	local wPos = script.waitPos[script.localMapID] --Position to wait(set random value after).
+	if (script.randomWaitPos == nil or Distance2D(script.randomWaitPos.x,script.randomWaitPos.y, wPos.x,wPos.y)<100) then
+		script.randomWaitPos = NavigationManager:GetRandomPointOnCircle(wPos.x,wPos.y,wPos.z,100,800)
+		return false
+	end
+	if ( pPos and Player.inCombat == false and script.portalReached == false ) then
 		return true
 	end
+	mc_ai_unstuck.idlecounter = 0
 	return false
 end
 function script.e_staynearPortal:execute()
 	ml_log("e_staynearPortal")
 	local pPos = Player.pos
 	if ( pPos ) then
-		if (script.portalReached == false or Distance2D( pPos.x, pPos.y, pPos.z, script.portalPos.x,script.portalPos.y,script.portalPos.z)> 1500 ) then
-			-- Player:MoveTo(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)
-			Player:MoveTo(script.portalPos[script.localMapID].x,script.portalPos[script.localMapID].y,script.portalPos[script.localMapID].z, 200, false, false, true)
+		if (Distance2D( pPos.x, pPos.y, script.randomWaitPos.x,script.randomWaitPos.y) > 250 ) then
+			Player:MoveTo(script.randomWaitPos.x,script.randomWaitPos.y,script.randomWaitPos.z, 200, false, false, true)
 			script.portalReached = false
 		else
 			script.portalReached = true

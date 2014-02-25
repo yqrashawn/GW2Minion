@@ -27,7 +27,7 @@ function script:SetData( identifier, tData )
 	end
 end
 
-function script:EventHandler( identifier, event )
+function script:EventHandler( identifier, event, value )
 	-- for extended UI event handling, gets called when a scriptUI element is pressed	
 	if ( event == "SetTarget" ) then
 		local target = Player:GetTarget()
@@ -141,7 +141,7 @@ function script.c_done:evaluate()
 	if (targets) then
 		local id,target = next(targets)
 		while (id and target) do
-			if (tonumber(ml_task_hub:CurrentTask().Data["TargetID"]) == target.id and taget.alive ) then
+			if (tonumber(ml_task_hub:CurrentTask().Data["TargetID"]) == target.id and target.alive ) then
 				return false
 			end
 			id,target = next(targets, id)

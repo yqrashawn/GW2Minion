@@ -10,7 +10,11 @@ mc_ai_unstuck.lastpos = nil
 
 function mc_ai_unstuck:OnUpdate( tick )
 	
-	if ( not Player.alive ) then return end
+	if ( Player.alive == false) then 
+		mc_ai_unstuck.Reset()
+		return
+	end
+	
 	
 	if 	(mc_ai_unstuck.lastpos == nil) or (mc_ai_unstuck.lastpos and type(mc_ai_unstuck.lastpos) ~= "table") then
 		mc_ai_unstuck.lastpos = Player.pos
@@ -94,19 +98,24 @@ end
 
 function mc_ai_unstuck.stuckhandler( event, distmoved, stuckcount )
 
-	d("STUCK! Distance Moved: "..tostring(distmoved) .. " Count: "..tostring(stuckcount) )
-	--d(Player:StopMovement())
-	local i = math.random(0,2)
-	if ( i == 0 ) then
-		Player:SetMovement(2)
-		mc_ai_unstuck.ismoving = true
-	elseif ( i == 1 ) then
-		Player:SetMovement(3)
-		mc_ai_unstuck.ismoving = true
-	elseif ( i == 2 ) then
-		Player:Jump()
+	if ( Player.alive == false) then 
+		mc_ai_unstuck.Reset()
+		return
 	end
 	
+	d("STUCK! Distance Moved: "..tostring(distmoved) .. " Count: "..tostring(stuckcount) )
+	Player:Jump()
+	
+	if ( tonumber(stuckcount) > 20 ) then
+		local i = math.random(0,1)
+		if ( i == 0 ) then
+			Player:SetMovement(2)
+			mc_ai_unstuck.ismoving = true
+		elseif ( i == 1 ) then
+			Player:SetMovement(3)
+			mc_ai_unstuck.ismoving = true
+		end
+	end
 	
 	if ( tonumber(stuckcount) > 20 ) then
 		ml_error("We are STUCK!")

@@ -6,6 +6,10 @@ mc_questmanager.profilepath = GetStartupPath() .. [[\LuaMods\GW2Minion\QuestMana
 function mc_questmanager.ModuleInit( ) 
 	ml_quest_mgr.ModuleInit("GW2Minion",mc_questmanager.profilepath ) -- from minionlib/ml_quest_mgr.lua
 	
+	-- Add Map exploration stuff
+	GUI_NewButton(ml_quest_mgr.mainwindow.name,GetString("questGenMapExplo"),"QMGenMapExploProfile",GetString("generalSettings"))
+	RegisterEventHandler("QMGenMapExploProfile",mc_questmanager.GenerateMapExploreProfile)
+	
 end
 RegisterEventHandler("Module.Initalize",mc_questmanager.ModuleInit) -- from minionlib/ml_quest_mgr.lua
 
@@ -95,4 +99,18 @@ end
 
 if ( mc_global.BotModes) then
 	mc_global.BotModes[GetString("questRunProfile")] = mc_ai_questprofile
+end
+
+
+function mc_questmanager.GenerateMapExploreProfile()
+	local mdata = mc_datamanager.GetLocalMapData( Player:GetLocalMapID() )
+	if ( TableSize(mdata) > 0 and TableSize(mdata["floors"]) > 0 and TableSize(mdata["floors"][0]) > 0) then
+		local data = mdata["floors"][0]
+		local sectors = mdata["floors"][0]["sectors"]
+		d(sectors)
+		--local id,entry = next (sectors)
+		
+	else
+		ml_error("No Mapdata for our current map found!")
+	end
 end

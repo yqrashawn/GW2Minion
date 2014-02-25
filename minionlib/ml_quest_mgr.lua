@@ -98,7 +98,8 @@ function ml_quest_mgr.ModuleInit( name , path)
 	RegisterEventHandler("QMLowerPrioStep",ml_quest_mgr.StepButtonHandler)
 	GUI_NewButton(ml_quest_mgr.stepwindow.name,GetString("questUp"),"QMHigherPrioStep")	
 	RegisterEventHandler("QMHigherPrioStep",ml_quest_mgr.StepButtonHandler)
-	
+	GUI_NewButton(ml_quest_mgr.stepwindow.name,GetString("questsaveStep"),"QMSaveProfile")	
+	RegisterEventHandler("QMSaveProfile",ml_quest_mgr.MainButtonHandler)
 	
 	-- QUEST PROGRESS TABLE (saving/loading character specific progress in quest profiles)		
 	if (Settings[ml_quest_mgr.ModuleName].gQMprogress == nil) then
@@ -122,7 +123,17 @@ function ml_quest_mgr.UpdateCurrentProfileData()
 		end
 		
 		if ( TableSize(ml_quest_mgr.QuestList) > 0) then
-            d("Quest Profile & Progress for "..gQMprofile.."_"..pName.." loaded")				           
+            d("Quest Profile & Progress for "..gQMprofile.."_"..pName.." loaded")	
+			
+			--[[ Check if the main-sharable-Profile (.qmp) changed, so we need to overwrite the current progress data.
+			local tmp = persistence.load( ml_quest_mgr.profilepath..gQMprofile..".qmp")			
+			if ( TableSize(ml_quest_mgr.QuestList) > 0) then
+				if ( TableSize(ml_quest_mgr.QuestList) ~= TableSize(tmp) ) then
+					d("Character Questprofile differs from original Questprofile! Resetting it!")
+					ml_quest_mgr.QuestList = tmp
+				end
+			end]]
+			
         else
 			ml_quest_mgr.QuestList = persistence.load( ml_quest_mgr.profilepath..gQMprofile..".qmp")
 			
@@ -132,10 +143,17 @@ function ml_quest_mgr.UpdateCurrentProfileData()
 				ml_error("Quest Profile is empty or was not found..")			
 			end
 		end
+		
+
+		
     else
         d("No new Quest Profile selected!")
 		gQMprofile = "None"
     end
+	
+	
+	
+	
 	ml_quest_mgr.RefreshQuestList()
     GUI_UnFoldGroup(ml_quest_mgr.mainwindow.name,GetString("quests"))	
 end
@@ -602,8 +620,9 @@ function ml_quest_mgr.RefreshScript()
 	GUI_UnFoldGroup(ml_quest_mgr.stepwindow.name,GetString("questStepDetails"))
 end
 
--- Saves the entered/changed data of the currently shown ScriptUI-Elements in the QuestList table
-function ml_quest_mgr.ScriptUIEventHandler( event, eventTxt )
+
+-- Passes the Button-Events on to the script
+function ml_quest_mgr.ScriptUIButtonEventHandler( event, eventTxt )
 	--d("Scriptevent: "..event.. " eventTxt: "..eventTxt)
 		
 	if ( eventTxt ) then
@@ -627,7 +646,42 @@ function ml_quest_mgr.ScriptUIEventHandler( event, eventTxt )
 					-- Forward the Event to the currently shown script-eventhandler for extended handling
 					if ( ml_quest_mgr.currentscript ) then
 						local ident = "QPrio"..tostring(ePrio).."_QStep"..tostring(sPrio).."_QName_"
-						ml_quest_mgr.currentscript:EventHandler( ident, evName )
+						ml_quest_mgr.currentscript:EventHandler( ident, evName, nil )
+					end
+				else
+					ml_error("Couldnt save script UI-variable into QuestList!")
+				end
+			end
+		end
+	end	
+end
+
+-- Saves the entered/changed data of the currently shown ScriptUI-Elements in the QuestList table
+function ml_quest_mgr.ScriptUIEventHandler( eventTxt, eventVal )
+	--d("Scriptevent: "..event.. " eventTxt: "..eventTxt)
+		
+	if ( eventTxt ) then
+		local ePos = string.find(eventTxt, "QPrio") 
+		local sPos = string.find(eventTxt, "_QStep")
+		local sEndPos = string.find(eventTxt, "_QName_")
+						
+		if ( ePos and sPos and sEndPos) then
+			local ePrio = string.sub(eventTxt,ePos+5,sPos-1)
+			local sPrio = string.sub(eventTxt,sPos+6,sEndPos-1)
+			local evName = string.sub(eventTxt,sEndPos+7)
+			--d ( tostring(ePrio).." "..tostring(sPrio).." "..tostring(evName).." "..tostring(eventVal))
+			if ( tonumber(ePrio) and tonumber(sPrio) and evName and evName ~= "" ) then
+				
+				-- save script variable data in the QuestList[][].script.data[]
+				if ( ml_quest_mgr.QuestList[tonumber(ePrio)]  and ml_quest_mgr.QuestList[tonumber(ePrio)].steps[tonumber(sPrio)]  and ml_quest_mgr.QuestList[tonumber(ePrio)].steps[tonumber(sPrio)].script.data ) then
+					--d("Saving:")
+					--d(eventTxt)
+					ml_quest_mgr.QuestList[tonumber(ePrio)].steps[tonumber(sPrio)].script.data[tostring(evName)] = _G[eventTxt]
+					
+					-- Forward the Event to the currently shown script-eventhandler for extended handling
+					if ( ml_quest_mgr.currentscript ) then
+						local ident = "QPrio"..tostring(ePrio).."_QStep"..tostring(sPrio).."_QName_"
+						ml_quest_mgr.currentscript:EventHandler( ident, evName, eventVal )
 					end
 				else
 					ml_error("Couldnt save script UI-variable into QuestList!")
@@ -707,13 +761,14 @@ function ml_quest_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 		elseif ( k == "QME_MaxLevel" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].maxlevel = tonumber(v)
 		elseif ( k == "QME_Map" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].map = v
 		elseif ( k == "QME_PrevQuest" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].prequest = v
-		elseif ( k == "QME_Repeat" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].repeatable = v
-		
+		elseif ( k == "QME_Repeat" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].repeatable = v		
 		elseif ( k == "QMS_Name" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].steps[ml_quest_mgr.stepwindow.currentPrio].name = v
 		elseif ( k == "QMS_Done" ) then ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].steps[ml_quest_mgr.stepwindow.currentPrio].done = v
 		elseif ( k == "gQMS_Script" ) then 
 			ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].steps[ml_quest_mgr.stepwindow.currentPrio].script.name = v		
 			ml_quest_mgr.RefreshScript()
+		else
+			 ml_quest_mgr.ScriptUIEventHandler( k, v )
 		end
 	end
 end

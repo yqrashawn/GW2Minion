@@ -1,4 +1,4 @@
--- Interact with Npc Quest
+-- Interact with Npc Quest, thanks etb
 script = inheritsFrom( ml_task )
 script.name = "DoEvent"
 script.Data = {}
@@ -23,18 +23,18 @@ function script:SetData( identifier, tData )
 	end
 end
 
-function script:EventHandler( identifier, event )
+function script:EventHandler( identifier, event, value )
 	if ( event == "SetEventID" ) then
-	local evList = MapMarkerList("nearest,isevent,onmesh,worldmarkertype="..mc_global.WorldMarkerType)
-	local i,e = next(evList)
-		if ( i and e ) then
-			self.Data["nEventID"] = e.eventID
-			
-			-- Update UI fields
-			_G[tostring(identifier).."nEventID"] = e.eventID
-			return true
-		end
-	return false
+		local evList = MapMarkerList("nearest,isevent,onmesh,worldmarkertype="..mc_global.WorldMarkerType)
+		local i,e = next(evList)
+			if ( i and e ) then
+				self.Data["nEventID"] = e.eventID
+				
+				-- Update UI fields
+				_G[tostring(identifier).."nEventID"] = e.eventID
+				return true
+			end
+		return false
 	end
 end
 		
