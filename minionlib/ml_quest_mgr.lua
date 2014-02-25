@@ -125,14 +125,14 @@ function ml_quest_mgr.UpdateCurrentProfileData()
 		if ( TableSize(ml_quest_mgr.QuestList) > 0) then
             d("Quest Profile & Progress for "..gQMprofile.."_"..pName.." loaded")	
 			
-			--[[ Check if the main-sharable-Profile (.qmp) changed, so we need to overwrite the current progress data.
+			-- Check if the main-sharable-Profile (.qmp) changed, so we need to overwrite the current progress data.
 			local tmp = persistence.load( ml_quest_mgr.profilepath..gQMprofile..".qmp")			
 			if ( TableSize(ml_quest_mgr.QuestList) > 0) then
 				if ( TableSize(ml_quest_mgr.QuestList) ~= TableSize(tmp) ) then
 					d("Character Questprofile differs from original Questprofile! Resetting it!")
 					ml_quest_mgr.QuestList = tmp
 				end
-			end]]
+			end
 			
         else
 			ml_quest_mgr.QuestList = persistence.load( ml_quest_mgr.profilepath..gQMprofile..".qmp")
@@ -144,7 +144,14 @@ function ml_quest_mgr.UpdateCurrentProfileData()
 			end
 		end
 		
-
+		-- Make sure the Questprofile is in correct order
+		if ( TableSize(ml_quest_mgr.QuestList) > 0) then
+			local ordered_table = {}		
+			for i = 1, #ml_quest_mgr.QuestList do
+				table.insert(ordered_table,i,ml_quest_mgr.QuestList[i])			
+			end
+			ml_quest_mgr.QuestList = ordered_table
+		end
 		
     else
         d("No new Quest Profile selected!")
@@ -245,15 +252,21 @@ function ml_quest_mgr.SaveProfile()
     if ( filename ~= "" ) then
 		d("Saving Profile Data into File: "..filename)
 		
+		-- Make sure the entries in QuestList are ordered according to their "index"
+		local ordered_table = {}		
+		for i = 1, #ml_quest_mgr.QuestList do
+			table.insert(ordered_table,i,ml_quest_mgr.QuestList[i])			
+		end
+				
 		-- Charspecific Profile with progress
 		local pName = Player.name	
 		pName = pName:gsub('%W','') -- only alphanumeric
 		if ( pName ~= nil and pName ~= "" ) then        
-			persistence.store( ml_quest_mgr.profilepath..gQMprofile.."_"..pName..".qmpx", ml_quest_mgr.QuestList)
+			persistence.store( ml_quest_mgr.profilepath..gQMprofile.."_"..pName..".qmpx", ordered_table)
 		end
 		
 		-- Clean profile without progress for sharing		
-		local cleanProfile = deepcopy( ml_quest_mgr.QuestList )
+		local cleanProfile = deepcopy( ordered_table )
 		cleanProfile = ml_quest_mgr.ResetProfile(cleanProfile)
 		persistence.store( ml_quest_mgr.profilepath..filename..".qmp", cleanProfile)
 		

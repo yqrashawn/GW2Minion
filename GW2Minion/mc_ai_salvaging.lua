@@ -5,7 +5,7 @@ mc_ai_needToSalvage = false
 c_salvage = inheritsFrom( ml_cause )
 e_salvage = inheritsFrom( ml_effect )
 function c_salvage:evaluate()
-	if (SalvageManager_Active == "1" and (Inventory.freeSlotCount < 5 or mc_ai_needToSalvage == true) and Inventory.freeSlotCount > 0
+	if (SalvageManager_Active == "1" and (Inventory.freeSlotCount > 1 or mc_ai_needToSalvage == true) and Inventory.freeSlotCount > 0
 	and TableSize(Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool))>0 and TableSize(mc_salvagemanager.createItemList())>0 ) then
 		mc_ai_needToSalvage = true
 		return true
@@ -20,7 +20,7 @@ function e_salvage:execute()
 
 	
 	if ((mc_ai_needToSalvage == true and TableSize(TList)==0 or TableSize(IList)==0 )
-	or (Inventory.freeSlotCount == 0)) then
+	or (Inventory.freeSlotCount < 2)) then
 		mc_ai_needToSalvage = false
 	end
 	local slowdown = math.random(0,3)

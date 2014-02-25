@@ -101,7 +101,6 @@ if ( mc_global.BotModes) then
 	mc_global.BotModes[GetString("questRunProfile")] = mc_ai_questprofile
 end
 
-
 function mc_questmanager.GenerateMapExploreProfile()
 	local mdata = mc_datamanager.GetLocalMapData( Player:GetLocalMapID() )
 	if ( TableSize(mdata) > 0 and TableSize(mdata["floors"]) > 0 and TableSize(mdata["floors"][0]) > 0) then

@@ -113,10 +113,7 @@ script.gateEntry = {
 }
 function script.c_gotoPortal:evaluate()
 	local pPos = Player.pos
-	if ( pPos and Player.inCombat == false and script.c_eventDone == true ) then
-		return true
-	end
-	return false
+	return ( pPos and not Player.inCombat and script.c_eventDone )
 end
 function script.e_gotoPortal:execute()
 	ml_log("e_gotoPortal")
@@ -206,15 +203,9 @@ script.eventID = {
 					[73] = {id = 5289}, --bloodtide
 }
 script.e_eventCheck = inheritsFrom( ml_effect )
-function script.c_eventCheck:evaluate()
-	if ( TableSize(MapMarkerList("nearest,isevent,eventID="..script.eventID[script.localMapID].id..",onmesh,worldmarkertype="..mc_global.WorldMarkerType))>0) then 
-	    script.c_eventRunning = true
-		return (not Player.inCombat and (script.c_eventRunning == true ))
-	end
-	if ( not Player.inCombat and (script.c_eventRunning == true )) then
-		return true
-	end
-	return false
+function script.c_eventCheck:evaluate() --thanx apple ^^
+ script.c_eventRunning = script.eventID[Player:GetLocalMapID()] and TableSize(MapMarkerList("nearest,isevent,eventID="..script.eventID[Player:GetLocalMapID()].id..",onmesh,worldmarkertype="..mc_global.WorldMarkerType)) > 0 
+ return not Player.inCombat and script.c_eventRunning
 end
 function script.e_eventCheck:execute()
 	ml_log("e_eventCheck")
@@ -245,13 +236,11 @@ script.randomWaitPos = nil -- Will hold random place around waitPos.
 script.c_staynearPortal = inheritsFrom( ml_cause )
 script.e_staynearPortal = inheritsFrom( ml_effect )
 function script.c_staynearPortal:evaluate()
-	local pPos = Player.pos
-	local wPos = script.waitPos[script.localMapID] --Position to wait(set random value after).
-	if (script.randomWaitPos == nil or Distance2D(script.randomWaitPos.x,script.randomWaitPos.y, wPos.x,wPos.y)<100) then
+	local pPos, wPos = Player.pos, script.waitPos[script.localMapID] --Player position --Position to wait(set random value after).
+	if (not script.randomWaitPos or Distance2D(script.randomWaitPos.x,script.randomWaitPos.y, wPos.x,wPos.y)<100) then
 		script.randomWaitPos = NavigationManager:GetRandomPointOnCircle(wPos.x,wPos.y,wPos.z,100,800)
 		return false
-	end
-	if ( pPos and Player.inCombat == false and script.portalReached == false ) then
+	elseif ( pPos and Player.inCombat == false and (script.portalReached == false or Distance2D( pPos.x, pPos.y, script.randomWaitPos.x,script.randomWaitPos.y) > 250)) then
 		return true
 	end
 	mc_ai_unstuck.idlecounter = 0
