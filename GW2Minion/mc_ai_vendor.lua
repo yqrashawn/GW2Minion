@@ -16,7 +16,7 @@ function mc_ai_vendor.NeedToSell( vendornearby )
 end
 function mc_ai_vendor.GetClosestVendorMarker()	
 	if ( mc_ai_vendor.isSelling ) then return true end
-	local mList = MapMarkerList("worldmarkertype=23,nearest,onmesh,type="..GW2.MAPMARKERTYPE.Merchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendors"))) 
+	local mList = MapMarkerList("nearest,onmesh,contentID="..GW2.MAPMARKER.Merchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendors"))) 
 	if ( TableSize(mList) > 0 )  then
 		local i,marker = next (mList)
 		if ( i and marker) then
@@ -27,7 +27,7 @@ function mc_ai_vendor.GetClosestVendorMarker()
 end
 function mc_ai_vendor.GetClosestVendor()	
 	if ( mc_ai_vendor.isSelling ) then return true end
-	local mList = MapMarkerList("worldmarkertype=23,nearest,onmesh,type="..GW2.MAPMARKERTYPE.Merchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendors"))) 
+	local mList = MapMarkerList("nearest,onmesh,contentID="..GW2.MAPMARKER.Merchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendors"))) 
 	if ( TableSize(mList) > 0 )  then
 		local i,marker = next (mList)
 		if ( i and marker) then
@@ -290,7 +290,7 @@ function mc_ai_vendor.NeedToBuyGatheringTools( vendornearby )
 end
 function mc_ai_vendor.GetClosestBuyVendorMarker()	
 	if ( mc_ai_vendor.isSelling ) then return true end
-	local mList = MapMarkerList("worldmarkertype=23,nearest,onmesh,type="..GW2.MAPMARKERTYPE.Merchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendorsbuy"))) 
+	local mList = MapMarkerList("nearest,onmesh,contentID="..GW2.MAPMARKER.Merchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendorsbuy"))) 
 	if ( TableSize(mList) > 0 )  then
 		local i,marker = next (mList)
 		if ( i and marker) then
@@ -301,7 +301,7 @@ function mc_ai_vendor.GetClosestBuyVendorMarker()
 end
 function mc_ai_vendor.GetClosestBuyVendor()	
 	if ( mc_ai_vendor.isSelling ) then return true end
-	local mList = MapMarkerList("worldmarkertype=23,nearest,onmesh,type="..GW2.MAPMARKERTYPE.Merchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendorsbuy"))) 
+	local mList = MapMarkerList("nearest,onmesh,contentID="..GW2.MAPMARKER.Merchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendorsbuy"))) 
 	if ( TableSize(mList) > 0 )  then
 		local i,marker = next (mList)
 		if ( i and marker) then
@@ -641,7 +641,7 @@ function mc_ai_vendor.NeedToRepair( vendornearby )
 end
 function mc_ai_vendor.GetClosestRepairVendorMarker()	
 	if ( mc_ai_vendor.isSelling ) then return true end
-	local mList = MapMarkerList("worldmarkertype=23,nearest,onmesh,type="..GW2.MAPMARKERTYPE.RepairMerchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendors"))) 
+	local mList = MapMarkerList("nearest,onmesh,contentID="..GW2.MAPMARKER.Repair..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendors"))) 
 	if ( TableSize(mList) > 0 )  then
 		local i,marker = next (mList)
 		if ( i and marker) then
@@ -652,7 +652,7 @@ function mc_ai_vendor.GetClosestRepairVendorMarker()
 end
 function mc_ai_vendor.GetClosestRepairVendor()	
 	if ( mc_ai_vendor.isSelling ) then return true end
-	local mList = MapMarkerList("worldmarkertype=23,nearest,onmesh,type="..GW2.MAPMARKERTYPE.RepairMerchant..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendors"))) 
+	local mList = MapMarkerList("nearest,onmesh,contentID="..GW2.MAPMARKER.Repair..",exclude_characterid="..mc_blacklist.GetExcludeString(GetString("vendors"))) 
 	if ( TableSize(mList) > 0 )  then
 		local i,marker = next (mList)
 		if ( i and marker) then
