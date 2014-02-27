@@ -112,15 +112,14 @@ function mc_questmanager.GenerateMapExploreProfile()
 		local pois = mdata["floors"][0]["points_of_interest"]
 		local skillpoints = mdata["floors"][0]["skill_challenges"]
 		
+				
 		
-		
-		-- Create a "2D - Levelmap/Table" to hopefully get an avg level of the whole area for all other things on the map
-		local levelmap = {}
+		local levelmap = {} -- Create a "2D - Levelmap/Table" which provides us an avg. level for all other entries in the zone
 		local id,entry = next (sectors)
 		while id and entry do			
 			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
-			-- CREATE GOTO QUEST
-			
+			-- CREATE GOTO SECTOR QUEST
+			mc_questmanager.AddExploreSectorQuest( realpos, entry )			
 			table.insert(levelmap, { pos = realpos, level = entry["level"] } )			
 			id,entry = next(sectors,id)
 		end
@@ -136,8 +135,13 @@ function mc_questmanager.GenerateMapExploreProfile()
 		local id,entry = next (pois)
 		while id and entry do
 			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
-			d(entry["name"].." : "..realpos[1].." "..realpos[2].. " Level: "..tostring(mc_questmanager.GetApproxLevel( levelmap, realpos )))
+			--d(tostring(entry["type"])..": "..tostring(entry["name"]).." : "..realpos[1].." "..realpos[2].. " Level: "..tostring(mc_questmanager.GetApproxLevel( levelmap, realpos )))
 			--CREATE Quest for each
+			if ( entry["type"] == "waypoint" ) then
+				mc_questmanager.AddExploreWaypointQuest( realpos, entry , mc_questmanager.GetApproxLevel( levelmap, realpos ) )
+			end
+			
+			
 			
 			id,entry = next(pois,id)
 		end		
@@ -146,7 +150,7 @@ function mc_questmanager.GenerateMapExploreProfile()
 		local id,entry = next (skillpoints)
 		while id and entry do
 			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
-			d(entry["name"].." : "..realpos[1].." "..realpos[2].. " Level: "..tostring(mc_questmanager.GetApproxLevel( levelmap, realpos )))
+			--d(tostring(entry["name"]).." : "..realpos[1].." "..realpos[2].. " Level: "..tostring(mc_questmanager.GetApproxLevel( levelmap, realpos )))
 			--CREATE Quest for each skillpoint
 			
 			id,entry = next(skillpoints,id)
@@ -178,4 +182,56 @@ function mc_questmanager.GetApproxLevel( levelmap, pPos )
 		level = levelmap[idx].level
 	end
 	return level
+end
+
+function mc_questmanager.AddExploreSectorQuest( pos2D, entry )
+	
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D.x, y=pos2D.y , z = -200 } )
+	--d(pos3D)
+	--["name"] = "Refuge Peak";
+	--["level"] = 31;
+	--["coord"] = [[18299.599999999999, 15148.6]];
+end
+
+function mc_questmanager.AddExploreWaypointQuest( pos2D, entry , level)	
+
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
+		-- use the 2D x,y and the z from the closeestpointonmesh
+		local WPName = entry["name"] or ""
+		newquest = {
+			prio = table.maxn(ml_quest_mgr.QuestList)+1,
+			name = WPName,
+			done = "0",
+			minlevel = 0,
+			maxlevel = level + 2,
+			map = mc_datamanager.GetMapName( Player:GetLocalMapID()),
+			mapid = Player:GetLocalMapID(),
+			prequest = "None",
+			repeatable = "0",
+			steps = {
+				-- Add a simple GoToPosition Step 
+				[1] = { prio = table.maxn(ml_quest_mgr.QuestList[table.maxn(ml_quest_mgr.QuestList)].steps)+1,
+					name = "GoTo"..WPName,
+					done = "0",
+					script = { 
+						name = "GotoPosition",
+						data = {
+						
+						
+						},
+					},
+				}
+			}
+		}
+		ml_quest_mgr.AddNewQuest( newquest )
+		GUI_UnFoldGroup(ml_quest_mgr.mainwindow.name,GetString("quests"))		
+		
+			
+		--d(tostring(entry["name"]).." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)
+		
+	end
+	--["name"] = "Refuge Peak";
+	--["level"] =level
+	--["coord"] = [[18299.599999999999, 15148.6]];
 end
