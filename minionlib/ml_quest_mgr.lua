@@ -963,4 +963,4 @@ end
 
 RegisterEventHandler("QuestManager.toggle", ml_quest_mgr.ToggleMenu)
 RegisterEventHandler("GUI.Update",ml_quest_mgr.GUIVarUpdate)
-RegisterEventHandler("GUI.Item",ml_quest_mgr.ScriptUIEventHandler)
+RegisterEventHandler("GUI.Item",ml_quest_mgr.ScriptUIButtonEventHandler)
