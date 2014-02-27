@@ -1,6 +1,6 @@
 -- Map & Itemdata manager
 mc_datamanager = { }
-mc_datamanager.path = GetStartupPath().. [[\LuaMods\GW2Minion\maps.data]]
+mc_datamanager.path = GetStartupPath().. [[\LuaMods\GW2Minion\mapsdata.lua]]
 mc_datamanager.mapData = {}
 
 function mc_datamanager.ModuleInit() 	
