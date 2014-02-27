@@ -146,9 +146,14 @@ function ml_quest_mgr.UpdateCurrentProfileData()
 		
 		-- Make sure the Questprofile is in correct order
 		if ( TableSize(ml_quest_mgr.QuestList) > 0) then
-			local ordered_table = {}		
+			local ordered_table = {}
 			for i = 1, #ml_quest_mgr.QuestList do
-				table.insert(ordered_table,i,ml_quest_mgr.QuestList[i])			
+				local orderedQ_table = {}
+				for k = 1, #ml_quest_mgr.QuestList[i].steps do				
+					table.insert(orderedQ_table,k,ml_quest_mgr.QuestList[i].steps[k])
+				end
+				ml_quest_mgr.QuestList[i].steps = orderedQ_table
+				table.insert(ordered_table,i,ml_quest_mgr.QuestList[i])
 			end
 			ml_quest_mgr.QuestList = ordered_table
 		end
@@ -253,9 +258,17 @@ function ml_quest_mgr.SaveProfile()
 		d("Saving Profile Data into File: "..filename)
 		
 		-- Make sure the entries in QuestList are ordered according to their "index"
-		local ordered_table = {}		
-		for i = 1, #ml_quest_mgr.QuestList do
-			table.insert(ordered_table,i,ml_quest_mgr.QuestList[i])			
+		if ( TableSize(ml_quest_mgr.QuestList) > 0) then
+			local ordered_table = {}
+			for i = 1, #ml_quest_mgr.QuestList do
+				local orderedQ_table = {}
+				for k = 1, #ml_quest_mgr.QuestList[i].steps do				
+					table.insert(orderedQ_table,k,ml_quest_mgr.QuestList[i].steps[k])
+				end
+				ml_quest_mgr.QuestList[i].steps = orderedQ_table
+				table.insert(ordered_table,i,ml_quest_mgr.QuestList[i])
+			end
+			ml_quest_mgr.QuestList = ordered_table
 		end
 				
 		-- Charspecific Profile with progress
