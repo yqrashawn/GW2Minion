@@ -105,10 +105,10 @@ function mc_questmanager.GenerateMapExploreProfile()
 	local mdata = mc_datamanager.GetLocalMapData( Player:GetLocalMapID() )
 	if ( TableSize(mdata) > 0 and TableSize(mdata["floors"]) > 0 and TableSize(mdata["floors"][0]) > 0) then
 		local data = mdata["floors"][0]
+		
 		-- tasks & sectors have 2D Map coords and level info
 		local sectors = mdata["floors"][0]["sectors"]
-		local tasks = mdata["floors"][0]["tasks"]
-		
+		local tasks = mdata["floors"][0]["tasks"]		
 		local pois = mdata["floors"][0]["points_of_interest"]
 		local skillpoints = mdata["floors"][0]["skill_challenges"]
 		
@@ -119,14 +119,17 @@ function mc_questmanager.GenerateMapExploreProfile()
 		while id and entry do			
 			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
 			-- CREATE GOTO SECTOR QUEST
-			mc_questmanager.AddExploreSectorQuest( realpos, entry )			
+			mc_questmanager.AddExploreSectorQuest( realpos, entry, entry["level"] )			
 			table.insert(levelmap, { pos = realpos, level = entry["level"] } )			
 			id,entry = next(sectors,id)
 		end
-		--Add Task-level-info
+		
+		-- HEARTQUESTS
 		local id,entry = next (tasks)
 		while id and entry do			
 			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
+			-- CREATE GOTO HEARTQUEST QUEST
+			mc_questmanager.AddDoHeartQuest( realpos, entry, entry["level"] )	
 			table.insert(levelmap, { pos = realpos, level = entry["level"] } )			
 			id,entry = next(tasks,id)
 		end
@@ -136,26 +139,30 @@ function mc_questmanager.GenerateMapExploreProfile()
 		while id and entry do
 			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
 			--d(tostring(entry["type"])..": "..tostring(entry["name"]).." : "..realpos[1].." "..realpos[2].. " Level: "..tostring(mc_questmanager.GetApproxLevel( levelmap, realpos )))
-			--CREATE Quest for each
 			if ( entry["type"] == "waypoint" ) then
 				mc_questmanager.AddExploreWaypointQuest( realpos, entry , mc_questmanager.GetApproxLevel( levelmap, realpos ) )
 			end
-			
-			
+			if ( entry["type"] == "landmark" ) then
+				mc_questmanager.AddExploreLandmarkQuest( realpos, entry , mc_questmanager.GetApproxLevel( levelmap, realpos ) )
+			end
+			if ( entry["type"] == "vista" ) then
+				mc_questmanager.AddExploreVistaQuest( realpos, entry , mc_questmanager.GetApproxLevel( levelmap, realpos ) )
+			end
 			
 			id,entry = next(pois,id)
 		end		
 		
-		-- Skillpoints
+		-- SKILLPOINTS
 		local id,entry = next (skillpoints)
 		while id and entry do
 			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
-			--d(tostring(entry["name"]).." : "..realpos[1].." "..realpos[2].. " Level: "..tostring(mc_questmanager.GetApproxLevel( levelmap, realpos )))
-			--CREATE Quest for each skillpoint
-			
+			--d(tostring(entry["name"]).." : "..realpos[1].." "..realpos[2].. " Level: "..tostring(mc_questmanager.GetApproxLevel( levelmap, realpos )))			
+			mc_questmanager.AddGetSkillQuest( realpos, mc_questmanager.GetApproxLevel( levelmap, realpos ) )
 			id,entry = next(skillpoints,id)
 		end	
 		
+		
+		ml_quest_mgr.RefreshQuestList()
 	else
 		ml_error("No Mapdata for our current map found!")
 	end
@@ -184,54 +191,235 @@ function mc_questmanager.GetApproxLevel( levelmap, pPos )
 	return level
 end
 
-function mc_questmanager.AddExploreSectorQuest( pos2D, entry )
-	
-	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D.x, y=pos2D.y , z = -200 } )
-	--d(pos3D)
-	--["name"] = "Refuge Peak";
-	--["level"] = 31;
-	--["coord"] = [[18299.599999999999, 15148.6]];
-end
-
-function mc_questmanager.AddExploreWaypointQuest( pos2D, entry , level)	
-
+function mc_questmanager.AddExploreSectorQuest( pos2D, entry, level)
 	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	local Name = entry["name"] or ""
 	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
-		-- use the 2D x,y and the z from the closeestpointonmesh
-		local WPName = entry["name"] or ""
+		-- use the 2D x,y and the z from the closeestpointonmesh		
 		newquest = {
 			prio = table.maxn(ml_quest_mgr.QuestList)+1,
-			name = WPName,
+			name = Name,
 			done = "0",
-			minlevel = 0,
-			maxlevel = level + 2,
+			minlevel = level + 2,
+			maxlevel = 80,
 			map = mc_datamanager.GetMapName( Player:GetLocalMapID()),
 			mapid = Player:GetLocalMapID(),
 			prequest = "None",
 			repeatable = "0",
 			steps = {
 				-- Add a simple GoToPosition Step 
-				[1] = { prio = table.maxn(ml_quest_mgr.QuestList[table.maxn(ml_quest_mgr.QuestList)].steps)+1,
-					name = "GoTo"..WPName,
+				[1] = { prio = 1,
+					name = "GoTo "..Name,
 					done = "0",
 					script = { 
 						name = "GotoPosition",
 						data = {
-						
-						
+							GotoX = pos2D[1],
+							GotoY = pos2D[2],
+							GotoZ = pos3D.z					
 						},
 					},
 				}
 			}
 		}
-		ml_quest_mgr.AddNewQuest( newquest )
-		GUI_UnFoldGroup(ml_quest_mgr.mainwindow.name,GetString("quests"))		
-		
-			
-		--d(tostring(entry["name"]).." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)
-		
+		ml_quest_mgr.QuestList[newquest.prio] = newquest		
+	else
+		ml_error("Sector "..Name.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
+		--d("Added: "..Name.." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)		
 	end
-	--["name"] = "Refuge Peak";
-	--["level"] =level
-	--["coord"] = [[18299.599999999999, 15148.6]];
+end
+
+function mc_questmanager.AddExploreWaypointQuest( pos2D, entry , level)	
+
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	local WPName = entry["name"] or ""
+	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
+		-- use the 2D x,y and the z from the closeestpointonmesh		
+		newquest = {
+			prio = table.maxn(ml_quest_mgr.QuestList)+1,
+			name = WPName,
+			done = "0",
+			minlevel = level + 2,
+			maxlevel = 80,
+			map = mc_datamanager.GetMapName( Player:GetLocalMapID()),
+			mapid = Player:GetLocalMapID(),
+			prequest = "None",
+			repeatable = "0",
+			steps = {
+				-- Add a simple GoToPosition Step 
+				[1] = { prio = 1,
+					name = "GoTo"..WPName,
+					done = "0",
+					script = { 
+						name = "GotoPosition",
+						data = {
+							GotoX = pos2D[1],
+							GotoY = pos2D[2],
+							GotoZ = pos3D.z					
+						},
+					},
+				}
+			}
+		}
+		ml_quest_mgr.QuestList[newquest.prio] = newquest	
+	else
+		ml_error("Waypoint "..WPName.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
+		--d("Added: "..WPName.." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)		
+	end
+end
+
+function mc_questmanager.AddExploreLandmarkQuest( pos2D, entry , level)	
+
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	local WPName = entry["name"] or ""
+	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
+		-- use the 2D x,y and the z from the closeestpointonmesh		
+		newquest = {
+			prio = table.maxn(ml_quest_mgr.QuestList)+1,
+			name = WPName,
+			done = "0",
+			minlevel = level + 2,
+			maxlevel = 80,
+			map = mc_datamanager.GetMapName( Player:GetLocalMapID()),
+			mapid = Player:GetLocalMapID(),
+			prequest = "None",
+			repeatable = "0",
+			steps = {
+				-- Add a simple GoToPosition Step 
+				[1] = { prio = 1,
+					name = "GoTo"..WPName,
+					done = "0",
+					script = { 
+						name = "GotoPosition",
+						data = {
+							GotoX = pos2D[1],
+							GotoY = pos2D[2],
+							GotoZ = pos3D.z					
+						},
+					},
+				}
+			}
+		}
+		ml_quest_mgr.QuestList[newquest.prio] = newquest		
+	else
+		ml_error("Landmark "..WPName.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
+		--d("Added: "..WPName.." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)		
+	end
+end
+
+function mc_questmanager.AddExploreVistaQuest( pos2D, entry , level)	
+
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	local WPName = "Discover Vista"
+	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
+		-- use the 2D x,y and the z from the closeestpointonmesh		
+		newquest = {
+			prio = table.maxn(ml_quest_mgr.QuestList)+1,
+			name = WPName,
+			done = "0",
+			minlevel = level + 2,
+			maxlevel = 80,
+			map = mc_datamanager.GetMapName( Player:GetLocalMapID()),
+			mapid = Player:GetLocalMapID(),
+			prequest = "None",
+			repeatable = "0",
+			steps = {
+				-- Add a simple ExploreVista Step 
+				[1] = { prio = 1,
+					name = "GoTo"..WPName,
+					done = "0",
+					script = { 
+						name = "ExploreVista",
+						data = {
+							GotoX = pos2D[1],
+							GotoY = pos2D[2],
+							GotoZ = pos3D.z					
+						},
+					},
+				}
+			}
+		}
+		ml_quest_mgr.QuestList[newquest.prio] = newquest	
+	else
+		ml_error("An undiscovered Vista is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
+		--d("Added: "..WPName.." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)		
+	end
+end
+
+function mc_questmanager.AddDoHeartQuest( pos2D, entry , level)	
+
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	local WPName = entry["objective"] or ""
+	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
+		-- use the 2D x,y and the z from the closeestpointonmesh		
+		newquest = {
+			prio = table.maxn(ml_quest_mgr.QuestList)+1,
+			name = WPName,
+			done = "0",
+			minlevel = level + 2,
+			maxlevel = 80,
+			map = mc_datamanager.GetMapName( Player:GetLocalMapID()),
+			mapid = Player:GetLocalMapID(),
+			prequest = "None",
+			repeatable = "0",
+			steps = {
+				-- Add a simple GoTo Step 
+				[1] = { prio = 1,
+					name = "GoTo"..WPName,
+					done = "0",
+					script = { 
+						name = "GotoPosition",
+						data = {
+							GotoX = pos2D[1],
+							GotoY = pos2D[2],
+							GotoZ = pos3D.z					
+						},
+					},
+				}
+			}
+		}
+		ml_quest_mgr.QuestList[newquest.prio] = newquest		
+	else
+		ml_error("HeartQuest "..WPName.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
+		--d("Added: "..WPName.." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)		
+	end
+end
+
+function mc_questmanager.AddGetSkillQuest( pos2D, level)	
+
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	local WPName = "SkillChallenge"
+	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
+		-- use the 2D x,y and the z from the closeestpointonmesh		
+		newquest = {
+			prio = table.maxn(ml_quest_mgr.QuestList)+1,
+			name = WPName,
+			done = "0",
+			minlevel = level + 2,
+			maxlevel = 80,
+			map = mc_datamanager.GetMapName( Player:GetLocalMapID()),
+			mapid = Player:GetLocalMapID(),
+			prequest = "None",
+			repeatable = "0",
+			steps = {
+				-- Add a simple GoToPosition Step 
+				[1] = { prio = 1,
+					name = "GoTo"..WPName,
+					done = "0",
+					script = { 
+						name = "DoSkillChallenge",
+						data = {
+							GotoX = pos2D[1],
+							GotoY = pos2D[2],
+							GotoZ = pos3D.z					
+						},
+					},
+				}
+			}
+		}
+		ml_quest_mgr.QuestList[newquest.prio] = newquest	
+	else
+		ml_error(WPName.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
+		--d("Added: "..WPName.." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)		
+	end
 end

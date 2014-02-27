@@ -347,6 +347,7 @@ end
 function mc_salvagemanager.ToggleMenu()
 	if (mc_salvagemanager.visible) then
 		GUI_WindowVisible(mc_salvagemanager.mainwindow.name,false)
+		GUI_WindowVisible(mc_salvagemanager.editwindow.name,false)
 		mc_salvagemanager.visible = false
 	else
 		local wnd = GUI_GetWindowInfo("MinionBot")

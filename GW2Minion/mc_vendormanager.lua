@@ -18,7 +18,8 @@ mc_vendormanager.tools = {
 	  [5] = 23008,
 	  [6] = 22997,
 	  [7] = 44876, -- Jack-in-the-Box Scythe
-	  [8] = 42594 -- Consortium Harvesting Sickle
+	  [8] = 42594, -- Consortium Harvesting Sickle
+	  [9] = 49308, -- Thresher-Sickle 5000
 	 },
 	 -- logging 1= lowest quality , 6 = orichalcum
 	 [1] = 
@@ -30,7 +31,8 @@ mc_vendormanager.tools = {
 	  [5] = 23009,
 	  [6] = 23000,
 	  [7] = 48955, -- DreamCleaver Logging Axe
-	  [8] = 42931 -- Chop-It-All Logging Axe
+	  [8] = 42931, -- Chop-It-All Logging Axe
+	  [9] = 00000, -- Placeholder for futue unlimTools
 	 },
 	 -- mining 1= lowest quality , 6 = orichalcum
 	 [2] =
@@ -42,7 +44,8 @@ mc_vendormanager.tools = {
 	  [5] = 23010,
 	  [6] = 23001,
 	  [7] = 43527, -- Bone Pick
-	  [8] = 41807 -- Molten Alliance Mining Pick
+	  [8] = 41807, -- Molten Alliance Mining Pick
+	  [9] = 284882, -- Watchwork Mining Pick
 	 },
 	 -- salvagingkits 0= lowest quality 
 	 [3] = 
@@ -585,7 +588,7 @@ function mc_vendormanager.GetGatheringToolsCount()
 	if (mTool) then buyList[3] = 1 end
 	
 	-- Check for unlimited tools -> we dont need to buy these
-	for invTools = 7, 8, 1 do
+	for invTools = 7, 9, 1 do
 		if (fTool and fTool.itemID == mc_vendormanager.tools[0][invTools]) then buyList[1] = 999 end
 		if (lTool and lTool.itemID == mc_vendormanager.tools[1][invTools]) then buyList[2] = 999 end
 		if (mTool and mTool.itemID == mc_vendormanager.tools[2][invTools]) then buyList[3] = 999 end
@@ -732,6 +735,7 @@ end
 function mc_vendormanager.SellToggleMenu()
 	if (mc_vendormanager.sellwindowVisible) then
 		GUI_WindowVisible(mc_vendormanager.sellmainwindow.name,false)
+		GUI_WindowVisible(mc_vendormanager.selleditwindow.name,false)
 		mc_vendormanager.sellwindowVisible = false
 	else
 		local wnd = GUI_GetWindowInfo("MinionBot")
