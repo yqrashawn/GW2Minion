@@ -66,10 +66,6 @@ function script:Init()
 	-- Salvaging
 	self:add(ml_element:create( "Salvaging", c_salvage, e_salvage, 110 ), self.process_elements)
 	
-	-- Repair & Vendoring
-	self:add(ml_element:create( "SellItems", c_vendorsell, e_vendorsell, 100 ), self.process_elements)
-	self:add(ml_element:create( "BuyItems", c_vendorbuy, e_vendorbuy, 90 ), self.process_elements)
-	self:add(ml_element:create( "RepairItems", c_vendorrepair, e_vendorrepair, 80 ), self.process_elements)
 	
 	-- Goto Commander
 	self:add(ml_element:create( "GoToCommander", self.c_gotoComm, self.e_gotoComm, 70 ), self.process_elements)
