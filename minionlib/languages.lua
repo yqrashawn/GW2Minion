@@ -428,6 +428,9 @@ strings =
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
 		
+		--mc_main.lua
+		guestserver						= "GuestServer",
+		
     },                                  
     ["cn"] =                            
     {                               
@@ -845,6 +848,8 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		--mc_main.lua
+		guestserver						= "GuestServer",
 	},
     ["jp"] =
     {
@@ -1250,6 +1255,8 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		--mc_main.lua
+		guestserver						= "GuestServer",
 	},   
     ["de"] =
     {
@@ -1655,6 +1662,8 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		--mc_main.lua
+		guestserver						= "GuestServer",
 	},     
     ["fr"] =
     {
@@ -2060,6 +2069,8 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		--mc_main.lua
+		guestserver						= "GuestServer",
 	},       
     ["ru"] =
     {
@@ -2467,6 +2478,8 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		--mc_main.lua
+		guestserver						= "GuestServer",
 	},    	
 
 }
@@ -2493,4 +2506,4 @@ function GetString(stringName)
 	end
 end
 
-RegisterEventHandler("FFXIVMINION.setlanguage", SetLanguage)
+RegisterEventHandler("GW2MINION.setlanguage", SetLanguage)

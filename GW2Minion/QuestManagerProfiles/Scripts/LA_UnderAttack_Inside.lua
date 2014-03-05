@@ -331,13 +331,11 @@ function script.e_reviveDownedPlayersInCombat:execute()
 				if ( not t or t.id ~= id ) then
 					Player:SetTarget( id )
 				else
-					-- yeah I know, but this usually doesnt break ;)
-					if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
+					-- yeah I know, but this usually doesnt break ;)							
 						Player:Interact( id )
 						ml_log("Reviving..")
 						mc_global.Wait(1000)
 						return true
-					end	
 				end
 			end
 		end
@@ -375,13 +373,11 @@ function script.e_revivePlayers:execute()
 				if ( not t or t.id ~= id ) then
 					Player:SetTarget( id )
 				else
-					-- yeah I know, but this usually doesnt break ;)
-					if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
+					-- yeah I know, but this usually doesnt break ;)							
 						Player:Interact( id )
 						ml_log("Reviving..")
 						mc_global.Wait(1000)
 						return true
-					end	
 				end
 			end
 		end

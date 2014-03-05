@@ -22,11 +22,10 @@ end
 function mc_ai_grind:Process()
 	--ml_log("Grind_Process->")
 		
-		
-	-- Randomly pick next maingoal and pursue it			
-	local i = math.random(0,1)
 	
-		
+	-- Randomly pick next maingoal and pursue it			
+	local i = math.random(0,3)
+	
 	-- Killsomething nearby
 	if ( i == 0 and function() return TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) == 0 end ) then
 		local newTask = mc_ai_combatAttack.Create()
@@ -44,12 +43,35 @@ function mc_ai_grind:Process()
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 			end
 		end
+		
 	
+	-- Gather
+	elseif ( i == 2 and Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,gatherable")) > 0 ) then
+		local newTask = mc_ai_Gather.Create()
+		ml_task_hub:CurrentTask():AddSubTask(newTask)
+	
+	
+	-- Do Quests
+	elseif ( i == 3 ) then
+		local newQ = ml_quest_mgr.GetNewQuest()
+		if ( newQ ~= nil ) then
+			local newTask = mc_ai_doquest.Create()
+			newTask.currentQuest = newQ
+			ml_task_hub:CurrentTask():AddSubTask(newTask)
+		end
+	
+	
+	-- Walk to Random Point in our levelrange
+	elseif ( i == 4 ) then
+		if ( TableSize(mc_datamanager.levelmap) > 0 ) then
+			local rpos = mc_datamanager.GetRandomPositionInLevelRange( Player.level )
+			if (TableSize(rpos) > 0 ) then				
+				local newTask = mc_ai_exploration.Create()
+				newTask.targetPosition = rpos
+				ml_task_hub:CurrentTask():AddSubTask(newTask)				
+			end
+		end
 	end
-							
-	-- Explore
-							
-	
 end
 
 function mc_ai_grind:OnSleep()

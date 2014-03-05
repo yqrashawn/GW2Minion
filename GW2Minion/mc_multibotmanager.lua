@@ -185,7 +185,7 @@ function mc_multibotmanager.UpdatePartyStatus()
 					end
 					
 					if ( not found and mc_blacklist.IsBlacklisted(pname) == false) then	
-						SendChatMsg(19,"/invite "..pname)
+						SendChatMsg(19,"/join "..pname)
 						dPartyStatus = "Inviting "..pname
 						d("Inviting "..pname)
 						mc_blacklist.AddBlacklistEntry(GetString("partymember"), idx, pname, mc_global.now + 30000)
@@ -252,11 +252,13 @@ function mc_multibotmanager.GetPlayerPartyData()
 	end
 	return nil
 end
+
+
 --**********************************************************
 -- HandleMultiBotMessages
 --**********************************************************
 function HandleMultiBotMessages( event, message, channel )	
---wt_debug("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
+--d("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
 		
 	if (channel == MBSGroup ) then
 		

@@ -35,7 +35,7 @@ function mc_ai_Gather:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_Gather:task_complete_eval()	
-	if ( c_dead:evaluate() or c_downed:evaluate() or c_Aggro:evaluate() or c_LootChests:evaluate() or c_LootCheck:evaluate() or c_Gathering:evaluate() == false) then 
+	if ( c_dead:evaluate() or c_downed:evaluate() or ( c_Aggro:evaluate() and Player.health.percent < 95)  or c_LootChests:evaluate() or c_LootCheck:evaluate() or c_Gathering:evaluate() == false) then 
 		Player:StopMovement()
 		return true
 	end
@@ -274,6 +274,8 @@ e_Gathering = inheritsFrom( ml_effect )
 function c_Gathering:evaluate()
 	return (Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,gatherable,maxdistance=4000")) > 0)
 end
+e_Gathering.tmr = 0
+e_Gathering.threshold = 2000
 function e_Gathering:execute()
 	ml_log("e_Gathering")
 	local GatherableList = GadgetList( "gatherable,shortestpath,onmesh")
@@ -289,6 +291,13 @@ function e_Gathering:execute()
 					if (tonumber(navResult) < 0) then
 						ml_error("mc_ai_gathering.MoveIntoCombatRange result: "..tonumber(navResult))					
 					end
+					
+					if ( mc_global.now - e_Gathering.tmr > e_Gathering.threshold ) then
+						e_Gathering.tmr = mc_global.now
+						e_Gathering.threshold = math.random(1500,5000)
+						mc_skillmanager.HealMe()
+					end
+					
 					ml_log("MoveToGatherable..")
 					return true
 				end

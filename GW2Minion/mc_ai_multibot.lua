@@ -195,13 +195,11 @@ function e_memberdown:execute()
 			local t = Player:GetTarget()
 			if ( not t or t.id ~= pchar.id ) then
 				Player:SetTarget( pchar.id )
-			else
-				if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
-					Player:Interact( pchar.id )
-					ml_log("Rezzing..")
-					mc_global.Wait(1000)
-					return ml_log(true)
-				end	
+			else				
+				Player:Interact( pchar.id )
+				ml_log("Rezzing..")
+				mc_global.Wait(1000)
+				return ml_log(true)
 			end
 		end
 		

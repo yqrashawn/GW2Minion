@@ -224,34 +224,6 @@ function mc_skillmanager.ModuleInit()
 	GUI_UnFoldGroup(mc_skillmanager.editwindow.name,"SkillDetails")
 	GUI_SizeWindow(mc_skillmanager.editwindow.name,mc_skillmanager.editwindow.w,mc_skillmanager.editwindow.h)
 	GUI_WindowVisible(mc_skillmanager.editwindow.name,false)
-	--[[SKM_NAME = ""
-	SKM_ON = "0"
-	SKM_Prio = 0
-	SKM_LOS = "1"
-	SKM_CHAN = "0"
-	SKM_MinR = 0
-	SKM_MaxR = 0
-	SKM_TType = "Enemy"
-	SKM_OutOfCombat = "Either"
-	SKM_PHPL = 0
-	SKM_PHPB = 0
-	SKM_PPowL = 0
-	SKM_PPowB = 0
-	SKM_PEff1 = ""
-	SKM_PCondC = 0
-	SKM_PNEff1 = ""
-	SKM_TMove = "Either"
-	SKM_THPL = 0
-	SKM_THPB = 0
-	SKM_TECount = 0
-	SKM_TERange = 0
-	SKM_TACount = 0
-	SKM_TARange = 0
-	SKM_TEff1 = ""
-	SKM_TNEff1 = ""
-	SKM_TCondC = 0
-	SKM_PBoonC = 0
-	SKM_TBoonC = 0--]]
 	
 	GUI_NewButton(mc_skillmanager.editwindow.name,"DELETE","SMEDeleteEvent")
 	RegisterEventHandler("SMEDeleteEvent",mc_skillmanager.EditorButtonHandler)	
@@ -988,7 +960,7 @@ function mc_skillmanager.HealMe()
 				--Try to find a "healskill" in our current Skill List
 				local currentSlot = 0
 				for i = 1, 16, 1 do					
-					if ( mc_skillmanager.cskills[i] and mc_skillmanager.cskills[i].skillID == skill.skillID and mc_skillmanager.cskills[i].cooldown == 0 and skill.ttype == "Self") then						
+					if ( mc_skillmanager.cskills[i] and mc_skillmanager.cskills[i].skillID == skill.skillID and mc_skillmanager.cskills[i].cooldown == 0 and skill.ttype == "Self" and skill.ooc ~= "No") then						
 						--d("Found Matching Skill, Cast Slot "..tostring(i) .. " Name "..tostring(mc_skillmanager.cskills[i].name))
 						currentSlot = i						
 						break

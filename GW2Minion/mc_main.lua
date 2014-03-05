@@ -25,7 +25,15 @@ function mc_global.moduleinit()
 	if ( Settings.GW2Minion.gDoEvents == nil ) then
         Settings.GW2Minion.gDoEvents = "1"
     end
-	
+	if ( Settings.GW2Minion.gAutostartbot == nil ) then
+		Settings.GW2Minion.gAutostartbot = "0"
+	end
+	if ( Settings.GW2Minion.gGuestServer == nil ) then
+		Settings.GW2Minion.gGuestServer = "None"
+	end
+	if ( Settings.GW2Minion.gSkipCutscene == nil ) then
+		Settings.GW2Minion.gSkipCutscene = "None"
+	end
 	
 	-- MAIN WINDOW
 	GUI_NewWindow(mc_global.window.name,mc_global.window.x,mc_global.window.y,mc_global.window.width,mc_global.window.height)
@@ -33,17 +41,19 @@ function mc_global.moduleinit()
 		
 	GUI_NewButton(mc_global.window.name,GetString("showradar"),"Radar.toggle")
 	RegisterEventHandler("mc_global.startStop", mc_global.eventhandler)
-	GUI_NewCheckbox(mc_global.window.name,GetString("botEnabled"),"gBotRunning",GetString("botStatus"));
-	GUI_NewComboBox(mc_global.window.name,GetString("botMode"),"gBotMode",GetString("botStatus"),"None");
+	GUI_NewCheckbox(mc_global.window.name,GetString("botEnabled"),"gBotRunning",GetString("botStatus"))
+	GUI_NewComboBox(mc_global.window.name,GetString("botMode"),"gBotMode",GetString("botStatus"),"None")
 	-- Debug fields
-	GUI_NewField(mc_global.window.name,"Task","dTrace",GetString("botStatus"));
-	GUI_NewField(mc_global.window.name,"AttackRange","dAttackRange",GetString("botStatus"));
+	--GUI_NewField(mc_global.window.name,"Task","dTrace",GetString("botStatus"))
+	GUI_NewField(mc_global.window.name,"AttackRange","dAttackRange",GetString("botStatus"))
 		
-	GUI_NewNumeric(mc_global.window.name,GetString("pulseTime"),"gPulseTime",GetString("settings"),"10","10000");
+	GUI_NewNumeric(mc_global.window.name,GetString("pulseTime"),"gPulseTime",GetString("settings"),"10","10000")
 
-	GUI_NewCheckbox(mc_global.window.name,GetString("depositItems"),"gDepositItems",GetString("settings"));	
-	GUI_NewCheckbox(mc_global.window.name,GetString("doEvents"),"gDoEvents",GetString("settings"));
-	
+	GUI_NewCheckbox(mc_global.window.name,GetString("depositItems"),"gDepositItems",GetString("settings"))	
+	GUI_NewCheckbox(mc_global.window.name,GetString("doEvents"),"gDoEvents",GetString("settings"))
+	GUI_NewComboBox(mc_global.window.name,GetString("guestserver"),"gGuestServer",GetString("settings"),"None")
+	GUI_NewCheckbox(mc_global.window.name,GetString("autoStartBot"),"gAutostartbot",GetString("settings"))
+	GUI_NewCheckbox(mc_global.window.name,GetString("skipcutscene"),"gSkipCutscene",GetString("settings"))
 
 	
 	GUI_NewButton(mc_global.window.name, GetString("advancedSettings"), "AdvancedSettings.toggle")
@@ -57,10 +67,7 @@ function mc_global.moduleinit()
 	GUI_NewButton(mc_global.advwindow.name, GetString("questManager"), "QuestManager.toggle")	
 	GUI_NewButton(mc_global.advwindow.name, GetString("skillManager"), "SkillManager.toggle")
 	GUI_NewButton(mc_global.advwindow.name, GetString("meshManager"), "ToggleMeshmgr")
-	
-	
-	
-	
+		
 	GUI_WindowVisible(mc_global.advwindow.name,false)
 	
 	-- setup bot mode
@@ -72,6 +79,25 @@ function mc_global.moduleinit()
             i,entry = next ( mc_global.BotModes,i)
         end
     end
+	
+	-- GuestServer
+	local newserverlist = "None"
+	local homeserverid = GetHomeServer()
+	local serverlist = {}	
+	if ( homeserverid > 1000 and homeserverid < 2000 ) then
+		serverlist = mc_datamanager.ServersUS
+	elseif ( homeserverid > 2000 and homeserverid < 3000 ) then
+		serverlist = mc_datamanager.ServersEU
+	end	
+	if ( TableSize(serverlist) > 0) then
+		local i,entry = next ( serverlist)
+		while i and entry do			
+			newserverlist = newserverlist..","..entry.name
+			i,entry = next ( serverlist,i)
+		end
+	end
+	gGuestServer_listitems = newserverlist
+	gGuestServer = Settings.GW2Minion.gGuestServer
     
     gBotMode_listitems = botModes    
     gBotMode = Settings.GW2Minion.gBotMode	
@@ -81,7 +107,8 @@ function mc_global.moduleinit()
 	gPulseTime = Settings.GW2Minion.gPulseTime	
 	gDepositItems = Settings.GW2Minion.gDepositItems	
 	gDoEvents = Settings.GW2Minion.gDoEvents	
-	
+	gAutostartbot = Settings.GW2Minion.gAutostartbot
+	gSkipCutscene = Settings.GW2Minion.gSkipCutscene
 	GUI_UnFoldGroup(mc_global.window.name,GetString("botStatus") );		
 end
 
@@ -109,10 +136,15 @@ function mc_global.onupdate( event, tickcount )
 				
 				-- Unstuck OnUpdate
 				mc_ai_unstuck:OnUpdate( tickcount )
-												
-				dTrace = ml_GetTraceString()
+											
+				GUI_SetStatusBar(ml_GetTraceString())
 			end
 		end
+	
+	elseif ( mc_global.running == false and gAutostartbot == "1" ) then
+		mc_global.togglebot(1)
+	else
+		GUI_SetStatusBar("BOT: Not Running")
 	end
 	
 	-- Mesher OnUpdate
@@ -126,6 +158,54 @@ function mc_global.onupdate( event, tickcount )
 	
 	-- BlackList OnUpdate
 	mc_blacklist.OnUpdate( tickcount )
+end
+
+mc_global.Charscreen_lastrun = 0
+function mc_global.OnUpdateCharSelect(event, tickcount )
+	GUI_SetStatusBar("In Characterscreen...Autostart Bot: "..tostring(gAutostartbot).. ", (Guest)Server: "..tostring(gGuestServer))
+	mc_global.now = tickcount
+	if (mc_global.Charscreen_lastrun == 0) then
+		mc_global.Charscreen_lastrun = tickcount
+	elseif ( gAutostartbot == "1" and tickcount - mc_global.Charscreen_lastrun > 2500) then
+		mc_global.Charscreen_lastrun = tickcount
+				
+		if ( gGuestServer ~= nil and gGuestServer ~= "None" ) then
+			local serverlist = {}
+			local homeserverid = GetHomeServer()
+			if ( homeserverid > 1000 and homeserverid < 2000 ) then
+				serverlist = mc_datamanager.ServersUS
+			elseif ( homeserverid > 2000 and homeserverid < 3000 ) then
+				serverlist = mc_datamanager.ServersEU
+			end	
+			if ( TableSize(serverlist) > 0) then
+				local i,entry = next ( serverlist)
+				while i and entry do			
+					if ( gGuestServer == entry.name ) then
+						SetServer(entry.id)
+						d("Selecting Guestserver: "..tostring(entry.name) .." ID: ".. tostring(entry.id))
+						break
+					end
+					i,entry = next ( serverlist,i)
+				end
+			end
+			--gGuestServer_listitems = newserverlist
+			--gGuestServer = Settings.GW2Minion.gGuestServer
+			
+		end		
+		d("Pressing PLAY")
+		PressKey("RETURN")				
+	end
+end
+
+mc_global.Cinema_lastrun = 0
+function mc_global.OnUpdateCutscene(event, tickcount )
+	GUI_SetStatusBar("In Cutscene...")
+	mc_global.now = tickcount
+	if ( gSkipCutscene == "1" and tickcount - mc_global.Cinema_lastrun > 2000 ) then
+		mc_global.Cinema_lastrun = tickcount
+		d("Skipping Cutscene...")
+		PressKey("ESC")
+	end
 end
 
 
@@ -153,7 +233,10 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 			k == "gMultiPort" or 
 			k == "gMultiPw" or 
 			k == "gMultiIP" or 
-			k == "gMultiBotEnabled" )			
+			k == "gMultiBotEnabled" or
+			k == "gAutostartbot" or
+			k == "gGuestServer" or
+			k == "gSkipCutscene" )			
 		then
 			Settings.GW2Minion[tostring(k)] = v
 		elseif (k == "dMember1") then Settings.GW2Minion.Party[1] = v Settings.GW2Minion.Party = Settings.GW2Minion.Party
@@ -234,3 +317,5 @@ end
 RegisterEventHandler("Module.Initalize",mc_global.moduleinit)
 RegisterEventHandler("Gameloop.Update",mc_global.onupdate)
 RegisterEventHandler("GUI.Update",mc_global.guivarupdate)
+RegisterEventHandler("Gameloop.CharSelectUpdate",mc_global.OnUpdateCharSelect)
+RegisterEventHandler("Gameloop.CutsceneUpdate",mc_global.OnUpdateCutscene)

@@ -101,6 +101,145 @@ if ( mc_global.BotModes) then
 	mc_global.BotModes[GetString("questRunProfile")] = mc_ai_questprofile
 end
 
+
+
+-- Run Quest(s) for the GrindTask, this will just finish (try to lol) the current quest instead of auto picking a new quest when the current once is finished
+mc_ai_doquest = inheritsFrom(ml_task)
+mc_ai_doquest.name = "DoQuest"
+
+function mc_ai_doquest.Create()
+	local newinst = inheritsFrom(mc_ai_doquest)
+    
+    --ml_task members
+    newinst.valid = true
+    newinst.completed = false
+    newinst.subtask = nil
+    newinst.process_elements = {}
+    newinst.overwatch_elements = {}
+	newinst.currentQuest = nil
+	newinst.currentStep = nil
+		
+    return newinst
+end
+
+function mc_ai_doquest:Init()
+
+	-- Dead?
+	self:add(ml_element:create( "Dead", c_dead, e_dead, 225 ), self.process_elements)
+	
+	-- Downed
+	self:add(ml_element:create( "Downed", c_downed, e_downed, 200 ), self.process_elements)
+	
+	-- AoELooting Characters
+	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 175 ), self.process_elements)
+		
+	-- Partymember Downed/Dead
+	self:add(ml_element:create( "RevivePartyMember", c_memberdown, e_memberdown, 170 ), self.process_elements)	
+		
+	-- Aggro
+	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 165 ), self.process_elements) --reactive queue
+	
+	-- Dont Dive lol
+	self:add(ml_element:create( "SwimUP", c_SwimUp, e_SwimUp, 160 ), self.process_elements)
+	
+	-- Normal Chests	
+	self:add(ml_element:create( "LootingChest", c_LootChests, e_LootChests, 155 ), self.process_elements)
+	
+	-- Resting
+	self:add(ml_element:create( "Resting", c_resting, e_resting, 145 ), self.process_elements)	
+
+	-- Normal Looting
+	self:add(ml_element:create( "Looting", c_LootCheck, e_LootCheck, 130 ), self.process_elements)
+
+	-- Deposit Items
+	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 120 ), self.process_elements)	
+	
+	-- Re-Equip Gathering Tools
+	self:add(ml_element:create( "EquippingGatherTool", c_GatherToolsCheck, e_GatherToolsCheck, 110 ), self.process_elements)	
+	
+	-- Quick-Repair & Vendoring (when a vendor is nearby)	
+	self:add(ml_element:create( "QuickSellItems", c_quickvendorsell, e_quickvendorsell, 100 ), self.process_elements)
+	self:add(ml_element:create( "QuickBuyItems", c_quickbuy, e_quickbuy, 99 ), self.process_elements)
+	self:add(ml_element:create( "QuickRepairItems", c_quickrepair, e_quickrepair, 98 ), self.process_elements)
+	
+	-- Repair & Vendoring
+	self:add(ml_element:create( "SellItems", c_vendorsell, e_vendorsell, 90 ), self.process_elements)	
+	self:add(ml_element:create( "BuyItems", c_vendorbuy, e_vendorbuy, 89 ), self.process_elements)
+	self:add(ml_element:create( "RepairItems", c_vendorrepair, e_vendorrepair, 88 ), self.process_elements)
+	
+	-- Salvaging
+	self:add(ml_element:create( "Salvaging", c_salvage, e_salvage, 75 ), self.process_elements)
+		
+	-- ReviveNPCs
+	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 70 ), self.process_elements)	
+	
+	-- Gathering
+	self:add(ml_element:create( "Gathering", c_Gathering, e_Gathering, 65 ), self.process_elements)
+			
+	-- Do Quest 
+	self:add(ml_element:create( "DoQuest", c_doQuest, e_doQuest, 50 ), self.process_elements)
+	
+    self:AddTaskCheckCEs()
+end
+
+function mc_ai_doquest:task_complete_eval()
+	return self.currentQuest == nil
+end
+function mc_ai_doquest:task_complete_execute()
+    self.completed = true
+end
+
+-- C n E's 
+------------
+c_doQuest = inheritsFrom( ml_cause )
+e_doQuest = inheritsFrom( ml_effect )
+function c_doQuest:evaluate()
+    return ml_task_hub:CurrentTask().currentQuest ~= nil	
+end
+function e_doQuest:execute()
+	ml_log("e_doQuest")
+	-- Get next QuestStep
+	if ( ml_task_hub:CurrentTask().currentStep == nil or ml_task_hub:CurrentTask().currentStep.done == "1" or ( ml_task_hub:CurrentTask().currentStep.script ~= nil and ml_task_hub:CurrentTask().currentStep.script.completed == true)) then
+			
+		-- Set this step to "Finished" in our character's questprofile progress			-- 									
+		if ( ml_task_hub:CurrentTask().currentStep~=nil and ml_task_hub:CurrentTask().currentStep.script ~= nil ) then 
+			d("QuestStep "..tostring(ml_task_hub:CurrentTask().currentStep.name).." completed!") 				
+			ml_quest_mgr.SetQuestData( ml_task_hub:CurrentTask().currentQuest, ml_task_hub:CurrentTask().currentStep, nil, "done", "1" )
+			ml_task_hub:CurrentTask().currentStep = nil
+		end
+					
+		-- Getting next questStep
+		ml_task_hub:CurrentTask().currentStep = ml_quest_mgr.GetNextQuestStep( ml_task_hub:CurrentTask().currentQuest )				
+		if ( ml_task_hub:CurrentTask().currentStep == nil ) then
+			d("All steps of current Quest "..tostring( ml_task_hub:CurrentTask().currentQuest.name).." are finished!")
+			ml_quest_mgr.SetQuestData( ml_task_hub:CurrentTask().currentQuest, nil, nil, "done", "1" )
+							
+			-- Reset QuestSteps for repeatable Quests
+			if ( ml_task_hub:CurrentTask().currentQuest.repeatable == "1" ) then
+				d("Resetting QuestSteps for "..tostring( ml_task_hub:CurrentTask().currentQuest.name))
+				ml_quest_mgr.ResetQuest( ml_task_hub:CurrentTask().currentQuest )
+			end
+			
+			d("Saving QuestProgress..")
+			ml_quest_mgr.SaveProfile()		
+			ml_task_hub:CurrentTask().currentQuest = nil
+		end			
+	else
+		-- Execute currentStep Task
+		if ( ml_task_hub:CurrentTask().currentStep.script ~= nil ) then
+			ml_task_hub:CurrentTask():AddSubTask(ml_task_hub:CurrentTask().currentStep.script)
+			
+		else
+			ml_error("QuestStep "..tostring(ml_task_hub:CurrentTask().currentStep.name).." has NO script selected!!!!!")
+		end			
+	end	
+end
+
+
+
+
+-- Utility functions
+
 function mc_questmanager.GenerateMapExploreProfile()
 	local mdata = mc_datamanager.GetLocalMapData( Player:GetLocalMapID() )
 	if ( TableSize(mdata) > 0 and TableSize(mdata["floors"]) > 0 and TableSize(mdata["floors"][0]) > 0) then
@@ -114,13 +253,14 @@ function mc_questmanager.GenerateMapExploreProfile()
 		
 				
 		
-		local levelmap = {} -- Create a "2D - Levelmap/Table" which provides us an avg. level for all other entries in the zone
+		mc_datamanager.levelmap = {} -- Create a "2D - Levelmap/Table" which provides us an avg. level for all other entries in the zone
 		local id,entry = next (sectors)
 		while id and entry do			
 			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
 			-- CREATE GOTO SECTOR QUEST
-			mc_questmanager.AddExploreSectorQuest( realpos, entry, entry["level"] )			
-			table.insert(levelmap, { pos = realpos, level = entry["level"] } )			
+			local position = { x=realpos[1], y=realpos[2], z=-2500}
+			mc_questmanager.AddExploreSectorQuest( position, entry, entry["level"] )			
+			table.insert(mc_datamanager.levelmap, { pos= position, level = entry["level"] } )			
 			id,entry = next(sectors,id)
 		end
 		
@@ -129,8 +269,9 @@ function mc_questmanager.GenerateMapExploreProfile()
 		while id and entry do			
 			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
 			-- CREATE GOTO HEARTQUEST QUEST
-			mc_questmanager.AddDoHeartQuest( realpos, entry, entry["level"] )	
-			table.insert(levelmap, { pos = realpos, level = entry["level"] } )			
+			local position = { x=realpos[1], y=realpos[2], z=-2500}
+			--mc_questmanager.AddDoHeartQuest( position, entry, entry["level"] )	
+			table.insert(mc_datamanager.levelmap, {  pos= position, level = entry["level"] } )			
 			id,entry = next(tasks,id)
 		end
 				
@@ -138,15 +279,16 @@ function mc_questmanager.GenerateMapExploreProfile()
 		local id,entry = next (pois)
 		while id and entry do
 			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
-			--d(tostring(entry["type"])..": "..tostring(entry["name"]).." : "..realpos[1].." "..realpos[2].. " Level: "..tostring(mc_questmanager.GetApproxLevel( levelmap, realpos )))
+			local position = { x=realpos[1], y=realpos[2], z=-2500}
+			--d(tostring(entry["type"])..": "..tostring(entry["name"]).." : "..realpos[1].." "..realpos[2].. " Level: "..tostring(mc_questmanager.GetApproxLevel(position )))
 			if ( entry["type"] == "waypoint" ) then
-				mc_questmanager.AddExploreWaypointQuest( realpos, entry , mc_questmanager.GetApproxLevel( levelmap, realpos ) )
+				mc_questmanager.AddExploreWaypointQuest( position, entry , mc_questmanager.GetApproxLevel( position ) )
 			end
 			if ( entry["type"] == "landmark" ) then
-				mc_questmanager.AddExploreLandmarkQuest( realpos, entry , mc_questmanager.GetApproxLevel( levelmap, realpos ) )
+				mc_questmanager.AddExploreLandmarkQuest( position, entry , mc_questmanager.GetApproxLevel( position ) )
 			end
 			if ( entry["type"] == "vista" ) then
-				mc_questmanager.AddExploreVistaQuest( realpos, entry , mc_questmanager.GetApproxLevel( levelmap, realpos ) )
+				mc_questmanager.AddExploreVistaQuest( position, entry , mc_questmanager.GetApproxLevel( position ) )
 			end
 			
 			id,entry = next(pois,id)
@@ -156,8 +298,8 @@ function mc_questmanager.GenerateMapExploreProfile()
 		local id,entry = next (skillpoints)
 		while id and entry do
 			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
-			--d(tostring(entry["name"]).." : "..realpos[1].." "..realpos[2].. " Level: "..tostring(mc_questmanager.GetApproxLevel( levelmap, realpos )))			
-			mc_questmanager.AddGetSkillQuest( realpos, mc_questmanager.GetApproxLevel( levelmap, realpos ) )
+			local position = { x=realpos[1], y=realpos[2], z=-2500}			
+			mc_questmanager.AddGetSkillQuest( position, mc_questmanager.GetApproxLevel( position ) )
 			id,entry = next(skillpoints,id)
 		end	
 		
@@ -169,30 +311,30 @@ function mc_questmanager.GenerateMapExploreProfile()
 end
 
 
-function mc_questmanager.GetApproxLevel( levelmap, pPos )
+function mc_questmanager.GetApproxLevel( pPos )
 	local level = { 0 , 80 }
-	local dist = 999999999
+	local dist = 9999999
 	local idx = 0
-	if ( TableSize(levelmap) > 0 and TableSize(pPos) > 0) then
-		local i, e = next ( levelmap )
+	if ( TableSize(mc_datamanager.levelmap) > 0 and TableSize(pPos) > 0) then
+		local i, e = next ( mc_datamanager.levelmap )
 		while i and e do
-			local dis = Distance2D(e.pos[1], e.pos[2], pPos[1], pPos[2])
-			--d(tostring(dis).." "..tostring(idx).." "..tostring(levelmap[idx]))
+			local dis = Distance2D(e.pos.x, e.pos.y, pPos.x, pPos.y)
+			--d(tostring(dis).." "..tostring(idx).." "..tostring(mc_datamanager.levelmap[idx]))
 			if ( dis < dist ) then
 				dist = dis
 				idx = i
 			end
-			i,e = next( levelmap,i)
+			i,e = next( mc_datamanager.levelmap,i)
 		end
 	end
 	if ( idx ~= 0 ) then
-		level = levelmap[idx].level
+		level = mc_datamanager.levelmap[idx].level
 	end
 	return level
 end
 
 function mc_questmanager.AddExploreSectorQuest( pos2D, entry, level)
-	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( pos2D )
 	local Name = entry["name"] or ""
 	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
 		-- use the 2D x,y and the z from the closeestpointonmesh		
@@ -207,15 +349,15 @@ function mc_questmanager.AddExploreSectorQuest( pos2D, entry, level)
 			prequest = "None",
 			repeatable = "0",
 			steps = {
-				-- Add a simple GoToPosition Step 
+				-- Add a simple ExploreMapObject Step 
 				[1] = { prio = 1,
 					name = "GoTo "..Name,
 					done = "0",
 					script = { 
-						name = "GotoPosition",
+						name = "ExploreMapObject",
 						data = {
-							GotoX = pos2D[1],
-							GotoY = pos2D[2],
+							GotoX = pos2D.x,
+							GotoY = pos2D.y,
 							GotoZ = pos3D.z					
 						},
 					},
@@ -231,7 +373,7 @@ end
 
 function mc_questmanager.AddExploreWaypointQuest( pos2D, entry , level)	
 
-	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( pos2D )
 	local WPName = entry["name"] or ""
 	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
 		-- use the 2D x,y and the z from the closeestpointonmesh		
@@ -246,15 +388,15 @@ function mc_questmanager.AddExploreWaypointQuest( pos2D, entry , level)
 			prequest = "None",
 			repeatable = "0",
 			steps = {
-				-- Add a simple GoToPosition Step 
+				-- Add a simple ExploreMapObject Step 
 				[1] = { prio = 1,
 					name = "GoTo"..WPName,
 					done = "0",
 					script = { 
-						name = "GotoPosition",
+						name = "ExploreMapObject",
 						data = {
-							GotoX = pos2D[1],
-							GotoY = pos2D[2],
+							GotoX = pos2D.x,
+							GotoY = pos2D.y,
 							GotoZ = pos3D.z					
 						},
 					},
@@ -270,7 +412,7 @@ end
 
 function mc_questmanager.AddExploreLandmarkQuest( pos2D, entry , level)	
 
-	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( pos2D )
 	local WPName = entry["name"] or ""
 	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
 		-- use the 2D x,y and the z from the closeestpointonmesh		
@@ -285,15 +427,15 @@ function mc_questmanager.AddExploreLandmarkQuest( pos2D, entry , level)
 			prequest = "None",
 			repeatable = "0",
 			steps = {
-				-- Add a simple GoToPosition Step 
+				-- Add a simple ExploreMapObject Step 
 				[1] = { prio = 1,
 					name = "GoTo"..WPName,
 					done = "0",
 					script = { 
-						name = "GotoPosition",
+						name = "ExploreMapObject",
 						data = {
-							GotoX = pos2D[1],
-							GotoY = pos2D[2],
+							GotoX = pos2D.x,
+							GotoY = pos2D.y,
 							GotoZ = pos3D.z					
 						},
 					},
@@ -309,7 +451,7 @@ end
 
 function mc_questmanager.AddExploreVistaQuest( pos2D, entry , level)	
 
-	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( pos2D )
 	local WPName = "Discover Vista"
 	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
 		-- use the 2D x,y and the z from the closeestpointonmesh		
@@ -331,8 +473,8 @@ function mc_questmanager.AddExploreVistaQuest( pos2D, entry , level)
 					script = { 
 						name = "ExploreVista",
 						data = {
-							GotoX = pos2D[1],
-							GotoY = pos2D[2],
+							GotoX = pos2D.x,
+							GotoY = pos2D.y,
 							GotoZ = pos3D.z					
 						},
 					},
@@ -348,7 +490,7 @@ end
 
 function mc_questmanager.AddDoHeartQuest( pos2D, entry , level)	
 
-	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( pos2D )
 	local WPName = entry["objective"] or ""
 	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
 		-- use the 2D x,y and the z from the closeestpointonmesh		
@@ -370,8 +512,8 @@ function mc_questmanager.AddDoHeartQuest( pos2D, entry , level)
 					script = { 
 						name = "GotoPosition",
 						data = {
-							GotoX = pos2D[1],
-							GotoY = pos2D[2],
+							GotoX = pos2D.x,
+							GotoY = pos2D.y,
 							GotoZ = pos3D.z					
 						},
 					},
@@ -387,7 +529,7 @@ end
 
 function mc_questmanager.AddGetSkillQuest( pos2D, level)	
 
-	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( {x=pos2D[1], y=pos2D[2] , z=-2500 })
+	local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( pos2D )
 	local WPName = "SkillChallenge"
 	if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
 		-- use the 2D x,y and the z from the closeestpointonmesh		
@@ -409,8 +551,8 @@ function mc_questmanager.AddGetSkillQuest( pos2D, level)
 					script = { 
 						name = "DoSkillChallenge",
 						data = {
-							GotoX = pos2D[1],
-							GotoY = pos2D[2],
+							GotoX = pos2D.x,
+							GotoY = pos2D.y,
 							GotoZ = pos3D.z					
 						},
 					},

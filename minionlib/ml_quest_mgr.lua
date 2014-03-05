@@ -117,6 +117,8 @@ function ml_quest_mgr.UpdateCurrentProfileData()
 		
 		-- Check if we have a character specific progress file of that profile and load that first
 		local pName = Player.name	
+		if (pName == nil or pName == "") then return end
+		
 		pName = pName:gsub('%W','') -- only alphanumeric
 		if ( pName ~= nil and pName ~= "" ) then        
 			ml_quest_mgr.QuestList = persistence.load( ml_quest_mgr.profilepath..gQMprofile.."_"..pName..".qmpx")
@@ -225,7 +227,7 @@ function ml_quest_mgr.UpdateProfiles()
 	
 	--Update Step-Script List
 	local scripts = "None"
-	local scriptlist = dirlist(ml_quest_mgr.profilepath,".*lua")
+	local scriptlist = dirlist(ml_quest_mgr.profilepath..[[Scripts\]],".*lua")
 	if ( TableSize(scriptlist) > 0) then			
 		local i,script = next ( scriptlist)
 		while i and script do				
@@ -624,7 +626,7 @@ function ml_quest_mgr.RefreshScript()
 	-- Load the UI elements of the selected script
 	if ( gQMS_Script ~= nil and gQMS_Script ~= "" and gQMS_Script ~= "None" ) then
 		-- Load Custom Step UI from script		
-		local loadedFunction, cError = loadfile(ml_quest_mgr.profilepath..gQMS_Script..".lua")
+		local loadedFunction, cError = loadfile(ml_quest_mgr.profilepath..[[Scripts\]]..gQMS_Script..".lua")
 		if ( loadedFunction == nil) then
 			ml_error(" Couldnt load scriptfile")
 		else			
@@ -731,7 +733,7 @@ function ml_quest_mgr.RefreshScriptData()
 					
 					if ( ml_quest_mgr.QuestList[qprio].steps[sprio].script.name and ml_quest_mgr.QuestList[qprio].steps[sprio].script.name ~= "" and ml_quest_mgr.QuestList[qprio].steps[sprio].script.name ~= "None") then
 					
-						local loadedFunction, cError = loadfile(ml_quest_mgr.profilepath..ml_quest_mgr.QuestList[qprio].steps[sprio].script.name..".lua")
+						local loadedFunction, cError = loadfile(ml_quest_mgr.profilepath..[[Scripts\]]..ml_quest_mgr.QuestList[qprio].steps[sprio].script.name..".lua")
 						if ( loadedFunction == nil) then
 							ml_error(" Couldnt load scriptfile: "..tostring(ml_quest_mgr.QuestList[qprio].steps[sprio].script.name))
 						else			
@@ -907,7 +909,7 @@ function ml_quest_mgr.GetNextQuestStep( currentQuest )
 					
 			if ( step.done == "0" and ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name and ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name ~= "" and ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name ~= "None") then
 			
-				local loadedFunction, cError = loadfile(ml_quest_mgr.profilepath..ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name..".lua")
+				local loadedFunction, cError = loadfile(ml_quest_mgr.profilepath..[[Scripts\]]..ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name..".lua")
 				if ( loadedFunction == nil) then
 					ml_error(" in loading scriptfile: "..tostring(ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name))
 				else			

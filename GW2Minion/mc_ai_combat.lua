@@ -33,10 +33,12 @@ function mc_ai_combatAttack:Init()
 	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 175 ), self.process_elements)
 		
 	-- AoELooting Gadgets/Chests needed ?
+		
+	-- Partymember Downed/Dead
+	self:add(ml_element:create( "RevivePartyMember", c_memberdown, e_memberdown, 172 ), self.process_elements)	
 	
-	
-	-- Revive PartyMember
-	
+	-- Revive Players
+	self:add(ml_element:create( "RevivePlayer", c_reviveDownedPlayersInCombat, e_reviveDownedPlayersInCombat, 170 ), self.process_elements)
 		
 	-- Aggro
 	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 165 ), self.process_elements) --reactive queue
@@ -46,7 +48,7 @@ function mc_ai_combatAttack:Init()
 	
 	-- Normal Chests	
 	self:add(ml_element:create( "LootingChest", c_LootChests, e_LootChests, 155 ), self.process_elements)
-	
+		
 	-- Resting
 	self:add(ml_element:create( "Resting", c_resting, e_resting, 145 ), self.process_elements)	
 
@@ -95,7 +97,7 @@ function mc_ai_combatAttack:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_combatAttack:task_complete_eval()	
-	if ( mc_global.now - self.duration > 0 or TableSize(CharacterList("attackable,alive,nearest,onmesh,maxdistance=4000,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) == 0) then 
+	if ( mc_global.now - self.duration > 0 or TableSize(CharacterList("attackable,alive,nearest,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) == 0) then 
 		Player:StopMovement()
 		return true
 	end
@@ -109,12 +111,14 @@ end
 ------------
 c_Aggro = inheritsFrom( ml_cause )
 e_Aggro = inheritsFrom( ml_effect )
+c_Aggro.threshold = 80
 function c_Aggro:evaluate()
    -- ml_log("c_Aggro")
-    return TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
+    return Player.health.percent < c_Aggro.threshold and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
 end
 function e_Aggro:execute()
 	ml_log("e_Aggro ")
+	c_Aggro.threshold = math.random(50,100)
 	Player:StopMovement()
 	local newTask = mc_ai_combatDefend.Create()
 	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
@@ -134,6 +138,8 @@ end
 
 
 e_SearchTarget = inheritsFrom( ml_effect )
+e_SearchTarget.lastID = 0
+e_SearchTarget.count = 0
 function e_SearchTarget:execute()
 	ml_log("e_SearchTarget")
 	-- Weakest Aggro in CombatRange first	
@@ -161,7 +167,22 @@ function e_SearchTarget:execute()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("New Target: "..(E.name).." ID:"..tostring(id))			
+			d("New Target: "..(E.name).." ID:"..tostring(id))
+			
+			-- Blacklist if we cant select it..happens sometimes when it is outside our select range
+			if (e_SearchTarget.lastID == id ) then
+				e_SearchTarget.count = e_SearchTarget.count+1
+				if ( e_SearchTarget.count > 30 ) then
+					e_SearchTarget.count = 0
+					e_SearchTarget.lastID = 0
+					mc_blacklist.AddBlacklistEntry(GetString("monsters"), E.contentID, E.name, mc_global.now + 60000)
+					d("Seems we cant select/target/reach our target, blacklisting it for 60seconds..")
+				end
+			else
+				e_SearchTarget.lastID = id
+				e_SearchTarget.count = 0
+			end
+			
 			return ml_log(Player:SetTarget(id))
 		end		
 	end
@@ -201,7 +222,13 @@ function mc_ai_combatDefend:Init()
 	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 125 ), self.process_elements)
 		
 	-- AoELooting Gadgets/Chests needed
-    
+	
+	-- Partymember Downed/Dead
+	self:add(ml_element:create( "RevivePartyMember", c_memberdown, e_memberdown, 122 ), self.process_elements)
+	
+	-- Revive Players
+	self:add(ml_element:create( "RevivePlayer", c_reviveDownedPlayersInCombat, e_reviveDownedPlayersInCombat, 120 ), self.process_elements)
+	    
 	-- Deposit Items
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 90 ), self.process_elements)	
 	
@@ -291,6 +318,9 @@ function c_MoveIntoCombatRange:evaluate()
 	end
 	return false
 end
+
+e_MoveIntoCombatRange.tmr = 0
+e_MoveIntoCombatRange.threshold = 2000
 function e_MoveIntoCombatRange:execute()
 	ml_log("e_MoveIntoCombRng")
 	local t = Player:GetTarget()
@@ -304,6 +334,12 @@ function e_MoveIntoCombatRange:execute()
 				if (tonumber(navResult) < 0) then					
 					ml_error("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
 				end
+				
+				if ( mc_global.now - e_MoveIntoCombatRange.tmr > e_MoveIntoCombatRange.threshold ) then
+					e_MoveIntoCombatRange.tmr = mc_global.now
+					e_MoveIntoCombatRange.threshold = math.random(1000,5000)
+					mc_skillmanager.HealMe()
+				end	
 				c_MoveIntoCombatRange.running = true
 				return true
 			end
@@ -398,7 +434,7 @@ function mc_ai_combatRevive:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_combatRevive:task_complete_eval()	
-	if ( c_dead:evaluate() or c_downed:evaluate() or c_Aggro:evaluate() or c_LootChests:evaluate() or c_LootCheck:evaluate() or c_reviveNPC:evaluate() == false) then 
+	if ( c_dead:evaluate() or c_downed:evaluate() or ( c_Aggro:evaluate() and Player.health.percent < 90) or c_LootChests:evaluate() or c_LootCheck:evaluate() or c_reviveNPC:evaluate() == false) then 
 		Player:StopMovement()
 		return true
 	end
@@ -427,11 +463,13 @@ end
 c_revive = inheritsFrom( ml_cause )
 e_revive = inheritsFrom( ml_effect )
 function c_revive:evaluate()
-    return (not Player.inCombat and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500")) > 0)
+    return (not Player.inCombat and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))) > 0)
 end
+e_revive.lastID = 0
+e_revive.counter = 0
 function e_revive:execute()
 	ml_log("e_revive")
-	local CharList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500")
+	local CharList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))
 	if ( TableSize(CharList) > 0 ) then
 		local id,entity = next (CharList)
 		if ( id and entity ) then
@@ -442,7 +480,66 @@ function e_revive:execute()
 				if ( tPos ) then
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then
-						ml_error("e_revive.MoveIntoCombatRange result: "..tonumber(navResult))					
+						ml_error("e_revive.MoveInToCombatRange result: "..tonumber(navResult))
+						if ( e_revive.lastID ~= entity.id ) then
+							e_revive.lastID = entity.id
+							e_revive.counter = 0
+						else
+							if ( e_revive.counter > 15 ) then
+								d("Blacklisting "..entity.name)
+								mc_blacklist.AddBlacklistEntry(GetString("monsters"), entity.contentID, entity.name, mc_global.now + 60000)
+							else
+								e_revive.counter = e_revive.counter + 1
+							end
+						end
+						return ml_log(false)
+					end
+					e_revive.lastID = 0
+					e_revive.counter = 0					
+					ml_log("MoveToRevive..")
+					return true
+				end
+			else
+				-- Grab that thing
+				Player:StopMovement()
+				local t = Player:GetTarget()
+				if ( not t or t.id ~= id ) then
+					Player:SetTarget( id )
+				else
+					-- yeah I know, but this usually doesnt break ;)											
+					Player:Interact( id )
+					ml_log("Reviving..")
+					mc_global.Wait(1000)
+					return true
+				end
+			end
+		end
+	end
+	return ml_log(false)	
+end
+
+c_reviveDownedPlayersInCombat = inheritsFrom( ml_cause )
+e_reviveDownedPlayersInCombat = inheritsFrom( ml_effect )
+function c_reviveDownedPlayersInCombat:evaluate()
+	if ( Player.health.percent > 50 ) then		
+		return TableSize(CharacterList("shortestpath,selectable,interactable,downed,friendly,player,onmesh,maxdistance=2000")) > 0
+	end
+	return false
+end
+function e_reviveDownedPlayersInCombat:execute()
+	ml_log("e_reviveDownedPlayersInCombat")
+	local CharList = CharacterList("shortestpath,selectable,interactable,downed,friendly,player,onmesh,maxdistance=1500")
+	if ( TableSize(CharList) > 0 ) then
+		local id,entity = next (CharList)
+		if ( id and entity ) then
+			
+			if (not entity.isInInteractRange) then
+				-- MoveIntoInteractRange
+				local tPos = entity.pos
+				if ( tPos ) then
+					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+					if (tonumber(navResult) < 0) then
+						ml_error("e_revive.MoveintoCombatRange result: "..tonumber(navResult))					
 					end
 					ml_log("MoveToRevive..")
 					return true
@@ -455,20 +552,17 @@ function e_revive:execute()
 					Player:SetTarget( id )
 				else
 					-- yeah I know, but this usually doesnt break ;)
-					if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
 						Player:Interact( id )
 						ml_log("Reviving..")
 						mc_global.Wait(1000)
 						return true
-					end	
+						
 				end
 			end
 		end
 	end
 	return ml_log(false)	
 end
-
-
 
 
 function DoCombatMovement()

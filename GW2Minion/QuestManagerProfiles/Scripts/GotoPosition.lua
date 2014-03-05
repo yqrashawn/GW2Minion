@@ -1,6 +1,6 @@
--- Goto Position x,y,z and interact with closest Vista - script for QuestManager
+-- Goto Position x,y,z script for QuestManager
 script = inheritsFrom( ml_task )
-script.name = "ExploreVista"
+script.name = "GotoPosition"
 script.Data = {}
 
 --******************
@@ -10,7 +10,9 @@ function script:UIInit( identifier )
 	-- You need to create the ScriptUI Elements exactly like you see here, the "event" needs to start with "tostring(identifier).." and the group needs to be GetString("questStepDetails")
 	GUI_NewField(ml_quest_mgr.stepwindow.name,"Goto X",tostring(identifier).."GotoX",GetString("questStepDetails"))
 	GUI_NewField(ml_quest_mgr.stepwindow.name,"Goto Y",tostring(identifier).."GotoY",GetString("questStepDetails"))
-	GUI_NewField(ml_quest_mgr.stepwindow.name,"Goto Z",tostring(identifier).."GotoZ",GetString("questStepDetails"))		
+	GUI_NewField(ml_quest_mgr.stepwindow.name,"Goto Z",tostring(identifier).."GotoZ",GetString("questStepDetails"))
+	GUI_NewButton(ml_quest_mgr.stepwindow.name,"Set Current Position",tostring(identifier).."SetPosition",GetString("questStepDetails"))
+		
 end
 
 function script:SetData( identifier, tData )
@@ -106,6 +108,8 @@ function script.c_goto:evaluate()
 	end
 	return false
 end
+script.e_goto.tmr = 0
+script.e_goto.threshold = 2000
 function script.e_goto:execute()
 	ml_log("e_goto")
 	local pPos = Player.pos
@@ -118,39 +122,17 @@ function script.e_goto:execute()
 			if (tonumber(navResult) < 0) then					
 				ml_error("e_gotoPosition result: "..tonumber(navResult))					
 			end			
+
+			if ( mc_global.now - script.e_goto.tmr > script.e_goto.threshold ) then
+				script.e_goto.tmr = mc_global.now
+				script.e_goto.threshold = math.random(1000,5000)
+				mc_skillmanager.HealMe()
+			end	
+
 			return ml_log(true)
 		else
-			local MList = MapMarkerList("onmesh,nearest,isvista,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("mapobjects")))
-			if ( TableSize(MList) > 0 ) then
-				local id,entry = next(MList)
-				if id and entry then
-					if ( entry.distance < 120 ) then
-						local t = Player:GetInteractableTarget()
-						if ( t ) then
-							d("Interacting with Vista..")
-							Player:Interact(t)
-							mc_global.Wait(2000)
-						else
-							ml_error("No Vista to Interact nearby ??")
-							mc_global.Wait(2000)
-						end
-					else
-						ml_error("Vista not in Range yet, trying to get closer..")
-						local mPos = entry.pos
-						if ( mPos ) then
-							local navResult = tostring(Player:MoveTo(mPos.x,mPos.y,mPos.z,50,false,false,false))
-							if (tonumber(navResult) < 0) then					
-								ml_error("e_gotoVistaPosition result: "..tonumber(navResult))					
-							end
-						else
-							ml_error("Vista Marker has no position!")
-						end						
-					end				
-				end
-			else
-				ml_error("Seems there is NO VISTA nearby !!?")
-				ml_task_hub:CurrentTask().completed = true				
-			end			
+
+			ml_task_hub:CurrentTask().completed = true
 		end
 	end	
 	return ml_log(false)

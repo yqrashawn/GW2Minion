@@ -1,6 +1,6 @@
 -- Goto Position x,y,z and interact with closest Vista - script for QuestManager
 script = inheritsFrom( ml_task )
-script.name = "DoSkillChallenge"
+script.name = "ExploreVista"
 script.Data = {}
 
 --******************
@@ -120,7 +120,7 @@ function script.e_goto:execute()
 			end			
 			return ml_log(true)
 		else
-			--[[local MList = MapMarkerList("onmesh,nearest,isvista,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("mapobjects")))
+			local MList = MapMarkerList("onmesh,nearest,isvista,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("mapobjects")))
 			if ( TableSize(MList) > 0 ) then
 				local id,entry = next(MList)
 				if id and entry then
@@ -128,7 +128,7 @@ function script.e_goto:execute()
 						local t = Player:GetInteractableTarget()
 						if ( t ) then
 							d("Interacting with Vista..")
-							Player:Interact(t)
+							Player:Interact(t.id)
 							mc_global.Wait(2000)
 						else
 							ml_error("No Vista to Interact nearby ??")
@@ -150,8 +150,7 @@ function script.e_goto:execute()
 			else
 				ml_error("Seems there is NO VISTA nearby !!?")
 				ml_task_hub:CurrentTask().completed = true				
-			end	]]
-			d("TODO: HandleSkillChallenge in SkillChallenge.lua Task")
+			end			
 		end
 	end	
 	return ml_log(false)

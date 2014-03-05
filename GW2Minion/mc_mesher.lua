@@ -331,6 +331,15 @@ function mm.OnUpdate( tickcount )
     end
 end
 
+-- Gets called when a navmesh is done loading/building
+function mm.NavMeshUpdate()
+	d("New Mesh loaded..")
+	mc_datamanager.UpdateLevelMap()
+	if ( TableSize(ml_quest_mgr.QuestList) == 0) then
+		mc_questmanager.GenerateMapExploreProfile()
+	end
+end
+
 -- add offmesh connection
 function mm.AddOMC()
     local pos = Player.pos
@@ -368,4 +377,6 @@ end
 RegisterEventHandler("ToggleMeshmgr", mm.ToggleMenu)
 RegisterEventHandler("GUI.Update",mm.GUIVarUpdate)
 RegisterEventHandler("Module.Initalize",mm.ModuleInit)
+RegisterEventHandler("Gameloop.NavmeshLoaded",mm.NavMeshUpdate)
+
 

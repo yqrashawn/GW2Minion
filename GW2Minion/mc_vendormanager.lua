@@ -17,9 +17,6 @@ mc_vendormanager.tools = {
 	  [4] = 23005,
 	  [5] = 23008,
 	  [6] = 22997,
-	  [7] = 44876, -- Jack-in-the-Box Scythe
-	  [8] = 42594, -- Consortium Harvesting Sickle
-	  [9] = 49308, -- Thresher-Sickle 5000
 	 },
 	 -- logging 1= lowest quality , 6 = orichalcum
 	 [1] = 
@@ -30,9 +27,6 @@ mc_vendormanager.tools = {
 	  [4] = 23006,
 	  [5] = 23009,
 	  [6] = 23000,
-	  [7] = 48955, -- DreamCleaver Logging Axe
-	  [8] = 42931, -- Chop-It-All Logging Axe
-	  [9] = 00000, -- Placeholder for futue unlimTools
 	 },
 	 -- mining 1= lowest quality , 6 = orichalcum
 	 [2] =
@@ -43,16 +37,13 @@ mc_vendormanager.tools = {
 	  [4] = 23007,
 	  [5] = 23010,
 	  [6] = 23001,
-	  [7] = 43527, -- Bone Pick
-	  [8] = 41807, -- Molten Alliance Mining Pick
-	  [9] = 284882, -- Watchwork Mining Pick
 	 },
 	 -- salvagingkits 0= lowest quality 
 	 [3] = 
 	 {
 	  [0] = 23038, -- Crude Salvage Kit
 	  [1] = 23040, -- Basic Salvage Kit
-	  [2] = 23041, -- Fine 
+	  [2] = 23041, -- Fine
 	  [3] = 23042, -- Journeyman
 	  [4] = 23043  -- Master
 	 }
@@ -588,11 +579,9 @@ function mc_vendormanager.GetGatheringToolsCount()
 	if (mTool) then buyList[3] = 1 end
 	
 	-- Check for unlimited tools -> we dont need to buy these
-	for invTools = 7, 9, 1 do
-		if (fTool and fTool.itemID == mc_vendormanager.tools[0][invTools]) then buyList[1] = 999 end
-		if (lTool and lTool.itemID == mc_vendormanager.tools[1][invTools]) then buyList[2] = 999 end
-		if (mTool and mTool.itemID == mc_vendormanager.tools[2][invTools]) then buyList[3] = 999 end
-	end
+	if (fTool and fTool.rarity == 4 and fTool.stackcount == 0) then buyList[1] = 999 end
+	if (lTool and lTool.rarity == 4 and lTool.stackcount == 0) then buyList[2] = 999 end
+	if (mTool and mTool.rarity == 4 and mTool.stackcount == 0) then buyList[3] = 999 end
 	
 	local sTools = Inventory("itemtype=" .. GW2.ITEMTYPE.Gathering)
 	if (sTools) then
@@ -621,13 +610,16 @@ function mc_vendormanager.GetNeededGatheringToolsInfo()
 	local fTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool)
 	local lTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool)
 	local mTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool)
-	if (fTool) then fTool = fTool.itemID else fTool = 0 end
-	if (lTool) then lTool = lTool.itemID else lTool = 0 end
-	if (mTool) then mTool = mTool.itemID else mTool = 0 end
+	local fToolID = 0
+	local lToolID = 0
+	local mToolID = 0
+	if (fTool) then fToolID = fTool.itemID end
+	if (lTool) then lToolID = lTool.itemID end
+	if (mTool) then mToolID = mTool.itemID end
 	local toolsInUse = {
-						[1] = fTool,
-						[2] = lTool,
-						[3] = mTool
+						[1] = fToolID,
+						[2] = lToolID,
+						[3] = mToolID
 	}
 	
 	-- Substract the one we still have in use from the stacksize wanted
@@ -638,11 +630,9 @@ function mc_vendormanager.GetNeededGatheringToolsInfo()
 	end
 	
 	-- Check for unlimited tools -> we dont need to buy these
-	for invTools = 7, 8, 1 do
-		if (toolsInUse[1] == mc_vendormanager.tools[0][invTools]) then buyList[1] = false end
-		if (toolsInUse[2] == mc_vendormanager.tools[1][invTools]) then buyList[2] = false end
-		if (toolsInUse[3] == mc_vendormanager.tools[2][invTools]) then buyList[3] = false end
-	end
+	if (fTool and fTool.rarity == 4 and fTool.stackcount == 0) then buyList[1] = false end
+	if (lTool and lTool.rarity == 4 and lTool.stackcount == 0) then buyList[2] = false end
+	if (mTool and mTool.rarity == 4 and mTool.stackcount == 0) then buyList[3] = false end
 	
 	-- Count our remaining gatheringtools
 	local gTools = Inventory("itemtype=" .. GW2.ITEMTYPE.Gathering)
