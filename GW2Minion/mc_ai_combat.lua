@@ -111,13 +111,25 @@ end
 ------------
 c_Aggro = inheritsFrom( ml_cause )
 e_Aggro = inheritsFrom( ml_effect )
-c_Aggro.threshold = 80
 function c_Aggro:evaluate()
    -- ml_log("c_Aggro")
-    return Player.health.percent < c_Aggro.threshold and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
+    return TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
 end
 function e_Aggro:execute()
 	ml_log("e_Aggro ")
+	Player:StopMovement()
+	local newTask = mc_ai_combatDefend.Create()
+	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
+end
+
+c_AggroEx = inheritsFrom( ml_cause )
+e_AggroEx = inheritsFrom( ml_effect )
+c_AggroEx.threshold = 80
+function c_AggroEx:evaluate()
+    return Player.health.percent < c_AggroEx.threshold and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
+end
+function e_AggroEx:execute()
+	ml_log("e_AggroEx ")
 	c_Aggro.threshold = math.random(50,100)
 	Player:StopMovement()
 	local newTask = mc_ai_combatDefend.Create()
@@ -507,6 +519,16 @@ function e_revive:execute()
 					Player:SetTarget( id )
 				else
 					-- yeah I know, but this usually doesnt break ;)											
+					if ( Player.profession == 8 ) then
+						local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
+						if ( skill ~= nil ) then
+							if ( skill.skillID == 10554 ) then
+								Player:CastSpell(GW2.SKILLBARSLOT.Slot_13) -- Leave Death Shroud
+								return
+							-- add more here if needed
+							end
+						end
+					end
 					Player:Interact( id )
 					ml_log("Reviving..")
 					mc_global.Wait(1000)
@@ -551,12 +573,23 @@ function e_reviveDownedPlayersInCombat:execute()
 				if ( not t or t.id ~= id ) then
 					Player:SetTarget( id )
 				else
-					-- yeah I know, but this usually doesnt break ;)
-						Player:Interact( id )
-						ml_log("Reviving..")
-						mc_global.Wait(1000)
-						return true
-						
+					
+					-- yeah I know, but this usually doesnt break ;)											
+					if ( Player.profession == 8 ) then
+						local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
+						if ( skill ~= nil ) then
+							if ( skill.skillID == 10554 ) then
+								Player:CastSpell(GW2.SKILLBARSLOT.Slot_13) -- Leave Death Shroud
+								return
+							-- add more here if needed
+							end
+						end
+					end
+					
+					Player:Interact( id )
+					ml_log("Reviving..")
+					mc_global.Wait(1000)
+					return true						
 				end
 			end
 		end

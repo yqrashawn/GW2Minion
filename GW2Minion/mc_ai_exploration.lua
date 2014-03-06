@@ -34,7 +34,7 @@ function mc_ai_exploration:Init()
 	self:add(ml_element:create( "RevivePlayer", c_reviveDownedPlayersInCombat, e_reviveDownedPlayersInCombat, 170 ), self.process_elements)
 		
 	-- Aggro
-	self:add(ml_element:create( "Aggro", c_AggroExpl, e_Aggro, 165 ), self.process_elements) --reactive queue
+	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 165 ), self.process_elements) --reactive queue
 	
 	-- Dont Dive lol
 	self:add(ml_element:create( "SwimUP", c_SwimUp, e_SwimUp, 160 ), self.process_elements)
@@ -93,11 +93,6 @@ end
 
 function mc_ai_exploration:task_complete_execute()
    self.completed = true
-end
-
-c_AggroExpl = inheritsFrom( ml_cause )
-function c_AggroExpl:evaluate()
-    return TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
 end
 
 
