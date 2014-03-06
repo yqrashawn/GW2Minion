@@ -18,7 +18,7 @@ mc_skillmanager.DefaultProfiles = {
 	[2] = "Warrior",
 	[3] = "Engineer",
 	[4] = "Ranger",
-	
+	[5] = "Thief",
 	[6] = "Elementalist",
 	[7] = "Mesmer",
 	[8] = "Necromancer",
@@ -752,12 +752,11 @@ function mc_skillmanager.GetAttackRange()
 						mc_skillmanager.cskills[i].slot = GW2.SKILLBARSLOT["Slot_" .. i]
 						mc_skillmanager.cskills[i].prio = v.prio						
 						-- Get Max Attack Range for global use
-						if ( i ~= 6 and i <= 9 ) then -- dont use elite or heal or F1-F4							
-							if ( i ~= 1 ) then							
-								if ( skill.cooldown == 0 and v.maxRange > maxrange) then
-									maxrange = v.maxRange
-								end
-							end				
+						if ( i > 1 and i < 6 ) then -- Only use Skill 2-5 for Attackrange check
+							--d(skill.name.." "..tostring(skill.maxRange).." "..tostring(v.name).." "..tostring(v.maxRange))
+							if ( skill.cooldown == 0 and v.maxRange > maxrange) then
+								maxrange = v.maxRange
+							end							
 						end						
 						break
 					end
@@ -796,7 +795,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 				--Try to find this skill in our current Skill List
 				local currentSlot = 0
 				for i = 1, 16, 1 do					
-					if ( mc_skillmanager.cskills[i] and mc_skillmanager.cskills[i].skillID == skill.skillID and mc_skillmanager.cskills[i].cooldown == 0) then						
+					if ( mc_skillmanager.cskills[i] and mc_skillmanager.cskills[i].skillID == skill.skillID and mc_skillmanager.cskills[i].cooldown == 0 and skill.ooc ~= "Yes") then						
 						--d("Found Matching Skill, Cast Slot "..tostring(i) .. " Name "..tostring(mc_skillmanager.cskills[i].name).. " Name "..tostring(mc_skillmanager.cskills[i].cooldown) )
 						currentSlot = i						
 						break
@@ -1111,7 +1110,7 @@ function mc_skillmanager.SwapWeapon(swaptype)
 		end
 		
 	elseif( Player.profession == 3 ) then 		
-		-- Engineer		
+		-- Engineer	
 		local availableKits = { [1] = 0 }-- Leave Kit Placeholder
 		for i = 1, 16, 1 do
 			if (mc_skillmanager.cskills[i]) then 
