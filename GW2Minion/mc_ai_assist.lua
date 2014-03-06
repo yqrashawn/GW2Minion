@@ -29,6 +29,8 @@ function mc_ai_assist:Process()
 			Player:AoELoot()
 		end
 		
+		if ( c_salvage:evaluate() == true ) then e_salvage:execute() end
+		
 		if ( sMtargetmode == "None" ) then 
 			mc_skillmanager.AttackTarget( nil ) 
 			
