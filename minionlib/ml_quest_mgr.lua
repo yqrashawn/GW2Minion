@@ -277,7 +277,7 @@ function ml_quest_mgr.SaveProfile()
 		local pName = Player.name	
 		pName = pName:gsub('%W','') -- only alphanumeric
 		if ( pName ~= nil and pName ~= "" ) then        
-			persistence.store( ml_quest_mgr.profilepath..gQMprofile.."_"..pName..".qmpx", ordered_table)
+			persistence.store( ml_quest_mgr.profilepath..filename.."_"..pName..".qmpx", ordered_table)
 		end
 		
 		-- Clean profile without progress for sharing		
