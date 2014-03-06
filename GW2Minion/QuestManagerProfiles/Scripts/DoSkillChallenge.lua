@@ -78,7 +78,7 @@ function script:Init()
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 120 ), self.process_elements)	
 	
 	-- Aggro
-	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 115 ), self.process_elements)
+	self:add(ml_element:create( "Aggro", self.c_Aggro, e_Aggro, 115 ), self.process_elements)
 		
 	-- GoTo Position
 	self:add(ml_element:create( "GoToPosition", self.c_goto, self.e_goto, 110 ), self.process_elements)	
@@ -95,6 +95,21 @@ function script:task_complete_execute()
 end
 
 
+script.c_Aggro = inheritsFrom( ml_cause )
+function script.c_Aggro:evaluate() 	
+	local pPos = Player.pos
+	if (pPos and 
+		tonumber(ml_task_hub:CurrentTask().Data["GotoX"]) ~= nil and
+		tonumber(ml_task_hub:CurrentTask().Data["GotoY"]) ~= nil and
+		tonumber(ml_task_hub:CurrentTask().Data["GotoZ"]) ~= nil and
+		Distance3D( ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],pPos.x,pPos.y,pPos.z) > 3000
+		) then		
+		return Player.health.percent > 80 and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
+	else
+		return TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
+	end
+	return false
+end
 
 -- Cause&Effect
 script.c_goto = inheritsFrom( ml_cause )

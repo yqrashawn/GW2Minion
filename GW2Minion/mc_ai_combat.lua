@@ -461,11 +461,11 @@ c_reviveNPC = inheritsFrom( ml_cause )
 e_reviveNPC = inheritsFrom( ml_effect )
 function c_reviveNPC:evaluate()
    -- ml_log("c_reviveNPC")
-    return (not Player.inCombat and c_AggroEx:evaluate() == false and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2000,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))) > 0)
+    return (not Player.inCombat and c_AggroEx:evaluate() == false and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))) > 0)
 end
 function e_reviveNPC:execute()
 	ml_log("e_reviveNPC")
-	local CList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2000,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))
+	local CList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))
 	if ( TableSize(CList) > 0 ) then
 		local id,e = next(CList)
 		if ( id and e ) then
