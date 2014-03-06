@@ -270,9 +270,14 @@ end
 
 ------------fck that, I'm lazy and this works like a god
 c_Gathering = inheritsFrom( ml_cause )
+c_Gathering.running = false
 e_Gathering = inheritsFrom( ml_effect )
 function c_Gathering:evaluate()
-	return (Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,gatherable,maxdistance=4000")) > 0)
+	if ( Inventory.freeSlotCount > 0 and ( TableSize(GadgetList("onmesh,gatherable,maxdistance=3000")) > 0 or c_Gathering.running == true)) then
+		return true
+	end
+	c_Gathering.running = false
+	return false
 end
 e_Gathering.tmr = 0
 e_Gathering.threshold = 2000
@@ -297,11 +302,12 @@ function e_Gathering:execute()
 						e_Gathering.threshold = math.random(1500,5000)
 						mc_skillmanager.HealMe()
 					end
-					
+					c_Gathering.running = true
 					ml_log("MoveToGatherable..")
 					return true
 				end
 			else
+				c_Gathering.running = false
 				-- Grab that thing
 				Player:StopMovement()
 				local t = Player:GetTarget()
@@ -311,7 +317,7 @@ function e_Gathering:execute()
 					-- yeah I know, but this usually doesnt break ;)
 					if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
 						Player:Interact( id )
-						ml_log("Gathering..")
+						ml_log("Gathering..")						
 						mc_global.Wait(1000)
 						return true
 					end	
@@ -319,6 +325,7 @@ function e_Gathering:execute()
 			end
 		end
 	end
+	c_Gathering.running = false
 	return ml_log(false)
 end
 

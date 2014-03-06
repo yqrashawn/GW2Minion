@@ -41,7 +41,7 @@ function mc_ai_combatAttack:Init()
 	self:add(ml_element:create( "RevivePlayer", c_reviveDownedPlayersInCombat, e_reviveDownedPlayersInCombat, 170 ), self.process_elements)
 		
 	-- Aggro
-	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 165 ), self.process_elements) --reactive queue
+	self:add(ml_element:create( "Aggro", c_AggroEx, e_AggroEx, 165 ), self.process_elements) --reactive queue
 	
 	-- Dont Dive lol
 	self:add(ml_element:create( "SwimUP", c_SwimUp, e_SwimUp, 160 ), self.process_elements)
@@ -130,7 +130,7 @@ function c_AggroEx:evaluate()
 end
 function e_AggroEx:execute()
 	ml_log("e_AggroEx ")
-	c_Aggro.threshold = math.random(50,100)
+	c_Aggro.threshold = math.random(70,100)
 	Player:StopMovement()
 	local newTask = mc_ai_combatDefend.Create()
 	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)

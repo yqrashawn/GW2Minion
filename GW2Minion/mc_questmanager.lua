@@ -183,7 +183,7 @@ function mc_ai_doquest:Init()
 end
 
 function mc_ai_doquest:task_complete_eval()
-	return self.currentQuest == nil
+	return self.currentQuest == nil or self.currentQuest.mapid ~= Player:GetLocalMapID()
 end
 function mc_ai_doquest:task_complete_execute()
     self.completed = true
@@ -194,7 +194,7 @@ end
 c_doQuest = inheritsFrom( ml_cause )
 e_doQuest = inheritsFrom( ml_effect )
 function c_doQuest:evaluate()
-    return ml_task_hub:CurrentTask().currentQuest ~= nil or ml_task_hub:CurrentTask().currentQuest.mapid ~= Player:GetLocalMapID()
+    return ml_task_hub:CurrentTask().currentQuest ~= nil
 end
 function e_doQuest:execute()
 	ml_log("e_doQuest")
