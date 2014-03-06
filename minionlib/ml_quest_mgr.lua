@@ -291,7 +291,7 @@ function ml_quest_mgr.SaveProfile()
             Settings[ml_quest_mgr.ModuleName].gQMprofile = filename
         end
 	else
-		ml_error("You need to enter a new Filename first!!")
+		ml_error("You need to enter a new QuestProfile Name first!!")
 	end
 end
 

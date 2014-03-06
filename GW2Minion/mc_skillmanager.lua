@@ -928,20 +928,19 @@ function mc_skillmanager.AttackTarget( TargetID )
 						else										
 							fastcastcount = fastcastcount + 1 
 							if ( fastcastcount >= 2) then
+								
+								-- Swap Weapon check			
+								if ( mc_global.AttackRange < 300 and target.distance > mc_global.AttackRange ) then
+									mc_skillmanager.SwapWeaponCheck("Range")
+								else	 
+									mc_skillmanager.SwapWeaponCheck("CoolDown")
+								end
 								return true
 							end
 						end						
 					end						
 				end				
 			end
-			
-			-- Swap Weapon check			
-			if ( mc_global.AttackRange < 300 and target.distance > mc_global.AttackRange ) then
-				mc_skillmanager.SwapWeaponCheck("Range")
-			else	 
-				mc_skillmanager.SwapWeaponCheck("CoolDown")
-			end			
-			
 		end
 	end
 	return false
@@ -1045,7 +1044,7 @@ end
 function mc_skillmanager.SwapWeaponCheck(swaptype)
 	if ( mc_global.now - mc_skillmanager.SwapTmr > 750 ) then
 				
-		-- Swap after random Time
+		-- Swap after random Time (not used right now)
 		if ( swaptype == "Pulse" and gSMSwapR == "1" and (mc_global.now - mc_skillmanager.SwapRTmr > math.random(3000,6000))) then
 			mc_skillmanager.SwapRTmr = mc_global.now
 			mc_skillmanager.SwapTmr = mc_global.now			
@@ -1133,7 +1132,7 @@ function mc_skillmanager.SwapWeapon(swaptype)
 			else
 				mc_skillmanager.SwapWeaponTable[availableKits[key]] = { lastused = mc_global.now }
 			end
-		else				
+		else			
 			if ( Player:CanSwapWeaponSet() ) then
 				if (gSMPrioKit == "None" or swaptype == "Pulse") then
 					Player:SwapWeaponSet()

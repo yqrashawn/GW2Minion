@@ -435,7 +435,7 @@ function mc_ai_combatRevive.Create()
     newinst.subtask = nil
     newinst.process_elements = {}
     newinst.overwatch_elements = {} 
-	
+	newinst.targetID = 0
     return newinst
 end
 function mc_ai_combatRevive:Init()
@@ -445,8 +445,8 @@ function mc_ai_combatRevive:Init()
 		
     self:AddTaskCheckCEs()
 end
-function mc_ai_combatRevive:task_complete_eval()	
-	if ( c_dead:evaluate() or c_downed:evaluate() or ( c_Aggro:evaluate() and Player.health.percent < 90) or c_LootChests:evaluate() or c_LootCheck:evaluate() or c_reviveNPC:evaluate() == false) then 
+function mc_ai_combatRevive:task_complete_eval()
+	if ( c_dead:evaluate() or c_downed:evaluate() or c_AggroEx:evaluate() or c_LootChests:evaluate() or c_LootCheck:evaluate() or self.targetID == 0 or CharacterList:Get(self.targetID) == nil or CharacterList:Get(self.targetID).alive == true ) then 
 		Player:StopMovement()
 		return true
 	end
@@ -461,79 +461,99 @@ c_reviveNPC = inheritsFrom( ml_cause )
 e_reviveNPC = inheritsFrom( ml_effect )
 function c_reviveNPC:evaluate()
    -- ml_log("c_reviveNPC")
-    return (not Player.inCombat and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500")) > 0)
+    return (not Player.inCombat and c_AggroEx:evaluate() == false and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2000,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))) > 0)
 end
 function e_reviveNPC:execute()
 	ml_log("e_reviveNPC")
-	Player:StopMovement()
-	local newTask = mc_ai_combatRevive.Create()
-	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
-	return ml_log(true)	
+	local CList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2000,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))
+	if ( TableSize(CList) > 0 ) then
+		local id,e = next(CList)
+		if ( id and e ) then
+			Player:StopMovement()
+			local newTask = mc_ai_combatRevive.Create()	
+			newTask.targetID = id
+			ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
+			return ml_log(true)
+		end
+	end
+	return ml_log(false)
 end
 
 ------------
 c_revive = inheritsFrom( ml_cause )
 e_revive = inheritsFrom( ml_effect )
 function c_revive:evaluate()
-    return (not Player.inCombat and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))) > 0)
+    return true
 end
 e_revive.lastID = 0
 e_revive.counter = 0
 function e_revive:execute()
 	ml_log("e_revive")
-	local CharList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))
-	if ( TableSize(CharList) > 0 ) then
-		local id,entity = next (CharList)
-		if ( id and entity ) then
+	local id = nil
+	local entity = nil
+	
+	if ( ml_task_hub:CurrentTask().targetID ~= nil and ml_task_hub:CurrentTask().targetID > 0 ) then 
+		entity = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
+		if ( entity == nil ) then
+			local CharList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=3500,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))
+			if ( TableSize(CharList) > 0 ) then
+				id,entity = next (CharList)			
+			end
+		else
+			id = entity.id
+		end
+	end
+	
+	
+	if ( id and entity ) then
 			
-			if (not entity.isInInteractRange) then
-				-- MoveIntoInteractRange
-				local tPos = entity.pos
-				if ( tPos ) then
-					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
-					if (tonumber(navResult) < 0) then
-						ml_error("e_revive.MoveInToCombatRange result: "..tonumber(navResult))
-						if ( e_revive.lastID ~= entity.id ) then
-							e_revive.lastID = entity.id
-							e_revive.counter = 0
+		if (not entity.isInInteractRange) then
+			-- MoveIntoInteractRange
+			local tPos = entity.pos
+			if ( tPos ) then
+				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+				if (tonumber(navResult) < 0) then
+					ml_error("e_revive.MoveInToCombatRange result: "..tonumber(navResult))
+					if ( e_revive.lastID ~= entity.id ) then
+						e_revive.lastID = entity.id
+						e_revive.counter = 0
+					else
+						if ( e_revive.counter > 15 ) then
+							d("Blacklisting "..entity.name)
+							mc_blacklist.AddBlacklistEntry(GetString("monsters"), entity.contentID, entity.name, mc_global.now + 60000)
 						else
-							if ( e_revive.counter > 15 ) then
-								d("Blacklisting "..entity.name)
-								mc_blacklist.AddBlacklistEntry(GetString("monsters"), entity.contentID, entity.name, mc_global.now + 60000)
-							else
-								e_revive.counter = e_revive.counter + 1
-							end
+							e_revive.counter = e_revive.counter + 1
 						end
-						return ml_log(false)
 					end
-					e_revive.lastID = 0
-					e_revive.counter = 0					
-					ml_log("MoveToRevive..")
-					return true
+					return ml_log(false)
 				end
+				e_revive.lastID = 0
+				e_revive.counter = 0					
+				ml_log("MoveToRevive..")
+				return true
+			end
+		else
+			-- Grab that thing
+			Player:StopMovement()
+			local t = Player:GetTarget()
+			if ( not t or t.id ~= id ) then
+				Player:SetTarget( id )
 			else
-				-- Grab that thing
-				Player:StopMovement()
-				local t = Player:GetTarget()
-				if ( not t or t.id ~= id ) then
-					Player:SetTarget( id )
-				else
-					-- yeah I know, but this usually doesnt break ;)											
-					if ( Player.profession == 8 ) then
-						local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
-						if ( skill ~= nil ) then
-							if ( skill.skillID == 10554 ) then
-								Player:CastSpell(GW2.SKILLBARSLOT.Slot_13) -- Leave Death Shroud
-								return
-							-- add more here if needed
-							end
+				-- yeah I know, but this usually doesnt break ;)											
+				if ( Player.profession == 8 ) then
+					local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
+					if ( skill ~= nil ) then
+						if ( skill.skillID == 10554 ) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_13) -- Leave Death Shroud
+							return
+						-- add more here if needed
 						end
 					end
-					Player:Interact( id )
-					ml_log("Reviving..")
-					mc_global.Wait(1000)
-					return true
 				end
+				Player:Interact( id )
+				ml_log("Reviving..")
+				mc_global.Wait(1000)
+				return true
 			end
 		end
 	end

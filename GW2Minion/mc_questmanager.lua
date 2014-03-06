@@ -41,7 +41,7 @@ end
 function mc_ai_questprofile:Process()
 	
 	-- Get a Quest
-	if ( self.currentQuest == nil ) then
+	if ( self.currentQuest == nil or self.currentQuest.mapid ~= Player:GetLocalMapID()) then
 		self.currentQuest = ml_quest_mgr.GetNewQuest()		
 		if ( self.currentQuest == nil ) then
 			d("No more Quests in Questprofile left, terminating task")
@@ -137,7 +137,7 @@ function mc_ai_doquest:Init()
 	self:add(ml_element:create( "RevivePartyMember", c_memberdown, e_memberdown, 170 ), self.process_elements)	
 		
 	-- Aggro
-	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 165 ), self.process_elements) --reactive queue
+	self:add(ml_element:create( "Aggro", c_AggroEx, e_AggroEx, 165 ), self.process_elements) --reactive queue
 	
 	-- Dont Dive lol
 	self:add(ml_element:create( "SwimUP", c_SwimUp, e_SwimUp, 160 ), self.process_elements)
@@ -194,7 +194,7 @@ end
 c_doQuest = inheritsFrom( ml_cause )
 e_doQuest = inheritsFrom( ml_effect )
 function c_doQuest:evaluate()
-    return ml_task_hub:CurrentTask().currentQuest ~= nil	
+    return ml_task_hub:CurrentTask().currentQuest ~= nil or ml_task_hub:CurrentTask().currentQuest.mapid ~= Player:GetLocalMapID()
 end
 function e_doQuest:execute()
 	ml_log("e_doQuest")
@@ -303,6 +303,12 @@ function mc_questmanager.GenerateMapExploreProfile()
 			id,entry = next(skillpoints,id)
 		end	
 		
+		if (gQMprofile ~= nil and ( gQMprofile == "None" or gQMprofile == "")) then
+			local mapname = mc_datamanager.GetMapName( Player:GetLocalMapID())
+			if ( mapname ~= nil and mapname ~= "" and mapname ~= "None" ) then
+				gQMnewname = mapname
+			end
+		end
 		
 		ml_quest_mgr.RefreshQuestList()
 	else
