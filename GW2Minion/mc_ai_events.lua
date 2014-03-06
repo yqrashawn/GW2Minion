@@ -120,7 +120,7 @@ c_MoveInEventRange.range = 2500 -- gets changed depending what objective we have
 function c_MoveInEventRange:evaluate()
 	local eID = ml_task_hub:CurrentTask().eventID
 	if ( tonumber(eID)~=nil ) then
-		local evList = MapMarkerList("nearest,eventID="..eID)
+		local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
 		local i,e = next(evList)
 		if ( i and e ) then
 			if ( c_MoveInEventRange.reached == false) then
@@ -143,7 +143,7 @@ function e_MoveInEventRange:execute()
 	ml_log("e_MoveInEventRange")
 	local eID = ml_task_hub:CurrentTask().eventID
 	if ( tonumber(eID)~=nil ) then
-		local evList = MapMarkerList("nearest,eventID="..eID)
+		local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
 		local i,e = next(evList)
 		if ( i and e ) then
 			local pPos = Player.pos
@@ -185,7 +185,7 @@ e_DoEventObjectives = inheritsFrom( ml_effect )
 function c_DoEventObjectives:evaluate()
 	local eID = ml_task_hub:CurrentTask().eventID
 	if ( tonumber(eID)~=nil ) then
-		local evList = MapMarkerList("nearest,eventID="..eID)
+		local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
 		if ( TableSize(evList)>0) then
 			local i,e = next(evList)
 			if ( i and e ) then
@@ -199,7 +199,7 @@ function e_DoEventObjectives:execute()
 	ml_log("e_DoEventObjectives")
 	local eID = ml_task_hub:CurrentTask().eventID
 	if ( tonumber(eID)~=nil ) then
-		local evList = MapMarkerList("nearest,eventID="..eID)
+		local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
 		if ( TableSize(evList)>0) then
 			local i,e = next(evList)
 			if ( i and e ) then
@@ -369,7 +369,7 @@ function c_event_LootChests:evaluate()
 	if ( Inventory.freeSlotCount > 0 ) then
 		local eID = ml_task_hub:CurrentTask().eventID
 		if ( tonumber(eID)~=nil ) then
-			local evList = MapMarkerList("nearest,eventID="..eID)
+			local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
 			local i,e = next(evList)
 			if ( i and e ) then
 				local ePos = e.pos
@@ -402,7 +402,7 @@ function c_event_LootCheck:evaluate()
 		if ( TableSize(LList) > 0 ) then
 			local eID = ml_task_hub:CurrentTask().eventID
 			if ( tonumber(eID)~=nil ) then
-				local evList = MapMarkerList("nearest,eventID="..eID)
+				local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
 				local i,e = next(evList)
 				if ( i and e ) then
 					local ePos = e.pos
@@ -439,7 +439,7 @@ function c_event_reviveNPC:evaluate()
 		if ( TableSize(CList) > 0 ) then
 			local eID = ml_task_hub:CurrentTask().eventID
 			if ( tonumber(eID)~=nil ) then
-				local evList = MapMarkerList("nearest,eventID="..eID)
+				local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
 				local i,e = next(evList)
 				if ( i and e ) then
 					local ePos = e.pos

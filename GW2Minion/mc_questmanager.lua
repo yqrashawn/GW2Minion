@@ -306,7 +306,7 @@ function mc_questmanager.GenerateMapExploreProfile()
 		
 		ml_quest_mgr.RefreshQuestList()
 	else
-		ml_error("No Mapdata for our current map found!")
+		d("No Mapdata for our current map found!")
 	end
 end
 
@@ -366,7 +366,7 @@ function mc_questmanager.AddExploreSectorQuest( pos2D, entry, level)
 		}
 		ml_quest_mgr.QuestList[newquest.prio] = newquest		
 	else
-		ml_error("Sector "..Name.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
+		d("Sector "..Name.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
 		--d("Added: "..Name.." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)		
 	end
 end
@@ -405,7 +405,7 @@ function mc_questmanager.AddExploreWaypointQuest( pos2D, entry , level)
 		}
 		ml_quest_mgr.QuestList[newquest.prio] = newquest	
 	else
-		ml_error("Waypoint "..WPName.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
+		d("Waypoint "..WPName.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
 		--d("Added: "..WPName.." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)		
 	end
 end
@@ -444,7 +444,7 @@ function mc_questmanager.AddExploreLandmarkQuest( pos2D, entry , level)
 		}
 		ml_quest_mgr.QuestList[newquest.prio] = newquest		
 	else
-		ml_error("Landmark "..WPName.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
+		d("Landmark "..WPName.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
 		--d("Added: "..WPName.." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)		
 	end
 end
@@ -483,7 +483,7 @@ function mc_questmanager.AddExploreVistaQuest( pos2D, entry , level)
 		}
 		ml_quest_mgr.QuestList[newquest.prio] = newquest	
 	else
-		ml_error("An undiscovered Vista is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
+		d("An undiscovered Vista is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
 		--d("Added: "..WPName.." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)		
 	end
 end
@@ -522,7 +522,7 @@ function mc_questmanager.AddDoHeartQuest( pos2D, entry , level)
 		}
 		ml_quest_mgr.QuestList[newquest.prio] = newquest		
 	else
-		ml_error("HeartQuest "..WPName.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
+		d("HeartQuest "..WPName.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
 		--d("Added: "..WPName.." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)		
 	end
 end
@@ -561,7 +561,7 @@ function mc_questmanager.AddGetSkillQuest( pos2D, level)
 		}
 		ml_quest_mgr.QuestList[newquest.prio] = newquest	
 	else
-		ml_error(WPName.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
+		d(WPName.." is NOT on the Navmesh!! ..Not adding it to the QuestProfile")
 		--d("Added: "..WPName.." "..pos3D.x.." "..pos3D.y.." "..pos3D.z)		
 	end
 end
