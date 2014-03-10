@@ -211,7 +211,7 @@ function e_doQuest:execute()
 		-- Getting next questStep
 		ml_task_hub:CurrentTask().currentStep = ml_quest_mgr.GetNextQuestStep( ml_task_hub:CurrentTask().currentQuest )				
 		if ( ml_task_hub:CurrentTask().currentStep == nil ) then
-			d("All steps of current Quest "..tostring( ml_task_hub:CurrentTask().currentQuest.name).." are finished!")
+			d("All steps of current Quest- "..tostring( ml_task_hub:CurrentTask().currentQuest.name).." -are finished!")
 			ml_quest_mgr.SetQuestData( ml_task_hub:CurrentTask().currentQuest, nil, nil, "done", "1" )
 							
 			-- Reset QuestSteps for repeatable Quests
@@ -303,12 +303,11 @@ function mc_questmanager.GenerateMapExploreProfile()
 			id,entry = next(skillpoints,id)
 		end	
 		
-		if (gQMprofile ~= nil and ( gQMprofile == "None" or gQMprofile == "")) then
-			local mapname = mc_datamanager.GetMapName( Player:GetLocalMapID())
-			if ( mapname ~= nil and mapname ~= "" and mapname ~= "None" ) then
-				gQMnewname = mapname
-			end
-		end
+		
+		local mapname = mc_datamanager.GetMapName( Player:GetLocalMapID())
+		if ( mapname ~= nil and mapname ~= "" and mapname ~= "None" ) then
+			gQMnewname = mapname
+		end		
 		
 		ml_quest_mgr.RefreshQuestList()
 	else

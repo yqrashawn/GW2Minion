@@ -49,7 +49,7 @@ function e_salvage:execute()
 						(filter.preferedKit ~= nil and filter.preferedKit ~= "None")) then 
 						
 							-- unlimited kit	 
-							if (filter.preferedKit == GetString("unlimited") and tool.rarity == 4 and tool.stackcount == 0) then
+							if (filter.preferedKit == GetString("unlimitedKit") and tool.rarity == 1 and tool.weapontype == 1) then
 								-- Salvage
 								if ( Player:GetCurrentlyCastedSpell() == 17 ) then
 									d("Salvaging "..item.name.." with "..tool.name)

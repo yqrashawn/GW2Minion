@@ -10,7 +10,7 @@ function mc_ai_vendor.NeedToSell( vendornearby )
 	if ( mc_ai_vendor.isSelling ) then return true end
 	
 	if ( vendornearby ) then
-		return (TableSize(mc_vendormanager.createItemList()) > 2)
+		return (TableSize(mc_vendormanager.createItemList()) > 2 and ((Inventory.freeSlotCount*100)/Inventory.slotCount) < 33)
 	end
 	return TableSize(mc_vendormanager.createItemList()) > 0
 end

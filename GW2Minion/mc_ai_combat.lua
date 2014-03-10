@@ -113,7 +113,7 @@ c_Aggro = inheritsFrom( ml_cause )
 e_Aggro = inheritsFrom( ml_effect )
 function c_Aggro:evaluate()
    -- ml_log("c_Aggro")
-    return TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
+    return Player.swimming == 0 and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
 end
 function e_Aggro:execute()
 	ml_log("e_Aggro ")
@@ -126,7 +126,7 @@ c_AggroEx = inheritsFrom( ml_cause )
 e_AggroEx = inheritsFrom( ml_effect )
 c_AggroEx.threshold = 80
 function c_AggroEx:evaluate()
-    return Player.health.percent < c_AggroEx.threshold and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
+    return Player.swimming == 0 and Player.health.percent < c_AggroEx.threshold and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
 end
 function e_AggroEx:execute()
 	ml_log("e_AggroEx ")
@@ -280,7 +280,7 @@ function c_NeedValidTarget:evaluate()
 	local target = Player:GetTarget()
 	if ( TableSize( target ) > 0 ) then	
 		--d("NeedValidTarget "..tostring(not target.alive and not target.attackable and not target.onmesh))
-		return (not target.alive or not target.attackable or not target.onmesh)
+		return (Player.swimming == 0 and not target.alive or not target.attackable or not target.onmesh)
 	end	
 	return true
 end
@@ -364,7 +364,7 @@ end
 c_KillTarget = inheritsFrom( ml_cause )
 e_KillTarget = inheritsFrom( ml_effect )
 function c_KillTarget()
-	return true
+	return Player.swimming == 0
 end
 function e_KillTarget:execute()
 	ml_log("e_KillTarget")

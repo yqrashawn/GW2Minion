@@ -120,7 +120,7 @@ function ml_quest_mgr.UpdateCurrentProfileData()
 		if (pName == nil or pName == "") then return end
 		
 		pName = pName:gsub('%W','') -- only alphanumeric
-		if ( pName ~= nil and pName ~= "" ) then        
+		if ( pName ~= nil and pName ~= "" ) then
 			ml_quest_mgr.QuestList = persistence.load( ml_quest_mgr.profilepath..gQMprofile.."_"..pName..".qmpx")
 		end
 		
@@ -142,7 +142,8 @@ function ml_quest_mgr.UpdateCurrentProfileData()
 			if ( TableSize(ml_quest_mgr.QuestList) > 0) then
 				d("Quest Profile "..gQMprofile.." loaded")				           
 			else
-				ml_error("Quest Profile is empty or was not found..")			
+				ml_error("Quest Profile is empty or was not found..")
+				ml_quest_mgr.QuestList = {}				
 			end
 		end
 		
@@ -256,7 +257,9 @@ function ml_quest_mgr.SaveProfile()
     end
 	
 	 -- Save current Profiledata into the Profile-file 
-    if ( filename ~= "" ) then
+    if ( filename ~= "" ) then		
+		filename = filename:gsub('%W','') -- only alphanumeric		    
+		
 		d("Saving Profile Data into File: "..filename)
 		
 		-- Make sure the entries in QuestList are ordered according to their "index"
@@ -277,11 +280,11 @@ function ml_quest_mgr.SaveProfile()
 		local pName = Player.name	
 		pName = pName:gsub('%W','') -- only alphanumeric
 		if ( pName ~= nil and pName ~= "" ) then        
-			persistence.store( ml_quest_mgr.profilepath..filename.."_"..pName..".qmpx", ordered_table)
+			persistence.store( ml_quest_mgr.profilepath..filename.."_"..pName..".qmpx", ml_quest_mgr.QuestList)
 		end
 		
 		-- Clean profile without progress for sharing		
-		local cleanProfile = deepcopy( ordered_table )
+		local cleanProfile = deepcopy( ml_quest_mgr.QuestList )
 		cleanProfile = ml_quest_mgr.ResetProfile(cleanProfile)
 		persistence.store( ml_quest_mgr.profilepath..filename..".qmp", cleanProfile)
 		

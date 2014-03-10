@@ -199,8 +199,9 @@ end
 
 mc_global.Cinema_lastrun = 0
 function mc_global.OnUpdateCutscene(event, tickcount )
-	GUI_SetStatusBar("In Cutscene...")
+	GUI_SetStatusBar("In Cutscene...")	
 	mc_global.now = tickcount
+	Player:StopMovement()
 	if ( gSkipCutscene == "1" and tickcount - mc_global.Cinema_lastrun > 2000 ) then
 		mc_global.Cinema_lastrun = tickcount
 		d("Skipping Cutscene...")
@@ -249,6 +250,7 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 		elseif ( k == "gBotMode") then        
 			Settings.GW2Minion[tostring(k)] = v
 			mc_global.UpdateMode()
+			mm.NavMeshUpdate()
 		end
 	end
 	GUI_RefreshWindow(mc_global.window.name)

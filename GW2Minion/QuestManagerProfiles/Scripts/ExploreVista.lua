@@ -112,7 +112,7 @@ function script.e_goto:execute()
 	if (pPos) then
 		local dist = Distance3D( ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],pPos.x,pPos.y,pPos.z)
 		ml_log("("..tostring(math.floor(dist))..")")
-		if ( dist > 100 ) then
+		if ( dist > 1500 ) then
 			--d(tostring(ml_task_hub:CurrentTask().Data["GotoX"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoY"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoZ"]))
 			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],125,false,false,true))		
 			if (tonumber(navResult) < 0) then					
@@ -120,7 +120,7 @@ function script.e_goto:execute()
 			end			
 			return ml_log(true)
 		else
-			local MList = MapMarkerList("onmesh,nearest,isvista,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("mapobjects")))
+			local MList = MapMarkerList("onmesh,nearest,isvista,maxdistance=1500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("mapobjects")))
 			if ( TableSize(MList) > 0 ) then
 				local id,entry = next(MList)
 				if id and entry then
