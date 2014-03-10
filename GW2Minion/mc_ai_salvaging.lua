@@ -81,6 +81,7 @@ function e_salvage:execute()
 			-- try to get a tool with the same raritylevel
 			local itemrarity = item.itemrarity
 			local besttool = nil
+			tid , tool = next(TList)
 			while tid and tool do 
 				if ( tool.rarity == itemrarity ) then
 					-- Salvage
