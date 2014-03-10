@@ -3,6 +3,8 @@ mc_multibotmanager.mainwindow = { name = GetString("multibotmanager"), x = 350, 
 mc_multibotmanager.visible = false
 mc_multibotmanager.lasttick = 0
 mc_multibotmanager.leadername = ""
+mc_multibotmanager.leaderserverID = 0
+mc_multibotmanager.leaderWPID = 0
 
 function mc_multibotmanager.ModuleInit() 	
 	
@@ -154,6 +156,15 @@ function mc_multibotmanager.LeaderBroadCast()
 			if ( pname ~= nil and pname ~= "" ) then
 				MultiBotSend( "1;"..pname,MBSGroup )
 			end
+			local data = mc_multibotmanager.GetPlayerPartyData()
+			if ( data and tonumber(data.currentserverid)~=nil) then			
+				MultiBotSend( "2;"..data.currentserverid,MBSGroup )
+			end
+			
+			local id,wp = next(WaypointList("nearest,onmesh,notcontested,samezone"))
+			if (id and wp ) then
+				MultiBotSend( "3;"..wp.id,MBSGroup )
+			end
 		end		
 	end
 end
@@ -283,7 +294,16 @@ function HandleMultiBotMessages( event, message, channel )
 					
 					-- Leader sends Minion LeaderName	
 					if ( tonumber(msgID) == 1 and msg ~= "" and Player:GetRole() == 0) then
-                        mc_multibotmanager.leadername = msg 
+                        mc_multibotmanager.leadername = msg
+					
+					-- Leader sends Minion his ServerID
+					elseif ( tonumber(msgID) == 2 and msg ~= "" and Player:GetRole() == 0) then
+                        mc_multibotmanager.leaderserverID = msg
+					
+					-- Leader sends Minion his Closest Waypoint ID
+					elseif ( tonumber(msgID) == 3 and msg ~= "" and Player:GetRole() == 0) then
+                        mc_multibotmanager.leaderWPID = msg
+						
 					end
 				end
 			end

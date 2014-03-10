@@ -247,17 +247,44 @@ function c_MoveToLeader:evaluate()
 				local pPlayer = mc_multibotmanager.GetPlayerPartyData()
 				if (pPlayer ~= nil and pmember.currentserverid ~= pPlayer.currentserverid ) then
 					ml_log("Leader is on a different Server!")
+					local sID = tonumber(mc_multibotmanager.leaderserverID)
+					if ( sID ~= nil and sID > 0 ) then
+						local serverlist = {}
+						if ( sID > 1000 and sID < 2000 ) then
+							serverlist = mc_datamanager.ServersUS
+						elseif ( sID > 2000 and sID < 3000 ) then
+							serverlist = mc_datamanager.ServersEU
+						end	
+						if ( TableSize(serverlist) > 0) then
+							local i,entry = next ( serverlist)
+							while i and entry do
+								if ( entry.id == sID ) then
+									gGuestServer = entry.name
+									SetServer(sID)									
+									d("Setting Guestserver: "..tostring(entry.name) .." ID: ".. tostring(entry.id))
+									Player:Logout()
+									mc_global.Wait(5000)
+									break
+								end
+								i,entry = next ( serverlist,i)
+							end
+						end
+					end
 					
 				elseif ( pmember.connectstatus == 1 ) then
 					ml_log("Leader has disconnected!")					
-				
+					
 				
 				elseif ( pmember.mapid ~= Player:GetLocalMapID()) then
-					ml_log("Leader is not in our map!")
-				
-				
+					ml_log("Leader is not in our map! ")
+					if ( tonumber(mc_multibotmanager.leaderWPID) ~= nil and tonumber(mc_multibotmanager.leaderWPID) > 0 and Player.inCombat == false and Inventory:GetInventoryMoney() > 500) then
+						ml_log(" Using closest Waypoint to get to Leader: ")
+						ml_log(Player:TeleportToWaypoint(tonumber(mc_multibotmanager.leaderWPID)))
+						mc_global.Wait(5000)
+					end
+					
 				else					
-					ml_log("Unknown error in finding the leader!")		
+					ml_log("Unknown error in finding the leader! ")		
 				end
 			end
 			return false
