@@ -15,48 +15,56 @@ function mc_salvagemanager.ModuleInit()
 			itemtype = "Weapon",
 			name = "Weapons_Junk",
 			rarity = "Junk",
+			preferedKit = "None",
 		},
 		
 		{
 			itemtype = "Weapon",
 			name = "Weapons_Common",
 			rarity = "Common",
+			preferedKit = "None",
 		},
 		
 		{
 			itemtype = "Weapon",
 			name = "Weapons_Masterwork",
 			rarity = "Masterwork",
+			preferedKit = "None",
 		},
 		
 		{
 			itemtype = "Weapon",
 			name = "Weapons_Fine",
 			rarity = "Fine",
+			preferedKit = "None",
 		},
 		
 		{
 			itemtype = "Armor",
 			name = "Armor_Junk",
 			rarity = "Junk",
+			preferedKit = "None",
 		},
 		
 		{
 			itemtype = "Armor",
 			name = "Armor_Common",
 			rarity = "Common",
+			preferedKit = "None",
 		},
 		
 		{
 			itemtype = "Armor",
 			name = "Armor_Masterwork",
 			rarity = "Masterwork",
+			preferedKit = "None",
 		},
 		
 		{
 			itemtype = "Armor",
 			name = "Armor_Fine",
 			rarity = "Fine",
+			preferedKit = "None",
 		},
 		
 		}
@@ -72,7 +80,7 @@ function mc_salvagemanager.ModuleInit()
 	-- MANAGER WINDOW
 	GUI_NewButton(mc_global.window.name, GetString("salvage"), "SalvageManager.toggle",GetString("vendorSettings"))
 	
-	-- SELL SETTINGS
+	-- Salvage SETTINGS
 	GUI_NewWindow(mc_salvagemanager.mainwindow.name,mc_salvagemanager.mainwindow.x,mc_salvagemanager.mainwindow.y,mc_salvagemanager.mainwindow.w,mc_salvagemanager.mainwindow.h,true)
 	GUI_NewCheckbox(mc_salvagemanager.mainwindow.name,GetString("active"),"SalvageManager_Active",GetString("salvage"))
 	GUI_NewField(mc_salvagemanager.mainwindow.name,GetString("newfiltername"),"SalvageManager_NewFilterName",GetString("salvage"))
@@ -83,9 +91,8 @@ function mc_salvagemanager.ModuleInit()
 	GUI_UnFoldGroup(mc_salvagemanager.mainwindow.name,GetString("salvage"))
 	GUI_WindowVisible(mc_salvagemanager.mainwindow.name,false)
 	
-	-- SELL IDs	
+	-- Salvage IDs	
 	GUI_NewComboBox(mc_salvagemanager.mainwindow.name,GetString("salvageByIDtems"),"SalvageManager_ItemToSalvage",GetString("salvageByID"),"")
-	mc_salvagemanager.UpdateSalvageSingleItemList()
 	GUI_NewButton(mc_salvagemanager.mainwindow.name,GetString("salvageByIDAddItem"),"SalvageManager_AdditemID",GetString("salvageByID"))
 	RegisterEventHandler("SalvageManager_AdditemID",mc_salvagemanager.AddItemID)
 	GUI_NewComboBox(mc_salvagemanager.mainwindow.name,GetString("salvageItemList"),"SalvageManager_ItemIDList",GetString("salvageByID"),"")
@@ -93,7 +100,7 @@ function mc_salvagemanager.ModuleInit()
 	GUI_NewButton(mc_salvagemanager.mainwindow.name,GetString("salvageByIDRemoveItem"),"SalvageManager_RemoveitemID",GetString("salvageByID"))
 	RegisterEventHandler("SalvageManager_RemoveitemID",mc_salvagemanager.RemoveItemID)
 	
-	-- SELL FILTERS
+	-- Salvage FILTERS
 	GUI_UnFoldGroup(mc_salvagemanager.mainwindow.name,GetString("salvagefilters"))
 	
 	-- EDITOR WINDOW
@@ -101,6 +108,7 @@ function mc_salvagemanager.ModuleInit()
 	GUI_NewField(mc_salvagemanager.editwindow.name,GetString("name"),"SalvageManager_Name",GetString("filterdetails"))
 	GUI_NewComboBox(mc_salvagemanager.editwindow.name,GetString("itemtype"),"SalvageManager_Itemtype",GetString("filterdetails"),"")
 	GUI_NewComboBox(mc_salvagemanager.editwindow.name,GetString("rarity"),"SalvageManager_Rarity",GetString("filterdetails"),GetString("rarityNone")..","..GetString("rarityJunk")..","..GetString("rarityCommon")..","..GetString("rarityFine")..","..GetString("rarityMasterwork")..","..GetString("rarityRare")..","..GetString("rarityExotic"))
+	GUI_NewComboBox(mc_salvagemanager.editwindow.name,GetString("preferedKit"),"SalvageManager_Kit",GetString("filterdetails"),GetString("rarityNone")..","..GetString("buyCrude")..","..GetString("buyBasic")..","..GetString("buyFine")..","..GetString("buyJourneyman")..","..GetString("buyMaster")..","..GetString("unlimitedKit"))
 	GUI_NewButton(mc_salvagemanager.editwindow.name,GetString("delete"),"SalvageManager_DeleteFilter")
 	RegisterEventHandler("SalvageManager_DeleteFilter",mc_salvagemanager.deleteFilter)
 	
@@ -252,10 +260,12 @@ function mc_salvagemanager.createItemList()
 	return false
 end
 
+
 --Check if filter is valid: 
 function mc_salvagemanager.validFilter(filter)
 	if (filter.itemtype ~= "None" and filter.itemtype ~= nil and
-	filter.rarity ~= "None" and filter.rarity ~= nil) then
+	filter.rarity ~= "None" and filter.rarity ~= nil and
+	filter.preferedKit ~= "None" and filter.preferedKit ~= nil) then
 		return true
 	elseif (filter.rarity ~= "Junk") then
 		return true
@@ -276,7 +286,7 @@ end
 function mc_salvagemanager.filterWindow(filterNumber)
 	if (mc_salvagemanager.filterList[filterNumber] == nil and not mc_salvagemanager.filterExcists() and SalvageManager_NewFilterName ~= nil and SalvageManager_NewFilterName ~= "") then
 		filterNumber = TableSize(mc_salvagemanager.filterList) + 1
-		mc_salvagemanager.filterList[filterNumber] = {name = SalvageManager_NewFilterName, rarity = "None", itemtype = "None"}
+		mc_salvagemanager.filterList[filterNumber] = {name = SalvageManager_NewFilterName, rarity = "None", itemtype = "None", preferedKit = "None"}
 		mc_salvagemanager.refreshFilterlist()
 		Settings.GW2Minion.SalvageManager_FilterList = mc_salvagemanager.filterList
 	end
@@ -288,6 +298,7 @@ function mc_salvagemanager.filterWindow(filterNumber)
 		SalvageManager_Name = mc_salvagemanager.filterList[filterNumber].name or "None"
 		SalvageManager_Rarity = mc_salvagemanager.filterList[filterNumber].rarity or "None"
 		SalvageManager_Itemtype = mc_salvagemanager.filterList[filterNumber].itemtype or "None"
+		SalvageManager_Kit = mc_salvagemanager.filterList[filterNumber].preferedKit or "None"
 		GUI_WindowVisible(mc_salvagemanager.editwindow.name,true)
 	end
 	SalvageManager_CurFilter = filterNumber
@@ -324,6 +335,7 @@ function mc_salvagemanager.refreshFilterlist()
 	SalvageManager_Name = nil
 	SalvageManager_Rarity = nil
 	SalvageManager_Itemtype = nil
+	SalvageManager_Kit = nil
 	GUI_WindowVisible(mc_salvagemanager.editwindow.name,false)
 	GUI_UnFoldGroup(mc_salvagemanager.mainwindow.name,GetString("salvagefilters"))
 end
@@ -334,10 +346,12 @@ function mc_salvagemanager.GUIVarUpdate(Event, NewVals, OldVals)
 		if ( k == "SalvageManager_Active" ) then Settings.GW2Minion[tostring(k)] = v
 		elseif (k == "SalvageManager_Name"  or
 				k == "SalvageManager_Rarity" or
-				k == "SalvageManager_Itemtype")
+				k == "SalvageManager_Itemtype" or 
+				k == "SalvageManager_Kit")
 		then
 		mc_salvagemanager.filterList[SalvageManager_CurFilter].rarity = SalvageManager_Rarity
 		mc_salvagemanager.filterList[SalvageManager_CurFilter].itemtype = SalvageManager_Itemtype
+		mc_salvagemanager.filterList[SalvageManager_CurFilter].preferedKit = SalvageManager_Kit
 		end
 		Settings.GW2Minion.SalvageManager_FilterList = mc_salvagemanager.filterList
 	end
@@ -354,6 +368,7 @@ function mc_salvagemanager.ToggleMenu()
 		GUI_MoveWindow( mc_salvagemanager.mainwindow.name, wnd.x+wnd.width,wnd.y) 
 		GUI_WindowVisible(mc_salvagemanager.mainwindow.name,true)
 		mc_salvagemanager.visible = true
+		mc_salvagemanager.UpdateSalvageSingleItemList()
 	end
 end
 

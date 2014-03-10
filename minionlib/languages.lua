@@ -223,6 +223,7 @@ strings =
         enable2DRadar                   = "Enable 2D Radar",
         enable3DRadar                   = "Enable 3D Radar",
         fullscreenRadar                 = "Fullscreen (2D)",
+		showOnlyEnemies					= "Show Enemies Only",
         showradar						= "Radar",
 		showNodes                       = "Show Nodes",
         showPlayers                     = "Show Players",
@@ -363,6 +364,7 @@ strings =
 		soulbound						= "Souldbound",
 		itemtype						= "Itemtype",
 		rarity							= "Rarity",
+		preferedKit						= "Prefered Kit",
 		weapontype						= "Weapontype",
 		itemid							= "Item ID",
 		sellByID						= "Sell Single Items",
@@ -403,7 +405,8 @@ strings =
 		buyFine							= "Fine Kit",
 		buyJourneyman					= "Journeyman Kit",
 		buyMaster						= "Master Kit",
-
+		unlimitedKit					= "Unlimited Kit",
+		
 		--mc_ai_event.lua
 		events							= "Events",
 		event							= "Event",
@@ -647,7 +650,9 @@ strings =
         enable2DRadar                   = "开启2D雷达",
         enable3DRadar                   = "开启3D雷达",
         fullscreenRadar                 = "全屏 (2D)",
-        showNodes                       = "显示节点",
+        showOnlyEnemies					= "Show Enemies Only",
+		showradar						= "Radar",
+		showNodes                       = "显示节点",
         showPlayers                     = "显示玩家",
         showBattleNPCs                  = "显示战斗NPC",
         showEventNPCs                   = "显示事件NPC",
@@ -784,6 +789,7 @@ strings =
 		soulbound						= "Souldbound",
 		itemtype						= "Itemtype",
 		rarity							= "Rarity",
+		preferedKit						= "Prefered Kit",
 		weapontype						= "Weapontype",
 		itemid							= "Item ID",
 		sellByID						= "Sell Single Items",
@@ -824,7 +830,8 @@ strings =
 		buyFine							= "Fine Kit",
 		buyJourneyman					= "Journeyman Kit",
 		buyMaster						= "Master Kit",
-
+		unlimitedKit					= "Unlimited Kit",
+		
 		--mc_ai_event.lua
 		events							= "Events",
 		event							= "Event",
@@ -1054,7 +1061,9 @@ strings =
         enable2DRadar                   = "2Dレーダー起動",
         enable3DRadar                   = "3Dレーダー起動",
         fullscreenRadar                 = "フルスクリーン (2D)",
-        showNodes                       = "採集ポイント表示",
+		showOnlyEnemies					= "Show Enemies Only",
+		showradar						= "Radar",
+		showNodes                       = "採集ポイント表示",
         showPlayers                     = "プレイヤー表示",
         showBattleNPCs                  = "バトルNPC表示",
         showEventNPCs                   = "イベントNPC表示",
@@ -1191,6 +1200,7 @@ strings =
 		soulbound						= "Souldbound",
 		itemtype						= "Itemtype",
 		rarity							= "Rarity",
+		preferedKit						= "Prefered Kit",
 		weapontype						= "Weapontype",
 		itemid							= "Item ID",
 		sellByID						= "Sell Single Items",
@@ -1231,6 +1241,7 @@ strings =
 		buyFine							= "Fine Kit",
 		buyJourneyman					= "Journeyman Kit",
 		buyMaster						= "Master Kit",
+		unlimitedKit					= "Unlimited Kit",
 
 		--mc_ai_event.lua
 		events							= "Events",
@@ -1461,7 +1472,9 @@ strings =
         enable2DRadar                   = "Enable 2D Radar",
         enable3DRadar                   = "Enable 3D Radar",
         fullscreenRadar                 = "Fullscreen (2D)",
-        showNodes                       = "Show Nodes",
+        showOnlyEnemies					= "Show Enemies Only",
+		showradar						= "Radar",
+		showNodes                       = "Show Nodes",
         showPlayers                     = "Show Players",
         showBattleNPCs                  = "Show Battle NPCs",
         showEventNPCs                   = "Show Event NPCs",
@@ -1598,6 +1611,7 @@ strings =
 		soulbound						= "Souldbound",
 		itemtype						= "Itemtype",
 		rarity							= "Rarity",
+		preferedKit						= "Prefered Kit",
 		weapontype						= "Weapontype",
 		itemid							= "Item ID",
 		sellByID						= "Sell Single Items",
@@ -1638,7 +1652,8 @@ strings =
 		buyFine							= "Fine Kit",
 		buyJourneyman					= "Journeyman Kit",
 		buyMaster						= "Master Kit",
-
+		unlimitedKit					= "Unlimited Kit",
+		
 		--mc_ai_event.lua
 		events							= "Events",
 		event							= "Event",
@@ -1868,7 +1883,9 @@ strings =
         enable2DRadar                   = "Activer 2D Radar",
         enable3DRadar                   = "Activer 3D Radar",
         fullscreenRadar                 = "Plein écran(2D)",
-        showNodes                       = "Afficher Nodes",
+        showOnlyEnemies					= "Show Enemies Only",
+		showradar						= "Radar",
+		showNodes                       = "Afficher Nodes",
         showPlayers                     = "Afficher Joueurs",
         showBattleNPCs                  = "Afficher NPCs",
         showEventNPCs                   = "Afficher Event NPCs",
@@ -2005,6 +2022,7 @@ strings =
 		soulbound						= "Souldbound",
 		itemtype						= "Itemtype",
 		rarity							= "Rarity",
+		preferedKit						= "Prefered Kit",
 		weapontype						= "Weapontype",
 		itemid							= "Item ID",
 		sellByID						= "Sell Single Items",
@@ -2045,7 +2063,8 @@ strings =
 		buyFine							= "Fine Kit",
 		buyJourneyman					= "Journeyman Kit",
 		buyMaster						= "Master Kit",
-
+		unlimitedKit					= "Unlimited Kit",
+		
 		--mc_ai_event.lua
 		events							= "Events",
 		event							= "Event",
@@ -2275,6 +2294,7 @@ strings =
         enable2DRadar                   = "Enable 2D Radar",
         enable3DRadar                   = "Enable 3D Radar",
         fullscreenRadar                 = "Fullscreen (2D)",
+		showOnlyEnemies					= "Show Enemies Only",
 		showradar						= "Radar",
         showNodes                       = "Show Nodes",
         showPlayers                     = "Show Players",
@@ -2414,6 +2434,7 @@ strings =
 		soulbound						= "Souldbound",
 		itemtype						= "Itemtype",
 		rarity							= "Rarity",
+		preferedKit						= "Prefered Kit",
 		weapontype						= "Weapontype",
 		itemid							= "Item ID",
 		sellByID						= "Sell Single Items",
@@ -2454,7 +2475,8 @@ strings =
 		buyFine							= "Fine Kit",
 		buyJourneyman					= "Journeyman Kit",
 		buyMaster						= "Master Kit",
-
+		unlimitedKit					= "Unlimited Kit",
+		
 		--mc_ai_event.lua
 		events							= "Events",
 		event							= "Event",

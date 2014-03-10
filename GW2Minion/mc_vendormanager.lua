@@ -41,11 +41,11 @@ mc_vendormanager.tools = {
 	 -- salvagingkits 0= lowest quality 
 	 [3] = 
 	 {
-	  [0] = 23038, -- Crude Salvage Kit
-	  [1] = 23040, -- Basic Salvage Kit
-	  [2] = 23041, -- Fine
-	  [3] = 23042, -- Journeyman
-	  [4] = 23043  -- Master
+	  [0] = 23038, -- Crude Salvage Kit (rarity 1)
+	  [1] = 23040, -- Basic Salvage Kit (rarity 1)
+	  [2] = 23041, -- Fine (rarity 2)
+	  [3] = 23042, -- Journeyman (rarity 3)
+	  [4] = 23043  -- Master (rarity 4)
 	 }
  }
 
@@ -161,7 +161,6 @@ function mc_vendormanager.ModuleInit()
 	GUI_UnFoldGroup(mc_vendormanager.sellmainwindow.name,GetString("sellfilters"))	
 	-- SELL BY ID FILTER
 	GUI_NewComboBox(mc_vendormanager.sellmainwindow.name,GetString("sellByIDtems"),"SellManager_ItemToSell",GetString("sellByID"),"")
-	mc_vendormanager.UpdateSellSingleItemList()
 	GUI_NewButton(mc_vendormanager.sellmainwindow.name,GetString("sellByIDAddItem"),"SellManager_AdditemID",GetString("sellByID"))
 	RegisterEventHandler("SellManager_AdditemID",mc_vendormanager.AddItemID)
 	GUI_NewComboBox(mc_vendormanager.sellmainwindow.name,GetString("sellItemList"),"SellManager_ItemIDList",GetString("sellByID"),"")
@@ -732,6 +731,7 @@ function mc_vendormanager.SellToggleMenu()
 		GUI_MoveWindow( mc_vendormanager.sellmainwindow.name, wnd.x+wnd.width,wnd.y) 
 		GUI_WindowVisible(mc_vendormanager.sellmainwindow.name,true)
 		mc_vendormanager.sellwindowVisible = true
+		mc_vendormanager.UpdateSellSingleItemList()
 	end
 end
 

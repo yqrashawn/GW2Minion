@@ -33,12 +33,9 @@ function mc_radar.HandleInit()
     if ( Settings.GW2Minion.gRadarShowBattleNPCs == nil ) then
         Settings.GW2Minion.gRadarShowBattleNPCs = "0"
     end	
-    if ( Settings.GW2Minion.gRadarShowEventNPCs == nil ) then
-        Settings.GW2Minion.gRadarShowEventNPCs = "0"
-    end	
-    if ( Settings.GW2Minion.gRadarShowEventObjs == nil ) then
-        Settings.GW2Minion.gRadarShowEventObjs = "0"
-    end
+    if ( Settings.GW2Minion.gRadarShowOnlyEnemies == nil ) then
+        Settings.GW2Minion.gRadarShowOnlyEnemies = "0"
+    end		
 	if ( Settings.GW2Minion.gRadarZoom == nil ) then
         Settings.GW2Minion.gRadarZoom = "10"
     end	
@@ -58,6 +55,7 @@ function mc_radar.HandleInit()
     GUI_NewCheckbox(mc_radar.MainWindow.Name,GetString("showNodes"),"gRadarShowNode","RadarSettings" );
     GUI_NewCheckbox(mc_radar.MainWindow.Name,GetString("showPlayers"),"gRadarShowPlayers","RadarSettings" );
     GUI_NewCheckbox(mc_radar.MainWindow.Name,GetString("showBattleNPCs"),"gRadarShowBattleNPCs","RadarSettings" );
+	GUI_NewCheckbox(mc_radar.MainWindow.Name,GetString("showOnlyEnemies"),"gRadarShowOnlyEnemies","RadarSettings" );	
         
     GUI_NewNumeric(mc_radar.MainWindow.Name,GetString("xPos"),"gRadarX","RadarSettings" );
     GUI_NewNumeric(mc_radar.MainWindow.Name,GetString("yPos"),"gRadarY","RadarSettings" );
@@ -70,8 +68,7 @@ function mc_radar.HandleInit()
     gRadarShowNode = Settings.GW2Minion.gRadarShowNode
     gRadarShowPlayers = Settings.GW2Minion.gRadarShowPlayers
     gRadarShowBattleNPCs = Settings.GW2Minion.gRadarShowBattleNPCs
-    gRadarShowEventNPCs = Settings.GW2Minion.gRadarShowEventNPCs
-    gRadarShowEventObjs = Settings.GW2Minion.gRadarShowEventObjs
+	gRadarShowOnlyEnemies = Settings.GW2Minion.gRadarShowOnlyEnemies
     gRadarX = Settings.GW2Minion.gRadarX
     gRadarY = Settings.GW2Minion.gRadarY
     
@@ -83,8 +80,8 @@ function mc_radar.HandleInit()
     if ( gRadarShowNode == "0") then HackManager:SetRadarSettings("gRadarShowNode",false) else HackManager:SetRadarSettings("gRadarShowNode",true) end
     if ( gRadarShowPlayers == "0") then HackManager:SetRadarSettings("gRadarShowPlayers",false) else HackManager:SetRadarSettings("gRadarShowPlayers",true) end
     if ( gRadarShowBattleNPCs == "0") then HackManager:SetRadarSettings("gRadarShowBattleNPCs",false) else HackManager:SetRadarSettings("gRadarShowBattleNPCs",true) end
-    if ( gRadarShowEventNPCs == "0") then HackManager:SetRadarSettings("gRadarShowEventNPCs",false) else HackManager:SetRadarSettings("gRadarShowEventNPCs",true) end
-    if ( gRadarShowEventObjs == "0") then HackManager:SetRadarSettings("gRadarShowEventObjs",false) else HackManager:SetRadarSettings("gRadarShowEventObjs",true) end
+	if ( gRadarShowOnlyEnemies == "0") then HackManager:SetRadarSettings("gRadarShowOnlyEnemies",false) else HackManager:SetRadarSettings("gRadarShowOnlyEnemies",true) end
+	
     if ( tonumber(gRadarX) ~= nil) then HackManager:SetRadarSettings("gRadarX",tonumber(gRadarX)) end
     if ( tonumber(gRadarY) ~= nil) then HackManager:SetRadarSettings("gRadarY",tonumber(gRadarY)) end
     
@@ -101,10 +98,8 @@ function mc_radar.GUIVarUpdate(Event, NewVals, OldVals)
             k == "g2dRadarFullScreen" or
             k == "gRadarShowNode" or
             k == "gRadarShowPlayers" or
-            k == "gRadarShowBattleNPCs" or			
-            k == "gRadarShowEventNPCs" or
-            k == "gRadarShowEventObjs" or			
-            k == "gRadarShowAetherytes")
+            k == "gRadarShowBattleNPCs" or	
+			k == "gRadarShowOnlyEnemies")
         then
             Settings.GW2Minion[tostring(k)] = v
             if ( v == "0") then
