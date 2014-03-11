@@ -225,7 +225,7 @@ function mc_salvagemanager.createItemList()
 	if (items) then
 		local id, item = next(items)
 		while (id and item) do
-			if (item.salvagable) then
+			if (item.salvagable and item.soulbound == false) then
 				local addItem = false
 				local _, filter = next(mc_salvagemanager.filterList)
 				while (filter) do
