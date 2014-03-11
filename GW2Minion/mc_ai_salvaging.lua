@@ -19,8 +19,8 @@ e_salvage.kitlist =
 	  [23040] = GetString("buyBasic"), -- Basic Salvage Kit (rarity 1)
 	  [23041] = GetString("buyFine"), -- Fine (rarity 2)
 	  [23042] = GetString("buyJourneyman"), -- Journeyman (rarity 3)
-	  [23043] = GetString("buyMaster")  -- Master (rarity 4)
-	  [23045] = GetString("mysticKit") -- Mystic Kit (rarity 4)
+	  [23043] = GetString("buyMaster"),  -- Master (rarity 4)
+	  [23045] = GetString("mysticKit"), -- Mystic Kit (rarity 4)
 	 }
 		
 function e_salvage:execute()
