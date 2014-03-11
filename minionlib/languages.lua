@@ -406,6 +406,7 @@ strings =
 		buyJourneyman					= "Journeyman Kit",
 		buyMaster						= "Master Kit",
 		unlimitedKit					= "Unlimited Kit",
+		mysticKit						= "Mystic Kit",
 		
 		--mc_ai_event.lua
 		events							= "Events",
@@ -831,6 +832,7 @@ strings =
 		buyJourneyman					= "Journeyman Kit",
 		buyMaster						= "Master Kit",
 		unlimitedKit					= "Unlimited Kit",
+		mysticKit						= "Mystic Kit",
 		
 		--mc_ai_event.lua
 		events							= "Events",
@@ -1242,7 +1244,8 @@ strings =
 		buyJourneyman					= "Journeyman Kit",
 		buyMaster						= "Master Kit",
 		unlimitedKit					= "Unlimited Kit",
-
+		mysticKit						= "Mystic Kit",
+		
 		--mc_ai_event.lua
 		events							= "Events",
 		event							= "Event",
@@ -1653,6 +1656,7 @@ strings =
 		buyJourneyman					= "Journeyman Kit",
 		buyMaster						= "Master Kit",
 		unlimitedKit					= "Unlimited Kit",
+		mysticKit						= "Mystic Kit",
 		
 		--mc_ai_event.lua
 		events							= "Events",
@@ -2064,6 +2068,7 @@ strings =
 		buyJourneyman					= "Journeyman Kit",
 		buyMaster						= "Master Kit",
 		unlimitedKit					= "Unlimited Kit",
+		mysticKit						= "Mystic Kit",
 		
 		--mc_ai_event.lua
 		events							= "Events",
@@ -2475,6 +2480,7 @@ strings =
 		buyFine							= "Fine Kit",
 		buyJourneyman					= "Journeyman Kit",
 		buyMaster						= "Master Kit",
+		mysticKit						= "Mystic Kit",
 		unlimitedKit					= "Unlimited Kit",
 		
 		--mc_ai_event.lua

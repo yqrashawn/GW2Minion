@@ -108,7 +108,7 @@ function mc_salvagemanager.ModuleInit()
 	GUI_NewField(mc_salvagemanager.editwindow.name,GetString("name"),"SalvageManager_Name",GetString("filterdetails"))
 	GUI_NewComboBox(mc_salvagemanager.editwindow.name,GetString("itemtype"),"SalvageManager_Itemtype",GetString("filterdetails"),"")
 	GUI_NewComboBox(mc_salvagemanager.editwindow.name,GetString("rarity"),"SalvageManager_Rarity",GetString("filterdetails"),GetString("rarityNone")..","..GetString("rarityJunk")..","..GetString("rarityCommon")..","..GetString("rarityFine")..","..GetString("rarityMasterwork")..","..GetString("rarityRare")..","..GetString("rarityExotic"))
-	GUI_NewComboBox(mc_salvagemanager.editwindow.name,GetString("preferedKit"),"SalvageManager_Kit",GetString("filterdetails"),GetString("rarityNone")..","..GetString("buyCrude")..","..GetString("buyBasic")..","..GetString("buyFine")..","..GetString("buyJourneyman")..","..GetString("buyMaster")..","..GetString("unlimitedKit"))
+	GUI_NewComboBox(mc_salvagemanager.editwindow.name,GetString("preferedKit"),"SalvageManager_Kit",GetString("filterdetails"),GetString("rarityNone")..","..GetString("buyCrude")..","..GetString("buyBasic")..","..GetString("buyFine")..","..GetString("buyJourneyman")..","..GetString("buyMaster")..","..GetString("mysticKit")..","..GetString("unlimitedKit"))
 	GUI_NewButton(mc_salvagemanager.editwindow.name,GetString("delete"),"SalvageManager_DeleteFilter")
 	RegisterEventHandler("SalvageManager_DeleteFilter",mc_salvagemanager.deleteFilter)
 	
@@ -267,7 +267,7 @@ function mc_salvagemanager.validFilter(filter)
 	filter.rarity ~= "None" and filter.rarity ~= nil and
 	filter.preferedKit ~= "None" and filter.preferedKit ~= nil) then
 		return true
-	elseif (filter.rarity ~= "Junk") then
+	elseif (filter.rarity == "Junk") then
 		return true
 	end
 	return false
