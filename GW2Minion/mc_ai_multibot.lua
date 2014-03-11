@@ -112,7 +112,7 @@ function e_dead_mb:execute()
 			local char = CharacterList:Get(pmember.id)
 			if ( char ) then
 				local cPos = char.pos
-				if ( cPos and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and char.alive == true) then
+				if ( cPos and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and char.dead == false) then
 					found = true
 					break
 				end
@@ -294,6 +294,8 @@ function c_MoveToLeader:evaluate()
 	return false
 end
 e_MoveToLeader.ldist = math.random(150,600)
+e_MoveToLeader.tmr = 0
+e_MoveToLeader.threshold = 2000
 function e_MoveToLeader:execute()
 	ml_log("e_MoveToLeader ")
 	local party = Player:GetParty()
@@ -317,7 +319,12 @@ function e_MoveToLeader:execute()
 						end
 						if (tonumber(navResult) < 0) then					
 							ml_error("e_MoveToLeader.MoveToLeader result: "..tonumber(navResult))					
-						end						
+						end
+						if ( mc_global.now - e_MoveToLeader.tmr > e_MoveToLeader.threshold ) then
+							e_MoveToLeader.tmr = mc_global.now
+							e_MoveToLeader.threshold = math.random(1000,5000)
+							mc_skillmanager.HealMe()
+						end	
 					else
 						d("Arrived at Leader..")
 						e_MoveToLeader.ldist = math.random(150,600)						

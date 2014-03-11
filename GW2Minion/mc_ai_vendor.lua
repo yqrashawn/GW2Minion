@@ -841,11 +841,12 @@ end
 
 function mc_ai_vendor.OpenSellWindow()
 	
-	ml_log( "Chatting with Vendor.." )							
+	ml_log( "Chatting with Vendor.." )	
+	local found = false	
 	local options = Player:GetConversationOptions()
 	if ( TableSize(options) > 0 ) then
 		nextOption, entry  = next( options )
-		local found = false
+		
 		while ( nextOption and entry ) do
 			if( entry.type == GW2.CONVERSATIONOPTIONS.Shop ) then
 				Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.Shop )
@@ -882,10 +883,10 @@ function mc_ai_vendor.OpenSellWindow()
 		ml_error("No Conversation Options at Vendor")
 	end	
 		
-		if ( found == false ) then
-			return false
-		end
+	if ( found == false ) then
+		return ml_log(false)
+	end
 	mc_global.Wait(2500)
-	return true
+	return ml_log(true)
 end
 

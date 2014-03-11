@@ -126,7 +126,7 @@ c_AggroEx = inheritsFrom( ml_cause )
 e_AggroEx = inheritsFrom( ml_effect )
 c_AggroEx.threshold = 80
 function c_AggroEx:evaluate()
-    return Player.swimming == 0 and Player.health.percent < c_AggroEx.threshold and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
+    return Player.swimming == 0 and ( math.random(0,50)==1 or Player.health.percent < c_AggroEx.threshold) and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
 end
 function e_AggroEx:execute()
 	ml_log("e_AggroEx ")

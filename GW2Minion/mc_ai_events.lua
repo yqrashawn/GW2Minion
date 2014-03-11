@@ -139,6 +139,8 @@ function c_MoveInEventRange:evaluate()
 	end
 	return false
 end
+e_MoveInEventRange.tmr = 0
+e_MoveInEventRange.threshold = 2000
 function e_MoveInEventRange:execute()
 	ml_log("e_MoveInEventRange")
 	local eID = ml_task_hub:CurrentTask().eventID
@@ -157,6 +159,13 @@ function e_MoveInEventRange:execute()
 						if (tonumber(navResult) < 0) then					
 							ml_error("mc_ai_events.MoveInEventRange result: "..tonumber(navResult))					
 						end
+						
+						if ( mc_global.now - e_MoveInEventRange.tmr > e_MoveInEventRange.threshold ) then
+							e_MoveInEventRange.tmr = mc_global.now
+							e_MoveInEventRange.threshold = math.random(1000,5000)
+							mc_skillmanager.HealMe()
+						end	
+						
 						return ml_log(true)
 					else
 						c_MoveInEventRange.reached = true
@@ -169,6 +178,13 @@ function e_MoveInEventRange:execute()
 						if (tonumber(navResult) < 0) then					
 							ml_error("mc_ai_events.MoveBackIntoEventRange result: "..tonumber(navResult))					
 						end
+						
+						if ( mc_global.now - e_MoveInEventRange.tmr > e_MoveInEventRange.threshold ) then
+							e_MoveInEventRange.tmr = mc_global.now
+							e_MoveInEventRange.threshold = math.random(1000,5000)
+							mc_skillmanager.HealMe()
+						end	
+						
 						c_MoveInEventRange.reached = false
 						return ml_log(true)
 					end
