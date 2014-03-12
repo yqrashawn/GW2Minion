@@ -67,8 +67,8 @@ function mc_ai_event:Init()
 end
 function mc_ai_event:task_complete_eval()
 	local eID = ml_task_hub:CurrentTask().eventID
-	if ( eID == nil or TableSize(MapMarkerList("onmesh,eventID="..eID))==0 ) then
-		c_MoveInEventRange.range = 350
+	if ( eID == nil or TableSize(MapMarkerList("nearest,onmesh,eventID="..eID))==0 ) then
+		c_MoveInEventRange.range = 1350
 		c_MoveInEventRange.reached = false
 		d("Event Done..")
 		return true
@@ -366,7 +366,7 @@ function e_DoEventObjectives:execute()
 	--
 							-- KillKillKill lol
 						if ( c_NeedValidTarget:evaluate() ) then 
-							e_SearchTarget:execute()
+							e_SearchTargetEvent:execute()
 						else
 							if ( c_MoveIntoCombatRange:evaluate() ) then
 								e_MoveIntoCombatRange:execute()
@@ -375,6 +375,58 @@ function e_DoEventObjectives:execute()
 							end
 						end
 	
+	return ml_log(false)
+end
+
+e_SearchTargetEvent = inheritsFrom( ml_effect )
+e_SearchTargetEvent.lastID = 0
+e_SearchTargetEvent.count = 0
+function e_SearchTargetEvent:execute()
+	ml_log("e_SearchTargetEvent")
+	-- Weakest Aggro in CombatRange first	
+	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,onmesh,maxdistance="..mc_global.AttackRange) )
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil ) then
+			--d("Found Aggro Target: "..(E.name).." ID:"..tostring(id))
+			return ml_log(Player:SetTarget(id))			
+		end		
+	end
+	
+	-- Then nearest attackable Gadget
+	local TList = ( GadgetList("nearest,attackable,alive,onmesh,maxdistance="..mc_global.AttackRange..",exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))) )
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil ) then
+			d("Found Gadget Target: "..(E.name).." ID:"..tostring(id))
+			return ml_log(Player:SetTarget(id))			
+		end		
+	end
+	
+	-- Then nearest attackable Target
+	TList = ( CharacterList("attackable,alive,nearest,onmesh,maxdistance="..c_MoveInEventRange.range..",exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))))
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil ) then
+			d("New Target: "..(E.name).." ID:"..tostring(id))
+			
+			-- Blacklist if we cant select it..happens sometimes when it is outside our select range
+			if (e_SearchTargetEvent.lastID == id ) then
+				e_SearchTargetEvent.count = e_SearchTargetEvent.count+1
+				if ( e_SearchTargetEvent.count > 30 ) then
+					e_SearchTargetEvent.count = 0
+					e_SearchTargetEvent.lastID = 0
+					mc_blacklist.AddBlacklistEntry(GetString("monsters"), E.contentID, E.name, mc_global.now + 60000)
+					d("Seems we cant select/target/reach our target, blacklisting it for 60seconds..")
+				end
+			else
+				e_SearchTargetEvent.lastID = id
+				e_SearchTargetEvent.count = 0
+			end
+			
+			return ml_log(Player:SetTarget(id))
+		end		
+	end
 	return ml_log(false)
 end
 
