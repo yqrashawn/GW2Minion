@@ -319,7 +319,7 @@ function c_MoveIntoCombatRange:evaluate()
     --ml_log("c_MoveIntoCombRng")
     local t = Player:GetTarget()
 	if ( t ) then		
-		if (t.distance >= mc_global.AttackRange or (t.isCharacter and not t.los) or (t.isGadget and not t.los and t.distance > mc_global.AttackRange)) then
+		if (t.distance >= mc_global.AttackRange or (t.isCharacter and not t.los) or (t.isGadget and not t.los and t.distance > mc_global.AttackRange) or (t.isGadget and not t.los and t.distance > 350)) then
 			return true
 		else
 			if ( c_MoveIntoCombatRange.running ) then 

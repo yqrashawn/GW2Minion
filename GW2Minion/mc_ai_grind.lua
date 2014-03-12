@@ -27,7 +27,7 @@ function mc_ai_grind:Process()
 	local i = math.random(0,4)
 
 	-- Killsomething nearby
-	if ( i == 0 and function() return TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) == 0 end ) then
+	if ( i == 0 and TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) > 0 ) then
 		local newTask = mc_ai_combatAttack.Create()
 		ml_task_hub:CurrentTask():AddSubTask(newTask)
 	

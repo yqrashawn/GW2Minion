@@ -314,6 +314,16 @@ function e_Gathering:execute()
 				if ( node.selectable and (not t or t.id ~= id )) then
 					Player:SetTarget( id )
 				else
+					
+					if (Player.profession == 8 ) then -- Necro, leave shroud
+						local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
+						if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
+							mc_global.Wait(500)
+							return
+						end
+					end
+					
 					-- yeah I know, but this usually doesnt break ;)
 					if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
 						Player:Interact( id )

@@ -379,6 +379,8 @@ function Dev.ModuleInit()
 	
 	GUI_NewField("Dev","CurrentClimbHeight","HackCL","Hacks")
 	GUI_NewNumeric("Dev","SetClimbHeight","HackSCL","Hacks","0","500");
+	GUI_NewButton("Dev","Set Values","Dev.SetVals","Hacks")
+	RegisterEventHandler("Dev.SetVals", Dev.Func)
 	
 	GUI_NewCheckbox("Dev","NoClip","HackNoCl","Hacks");
 	
@@ -619,6 +621,12 @@ function Dev.Func ( arg )
 		end
 	elseif ( arg == "Dev.aoeloot") then
 		d(Player:AoELoot())		
+	elseif ( arg == "Dev.SetVals") then
+		
+		if ( tonumber(HackSPCS) ~=nil ) then Player:SetSpeed(tonumber(HackSPCS)) end		
+		if ( tonumber(HackGravS)~=nil ) then Player:SetGravity(tonumber(HackGravS)) end
+		if ( tonumber(HackSCL)~=nil ) then Player:SetCrawlHeight(tonumber(HackSCL)) end
+	
 	end	
 end
 
@@ -1277,15 +1285,11 @@ function Dev.UpdateWindow()
 	
 	-- Hacks
 	HackSPC = Player:GetSpeed()	
-	if ( tonumber(HackSPCS) == nil ) then HackSPCS = tonumber(HackSPC) end
-	if ( tonumber(HackSPC) ~= tonumber(HackSPCS) ) then d(Player:SetSpeed(tonumber(HackSPCS))) end	
 	HackGrav = Player:GetGravity()
-	if ( tonumber(HackGravS) == nil ) then HackGravS = tonumber(HackGrav) end
-	if ( tonumber(HackGrav) ~= tonumber(HackGravS) ) then d(Player:SetGravity(tonumber(HackGravS))) end
 	HackCL = Player:GetCrawlHeight()
-	if ( tonumber(HackSCL) == nil ) then HackSCL = tonumber(HackCL) end
-	if ( tonumber(HackCL) ~= tonumber(HackSCL) ) then d(Player:SetCrawlHeight(tonumber(HackSCL))) end
-	
+	if ( tonumber(HackSPC) ~=nil and HackSPCS == "" ) then HackSPCS = HackSPC end		
+	if ( tonumber(HackGrav)~=nil and HackGravS == "" ) then HackGravS = HackGrav end
+	if ( tonumber(HackCL)~=nil and HackSCL == "") then HackSCL = HackCL end
 	
 	-- ConversationInfo	
 	ConOpen = tostring(Player:IsConversationOpen())

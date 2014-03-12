@@ -270,7 +270,7 @@ function mc_questmanager.GenerateMapExploreProfile()
 			local realpos = mc_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
 			-- CREATE GOTO HEARTQUEST QUEST
 			local position = { x=realpos[1], y=realpos[2], z=-2500}
-			--mc_questmanager.AddDoHeartQuest( position, entry, entry["level"] )	
+			mc_questmanager.AddDoHeartQuest( position, entry, entry["level"] )	
 			table.insert(mc_datamanager.levelmap, {  pos= position, level = entry["level"] } )			
 			id,entry = next(tasks,id)
 		end
@@ -515,7 +515,7 @@ function mc_questmanager.AddDoHeartQuest( pos2D, entry , level)
 					name = "GoTo"..WPName,
 					done = "0",
 					script = { 
-						name = "GotoPosition",
+						name = "DoHeartQuest",
 						data = {
 							GotoX = pos2D.x,
 							GotoY = pos2D.y,

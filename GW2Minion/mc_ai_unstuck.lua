@@ -106,7 +106,7 @@ function mc_ai_unstuck.stuckhandler( event, distmoved, stuckcount )
 	d("STUCK! Distance Moved: "..tostring(distmoved) .. " Count: "..tostring(stuckcount) )
 	Player:Jump()
 	
-	if ( tonumber(stuckcount) > 20 ) then
+	if ( tonumber(stuckcount) < 20 ) then
 		local i = math.random(0,1)
 		if ( i == 0 ) then
 			Player:SetMovement(2)
