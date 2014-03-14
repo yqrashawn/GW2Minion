@@ -82,7 +82,9 @@ function mc_ai_combatAttack:Init()
 	
 	-- Gathering
 	self:add(ml_element:create( "Gathering", c_Gathering, e_Gathering, 65 ), self.process_elements)
-			
+	
+	-- Finish Enemy
+	self:add(ml_element:create( "FinishHim", c_FinishHim, e_FinishHim, 60 ), self.process_elements)
 	-- Killsomething nearby					
 	-- Valid Target
 	self:add(ml_element:create( "SearchingTarget", c_NeedValidTarget, e_SearchTarget, 50 ), self.process_elements)
@@ -148,6 +150,26 @@ function e_SwimUp:execute()
 	Player:SetMovement(10)
 end
 
+-- attempt to destroy path-blocking gadgets like doors n stuff while moving
+c_DestroyGadget = inheritsFrom( ml_cause )
+e_DestroyGadget = inheritsFrom( ml_effect )
+function c_DestroyGadget:evaluate()
+	if ( Player.swimming == 0 and Player:IsMoving() and (mc_ai_unstuck.stuckcounter > 0 or mc_ai_unstuck.stuckcounter2 > 0) )then		
+		return TableSize( GadgetList("nearest,attackable,alive,onmesh,maxdistance=350,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))) ) > 0
+	end
+	return false
+end
+function e_DestroyGadget:execute()
+	local TList = ( GadgetList("nearest,attackable,alive,onmesh,maxdistance=350,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))) )
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil ) then
+			d("Found Blocking Gadget Target: "..(E.name).." ID:"..tostring(id))			
+			Player:SetTarget(id)
+			e_KillTarget:execute()
+		end		
+	end
+end
 
 e_SearchTarget = inheritsFrom( ml_effect )
 e_SearchTarget.lastID = 0
@@ -201,7 +223,70 @@ function e_SearchTarget:execute()
 	return ml_log(false)
 end
 
-
+-- Finish downed enemies
+c_FinishHim = inheritsFrom( ml_cause )
+e_FinishHim = inheritsFrom( ml_effect )
+e_FinishHim.tmr = 0
+e_FinishHim.threshold = 2000
+function c_FinishHim:evaluate()
+    return Player.swimming == 0 and Player.health.percent > 15 and TableSize(CharacterList("nearest,downed,aggro,attackable,maxdistance=1200,onmesh")) > 0
+end
+function e_FinishHim:execute()
+	ml_log("e_FinishHim")
+	local EList = CharacterList("nearest,downed,aggro,attackable,maxdistance=1200,onmesh")
+	if ( EList ) then
+		local id,entity = next (EList)
+		if ( id and entity ) then
+			
+			if (not entity.isInInteractRange) then
+				-- MoveIntoInteractRange
+				local tPos = entity.pos
+				if ( tPos ) then
+					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+					MoveOnlyStraightForward()
+					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+					if (tonumber(navResult) < 0) then
+						ml_error("e_FinishHim.MoveIntoCombatRange result: "..tonumber(navResult))					
+					end
+					
+					if ( mc_global.now - e_FinishHim.tmr > e_FinishHim.threshold ) then
+						e_FinishHim.tmr = mc_global.now
+						e_FinishHim.threshold = math.random(1500,5000)
+						mc_skillmanager.HealMe()
+					end
+					ml_log("MoveTo_FinishHim..")
+					return true
+				end
+			else
+				-- Grab that thing
+				Player:StopMovement()
+				local t = Player:GetTarget()
+				if ( entity.selectable and (not t or t.id ~= id )) then
+					Player:SetTarget( id )
+				else
+					
+					if (Player.profession == 8 ) then -- Necro, leave shroud
+						local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
+						if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17) then
+							Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
+							mc_global.Wait(500)
+							return
+						end
+					end
+					
+					-- yeah I know, but this usually doesnt break ;)
+					if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
+						Player:Interact( id )
+						ml_log("Finishing..")						
+						mc_global.Wait(1000)
+						return true
+					end	
+				end			
+			end
+		end
+	end
+	return ml_log(false)
+end
 
 
 
@@ -247,8 +332,11 @@ function mc_ai_combatDefend:Init()
 	-- Dont Dive lol
 	self:add(ml_element:create( "SwimUP", c_SwimUp, e_SwimUp, 80 ), self.process_elements)
 	
+	-- Finish Enemy
+	self:add(ml_element:create( "FinishHim", c_FinishHim, e_FinishHim, 70 ), self.process_elements)
+	
 	-- Valid Target
-	self:add(ml_element:create( "NeedValidTarget", c_NeedValidTarget, e_SetAggroTarget, 75 ), self.process_elements)
+	self:add(ml_element:create( "NeedValidTarget", c_NeedValidTarget, e_SetAggroTarget, 60 ), self.process_elements)
 		
 	-- Get into Combat Range
 	self:add(ml_element:create( "MovingIntoCombatRange", c_MoveIntoCombatRange, e_MoveIntoCombatRange, 50 ), self.process_elements)
@@ -318,7 +406,7 @@ c_MoveIntoCombatRange.running = false
 function c_MoveIntoCombatRange:evaluate()
     --ml_log("c_MoveIntoCombRng")
     local t = Player:GetTarget()
-	if ( t ) then		
+	if ( t and Player.swimming == 0 ) then		
 		if (t.distance >= mc_global.AttackRange or (t.isCharacter and not t.los) or (t.isGadget and not t.los and t.distance > mc_global.AttackRange) or (t.isGadget and not t.los and t.distance > 350)) then
 			return true
 		else
@@ -342,6 +430,8 @@ function e_MoveIntoCombatRange:execute()
 			-- moveto(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)		
 			if ( tPos ) then
 				--d("MoveIntoCombatRange..Running")
+				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+				MoveOnlyStraightForward()
 				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,100+t.radius,false,false,true))		
 				if (tonumber(navResult) < 0) then					
 					ml_error("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
@@ -390,7 +480,7 @@ c_resting = inheritsFrom( ml_cause )
 e_resting = inheritsFrom( ml_effect )
 c_resting.hpPercent = math.random(45,85)
 function c_resting:evaluate()
-	if ( Player.inCombat == false and Player.health.percent < c_resting.hpPercent ) then		
+	if ( Player.swimming == 0 and Player.inCombat == false and Player.health.percent < c_resting.hpPercent ) then		
 		local mybuffs = Player.buffs
 		return not mc_helper.BufflistHasBuffs(mybuffs, "737,723,736") --burning,poison,bleeding		
 	end	
@@ -406,6 +496,10 @@ function e_resting:execute()
 			mc_global.Wait(500)
 			return
 		end
+	end
+	
+	if ( Player:IsMoving() ) then
+		Player:StopMovement()
 	end
 	
 	-- check Skillmanager if he can heal first
@@ -511,6 +605,7 @@ function e_revive:execute()
 			-- MoveIntoInteractRange
 			local tPos = entity.pos
 			if ( tPos ) then
+				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
 				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 				if (tonumber(navResult) < 0) then
 					ml_error("e_revive.MoveInToCombatRange result: "..tonumber(navResult))
@@ -579,6 +674,8 @@ function e_reviveDownedPlayersInCombat:execute()
 				-- MoveIntoInteractRange
 				local tPos = entity.pos
 				if ( tPos ) then
+					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+					MoveOnlyStraightForward()
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then
 						ml_error("e_revive.MoveintoCombatRange result: "..tonumber(navResult))					
@@ -779,4 +876,18 @@ function DoCombatMovement()
 	end	
 	return false
 end
-
+						
+-- The bot sometimes is "stuck" on strafing left or right after combat, this fixes it
+function MoveOnlyStraightForward()
+	if ( Player:IsMoving() ) then
+		local movdirs = Player:GetMovement()		
+		if (movdirs.left) then
+			Player:UnSetMovement(2)
+			return true
+		elseif (movdirs.right) then 
+			Player:UnSetMovement(3)
+			return true
+		end
+	end
+	return false
+end

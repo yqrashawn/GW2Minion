@@ -13,7 +13,9 @@ function mc_ai_event.Create()
     newinst.subtask = nil
     newinst.process_elements = {}
     newinst.overwatch_elements = {}
-    newinst.eventID = nil	
+    newinst.eventID = nil
+	newinst.maxduration = 900000 --15min
+	newinst.curduration = 0
     return newinst
 end
 
@@ -66,8 +68,18 @@ function mc_ai_event:Init()
 	self:AddTaskCheckCEs()
 end
 function mc_ai_event:task_complete_eval()
+	-- Event timer check
+	if ( ml_task_hub:CurrentTask().curduration == 0 ) then 
+		ml_task_hub:CurrentTask().curduration = mc_global.now
+	elseif ( mc_global.now - ml_task_hub:CurrentTask().curduration > ml_task_hub:CurrentTask().maxduration ) then
+		d("Event maxduration (15 minutes) have passed...moving on")
+		mc_blacklist.AddBlacklistEntry(GetString("event"), ml_task_hub:CurrentTask().eventID, "Event", mc_global.now + 1800000)
+		return true		
+	end
+	
+	-- Event gone
 	local eID = ml_task_hub:CurrentTask().eventID
-	if ( eID == nil or TableSize(MapMarkerList("nearest,onmesh,eventID="..eID))==0 ) then
+	if ( eID == nil or TableSize(MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event"))))==0 ) then
 		c_MoveInEventRange.range = 1350
 		c_MoveInEventRange.reached = false
 		d("Event Done..")
@@ -120,7 +132,7 @@ c_MoveInEventRange.range = 2500 -- gets changed depending what objective we have
 function c_MoveInEventRange:evaluate()
 	local eID = ml_task_hub:CurrentTask().eventID
 	if ( tonumber(eID)~=nil ) then
-		local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
+		local evList = MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
 		local i,e = next(evList)
 		if ( i and e ) then
 			if ( c_MoveInEventRange.reached == false) then
@@ -145,7 +157,7 @@ function e_MoveInEventRange:execute()
 	ml_log("e_MoveInEventRange")
 	local eID = ml_task_hub:CurrentTask().eventID
 	if ( tonumber(eID)~=nil ) then
-		local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
+		local evList = MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
 		local i,e = next(evList)
 		if ( i and e ) then
 			local pPos = Player.pos
@@ -155,6 +167,8 @@ function e_MoveInEventRange:execute()
 				if ( c_MoveInEventRange.reached == false) then
 					-- 1st time get into event range
 					if ( Distance2D ( pPos.x, pPos.y, ePos.x, ePos.y) > 350 ) then
+						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
 						if (tonumber(navResult) < 0) then					
 							ml_error("mc_ai_events.MoveInEventRange result: "..tonumber(navResult))					
@@ -174,6 +188,8 @@ function e_MoveInEventRange:execute()
 				else
 					-- Check if we moved too far away from the event we are in
 					if ( Distance2D ( pPos.x, pPos.y, ePos.x, ePos.y) > c_MoveInEventRange.range ) then
+						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
 						if (tonumber(navResult) < 0) then					
 							ml_error("mc_ai_events.MoveBackIntoEventRange result: "..tonumber(navResult))					
@@ -201,7 +217,7 @@ e_DoEventObjectives = inheritsFrom( ml_effect )
 function c_DoEventObjectives:evaluate()
 	local eID = ml_task_hub:CurrentTask().eventID
 	if ( tonumber(eID)~=nil ) then
-		local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
+		local evList = MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
 		if ( TableSize(evList)>0) then
 			local i,e = next(evList)
 			if ( i and e ) then
@@ -215,13 +231,13 @@ function e_DoEventObjectives:execute()
 	ml_log("e_DoEventObjectives")
 	local eID = ml_task_hub:CurrentTask().eventID
 	if ( tonumber(eID)~=nil ) then
-		local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
+		local evList = MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
 		if ( TableSize(evList)>0) then
 			local i,e = next(evList)
 			if ( i and e ) then
 			
 				--pick out the first objective
-				local evo = e.eventobjectivelist				
+				local evoList = e.eventobjectivelist				
 				if ( evoList ) then
 					local oid,obj = next(evoList)
 					if ( oid and obj ) then
@@ -238,6 +254,10 @@ function e_DoEventObjectives:execute()
 						elseif ( objType == GW2.OBJECTIVETYPE.CollectItems ) then 
 						ml_log("OBJECTIVETYPE.CollectItems")
 						c_MoveInEventRange.range = 4000
+						
+						d("Bot cant handle CollectItems-Events, blacklisting it..")
+						mc_blacklist.AddBlacklistEntry(GetString("event"), e.eventID, "CollectItems", mc_global.now + 1800000)
+						ml_task_hub:CurrentTask().completed = true
 						
 						elseif ( objType == GW2.OBJECTIVETYPE.Counter ) then 
 						ml_log("OBJECTIVETYPE.Counter")
@@ -365,7 +385,7 @@ function e_DoEventObjectives:execute()
 	
 	--
 							-- KillKillKill lol
-						if ( c_NeedValidTarget:evaluate() ) then 
+						if ( c_NeedValidTargetEvent:evaluate() ) then 
 							e_SearchTargetEvent:execute()
 						else
 							if ( c_MoveIntoCombatRange:evaluate() ) then
@@ -378,9 +398,25 @@ function e_DoEventObjectives:execute()
 	return ml_log(false)
 end
 
+c_NeedValidTargetEvent = inheritsFrom( ml_cause )
+function c_NeedValidTargetEvent:evaluate()
+	local target = Player:GetTarget()
+	if ( TableSize( target ) > 0 ) then	
+		--d("NeedValidTarget "..tostring(not target.alive and not target.attackable and not target.onmesh))
+		if (Player.swimming == 0 and not target.alive or not target.attackable or not target.onmesh or target.pathdistance > c_MoveInEventRange.range) then
+			return true
+		else
+			e_SearchTargetEvent.Tmr = 0
+			return false
+		end
+	end	
+	return true
+end
 e_SearchTargetEvent = inheritsFrom( ml_effect )
 e_SearchTargetEvent.lastID = 0
 e_SearchTargetEvent.count = 0
+e_SearchTargetEvent.Tmr = 0
+e_SearchTargetEvent.PathThrottle = 0
 function e_SearchTargetEvent:execute()
 	ml_log("e_SearchTargetEvent")
 	-- Weakest Aggro in CombatRange first	
@@ -389,6 +425,7 @@ function e_SearchTargetEvent:execute()
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
 			--d("Found Aggro Target: "..(E.name).." ID:"..tostring(id))
+			e_SearchTargetEvent.Tmr = 0
 			return ml_log(Player:SetTarget(id))			
 		end		
 	end
@@ -399,34 +436,48 @@ function e_SearchTargetEvent:execute()
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
 			d("Found Gadget Target: "..(E.name).." ID:"..tostring(id))
+			e_SearchTargetEvent.Tmr = 0
 			return ml_log(Player:SetTarget(id))			
 		end		
 	end
 	
 	-- Then nearest attackable Target
-	TList = ( CharacterList("attackable,alive,nearest,onmesh,maxdistance="..c_MoveInEventRange.range..",exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))))
-	if ( TableSize( TList ) > 0 ) then
-		local id, E  = next( TList )
-		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("New Target: "..(E.name).." ID:"..tostring(id))
-			
-			-- Blacklist if we cant select it..happens sometimes when it is outside our select range
-			if (e_SearchTargetEvent.lastID == id ) then
-				e_SearchTargetEvent.count = e_SearchTargetEvent.count+1
-				if ( e_SearchTargetEvent.count > 30 ) then
+	if ( mc_global.now - e_SearchTargetEvent.PathThrottle > 2500 ) then
+		e_SearchTargetEvent.PathThrottle = mc_global.now
+		TList = ( CharacterList("attackable,alive,shortestpath,onmesh,maxpathdistance="..c_MoveInEventRange.range..",exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))))
+		if ( TableSize( TList ) > 0 ) then
+			local id, E  = next( TList )
+			if ( id ~= nil and id ~= 0 and E ~= nil ) then
+				d("New Target: "..(E.name).." ID:"..tostring(id))
+				
+				-- Blacklist if we cant select it..happens sometimes when it is outside our select range
+				if (e_SearchTargetEvent.lastID == id ) then
+					e_SearchTargetEvent.count = e_SearchTargetEvent.count+1
+					if ( e_SearchTargetEvent.count > 10 ) then
+						e_SearchTargetEvent.count = 0
+						e_SearchTargetEvent.lastID = 0
+						mc_blacklist.AddBlacklistEntry(GetString("monsters"), E.contentID, E.name, mc_global.now + 60000)
+						d("Seems we cant select/target/reach our target, blacklisting it for 60seconds..")
+					end
+				else
+					e_SearchTargetEvent.lastID = id
 					e_SearchTargetEvent.count = 0
-					e_SearchTargetEvent.lastID = 0
-					mc_blacklist.AddBlacklistEntry(GetString("monsters"), E.contentID, E.name, mc_global.now + 60000)
-					d("Seems we cant select/target/reach our target, blacklisting it for 60seconds..")
 				end
-			else
-				e_SearchTargetEvent.lastID = id
-				e_SearchTargetEvent.count = 0
-			end
-			
-			return ml_log(Player:SetTarget(id))
-		end		
+				e_SearchTargetEvent.Tmr = 0
+				return ml_log(Player:SetTarget(id))
+			end		
+		end
 	end
+	-- Seems there is nothing to attack nearby...
+	if ( e_SearchTargetEvent.Tmr == 0 ) then 
+		e_SearchTargetEvent.Tmr = mc_global.now 
+	elseif ( mc_global.now - e_SearchTargetEvent.Tmr > 60000 ) then
+		d("Seems there is a problem with the Event, nothing to attack in the last 60sec, blacklisting it..")
+		mc_blacklist.AddBlacklistEntry(GetString("event"), ml_task_hub:CurrentTask().eventID, "Event", mc_global.now + 1800000)
+		ml_task_hub:CurrentTask().completed = true
+		e_SearchTargetEvent.Tmr = 0
+	end
+	
 	return ml_log(false)
 end
 
@@ -437,7 +488,7 @@ function c_event_LootChests:evaluate()
 	if ( Inventory.freeSlotCount > 0 ) then
 		local eID = ml_task_hub:CurrentTask().eventID
 		if ( tonumber(eID)~=nil ) then
-			local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
+			local evList = MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
 			local i,e = next(evList)
 			if ( i and e ) then
 				local ePos = e.pos
@@ -470,7 +521,7 @@ function c_event_LootCheck:evaluate()
 		if ( TableSize(LList) > 0 ) then
 			local eID = ml_task_hub:CurrentTask().eventID
 			if ( tonumber(eID)~=nil ) then
-				local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
+				local evList = MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
 				local i,e = next(evList)
 				if ( i and e ) then
 					local ePos = e.pos
@@ -507,7 +558,7 @@ function c_event_reviveNPC:evaluate()
 		if ( TableSize(CList) > 0 ) then
 			local eID = ml_task_hub:CurrentTask().eventID
 			if ( tonumber(eID)~=nil ) then
-				local evList = MapMarkerList("nearest,onmesh,eventID="..eID)
+				local evList = MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
 				local i,e = next(evList)
 				if ( i and e ) then
 					local ePos = e.pos

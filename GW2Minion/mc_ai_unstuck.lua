@@ -6,6 +6,7 @@ mc_ai_unstuck.idlecounter = 0
 mc_ai_unstuck.respawntimer = 0
 mc_ai_unstuck.ismoving = false
 mc_ai_unstuck.lastpos = nil
+mc_ai_unstuck.stuckcounter2 = 0
 
 
 function mc_ai_unstuck:OnUpdate( tick )
@@ -21,7 +22,8 @@ function mc_ai_unstuck:OnUpdate( tick )
 		return	
 	end
 	
-	if ( gBotMode == "Assist") then return end
+	if ( gBotMode == "Assist" ) then return end
+	if ( mc_helper.HasBuffs(Player, "791,727") ) then return end --Fear and Immobilized
 	
 	-- Stuck check for movement stucks
 	if ( Player:IsMoving()) then
@@ -30,8 +32,13 @@ function mc_ai_unstuck:OnUpdate( tick )
 			mc_ai_unstuck.stucktimer = tick
 			local pPos = Player.pos
 			if ( pPos ) then
-				--d(Distance2D ( pPos.x, pPos.y, mc_ai_unstuck.lastpos.x, mc_ai_unstuck.lastpos.y))
-				if ( Distance2D ( pPos.x, pPos.y, mc_ai_unstuck.lastpos.x,  mc_ai_unstuck.lastpos.y) < 75 ) then					
+				--d(Distance2D ( pPos.x, pPos.y, mc_ai_unstuck.lastpos.x, mc_ai_unstuck.lastpos.y))				
+				local bcheck = Distance2D ( pPos.x, pPos.y, mc_ai_unstuck.lastpos.x,  mc_ai_unstuck.lastpos.y) < 75
+				if ( mc_ai_unstuck.ismoving == true ) then
+					bcheck = Distance2D ( pPos.x, pPos.y, mc_ai_unstuck.lastpos.x,  mc_ai_unstuck.lastpos.y) < 125
+				end
+				
+				if ( bcheck ) then					
 					if ( mc_ai_unstuck.stuckcounter > 1 ) then
 						d("Seems we are stuck?")
 						if ( Player:CanMove() ) then
@@ -82,31 +89,42 @@ end
 
 function mc_ai_unstuck.HandleStuck()
 	if ( mc_global.now - mc_ai_unstuck.respawntimer < 30000 ) then
-		ml_error("We used a waypoint within the last 30 seconds already but are stuck again !?")
+		ml_error("We used a waypoint for unstuck within the last 30 seconds already but are stuck again !?")
 		ml_error("Stopping bot...")
 		mc_global.togglebot("0")
 			--ExitGW()
 	else
-		d("Trying to teleport to nearest waypoint for unstuck..")
-		if ( Player:RespawnAtClosestWaypoint() ) then
-			mc_global.Wait(3000)
-			mc_ai_unstuck.respawntimer = mc_global.now
+		if ( not Player.inCombat ) then
+			d("Trying to teleport to nearest waypoint for unstuck..")		
+			if ( Player:RespawnAtClosestWaypoint() ) then
+				mc_global.Wait(3000)
+				mc_ai_unstuck.respawntimer = mc_global.now
+			end
+		else
+			d("Seems we are still in combat, cant use waypoint..")
+			if ( c_NeedValidTarget:evaluate() ) then 
+				e_SearchTarget:execute()
+			else				
+				e_KillTarget:execute()				
+			end
 		end
 	end	
 	mc_ai_unstuck.stuckcounter = 0	
 end
 
 function mc_ai_unstuck.stuckhandler( event, distmoved, stuckcount )
-
+	
 	if ( Player.alive == false) then 
 		mc_ai_unstuck.Reset()
 		return
 	end
+	mc_ai_unstuck.stuckcounter2 = tonumber(stuckcount)
 	
-	d("STUCK! Distance Moved: "..tostring(distmoved) .. " Count: "..tostring(stuckcount) )
-	Player:Jump()
-	
-	if ( tonumber(stuckcount) < 20 ) then
+	d("STUCK! Distance Moved: "..tostring(distmoved) .. " Count: "..tostring(mc_ai_unstuck.stuckcounter2) )
+		
+	if ( tonumber(mc_ai_unstuck.stuckcounter2) < 20 and Player:CanMove()) then
+		Player:Jump()
+		
 		local i = math.random(0,1)
 		if ( i == 0 ) then
 			Player:SetMovement(2)
@@ -117,7 +135,7 @@ function mc_ai_unstuck.stuckhandler( event, distmoved, stuckcount )
 		end
 	end
 	
-	if ( tonumber(stuckcount) > 20 ) then
+	if ( tonumber(mc_ai_unstuck.stuckcounter2) > 20 ) then
 		ml_error("We are STUCK!")
 		mc_ai_unstuck.HandleStuck()
 	end
@@ -131,6 +149,7 @@ function mc_ai_unstuck.Reset()
 	mc_ai_unstuck.respawntimer = 0
 	mc_ai_unstuck.ismoving = false
 	mc_ai_unstuck.lastpos = nil
+	mc_ai_unstuck.stuckcounter2 = 0
 end
 
 RegisterEventHandler("Gameloop.Stuck",mc_ai_unstuck.stuckhandler) -- gets called by c++ when using the navigationsystem

@@ -110,6 +110,8 @@ function e_goToPosition:execute()
 		local dist = Distance3D( ml_task_hub:CurrentTask().targetPosition.x,ml_task_hub:CurrentTask().targetPosition.y,ml_task_hub:CurrentTask().targetPosition.z,pPos.x,pPos.y,pPos.z)
 		ml_log("("..tostring(math.floor(dist))..")")
 		if ( dist > 500 ) then
+			if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+			MoveOnlyStraightForward()
 			--d(tostring(ml_task_hub:CurrentTask().Data["GotoX"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoY"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoZ"]))
 			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().targetPosition.x,ml_task_hub:CurrentTask().targetPosition.y,ml_task_hub:CurrentTask().targetPosition.z,125,false,false,true))		
 			if (tonumber(navResult) < 0) then					

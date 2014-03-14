@@ -77,6 +77,8 @@ function e_quickvendorsell:execute()
 						-- MoveIntoInteractRange
 						local tPos = vendor.pos
 						if ( tPos ) then
+							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+							MoveOnlyStraightForward()
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
 								ml_error("e_quickvendorsell.MoveIntoInteractRange result: "..tonumber(navResult))					
@@ -107,6 +109,8 @@ function e_quickvendorsell:execute()
 					-- We are not close enought, vendor is not yet in Charlist
 					local pos = vendor.pos
 					if ( pos ) then
+						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
 							ml_error("e_quickvendorsell.MoveInto Vendor Range result: "..tonumber(navResult))					
@@ -159,6 +163,8 @@ function e_vendorsell:execute()
 						-- MoveIntoInteractRange
 						local tPos = char.pos
 						if ( tPos ) then
+							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+							MoveOnlyStraightForward()
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
 								ml_error("e_vendorsell.MoveIntoInteractRange result: "..tonumber(navResult))					
@@ -189,6 +195,8 @@ function e_vendorsell:execute()
 					-- We are not close enought, char is not yet in Charlist
 					local pos = vMarker.pos
 					if ( pos ) then
+						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
 							ml_error("e_vendorsell.MoveIntovMarkerRange result: "..tonumber(navResult))					
@@ -345,6 +353,8 @@ function e_quickbuy:execute()
 						-- MoveIntoInteractRange
 						local tPos = vendor.pos
 						if ( tPos ) then
+							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+							MoveOnlyStraightForward()
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
 								ml_error("e_quickbuy.MoveIntoInteractRange result: "..tonumber(navResult))					
@@ -427,6 +437,8 @@ function e_vendorbuy:execute()
 						-- MoveIntoInteractRange
 						local tPos = char.pos
 						if ( tPos ) then
+							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+							MoveOnlyStraightForward()
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
 								ml_error("e_vendorbuy.MoveIntoInteractRange result: "..tonumber(navResult))					
@@ -688,6 +700,7 @@ function e_quickrepair:execute()
 						-- MoveIntoInteractRange
 						local tPos = vendor.pos
 						if ( tPos ) then
+							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
 								ml_error("e_quickrepair.MoveIntoInteractRange result: "..tonumber(navResult))					

@@ -31,6 +31,8 @@ function mc_ai_assist:Process()
 		
 		if ( c_salvage:evaluate() == true ) then e_salvage:execute() end
 		
+		if ( FinishEnemy() == true ) then return end
+				
 		if ( sMtargetmode == "None" ) then 
 			mc_skillmanager.AttackTarget( nil ) 
 			
@@ -91,6 +93,29 @@ function mc_ai_assist.moduleinit()
 	sMtargetmode = Settings.GW2Minion.sMtargetmode
 	sMmode = Settings.GW2Minion.sMmode
 	
+end
+
+c_FinishHim = inheritsFrom( ml_cause )
+e_FinishHim = inheritsFrom( ml_effect )
+function FinishEnemy()    
+	if ( Player.IsMoving() == false and Player.health.percent > 15 ) then
+		local EList = CharacterList("nearest,downed,aggro,attackable,maxdistance=150,onmesh")
+		if ( EList ) then
+			local id,entity = next (EList)
+			if ( id and entity ) then
+				if ( entity.isInInteractRange and entity.selectable) then
+					local t = Player:GetTarget()
+					if ( t and t.id == id ) then						
+						Player:Interact( id )
+						ml_log("Finishing..")						
+						mc_global.Wait(1000)
+						return true						
+					end
+				end
+			end
+		end
+	end
+	return false
 end
 
 

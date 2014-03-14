@@ -151,6 +151,8 @@ function script.e_goto:execute()
 		ml_log("("..tostring(math.floor(dist))..")")
 		if ( dist > 2500 ) then
 			--d(tostring(ml_task_hub:CurrentTask().Data["GotoX"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoY"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoZ"]))
+			if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+			MoveOnlyStraightForward()
 			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],100,false,false,true))		
 			if (tonumber(navResult) < 0) then					
 				ml_error("e_gotoPosition result: "..tonumber(navResult))					

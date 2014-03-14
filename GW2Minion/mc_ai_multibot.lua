@@ -62,6 +62,9 @@ function mc_ai_multibot:Init()
 	-- Gathering
 	self:add(ml_element:create( "Gathering", c_Gathering_mb, e_Gathering, 280 ), self.process_elements)
 	
+	-- Finish Enemy
+	self:add(ml_element:create( "FinishHim", c_FinishHim, e_FinishHim, 270 ), self.process_elements)
+	
 	-- Valid Target
 	self:add(ml_element:create( "NeedValidTarget", c_NeedValidTarget, e_SetAggroTarget_mb, 260 ), self.process_elements)
 		
@@ -182,6 +185,8 @@ function e_memberdown:execute()
 			-- MoveIntoInteractRange
 			local tPos = pchar.pos
 			if ( tPos ) then
+				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+				MoveOnlyStraightForward()
 				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 				if (tonumber(navResult) < 0) then
 					ml_error("e_memberdown.MoveIntoRange result: "..tonumber(navResult))					
@@ -192,6 +197,16 @@ function e_memberdown:execute()
 		else
 			-- Grab that thing
 			Player:StopMovement()
+			
+			if (Player.profession == 8 ) then -- Necro, leave shroud
+				local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
+				if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17) then
+					Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
+					mc_global.Wait(500)
+					return
+				end
+			end
+					
 			local t = Player:GetTarget()
 			if ( not t or t.id ~= pchar.id ) then
 				Player:SetTarget( pchar.id )
@@ -312,12 +327,16 @@ function e_MoveToLeader:execute()
 					if ( Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) > e_MoveToLeader.ldist ) then
 						local nPos = NavigationManager:GetClosestPointOnMesh(cPos)
 						local navResult = 0
+						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+						MoveOnlyStraightForward()
 						if (nPos) then						
 							navResult = tostring(Player:MoveTo(nPos.x,nPos.y,nPos.z,150,false,true,true))		
-						else
-							navResult = tostring(Player:MoveTo(cPos.x,cPos.y,cPos.z,150,false,true,true))		
 						end
-						if (tonumber(navResult) < 0) then					
+						if ( tonumber(navResult) < 0 ) then
+							navResult = tostring(Player:MoveTo(cPos.x,cPos.y,cPos.z,150,false,true,true))
+						end
+						
+						if (tonumber(navResult) < 0 and tonumber(navResult) ~= -3) then					
 							ml_error("e_MoveToLeader.MoveToLeader result: "..tonumber(navResult))					
 						end
 						if ( mc_global.now - e_MoveToLeader.tmr > e_MoveToLeader.threshold ) then
@@ -365,9 +384,14 @@ function e_SetAggroTarget_mb:execute()
 		if ( pmember.id ~= 0 and pmember.name == mc_multibotmanager.leadername) then
 			local char = CharacterList:Get(pmember.id)
 			if ( char ) then
-								
+			
 				-- nearest to leader first	
-				local TList = ( CharacterList("nearest,attackable,alive,aggro,onmesh,distanceto="..char.id..",maxdistance=1300") )
+				local TList = nil 
+				if (not Player.inCombat) then
+					TList = CharacterList("nearest,attackable,alive,aggro,onmesh,distanceto="..char.id..",maxdistance=750")
+				else
+					TList = CharacterList("nearest,attackable,alive,aggro,onmesh,distanceto="..char.id..",maxdistance=1750")
+				end
 				if ( TableSize( TList ) > 0 ) then
 					local id, E  = next( TList )
 					if ( id ~= nil and id ~= 0 and E ~= nil ) then

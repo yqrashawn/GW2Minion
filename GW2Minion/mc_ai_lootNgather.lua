@@ -50,7 +50,7 @@ c_gatherTask = inheritsFrom( ml_cause )
 e_gatherTask = inheritsFrom( ml_effect )
 function c_gatherTask:evaluate()
    -- ml_log("c_gatherTask")
-    return (Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,gatherable,maxdistance=4000")) > 0)
+    return (Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=4000")) > 0)
 end
 function e_gatherTask:execute()
 	ml_log("e_gatherTask")
@@ -66,8 +66,8 @@ e_deposit = inheritsFrom( ml_effect )
 c_deposit.LastCount = nil
 function c_deposit:evaluate()
 	if ( gDepositItems == "1" ) then
-		if ( Inventory.freeSlotCount <= 5 ) then
-			if ( not c_deposit.LastCount or c_deposit.LastCount ~= Inventory.freeSlotCount ) then			
+		if ( Inventory.freeSlotCount <= 10 ) then
+			if ( c_deposit.LastCount == nil or c_deposit.LastCount ~= Inventory.freeSlotCount ) then			
 				return true
 			else
 				return false
@@ -171,6 +171,8 @@ function e_Loot:execute()
 				-- MoveIntoInteractRange
 				local tPos = entity.pos
 				if ( tPos ) then
+					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+					MoveOnlyStraightForward()
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then
 						ml_error("e_Loot.MoveIntoCombatRange result: "..tonumber(navResult))					
@@ -205,7 +207,7 @@ e_LootChests = inheritsFrom( ml_effect )
 function c_LootChests:evaluate()
 	--ml_log("c_LootChests")
 	if ( Inventory.freeSlotCount > 0 ) then
-		local GList = GadgetList("onmesh,lootable,maxdistance=4000")
+		local GList = GadgetList("onmesh,lootable,maxdistance=3000")
 		if ( TableSize( GList ) > 0 ) then			
 			local index, LT = next( GList )
 			while ( index ~= nil and LT~=nil ) do
@@ -232,6 +234,7 @@ function e_LootChests:execute()
 					-- MoveIntoInteractRange
 					local tPos = LT.pos
 					if ( tPos ) then
+						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
 							ml_error("e_lootchest.MoveIntoRange result: "..tonumber(navResult))					
@@ -265,15 +268,12 @@ end
 
 
 
-
-
-
 ------------fck that, I'm lazy and this works like a god
 c_Gathering = inheritsFrom( ml_cause )
 c_Gathering.running = false
 e_Gathering = inheritsFrom( ml_effect )
 function c_Gathering:evaluate()
-	if ( Inventory.freeSlotCount > 0 and ( TableSize(GadgetList("onmesh,gatherable,maxdistance=3000")) > 0 or c_Gathering.running == true)) then
+	if ( Inventory.freeSlotCount > 0 and ( c_Gathering.running == true or TableSize(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=4500")) > 0 )) then
 		return true
 	end
 	c_Gathering.running = false
@@ -281,6 +281,7 @@ function c_Gathering:evaluate()
 end
 e_Gathering.tmr = 0
 e_Gathering.threshold = 2000
+e_Gathering.throttle = 1500
 function e_Gathering:execute()
 	ml_log("e_Gathering")
 	local GatherableList = GadgetList( "gatherable,shortestpath,onmesh")
@@ -292,6 +293,8 @@ function e_Gathering:execute()
 				-- MoveIntoInteractRange
 				local tPos = node.pos
 				if ( tPos ) then
+					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+					MoveOnlyStraightForward()
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then
 						ml_error("mc_ai_gathering.MoveIntoCombatRange result: "..tonumber(navResult))					
@@ -338,6 +341,7 @@ function e_Gathering:execute()
 	c_Gathering.running = false
 	return ml_log(false)
 end
+
 
 c_GatherToolsCheck = inheritsFrom( ml_cause )
 e_GatherToolsCheck = inheritsFrom( ml_effect )
