@@ -83,7 +83,7 @@ function mc_ai_event:task_complete_eval()
 		c_MoveInEventRange.range = 1350
 		c_MoveInEventRange.reached = false
 		d("Event Done..")
-		if ( c_MoveInEventRange.reached == false and c_MoveInEventRange.movingtoevent == true and Player:IsMoving() and c_MoveInEventRange.lastdist > 4000) 
+		if ( c_MoveInEventRange.reached == false and c_MoveInEventRange.movingtoevent == true and Player:IsMoving() and c_MoveInEventRange.lastdist > 4000)  then
 			-- should hopefully prevent the back n forth on the corner of where an event is visible
 			
 		else
