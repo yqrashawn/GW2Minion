@@ -25,6 +25,9 @@ function mc_ai_multibot:Init()
 	-- Downed
 	self:add(ml_element:create( "Downed", c_downed, e_downed, 470 ), self.process_elements)
 	
+	-- Dont Dive lol
+	self:add(ml_element:create( "SwimUP", c_SwimUp, e_SwimUp, 465 ), self.process_elements)
+	
 	-- AoELooting Characters
 	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 460 ), self.process_elements)
 	
@@ -371,8 +374,13 @@ end
 
 c_Gathering_mb = inheritsFrom( ml_cause )
 function c_Gathering_mb:evaluate()
-	return (not Player.inCombat and Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,gatherable,maxdistance=1200")) > 0)
+	if ( Player.inCombat == false and Inventory.freeSlotCount > 0 and ( c_Gathering.running == true or TableSize(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=1200")) > 0 )) then
+		return true
+	end
+	c_Gathering.running = false
+	return false
 end
+
 
 e_SetAggroTarget_mb = inheritsFrom( ml_effect )
 function e_SetAggroTarget_mb:execute()

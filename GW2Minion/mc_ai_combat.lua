@@ -165,10 +165,22 @@ function e_DestroyGadget:execute()
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
 			d("Found Blocking Gadget Target: "..(E.name).." ID:"..tostring(id))			
-			Player:SetTarget(id)
-			e_KillTarget:execute()
+			if ( E.selectable ) then 
+				Player:SetTarget(id)
+				e_KillTarget:execute()
+			else
+				if ( E.attackable) then
+					local pos = E.pos
+					if ( pos ) then
+						Player:SetFacing(pos.x,pos.y,pos.z)
+						mc_skillmanager.AttackTarget( E.id )
+						return ml_log(true)
+					end
+				end			
+			end
 		end		
 	end
+	return ml_log(" Cant destroy Gadget! ")
 end
 
 e_SearchTarget = inheritsFrom( ml_effect )
