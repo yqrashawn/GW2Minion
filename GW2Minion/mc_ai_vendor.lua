@@ -32,7 +32,7 @@ function mc_ai_vendor.GetClosestVendor()
 		local i,marker = next (mList)
 		if ( i and marker) then
 			local vendor = CharacterList:Get(marker.characterID)
-			if ( vendor and vendor.alive ) then
+			if ( vendor and vendor.alive and vendor.pathdistance < 4000) then
 				return vendor
 			end
 		end
@@ -314,7 +314,7 @@ function mc_ai_vendor.GetClosestBuyVendor()
 		local i,marker = next (mList)
 		if ( i and marker) then
 			local vendor = CharacterList:Get(marker.characterID)
-			if ( vendor and vendor.alive ) then
+			if ( vendor and vendor.alive and vendor.pathdistance < 4000) then
 				return vendor
 			end
 		end
@@ -669,7 +669,7 @@ function mc_ai_vendor.GetClosestRepairVendor()
 		local i,marker = next (mList)
 		if ( i and marker) then
 			local vendor = CharacterList:Get(marker.characterID)
-			if ( vendor and vendor.alive ) then
+			if ( vendor and vendor.alive and vendor.pathdistance < 4000) then
 				return vendor
 			end
 		end

@@ -83,7 +83,12 @@ function mc_ai_event:task_complete_eval()
 		c_MoveInEventRange.range = 1350
 		c_MoveInEventRange.reached = false
 		d("Event Done..")
-		return true
+		if ( c_MoveInEventRange.reached == false and c_MoveInEventRange.movingtoevent == true and Player:IsMoving() and c_MoveInEventRange.lastdist > 4000) 
+			-- should hopefully prevent the back n forth on the corner of where an event is visible
+			
+		else
+			return true
+		end
 	end
 	return false
 end
@@ -129,6 +134,8 @@ c_MoveInEventRange = inheritsFrom( ml_cause )
 e_MoveInEventRange = inheritsFrom( ml_effect )
 c_MoveInEventRange.reached = false
 c_MoveInEventRange.range = 2500 -- gets changed depending what objective we have
+c_MoveInEventRange.lastdist = 2500
+c_MoveInEventRange.movingtoevent = false
 function c_MoveInEventRange:evaluate()
 	local eID = ml_task_hub:CurrentTask().eventID
 	if ( tonumber(eID)~=nil ) then
@@ -142,7 +149,8 @@ function c_MoveInEventRange:evaluate()
 				local pPos = Player.pos
 				local ePos = e.pos
 				if (pPos) then
-					if ( Distance2D ( pPos.x, pPos.y, ePos.x, ePos.y) > c_MoveInEventRange.range ) then
+					c_MoveInEventRange.lastdist = Distance2D ( pPos.x, pPos.y, ePos.x, ePos.y)
+					if ( c_MoveInEventRange.lastdist > c_MoveInEventRange.range ) then
 						return true					
 					end
 				end			
@@ -172,6 +180,8 @@ function e_MoveInEventRange:execute()
 						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
 						if (tonumber(navResult) < 0) then					
 							ml_error("mc_ai_events.MoveInEventRange result: "..tonumber(navResult))					
+						else
+							c_MoveInEventRange.movingtoevent = true
 						end
 						
 						if ( mc_global.now - e_MoveInEventRange.tmr > e_MoveInEventRange.threshold ) then
@@ -182,6 +192,7 @@ function e_MoveInEventRange:execute()
 						
 						return ml_log(true)
 					else
+						c_MoveInEventRange.movingtoevent = false
 						c_MoveInEventRange.reached = true
 					end
 					

@@ -314,6 +314,7 @@ end
 e_MoveToLeader.ldist = math.random(150,600)
 e_MoveToLeader.tmr = 0
 e_MoveToLeader.threshold = 2000
+e_MoveToLeader.throttle = 1000
 function e_MoveToLeader:execute()
 	ml_log("e_MoveToLeader ")
 	local party = Player:GetParty()
@@ -374,7 +375,7 @@ end
 
 c_Gathering_mb = inheritsFrom( ml_cause )
 function c_Gathering_mb:evaluate()
-	if ( Player.inCombat == false and Inventory.freeSlotCount > 0 and ( c_Gathering.running == true or TableSize(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=1200")) > 0 )) then
+	if ( Player.inCombat == false and Inventory.freeSlotCount > 0 and ( c_Gathering.running == true or TableSize(GadgetList("onmesh,shortestpath,gatherable,maxdistance=2500,maxpathdistance=1200")) > 0 )) then
 		return true
 	end
 	c_Gathering.running = false

@@ -24,7 +24,7 @@ function mc_ai_grind:Process()
 		
 	
 	-- Randomly pick next maingoal and pursue it			
-	local i = math.random(0,4)
+	local i = math.random(0,2)
 
 	-- Killsomething nearby
 	if ( i == 0 and TableSize(CharacterList("alive,attackable,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) > 0 ) then
@@ -33,7 +33,7 @@ function mc_ai_grind:Process()
 	
 	-- Do Events
 	elseif ( i == 1 and gDoEvents == "1") then
-		local evList = MapMarkerList("nearest,isevent,onmesh,worldmarkertype="..mc_global.WorldMarkerType..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
+		local evList = MapMarkerList("nearest,isevent,onmesh,maxdistance=5000,worldmarkertype="..mc_global.WorldMarkerType..",exclude_eventid="..mc_blacklist.GetExcludeString(GetString("event")))
 		local id,ev = next(evList)
 		if ( id and ev ) then
 			local evi = ev.eventinfo
@@ -46,31 +46,30 @@ function mc_ai_grind:Process()
 		
 	
 	-- Gather
-	elseif ( i == 2 and Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,gatherable")) > 0 ) then
-		local newTask = mc_ai_Gather.Create()
-		ml_task_hub:CurrentTask():AddSubTask(newTask)
+	--elseif ( i == 3 and Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,gatherable")) > 0 ) then
+		--local newTask = mc_ai_Gather.Create()
+		--ml_task_hub:CurrentTask():AddSubTask(newTask)
 	
 	
 	-- Do Quests
-	elseif ( i == 3 ) then
+	elseif ( i == 2 ) then
 		local newQ = ml_quest_mgr.GetNewQuest()
 		if ( newQ ~= nil ) then
 			local newTask = mc_ai_doquest.Create()
 			newTask.currentQuest = newQ
 			ml_task_hub:CurrentTask():AddSubTask(newTask)
-		end
-	
-	
-	-- Walk to Random Point in our levelrange
-	elseif ( i == 4 ) then
-		if ( TableSize(mc_datamanager.levelmap) > 0 ) then
-			local rpos = mc_datamanager.GetRandomPositionInLevelRange( Player.level )
-			if (TableSize(rpos) > 0 ) then				
-				local newTask = mc_ai_exploration.Create()
-				newTask.targetPosition = rpos
-				ml_task_hub:CurrentTask():AddSubTask(newTask)				
+		else
+			-- Walk to Random Point in our levelrange
+			if ( TableSize(mc_datamanager.levelmap) > 0 ) then
+				local rpos = mc_datamanager.GetRandomPositionInLevelRange( Player.level )
+				if (TableSize(rpos) > 0 ) then				
+					local newTask = mc_ai_exploration.Create()
+					newTask.targetPosition = rpos
+					ml_task_hub:CurrentTask():AddSubTask(newTask)				
+				end
 			end
-		end
+		end	
+		
 	end
 end
 
