@@ -169,7 +169,7 @@ function mc_multibotmanager.LeaderBroadCast()
 	end
 end
 
---connectionstatus 1 = disco/offline , 2 = connected, 3=invitation pending on player
+--connectionstatus 2 = disco/offline , 3 = connected, 4=invitation pending on player
 --invitationstatus 1 = not in a party, 2 partyinvite, 4 squadinvite , 5 teaminvite
 function mc_multibotmanager.UpdatePartyStatus()
 			
@@ -220,7 +220,7 @@ function mc_multibotmanager.UpdatePartyStatus()
 				while ( index ~= nil and player ~= nil ) do	
 					if ( player.name == pname ) then
 						-- check if we got an party invite
-						if ( player.hasparty == false and player.connectstatus == 2 and player.invitestatus == 2 ) then
+						if ( player.hasparty == false and player.connectstatus == 3 and player.invitestatus == 2 ) then
 							d("Accepting Party invitation.")
 							SendChatMsg(19,"/join "..mc_multibotmanager.leadername)
 							dPartyStatus = "Joining "..mc_multibotmanager.leadername							
