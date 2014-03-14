@@ -98,7 +98,7 @@ end
 c_FinishHim = inheritsFrom( ml_cause )
 e_FinishHim = inheritsFrom( ml_effect )
 function FinishEnemy()    
-	if ( Player.IsMoving() == false and Player.health.percent > 15 ) then
+	if ( Player:IsMoving() == false and Player.health.percent > 15 ) then
 		local EList = CharacterList("nearest,downed,aggro,attackable,maxdistance=150,onmesh")
 		if ( EList ) then
 			local id,entity = next (EList)

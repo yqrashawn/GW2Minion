@@ -62,7 +62,7 @@ function mc_ai_unstuck:OnUpdate( tick )
 		end
 	else
 		mc_ai_unstuck.stuckcounter = 0
-		
+		if ( c_MoveToLeader.nearleader ) then return end
 		-- Idle stuck check	
 		if ( tick - mc_ai_unstuck.idletimer > 6000 ) then
 			mc_ai_unstuck.idletimer = tick
@@ -111,6 +111,7 @@ function mc_ai_unstuck.HandleStuck()
 	end	
 	mc_ai_unstuck.stuckcounter = 0	
 end
+
 
 function mc_ai_unstuck.stuckhandler( event, distmoved, stuckcount )
 	
