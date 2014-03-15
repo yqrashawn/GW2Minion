@@ -123,7 +123,7 @@ function mc_ai_unstuck.stuckhandler( event, distmoved, stuckcount )
 	
 	d("STUCK! Distance Moved: "..tostring(distmoved) .. " Count: "..tostring(mc_ai_unstuck.stuckcounter2) )
 		
-	if ( tonumber(mc_ai_unstuck.stuckcounter2) < 20 and Player:CanMove()) then
+	if ( tonumber(mc_ai_unstuck.stuckcounter2) < 20 and Player:CanMove() and mc_helper.HasBuffs(Player, "791,727") == false ) then --Fear and Immobilized
 		Player:Jump()
 		
 		local i = math.random(0,1)

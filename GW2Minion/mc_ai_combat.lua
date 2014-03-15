@@ -170,10 +170,13 @@ function e_DestroyGadget:execute()
 				e_KillTarget:execute()
 			else
 				if ( E.attackable) then
-					local pos = E.pos
+					local pos = E.pos					
 					if ( pos ) then
 						Player:SetFacing(pos.x,pos.y,pos.z)
 						mc_skillmanager.AttackTarget( E.id )
+						if ( E.distance < 150 ) then
+							Player:StopMovement()
+						end
 						return ml_log(true)
 					end
 				end			

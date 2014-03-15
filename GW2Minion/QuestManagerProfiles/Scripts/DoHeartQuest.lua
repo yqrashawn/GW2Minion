@@ -144,7 +144,7 @@ script.e_goto.tmr = 0
 script.e_goto.threshold = 2000
 script.e_goto.waittmr = 0
 function script.e_goto:execute()
-	ml_log("e_gotoSkillChallenge")
+	ml_log("e_gotoHeartQuest")
 	local pPos = Player.pos
 	if (pPos) then
 		local dist = Distance3D( ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],pPos.x,pPos.y,pPos.z)

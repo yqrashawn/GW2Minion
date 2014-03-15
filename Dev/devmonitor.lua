@@ -944,7 +944,12 @@ function Dev.UpdateWindow()
 	-- MarkerInfo
 	local id,mm
 	if ( mmselection == "Closest" ) then
-		id,mm = next(MapMarkerList("nearest"))
+		local MM = MapMarkerList("")
+		id,mm = next(MM)
+		while id and mm do
+			if ( mm.isWorldPortal ) then break end
+			id,mm = next(MM,id)
+		end
 	else
 		mm = MapMarkerList:Get(tonumber(mmindex))
 		id = tonumber(mmindex)

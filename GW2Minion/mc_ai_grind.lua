@@ -66,6 +66,14 @@ function mc_ai_grind:Process()
 					local newTask = mc_ai_exploration.Create()
 					newTask.targetPosition = rpos
 					ml_task_hub:CurrentTask():AddSubTask(newTask)				
+				
+				else
+					local rpos = Player:GetRandomPoint(5000)
+					if ( rpos ) then
+						local newTask = mc_ai_exploration.Create()
+						newTask.targetPosition = rpos
+						ml_task_hub:CurrentTask():AddSubTask(newTask)	
+					end
 				end
 			end
 		end	
