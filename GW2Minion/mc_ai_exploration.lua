@@ -83,8 +83,9 @@ function mc_ai_exploration:Init()
 end
 function mc_ai_exploration:task_complete_eval()
 	local pPos = Player.pos
+	if ( TableSize(ml_task_hub:CurrentTask().targetPosition) == 0 ) then return true end
 	if (pPos) then
-		if ( Distance3D( self.targetPosition.x, self.targetPosition.y, self.targetPosition.z,pPos.x,pPos.y,pPos.z) < 200 ) then
+		if ( Distance3D( ml_task_hub:CurrentTask().targetPosition.x, ml_task_hub:CurrentTask().targetPosition.y, ml_task_hub:CurrentTask().targetPosition.z,pPos.x,pPos.y,pPos.z) < 200 ) then
 			return true
 		end
 	end
