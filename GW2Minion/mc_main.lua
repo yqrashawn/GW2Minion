@@ -211,7 +211,7 @@ end
 
 
 function mc_global.eventhandler(arg)
-	if ( arg == "mc_global.startStop" ) then
+	if ( arg == "mc_global.startStop" or arg == "GW2MINION.toggle") then
 		if ( gBotRunning == "1" ) then
 			mc_global.togglebot("0")			
 		else
@@ -321,3 +321,4 @@ RegisterEventHandler("Gameloop.Update",mc_global.onupdate)
 RegisterEventHandler("GUI.Update",mc_global.guivarupdate)
 RegisterEventHandler("Gameloop.CharSelectUpdate",mc_global.OnUpdateCharSelect)
 RegisterEventHandler("Gameloop.CutsceneUpdate",mc_global.OnUpdateCutscene)
+RegisterEventHandler("GW2MINION.toggle", mc_global.eventhandler)

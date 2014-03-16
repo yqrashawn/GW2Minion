@@ -14,12 +14,17 @@ mm.OMC = 0
 function mm.ModuleInit() 	
 
     if (Settings.GW2Minion.DefaultMaps == nil) then
-        Settings.GW2Minion.DefaultMaps = {			
+        Settings.GW2Minion.DefaultMaps = {						
+			[22] = "FireHeartRise",
 			[23] = "KessexHills",
+			[25] = "IronMarches",
 			[27] = "LonarsPass",
+			[35] = "MetricaProvince",
 			[50] = "LionsArchUnderAttack",
+			[73] = "BloodtideCoast",			
 			[432] = "FightingtheNightmare",
-			[929] = "Pavillion",			
+			[929] = "Pavillion",	
+			[968] = "EdgeOfTheMist",
 		}
     end
     
