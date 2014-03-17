@@ -434,6 +434,7 @@ strings =
 		
 		--mc_main.lua
 		guestserver						= "GuestServer",
+		revivecharacters				= "Revive Others",
 		
     },                                  
     ["cn"] =                            
@@ -859,6 +860,7 @@ strings =
 		minionmode						= "MinionMode",
 		--mc_main.lua
 		guestserver						= "GuestServer",
+		revivecharacters				= "Revive Others",
 	},
     ["jp"] =
     {
@@ -1271,6 +1273,7 @@ strings =
 		minionmode						= "MinionMode",
 		--mc_main.lua
 		guestserver						= "GuestServer",
+		revivecharacters				= "Revive Others",
 	},   
     ["de"] =
     {
@@ -1683,6 +1686,7 @@ strings =
 		minionmode						= "MinionMode",
 		--mc_main.lua
 		guestserver						= "GuestServer",
+		revivecharacters				= "Revive Others",
 	},     
     ["fr"] =
     {
@@ -2095,6 +2099,7 @@ strings =
 		minionmode						= "MinionMode",
 		--mc_main.lua
 		guestserver						= "GuestServer",
+		revivecharacters				= "Revive Others",
 	},       
     ["ru"] =
     {
@@ -2508,6 +2513,7 @@ strings =
 		minionmode						= "MinionMode",
 		--mc_main.lua
 		guestserver						= "GuestServer",
+		revivecharacters				= "Revive Others",
 	},    	
 
 }

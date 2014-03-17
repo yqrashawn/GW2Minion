@@ -34,7 +34,12 @@ function mc_global.moduleinit()
 	if ( Settings.GW2Minion.gSkipCutscene == nil ) then
 		Settings.GW2Minion.gSkipCutscene = "None"
 	end
-	
+	if ( Settings.GW2Minion.gGather == nil ) then
+		Settings.GW2Minion.gGather = "1"
+	end
+	if ( Settings.GW2Minion.gRevive == nil ) then
+		Settings.GW2Minion.gRevive = "1"
+	end	
 	-- MAIN WINDOW
 	GUI_NewWindow(mc_global.window.name,mc_global.window.x,mc_global.window.y,mc_global.window.width,mc_global.window.height)
 	GUI_NewButton(mc_global.window.name,GetString("startStop"),"mc_global.startStop")
@@ -54,6 +59,8 @@ function mc_global.moduleinit()
 	GUI_NewComboBox(mc_global.window.name,GetString("guestserver"),"gGuestServer",GetString("settings"),"None")
 	GUI_NewCheckbox(mc_global.window.name,GetString("autoStartBot"),"gAutostartbot",GetString("settings"))
 	GUI_NewCheckbox(mc_global.window.name,GetString("skipcutscene"),"gSkipCutscene",GetString("settings"))
+	GUI_NewCheckbox(mc_global.window.name,GetString("gatherMode"),"gGather",GetString("settings"))
+	GUI_NewCheckbox(mc_global.window.name,GetString("revivecharacters"),"gRevive",GetString("settings"))
 
 	
 	GUI_NewButton(mc_global.window.name, GetString("advancedSettings"), "AdvancedSettings.toggle")
@@ -109,6 +116,8 @@ function mc_global.moduleinit()
 	gDoEvents = Settings.GW2Minion.gDoEvents	
 	gAutostartbot = Settings.GW2Minion.gAutostartbot
 	gSkipCutscene = Settings.GW2Minion.gSkipCutscene
+	gGather = Settings.GW2Minion.gGather
+	gRevive = Settings.GW2Minion.gRevive
 	GUI_UnFoldGroup(mc_global.window.name,GetString("botStatus") );		
 end
 
@@ -237,7 +246,9 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 			k == "gMultiBotEnabled" or
 			k == "gAutostartbot" or
 			k == "gGuestServer" or
-			k == "gSkipCutscene" )			
+			k == "gSkipCutscene" or
+			k == "gGather" or
+			k == "gRevive" )			
 		then
 			Settings.GW2Minion[tostring(k)] = v
 		elseif (k == "dMember1") then Settings.GW2Minion.Party[1] = v Settings.GW2Minion.Party = Settings.GW2Minion.Party

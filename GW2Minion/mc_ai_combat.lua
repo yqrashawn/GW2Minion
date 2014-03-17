@@ -570,7 +570,7 @@ c_reviveNPC = inheritsFrom( ml_cause )
 e_reviveNPC = inheritsFrom( ml_effect )
 function c_reviveNPC:evaluate()
    -- ml_log("c_reviveNPC")
-    return (not Player.inCombat and c_AggroEx:evaluate() == false and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))) > 0)
+    return (gRevive == "1" and not Player.inCombat and c_AggroEx:evaluate() == false and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))) > 0)
 end
 function e_reviveNPC:execute()
 	ml_log("e_reviveNPC")
@@ -673,7 +673,7 @@ end
 c_reviveDownedPlayersInCombat = inheritsFrom( ml_cause )
 e_reviveDownedPlayersInCombat = inheritsFrom( ml_effect )
 function c_reviveDownedPlayersInCombat:evaluate()
-	if ( Player.health.percent > 50 ) then		
+	if ( gRevive == "1" and Player.health.percent > 50 ) then		
 		return TableSize(CharacterList("shortestpath,selectable,interactable,downed,friendly,player,onmesh,maxdistance=2000")) > 0
 	end
 	return false

@@ -50,7 +50,7 @@ c_gatherTask = inheritsFrom( ml_cause )
 e_gatherTask = inheritsFrom( ml_effect )
 function c_gatherTask:evaluate()
    -- ml_log("c_gatherTask")
-    return (Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=4000")) > 0)
+    return (gGather == "1" and Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=4000")) > 0)
 end
 function e_gatherTask:execute()
 	ml_log("e_gatherTask")
@@ -273,7 +273,7 @@ c_Gathering = inheritsFrom( ml_cause )
 c_Gathering.running = false
 e_Gathering = inheritsFrom( ml_effect )
 function c_Gathering:evaluate()
-	if ( Inventory.freeSlotCount > 0 and ( c_Gathering.running == true or TableSize(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=4500")) > 0 )) then
+	if ( gGather == "1" and Inventory.freeSlotCount > 0 and ( c_Gathering.running == true or TableSize(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=4500")) > 0 )) then
 		return true
 	end
 	c_Gathering.running = false

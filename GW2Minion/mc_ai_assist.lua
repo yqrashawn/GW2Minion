@@ -19,7 +19,8 @@ function mc_ai_assist:Init()
 
 end
 
-
+mc_ai_assist.tmr = 0
+mc_ai_assist.threshold = 2000
 function mc_ai_assist:Process()
 	--ml_log("AssistMode_Process->")
 		
@@ -32,7 +33,14 @@ function mc_ai_assist:Process()
 		if ( c_salvage:evaluate() == true ) then e_salvage:execute() end
 		
 		if ( FinishEnemy() == true ) then return end
-				
+		
+		
+		if ( mc_global.now - mc_ai_assist.tmr > mc_ai_assist.threshold and Player:IsMoving()) then
+			mc_ai_assist.tmr = mc_global.now
+			mc_ai_assist.threshold = math.random(500,3000)
+			mc_skillmanager.HealMe()
+		end	
+		
 		if ( sMtargetmode == "None" ) then 
 			mc_skillmanager.AttackTarget( nil ) 
 			

@@ -370,12 +370,12 @@ end
 
 c_reviveNPC_mb = inheritsFrom( ml_cause )
 function c_reviveNPC_mb:evaluate()
-    return (not Player.inCombat and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=1500")) > 0)
+    return (gRevive == "1" and not Player.inCombat and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=1500")) > 0)
 end
 
 c_Gathering_mb = inheritsFrom( ml_cause )
 function c_Gathering_mb:evaluate()
-	if ( Player.inCombat == false and Inventory.freeSlotCount > 0 and ( c_Gathering.running == true or TableSize(GadgetList("onmesh,shortestpath,gatherable,maxdistance=2500,maxpathdistance=1200")) > 0 )) then
+	if ( gGather == "1" and Player.inCombat == false and Inventory.freeSlotCount > 0 and ( c_Gathering.running == true or TableSize(GadgetList("onmesh,shortestpath,gatherable,maxdistance=2500,maxpathdistance=1200")) > 0 )) then
 		return true
 	end
 	c_Gathering.running = false

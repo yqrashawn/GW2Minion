@@ -767,8 +767,21 @@ function mc_skillmanager.GetAttackRange()
 	return maxrange
 end
 
+
+mc_skillmanager.PetTmr = 0
 function mc_skillmanager.AttackTarget( TargetID )	
 	local fastcastcount = 0
+	
+	-- ranger wanting extracode lol
+	if ( Player.profession == 4 and mc_global.now - mc_skillmanager.PetTmr > 2500) then 
+		mc_skillmanager.PetTmr = mc_global.now
+		local pet = Player:GetPet()
+		if ( pet ~= nil and Player:CanSwitchPet() == true and Player.healthstate == GW2.HEALTHSTATE.Alive and pet.alive == false) then	
+			d("Switching Pet..")
+			Player:SwitchPet()		
+		end
+	end
+	
 	
 	--Valid Target?
 	local target
@@ -947,7 +960,18 @@ function mc_skillmanager.AttackTarget( TargetID )
 end
 
 function mc_skillmanager.HealMe()	
-		
+	
+	-- ranger wanting extracode lol
+	if ( Player.profession == 4 and mc_global.now - mc_skillmanager.PetTmr > 2500) then 
+		mc_skillmanager.PetTmr = mc_global.now
+		local pet = Player:GetPet()
+		if ( pet ~= nil and Player:CanSwitchPet() == true and Player.healthstate == GW2.HEALTHSTATE.Alive and pet.alive == false) then	
+			d("Switching Pet..")
+			Player:SwitchPet()		
+		end
+	end
+
+	
 	--Valid Target?
 	local mybuffs = Player.buffs	
 	if ( mybuffs ) then
