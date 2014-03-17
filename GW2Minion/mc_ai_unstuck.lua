@@ -22,7 +22,7 @@ function mc_ai_unstuck:OnUpdate( tick )
 		return	
 	end
 	
-	if ( gBotMode == "Assist" ) then return end
+	if ( gBotMode == GetString("assistMode") ) then return end
 	if ( mc_helper.HasBuffs(Player, "791,727") ) then return end --Fear and Immobilized
 	
 	-- Stuck check for movement stucks

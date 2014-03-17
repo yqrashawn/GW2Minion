@@ -131,3 +131,78 @@ function e_goToPosition:execute()
 	end	
 	return ml_log(false)
 end
+
+
+
+
+-- Explore Mode
+mc_ai_explore = inheritsFrom(ml_task)
+mc_ai_explore.name = "ExploreMode"
+
+function mc_ai_explore.Create()
+	local newinst = inheritsFrom(mc_ai_explore)
+    
+    --ml_task members
+    newinst.valid = true
+    newinst.completed = false
+    newinst.subtask = nil
+    newinst.process_elements = {}
+    newinst.overwatch_elements = {}
+            
+    return newinst
+end
+
+function mc_ai_explore:Init()
+
+end
+
+function mc_ai_explore:Process()
+	local newQ = ml_quest_mgr.GetNewQuest()
+	if ( newQ ~= nil ) then
+		local newTask = mc_ai_doquest.Create()
+		newTask.currentQuest = newQ
+		ml_task_hub:CurrentTask():AddSubTask(newTask)
+	else
+		-- Walk to Random Point in our levelrange
+		if ( TableSize(mc_datamanager.levelmap) > 0 ) then
+			local rpos = mc_datamanager.GetRandomPositionInLevelRange( Player.level )
+			if (TableSize(rpos) > 0 ) then				
+				local newTask = mc_ai_exploration.Create()
+				newTask.targetPosition = rpos
+				ml_task_hub:CurrentTask():AddSubTask(newTask)				
+			
+			else
+				local rpos = Player:GetRandomPoint(5000)
+				if ( rpos ) then
+					local newTask = mc_ai_exploration.Create()
+					newTask.targetPosition = rpos
+					ml_task_hub:CurrentTask():AddSubTask(newTask)	
+				end
+			end
+		end
+	end
+end
+
+function mc_ai_explore:OnSleep()
+	d("mc_ai_explore:OnSleep->")
+end
+
+function mc_ai_explore:OnTerminate()
+	d("mc_ai_explore:OnTerminate->")
+end
+
+function mc_ai_explore:IsGoodToAbort()
+	d("mc_ai_explore:IsGoodToAbort->")
+end
+
+-- Gets called after the CnEs are evaluated, if true, calls directly task_complete_execute()
+function mc_ai_explore:task_complete_eval()	
+	return false
+end
+function mc_ai_explore:task_complete_execute()
+    
+end
+
+if ( mc_global.BotModes) then
+	mc_global.BotModes[GetString("exploreMode")] = mc_ai_explore
+end

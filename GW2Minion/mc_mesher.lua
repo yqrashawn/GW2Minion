@@ -344,7 +344,7 @@ function mm.NavMeshUpdate()
 	mc_datamanager.UpdateLevelMap()
 	
 	-- try loading questprofile
-	if ( gBotMode == GetString("grindMode") ) then
+	if ( gBotMode == GetString("grindMode") or gBotMode == GetString("exploreMode")) then
 		local mapname = mc_datamanager.GetMapName( Player:GetLocalMapID())
 		if ( mapname ~= nil and mapname ~= "" and mapname ~= "None" ) then
 			mapname = mapname:gsub('%W','') -- only alphanumeric
@@ -355,7 +355,7 @@ function mm.NavMeshUpdate()
 		end
 	end
 	
-	if ( TableSize(ml_quest_mgr.QuestList) == 0 and gBotMode == GetString("grindMode")) then
+	if ( TableSize(ml_quest_mgr.QuestList) == 0 and (gBotMode == GetString("grindMode") or gBotMode == GetString("exploreMode"))) then
 		mc_questmanager.GenerateMapExploreProfile()
 	end
 end
