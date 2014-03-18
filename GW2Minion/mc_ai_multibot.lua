@@ -288,11 +288,7 @@ function c_MoveToLeader:evaluate()
 							end
 						end
 					end
-					
-				elseif ( pmember.connectstatus == 1 ) then
-					ml_log("Leader has disconnected!")					
-					
-				
+									
 				elseif ( pmember.mapid ~= Player:GetLocalMapID()) then
 					ml_log("Leader is not in our map! ")
 					if ( tonumber(mc_multibotmanager.leaderWPID) ~= nil and tonumber(mc_multibotmanager.leaderWPID) > 0 and Player.inCombat == false and Inventory:GetInventoryMoney() > 500) then
@@ -300,7 +296,10 @@ function c_MoveToLeader:evaluate()
 						ml_log(Player:TeleportToWaypoint(tonumber(mc_multibotmanager.leaderWPID)))
 						mc_global.Wait(5000)
 					end
-					
+				
+				elseif ( pmember.connectstatus == 1 ) then
+					ml_log("Leader has disconnected?!")
+				
 				else					
 					ml_log("Unknown error in finding the leader! ")		
 				end
