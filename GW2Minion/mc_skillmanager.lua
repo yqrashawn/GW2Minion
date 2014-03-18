@@ -207,7 +207,7 @@ function mc_skillmanager.ModuleInit()
 	GUI_NewField(mc_skillmanager.editwindow.name,GetString("playerHas"),"SKM_PEff1","SkillDetails");	
 	GUI_NewField(mc_skillmanager.editwindow.name,GetString("playerHasNot"),"SKM_PNEff1","SkillDetails");
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Player has #Boons >","SKM_PBoonC","SkillDetails");
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Player has #Conditions >","SKM_BCondC","SkillDetails");	
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Player has #Conditions >","SKM_PCondC","SkillDetails");	
 	GUI_NewComboBox(mc_skillmanager.editwindow.name,GetString("targetMoving"),"SKM_TMove","SkillDetails","Either,Yes,No");
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("targetHPGT"),"SKM_THPL","SkillDetails");
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("targetHPLT"),"SKM_THPB","SkillDetails");
