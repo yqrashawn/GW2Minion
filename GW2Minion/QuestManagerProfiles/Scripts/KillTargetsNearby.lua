@@ -51,15 +51,15 @@ function script:Init()
 	-- Normal Chests	
 	self:add(ml_element:create( "LootingChest", c_LootChests, e_LootChests, 155 ), self.process_elements)
 	
-	-- Resting
-	self:add(ml_element:create( "Resting", c_resting, e_resting, 145 ), self.process_elements)	
-
 	-- Normal Looting
-	self:add(ml_element:create( "Looting", c_LootCheck, e_LootCheck, 130 ), self.process_elements)
+	self:add(ml_element:create( "Looting", c_LootCheck, e_LootCheck, 150 ), self.process_elements)
+	
+	-- Resting
+	self:add(ml_element:create( "Resting", c_resting, e_resting, 140 ), self.process_elements)	
 
 	-- Deposit Items
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 120 ), self.process_elements)	
-	
+			
 	-- Find Target
 	self:add(ml_element:create( "FindTarget", self.c_findtarget, e_SearchTarget, 110 ), self.process_elements)
 	
@@ -73,7 +73,8 @@ function script:Init()
 end
 
 
-function script:task_complete_eval()		
+function script:task_complete_eval()
+	if ( script.kTargetTmr ~= nil ) then ml_log("_"..tostring(self.Data["_TargetKillTime"]*1000 -( mc_global.now - script.kTargetTmr).." seconds remaining_")) end
 	if ( script.kTargetTmr ~= 0 and mc_global.now - script.kTargetTmr > self.Data["_TargetKillTime"]*1000 ) then return true end
 	return false
 end

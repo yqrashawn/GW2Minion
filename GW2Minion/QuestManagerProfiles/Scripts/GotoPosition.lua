@@ -122,7 +122,7 @@ function script.e_goto:execute()
 			if (tonumber(navResult) < 0) then					
 				ml_error("e_gotoPosition result: "..tonumber(navResult))					
 			end			
-
+						
 			if ( mc_global.now - script.e_goto.tmr > script.e_goto.threshold ) then
 				script.e_goto.tmr = mc_global.now
 				script.e_goto.threshold = math.random(1000,5000)

@@ -41,7 +41,7 @@ function mc_ai_combatAttack:Init()
 	self:add(ml_element:create( "RevivePlayer", c_reviveDownedPlayersInCombat, e_reviveDownedPlayersInCombat, 170 ), self.process_elements)
 		
 	-- Aggro
-	self:add(ml_element:create( "Aggro", c_AggroEx, e_AggroEx, 165 ), self.process_elements) --reactive queue
+	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 165 ), self.process_elements) --reactive queue
 	
 	-- Dont Dive lol
 	self:add(ml_element:create( "SwimUP", c_SwimUp, e_SwimUp, 160 ), self.process_elements)
@@ -99,7 +99,7 @@ function mc_ai_combatAttack:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_combatAttack:task_complete_eval()	
-	if ( mc_global.now - self.duration > 0 or TableSize(CharacterList("attackable,alive,nearest,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) == 0) then 
+	if ( Player.swimming ~= 0 or mc_global.now - self.duration > 0 or TableSize(CharacterList("attackable,alive,nearest,onmesh,maxdistance=3500,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))) == 0) then 
 		Player:StopMovement()
 		return true
 	end
@@ -128,7 +128,7 @@ c_AggroEx = inheritsFrom( ml_cause )
 e_AggroEx = inheritsFrom( ml_effect )
 c_AggroEx.threshold = 80
 function c_AggroEx:evaluate()
-    return Player.swimming == 0 and ( math.random(0,50)==1 or Player.health.percent < c_AggroEx.threshold) and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
+    return Player.swimming == 0 and ( math.random(0,20)==1 or Player.health.percent < c_AggroEx.threshold) and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
 end
 function e_AggroEx:execute()
 	ml_log("e_AggroEx ")
@@ -364,7 +364,7 @@ function mc_ai_combatDefend:Init()
 end
 function mc_ai_combatDefend:task_complete_eval()
 	--ml_log("combatDefend:Complete?->")
-	if ( TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh"))== 0) then 
+	if ( Player.swimming ~= 0 or TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh"))== 0) then 
 		Player:StopMovement()
 		return true
 	end

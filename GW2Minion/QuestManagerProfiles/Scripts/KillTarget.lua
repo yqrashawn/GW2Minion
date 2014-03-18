@@ -11,7 +11,8 @@ function script:UIInit( identifier )
 	GUI_NewField(ml_quest_mgr.stepwindow.name,"Target Name",tostring(identifier).."TargetName",GetString("questStepDetails"))
 	GUI_NewField(ml_quest_mgr.stepwindow.name,"Target contentID",tostring(identifier).."TargetcontentID",GetString("questStepDetails"))
 	GUI_NewButton(ml_quest_mgr.stepwindow.name,"Set Current Target",tostring(identifier).."SetTarget",GetString("questStepDetails"))
-	GUI_NewNumeric(ml_quest_mgr.stepwindow.name,"Waiting Time for Target to Spawn",tostring(identifier).."_TargetSpawnTime",GetString("questStepDetails"),"0","999");
+	GUI_NewNumeric(ml_quest_mgr.stepwindow.name,"KillCount",tostring(identifier).."_TargetKillCount",GetString("questStepDetails"),"0","9999");
+	GUI_NewNumeric(ml_quest_mgr.stepwindow.name,"Waiting Time for Target to Spawn",tostring(identifier).."_TargetSpawnTime",GetString("questStepDetails"),"0","9999");
 	
 end
 
@@ -25,6 +26,7 @@ function script:SetData( identifier, tData )
 		-- Update the script UI (make sure the Data assigning to a _G is NOT nil! else crashboooombang!)
 		if ( self.Data["TargetName"] ) then _G[tostring(identifier).."TargetName"] = self.Data["TargetName"] end
 		if ( self.Data["TargetcontentID"] ) then _G[tostring(identifier).."TargetcontentID"] = self.Data["TargetcontentID"] end
+		if ( self.Data["_TargetKillCount"] ) then _G[tostring(identifier).."_TargetKillCount"] = self.Data["_TargetKillCount"] end
 		if ( self.Data["_TargetSpawnTime"] ) then _G[tostring(identifier).."_TargetSpawnTime"] = self.Data["_TargetSpawnTime"] end
 	end
 end
@@ -67,111 +69,96 @@ function script:Init()
 			
 	-- Normal Chests	
 	self:add(ml_element:create( "LootingChest", c_LootChests, e_LootChests, 155 ), self.process_elements)
-	
-	-- Resting
-	self:add(ml_element:create( "Resting", c_resting, e_resting, 145 ), self.process_elements)	
 
 	-- Normal Looting
-	self:add(ml_element:create( "Looting", c_LootCheck, e_LootCheck, 130 ), self.process_elements)
+	self:add(ml_element:create( "Looting", c_LootCheck, e_LootCheck, 150 ), self.process_elements)
+	
+	-- Aggro
+	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 145 ), self.process_elements) --reactive queue
 
 	-- Deposit Items
-	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 120 ), self.process_elements)	
+	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 140 ), self.process_elements)
+	
+	-- Resting
+	self:add(ml_element:create( "Resting", c_resting, e_resting, 135 ), self.process_elements)	
 	
 	-- Find Target
 	self:add(ml_element:create( "FindTarget", self.c_findtarget, self.e_findtarget, 110 ), self.process_elements)
 	
 	-- Get into Combat Range
 	self:add(ml_element:create( "MovingIntoCombatRange", c_MoveIntoCombatRange, e_MoveIntoCombatRange, 100 ), self.process_elements)
-	
+		
 	-- Kill Target
 	self:add(ml_element:create( "KillTarget", c_KillTarget, e_KillTarget, 90 ), self.process_elements)
-	
-	-- Done?
-	self:add(ml_element:create( "Done", c_done, e_done, 50 ), self.process_elements)
 	
 	self:AddTaskCheckCEs()
 end
 
 
 function script:task_complete_eval()		
+	if ( ml_task_hub:CurrentTask().Data["_TargetKillCount"] ~= nil and tonumber(script.kTargetCount)~=nil ) then
+		ml_log("_"..tostring(script.kTargetCount).."_of_"..tostring(ml_task_hub:CurrentTask().Data["_TargetKillCount"]).."_killed_")
+		if (tonumber(script.kTargetCount) >= tonumber(ml_task_hub:CurrentTask().Data["_TargetKillCount"] )) then
+			return true
+		end
+	end
 	return false
 end
 function script:task_complete_execute()
    self.completed = true
 end
 
-
-
 -- Cause&Effect
 script.c_findtarget = inheritsFrom( ml_cause )
 script.e_findtarget = inheritsFrom( ml_effect )
-script.kTarget = nil
+script.kTargetID = nil
+script.kLastTargetID = nil
 script.kTargetTmr = 0
+script.kTargetCount = 0
 function script.c_findtarget:evaluate() 
-	if (ml_task_hub:CurrentTask().Data["TargetName"] ~= nil and
-		ml_task_hub:CurrentTask().Data["TargetcontentID"] ~= nil and
-		kTarget == nil) then
-		return true
-	elseif (kTarget == nil) then
+	if (ml_task_hub:CurrentTask().Data["TargetName"] ~= nil and	ml_task_hub:CurrentTask().Data["TargetcontentID"] ~= nil ) then
+		if ( Player:GetTarget() == nil ) then
+			return true
+		end
+	else
 		ml_error("Quest KillTarget Step has no Target set!")
 		ml_task_hub:CurrentTask().completed = true
 	end
 	return false
 end
 function script.e_findtarget:execute()
-	ml_log("e_killtarget")
-	if (kTarget == nil) then
-		local targets = ( CharacterList("shortestpath,attackable,alive,onmesh,maxpathdistance=4000") )
-		if (targets) then
-			local id,target = next(targets)
-			while (id and target) do
-				if (tonumber(ml_task_hub:CurrentTask().Data["TargetcontentID"]) == target.contentID ) then
-					kTarget = target
-					Player:SetTarget(target.id)
-					script.kTargetTmr = mc_global.now
-					break
-				end
-				id,target = next(targets, id)
-			end
-		end
-	else
-		-- timer
-		if ( script.kTargetTmr == 0 ) then 
-			script.kTargetTmr = mc_global.now
-		elseif ( mc_global.now - script.kTargetTmr > tonumber(ml_task_hub:CurrentTask().Data["_TargetSpawnTime"])*1000 ) then
-			d("No enemy found in 30 seconds, ending step")
-			ml_task_hub:CurrentTask().completed = true
+	
+	-- Check if we got a new target, raise counter
+	if ( script.kTargetID ~= nil ) then 		
+		if ( script.kLastTargetID == nil ) then 
+			script.kLastTargetID = script.kTargetID
+		elseif ( script.kLastTargetID ~= script.kTargetID ) then
+			script.kLastTargetID = script.kTargetID
+			script.kTargetCount = script.kTargetCount + 1
 		end
 	end
-	return ml_log(false)
-end
-
-script.c_done = inheritsFrom( ml_cause )
-script.e_done = inheritsFrom( ml_effect )
-function script.c_done:evaluate() 
-	local targets = ( CharacterList("shortestpath,attackable,alive,onmesh,maxpathdistance=4000") )
+	-- Get a new target with contentID we want 
+	local targets = CharacterList("shortestpath,attackable,alive,onmesh,maxpathdistance=4000,contentID="..ml_task_hub:CurrentTask().Data["TargetcontentID"])
 	if (targets) then
 		local id,target = next(targets)
-		while (id and target) do
-			if (tonumber(ml_task_hub:CurrentTask().Data["TargetcontentID"]) == target.contentID and target.alive ) then
-				script.kTargetTmr = mc_global.now
-				return false
-			end
-			id,target = next(targets, id)
+		if (id and target) then
+			script.kTargetTmr = mc_global.now
+			script.kTargetID = target.id
+			Player:SetTarget(target.id)
+			mc_global.Wait(250)
+			return ml_log(true)
 		end	
 	end
 	-- timer
 	if ( script.kTargetTmr == 0 ) then 
 		script.kTargetTmr = mc_global.now
+		return ml_log(false)
 	elseif ( mc_global.now - script.kTargetTmr > tonumber(ml_task_hub:CurrentTask().Data["_TargetSpawnTime"])*1000 ) then
-		d("No enemies found in 30 seconds, ending step")
+		d("No enemies found in 30 seconds, ending step")		
 		ml_task_hub:CurrentTask().completed = true
 	end
-	return true
+	ml_log("_Waiting: "..tostring(mc_global.now - script.kTargetTmr).."Seconds_")
+	return ml_log(false)
 end
-function script.e_done:execute()
-	ml_task_hub:CurrentTask().completed = true
-end
-
 
 return script

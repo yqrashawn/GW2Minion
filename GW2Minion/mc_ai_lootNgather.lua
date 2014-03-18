@@ -372,7 +372,7 @@ function e_GatherToolsCheck:execute()
 				local itemID = item.itemID
 				for invTools = 1, 6, 1 do
 					--d(tostring(itemID).." / "..tostring(mc_vendormanager.tools[tSlot][invTools]))
-					if (itemID == mc_vendormanager.tools[tSlot][invTools] and pLevel >= mc_vendormanager.LevelRestrictions(invTools)) then 
+					if (itemID == mc_vendormanager.tools[tSlot][invTools] and pLevel >= mc_vendormanager.LevelRestrictions[invTools]) then 
 						-- We found a tool to equip into our empty gatherable slot
 						if ( tSlot == 0 ) then d("Equipping Sickle ..") item:Equip(GW2.EQUIPMENTSLOT.ForagingTool) end
 						if ( tSlot == 1 ) then d("Equipping Axe ..") item:Equip(GW2.EQUIPMENTSLOT.LoggingTool) end
