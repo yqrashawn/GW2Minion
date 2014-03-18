@@ -175,7 +175,7 @@ function e_Loot:execute()
 					MoveOnlyStraightForward()
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then
-						ml_error("e_Loot.MoveIntoCombatRange result: "..tonumber(navResult))					
+						d("e_Loot.MoveIntoCombatRange result: "..tonumber(navResult))					
 					end
 					ml_log("MoveToLootable..")
 					return ml_log(true)
@@ -237,7 +237,7 @@ function e_LootChests:execute()
 						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
-							ml_error("e_lootchest.MoveIntoRange result: "..tonumber(navResult))					
+							d("e_lootchest.MoveIntoRange result: "..tonumber(navResult))					
 						end
 						ml_log("MoveToLootChest..")
 						return true
@@ -297,7 +297,7 @@ function e_Gathering:execute()
 					MoveOnlyStraightForward()
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then
-						ml_error("mc_ai_gathering.MoveIntoCombatRange result: "..tonumber(navResult))					
+						d("mc_ai_gathering.MoveIntoCombatRange result: "..tonumber(navResult))					
 					end
 					
 					if ( mc_global.now - e_Gathering.tmr > e_Gathering.threshold ) then
@@ -365,13 +365,14 @@ function e_GatherToolsCheck:execute()
 	if ( tSlot ~= nil) then
 		local sTools = Inventory("itemtype=" .. GW2.ITEMTYPE.Gathering)
 		if (sTools) then
+			local pLevel = Player.level
 			local id,item = next(sTools)
 			while (id and item) do
 				
 				local itemID = item.itemID
-				for invTools = 1, 8, 1 do
+				for invTools = 1, 6, 1 do
 					--d(tostring(itemID).." / "..tostring(mc_vendormanager.tools[tSlot][invTools]))
-					if (itemID == mc_vendormanager.tools[tSlot][invTools]) then 
+					if (itemID == mc_vendormanager.tools[tSlot][invTools] and pLevel >= mc_vendormanager.LevelRestrictions(invTools)) then 
 						-- We found a tool to equip into our empty gatherable slot
 						if ( tSlot == 0 ) then d("Equipping Sickle ..") item:Equip(GW2.EQUIPMENTSLOT.ForagingTool) end
 						if ( tSlot == 1 ) then d("Equipping Axe ..") item:Equip(GW2.EQUIPMENTSLOT.LoggingTool) end

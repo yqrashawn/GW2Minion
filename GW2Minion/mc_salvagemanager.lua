@@ -230,8 +230,8 @@ function mc_salvagemanager.createItemList()
 				local _, filter = next(mc_salvagemanager.filterList)
 				while (filter) do
 					if (mc_salvagemanager.validFilter(filter)) then
-						if ((filter.rarity == "None" or filter.rarity == nil or GW2.ITEMRARITY[filter.rarity] == item.rarity) and
-						(filter.itemtype == "None" or filter.itemtype == nil or GW2.ITEMTYPE[filter.itemtype] == item.itemtype)) then
+						if ((filter.rarity == nil or filter.rarity == "None" or GW2.ITEMRARITY[filter.rarity] == item.rarity) and
+						(filter.itemtype == nil or filter.itemtype == "None" or GW2.ITEMTYPE[filter.itemtype] == item.itemtype)) then
 							addItem = true
 						end
 					end
@@ -264,8 +264,7 @@ end
 --Check if filter is valid: 
 function mc_salvagemanager.validFilter(filter)
 	if (filter.itemtype ~= "None" and filter.itemtype ~= nil and
-	filter.rarity ~= "None" and filter.rarity ~= nil and
-	filter.preferedKit ~= "None" and filter.preferedKit ~= nil) then
+	filter.rarity ~= "None" and filter.rarity ~= nil) then
 		return true
 	elseif (filter.rarity == "Junk") then
 		return true

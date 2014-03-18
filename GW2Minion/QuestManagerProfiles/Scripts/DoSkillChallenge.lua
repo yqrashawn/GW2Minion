@@ -139,7 +139,7 @@ function script.e_goto:execute()
 			MoveOnlyStraightForward()
 			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],100,false,false,true))		
 			if (tonumber(navResult) < 0) then					
-				ml_error("e_gotoPosition result: "..tonumber(navResult))					
+				d("e_gotoPosition result: "..tonumber(navResult))					
 			end
 
 			if ( mc_global.now - script.e_goto.tmr > script.e_goto.threshold ) then
@@ -202,7 +202,7 @@ function script.e_goto:execute()
 								MoveOnlyStraightForward()
 								local navResult = tostring(Player:MoveTo(mPos.x,mPos.y,mPos.z,50,false,false,false))
 								if (tonumber(navResult) < 0) then					
-									ml_error("e_gotoSkillChallengePosition result: "..tonumber(navResult))					
+									d("e_gotoSkillChallengePosition result: "..tonumber(navResult))					
 								end
 							else
 								ml_error("SkillChallenge Marker has no position!")

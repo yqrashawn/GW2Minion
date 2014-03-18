@@ -192,7 +192,7 @@ function e_memberdown:execute()
 				MoveOnlyStraightForward()
 				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 				if (tonumber(navResult) < 0) then
-					ml_error("e_memberdown.MoveIntoRange result: "..tonumber(navResult))					
+					d("e_memberdown.MoveIntoRange result: "..tonumber(navResult))					
 				end
 				ml_log("MoveToDownedPartyMember..")
 				return ml_log(true)
@@ -341,7 +341,7 @@ function e_MoveToLeader:execute()
 						end
 						
 						if (tonumber(navResult) < 0 and tonumber(navResult) ~= -3) then					
-							ml_error("e_MoveToLeader.MoveToLeader result: "..tonumber(navResult))					
+							d("e_MoveToLeader.MoveToLeader result: "..tonumber(navResult))					
 						end
 						if ( mc_global.now - e_MoveToLeader.tmr > e_MoveToLeader.threshold ) then
 							e_MoveToLeader.tmr = mc_global.now

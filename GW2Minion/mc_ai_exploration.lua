@@ -116,7 +116,7 @@ function e_goToPosition:execute()
 			--d(tostring(ml_task_hub:CurrentTask().Data["GotoX"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoY"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoZ"]))
 			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().targetPosition.x,ml_task_hub:CurrentTask().targetPosition.y,ml_task_hub:CurrentTask().targetPosition.z,125,false,false,true))		
 			if (tonumber(navResult) < 0) then					
-				ml_error("e_gotoPosition result: "..tonumber(navResult))					
+				d("e_gotoPosition result: "..tonumber(navResult))					
 			end	
 
 			if ( mc_global.now - e_goToPosition.tmr > e_goToPosition.threshold ) then

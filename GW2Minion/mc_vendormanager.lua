@@ -12,11 +12,11 @@ mc_vendormanager.tools = {
 	 [0] = 
 	 {
 	  [1] = 23029,
-	  [2] = 22992,
-	  [3] = 23004,
-	  [4] = 23005,
-	  [5] = 23008,
-	  [6] = 22997,
+	  [2] = 22992, -- lvl10
+	  [3] = 23004, -- lvl20
+	  [4] = 23005, -- lvl30
+	  [5] = 23008, -- lvl45
+	  [6] = 22997, -- lvl60
 	 },
 	 -- logging 1= lowest quality , 6 = orichalcum
 	 [1] = 
@@ -48,6 +48,17 @@ mc_vendormanager.tools = {
 	  [4] = 23043  -- Master (rarity 4)
 	 }
  }
+
+ mc_vendormanager.LevelRestrictions = 
+ { 
+ 	 --level restrictions	
+	[1] = 0,
+	[2] = 10, -- lvl10
+	[3] = 20, -- lvl20
+	[4] = 30, -- lvl30
+	[5] = 45, -- lvl45
+	[6] = 60, -- lvl60	
+}
 
 function mc_vendormanager.ModuleInit()
 	
@@ -566,7 +577,6 @@ function mc_vendormanager.GetNeedSalvageKitInfo()
 	return buyList
 end
 
-
 function mc_vendormanager.GetGatheringToolsCount()
 	local buyList = {[1]=0,[2]=0,[3]=0}
 	
@@ -584,13 +594,14 @@ function mc_vendormanager.GetGatheringToolsCount()
 	
 	local sTools = Inventory("itemtype=" .. GW2.ITEMTYPE.Gathering)
 	if (sTools) then
+		local pLevel = Player.level
 		local id,item = next(sTools)
 		while (id and item) do
 			local itemID = item.itemID
 			for invTools = 1, 6, 1 do				
-				if (itemID == mc_vendormanager.tools[0][invTools]) then buyList[1] = buyList[1] + 1  break end
-				if (itemID == mc_vendormanager.tools[1][invTools]) then buyList[2] = buyList[2] + 1  break end
-				if (itemID == mc_vendormanager.tools[2][invTools]) then buyList[3] = buyList[3] + 1  break end
+				if (itemID == mc_vendormanager.tools[0][invTools] and pLevel >= mc_vendormanager.LevelRestrictions[invTools]) then buyList[1] = buyList[1] + 1  break end
+				if (itemID == mc_vendormanager.tools[1][invTools] and pLevel >= mc_vendormanager.LevelRestrictions[invTools]) then buyList[2] = buyList[2] + 1  break end
+				if (itemID == mc_vendormanager.tools[2][invTools] and pLevel >= mc_vendormanager.LevelRestrictions[invTools]) then buyList[3] = buyList[3] + 1  break end
 			end
 			id,item = next(sTools, id)
 		end

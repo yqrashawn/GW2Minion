@@ -81,7 +81,7 @@ function e_quickvendorsell:execute()
 							MoveOnlyStraightForward()
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
-								ml_error("e_quickvendorsell.MoveIntoInteractRange result: "..tonumber(navResult))					
+								d("e_quickvendorsell.MoveIntoInteractRange result: "..tonumber(navResult))					
 							end
 							ml_log("MoveToSellVendor..")
 							return true
@@ -113,7 +113,7 @@ function e_quickvendorsell:execute()
 						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
-							ml_error("e_quickvendorsell.MoveInto Vendor Range result: "..tonumber(navResult))					
+							d("e_quickvendorsell.MoveInto Vendor Range result: "..tonumber(navResult))					
 						end
 						ml_log("MoveToSellVendor..")
 						return true
@@ -167,7 +167,7 @@ function e_vendorsell:execute()
 							MoveOnlyStraightForward()
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
-								ml_error("e_vendorsell.MoveIntoInteractRange result: "..tonumber(navResult))					
+								d("e_vendorsell.MoveIntoInteractRange result: "..tonumber(navResult))					
 							end
 							ml_log("MoveToSellVendor..")
 							return true
@@ -199,7 +199,7 @@ function e_vendorsell:execute()
 						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
-							ml_error("e_vendorsell.MoveIntovMarkerRange result: "..tonumber(navResult))					
+							d("e_vendorsell.MoveIntovMarkerRange result: "..tonumber(navResult))					
 						end
 						ml_log("MoveToSellVendorMarker..")
 						return true
@@ -357,7 +357,7 @@ function e_quickbuy:execute()
 							MoveOnlyStraightForward()
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
-								ml_error("e_quickbuy.MoveIntoInteractRange result: "..tonumber(navResult))					
+								d("e_quickbuy.MoveIntoInteractRange result: "..tonumber(navResult))					
 							end
 							ml_log("MoveToBuyVendor..")
 							return true
@@ -387,7 +387,7 @@ function e_quickbuy:execute()
 					if ( pos ) then
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
-							ml_error("e_quickbuy.MoveInto Vendor Range result: "..tonumber(navResult))					
+							d("e_quickbuy.MoveInto Vendor Range result: "..tonumber(navResult))					
 						end
 						ml_log("MoveToBuyVendor..")
 						return true
@@ -441,7 +441,7 @@ function e_vendorbuy:execute()
 							MoveOnlyStraightForward()
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
-								ml_error("e_vendorbuy.MoveIntoInteractRange result: "..tonumber(navResult))					
+								d("e_vendorbuy.MoveIntoInteractRange result: "..tonumber(navResult))					
 							end
 							ml_log("MoveToBuyVendor..")
 							return true
@@ -471,7 +471,7 @@ function e_vendorbuy:execute()
 					if ( pos ) then
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
-							ml_error("e_vendorbuy.MoveIntovMarkerRange result: "..tonumber(navResult))					
+							d("e_vendorbuy.MoveIntovMarkerRange result: "..tonumber(navResult))					
 						end
 						ml_log("MoveToVendorBuyMarker..")
 						return true
@@ -703,7 +703,7 @@ function e_quickrepair:execute()
 							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
-								ml_error("e_quickrepair.MoveIntoInteractRange result: "..tonumber(navResult))					
+								d("e_quickrepair.MoveIntoInteractRange result: "..tonumber(navResult))					
 							end
 							ml_log("MoveToRepairVendor..")
 							return true
@@ -793,7 +793,7 @@ function e_vendorrepair:execute()
 					if ( pos ) then
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
-							ml_error("e_vendorrepair.MoveIntovMarkerRange result: "..tonumber(navResult))					
+							d("e_vendorrepair.MoveIntovMarkerRange result: "..tonumber(navResult))					
 						end
 						ml_log("MoveToRepairVendorMarker..")
 						return true

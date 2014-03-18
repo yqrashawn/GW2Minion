@@ -155,7 +155,7 @@ function script.e_goto:execute()
 			MoveOnlyStraightForward()
 			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],100,false,false,true))		
 			if (tonumber(navResult) < 0) then					
-				ml_error("e_gotoPosition result: "..tonumber(navResult))					
+				d("e_gotoPosition result: "..tonumber(navResult))					
 			end
 
 			if ( mc_global.now - script.e_goto.tmr > script.e_goto.threshold ) then

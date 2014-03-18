@@ -41,6 +41,11 @@ end
 function mc_ai_questprofile:Process()
 	
 	-- Get a Quest
+	if ( self.currentStep~=nil and self.currentStep.script ~= nil and self.currentStep.script.completed == true ) then
+		d("QuestStep "..tostring(self.currentStep.name).." completed!")
+		ml_quest_mgr.SetQuestData( self.currentQuest, self.currentStep, nil, "done", "1" )
+		self.currentStep = nil
+	end
 	if ( self.currentQuest == nil or self.currentQuest.mapid ~= Player:GetLocalMapID()) then
 		self.currentQuest = ml_quest_mgr.GetNewQuest()		
 		if ( self.currentQuest == nil ) then
@@ -58,7 +63,7 @@ function mc_ai_questprofile:Process()
 				ml_quest_mgr.SetQuestData( self.currentQuest, self.currentStep, nil, "done", "1" )
 				self.currentStep = nil
 			end
-						
+			
 			-- Getting next questStep
 			self.currentStep = ml_quest_mgr.GetNextQuestStep( self.currentQuest )				
 			if ( self.currentStep == nil ) then

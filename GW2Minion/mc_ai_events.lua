@@ -180,7 +180,7 @@ function e_MoveInEventRange:execute()
 						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
 						if (tonumber(navResult) < 0) then					
-							ml_error("mc_ai_events.MoveInEventRange result: "..tonumber(navResult))					
+							d("mc_ai_events.MoveInEventRange result: "..tonumber(navResult))					
 						else
 							c_MoveInEventRange.movingtoevent = true
 						end
@@ -204,7 +204,7 @@ function e_MoveInEventRange:execute()
 						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
 						if (tonumber(navResult) < 0) then					
-							ml_error("mc_ai_events.MoveBackIntoEventRange result: "..tonumber(navResult))					
+							d("mc_ai_events.MoveBackIntoEventRange result: "..tonumber(navResult))					
 						end
 						
 						if ( mc_global.now - e_MoveInEventRange.tmr > e_MoveInEventRange.threshold ) then

@@ -193,7 +193,7 @@ function mc_skillmanager.ModuleInit()
 	-- EDITOR WINDOW
 	GUI_NewWindow(mc_skillmanager.editwindow.name,mc_skillmanager.mainwindow.x+mc_skillmanager.mainwindow.w,mc_skillmanager.mainwindow.y,mc_skillmanager.editwindow.w,mc_skillmanager.editwindow.h,true)		
 	GUI_NewField(mc_skillmanager.editwindow.name,GetString("maMarkerName"),"SKM_NAME","SkillDetails")
-	GUI_NewCheckbox(mc_skillmanager.editwindow.name,GetString("initFight"),"SKM_ON","SkillDetails")
+	GUI_NewCheckbox(mc_skillmanager.editwindow.name,GetString("setsAttackRange"),"SKM_ON","SkillDetails")
 	GUI_NewCheckbox(mc_skillmanager.editwindow.name,GetString("los"),"SKM_LOS","SkillDetails")
 	GUI_NewCheckbox(mc_skillmanager.editwindow.name,GetString("channeled"),"SKM_CHAN","SkillDetails")
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("minRange"),"SKM_MinR","SkillDetails")
@@ -205,7 +205,9 @@ function mc_skillmanager.ModuleInit()
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("playerPowerGT"),"SKM_PPowL","SkillDetails");
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("playerPowerLT"),"SKM_PPowB","SkillDetails");
 	GUI_NewField(mc_skillmanager.editwindow.name,GetString("playerHas"),"SKM_PEff1","SkillDetails");	
-	GUI_NewField(mc_skillmanager.editwindow.name,GetString("playerHasNot"),"SKM_PNEff1","SkillDetails");	
+	GUI_NewField(mc_skillmanager.editwindow.name,GetString("playerHasNot"),"SKM_PNEff1","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Player has #Boons >","SKM_PBoonC","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Player has #Conditions >","SKM_BCondC","SkillDetails");	
 	GUI_NewComboBox(mc_skillmanager.editwindow.name,GetString("targetMoving"),"SKM_TMove","SkillDetails","Either,Yes,No");
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("targetHPGT"),"SKM_THPL","SkillDetails");
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("targetHPLT"),"SKM_THPB","SkillDetails");
@@ -214,10 +216,9 @@ function mc_skillmanager.ModuleInit()
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("alliesNearCount"),"SKM_TACount","SkillDetails");
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("alliesNearRange"),"SKM_TARange","SkillDetails");
 	GUI_NewField(mc_skillmanager.editwindow.name,GetString("targetHas"),"SKM_TEff1","SkillDetails");	
-	GUI_NewField(mc_skillmanager.editwindow.name,GetString("targetHasNot"),"SKM_TNEff1","SkillDetails");	
-	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Target has #Conditions >","SKM_TCondC","SkillDetails");
-	--GUI_NewNumeric(mc_skillmanager.editwindow.name,"Player has #Boons >","SKM_PBoonC","SkillDetails");
+	GUI_NewField(mc_skillmanager.editwindow.name,GetString("targetHasNot"),"SKM_TNEff1","SkillDetails");		
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Target has #Boons >","SKM_TBoonC","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Target has #Conditions >","SKM_TCondC","SkillDetails");	
 	GUI_NewField(mc_skillmanager.editwindow.name,GetString("prevSkillID"),"SKM_PrevID","SkillDetails");	
 	
 	
@@ -283,7 +284,8 @@ function mc_skillmanager.UpdateCurrentProfileData()
 								elseif ( key == "PPowB" )then newskill.ppowb = tonumber(value)
 								elseif ( key == "PEff1" )then newskill.peff1 = tostring(value)
 								elseif ( key == "PNEff1" )then newskill.pneff1 = tostring(value)
-								elseif ( key == "PCondC" )then newskill.pcondc = tonumber(value)												
+								elseif ( key == "PCondC" )then newskill.pcondc = tonumber(value)
+								elseif ( key == "PBoonC" )then newskill.pboonc = tonumber(value)								
 								elseif ( key == "TMove" )then newskill.tmove = tostring(value)
 								elseif ( key == "THPL" )then newskill.thpl = tonumber(value)
 								elseif ( key == "THPB" )then newskill.thpb = tonumber(value)						
@@ -293,8 +295,7 @@ function mc_skillmanager.UpdateCurrentProfileData()
 								elseif ( key == "TARange" )then newskill.tarange = tonumber(value)
 								elseif ( key == "TEff1" )then newskill.teff1 = tostring(value)
 								elseif ( key == "TNEff1" )then newskill.tneff1 = tostring(value)						
-								elseif ( key == "TCondC" )then newskill.tcondc = tonumber(value)
-								elseif ( key == "PBoonC" )then newskill.pboonc = tonumber(value)
+								elseif ( key == "TCondC" )then newskill.tcondc = tonumber(value)								
 								elseif ( key == "TBoonC" )then newskill.tboonc = tonumber(value)
 								elseif ( key == "PrevID" )then newskill.previd = tostring(value)		
 							end
@@ -728,15 +729,15 @@ end
 
 -- Updates the MaxAttackRange and our cskills List
 function mc_skillmanager.GetAttackRange()
-	local maxrange = 130
+	local maxrange = 150
 	mc_skillmanager.cskills = {}
 	
 	for i = 1, 16, 1 do	
 		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
 		if ( skill ~= nil ) then			
 			if ( i == 1 ) then
-				if( skill.maxRange < 130 ) then
-					maxrange = 130
+				if( skill.maxRange < 150 ) then
+					maxrange = 150
 				else
 					maxrange = skill.maxRange
 				end
@@ -746,13 +747,13 @@ function mc_skillmanager.GetAttackRange()
 			if ( TableSize(mc_skillmanager.SkillProfile) > 0 ) then				
 				local sID = skill.skillID
 				for k,v in pairs(mc_skillmanager.SkillProfile) do					
-					if ( v.used == "1" and v.skillID == sID) then						
+					if ( v.skillID == sID) then						
 						--d("Adding skill "..tostring(sID) .." WTF "..tostring(v.skillID) .." to index "..tostring(i))						
 						mc_skillmanager.cskills[i] = skill
 						mc_skillmanager.cskills[i].slot = GW2.SKILLBARSLOT["Slot_" .. i]
 						mc_skillmanager.cskills[i].prio = v.prio						
 						-- Get Max Attack Range for global use
-						if ( i > 1 and i < 6 ) then -- Only use Skill 2-5 for Attackrange check
+						if (v.used == "1" and i > 1 and i < 6 ) then -- Only use Skill 2-5 for Attackrange check
 							--d(skill.name.." "..tostring(skill.maxRange).." "..tostring(v.name).." "..tostring(v.maxRange))
 							if ( skill.cooldown == 0 and v.maxRange > maxrange) then
 								maxrange = v.maxRange
@@ -859,7 +860,9 @@ function mc_skillmanager.AttackTarget( TargetID )
 					if ( skill.pcondc > 0 and mybuffs ) then																		
 						if (CountConditions(mybuffs) <= skill.pcondc) then continue end								
 					end
-					
+					if ( skill.pboonc > 0 and mybuffs ) then
+						if (CountBoons(mybuffs) <= skill.pboonc) then continue end						
+					end	
 					--ALLIE AE CHECK
 					if ( skill.tacount > 0 and skill.tarange > 0) then
 						--d("ALLIE AE CHECK "..tostring(TableSize(CharacterList("friendly,maxdistance="..skill.tarange..",distanceto="..target.id))))

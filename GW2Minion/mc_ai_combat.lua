@@ -61,6 +61,9 @@ function mc_ai_combatAttack:Init()
 	-- Re-Equip Gathering Tools
 	self:add(ml_element:create( "EquippingGatherTool", c_GatherToolsCheck, e_GatherToolsCheck, 110 ), self.process_elements)	
 	
+	-- Salvaging
+	self:add(ml_element:create( "Salvaging", c_salvage, e_salvage, 105 ), self.process_elements)
+	
 	-- Quick-Repair & Vendoring (when a vendor is nearby)	
 	self:add(ml_element:create( "QuickSellItems", c_quickvendorsell, e_quickvendorsell, 100 ), self.process_elements)
 	self:add(ml_element:create( "QuickBuyItems", c_quickbuy, e_quickbuy, 99 ), self.process_elements)
@@ -70,9 +73,6 @@ function mc_ai_combatAttack:Init()
 	self:add(ml_element:create( "SellItems", c_vendorsell, e_vendorsell, 90 ), self.process_elements)	
 	self:add(ml_element:create( "BuyItems", c_vendorbuy, e_vendorbuy, 89 ), self.process_elements)
 	self:add(ml_element:create( "RepairItems", c_vendorrepair, e_vendorrepair, 88 ), self.process_elements)
-	
-	-- Salvaging
-	self:add(ml_element:create( "Salvaging", c_salvage, e_salvage, 75 ), self.process_elements)
 
 	-- DoEvents
 	self:add(ml_element:create( "DoEvent", c_doEvents, e_doEvents, 72 ), self.process_elements)
@@ -261,7 +261,7 @@ function e_FinishHim:execute()
 					MoveOnlyStraightForward()
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then
-						ml_error("e_FinishHim.MoveIntoCombatRange result: "..tonumber(navResult))					
+						d("e_FinishHim.MoveIntoCombatRange result: "..tonumber(navResult))					
 					end
 					
 					if ( mc_global.now - e_FinishHim.tmr > e_FinishHim.threshold ) then
@@ -449,7 +449,7 @@ function e_MoveIntoCombatRange:execute()
 				MoveOnlyStraightForward()
 				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,100+t.radius,false,false,true))		
 				if (tonumber(navResult) < 0) then					
-					ml_error("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
+					d("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
 				end
 				
 				if ( mc_global.now - e_MoveIntoCombatRange.tmr > e_MoveIntoCombatRange.threshold ) then
@@ -623,7 +623,7 @@ function e_revive:execute()
 				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
 				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 				if (tonumber(navResult) < 0) then
-					ml_error("e_revive.MoveInToCombatRange result: "..tonumber(navResult))
+					d("e_revive.MoveInToCombatRange result: "..tonumber(navResult))
 					if ( e_revive.lastID ~= entity.id ) then
 						e_revive.lastID = entity.id
 						e_revive.counter = 0
@@ -693,7 +693,7 @@ function e_reviveDownedPlayersInCombat:execute()
 					MoveOnlyStraightForward()
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then
-						ml_error("e_revive.MoveintoCombatRange result: "..tonumber(navResult))					
+						d("e_revive.MoveintoCombatRange result: "..tonumber(navResult))					
 					end
 					ml_log("MoveToRevive..")
 					return true
