@@ -37,7 +37,7 @@ function mc_ai_assist:Process()
 		
 		if ( mc_global.now - mc_ai_assist.tmr > mc_ai_assist.threshold and Player:IsMoving()) then
 			mc_ai_assist.tmr = mc_global.now
-			mc_ai_assist.threshold = math.random(500,3000)
+			mc_ai_assist.threshold = math.random(500,1000)
 			mc_skillmanager.HealMe()
 		end	
 		
