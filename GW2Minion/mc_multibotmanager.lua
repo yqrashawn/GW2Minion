@@ -220,7 +220,7 @@ function mc_multibotmanager.UpdatePartyStatus()
 				while ( index ~= nil and player ~= nil ) do	
 					if ( player.name == pname ) then
 						-- check if we got an party invite
-						if ( player.hasparty == false and (player.connectstatus == 3 or player.connectstatus == 2) and player.invitestatus == 2 ) then
+						if ( player.hasparty == false and (player.connectstatus == 3 or player.connectstatus == 2 or player.connectstatus == 1) and player.invitestatus == 2 ) then
 							d("Accepting Party invitation.")
 							SendChatMsg(19,"/join "..mc_multibotmanager.leadername)
 							dPartyStatus = "Joining "..mc_multibotmanager.leadername							
