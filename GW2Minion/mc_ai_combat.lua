@@ -128,11 +128,11 @@ c_AggroEx = inheritsFrom( ml_cause )
 e_AggroEx = inheritsFrom( ml_effect )
 c_AggroEx.threshold = 80
 function c_AggroEx:evaluate()
-    return Player.swimming == 0 and ( math.random(0,20)==1 or Player.health.percent < c_AggroEx.threshold) and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
+    return Player.swimming == 0 and Player.health.percent < c_AggroEx.threshold and TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh")) > 0 and ( Inventory.freeSlotCount > 0 or ( Inventory.freeSlotCount == 0 and not mc_ai_vendor.NeedToSell() or TableSize(mc_ai_vendor.GetClosestVendorMarker()) == 0 ))
 end
 function e_AggroEx:execute()
 	ml_log("e_AggroEx ")
-	c_Aggro.threshold = math.random(70,100)
+	c_AggroEx.threshold = math.random(70,100)
 	Player:StopMovement()
 	local newTask = mc_ai_combatDefend.Create()
 	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
@@ -154,7 +154,7 @@ end
 c_DestroyGadget = inheritsFrom( ml_cause )
 e_DestroyGadget = inheritsFrom( ml_effect )
 function c_DestroyGadget:evaluate()
-	if ( Player.swimming == 0 and Player:IsMoving() and (mc_ai_unstuck.stuckcounter > 0 or mc_ai_unstuck.stuckcounter2 > 0) )then		
+	if ( Player.swimming == 0 and (mc_ai_unstuck.stuckcounter > 0 or mc_ai_unstuck.stuckcounter2 > 0) )then		
 		return TableSize( GadgetList("nearest,attackable,alive,onmesh,maxdistance=350,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))) ) > 0
 	end
 	return false
@@ -168,6 +168,9 @@ function e_DestroyGadget:execute()
 			if ( E.selectable ) then 
 				Player:SetTarget(id)
 				e_KillTarget:execute()
+				if ( E.distance < 150 ) then
+					Player:StopMovement()
+				end
 			else
 				if ( E.attackable) then
 					local pos = E.pos					
