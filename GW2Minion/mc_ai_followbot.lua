@@ -519,7 +519,7 @@ end
 
 e_MoveToLeader_fm.rndStopDist = math.random(55,300)
 function e_MoveToLeader_fm:execute()
-	if ( Player.onmesh) then 
+	if ( Player.onmesh == true) then 
 		ml_log("Moving_With_Mesh_ToLeader")
 		if ( mc_followbot.targetInParty == true ) then
 			return e_MoveToLeader:execute()
@@ -527,12 +527,16 @@ function e_MoveToLeader_fm:execute()
 			if ( mc_followbot.targetID ~= 0 ) then
 				local target = CharacterList:Get(mc_followbot.targetID)
 				if ( TableSize(target)>0 ) then			
-					if ( target.onmesh and target.distance > c_MoveToLeader_fm.randomDist ) then
+					if ( target.onmesh == true and target.distance > c_MoveToLeader_fm.randomDist ) then
 						local tpos = target.pos
 						local navResult = tostring(Player:MoveTo(tpos.x,tpos.y,tpos.z,c_MoveToLeader_fm.randomDist,false,true,true))		
 						if (tonumber(navResult) < 0) then					
 							d("mc_ai_followbot.e_MoveToLeader_fm result: "..tonumber(navResult))					
 						end
+						-- add this targetpoint on mesh as our first node in the navpath in case the target leaves the navmesh
+						local mstate = target.movementstate
+						mc_followbot.targetPath = {}
+						table.insert(mc_followbot.targetPath, { pos = { x=tpos.x, y=tpos.y, z=tpos.z } , flag = mstate })
 						
 						if ( mc_global.now - c_MoveToLeader_fm.tmr > c_MoveToLeader_fm.threshold ) then
 							c_MoveToLeader_fm.tmr = mc_global.now
@@ -545,13 +549,11 @@ function e_MoveToLeader_fm:execute()
 					ml_log("TargetNotInCharacterList")
 				end
 			end
-		end
-		
+		end		
 	end
 	
 	
-	--- handles movement offside the mesh
-	
+	--- handles movement offside the mesh	
 		ml_log("Moving_Without_Mesh_ToLeader")
 		if ( TableSize(mc_followbot.targetPath) > 0 ) then
 			local node = mc_followbot.targetPath[1]
