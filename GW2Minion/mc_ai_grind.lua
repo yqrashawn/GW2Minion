@@ -11,7 +11,7 @@ function mc_ai_grind.Create()
     newinst.subtask = nil
     newinst.process_elements = {}
     newinst.overwatch_elements = {}
-            
+	
     return newinst
 end
 
@@ -21,7 +21,6 @@ end
 
 function mc_ai_grind:Process()
 	--ml_log("Grind_Process->")
-		
 	
 	-- Randomly pick next maingoal and pursue it			
 	local i = math.random(0,2)

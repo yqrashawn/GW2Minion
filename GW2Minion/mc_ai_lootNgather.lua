@@ -356,10 +356,11 @@ function c_GatherToolsCheck:evaluate()
 end
 function e_GatherToolsCheck:execute()
 	ml_log("e_GatherToolsCheck")
+	local toolList = mc_vendormanager.GetGatheringToolsCount()
 	local tSlot = nil
-	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil) then tSlot = 0
-	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil) then tSlot = 1
-	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil) then tSlot = 2 
+	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and toolList[1] > 0) then tSlot = 0
+	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil and toolList[2] > 0) then tSlot = 1
+	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil and toolList[3] > 0) then tSlot = 2 
 	end
 	
 	if ( tSlot ~= nil) then

@@ -1015,7 +1015,9 @@ function mc_skillmanager.HealMe()
 					if ( skill.pcondc > 0 and mybuffs ) then																		
 						if (CountConditions(mybuffs) <= skill.pcondc) then continue end								
 					end
-																						
+					if ( skill.pboonc > 0 and mybuffs ) then
+						if (CountBoons(mybuffs) <= skill.pboonc) then continue end						
+					end																		
 					 -- PREVIOUS SKILL					
                     if ( mc_skillmanager.prevSkillID ~= 0 and skill.previd ~= "" ) then
                         --d("Previous SkillID "..tostring(mc_skillmanager.prevSkillID))

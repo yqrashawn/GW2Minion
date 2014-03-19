@@ -1,6 +1,6 @@
 mc_global = { }
 mc_global.window = { name="MinionBot", x=50, y=50, width=200, height=300 }
-mc_global.advwindow = { name="AdvandedSettings", x=250, y=200 , width=200, height=150 }
+mc_global.advwindow = { name="AdvandedSettings", x=250, y=200 , width=200, height=165 }
 mc_global.advwindowvisible = false
 mc_global.path = GetStartupPath()
 mc_global.now = 0
@@ -73,6 +73,7 @@ function mc_global.moduleinit()
 	RegisterEventHandler("bToggleBlacklistMgr", mc_blacklist.ToggleMenu)
 	GUI_NewButton(mc_global.advwindow.name, GetString("questManager"), "QuestManager.toggle")	
 	GUI_NewButton(mc_global.advwindow.name, GetString("skillManager"), "SkillManager.toggle")
+	GUI_NewButton(mc_global.advwindow.name, GetString("maprotation"), "MapRotation.toggle")
 	GUI_NewButton(mc_global.advwindow.name, GetString("meshManager"), "ToggleMeshmgr")
 		
 	GUI_WindowVisible(mc_global.advwindow.name,false)
@@ -139,8 +140,14 @@ function mc_global.onupdate( event, tickcount )
 					ml_log(ml_task_hub:CurrentTask().name.." :")
 				end
 				
-				if (not ml_task_hub:Update() and ml_task_hub.shouldRun) then
-					ml_error("No task queued, please select a valid bot mode in the Settings drop-down menu")
+				if ( ml_task_hub.shouldRun ) then
+					if ( (gBotMode == GetString("grindMode") or gBotMode == GetString("exploreMode")) and mc_meshrotation.Update() == true) then
+						
+					end
+					
+					if (not ml_task_hub:Update() ) then
+						ml_error("No task queued, please select a valid bot mode in the Settings drop-down menu")
+					end
 				end
 				
 				-- Unstuck OnUpdate
@@ -292,6 +299,7 @@ function mc_global.togglebot(arg)
 		mc_global.running = true
 		ml_task_hub.shouldRun = true
 		gBotRunning = "1"
+		mc_meshrotation.currentMapTime = mc_global.now
 	end
 end
 

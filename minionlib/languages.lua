@@ -33,7 +33,7 @@ strings =
         navmesh                         = "Navmesh",
         waypoint                        = "Waypoint",
         generalSettings                 = "General",
-		getWaypoint						= "GetMeshWP",
+		getWaypoint						= "Get Closest WaypointInfo",
 		useInSwitcher					= "UseInSwitcher",
 		enableSwitcher					= "EnableSwitcher",
 		minSwitchTime			        = "MinSwitchTime",
@@ -59,6 +59,14 @@ strings =
 		buildNAVMesh					= "Build NAVMesh",
         enablePSwitch					= "EnableParanoiaSwitch",
         pSwitchCount                    = "ParanoiaPlayerCount",
+		-- mc_meshswitcher.lua
+		maprotation						= "MapRotation",
+		mapid							= "MapID",
+		waypointid						= "WaypointID",
+		addnewmap						= "Add New Map",
+		editmap							= "Edit Map",
+		deletemap						= "Delete Map",
+		lblsave							= "Save",
 		
         -- skillmanager.lua
 		skillbook                 	 	= "SkillBook",

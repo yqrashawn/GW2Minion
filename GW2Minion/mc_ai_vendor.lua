@@ -324,7 +324,7 @@ end
 c_quickbuy = inheritsFrom( ml_cause )
 e_quickbuy = inheritsFrom( ml_effect )
 function c_quickbuy:evaluate()	
-	return (SellManager_Active == "1" and Inventory.freeSlotCount > 0 and ( 
+	return (BuyManager_Active == "1" and Inventory.freeSlotCount > 0 and ( 
 		( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) ) -- so we wont leave the vendor after we sold 1 item ;)
 		or 
 		( mc_ai_vendor.NeedToBuyGatheringTools( true ) and TableSize(mc_ai_vendor.GetClosestBuyVendor()) > 0) -- We need new gathering tools
@@ -405,7 +405,7 @@ end
 c_vendorbuy = inheritsFrom( ml_cause )
 e_vendorbuy = inheritsFrom( ml_effect )
 function c_vendorbuy:evaluate()	
-	return (SellManager_Active == "1" and Inventory.freeSlotCount > 0 and ( 
+	return (BuyManager_Active == "1" and Inventory.freeSlotCount > 0 and ( 
 		( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) )
 		or 
 		( mc_ai_vendor.NeedToBuyGatheringTools() and TableSize(mc_ai_vendor.GetClosestBuyVendorMarker()) > 0)

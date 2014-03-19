@@ -7,6 +7,7 @@ mc_ai_unstuck.respawntimer = 0
 mc_ai_unstuck.ismoving = false
 mc_ai_unstuck.lastpos = nil
 mc_ai_unstuck.stuckcounter2 = 0
+mc_ai_unstuck.conditions = "791,727,721" --Fear, Immobilized, Crippled. -- Needs more! (all debufs that slow you down.)
 
 
 function mc_ai_unstuck:OnUpdate( tick )
@@ -23,7 +24,7 @@ function mc_ai_unstuck:OnUpdate( tick )
 	end
 	
 	if ( gBotMode == GetString("assistMode") ) then return end
-	if ( mc_helper.HasBuffs(Player, "791,727") ) then return end --Fear and Immobilized
+	if ( mc_helper.HasBuffs(Player, mc_ai_unstuck.conditions) ) then return end --Fear and Immobilized
 	
 	-- Stuck check for movement stucks
 	if ( Player:IsMoving()) then
@@ -138,7 +139,7 @@ function mc_ai_unstuck.stuckhandler( event, distmoved, stuckcount )
 	
 	d("STUCK! Distance Moved: "..tostring(distmoved) .. " Count: "..tostring(mc_ai_unstuck.stuckcounter2) )
 		
-	if ( tonumber(mc_ai_unstuck.stuckcounter2) < 20 and Player:CanMove() and mc_helper.HasBuffs(Player, "791,727") == false ) then --Fear and Immobilized
+	if ( tonumber(mc_ai_unstuck.stuckcounter2) < 20 and Player:CanMove() and mc_helper.HasBuffs(Player, mc_ai_unstuck.conditions) == false ) then --Fear and Immobilized
 		Player:Jump()
 		
 		local i = math.random(0,1)

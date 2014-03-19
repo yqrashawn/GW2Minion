@@ -362,6 +362,9 @@ function mm.NavMeshUpdate()
 	if ( TableSize(ml_quest_mgr.QuestList) == 0 and (gBotMode == GetString("grindMode") or gBotMode == GetString("exploreMode"))) then
 		mc_questmanager.GenerateMapExploreProfile()
 	end
+	
+	mc_global.ResetBot()
+	mc_global.UpdateMode()	
 end
 
 -- add offmesh connection
