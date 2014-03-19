@@ -7,10 +7,10 @@ mc_followbot.targetPath = {} -- holds positions of the target we follow
 
 
 function mc_followbot.ModuleInit( ) 
-	--GUI_NewField(mc_global.window.name,"FollowPathSize","gtargetPathSize",GetString("followmode"))
-	--GUI_NewField(mc_global.window.name,GetString("followtarget"),"gFollowTarget",GetString("followmode"))
-	--GUI_NewButton(mc_global.window.name,GetString("followtarget"),"mc_followbot.FollowTarget",GetString("followmode"))
-	--RegisterEventHandler("mc_followbot.FollowTarget", mc_followbot.SetFollowTarget)	
+	GUI_NewField(mc_global.window.name,"FollowPathSize","gtargetPathSize",GetString("followmode"))
+	GUI_NewField(mc_global.window.name,GetString("followtarget"),"gFollowTarget",GetString("followmode"))
+	GUI_NewButton(mc_global.window.name,GetString("followtarget"),"mc_followbot.FollowTarget",GetString("followmode"))
+	RegisterEventHandler("mc_followbot.FollowTarget", mc_followbot.SetFollowTarget)	
 end
 RegisterEventHandler("Module.Initalize",mc_followbot.ModuleInit)
 
@@ -87,8 +87,7 @@ function mc_followbot.OnUpdate( tick )
 								local dist = Distance3D( mc_followbot.targetPath[i].pos.x ,mc_followbot.targetPath[i].pos.y , mc_followbot.targetPath[i].pos.z, mc_followbot.targetPath[k].pos.x ,mc_followbot.targetPath[k].pos.y , mc_followbot.targetPath[k].pos.z)
 								
 								if ( dist < 110 ) then
-									-- we can shortcut our path here									
-									d("Shortening at : "..tostring(i))
+									-- we can shortcut our path here
 									-- add start nodes till shortening point
 									for j = 1, i, 1 do
 										table.insert(optpath,mc_followbot.targetPath[j])
@@ -194,7 +193,7 @@ function mc_ai_followbot:Init()
 end
 
 if ( mc_global.BotModes) then
-	--mc_global.BotModes[GetString("followmode")] = mc_ai_followbot
+	mc_global.BotModes[GetString("followmode")] = mc_ai_followbot
 end
 
 
@@ -261,16 +260,16 @@ end
 
 
 c_NeedValidTarget_fm = inheritsFrom( ml_cause )
-c_NeedValidTarget_fm = inheritsFrom( ml_effect )
+e_NeedValidTarget_fm = inheritsFrom( ml_effect )
 function c_NeedValidTarget_fm:evaluate()
 	local target = Player:GetTarget()
 	if ( TableSize( target ) > 0 ) then
-		return (Player.swimming == 0 and target.dead or not target.attackable or target.distance > mc_global.AttackRange)
+		return ( target.dead or not target.attackable or target.distance > mc_global.AttackRange)
 	end	
 	return true
 end
-function c_NeedValidTarget_fm:execute()
-	ml_log("c_NeedValidTarget_fm")
+function e_NeedValidTarget_fm:execute()
+	ml_log("e_NeedValidTarget_fm")
 		
 	local party = Player:GetParty()
 	if ( TableSize(party)>0 ) then
@@ -302,8 +301,20 @@ function c_NeedValidTarget_fm:execute()
 		end
 	end
 	
-	-- lowesthealth in CombatRange first	
-	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,maxdistance="..mc_global.AttackRange) )
+	-- we do PVP n kill players first ! :D
+	-- lowesthealth Player in CombatRange first	
+	local TList = ( CharacterList("nearest,attackable,alive,player,aggro,maxdistance="..mc_global.AttackRange) )
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil ) then
+			--d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+			Player:SetTarget(id)
+			return ml_log(true)	
+		end		
+	end
+			
+	-- lowesthealth in CombatRange 	
+	local TList = ( CharacterList("nearest,attackable,downed,player,maxdistance="..mc_global.AttackRange) )
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
@@ -313,8 +324,18 @@ function c_NeedValidTarget_fm:execute()
 		end		
 	end
 	
-	-- lowest gadget
+	-- lowesthealth NPC in CombatRange 	
+	local TList = ( CharacterList("nearest,attackable,alive,aggro,maxdistance="..mc_global.AttackRange) )
+	if ( TableSize( TList ) > 0 ) then
+		local id, E  = next( TList )
+		if ( id ~= nil and id ~= 0 and E ~= nil ) then
+			--d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+			Player:SetTarget(id)
+			return ml_log(true)	
+		end		
+	end
 	
+	-- lowest gadget	
 	local TList = GadgetList("nearest,attackable,selectable,alive,maxdistance="..mc_global.AttackRange..",exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
@@ -326,7 +347,7 @@ function c_NeedValidTarget_fm:execute()
 	end
 	
 	-- Then nearest Aggro Target
-	TList = ( CharacterList("attackable,alive,aggro,nearest") )
+	TList = ( CharacterList("attackable,alive,aggro,nearest,maxdistance=1000") )
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
@@ -334,6 +355,11 @@ function c_NeedValidTarget_fm:execute()
 			Player:SetTarget(id)
 			return ml_log(true)	
 		end		
+	end
+	
+	--some failsave
+	if ( Player:IsMoving() ) then
+		Player:StopMovement()
 	end
 	
 	return ml_log(false)
@@ -350,8 +376,10 @@ function c_MoveIntoCombatRange_fm:evaluate()
 			if (Player.onmesh ) then
 				return true
 			else
-				-- not moving on navmesh 
-				
+				-- not moving on navmesh, record path from our current pos so we can walk it back							
+				if ( t.los and t.distance < 800 and t.distance > mc_global.AttackRange ) then 
+					return true
+				end				
 			end
 		else
 			if ( c_MoveIntoCombatRange_fm.running ) then 
@@ -367,9 +395,9 @@ e_MoveIntoCombatRange_fm.tmr = 0
 e_MoveIntoCombatRange_fm.threshold = 2000
 function e_MoveIntoCombatRange_fm:execute()
 	ml_log("e_MoveIntoCombRng")
-	if (Player.onmesh ) then
-		local t = Player:GetTarget()
-		if ( t ) then	
+	local t = Player:GetTarget()
+	if ( t ) then	
+		if (Player.onmesh ) then		
 			if ( t.distance >= mc_global.AttackRange or not t.los)then
 				local tPos = t.pos
 				-- moveto(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)		
@@ -391,9 +419,25 @@ function e_MoveIntoCombatRange_fm:execute()
 					return true
 				end
 			end
-		end	
-	else
-	
+		else
+			-- try to record our way to target to be able to walk it back
+			local tpos = t.pos
+			local pSize = TableSize(mc_followbot.targetPath)
+			if ( pSize > 0 ) then
+				-- Extend existing path by adding our walking at beginning
+				local pPos = Player.pos
+				local dist = Distance3D( pPos.x, pPos.y, pPos.z, mc_followbot.targetPath[1].pos.x ,mc_followbot.targetPath[1].pos.y , mc_followbot.targetPath[1].pos.z)
+				if ( dist > 120 and dist < 250 ) then
+					table.insert(mc_followbot.targetPath, { pos = { x=pPos.x, y=pPos.y, z=pPos.z } , flag = mstate },1)
+				end
+				
+			else
+				-- start a new path
+				local pPos = Player.pos
+				local mstate = Player.movementstate
+				table.insert(mc_followbot.targetPath, { pos = { x=pPos.x, y=pPos.y, z=pPos.z } , flag = mstate })				
+			end
+		end
 	end
 	return ml_log(false)
 end
@@ -430,23 +474,85 @@ end
 c_MoveToLeader_fm = inheritsFrom( ml_cause )
 e_MoveToLeader_fm = inheritsFrom( ml_effect )
 c_MoveToLeader_fm.nearleader = false
+c_MoveToLeader_fm.randomDist = math.random(100,500)
+c_MoveToLeader_fm.tmr = 0
+c_MoveToLeader_fm.threshold = 2000
 function c_MoveToLeader_fm:evaluate()
 	
-	if ( Player.onmesh) then 
-		return c_MoveToLeader:evaluate()
+	if ( Player.onmesh ) then 
+		if ( mc_followbot.targetInParty == true ) then
+			return c_MoveToLeader:evaluate()
+		else
+			if ( mc_followbot.targetID ~= 0 ) then
+				local target = CharacterList:Get(mc_followbot.targetID)
+				if ( TableSize(target)>0 ) then			
+					if ( target.distance > c_MoveToLeader_fm.randomDist ) then
+						return true					
+					end				
+				else
+					ml_log("TargetNotInCharacterList")
+				end
+			end
+		end
 	else
-		if (TableSize(mc_followbot.targetPath) > 0 ) then
-			return true
+		if (TableSize(mc_followbot.targetPath) > 0 ) then			
+			if ( mc_followbot.targetID ~= 0 ) then
+				local target = CharacterList:Get(mc_followbot.targetID)
+				if ( TableSize(target)>0 ) then				
+					local mstate = target.movementstate
+					local tpos = target.pos
+					local pPos = Player.pos
+					local dist = Distance3D( pPos.x, pPos.y, pPos.z, tpos.x, tpos.y, tpos.z)
+					if ( dist > 750 or mstate == 3 and dist > 250 ) then
+						return true
+					end					
+				end
+				if ( c_MoveToLeader_fm.movingtoleader == true ) then
+					c_MoveToLeader_fm.movingtoleader = false
+					Player:StopMovement()
+				end
+			end
 		end
 	end	
 	return false
 end
 
+e_MoveToLeader_fm.rndStopDist = math.random(55,300)
 function e_MoveToLeader_fm:execute()
 	if ( Player.onmesh) then 
-		return e_MoveToLeader:execute()
-	else
-		ml_log("Moving_Without_Mesh")
+		ml_log("Moving_With_Mesh_ToLeader")
+		if ( mc_followbot.targetInParty == true ) then
+			return e_MoveToLeader:execute()
+		else
+			if ( mc_followbot.targetID ~= 0 ) then
+				local target = CharacterList:Get(mc_followbot.targetID)
+				if ( TableSize(target)>0 ) then			
+					if ( target.onmesh and target.distance > c_MoveToLeader_fm.randomDist ) then
+						local tpos = target.pos
+						local navResult = tostring(Player:MoveTo(tpos.x,tpos.y,tpos.z,c_MoveToLeader_fm.randomDist,false,true,true))		
+						if (tonumber(navResult) < 0) then					
+							d("mc_ai_followbot.e_MoveToLeader_fm result: "..tonumber(navResult))					
+						end
+						
+						if ( mc_global.now - c_MoveToLeader_fm.tmr > c_MoveToLeader_fm.threshold ) then
+							c_MoveToLeader_fm.tmr = mc_global.now
+							c_MoveToLeader_fm.threshold = math.random(1000,2000)
+							mc_skillmanager.HealMe()
+						end
+						return ml_log(true)
+					end				
+				else
+					ml_log("TargetNotInCharacterList")
+				end
+			end
+		end
+		
+	end
+	
+	
+	--- handles movement offside the mesh
+	
+		ml_log("Moving_Without_Mesh_ToLeader")
 		if ( TableSize(mc_followbot.targetPath) > 0 ) then
 			local node = mc_followbot.targetPath[1]
 			local pPos = Player.pos
@@ -456,25 +562,41 @@ function e_MoveToLeader_fm:execute()
 			if ( node.flag == 5 or node.flag == 4) then
 				dist = Distance2D( pPos.x, pPos.y, node.pos.x, node.pos.y)
 			end
-						
-			if ( dist < 55 ) then
-				if ( node.flag == 5 or node.flag == 4) then jump = true end
-				table.remove(mc_followbot.targetPath,1)
+			
+			-- last point
+			if ( TableSize(mc_followbot.targetPath) == 1 ) then
+				if ( dist < e_MoveToLeader_fm.rndStopDist ) then
+					if ( node.flag == 5 or node.flag == 4) then jump = true end
+					table.remove(mc_followbot.targetPath,1)
+				end
+			else
+				if ( dist < 55 ) then
+					if ( node.flag == 5 or node.flag == 4) then jump = true end
+					table.remove(mc_followbot.targetPath,1)
+				end
 			end
 			
 			if ( TableSize(mc_followbot.targetPath) > 0 ) then
 				node = mc_followbot.targetPath[1]
 				Player:SetFacing(node.pos.x, node.pos.y, node.pos.z)
 				if ( Player:CanMove() and Player:IsMoving() == false) then
-					Player:SetMovement(0)					
+					Player:SetMovement(0)
+					c_MoveToLeader_fm.movingtoleader = true
 				end
 				if ( jump ) then Player:Jump() end
+				
+				if ( mc_global.now - c_MoveToLeader_fm.tmr > c_MoveToLeader_fm.threshold ) then
+					c_MoveToLeader_fm.tmr = mc_global.now
+					c_MoveToLeader_fm.threshold = math.random(1000,2000)
+					mc_skillmanager.HealMe()
+				end	
+				
 				ml_log("Moving to next pathnode")
 			else
+				c_MoveToLeader_fm.movingtoleader = false
 				Player:StopMovement()
 			end
-		end		
-	end
+		end
 	return ml_log(false)
 end
 
