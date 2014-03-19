@@ -6,7 +6,7 @@ mc_meshrotation.currentlyeditedmap = nil
 mc_meshrotation.mapList = {}
 mc_meshrotation.currentMapIndex = 1
 mc_meshrotation.currentMapTime = 0
-mc_meshrotation.currentSwitchTime = 0
+mc_meshrotation.currentSwitchTime = nil
 
 function mc_meshrotation.ModuleInit()
 	
@@ -36,7 +36,7 @@ function mc_meshrotation.ModuleInit()
 	GUI_NewField(mc_meshrotation.editwindow.name,GetString("mapid"),"MapRota_MapID",GetString("addnewmap"))
 	GUI_NewField(mc_meshrotation.editwindow.name,GetString("waypoint"),"MapRota_WPName",GetString("addnewmap"))
 	GUI_NewField(mc_meshrotation.editwindow.name,GetString("waypointid"),"MapRota_WPID",GetString("addnewmap"))	
-	GUI_NewNumeric(mc_meshrotation.editwindow.name,GetString("switchTimer"),"MapRota_SwitchTime",GetString("addnewmap"),"60","9999999")
+	GUI_NewNumeric(mc_meshrotation.editwindow.name,GetString("switchTimer"),"MapRota_SwitchTime",GetString("addnewmap"),"1","1440")
 	GUI_NewButton(mc_meshrotation.editwindow.name,GetString("deletemap"),"Maprotation_DeleteMap")
 	RegisterEventHandler("Maprotation_DeleteMap",mc_meshrotation.deleteMap)
 	GUI_NewButton(mc_meshrotation.editwindow.name,GetString("lblsave"),"Maprotation_SaveMap")
@@ -99,7 +99,6 @@ function mc_meshrotation.editorWindow(filterNumber)
 		MapRota_SwitchTime = mc_meshrotation.mapList[filterNumber].switchtime or 0
 		GUI_WindowVisible(mc_meshrotation.editwindow.name,true)
 	end
-	d(filterNumber)
 	mc_meshrotation.currentlyeditedmap = filterNumber
 end
 
@@ -138,8 +137,17 @@ end
 
 function mc_meshrotation.GetNextMap()
 	if ( TableSize(mc_meshrotation.mapList) > 0 ) then
-		if ( TableSize(mc_meshrotation.mapList[mc_meshrotation.currentMapIndex])>0 ) then
 		
+		-- Set first run switch time, no need to switch already.
+		if (mc_meshrotation.currentSwitchTime == nil) then
+			mc_meshrotation.currentMapIndex = mc_meshrotation.GetCurrentMapIndex()
+			local timeval = tonumber(mc_meshrotation.mapList[mc_meshrotation.currentMapIndex].switchtime)*60000
+			mc_meshrotation.currentSwitchTime = math.random(timeval - ((timeval/100)*15), timeval + ((timeval/100)*15))
+			mc_meshrotation.currentMapTime = mc_global.now
+		end
+		
+		if ( TableSize(mc_meshrotation.mapList[mc_meshrotation.currentMapIndex])>0 ) then
+			
 			-- Return the "next map" until we are actually on the next map
 			if ( Player:GetLocalMapID() ~= mc_meshrotation.mapList[mc_meshrotation.currentMapIndex].mapid ) then
 				gMaprotationStatus = "Switch to "..mc_meshrotation.mapList[mc_meshrotation.currentMapIndex].name
@@ -147,9 +155,9 @@ function mc_meshrotation.GetNextMap()
 				mc_meshrotation.currentSwitchTime = math.random(timeval - ((timeval/100)*15), timeval + ((timeval/100)*15))
 				return mc_meshrotation.mapList[mc_meshrotation.currentMapIndex]
 			end
-		
+			
 			-- Get the next map if timer is up
-			if ( mc_global.now - mc_meshrotation.currentMapTime > mc_meshrotation.currentSwitchTime ) then
+			if ( mc_global.now - mc_meshrotation.currentMapTime > mc_meshrotation.currentSwitchTime) then
 				
 				d("Time to switch to the next map...")
 				mc_meshrotation.currentMapIndex = mc_meshrotation.currentMapIndex + 1
@@ -163,19 +171,27 @@ function mc_meshrotation.GetNextMap()
 				
 				if ( TableSize(mc_meshrotation.mapList[mc_meshrotation.currentMapIndex])>0 ) then
 					local timeval = tonumber(mc_meshrotation.mapList[mc_meshrotation.currentMapIndex].switchtime)*60000
-					d(timeval)
 					mc_meshrotation.currentSwitchTime = math.random(timeval - ((timeval/100)*15), timeval + ((timeval/100)*15))
-					d(mc_meshrotation.currentSwitchTime)
 					return mc_meshrotation.mapList[mc_meshrotation.currentMapIndex]
 				else
 					ml_error("mc_meshrotation.mapList[mc_meshrotation.currentMapIndex]) is nil !?")
 				end
 			else
-				gMaprotationStatus = "Switch in "..tostring(round(tonumber(mc_meshrotation.currentSwitchTime - (mc_global.now - mc_meshrotation.currentMapTime))/60000)).." minutes"
+				gMaprotationStatus = "Switch in " .. round(tonumber(mc_meshrotation.currentSwitchTime - (mc_global.now - mc_meshrotation.currentMapTime))/60000) .. " minutes"
 			end
 		end
 	end
 	return nil
+end
+
+function mc_meshrotation.GetCurrentMapIndex()
+	local mapID = Player:GetLocalMapID()
+	for index,info in pairs(mc_meshrotation.mapList) do
+		if (info.mapid == mapID) then
+			return index
+		end
+	end
+	return 1
 end
 
 

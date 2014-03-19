@@ -64,6 +64,7 @@ function mc_ai_unstuck:OnUpdate( tick )
 	else
 		mc_ai_unstuck.stuckcounter = 0
 		if ( c_MoveToLeader.nearleader ) then return end
+		if ( gBotMode == GetString("followmode") ) then return end
 		-- Idle stuck check	
 		if ( tick - mc_ai_unstuck.idletimer > 6000 ) then
 			mc_ai_unstuck.idletimer = tick

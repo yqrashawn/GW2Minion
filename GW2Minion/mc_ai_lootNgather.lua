@@ -270,75 +270,76 @@ end
 
 ------------fck that, I'm lazy and this works like a god
 c_Gathering = inheritsFrom( ml_cause )
-c_Gathering.running = false
 e_Gathering = inheritsFrom( ml_effect )
+c_Gathering.tPos = nil
 function c_Gathering:evaluate()
-	if ( gGather == "1" and Inventory.freeSlotCount > 0 and ( c_Gathering.running == true or TableSize(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=4500")) > 0 )) then
+	if ( c_Gathering.tPos == nil ) then
+		local _,gadget = next(GadgetList("onmesh,nearest,gatherable,maxdistance=4500"))
+		if (gadget) then
+			c_Gathering.tPos = gadget.pos
+		end
+	end
+	if ( gGather == "1" and Inventory.freeSlotCount > 0 and c_Gathering.tPos ~= nil and TableSize(c_Gathering.tPos) > 0 ) then
 		return true
 	end
-	c_Gathering.running = false
+	c_Gathering.tPos = nil
 	return false
 end
 e_Gathering.tmr = 0
 e_Gathering.threshold = 2000
-e_Gathering.throttle = 1500
 function e_Gathering:execute()
 	ml_log("e_Gathering")
-	local GatherableList = GadgetList( "gatherable,shortestpath,onmesh")
-	if ( GatherableList ) then
-		local id,node = next (GatherableList)
-		if ( id and node ) then
-			
-			if (not node.isInInteractRange) then
-				-- MoveIntoInteractRange
-				local tPos = node.pos
-				if ( tPos ) then
-					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
-					MoveOnlyStraightForward()
-					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
-					if (tonumber(navResult) < 0) then
-						d("mc_ai_gathering.MoveIntoCombatRange result: "..tonumber(navResult))					
-					end
-					
-					if ( mc_global.now - e_Gathering.tmr > e_Gathering.threshold ) then
-						e_Gathering.tmr = mc_global.now
-						e_Gathering.threshold = math.random(1500,5000)
-						mc_skillmanager.HealMe()
-					end
-					c_Gathering.running = true
-					ml_log("MoveToGatherable..")
-					return true
+	if ( TableSize(c_Gathering.tPos) > 0 ) then
+		local pPos = Player.pos
+		local tPos = c_Gathering.tPos
+		local dist = Distance2D(tPos.x, tPos.y, pPos.x, pPos.y)
+		if (dist > 100) then
+			-- MoveIntoInteractRange
+			if ( tPos ) then
+				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+				MoveOnlyStraightForward()
+				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))
+				if (tonumber(navResult) < 0) then
+					d("mc_ai_gathering.MoveIntoCombatRange result: "..tonumber(navResult))
 				end
-			else
-				c_Gathering.running = false
-				-- Grab that thing
-				Player:StopMovement()
-				local t = Player:GetTarget()
-				if ( node.selectable and (not t or t.id ~= id )) then
-					Player:SetTarget( id )
+				if ( mc_global.now - e_Gathering.tmr > e_Gathering.threshold ) then
+					e_Gathering.tmr = mc_global.now
+					e_Gathering.threshold = math.random(1500,5000)
+					mc_skillmanager.HealMe()
+				end
+				ml_log("MoveToGatherable..")
+				return true
+			end
+		else
+			-- Grab that thing
+			Player:StopMovement()
+			local _,gadget = next(GadgetList("onmesh,nearest,gatherable,maxdistance=500"))
+			local t = Player:GetTarget()
+			if (gadget) then
+				if ( gadget.selectable and (not t or t.id ~= gadget.id )) then
+					Player:SetTarget( gadget.id )
 				else
-					
-					if (Player.profession == 8 ) then -- Necro, leave shroud
+					if ( Player.profession == 8 ) then -- Necro, leave shroud
 						local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
-						if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17) then
+						if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17 ) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
 							mc_global.Wait(500)
 							return
 						end
 					end
-					
 					-- yeah I know, but this usually doesnt break ;)
-					if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
-						Player:Interact( id )
-						ml_log("Gathering..")						
+					if ( Player:GetCurrentlyCastedSpell() == 17 ) then
+						Player:Interact( gadget.id )
+						ml_log("Gathering..")
 						mc_global.Wait(1000)
+						c_Gathering.tPos = nil
 						return true
-					end	
-				end			
+					end
+				end
 			end
 		end
 	end
-	c_Gathering.running = false
+	c_Gathering.tPos = nil
 	return ml_log(false)
 end
 
@@ -356,11 +357,10 @@ function c_GatherToolsCheck:evaluate()
 end
 function e_GatherToolsCheck:execute()
 	ml_log("e_GatherToolsCheck")
-	local toolList = mc_vendormanager.GetGatheringToolsCount()
 	local tSlot = nil
-	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and toolList[1] > 0) then tSlot = 0
-	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil and toolList[2] > 0) then tSlot = 1
-	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil and toolList[3] > 0) then tSlot = 2 
+	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil) then tSlot = 0
+	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil) then tSlot = 1
+	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil) then tSlot = 2 
 	end
 	
 	if ( tSlot ~= nil) then
@@ -373,7 +373,7 @@ function e_GatherToolsCheck:execute()
 				local itemID = item.itemID
 				for invTools = 1, 6, 1 do
 					--d(tostring(itemID).." / "..tostring(mc_vendormanager.tools[tSlot][invTools]))
-					if (itemID == mc_vendormanager.tools[tSlot][invTools] and pLevel >= mc_vendormanager.LevelRestrictions[invTools]) then 
+					if (itemID == mc_vendormanager.tools[tSlot][invTools] and pLevel >= mc_vendormanager.LevelRestrictions(invTools)) then 
 						-- We found a tool to equip into our empty gatherable slot
 						if ( tSlot == 0 ) then d("Equipping Sickle ..") item:Equip(GW2.EQUIPMENTSLOT.ForagingTool) end
 						if ( tSlot == 1 ) then d("Equipping Axe ..") item:Equip(GW2.EQUIPMENTSLOT.LoggingTool) end

@@ -174,6 +174,9 @@ function mc_global.onupdate( event, tickcount )
 	
 	-- BlackList OnUpdate
 	mc_blacklist.OnUpdate( tickcount )
+	
+	-- FollowBot OnUpdate
+	mc_followbot.OnUpdate( tickcount )
 end
 
 mc_global.Charscreen_lastrun = 0

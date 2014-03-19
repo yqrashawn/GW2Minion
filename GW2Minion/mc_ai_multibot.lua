@@ -35,7 +35,7 @@ function mc_ai_multibot:Init()
 	self:add(ml_element:create( "Downed", c_memberdown, e_memberdown, 450 ), self.process_elements)
 	
 	-- Normal Looting
-	self:add(ml_element:create( "Looting", c_LootCheck, e_LootCheck, 430 ), self.process_elements)
+	self:add(ml_element:create( "Looting", c_LootCheck_mb, e_LootCheck, 430 ), self.process_elements)
 
 	-- Deposit Items
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 420 ), self.process_elements)	
@@ -111,24 +111,33 @@ function e_dead_mb:execute()
 	local party = Player:GetParty()
 	local pPos = Player.pos
 	
-	local found = false
-	local idx,pmember = next(party)	
-	while (idx and pmember) do
-		if ( pmember.id ~= 0 ) then
-			local char = CharacterList:Get(pmember.id)
-			if ( char ) then
-				local cPos = char.pos
-				if ( cPos and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and char.dead == false) then
-					found = true
-					break
+	local found = false	
+	if ( TableSize(party) > 1 ) then		
+		local idx,pmember = next(party)	
+		while (idx and pmember) do
+			if ( pmember.id ~= 0 ) then
+				local char = CharacterList:Get(pmember.id)
+				if ( char ) then
+					local cPos = char.pos
+					if ( cPos and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and char.dead == false) then
+						found = true
+						break
+					end
 				end
 			end
+			idx,pmember=next(party,idx)
 		end
-		idx,pmember=next(party,idx)
+	end
+	
+	-- Check for nearby Players who can rezz us
+	if ( found == false ) then
+		if ( TableSize(CharacterList("nearest,alive,friendly,player,maxdistance=2500"))>0 ) then
+			found = true
+		end
 	end
 	
 	if ( found ) then
-		ml_log("Waiting for Partymember to rezz me")
+		ml_log("Waiting for Players/Partymember to rezz me")
 	else	
 		if ( c_dead_mb.deadTmr == 0 ) then
 			c_dead_mb.deadTmr = mc_global.now
@@ -147,19 +156,21 @@ c_memberdown = inheritsFrom( ml_cause )
 e_memberdown = inheritsFrom( ml_effect )
 function c_memberdown:evaluate()
 	local party = Player:GetParty()
-	local pPos = Player.pos	
-	local idx,pmember = next(party)	
-	while (idx and pmember) do
-		if ( pmember.id ~= 0 ) then
-			local char = CharacterList:Get(pmember.id)
-			if ( char ) then
-				local cPos = char.pos
-				if ( cPos ~= nil and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and char.onmesh and (char.downed == true or char.dead == true) and Player.health.percent > 50) then
-					return true
+	local pPos = Player.pos
+	if ( TableSize(party) >0 ) then
+		local idx,pmember = next(party)	
+		while (idx and pmember) do
+			if ( pmember.id ~= 0 ) then
+				local char = CharacterList:Get(pmember.id)
+				if ( char ) then
+					local cPos = char.pos
+					if ( cPos ~= nil and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and char.onmesh and (char.downed == true or char.dead == true) and Player.health.percent > 50) then
+						return true
+					end
 				end
 			end
+			idx,pmember=next(party,idx)
 		end
-		idx,pmember=next(party,idx)
 	end
 	return false
 end

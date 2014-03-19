@@ -433,7 +433,9 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
-		
+		--mc_followbot
+		followmode						= "FollowMode",
+		followtarget					= "Follow Target",
 		--mc_main.lua
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive Others",
@@ -870,6 +872,9 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		--mc_followbot
+		followmode						= "FollowMode",
+		followtarget					= "Follow Target",
 		--mc_main.lua
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive Others",
@@ -1293,6 +1298,9 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		--mc_followbot
+		followmode						= "FollowMode",
+		followtarget					= "Follow Target",
 		--mc_main.lua
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive Others",
@@ -1716,6 +1724,9 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		--mc_followbot
+		followmode						= "FollowMode",
+		followtarget					= "Follow Target",
 		--mc_main.lua
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive Others",
@@ -2139,6 +2150,9 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		--mc_followbot
+		followmode						= "FollowMode",
+		followtarget					= "Follow Target",
 		--mc_main.lua
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive Others",
@@ -2563,6 +2577,9 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		--mc_followbot
+		followmode						= "FollowMode",
+		followtarget					= "Follow Target",
 		--mc_main.lua
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive Others",
