@@ -51,14 +51,6 @@ strings =
         pSwitchCount                    = "ParanoiaPlayerCount",		
         maMarkerID                      = "ID",
         maMarkerName                    = "Name",
-		showMesh						= "Show Triangle Mesh",
-		showrealMesh					= "Show NavMesh",
-		newMeshName						= "New Meshfile Name",
-		newMesh							= "Create New Meshfile",
-		saveMesh						= "Save Mesh to File",
-		buildNAVMesh					= "Build NAVMesh",
-        enablePSwitch					= "EnableParanoiaSwitch",
-        pSwitchCount                    = "ParanoiaPlayerCount",
 		-- mc_meshswitcher.lua
 		maprotation						= "MapRotation",
 		mapid							= "MapID",
@@ -497,6 +489,14 @@ strings =
         pSwitchCount                    = "四周人数数量",
 	    maMarkerID                      = "ID",
         maMarkerName                    = "名字",
+		-- mc_meshswitcher.lua
+		maprotation						= "MapRotation",
+		mapid							= "MapID",
+		waypointid						= "WaypointID",
+		addnewmap						= "Add New Map",
+		editmap							= "Edit Map",
+		deletemap						= "Delete Map",
+		lblsave							= "Save",
 		
         -- skillmanager.lua
         skillbook                 	 	= "技能书",
@@ -923,6 +923,14 @@ strings =
         pSwitchCount                    = "パラノイアプレイヤー数",	
         maMarkerID                      = "ID",
         maMarkerName                    = "名",
+		-- mc_meshswitcher.lua
+		maprotation						= "MapRotation",
+		mapid							= "MapID",
+		waypointid						= "WaypointID",
+		addnewmap						= "Add New Map",
+		editmap							= "Edit Map",
+		deletemap						= "Delete Map",
+		lblsave							= "Save",
 		
         -- skillmanager.lua
 		skillbook                 	 	= "スキルブック",
@@ -1337,7 +1345,15 @@ strings =
         enablePSwitch					= "EnableParanoiaSwitch",
         pSwitchCount                    = "ParanoiaPlayerCount",		
         maMarkerID                      = "ID",
-        maMarkerName                    = "Name",
+        maMarkerName                    = "Name",			
+		-- mc_meshswitcher.lua
+		maprotation						= "MapRotation",
+		mapid							= "MapID",
+		waypointid						= "WaypointID",
+		addnewmap						= "Add New Map",
+		editmap							= "Edit Map",
+		deletemap						= "Delete Map",
+		lblsave							= "Save",
 		
         -- skillmanager.lua
 		skillbook                 	 	= "SkillBook",
@@ -1753,6 +1769,14 @@ strings =
         pSwitchCount                    = "NombreJoueurParanoia",		
         maMarkerID                      = "ID",
         maMarkerName                    = "Nom",
+		-- mc_meshswitcher.lua
+		maprotation						= "MapRotation",
+		mapid							= "MapID",
+		waypointid						= "WaypointID",
+		addnewmap						= "Add New Map",
+		editmap							= "Edit Map",
+		deletemap						= "Delete Map",
+		lblsave							= "Save",
 		
         -- skillmanager.lua
 		skillbook                 	 	= "Livre des Compétences",
@@ -2168,6 +2192,14 @@ strings =
         pSwitchCount                    = "ParanoiaPlayerCount",		
         maMarkerID                      = "ID",
         maMarkerName                    = "Name",
+		-- mc_meshswitcher.lua
+		maprotation						= "MapRotation",
+		mapid							= "MapID",
+		waypointid						= "WaypointID",
+		addnewmap						= "Add New Map",
+		editmap							= "Edit Map",
+		deletemap						= "Delete Map",
+		lblsave							= "Save",
 		
         -- skillmanager.lua
 		skillbook                 	 	= "SkillBook",

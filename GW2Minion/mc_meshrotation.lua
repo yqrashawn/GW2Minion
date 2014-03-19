@@ -6,6 +6,7 @@ mc_meshrotation.currentlyeditedmap = nil
 mc_meshrotation.mapList = {}
 mc_meshrotation.currentMapIndex = 1
 mc_meshrotation.currentMapTime = 0
+mc_meshrotation.currentSwitchTime = 0
 
 function mc_meshrotation.ModuleInit()
 	
@@ -35,7 +36,7 @@ function mc_meshrotation.ModuleInit()
 	GUI_NewField(mc_meshrotation.editwindow.name,GetString("mapid"),"MapRota_MapID",GetString("addnewmap"))
 	GUI_NewField(mc_meshrotation.editwindow.name,GetString("waypoint"),"MapRota_WPName",GetString("addnewmap"))
 	GUI_NewField(mc_meshrotation.editwindow.name,GetString("waypointid"),"MapRota_WPID",GetString("addnewmap"))	
-	GUI_NewNumeric(mc_meshrotation.editwindow.name,GetString("switchTimer"),"MapRota_MinSwitchTime",GetString("addnewmap"),"60","9999999")
+	GUI_NewNumeric(mc_meshrotation.editwindow.name,GetString("switchTimer"),"MapRota_SwitchTime",GetString("addnewmap"),"60","9999999")
 	GUI_NewButton(mc_meshrotation.editwindow.name,GetString("deletemap"),"Maprotation_DeleteMap")
 	RegisterEventHandler("Maprotation_DeleteMap",mc_meshrotation.deleteMap)
 	GUI_NewButton(mc_meshrotation.editwindow.name,GetString("lblsave"),"Maprotation_SaveMap")
@@ -73,7 +74,7 @@ function mc_meshrotation.updateMaprotationList()
 	MapRota_MapID = ""
 	MapRota_WPID = ""
 	MapRota_WPName = ""
-	MapRota_MinSwitchTime = 0
+	MapRota_SwitchTime = 0
 	GUI_WindowVisible(mc_meshrotation.editwindow.name,false)
 	GUI_UnFoldGroup(mc_meshrotation.mainwindow.name,GetString("maprotation"))
 end
@@ -86,7 +87,7 @@ function mc_meshrotation.editorWindow(filterNumber)
 	end
 	if (mc_meshrotation.mapList[filterNumber] == nil) then
 		filterNumber = TableSize(mc_meshrotation.mapList) + 1
-		mc_meshrotation.mapList[filterNumber] = {name = mc_datamanager.GetMapName( Player:GetLocalMapID() ), mapid = Player:GetLocalMapID(), wpid = "None", wpname = "None", minswitchtime = 0}
+		mc_meshrotation.mapList[filterNumber] = {name = mc_datamanager.GetMapName( Player:GetLocalMapID() ), mapid = Player:GetLocalMapID(), wpid = "None", wpname = "None", switchtime = 0}
 		mc_meshrotation.updateMaprotationList()
 		Settings.GW2Minion.Maprotation_MapList = mc_meshrotation.mapList
 	end
@@ -95,7 +96,7 @@ function mc_meshrotation.editorWindow(filterNumber)
 		MapRota_MapID = mc_meshrotation.mapList[filterNumber].mapid or "None"
 		MapRota_WPID = mc_meshrotation.mapList[filterNumber].wpid or "None"
 		MapRota_WPName = mc_meshrotation.mapList[filterNumber].wpname or "None"
-		MapRota_MinSwitchTime = mc_meshrotation.mapList[filterNumber].minswitchtime or 0
+		MapRota_SwitchTime = mc_meshrotation.mapList[filterNumber].switchtime or 0
 		GUI_WindowVisible(mc_meshrotation.editwindow.name,true)
 	end
 	d(filterNumber)
@@ -142,11 +143,13 @@ function mc_meshrotation.GetNextMap()
 			-- Return the "next map" until we are actually on the next map
 			if ( Player:GetLocalMapID() ~= mc_meshrotation.mapList[mc_meshrotation.currentMapIndex].mapid ) then
 				gMaprotationStatus = "Switch to "..mc_meshrotation.mapList[mc_meshrotation.currentMapIndex].name
+				local timeval = tonumber(mc_meshrotation.mapList[mc_meshrotation.currentMapIndex].switchtime)*60000
+				mc_meshrotation.currentSwitchTime = math.random(timeval - ((timeval/100)*15), timeval + ((timeval/100)*15))
 				return mc_meshrotation.mapList[mc_meshrotation.currentMapIndex]
 			end
 		
 			-- Get the next map if timer is up
-			if ( mc_global.now - mc_meshrotation.currentMapTime > (tonumber(mc_meshrotation.mapList[mc_meshrotation.currentMapIndex].minswitchtime)*1000) ) then
+			if ( mc_global.now - mc_meshrotation.currentMapTime > mc_meshrotation.currentSwitchTime ) then
 				
 				d("Time to switch to the next map...")
 				mc_meshrotation.currentMapIndex = mc_meshrotation.currentMapIndex + 1
@@ -154,19 +157,23 @@ function mc_meshrotation.GetNextMap()
 				if ( mc_meshrotation.currentMapIndex > TableSize(mc_meshrotation.mapList) ) then
 					-- Start from top of the list
 					mc_meshrotation.currentMapIndex = 1
-				end			
+				end
 				
 				mc_meshrotation.currentMapTime = mc_global.now
 				
-				if ( TableSize(mc_meshrotation.mapList[mc_meshrotation.currentMapIndex])>0 ) then					
+				if ( TableSize(mc_meshrotation.mapList[mc_meshrotation.currentMapIndex])>0 ) then
+					local timeval = tonumber(mc_meshrotation.mapList[mc_meshrotation.currentMapIndex].switchtime)*60000
+					d(timeval)
+					mc_meshrotation.currentSwitchTime = math.random(timeval - ((timeval/100)*15), timeval + ((timeval/100)*15))
+					d(mc_meshrotation.currentSwitchTime)
 					return mc_meshrotation.mapList[mc_meshrotation.currentMapIndex]
 				else
 					ml_error("mc_meshrotation.mapList[mc_meshrotation.currentMapIndex]) is nil !?")
-				end				
+				end
 			else
-				gMaprotationStatus = "Switch in "..tostring(math.floor(tonumber(mc_meshrotation.mapList[mc_meshrotation.currentMapIndex].minswitchtime - (mc_global.now - mc_meshrotation.currentMapTime)/1000))).." seconds"
+				gMaprotationStatus = "Switch in "..tostring(round(tonumber(mc_meshrotation.currentSwitchTime - (mc_global.now - mc_meshrotation.currentMapTime))/60000)).." minutes"
 			end
-		end				
+		end
 	end
 	return nil
 end
@@ -177,7 +184,7 @@ function mc_meshrotation.Update()
 	-- MapRotation Check
 	if (Maprotation_Active == "1" and Player.inCombat == false ) then
 		mc_meshrotation.nextWP = mc_meshrotation.GetNextMap()
-		if ( mc_meshrotation.nextWP ~= nil ) then
+		if ( mc_meshrotation.nextWP ~= nil and mc_meshrotation.nextWP.mapid ~= Player:GetLocalMapID() ) then
 			-- we need to switch maps
 			if ( tonumber(mc_meshrotation.nextWP.wpid)~= nil and Inventory:GetInventoryMoney() > 500) then
 				d("Teleporting to Waypoint "..mc_meshrotation.nextWP.name.." ID: "..tostring(mc_meshrotation.nextWP.wpid))
@@ -202,11 +209,11 @@ function mc_meshrotation.GUIVarUpdate(Event, NewVals, OldVals)
 		if ( k == "Maprotation_Active" ) then Settings.GW2Minion[tostring(k)] = v
 		elseif (k == "MapRota_Name" or
 				k == "MapRota_WPName" or 
-				k == "MapRota_MinSwitchTime")
+				k == "MapRota_SwitchTime")
 		then
 			mc_meshrotation.mapList[mc_meshrotation.currentlyeditedmap].name = MapRota_Name
 			mc_meshrotation.mapList[mc_meshrotation.currentlyeditedmap].wpname = MapRota_WPName
-			mc_meshrotation.mapList[mc_meshrotation.currentlyeditedmap].minswitchtime = MapRota_MinSwitchTime
+			mc_meshrotation.mapList[mc_meshrotation.currentlyeditedmap].switchtime = MapRota_SwitchTime
 			
 		end
 		Settings.GW2Minion.Maprotation_MapList = mc_meshrotation.mapList

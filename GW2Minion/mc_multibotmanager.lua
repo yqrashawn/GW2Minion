@@ -276,10 +276,20 @@ function HandleMultiBotMessages( event, message, channel )
 		-- Set role of this client, multibotserver sends this info when a bot enters/leaves the channel
 		if ( message:find('[[Leader]]') ~= nil) then
 			Player:SetRole(1)
-			gRole = "Party Leader"			
+			gRole = "Party Leader"
+			if ( gBotMode == GetString("minionmode") ) then
+				gBotMode = GetString("grindMode")
+				mc_global.ResetBot()
+				ml_task_hub:ClearQueues()
+				mc_global.UpdateMode()
+			end
 		elseif ( message:find('[[Minion]]') ~= nil) then
 			Player:SetRole(0)
 			gRole = "Party Member"
+			gBotMode = GetString("minionmode")			
+			mc_global.ResetBot()
+			ml_task_hub:ClearQueues()
+			mc_global.UpdateMode()
 		end	
 		
 		if ( gMultiBotEnabled == "1" ) then
