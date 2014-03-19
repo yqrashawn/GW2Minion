@@ -364,6 +364,7 @@ function mm.NavMeshUpdate()
 	end
 	
 	mc_global.ResetBot()
+	ml_task_hub:ClearQueues()
 	mc_global.UpdateMode()	
 end
 

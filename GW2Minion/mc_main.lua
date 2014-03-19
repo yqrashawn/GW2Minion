@@ -229,8 +229,10 @@ end
 function mc_global.eventhandler(arg)
 	if ( arg == "mc_global.startStop" or arg == "GW2MINION.toggle") then
 		if ( gBotRunning == "1" ) then
+			gAutostartbot = "0"
 			mc_global.togglebot("0")			
 		else
+			gAutostartbot = "1"
 			mc_global.togglebot("1")
 		end
 	end
