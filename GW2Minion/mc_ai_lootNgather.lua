@@ -286,7 +286,7 @@ function c_Gathering:evaluate()
 	return false
 end
 e_Gathering.tmr = 0
-e_Gathering.threshold = 2000
+e_Gathering.threshold = 500
 function e_Gathering:execute()
 	ml_log("e_Gathering")
 	if ( TableSize(c_Gathering.tPos) > 0 ) then
