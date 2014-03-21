@@ -406,14 +406,14 @@ c_vendorbuy = inheritsFrom( ml_cause )
 e_vendorbuy = inheritsFrom( ml_effect )
 function c_vendorbuy:evaluate()	
 	return (BuyManager_Active == "1" and Player.swimming ~= 0 and Inventory.freeSlotCount > 0 and ( 
-		( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) )
-		or 
-		( mc_ai_vendor.NeedToBuyGatheringTools() and TableSize(mc_ai_vendor.GetClosestBuyVendorMarker()) > 0)
+			( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) )
+			or 
+			( mc_ai_vendor.NeedToBuyGatheringTools() and TableSize(mc_ai_vendor.GetClosestBuyVendorMarker()) > 0)
 		)		
 	)
 end
 function e_vendorbuy:execute()
-	ml_log("e_vendorbuy")
+	ml_log("e_vendorbuy_")
 	
 	-- We are already at a vendor
 	if ( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying or mc_ai_vendor.isSelling) ) then
