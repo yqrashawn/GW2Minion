@@ -156,9 +156,8 @@ end
 c_DestroyGadget = inheritsFrom( ml_cause )
 e_DestroyGadget = inheritsFrom( ml_effect )
 function c_DestroyGadget:evaluate()
-	if ( Player.swimming == 0 and (mc_ai_unstuck.stuckcounter > 0 or mc_ai_unstuck.stuckcounter2 > 0) )then		
-		local dbb =  TableSize( GadgetList("nearest,attackable,alive,onmesh,maxdistance=350,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))) ) > 0		
-		return true
+	if ( Player.swimming == 0 and (mc_ai_unstuck.stuckcounter > 0 or mc_ai_unstuck.stuckcounter2 > 0) )then
+		return TableSize( GadgetList("nearest,attackable,alive,onmesh,maxdistance=350,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))) ) > 0
 	end
 	return false
 end
