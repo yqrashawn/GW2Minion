@@ -47,7 +47,7 @@ c_quickvendorsell = inheritsFrom( ml_cause )
 e_quickvendorsell = inheritsFrom( ml_effect )
 c_quickvendorsell.inventoryLimit = math.random(4,6)/10
 function c_quickvendorsell:evaluate()	
-	return (SellManager_Active == "1" and Player.swimming ~= 0 and 
+	return (SellManager_Active == "1" and 
 		( 
 			( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isSelling) ) -- so we wont leave the vendor after we sold 1 item ;)
 			or
@@ -131,7 +131,7 @@ end
 c_vendorsell = inheritsFrom( ml_cause )
 e_vendorsell = inheritsFrom( ml_effect )
 function c_vendorsell:evaluate()	
-	return (SellManager_Active == "1" and Player.swimming ~= 0 and 
+	return (SellManager_Active == "1" and  
 		( 
 			( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isSelling) )
 			or
@@ -324,7 +324,7 @@ end
 c_quickbuy = inheritsFrom( ml_cause )
 e_quickbuy = inheritsFrom( ml_effect )
 function c_quickbuy:evaluate()	
-	return (BuyManager_Active == "1" and Player.swimming ~= 0 and Inventory.freeSlotCount > 0 and ( 
+	return (BuyManager_Active == "1" and Inventory.freeSlotCount > 0 and ( 
 		( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) ) -- so we wont leave the vendor after we sold 1 item ;)
 		or 
 		( mc_ai_vendor.NeedToBuyGatheringTools( true ) and TableSize(mc_ai_vendor.GetClosestBuyVendor()) > 0) -- We need new gathering tools
@@ -405,7 +405,7 @@ end
 c_vendorbuy = inheritsFrom( ml_cause )
 e_vendorbuy = inheritsFrom( ml_effect )
 function c_vendorbuy:evaluate()	
-	return (BuyManager_Active == "1" and Player.swimming ~= 0 and Inventory.freeSlotCount > 0 and ( 
+	return (BuyManager_Active == "1" and  Inventory.freeSlotCount > 0 and ( 
 			( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) )
 			or 
 			( mc_ai_vendor.NeedToBuyGatheringTools() and TableSize(mc_ai_vendor.GetClosestBuyVendorMarker()) > 0)
@@ -679,7 +679,7 @@ end
 c_quickrepair = inheritsFrom( ml_cause )
 e_quickrepair = inheritsFrom( ml_effect )
 function c_quickrepair:evaluate()	
-	return ( Player.swimming ~= 0 and mc_ai_vendor.NeedToRepair( true ) and TableSize(mc_ai_vendor.GetClosestRepairVendor()) > 0)
+	return (  mc_ai_vendor.NeedToRepair( true ) and TableSize(mc_ai_vendor.GetClosestRepairVendor()) > 0)
 end
 function e_quickrepair:execute()
 	ml_log("e_quickrepair")	
@@ -736,7 +736,7 @@ end
 c_vendorrepair = inheritsFrom( ml_cause )
 e_vendorrepair = inheritsFrom( ml_effect )
 function c_vendorrepair:evaluate()	
-	return ( mc_ai_vendor.NeedToRepair() and Player.swimming ~= 0 and TableSize(mc_ai_vendor.GetClosestRepairVendorMarker()) > 0)
+	return ( mc_ai_vendor.NeedToRepair() and  TableSize(mc_ai_vendor.GetClosestRepairVendorMarker()) > 0)
 end
 function e_vendorrepair:execute()
 	ml_log("e_vendorrepair")
