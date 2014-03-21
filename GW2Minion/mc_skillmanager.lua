@@ -777,7 +777,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 	if ( Player.profession == 4 and mc_global.now - mc_skillmanager.PetTmr > 2500) then 
 		mc_skillmanager.PetTmr = mc_global.now
 		local pet = Player:GetPet()
-		if ( pet ~= nil and Player:CanSwitchPet() == true and Player.healthstate == GW2.HEALTHSTATE.Alive and pet.alive == false) then	
+		if ( pet ~= nil and Player:CanSwitchPet() == true and Player.healthstate == GW2.HEALTHSTATE.Alive and (pet.alive == false or pet.health.percent < 10)) then	
 			d("Switching Pet..")
 			Player:SwitchPet()		
 		end

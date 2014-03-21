@@ -47,7 +47,7 @@ c_quickvendorsell = inheritsFrom( ml_cause )
 e_quickvendorsell = inheritsFrom( ml_effect )
 c_quickvendorsell.inventoryLimit = math.random(4,6)/10
 function c_quickvendorsell:evaluate()	
-	return (SellManager_Active == "1" and 
+	return (SellManager_Active == "1" and Player.swimming ~= 0 and 
 		( 
 			( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isSelling) ) -- so we wont leave the vendor after we sold 1 item ;)
 			or
@@ -77,7 +77,7 @@ function e_quickvendorsell:execute()
 						-- MoveIntoInteractRange
 						local tPos = vendor.pos
 						if ( tPos ) then
-							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 							MoveOnlyStraightForward()
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
@@ -109,7 +109,7 @@ function e_quickvendorsell:execute()
 					-- We are not close enought, vendor is not yet in Charlist
 					local pos = vendor.pos
 					if ( pos ) then
-						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
@@ -131,7 +131,7 @@ end
 c_vendorsell = inheritsFrom( ml_cause )
 e_vendorsell = inheritsFrom( ml_effect )
 function c_vendorsell:evaluate()	
-	return (SellManager_Active == "1" and 
+	return (SellManager_Active == "1" and Player.swimming ~= 0 and 
 		( 
 			( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isSelling) )
 			or
@@ -163,7 +163,7 @@ function e_vendorsell:execute()
 						-- MoveIntoInteractRange
 						local tPos = char.pos
 						if ( tPos ) then
-							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 							MoveOnlyStraightForward()
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
@@ -195,7 +195,7 @@ function e_vendorsell:execute()
 					-- We are not close enought, char is not yet in Charlist
 					local pos = vMarker.pos
 					if ( pos ) then
-						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
@@ -324,7 +324,7 @@ end
 c_quickbuy = inheritsFrom( ml_cause )
 e_quickbuy = inheritsFrom( ml_effect )
 function c_quickbuy:evaluate()	
-	return (BuyManager_Active == "1" and Inventory.freeSlotCount > 0 and ( 
+	return (BuyManager_Active == "1" and Player.swimming ~= 0 and Inventory.freeSlotCount > 0 and ( 
 		( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) ) -- so we wont leave the vendor after we sold 1 item ;)
 		or 
 		( mc_ai_vendor.NeedToBuyGatheringTools( true ) and TableSize(mc_ai_vendor.GetClosestBuyVendor()) > 0) -- We need new gathering tools
@@ -353,7 +353,7 @@ function e_quickbuy:execute()
 						-- MoveIntoInteractRange
 						local tPos = vendor.pos
 						if ( tPos ) then
-							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 							MoveOnlyStraightForward()
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
@@ -405,7 +405,7 @@ end
 c_vendorbuy = inheritsFrom( ml_cause )
 e_vendorbuy = inheritsFrom( ml_effect )
 function c_vendorbuy:evaluate()	
-	return (BuyManager_Active == "1" and Inventory.freeSlotCount > 0 and ( 
+	return (BuyManager_Active == "1" and Player.swimming ~= 0 and Inventory.freeSlotCount > 0 and ( 
 		( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) )
 		or 
 		( mc_ai_vendor.NeedToBuyGatheringTools() and TableSize(mc_ai_vendor.GetClosestBuyVendorMarker()) > 0)
@@ -437,7 +437,7 @@ function e_vendorbuy:execute()
 						-- MoveIntoInteractRange
 						local tPos = char.pos
 						if ( tPos ) then
-							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 							MoveOnlyStraightForward()
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
@@ -679,7 +679,7 @@ end
 c_quickrepair = inheritsFrom( ml_cause )
 e_quickrepair = inheritsFrom( ml_effect )
 function c_quickrepair:evaluate()	
-	return ( mc_ai_vendor.NeedToRepair( true ) and TableSize(mc_ai_vendor.GetClosestRepairVendor()) > 0)
+	return ( Player.swimming ~= 0 and mc_ai_vendor.NeedToRepair( true ) and TableSize(mc_ai_vendor.GetClosestRepairVendor()) > 0)
 end
 function e_quickrepair:execute()
 	ml_log("e_quickrepair")	
@@ -700,7 +700,7 @@ function e_quickrepair:execute()
 						-- MoveIntoInteractRange
 						local tPos = vendor.pos
 						if ( tPos ) then
-							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+							if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 							if (tonumber(navResult) < 0) then
 								d("e_quickrepair.MoveIntoInteractRange result: "..tonumber(navResult))					
@@ -736,7 +736,7 @@ end
 c_vendorrepair = inheritsFrom( ml_cause )
 e_vendorrepair = inheritsFrom( ml_effect )
 function c_vendorrepair:evaluate()	
-	return ( mc_ai_vendor.NeedToRepair() and TableSize(mc_ai_vendor.GetClosestRepairVendorMarker()) > 0)
+	return ( mc_ai_vendor.NeedToRepair() and Player.swimming ~= 0 and TableSize(mc_ai_vendor.GetClosestRepairVendorMarker()) > 0)
 end
 function e_vendorrepair:execute()
 	ml_log("e_vendorrepair")

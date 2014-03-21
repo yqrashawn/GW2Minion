@@ -335,6 +335,18 @@ function Dev.ModuleInit()
 	tb_nPoints = 0
 	Nmovetype = "Straight"
 	Nnavitype = "Normal"
+	GUI_NewNumeric("Dev","ObstacleSize","obsSize","NavigationSystem","32","9999")
+	obsSize = 50
+	GUI_NewButton("Dev","AddObstacle","Dev.AddOB","NavigationSystem")
+	RegisterEventHandler("Dev.AddOB", Dev.Move)
+	GUI_NewButton("Dev","ClearObstacles","Dev.ClearOB","NavigationSystem")
+	RegisterEventHandler("Dev.ClearOB", Dev.Move)
+	GUI_NewNumeric("Dev","AvoidanceAreaSize","avoidSize","NavigationSystem","32","9999")
+	avoidSize = 50
+	GUI_NewButton("Dev","AddAvoidancearea","Dev.AddAA","NavigationSystem")
+	RegisterEventHandler("Dev.AddAA", Dev.Move)
+	GUI_NewButton("Dev","ClearAvoidanceareas","Dev.ClearAA","NavigationSystem")
+	RegisterEventHandler("Dev.ClearAA", Dev.Move)
 	
 	-- Spell&CastingInfo
 	GUI_NewField("Dev","IsCasting","SCIsCast","Spell&CastingInfo")
@@ -630,7 +642,8 @@ function Dev.Func ( arg )
 	end	
 end
 
-
+Dev.Obstacles = {}
+Dev.AvoidanceAreas = {}
 function Dev.Move ( arg ) 
 	if ( arg == "Dev.MoveDir") then
 		d(Player:SetMovement(tonumber(mimovf)))
@@ -692,6 +705,35 @@ function Dev.Move ( arg )
 				tb_xdist = Distance3D(p.x,p.y,p.z,ppos.x,ppos.y,ppos.z)
 			end
 		end
+
+	elseif ( arg == "Dev.AddOB" and Player.onmesh) then
+		local pPos = Player.pos
+		if ( pPos ) then
+			table.insert(Dev.Obstacles, { x=pPos.x, y=pPos.y, z=pPos.z, r=tonumber(obsSize) })
+			d("Adding new Obstacle with size "..tostring(obsSize))
+			NavigationManager:AddNavObstacles(Dev.Obstacles)
+		end
+	elseif ( arg == "Dev.ClearOB" ) then
+		local pPos = Player.pos
+		if ( pPos ) then
+			Dev.Obstacles = {}
+			d("Clearing Obstacles ")
+			NavigationManager:ClearNavObstacles()
+		end
+	elseif ( arg == "Dev.AddAA" and Player.onmesh) then
+		local pPos = Player.pos
+		if ( pPos ) then
+			table.insert(Dev.AvoidanceAreas, { x=pPos.x, y=pPos.y, z=pPos.z, r=tonumber(avoidSize) })
+			d("adding AvoidanceArea with size "..tostring(avoidSize))
+			NavigationManager:SetAvoidanceAreas(Dev.AvoidanceAreas)
+		end
+	elseif ( arg == "Dev.ClearAA" ) then
+		local pPos = Player.pos
+		if ( pPos ) then
+			Dev.AvoidanceAreas = {}
+			d("Clearing AvoidanceAreas ")
+			NavigationManager:ClearAvoidanceAreas()
+		end			
 	end
 end
 			

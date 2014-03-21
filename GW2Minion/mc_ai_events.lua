@@ -176,7 +176,7 @@ function e_MoveInEventRange:execute()
 				if ( c_MoveInEventRange.reached == false) then
 					-- 1st time get into event range
 					if ( c_MoveInEventRange.lastdist > 350 ) then
-						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
 						if (tonumber(navResult) < 0) then					
@@ -200,7 +200,7 @@ function e_MoveInEventRange:execute()
 				else
 					-- Check if we moved too far away from the event we are in
 					if ( c_MoveInEventRange.lastdist > c_MoveInEventRange.range ) then
-						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 						MoveOnlyStraightForward()
 						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
 						if (tonumber(navResult) < 0) then					
@@ -388,6 +388,9 @@ function e_DoEventObjectives:execute()
 						
 						else
 							ml_error("Unhandled EventType !!!! : "..tostring(objType))
+							d("Bot cant handle Events, blacklisting it..")
+							mc_blacklist.AddBlacklistEntry(GetString("event"), e.eventID, "CollectItems", mc_global.now + 1800000)
+							ml_task_hub:CurrentTask().completed = true
 						end
 					end						
 				end

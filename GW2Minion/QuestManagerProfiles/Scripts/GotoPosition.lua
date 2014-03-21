@@ -79,6 +79,19 @@ function script:Init()
 	-- Deposit Items
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 120 ), self.process_elements)	
 	
+	-- Re-Equip Gathering Tools
+	self:add(ml_element:create( "EquippingGatherTool", c_GatherToolsCheck, e_GatherToolsCheck, 118 ), self.process_elements)	
+	
+	-- Quick-Repair & Vendoring (when a vendor is nearby)	
+	self:add(ml_element:create( "QuickSellItems", c_quickvendorsell, e_quickvendorsell, 117 ), self.process_elements)
+	self:add(ml_element:create( "QuickBuyItems", c_quickbuy, e_quickbuy, 116 ), self.process_elements)
+	self:add(ml_element:create( "QuickRepairItems", c_quickrepair, e_quickrepair, 115 ), self.process_elements)
+	
+	-- Repair & Vendoring
+	self:add(ml_element:create( "SellItems", c_vendorsell, e_vendorsell, 114 ), self.process_elements)	
+	self:add(ml_element:create( "BuyItems", c_vendorbuy, e_vendorbuy, 113 ), self.process_elements)
+	self:add(ml_element:create( "RepairItems", c_vendorrepair, e_vendorrepair, 112 ), self.process_elements)
+	
 	-- GoTo Position
 	self:add(ml_element:create( "GoToPosition", self.c_goto, self.e_goto, 110 ), self.process_elements)	
 	

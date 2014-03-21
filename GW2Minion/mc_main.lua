@@ -1,6 +1,6 @@
 mc_global = { }
 mc_global.window = { name="MinionBot", x=50, y=50, width=200, height=300 }
-mc_global.advwindow = { name="AdvandedSettings", x=250, y=200 , width=200, height=165 }
+mc_global.advwindow = { name="AdvandedSettings", x=250, y=200 , width=200, height=170 }
 mc_global.advwindowvisible = false
 mc_global.path = GetStartupPath()
 mc_global.now = 0
@@ -187,7 +187,8 @@ function mc_global.OnUpdateCharSelect(event, tickcount )
 		mc_global.Charscreen_lastrun = tickcount
 	elseif ( gAutostartbot == "1" and tickcount - mc_global.Charscreen_lastrun > 2500) then
 		mc_global.Charscreen_lastrun = tickcount
-				
+		
+		
 		if ( gGuestServer ~= nil and gGuestServer ~= "None" ) then
 			local serverlist = {}
 			local homeserverid = GetHomeServer()
@@ -254,8 +255,7 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 			k == "MBSGroup" or 
 			k == "gMultiPort" or 
 			k == "gMultiPw" or 
-			k == "gMultiIP" or 
-			k == "gMultiBotEnabled" or
+			k == "gMultiIP" or 			
 			k == "gAutostartbot" or
 			k == "gGuestServer" or
 			k == "gSkipCutscene" or
@@ -274,6 +274,11 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 			Settings.GW2Minion[tostring(k)] = v
 			mc_global.UpdateMode()
 			mm.NavMeshUpdate()
+		elseif ( k == "gMultiBotEnabled" ) then
+			if ( v == "0" ) then							
+				MultiBotDisconnect()				
+			end
+			Settings.GW2Minion[tostring(k)] = v
 		end
 	end
 	GUI_RefreshWindow(mc_global.window.name)

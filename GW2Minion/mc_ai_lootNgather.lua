@@ -35,7 +35,7 @@ function mc_ai_Gather:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_Gather:task_complete_eval()	
-	if ( c_dead:evaluate() or c_downed:evaluate() or ( c_Aggro:evaluate() and Player.health.percent < 95)  or c_LootChests:evaluate() or c_LootCheck:evaluate() or c_Gathering:evaluate() == false) then 
+	if ( c_dead:evaluate() or c_downed:evaluate() or ( c_Aggro:evaluate() and Player.health.percent < 95)  or c_LootChests:evaluate() or c_LootCheck:evaluate() or ( gBotMode == GetString("minionmode") and c_Gathering_mb:evaluate() == false or gBotMode ~= GetString("minionmode") and c_Gathering:evaluate() == false)) then 
 		Player:StopMovement()
 		return true
 	end
@@ -48,6 +48,7 @@ end
 ------------
 c_gatherTask = inheritsFrom( ml_cause )
 e_gatherTask = inheritsFrom( ml_effect )
+c_gatherTask.throttle = 2500
 function c_gatherTask:evaluate()
    -- ml_log("c_gatherTask")
     return (gGather == "1" and Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=4000")) > 0)
@@ -171,7 +172,7 @@ function e_Loot:execute()
 				-- MoveIntoInteractRange
 				local tPos = entity.pos
 				if ( tPos ) then
-					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 					MoveOnlyStraightForward()
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then
@@ -296,7 +297,7 @@ function e_Gathering:execute()
 		if (dist > 100) then
 			-- MoveIntoInteractRange
 			if ( tPos ) then
-				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 				MoveOnlyStraightForward()
 				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))
 				if (tonumber(navResult) < 0) then
@@ -357,10 +358,11 @@ function c_GatherToolsCheck:evaluate()
 end
 function e_GatherToolsCheck:execute()
 	ml_log("e_GatherToolsCheck")
+	local toolList = mc_vendormanager.GetGatheringToolsCount()
 	local tSlot = nil
-	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil) then tSlot = 0
-	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil) then tSlot = 1
-	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil) then tSlot = 2 
+	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and toolList[1] > 0) then tSlot = 0
+	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil and toolList[2] > 0) then tSlot = 1
+	elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil and toolList[3] > 0) then tSlot = 2 
 	end
 	
 	if ( tSlot ~= nil) then

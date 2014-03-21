@@ -364,7 +364,9 @@ function mm.NavMeshUpdate()
 	end
 	
 	mc_global.ResetBot()
-	ml_task_hub:ClearQueues()
+	if ( Maprotation_Active == "1") then
+		ml_task_hub:ClearQueues()
+	end
 	mc_global.UpdateMode()	
 end
 

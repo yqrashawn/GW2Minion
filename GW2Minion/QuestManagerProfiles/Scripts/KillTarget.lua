@@ -82,6 +82,9 @@ function script:Init()
 	-- Resting
 	self:add(ml_element:create( "Resting", c_resting, e_resting, 135 ), self.process_elements)	
 	
+	-- Salvaging
+	self:add(ml_element:create( "Salvaging", c_salvage, e_salvage, 111 ), self.process_elements)
+	
 	-- Find Target
 	self:add(ml_element:create( "FindTarget", self.c_findtarget, self.e_findtarget, 110 ), self.process_elements)
 	

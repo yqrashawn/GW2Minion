@@ -81,7 +81,9 @@ function mc_ai_combatAttack:Init()
 	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 70 ), self.process_elements)	
 	
 	-- Gathering
-	self:add(ml_element:create( "Gathering", c_Gathering, e_Gathering, 65 ), self.process_elements)
+	--self:add(ml_element:create( "Gathering", c_Gathering, e_Gathering, 65 ), self.process_elements)
+	self:add(ml_element:create( "Gathering", c_gatherTask, e_gatherTask, 65 ), self.process_elements)
+	
 	
 	-- Finish Enemy
 	self:add(ml_element:create( "FinishHim", c_FinishHim, e_FinishHim, 60 ), self.process_elements)
@@ -155,7 +157,8 @@ c_DestroyGadget = inheritsFrom( ml_cause )
 e_DestroyGadget = inheritsFrom( ml_effect )
 function c_DestroyGadget:evaluate()
 	if ( Player.swimming == 0 and (mc_ai_unstuck.stuckcounter > 0 or mc_ai_unstuck.stuckcounter2 > 0) )then		
-		return TableSize( GadgetList("nearest,attackable,alive,onmesh,maxdistance=350,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))) ) > 0
+		local dbb =  TableSize( GadgetList("nearest,attackable,alive,onmesh,maxdistance=350,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))) ) > 0		
+		return true
 	end
 	return false
 end
@@ -165,24 +168,21 @@ function e_DestroyGadget:execute()
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
 			d("Found Blocking Gadget Target: "..(E.name).." ID:"..tostring(id))			
-			if ( E.selectable ) then 
-				Player:SetTarget(id)
-				e_KillTarget:execute()
+			if ( E.selectable ) then 			
+				
 				if ( E.distance < 150 ) then
 					Player:StopMovement()
 				end
-			else
-				if ( E.attackable) then
-					local pos = E.pos					
-					if ( pos ) then
-						Player:SetFacing(pos.x,pos.y,pos.z)
-						mc_skillmanager.AttackTarget( E.id )
-						if ( E.distance < 150 ) then
-							Player:StopMovement()
-						end
-						return ml_log(true)
+				Player:SetTarget(id)
+				local pos = E.pos					
+				if ( pos ) then
+					Player:SetFacing(pos.x,pos.y,pos.z)
+					if ( E.distance < 450 and Player:CanCast() ) then
+						Player:CastSpell(GW2.SKILLBARSLOT.Slot_1)
 					end
-				end			
+					mc_skillmanager.AttackTarget( E.id )
+					return ml_log(true)
+				end				
 			end
 		end		
 	end
@@ -260,7 +260,7 @@ function e_FinishHim:execute()
 				-- MoveIntoInteractRange
 				local tPos = entity.pos
 				if ( tPos ) then
-					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 					MoveOnlyStraightForward()
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then
@@ -448,7 +448,7 @@ function e_MoveIntoCombatRange:execute()
 			-- moveto(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)		
 			if ( tPos ) then
 				--d("MoveIntoCombatRange..Running")
-				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 				MoveOnlyStraightForward()
 				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,100+t.radius,false,false,true))		
 				if (tonumber(navResult) < 0) then					
@@ -623,7 +623,7 @@ function e_revive:execute()
 			-- MoveIntoInteractRange
 			local tPos = entity.pos
 			if ( tPos ) then
-				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 				if (tonumber(navResult) < 0) then
 					d("e_revive.MoveInToCombatRange result: "..tonumber(navResult))
@@ -692,7 +692,7 @@ function e_reviveDownedPlayersInCombat:execute()
 				-- MoveIntoInteractRange
 				local tPos = entity.pos
 				if ( tPos ) then
-					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 					MoveOnlyStraightForward()
 					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 					if (tonumber(navResult) < 0) then

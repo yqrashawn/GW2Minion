@@ -63,7 +63,7 @@ function mc_ai_multibot:Init()
 	self:add(ml_element:create( "ReviveNPC", c_reviveNPC_mb, e_reviveNPC, 300 ), self.process_elements)	
 	
 	-- Gathering
-	self:add(ml_element:create( "Gathering", c_Gathering_mb, e_Gathering, 280 ), self.process_elements)
+	self:add(ml_element:create( "Gathering", c_Gathering_mb, e_gatherTask, 280 ), self.process_elements)
 	
 	-- Finish Enemy
 	self:add(ml_element:create( "FinishHim", c_FinishHim, e_FinishHim, 270 ), self.process_elements)
@@ -199,7 +199,7 @@ function e_memberdown:execute()
 			-- MoveIntoInteractRange
 			local tPos = pchar.pos
 			if ( tPos ) then
-				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 				MoveOnlyStraightForward()
 				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
 				if (tonumber(navResult) < 0) then
@@ -304,8 +304,14 @@ function c_MoveToLeader:evaluate()
 					ml_log("Leader is not in our map! ")
 					if ( tonumber(mc_multibotmanager.leaderWPID) ~= nil and tonumber(mc_multibotmanager.leaderWPID) > 0 and Player.inCombat == false and Inventory:GetInventoryMoney() > 500) then
 						ml_log(" Using closest Waypoint to get to Leader: ")
-						ml_log(Player:TeleportToWaypoint(tonumber(mc_multibotmanager.leaderWPID)))
-						mc_global.Wait(5000)
+						local id,wp = next(WaypointList("nearest,onmesh,notcontested,samezone"))
+						if ( id and wp and tonumber(wp.id) == tonumber(mc_multibotmanager.leaderWPID) ) then
+							d("Our leader switched maps and we are waiting for new wapointID")
+							mc_global.Wait(5000)
+						else							
+							ml_log(Player:TeleportToWaypoint(tonumber(mc_multibotmanager.leaderWPID)))
+							mc_global.Wait(5000)
+						end
 					end
 				
 				elseif ( pmember.connectstatus == 1 ) then
@@ -341,7 +347,7 @@ function e_MoveToLeader:execute()
 					if ( Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) > e_MoveToLeader.ldist ) then
 						local nPos = NavigationManager:GetClosestPointOnMesh(cPos)
 						local navResult = 0
-						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
+						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 						MoveOnlyStraightForward()
 						if (nPos) then						
 							navResult = tostring(Player:MoveTo(nPos.x,nPos.y,nPos.z,150,false,true,true))		
@@ -355,12 +361,16 @@ function e_MoveToLeader:execute()
 						end
 						if ( mc_global.now - e_MoveToLeader.tmr > e_MoveToLeader.threshold ) then
 							e_MoveToLeader.tmr = mc_global.now
-							e_MoveToLeader.threshold = math.random(1000,5000)
+							e_MoveToLeader.threshold = math.random(1000,3000)
 							mc_skillmanager.HealMe()
 						end	
 					else
 						d("Arrived at Leader..")
-						e_MoveToLeader.ldist = math.random(150,600)						
+						if ( char.movementstate == 3 ) then
+							e_MoveToLeader.ldist = math.random(150,600)
+						else
+							e_MoveToLeader.ldist = math.random(65,250)
+						end
 						Player:StopMovement()
 						c_MoveToLeader.nearleader = true
 					end					
@@ -385,10 +395,16 @@ end
 
 c_Gathering_mb = inheritsFrom( ml_cause )
 function c_Gathering_mb:evaluate()
-	if ( gGather == "1" and Player.inCombat == false and Inventory.freeSlotCount > 0 and ( c_Gathering.running == true or TableSize(GadgetList("onmesh,shortestpath,gatherable,maxdistance=2500,maxpathdistance=1200")) > 0 )) then
+	if ( c_Gathering.tPos == nil ) then
+		local _,gadget = next(GadgetList("onmesh,nearest,gatherable,maxdistance=1500"))
+		if (gadget) then
+			c_Gathering.tPos = gadget.pos
+		end
+	end
+	if ( gGather == "1" and Inventory.freeSlotCount > 0 and c_Gathering.tPos ~= nil and TableSize(c_Gathering.tPos) > 0 ) then
 		return true
 	end
-	c_Gathering.running = false
+	c_Gathering.tPos = nil
 	return false
 end
 

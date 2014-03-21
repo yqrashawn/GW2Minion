@@ -74,6 +74,11 @@ function mc_multibotmanager.ModuleInit()
     GUI_UnFoldGroup(mc_multibotmanager.mainwindow.name,GetString("groupInfo"))
 	
     GUI_WindowVisible(mc_multibotmanager.mainwindow.name,false)
+
+	-- fix for getting the proper leader/minion role on reload lua
+	if (gMultiBotEnabled == "1" and MultiBotIsConnected() ) then
+		MultiBotJoinChannel(MBSGroup)
+	end
 end
 
 
@@ -148,6 +153,7 @@ function mc_multibotmanager.CopyParty()
 end
 
 mc_multibotmanager.broadcastTmr = 0
+mc_multibotmanager.broadcastTmr2 = 0
 function mc_multibotmanager.LeaderBroadCast()
 	if ( Player:GetRole() == 1 ) then
 		if ( mc_global.now - mc_multibotmanager.broadcastTmr > 5000 ) then
@@ -165,6 +171,15 @@ function mc_multibotmanager.LeaderBroadCast()
 			if (id and wp ) then
 				MultiBotSend( "3;"..wp.id,MBSGroup )
 			end
+		end
+		
+		if ( mc_global.now - mc_multibotmanager.broadcastTmr2 > 1500 ) then
+			mc_multibotmanager.broadcastTmr2 = mc_global.now
+			-- targetID
+			local t = Player:GetTarget()		
+			if ( t ~= nil and TableSize(t) > 0 and t.distance < 1500 and t.selectable and t.attackable and t.dead == false) then				
+				MultiBotSend( "4;"..t.id,MBSGroup )	
+			end			
 		end		
 	end
 end
@@ -196,7 +211,7 @@ function mc_multibotmanager.UpdatePartyStatus()
 					end
 					
 					if ( not found and mc_blacklist.IsBlacklisted(pname) == false) then	
-						SendChatMsg(19,"/join "..pname)
+						SendChatMsg(19,"/invite "..pname)
 						dPartyStatus = "Inviting "..pname
 						d("Inviting "..pname)
 						mc_blacklist.AddBlacklistEntry(GetString("partymember"), idx, pname, mc_global.now + 30000)
@@ -220,17 +235,24 @@ function mc_multibotmanager.UpdatePartyStatus()
 				while ( index ~= nil and player ~= nil ) do	
 					if ( player.name == pname ) then
 						-- check if we got an party invite
-						if ( player.hasparty == false and (player.connectstatus == 3 or player.connectstatus == 2 or player.connectstatus == 1) and player.invitestatus == 2 ) then
-							d("Accepting Party invitation.")
-							SendChatMsg(19,"/join "..mc_multibotmanager.leadername)
-							dPartyStatus = "Joining "..mc_multibotmanager.leadername							
-							return
+						if ( player.hasparty == false ) then
+							if ( (player.connectstatus == 3 or player.connectstatus == 2 or player.connectstatus == 1) and player.invitestatus == 2 ) then
+								d("Accepting Party invitation.")
+								SendChatMsg(19,"/join "..mc_multibotmanager.leadername)
+								dPartyStatus = "Joining "..mc_multibotmanager.leadername							
+								return
+							else
+								dPartyStatus = "Waiting for invite"
+							end
+						else
+							dPartyStatus = "In a Party"
 						end
 					end
 					index, player  = next( party,index )
 				end
-				dPartyStatus = "In a Party"
 			end
+		else
+			dPartyStatus = "Waiting for leadername"
 		end
 	end		
 end
@@ -313,7 +335,10 @@ function HandleMultiBotMessages( event, message, channel )
 					-- Leader sends Minion his Closest Waypoint ID
 					elseif ( tonumber(msgID) == 3 and msg ~= "" and Player:GetRole() == 0) then
                         mc_multibotmanager.leaderWPID = msg
-						
+					
+					-- Leader sends Minions his TargetID to attack
+					elseif ( tonumber(msgID) == 4 and tonumber(msg) ~= nil and msg ~= "" and Player:GetRole() == 0) then
+						mc_followbot.KilltargetID = msg
 					end
 				end
 			end

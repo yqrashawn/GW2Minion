@@ -103,9 +103,18 @@ function mc_ai_unstuck.HandleStuck()
 				ml_error("We may not have enough money for using the waypoint anymore...")
 			end
 			d("Trying to teleport to nearest waypoint for unstuck..")		
-			if ( Player:RespawnAtClosestWaypoint() ) then
+			-- safetycheck
+			local id,wp = next(WaypointList("nearest,onmesh,notcontested,samezone"))
+			if ( id and wp and wp.distance > 250 ) then
+				if ( Player:RespawnAtClosestWaypoint() ) then
+					mc_global.Wait(3000)
+					mc_ai_unstuck.respawntimer = mc_global.now
+				end
+			else
+				ml_error("We are at a waypoint but need to teleport again!? Something weird is going on, stopping bot")
+				d("Logging out...")
+				Player:Logout()
 				mc_global.Wait(3000)
-				mc_ai_unstuck.respawntimer = mc_global.now
 			end
 			mc_ai_unstuck.logoutTmr = 0
 		else
@@ -142,6 +151,9 @@ function mc_ai_unstuck.stuckhandler( event, distmoved, stuckcount )
 		
 	if ( tonumber(mc_ai_unstuck.stuckcounter2) < 20 and Player:CanMove() and mc_helper.HasBuffs(Player, mc_ai_unstuck.conditions) == false ) then --Fear and Immobilized
 		Player:Jump()
+		
+		-- Add a try to kill blocking destroyable gadgets here?
+		
 		
 		local i = math.random(0,1)
 		if ( i == 0 ) then

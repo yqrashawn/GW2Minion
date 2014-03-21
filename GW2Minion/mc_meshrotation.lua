@@ -106,6 +106,7 @@ end
 function mc_meshrotation.addMap()
 	GUI_MoveWindow( mc_meshrotation.editwindow.name, mc_meshrotation.mainwindow.x+mc_meshrotation.mainwindow.w,mc_meshrotation.mainwindow.y) 	
 	mc_meshrotation.editorWindow("Maprotation_Map"..tostring(TableSize(mc_meshrotation.mapList) + 1))	
+	mc_meshrotation.getclosestWP()
 end
 
 --Delete Map.
@@ -157,7 +158,7 @@ function mc_meshrotation.GetNextMap()
 			end
 			
 			-- Get the next map if timer is up
-			if ( mc_global.now - mc_meshrotation.currentMapTime > mc_meshrotation.currentSwitchTime) then
+			if ( mc_global.now - mc_meshrotation.currentMapTime > mc_meshrotation.currentSwitchTime and Player.inCombat == false) then
 				
 				d("Time to switch to the next map...")
 				mc_meshrotation.currentMapIndex = mc_meshrotation.currentMapIndex + 1
@@ -176,6 +177,8 @@ function mc_meshrotation.GetNextMap()
 				else
 					ml_error("mc_meshrotation.mapList[mc_meshrotation.currentMapIndex]) is nil !?")
 				end
+			elseif ( mc_global.now - mc_meshrotation.currentMapTime > mc_meshrotation.currentSwitchTime and Player.inCombat == true) then
+				gMaprotationStatus = "Player in combat, switching when done"
 			else
 				gMaprotationStatus = "Switch in " .. round(tonumber(mc_meshrotation.currentSwitchTime - (mc_global.now - mc_meshrotation.currentMapTime))/60000) .. " minutes"
 			end
@@ -198,22 +201,24 @@ end
 mc_meshrotation.nextWP = nil
 function mc_meshrotation.Update()
 	-- MapRotation Check
-	if (Maprotation_Active == "1" and Player.inCombat == false ) then
+	if (Maprotation_Active == "1" ) then 
 		mc_meshrotation.nextWP = mc_meshrotation.GetNextMap()
-		if ( mc_meshrotation.nextWP ~= nil and mc_meshrotation.nextWP.mapid ~= Player:GetLocalMapID() ) then
-			-- we need to switch maps
-			if ( tonumber(mc_meshrotation.nextWP.wpid)~= nil and Inventory:GetInventoryMoney() > 500) then
-				d("Teleporting to Waypoint "..mc_meshrotation.nextWP.name.." ID: "..tostring(mc_meshrotation.nextWP.wpid))
-				if ( Player:TeleportToWaypoint(mc_meshrotation.nextWP.wpid) == false ) then
-					d("Seems we cannot use the targeted waypoint to switch maps, is that waypoint explored ?")
+		if ( Player.inCombat == false ) then		
+			if ( mc_meshrotation.nextWP ~= nil and mc_meshrotation.nextWP.mapid ~= Player:GetLocalMapID() ) then
+				-- we need to switch maps
+				if ( tonumber(mc_meshrotation.nextWP.wpid)~= nil and Inventory:GetInventoryMoney() > 500) then
+					d("Teleporting to Waypoint "..mc_meshrotation.nextWP.name.." ID: "..tostring(mc_meshrotation.nextWP.wpid))
+					if ( Player:TeleportToWaypoint(mc_meshrotation.nextWP.wpid) == false ) then
+						d("Seems we cannot use the targeted waypoint to switch maps, is that waypoint explored ?")
+					else
+						d("Teleported to new waypoint")
+						mc_global.Wait(2000)
+					end				
 				else
-					d("Teleported to new waypoint")
-					mc_global.Wait(2000)
-				end				
-			else
-				ml_error(" NextMap().wpid is nil or we are out of money")
-			end	
-		end		
+					ml_error(" The Map in your Maprotation has NO WAYPOINT setup or we are out of money")
+				end	
+			end
+		end
 	end
 	return false
 end
