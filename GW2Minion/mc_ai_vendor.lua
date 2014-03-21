@@ -615,8 +615,8 @@ function mc_ai_vendor.BuyAtVendor( vendor , nearbyvendor)
 								
 				-- Seems we cant buy the tools we need at this Vendor, blacklisting him for 60 min
 				ml_error( "Vendoring: can't Buy the Tools we want at this vendor.." )
-				ml_error("Blacklisted BuyTools-Vendor for 60min"..vendor.name)
-				mc_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, mc_global.now + 60000)	
+				ml_error("Blacklisted BuyTools-Vendor for 15 min"..vendor.name)
+				mc_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, mc_global.now + 900000)	
 			
 			else
 				ml_error( "VendorList Empty??" )
