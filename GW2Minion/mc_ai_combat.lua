@@ -157,26 +157,32 @@ c_DestroyGadget = inheritsFrom( ml_cause )
 e_DestroyGadget = inheritsFrom( ml_effect )
 function c_DestroyGadget:evaluate()
 	if ( Player.swimming == 0 and (mc_ai_unstuck.stuckcounter > 0 or mc_ai_unstuck.stuckcounter2 > 0) )then
-		return TableSize( GadgetList("nearest,attackable,alive,onmesh,maxdistance=350,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))) ) > 0
+		local GList =  GadgetList("nearest,attackable,alive,onmesh,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))
+		if ( TableSize(GList) > 0 ) then
+			local id,gadget = next(GList)		
+			if ( gadget and gadget.distance < 200 + gadget.radius ) then
+				return true
+			end
+		end
 	end
 	return false
 end
 function e_DestroyGadget:execute()
-	local TList = ( GadgetList("nearest,attackable,alive,onmesh,maxdistance=350,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))) )
+	local TList = GadgetList("nearest,attackable,alive,onmesh,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters")))
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
 			d("Found Blocking Gadget Target: "..(E.name).." ID:"..tostring(id))			
 			if ( E.selectable ) then 			
 				
-				if ( E.distance < 150 ) then
+				if ( E.distance < 150 + E.radius) then
 					Player:StopMovement()
 				end
 				Player:SetTarget(id)
 				local pos = E.pos					
 				if ( pos ) then
 					Player:SetFacing(pos.x,pos.y,pos.z)
-					if ( E.distance < 450 and Player:CanCast() ) then
+					if ( E.distance < 450 + E.radius and Player:CanCast() ) then
 						Player:CastSpell(GW2.SKILLBARSLOT.Slot_1)
 					end
 					mc_skillmanager.AttackTarget( E.id )

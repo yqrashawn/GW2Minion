@@ -142,7 +142,7 @@ function mc_ai_doquest:Init()
 	self:add(ml_element:create( "RevivePartyMember", c_memberdown, e_memberdown, 170 ), self.process_elements)	
 		
 	-- Aggro
-	self:add(ml_element:create( "Aggro", c_AggroEx, e_AggroEx, 165 ), self.process_elements) --reactive queue
+	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 165 ), self.process_elements) --reactive queue
 	
 	-- Dont Dive lol
 	self:add(ml_element:create( "SwimUP", c_SwimUp, e_SwimUp, 160 ), self.process_elements)
@@ -179,8 +179,8 @@ function mc_ai_doquest:Init()
 	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 70 ), self.process_elements)	
 	
 	-- Gathering
-	self:add(ml_element:create( "Gathering", c_Gathering, e_Gathering, 65 ), self.process_elements)
-			
+	self:add(ml_element:create( "Gathering", c_gatherTask, e_gatherTask, 65 ), self.process_elements)
+		
 	-- Do Quest 
 	self:add(ml_element:create( "DoQuest", c_doQuest, e_doQuest, 50 ), self.process_elements)
 	

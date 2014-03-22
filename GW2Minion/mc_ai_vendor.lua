@@ -1,6 +1,9 @@
 -- Handles Selling,Buying,Repairing
 -- UI is in mc_vendormanager.lua
 mc_ai_vendor = {}
+mc_ai_vendor.tmr = 0
+mc_ai_vendor.threshold = 2000
+
 
 --************
 -- SELLING 
@@ -83,6 +86,11 @@ function e_quickvendorsell:execute()
 							if (tonumber(navResult) < 0) then
 								d("e_quickvendorsell.MoveIntoInteractRange result: "..tonumber(navResult))					
 							end
+							if ( mc_global.now - mc_ai_vendor.tmr > mc_ai_vendor.threshold ) then
+								mc_ai_vendor.tmr = mc_global.now
+								mc_ai_vendor.threshold = math.random(1500,5000)
+								mc_skillmanager.HealMe()
+							end
 							ml_log("MoveToSellVendor..")
 							return true
 						end
@@ -114,6 +122,11 @@ function e_quickvendorsell:execute()
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
 							d("e_quickvendorsell.MoveInto Vendor Range result: "..tonumber(navResult))					
+						end
+						if ( mc_global.now - mc_ai_vendor.tmr > mc_ai_vendor.threshold ) then
+							mc_ai_vendor.tmr = mc_global.now
+							mc_ai_vendor.threshold = math.random(1500,5000)
+							mc_skillmanager.HealMe()
 						end
 						ml_log("MoveToSellVendor..")
 						return true
@@ -169,6 +182,11 @@ function e_vendorsell:execute()
 							if (tonumber(navResult) < 0) then
 								d("e_vendorsell.MoveIntoInteractRange result: "..tonumber(navResult))					
 							end
+							if ( mc_global.now - mc_ai_vendor.tmr > mc_ai_vendor.threshold ) then
+								mc_ai_vendor.tmr = mc_global.now
+								mc_ai_vendor.threshold = math.random(1500,5000)
+								mc_skillmanager.HealMe()
+							end
 							ml_log("MoveToSellVendor..")
 							return true
 						end
@@ -200,6 +218,11 @@ function e_vendorsell:execute()
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
 							d("e_vendorsell.MoveIntovMarkerRange result: "..tonumber(navResult))					
+						end
+						if ( mc_global.now - mc_ai_vendor.tmr > mc_ai_vendor.threshold ) then
+							mc_ai_vendor.tmr = mc_global.now
+							mc_ai_vendor.threshold = math.random(1500,5000)
+							mc_skillmanager.HealMe()
 						end
 						ml_log("MoveToSellVendorMarker..")
 						return true
@@ -359,6 +382,11 @@ function e_quickbuy:execute()
 							if (tonumber(navResult) < 0) then
 								d("e_quickbuy.MoveIntoInteractRange result: "..tonumber(navResult))					
 							end
+							if ( mc_global.now - mc_ai_vendor.tmr > mc_ai_vendor.threshold ) then
+								mc_ai_vendor.tmr = mc_global.now
+								mc_ai_vendor.threshold = math.random(1500,5000)
+								mc_skillmanager.HealMe()
+							end
 							ml_log("MoveToBuyVendor..")
 							return true
 						end
@@ -388,6 +416,11 @@ function e_quickbuy:execute()
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
 							d("e_quickbuy.MoveInto Vendor Range result: "..tonumber(navResult))					
+						end
+						if ( mc_global.now - mc_ai_vendor.tmr > mc_ai_vendor.threshold ) then
+							mc_ai_vendor.tmr = mc_global.now
+							mc_ai_vendor.threshold = math.random(1500,5000)
+							mc_skillmanager.HealMe()
 						end
 						ml_log("MoveToBuyVendor..")
 						return true
@@ -443,6 +476,11 @@ function e_vendorbuy:execute()
 							if (tonumber(navResult) < 0) then
 								d("e_vendorbuy.MoveIntoInteractRange result: "..tonumber(navResult))					
 							end
+							if ( mc_global.now - mc_ai_vendor.tmr > mc_ai_vendor.threshold ) then
+								mc_ai_vendor.tmr = mc_global.now
+								mc_ai_vendor.threshold = math.random(1500,5000)
+								mc_skillmanager.HealMe()
+							end
 							ml_log("MoveToBuyVendor..")
 							return true
 						end
@@ -472,6 +510,11 @@ function e_vendorbuy:execute()
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
 							d("e_vendorbuy.MoveIntovMarkerRange result: "..tonumber(navResult))					
+						end
+						if ( mc_global.now - mc_ai_vendor.tmr > mc_ai_vendor.threshold ) then
+							mc_ai_vendor.tmr = mc_global.now
+							mc_ai_vendor.threshold = math.random(1500,5000)
+							mc_skillmanager.HealMe()
 						end
 						ml_log("MoveToVendorBuyMarker..")
 						return true
@@ -705,6 +748,11 @@ function e_quickrepair:execute()
 							if (tonumber(navResult) < 0) then
 								d("e_quickrepair.MoveIntoInteractRange result: "..tonumber(navResult))					
 							end
+							if ( mc_global.now - mc_ai_vendor.tmr > mc_ai_vendor.threshold ) then
+								mc_ai_vendor.tmr = mc_global.now
+								mc_ai_vendor.threshold = math.random(1500,5000)
+								mc_skillmanager.HealMe()
+							end
 							ml_log("MoveToRepairVendor..")
 							return true
 						end
@@ -765,6 +813,11 @@ function e_vendorrepair:execute()
 							if (tonumber(navResult) < 0) then
 								ml_error("e_vendorrepair.MoveIntoInteractRange result: "..tonumber(navResult))					
 							end
+							if ( mc_global.now - mc_ai_vendor.tmr > mc_ai_vendor.threshold ) then
+								mc_ai_vendor.tmr = mc_global.now
+								mc_ai_vendor.threshold = math.random(1500,5000)
+								mc_skillmanager.HealMe()
+							end
 							ml_log("MoveToRepairVendor..")
 							return true
 						end
@@ -794,6 +847,11 @@ function e_vendorrepair:execute()
 						local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))		
 						if (tonumber(navResult) < 0) then
 							d("e_vendorrepair.MoveIntovMarkerRange result: "..tonumber(navResult))					
+						end
+						if ( mc_global.now - mc_ai_vendor.tmr > mc_ai_vendor.threshold ) then
+							mc_ai_vendor.tmr = mc_global.now
+							mc_ai_vendor.threshold = math.random(1500,5000)
+							mc_skillmanager.HealMe()
 						end
 						ml_log("MoveToRepairVendorMarker..")
 						return true

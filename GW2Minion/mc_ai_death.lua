@@ -12,25 +12,56 @@ function c_dead:evaluate()
 	return false
 end
 function e_dead:execute()
-
 	ml_log("e_dead")
-	if (mc_global.now - c_dead.deadTmr > 5000) then
-		local pHealth = Player.health
-		if ( c_dead.deadTmr == 0 or c_dead.lastHealth == nil or c_dead.lastHealth < pHealth.current ) then
-			c_dead.lastHealth = pHealth.current
-			c_dead.deadTmr = mc_global.now
-
-			if (c_dead.lastHealth ~= 0) then
-				c_dead.deadTmr = mc_global.now + 10000
+	-- check for partymember who can raise us
+	local party = Player:GetParty()
+	local pPos = Player.pos	
+	local found = false	
+	if ( TableSize(party) > 1 ) then		
+		local idx,pmember = next(party)	
+		while (idx and pmember) do
+			if ( pmember.id ~= 0 ) then
+				local char = CharacterList:Get(pmember.id)
+				if ( char ) then
+					local cPos = char.pos
+					if ( cPos and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) < 4000 and char.dead == false) then
+						found = true
+						break
+					end
+				end
 			end
-			d( "Dead: Are we being revived? If so wait to respawn.. " )
-		elseif ( c_dead.deadTmr ~= 0 and c_dead.lastHealth ~= nil ) then
-			c_dead.lastHealth = nil
-			c_dead.deadTmr = 0
-			d( "Dead: RESPAWN AT NEAREST WAYPOINT " )
-			d( Player:RespawnAtClosestWaypoint() )
-			mc_global.ResetBot()
-			mc_ai_unstuck.Reset()
+			idx,pmember=next(party,idx)
+		end
+	end	
+	-- Check for nearby Players who can rezz us
+	if ( found == false ) then
+		if ( TableSize(CharacterList("nearest,alive,friendly,player,maxdistance=1200"))>0 ) then
+			found = true
+		end
+	end
+	
+	if ( found ) then
+		ml_log("Waiting for Players/Partymember to rezz me")
+	else	
+	
+		if (mc_global.now - c_dead.deadTmr > 5000) then
+			local pHealth = Player.health
+			if ( c_dead.deadTmr == 0 or c_dead.lastHealth == nil or c_dead.lastHealth < pHealth.current ) then
+				c_dead.lastHealth = pHealth.current
+				c_dead.deadTmr = mc_global.now
+
+				if (c_dead.lastHealth ~= 0) then
+					c_dead.deadTmr = mc_global.now + 10000
+				end
+				d( "Dead: Are we being revived? If so wait to respawn.. " )
+			elseif ( c_dead.deadTmr ~= 0 and c_dead.lastHealth ~= nil ) then
+				c_dead.lastHealth = nil
+				c_dead.deadTmr = 0
+				d( "Dead: RESPAWN AT NEAREST WAYPOINT " )
+				d( Player:RespawnAtClosestWaypoint() )
+				mc_global.ResetBot()
+				mc_ai_unstuck.Reset()
+			end
 		end
 	end
 end

@@ -20,6 +20,9 @@ function mc_ai_Gather:Init()
 	
 	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 175 ), self.process_elements)
 	
+	-- Aggro
+	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 155 ), self.process_elements) --reactive queue
+	
 	-- Resting
 	self:add(ml_element:create( "Resting", c_resting, e_resting, 145 ), self.process_elements)
 	
@@ -35,7 +38,7 @@ function mc_ai_Gather:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_Gather:task_complete_eval()	
-	if ( c_dead:evaluate() or c_downed:evaluate() or ( c_Aggro:evaluate() and Player.health.percent < 95)  or c_LootChests:evaluate() or c_LootCheck:evaluate() or ( gBotMode == GetString("minionmode") and c_Gathering_mb:evaluate() == false or gBotMode ~= GetString("minionmode") and c_Gathering:evaluate() == false)) then 
+	if ( c_dead:evaluate() or c_downed:evaluate() or ( c_Aggro:evaluate() and Player.health.percent < 95)  or c_LootChests:evaluate() or c_LootCheck:evaluate() or ( gBotMode == GetString("minionmode") and c_Gathering_mb:evaluate() == false or gBotMode ~= GetString("minionmode") and c_gatherTask:evaluate() == false)) then 
 		Player:StopMovement()
 		return true
 	end
@@ -51,7 +54,7 @@ e_gatherTask = inheritsFrom( ml_effect )
 c_gatherTask.throttle = 2500
 function c_gatherTask:evaluate()
    -- ml_log("c_gatherTask")
-    return (gGather == "1" and Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=4000")) > 0)
+    return (gGather == "1" and Inventory.freeSlotCount > 0 and TableSize(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=2000")) > 0)
 end
 function e_gatherTask:execute()
 	ml_log("e_gatherTask")
@@ -275,7 +278,7 @@ e_Gathering = inheritsFrom( ml_effect )
 c_Gathering.tPos = nil
 function c_Gathering:evaluate()
 	if ( c_Gathering.tPos == nil ) then
-		local _,gadget = next(GadgetList("onmesh,nearest,gatherable,maxdistance=4500"))
+		local _,gadget = next(GadgetList("onmesh,nearest,gatherable,maxdistance=3000"))
 		if (gadget) then
 			c_Gathering.tPos = gadget.pos
 		end

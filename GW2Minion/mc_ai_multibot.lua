@@ -256,13 +256,16 @@ function c_MoveToLeader:evaluate()
 					if ( cPos ) then
 											
 						if ( c_MoveToLeader.nearleader == false ) then 
+							ml_log("e_MoveToLeader ")
 							return true
 						else 
 							if (not Player.inCombat and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) > 750) then
 								c_MoveToLeader.nearleader = false
+								ml_log("e_MoveToLeader ")
 								return true
 							elseif (Player.inCombat and Distance2D ( pPos.x, pPos.y, cPos.x, cPos.y) > 2750) then
 								c_MoveToLeader.nearleader = false
+								ml_log("e_MoveToLeader ")
 								return true						
 							end					
 						end					
@@ -331,8 +334,7 @@ e_MoveToLeader.ldist = math.random(150,600)
 e_MoveToLeader.tmr = 0
 e_MoveToLeader.threshold = 2000
 e_MoveToLeader.throttle = 1000
-function e_MoveToLeader:execute()
-	ml_log("e_MoveToLeader ")
+function e_MoveToLeader:execute()	
 	local party = Player:GetParty()
 	local pPos = Player.pos	
 	
@@ -394,15 +396,20 @@ function c_reviveNPC_mb:evaluate()
 end
 
 c_Gathering_mb = inheritsFrom( ml_cause )
+c_Gathering_mb.throttle = 2500
 function c_Gathering_mb:evaluate()
-	if ( c_Gathering.tPos == nil ) then
-		local _,gadget = next(GadgetList("onmesh,nearest,gatherable,maxdistance=1500"))
+	if ( gGather == "1" and c_Gathering.tPos == nil ) then
+		local _,gadget = next(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=2250"))
 		if (gadget) then
 			c_Gathering.tPos = gadget.pos
 		end
 	end
+	
 	if ( gGather == "1" and Inventory.freeSlotCount > 0 and c_Gathering.tPos ~= nil and TableSize(c_Gathering.tPos) > 0 ) then
-		return true
+		local pPos = Player.pos
+		if ( Distance3D( pPos.x, pPos.y, pPos.z, c_Gathering.tPos.x, c_Gathering.tPos.y, c_Gathering.tPos.z) < 3000 ) then
+			return true
+		end
 	end
 	c_Gathering.tPos = nil
 	return false

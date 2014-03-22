@@ -74,7 +74,7 @@ function mc_ai_exploration:Init()
 	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 70 ), self.process_elements)	
 	
 	-- Gathering
-	self:add(ml_element:create( "Gathering", c_Gathering, e_Gathering, 65 ), self.process_elements)	
+	self:add(ml_element:create( "Gathering", c_gatherTask, e_gatherTask, 65 ), self.process_elements)
 	
 	-- GotoPosition
 	self:add(ml_element:create( "GotoRandomPosition", c_goToPosition, e_goToPosition, 30 ), self.process_elements)	
