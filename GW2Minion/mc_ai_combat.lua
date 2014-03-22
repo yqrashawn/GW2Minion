@@ -476,6 +476,9 @@ end
 
 c_KillTarget = inheritsFrom( ml_cause )
 e_KillTarget = inheritsFrom( ml_effect )
+e_KillTarget.lastID = 0
+e_KillTarget.lastHP = 0
+e_KillTarget.Tmr = 0
 function c_KillTarget()
 	return Player.swimming == 0
 end
@@ -489,6 +492,24 @@ function e_KillTarget:execute()
 			mc_skillmanager.AttackTarget( t.id )
 			
 			DoCombatMovement()
+			
+			-- Check for determined/unkillable targets
+			if ( e_KillTarget.lastID ~= t.id ) then
+				e_KillTarget.lastID = t.id
+			else
+				if ( mc_global.now - e_KillTarget.Tmr > 5000 ) then
+					e_KillTarget.Tmr = mc_global.now
+					if ( e_KillTarget.lastHP ~= t.health.current ) then
+						e_KillTarget.lastHP = t.health.current
+					else
+						local tbuffs = t.buffs
+						if ( mc_helper.BufflistHasBuffs(tbuffs, "762") == true) then-- determined
+							d("Enemy has determined buff, blacklisting it for 15min")
+							mc_blacklist.AddBlacklistEntry(GetString("monsters"), t.contentID, t.name, mc_global.now + 900000)							
+						end
+					end
+				end
+			end
 			
 			return ml_log(true)
 		end

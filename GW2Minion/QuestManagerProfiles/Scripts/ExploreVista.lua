@@ -64,7 +64,13 @@ function script:Init()
 	
 	-- AoELooting Characters
 	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 175 ), self.process_elements)
-			
+	
+	-- Aggro
+	self:add(ml_element:create( "Aggro", c_AggroEx, e_AggroEx, 165 ), self.process_elements) --reactive queue
+	
+	-- Dont Dive lol
+	self:add(ml_element:create( "SwimUP", c_SwimUp, e_SwimUp, 160 ), self.process_elements)
+		
 	-- Normal Chests	
 	self:add(ml_element:create( "LootingChest", c_LootChests, e_LootChests, 155 ), self.process_elements)
 	

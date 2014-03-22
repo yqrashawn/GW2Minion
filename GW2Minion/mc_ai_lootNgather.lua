@@ -21,7 +21,7 @@ function mc_ai_Gather:Init()
 	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 175 ), self.process_elements)
 	
 	-- Aggro
-	self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 155 ), self.process_elements) --reactive queue
+	--self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 155 ), self.process_elements) --reactive queue
 	
 	-- Resting
 	self:add(ml_element:create( "Resting", c_resting, e_resting, 145 ), self.process_elements)
@@ -308,7 +308,7 @@ function e_Gathering:execute()
 				end
 				if ( mc_global.now - e_Gathering.tmr > e_Gathering.threshold ) then
 					e_Gathering.tmr = mc_global.now
-					e_Gathering.threshold = math.random(1500,5000)
+					e_Gathering.threshold = math.random(1000,3000)
 					mc_skillmanager.HealMe()
 				end
 				ml_log("MoveToGatherable..")
