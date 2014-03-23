@@ -13,7 +13,7 @@ function mc_ai_Gather.Create()
     newinst.subtask = nil
     newinst.process_elements = {}
     newinst.overwatch_elements = {} 
-	
+	newinst.tPos = {}
     return newinst
 end
 function mc_ai_Gather:Init()
@@ -21,7 +21,7 @@ function mc_ai_Gather:Init()
 	self:add(ml_element:create( "AoELoot", c_AoELoot, e_AoELoot, 175 ), self.process_elements)
 	
 	-- Aggro
-	--self:add(ml_element:create( "Aggro", c_Aggro, e_Aggro, 155 ), self.process_elements) --reactive queue
+	-- Cant add aggro since gather task is also in reactive queue like aggro
 	
 	-- Resting
 	self:add(ml_element:create( "Resting", c_resting, e_resting, 145 ), self.process_elements)
@@ -38,7 +38,7 @@ function mc_ai_Gather:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_Gather:task_complete_eval()	
-	if ( c_dead:evaluate() or c_downed:evaluate() or ( c_Aggro:evaluate() and Player.health.percent < 95)  or c_LootChests:evaluate() or c_LootCheck:evaluate() or ( gBotMode == GetString("minionmode") and c_Gathering_mb:evaluate() == false or gBotMode ~= GetString("minionmode") and c_gatherTask:evaluate() == false)) then 
+	if ( c_dead:evaluate() or c_downed:evaluate() or ( c_Aggro:evaluate() and Player.health.percent < 95) ) then 
 		Player:StopMovement()
 		return true
 	end
@@ -60,6 +60,17 @@ function e_gatherTask:execute()
 	ml_log("e_gatherTask")
 	Player:StopMovement()
 	local newTask = mc_ai_Gather.Create()
+	local GList = GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=2000")
+	if ( TableSize(GList)>0) then
+		local id,gatherable = next(GList)
+		if ( gatherable ) then
+			newTask.tPos = gatherable.pos
+		else
+			ml_error("gatherable not in list..")
+		end
+	else
+		ml_error("Bug: GList in e_gatherTask is empty!?")
+	end
 	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
 	return ml_log(true)	
 end
@@ -68,9 +79,10 @@ end
 c_deposit = inheritsFrom( ml_cause )
 e_deposit = inheritsFrom( ml_effect )
 c_deposit.LastCount = nil
+c_deposit.RandomCount = math.random(10,20)
 function c_deposit:evaluate()
 	if ( gDepositItems == "1" ) then
-		if ( Inventory.freeSlotCount <= 10 ) then
+		if ( Inventory.freeSlotCount <= c_deposit.RandomCount ) then
 			if ( c_deposit.LastCount == nil or c_deposit.LastCount ~= Inventory.freeSlotCount ) then			
 				return true
 			else
@@ -86,6 +98,7 @@ function e_deposit:execute()
 	ml_log( "e_deposit" )
 	c_deposit.LastCount = Inventory.freeSlotCount
 	ml_log(Inventory:DepositCollectables())
+	c_deposit.RandomCount = math.random(10,20)
 end
 
 ------------
@@ -146,7 +159,7 @@ c_LootCheck = inheritsFrom( ml_cause )
 e_LootCheck = inheritsFrom( ml_effect )
 function c_LootCheck:evaluate()
    -- ml_log("c_Loot")
-    return Inventory.freeSlotCount > 0 and TableSize(CharacterList("nearest,lootable,onmesh")) > 0
+    return Inventory.freeSlotCount > 0 and TableSize(CharacterList("nearest,lootable,onmesh,maxdistance=2500")) > 0
 end
 function e_LootCheck:execute()
 	ml_log("e_LootCheck")
@@ -211,7 +224,7 @@ e_LootChests = inheritsFrom( ml_effect )
 function c_LootChests:evaluate()
 	--ml_log("c_LootChests")
 	if ( Inventory.freeSlotCount > 0 ) then
-		local GList = GadgetList("onmesh,lootable,maxdistance=3000")
+		local GList = GadgetList("onmesh,lootable,maxdistance=2500")
 		if ( TableSize( GList ) > 0 ) then			
 			local index, LT = next( GList )
 			while ( index ~= nil and LT~=nil ) do
@@ -275,29 +288,31 @@ end
 ------------fck that, I'm lazy and this works like a god
 c_Gathering = inheritsFrom( ml_cause )
 e_Gathering = inheritsFrom( ml_effect )
-c_Gathering.tPos = nil
 function c_Gathering:evaluate()
-	if ( c_Gathering.tPos == nil ) then
-		local _,gadget = next(GadgetList("onmesh,nearest,gatherable,maxdistance=3000"))
+		
+	if ( TableSize(ml_task_hub:CurrentTask().tPos) == 0 ) then
+		local _,gadget = next(GadgetList("onmesh,nearest,gatherable,maxdistance=2000"))
 		if (gadget) then
-			c_Gathering.tPos = gadget.pos
+			ml_task_hub:CurrentTask().tPos = gadget.pos			
 		end
-	end
-	if ( gGather == "1" and Inventory.freeSlotCount > 0 and c_Gathering.tPos ~= nil and TableSize(c_Gathering.tPos) > 0 ) then
+	else		
 		return true
 	end
-	c_Gathering.tPos = nil
+	
+	-- no gatherable nearby and our current one is gathered, ending task
+	ml_task_hub:CurrentTask().completed = true
 	return false
 end
+
 e_Gathering.tmr = 0
 e_Gathering.threshold = 500
 function e_Gathering:execute()
 	ml_log("e_Gathering")
-	if ( TableSize(c_Gathering.tPos) > 0 ) then
+	if ( TableSize(ml_task_hub:CurrentTask().tPos) > 0 ) then
 		local pPos = Player.pos
-		local tPos = c_Gathering.tPos
-		local dist = Distance2D(tPos.x, tPos.y, pPos.x, pPos.y)
-		if (dist > 100) then
+		local tPos = ml_task_hub:CurrentTask().tPos
+		local dist = Distance3D(tPos.x, tPos.y, tPos.z, pPos.x, pPos.y, pPos.z)
+		if (dist > 150) then
 			-- MoveIntoInteractRange
 			if ( tPos ) then
 				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
@@ -317,33 +332,55 @@ function e_Gathering:execute()
 		else
 			-- Grab that thing
 			Player:StopMovement()
-			local _,gadget = next(GadgetList("onmesh,nearest,gatherable,maxdistance=500"))
-			local t = Player:GetTarget()
-			if (gadget) then
-				if ( gadget.selectable and (not t or t.id ~= gadget.id )) then
-					Player:SetTarget( gadget.id )
-				else
-					if ( Player.profession == 8 ) then -- Necro, leave shroud
-						local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
-						if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17 ) then
-							Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
-							mc_global.Wait(500)
-							return
+			local GList = GadgetList("onmesh,nearest,gatherable,maxdistance=750")
+			if ( TableSize(GList)>0) then
+				local _,gadget = next(GList)
+				local t = Player:GetTarget()
+				if (gadget) then
+					if ( gadget.selectable and (not t or t.id ~= gadget.id )) then
+						Player:SetTarget( gadget.id )
+						return ml_log(true)
+					else
+						if ( gadget.isInInteractRange ) then
+							if ( Player.profession == 8 ) then -- Necro, leave shroud
+								local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
+								if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17 ) then
+									Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
+									mc_global.Wait(500)
+									return
+								end
+							end
+							-- yeah I know, but this usually doesnt break ;)
+							if ( Player:GetCurrentlyCastedSpell() == 17 ) then
+								Player:Interact( gadget.id )
+								ml_log("Gathering..")
+								mc_global.Wait(1000)
+								return
+							end
+							return ml_log(true)
+						else
+							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))
+							if (tonumber(navResult) < 0) then
+								d("mc_ai_gathering.MoveToGatherableInteractRange result: "..tonumber(navResult))
+							end
+							ml_log("MoveToGatherableInteractRange..")
+							return ml_log(true)
 						end
 					end
-					-- yeah I know, but this usually doesnt break ;)
-					if ( Player:GetCurrentlyCastedSpell() == 17 ) then
-						Player:Interact( gadget.id )
-						ml_log("Gathering..")
-						mc_global.Wait(1000)
-						c_Gathering.tPos = nil
-						return true
-					end
+				else
+					d("No gadget nearby anymore, finishing gathertask")
+					ml_task_hub:CurrentTask().tPos = {}
+					return ml_log(true)
 				end
+			else
+				d("No gadget nearby anymore, finishing gather task")
+				ml_task_hub:CurrentTask().tPos = {}
+				return ml_log(true)
 			end
 		end
 	end
-	c_Gathering.tPos = nil
+	ml_error("Bug in e_Gathering() , no case that handled our situation")
+	ml_task_hub:CurrentTask().tPos = {}
 	return ml_log(false)
 end
 
@@ -352,12 +389,34 @@ c_GatherToolsCheck = inheritsFrom( ml_cause )
 e_GatherToolsCheck = inheritsFrom( ml_effect )
 function c_GatherToolsCheck:evaluate()
 	local toolList = mc_vendormanager.GetGatheringToolsCount()
-	return (not Player.inCombat and (
-			(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and toolList[1] > 0) or 
-			(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil  and toolList[2] > 0) or 
-			(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil   and toolList[3] > 0)
-		)
-	)
+	if( not Player.inCombat ) then
+		
+		local tSlot = nil
+		if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and toolList[1] > 0) then tSlot = 0
+		elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil and toolList[2] > 0) then tSlot = 1
+		elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil and toolList[3] > 0) then tSlot = 2 
+		end
+			
+		if ( tSlot ~= nil) then
+			local sTools = Inventory("itemtype=" .. GW2.ITEMTYPE.Gathering)
+			if (sTools) then
+				local pLevel = Player.level
+				local id,item = next(sTools)
+				while (id and item) do						
+					local itemID = item.itemID
+					for invTools = 1, 6, 1 do
+						--d(tostring(itemID).." / "..tostring(mc_vendormanager.tools[tSlot][invTools]))
+						if (itemID == mc_vendormanager.tools[tSlot][invTools] and pLevel >= mc_vendormanager.LevelRestrictions[invTools]) then 
+							-- We found a tool to equip into our empty gatherable slot								
+							return ml_log(true)
+						end
+					end
+					id,item = next(sTools, id)
+				end
+			end
+		end	
+	end
+	return false
 end
 function e_GatherToolsCheck:execute()
 	ml_log("e_GatherToolsCheck")
@@ -384,14 +443,15 @@ function e_GatherToolsCheck:execute()
 						if ( tSlot == 1 ) then d("Equipping Axe ..") item:Equip(GW2.EQUIPMENTSLOT.LoggingTool) end
 						if ( tSlot == 2 ) then d("Equipping Pick ..") item:Equip(GW2.EQUIPMENTSLOT.MiningTool) end						
 						mc_global.Wait(750)
-						return ml_log(true)
+						return ml_log(true)					
 					end
 				end
 				id,item = next(sTools, id)
 			end
 		end
+		ml_error("Bug in e_GatherToolsCheck -> sTools == nil!")
 	else
-		ml_error("e_GatherToolsCheck -> tType ==nil!")
+		ml_error("e_GatherToolsCheck -> tType == nil!")
 	end	
 	return ml_log(false)
 end

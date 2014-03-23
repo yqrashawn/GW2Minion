@@ -53,7 +53,7 @@ function mc_ai_combatAttack:Init()
 	self:add(ml_element:create( "Resting", c_resting, e_resting, 145 ), self.process_elements)	
 
 	-- Normal Looting
-	self:add(ml_element:create( "Looting", c_LootCheck, e_LootCheck, 130 ), self.process_elements)
+	self:add(ml_element:create( "Looting", c_LootCheck, e_LootCheck, 130 ), self.process_elements) --reactive queue
 
 	-- Deposit Items
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 120 ), self.process_elements)	

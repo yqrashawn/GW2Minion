@@ -63,7 +63,8 @@ function mc_ai_multibot:Init()
 	self:add(ml_element:create( "ReviveNPC", c_reviveNPC_mb, e_reviveNPC, 300 ), self.process_elements)	
 	
 	-- Gathering
-	self:add(ml_element:create( "Gathering", c_Gathering_mb, e_gatherTask, 280 ), self.process_elements)
+	--self:add(ml_element:create( "Gathering", c_Gathering_mb, e_gatherTask, 280 ), self.process_elements)
+	self:add(ml_element:create( "Gathering", c_gatherTask, e_gatherTask, 280 ), self.process_elements)
 	
 	-- Finish Enemy
 	self:add(ml_element:create( "FinishHim", c_FinishHim, e_FinishHim, 270 ), self.process_elements)
@@ -399,7 +400,7 @@ c_Gathering_mb = inheritsFrom( ml_cause )
 c_Gathering_mb.throttle = 2500
 function c_Gathering_mb:evaluate()
 	if ( gGather == "1" and c_Gathering.tPos == nil ) then
-		local _,gadget = next(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=2250"))
+		local _,gadget = next(GadgetList("onmesh,shortestpath,gatherable,maxpathdistance=2000"))
 		if (gadget) then
 			c_Gathering.tPos = gadget.pos
 		end
