@@ -312,14 +312,14 @@ function e_Gathering:execute()
 		local pPos = Player.pos
 		local tPos = ml_task_hub:CurrentTask().tPos
 		local dist = Distance3D(tPos.x, tPos.y, tPos.z, pPos.x, pPos.y, pPos.z)
-		if (dist > 150) then
+		if (dist > 250) then
 			-- MoveIntoInteractRange
 			if ( tPos ) then
 				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 				MoveOnlyStraightForward()
-				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))
+				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,75,false,true,true))
 				if (tonumber(navResult) < 0) then
-					d("mc_ai_gathering.MoveIntoCombatRange result: "..tonumber(navResult))
+					d("mc_ai_gathering.MoveIntoRange result: "..tonumber(navResult))
 				end
 				if ( mc_global.now - e_Gathering.tmr > e_Gathering.threshold ) then
 					e_Gathering.tmr = mc_global.now

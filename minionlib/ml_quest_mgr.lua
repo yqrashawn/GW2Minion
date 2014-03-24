@@ -32,9 +32,13 @@ function ml_quest_mgr.ModuleInit( name , path)
 	if (Settings[ml_quest_mgr.ModuleName].gQMprofile == nil) then
 		Settings[ml_quest_mgr.ModuleName].gQMprofile = "None"
 	end
+	if ( Settings.GW2Minion.gQMrandomize == nil ) then
+		Settings.GW2Minion.gQMrandomize = "1"
+	end	
 		
 	GUI_NewWindow(ml_quest_mgr.mainwindow.name,ml_quest_mgr.mainwindow.x,ml_quest_mgr.mainwindow.y,ml_quest_mgr.mainwindow.w,ml_quest_mgr.mainwindow.h,true)
 	GUI_NewComboBox(ml_quest_mgr.mainwindow.name,GetString("profile"),"gQMprofile",GetString("generalSettings"),"None")
+	GUI_NewCheckbox(ml_quest_mgr.mainwindow.name,GetString("questRandomized"),"gQMrandomize",GetString("generalSettings"))
 	GUI_NewField(ml_quest_mgr.mainwindow.name,GetString("newProfileName"),"gQMnewname",GetString("generalSettings"))
 	GUI_NewButton(ml_quest_mgr.mainwindow.name,GetString("newProfile"),"QMCreateNewProfile",GetString("generalSettings"))
 	RegisterEventHandler("QMCreateNewProfile",ml_quest_mgr.CreateNewProfile)
@@ -45,7 +49,7 @@ function ml_quest_mgr.ModuleInit( name , path)
 	RegisterEventHandler("QMAddQuest",ml_quest_mgr.MainButtonHandler)	
 
 
-				
+	gQMrandomize = Settings.GW2Minion.gQMrandomize			
 	gQMprofile = Settings[ml_quest_mgr.ModuleName].gQMprofile
 	gQMnewname = ""
   		
@@ -117,7 +121,10 @@ function ml_quest_mgr.UpdateCurrentProfileData()
 		
 		-- Check if we have a character specific progress file of that profile and load that first
 		local pName = Player.name	
-		if (pName == nil or pName == "") then return end
+		if (pName == nil or pName == "") then 
+			ml_error("Playername is empty ... restart your gw2 please!")
+			return 
+		end
 		
 		pName = pName:gsub('%W','') -- only alphanumeric
 		if ( pName ~= nil and pName ~= "" ) then
@@ -448,7 +455,7 @@ function ml_quest_mgr.EditQuest( arg )
 		QME_Done = quest.done
 		QME_MinLevel = tonumber(quest.minlevel)
 		QME_MaxLevel = tonumber(quest.maxlevel)
-		QME_Map = quest.map.."("..tostring(quest.mapid)..")"
+		QME_Map = quest.map
 		QME_PrevQuest = quest.prequest
 		QME_Repeat = quest.repeatable
 	else
@@ -493,6 +500,13 @@ function ml_quest_mgr.AddNewStep( step )
 	if ( ml_quest_mgr.RegisteredButtonEventList[bevent] == nil ) then
 		RegisterEventHandler(bevent,ml_quest_mgr.EditStep)
 		ml_quest_mgr.RegisteredButtonEventList[bevent] = 1
+	end
+	
+	-- add the current map we are in to the quest maps, so the mapID check wont fail when switching maps
+	local mid = Player:GetLocalMapID()	
+	if ( not ml_quest_mgr.QuestIsForMapID( ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio],mid)) then
+		ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].mapid = ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].mapid .. ","..tostring(Player:GetLocalMapID())
+		ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].map = ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].map .. ","..tostring(mc_datamanager.GetMapName( Player:GetLocalMapID()))
 	end
 		
 	if ( not step ) then
@@ -780,7 +794,9 @@ end
 
 function ml_quest_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
-		if ( k == "gQMprofile" ) then
+		if ( k == "gQMrandomize" ) then
+			Settings.GW2Minion[tostring(k)] = v
+		elseif ( k == "gQMprofile" ) then
 			GUI_WindowVisible(ml_quest_mgr.editwindow.name,false)
 			GUI_WindowVisible(ml_quest_mgr.stepwindow.name,false)
 			ml_quest_mgr.currentscript = nil
@@ -877,28 +893,45 @@ end
 function ml_quest_mgr.GetNewQuest()	
 	if ( TableSize( ml_quest_mgr.QuestList ) > 0 ) then
 		local validQuests = {}
-		local qprio,quest = next ( ml_quest_mgr.QuestList )
+		local mid = Player:GetLocalMapID()
+		local qprio,quest = next ( ml_quest_mgr.QuestList )		
 		while qprio and quest do
 			
-			if ( quest.done == "0" and tonumber(quest.mapid) == Player:GetLocalMapID() and tonumber(quest.minlevel) <= Player.level and tonumber(quest.maxlevel) >= Player.level and TableSize( ml_quest_mgr.QuestList[qprio].steps ) > 0 ) then
-				-- Check if this quest needs a prequest to be done first
-				if ( quest.prequest ~= "" and quest.prequest ~= "None" ) then
-					local preQuest = ml_quest_mgr.GetQuestByName( quest.prequest )
-					if ( preQuest ~= nil and preQuest.done == "1") then						
+			if ( quest.done == "0" and tonumber(quest.minlevel) <= Player.level and tonumber(quest.maxlevel) >= Player.level and TableSize( ml_quest_mgr.QuestList[qprio].steps ) > 0 ) then
+													
+				local found = false
+				for _mapid in StringSplit(tostring(quest.mapid),",") do
+					if ( _mapid == tostring(mid) ) then
+						found = true
+						break
+					end
+				end
+			
+				if ( found ) then
+				
+					-- Check if this quest needs a prequest to be done first
+					if ( quest.prequest ~= "" and quest.prequest ~= "None" ) then
+						local preQuest = ml_quest_mgr.GetQuestByName( quest.prequest )
+						if ( preQuest ~= nil and preQuest.done == "1") then						
+							table.insert(validQuests,quest)
+						end
+					else					
 						table.insert(validQuests,quest)
 					end
-				else					
-					table.insert(validQuests,quest)
 				end
 			end
 			
 			qprio,quest = next ( ml_quest_mgr.QuestList , qprio )
 		end
 		
-		if ( TableSize(validQuests) > 0 ) then
-			local r = math.random (1,TableSize(validQuests))			
-			d("Next Quest Selected: "..tostring(validQuests[r].name))
-			return validQuests[r]
+		if ( TableSize(validQuests) > 0 ) then			
+			if ( gQMrandomize == "1") then
+				r = math.random (1,TableSize(validQuests))			
+				d("Next Quest Selected: "..tostring(validQuests[r].name))
+				return validQuests[r]
+			else
+				return validQuests[1]
+			end			
 		end
 	end
 	return nil
@@ -975,6 +1008,20 @@ function ml_quest_mgr.SetQuestData( quest, step, script, variablename, data )
 	return false
 end
 
+-- checks if the passed quest contains the passed mapID
+function ml_quest_mgr.QuestIsForMapID( quest, mapid)
+	if ( mapid ~= "" and TableSize(quest) > 0 ) then
+		local found = false
+		for _mapid in StringSplit(tostring(quest.mapid),",") do
+			if ( _mapid == tostring(mapid) ) then
+				return true
+			end
+		end
+	else
+		ml_error("QuestIsForMapID error")
+	end
+	return false
+end
 
 
 

@@ -334,6 +334,7 @@ strings =
 		questReset						= "Reset Questprogress",
 		questsaveStep					= "Save Step",
 		questGenMapExplo				= "Generate Map Profile",
+		questRandomized					= "Random Quest",
 		mapobjects						= "Mapobjects",
 		
 		--mc_ai_vendor.lua

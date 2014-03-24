@@ -1,6 +1,4 @@
-	
-
-    -- Teleport script for QuestManager
+	-- Teleport script for QuestManager
     script = inheritsFrom( ml_task )
     script.name = "GoToWaypoint"
     script.Data = {}
@@ -107,9 +105,10 @@
             ml_log("e_goto")
             local nWay = wp.id
             if (nWay) then
-                    Player:TeleportToWaypoint(nWay)                
-                    return ml_log(true)
-                    ml_task_hub:CurrentTask().completed = true
+				if ( Player.inCombat == false and Player:TeleportToWaypoint(nWay) == true) then
+					ml_task_hub:CurrentTask().completed = true
+				end
+                return ml_log(true)                    
             else
             return ml_log(false)           
             end    

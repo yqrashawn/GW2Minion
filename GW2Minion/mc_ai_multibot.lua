@@ -393,7 +393,7 @@ end
 
 c_reviveNPC_mb = inheritsFrom( ml_cause )
 function c_reviveNPC_mb:evaluate()
-    return (gRevive == "1" and not Player.inCombat and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=1500")) > 0)
+    return (gRevive == "1" and not Player.inCombat and TableSize(CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=1500,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))) > 0)
 end
 
 c_Gathering_mb = inheritsFrom( ml_cause )

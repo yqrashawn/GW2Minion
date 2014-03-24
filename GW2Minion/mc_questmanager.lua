@@ -5,11 +5,10 @@ mc_questmanager.profilepath = GetStartupPath() .. [[\LuaMods\GW2Minion\QuestMana
 
 function mc_questmanager.ModuleInit( ) 
 	ml_quest_mgr.ModuleInit("GW2Minion",mc_questmanager.profilepath ) -- from minionlib/ml_quest_mgr.lua
-	
-	-- Add Map exploration stuff
+
+	-- Add Map exploration stuff	
 	GUI_NewButton(ml_quest_mgr.mainwindow.name,GetString("questGenMapExplo"),"QMGenMapExploProfile",GetString("generalSettings"))
 	RegisterEventHandler("QMGenMapExploProfile",mc_questmanager.GenerateMapExploreProfile)
-	
 end
 RegisterEventHandler("Module.Initalize",mc_questmanager.ModuleInit) -- from minionlib/ml_quest_mgr.lua
 
@@ -46,7 +45,8 @@ function mc_ai_questprofile:Process()
 		ml_quest_mgr.SetQuestData( self.currentQuest, self.currentStep, nil, "done", "1" )
 		self.currentStep = nil
 	end
-	if ( self.currentQuest == nil or self.currentQuest.mapid ~= Player:GetLocalMapID()) then
+	
+	if ( self.currentQuest == nil or ml_quest_mgr.QuestIsForMapID(self.currentQuest, Player:GetLocalMapID()) == false ) then
 		self.currentQuest = ml_quest_mgr.GetNewQuest()		
 		if ( self.currentQuest == nil ) then
 			d("No more Quests in Questprofile left, terminating task")
@@ -188,7 +188,7 @@ function mc_ai_doquest:Init()
 end
 
 function mc_ai_doquest:task_complete_eval()
-	return self.currentQuest == nil or self.currentQuest.mapid ~= Player:GetLocalMapID()
+	return self.currentQuest == nil or  ml_quest_mgr.QuestIsForMapID(ml_task_hub:CurrentTask().currentQuest, Player:GetLocalMapID()) == false
 end
 function mc_ai_doquest:task_complete_execute()
     self.completed = true

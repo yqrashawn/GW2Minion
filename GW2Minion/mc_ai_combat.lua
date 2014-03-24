@@ -584,7 +584,7 @@ function mc_ai_combatRevive:Init()
     self:AddTaskCheckCEs()
 end
 function mc_ai_combatRevive:task_complete_eval()
-	if ( c_dead:evaluate() or c_downed:evaluate() or c_AggroEx:evaluate() or c_LootChests:evaluate() or c_LootCheck:evaluate() or self.targetID == 0 or CharacterList:Get(self.targetID) == nil or CharacterList:Get(self.targetID).alive == true ) then 
+	if ( c_dead:evaluate() or c_downed:evaluate() or c_AggroEx:evaluate() or ml_task_hub:CurrentTask().targetID == 0 or CharacterList:Get(ml_task_hub:CurrentTask().targetID) == nil or CharacterList:Get(ml_task_hub:CurrentTask().targetID).alive == true ) then 
 		Player:StopMovement()
 		return true
 	end
@@ -633,7 +633,7 @@ function e_revive:execute()
 	if ( ml_task_hub:CurrentTask().targetID ~= nil and ml_task_hub:CurrentTask().targetID > 0 ) then 
 		entity = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
 		if ( entity == nil ) then
-			local CharList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=3500,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))
+			local CharList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,exclude="..mc_blacklist.GetExcludeString(GetString("monsters")))
 			if ( TableSize(CharList) > 0 ) then
 				id,entity = next (CharList)			
 			end

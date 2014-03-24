@@ -34,7 +34,7 @@ function mc_ai_unstuck:OnUpdate( tick )
 			local pPos = Player.pos
 			if ( pPos ) then
 				--d(Distance2D ( pPos.x, pPos.y, mc_ai_unstuck.lastpos.x, mc_ai_unstuck.lastpos.y))				
-				local bcheck = Distance2D ( pPos.x, pPos.y, mc_ai_unstuck.lastpos.x,  mc_ai_unstuck.lastpos.y) < 75
+				local bcheck = Distance2D ( pPos.x, pPos.y, mc_ai_unstuck.lastpos.x,  mc_ai_unstuck.lastpos.y) < 80
 				if ( mc_ai_unstuck.ismoving == true ) then
 					bcheck = Distance2D ( pPos.x, pPos.y, mc_ai_unstuck.lastpos.x,  mc_ai_unstuck.lastpos.y) < 125
 				end
