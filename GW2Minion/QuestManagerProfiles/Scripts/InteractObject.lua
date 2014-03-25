@@ -91,7 +91,7 @@ end
 
 
 script.c_MoveInObjectRange = inheritsFrom( ml_cause )
-script.e_MoveInObjetRange = inheritsFrom( ml_effect )
+script.e_MoveInObjectRange = inheritsFrom( ml_effect )
 script.c_MoveInObjectRange.reached = false
 script.c_MoveInObjectRange.range = 50
 
