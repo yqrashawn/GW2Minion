@@ -764,7 +764,8 @@ function e_quickrepair:execute()
 							Player:SetTarget( vendor.id )
 						else
 							
-							if ( not Inventory:IsVendorOpened() and not Player:IsConversationOpen() ) then
+							--if ( not Inventory:IsVendorOpened() and not Player:IsConversationOpen() ) then
+							if ( not Player:IsConversationOpen() ) then
 								ml_log( " Opening Vendor.. " )
 								Player:Interact( vendor.id )
 								mc_global.Wait(1500)
