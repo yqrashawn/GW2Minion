@@ -16,6 +16,8 @@ function mm.ModuleInit()
 
 	if (Settings.GW2Minion.DefaultMaps == nil) then
 		Settings.GW2Minion.DefaultMaps = {
+			[19] = "PlainsOfAshford",
+			[20] = "BlazzeridgeSteppes",
 			[22] = "FireHeartRise",
 			[23] = "KessexHills",
 			[25] = "IronMarches",
