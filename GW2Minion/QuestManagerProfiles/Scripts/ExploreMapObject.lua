@@ -112,9 +112,9 @@ function script:Init()
 	-- ReviveNPCs
 	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 70 ), self.process_elements)	
 	
-	-- Gathering
-	self:add(ml_element:create( "Gathering", c_Gathering, e_Gathering, 65 ), self.process_elements)
-	
+	-- Gathering	
+	self:add(ml_element:create( "Gathering", c_gatherTask, e_gatherTask, 65 ), self.process_elements)
+		
 	-- GoTo Position
 	self:add(ml_element:create( "GoToPosition", self.c_goto, self.e_goto, 30 ), self.process_elements)	
 	
@@ -126,6 +126,7 @@ function script:task_complete_eval()
 	return false
 end
 function script:task_complete_execute()
+	d("WWWWWWWWWWW")
    self.completed = true
 end
 
@@ -166,7 +167,6 @@ function script.e_goto:execute()
 			end			
 			return ml_log(true)
 		else
-			
 			ml_task_hub:CurrentTask().completed = true
 		end
 	end	

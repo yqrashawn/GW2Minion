@@ -312,12 +312,12 @@ function e_Gathering:execute()
 		local pPos = Player.pos
 		local tPos = ml_task_hub:CurrentTask().tPos
 		local dist = Distance3D(tPos.x, tPos.y, tPos.z, pPos.x, pPos.y, pPos.z)
-		if (dist > 250) then
+		if (dist > 200) then
 			-- MoveIntoInteractRange
 			if ( tPos ) then
 				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 				MoveOnlyStraightForward()
-				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,75,false,true,true))
+				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))
 				if (tonumber(navResult) < 0) then
 					d("mc_ai_gathering.MoveIntoRange result: "..tonumber(navResult))
 				end
@@ -330,8 +330,7 @@ function e_Gathering:execute()
 				return true
 			end
 		else
-			-- Grab that thing
-			Player:StopMovement()
+			-- Grab that thing			
 			local GList = GadgetList("onmesh,nearest,gatherable,maxdistance=750")
 			if ( TableSize(GList)>0) then
 				local _,gadget = next(GList)
@@ -342,6 +341,7 @@ function e_Gathering:execute()
 						return ml_log(true)
 					else
 						if ( gadget.isInInteractRange ) then
+							Player:StopMovement()
 							if ( Player.profession == 8 ) then -- Necro, leave shroud
 								local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
 								if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17 ) then
@@ -359,12 +359,20 @@ function e_Gathering:execute()
 							end
 							return ml_log(true)
 						else
-							local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))
-							if (tonumber(navResult) < 0) then
-								d("mc_ai_gathering.MoveToGatherableInteractRange result: "..tonumber(navResult))
+							local tPos = gadget.pos
+							if ( tPos ) then
+								ml_task_hub:CurrentTask().tPos = tPos
+								local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))
+								if (tonumber(navResult) < 0) then
+									d("mc_ai_gathering.MoveToGatherableInteractRange result: "..tonumber(navResult))
+								end
+								ml_log("MoveToGatherableInteractRange..")
+								return ml_log(true)
+							else
+								ml_error("Gatherable Pos is nil")
+								ml_task_hub:CurrentTask().tPos = {}
+								return ml_log(true)
 							end
-							ml_log("MoveToGatherableInteractRange..")
-							return ml_log(true)
 						end
 					end
 				else
