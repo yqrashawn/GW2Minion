@@ -372,7 +372,7 @@ function mc_ai_combatDefend:Init()
 end
 function mc_ai_combatDefend:task_complete_eval()
 	--ml_log("combatDefend:Complete?->")
-	if ( Player.swimming ~= 0 or TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh"))== 0) then 
+	if ( Player.swimming ~= 0 or TableSize(CharacterList("nearest,alive,aggro,attackable,maxdistance=1200,onmesh,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))))== 0) then 
 		Player:StopMovement()
 		return true
 	end
