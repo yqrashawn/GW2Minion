@@ -41,7 +41,7 @@ function mc_ai_multibot:Init()
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 420 ), self.process_elements)	
 	
 	-- Re-Equip Gathering Tools
-	self:add(ml_element:create( "EquippingGatherTool", c_GatherToolsCheck, e_GatherToolsCheck, 410 ), self.process_elements)	
+	self:add(ml_element:create( "EquippingGatherTool", c_GatherToolsCheck, e_GatherToolsCheck, 415 ), self.process_elements)	
 	
 	-- Quick-Repair & Vendoring (when a vendor is nearby)	
 	self:add(ml_element:create( "QuickSellItems", c_quickvendorsell, e_quickvendorsell, 400 ), self.process_elements)
@@ -63,7 +63,6 @@ function mc_ai_multibot:Init()
 	self:add(ml_element:create( "ReviveNPC", c_reviveNPC_mb, e_reviveNPC, 300 ), self.process_elements)	
 	
 	-- Gathering
-	--self:add(ml_element:create( "Gathering", c_Gathering_mb, e_gatherTask, 280 ), self.process_elements)
 	self:add(ml_element:create( "Gathering", c_gatherTask, e_gatherTask, 280 ), self.process_elements)
 	
 	-- Finish Enemy
@@ -333,7 +332,7 @@ function c_MoveToLeader:evaluate()
 end
 e_MoveToLeader.ldist = math.random(150,600)
 e_MoveToLeader.tmr = 0
-e_MoveToLeader.threshold = 2000
+e_MoveToLeader.thresh = 2000
 e_MoveToLeader.throttle = 1000
 function e_MoveToLeader:execute()	
 	local party = Player:GetParty()
@@ -362,9 +361,9 @@ function e_MoveToLeader:execute()
 						if (tonumber(navResult) < 0 and tonumber(navResult) ~= -3) then					
 							d("e_MoveToLeader.MoveToLeader result: "..tonumber(navResult))					
 						end
-						if ( mc_global.now - e_MoveToLeader.tmr > e_MoveToLeader.threshold ) then
+						if ( mc_global.now - e_MoveToLeader.tmr > e_MoveToLeader.thresh ) then
 							e_MoveToLeader.tmr = mc_global.now
-							e_MoveToLeader.threshold = math.random(1000,3000)
+							e_MoveToLeader.thresh = math.random(1000,3000)
 							mc_skillmanager.HealMe()
 						end	
 					else

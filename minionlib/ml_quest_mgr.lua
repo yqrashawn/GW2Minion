@@ -135,13 +135,12 @@ function ml_quest_mgr.UpdateCurrentProfileData()
             d("Quest Profile & Progress for "..gQMprofile.."_"..pName.." loaded")	
 			
 			-- Check if the main-sharable-Profile (.qmp) changed, so we need to overwrite the current progress data.
-			local tmp = persistence.load( ml_quest_mgr.profilepath..gQMprofile..".qmp")			
-			if ( TableSize(ml_quest_mgr.QuestList) > 0) then
-				if ( TableSize(ml_quest_mgr.QuestList) ~= TableSize(tmp) ) then
-					d("Character Questprofile differs from original Questprofile! Resetting it!")
-					ml_quest_mgr.QuestList = tmp
-				end
+			local tmp = persistence.load( ml_quest_mgr.profilepath..gQMprofile..".qmp")
+			if ( TableSize(ml_quest_mgr.QuestList) ~= TableSize(tmp) ) then
+				d("Character Questprofile differs from original Questprofile! Resetting it!")
+				ml_quest_mgr.QuestList = tmp
 			end
+			
 			
         else
 			ml_quest_mgr.QuestList = persistence.load( ml_quest_mgr.profilepath..gQMprofile..".qmp")
@@ -172,9 +171,6 @@ function ml_quest_mgr.UpdateCurrentProfileData()
         d("No new Quest Profile selected!")
 		gQMprofile = "None"
     end
-	
-	
-	
 	
 	ml_quest_mgr.RefreshQuestList()
     GUI_UnFoldGroup(ml_quest_mgr.mainwindow.name,GetString("quests"))	
