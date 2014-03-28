@@ -11,6 +11,7 @@ mc_skillmanager.RegisteredButtonEventList = {}
 mc_skillmanager.cskills = {} -- Current List of Skills, gets constantly updated each pulse
 mc_skillmanager.prevSkillID = 0
 mc_skillmanager.SwapTmr = 0 -- General WeaponSwap Timer
+mc_skillmanager.SwapRTmr = 0 -- Random WeaponSwap Timer
 mc_skillmanager.SwapWeaponTable = {}
 
 mc_skillmanager.DefaultProfiles = {
@@ -148,7 +149,7 @@ function mc_skillmanager.ModuleInit()
 	GUI_NewWindow(mc_skillmanager.mainwindow.name,mc_skillmanager.mainwindow.x,mc_skillmanager.mainwindow.y,mc_skillmanager.mainwindow.w,mc_skillmanager.mainwindow.h,true)
 	GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("profile"),"gSMprofile",GetString("generalSettings"),"None")
 		
-	--GUI_NewCheckbox(mc_skillmanager.mainwindow.name,GetString("SwapR"),"gSMSwapR",GetString("AdvancedSettings"))
+	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,GetString("SwapR"),"gSMSwapR",GetString("AdvancedSettings"))
 	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,GetString("SwapCD"),"gSMSwapCD",GetString("AdvancedSettings"))
 	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,GetString("SwapRange"),"gSMSwapRange",GetString("AdvancedSettings"))
 	
@@ -804,6 +805,8 @@ function mc_skillmanager.AttackTarget( TargetID )
 			targetbuffs = target.buffs
 		end
 		if ( TableSize(mc_skillmanager.SkillProfile) > 0 and Player:CanCast()) then
+			mc_skillmanager.SwapWeaponCheck("Pulse")
+			
 			for prio,skill in pairs(mc_skillmanager.SkillProfile) do
 				
 				--Try to find this skill in our current Skill List

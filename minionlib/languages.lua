@@ -138,6 +138,7 @@ strings =
 		prevSkillID						= "Previous Skill ID",
 		AdvancedSettings				= "Advanced Settings",
 		Fightstyle						= "Fightstyle",
+		SwapR							= "SwapWeapon Random",
         SwapCD							= "SwapWeapon CD",
 		SwapRange						= "SwapWeapon Range",
 		PriorizeKit						= "Priorized Kit",
@@ -147,7 +148,6 @@ strings =
 		PriorizeAttunement4				= "Attunement Prio 4",
 		AutoStomp						= "Finish Enemy",
 		AutoRezz						= "Rezz Friendly",
-		Fightstyle						= "Fightstyle",
 		
         --ffxiv stuff specific stuff
         botMode                       	= "Bot Mode",
@@ -590,7 +590,17 @@ strings =
 		AutoStomp						= "复活敌方",
 		AutoRezz						= "复活敌方",
 		Fightstyle						= "战斗风格",
-
+		SwapR							= "SwapWeapon Random",
+        SwapCD							= "SwapWeapon CD",
+		SwapRange						= "SwapWeapon Range",
+		PriorizeKit						= "Priorized Kit",
+		PriorizeAttunement1				= "Attunement Prio 1",
+		PriorizeAttunement2				= "Attunement Prio 2",
+		PriorizeAttunement3				= "Attunement Prio 3",
+		PriorizeAttunement4				= "Attunement Prio 4",
+		AutoStomp						= "Finish Enemy",
+		AutoRezz						= "Rezz Friendly",
+		
         --ffxiv
         botMode                       	= "挂机模式",
         addGrindSpot                    = "添加普通地面挂机标识",
@@ -1016,7 +1026,18 @@ strings =
 		prevSkillID						= "前スキル ID",
 		AdvancedSettings				= "高度設定",
 		Fightstyle						= "戦闘スタイル",
-        
+		SwapR							= "SwapWeapon Random",
+        SwapCD							= "SwapWeapon CD",
+		SwapRange						= "SwapWeapon Range",
+		PriorizeKit						= "Priorized Kit",
+		PriorizeAttunement1				= "Attunement Prio 1",
+		PriorizeAttunement2				= "Attunement Prio 2",
+		PriorizeAttunement3				= "Attunement Prio 3",
+		PriorizeAttunement4				= "Attunement Prio 4",
+		AutoStomp						= "Finish Enemy",
+		AutoRezz						= "Rezz Friendly",
+		
+		
         --ffxiv stuff specific stuff
         botMode                       	= "Bot モード",
         addGrindSpot                    = "レベルングマーカー追加",
@@ -1442,7 +1463,17 @@ strings =
 		prevSkillID						= "Previous Skill ID",
 		AdvancedSettings				= "Advanced Settings",
 		Fightstyle						= "Fightstyle",
-        
+        SwapR							= "SwapWeapon Random",
+        SwapCD							= "SwapWeapon CD",
+		SwapRange						= "SwapWeapon Range",
+		PriorizeKit						= "Priorized Kit",
+		PriorizeAttunement1				= "Attunement Prio 1",
+		PriorizeAttunement2				= "Attunement Prio 2",
+		PriorizeAttunement3				= "Attunement Prio 3",
+		PriorizeAttunement4				= "Attunement Prio 4",
+		AutoStomp						= "Finish Enemy",
+		AutoRezz						= "Rezz Friendly",
+		
         --ffxiv stuff specific stuff
         botMode                       	= "Bot Mode",
         addGrindSpot                    = "Add Grind Marker",
@@ -1868,7 +1899,17 @@ strings =
 		prevSkillID						= "ID compétence Précédente",
 		AdvancedSettings				= "Configuration Avancé",
 		Fightstyle						= "Style de combat",
-        
+       	SwapR							= "SwapWeapon Random",
+        SwapCD							= "SwapWeapon CD",
+		SwapRange						= "SwapWeapon Range",
+		PriorizeKit						= "Priorized Kit",
+		PriorizeAttunement1				= "Attunement Prio 1",
+		PriorizeAttunement2				= "Attunement Prio 2",
+		PriorizeAttunement3				= "Attunement Prio 3",
+		PriorizeAttunement4				= "Attunement Prio 4",
+		AutoStomp						= "Finish Enemy",
+		AutoRezz						= "Rezz Friendly",
+		
         --ffxiv stuff specific stuff
         botMode                       	= "Mode Bot",
         addGrindSpot                    = "Ajouter Grind Marker",
@@ -2294,7 +2335,17 @@ strings =
 		prevSkillID						= "Previous Skill ID",
 		AdvancedSettings				= "Advanced Settings",
 		Fightstyle						= "Fightstyle",
-        
+        SwapR							= "SwapWeapon Random",
+        SwapCD							= "SwapWeapon CD",
+		SwapRange						= "SwapWeapon Range",
+		PriorizeKit						= "Priorized Kit",
+		PriorizeAttunement1				= "Attunement Prio 1",
+		PriorizeAttunement2				= "Attunement Prio 2",
+		PriorizeAttunement3				= "Attunement Prio 3",
+		PriorizeAttunement4				= "Attunement Prio 4",
+		AutoStomp						= "Finish Enemy",
+		AutoRezz						= "Rezz Friendly",
+		
         --ffxiv stuff specific stuff
         botMode                       	= "Bot Mode",
         addGrindSpot                    = "Add Grind Marker",
