@@ -140,7 +140,7 @@ function mc_multibotmanager.CopyParty()
 		
 		local index, player  = next( party )
 		while ( index ~= nil and player ~= nil ) do			
-			if ( player.name ~= pname ) then
+			if ( player.name ~= pname and player.name ~= "") then
 				Settings.GW2Minion.Party[count] = player.name
 				_G["dMember"..count] = player.name
 				count = count + 1
@@ -202,7 +202,7 @@ function mc_multibotmanager.UpdatePartyStatus()
 					
 					local found = false
 					local index, player  = next( party )
-					while ( index ~= nil and player ~= nil ) do			
+					while ( index ~= nil and player ~= nil and player.name ~= "") do			
 						if ( player.name == pname ) then
 							found = true
 							break -- this player is already in our party
@@ -211,9 +211,9 @@ function mc_multibotmanager.UpdatePartyStatus()
 					end
 					
 					if ( not found and mc_blacklist.IsBlacklisted(pname) == false) then	
-						SendChatMsg(19,"/invite "..pname)
-						dPartyStatus = "Inviting "..pname
 						d("Inviting "..pname)
+						dPartyStatus = "Inviting "..pname
+						SendChatMsg(19,"/invite "..pname)												
 						mc_blacklist.AddBlacklistEntry(GetString("partymember"), idx, pname, mc_global.now + 30000)
 						return 
 					end
@@ -233,11 +233,11 @@ function mc_multibotmanager.UpdatePartyStatus()
 				local pname = Player.name
 				local index, player  = next( party )
 				while ( index ~= nil and player ~= nil ) do	
-					if ( player.name == pname ) then
+					if ( player.name == pname and player.name ~= "") then
 						-- check if we got an party invite
 						if ( player.hasparty == false ) then
 							if ( (player.connectstatus == 3 or player.connectstatus == 2 or player.connectstatus == 1) and player.invitestatus == 2 ) then
-								d("Accepting Party invitation.")
+								d("Accepting Party invitation from "..mc_multibotmanager.leadername)
 								SendChatMsg(19,"/join "..mc_multibotmanager.leadername)
 								dPartyStatus = "Joining "..mc_multibotmanager.leadername							
 								return
@@ -291,7 +291,7 @@ end
 -- HandleMultiBotMessages
 --**********************************************************
 function HandleMultiBotMessages( event, message, channel )	
---d("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
+d("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
 		
 	if (channel == MBSGroup ) then
 		
