@@ -335,7 +335,7 @@ function mm.OnUpdate( tickcount )
 		-- Check if we switched maps
 		local mapid = Player.localmapid
 		if ( not mm.reloadMeshPending and mapid ~= nil and mm.mapID ~= mapid ) then
-			if (Settings.GW2Minion.DefaultMaps[mapid] ~= nil) then
+			if (Settings.GW2Minion.DefaultMaps[mapid] ~= nil and (Settings.GW2Minion.DefaultMaps[mapid] ~= "none")) then
 				d("Autoloading Navmesh for this Zone: "..Settings.GW2Minion.DefaultMaps[mapid])
 				mm.reloadMeshPending = true
 				mm.reloadMeshTmr = mm.lasttick
@@ -353,7 +353,7 @@ function mm.NavMeshUpdate()
 	-- try loading questprofile
 	if ( gBotMode == GetString("grindMode") or gBotMode == GetString("exploreMode")) then
 		local mapname = mc_datamanager.GetMapName( Player:GetLocalMapID())
-		if ( mapname ~= nil and mapname ~= "" and mapname ~= "None" ) then
+		if ( mapname ~= nil and mapname ~= "" and mapname ~= "none" ) then
 			mapname = mapname:gsub('%W','') -- only alphanumeric
 			if ( mapname ~= nil and mapname ~= "" ) then
 				gQMprofile = mapname

@@ -291,7 +291,7 @@ end
 -- HandleMultiBotMessages
 --**********************************************************
 function HandleMultiBotMessages( event, message, channel )	
-d("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
+--d("MBM:" .. tostring(message) .. " chan: " .. tostring(channel))
 		
 	if (channel == MBSGroup ) then
 		
