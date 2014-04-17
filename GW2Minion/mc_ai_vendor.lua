@@ -928,10 +928,6 @@ function mc_ai_vendor.OpenSellWindow()
 				Player:SelectConversationOption( GW2.CONVERSATIONOPTIONS.KarmaShop )
 				found = true
 				break
-			elseif( entry.type == 23 ) then
-				Player:SelectConversationOption( 23 )
-				found = true
-				break
 			elseif( entry.type == 13 ) then
 				Player:SelectConversationOption( 13 )
 				found = true
