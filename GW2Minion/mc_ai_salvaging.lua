@@ -20,6 +20,7 @@ e_salvage.kitlist =
 	  [23041] = GetString("buyFine"), -- Fine (rarity 2)
 	  [23042] = GetString("buyJourneyman"), -- Journeyman (rarity 3)
 	  [23043] = GetString("buyMaster"),  -- Master (rarity 4)
+	  [44602] = GetString("unlimitedKit"), -- Copper-Fed Kit (rarity 1)
 	  [23045] = GetString("mysticKit"), -- Mystic Kit (rarity 4)
 	 }
 		
