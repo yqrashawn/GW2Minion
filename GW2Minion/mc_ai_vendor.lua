@@ -254,7 +254,7 @@ function mc_ai_vendor.SellAtVendor( vendor , nearbyvendor)
 				local i,item = next (sList)
 				if ( i and item ) then
 					mc_ai_vendor.isSelling = true
-					d("Selling :"..tostring(item.name))
+					d("Selling :"..(item.name))
 					item:Sell()
 					return
 				end				
@@ -347,7 +347,7 @@ end
 c_quickbuy = inheritsFrom( ml_cause )
 e_quickbuy = inheritsFrom( ml_effect )
 function c_quickbuy:evaluate()	
-	return (BuyManager_Active == "1" and Inventory.freeSlotCount > 0 and ( 
+	return (BuyManager_Active == "1" and Inventory.freeSlotCount > 0 and Player:GetWalletEntry(1) > 150 and( 
 		( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) ) -- so we wont leave the vendor after we sold 1 item ;)
 		or 
 		( mc_ai_vendor.NeedToBuyGatheringTools( true ) and TableSize(mc_ai_vendor.GetClosestBuyVendor()) > 0) -- We need new gathering tools
@@ -438,7 +438,7 @@ end
 c_vendorbuy = inheritsFrom( ml_cause )
 e_vendorbuy = inheritsFrom( ml_effect )
 function c_vendorbuy:evaluate()	
-	return (BuyManager_Active == "1" and  Inventory.freeSlotCount > 0 and ( 
+	return (BuyManager_Active == "1" and  Inventory.freeSlotCount > 0 and Player:GetWalletEntry(1) > 150 and( 
 			( (Inventory:IsVendorOpened() or Player:IsConversationOpen()) and ( mc_ai_vendor.isBuying ) )
 			or 
 			( mc_ai_vendor.NeedToBuyGatheringTools() and TableSize(mc_ai_vendor.GetClosestBuyVendorMarker()) > 0)
@@ -722,7 +722,7 @@ end
 c_quickrepair = inheritsFrom( ml_cause )
 e_quickrepair = inheritsFrom( ml_effect )
 function c_quickrepair:evaluate()	
-	return (  mc_ai_vendor.NeedToRepair( true ) and TableSize(mc_ai_vendor.GetClosestRepairVendor()) > 0)
+	return (  mc_ai_vendor.NeedToRepair( true ) and TableSize(mc_ai_vendor.GetClosestRepairVendor()) > 0 and Player:GetWalletEntry(1) > 150 )
 end
 function e_quickrepair:execute()
 	ml_log("e_quickrepair")	
@@ -785,7 +785,7 @@ end
 c_vendorrepair = inheritsFrom( ml_cause )
 e_vendorrepair = inheritsFrom( ml_effect )
 function c_vendorrepair:evaluate()	
-	return ( mc_ai_vendor.NeedToRepair() and  TableSize(mc_ai_vendor.GetClosestRepairVendorMarker()) > 0)
+	return ( mc_ai_vendor.NeedToRepair() and  TableSize(mc_ai_vendor.GetClosestRepairVendorMarker()) > 0 and Player:GetWalletEntry(1) > 150 )
 end
 function e_vendorrepair:execute()
 	ml_log("e_vendorrepair")

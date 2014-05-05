@@ -8,7 +8,7 @@ mc_global.lasttick = 0
 mc_global.running = false
 mc_global.BotModes = {}
 
-mc_global.WorldMarkerType = 23 -- enum for "in current map", changes on larger patches sometimes
+mc_global.WorldMarkerType = 24 -- enum for "in current map", changes on larger patches sometimes
 
 
 function mc_global.moduleinit()
@@ -202,7 +202,7 @@ function mc_global.OnUpdateCharSelect(event, tickcount )
 				while i and entry do			
 					if ( gGuestServer == entry.name ) then
 						SetServer(entry.id)
-						d("Selecting Guestserver: "..tostring(entry.name) .." ID: ".. tostring(entry.id))
+						d("Selecting Guestserver: "..(entry.name) .." ID: ".. tostring(entry.id))
 						break
 					end
 					i,entry = next ( serverlist,i)

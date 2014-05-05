@@ -335,7 +335,7 @@ function e_NeedValidTarget_fm:execute()
 					if ( TableSize( TList ) > 0 ) then
 						local id, E  = next( TList )
 						if ( id ~= nil and id ~= 0 and E ~= nil and E.distance <  mc_global.AttackRange) then
-							d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+							d("New Aggro Target: "..(E.name).." ID:"..tostring(id))
 							Player:SetTarget(id)
 							return ml_log(true)	
 						end		
@@ -353,7 +353,7 @@ function e_NeedValidTarget_fm:execute()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			--d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+			--d("New Aggro Target: "..(E.name).." ID:"..tostring(id))
 			Player:SetTarget(id)
 			return ml_log(true)	
 		end		
@@ -364,7 +364,7 @@ function e_NeedValidTarget_fm:execute()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			--d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+			--d("New Aggro Target: "..(E.name).." ID:"..tostring(id))
 			Player:SetTarget(id)
 			return ml_log(true)	
 		end		
@@ -375,7 +375,7 @@ function e_NeedValidTarget_fm:execute()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			--d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+			--d("New Aggro Target: "..(E.name).." ID:"..tostring(id))
 			Player:SetTarget(id)
 			return ml_log(true)	
 		end		
@@ -397,7 +397,7 @@ function e_NeedValidTarget_fm:execute()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			--d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+			--d("New Aggro Target: "..(E.name).." ID:"..tostring(id))
 			Player:SetTarget(id)
 			return ml_log(true)	
 		end		

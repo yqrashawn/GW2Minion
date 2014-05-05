@@ -229,7 +229,7 @@ function c_LootChests:evaluate()
 			local index, LT = next( GList )
 			while ( index ~= nil and LT~=nil ) do
 				if ( LT.selectable and (LT.contentID == 17698 or LT.contentID == 198260 or LT.contentID == 232192 or LT.contentID == 232193 or LT.contentID == 232194 or LT.contentID == 262863 or LT.contentID == 236384)) then --or LT.contentID == 41638
-					d("CHEST: "..tostring(LT.name).." "..tostring(LT.distance).." "..tostring(LT.contentID).." "..tostring(LT.lootable).." "..tostring(index))
+					--d("CHEST: "..(LT.name).." "..tostring(LT.distance).." "..tostring(LT.contentID).." "..tostring(LT.lootable).." "..tostring(index))
 					return true
 				end
 				index, LT = next( GList,index )

@@ -293,7 +293,7 @@ function c_MoveToLeader:evaluate()
 								if ( entry.id == sID ) then
 									gGuestServer = entry.name
 									SetServer(sID)									
-									d("Setting Guestserver: "..tostring(entry.name) .." ID: ".. tostring(entry.id))
+									d("Setting Guestserver: "..(entry.name) .." ID: ".. tostring(entry.id))
 									Player:Logout()
 									mc_global.Wait(5000)
 									break
@@ -437,7 +437,7 @@ function e_SetAggroTarget_mb:execute()
 				if ( TableSize( TList ) > 0 ) then
 					local id, E  = next( TList )
 					if ( id ~= nil and id ~= 0 and E ~= nil ) then
-						d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+						d("New Aggro Target: "..(E.name).." ID:"..tostring(id))
 						Player:SetTarget(id)
 						return ml_log(true)	
 					end		
@@ -453,7 +453,7 @@ function e_SetAggroTarget_mb:execute()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			--d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+			--d("New Aggro Target: "..(E.name).." ID:"..tostring(id))
 			Player:SetTarget(id)
 			return ml_log(true)	
 		end		
@@ -464,7 +464,7 @@ function e_SetAggroTarget_mb:execute()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			--d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+			--d("New Aggro Target: "..(E.name).." ID:"..tostring(id))
 			Player:SetTarget(id)
 			return ml_log(true)	
 		end		
