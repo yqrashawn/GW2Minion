@@ -139,6 +139,7 @@ function Dev.ModuleInit()
 	GUI_NewField("Dev","StackCount","IStack","InventoryInfo")
 	GUI_NewField("Dev","Soulbound","ISould","InventoryInfo")
 	GUI_NewField("Dev","Req.Soulbind","IRSoul","InventoryInfo")
+	GUI_NewField("Dev","Accountbound","IAccbou","InventoryInfo")
 	GUI_NewField("Dev","IsSalvagable","ISalv","InventoryInfo")
 	GUI_NewButton("Dev","UseItem","Dev.IUse","InventoryInfo")
 	RegisterEventHandler("Dev.IUse", Dev.Func)
@@ -938,6 +939,7 @@ function Dev.UpdateWindow()
 		ILoc = myitem.location
 		IStack = myitem.stackcount
 		ISould = tostring(myitem.soulbound)
+		IAccbou = tostring(myitem.accountbound)
 		IRSoul = tostring(myitem.reqsoulbind)
 		ISalv = tostring(myitem.salvagable)
 	else
@@ -955,6 +957,7 @@ function Dev.UpdateWindow()
 		ILoc = 0
 		IStack = 0
 		ISould = 0
+		IAccbou = 0
 		IRSoul = 0
 		ISalv = 0
 	end

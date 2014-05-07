@@ -3,7 +3,7 @@
 mc_ai_vendor = {}
 mc_ai_vendor.tmr = 0
 mc_ai_vendor.threshold = 2000
-
+mc_ai_vendor.vendorThrottleTmr = 0
 
 --************
 -- SELLING 
@@ -239,29 +239,33 @@ function e_vendorsell:execute()
 	return ml_log(false)		
 end
 function mc_ai_vendor.SellAtVendor( vendor , nearbyvendor)
-	-- Sell stuff	
-	if ( mc_ai_vendor.NeedToSell() or ( nearbyvendor and mc_ai_vendor.NeedToSell( true ) )) then
-		if ( not Inventory:IsVendorOpened() and Player:IsConversationOpen() ) then
-			if ( not mc_ai_vendor.OpenSellWindow() ) then
-				ml_error( "Vendoring: can't Sell at vendor, please report back to the developers" )
-				ml_error("Blacklisted Sell-Vendor"..vendor.name)
-				mc_blacklist.AddBlacklistEntry(GetString("vendors"), vendor.id, vendor.name, true)	
-			end
-		else
-			-- SELL HERE
-			local sList = mc_vendormanager.createItemList()
-			if ( TableSize(sList) > 0 ) then
-				local i,item = next (sList)
-				if ( i and item ) then
-					mc_ai_vendor.isSelling = true
-					d("Selling :"..(item.name))
-					item:Sell()
-					return
-				end				
+	-- Sell stuff
+	
+	if ( mc_global.now - mc_ai_vendor.vendorThrottleTmr > 500 ) then
+		mc_ai_vendor.vendorThrottleTmr = mc_global.now
+		if ( mc_ai_vendor.NeedToSell() or ( nearbyvendor and mc_ai_vendor.NeedToSell( true ) )) then
+			if ( not Inventory:IsVendorOpened() and Player:IsConversationOpen() ) then
+				if ( not mc_ai_vendor.OpenSellWindow() ) then
+					ml_error( "Vendoring: can't Sell at vendor, please report back to the developers" )
+					ml_error("Blacklisted Sell-Vendor"..vendor.name)
+					mc_blacklist.AddBlacklistEntry(GetString("vendors"), vendor.id, vendor.name, true)	
+				end
 			else
-				d("Selling finished..")				
-				Inventory:SellJunk()
-				mc_ai_vendor.isSelling = false				
+				-- SELL HERE
+				local sList = mc_vendormanager.createItemList()
+				if ( TableSize(sList) > 0 ) then
+					local i,item = next (sList)
+					if ( i and item ) then
+						mc_ai_vendor.isSelling = true
+						d("Selling :"..(item.name))
+						item:Sell()
+						return
+					end				
+				else
+					d("Selling finished..")				
+					Inventory:SellJunk()
+					mc_ai_vendor.isSelling = false				
+				end
 			end
 		end
 	end
@@ -532,138 +536,141 @@ function e_vendorbuy:execute()
 end
 function mc_ai_vendor.BuyAtVendor( vendor , nearbyvendor)
 	
-	-- BUY TOOLS
-	if ( mc_ai_vendor.NeedToBuyGatheringTools() or ( nearbyvendor and mc_ai_vendor.NeedToBuyGatheringTools( true ) )) then
-		if ( not Inventory:IsVendorOpened() and Player:IsConversationOpen() ) then
-			if ( not mc_ai_vendor.OpenSellWindow() ) then
-				ml_error( "Vendoring: can't Buy Tools at vendor.." )
-				ml_error("Blacklisted BuyTools-Vendor"..vendor.name)
-				mc_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)	
-			end
-		else
-			-- BUY TOOLS HERE
-			--set mc_ai_vendor.isBuying treu/false			
-			if ( Inventory:GetVendorServiceType() ~= GW2.VENDORSERVICETYPE.VendorBuy ) then
-				d("Switching to Buy Window")
-				Inventory:SetVendorServiceType(GW2.VENDORSERVICETYPE.VendorBuy)
-				return
-			end
-			local VList = VendorItemList("")
-			if ( TableSize(VList)>0 )then
-				local kitsToBuy = mc_vendormanager.NeedSalvageKitInfo()
-				local toolCount = mc_vendormanager.GetGatheringToolsCount()
-				
-				-- Buy SalvageKits				
-				-- stop when we have enough tools				
-				if ( mc_ai_vendor.isBuying and kitsToBuy.count >= tonumber(BuyManager_sStacks) and 
-					tonumber(BuyManager_toolStacks) <= toolCount[1] and 
-					tonumber(BuyManager_toolStacks) <= toolCount[2] and 
-					tonumber(BuyManager_toolStacks) <= toolCount[3] )
-					then
-					d("Finished Buying SalvageTools...")
-					mc_ai_vendor.isBuying = false
-					return
-				end				
-				
-				if ( kitsToBuy.count < tonumber(BuyManager_sStacks)) then
-					for i=#kitsToBuy.kits,1,-1 do						
-						local id,item = next(VList)
-						while (id and item) do
-							local itemID = item.itemID							
-							if (kitsToBuy.kits[i] == itemID) then
-								mc_ai_vendor.isBuying = true
-								d("Buying SalvageKit: "..item.name)
-								item:Buy()
-								return
-							end
-							id,item = next(VList,id)	
-						end
-					end
+	if ( mc_global.now - mc_ai_vendor.vendorThrottleTmr > 500 ) then
+		mc_ai_vendor.vendorThrottleTmr = mc_global.now
+		-- BUY TOOLS
+		if ( mc_ai_vendor.NeedToBuyGatheringTools() or ( nearbyvendor and mc_ai_vendor.NeedToBuyGatheringTools( true ) )) then
+			if ( not Inventory:IsVendorOpened() and Player:IsConversationOpen() ) then
+				if ( not mc_ai_vendor.OpenSellWindow() ) then
+					ml_error( "Vendoring: can't Buy Tools at vendor.." )
+					ml_error("Blacklisted BuyTools-Vendor"..vendor.name)
+					mc_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)	
 				end
-				
-				-- Buy GatheringTools
-				local toolsToBuy = mc_vendormanager.GetNeededGatheringToolsInfo()
-				d("BuyingTools")
-				-- Buy FTools
-				if ( tonumber(BuyManager_toolStacks) > toolCount[1] and TableSize(toolsToBuy[1])>0) then					
-					for i=#mc_vendormanager.tools[0],1,-1 do
-						local tid,count = next(toolsToBuy[1])
-						while (tid) do						
-							if ( mc_vendormanager.tools[0][i] == tid) then
-								-- First highest rarity item we should buy
-								local index,item = next(VList)
-								while (index and item) do
-									if ( item.itemID == tid ) then 
-										mc_ai_vendor.isBuying = true
-										d("Buying HarvestingTool: "..item.name)
-										item:Buy()
-										mc_global.Wait(math.random(450,850))
-										return
-									end
-									index,item = next(VList,index)
-								end
-							end
-							tid,count = next(toolsToBuy[1],tid)
-						end
-					end
-				end
-										
-				-- Buy LTools
-				if ( tonumber(BuyManager_toolStacks) > toolCount[2] and TableSize(toolsToBuy[2])>0) then
-					for i=#mc_vendormanager.tools[1],1,-1 do
-						local tid,count = next(toolsToBuy[2])
-						while (tid) do						
-							if ( mc_vendormanager.tools[1][i] == tid) then
-								-- First highest rarity item we should buy
-								local index,item = next(VList)
-								while (index and item) do
-									if ( item.itemID == tid ) then 
-										mc_ai_vendor.isBuying = true
-										d("Buying LoggingTool: "..item.name)
-										item:Buy()
-										mc_global.Wait(math.random(450,850))
-										return
-									end
-									index,item = next(VList,index)
-								end
-							end
-							tid,count = next(toolsToBuy[2],tid)
-						end
-					end
-				end
-
-				-- Buy MTools
-				if ( tonumber(BuyManager_toolStacks) > toolCount[3] and TableSize(toolsToBuy[3])>0) then
-					for i=#mc_vendormanager.tools[2],1,-1 do
-						local tid,count = next(toolsToBuy[3])
-						while (tid) do						
-							if ( mc_vendormanager.tools[2][i] == tid) then
-								-- First highest rarity item we should buy
-								local index,item = next(VList)
-								while (index and item) do
-									if ( item.itemID == tid ) then 
-										mc_ai_vendor.isBuying = true
-										d("Buying MiningTool: "..item.name)
-										item:Buy()
-										mc_global.Wait(math.random(450,850))
-										return
-									end
-									index,item = next(VList,index)
-								end
-							end
-							tid,count = next(toolsToBuy[3],tid)
-						end
-					end
-				end
-								
-				-- Seems we cant buy the tools we need at this Vendor, blacklisting him for 60 min
-				ml_error( "Vendoring: can't Buy the Tools we want at this vendor.." )
-				ml_error("Blacklisted BuyTools-Vendor for 15 min"..vendor.name)
-				mc_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, mc_global.now + 900000)	
-			
 			else
-				ml_error( "VendorList Empty??" )
-			end			
+				-- BUY TOOLS HERE
+				--set mc_ai_vendor.isBuying treu/false			
+				if ( Inventory:GetVendorServiceType() ~= GW2.VENDORSERVICETYPE.VendorBuy ) then
+					d("Switching to Buy Window")
+					Inventory:SetVendorServiceType(GW2.VENDORSERVICETYPE.VendorBuy)
+					return
+				end
+				local VList = VendorItemList("")
+				if ( TableSize(VList)>0 )then
+					local kitsToBuy = mc_vendormanager.NeedSalvageKitInfo()
+					local toolCount = mc_vendormanager.GetGatheringToolsCount()
+					
+					-- Buy SalvageKits				
+					-- stop when we have enough tools				
+					if ( mc_ai_vendor.isBuying and kitsToBuy.count >= tonumber(BuyManager_sStacks) and 
+						tonumber(BuyManager_toolStacks) <= toolCount[1] and 
+						tonumber(BuyManager_toolStacks) <= toolCount[2] and 
+						tonumber(BuyManager_toolStacks) <= toolCount[3] )
+						then
+						d("Finished Buying SalvageTools...")
+						mc_ai_vendor.isBuying = false
+						return
+					end				
+					
+					if ( kitsToBuy.count < tonumber(BuyManager_sStacks)) then --current count < max stacks wanted
+						for i=#kitsToBuy.kits,1,-1 do						
+							local id,item = next(VList)
+							while (id and item) do
+								local itemID = item.itemID							
+								if (kitsToBuy.kits[i] == itemID) then
+									mc_ai_vendor.isBuying = true
+									d("Buying SalvageKit: "..item.name)
+									item:Buy()
+									return
+								end
+								id,item = next(VList,id)	
+							end
+						end
+					end
+					
+					-- Buy GatheringTools
+					local toolsToBuy = mc_vendormanager.GetNeededGatheringToolsInfo()
+					d("BuyingTools")
+					-- Buy FTools
+					if ( tonumber(BuyManager_toolStacks) > toolCount[1] and TableSize(toolsToBuy[1])>0) then					
+						for i=#mc_vendormanager.tools[0],1,-1 do
+							local tid,count = next(toolsToBuy[1])
+							while (tid) do						
+								if ( mc_vendormanager.tools[0][i] == tid) then
+									-- First highest rarity item we should buy
+									local index,item = next(VList)
+									while (index and item) do
+										if ( item.itemID == tid ) then 
+											mc_ai_vendor.isBuying = true
+											d("Buying HarvestingTool: "..item.name)
+											item:Buy()
+											mc_global.Wait(math.random(450,850))
+											return
+										end
+										index,item = next(VList,index)
+									end
+								end
+								tid,count = next(toolsToBuy[1],tid)
+							end
+						end
+					end
+											
+					-- Buy LTools
+					if ( tonumber(BuyManager_toolStacks) > toolCount[2] and TableSize(toolsToBuy[2])>0) then
+						for i=#mc_vendormanager.tools[1],1,-1 do
+							local tid,count = next(toolsToBuy[2])
+							while (tid) do						
+								if ( mc_vendormanager.tools[1][i] == tid) then
+									-- First highest rarity item we should buy
+									local index,item = next(VList)
+									while (index and item) do
+										if ( item.itemID == tid ) then 
+											mc_ai_vendor.isBuying = true
+											d("Buying LoggingTool: "..item.name)
+											item:Buy()
+											mc_global.Wait(math.random(450,850))
+											return
+										end
+										index,item = next(VList,index)
+									end
+								end
+								tid,count = next(toolsToBuy[2],tid)
+							end
+						end
+					end
+
+					-- Buy MTools
+					if ( tonumber(BuyManager_toolStacks) > toolCount[3] and TableSize(toolsToBuy[3])>0) then
+						for i=#mc_vendormanager.tools[2],1,-1 do
+							local tid,count = next(toolsToBuy[3])
+							while (tid) do						
+								if ( mc_vendormanager.tools[2][i] == tid) then
+									-- First highest rarity item we should buy
+									local index,item = next(VList)
+									while (index and item) do
+										if ( item.itemID == tid ) then 
+											mc_ai_vendor.isBuying = true
+											d("Buying MiningTool: "..item.name)
+											item:Buy()
+											mc_global.Wait(math.random(450,850))
+											return
+										end
+										index,item = next(VList,index)
+									end
+								end
+								tid,count = next(toolsToBuy[3],tid)
+							end
+						end
+					end
+									
+					-- Seems we cant buy the tools we need at this Vendor, blacklisting him for 60 min
+					ml_error( "Vendoring: can't Buy the Tools we want at this vendor.." )
+					ml_error("Blacklisted BuyTools-Vendor for 15 min"..vendor.name)
+					mc_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, mc_global.now + 900000)	
+				
+				else
+					ml_error( "VendorList Empty??" )
+				end			
+			end
 		end
 	end
 end

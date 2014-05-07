@@ -502,7 +502,7 @@ function ml_quest_mgr.AddNewStep( step )
 	local mid = Player:GetLocalMapID()	
 	if ( not ml_quest_mgr.QuestIsForMapID( ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio],mid)) then
 		ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].mapid = ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].mapid .. ","..tostring(Player:GetLocalMapID())
-		ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].map = ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].map .. ","..tostring(mc_datamanager.GetMapName( Player:GetLocalMapID()))
+		ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].map = ml_quest_mgr.QuestList[ml_quest_mgr.editwindow.currentPrio].map .. ","..(mc_datamanager.GetMapName( Player:GetLocalMapID()))
 	end
 		
 	if ( not step ) then
@@ -675,14 +675,14 @@ function ml_quest_mgr.ScriptUIButtonEventHandler( event, eventTxt )
 			local ePrio = string.sub(eventTxt,ePos+5,sPos-1)
 			local sPrio = string.sub(eventTxt,sPos+6,sEndPos-1)
 			local evName = string.sub(eventTxt,sEndPos+7)
-			--d ( tostring(ePrio).." "..tostring(sPrio).." "..tostring(evName))
+			--d ( tostring(ePrio).." "..tostring(sPrio).." "..(evName))
 			if ( tonumber(ePrio) and tonumber(sPrio) and evName and evName ~= "" ) then
 				
 				-- save script variable data in the QuestList[][].script.data[]
 				if ( ml_quest_mgr.QuestList[tonumber(ePrio)]  and ml_quest_mgr.QuestList[tonumber(ePrio)].steps[tonumber(sPrio)]  and ml_quest_mgr.QuestList[tonumber(ePrio)].steps[tonumber(sPrio)].script.data ) then
 					--d("Saving:")
 					--d(eventTxt)
-					ml_quest_mgr.QuestList[tonumber(ePrio)].steps[tonumber(sPrio)].script.data[tostring(evName)] = _G[eventTxt]
+					ml_quest_mgr.QuestList[tonumber(ePrio)].steps[tonumber(sPrio)].script.data[(evName)] = _G[eventTxt]
 					
 					-- Forward the Event to the currently shown script-eventhandler for extended handling
 					if ( ml_quest_mgr.currentscript ) then
@@ -717,7 +717,7 @@ function ml_quest_mgr.ScriptUIEventHandler( eventTxt, eventVal )
 				if ( ml_quest_mgr.QuestList[tonumber(ePrio)]  and ml_quest_mgr.QuestList[tonumber(ePrio)].steps[tonumber(sPrio)]  and ml_quest_mgr.QuestList[tonumber(ePrio)].steps[tonumber(sPrio)].script.data ) then
 					--d("Saving:")
 					--d(eventTxt)
-					ml_quest_mgr.QuestList[tonumber(ePrio)].steps[tonumber(sPrio)].script.data[tostring(evName)] = _G[eventTxt]
+					ml_quest_mgr.QuestList[tonumber(ePrio)].steps[tonumber(sPrio)].script.data[(evName)] = _G[eventTxt]
 					
 					-- Forward the Event to the currently shown script-eventhandler for extended handling
 					if ( ml_quest_mgr.currentscript ) then
@@ -923,7 +923,7 @@ function ml_quest_mgr.GetNewQuest()
 		if ( TableSize(validQuests) > 0 ) then			
 			if ( gQMrandomize == "1") then
 				r = math.random (1,TableSize(validQuests))			
-				d("Next Quest Selected: "..tostring(validQuests[r].name))
+				d("Next Quest Selected: "..(validQuests[r].name))
 				return validQuests[r]
 			else
 				return validQuests[1]
@@ -943,7 +943,7 @@ function ml_quest_mgr.GetNextQuestStep( currentQuest )
 			
 				local loadedFunction, cError = loadfile(ml_quest_mgr.profilepath..[[Scripts\]]..ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name..".lua")
 				if ( loadedFunction == nil) then
-					ml_error(" in loading scriptfile: "..tostring(ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name))
+					ml_error(" in loading scriptfile: "..(ml_quest_mgr.QuestList[currentQuest.prio].steps[sprio].script.name))
 				else			
 					local script = loadedFunction()
 					local ident = "QPrio"..tostring(currentQuest.prio).."_QStep"..tostring(sprio).."_QName_"

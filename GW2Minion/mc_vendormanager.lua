@@ -367,7 +367,7 @@ function mc_vendormanager.createItemList()
 				iID,lItem = next(SellManager_ItemIDInfo, iID)
 			end
 			
-			if (addItem) then
+			if (addItem and item.accountbound == false) then
 				table.insert(filteredItems, item)
 			end
 			id, item = next(items, id)

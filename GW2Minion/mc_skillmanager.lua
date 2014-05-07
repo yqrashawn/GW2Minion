@@ -1181,6 +1181,118 @@ function mc_skillmanager.SwapWeapon(swaptype)
 	end	
 end
 
+--[[ TEST THIS CODE!
+function SkillManager.GetTarget()
+    local id = Player:GetTarget()
+    if (id ~= nil) and (id ~= 0) then
+        if (CharacterList:Get(id) ~= nil) then
+            if (CharacterList:Get(id).attitude ~= 0) and (CharacterList:Get(id).attitude ~= 3) and (CharacterList:Get(id).healthstate ~= 1) then
+                SkillManager.Target = {id,CharacterList:Get(id)}
+                return
+            end
+        end
+    end
+    SkillManager.Target = {0,0}
+end
+
+function SkillManager.TargetSpeed()
+    local dx = SkillManager.LastX - SkillManager.Target[2].pos.x
+    local dy = SkillManager.LastY - SkillManager.Target[2].pos.y
+    return math.sqrt(dx*dx + dy*dy)
+end
+
+function SkillManager.PlayerSpeed()
+    if SkillManager.PLastX and SkillManager.PLastY then
+        local dx = SkillManager.PLastX - Player.pos.x
+        local dy = SkillManager.PLastY - Player.pos.y
+        d("Player Speed: " .. math.sqrt(dx*dx + dy*dy))
+    end
+    SkillManager.PLastX = Player.pos.x
+    SkillManager.PLastY = Player.pos.y
+end
+
+function SkillManager.MovementPrediction()
+    SkillManager.PredictX = SkillManager.Target[2].pos.x
+    SkillManager.PredictY = SkillManager.Target[2].pos.y
+    if (Antioch_TMP == "1") then
+        if (SkillManager.CurrentTarget == SkillManager.LastTarget) then -- We haven't changed targets
+            -- d("Unchanged target.")
+            if (SkillManager.Target[2].movementstate ~= 0) then -- Target is moving
+                local TargetHeading = math.atan2(SkillManager.Target[2].pos.hy, SkillManager.Target[2].pos.hx)
+                local TargetSpeed = SkillManager.TargetSpeed()
+                -- d("Speed: " .. TargetSpeed)
+                if (SkillManager.TargetSpeed() <= 65) then
+                    SkillManager.PredictX = SkillManager.Target[2].pos.x + math.cos(TargetHeading) * TargetSpeed * (1 + SkillManager.Target[2].distance / 100)
+                    SkillManager.PredictY = SkillManager.Target[2].pos.y + math.sin(TargetHeading) * TargetSpeed * (1 + SkillManager.Target[2].distance / 100)
+                    if Distance3D(Player.pos.x,Player.pos.y,Player.pos.z,SkillManager.PredictX,SkillManager.PredictY,SkillManager.Target[2].pos.z) <= 1575 then
+                        -- d("OldX: " .. SkillManager.Target[2].pos.x .. " NewX: " .. SkillManager.PredictX)
+                        -- d("OldY: " .. SkillManager.Target[2].pos.y .. " NewY: " .. SkillManager.PredictY)
+                    else
+                        -- d("Predicted location was too far.")
+                    end
+                else
+                    -- d("Target was too fast. Teleported?)
+                end
+            end
+        else
+            -- d("Switched targets.")
+        end
+    end
+    SkillManager.LastX = SkillManager.Target[2].pos.x
+    SkillManager.LastY = SkillManager.Target[2].pos.y
+    SkillManager.LastTarget = SkillManager.CurrentTarget
+end
+
+function SkillManager.GroundCombat()
+    SkillManager.GetTarget()
+    SkillManager.CurrentTarget = SkillManager.Target[1]
+    if (SkillManager.Target[1] ~= 0) then
+        if (SkillManager.Target[2].distance < 1575) then
+            SkillManager.Cast(7,38289) -- Equip Grenades
+            SkillManager.MovementPrediction()
+            local GroundTargetPos = {}
+            GroundTargetPos[1] = SkillManager.PredictX
+            GroundTargetPos[2] = SkillManager.PredictY
+            if (SkillManager.Target[2].los) or (SkillManager.Target[2].distance < 900) then
+                GroundTargetPos[3] = SkillManager.Target[2].pos.z
+            else
+                GroundTargetPos[3] = (SkillManager.Target[2].pos.z - math.random(50,100))
+            end
+            SkillManager.CastGround(1,168949,GroundTargetPos) -- Grenade
+            SkillManager.CastGround(3,126469,GroundTargetPos) -- Flash Grenade
+            SkillManager.CastGround(5,132338,GroundTargetPos) -- Poison Grenade
+            SkillManager.CastGround(2,132339,GroundTargetPos) -- Shrapnel Grenade
+            SkillManager.CastGround(12,37625,GroundTargetPos) -- Grenade Barrage
+            SkillManager.CastGround(4,83475,GroundTargetPos) -- Freeze Grenade
+            if (SkillManager.Target[2].distance <= 1200) and (SkillManager.Target[2].los == true) then -- These require LOS and 1200 distance
+                SkillManager.Cast(14,38554,SkillManager.Target[1]) -- Analyze
+                SkillManager.Cast(9,38393) -- Utility Goggles
+            end
+            return
+        end
+    else
+        local MyTargetID = Player:GetTarget()
+        if (MyTargetID ~= nil) and (MyTargetID ~= 0) then
+            SkillManager.AttackSiegeEquipment(MyTargetID)
+        end
+    end
+end
+
+function SkillManager.WaterCombat()
+    local id = Player:GetTarget()
+    if (id ~= nil) and (id ~= 0) then
+        SkillManager.Cast(7,38289) -- Equip Grenades
+        local info = CharacterList:Get(id)
+        if (info.attitude ~= 0) and (info.healthstate ~= 1) then
+            SkillManager.Cast(1,222355,id)
+            SkillManager.Cast(2,222359,id)
+            SkillManager.Cast(3,222363,id)
+            SkillManager.Cast(4,222365,id)
+            SkillManager.Cast(5,222371,id)
+        end
+    end
+end 
+---]]
 
 
 RegisterEventHandler("SkillManager.toggle", mc_skillmanager.ToggleMenu)

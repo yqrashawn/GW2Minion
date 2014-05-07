@@ -784,6 +784,7 @@ strings =
 		questReset						= "任务重置",
 		questsaveStep					= "保存步骤",
 		questGenMapExplo				= "生成地图配置文件",
+		questRandomized					= "随机任务",
 		mapobjects						= "地图目标",
 		
 		--mc_ai_vendor.lua
