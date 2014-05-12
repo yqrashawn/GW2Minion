@@ -115,6 +115,9 @@ function script:Init()
 	-- Gathering	
 	self:add(ml_element:create( "Gathering", c_gatherTask, e_gatherTask, 65 ), self.process_elements)
 		
+	-- Kill Stuff Nearby
+	self:add(ml_element:create( "SearchAndKillNearby", c_SearchAndKillNearby, e_SearchAndKillNearby, 45 ), self.process_elements)	
+		
 	-- GoTo Position
 	self:add(ml_element:create( "GoToPosition", self.c_goto, self.e_goto, 30 ), self.process_elements)	
 	

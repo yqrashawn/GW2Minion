@@ -205,6 +205,8 @@ function mc_skillmanager.ModuleInit()
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("playerHPLT"),"SKM_PHPB","SkillDetails");
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("playerPowerGT"),"SKM_PPowL","SkillDetails");
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("playerPowerLT"),"SKM_PPowB","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("playerEnduranceGT"),"SKM_PEndL","SkillDetails");
+	GUI_NewNumeric(mc_skillmanager.editwindow.name,GetString("playerEnduranceLT"),"SKM_PEndB","SkillDetails");
 	GUI_NewField(mc_skillmanager.editwindow.name,GetString("playerHas"),"SKM_PEff1","SkillDetails");	
 	GUI_NewField(mc_skillmanager.editwindow.name,GetString("playerHasNot"),"SKM_PNEff1","SkillDetails");
 	GUI_NewNumeric(mc_skillmanager.editwindow.name,"Player has #Boons >","SKM_PBoonC","SkillDetails");
@@ -283,6 +285,8 @@ function mc_skillmanager.UpdateCurrentProfileData()
 								elseif ( key == "PHPB" )then newskill.phpb = tonumber(value)
 								elseif ( key == "PPowL" )then newskill.ppowl = tonumber(value)
 								elseif ( key == "PPowB" )then newskill.ppowb = tonumber(value)
+								elseif ( key == "PEndL" )then newskill.ppowl = tonumber(value)
+								elseif ( key == "PEndB" )then newskill.ppowb = tonumber(value)								
 								elseif ( key == "PEff1" )then newskill.peff1 = tostring(value)
 								elseif ( key == "PNEff1" )then newskill.pneff1 = tostring(value)
 								elseif ( key == "PCondC" )then newskill.pcondc = tonumber(value)
@@ -370,6 +374,8 @@ function mc_skillmanager.GUIVarUpdate(Event, NewVals, OldVals)
 		elseif ( k == "SKM_PHPB" ) then mc_skillmanager.SkillProfile[SKM_Prio].phpb = tonumber(v)
 		elseif ( k == "SKM_PPowL" ) then mc_skillmanager.SkillProfile[SKM_Prio].ppowl = tonumber(v)
 		elseif ( k == "SKM_PPowB" ) then mc_skillmanager.SkillProfile[SKM_Prio].ppowb = tonumber(v)
+		elseif ( k == "SKM_PEndL" ) then mc_skillmanager.SkillProfile[SKM_Prio].pendl = tonumber(v)
+		elseif ( k == "SKM_PEndB" ) then mc_skillmanager.SkillProfile[SKM_Prio].pendb = tonumber(v)
 		elseif ( k == "SKM_PEff1" ) then mc_skillmanager.SkillProfile[SKM_Prio].peff1 = v
 		elseif ( k == "SKM_PCondC" ) then mc_skillmanager.SkillProfile[SKM_Prio].pcondc = tonumber(v)
 		elseif ( k == "SKM_PNEff1" ) then mc_skillmanager.SkillProfile[SKM_Prio].pneff1 = v
@@ -486,7 +492,9 @@ function mc_skillmanager.SaveProfile()
 			string2write = string2write.."SKM_PHPL="..skill.phpl.."\n" 
 			string2write = string2write.."SKM_PHPB="..skill.phpb.."\n" 
 			string2write = string2write.."SKM_PPowL="..skill.ppowl.."\n" 
-			string2write = string2write.."SKM_PPowB="..skill.ppowb.."\n" 
+			string2write = string2write.."SKM_PPowB="..skill.ppowb.."\n"
+			string2write = string2write.."SKM_PEndL="..skill.pendl.."\n" 
+			string2write = string2write.."SKM_PEndB="..skill.pendb.."\n" 
 			string2write = string2write.."SKM_PEff1="..skill.peff1.."\n" 
 			string2write = string2write.."SKM_PCondC="..skill.pcondc.."\n" 
 			string2write = string2write.."SKM_PNEff1="..skill.pneff1.."\n" 								
@@ -638,6 +646,8 @@ function mc_skillmanager.CreateNewSkillEntry(skill)
 				phpb = skill.phpb or 0,
 				ppowl = skill.ppowl or 0,
 				ppowb = skill.ppowb or 0,
+				pendl = skill.pendl or 0,
+				pendb = skill.pendb or 0,
 				peff1 = skill.peff1 or "",
 				pcondc = skill.pcondc or 0,
 				pneff1 = skill.pneff1 or "",
@@ -679,6 +689,8 @@ function mc_skillmanager.EditSkill(event)
 		SKM_PHPB = tonumber(skill.phpb) or 0
 		SKM_PPowL = tonumber(skill.ppowl) or 0
 		SKM_PPowB = tonumber(skill.ppowb) or 0
+		SKM_PEndL = tonumber(skill.pendl) or 0
+		SKM_PEndB = tonumber(skill.pendb) or 0
 		SKM_PEff1 = skill.peff1 or ""
 		SKM_PCondC = tonumber(skill.pcondc) or 0
 		SKM_PNEff1 = skill.pneff1 or ""
@@ -846,7 +858,9 @@ function mc_skillmanager.AttackTarget( TargetID )
 					if ( (skill.phpl > 0 and skill.phpl > Player.health.percent)
 						or (skill.phpb > 0 and skill.phpb < Player.health.percent)
 						or (skill.ppowl > 0 and skill.ppowl > Player.power)
-						or (skill.ppowb > 0 and skill.ppowb < Player.power)					
+						or (skill.ppowb > 0 and skill.ppowb < Player.power)
+						or (skill.pendl > 0 and skill.pendl > Player.endurance)
+						or (skill.pendb > 0 and skill.pendb < Player.endurance)					
 						) then continue end
 						
 					-- PLAYER BUFF AND CONDITION CHECKS
@@ -1001,7 +1015,9 @@ function mc_skillmanager.HealMe()
 					if ( (skill.phpl > 0 and skill.phpl > Player.health.percent)
 						or (skill.phpb > 0 and skill.phpb < Player.health.percent)
 						or (skill.ppowl > 0 and skill.ppowl > Player.power)
-						or (skill.ppowb > 0 and skill.ppowb < Player.power)					
+						or (skill.ppowb > 0 and skill.ppowb < Player.power)
+						or (skill.pendl > 0 and skill.pendl > Player.endurance)
+						or (skill.pendb > 0 and skill.pendb < Player.endurance)					
 						) then continue end
 						
 					-- PLAYER BUFF AND CONDITION CHECKS

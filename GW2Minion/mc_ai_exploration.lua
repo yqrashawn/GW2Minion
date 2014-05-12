@@ -76,6 +76,9 @@ function mc_ai_exploration:Init()
 	-- Gathering
 	self:add(ml_element:create( "Gathering", c_gatherTask, e_gatherTask, 65 ), self.process_elements)
 	
+	-- Kill Stuff Nearby
+	self:add(ml_element:create( "SearchAndKillNearby", c_SearchAndKillNearby, e_SearchAndKillNearby, 45 ), self.process_elements)
+	
 	-- GotoPosition
 	self:add(ml_element:create( "GotoRandomPosition", c_goToPosition, e_goToPosition, 30 ), self.process_elements)	
 	

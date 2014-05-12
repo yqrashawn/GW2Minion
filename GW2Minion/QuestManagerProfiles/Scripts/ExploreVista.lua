@@ -83,6 +83,9 @@ function script:Init()
 	-- Deposit Items
 	self:add(ml_element:create( "DepositingItems", c_deposit, e_deposit, 120 ), self.process_elements)	
 	
+	-- Kill Stuff Nearby
+	self:add(ml_element:create( "SearchAndKillNearby", c_SearchAndKillNearby, e_SearchAndKillNearby, 115 ), self.process_elements)
+	
 	-- GoTo Position
 	self:add(ml_element:create( "GoToPosition", self.c_goto, self.e_goto, 110 ), self.process_elements)	
 	
