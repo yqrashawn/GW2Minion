@@ -1,0 +1,101 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	[1] = {
+		["map"] = "Lornar's Pass";
+		["minlevel"] = 0;
+		["done"] = "0";
+		["prequest"] = "None";
+		["mapid"] = 27;
+		["prio"] = 1;
+		["name"] = "OutSideLA_LonarsPass";
+		["maxlevel"] = 80;
+		["steps"] = {
+			[1] = {
+				["script"] = {
+					["name"] = "LA_UnderAttack_Outside";
+					["data"] = {
+					};
+				};
+				["prio"] = 1;
+				["name"] = "Sell_Repair_Event_EnterPortal";
+				["done"] = "0";
+			};
+		};
+		["repeatable"] = "1";
+	};
+	[2] = {
+		["map"] = "Unknown";
+		["minlevel"] = 0;
+		["done"] = "0";
+		["prequest"] = "None";
+		["mapid"] = 73;
+		["prio"] = 2;
+		["name"] = "OutSideLA_BloodtideCoast";
+		["maxlevel"] = 80;
+		["steps"] = {
+			[1] = {
+				["script"] = {
+					["name"] = "LA_UnderAttack_Outside";
+					["data"] = {
+					};
+				};
+				["prio"] = 1;
+				["name"] = "Sell_Repair_Event_EnterPortal";
+				["done"] = "0";
+			};
+		};
+		["repeatable"] = "1";
+	};
+	[3] = {
+		["map"] = "Unknown";
+		["minlevel"] = 0;
+		["done"] = "0";
+		["prequest"] = "None";
+		["mapid"] = 24;
+		["prio"] = 3;
+		["name"] = "OutSideLA_LornarsPass";
+		["maxlevel"] = 80;
+		["steps"] = {
+			[1] = {
+				["script"] = {
+					["name"] = "LA_UnderAttack_Outside";
+					["data"] = {
+					};
+				};
+				["prio"] = 1;
+				["name"] = "Sell_Repair_Event_EnterPortal";
+				["done"] = "0";
+			};
+		};
+		["repeatable"] = "1";
+	};
+	[4] = {
+		["map"] = "Lion's Arch";
+		["minlevel"] = 0;
+		["done"] = "0";
+		["prequest"] = "None";
+		["mapid"] = 50;
+		["prio"] = 4;
+		["name"] = "InsideLA_UnderAttack";
+		["maxlevel"] = 80;
+		["steps"] = {
+			[1] = {
+				["script"] = {
+					["name"] = "LA_UnderAttack_Inside";
+					["data"] = {
+						["GotoZ"] = "123";
+						["_btFollowCMD"] = "0";
+					};
+				};
+				["prio"] = 1;
+				["name"] = "FarmFarmFarm";
+				["done"] = "0";
+			};
+		};
+		["repeatable"] = "1";
+	};
+}
+return obj1
