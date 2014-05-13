@@ -52,6 +52,7 @@ function mc_global.moduleinit()
 	-- Debug fields
 	--GUI_NewField(mc_global.window.name,"Task","dTrace",GetString("botStatus"))
 	GUI_NewField(mc_global.window.name,"AttackRange","dAttackRange",GetString("botStatus"))
+	GUI_NewCheckbox(mc_global.window.name,GetString("disabledrawing"),"dDisableRender",GetString("botStatus"))
 		
 	GUI_NewNumeric(mc_global.window.name,GetString("pulseTime"),"gPulseTime",GetString("settings"),"10","10000")
 
@@ -279,6 +280,8 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 				MultiBotDisconnect()				
 			end
 			Settings.GW2Minion[tostring(k)] = v
+		elseif ( k == "dDisableRender") then
+			RenderManager:ToggleRendering(tonumber(v))		
 		end
 	end
 	GUI_RefreshWindow(mc_global.window.name)
