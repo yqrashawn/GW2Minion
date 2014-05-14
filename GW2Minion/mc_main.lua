@@ -40,6 +40,10 @@ function mc_global.moduleinit()
 	if ( Settings.GW2Minion.gRevive == nil ) then
 		Settings.GW2Minion.gRevive = "1"
 	end	
+	if ( Settings.GW2Minion.dDisableRender == nil ) then
+		Settings.GW2Minion.dDisableRender = "0"
+	end	
+	
 	-- MAIN WINDOW
 	GUI_NewWindow(mc_global.window.name,mc_global.window.x,mc_global.window.y,mc_global.window.width,mc_global.window.height)
 	GUI_NewButton(mc_global.window.name,GetString("startStop"),"mc_global.startStop")
@@ -120,6 +124,7 @@ function mc_global.moduleinit()
 	gSkipCutscene = Settings.GW2Minion.gSkipCutscene
 	gGather = Settings.GW2Minion.gGather
 	gRevive = Settings.GW2Minion.gRevive
+	dDisableRender = Settings.GW2Minion.dDisableRender
 	GUI_UnFoldGroup(mc_global.window.name,GetString("botStatus") );		
 end
 
@@ -261,7 +266,8 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 			k == "gGuestServer" or
 			k == "gSkipCutscene" or
 			k == "gGather" or
-			k == "gRevive" )			
+			k == "gRevive" or 
+			k == "dDisableRender")			
 		then
 			Settings.GW2Minion[tostring(k)] = v
 		elseif (k == "dMember1") then Settings.GW2Minion.Party[1] = v Settings.GW2Minion.Party = Settings.GW2Minion.Party
