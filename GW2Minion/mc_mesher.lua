@@ -22,6 +22,7 @@ function mm.ModuleInit()
 			[23] = "KessexHills",
 			[25] = "IronMarches",
 			[27] = "LonarsPass",
+			[27] = "TimberlineFalls",
 			[32] = "DiessaPlateau",			
 			[35] = "MetricaProvince",
 			[50] = "LionsArchUnderAttack",

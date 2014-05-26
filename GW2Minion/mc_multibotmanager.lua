@@ -213,7 +213,7 @@ function mc_multibotmanager.UpdatePartyStatus()
 					if ( not found and mc_blacklist.IsBlacklisted(pname) == false) then	
 						d("Inviting "..pname)
 						dPartyStatus = "Inviting "..pname
-						SendChatMsg(19,"/invite "..pname)												
+						SendChatMsg(GW2.CHATCHANNEL.Say,"/invite "..pname)												
 						mc_blacklist.AddBlacklistEntry(GetString("partymember"), idx, pname, mc_global.now + 30000)
 						return 
 					end
@@ -227,18 +227,18 @@ function mc_multibotmanager.UpdatePartyStatus()
 	
 	else
 		-- Wait for invitation and accept
-		if ( mc_multibotmanager.leadername ~= "" ) then 
+		if ( mc_multibotmanager.leadername ~= nil and mc_multibotmanager.leadername ~= "" ) then 
 			local party = Player:GetParty()
 			if ( TableSize(party) > 0 ) then
 				local pname = Player.name
 				local index, player  = next( party )
 				while ( index ~= nil and player ~= nil ) do	
 					if ( player.name == pname and player.name ~= "") then
-						-- check if we got an party invite
+						-- check if we got a party invite
 						if ( player.hasparty == false ) then
 							if ( (player.connectstatus == 3 or player.connectstatus == 2 or player.connectstatus == 1) and player.invitestatus == 2 ) then
 								d("Accepting Party invitation from "..mc_multibotmanager.leadername)
-								SendChatMsg(19,"/join "..mc_multibotmanager.leadername)
+								SendChatMsg(GW2.CHATCHANNEL.Say,"/join "..mc_multibotmanager.leadername)
 								dPartyStatus = "Joining "..mc_multibotmanager.leadername							
 								return
 							else
