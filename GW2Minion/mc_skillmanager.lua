@@ -936,12 +936,12 @@ function mc_skillmanager.AttackTarget( TargetID )
 									--d("Dist : "..tostring(dist))
 									if dist <= 1575 then											
 										Player:CastSpell(skill.slot,tpos.x,tpos.y,tpos.z) 
-										d("Casting AE on moving Target (predicted pos): "..tostring(mc_skillmanager.currentskills[prio].name))
+										--d("Casting AE on moving Target (predicted pos): "..tostring(mc_skillmanager.currentskills[prio].name))
 										cast = true
 									else
 										--d("Predicted location was too far.")
 										if ( Player:CastSpell(skill.slot,tpos.x,tpos.y,tpos.z) ) then									
-											d("Casting AE on moving Target: "..tostring(mc_skillmanager.currentskills[prio].name))
+											--d("Casting AE on moving Target: "..tostring(mc_skillmanager.currentskills[prio].name))
 											cast = true
 										end
 									end
@@ -954,7 +954,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 							end									
 						else
 							if ( Player:CastSpell(skill.slot,TargetID) ) then
-								d("Casting on Target: "..tostring(mc_skillmanager.currentskills[prio].name))
+								--d("Casting on Target: "..tostring(mc_skillmanager.currentskills[prio].name))
 								cast = true								
 							end									
 						end											
