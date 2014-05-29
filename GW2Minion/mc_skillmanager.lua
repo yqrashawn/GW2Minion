@@ -839,11 +839,11 @@ function mc_skillmanager.CanCast( target, skill , playerbufflist, targetbufflist
 	if ( target ) then
 		-- Friends around Target check
 		if ( skill.tacount > 0 and skill.tarange > 0) then
-			if ( TableSize(EntityList("friendly,maxdistance="..skill.tarange..",distanceto="..target.id)) < skill.tacount) then return false end
+			if ( TableSize(CharacterList("friendly,maxdistance="..skill.tarange..",distanceto="..target.id)) < skill.tacount) then return false end
 		end	
 		-- Enemies around Target check
 		if ( skill.tecount > 0 and skill.terange > 0) then
-			if ( TableSize(EntityList("alive,attackable,maxdistance="..skill.terange..",distanceto="..target.id)) < skill.tecount) then return false end
+			if ( TableSize(CharacterList("alive,attackable,maxdistance="..skill.terange..",distanceto="..target.id)) < skill.tecount) then return false end
 		end
 	end		  
 	
