@@ -81,7 +81,7 @@ function mc_ai_assist.SetTargetAssist()
 	
 	if ( target ) then 
 		Player:SetTarget(target.id)
-		return mc_skillmanager.AttackTarget( target.id ) 
+		return mc_skillmanager.AttackTarget( target.id ) 		
 	else
 		return false
 	end

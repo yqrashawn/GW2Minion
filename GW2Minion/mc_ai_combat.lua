@@ -403,7 +403,7 @@ function e_SetAggroTarget:execute()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+			d("New Aggro Target ID:"..tostring(id))
 			Player:SetTarget(id)
 			return ml_log(true)	
 		end		
@@ -414,7 +414,7 @@ function e_SetAggroTarget:execute()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("New Aggro Target: "..tostring(E.name).." ID:"..tostring(id))
+			d("New Aggro Target ID:"..tostring(id))
 			Player:SetTarget(id)
 			return ml_log(true)	
 		end		
