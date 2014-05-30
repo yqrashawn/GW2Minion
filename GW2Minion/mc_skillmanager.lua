@@ -892,6 +892,8 @@ function mc_skillmanager.AttackTarget( TargetID )
 			targetbufflist = target.buffs
 		end
 		
+		local cast = false
+		
 		if ( TableSize(mc_skillmanager.currentskills) > 0 ) then
 			mc_skillmanager.SwapWeaponCheck("Pulse")
 			
@@ -904,7 +906,7 @@ function mc_skillmanager.AttackTarget( TargetID )
 				if ( (cancast or (not cancast and skill.throttle == 0)) and mc_skillmanager.CanCast( target, skill , playerbufflist, targetbufflist) ) then
 									
 					--d("Cast Slot "..tostring(skill.slot))
-					local cast = false
+					cast = false
 					if ( skill.ttype == "Self" ) then
 						if ( Player:CastSpell(skill.slot) ) then							
 							cast = true
@@ -970,22 +972,29 @@ function mc_skillmanager.AttackTarget( TargetID )
 							mc_skillmanager.lastcastTmr = mc_global.now
 						end
 						
+						if ( skill.slot ~= 1 ) then
+							mc_skillmanager.SwapWeapCheck(target)
+						end						
 						return true
+					
 					else
-						
-						-- Swap Weapon check			
-						if ( mc_global.AttackRange < 300 and target.distance > mc_global.AttackRange ) then
-							mc_skillmanager.SwapWeaponCheck("Range")
-						else	 
-							mc_skillmanager.SwapWeaponCheck("CoolDown")
-						end
-						
+						mc_skillmanager.SwapWeapCheck(target)
 					end
 				end				
 			end
 		end
+		mc_skillmanager.SwapWeapCheck(target)
 	end
 	return false
+end
+
+function mc_skillmanager.SwapWeapCheck( target )
+	-- Swap Weapon check
+	if ( mc_global.AttackRange < 300 and target.distance > mc_global.AttackRange ) then
+		mc_skillmanager.SwapWeaponCheck("Range")
+	else	 
+		mc_skillmanager.SwapWeaponCheck("CoolDown")
+	end	
 end
 
 function mc_skillmanager.HealMe()	
@@ -1015,7 +1024,7 @@ function mc_skillmanager.HealMe()
 				if (skill.ttype == "Self" and mc_skillmanager.CanCast( nil, skill , playerbufflist, nil) ) then
 										
 					if ( Player:CastSpell(skill.slot) ) then
-						d("Cast Healing Slot "..tostring(skill.slot))					
+						--d("Cast Healing Slot "..tostring(skill.slot))					
 						--d("Casting on Self: "..tostring(mc_skillmanager.currentskills[prio].name))
 						if (prio ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.currentskills[prio].skillID end
 						mc_skillmanager.SkillProfile[prio].timelastused = mc_global.now
@@ -1069,7 +1078,7 @@ function mc_skillmanager.SwapWeaponCheck(swaptype)
 	if ( mc_global.now - mc_skillmanager.SwapTmr > 750 ) then
 				
 		-- Swap after random Time (not used right now)
-		if ( swaptype == "Pulse" and gSMSwapR == "1" and (mc_global.now - mc_skillmanager.SwapRTmr > math.random(3000,6000))) then
+		if ( swaptype == "Pulse" and gSMSwapR == "1" and (mc_global.now - mc_skillmanager.SwapRTmr > math.random(4000,7000))) then
 			mc_skillmanager.SwapRTmr = mc_global.now
 			mc_skillmanager.SwapTmr = mc_global.now			
 			mc_skillmanager.SwapWeapon(swaptype)
@@ -1134,16 +1143,15 @@ function mc_skillmanager.SwapWeapon(swaptype)
 		
 	elseif( Player.profession == 3 ) then 		
 		-- Engineer	
-		local availableKits = { [1] = 0 }-- Leave Kit Placeholder
-		for i = 1, 16, 1 do
-			if (mc_skillmanager.currentskills[i]) then 
-				--d(tostring(mc_skillmanager.currentskills[i].skillID) .. " / "..tostring(mc_skillmanager.EngineerKits[mc_skillmanager.currentskills[i].skillID]))
-				if ( mc_skillmanager.EngineerKits[mc_skillmanager.currentskills[i].skillID] ~= nil and not Player:IsSpellOnCooldown(mc_skillmanager.currentskills[i].slot)) then
-					if ( mc_skillmanager.SwapWeaponTable[mc_skillmanager.currentskills[i].slot] == nil or (mc_global.now - mc_skillmanager.SwapWeaponTable[mc_skillmanager.currentskills[i].slot].lastused or 0) > 1000) then
-						availableKits[#availableKits+1] = mc_skillmanager.currentskills[i].slot												
-					end
-				end				
-			end
+		local availableKits = { [1] = 0 }-- Leave Kit Placeholder					
+		for prio,skill in pairsByKeys(mc_skillmanager.currentskills) do
+			--d(tostring(skill.skillID) .. " / "..tostring(mc_skillmanager.EngineerKits[skill.skillID]))
+			if ( mc_skillmanager.EngineerKits[skill.skillID] ~= nil and not Player:IsSpellOnCooldown(skill.slot)) then
+				if ( mc_skillmanager.SwapWeaponTable[skill.slot] == nil or (mc_global.now - mc_skillmanager.SwapWeaponTable[skill.slot].lastused or 0) > 1500) then
+					--d("ADDING: "..tostring(skill.skillID) .. " / "..tostring(mc_skillmanager.EngineerKits[skill.skillID]))
+					availableKits[#availableKits+1] = skill.slot												
+				end
+			end				
 		end		
 		local key = math.random(#availableKits)		
 		--d("MAx "..tostring(#availableKits).."..KEYSIZE "..tostring(#availableKits).. " choosen: "..tostring(key))
@@ -1151,14 +1159,14 @@ function mc_skillmanager.SwapWeapon(swaptype)
 		if ( key ~= 1 ) then
 			Player:CastSpell(availableKits[key])
 			if (gSMPrioKit ~= "None" and tostring(mc_skillmanager.EngineerKits[Player:GetSpellInfo(availableKits[key]).skillID]) ~= tostring(gSMPrioKit))then
-				--d(tostring(mc_skillmanager.EngineerKits[Player:GetSpellInfo(availableKits[key]).skillID]).." is not our priokit: "..tostring(gSMPrioKit).." extending time")
-				mc_skillmanager.SwapWeaponTable[availableKits[key]] = { lastused = mc_global.now + 5000 }
+				--d(tostring(mc_skillmanager.EngineerKits[Player:GetSpellInfo(availableKits[key]).skillID]).." is not our priokit: "..tostring(gSMPrioKit).." delaying next use")
+				mc_skillmanager.SwapWeaponTable[availableKits[key]] = { lastused = mc_global.now + 15000 }
 			else
 				mc_skillmanager.SwapWeaponTable[availableKits[key]] = { lastused = mc_global.now }
 			end
 		else			
 			if ( Player:CanSwapWeaponSet() ) then
-				if (gSMPrioKit == "None" or swaptype == "Pulse") then
+				if (gSMPrioKit == "None" or swaptype == "Pulse" or swaptype == "Range") then
 					Player:SwapWeaponSet()
 					mc_skillmanager.SwapTmr = mc_global.now
 				end

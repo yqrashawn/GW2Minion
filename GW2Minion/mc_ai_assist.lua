@@ -83,6 +83,11 @@ function mc_ai_assist.SetTargetAssist()
 		Player:SetTarget(target.id)
 		return mc_skillmanager.AttackTarget( target.id ) 		
 	else
+		-- see if we can swap weapons/kits to get a better attackrange
+		local currTarget = Player:GetTarget()
+		if ( currTarget ~= nil ) then
+			return mc_skillmanager.AttackTarget( currTarget.id )
+		end
 		return false
 	end
 end
