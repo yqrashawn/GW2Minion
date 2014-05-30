@@ -328,7 +328,7 @@ function mc_global.UpdateGlobals()
 	mc_global.Player_Health = Player.health or { current = 0, max = 0, percent = 0 }
 	mc_global.Player_Power = Player.power or 0
 	mc_global.Player_Endurance = Player.endurance or 0
-	
+	mc_global.Player_InCombat = Player.inCombat or false
 	
 	-- Update Debug fields	
 	dAttackRange = mc_global.AttackRange	

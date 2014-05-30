@@ -805,6 +805,8 @@ function mc_skillmanager.CanCast( target, skill , playerbufflist, targetbufflist
 	-- Check general conditions
 	if ( skill.throttle	> 0 and skill.timelastused and mc_global.now - skill.timelastused < skill.throttle)  then return false end
 	if ( skill.previd ~= "" and not StringContains(skill.previd, mc_skillmanager.prevSkillID)) then return false end
+	if ( skill.ooc == "Yes" and mc_global.Player_InCombat == true ) then return false end
+	if ( skill.ooc == "No" and mc_global.Player_InCombat == false ) then return false end
 	
 	-- Check Player related conditions				
 	if ( skill.phpl		> 0 and skill.phpl > mc_global.Player_Health.percent)  then return false end
