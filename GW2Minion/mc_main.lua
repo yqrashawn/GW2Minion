@@ -167,7 +167,10 @@ function mc_global.onupdate( event, tickcount )
 	elseif ( mc_global.running == false and gAutostartbot == "1" ) then
 		mc_global.togglebot(1)
 	else
-		GUI_SetStatusBar("BOT: Not Running")
+		if ( tickcount - mc_global.lasttick > tonumber(gPulseTime) ) then
+			mc_global.lasttick = tickcount
+			GUI_SetStatusBar("BOT: Not Running")
+		end
 	end
 	
 	-- Mesher OnUpdate
