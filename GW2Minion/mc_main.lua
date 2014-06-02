@@ -346,6 +346,8 @@ end
 
 function mc_global.Wait( seconds ) 
 	mc_global.lasttick = mc_global.lasttick + seconds
+	-- extend unstucktimers
+	mc_ai_unstuck.idletimer = mc_ai_unstuck.idletimer + seconds
 end
 
 function mc_global.ToggleAdvMenu()

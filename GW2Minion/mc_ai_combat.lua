@@ -224,7 +224,7 @@ function e_SearchTarget:execute()
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
-			d("New Target: "..(E.name).." ID:"..tostring(id))
+			d("New Target ID:"..tostring(id))
 			
 			-- Blacklist if we cant select it..happens sometimes when it is outside our select range
 			if (e_SearchTarget.lastID == id ) then
