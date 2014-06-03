@@ -40,6 +40,7 @@ end
 
 function mc_followbot.OnUpdate( tick )	
 	if ( gBotMode == GetString("followmode") and tick - mc_followbot.lasttick > 250 ) then
+		mc_followbot.lasttick = tick
 		if ( mc_followbot.targetID ~= 0 ) then
 			local target = CharacterList:Get(mc_followbot.targetID)
 			if ( TableSize(target)>0 ) then

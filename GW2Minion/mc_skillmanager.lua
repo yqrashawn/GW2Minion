@@ -805,9 +805,9 @@ function mc_skillmanager.CanCast( target, skill , playerbufflist, targetbufflist
 	-- Check general conditions
 	if ( skill.throttle	> 0 and skill.timelastused and mc_global.now - skill.timelastused < skill.throttle)  then return false end
 	if ( skill.previd ~= "" and not StringContains(skill.previd, mc_skillmanager.prevSkillID)) then return false end
-	--if ( skill.ooc == "Yes" and mc_global.Player_InCombat == true ) then return false end
-	--if ( skill.ooc == "No" and mc_global.Player_InCombat == false ) then return false end
-	
+	if ( skill.ooc == "Yes" and mc_global.Player_InCombat == true ) then return false end
+	--if ( skill.ooc == "No" and mc_global.Player_InCombat == false and ( skill.slot ~= 1 or ( target and target.attackable ))) then return false end
+		
 	-- Check Player related conditions				
 	if ( skill.phpl		> 0 and skill.phpl > mc_global.Player_Health.percent)  then return false end
 	if ( skill.phpb 	> 0 and skill.phpb < mc_global.Player_Health.percent)  then return false end
@@ -823,7 +823,7 @@ function mc_skillmanager.CanCast( target, skill , playerbufflist, targetbufflist
 					
 
 	-- Check Target related conditions
-	if ( target and skill.ttype == "Enemy" ) then
+	if ( target and skill.ttype == "Enemy" ) then		
 		if ( skill.los == "Yes" and target.los == false ) then return false end
 		if ( skill.minRange > 0 and target.distance < skill.minRange) then return false end
 		if ( skill.maxRange > 0 and target.distance > skill.maxRange) then return false end
@@ -974,13 +974,14 @@ function mc_skillmanager.AttackTarget( TargetID )
 							mc_skillmanager.lastcastTmr = mc_global.now
 						end
 						
-						if ( skill.slot ~= 1 ) then
+						if ( skill.slot == 5 ) then						
 							mc_skillmanager.SwapWeapCheck(target)
 						end						
-						return true
-					
+						return true					
 					else
-						mc_skillmanager.SwapWeapCheck(target)
+						if ( skill.slot == 5 ) then
+							mc_skillmanager.SwapWeapCheck(target)
+						end
 					end
 				end				
 			end
