@@ -786,7 +786,7 @@ function mc_skillmanager.GetAttackRange()
 					--d("ADDING: " ..skill.name.." P: "..tostring(skill.prio).." S"..tostring(currentslot))
 					
 					-- Get Max Attack Range for global use
-					if (skill.atkrng == "1" and currentslot > 1 and currentslot < 6 ) then -- Only use Skill 2-5 for Attackrange check
+					if (skill.atkrng == "1" and currentslot > 5 and currentslot < 10 ) then -- Only use Skill 2-5 for Attackrange check
 						--d(skill.name.." "..tostring(skill.maxRange).." "..tostring(skill.name).." "..tostring(skill.maxRange))
 						if ( skill.maxRange > maxrange) then
 							maxrange = skill.maxRange
