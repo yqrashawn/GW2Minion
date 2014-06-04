@@ -130,11 +130,11 @@ function e_dead_mb:execute()
 	end
 	
 	-- Check for nearby Players who can rezz us
-	if ( found == false ) then
-		if ( TableSize(CharacterList("nearest,alive,friendly,player,maxdistance=2500"))>0 ) then
-			found = true
-		end
-	end
+	--if ( found == false ) then
+	--	if ( TableSize(CharacterList("nearest,alive,friendly,player,maxdistance=2500"))>0 ) then
+	--		found = true
+	--	end
+	--end
 	
 	if ( found ) then
 		ml_log("Waiting for Players/Partymember to rezz me")
