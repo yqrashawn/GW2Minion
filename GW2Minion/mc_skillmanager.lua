@@ -30,6 +30,7 @@ mc_skillmanager.EngineerKits = {
 	[5812] = "BombKit",
 	[5927] = "FlameThrower",
 	[6020] = "GrenadeKit",
+	[5805] = "GrenadeKit",
 	[5904] = "ToolKit",
 	[5933] = "ElixirGun",
 	--[5802] = "Medkit",
