@@ -87,7 +87,8 @@ function mm.ModuleInit()
 	gChangeAreaType = "Road"
 	gChangeAreaSize = "5"
 	gBiDirOffMesh = "0"
-		
+	
+	
 	MeshManager:SetRecordingArea(2)
 	MeshManager:RecSize(gRecAreaSize)
 	MeshManager:SetChangeToArea(1)
@@ -411,6 +412,6 @@ end
 RegisterEventHandler("ToggleMeshmgr", mm.ToggleMenu)
 RegisterEventHandler("GUI.Update",mm.GUIVarUpdate)
 RegisterEventHandler("Module.Initalize",mm.ModuleInit)
-RegisterEventHandler("Gameloop.NavmeshLoaded",mm.NavMeshUpdate)
+RegisterEventHandler("Gameloop.MeshReady",mm.NavMeshUpdate)
 
 
