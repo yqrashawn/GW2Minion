@@ -352,7 +352,7 @@ function mc_global.ChatMonitor( tickcount )
 			local NewWhisper = GetChatMsg(GW2.CHATCHANNEL.Whisper, 100)
 			if ( TableSize(NewWhisper) > 0 ) then
 				if ( mc_global.whispers[GW2.CHATCHANNEL.Whisper] ~= nil and mc_global.whispers[GW2.CHATCHANNEL.Whisper] ~= NewWhisper[1]) then
-					PlaySound(mc_global.path.."\\LuaMods\\minionlib\\Alarm1.wav")
+					PlaySound(mc_global.path.."\\MinionFiles\\Alarm1.wav")
 				end
 				mc_global.whispers[GW2.CHATCHANNEL.Whisper] = NewWhisper[1]
 			end
@@ -361,7 +361,7 @@ function mc_global.ChatMonitor( tickcount )
 			local NewWhisper = GetChatMsg(GW2.CHATCHANNEL.Say, 100)
 			if ( TableSize(NewWhisper) > 0 ) then
 				if ( mc_global.whispers[GW2.CHATCHANNEL.Say] ~= nil and mc_global.whispers[GW2.CHATCHANNEL.Say] ~= NewWhisper[1]) then
-					PlaySound(mc_global.path.."\\LuaMods\\minionlib\\Alarm1.wav")
+					PlaySound(mc_global.path.."\\MinionFiles\\Alarm1.wav")
 				end
 				mc_global.whispers[GW2.CHATCHANNEL.Say] = NewWhisper[1]
 			end
@@ -370,7 +370,7 @@ function mc_global.ChatMonitor( tickcount )
 			local NewWhisper = GetChatMsg(GW2.CHATCHANNEL.Info, 100)
 			if ( TableSize(NewWhisper) > 0 ) then
 				if ( mc_global.whispers[GW2.CHATCHANNEL.Info] ~= nil and mc_global.whispers[GW2.CHATCHANNEL.Info] ~= NewWhisper[1]) then
-					PlaySound(mc_global.path.."\\LuaMods\\minionlib\\Alarm1.wav")
+					PlaySound(mc_global.path.."\\MinionFiles\\Alarm1.wav")
 					d("Info Alert!")
 				end
 				mc_global.whispers[GW2.CHATCHANNEL.Info] = NewWhisper[1]
@@ -380,7 +380,7 @@ function mc_global.ChatMonitor( tickcount )
 			local NewWhisper = GetChatMsg(GW2.CHATCHANNEL.God, 100)
 			if ( TableSize(NewWhisper) > 0 ) then
 				if ( mc_global.whispers[GW2.CHATCHANNEL.God] ~= nil and mc_global.whispers[GW2.CHATCHANNEL.God] ~= NewWhisper[1]) then
-					PlaySound(mc_global.path.."\\LuaMods\\minionlib\\Alarm1.wav")
+					PlaySound(mc_global.path.."\\MinionFiles\\Alarm1.wav")
 					d("God Alert!")
 				end
 				mc_global.whispers[GW2.CHATCHANNEL.God] = NewWhisper[1]
@@ -390,7 +390,7 @@ function mc_global.ChatMonitor( tickcount )
 			local NewWhisper = GetChatMsg(GW2.CHATCHANNEL.Guild, 100)
 			if ( TableSize(NewWhisper) > 0 ) then
 				if ( mc_global.whispers[GW2.CHATCHANNEL.Guild] ~= nil and mc_global.whispers[GW2.CHATCHANNEL.Guild] ~= NewWhisper[1]) then
-					PlaySound(mc_global.path.."\\LuaMods\\minionlib\\Alarm1.wav")					
+					PlaySound(mc_global.path.."\\MinionFiles\\Alarm1.wav")					
 				end
 				mc_global.whispers[GW2.CHATCHANNEL.Guild] = NewWhisper[1]
 			end
@@ -399,7 +399,7 @@ function mc_global.ChatMonitor( tickcount )
 			local NewWhisper = GetChatMsg(GW2.CHATCHANNEL.Party, 100)
 			if ( TableSize(NewWhisper) > 0 ) then
 				if ( mc_global.whispers[GW2.CHATCHANNEL.Party] ~= nil and mc_global.whispers[GW2.CHATCHANNEL.Party] ~= NewWhisper[1]) then
-					PlaySound(mc_global.path.."\\LuaMods\\minionlib\\Alarm1.wav")
+					PlaySound(mc_global.path.."\\MinionFiles\\Alarm1.wav")
 				end
 				mc_global.whispers[GW2.CHATCHANNEL.Party] = NewWhisper[1]
 			end
