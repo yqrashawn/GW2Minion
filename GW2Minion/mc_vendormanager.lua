@@ -317,8 +317,10 @@ function mc_vendormanager.ModuleInit()
 	BuyManager_orichalcumTools = Settings.GW2Minion.BuyManager_orichalcumTools
 	BuyManager_toolStacks = Settings.GW2Minion.BuyManager_toolStacks
 	
-	mc_vendormanager.UpdateSellSingleItemList()
-	mc_vendormanager.updateItemIDList()
+	if (Player) then
+		mc_vendormanager.UpdateSellSingleItemList()
+		mc_vendormanager.updateItemIDList()
+	end
 end
 
 --Fill the "Sell Single Item"-dropdownlist

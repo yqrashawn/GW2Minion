@@ -154,19 +154,20 @@ function mc_skillmanager.ModuleInit()
 	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,GetString("SwapCD"),"gSMSwapCD",GetString("AdvancedSettings"))
 	GUI_NewCheckbox(mc_skillmanager.mainwindow.name,GetString("SwapRange"),"gSMSwapRange",GetString("AdvancedSettings"))
 	
-	local prof = Player.profession
-	if ( prof ~= nil ) then
-		if (prof == 3) then	-- Engineer
-		GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeKit"),"gSMPrioKit",GetString("AdvancedSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
-		
-		elseif( prof == 6 ) then -- Elementalist
-			GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeAttunement1"),"gSMPrioAtt",GetString("AdvancedSettings"),"None,Fire,Water,Air,Earth")
-			GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeAttunement2"),"gSMPrioAtt2",GetString("AdvancedSettings"),"None,Fire,Water,Air,Earth")
-			GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeAttunement3"),"gSMPrioAtt3",GetString("AdvancedSettings"),"None,Fire,Water,Air,Earth")
-			GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeAttunement4"),"gSMPrioAtt4",GetString("AdvancedSettings"),"None,Fire,Water,Air,Earth")
-		end				
+	if ( Player ) then
+		local prof = Player.profession
+		if ( prof ~= nil ) then
+			if (prof == 3) then	-- Engineer
+			GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeKit"),"gSMPrioKit",GetString("AdvancedSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
+			
+			elseif( prof == 6 ) then -- Elementalist
+				GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeAttunement1"),"gSMPrioAtt",GetString("AdvancedSettings"),"None,Fire,Water,Air,Earth")
+				GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeAttunement2"),"gSMPrioAtt2",GetString("AdvancedSettings"),"None,Fire,Water,Air,Earth")
+				GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeAttunement3"),"gSMPrioAtt3",GetString("AdvancedSettings"),"None,Fire,Water,Air,Earth")
+				GUI_NewComboBox(mc_skillmanager.mainwindow.name,GetString("PriorizeAttunement4"),"gSMPrioAtt4",GetString("AdvancedSettings"),"None,Fire,Water,Air,Earth")
+			end				
+		end
 	end
-	
 	GUI_NewButton(mc_skillmanager.mainwindow.name,GetString("autoetectSkills"),"SMAutodetect",GetString("skillEditor"))
 	RegisterEventHandler("SMAutodetect",mc_skillmanager.AutoDetectSkills)	
 	GUI_NewButton(mc_skillmanager.mainwindow.name,GetString("saveProfile"),"SMSaveEvent")	
@@ -241,10 +242,12 @@ function mc_skillmanager.ModuleInit()
 	RegisterEventHandler("SMESkillDOWNEvent",mc_skillmanager.EditorButtonHandler)	
 	GUI_NewButton(mc_skillmanager.editwindow.name,"UP","SMESkillUPEvent")
 	RegisterEventHandler("SMESkillUPEvent",mc_skillmanager.EditorButtonHandler)
-		
-	mc_skillmanager.UpdateProfiles() -- Update the profiles dropdownlist
-	GUI_DeleteGroup(mc_skillmanager.mainwindow.name,"ProfileSkills")
-	mc_skillmanager.UpdateCurrentProfileData()	
+	
+	if ( Player ) then
+		mc_skillmanager.UpdateProfiles() -- Update the profiles dropdownlist
+		GUI_DeleteGroup(mc_skillmanager.mainwindow.name,"ProfileSkills")
+		mc_skillmanager.UpdateCurrentProfileData()
+	end
 end
 
 function mc_skillmanager.UpdateCurrentProfileData()
@@ -806,16 +809,16 @@ function mc_skillmanager.CanCast( target, skill , playerbufflist, targetbufflist
 	-- Check general conditions
 	if ( skill.throttle	> 0 and skill.timelastused and mc_global.now - skill.timelastused < skill.throttle)  then return false end
 	if ( skill.previd ~= "" and not StringContains(skill.previd, mc_skillmanager.prevSkillID)) then return false end
-	if ( skill.ooc == "Yes" and mc_global.Player_InCombat == true ) then return false end
-	--if ( skill.ooc == "No" and mc_global.Player_InCombat == false and ( skill.slot ~= 1 or ( target and target.attackable ))) then return false end
+	if ( skill.ooc == "Yes" and ml_global_information.Player_InCombat == true ) then return false end
+	--if ( skill.ooc == "No" and ml_global_information.Player_InCombat == false and ( skill.slot ~= 1 or ( target and target.attackable ))) then return false end
 		
 	-- Check Player related conditions				
-	if ( skill.phpl		> 0 and skill.phpl > mc_global.Player_Health.percent)  then return false end
-	if ( skill.phpb 	> 0 and skill.phpb < mc_global.Player_Health.percent)  then return false end
-	if ( skill.ppowl	> 0 and skill.ppowl> mc_global.Player_Power)  then return false end
-	if ( skill.ppowb 	> 0 and skill.ppowb< mc_global.Player_Power)  then return false end
-	if ( skill.pendl	> 0 and skill.pendl> mc_global.Player_Endurance)  then return false end
-	if ( skill.pendb 	> 0 and skill.pendb< mc_global.Player_Endurance)  then return false end
+	if ( skill.phpl		> 0 and skill.phpl > ml_global_information.Player_Health.percent)  then return false end
+	if ( skill.phpb 	> 0 and skill.phpb < ml_global_information.Player_Health.percent)  then return false end
+	if ( skill.ppowl	> 0 and skill.ppowl> ml_global_information.Player_Power)  then return false end
+	if ( skill.ppowb 	> 0 and skill.ppowb< ml_global_information.Player_Power)  then return false end
+	if ( skill.pendl	> 0 and skill.pendl> ml_global_information.Player_Endurance)  then return false end
+	if ( skill.pendb 	> 0 and skill.pendb< ml_global_information.Player_Endurance)  then return false end
 	--Possible buffcheck values: "134,245+123,552+123+531"
 	if ( skill.peff1 ~= ""  and playerbufflist and not mc_helper.BufflistHasBuffs(playerbufflist, skill.peff1) ) then return false end
 	if ( skill.pneff1 ~= "" and playerbufflist and mc_helper.BufflistHasBuffs(playerbufflist, skill.pneff1) ) then return false end
@@ -994,7 +997,7 @@ end
 
 function mc_skillmanager.SwapWeapCheck( target )
 	-- Swap Weapon check
-	if ( mc_global.AttackRange < 300 and target.distance > mc_global.AttackRange ) then
+	if ( ml_global_information.AttackRange < 300 and target.distance > ml_global_information.AttackRange ) then
 		mc_skillmanager.SwapWeaponCheck("Range")
 	else	 
 		mc_skillmanager.SwapWeaponCheck("CoolDown")
@@ -1026,21 +1029,23 @@ function mc_skillmanager.HealMe()
 			for prio,skill in pairs(mc_skillmanager.currentskills) do
 				
 				if (skill.ttype == "Self" and mc_skillmanager.CanCast( nil, skill , playerbufflist, nil) ) then
-										
-					if ( Player:CastSpell(skill.slot) ) then
-						--d("Cast Healing Slot "..tostring(skill.slot))					
-						--d("Casting on Self: "..tostring(mc_skillmanager.currentskills[prio].name))
-						if (prio ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.currentskills[prio].skillID end
-						mc_skillmanager.SkillProfile[prio].timelastused = mc_global.now
-						
-						if ( skill.casttime > 0 ) then							
-							mc_skillmanager.lastcastTmr = mc_global.now + skill.casttime
-						else
-							mc_skillmanager.lastcastTmr = mc_global.now
-						end			
-						
-						return true
-					end						
+					
+					if ( skill.ooc ~= "No" or (skill.ooc == "No" and ml_global_information.Player_InCombat == true ) ) then
+						if ( Player:CastSpell(skill.slot) ) then
+							--d("Cast Healing Slot "..tostring(skill.slot))					
+							--d("Casting on Self: "..tostring(mc_skillmanager.currentskills[prio].name))
+							if (prio ~= 1 ) then mc_skillmanager.prevSkillID = mc_skillmanager.currentskills[prio].skillID end
+							mc_skillmanager.SkillProfile[prio].timelastused = mc_global.now
+							
+							if ( skill.casttime > 0 ) then							
+								mc_skillmanager.lastcastTmr = mc_global.now + skill.casttime
+							else
+								mc_skillmanager.lastcastTmr = mc_global.now
+							end			
+							
+							return true
+						end
+					end
 				end				
 			end
 		end
