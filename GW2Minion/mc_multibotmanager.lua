@@ -301,6 +301,7 @@ function HandleMultiBotMessages( event, message, channel )
 			gRole = "Party Leader"
 			if ( gBotMode == GetString("minionmode") ) then
 				gBotMode = GetString("grindMode")
+				Settings.GW2Minion.gBotMode	= gBotMode
 				mc_global.ResetBot()
 				ml_task_hub:ClearQueues()
 				mc_global.UpdateMode()
@@ -308,7 +309,8 @@ function HandleMultiBotMessages( event, message, channel )
 		elseif ( message:find('[[Minion]]') ~= nil) then
 			Player:SetRole(0)
 			gRole = "Party Member"
-			gBotMode = GetString("minionmode")			
+			gBotMode = GetString("minionmode")
+			Settings.GW2Minion.gBotMode	= gBotMode			
 			mc_global.ResetBot()
 			ml_task_hub:ClearQueues()
 			mc_global.UpdateMode()
