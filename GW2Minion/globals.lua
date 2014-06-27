@@ -17,6 +17,7 @@ function ml_globals.UpdateGlobals()
 		
 		-- Update Debug fields	
 		dAttackRange = ml_global_information.AttackRange
+		mc_global.AttackRange = ml_global_information.AttackRange  -- for backwards compatibility ;)
 	end
 end
 
