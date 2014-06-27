@@ -187,13 +187,25 @@ function ml_mesh_mgr.UpdateMeshfiles()
 	gmeshname_listitems = meshlist
 end
 
---Sets this mapname as default for the mapid
+--Sets this mapname as default for the mapid if there is nothing set yet
 function ml_mesh_mgr.SetDefaultMesh(mapid,mapname)
+	if (tonumber(mapid) ~= nil and tonumber(mapid) ~= 0 and mapname ~= "" and mapname ~= "none" and mapname ~= "None" ) then
+		if ( Settings.minionlib.DefaultMaps[mapid] == nil or Settings.minionlib.DefaultMaps[mapid] == "" or Settings.minionlib.DefaultMaps[mapid] == "none" or Settings.minionlib.DefaultMaps[mapid] == "None") then
+			Settings.minionlib.DefaultMaps[mapid] = mapname
+			Settings.minionlib.DefaultMaps = Settings.minionlib.DefaultMaps -- trigger saving of settings
+			d( "New DEFAULT mesh "..mapname.." set for mapID "..tostring(mapid))
+		end
+	else
+		d( "Error setting default mesh, mapID or name invalid! : "..tostring(mapid).." / "..mapname)
+	end	
+end
+--Updates the mapname as default for the mapid
+function ml_mesh_mgr.UpdateDefaultMesh(mapid,mapname)
 	if (tonumber(mapid) ~= nil and tonumber(mapid) ~= 0 and mapname ~= "" and mapname ~= "none" and mapname ~= "None" ) then
 		if ( Settings.minionlib.DefaultMaps[mapid] ~= mapname ) then
 			Settings.minionlib.DefaultMaps[mapid] = mapname
 			Settings.minionlib.DefaultMaps = Settings.minionlib.DefaultMaps -- trigger saving of settings
-			d( "New DEFAULT mesh "..mapname.." set for mapID "..tostring(mapid))
+			d( "Updating DEFAULT mesh "..mapname.." set for mapID "..tostring(mapid))
 		end
 	else
 		d( "Error setting default mesh, mapID or name invalid! : "..tostring(mapid).." / "..mapname)
@@ -468,7 +480,7 @@ function ml_mesh_mgr.SaveMesh()
 			if (NavigationManager:SaveNavMesh(filename)) then
 								
 				-- Saving of Default Mesh
-				ml_mesh_mgr.SetDefaultMesh(ml_mesh_mgr.currentMesh.MapID,filename)
+				ml_mesh_mgr.UpdateDefaultMesh(ml_mesh_mgr.currentMesh.MapID,filename)
 				
 				-- Save MeshData				
 				d("Saving MeshData..")
@@ -520,7 +532,7 @@ function ml_mesh_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
 		if ( k == "gmeshname" and v ~= "") then
 			if ( v ~= "none" ) then
-				ml_mesh_mgr.SetDefaultMesh(ml_mesh_mgr.GetMapID(),v) -- 
+				ml_mesh_mgr.UpdateDefaultMesh(ml_mesh_mgr.GetMapID(),v) -- 
 				ml_mesh_mgr.currentMesh.MapID = 0 -- trigger reload of mesh
 			else
 				ml_mesh_mgr.ClearNavMesh()
