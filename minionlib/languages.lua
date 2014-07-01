@@ -3661,11 +3661,11 @@ function SetLanguage(event, arg)
 	d("Switching language "..tostring(arg))	
 	if ( tonumber(arg) ~= nil ) then
 		if ( arg == "0" ) then gCurrentLanguage = "us"
-		elseif ( arg == "1" ) then gCurrentLanguage = "cn" 
-		elseif ( arg == "2" ) then gCurrentLanguage = "jp" 
-		elseif ( arg == "3" ) then gCurrentLanguage = "de" 
+		elseif ( arg == "1" ) then gCurrentLanguage = "de" 
+		elseif ( arg == "2" ) then gCurrentLanguage = "cn" 
+		elseif ( arg == "3" ) then gCurrentLanguage = "ru" 
 		elseif ( arg == "4" ) then gCurrentLanguage = "fr"
-        elseif ( arg == "5" ) then gCurrentLanguage = "ru"
+        elseif ( arg == "5" ) then gCurrentLanguage = "jp"
 		end
 	end	
 end
@@ -3679,4 +3679,4 @@ function GetString(stringName)
 	end
 end
 
-RegisterEventHandler("ESOMinion.setlanguage", SetLanguage)
+RegisterEventHandler("GW2Minion.setlanguage", SetLanguage)
