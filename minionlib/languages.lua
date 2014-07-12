@@ -3679,4 +3679,4 @@ function GetString(stringName)
 	end
 end
 
-RegisterEventHandler("GW2Minion.setlanguage", SetLanguage)
+RegisterEventHandler("GW2MINION.setlanguage", SetLanguage)
