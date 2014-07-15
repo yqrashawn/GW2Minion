@@ -187,13 +187,14 @@ function mc_global.moduleinit()
 		ml_mesh_mgr.SetDefaultMesh(28,"Wayfarer Foothills")		
 		ml_mesh_mgr.SetDefaultMesh(29,"TimberlineFalls")
 		ml_mesh_mgr.SetDefaultMesh(30,"FrostGorge Sound")
-		
+		ml_mesh_mgr.SetDefaultMesh(31,"Snowden Drifts")		
 		ml_mesh_mgr.SetDefaultMesh(32,"DiessaPlateau")
 		ml_mesh_mgr.SetDefaultMesh(34,"Caledon Forest")
 		ml_mesh_mgr.SetDefaultMesh(35,"MetricaProvince")
 		ml_mesh_mgr.SetDefaultMesh(39,"MountMaelstrom")
 		
 		ml_mesh_mgr.SetDefaultMesh(53,"Sparkfly Fen")
+		ml_mesh_mgr.SetDefaultMesh(54,"Brisban Wildlands")
 		ml_mesh_mgr.SetDefaultMesh(73,"BloodtideCoast")
 				
 		-- Setup the marker types we wanna use
