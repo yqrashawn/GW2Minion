@@ -491,7 +491,9 @@ function e_KillTarget:execute()
 			Player:SetFacing(pos.x,pos.y,pos.z)
 			mc_skillmanager.AttackTarget( t.id )
 			
-			DoCombatMovement()
+			if ( gDoCombatMovement == "1" ) then
+				DoCombatMovement()
+			end
 			
 			-- Check for determined/unkillable targets
 			if ( e_KillTarget.lastID ~= t.id ) then

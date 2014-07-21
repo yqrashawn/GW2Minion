@@ -278,13 +278,11 @@ end
 -- BUY TOOLS
 --************
 mc_ai_vendor.isBuying = false
-function mc_ai_vendor.NeedToBuyGatheringTools( vendornearby )	
+function mc_ai_vendor.NeedToBuyGatheringTools( vendornearby )
 	if ( mc_ai_vendor.isBuying ) then return true end
 	
 	if ( BuyManager_Active == "1") then
-		if ( vendornearby ) then
-			-- Go to nearby vendor when we have "some" tools left and can use the change to fill up
-			
+		if ( vendornearby ) then -- Go to nearby vendor when we have "some" tools left and can use the chance to fill up
 			-- Check for SalvageKits to buy
 			local kitsToBuy = mc_vendormanager.NeedSalvageKitInfo()
 			if (tonumber(BuyManager_sStacks)/2 >= kitsToBuy.count and Inventory.freeSlotCount >= kitsToBuy.count and TableSize(kitsToBuy.kits)>0 ) then
@@ -293,31 +291,61 @@ function mc_ai_vendor.NeedToBuyGatheringTools( vendornearby )
 			end
 			
 			-- Check for Gatheringtools to buy
-			local toolCount = mc_vendormanager.GetGatheringToolsCount()
-			if (tonumber(BuyManager_toolStacks)/2 >= toolCount[1] or 
-				tonumber(BuyManager_toolStacks)/2 >= toolCount[2] or 
-				tonumber(BuyManager_toolStacks)/2 >= toolCount[3]) then
-				return true		
-			end			
+			local toolsToBuy = mc_vendormanager.GetNeededGatheringToolsInfo()
+			if (TableSize(toolsToBuy[1]) > 0) then
+				for _,nmbr in pairs(toolsToBuy[1]) do
+					if (tonumber(nmbr) ~= nil and nmbr >= BuyManager_toolStacks/2) then
+						return true
+					end
+				end
+			end
+			if (TableSize(toolsToBuy[2]) > 0) then
+				for _,nmbr in pairs(toolsToBuy[2]) do
+					if (tonumber(nmbr) ~= nil and nmbr >= BuyManager_toolStacks/2) then
+						return true
+					end
+				end
+			end
+			if (TableSize(toolsToBuy[3]) > 0) then
+				for _,nmbr in pairs(toolsToBuy[3]) do
+					if (tonumber(nmbr) ~= nil and nmbr >= BuyManager_toolStacks/2) then
+						return true
+					end
+				end
+			end
 		
-		else
-			-- Go only to Vendor when we dont have any kit / tools at all
+		else -- Go only to Vendor when we dont have any kit / tools at all
 			
 			-- Check for SalvageKits to buy
 			local kitsToBuy = mc_vendormanager.NeedSalvageKitInfo()
 			if ( kitsToBuy.count == 0 and tonumber(BuyManager_sStacks) > 0 and Inventory.freeSlotCount >= kitsToBuy.count and TableSize(kitsToBuy.kits)>0 ) then
 			-- We have no Kits left, we should buy some and have enought space in Inv to buy them
-				return true					
-			end	
+				return true
+			end
 			
 			-- Check for Gatheringtools to buy
 			local toolsToBuy = mc_vendormanager.GetNeededGatheringToolsInfo()
-			if ((Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and TableSize(toolsToBuy[1])>0 )or 
-				(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil  and TableSize(toolsToBuy[2])>0 )or 
-				(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil   and TableSize(toolsToBuy[3])>0 )) then 
-				
-				return true				
-			end			
+			if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and TableSize(toolsToBuy[1]) > 0) then
+				for _,nmbr in pairs(toolsToBuy[1]) do
+					if (nmbr == BuyManager_toolStacks) then
+						return true
+					end
+				end
+			end
+			if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil and TableSize(toolsToBuy[2]) > 0) then
+				for _,nmbr in pairs(toolsToBuy[2]) do
+					if (nmbr == BuyManager_toolStacks) then
+						return true
+					end
+				end
+			end
+			if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil and TableSize(toolsToBuy[3]) > 0) then
+				for _,nmbr in pairs(toolsToBuy[3]) do
+					if (nmbr == BuyManager_toolStacks) then
+						return true
+					end
+				end
+			end
 			
 		end
 	end

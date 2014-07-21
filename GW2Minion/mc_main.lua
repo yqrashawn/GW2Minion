@@ -46,6 +46,10 @@ function mc_global.moduleinit()
 	if ( Settings.GW2Minion.dDisableRender == nil ) then
 		Settings.GW2Minion.dDisableRender = "0"
 	end	
+	if ( Settings.GW2Minion.gDoCombatMovement == nil ) then
+		Settings.GW2Minion.gDoCombatMovement = "1"
+	end	
+	
 	
 	if ( Settings.GW2Minion.gChatAlert == nil ) then
 		Settings.GW2Minion.gChatAlert = {
@@ -76,6 +80,7 @@ function mc_global.moduleinit()
 
 	GUI_NewCheckbox(mc_global.window.name,GetString("depositItems"),"gDepositItems",GetString("settings"))	
 	GUI_NewCheckbox(mc_global.window.name,GetString("doEvents"),"gDoEvents",GetString("settings"))
+	GUI_NewCheckbox(mc_global.window.name,GetString("combatMovement"),"gDoCombatMovement",GetString("settings"))
 	GUI_NewComboBox(mc_global.window.name,GetString("guestserver"),"gGuestServer",GetString("settings"),"None")	
 	GUI_NewCheckbox(mc_global.window.name,GetString("skipcutscene"),"gSkipCutscene",GetString("settings"))
 	GUI_NewCheckbox(mc_global.window.name,GetString("gatherMode"),"gGather",GetString("settings"))
@@ -144,13 +149,15 @@ function mc_global.moduleinit()
 	gSkipCutscene = Settings.GW2Minion.gSkipCutscene
 	gGather = Settings.GW2Minion.gGather
 	gRevive = Settings.GW2Minion.gRevive
+	gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement
 	gChatAlertWhisper = Settings.GW2Minion.gChatAlert.Whisper
 	gChatAlertSay = Settings.GW2Minion.gChatAlert.Say
 	gChatAlertInfo = Settings.GW2Minion.gChatAlert.Info
 	gChatAlertGod = Settings.GW2Minion.gChatAlert.God
 	gChatAlertGuild = Settings.GW2Minion.gChatAlert.Guild
 	gChatAlertParty = Settings.GW2Minion.gChatAlert.Party
-
+	
+	
 	if ( RenderManager ) then
 		RenderManager:ToggleRendering(tonumber(dDisableRender))
 	end
@@ -438,7 +445,9 @@ function mc_global.guivarupdate(Event, NewVals, OldVals)
 			k == "gGuestServer" or
 			k == "gSkipCutscene" or
 			k == "gGather" or
-			k == "gRevive" )			
+			k == "gRevive" or
+			k == "gDoCombatMovement"
+			)			
 		then
 			Settings.GW2Minion[tostring(k)] = v
 		elseif (k == "dMember1") then Settings.GW2Minion.Party[1] = v Settings.GW2Minion.Party = Settings.GW2Minion.Party

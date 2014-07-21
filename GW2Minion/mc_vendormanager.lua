@@ -673,27 +673,24 @@ end
 
 function mc_vendormanager.checkBuyFilters(buyList)
 	for tool = 1, 3, 1 do
-		local set = buyList[tool]
-		if (set) then
-			local itemID,_ = next(set)
-			if (itemID) then
-				if (BuyManager_copperTools == "0") then buyList[tool][itemID] = false end
-				itemID,_ = next(set,itemID)
-				if (BuyManager_ironTools == "0") then buyList[tool][itemID] = false end
-				itemID,_ = next(set,itemID)
-				if (BuyManager_steelTools == "0") then buyList[tool][itemID] = false end
-				itemID,_ = next(set,itemID)
-				if (BuyManager_darksteelTools == "0") then buyList[tool][itemID] = false end
-				itemID,_ = next(set,itemID)
-				if (BuyManager_mithrilTools == "0") then buyList[tool][itemID] = false end
-				itemID,_ = next(set,itemID)
-				if (BuyManager_orichalcumTools == "0") then buyList[tool][itemID] = false end
-			end
+		if (buyList[tool]) then
+			local tID = 1
+			local pLevel = Player.level
+			if (BuyManager_copperTools == "0" or pLevel < mc_vendormanager.LevelRestrictions[tID]) then buyList[tool][mc_vendormanager.tools[tool-1][tID]] = false end
+			tID = tID + 1
+			if (BuyManager_ironTools == "0" or pLevel < mc_vendormanager.LevelRestrictions[tID]) then buyList[tool][mc_vendormanager.tools[tool-1][tID]] = false end
+			tID = tID + 1
+			if (BuyManager_steelTools == "0" or pLevel < mc_vendormanager.LevelRestrictions[tID]) then buyList[tool][mc_vendormanager.tools[tool-1][tID]] = false end
+			tID = tID + 1
+			if (BuyManager_darksteelTools == "0" or pLevel < mc_vendormanager.LevelRestrictions[tID]) then buyList[tool][mc_vendormanager.tools[tool-1][tID]] = false end
+			tID = tID + 1
+			if (BuyManager_mithrilTools == "0" or pLevel < mc_vendormanager.LevelRestrictions[tID]) then buyList[tool][mc_vendormanager.tools[tool-1][tID]] = false end
+			tID = tID + 1
+			if (BuyManager_orichalcumTools == "0" or pLevel < mc_vendormanager.LevelRestrictions[tID]) then buyList[tool][mc_vendormanager.tools[tool-1][tID]] = false end
 		end
 	end
 	return buyList
 end
-
 
 function mc_vendormanager.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
