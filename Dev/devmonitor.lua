@@ -8,6 +8,7 @@ function Dev.ModuleInit()
 	GUI_NewWindow("Dev",400,50,250,430)
 	GUI_NewComboBox("Dev","Player/TargetInfo","chartarg","CharacterInfo","Player,Target");
 	GUI_NewField("Dev","Ptr","TargetPtr","CharacterInfo")
+	GUI_NewField("Dev","Ptr2","TargetPtr2","CharacterInfo")
 	GUI_NewField("Dev","ID","TID","CharacterInfo")
 	GUI_NewField("Dev","ContentID","TCID","CharacterInfo")
 	GUI_NewField("Dev","Type","TType","CharacterInfo")	
@@ -106,7 +107,7 @@ function Dev.ModuleInit()
 	GUI_NewField("Dev","IsUnknown6","GTIsUnknown6","GadgetInfo")
 	GUI_NewField("Dev","IsUnknown7","GTIsUnknown7","GadgetInfo")
 	GUI_NewField("Dev","IsUnknown8","GTIsUnknown8","GadgetInfo")
-	GUI_NewField("Dev","IsUnknown9","GTIsUnknown9","GadgetInfo")
+	GUI_NewField("Dev","IsTurret","GTIsUnknown9","GadgetInfo")
 	GUI_NewField("Dev","IsUnknown10","GTIsUnknown10","GadgetInfo")
 	GUI_NewField("Dev","IsUnknown11","GTIsUnknown11","GadgetInfo")
 	GUI_NewField("Dev","IsUnknown12","GTIsUnknown12","GadgetInfo")
@@ -758,6 +759,7 @@ function Dev.UpdateWindow()
 	if (mytarget ~= nil) then
 		if ( mytarget.isCharacter ) then
 			TargetPtr = string.format( "%x",tonumber(mytarget.ptr ))
+			TargetPtr2 = string.format( "%x",tonumber(mytarget.ptr2 ))
 			TID = mytarget.id
 			TCID = mytarget.contentID
 			TType = "Character"
@@ -861,7 +863,7 @@ function Dev.UpdateWindow()
 			GTIsUnknown6 = tostring(mytarget.isUnknown6)	
 			GTIsUnknown7 = tostring(mytarget.isUnknown7)
 			GTIsUnknown8 = tostring(mytarget.isUnknown8)	
-			GTIsUnknown9 = tostring(mytarget.isUnknown9) 
+			GTIsUnknown9 = tostring(mytarget.isTurret) 
 			GTIsUnknown10 = tostring(mytarget.isUnknown10)
 			GTIsUnknown11 = tostring(mytarget.isUnknown11)	
 			GTIsUnknown12 = tostring(mytarget.isUnknown12)
