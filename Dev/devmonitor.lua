@@ -459,6 +459,31 @@ function Dev.ModuleInit()
 	GUI_NewButton("Dev","ClaimReward","Dev.DClaim","DungeonInfo")
 	RegisterEventHandler("Dev.DReset", Dev.Func)
 	
+	-- QuestManager
+	GUI_NewField("Dev","StoryName","qmstoryname","QuestManager")
+	GUI_NewField("Dev","StoryID","qmstoryid","QuestManager")
+	GUI_NewField("Dev","QuestName","qmquestname","QuestManager")
+	GUI_NewField("Dev","QuestID","qmquestid","QuestManager")
+	GUI_NewField("Dev","QuestIsComplete","qmquestcomplete","QuestManager")	
+	GUI_NewField("Dev","QuestGoalName","qmgoalname","QuestManager")
+	GUI_NewField("Dev","QuestGoalID","qmqgoalid","QuestManager")	
+	GUI_NewField("Dev","StepMax","qmsmax","QuestManager")
+	GUI_NewField("Dev","StepCurrent","qmscurr","QuestManager")
+	GUI_NewField("Dev","StepName","qmsname","QuestManager")
+	GUI_NewField("Dev","StepUnknown1","qmsu1","QuestManager")
+	GUI_NewField("Dev","StepUnknown2","qmsu2","QuestManager")
+	GUI_NewField("Dev","StepUnknown3","qmsu3","QuestManager")
+	GUI_NewField("Dev","StepUnknown4","qmsu4","QuestManager")
+	GUI_NewField("Dev","StepUnknown5","qmsu5","QuestManager")
+	
+	GUI_NewField("Dev","RewardCount","qmrewardcount","QuestManager")
+	GUI_NewNumeric("Dev","RewardSelected","qmrewardsel","QuestManager","1","50");
+	GUI_NewField("Dev","RewardItemName","qmrewardiname","QuestManager")
+	GUI_NewField("Dev","RewardItemID","qmrewardiid","QuestManager")
+	GUI_NewField("Dev","RewardItemCount","qmrewardicount","QuestManager")
+	GUI_NewField("Dev","RewardItemUnknown1","qmrewardiunk1","QuestManager")
+	GUI_NewField("Dev","RewardItemSelectable","qmrewardiselect","QuestManager")	
+	qmrewardsel = 1
 	
 	--PetInfo
 	GUI_NewField("Dev","HasPet","PetHas","PetInfo")
@@ -1456,6 +1481,74 @@ function Dev.UpdateWindow()
 		DunUnk4 = 0
 		DunUnk5 = 0
 		DunUnk6 = 0
+	end
+	
+	
+	-- QuestManager
+	local qm = QuestManager:GetActiveQuest()
+	if ( TableSize(qm) > 0 ) then
+		qmstoryname = qm.storyname
+		qmstoryid = qm.storyid
+		qmquestname = qm.questname
+		qmquestid = qm.questid
+		qmquestcomplete = tostring(qm.isquestcomplete)
+		qmgoalname = qm.questgoalname
+		qmqgoalid = qm.questgoalid
+		qmsmax = qm.stepmax
+		qmscurr = qm.stepcurrent
+		qmsname = qm.stepname
+		qmsu1 = tostring(qm.stepU1)
+		qmsu2 = tostring(qm.stepU2)
+		qmsu3 = tostring(qm.stepU3)
+		qmsu4 = tostring(qm.stepU4)
+		qmsu5 = tostring(qm.stepU5)
+		qmrewardcount = qm.questrewardcount				
+		
+	else
+		qmstoryname = ""
+		qmstoryid = 0
+		qmquestname = ""
+		qmquestid = 0
+		qmquestcomplete = false
+		qmgoalname = ""
+		qmqgoalid = 0
+		qmsmax = 0
+		qmscurr = 0
+		qmsname = ""
+		qmsu1 = 0
+		qmsu1 = 0
+		qmsu1 = 0
+		qmsu1 = 0
+		qmsu1 = 0
+		qmrewardcount = 0
+	
+	end
+	local qmr = QuestManager:GetActiveQuestRewardList()
+	local reward = nil
+	if ( TableSize(qmr) > 0 )then
+		local count = 1
+		local iid
+		iid, reward = next (qmr)
+		while (iid ~= nil and reward ~= nil) do			
+			if ( count == tonumber(qmrewardsel) ) then
+				break
+			end
+			count = count + 1
+			iid,reward = next (qmr,iid)
+		end		
+	end
+	if ( reward ) then
+		qmrewardiname = reward.name
+		qmrewardiid = reward.itemID
+		qmrewardicount = reward.count
+		qmrewardiunk1 = reward.Unknown2
+		qmrewardiselect = tostring(reward.selectable)
+	else
+		qmrewardiname = ""
+		qmrewardiid = 0
+		qmrewardicount = 0
+		qmrewardiunk1 = 0
+		qmrewardiselect = false
 	end
 	
 	
