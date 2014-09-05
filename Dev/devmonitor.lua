@@ -37,8 +37,15 @@ function Dev.ModuleInit()
 	GUI_NewField("Dev","IsDowned","TDown","CharacterInfo")
 	GUI_NewField("Dev","IsDead","TDead","CharacterInfo")
 	GUI_NewField("Dev","Attitude","TAttit","CharacterInfo")
-	GUI_NewField("Dev","IsAggro","TAggro","CharacterInfo")	
-	GUI_NewField("Dev","InCombat","TInCombat","CharacterInfo")	
+	GUI_NewField("Dev","IsAggro","TAggro","CharacterInfo")
+	GUI_NewField("Dev","AggroPercent","TAggroPercent","CharacterInfo")
+	GUI_NewField("Dev","InCombat","TInCombat","CharacterInfo")
+	GUI_NewField("Dev","AttackedTargetPtr","TAttPrr","CharacterInfo")
+	GUI_NewField("Dev","AttackedTargetID","TAttID","CharacterInfo")
+	GUI_NewField("Dev","Current SpellID","TAttSPID","CharacterInfo")
+	GUI_NewField("Dev","Last SpellID","TAttLSPID","CharacterInfo")
+	GUI_NewField("Dev","Skill Slot","TAttSlot","CharacterInfo")
+	GUI_NewField("Dev","Skill Duration","TAttSDur","CharacterInfo")
 	GUI_NewField("Dev","IsControlled","TIsControlled","CharacterInfo")
 	GUI_NewField("Dev","IsPlayer","TIsPlayer","CharacterInfo")
 	GUI_NewField("Dev","IsPet","TIsPet","CharacterInfo")
@@ -51,6 +58,8 @@ function Dev.ModuleInit()
 	GUI_NewField("Dev","IsSwimming","TIsSwimming","CharacterInfo")
 	GUI_NewField("Dev","IsChampion","TIsChamp","CharacterInfo")
 	GUI_NewField("Dev","IsVeteran","TIsVet","CharacterInfo")
+	GUI_NewField("Dev","IsLegendary","TIsLegend","CharacterInfo")
+	GUI_NewField("Dev","IsElite","TIsElite","CharacterInfo")	
 	GUI_NewField("Dev","IsUnknown0","TIsUnknown0","CharacterInfo")
 	GUI_NewField("Dev","isGathering","TisGathering","CharacterInfo")
 	GUI_NewField("Dev","IsUnknown2","TIsUnknown2","CharacterInfo")
@@ -814,7 +823,24 @@ function Dev.UpdateWindow()
 			TDead = tostring(mytarget.dead)
 			TAttit = tostring(mytarget.attitude)
 			TAggro = tostring(mytarget.isAggro)
+			TAggroPercent = mytarget.aggropercent
 			TInCombat = tostring(mytarget.inCombat)
+			local castinfo = mytarget.castinfo
+			if ( TableSize(castinfo) > 0 ) then
+				TAttPrr = castinfo.ptr
+				TAttID = castinfo.targetID
+				TAttSPID = castinfo.skillID
+				TAttLSPID = castinfo.lastSkillID
+				TAttSlot = castinfo.slot
+				TAttSDur = castinfo.duration
+			else
+				TAttPrr = 0
+				TAttID = 0
+				TAttSPID = 0
+				TAttLSPID = 0
+				TAttSlot = 0
+				TAttSDur = 0
+			end
 			TIsControlled = tostring(mytarget.isControlled)
 			TIsPlayer = tostring(mytarget.isPlayer)
 			TIsPet = tostring(mytarget.isPet)
@@ -827,6 +853,8 @@ function Dev.UpdateWindow()
 			TIsSwimming = tostring(mytarget.swimming == 2)
 			TIsChamp = tostring(mytarget.isChampion)
 			TIsVet = tostring(mytarget.isVeteran)
+			TIsLegend = tostring(mytarget.isLegendary)
+			TIsElite = tostring(mytarget.isElite)
 			TIsUnknown0 = tostring(mytarget.isUnknown0)
 			TisGathering = tostring(mytarget.isGathering)
 			TIsUnknown2 = tostring(mytarget.isUnknown2)
