@@ -359,6 +359,22 @@ function Dev.ModuleInit()
 	GUI_NewButton("Dev","ClearAvoidanceareas","Dev.ClearAA","NavigationSystem")
 	RegisterEventHandler("Dev.ClearAA", Dev.Move)
 	
+	-- Navigation - World
+	DevNWTempData = {}
+	DevNWTempDataB = {}
+	DevNWTempData = persistence.load(ml_global_information.Path..[[\LuaMods\GW2Minion\]].."worldnav_data.lua")
+	if ( not ValidTable(DevNWTempData)) then DevNWTempData = {} end
+	
+	GUI_NewField("Dev","#Total_Transitions: ","NWTotal","NavigationSystem_World")
+	GUI_NewField("Dev","#Out_Transitions: ","NWOut","NavigationSystem_World")
+	GUI_NewField("Dev","#In_Transitions: ","NWIn","NavigationSystem_World")
+	GUI_NewComboBox("Dev","TransitionType","gdevNWTransType","NavigationSystem_World","Normal,Dungeon,Interact")
+	GUI_NewButton("Dev","From Here","Dev.NWFrom","NavigationSystem_World")
+	RegisterEventHandler("Dev.NWFrom", Dev.Func)
+	GUI_NewButton("Dev","To Here","Dev.NWTo","NavigationSystem_World")
+	RegisterEventHandler("Dev.NWTo", Dev.Func)
+	gdevNWTransType = "Walk"
+	
 	-- Spell&CastingInfo
 	GUI_NewField("Dev","IsCasting","SCIsCast","Spell&CastingInfo")
 	GUI_NewField("Dev","CanCast","SCCanC","Spell&CastingInfo")
@@ -675,8 +691,59 @@ function Dev.Func ( arg )
 		if ( tonumber(HackGravS)~=nil ) then Player:SetGravity(tonumber(HackGravS)) end
 		if ( tonumber(HackSCL)~=nil ) then Player:SetCrawlHeight(tonumber(HackSCL)) end
 	
+	elseif ( arg == "Dev.NWFrom" and ml_global_information.CurrentMapID ~= nil and ml_global_information.CurrentMapID~=0) then
+			
+		DevNWTempDataB = { 
+			FromID=ml_global_information.CurrentMapID, 
+			x=ml_global_information.Player_Position.x,
+			y=ml_global_information.Player_Position.y,
+			z=ml_global_information.Player_Position.z,
+			hx=ml_global_information.Player_Position.hx,
+			hy=ml_global_information.Player_Position.hy,
+			hz=ml_global_information.Player_Position.hz,
+			ttype = gdevNWTransType
+		}
+	elseif ( arg == "Dev.NWTo" and DevNWTempData ~= nil and ValidTable(DevNWTempDataB)and ml_global_information.CurrentMapID ~= nil and ml_global_information.CurrentMapID~=0) then
+		
+		if ( DevNWTempData[DevNWTempDataB.FromID] == nil ) then
+			DevNWTempData[DevNWTempDataB.FromID] = {}
+		end
+		if ( DevNWTempData[DevNWTempDataB.FromID][ml_global_information.CurrentMapID] == nil ) then
+			DevNWTempData[DevNWTempDataB.FromID][ml_global_information.CurrentMapID] = {}
+		end
+		local wtf = {
+					x = DevNWTempDataB.x,
+					y = DevNWTempDataB.y,
+					z = DevNWTempDataB.z,
+					hx = DevNWTempDataB.hx,
+					hy = DevNWTempDataB.hy,
+					hz = DevNWTempDataB.hz,
+					type = DevNWTempDataB.ttype,
+		}
+		table.insert(DevNWTempData[DevNWTempDataB.FromID][ml_global_information.CurrentMapID],TableSize(DevNWTempData[DevNWTempDataB.FromID][ml_global_information.CurrentMapID])+1,wtf)
+		
+		--and back
+		if ( DevNWTempData[ml_global_information.CurrentMapID] == nil ) then
+			DevNWTempData[ml_global_information.CurrentMapID] = {}
+		end
+		if ( DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID] == nil ) then
+			DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID] = {}
+		end
+		wtf = {
+					x = ml_global_information.Player_Position.x,
+					y = ml_global_information.Player_Position.y,
+					z = ml_global_information.Player_Position.z,
+					hx = ml_global_information.Player_Position.hx,
+					hy = ml_global_information.Player_Position.hy,
+					hz = ml_global_information.Player_Position.hz,
+					type = gdevNWTransType,
+		}		
+		table.insert(DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID],TableSize(DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID])+1,wtf)
+		persistence.store(ml_global_information.Path..[[\LuaMods\GW2Minion\]].."worldnav_data.lua",DevNWTempData)
+		d("New Transition Saved")		
 	end	
 end
+
 
 Dev.Obstacles = {}
 Dev.AvoidanceAreas = {}
@@ -1349,6 +1416,31 @@ function Dev.UpdateWindow()
 		mifacet = "Behind"
 	elseif( facedir == false) then
 		mifacet = "Not Facing"
+	end
+	
+	--NavigationSystem_World
+	
+	if ( DevNWTempData ~= nil and ValidTable(DevNWTempData) ) then
+		NWTotal = TableSize(DevNWTempData)		
+		NWOut = TableSize(DevNWTempData[ml_global_information.CurrentMapID])
+		
+		local transInMap = 0
+		local outID,inTable = next(DevNWTempData)
+		while outID and inTable do
+			local a,b = next (inTable)
+			while a and b do
+				if ( a == ml_global_information.CurrentMapID) then
+					transInMap = transInMap + 1
+				end
+				a,b = next(inTable,a)
+			end
+			outID,inTable = next(DevNWTempData,outID)
+		end
+		NWIn = transInMap
+	else
+		NWTotal = 0
+		NWOut = 0
+		NWIn = 0
 	end
 	
 	-- Spell&CastingInfo

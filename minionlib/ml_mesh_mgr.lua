@@ -101,6 +101,7 @@ function ml_mesh_mgr.ModuleInit()
 	gShowRealMesh = "0"
 	gShowPath = "0"
 	gShowMesh = "0"
+	gnewmeshname = ""
 	gMeshrec = "0"
 	gRecAreaType = "Lowdanger"
 	gRecAreaSize = "20"
@@ -630,7 +631,7 @@ function ml_mesh_mgr.ClearNavMesh()
 	ml_mesh_mgr.currentMesh.MapID = ml_mesh_mgr.GetMapID()
 	ml_mesh_mgr.currentMesh.AllowedMapIDs[ml_mesh_mgr.currentMesh.MapID] = ml_mesh_mgr.currentMesh.MapID
 	ml_mesh_mgr.currentMesh.Name = ml_mesh_mgr.GetMapName()
-	gnewmeshname = ml_mesh_mgr.currentMesh.Name
+	gnewmeshname = ml_mesh_mgr.currentMesh.Name or ""
 	gmeshname = "none"
 	d("Empty NavMesh created...")
 end

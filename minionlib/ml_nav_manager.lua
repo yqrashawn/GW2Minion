@@ -53,7 +53,11 @@ function ml_nav_manager.SetNavPath(currID, destID)
     local currNode = ml_nav_manager.GetNode(currID)
     local destNode = ml_nav_manager.GetNode(destID)
     
-    ml_nav_manager.currPath = ml_nav_manager.GetPath(currNode, destNode)
+	if ( currNode and destNode ) then
+		ml_nav_manager.currPath = ml_nav_manager.GetPath(currNode, destNode)
+	else
+		ml_nav_manager.currPath = {}
+	end
 end
 
 function ml_nav_manager.GetPath(source, dest)

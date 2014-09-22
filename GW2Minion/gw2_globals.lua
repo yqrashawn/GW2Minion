@@ -21,8 +21,12 @@ function ml_global_information.OnUpdate()
 		ml_global_information.Player_Position = Player.pos
 		ml_global_information.Player_Level = Player.level
 		ml_global_information.Player_OnMesh = Player.onmesh or false
-		ml_global_information.CurrentMapID = Player:GetLocalMapID()
-		if ( mc_datamanager ) then  ml_global_information.CurrentMapName = mc_datamanager.GetMapName( Player:GetLocalMapID()) end
+		ml_global_information.CurrentMapID = Player:GetLocalMapID() or 0
+		if ( gw2_datamanager and ml_global_information.CurrentMapID ~= 0) then  
+			ml_global_information.CurrentMapName = gw2_datamanager.GetMapName( ml_global_information.CurrentMapID ) 
+		else
+			ml_global_information.CurrentMapName = ""
+		end
 		
 		-- Update Debug fields	
 		dAttackRange = ml_global_information.AttackRange or 120
