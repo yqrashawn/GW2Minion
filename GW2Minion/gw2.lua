@@ -60,13 +60,14 @@ function gw2minion.ModuleInit()
 		end
 		
 		-- Set default meshes SetDefaultMesh(mapid, filename)
+		ml_mesh_mgr.SetDefaultMesh(15,"Queensdale")
 		ml_mesh_mgr.SetDefaultMesh(17,"Harathi Hinterlands")
 			
 		ml_mesh_mgr.SetDefaultMesh(19,"PlainsOfAshford")
 		ml_mesh_mgr.SetDefaultMesh(20,"BlazzeridgeSteppes")
 		ml_mesh_mgr.SetDefaultMesh(21,"Fields of Ruin")
 		ml_mesh_mgr.SetDefaultMesh(22,"FireHeartRise")		
-				
+		ml_mesh_mgr.SetDefaultMesh(23,"Kessex Hills")		
 		ml_mesh_mgr.SetDefaultMesh(24,"Gendarran Fields")
 		ml_mesh_mgr.SetDefaultMesh(25,"IronMarches")
 		ml_mesh_mgr.SetDefaultMesh(26,"Dredgehaunt Cliffs")
@@ -84,11 +85,18 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.SetDefaultMesh(51,"Straits of Devastation")
 		ml_mesh_mgr.SetDefaultMesh(53,"Sparkfly Fen")
 		ml_mesh_mgr.SetDefaultMesh(54,"Brisban Wildlands")
+		
+		ml_mesh_mgr.SetDefaultMesh(62,"CursedShore")
+		ml_mesh_mgr.SetDefaultMesh(65,"Malchors Leap")
 		ml_mesh_mgr.SetDefaultMesh(73,"BloodtideCoast")
 		
 		ml_mesh_mgr.SetDefaultMesh(91,"The Grove")
+		ml_mesh_mgr.SetDefaultMesh(139,"Rata Sum")
 		ml_mesh_mgr.SetDefaultMesh(218,"Black Citadel")
 		ml_mesh_mgr.SetDefaultMesh(326,"Hoelbrak")
+		ml_mesh_mgr.SetDefaultMesh(350,"Heart of the Mists")
+		ml_mesh_mgr.SetDefaultMesh(968,"EdgeOfTheMist")
+		
 		-- Setup the marker types we wanna use
 		   --[[ local mapMarker = ml_marker:Create("MapMarker")
 			mapMarker:SetType(GetString("mapMarker"))

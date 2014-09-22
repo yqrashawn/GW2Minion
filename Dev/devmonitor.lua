@@ -373,7 +373,7 @@ function Dev.ModuleInit()
 	RegisterEventHandler("Dev.NWFrom", Dev.Func)
 	GUI_NewButton("Dev","To Here","Dev.NWTo","NavigationSystem_World")
 	RegisterEventHandler("Dev.NWTo", Dev.Func)
-	gdevNWTransType = "Walk"
+	gdevNWTransType = "Normal"
 	
 	-- Spell&CastingInfo
 	GUI_NewField("Dev","IsCasting","SCIsCast","Spell&CastingInfo")
