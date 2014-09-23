@@ -9,6 +9,13 @@ function gw2minion.ModuleInit()
 	if ( mw ) then
 		mw:NewComboBox(GetString("botMode"),"gBotMode",GetString("botStatus"),"")
 		mw:UnFold(GetString("botStatus") )
+		
+		local b = mw:NewButton(GetString("startBot"),"gw2minion.evBotstartStop")
+		b:SetToggleState(false)
+		b:SetSize(25,30)
+		RegisterEventHandler("gw2minion.evBotstartStop", gw2minion.ToggleBot)
+		RegisterEventHandler("GW2MINION.toggle", gw2minion.ToggleBot)
+		
 	end	
 	-- Setup default bot modes
 	gw2minion.UpdateBotModes()
@@ -17,13 +24,14 @@ function gw2minion.ModuleInit()
 	
 	Settings.GW2Minion.gPulseTime = Settings.GW2Minion.gPulseTime or "150"
 	Settings.GW2Minion.gBotMode = Settings.GW2Minion.gBotMode or GetString("grindMode")
+	Settings.GW2Minion.gBotRunning = Settings.GW2Minion.gBotRunning or "0"	
 	Settings.GW2Minion.gGuestServer = Settings.GW2Minion.gGuestServer or "None"
 	Settings.GW2Minion.dDisableRender = Settings.GW2Minion.dDisableRender or "0"
 		
 	if ( RenderManager ) then RenderManager:ToggleRendering(tonumber(dDisableRender)) end
 	
-    gBotMode = Settings.GW2Minion.gBotMode	
-	gw2minion.SwitchMode(gBotMode)	
+    gBotMode = Settings.GW2Minion.gBotMode
+	gBotRunning	= Settings.GW2Minion.gBotRunning
 	gPulseTime = Settings.GW2Minion.gPulseTime
 
 	
@@ -132,6 +140,11 @@ function gw2minion.ModuleInit()
 		end
 		
 	end
+	
+	gw2minion.SwitchMode(gBotMode)
+	if ( gBotRunning == "1" ) then
+		gw2minion.ToggleBot()
+	end				
 end
 
 function gw2minion.OnUpdate(event, tickcount )
@@ -148,7 +161,19 @@ function gw2minion.OnUpdate(event, tickcount )
 		ml_blacklist_mgr.UpdateEntryTime()
 		ml_blacklist_mgr.UpdateEntries(tickcount)
 		
-		
+		if ( ml_global_information.Running ) then		
+																
+			if( ml_task_hub:CurrentTask() ~= nil) then
+				ml_log(ml_task_hub:CurrentTask().name.." :")
+			end
+				
+			if ( ml_task_hub.shouldRun ) then
+				if (not ml_task_hub:Update() ) then
+					ml_error("No task queued, please select a valid bot mode in the Settings drop-down menu")
+				end
+			end
+				
+		end
 		GUI_SetStatusBar(ml_GetLogString())
 	end
 end
@@ -168,6 +193,37 @@ function gw2minion.OnUpdateCutscene(event, tickcount )
 		gw2minion.SwitchUIForGameState()
 	end
 end
+
+function gw2minion.ToggleBot(arg)
+	local mw = WindowManager:GetWindow(gw2minion.MainWindow.Name)
+	if ( mw ) then 
+		local sb = mw:GetControl(GetString("startBot"))
+		if ( sb ) then
+			if ( arg == "GW2MINION.toggle" ) then -- CTRL + S
+				if ( sb.pressed ) then
+					sb:SetToggleState(false)
+				else
+					sb:SetToggleState(true)
+				end
+			end
+			if ( sb.pressed ) then
+				d("Starting Bot..")
+				ml_global_information.Running = true
+				ml_task_hub.shouldRun = true
+				Settings.GW2Minion.gBotRunning = "1"
+				sb:SetText(GetString("stopBot"))
+			else
+				d("Stopping Bot..")
+				ml_global_information.Running = false
+				ml_task_hub.shouldRun = false		
+				Settings.GW2Minion.gBotRunning = "0"
+				ml_global_information.Reset()				
+				sb:SetText(GetString("startBot"))
+			end
+		end
+	end
+end
+
 --switches the shown UI according to the gamestate
 function gw2minion.SwitchUIForGameState(tickcount)
 	local currentGameState = GetGameState()

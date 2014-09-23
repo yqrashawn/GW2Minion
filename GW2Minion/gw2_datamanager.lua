@@ -7,16 +7,11 @@ gw2_datamanager.levelmap = {} -- Create a "2D - Levelmap/Table" which provides u
 
 function gw2_datamanager.ModuleInit() 	
 	
-	gw2_datamanager.LoadMapData()
+	gw2_datamanager.mapData = persistence.load(gw2_datamanager.path)
+	d("Mapdata loaded, "..tostring(TableSize(gw2_datamanager.mapData)).." entries found")
 	
 end
 
-function gw2_datamanager.LoadMapData()
-	gw2_datamanager.mapData = persistence.load(gw2_datamanager.path)
-	d("Mapdata loaded, "..tostring(TableSize(gw2_datamanager.mapData)).." entries found")
-end
-
---d(gw2_datamanager.GetMapName(19))
 function gw2_datamanager.GetMapName( mapid )
 	local name = "Unknown"
 	if ( TableSize(gw2_datamanager.mapData) > 0 and tonumber(mapid)~=nil) then
@@ -37,7 +32,7 @@ function gw2_datamanager.GetLocalMapData( mapid )
 	return mdata
 end
 
-
+-- converts the coordinates from the data file to ingame coordinates
 function gw2_datamanager.recalc_coords(continent_rect, map_rect, coords)
 	local contrec = {}
 	for word in string.gmatch(tostring(continent_rect), '[%-]?%d+.%d+') do table.insert(contrec,word) end
@@ -72,6 +67,7 @@ function gw2_datamanager.recalc_coords(continent_rect, map_rect, coords)
     }
 end
 
+-- Needs to be called when a new zone is beeing entered!
 function gw2_datamanager.UpdateLevelMap()
 	local mdata = gw2_datamanager.GetLocalMapData( Player:GetLocalMapID() )
 	if ( TableSize(mdata) > 0 and TableSize(mdata["floors"]) > 0 and TableSize(mdata["floors"][0]) > 0) then
@@ -102,7 +98,7 @@ function gw2_datamanager.UpdateLevelMap()
 	end
 end
 
-
+-- picks a random point of interest in the map within levelrange +/-2, tries to get the z axis by a mesh check 
 function gw2_datamanager.GetRandomPositionInLevelRange( level )
 	local pPos = Player.pos
 	if ( TableSize(gw2_datamanager.levelmap) > 0 and TableSize(pPos) > 0) then
@@ -131,4 +127,4 @@ function gw2_datamanager.GetRandomPositionInLevelRange( level )
 end
 
 RegisterEventHandler("Module.Initalize",gw2_datamanager.ModuleInit)
-
+RegisterEventHandler("Gameloop.MeshReady",gw2_datamanager.UpdateLevelMap)
