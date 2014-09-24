@@ -1,6 +1,6 @@
 gw2_skill_manager = {}
 gw2_skill_manager.mainWindow = { name = GetString("skillManager"), x = 350, y = 50, w = 250, h = 350}
-gw2_skill_manager.editWindow = { name = GetString("skillEditor"), w = 250, h = 550}
+gw2_skill_manager.editWindow = { name = GetString("skillEditor"), x = 600, y = 50, w = 250, h = 550}
 gw2_skill_manager.profile = nil
 gw2_skill_manager.path = GetStartupPath() .. [[\LuaMods\GW2Minion\SkillManagerProfiles\]]
 --setmetatable(gw2_skill_manager, {__call = function(cls,...) return cls.NewInstance(...) end})
@@ -22,18 +22,48 @@ function gw2_skill_manager.ModuleInit()
 	
 	-- Init Edit Window
 	local editWindow = WindowManager:NewWindow(gw2_skill_manager.editWindow.name,gw2_skill_manager.editWindow.x,gw2_skill_manager.editWindow.y,gw2_skill_manager.editWindow.w,gw2_skill_manager.editWindow.h,false)
+	if (editWindow) then
+		-- Skill Section
+		editWindow:NewNumeric(GetString("smSkillID"),"SklMgr_ID",GetString("Skill"))
+		editWindow:NewField(GetString("smSkillName"),"SklMgr_Name",GetString("Skill"))
+		editWindow:NewComboBox(GetString("smTarget"),"SklMgr_Target",GetString("Skill"),"Either,Enemy,Player")
+		editWindow:NewComboBox(GetString("smGrndTarget"),"SklMgr_GrndTarget",GetString("Skill"),"true,false")
+		editWindow:NewComboBox(GetString("smHealing"),"SklMgr_Healing",GetString("Skill"),"true,false")
+		editWindow:NewNumeric(GetString("smAllyCount"),"SklMgr_AllyCount",GetString("Skill"))
+		editWindow:NewNumeric(GetString("smAllyRange"),"SklMgr_AllyRange",GetString("Skill"))
+		editWindow:NewNumeric(GetString("smEnemyCount"),"SklMgr_EnemyCount",GetString("Skill"))
+		editWindow:NewNumeric(GetString("smEnemyRange"),"SklMgr_EnemyRange",GetString("Skill"))
+		-- Player Section
+		editWindow:NewComboBox(GetString("smCombatState"),"SklMgr_CombatState",GetString("Player"),"Either,InCombat,OutCombat")
+		editWindow:NewNumeric(GetString("smMinHP"),"SklMgr_pMinHP",GetString("Player"),1,100)
+		editWindow:NewNumeric(GetString("smMaxHP"),"SklMgr_pMaxHP",GetString("Player"),0,99)
+		editWindow:NewNumeric(GetString("smMinPower"),"SklMgr_MaxPower",GetString("Player"),1,100)
+		editWindow:NewNumeric(GetString("smMaxPower"),"SklMgr_MinPower",GetString("Player"),0,99)
+		editWindow:NewNumeric(GetString("smMinEndurance"),"SklMgr_MimEndurance",GetString("Player"),1,100)
+		editWindow:NewNumeric(GetString("smMaxEndurance"),"SklMgr_MaxEndurance",GetString("Player"),0,99)
+		editWindow:NewField(GetString("smHasBuffs"),"SklMgr_PHasBuffs",GetString("Player"))
+		editWindow:NewField(GetString("smHasNotBuffs"),"SklMgr_PHasNotBuffs",GetString("Player"))
+		editWindow:NewNumeric(GetString("smCondCount"),"SklMgr_PCondCount",GetString("Player"))
+		editWindow:NewNumeric(GetString("smBoonCount"),"SklMgr_PBoonCount",GetString("Player"))
+		-- Target Section
+		editWindow:NewComboBox(GetString("smLOS"),"SklMgr_LOS",GetString("Target"),"true,false")
+		editWindow:NewNumeric(GetString("smMaxEndurance"),"SklMgr_MaxEndurance",GetString("Player"),1,5000)
+		--editWindow:Hide()
+	end
 	
 	-- Set Default Profile
-	--[[if (Settings.GW2Minion.gCurrentProfile) then
+	if (Settings.GW2Minion.gCurrentProfile) then
+		d("lol")
 		gw2_skill_manager.profile = gw2_skill_manager.NewInstance(Settings.GW2Minion.gCurrentProfile)
 		gw2_skill_manager.UpdateUI()
-	end]]
+	end
 	gw2_skill_manager.profile = gw2_skill_manager.NewInstance("testprofile")
 	gw2_skill_manager.UpdateUI()
 	
 end
 
 function gw2_skill_manager.NewInstance(profileName)
+	profileName = string.gsub(profileName,'%W','')
 	profileName = table_invert(GW2.CHARCLASS)[Player.profession] .. "_" .. profileName
 	local newProfile = (persistence.load(gw2_skill_manager.path .. profileName .. ".lua") or
 						{
@@ -734,14 +764,11 @@ end
 function gw2_skill_manager.UpdateUI()
 	local mainWindow = WindowManager:GetWindow(gw2_skill_manager.mainWindow.name)
 	if (mainWindow) then
-		local box = mainWindow:GetControl(GetString("profile"),GetString("generalSettings"))
-		if (box) then
-			box:Clear()
-			for profile in StringSplit(gw2_skill_manager.GetProfileList(),",") do
-				d(profile)
-				box:Add(profile)
-			end
+		local newComboList = "None"
+		for profile in StringSplit(gw2_skill_manager.GetProfileList(),",") do
+			newComboList = newComboList .. "," .. profile
 		end
+		gCurrentProfileName_listirems = newComboList
 		mainWindow:DeleteGroup(GetString("profileSkills"))
 		if (gw2_skill_manager.profile) then
 			for key=1,#gw2_skill_manager.profile.skills do
@@ -750,6 +777,13 @@ function gw2_skill_manager.UpdateUI()
 				
 			end
 		end
+	end
+end
+
+function gw2_skill_manager.OpenEditWindow(skill)
+	local editWindow = WindowManager:GetWindow(gw2_skill_manager.editWindow.name)
+	if (editWindow) then
+		
 	end
 end
 
