@@ -5,7 +5,7 @@ ml_global_information.Lasttick = 0
 ml_global_information.Running = false
 ml_global_information.BotModes = {}
 ml_global_information.LastGameState = 0
-
+ml_global_information.ShowDebug = false
 ml_global_information.WorldMarkerType = 24 -- enum for "in current map", changes on larger patches sometimes
 
 -- Global vars which are used very often and we can just reduce the hammering by getting them once per frame here

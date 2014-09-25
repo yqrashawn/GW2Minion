@@ -21,17 +21,44 @@ end
 function gw2_task_navtomap:Init()
 	d("gw2_task_navtomap:Init")
 	
-	--self:add(ml_element:create( "MultiBotCheck", c_MultiBotCheck, e_MultiBotCheck, 500 ), self.process_elements)
+	--ml_task_hub:CurrentTask():add(ml_element:create( "MultiBotCheck", c_MultiBotCheck, e_MultiBotCheck, 500 ), ml_task_hub:CurrentTask().process_elements)
 		
-	--self:AddTaskCheckCEs()	
+	--ml_task_hub:CurrentTask():AddTaskCheckCEs()
 end
 function gw2_task_navtomap:task_complete_eval()
-    return this.taretMapID == 0
+	return ml_task_hub:CurrentTask().targetMapID == 0
 end
 
 function gw2_task_navtomap:Process()
-	d("gw2_task_navtomap:Process")
-	
+	ml_log("task_navtomap: ")
+	if ( ml_task_hub:CurrentTask().targetMapID ~= 0 ) then
+		
+		if ( ml_task_hub:CurrentTask().targetMapID ~= ml_global_information.CurrentMapID ) then
+			local pos = ml_nav_manager.GetNextPathPos(	ml_global_information.Player_Position, ml_global_information.CurrentMapID, ml_task_hub:CurrentTask().targetMapID	)
+			if (ValidTable(pos)) then
+				local dist = Distance3D(pos.x,pos.y,pos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
+				if ( dist > 50 ) then
+					
+					local newTask = gw2_task_moveto.Create()
+					newTask.targetPos = pos
+					ml_task_hub:CurrentTask():AddSubTask(newTask)
+					
+				else
+					ml_log("Transition reached")
+					-- Get navpoint and handle by type Interact / walk straight through after facing
+					
+					
+				end			
+			else			
+				ml_error("gw2_task_navtomap: Cannot find a path to the targetmap!, aborting task")
+				newinst.completed = true
+			end
+			
+		else
+			ml_log("TargetMap Reached")
+			newinst.completed = true
+		end
+	end
 end
 
 function gw2_task_navtomap:UIInit()
@@ -69,7 +96,7 @@ function gw2_task_navtomap:UIDestroy()
 	d("gw2_task_navtomap:UIDestroy")
 end
 
-function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
+function gw2_task_navtomap.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
 		if ( k == "gNavToMap" ) then
 			if ( gNavToMap ~= nil and ValidTable(gw2_task_navtomap.maps) ) then
@@ -81,14 +108,16 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 					end
 				end
 				if ( id ~= 0 ) then			
-					d("Setting new path FROM :"..gw2_datamanager.GetMapName( ml_global_information.CurrentMapID ).. " TO: "..gNavToMap)
+					d("Setting new path FROM "..gw2_datamanager.GetMapName( ml_global_information.CurrentMapID ).. " TO "..gNavToMap)
 					local pos = ml_nav_manager.GetNextPathPos(	ml_global_information.Player_Position, ml_global_information.CurrentMapID, id	)
 					if (ValidTable(pos)) then
+						
 						ml_task_hub:ClearQueues()
 						local task = ml_global_information.BotModes[gw2_task_navtomap.name]
 						if (task ~= nil) then
-							task.targetMapID = id
-							ml_task_hub:Add(task.Create(), LONG_TERM_GOAL, TP_ASAP)
+							task.Create()
+							task.targetMapID = id				
+							ml_task_hub:Add(task, LONG_TERM_GOAL, TP_ASAP)
 						end
 					else
 						ml_error("Cannot find a Path to MapID "..tostring(id).." - "..gw2_datamanager.GetMapName( tonumber(id) ))				
@@ -98,5 +127,5 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 		end
 	end
 end
-RegisterEventHandler("GUI.Update",gw2minion.GUIVarUpdate)
+RegisterEventHandler("GUI.Update",gw2_task_navtomap.GUIVarUpdate)
 ml_global_information.AddBotMode(gw2_task_navtomap.name, gw2_task_navtomap)

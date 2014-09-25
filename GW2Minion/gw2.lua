@@ -1,7 +1,8 @@
 gw2minion = {}
-gw2minion.MainWindow = { Name="MainMenu", x=50, y=50, width=220, height=350 }
+gw2minion.MainWindow = { Name="MainMenu", x=50, y=50, width=220, height=350, ChildWindows = {} }
 gw2minion.CinemaWindow = { Name="CinemaMenu", x=100, y=100 , width=250, height=150 }
 gw2minion.CharacterWindow = { Name="CharacterMenu", x=100, y=100 , width=250, height=150 }
+gw2minion.DebugWindow = { Name="DebugInfo", x=100, y=100 , width=200, height=250 }
 
 function gw2minion.ModuleInit()
 	--Init MainMenu Window
@@ -15,6 +16,12 @@ function gw2minion.ModuleInit()
 		b:SetSize(25,30)
 		RegisterEventHandler("gw2minion.evBotstartStop", gw2minion.ToggleBot)
 		RegisterEventHandler("GW2MINION.toggle", gw2minion.ToggleBot)
+		
+		local bd = mw:NewButton("D","gw2minion.evToggleDebugWindow")
+		bd:Dock(0)
+		bd:SetSize(15,15)
+		bd:SetPos(100,0)
+		RegisterEventHandler("gw2minion.evToggleDebugWindow", gw2minion.ShowDebug)
 		
 	end	
 	-- Setup default bot modes
@@ -41,6 +48,10 @@ function gw2minion.ModuleInit()
 	-- CharacterWindow	
 	local caw = WindowManager:NewWindow(gw2minion.CharacterWindow.Name,gw2minion.CharacterWindow.x,gw2minion.CharacterWindow.y,gw2minion.CharacterWindow.width,gw2minion.CharacterWindow.height)
 	
+	-- DebugWindow
+	local dw = WindowManager:NewWindow(gw2minion.DebugWindow.Name,gw2minion.DebugWindow.x,gw2minion.DebugWindow.y,gw2minion.DebugWindow.width,gw2minion.DebugWindow.height)
+		dw:Hide()
+	gw2minion.MainWindow.ChildWindows[gw2minion.DebugWindow.Name] = gw2minion.DebugWindow.Name
 	
 	-- Setup marker manager callbacks and vars
 	if ( ml_marker_mgr ) then
@@ -217,6 +228,7 @@ function gw2minion.ToggleBot(arg)
 				ml_global_information.Running = false
 				ml_task_hub.shouldRun = false		
 				Settings.GW2Minion.gBotRunning = "0"
+				ml_global_information.Stop()
 				ml_global_information.Reset()				
 				sb:SetText(GetString("startBot"))
 			end
@@ -229,6 +241,7 @@ function gw2minion.SwitchUIForGameState(tickcount)
 	local currentGameState = GetGameState()
 	if ( currentGameState ~= ml_global_information.LastGameState ) then
 		ml_global_information.LastGameState = currentGameState
+		GUI_ToggleConsole(false)
 		local wMain = WindowManager:GetWindow(gw2minion.MainWindow.Name)
 		local wCine = WindowManager:GetWindow(gw2minion.CinemaWindow.Name)
 		local wChar = WindowManager:GetWindow(gw2minion.CharacterWindow.Name)
@@ -239,10 +252,18 @@ function gw2minion.SwitchUIForGameState(tickcount)
 				wChar:Hide()
 			elseif( currentGameState == 14 or currentGameState == 10 ) then --cinematic
 				wMain:Hide()
+				for name,_ in pairs(gw2minion.MainWindow.ChildWindows) do
+					local wnd = WindowManager:GetWindow(name)
+					if ( wnd ) then wnd:Hide() end
+				end
 				wCine:Show()
 				wChar:Hide()
 			elseif( currentGameState == 4 ) then --charscreen
 				wMain:Hide()
+				for name,_ in pairs(gw2minion.MainWindow.ChildWindows) do
+					local wnd = WindowManager:GetWindow(name)
+					if ( wnd ) then wnd:Hide() end
+				end
 				wCine:Hide()
 				wChar:Show()
 			end
@@ -264,7 +285,7 @@ function ml_global_information.Reset()
     ml_task_hub:ClearQueues()
 	if (gBotMode ~= nil) then
 		local task = ml_global_information.BotModes[gBotMode]
-		if (task ~= nil) then
+		if (task ~= nil) then			
 			ml_task_hub:Add(task.Create(), LONG_TERM_GOAL, TP_ASAP)
 		end
     end
@@ -272,7 +293,7 @@ end
 
 function ml_global_information.Stop()
     if (Player:IsMoving()) then
-        Player:Stop()
+        Player:StopMovement()
     end
 end
 
@@ -328,7 +349,7 @@ function gw2minion.SwitchMode(mode)
 		end
 	
 		-- Destroy old UI	
-		if (Settings.GW2Minion["gBotMode"] ~= nil and Settings.GW2Minion["gBotMode"] ~= mode and ml_global_information.BotModes[Settings.GW2Minion["gBotMode"]] ~= nil) then
+		if (Settings.GW2Minion["gBotMode"] ~= nil and ml_global_information.BotModes[Settings.GW2Minion["gBotMode"]] ~= nil) then
 			ml_global_information.BotModes[Settings.GW2Minion["gBotMode"]]:UIDestroy()						
 		end
 		-- Create new UI
@@ -352,7 +373,18 @@ function gw2minion.SwitchMode(mode)
 	end
 end
 
-
+function gw2minion.ShowDebug()
+	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
+	if ( dw ) then
+		if ( dw.visible ) then
+			dw:Hide()
+			ml_global_information.ShowDebug = false
+		else
+			dw:Show()
+			ml_global_information.ShowDebug = true
+		end
+	end
+end
 RegisterEventHandler("Module.Initalize",gw2minion.ModuleInit)
 RegisterEventHandler("GUI.Update",gw2minion.GUIVarUpdate)
 RegisterEventHandler("Gameloop.Update",gw2minion.OnUpdate)
