@@ -31,9 +31,7 @@ function gw2_task_moveto.Create()
 end
 
 function gw2_task_moveto:Process()
-	d("gw2_task_moveto:Process")
-	
-	
+	ml_log("MoveTo")
 	if ( ValidTable(ml_task_hub:CurrentTask().targetPos) ) then
 	
 		local dist = Distance3D(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
@@ -46,6 +44,7 @@ function gw2_task_moveto:Process()
 			-- Charlist
 			-- Gadgetlist
 			-- check for closest point on mesh to compensate for 3D vs mesh differences
+			
 		end
 		
 		
@@ -61,6 +60,37 @@ function gw2_task_moveto:Process()
 			-- Check for increased node count when the targetpos is the same to prevent back n forth twisting and stuck 
 			
 			
+			-- Errorhandling
+			if ( newnodecount < 0 ) then			
+			--[[
+			-1 : Startpoint not on navmesh
+			-2 : Endpoint not on navmesh
+			-3 : No path between start and endpoint found
+			-4 : Path between start and endpoint has a lenght of 0
+			-5 : No path between start and endpoint found
+			-6 : Couldn't find a path
+			-7 : Distance Playerpos-Targetpos < stoppingthreshold
+			-8 : NavMesh is not ready/loaded
+			-9 : Player object not valid
+			-10 : Moveto coordinates are crap
+			]]
+				
+				if ( newnodecount == -1 ) then
+					-- try to get to the closest point on the navmesh first
+					-- NavigationManager:GetPointToMeshDistance(x,y,z)
+					-- NavigationManager:GetClosestPointOnMesh(x,y,z)
+				elseif ( newnodecount == -2 ) then
+					-- try to get instead to the closest point near the endpoint on the navmesh
+					-- NavigationManager:GetPointToMeshDistance(x,y,z)
+					-- NavigationManager:GetClosestPointOnMesh(x,y,z)
+				else
+					
+					ml_log("gw2_task_moveto: No Valid Path : "..tostring(newnodecount))
+					ml_task_hub:CurrentTask().completed = true
+				
+				end
+			
+			end			
 			
 		end
 		

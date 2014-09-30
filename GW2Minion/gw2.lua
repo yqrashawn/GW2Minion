@@ -180,7 +180,9 @@ function gw2minion.OnUpdate(event, tickcount )
 				
 			if ( ml_task_hub.shouldRun ) then
 				if (not ml_task_hub:Update() ) then
-					ml_error("No task queued, please select a valid bot mode in the Settings drop-down menu")
+					if ( not ml_global_information.Reset() ) then
+						ml_error("No task queued, please select a valid bot mode in the Settings drop-down menu")
+					end
 				end
 			end
 				
@@ -287,14 +289,21 @@ function ml_global_information.Reset()
 		local task = ml_global_information.BotModes[gBotMode]
 		if (task ~= nil) then			
 			ml_task_hub:Add(task.Create(), LONG_TERM_GOAL, TP_ASAP)
+			return true
 		end
     end
+	return false
 end
 
 function ml_global_information.Stop()
     if (Player:IsMoving()) then
         Player:StopMovement()
     end
+end
+
+function ml_global_information.Wait( mseconds )
+	ml_global_information.Lasttick = ml_global_information.Lasttick + mseconds
+	
 end
 
 -- To add a task to the BotMode Dropdown

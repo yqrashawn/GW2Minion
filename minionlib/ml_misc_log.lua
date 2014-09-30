@@ -45,7 +45,7 @@ function ml_log( arg )
 		ml_logstring = ml_logstring.."("..arg..")::"
 		return "Running"
 	else	
-		ml_logstring = ml_logstring..arg
+		ml_logstring = ml_logstring.." "..arg
 	end
 	--d( debug.traceback())	
 end
