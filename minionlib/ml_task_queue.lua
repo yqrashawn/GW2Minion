@@ -12,12 +12,14 @@ function ml_task_queue:Add(task, prio)
 end
 
 function ml_task_queue:Update()
-    if (self.rootTask ~= nil and self.rootTask ~= false) then
-        local status = self.rootTask:Update()
+    local status = nil
+	if (self.rootTask ~= nil and self.rootTask ~= false) then
+        status = self.rootTask:Update()
         if (status ~= TS_PROGRESSING) then
             self:Delete()
         end
     end
+	return status -- return the status back to the hub
 end
 
 function ml_task_queue:HasOrders()

@@ -22,11 +22,8 @@ function gw2_task_moveto.Create()
 	
 	newinst.followNavSystem = false
 	newinst.randomMovement = false
-	newinst.smoothTurns = true
-	
-	newinst.stuckCount = 0
-	newinst.stuckTimer = 0
-	newinst.stuckRandomPos = nil
+	newinst.smoothTurns = true	
+
     return newinst
 end
 
@@ -50,48 +47,66 @@ function gw2_task_moveto:Process()
 		
 		if ( dist <= ml_task_hub:CurrentTask().stoppingDistance + ml_task_hub:CurrentTask().targetRadius ) then
 			ml_task_hub:CurrentTask().completed = true
-		else			
-			local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,25+ml_task_hub:CurrentTask().targetRadius,ml_task_hub:CurrentTask().followNavSystem,ml_task_hub:CurrentTask().randomMovement,ml_task_hub:CurrentTask().smoothTurns)
-						
-			if ( ml_global_information.ShowDebug and newnodecount ~= dbPNodes ) then
-				dbPNodesLast = dbPNodes
-				dbPNodes = newnodecount
-			end			
-			-- Check for increased node count when the targetpos is the same to prevent back n forth twisting and stuck 
+		else
+
+			-- HandleStuck
+			if ( not gw2_unstuck.HandleStuck() ) then
 			
-			
-			-- Errorhandling
-			if ( newnodecount < 0 ) then			
-			--[[
-			-1 : Startpoint not on navmesh
-			-2 : Endpoint not on navmesh
-			-3 : No path between start and endpoint found
-			-4 : Path between start and endpoint has a lenght of 0
-			-5 : No path between start and endpoint found
-			-6 : Couldn't find a path
-			-7 : Distance Playerpos-Targetpos < stoppingthreshold
-			-8 : NavMesh is not ready/loaded
-			-9 : Player object not valid
-			-10 : Moveto coordinates are crap
-			]]
+				local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_task_hub:CurrentTask().stoppingDistance+ml_task_hub:CurrentTask().targetRadius,ml_task_hub:CurrentTask().followNavSystem,ml_task_hub:CurrentTask().randomMovement,ml_task_hub:CurrentTask().smoothTurns)
+							
+				if ( ml_global_information.ShowDebug and newnodecount ~= dbPNodes ) then
+					dbPNodesLast = dbPNodes
+					dbPNodes = newnodecount
+				end			
+				-- Check for increased node count when the targetpos is the same to prevent back n forth twisting and stuck 
 				
-				if ( newnodecount == -1 ) then
-					-- try to get to the closest point on the navmesh first
-					-- NavigationManager:GetPointToMeshDistance(x,y,z)
-					-- NavigationManager:GetClosestPointOnMesh(x,y,z)
-				elseif ( newnodecount == -2 ) then
-					-- try to get instead to the closest point near the endpoint on the navmesh
-					-- NavigationManager:GetPointToMeshDistance(x,y,z)
-					-- NavigationManager:GetClosestPointOnMesh(x,y,z)
-				else
+				
+				-- Errorhandling
+				if ( newnodecount < 0 ) then			
+				--[[
+				-1 : Startpoint not on navmesh
+				-2 : Endpoint not on navmesh
+				-3 : No path between start and endpoint found
+				-4 : Path between start and endpoint has a lenght of 0
+				-5 : No path between start and endpoint found
+				-6 : Couldn't find a path
+				-7 : Distance Playerpos-Targetpos < stoppingthreshold
+				-8 : NavMesh is not ready/loaded
+				-9 : Player object not valid
+				-10 : Moveto coordinates are crap
+				]]
 					
-					ml_log("gw2_task_moveto: No Valid Path : "..tostring(newnodecount))
-					ml_task_hub:CurrentTask().completed = true
-				
+					if ( newnodecount == -1 ) then
+						ml_error(" -1: Player not on navmesh")
+						-- try to get to the closest point on the navmesh first
+						-- NavigationManager:GetPointToMeshDistance(x,y,z)
+						-- NavigationManager:GetClosestPointOnMesh(x,y,z)
+					elseif ( newnodecount == -2 ) then
+						ml_error(" -2: Endpoint not on navmesh")
+						-- try to get instead to the closest point near the endpoint on the navmesh
+						-- NavigationManager:GetPointToMeshDistance(x,y,z)
+						-- NavigationManager:GetClosestPointOnMesh(x,y,z)
+					elseif ( newnodecount == -7 ) then
+						ml_error(" -7: Distance Playerpos-Targetpos < stoppingthreshold")
+						-- try to lower the targetRadius & stoppingDistance
+						if ( ml_task_hub:CurrentTask().targetRadius > 0 ) then
+							ml_task_hub:CurrentTask().targetRadius = 0 
+						
+						elseif ( ml_task_hub:CurrentTask().targetRadius == 0 and ml_task_hub:CurrentTask().stoppingDistance > 0 ) then
+							ml_task_hub:CurrentTask().stoppingDistance = 10 
+							
+						elseif ( ml_task_hub:CurrentTask().targetRadius == 0 and ml_task_hub:CurrentTask().stoppingDistance <= 10 ) then
+							ml_log("gw2_task_moveto: Distance Playerpos-Targetpos < stoppingthreshold : "..tostring(newnodecount))
+							ml_task_hub:CurrentTask().completed = true
+						end
+					else
+						ml_error("gw2_task_moveto result: "..tostring(newnodecount))
+						ml_log("gw2_task_moveto: No Valid Path : "..tostring(newnodecount))
+						--ml_task_hub:CurrentTask().completed = true
+					
+					end			
 				end
-			
-			end			
-			
+			end
 		end
 		
 		if ( ml_global_information.ShowDebug ) then 
@@ -99,10 +114,12 @@ function gw2_task_moveto:Process()
 			dbTDist = dist
 			dbPStopDist = ml_task_hub:CurrentTask().stoppingDistance
 			dbTID = tostring(ml_task_hub:CurrentTask().targetID)
-			dbStuckCount = stuckCount
-			dbStuckTmr = stuckTimer
-			if ( ValidTable(ml_task_hub:CurrentTask().stuckRandomPos) ) then
-				dbStuckRPos = (math.floor(ml_task_hub:CurrentTask().stuckRandomPos.x * 10) / 10).." / "..(math.floor(ml_task_hub:CurrentTask().stuckRandomPos.y * 10) / 10).." / "..(math.floor(ml_task_hub:CurrentTask().stuckRandomPos.z * 10) / 10)
+			dbStuckCount = gw2_unstuck.stuckCount
+			dbStuckTmr = TimeSince(gw2_unstuck.stuckTimer)
+			dbJumpCount = gw2_unstuck.jumpCount
+			dbLastOnMesh = TimeSince(gw2_unstuck.lastOnMeshTime)
+			if ( ValidTable(gw2_unstuck.stuckRandomPos) ) then
+				dbStuckRPos = (math.floor(gw2_unstuck.stuckRandomPos.x * 10) / 10).." / "..(math.floor(gw2_unstuck.stuckRandomPos.y * 10) / 10).." / "..(math.floor(gw2_unstuck.stuckRandomPos.z * 10) / 10)
 			else
 				dbStuckRPos = "0/0/0"
 			end
@@ -122,22 +139,3 @@ function gw2_task_moveto:Process()
 	
 end
 
-function gw2_task_moveto.ModuleInit()
-	d("gw2_task_moveto:ModuleInit")
-	
-	-- Setup Debug fields
-	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
-	if ( dw ) then
-		dw:NewField("PathNodes","dbPNodes","Task_MoveTo")
-		dw:NewField("LastPathNodes","dbPNodesLast","Task_MoveTo")
-		dw:NewField("PathStoppingDist","dbPStopDist","Task_MoveTo")
-		dw:NewField("TargetPos","dbTPos","Task_MoveTo")
-		dw:NewField("TargetDist","dbTDist","Task_MoveTo")
-		dw:NewField("TargetID","dbTID","Task_MoveTo")		
-		dw:NewField("StuckCount","dbStuckCount","Task_MoveTo")
-		dw:NewField("StuckTmr","dbStuckTmr","Task_MoveTo")
-		dw:NewField("StuckRandomPos","dbStuckRPos","Task_MoveTo")		
-	end
-end
-
-RegisterEventHandler("Module.Initalize",gw2_task_moveto.ModuleInit)

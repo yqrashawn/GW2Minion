@@ -2,7 +2,7 @@ gw2minion = {}
 gw2minion.MainWindow = { Name="MainMenu", x=50, y=50, width=220, height=350, ChildWindows = {} }
 gw2minion.CinemaWindow = { Name="CinemaMenu", x=100, y=100 , width=250, height=150 }
 gw2minion.CharacterWindow = { Name="CharacterMenu", x=100, y=100 , width=250, height=150 }
-gw2minion.DebugWindow = { Name="DebugInfo", x=100, y=100 , width=200, height=250 }
+gw2minion.DebugWindow = { Name="DebugInfo", x=100, y=350 , width=200, height=350 }
 
 function gw2minion.ModuleInit()
 	--Init MainMenu Window
@@ -225,6 +225,7 @@ function gw2minion.ToggleBot(arg)
 				ml_task_hub.shouldRun = true
 				Settings.GW2Minion.gBotRunning = "1"
 				sb:SetText(GetString("stopBot"))
+				gw2_unstuck.Start()
 			else
 				d("Stopping Bot..")
 				ml_global_information.Running = false
@@ -299,6 +300,7 @@ function ml_global_information.Stop()
     if (Player:IsMoving()) then
         Player:StopMovement()
     end
+	gw2_unstuck.Reset()
 end
 
 function ml_global_information.Wait( mseconds )
@@ -348,6 +350,7 @@ function gw2minion.UpdateGuestServers()
 	gGuestServer = Settings.GW2Minion.gGuestServer
 end
 
+-- Switching BotMode and updating UI accordingly
 function gw2minion.SwitchMode(mode)	
 	ml_global_information.Reset()
 	local newtask = ml_global_information.BotModes[mode]
@@ -382,6 +385,7 @@ function gw2minion.SwitchMode(mode)
 	end
 end
 
+-- Extra debug window with live values
 function gw2minion.ShowDebug()
 	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
 	if ( dw ) then

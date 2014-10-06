@@ -35,16 +35,20 @@ function ml_task_hub:Update()
 		end
 		local currQueueId = 0
 		local didUpdate = false
+		
 		for index, queue in pairs(ml_task_hub.queues)  do
 			ml_task_hub:HandlePending( queue, prevQueue )
 			if ( queue:HasOrders() ) then
 				ml_task_hub.prevQueueId = index
-				queue:Update()
-				didUpdate = true
-				break
+				local result = queue:Update()
+				
+				-- dont leave the loop when a task was completed/failed to prevent the slow task-switching
+				if ( result == TS_PROGRESSING ) then
+					didUpdate = true
+					break
+				end
 			end
-		end
-		
+		end		
 		return didUpdate
 	end
 end

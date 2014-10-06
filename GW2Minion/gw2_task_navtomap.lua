@@ -22,17 +22,6 @@ function gw2_task_navtomap.Create()
     return newinst
 end
 
-function gw2_task_navtomap:Init()
-	d("gw2_task_navtomap:Init")
-	
-	--ml_task_hub:CurrentTask():add(ml_element:create( "MultiBotCheck", c_MultiBotCheck, e_MultiBotCheck, 500 ), ml_task_hub:CurrentTask().process_elements)
-		
-	--ml_task_hub:CurrentTask():AddTaskCheckCEs()
-end
-function gw2_task_navtomap:task_complete_eval()
-	return ml_task_hub:CurrentTask().targetMapID == 0
-end
-
 function gw2_task_navtomap:Process()
 	ml_log("task_navtomap: ")
 	if ( ml_task_hub:CurrentTask().targetMapID ~= 0 ) then
@@ -103,6 +92,11 @@ function gw2_task_navtomap:Process()
 					id=mid
 					break
 				end
+			end
+			if ( id == ml_global_information.CurrentMapID ) then
+				ml_log("TargetMap Reached")
+				Player:StopMovement()
+				ml_task_hub:CurrentTask().completed = true
 			end
 			if ( id ~= 0 ) then			
 				d("Setting new path FROM "..gw2_datamanager.GetMapName( ml_global_information.CurrentMapID ).. " TO "..gNavToMap)
@@ -179,7 +173,7 @@ function gw2_task_navtomap.GUIVarUpdate(Event, NewVals, OldVals)
 							ml_task_hub:Add(task, LONG_TERM_GOAL, TP_ASAP)
 						end
 					else
-						ml_error("Cannot find a Path to MapID "..tostring(id).." - "..gw2_datamanager.GetMapName( tonumber(id) ))				
+						ml_error("Cannot find a Path to Map ID "..tostring(id).." - "..gw2_datamanager.GetMapName( tonumber(id) ))				
 					end
 				end
 			end
