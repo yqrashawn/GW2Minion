@@ -175,6 +175,8 @@ function gw2minion.OnUpdate(event, tickcount )
 		-- BlackList OnUpdate		
 		ml_blacklist_mgr.UpdateEntryTime()
 		ml_blacklist_mgr.UpdateEntries(tickcount)
+		-- SkillManager OnUpdate
+		gw2_skill_manager.OnUpdate(tickcount)
 		
 		if ( ml_global_information.Running ) then		
 																

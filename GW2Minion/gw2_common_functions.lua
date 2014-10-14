@@ -51,3 +51,14 @@ function gw2_common_functions.BufflistHasBuffs(bufflist, buffIDs)
 	end
     return false
 end
+
+function gw2_common_functions.NecroLeaveDeathshroud()
+	if (Player.profession == 8 ) then
+		local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
+		if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17 ) then
+			Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
+			return true
+		end
+	end
+	return false
+end
