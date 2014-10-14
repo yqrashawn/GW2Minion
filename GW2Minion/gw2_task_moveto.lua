@@ -22,6 +22,7 @@ function gw2_task_moveto.Create()
 	
 	newinst.followNavSystem = false
 	newinst.randomMovement = false
+	newinst.alwaysRandomMovement = false
 	newinst.smoothTurns = true	
 
     return newinst
@@ -51,8 +52,14 @@ function gw2_task_moveto:Process()
 
 			-- HandleStuck
 			if ( not gw2_unstuck.HandleStuck() ) then
-			
-				local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_task_hub:CurrentTask().stoppingDistance+ml_task_hub:CurrentTask().targetRadius,ml_task_hub:CurrentTask().followNavSystem,ml_task_hub:CurrentTask().randomMovement,ml_task_hub:CurrentTask().smoothTurns)
+				
+				-- randomize the randomized movement (lol)
+				local randommovement = ml_task_hub:CurrentTask().randomMovement
+				if ( not ml_task_hub:CurrentTask().alwaysRandomMovement and math.random(1,2) == 1) then
+					randommovement = true
+				end
+				
+				local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_task_hub:CurrentTask().stoppingDistance+ml_task_hub:CurrentTask().targetRadius,ml_task_hub:CurrentTask().followNavSystem,randommovement,ml_task_hub:CurrentTask().smoothTurns)
 							
 				if ( ml_global_information.ShowDebug and newnodecount ~= dbPNodes ) then
 					dbPNodesLast = dbPNodes

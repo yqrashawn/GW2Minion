@@ -2,5 +2,5 @@
 Name=GW2Minion
 Dependencies=minionlib
 Version=1
-Files=gw2_globals.lua,gw2_datamanager.lua,gw2.lua,gw2_task_grind.lua,gw2_task_assist.lua,gw2_task_navtomap.lua,gw2_skill_manager.lua,gw2_task_moveto.lua,gw2_common_functions.lua,gw2_unstuck.lua
+Files=gw2_globals.lua,gw2_datamanager.lua,gw2.lua,gw2_task_grind.lua,gw2_task_assist.lua,gw2_task_navtomap.lua,gw2_skill_manager.lua,gw2_task_moveto.lua,gw2_common_functions.lua,gw2_unstuck.lua,gw2_task_salvage.lua,gw2_task_follow.lua
 Enabled=1

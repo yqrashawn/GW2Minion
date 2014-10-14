@@ -44,6 +44,7 @@ ml_mesh_mgr.SetEvacPoint = function () return end -- Needs to get set
 ml_mesh_mgr.nextNavMesh = nil -- Holds the navmeshfilename that should get loaded
 ml_mesh_mgr.currentMesh = ml_mesh.Create()
 ml_mesh_mgr.loadingMesh = false
+ml_mesh_mgr.loadObjectFile = false
 ml_mesh_mgr.averagegameunitsize = 50
 ml_mesh_mgr.OMC = 0
 ml_mesh_mgr.transitionthreshold = 10 -- distance when to autoset an OMC, like when we we'r walking though a portal or door but are still in the same map
@@ -306,7 +307,7 @@ function ml_mesh_mgr.SwitchNavmesh()
 		if ( ml_mesh_mgr.navmeshfilepath ~= nil and ml_mesh_mgr.navmeshfilepath ~= "" ) then
 			-- Check if the file exist
 			d("Loading Navmesh : " ..ml_mesh_mgr.nextNavMesh)
-			if (not NavigationManager:LoadNavMesh(ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh)) then
+			if (not NavigationManager:LoadNavMesh(ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh,ml_mesh_mgr.loadObjectFile)) then
 				ml_error("Error while trying to load Navmesh: "..ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh)
 				ml_marker_mgr.ClearMarkerList()
 				ml_marker_mgr.RefreshMarkerNames()
@@ -314,6 +315,9 @@ function ml_mesh_mgr.SwitchNavmesh()
 				gnewmeshname = ""
 				
 			else
+				-- Dont reload the obj file again
+				ml_mesh_mgr.loadObjectFile = false
+				
 				-- To prevent (re-)loading or saving of mesh data while the mesh is beeing build/loaded
 				ml_mesh_mgr.loadingMesh = true
 				
@@ -660,12 +664,14 @@ function ml_mesh_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 			end			
 		elseif( k == "gShowMesh") then
 			if (v == "1") then
+				ml_mesh_mgr.LoadObjectFile()
 				MeshManager:ShowTriMesh(true)
 			else
 				MeshManager:ShowTriMesh(false)
 			end				
 		elseif( k == "gMeshrec") then
 			if (v == "1") then
+				ml_mesh_mgr.LoadObjectFile()
 				MeshManager:Record(true)
 			else
 				MeshManager:Record(false)
@@ -682,6 +688,7 @@ function ml_mesh_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 			MeshManager:RecSize(tonumber(gRecAreaSize))
 		elseif( k == "gMeshChange") then
 			if (v == "1") then
+				ml_mesh_mgr.LoadObjectFile()
 				MeshManager:SetChangeAreaMode(true)
 			else
 				MeshManager:SetChangeAreaMode(false)
@@ -777,7 +784,7 @@ end
 
 -- Toggle meshmanager Window
 function ml_mesh_mgr.ToggleMenu()
-    if (ml_mesh_mgr.visible) then
+	if (ml_mesh_mgr.visible) then
         GUI_WindowVisible(ml_mesh_mgr.mainwindow.name,false)
         ml_mesh_mgr.visible = false
     else
@@ -786,10 +793,18 @@ function ml_mesh_mgr.ToggleMenu()
             GUI_MoveWindow( ml_mesh_mgr.mainwindow.name, wnd.x+wnd.width,wnd.y) 
             GUI_WindowVisible(ml_mesh_mgr.mainwindow.name,true)
 			GUI_SizeWindow(ml_mesh_mgr.mainwindow.name,ml_mesh_mgr.mainwindow.w,ml_mesh_mgr.mainwindow.h)
-        end
-        
+        end        
         ml_mesh_mgr.visible = true
     end
+end
+
+-- load the obj file of the mesh for editing functions
+function ml_mesh_mgr.LoadObjectFile()
+	if ( gmeshname ~= "none" and not NavigationManager:IsObjectFileLoaded()) then
+		d("Loading .OBJ file for mesh...")
+		ml_mesh_mgr.loadObjectFile = true
+		ml_mesh_mgr.LoadNavMesh(gmeshname)
+	end
 end
 
 function ml_mesh_mgr.SetEvacPoint()

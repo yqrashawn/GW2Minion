@@ -32,7 +32,7 @@ end
 ml_logstring = ""
 function ml_log( arg )
 	-- prevent out of memory error (ya that really happened)
-	if ( string.len(arg) > 500 ) then
+	if ( string.len(ml_logstring) > 500 ) then
 		ml_logstring = ""
 	end
 	if (type( arg ) == "boolean" and arg == true) then		
