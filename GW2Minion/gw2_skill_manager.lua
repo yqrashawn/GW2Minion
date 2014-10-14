@@ -6,6 +6,7 @@ gw2_skill_manager.currentSkill = nil
 gw2_skill_manager.path = GetStartupPath() .. [[\LuaMods\GW2Minion\SkillManagerProfiles\]]
 gw2_skill_manager.detecting = false
 gw2_skill_manager.RecordSkillTmr = 0
+gw2_skill_manager.RecordRefreshTmr = 0
 --setmetatable(gw2_skill_manager, {__call = function(cls,...) return cls.NewInstance(...) end})
 
 function gw2_skill_manager.ModuleInit()
@@ -807,6 +808,7 @@ function gw2_skill_manager.UpdateMainWindow(openGroup)
 	if (mainWindow) then
 		gSMCurrentProfileName_listitems = gw2_skill_manager.GetProfileList()
 		mainWindow:DeleteGroup(GetString("profileSkills"))
+		mainWindow:DeleteGroup(GetString("ProfessionSettings"))
 		if (gw2_skill_manager.profile) then
 			for key=1,#gw2_skill_manager.profile.skills do
 				local skill = gw2_skill_manager.profile.skills[key]
@@ -814,24 +816,23 @@ function gw2_skill_manager.UpdateMainWindow(openGroup)
 				RegisterEventHandler(skill.priority,gw2_skill_manager.UpdateEditWindow)
 			end
 			if (openGroup) then mainWindow:UnFold(GetString("profileSkills")) end
-		end
-		if (Player) then
-			local profession = Player.profession
-			if (profession) then
-				if (profession == GW2.CHARCLASS.Engineer) then
-					mainWindow:NewComboBox(GetString("PriorizeKit"),"gSMPrioKit",GetString("ProfessionSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
-					gSMPrioKit = gw2_skill_manager.profile.professionSettings.priorityKit
-				elseif(profession == GW2.CHARCLASS.Elementalist) then
-					mainWindow:NewComboBox(GetString("PriorizeAttunement1"),"gSMPrioAtt1",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
-					mainWindow:NewComboBox(GetString("PriorizeAttunement2"),"gSMPrioAtt2",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
-					mainWindow:NewComboBox(GetString("PriorizeAttunement3"),"gSMPrioAtt3",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
-					mainWindow:NewComboBox(GetString("PriorizeAttunement4"),"gSMPrioAtt4",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
-					gSMPrioAtt1 = gw2_skill_manager.profile.professionSettings.PriorityAtt1
-					gSMPrioAtt2 = gw2_skill_manager.profile.professionSettings.PriorityAtt2
-					gSMPrioAtt3 = gw2_skill_manager.profile.professionSettings.PriorityAtt3
-					gSMPrioAtt4 = gw2_skill_manager.profile.professionSettings.PriorityAtt4
-				else
-					mainWindow:DeleteGroup(GetString("ProfessionSettings"))
+
+			if (Player) then
+				local profession = Player.profession
+				if (profession) then
+					if (profession == GW2.CHARCLASS.Engineer) then
+						mainWindow:NewComboBox(GetString("PrioritizeKit"),"gSMPrioKit",GetString("ProfessionSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
+						gSMPrioKit = gw2_skill_manager.profile.professionSettings.priorityKit
+					elseif(profession == GW2.CHARCLASS.Elementalist) then
+						mainWindow:NewComboBox(GetString("PriorizeAttunement1"),"gSMPrioAtt1",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
+						mainWindow:NewComboBox(GetString("PriorizeAttunement2"),"gSMPrioAtt2",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
+						mainWindow:NewComboBox(GetString("PriorizeAttunement3"),"gSMPrioAtt3",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
+						mainWindow:NewComboBox(GetString("PriorizeAttunement4"),"gSMPrioAtt4",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
+						gSMPrioAtt1 = gw2_skill_manager.profile.professionSettings.PriorityAtt1
+						gSMPrioAtt2 = gw2_skill_manager.profile.professionSettings.PriorityAtt2
+						gSMPrioAtt3 = gw2_skill_manager.profile.professionSettings.PriorityAtt3
+						gSMPrioAtt4 = gw2_skill_manager.profile.professionSettings.PriorityAtt4
+					end
 				end
 			end
 		end
@@ -1038,6 +1039,9 @@ function gw2_skill_manager.OnUpdate(tickcount)
 	if (gw2_skill_manager.detecting == true) then
 		if (tickcount - gw2_skill_manager.RecordSkillTmr > 30000) then
 			gw2_skill_manager.detecting = false
+		end
+		if (tickcount - gw2_skill_manager.RecordRefreshTmr > 500) then
+			gw2_skill_manager.RecordRefreshTmr = tickcount
 			gw2_skill_manager.UpdateMainWindow(true)
 		end
 		gw2_skill_manager.profile:DetectSkills()
