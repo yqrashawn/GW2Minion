@@ -282,7 +282,6 @@ function ml_mesh_mgr.RemoveDefaultMesh(mapid)
 end
 
 -- Use this to load a new / wanted navmesh
--- Use this to load a new / wanted navmesh
 function ml_mesh_mgr.LoadNavMesh( meshname )
 	if ( meshname ~= nil and meshname ~= 0 and type(meshname) == "string") then
 		if ( ml_mesh_mgr.loadingMesh == false ) then

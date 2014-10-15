@@ -13,7 +13,7 @@ gw2_unstuck.logoutTmr = 0
 gw2_unstuck.slowConditions = "791,727,721" --Fear, Immobilized, Crippled. -- Needs more! (all debufs that slow you down.)
 
 
-function gw2_unstuck.HandleStuck()
+function gw2_unstuck.HandleStuck(mode)
 	
 	-- MainThrottle
 	if ( TimeSince(gw2_unstuck.stuckTimer) < 250 ) then
@@ -60,24 +60,31 @@ function gw2_unstuck.HandleStuck()
 		if ( TimeSince(gw2_unstuck.lastOnMeshTime) > 2000) then
 			ml_log("Player not on Navmesh!")
 			
-			-- if the bot is started not on the mesh try to walk back onto the mesh			
-			local p = NavigationManager:GetClosestPointOnMesh({ x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z })
-			--d(tostring(gw2_unstuck.lastOnMeshTime).." "..tostring(TimeSince(gw2_unstuck.lastOnMeshTime)).." "..tostring(p.distance))
-			if ( (gw2_unstuck.lastOnMeshTime == 0 or TimeSince(gw2_unstuck.lastOnMeshTime) < 10000) and ValidTable(p) and p.distance > 0) then
-				ml_log("Move blindly to nearby mesh")
-				Player:SetFacingExact(p.x,p.y,p.z)
-				Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
-				gw2_unstuck.HandleStuck_MovedDistanceCheck()
-				gw2_unstuck.HandleStuck_ControlManualMovement()				
-			
-			else
-				-- we are not on or nearby the mesh
-				gw2_unstuck.HandleStuck_UseWaypoint()
+			if ( mode == nil ) then 
+				-- if the bot is started not on the mesh try to walk back onto the mesh			
+				local p = NavigationManager:GetClosestPointOnMesh({ x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z })
+				--d(tostring(gw2_unstuck.lastOnMeshTime).." "..tostring(TimeSince(gw2_unstuck.lastOnMeshTime)).." "..tostring(p.distance))			
+				if ( (gw2_unstuck.lastOnMeshTime == 0 or TimeSince(gw2_unstuck.lastOnMeshTime) < 10000) and ValidTable(p) and p.distance > 0) then
+					ml_log("Move blindly to nearby mesh")
+					Player:SetFacingExact(p.x,p.y,p.z)
+					Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+					gw2_unstuck.HandleStuck_MovedDistanceCheck()
+					gw2_unstuck.HandleStuck_ControlManualMovement()				
 				
-			end	
-			gw2_unstuck.lastResult = true 
-			return gw2_unstuck.lastResult
-		
+				else
+					-- we are not on or nearby the mesh
+					gw2_unstuck.HandleStuck_UseWaypoint()
+					
+				end	
+				gw2_unstuck.lastResult = true 
+				return gw2_unstuck.lastResult
+			
+			elseif ( mode == "follow" ) then
+				
+				gw2_unstuck.HandleStuck_MovedDistanceCheck()
+				gw2_unstuck.HandleStuck_ControlManualMovement()
+				
+			end
 		end
 	else
 		
@@ -177,15 +184,27 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck()
 					Player:Jump()
 				end
 			
-			else
+			elseif ( gw2_unstuck.stuckCount < 20) then
 				d("stuckCount > 10 !! Get a random point and try to walk there")
 				local p = NavigationManager:GetRandomPointOnCircle(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,50,650)
 					if ( p) then			
-					if ( Distance3D(p.x,p.y,p.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z) > 100) then
+					if ( Distance3D(p.x,p.y,p.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z) > 200) then
 						d("New antistuck-randomposition set")
 						gw2_unstuck.antiStuckPos = p
 					end
 				end
+			elseif ( gw2_unstuck.stuckCount < 25 ) then
+				table.insert(ml_mesh_mgr.currentMesh.Obstacles, { x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z, r=120 })
+				d("Adding new Obstacle for navigating around the stuck")
+				NavigationManager:AddNavObstacles(ml_mesh_mgr.currentMesh.Obstacles)
+				Player:StopMovement()
+				Player:SetMovement(1)
+				ml_global_information.Wait( 2000 )
+				Player:Jump()
+				
+			else
+				d("We are really really stuck this time...")
+				gw2_unstuck.HandleStuck_UseWaypoint()
 			end
 		end
 		

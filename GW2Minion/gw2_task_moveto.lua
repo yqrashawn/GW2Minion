@@ -1,4 +1,4 @@
--- Moveto task
+-- Moveto task & Follow task
 -- For navigating to further away targets or points, do not use this for short range combat navigation, it will be slow, very slow
 -- This task should handle movement, antistuck and do basic things to handle stucks, we'll see how it develops 
 gw2_task_moveto = inheritsFrom(ml_task)
