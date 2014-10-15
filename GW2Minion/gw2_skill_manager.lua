@@ -49,11 +49,11 @@ function gw2_skill_manager.ModuleInit()
 		editWindow:NewNumeric(GetString("smEnemyRange"),"SklMgr_EnemyRange",GetString("Skill"))
 		-- Player Section
 		editWindow:NewComboBox(GetString("smCombatState"),"SklMgr_CombatState",GetString("Player"),"Either,InCombat,OutCombat")
-		editWindow:NewNumeric(GetString("smMinHP"),"SklMgr_PMinHP",GetString("Player"),1,100)
+		editWindow:NewNumeric(GetString("smMinHP"),"SklMgr_PMinHP",GetString("Player"),0,100)
 		editWindow:NewNumeric(GetString("smMaxHP"),"SklMgr_PMaxHP",GetString("Player"),0,99)
-		editWindow:NewNumeric(GetString("smMinPower"),"SklMgr_MinPower",GetString("Player"),1,100)
+		editWindow:NewNumeric(GetString("smMinPower"),"SklMgr_MinPower",GetString("Player"),0,100)
 		editWindow:NewNumeric(GetString("smMaxPower"),"SklMgr_MaxPower",GetString("Player"),0,99)
-		editWindow:NewNumeric(GetString("smMinEndurance"),"SklMgr_MinEndurance",GetString("Player"),1,100)
+		editWindow:NewNumeric(GetString("smMinEndurance"),"SklMgr_MinEndurance",GetString("Player"),0,100)
 		editWindow:NewNumeric(GetString("smMaxEndurance"),"SklMgr_MaxEndurance",GetString("Player"),0,99)
 		editWindow:NewField(GetString("smHasBuffs"),"SklMgr_PHasBuffs",GetString("Player"))
 		editWindow:NewField(GetString("smHasNotBuffs"),"SklMgr_PHasNotBuffs",GetString("Player"))
@@ -61,10 +61,10 @@ function gw2_skill_manager.ModuleInit()
 		editWindow:NewNumeric(GetString("smBoonCount"),"SklMgr_PBoonCount",GetString("Player"))
 		-- Target Section
 		editWindow:NewComboBox(GetString("smLOS"),"SklMgr_LOS",GetString("Target"),"true,false")
-		editWindow:NewNumeric(GetString("smMinRange"),"SklMgr_MinRange",GetString("Target"),1,5000)
-		editWindow:NewNumeric(GetString("smMaxRange"),"SklMgr_MaxRange",GetString("Target"),1,5000)
-		editWindow:NewNumeric(GetString("smRadius"),"SklMgr_MaxRadius",GetString("Target"),1,5000)
-		editWindow:NewNumeric(GetString("smMinHP"),"SklMgr_TMinHP",GetString("Target"),1,100)
+		editWindow:NewNumeric(GetString("smMinRange"),"SklMgr_MinRange",GetString("Target"),0,5000)
+		editWindow:NewNumeric(GetString("smMaxRange"),"SklMgr_MaxRange",GetString("Target"),0,5000)
+		editWindow:NewNumeric(GetString("smRadius"),"SklMgr_MaxRadius",GetString("Target"),0,5000)
+		editWindow:NewNumeric(GetString("smMinHP"),"SklMgr_TMinHP",GetString("Target"),0,100)
 		editWindow:NewNumeric(GetString("smMaxHP"),"SklMgr_TMaxHP",GetString("Target"),0,99)
 		editWindow:NewComboBox(GetString("smMoving"),"SklMgr_Moving",GetString("Target"),"Either,Moving,NotMoving")
 		editWindow:NewField(GetString("smHasBuffs"),"SklMgr_THasBuffs",GetString("Target"))
@@ -327,7 +327,8 @@ function gw2_skill_manager.NewInstance(profileName)
 							returnSkillList[newPriority] = skill
 							returnSkillList[newPriority].slot = aSkill.slot
 							newPriority = newPriority + 1
-							if (aSkill.slot >= GW2.SKILLBARSLOT.Slot_1  and aSkill.slot <= GW2.SKILLBARSLOT.Slot_5 and skill.target.maxRange > maxRange) then
+							if ((aSkill.slot >= GW2.SKILLBARSLOT.Slot_1  and aSkill.slot <= GW2.SKILLBARSLOT.Slot_5) and
+							(skill.target.maxrange > 0 and skill.target.maxRange > maxRange or skill.target.maxrange == 0 and skill.target.radius > maxRange)) then
 								maxRange = skill.target.maxRange
 							end
 							break
@@ -632,6 +633,13 @@ function gw2_skill_manager.NewInstance(profileName)
 			local saveFile = {
 				name = self.name,
 				profession = self.profession,
+				professionSettings = {
+										priorityKit = self.professionSettings.priorityKit,
+										PriorityAtt1 = self.professionSettings.PriorityAtt1,
+										PriorityAtt2 = self.professionSettings.PriorityAtt2,
+										PriorityAtt3 = self.professionSettings.PriorityAtt3,
+										PriorityAtt4 = self.professionSettings.PriorityAtt4,
+									},
 				skills = {},
 			}
 			for priority=1,(TableSize(self.skills)-1) do
@@ -810,13 +818,6 @@ function gw2_skill_manager.UpdateMainWindow(openGroup)
 		mainWindow:DeleteGroup(GetString("profileSkills"))
 		mainWindow:DeleteGroup(GetString("ProfessionSettings"))
 		if (gw2_skill_manager.profile) then
-			for key=1,#gw2_skill_manager.profile.skills do
-				local skill = gw2_skill_manager.profile.skills[key]
-				mainWindow:NewButton(skill.priority .. ":" .. skill.skill.name,skill.priority,GetString("profileSkills"))
-				RegisterEventHandler(skill.priority,gw2_skill_manager.UpdateEditWindow)
-			end
-			if (openGroup) then mainWindow:UnFold(GetString("profileSkills")) end
-
 			if (Player) then
 				local profession = Player.profession
 				if (profession) then
@@ -835,6 +836,13 @@ function gw2_skill_manager.UpdateMainWindow(openGroup)
 					end
 				end
 			end
+			
+			for key=1,#gw2_skill_manager.profile.skills do
+				local skill = gw2_skill_manager.profile.skills[key]
+				mainWindow:NewButton(skill.priority .. ":" .. skill.skill.name,skill.priority,GetString("profileSkills"))
+				RegisterEventHandler(skill.priority,gw2_skill_manager.UpdateEditWindow)
+			end
+			if (openGroup) then mainWindow:UnFold(GetString("profileSkills")) end
 		end
 	end
 end
@@ -886,8 +894,12 @@ function gw2_skill_manager.UpdateEditWindow(skill)
 end
 
 function gw2_skill_manager.SaveProfile()
-	if (gSMCurrentProfileName ~= "None") then
+	if (gw2_skill_manager.profile) then
 		gw2_skill_manager.profile:Save()
+		gSMCurrentProfileName_listitems = gw2_skill_manager.GetProfileList()
+		local name = gw2_skill_manager.profile.name
+		name = string.sub(name,select(2,string.find(name,"_"))+1,#name)
+		gSMCurrentProfileName = name
 	end
 end
 
@@ -899,7 +911,7 @@ function gw2_skill_manager.NewProfile()
 end
 
 function gw2_skill_manager.DetectSkills()
-	if (gSMCurrentProfileName ~= "None") then
+	if (gw2_skill_manager.profile) then
 		gw2_skill_manager.RecordSkillTmr = ml_global_information.Now
 		gw2_skill_manager.detecting = true
 	end
@@ -1031,6 +1043,16 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 			gw2_skill_manager.UpdateMainWindow()
 			gw2_skill_manager.currentSkill = nil
 			gw2_skill_manager.UpdateEditWindow()
+		elseif (k == "gSMPrioKit") then
+			gw2_skill_manager.profile.professionSettings.priorityKit = v
+		elseif (k == "gSMPrioAtt1") then
+			gw2_skill_manager.profile.professionSettings.PriorityAtt1 = v
+		elseif (k == "gSMPrioAtt2") then
+			gw2_skill_manager.profile.professionSettings.PriorityAtt2 = v
+		elseif (k == "gSMPrioAtt3") then
+			gw2_skill_manager.profile.professionSettings.PriorityAtt3 = v
+		elseif (k == "gSMPrioAtt4") then
+			gw2_skill_manager.profile.professionSettings.PriorityAtt4 = v
 		end
 	end
 end
