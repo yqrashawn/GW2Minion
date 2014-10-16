@@ -19,14 +19,11 @@ function gw2_skill_manager.ModuleInit()
 	-- Init Main Window
 	local mainWindow = WindowManager:NewWindow(gw2_skill_manager.mainWindow.name,gw2_skill_manager.mainWindow.x,gw2_skill_manager.mainWindow.y,gw2_skill_manager.mainWindow.w,gw2_skill_manager.mainWindow.h,false)
 	if (mainWindow) then
-		-- Generall settings section
-		--mainWindow:NewCheckBox(GetString("active"),"gSMActive",GetString("settings"))
+		-- Settings section
 		mainWindow:NewComboBox(GetString("profile"),"gSMCurrentProfileName",GetString("settings"),"")
 		gSMCurrentProfileName = Settings.GW2Minion.gCurrentProfile
-		-- Advanced settings section
-		mainWindow:NewField(GetString("newProfileName"),"gSMNewProfileName",GetString("settings"))
 		mainWindow:NewButton(GetString("newProfile"),"gSMNewProfile",GetString("settings"))
-		RegisterEventHandler("gSMNewProfile",gw2_skill_manager.NewProfile)
+		RegisterEventHandler("gSMNewProfile",function() gw2_common_functions.CreateDialog(GetString("newProfileName"),gw2_skill_manager.NewProfile) end)
 		mainWindow:NewButton(GetString("autoDetectSkills"),"gSMDetectSkills",GetString("settings"))
 		RegisterEventHandler("gSMDetectSkills",gw2_skill_manager.DetectSkills)
 		-- Main window elements
@@ -470,6 +467,7 @@ function gw2_skill_manager.NewInstance(profileName)
 				local Tdist = T.distance
 				local playerHP = Player.health.percent
 				local movedir = Player:GetMovement()
+				local _,attackRange = _private:GetAvailableSkills()
 
 				-- EVADE
 				if (Player.endurance >= 50 and Player.health.percent < 100) then
@@ -493,7 +491,6 @@ function gw2_skill_manager.NewInstance(profileName)
 				if ( Player:IsMoving() ) then
 
 					if ( not Player.onmeshexact and (movedir.backward or movedir.left or movedir.right) ) then
-						d("We ran outside the NavMesh!")
 						Player:UnSetMovement(1)
 						Player:UnSetMovement(2)
 						Player:UnSetMovement(3)
@@ -501,7 +498,6 @@ function gw2_skill_manager.NewInstance(profileName)
 						if (pPos) then
 							local mPos = NavigationManager:GetClosestPointOnMesh(pPos)
 							if ( mPos ) then
-								--d("Moving back onto the NavMesh..")
 								Player:MoveTo(mPos.x,mPos.y,mPos.z,50,false,false,false)
 							end
 						end
@@ -509,48 +505,43 @@ function gw2_skill_manager.NewInstance(profileName)
 					end
 
 					if (tonumber(Tdist) ~= nil) then
-						if (ml_global_information.AttackRange > 300) then
+						if (attackRange > 300) then
 							-- RANGE
-							if (Tdist < (ml_global_information.AttackRange / 2) and movedir.forward ) then -- we are too close and moving towards enemy
+							if (Tdist < (attackRange / 2) and movedir.forward ) then -- we are too close and moving towards enemy
 								Player:UnSetMovement(0)	-- stop moving forward
-							elseif ( Tdist > ml_global_information.AttackRange and movedir.backward ) then -- we are too far away and moving backwards
+							elseif ( Tdist > attackRange and movedir.backward ) then -- we are too far away and moving backwards
 								Player:UnSetMovement(1)	-- stop moving backward
-							elseif (Tdist > ml_global_information.AttackRange and (movedir.left or movedir.right)) then -- we are strafing outside the maxrange
-								if ( movedir.left ) then
-									Player:UnSetMovement(2) -- stop moving Left
-								elseif( movedir.right) then
-									Player:UnSetMovement(3) -- stop moving Right
-								end
+							elseif (Tdist > attackRange and movedir.left) then -- we are strafing outside the maxrange
+								Player:UnSetMovement(2) -- stop moving Left
+							elseif (Tdist > attackRange and movedir.right) then -- we are strafing outside the maxrange
+								Player:UnSetMovement(3) -- stop moving Right
 							end
 						else
 							-- MELEE
-							if ( Tdist < 85 and movedir.forward) then -- we are too close and moving towards enemy
+							if ( Tdist < (T.radius + 5) and movedir.forward) then -- we are too close and moving towards enemy
 								Player:UnSetMovement(0)	-- stop moving forward
-							elseif (Tdist > ml_global_information.AttackRange and movedir.backward) then -- we are too far away and moving backwards
+							elseif (Tdist > attackRange and movedir.backward) then -- we are too far away and moving backwards
 								Player:UnSetMovement(1)	-- stop moving backward
-							elseif ((Tdist > ml_global_information.AttackRange + 50 or Tdist < 50) and (movedir.left or movedir.right)) then -- we are strafing outside the maxrange
-								if ( movedir.left ) then
-									Player:UnSetMovement(2) -- stop moving Left
-								elseif( movedir.right) then
-									Player:UnSetMovement(3) -- stop moving Right
-								end
+							elseif ((Tdist > attackRange + 50 or Tdist < 50) and movedir.left) then -- we are strafing outside the maxrange
+								Player:UnSetMovement(2) -- stop moving Left
+							elseif ((Tdist > attackRange + 50 or Tdist < 50) and movedir.right) then -- we are strafing outside the maxrange
+								Player:UnSetMovement(3) -- stop moving Right
 							end
 						end
 					end
 				end
 
 				--Set New Movement
-				--d("PRECHECK "..tostring(Tdist ~= nil) .." Timer"..tostring(mc_global.now - _private.combatMoveTmr > 0) .."  cancast: "..tostring(Player:CanCast()).."  oOM: "..tostring(Player.onmesh).." Tlos: "..tostring(T.los) .."  Icom: "..tostring(Player.inCombat and T.inCombat))
 				if ( Tdist ~= nil and mc_global.now - _private.combatMoveTmr > 0 and Player:CanCast() and Player.onmesh and T.los and Player.inCombat and T.inCombat) then
 
 					_private.combatMoveTmr = mc_global.now + math.random(1000,2000)
 					--tablecount:  1, 2, 3, 4, 5   --Table index starts at 1, not 0 
 					local dirs = { 0, 1, 2, 3, 4 } --Forward = 0, Backward = 1, Left = 2, Right = 3, + stop
 
-					if (ml_global_information.AttackRange > 300 ) then
+					if (attackRange > 300 ) then
 						-- RANGE
-						if (Tdist < ml_global_information.AttackRange ) then
-							if (Tdist > (ml_global_information.AttackRange * 0.90)) then 
+						if (Tdist < attackRange ) then
+							if (Tdist > (attackRange * 0.90)) then 
 								table.remove(dirs,2) -- We are too far away to walk backward
 							end
 							if (Tdist < 600) then 
@@ -569,7 +560,7 @@ function gw2_skill_manager.NewInstance(profileName)
 
 					else
 						-- MELEE
-						if (Tdist < ml_global_information.AttackRange ) then
+						if (Tdist < attackRange ) then
 							if (Tdist > 200) then 
 								table.remove(dirs,2) -- We are too far away to walk backwards
 							end
@@ -791,6 +782,10 @@ function gw2_skill_manager.NewInstance(profileName)
 	end
 end
 
+function gw2_skill_manager.NewProfile()
+	
+end
+
 function gw2_skill_manager.GetProfileList()
 	local profession = Player.profession
 	local list = "None"
@@ -923,8 +918,9 @@ function gw2_skill_manager.SaveProfile()
 	end
 end
 
-function gw2_skill_manager.NewProfile()
-	gw2_skill_manager.profile = gw2_skill_manager.NewInstance(gSMNewProfileName)
+function gw2_skill_manager.NewProfile(profileName)
+	gw2_skill_manager.profile = gw2_skill_manager.NewInstance(profileName)
+	gw2_skill_manager.SaveProfile()
 	gw2_skill_manager.UpdateMainWindow()
 	gw2_skill_manager.currentSkill = nil
 	gw2_skill_manager.UpdateEditWindow()
