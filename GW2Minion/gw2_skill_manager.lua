@@ -30,6 +30,8 @@ function gw2_skill_manager.ModuleInit()
 		mainWindow:NewButton(GetString("saveProfile"),"gSMprofile")
 		RegisterEventHandler("gSMprofile",gw2_skill_manager.SaveProfile)
 		mainWindow:UnFold(GetString("settings") )
+		
+		mainWindow:Hide()
 	end
 	
 	-- Init Edit Window
@@ -924,6 +926,7 @@ function gw2_skill_manager.NewProfile(profileName)
 	gw2_skill_manager.UpdateMainWindow()
 	gw2_skill_manager.currentSkill = nil
 	gw2_skill_manager.UpdateEditWindow()
+	gw2_skill_manager.DetectSkills()
 end
 
 function gw2_skill_manager.DetectSkills()
