@@ -46,11 +46,17 @@ function gw2minion.ModuleInit()
 		RegisterEventHandler("gw2minion.evToggleSkillManager", gw2_skill_manager.ToggleMenu)
 		
 		mw:NewButton(GetString("meshManager"),"ToggleMeshManager",GetString("advancedSettings"))
-		local mm = mw:NewButton("MM","ToggleMeshManager")
+		local mm = mw:NewButton("ME","ToggleMeshManager")
 		mm:Dock(0)
 		mm:SetSize(18,14)
 		mm:SetPos(140,0)		
 		
+		mw:NewButton(GetString("markerManager"),"ToggleMarkerMgr",GetString("advancedSettings"))
+		local mm = mw:NewButton("MA","ToggleMarkerMgr")
+		mm:Dock(0)
+		mm:SetSize(18,14)
+		mm:SetPos(160,0)
+
 		mw:NewButton(GetString("checkChat"),"gw2minion.evToggleChatManager",GetString("advancedSettings"))
 		
 		mw:NewButton(GetString("blacklistManager"),"ToggleBlacklistMgr",GetString("advancedSettings"))		
@@ -107,7 +113,7 @@ function gw2minion.ModuleInit()
 	
 	
 	-- DebugWindow
-	local dw = WindowManager:NewWindow(gw2minion.DebugWindow.Name,gw2minion.DebugWindow.x,gw2minion.DebugWindow.y,gw2minion.DebugWindow.width,gw2minion.DebugWindow.height)
+	local dw = WindowManager:NewWindow(gw2minion.DebugWindow.Name,gw2minion.DebugWindow.x,gw2minion.DebugWindow.y,gw2minion.DebugWindow.width,gw2minion.DebugWindow.height,true)
 		dw:Hide()
 	gw2minion.MainWindow.ChildWindows[gw2minion.DebugWindow.Name] = gw2minion.DebugWindow.Name
 	
@@ -116,7 +122,7 @@ function gw2minion.ModuleInit()
 		ml_marker_mgr.GetPosition = 	function () return ml_global_information.Player_Position end
 		ml_marker_mgr.GetLevel = 		function () return ml_global_information.Player_Level end
 		ml_marker_mgr.DrawMarker =		ml_global_information.DrawMarker
-		ml_marker_mgr.parentWindow = gw2minion.MainWindow.Name
+		ml_marker_mgr.parentWindow = { Name=gw2minion.MainWindow.Name}
 		ml_marker_mgr.markerPath = ml_global_information.Path.. [[\Navigation\]]		
 	end
 	
@@ -175,18 +181,18 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.SetDefaultMesh(968,"EdgeOfTheMist")
 		
 		-- Setup the marker types we wanna use
-		   --[[ local mapMarker = ml_marker:Create("MapMarker")
-			mapMarker:SetType(GetString("mapMarker"))
-			mapMarker:SetMinLevel(1)
-			mapMarker:SetMaxLevel(50)
-			mapMarker:AddField("int", "Target MapID", 0)			
-			ml_marker_mgr.AddMarkerTemplate(mapMarker)			
+		    local grindMarker = ml_marker:Create("grindMarker")
+			grindMarker:SetType(GetString("grindMarker"))
+			grindMarker:SetMinLevel(1)
+			grindMarker:SetMaxLevel(50)
+			grindMarker:SetTime(300)		
+			ml_marker_mgr.AddMarkerTemplate(grindMarker)			
 			
 			local vendorMarker = ml_marker:Create("vendorTemplate")
 			vendorMarker:SetType(GetString("vendorMarker"))
 			vendorMarker:SetMinLevel(1)
 			vendorMarker:SetMaxLevel(50)
-			ml_marker_mgr.AddMarkerTemplate(vendorMarker)--]]
+			ml_marker_mgr.AddMarkerTemplate(vendorMarker)
 			
 			
 			-- refresh the manager with the new templates

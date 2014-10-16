@@ -331,6 +331,8 @@ function ml_mesh_mgr.SwitchNavmesh()
 				else
 					ml_marker_mgr.markerPath = ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh..".info" -- this needs to be set, else the markermanager doesnt work when there is no .info file..should probably be fixed on markermanager side and not here
 					d("WARNING: ml_mesh_mgr.SwitchNavmesh: No Marker-file exist  : "..ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh..".info")
+					-- create a new file for now, until we decide to move markerdata into mesh data
+					ml_marker_mgr.WriteMarkerFile(ml_marker_mgr.markerPath)
 				end				
 				
 				-- Update MeshData from .data file
