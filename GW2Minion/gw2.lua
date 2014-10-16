@@ -18,7 +18,7 @@ function gw2minion.ModuleInit()
 		mw:NewCheckBox(GetString("reviveplayers"),"gRevivePlayers",GetString("settings"))
 		mw:NewCheckBox(GetString("revivecharacters"),"gRevive",GetString("settings"))
 		mw:NewCheckBox(GetString("disabledrawing"),"gDisableRender",GetString("settings"))		
-		
+				
 		local b = mw:NewButton(GetString("startBot"),"gw2minion.evBotstartStop")
 		b:SetToggleState(false)
 		b:SetSize(25,30)
@@ -31,26 +31,29 @@ function gw2minion.ModuleInit()
 		bd:SetPos(190,0)
 		RegisterEventHandler("gw2minion.evToggleDebugWindow", gw2minion.ShowDebug)
 		
-		mw:NewButton(GetString("showradar"),"gw2minion.evToggleRadar",GetString("settings"))
+		mw:NewButton(GetString("showradar"),"gw2minion.evToggleRadar",GetString("advancedSettings"))
 		local rm = mw:NewButton("R","gw2minion.evToggleRadar")
 		rm:Dock(0)
 		rm:SetSize(18,14)
 		rm:SetPos(100,0)
 		RegisterEventHandler("gw2minion.evToggleRadar", gw2minion.ShowDebug)
 		
-		mw:NewButton(GetString("skillManager"),"gw2minion.evToggleSkillManager",GetString("settings"))
+		mw:NewButton(GetString("skillManager"),"gw2minion.evToggleSkillManager",GetString("advancedSettings"))
 		local sm = mw:NewButton("SM","gw2minion.evToggleSkillManager")
 		sm:Dock(0)
 		sm:SetSize(18,14)
 		sm:SetPos(120,0)
 		RegisterEventHandler("gw2minion.evToggleSkillManager", gw2_skill_manager.ToggleMenu)
 		
-		mw:NewButton(GetString("meshManager"),"ToggleMeshManager",GetString("settings"))
+		mw:NewButton(GetString("meshManager"),"ToggleMeshManager",GetString("advancedSettings"))
 		local mm = mw:NewButton("MM","ToggleMeshManager")
 		mm:Dock(0)
 		mm:SetSize(18,14)
 		mm:SetPos(140,0)		
-				
+		
+		mw:NewButton(GetString("checkChat"),"gw2minion.evToggleChatManager",GetString("advancedSettings"))
+		
+		mw:NewButton(GetString("blacklistManager"),"ToggleBlacklistMgr",GetString("advancedSettings"))		
 		
 	end	
 	-- Setup default bot modes
@@ -195,7 +198,7 @@ function gw2minion.ModuleInit()
 	
 	-- Setup blacklists
 	if ( ml_blacklist_mgr ) then
-		ml_blacklist_mgr.parentWindow = gw2minion.MainWindow.Name
+		ml_blacklist_mgr.parentWindow = { Name=gw2minion.MainWindow.Name }
 		ml_blacklist_mgr.path = GetStartupPath() .. [[\LuaMods\GW2Minion\blacklist.info]]
 		ml_blacklist_mgr.ReadBlacklistFile(ml_blacklist_mgr.path)
 		if not ml_blacklist.BlacklistExists(GetString("monsters")) then
@@ -207,8 +210,21 @@ function gw2minion.ModuleInit()
 		if not ml_blacklist.BlacklistExists(GetString("salvageItems")) then
 			ml_blacklist.CreateBlacklist(GetString("salvageItems"))
 		end
-		
-		
+		if not ml_blacklist.BlacklistExists(GetString("event")) then
+			ml_blacklist.CreateBlacklist(GetString("event"))
+		end
+		if not ml_blacklist.BlacklistExists(GetString("salvageItems")) then
+			ml_blacklist.CreateBlacklist(GetString("salvageItems"))
+		end
+		if not ml_blacklist.BlacklistExists(GetString("vendorsbuy")) then
+			ml_blacklist.CreateBlacklist(GetString("vendorsbuy"))
+		end
+		if not ml_blacklist.BlacklistExists(GetString("partymember")) then
+			ml_blacklist.CreateBlacklist(GetString("partymember"))
+		end
+		if not ml_blacklist.BlacklistExists(GetString("mapobjects")) then
+			ml_blacklist.CreateBlacklist(GetString("mapobjects"))
+		end			
 	end
 	
 	gw2minion.SwitchMode(gBotMode)
@@ -232,6 +248,8 @@ function gw2minion.OnUpdate(event, tickcount )
 		ml_blacklist_mgr.UpdateEntries(tickcount)
 		-- SkillManager OnUpdate
 		gw2_skill_manager.OnUpdate(tickcount)
+		-- ChatAlert OnUpdate
+		gw2_chatmanager.ChatMonitor( tickcount )
 		
 		if ( ml_global_information.Running ) then		
 																
@@ -392,6 +410,7 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "gDisableRender" 			
 			) then
 			Settings.GW2Minion[tostring(k)] = v
+					
 		end
 	end
 end
