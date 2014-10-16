@@ -11,6 +11,14 @@ function gw2minion.ModuleInit()
 		mw:NewComboBox(GetString("botMode"),"gBotMode",GetString("botStatus"),"")
 		mw:UnFold(GetString("botStatus") )
 		
+		mw:NewCheckBox(GetString("depositItems"),"gDepositItems",GetString("settings"))
+		mw:NewCheckBox(GetString("doEvents"),"gDoEvents",GetString("settings"))
+		mw:NewCheckBox(GetString("combatMovement"),"gDoCombatMovement",GetString("settings"))
+		mw:NewCheckBox(GetString("gatherMode"),"gGather",GetString("settings"))
+		mw:NewCheckBox(GetString("reviveplayers"),"gRevivePlayers",GetString("settings"))
+		mw:NewCheckBox(GetString("revivecharacters"),"gRevive",GetString("settings"))
+		mw:NewCheckBox(GetString("disabledrawing"),"gDisableRender",GetString("settings"))		
+		
 		local b = mw:NewButton(GetString("startBot"),"gw2minion.evBotstartStop")
 		b:SetToggleState(false)
 		b:SetSize(25,30)
@@ -19,26 +27,61 @@ function gw2minion.ModuleInit()
 		
 		local bd = mw:NewButton("D","gw2minion.evToggleDebugWindow")
 		bd:Dock(0)
-		bd:SetSize(15,15)
-		bd:SetPos(100,0)
+		bd:SetSize(15,14)
+		bd:SetPos(190,0)
 		RegisterEventHandler("gw2minion.evToggleDebugWindow", gw2minion.ShowDebug)
+		
+		mw:NewButton(GetString("showradar"),"gw2minion.evToggleRadar",GetString("settings"))
+		local rm = mw:NewButton("R","gw2minion.evToggleRadar")
+		rm:Dock(0)
+		rm:SetSize(18,14)
+		rm:SetPos(100,0)
+		RegisterEventHandler("gw2minion.evToggleRadar", gw2minion.ShowDebug)
+		
+		mw:NewButton(GetString("skillManager"),"gw2minion.evToggleSkillManager",GetString("settings"))
+		local sm = mw:NewButton("SM","gw2minion.evToggleSkillManager")
+		sm:Dock(0)
+		sm:SetSize(18,14)
+		sm:SetPos(120,0)
+		RegisterEventHandler("gw2minion.evToggleSkillManager", gw2_skill_manager.ToggleMenu)
+		
+		mw:NewButton(GetString("meshManager"),"ToggleMeshManager",GetString("settings"))
+		local mm = mw:NewButton("MM","ToggleMeshManager")
+		mm:Dock(0)
+		mm:SetSize(18,14)
+		mm:SetPos(140,0)		
+				
 		
 	end	
 	-- Setup default bot modes
 	gw2minion.UpdateBotModes()
-		
+	
 	Settings.GW2Minion.gPulseTime = Settings.GW2Minion.gPulseTime or "150"
 	Settings.GW2Minion.gBotMode = Settings.GW2Minion.gBotMode or GetString("grindMode")
 	Settings.GW2Minion.gBotRunning = Settings.GW2Minion.gBotRunning or "0"	
 	Settings.GW2Minion.gGuestServer = Settings.GW2Minion.gGuestServer or "None"
-	Settings.GW2Minion.dDisableRender = Settings.GW2Minion.dDisableRender or "0"
-		
-	if ( RenderManager ) then RenderManager:ToggleRendering(tonumber(dDisableRender)) end
+	Settings.GW2Minion.gDisableRender = Settings.GW2Minion.gDisableRender or "0"
+	Settings.GW2Minion.gDepositItems = Settings.GW2Minion.gDepositItems or "1"
+	Settings.GW2Minion.gDoEvents = Settings.GW2Minion.gDoEvents or "1"
+	Settings.GW2Minion.gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement or "1"
+	Settings.GW2Minion.gGather = Settings.GW2Minion.gGather or "1"
+	Settings.GW2Minion.gRevivePlayers = Settings.GW2Minion.gRevivePlayers or "1"
+	Settings.GW2Minion.gRevive = Settings.GW2Minion.gRevive or "1"	
+	Settings.GW2Minion.gDisableRender = Settings.GW2Minion.gDisableRender or "1"
+	
+	if ( RenderManager ) then RenderManager:ToggleRendering(tonumber(gDisableRender)) end
 	
     gBotMode = Settings.GW2Minion.gBotMode
 	gBotRunning	= Settings.GW2Minion.gBotRunning
 	gPulseTime = Settings.GW2Minion.gPulseTime
-
+	gDepositItems = Settings.GW2Minion.gDepositItems
+	gDoEvents = Settings.GW2Minion.gDoEvents
+	gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement
+	gGather = Settings.GW2Minion.gGather	
+	gRevivePlayers = Settings.GW2Minion.gRevivePlayers
+	gRevive = Settings.GW2Minion.gRevive
+	gDisableRender = Settings.GW2Minion.gDisableRender
+	
 	
 	-- CinemaWindow	
 	Settings.GW2Minion.gSkipCutscene = Settings.GW2Minion.gSkipCutscene or "0"
@@ -170,7 +213,7 @@ function gw2minion.ModuleInit()
 	
 	gw2minion.SwitchMode(gBotMode)
 	if ( gBotRunning == "1" ) then		
-		gw2minion.ToggleBot()
+		gw2minion.ToggleBot("GW2MINION.toggle")
 	end				
 end
 
@@ -334,8 +377,20 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			ml_global_information.Stop()
 			gw2minion.SwitchMode(v)
 			Settings.GW2Minion[tostring(k)] = v
+		elseif ( k == "gDisableRender") then
+			RenderManager:ToggleRendering(tonumber(v))
+			Settings.GW2Minion[tostring(k)] = v		
 		elseif ( k == "gGuestServer" or
-			k == "gSkipCutscene") then
+			k == "gAutostartbot" or
+			k == "gSkipCutscene" or
+			k == "gDepositItems" or
+			k == "gDoEvents" or
+			k == "gDoCombatMovement" or
+			k == "gGather" or			
+			k == "gRevivePlayers" or
+			k == "gRevive" or
+			k == "gDisableRender" 			
+			) then
 			Settings.GW2Minion[tostring(k)] = v
 		end
 	end

@@ -129,7 +129,7 @@ strings =
 		sMtargetmode					= "Target Mode",
 		refreshProfiles                 = "Refresh Profile List",			
         deleteProfile                   = "Delete Current Profile",
-        autoetectSkills                 = "Autodetect Skills",
+        autoDetectSkills                 = "Autodetect Skills",
 		addinterrupt                    = "Add Interrupt",  
     addblock                        = "Add Block",
 		refreshSkillList                = "Clear & Refresh SkillList",
@@ -610,6 +610,7 @@ strings =
 		--mc_main.lua
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive Others",
+		reviveplayers					= "Revive Players",		
     },                                  
     ["cn"] =                            
     {                               
@@ -736,7 +737,7 @@ strings =
 		sMtargetmode					= "目标模式",
 		refreshProfiles                 = "刷新配置文件列表",
         deleteProfile                   = "删除当前配置",
-        autoetectSkills                 = "自动检测技能",
+        autoDetectSkills                 = "自动检测技能",
 		addinterrupt                    = "Add Interrupt",  
     addblock                        = "Add Block",
 		refreshSkillList                 = "清除 & 刷新技能列表",
@@ -1228,6 +1229,7 @@ strings =
 		--mc_main.lua
 		guestserver						= "访问其他服务器",
 		revivecharacters				= "复活其他人",
+		reviveplayers					= "复活角色",		
 	},
     ["jp"] =
     {
@@ -1353,7 +1355,7 @@ strings =
 		sMtargetmode					= "標的モード",
 		refreshProfiles                 = "プロファイル表リフレッシュ",			
         deleteProfile                   = "現プロファイル削除",
-        autoetectSkills                 = "スキル自動検索",
+        autoDetectSkills                 = "スキル自動検索",
 		addinterrupt                    = "Add Interrupt",  
     addblock                        = "Add Block",
 		refreshSkillList                = "スキル表　新規＆リフレッシュ",
@@ -1834,6 +1836,7 @@ strings =
 		--mc_main.lua
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive Others",
+		reviveplayers					= "Revive Players",
 	},   
     ["de"] =
     {
@@ -1961,7 +1964,7 @@ strings =
 		sMtargetmode					= "Target Mode",
 		refreshProfiles                 = "Refresh Profile List",			
         deleteProfile                   = "Delete Current Profile",
-        autoetectSkills                 = "Autodetect Skills",
+        autoDetectSkills                 = "Autodetect Skills",
 		addinterrupt                    = "Add Interrupt",  
     addblock                        = "Add Block",
     refreshSkillList                = "Clear & Refresh SkillList",
@@ -2441,6 +2444,7 @@ strings =
 		--mc_main.lua
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive Others",
+		reviveplayers					= "Revive Players",
 	},     
     ["fr"] =
     {
@@ -2567,7 +2571,7 @@ strings =
 		sMtargetmode					= "Mode Cible",
 		refreshProfiles                 = "Rafraîchir Liste Profil",			
         deleteProfile                   = "Supprimer Profil Courrent",
-        autoetectSkills                 = "Autodetecter Compétences",
+        autoDetectSkills                 = "Autodetecter Compétences",
 		addinterrupt                    = "Add Interrupt",  
     addblock                        = "Add Block",
 		refreshSkillList                = "Effacer & rafraîchir Liste de Compétences",
@@ -3060,6 +3064,7 @@ strings =
 		--mc_main.lua
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive Others",
+		reviveplayers					= "Revive Players",
 	},       
     ["ru"] =
     {
@@ -3185,7 +3190,7 @@ strings =
 		sMtargetmode					= "Target Mode",
 		refreshProfiles                 = "Refresh Profile List",			
         deleteProfile                   = "Delete Current Profile",
-        autoetectSkills                 = "Autodetect Skills",
+        autoDetectSkills                 = "Autodetect Skills",
 		addinterrupt                    = "Add Interrupt",  
     addblock                        = "Add Block",
 		refreshSkillList                = "Clear & Refresh SkillList",
@@ -3665,6 +3670,7 @@ strings =
 		--mc_main.lua
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive Others",
+		reviveplayers					= "Revive Players",
 	},    	
 
 }

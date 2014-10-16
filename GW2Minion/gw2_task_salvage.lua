@@ -215,7 +215,7 @@ function gw2_task_salvage.ModuleInit()
 
 	
 	-- MANAGER WINDOW
-	GUI_NewButton(gw2minion.MainWindow.Name, GetString("salvagemanager"), "SalvageManager.toggle",GetString("advancedSettings"))
+	GUI_NewButton(gw2minion.MainWindow.Name, GetString("salvagemanager"), "SalvageManager.toggle",GetString("settings"))
 	
 	-- Salvage SETTINGS
 	GUI_NewWindow(mc_salvagemanager.mainwindow.name,mc_salvagemanager.mainwindow.x,mc_salvagemanager.mainwindow.y,mc_salvagemanager.mainwindow.w,mc_salvagemanager.mainwindow.h,true)

@@ -20,18 +20,19 @@ function gw2_skill_manager.ModuleInit()
 	local mainWindow = WindowManager:NewWindow(gw2_skill_manager.mainWindow.name,gw2_skill_manager.mainWindow.x,gw2_skill_manager.mainWindow.y,gw2_skill_manager.mainWindow.w,gw2_skill_manager.mainWindow.h,false)
 	if (mainWindow) then
 		-- Generall settings section
-		mainWindow:NewCheckBox(GetString("active"),"gSMActive",GetString("generalSettings"))
-		mainWindow:NewComboBox(GetString("profile"),"gSMCurrentProfileName",GetString("generalSettings"),"")
+		--mainWindow:NewCheckBox(GetString("active"),"gSMActive",GetString("settings"))
+		mainWindow:NewComboBox(GetString("profile"),"gSMCurrentProfileName",GetString("settings"),"")
 		gSMCurrentProfileName = Settings.GW2Minion.gCurrentProfile
 		-- Advanced settings section
-		mainWindow:NewField(GetString("newProfileName"),"gSMNewProfileName",GetString("AdvancedSettings"))
-		mainWindow:NewButton(GetString("newProfile"),"gSMNewProfile",GetString("AdvancedSettings"))
+		mainWindow:NewField(GetString("newProfileName"),"gSMNewProfileName",GetString("settings"))
+		mainWindow:NewButton(GetString("newProfile"),"gSMNewProfile",GetString("settings"))
 		RegisterEventHandler("gSMNewProfile",gw2_skill_manager.NewProfile)
-		mainWindow:NewButton(GetString("autoDetectSkills"),"gSMDetectSkills",GetString("AdvancedSettings"))
+		mainWindow:NewButton(GetString("autoDetectSkills"),"gSMDetectSkills",GetString("settings"))
 		RegisterEventHandler("gSMDetectSkills",gw2_skill_manager.DetectSkills)
 		-- Main window elements
 		mainWindow:NewButton(GetString("saveProfile"),"gSMprofile")
 		RegisterEventHandler("gSMprofile",gw2_skill_manager.SaveProfile)
+		mainWindow:UnFold(GetString("settings") )
 	end
 	
 	-- Init Edit Window
@@ -890,6 +891,25 @@ function gw2_skill_manager.UpdateEditWindow(skill)
 		SklMgr_Type = lSkill.target.type
 	elseif (skill == nil and editWindow) then
 		editWindow:Hide()
+	end
+end
+
+function gw2_skill_manager.ToggleMenu()
+	local mainWindow = WindowManager:GetWindow(gw2_skill_manager.mainWindow.name)
+	if (mainWindow) then		
+		if ( mainWindow.visible ) then
+			local editWindow = WindowManager:GetWindow(gw2_skill_manager.editWindow.name)
+			if ( editWindow ) then 
+				editWindow:Hide()
+				mainWindow:Hide()
+			end
+		else
+			local wnd = WindowManager:GetWindow(gw2minion.MainWindow.Name)
+			if ( wnd ) then
+				mainWindow:SetPos(wnd.x+wnd.width,wnd.y)
+				mainWindow:Show()
+			end
+		end
 	end
 end
 
