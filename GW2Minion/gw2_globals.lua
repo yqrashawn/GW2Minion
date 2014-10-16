@@ -13,7 +13,6 @@ ml_global_information.WorldMarkerType = 24 -- enum for "in current map", changes
 function ml_global_information.OnUpdate()
 	
 	if ( Player ~= nil ) then
-		if (mc_skillmanager) then ml_global_information.AttackRange = mc_skillmanager.GetAttackRange() end
 				
 		ml_global_information.Player_Health = Player.health or { current = 0, max = 0, percent = 0 }
 		ml_global_information.Player_Power = Player.power or 0
