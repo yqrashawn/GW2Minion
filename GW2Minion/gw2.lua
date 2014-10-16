@@ -1,7 +1,7 @@
 gw2minion = {}
 gw2minion.MainWindow = { Name="MainMenu", x=50, y=50, width=220, height=350, ChildWindows = {} }
-gw2minion.CinemaWindow = { Name="CinemaMenu", x=100, y=100 , width=250, height=150 }
-gw2minion.CharacterWindow = { Name="CharacterMenu", x=100, y=100 , width=250, height=150 }
+gw2minion.CinemaWindow = { Name="CinemaMenu", x=100, y=100 , width=250, height=100 }
+gw2minion.CharacterWindow = { Name="CharacterMenu", x=100, y=100 , width=250, height=100 }
 gw2minion.DebugWindow = { Name="DebugInfo", x=100, y=350 , width=200, height=350 }
 
 function gw2minion.ModuleInit()
@@ -26,9 +26,7 @@ function gw2minion.ModuleInit()
 	end	
 	-- Setup default bot modes
 	gw2minion.UpdateBotModes()
-	-- Setup GuestServerList
-	gw2minion.UpdateGuestServers()
-	
+		
 	Settings.GW2Minion.gPulseTime = Settings.GW2Minion.gPulseTime or "150"
 	Settings.GW2Minion.gBotMode = Settings.GW2Minion.gBotMode or GetString("grindMode")
 	Settings.GW2Minion.gBotRunning = Settings.GW2Minion.gBotRunning or "0"	
@@ -42,11 +40,25 @@ function gw2minion.ModuleInit()
 	gPulseTime = Settings.GW2Minion.gPulseTime
 
 	
-	-- CinemaWindow		
+	-- CinemaWindow	
+	Settings.GW2Minion.gSkipCutscene = Settings.GW2Minion.gSkipCutscene or "0"
 	local cw = WindowManager:NewWindow(gw2minion.CinemaWindow.Name,gw2minion.CinemaWindow.x,gw2minion.CinemaWindow.y,gw2minion.CinemaWindow.width,gw2minion.CinemaWindow.height)
+	cw:NewCheckBox(GetString("skipcutscene"),"gSkipCutscene",GetString("settings"))
+	cw:UnFold(GetString("settings") )
+	gSkipCutscene = Settings.GW2Minion.gSkipCutscene
 	
-	-- CharacterWindow	
+	-- CharacterWindow
+	Settings.GW2Minion.gGuestServer = Settings.GW2Minion.gGuestServer or "None"
+	Settings.GW2Minion.gAutostartbot = Settings.GW2Minion.gAutostartbot or "0"
 	local caw = WindowManager:NewWindow(gw2minion.CharacterWindow.Name,gw2minion.CharacterWindow.x,gw2minion.CharacterWindow.y,gw2minion.CharacterWindow.width,gw2minion.CharacterWindow.height)
+	caw:NewComboBox(GetString("guestserver"),"gGuestServer",GetString("settings"),"None")
+	caw:NewCheckBox(GetString("autoStartBot"),"gAutostartbot",GetString("settings"))
+	caw:UnFold(GetString("settings") )
+	-- Setup GuestServerList
+	gw2minion.UpdateGuestServers()
+	gGuestServer = Settings.GW2Minion.gGuestServer
+	gAutostartbot = Settings.GW2Minion.gAutostartbot
+	
 	
 	-- DebugWindow
 	local dw = WindowManager:NewWindow(gw2minion.DebugWindow.Name,gw2minion.DebugWindow.x,gw2minion.DebugWindow.y,gw2minion.DebugWindow.width,gw2minion.DebugWindow.height)
@@ -157,7 +169,7 @@ function gw2minion.ModuleInit()
 	end
 	
 	gw2minion.SwitchMode(gBotMode)
-	if ( gBotRunning == "1" ) then
+	if ( gBotRunning == "1" ) then		
 		gw2minion.ToggleBot()
 	end				
 end
@@ -197,19 +209,55 @@ function gw2minion.OnUpdate(event, tickcount )
 	end
 end
 
+gw2minion.Charscreen_lastrun = 0
 function gw2minion.OnUpdateCharSelect(event, tickcount )
-	ml_global_information.Now = tickcount
+	ml_global_information.Now = tickcount	
 	if ( TimeSince(ml_global_information.Lasttick) > tonumber(gPulseTime) ) then
 		ml_global_information.Lasttick = tickcount
 		gw2minion.SwitchUIForGameState()
+		
+		if ( gGuestServer ~= nil and gGuestServer ~= "None" and TimeSince(gw2minion.Charscreen_lastrun) > 2000 ) then
+			gw2minion.Charscreen_lastrun = ml_global_information.Now
+			local serverlist = {}
+			local homeserverid = GetHomeServer()
+			if ( homeserverid > 1000 and homeserverid < 2000 ) then
+				serverlist = ml_global_information.ServersUS
+			elseif ( homeserverid > 2000 and homeserverid < 3000 ) then
+				serverlist = ml_global_information.ServersEU
+			end	
+			if ( TableSize(serverlist) > 0) then
+				local i,entry = next ( serverlist)
+				while i and entry do			
+					if ( gGuestServer == entry.name ) then
+						SetServer(entry.id)
+						d("Selecting Guestserver: "..(entry.name) .." ID: ".. tostring(entry.id))
+						break
+					end
+					i,entry = next ( serverlist,i)
+				end
+			end
+			if ( gAutostartbot == "1" ) then
+				GUI_ToggleConsole(false)
+				d("Pressing PLAY")
+				PressKey("RETURN")
+			end
+		end		
 	end
 end
-
+gw2minion.Cinema_lastrun = 0
 function gw2minion.OnUpdateCutscene(event, tickcount )
 	ml_global_information.Now = tickcount
 	if ( TimeSince(ml_global_information.Lasttick) > tonumber(gPulseTime) ) then
 		ml_global_information.Lasttick = tickcount
 		gw2minion.SwitchUIForGameState()
+		
+		Player:StopMovement()
+		if ( gSkipCutscene == "1" and TimeSince( gw2minion.Cinema_lastrun > 2000 )) then
+			gw2minion.Cinema_lastrun = ml_global_information.Now
+			GUI_ToggleConsole(false)
+			d("Skipping Cutscene...")
+			PressKey("ESC")
+		end
 	end
 end
 
@@ -282,9 +330,12 @@ end
 
 function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
-		if ( k == "gBotMode" ) then
+		if (k == "gBotMode" ) then
 			ml_global_information.Stop()
 			gw2minion.SwitchMode(v)
+			Settings.GW2Minion[tostring(k)] = v
+		elseif ( k == "gGuestServer" or
+			k == "gSkipCutscene") then
 			Settings.GW2Minion[tostring(k)] = v
 		end
 	end
