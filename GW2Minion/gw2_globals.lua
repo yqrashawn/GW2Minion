@@ -33,10 +33,42 @@ function ml_global_information.OnUpdate()
 			ml_global_information.CurrentMapName = ""
 		end
 		
-		-- Update Debug fields	
-		dAttackRange = ml_global_information.AttackRange or 120
+		ml_global_information.AttackRange = gw2_skill_manager.GetMaxAttackRange()
+		
+		-- Update Debug fields
+		if ( ml_global_information.ShowDebug ) then		
+			dAttackRange = ml_global_information.AttackRange or 154
+			
+		end
 	end
 end
+
+ml_global_information.ConditionsEnum = {
+		[736] = "Bleeding",
+		[720] = "Blind",
+		[737] = "Burning",
+		[722] = "Chilled",
+		[861] = "Confusion",
+		[721] = "Crippled",
+		[791] = "Fear",
+		[727] = "Immobilized",
+		[738] = "Vulnerability",
+		[742] = "Weakness",
+		[723] = "Poison",		
+	};
+	
+ml_global_information.BoonsEnum = {
+		[743] = "Aegis",
+		[725] = "Fury",
+		[740] = "Might",
+		[717] = "Protection",
+		[718] = "Regeneration",
+		[873] = "Retaliation",
+		[1122] = "Stability",
+		[719] = "Swiftness",
+		[726] = "Vigor",
+		[762] = "Determined",
+	};
 
 ml_global_information.ServersUS = {		
 	{id=1010,name="Ehmry Bay"},

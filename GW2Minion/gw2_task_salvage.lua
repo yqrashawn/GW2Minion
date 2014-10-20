@@ -220,9 +220,10 @@ function gw2_task_salvage.ModuleInit()
 	-- Salvage SETTINGS
 	GUI_NewWindow(mc_salvagemanager.mainwindow.name,mc_salvagemanager.mainwindow.x,mc_salvagemanager.mainwindow.y,mc_salvagemanager.mainwindow.w,mc_salvagemanager.mainwindow.h,true)
 	GUI_NewCheckbox(mc_salvagemanager.mainwindow.name,GetString("active"),"SalvageManager_Active",GetString("salvage"))
-	GUI_NewField(mc_salvagemanager.mainwindow.name,GetString("newfiltername"),"SalvageManager_NewFilterName",GetString("salvage"))
-	GUI_NewButton(mc_salvagemanager.mainwindow.name,GetString("newfilter"),"SalvageManager_NewFilter",GetString("salvage"))
-	RegisterEventHandler("SalvageManager_NewFilter",mc_salvagemanager.filterWindow)
+	--GUI_NewField(mc_salvagemanager.mainwindow.name,GetString("newfiltername"),"SalvageManager_NewFilterName",GetString("salvage"))
+	SalvageManager_NewFilterName = ""
+	GUI_NewButton(mc_salvagemanager.mainwindow.name,GetString("newfilter"),"SalvageManager_NewFilter")--,GetString("salvage"))
+	RegisterEventHandler("SalvageManager_NewFilter",mc_salvagemanager.CreateDialog)
 	
 	GUI_SizeWindow(mc_salvagemanager.mainwindow.name,mc_salvagemanager.mainwindow.w,mc_salvagemanager.mainwindow.h)
 	GUI_UnFoldGroup(mc_salvagemanager.mainwindow.name,GetString("salvage"))
@@ -418,6 +419,36 @@ function mc_salvagemanager.haveSalvagebleItem()
 	return false
 end
 
+function mc_salvagemanager.CreateDialog()
+	
+	local dialog = WindowManager:GetWindow(GetString("newfiltername"))
+	local wSize = {w = 300, h = 100}
+	if ( not dialog ) then
+		dialog = WindowManager:NewWindow(GetString("newfiltername"),nil,nil,nil,nil,true)
+		dialog:NewField(GetString("newfiltername"),"salvagedialogfieldString","Please Enter")
+		dialog:UnFold("Please Enter")
+		
+		local bSize = {w = 60, h = 20}
+		-- Cancel Button
+		local cancel = dialog:NewButton("Cancel","CancelDialog")
+		cancel:Dock(0)
+		cancel:SetSize(bSize.w,bSize.h)
+		cancel:SetPos(((wSize.w - 12) - bSize.w),40)
+		RegisterEventHandler("CancelDialog", function() dialog:SetModal(false) dialog:Hide() end)
+		-- OK Button
+		local OK = dialog:NewButton("OK","OKDialog")
+		OK:Dock(0)
+		OK:SetSize(bSize.w,bSize.h)
+		OK:SetPos(((wSize.w - 12) - (bSize.w * 2 + 10)),40)
+		RegisterEventHandler("OKDialog", function() if (ValidString(salvagedialogfieldString) == false) then ml_error("Please enter " .. GetString("newfiltername") .. " first.") return false end dialog:SetModal(false) SalvageManager_NewFilterName = salvagedialogfieldString mc_salvagemanager.filterWindow("SalvageManager_NewFilter") dialog:Hide() return true end)
+	end
+	
+	dialog:SetSize(wSize.w,wSize.h)
+	dialog:Dock(GW2.DOCK.Center)
+	dialog:Focus()
+	dialog:SetModal(true)	
+	dialog:Show()
+end
 
 --New filter/Load filter.
 function mc_salvagemanager.filterWindow(filterNumber)
@@ -439,6 +470,7 @@ function mc_salvagemanager.filterWindow(filterNumber)
 		GUI_WindowVisible(mc_salvagemanager.editwindow.name,true)
 	end
 	SalvageManager_CurFilter = filterNumber
+	SalvageManager_NewFilterName = ""
 end
 
 --Delete filter.

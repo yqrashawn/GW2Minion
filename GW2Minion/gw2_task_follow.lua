@@ -287,7 +287,7 @@ function e_FollowTarget:execute()
 						if ( not gw2_unstuck.HandleStuck() ) then
 							
 							if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,tpos.x,tpos.y,tpos.z))) then
-								local navResult = tostring(Player:MoveTo(tpos.x,tpos.y,tpos.z,c_FollowTarget.randomDist,false,true,true))
+								local navResult = tostring(Player:MoveTo(tpos.x,tpos.y,tpos.z,c_FollowTarget.randomDist,false,false,true))
 								if (tonumber(navResult) < 0) then					
 									d("e_FollowTarget result: "..tonumber(navResult))					
 								end

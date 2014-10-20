@@ -23,11 +23,12 @@ function gw2_skill_manager.ModuleInit()
 		mainWindow:NewComboBox(GetString("profile"),"gSMCurrentProfileName",GetString("settings"),"")
 		gSMCurrentProfileName = Settings.GW2Minion.gCurrentProfile
 		mainWindow:NewButton(GetString("newProfile"),"gSMNewProfile",GetString("settings"))
-		RegisterEventHandler("gSMNewProfile",function() gw2_common_functions.CreateDialog(GetString("newProfileName"),gw2_skill_manager.NewProfile) end)
-		mainWindow:NewButton(GetString("autoDetectSkills"),"gSMDetectSkills",GetString("settings"))
+		RegisterEventHandler("gSMNewProfile",gw2_skill_manager.CreateDialog)
+		local bb = mainWindow:NewButton(GetString("autoDetectSkills"),"gSMDetectSkills")
+		bb:SetToggleState(false)
 		RegisterEventHandler("gSMDetectSkills",gw2_skill_manager.DetectSkills)
 		-- Main window elements
-		mainWindow:NewButton(GetString("saveProfile"),"gSMprofile")
+		mainWindow:NewButton(GetString("saveProfile"),"gSMprofile",GetString("settings"))
 		RegisterEventHandler("gSMprofile",gw2_skill_manager.SaveProfile)
 		mainWindow:UnFold(GetString("settings") )
 		
@@ -95,7 +96,7 @@ end
 
 function gw2_skill_manager.NewInstance(profileName)
 	if (GetGameState() == 16) then
-		if (profileName == "None") then return false end
+		if (profileName == nil or profileName == "None") then return false end
 		profileName = string.gsub(profileName,'%W','')
 		profileName = table_invert(GW2.CHARCLASS)[Player.profession] .. "_" .. profileName
 		d(profileName)
@@ -275,7 +276,7 @@ function gw2_skill_manager.NewInstance(profileName)
 
 		function _private:CheckTargetBuffs(target)
 			if (target) then
-				if (mc_helper.BufflistHasBuffs(target.buffs,"762")) then
+				if (gw2_common_functions.BufflistHasBuffs(target.buffs,"762")) then
 					mc_blacklist.AddBlacklistEntry(GetString("monsters"),target.contentID,target.name,ml_global_information.Now+90000)
 					Player:ClearTarget()
 					return false
@@ -327,8 +328,10 @@ function gw2_skill_manager.NewInstance(profileName)
 							returnSkillList[newPriority] = skill
 							returnSkillList[newPriority].slot = aSkill.slot
 							newPriority = newPriority + 1
+								
 							if ((aSkill.slot >= GW2.SKILLBARSLOT.Slot_1  and aSkill.slot <= GW2.SKILLBARSLOT.Slot_5) and
-							(skill.target.maxrange > 0 and skill.target.maxRange > maxRange or skill.target.maxrange == 0 and skill.target.radius > maxRange)) then
+							(skill.target.maxRange > 0 and skill.target.maxRange > maxRange or skill.target.maxRange == 0 and skill.target.radius > maxRange)) then
+								--d("SKill :"..tostring(aSkill.slot).." : "..tostring(skill.target.maxRange) .. " / "..tostring(skill.target.radius))
 								maxRange = skill.target.maxRange
 							end
 							break
@@ -336,6 +339,7 @@ function gw2_skill_manager.NewInstance(profileName)
 					end
 				end
 			end
+			
 			return (ValidTable(returnSkillList) and returnSkillList or false),maxRange
 		end
 
@@ -358,14 +362,14 @@ function gw2_skill_manager.NewInstance(profileName)
 				local playerBuffList = Player.buffs
 				if (skill.player.combatState == "InCombat" and ml_global_information.Player_InCombat == false ) then return false end
 				if (skill.player.combatState == "OutsideCombat" and ml_global_information.Player_InCombat == true ) then return false end
-				if (skill.player.minHP > 0 and Player_Health.percent > skill.player.minHP) then return false end
-				if (skill.player.maxHP > 0 and Player_Health.percent < skill.player.maxHP) then return false end
+				if (skill.player.minHP > 0 and ml_global_information.Player_Health.percent > skill.player.minHP) then return false end
+				if (skill.player.maxHP > 0 and ml_global_information.Player_Health.percent < skill.player.maxHP) then return false end
 				if (skill.player.minEndurance > 0 and ml_global_information.Player_Endurance > skill.player.minEndurance) then return false end
 				if (skill.player.maxEndurance > 0 and ml_global_information.Player_Endurance < skill.player.maxEndurance) then return false end
-				if (skill.player.hasBuffs ~= "" and playerBuffList and not mc_helper.BufflistHasBuffs(playerBuffList, skill.player.hasBuffs)) then return false end
-				if (skill.player.hasNotBuffs ~= "" and playerBuffList and mc_helper.BufflistHasBuffs(playerBuffList, skill.player.hasNotBuffs)) then return false end
-				if (skill.player.conditionCount > 0 and playerBuffList and mc_helper.CountConditions(playerBuffList) <= skill.player.conditionCount) then return false end
-				if (skill.player.boonCount > 0 and playerBuffList and mc_helper.CountBoons(playerBuffList) <= skill.player.boonCount) then return false end
+				if (skill.player.hasBuffs ~= "" and playerBuffList and not gw2_common_functions.BufflistHasBuffs(playerBuffList, skill.player.hasBuffs)) then return false end
+				if (skill.player.hasNotBuffs ~= "" and playerBuffList and gw2_common_functions.BufflistHasBuffs(playerBuffList, skill.player.hasNotBuffs)) then return false end
+				if (skill.player.conditionCount > 0 and playerBuffList and gw2_common_functions.CountConditions(playerBuffList) <= skill.player.conditionCount) then return false end
+				if (skill.player.boonCount > 0 and playerBuffList and gw2_common_functions.CountBoons(playerBuffList) <= skill.player.boonCount) then return false end
 				
 				-- Check Target related conditions
 				if (target and skill.skill.target == "Enemy") then
@@ -379,10 +383,10 @@ function gw2_skill_manager.NewInstance(profileName)
 						if (skill.target.moving == "Yes" and target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving )then return false end
 						if (skill.target.moving == "No" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving )then return false end
 					end
-					if (skill.target.hasBuffs ~= "" and targetBuffList and not mc_helper.BufflistHasBuffs(targetBuffList, skill.target.hasBuffs)) then return false end
-					if (skill.target.hasNotBuffs ~= "" and targetBuffList and mc_helper.BufflistHasBuffs(targetBuffList, skill.target.hasNotBuffs)) then return false end
-					if (skill.target.conditionCount > 0 and targetBuffList and mc_helper.CountConditions(targetBuffList) <= skill.target.conditionCount) then return false end
-					if (skill.target.boonCount > 0 and targetBuffList and mc_helper.CountBoons(targetBuffList) <= skill.target.boonCount) then return false end
+					if (skill.target.hasBuffs ~= "" and targetBuffList and not gw2_common_functions.BufflistHasBuffs(targetBuffList, skill.target.hasBuffs)) then return false end
+					if (skill.target.hasNotBuffs ~= "" and targetBuffList and gw2_common_functions.BufflistHasBuffs(targetBuffList, skill.target.hasNotBuffs)) then return false end
+					if (skill.target.conditionCount > 0 and targetBuffList and gw2_common_functions.CountConditions(targetBuffList) <= skill.target.conditionCount) then return false end
+					if (skill.target.boonCount > 0 and targetBuffList and gw2_common_functions.CountBoons(targetBuffList) <= skill.target.boonCount) then return false end
 					if (skill.target.type == "Character" and target.isCharacter == false) then return false end
 					if (skill.target.type == "Gadget" and target.isGadget == false) then return false end
 				elseif (skill.skill.target == "Enemy") then
@@ -465,7 +469,7 @@ function gw2_skill_manager.NewInstance(profileName)
 		function _private:DoCombatMovement()
 			local T = Player:GetTarget()
 			if ( T and Player.health.percent < 98 ) then
-				if ( mc_helper.HasBuffs(Player, "791,727") ) then return false end
+				if ( gw2_common_functions.HasBuffs(Player, "791,727") ) then return false end
 				local Tdist = T.distance
 				local playerHP = Player.health.percent
 				local movedir = Player:GetMovement()
@@ -719,7 +723,10 @@ function gw2_skill_manager.NewInstance(profileName)
 			return self.skills
 		end
 
-
+		function newProfile:GetMaxAttackRange()
+			local _,maxRange = _private:GetAvailableSkills()			
+			return maxRange
+		end
 		--[[ skill functions prototype skill
 				-- prototype skill functions, accessible on each skill
 				
@@ -767,7 +774,6 @@ function gw2_skill_manager.NewInstance(profileName)
 			return _private:RemoveSkill(self)
 		end
 
-
 		newProfile.skills.prototype.__index = newProfile.skills.prototype
 		-- set metatable for skills
 		if (ValidTable(newProfile.skills)) then
@@ -778,15 +784,12 @@ function gw2_skill_manager.NewInstance(profileName)
 					
 				end
 			end
-		end
+		end		
 
 		return newProfile
 	end
 end
 
-function gw2_skill_manager.NewProfile()
-	
-end
 
 function gw2_skill_manager.GetProfileList()
 	local profession = Player.profession
@@ -926,13 +929,40 @@ function gw2_skill_manager.NewProfile(profileName)
 	gw2_skill_manager.UpdateMainWindow()
 	gw2_skill_manager.currentSkill = nil
 	gw2_skill_manager.UpdateEditWindow()
-	gw2_skill_manager.DetectSkills()
+	gw2_skill_manager.DetectSkills(true)
 end
 
-function gw2_skill_manager.DetectSkills()
-	if (gw2_skill_manager.profile) then
-		gw2_skill_manager.RecordSkillTmr = ml_global_information.Now
-		gw2_skill_manager.detecting = true
+function gw2_skill_manager.DetectSkills(arg)
+	local mw = WindowManager:GetWindow(gw2_skill_manager.mainWindow.name)
+	if ( mw ) then 
+		local sb = mw:GetControl(GetString("autoDetectSkills"))
+		if ( sb ) then
+			if (gw2_skill_manager.profile) then
+				
+				if ( arg == true ) then -- Create New Profile -> autorecord afterwards
+					if ( sb.pressed ) then
+						sb:SetToggleState(false)
+					else
+						sb:SetToggleState(true)
+					end
+				end
+				if ( sb.pressed ) then
+					d("Recording Skills..")
+					gw2_skill_manager.RecordSkillTmr = ml_global_information.Now
+					gw2_skill_manager.detecting = true
+					sb:SetText("Stop "..GetString("autoDetectSkills"))
+				else
+					d("Stopping Recording Skills..")
+					gw2_skill_manager.detecting = false					
+					sb:SetText(GetString("autoDetectSkills"))
+				end				
+				
+			else
+				d("You need to create a profile first")
+				sb:SetToggleState(false)
+				gw2_skill_manager.CreateDialog()
+			end
+		end
 	end
 end
 
@@ -940,7 +970,6 @@ function gw2_skill_manager.MoveSkillUp()
 	gw2_skill_manager.profile.skills[gw2_skill_manager.currentSkill]:MoveUp()
 	if (gw2_skill_manager.currentSkill > 1) then
 		gw2_skill_manager.currentSkill = gw2_skill_manager.currentSkill - 1
-		gw2_skill_manager.UpdateMainWindow(true)
 	end
 end
 
@@ -1088,6 +1117,63 @@ function gw2_skill_manager.OnUpdate(tickcount)
 		gw2_skill_manager.profile:DetectSkills()
 	end
 end
+
+function gw2_skill_manager.CreateDialog()
+	
+	local dialog = WindowManager:GetWindow(GetString("newProfileName"))
+	local wSize = {w = 300, h = 100}
+	if ( not dialog ) then
+		dialog = WindowManager:NewWindow(GetString("newProfileName"),nil,nil,nil,nil,true)
+		dialog:NewField(GetString("newProfileName"),"smdialogfieldString","Please Enter")
+		dialog:UnFold("Please Enter")
+		
+		local bSize = {w = 60, h = 20}
+		-- Cancel Button
+		local cancel = dialog:NewButton("Cancel","CancelDialog")
+		cancel:Dock(0)
+		cancel:SetSize(bSize.w,bSize.h)
+		cancel:SetPos(((wSize.w - 12) - bSize.w),40)
+		RegisterEventHandler("CancelDialog", function() dialog:SetModal(false) dialog:Hide() end)
+		-- OK Button
+		local OK = dialog:NewButton("OK","OKDialog")
+		OK:Dock(0)
+		OK:SetSize(bSize.w,bSize.h)
+		OK:SetPos(((wSize.w - 12) - (bSize.w * 2 + 10)),40)
+		RegisterEventHandler("OKDialog", function() if (ValidString(smdialogfieldString) == false) then ml_error("Please enter " .. GetString("newProfileName") .. " first.") return false end dialog:SetModal(false) dialog:Hide() gw2_skill_manager.NewProfile(smdialogfieldString)  return true end)
+	end
+	
+	dialog:SetSize(wSize.w,wSize.h)
+	dialog:Dock(GW2.DOCK.Center)
+	dialog:Focus()
+	dialog:SetModal(true)	
+	dialog:Show()
+end
+
+function gw2_skill_manager.GetMaxAttackRange()
+	if ( gw2_skill_manager.profile ) then
+		return gw2_skill_manager.profile:GetMaxAttackRange()
+	else
+		d("No gw2_skill_manager.profile loaded!")
+		return 154
+	end
+end
+
+function gw2_skill_manager.Attack(target)
+	if ( gw2_skill_manager.profile ) then
+		gw2_skill_manager.profile:Attack(target)
+	else
+		d("No gw2_skill_manager.profile loaded!")
+	end
+end
+
+function gw2_skill_manager.Heal(target)
+	if ( gw2_skill_manager.profile ) then
+		gw2_skill_manager.profile:Heal(target)
+	else
+		d("No gw2_skill_manager.profile loaded!")
+	end
+end
+
 
 RegisterEventHandler("Module.Initalize",gw2_skill_manager.ModuleInit)
 RegisterEventHandler("GUI.Update",gw2_skill_manager.GUIVarUpdate)

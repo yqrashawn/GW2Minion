@@ -1,5 +1,5 @@
 gw2minion = {}
-gw2minion.MainWindow = { Name="MainMenu", x=50, y=50, width=220, height=350, ChildWindows = {} }
+gw2minion.MainWindow = { Name="MainMenu", x=50, y=50, width=220, height=300, ChildWindows = {} }
 gw2minion.CinemaWindow = { Name="CinemaMenu", x=100, y=100 , width=250, height=100 }
 gw2minion.CharacterWindow = { Name="CharacterMenu", x=100, y=100 , width=250, height=100 }
 gw2minion.DebugWindow = { Name="DebugInfo", x=100, y=350 , width=200, height=350 }
@@ -114,6 +114,7 @@ function gw2minion.ModuleInit()
 	
 	-- DebugWindow
 	local dw = WindowManager:NewWindow(gw2minion.DebugWindow.Name,gw2minion.DebugWindow.x,gw2minion.DebugWindow.y,gw2minion.DebugWindow.width,gw2minion.DebugWindow.height,true)
+		dw:NewField("AttackRange","dAttackRange","GlobalStats")
 		dw:Hide()
 	gw2minion.MainWindow.ChildWindows[gw2minion.DebugWindow.Name] = gw2minion.DebugWindow.Name
 	

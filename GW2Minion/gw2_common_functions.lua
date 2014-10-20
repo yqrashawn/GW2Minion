@@ -52,6 +52,35 @@ function gw2_common_functions.BufflistHasBuffs(bufflist, buffIDs)
     return false
 end
 
+function gw2_common_functions.CountConditions(bufflist)
+	local count = 0
+	if ( bufflist ) then	
+		local i,buff = next(bufflist)
+		while i and buff do							
+			local bskID = buff.skillID
+			if ( bskID and ml_global_information.ConditionsEnum[bskID] ~= nil) then
+				count = count + 1
+			end
+			i,buff = next(bufflist,i)
+		end		
+	end
+	return count
+end
+function gw2_common_functions.CountBoons(bufflist)
+	local count = 0
+	if ( bufflist ) then	
+		local i,buff = next(bufflist)
+		while i and buff do							
+			local bskID = buff.skillID
+			if ( bskID and ml_global_information.BoonsEnum[bskID] ~= nil) then
+				count = count + 1
+			end
+			i,buff = next(bufflist,i)
+		end		
+	end
+	return count
+end
+
 function gw2_common_functions.NecroLeaveDeathshroud()
 	if (Player.profession == 8 ) then
 		local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
@@ -76,15 +105,18 @@ function gw2_common_functions.GetPartyMemberByName( name )
 	end
 	return nil
 end
-
+-- trouble with deleting the stupid window while it has events registered, turns out that crashes / fucks stuff up if more than just 1 function is using this dialog with different args
 function gw2_common_functions.CreateDialog(name,func)
+
 	local dialog = WindowManager:NewWindow("Dialog",nil,nil,nil,nil,true)
+	
 	local wSize = {w = 300, h = 100}
 	dialog:SetSize(wSize.w,wSize.h)
 	dialog:Dock(GW2.DOCK.Center)
 	dialog:Focus()
 	dialog:SetModal(true)
-	dialog:NewField(name,"fieldString",name)
+	dialog:NewField(name,"dialogfieldString",name)
+	dialog:Show()
 	dialog:UnFold(name)
 	
 	local bSize = {w = 60, h = 20}
@@ -99,5 +131,5 @@ function gw2_common_functions.CreateDialog(name,func)
 	OK:Dock(0)
 	OK:SetSize(bSize.w,bSize.h)
 	OK:SetPos(((wSize.w - 12) - (bSize.w * 2 + 10)),40)
-	RegisterEventHandler("OKDialog", function() if (ValidString(fieldString) == false) then return ml_error("Please enter " .. name .. " first.") end dialog:SetModal(false) func(fieldString) dialog:Hide() dialog:Delete() end)
+	RegisterEventHandler("OKDialog", function() if (ValidString(dialogfieldString) == false) then ml_error("Please enter " .. name .. " first.") return false end dialog:SetModal(false) func(dialogfieldString) dialog:Hide() dialog:Delete() return true end)
 end
