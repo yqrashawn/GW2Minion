@@ -105,6 +105,21 @@ function gw2_common_functions.GetPartyMemberByName( name )
 	end
 	return nil
 end
+
+function gw2_common_functions.MoveOnlyStraightForward()
+	if ( Player:IsMoving() ) then
+		local movdirs = Player:GetMovement()
+		if (movdirs.left) then
+			Player:UnSetMovement(2)
+			return true
+		elseif (movdirs.right) then 
+			Player:UnSetMovement(3)
+			return true
+		end
+	end
+	return false
+end
+
 -- trouble with deleting the stupid window while it has events registered, turns out that crashes / fucks stuff up if more than just 1 function is using this dialog with different args
 function gw2_common_functions.CreateDialog(name,func)
 

@@ -704,7 +704,7 @@ function gw2_skill_manager.NewInstance(profileName)
 					end
 				elseif (gMoveIntoCombatRange ~= "0") then
 					if (maxRange < 300 and target.distance > maxRange) then _private:SwapWeapon() end
-					MoveOnlyStraightForward()
+					gw2_common_functions.MoveOnlyStraightForward()
 					local tPos = target.pos
 					Player:MoveTo(tPos.x,tPos.y,tPos.z,50 + target.radius,false,false,true)
 					_private.runIntoCombatRange = true
@@ -725,7 +725,7 @@ function gw2_skill_manager.NewInstance(profileName)
 		end
 
 		function newProfile:GetMaxAttackRange()
-			local _,maxRange = _private:GetAvailableSkills()			
+			local _,maxRange = _private:GetAvailableSkills()
 			return maxRange
 		end
 
@@ -1181,31 +1181,7 @@ function gw2_skill_manager.OnUpdate(tickcount)
 		end
 		gw2_skill_manager.profile:DetectSkills()
 	end
-	if (gw2_skill_manager.profile) then
-		local target = Player:GetTarget()
-		if (target and target.attackable) then
-			gw2_skill_manager.profile:Attack(target)
-		end
-	end
 end
 
 RegisterEventHandler("Module.Initalize",gw2_skill_manager.ModuleInit)
 RegisterEventHandler("GUI.Update",gw2_skill_manager.GUIVarUpdate)
-
-
---- functions not present yet in beta needed for testing:
-
--- The bot sometimes is "stuck" on strafing left or right after combat, this fixes it
-function MoveOnlyStraightForward()
-	if ( Player:IsMoving() ) then
-		local movdirs = Player:GetMovement()		
-		if (movdirs.left) then
-			Player:UnSetMovement(2)
-			return true
-		elseif (movdirs.right) then 
-			Player:UnSetMovement(3)
-			return true
-		end
-	end
-	return false
-end
