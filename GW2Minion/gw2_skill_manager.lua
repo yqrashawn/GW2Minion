@@ -365,8 +365,8 @@ function gw2_skill_manager.NewInstance(profileName)
 				if (skill.player.maxHP > 0 and ml_global_information.Player_Health.percent < skill.player.maxHP) then return false end
 				if (skill.player.minEndurance > 0 and ml_global_information.Player_Endurance > skill.player.minEndurance) then return false end
 				if (skill.player.maxEndurance > 0 and ml_global_information.Player_Endurance < skill.player.maxEndurance) then return false end
-				if (skill.player.hasBuffs ~= "" and playerBuffList and not gw2_common_functions.BufflistHasBuffs(playerBuffList, skill.player.hasBuffs)) then return false end
-				if (skill.player.hasNotBuffs ~= "" and playerBuffList and gw2_common_functions.BufflistHasBuffs(playerBuffList, skill.player.hasNotBuffs)) then return false end
+				if (skill.player.hasBuffs ~= "" and playerBuffList and not gw2_common_functions.BufflistHasBuffs(playerBuffList, tostring(skill.player.hasBuffs))) then return false end
+				if (skill.player.hasNotBuffs ~= "" and playerBuffList and gw2_common_functions.BufflistHasBuffs(playerBuffList, tostring(skill.player.hasNotBuffs))) then return false end
 				if (skill.player.conditionCount > 0 and playerBuffList and gw2_common_functions.CountConditions(playerBuffList) <= skill.player.conditionCount) then return false end
 				if (skill.player.boonCount > 0 and playerBuffList and gw2_common_functions.CountBoons(playerBuffList) <= skill.player.boonCount) then return false end
 				
@@ -382,8 +382,8 @@ function gw2_skill_manager.NewInstance(profileName)
 						if (skill.target.moving == "Yes" and target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving )then return false end
 						if (skill.target.moving == "No" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving )then return false end
 					end
-					if (skill.target.hasBuffs ~= "" and targetBuffList and not gw2_common_functions.BufflistHasBuffs(targetBuffList, skill.target.hasBuffs)) then return false end
-					if (skill.target.hasNotBuffs ~= "" and targetBuffList and gw2_common_functions.BufflistHasBuffs(targetBuffList, skill.target.hasNotBuffs)) then return false end
+					if (skill.target.hasBuffs ~= "" and targetBuffList and not gw2_common_functions.BufflistHasBuffs(targetBuffList, tostring(skill.target.hasBuffs))) then return false end
+					if (skill.target.hasNotBuffs ~= "" and targetBuffList and gw2_common_functions.BufflistHasBuffs(targetBuffList, tostring(skill.target.hasNotBuffs))) then return false end
 					if (skill.target.conditionCount > 0 and targetBuffList and gw2_common_functions.CountConditions(targetBuffList) <= skill.target.conditionCount) then return false end
 					if (skill.target.boonCount > 0 and targetBuffList and gw2_common_functions.CountBoons(targetBuffList) <= skill.target.boonCount) then return false end
 					if (skill.target.type == "Character" and target.isCharacter == false) then return false end
