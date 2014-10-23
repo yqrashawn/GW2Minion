@@ -28,9 +28,9 @@ function gw2_common_functions.HasBuffs(entity, buffIDs)
 end
 
 function gw2_common_functions.BufflistHasBuffs(bufflist, buffIDs)
-
+	
 	if (bufflist == nil or TableSize(bufflist) == 0) then return false end
-			
+		
 	for _orids in StringSplit(buffIDs,",") do
 		local found = false
 		for _andid in StringSplit(_orids,"+") do

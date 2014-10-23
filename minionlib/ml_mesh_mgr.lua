@@ -79,8 +79,8 @@ function ml_mesh_mgr.ModuleInit()
 	GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("changeAreaType"),"gChangeAreaType",GetString("editor"),"Delete,Road,Lowdanger,Highdanger")
 	GUI_NewNumeric(ml_mesh_mgr.mainwindow.name,GetString("changeAreaSize"),"gChangeAreaSize",GetString("editor"),"1","10")
 	GUI_NewCheckbox(ml_mesh_mgr.mainwindow.name,GetString("biDirOffMesh"),"gBiDirOffMesh",GetString("connections"))
-	--GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("typeOffMeshSpot"),"gOMCType",GetString("connections"),"Jump,Teleport,Portal,Interact")	
-	GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("typeOffMeshSpot"),"gOMCType",GetString("connections"),"Jump")	
+	--GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("typeOffMeshSpot"),"gOMCType",GetString("connections"),"Jump,Walk,Teleport,Interact,Portal")	
+	GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("typeOffMeshSpot"),"gOMCType",GetString("connections"),"Jump,Walk,Teleport,Interact,Portal")	
 	GUI_NewButton(ml_mesh_mgr.mainwindow.name,GetString("addOffMeshSpot"),"offMeshSpotEvent",GetString("connections"))
 	RegisterEventHandler("offMeshSpotEvent", ml_mesh_mgr.AddOMC)
 	GUI_NewButton(ml_mesh_mgr.mainwindow.name,GetString("delOffMeshSpot"),"deleteoffMeshEvent",GetString("connections"))
@@ -306,20 +306,21 @@ function ml_mesh_mgr.SwitchNavmesh()
 		if ( ml_mesh_mgr.navmeshfilepath ~= nil and ml_mesh_mgr.navmeshfilepath ~= "" ) then
 			-- Check if the file exist
 			d("Loading Navmesh : " ..ml_mesh_mgr.nextNavMesh)
+			-- To prevent (re-)loading or saving of mesh data while the mesh is beeing build/loaded
+			ml_mesh_mgr.loadingMesh = true
 			if (not NavigationManager:LoadNavMesh(ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh,ml_mesh_mgr.loadObjectFile)) then
 				ml_error("Error while trying to load Navmesh: "..ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh)
 				ml_marker_mgr.ClearMarkerList()
 				ml_marker_mgr.RefreshMarkerNames()
 				gmeshname = ""
 				gnewmeshname = ""
+				ml_mesh_mgr.loadingMesh = false
 				
 			else
+			
 				-- Dont reload the obj file again
 				ml_mesh_mgr.loadObjectFile = false
-				
-				-- To prevent (re-)loading or saving of mesh data while the mesh is beeing build/loaded
-				ml_mesh_mgr.loadingMesh = true
-				
+								
 				-- Update MarkerData from .info file
 				ml_marker_mgr.ClearMarkerList()
 				
@@ -709,7 +710,7 @@ function ml_mesh_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 		elseif( k == "gnewmeshname" ) then
 			ml_mesh_mgr.currentMesh.Name = v
 		elseif( k == "gNoMeshLoad" ) then
-			Settings.FFXIVMINION[tostring(k)] = v
+			Settings.GW2Minion[tostring(k)] = v
 		end
 	end
 end
@@ -735,26 +736,32 @@ end
 
 -- add offmesh connection
 function ml_mesh_mgr.AddOMC()
-	local pos = ml_global_information.Player_Position
 	
 	ml_mesh_mgr.OMC = ml_mesh_mgr.OMC+1
 	if (ml_mesh_mgr.OMC == 1 ) then
-		ml_mesh_mgr.OMCP1 = pos
-		ml_mesh_mgr.OMCP1.y = ml_mesh_mgr.OMCP1.y
+		ml_mesh_mgr.OMCP1 = ml_global_information.Player_Position
+		
 	elseif (ml_mesh_mgr.OMC == 2 ) then
-		ml_mesh_mgr.OMCP2 = pos
-		ml_mesh_mgr.OMCP2.y = ml_mesh_mgr.OMCP2.y
+		ml_mesh_mgr.OMCP2 = ml_global_information.Player_Position
+		
 		local omctype
 		if ( gOMCType == "Jump" ) then
 			omctype = 0
+		elseif ( gOMCType == "Walk" ) then
+			ml_mesh_mgr.AddOMCBridge(1)
+			return
 		elseif ( gOMCType == "Teleport" ) then
-			omctype = 1
+			ml_mesh_mgr.AddOMCBridge(2)
+			return
 		elseif ( gOMCType == "Interact" ) then
-			omctype = 2
-		elseif ( gOMCType == "Portal" ) then
-			omctype = 3
+			ml_mesh_mgr.AddOMCBridge(3)
+			return
+		elseif ( gOMCType == "Portal" ) then			
+			ml_mesh_mgr.AddOMCBridge(4)
+			return
 		end
 		
+		-- Default Short Range Jump		
 		if ( gBiDirOffMesh == "0" ) then
 			d(MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,false,omctype))
 		else
@@ -763,6 +770,60 @@ function ml_mesh_mgr.AddOMC()
 		ml_mesh_mgr.OMC = 0
 	end	
 end
+--d(tostring(vector.x).." / "..tostring(vector.y).." / "..tostring(vector.z))
+--d(Player:MoveTo(ml_mesh_mgr.OMCP1.x+vector.x,ml_mesh_mgr.OMCP1.y+vector.y,ml_mesh_mgr.OMCP1.z+vector.z,30,false,true,true)	)
+
+-- will bridge larger distances with singlecells and multiple short range OMCs
+function ml_mesh_mgr.AddOMCBridge(omctype)	
+	
+	-- Get Distance and cut it in "shorter" intervals which we have to bridge with omcs and single cells
+	local length = Distance3D(ml_mesh_mgr.OMCP1.x,ml_mesh_mgr.OMCP1.y,ml_mesh_mgr.OMCP1.z,ml_mesh_mgr.OMCP2.x,ml_mesh_mgr.OMCP2.y,ml_mesh_mgr.OMCP2.z)
+	
+	local intervals = math.ceil(length / 350)
+	
+	local vector = { x = (ml_mesh_mgr.OMCP2.x-ml_mesh_mgr.OMCP1.x)/length, y = (ml_mesh_mgr.OMCP2.y-ml_mesh_mgr.OMCP1.y)/length, z = (ml_mesh_mgr.OMCP2.z-ml_mesh_mgr.OMCP1.z)/length }
+	
+	-- Distance is small enough for just 1 OMC
+	if ( intervals <= 1 ) then
+		d(MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,true,omctype))
+	
+	else
+		local TOposition = {}
+		local FROMposition = { x = ml_mesh_mgr.OMCP1.x, y = ml_mesh_mgr.OMCP1.y, z = ml_mesh_mgr.OMCP1.z}
+		for i=1,intervals,1 do
+			d("Invetval:" ..tostring(i))
+			-- Last point 
+			if ( i == intervals ) then
+				d(MeshManager:AddOffMeshConnection(FROMposition,ml_mesh_mgr.OMCP2,true,omctype))
+			
+			else
+				-- make OMCs with singlecells to bridge the whole distance between original start and end
+				
+				-- get next interval point
+				TOposition.x = FROMposition.x + vector.x*350
+				TOposition.y = FROMposition.y + vector.y*350
+				TOposition.z = FROMposition.z + vector.z*350
+				
+				-- Add "To"-point
+				d(MeshManager:AddOffMeshConnection(FROMposition,TOposition,true,omctype))
+				
+				-- Add singleCell
+				local newVertexCenter = { x=TOposition.x, y=TOposition.y, z=TOposition.z }
+				if ( not NavigationManager:IsOnMeshExact(TOposition) ) then
+					d(MeshManager:CreateSingleCell( newVertexCenter))
+				end
+				
+				-- Update "From"-point
+				FROMposition.x = TOposition.x
+				FROMposition.y = TOposition.y
+				FROMposition.z = TOposition.z
+				
+			end
+		end
+	end
+	ml_mesh_mgr.OMC = 0
+end
+
 -- delete offmesh connection
 function ml_mesh_mgr.DeleteOMC()
 	local pos = ml_global_information.Player_Position
@@ -773,6 +834,21 @@ end
 -- Handler for different OMC types
 function ml_mesh_mgr.HandleOMC( event, OMCType ) 	
 	d("OMC REACHED : "..tostring(OMCType))
+	-- TODO: delayed Player:StopMovement()
+	if ( OMCType == 1 ) then -- Walk		
+		ml_global_information.Lasttick = ml_global_information.Lasttick + 1500 -- tiny pause to not walk backwards and instead through the portal
+		Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+		
+	elseif ( OMCType == 2 ) then -- Teleport		
+		ml_global_information.Lasttick = ml_global_information.Lasttick + 1500 -- tiny pause to not walk backwards and instead through the portal
+	
+	elseif ( OMCType == 4 ) then -- Interact		
+		ml_global_information.Lasttick = ml_global_information.Lasttick + 1500 -- tiny pause to not walk backwards and instead through the portal
+				
+	elseif ( OMCType == 4 ) then -- Portal		
+		ml_global_information.Lasttick = ml_global_information.Lasttick + 1500 -- tiny pause to not walk backwards and instead through the portal
+		
+	end
 	--Player:StopMovement()	
 end
 

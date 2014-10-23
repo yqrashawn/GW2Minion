@@ -434,18 +434,20 @@ function gw2_skill_manager.NewInstance(profileName)
 						[5933] = "ElixirGun",
 					}
 					local availableSkills = _private:GetAvailableSkills()
-					local availableKits = { [0] = 0 }
-					for key=1,TableSize(availableSkills)-1 do
+					local availableKits = { [1] = { slot=0, skillID=0} }-- Leave Kit Placeholder
+					for key=1,TableSize(availableSkills) do
 						local skill = availableSkills[key]
 						if (skill and EngineerKits[skill.skill.id]) then
 							if (_private.lastKitTable[skill.slot] == nil or (ml_global_information.Now - _private.lastKitTable[skill.slot].lastused or 0) > 1500) then
-								availableKits[TableSize(availableKits)].slot = skill.slot
-								availableKits[TableSize(availableKits)].skillID = skill.skill.id
+								local kitcount = TableSize(availableKits)
+								availableKits[kitcount+1] = {}
+								availableKits[kitcount+1].slot = skill.slot
+								availableKits[kitcount+1].skillID = skill.skill.id
 							end
 						end
 					end
-					local key = math.random(0,TableSize(availableKits)-1)
-					if (key ~= 0) then
+					local key = math.random(1,TableSize(availableKits))
+					if (key ~= 1) then
 						Player:CastSpell(availableKits[key].slot)
 						if (gSMPrioKit ~= "None" and EngineerKits[availableKits[key].skillID] ~= tostring(gSMPrioKit))then
 							_private.lastKitTable[availableKits[key].slot] = { lastused = ml_global_information.Now + 15000 }

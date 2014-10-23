@@ -10,7 +10,7 @@ gw2_unstuck.jumpCount = 0
 gw2_unstuck.stuckthreshold = 45
 gw2_unstuck.respawntimer = 0
 gw2_unstuck.logoutTmr = 0
-gw2_unstuck.slowConditions = "791,727,721" --Fear, Immobilized, Crippled. -- Needs more! (all debufs that slow you down.)
+gw2_unstuck.slowConditions = "721,722,727,791,872" --Cripple, Chill, Immobilize, Fear, Stun. -- Needs more! (all debufs that slow you down.)
 
 
 function gw2_unstuck.HandleStuck(mode)
