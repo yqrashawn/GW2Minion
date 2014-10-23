@@ -47,6 +47,7 @@ function gw2_skill_manager.ModuleInit()
 		editWindow:NewComboBox(GetString("targetType"),"SklMgr_Target",GetString("Skill"),"Either,Enemy,Player")
 		editWindow:NewComboBox(GetString("isGroundTargeted"),"SklMgr_GrndTarget",GetString("Skill"),"true,false")
 		editWindow:NewComboBox(GetString("smsktypeheal"),"SklMgr_Healing",GetString("Skill"),"true,false")
+		editWindow:NewField(GetString("prevSkillID"),"SklMgr_LastSkillID",GetString("Skill"))
 		editWindow:NewNumeric(GetString("alliesNearCount"),"SklMgr_AllyCount",GetString("Skill"))
 		editWindow:NewNumeric(GetString("alliesNearRange"),"SklMgr_AllyRange",GetString("Skill"))
 		editWindow:NewNumeric(GetString("enemiesNearCount"),"SklMgr_EnemyCount",GetString("Skill"))
@@ -220,6 +221,7 @@ function gw2_skill_manager.NewInstance(profileName)
 									allyRangeMax	= 0,
 									enemyNearCount	= 0,
 									enemyRangeMax	= 0,
+									lastSkillID		= "",
 						},
 						player = {
 									combatState		= "Either",
@@ -347,6 +349,8 @@ function gw2_skill_manager.NewInstance(profileName)
 				-- Check Skill related conditions
 				if (target or skill.skill.target == "Self") then
 					local entityToCheck = (target or Player)
+					-- Last SkillID chek
+					if (skill.skill.lastSkillID ~= "" and tostring(skill.skill.lastSkillID) ~= Player.castinfo.lastSkillID) then return false end
 					-- Friends around Target check
 					if ( skill.skill.allyNearCount > 0 and skill.skill.allyRangeMax > 0) then
 						if (TableSize(CharacterList("friendly,maxdistance=" .. skill.skill.allyRangeMax .. ",distanceto=" .. entityToCheck.id)) < skill.skill.allyNearCount) then return false end
@@ -866,6 +870,7 @@ function gw2_skill_manager.UpdateEditWindow(skill)
 		SklMgr_Target = lSkill.skill.target
 		SklMgr_GrndTarget = tostring(lSkill.skill.groundTargeted)
 		SklMgr_Healing = tostring(lSkill.skill.healing)
+		SklMgr_LastSkillID = lSkill.skill.lastSkillID
 		SklMgr_AllyCount = lSkill.skill.allyNearCount
 		SklMgr_AllyRange = lSkill.skill.allyRangeMax
 		SklMgr_EnemyCount = lSkill.skill.enemyNearCount
@@ -1022,6 +1027,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "SklMgr_Target" or
 				k == "SklMgr_GrndTarget" or
 				k == "SklMgr_Healing" or
+				k == "SklMgr_LastSkillID" or
 				k == "SklMgr_AllyCount" or
 				k == "SklMgr_AllyRange" or
 				k == "SklMgr_EnemyCount" or
@@ -1030,6 +1036,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 			local var = {	SklMgr_Target = "target",
 							SklMgr_GrndTarget = "groundTargeted",
 							SklMgr_Healing = "healing",
+							SklMgr_LastSkillID = "lastSkillID",
 							SklMgr_AllyCount = "allyNearCount",
 							SklMgr_AllyRange = "allyRangeMax",
 							SklMgr_EnemyCount = "enemyNearCount",
