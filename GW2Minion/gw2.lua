@@ -253,11 +253,17 @@ function gw2minion.OnUpdate(event, tickcount )
 		ml_blacklist_mgr.UpdateEntries(tickcount)
 		-- SkillManager OnUpdate
 		gw2_skill_manager.OnUpdate(tickcount)
-		-- ChatAlert OnUpdate
-		gw2_chatmanager.ChatMonitor( tickcount )
+
 		
 		if ( ml_global_information.Running ) then		
-																
+			
+			-- Common Tasks (AoE loot, deposit items etc. )
+			gw2_common_tasks.OnUpdate( tickcount )
+			
+			-- ChatAlert OnUpdate
+			gw2_chatmanager.ChatMonitor( tickcount )
+			
+			-- BotMode OnUpdate
 			if( ml_task_hub:CurrentTask() ~= nil) then
 				ml_log(ml_task_hub:CurrentTask().name.." :")
 			end

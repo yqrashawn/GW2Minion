@@ -25,6 +25,8 @@ function ml_global_information.OnUpdate()
 		ml_global_information.Player_IsMoving = Player:IsMoving() or false
 		ml_global_information.Player_CanMove = Player:CanMove() or false
 		ml_global_information.Player_MovementDirections = Player:GetMovement() or { forward=false, backward=false, left=false, right=false }
+		ml_global_information.Player_Inventory_SlotsFree = Inventory.freeSlotCount or 0
+		
 		
 		ml_global_information.CurrentMapID = Player:GetLocalMapID() or 0
 		if ( gw2_datamanager and ml_global_information.CurrentMapID ~= 0) then  

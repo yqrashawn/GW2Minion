@@ -21,7 +21,9 @@ end
 function gw2_task_follow:Init()
 	
 	self:add(ml_element:create( "UpdateFollowPathData", c_UpdateFollowPathData, e_UpdateFollowPathData, 1000 ), self.process_elements)
-	self:add(ml_element:create( "FollowingTarget", c_FollowTarget, e_FollowTarget, 200 ), self.process_elements)
+	self:add(ml_element:create( "FollowingTarget", c_FollowTarget, e_FollowTarget, 500 ), self.process_elements)
+	self:add(ml_element:create( "AttackBestCharacterTarget", c_AttackBestCharacterTarget, e_AttackBestCharacterTarget, 400 ), self.process_elements)	
+	
 	
 	self:AddTaskCheckCEs()
 end
@@ -33,13 +35,17 @@ end
 function gw2_task_follow:UIInit()
 	d("gw2_task_follow:UIInit")
 	local mw = WindowManager:GetWindow(gw2minion.MainWindow.Name)
-	if ( mw ) then		
+	if ( mw ) then
+		mw:NewComboBox(GetString("sMtargetmode"),"sMtargetmode",GetString("followmode"),"None,LowestHealth,Closest,Biggest Crowd");
+		mw:NewComboBox(GetString("sMmode"),"sMmode",GetString("followmode"),"Everything,Players Only")
 		mw:NewField(GetString("followtarget"),"gFollowTargetName",GetString("followmode"))		
 		mw:NewButton(GetString("followtarget"),"gw2_task_follow.FollowTarget",GetString("followmode"))
 		RegisterEventHandler("gw2_task_follow.FollowTarget", gw2_task_follow.SetFollowTarget)	
 		
 		mw:UnFold( GetString("followmode") );
 	end
+	sMtargetmode = Settings.GW2Minion.sMtargetmode
+	sMmode = Settings.GW2Minion.sMmode
 	return true
 end
 function gw2_task_follow:UIDestroy()
@@ -49,6 +55,12 @@ end
 
 function gw2_task_follow.ModuleInit()
 	-- Setup Debug fields
+	if (Settings.GW2Minion.sMtargetmode == nil) then
+		Settings.GW2Minion.sMtargetmode = "None"
+	end
+	if (Settings.GW2Minion.sMmode == nil) then
+		Settings.GW2Minion.sMmode = "Everything"
+	end
 	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
 	if ( dw ) then
 		dw:NewField("FollowTargetID","gFollowTargetID","Task_Follow")
@@ -64,7 +76,7 @@ function gw2_task_follow.SetFollowTarget()
 	local t = Player:GetTarget()
 	gw2_task_follow.targetPath = {}
 	gw2_task_follow.lastFollowTargetPos = {}
-	c_FollowTarget.randomDist = math.random(100,500)
+	c_FollowTarget.randomDist = math.random(150,700)
 	e_FollowTarget.rndStopDist = math.random(55,400)
 	if ( t ) then
 		gFollowTargetName = t.name		
@@ -232,11 +244,21 @@ function c_FollowTarget:evaluate()
 			if ( gFollowTargetID ~= nil and gFollowTargetID ~= 0 and gFollowTargetID ~= "") then
 				local target = CharacterList:Get(gFollowTargetID)
 				if ( TableSize(target)>0 ) then			
-					if ( target.distance > c_FollowTarget.randomDist ) then
-						return true					
-					end				
+					
+					-- extend the range threshold when to follow our target while we are fighting
+					if ( ml_global_information.Player_InCombat and Player:GetTarget() ~= nil ) then
+						if ( target.distance > c_FollowTarget.randomDist + 1000 ) then							
+							return true
+						end
+					else
+						if ( target.distance > c_FollowTarget.randomDist ) then							
+							return true					
+						end					
+					end
+					
 				else
 					if ( TableSize(gw2_task_follow.targetPath) > 0 ) then
+						d("PAAAAAAAAAAATH")
 						return true
 					end
 					ml_log("FollowTarget Not In CharacterList")

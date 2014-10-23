@@ -120,6 +120,74 @@ function gw2_common_functions.MoveOnlyStraightForward()
 	return false
 end
 
+function gw2_common_functions.FinishEnemy()    
+	if ( ml_global_information.Player_IsMoving == false and ml_global_information.Player_Health.percent > 15 ) then
+		local EList = CharacterList("nearest,downed,aggro,attackable,interactable,selectable,maxdistance=150,onmesh")
+		if ( EList ) then
+			local id,entity = next (EList)
+			if ( id and entity ) then
+				if ( entity.isInInteractRange ) then
+					local t = Player:GetTarget()
+					if ( t and t.id == id ) then						
+						Player:Interact( id )
+						ml_log("Finishing..")						
+						ml_global_information.Wait(1000)
+						return true						
+					end
+				end
+			end
+		end
+	end
+	return false
+end
+
+-- Tries to get a "best target" to attack
+function gw2_common_functions.GetBestCharacterTarget()
+	-- Try to get Enemy with los in range first
+	local target = gw2_common_functions.GetCharacterTargetExtended(ml_global_information.AttackRange, 1)
+	-- Try to get Enemy without los in range 
+	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended(ml_global_information.AttackRange, 0) end
+	-- Try to get Enemy without los in range + 250
+	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended(ml_global_information.AttackRange + 250, 0) end
+	
+	if ( target and target.id ) then
+		if ( target.distance < 1500 and target.los ) then
+			Player:SetTarget(target.id)
+		end
+		return target 		
+	else
+		
+		local currTarget = Player:GetTarget()
+		if ( currTarget ~= nil and currTarget.attackable ) then
+			return target
+		end		
+	end
+	return nil 
+end
+function gw2_common_functions.GetCharacterTargetExtended(maxrange, los)
+    
+	local filterstring = "attackable,alive,maxdistance="..tostring(maxrange)
+	
+	if (los == "1") then filterstring = filterstring..",los" end
+	if (sMmode == "Players Only") then filterstring = filterstring..",player" end
+	if (sMtargetmode == "LowestHealth") then filterstring = filterstring..",lowesthealth" end
+	if (sMtargetmode == "Closest") then filterstring = filterstring..",nearest" end
+	if (sMtargetmode == "Biggest Crowd") then filterstring = filterstring..",clustered=600" end
+	
+	local TargetList = CharacterList(filterstring)
+	if ( TargetList ) then
+		local id,entry = next(TargetList)
+		if (id and entry ) then			
+			return entry
+		end
+	end	
+	return nil
+end
+
+
+
+
+
 -- trouble with deleting the stupid window while it has events registered, turns out that crashes / fucks stuff up if more than just 1 function is using this dialog with different args
 function gw2_common_functions.CreateDialog(name,func)
 

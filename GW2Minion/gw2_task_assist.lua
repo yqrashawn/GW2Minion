@@ -27,7 +27,7 @@ function gw2_task_assist:Process()
 	if ( ml_global_information.Player_Alive ) then
 		
 		
-		if ( FinishEnemy() == true ) then return end
+		if ( gw2_common_functions.FinishEnemy() == true ) then return end
 		
 		
 		if ( TimeSince(gw2_task_assist.tmr) > 2000 and Player:IsMoving()) then
@@ -43,7 +43,10 @@ function gw2_task_assist:Process()
 			end
 			
 		elseif ( sMtargetmode ~= "None" ) then 
-			gw2_task_assist.SetTargetAssist()
+			local target = w2_common_functions.GetBestCharacterTarget()
+			if ( target and target.alive and target.attackable ) then
+				gw2_skill_manager.Attack( target )
+			end
 		end
 	end
 	
@@ -78,47 +81,6 @@ function gw2_task_assist.ModuleInit()
 	end
 	if (Settings.GW2Minion.sMmode == nil) then
 		Settings.GW2Minion.sMmode = "Everything"
-	end
-end
-
-
-function gw2_task_assist.SelectTargetExtended(maxrange, los)
-    
-	local filterstring = "attackable,alive,maxdistance="..tostring(maxrange)
-	
-	if (los == "1") then filterstring = filterstring..",los" end
-	if (sMmode == "Players Only") then filterstring = filterstring..",player" end
-	if (sMtargetmode == "LowestHealth") then filterstring = filterstring..",lowesthealth" end
-	if (sMtargetmode == "Closest") then filterstring = filterstring..",nearest" end
-	if (sMtargetmode == "Biggest Crowd") then filterstring = filterstring..",clustered=600" end
-	
-	local TargetList = CharacterList(filterstring)
-	if ( TargetList ) then
-		local id,entry = next(TargetList)
-		if (id and entry ) then
-			ml_log("Attacking "..tostring(entry.id) .. " name "..entry.name)
-			return entry
-		end
-	end	
-	return nil
-end
-
-function gw2_task_assist.SetTargetAssist()
-	-- Try to get Enemy with los in range first
-	local target = gw2_task_assist.SelectTargetExtended(ml_global_information.AttackRange, 1)	
-	if ( not target ) then target = gw2_task_assist.SelectTargetExtended(ml_global_information.AttackRange, 0) end
-	if ( not target ) then target = gw2_task_assist.SelectTargetExtended(ml_global_information.AttackRange + 250, 0) end
-	
-	if ( target and target.id ) then 
-		Player:SetTarget(target.id)
-		return gw2_skill_manager.Attack( target ) 		
-	else
-		
-		local currTarget = Player:GetTarget()
-		if ( currTarget ~= nil ) then
-			return gw2_skill_manager.Attack( currTarget )
-		end
-		return false
 	end
 end
 
