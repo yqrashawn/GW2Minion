@@ -351,10 +351,12 @@ function gw2_skill_manager.NewInstance(profileName)
 				-- Check Skill related conditions
 				if (target or skill.skill.target == "Self") then
 					local entityToCheck = (target or Player)
+
 					-- Last SkillID check
-					if (skill.skill.lastSkillID ~= "" and tostring(skill.skill.lastSkillID) ~= Player.castinfo.lastSkillID) then return false end
+					if (skill.skill.lastSkillID ~= nil and skill.skill.lastSkillID ~= "" and tostring(skill.skill.lastSkillID) ~= Player.castinfo.lastSkillID) then return false end
 					-- Delay check
-					if (skill.skill.delay > 0 and (_private.skillLastCast[skill.id] == nil or skill.skill.delay < TimeSince(_private.skillLastCast[skill.id]))) then return false end
+					if (skill.skill.delay ~= nil and skill.skill.delay > 0 and (_private.skillLastCast[skill.id] == nil or skill.skill.delay < TimeSince(_private.skillLastCast[skill.id]))) then return false end
+
 					-- Friends around Target check
 					if ( skill.skill.allyNearCount > 0 and skill.skill.allyRangeMax > 0) then
 						if (TableSize(CharacterList("friendly,maxdistance=" .. skill.skill.allyRangeMax .. ",distanceto=" .. entityToCheck.id)) < skill.skill.allyNearCount) then return false end
@@ -477,18 +479,18 @@ function gw2_skill_manager.NewInstance(profileName)
 		_private.lastEvadedSkill = 0
 		function _private:DoCombatMovement()
 			local T = Player:GetTarget()
-			if ( T and Player.health.percent < 98 and gDoCombatMovement ~= "0") then
+			if ( T and ml_global_information.Player_Health.percent < 98 and gDoCombatMovement ~= "0") then
 				if ( gw2_common_functions.HasBuffs(Player, "791,727") ) then return false end
 				local Tdist = T.distance
-				local playerHP = Player.health.percent
-				local movedir = Player:GetMovement()
+				local playerHP = ml_global_information.Player_Health.percent
+				local movedir = ml_global_information.Player_MovementDirections
 				local _,attackRange = _private:GetAvailableSkills()
 
 				-- SET FACING TARGET
 				Player:SetFacingExact(T.pos.x,T.pos.y,T.pos.z)
 
 				-- EVADE
-				if (Player.endurance >= 50 and Player.health.percent < 100) then
+				if (ml_global_information.Player_Endurance >= 50 and ml_global_information.Player_Health.percent < 100) then
 					-- Get target and check if casting.
 					local target = Player:GetTarget()
 					if (target) then
@@ -688,13 +690,15 @@ function gw2_skill_manager.NewInstance(profileName)
 		function newProfile:Attack(target)
 			if (_private:CheckTargetBuffs(target)) then
 				local skills,maxRange = _private:GetAvailableSkills()
+				
 				if (target == nil or target.distance < maxRange) then
 					if (_private.runIntoCombatRange == true) then
 						_private.runIntoCombatRange = false
 						Player:StopMovement()
 					end
 					_private:DoCombatMovement()
-					if (Player.castinfo.duration == 0) then
+					
+					if (Player.castinfo.duration == 0  ) then						
 						if (ValidTable(skills)) then
 							for priority=1,TableSize(skills) do
 								local skill = skills[priority]

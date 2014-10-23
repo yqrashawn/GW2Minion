@@ -2,10 +2,19 @@ Dev = { }
 Dev.lastticks = 0
 Dev.running = false
 Dev.curTask = nil
-
+Dev.initialized = false
 
 function Dev.ModuleInit()
-	GUI_NewWindow("Dev",400,50,250,430)
+	
+	GUI_NewWindow("Dev",400,50,250,430)		
+	GUI_WindowVisible("Dev",false)	
+	GUI_NewButton("Dev","TOGGLE DEVMONITOR ON_OFF","Dev.Test1")
+	RegisterEventHandler("Dev.Test1", Dev.LoadModule)
+end
+
+function Dev.LoadModule()
+	if ( Dev.initialized == false ) then
+	Dev.initialized = true
 	GUI_NewComboBox("Dev","Player/TargetInfo","chartarg","CharacterInfo","Player,Target");
 	GUI_NewField("Dev","Ptr","TargetPtr","CharacterInfo")
 	GUI_NewField("Dev","Ptr2","TargetPtr2","CharacterInfo")
@@ -549,11 +558,10 @@ function Dev.ModuleInit()
 	RegisterEventHandler("Dev.STringID", Dev.Func)
 	nRenderDepth = 2
 	
+	GUI_SizeWindow("Dev",250,550)	
+	end		
 	
-	GUI_WindowVisible("Dev",false)	
-	GUI_NewButton("Dev","TOGGLE DEVMONITOR ON_OFF","Dev.Test1")
-	RegisterEventHandler("Dev.Test1", Dev.Test1)
-	GUI_SizeWindow("Dev",250,550)		
+	Dev.Test1()
 end
 
 function Dev.GUIVarUpdate(Event, NewVals, OldVals)
