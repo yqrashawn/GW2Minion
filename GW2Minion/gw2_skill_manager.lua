@@ -1,13 +1,15 @@
 gw2_skill_manager = {}
-gw2_skill_manager.mainWindow = { name = GetString("skillManager"), x = 350, y = 50, w = 250, h = 350}
+gw2_skill_manager.mainWindow = {name = GetString("skillManager"), x = 350, y = 50, w = 250, h = 350}
 gw2minion.MainWindow.ChildWindows[gw2_skill_manager.mainWindow.name] = gw2_skill_manager.mainWindow.name
-gw2_skill_manager.editWindow = { name = GetString("skillEditor"), x = 600, y = 50, w = 250, h = 550}
+gw2_skill_manager.editWindow = {name = GetString("skillEditor"), x = 600, y = 50, w = 250, h = 550}
 gw2minion.MainWindow.ChildWindows[gw2_skill_manager.editWindow.name] = gw2_skill_manager.editWindow.name
 gw2_skill_manager.profile = nil
 gw2_skill_manager.currentSkill = nil
 gw2_skill_manager.path = GetStartupPath() .. [[\LuaMods\GW2Minion\SkillManagerProfiles\]]
 gw2_skill_manager.detecting = false
 gw2_skill_manager.RecordRefreshTmr = 0
+gw2_skill_manager.attacking = false
+gw2_skill_manager.lastAttack = 0
 --setmetatable(gw2_skill_manager, {__call = function(cls,...) return cls.NewInstance(...) end})
 
 function gw2_skill_manager.ModuleInit()
@@ -41,39 +43,39 @@ function gw2_skill_manager.ModuleInit()
 	if (editWindow) then
 		-- Skill Section
 		editWindow:NewNumeric(GetString("smSkillID"),"SklMgr_ID",GetString("Skill"))
-		editWindow:NewField(GetString("smSkillName"),"SklMgr_Name",GetString("Skill"))
-		editWindow:NewComboBox(GetString("smTarget"),"SklMgr_Target",GetString("Skill"),"Either,Enemy,Player")
-		editWindow:NewComboBox(GetString("smGrndTarget"),"SklMgr_GrndTarget",GetString("Skill"),"true,false")
-		editWindow:NewComboBox(GetString("smHealing"),"SklMgr_Healing",GetString("Skill"),"true,false")
-		editWindow:NewNumeric(GetString("smAllyCount"),"SklMgr_AllyCount",GetString("Skill"))
-		editWindow:NewNumeric(GetString("smAllyRange"),"SklMgr_AllyRange",GetString("Skill"))
-		editWindow:NewNumeric(GetString("smEnemyCount"),"SklMgr_EnemyCount",GetString("Skill"))
-		editWindow:NewNumeric(GetString("smEnemyRange"),"SklMgr_EnemyRange",GetString("Skill"))
+		editWindow:NewField(GetString("name"),"SklMgr_Name",GetString("Skill"))
+		editWindow:NewComboBox(GetString("targetType"),"SklMgr_Target",GetString("Skill"),"Either,Enemy,Player")
+		editWindow:NewComboBox(GetString("isGroundTargeted"),"SklMgr_GrndTarget",GetString("Skill"),"true,false")
+		editWindow:NewComboBox(GetString("smsktypeheal"),"SklMgr_Healing",GetString("Skill"),"true,false")
+		editWindow:NewNumeric(GetString("alliesNearCount"),"SklMgr_AllyCount",GetString("Skill"))
+		editWindow:NewNumeric(GetString("alliesNearRange"),"SklMgr_AllyRange",GetString("Skill"))
+		editWindow:NewNumeric(GetString("enemiesNearCount"),"SklMgr_EnemyCount",GetString("Skill"))
+		editWindow:NewNumeric(GetString("enemiesNearRange"),"SklMgr_EnemyRange",GetString("Skill"))
 		-- Player Section
-		editWindow:NewComboBox(GetString("smCombatState"),"SklMgr_CombatState",GetString("Player"),"Either,InCombat,OutCombat")
-		editWindow:NewNumeric(GetString("smMinHP"),"SklMgr_PMinHP",GetString("Player"),0,100)
-		editWindow:NewNumeric(GetString("smMaxHP"),"SklMgr_PMaxHP",GetString("Player"),0,99)
-		editWindow:NewNumeric(GetString("smMinPower"),"SklMgr_MinPower",GetString("Player"),0,100)
-		editWindow:NewNumeric(GetString("smMaxPower"),"SklMgr_MaxPower",GetString("Player"),0,99)
-		editWindow:NewNumeric(GetString("smMinEndurance"),"SklMgr_MinEndurance",GetString("Player"),0,100)
-		editWindow:NewNumeric(GetString("smMaxEndurance"),"SklMgr_MaxEndurance",GetString("Player"),0,99)
-		editWindow:NewField(GetString("smHasBuffs"),"SklMgr_PHasBuffs",GetString("Player"))
-		editWindow:NewField(GetString("smHasNotBuffs"),"SklMgr_PHasNotBuffs",GetString("Player"))
-		editWindow:NewNumeric(GetString("smCondCount"),"SklMgr_PCondCount",GetString("Player"))
+		editWindow:NewComboBox(GetString("useOutOfCombat"),"SklMgr_CombatState",GetString("Player"),"Either,InCombat,OutCombat")
+		editWindow:NewNumeric(GetString("playerHPLT"),"SklMgr_PMinHP",GetString("Player"),0,100)
+		editWindow:NewNumeric(GetString("playerHPGT"),"SklMgr_PMaxHP",GetString("Player"),0,99)
+		editWindow:NewNumeric(GetString("playerPowerLT"),"SklMgr_MinPower",GetString("Player"),0,100)
+		editWindow:NewNumeric(GetString("playerPowerGT"),"SklMgr_MaxPower",GetString("Player"),0,99)
+		editWindow:NewNumeric(GetString("playerEnduranceLT"),"SklMgr_MinEndurance",GetString("Player"),0,100)
+		editWindow:NewNumeric(GetString("playerEnduranceGT"),"SklMgr_MaxEndurance",GetString("Player"),0,99)
+		editWindow:NewField(GetString("playerHas"),"SklMgr_PHasBuffs",GetString("Player"))
+		editWindow:NewField(GetString("playerHasNot"),"SklMgr_PHasNotBuffs",GetString("Player"))
+		editWindow:NewNumeric(GetString("orPlayerCond"),"SklMgr_PCondCount",GetString("Player"))
 		editWindow:NewNumeric(GetString("smBoonCount"),"SklMgr_PBoonCount",GetString("Player"))
 		-- Target Section
-		editWindow:NewComboBox(GetString("smLOS"),"SklMgr_LOS",GetString("Target"),"true,false")
-		editWindow:NewNumeric(GetString("smMinRange"),"SklMgr_MinRange",GetString("Target"),0,5000)
-		editWindow:NewNumeric(GetString("smMaxRange"),"SklMgr_MaxRange",GetString("Target"),0,5000)
-		editWindow:NewNumeric(GetString("smRadius"),"SklMgr_MaxRadius",GetString("Target"),0,5000)
-		editWindow:NewNumeric(GetString("smMinHP"),"SklMgr_TMinHP",GetString("Target"),0,100)
-		editWindow:NewNumeric(GetString("smMaxHP"),"SklMgr_TMaxHP",GetString("Target"),0,99)
-		editWindow:NewComboBox(GetString("smMoving"),"SklMgr_Moving",GetString("Target"),"Either,Moving,NotMoving")
-		editWindow:NewField(GetString("smHasBuffs"),"SklMgr_THasBuffs",GetString("Target"))
-		editWindow:NewField(GetString("smHasNotBuffs"),"SklMgr_THasNotBuffs",GetString("Target"))
-		editWindow:NewNumeric(GetString("smCondCount"),"SklMgr_TCondCount",GetString("Target"))
-		editWindow:NewNumeric(GetString("smBoonCount"),"SklMgr_TBoonCount",GetString("Target"))
-		editWindow:NewComboBox(GetString("smType"),"SklMgr_Type",GetString("Target"),"Either,Character,Gadget")
+		editWindow:NewComboBox(GetString("los"),"SklMgr_LOS",GetString("targetType"),"true,false")
+		editWindow:NewNumeric(GetString("minRange"),"SklMgr_MinRange",GetString("targetType"),0,5000)
+		editWindow:NewNumeric(GetString("maxRange"),"SklMgr_MaxRange",GetString("targetType"),0,5000)
+		editWindow:NewNumeric(GetString("smRadius"),"SklMgr_MaxRadius",GetString("targetType"),0,5000)
+		editWindow:NewNumeric(GetString("playerHPLT"),"SklMgr_TMinHP",GetString("targetType"),0,100)
+		editWindow:NewNumeric(GetString("playerHPGT"),"SklMgr_TMaxHP",GetString("targetType"),0,99)
+		editWindow:NewComboBox(GetString("targetMoving"),"SklMgr_Moving",GetString("targetType"),"Either,Moving,NotMoving")
+		editWindow:NewField(GetString("targetHas"),"SklMgr_THasBuffs",GetString("targetType"))
+		editWindow:NewField(GetString("targetHasNot"),"SklMgr_THasNotBuffs",GetString("targetType"))
+		editWindow:NewNumeric(GetString("smCondCount"),"SklMgr_TCondCount",GetString("targetType"))
+		editWindow:NewNumeric(GetString("smBoonCount"),"SklMgr_TBoonCount",GetString("targetType"))
+		editWindow:NewComboBox(GetString("targetType"),"SklMgr_Type",GetString("targetType"),"Either,Character,Gadget")
 		-- Buttons
 		editWindow:NewButton(GetString("smDeleteSkill"),"gSMdeleteSkill")
 		RegisterEventHandler("gSMdeleteSkill",gw2_skill_manager.DeleteSkill)
@@ -358,7 +360,7 @@ function gw2_skill_manager.NewInstance(profileName)
 				-- Check Player related conditions
 				local playerBuffList = Player.buffs
 				if (skill.player.combatState == "InCombat" and ml_global_information.Player_InCombat == false ) then return false end
-				if (skill.player.combatState == "OutsideCombat" and ml_global_information.Player_InCombat == true ) then return false end
+				if (skill.player.combatState == "OutCombat" and ml_global_information.Player_InCombat == true ) then return false end
 				if (skill.player.minHP > 0 and ml_global_information.Player_Health.percent > skill.player.minHP) then return false end
 				if (skill.player.maxHP > 0 and ml_global_information.Player_Health.percent < skill.player.maxHP) then return false end
 				if (skill.player.minEndurance > 0 and ml_global_information.Player_Endurance > skill.player.minEndurance) then return false end
@@ -442,7 +444,7 @@ function gw2_skill_manager.NewInstance(profileName)
 							end
 						end
 					end
-					local key = math.random(0,TableSize(availableKits))
+					local key = math.random(0,TableSize(availableKits)-1)
 					if (key ~= 0) then
 						Player:CastSpell(availableKits[key].slot)
 						if (gSMPrioKit ~= "None" and EngineerKits[availableKits[key].skillID] ~= tostring(gSMPrioKit))then
@@ -465,7 +467,7 @@ function gw2_skill_manager.NewInstance(profileName)
 		_private.lastEvadedSkill = 0
 		function _private:DoCombatMovement()
 			local T = Player:GetTarget()
-			if ( T and Player.health.percent < 98 ) then
+			if ( T and Player.health.percent < 98 and gDoCombatMovement ~= "0") then
 				if ( gw2_common_functions.HasBuffs(Player, "791,727") ) then return false end
 				local Tdist = T.distance
 				local playerHP = Player.health.percent
@@ -482,7 +484,7 @@ function gw2_skill_manager.NewInstance(profileName)
 					if (target) then
 						local targetOfTarget = target.castinfo.targetID
 						local skillofTarget = target.castinfo.skillID
-						if (castinfo and targetOfTarget == Player.id and skillofTarget ~= 0 and skillofTarget ~= _private.lastEvadedSkill) then
+						if (targetOfTarget == Player.id and skillofTarget ~= 0 and skillofTarget ~= _private.lastEvadedSkill) then
 							_private.lastEvadedSkill = skillofTarget
 							Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z)
 							local direction = {[1]=1,[2]=2,[3]=0,[4]=6,[5]=7}
@@ -609,8 +611,6 @@ function gw2_skill_manager.NewInstance(profileName)
 						Player:StopMovement()
 					end
 				end
-			elseif (T == nil) then
-				Player:StopMovement()
 			end
 			return false
 		end
@@ -682,7 +682,7 @@ function gw2_skill_manager.NewInstance(profileName)
 						_private.runIntoCombatRange = false
 						Player:StopMovement()
 					end
-					if (gDoCombatMovement ~= "0") then _private:DoCombatMovement() end
+					_private:DoCombatMovement()
 					if (Player.castinfo.duration == 0) then
 						if (ValidTable(skills)) then
 							for priority=1,TableSize(skills) do
@@ -1159,6 +1159,8 @@ end
 
 function gw2_skill_manager.Attack(target)
 	if ( gw2_skill_manager.profile ) then
+		gw2_skill_manager.attacking = true
+		gw2_skill_manager.lastAttack = ml_global_information.Lasttick
 		gw2_skill_manager.profile:Attack(target)
 	else
 		d("No gw2_skill_manager.profile loaded!")
@@ -1180,6 +1182,10 @@ function gw2_skill_manager.OnUpdate(tickcount)
 			gw2_skill_manager.UpdateMainWindow(true)
 		end
 		gw2_skill_manager.profile:DetectSkills()
+	end
+	if (gw2_skill_manager.attacking == true and TimeSince(gw2_skill_manager.lastAttack) > 500) then
+		gw2_skill_manager.attacking = false
+		gw2_common_functions.MoveOnlyStraightForward()
 	end
 end
 

@@ -76,9 +76,6 @@ function gw2minion.ModuleInit()
 	Settings.GW2Minion.gGather = Settings.GW2Minion.gGather or "1"
 	Settings.GW2Minion.gRevivePlayers = Settings.GW2Minion.gRevivePlayers or "1"
 	Settings.GW2Minion.gRevive = Settings.GW2Minion.gRevive or "1"	
-	Settings.GW2Minion.gDisableRender = Settings.GW2Minion.gDisableRender or "1"
-	
-	if ( RenderManager ) then RenderManager:ToggleRendering(tonumber(gDisableRender)) end
 	
     gBotMode = Settings.GW2Minion.gBotMode
 	gBotRunning	= Settings.GW2Minion.gBotRunning
@@ -91,6 +88,7 @@ function gw2minion.ModuleInit()
 	gRevive = Settings.GW2Minion.gRevive
 	gDisableRender = Settings.GW2Minion.gDisableRender
 	
+	if ( RenderManager ) then RenderManager:ToggleRendering(tonumber(gDisableRender)) end
 	
 	-- CinemaWindow	
 	Settings.GW2Minion.gSkipCutscene = Settings.GW2Minion.gSkipCutscene or "0"
@@ -340,6 +338,10 @@ function gw2minion.ToggleBot(arg)
 				else
 					sb:SetToggleState(true)
 				end
+			elseif (arg == "on" ) then
+				sb:SetToggleState(true)
+			elseif (arg == "off" ) then
+				sb:SetToggleState(false)
 			end
 			if ( sb.pressed ) then
 				d("Starting Bot..")
