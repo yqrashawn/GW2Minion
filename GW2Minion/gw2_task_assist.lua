@@ -33,7 +33,7 @@ function gw2_task_assist:Process()
 		if ( TimeSince(gw2_task_assist.tmr) > 2000 and Player:IsMoving()) then
 			gw2_task_assist.tmr = ml_global_information.Now
 			gw2_task_assist.threshold = math.random(500,1500)
-			gw2_skill_manager.Heal(Player)
+			gw2_skill_manager.Heal()
 		end	
 		
 		if ( sMtargetmode == "None" ) then
