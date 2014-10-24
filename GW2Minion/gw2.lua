@@ -370,6 +370,7 @@ function gw2minion.ToggleBot(arg)
 end
 
 --switches the shown UI according to the gamestate
+gw2minion.lastWindowState = {}
 function gw2minion.SwitchUIForGameState(tickcount)
 	local currentGameState = GetGameState()
 	if ( currentGameState ~= ml_global_information.LastGameState ) then
@@ -379,24 +380,34 @@ function gw2minion.SwitchUIForGameState(tickcount)
 		local wCine = WindowManager:GetWindow(gw2minion.CinemaWindow.Name)
 		local wChar = WindowManager:GetWindow(gw2minion.CharacterWindow.Name)
 		if ( wMain and wCine and wChar) then
+
+			local manageChildWindows = function(arg)
+				for name,_ in pairs(gw2minion.MainWindow.ChildWindows) do
+					local wnd = WindowManager:GetWindow(name)
+					if ( wnd ) then
+						if ( arg ~= true ) then
+							gw2minion.lastWindowState[wnd.name] = wnd.visible
+							wnd:Hide()
+						elseif ( gw2minion.lastWindowState[wnd.name] ) then
+							wnd:Show()
+						end
+					end
+				end
+			end
+
 			if ( currentGameState == 16 ) then --ingame
 				wMain:Show()
+				manageChildWindows(true)
 				wCine:Hide()
 				wChar:Hide()
 			elseif( currentGameState == 14 or currentGameState == 10 ) then --cinematic
 				wMain:Hide()
-				for name,_ in pairs(gw2minion.MainWindow.ChildWindows) do
-					local wnd = WindowManager:GetWindow(name)
-					if ( wnd ) then wnd:Hide() end
-				end
+				manageChildWindows()
 				wCine:Show()
 				wChar:Hide()
 			elseif( currentGameState == 4 ) then --charscreen
 				wMain:Hide()
-				for name,_ in pairs(gw2minion.MainWindow.ChildWindows) do
-					local wnd = WindowManager:GetWindow(name)
-					if ( wnd ) then wnd:Hide() end
-				end
+				manageChildWindows()
 				wCine:Hide()
 				wChar:Show()
 			end
