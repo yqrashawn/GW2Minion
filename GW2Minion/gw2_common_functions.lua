@@ -154,7 +154,7 @@ function gw2_common_functions.GetBestCharacterTarget()
 		if ( target.distance < 1500 and target.los ) then
 			Player:SetTarget(target.id)
 		end
-		return target 		
+		return target
 	else
 		
 		local currTarget = Player:GetTarget()

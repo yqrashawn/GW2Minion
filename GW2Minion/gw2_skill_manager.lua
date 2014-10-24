@@ -1200,7 +1200,7 @@ end
 
 function gw2_skill_manager.Heal()
 	if ( gw2_skill_manager.profile ) then
-		gw2_skill_manager.profile:Heal(target)
+		gw2_skill_manager.profile:Heal()
 	else
 		d("No gw2_skill_manager.profile loaded!")
 	end
