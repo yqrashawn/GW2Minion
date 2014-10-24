@@ -257,8 +257,7 @@ function c_FollowTarget:evaluate()
 					end
 					
 				else
-					if ( TableSize(gw2_task_follow.targetPath) > 0 ) then
-						d("PAAAAAAAAAAATH")
+					if ( TableSize(gw2_task_follow.targetPath) > 0 ) then						
 						return true
 					end
 					ml_log("FollowTarget Not In CharacterList")

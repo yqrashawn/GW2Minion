@@ -6,7 +6,7 @@ function gw2_common_tasks.OnUpdate( tickcount )
 	
 	gw2_common_tasks.DepositItems(tickcount)
 	gw2_common_tasks.AoELoot(tickcount)
-	
+	gw2_common_tasks.SwimUp(tickcount)
 
 end
 
@@ -23,5 +23,20 @@ function gw2_common_tasks.AoELoot(tickcount)
 	if( TimeSince(gw2_common_tasks.aoeLootLastUsed) > 1050 and ml_global_information.Player_Inventory_SlotsFree > 0) then
 		gw2_common_tasks.aoeLootLastUsed = tickcount + math.random(50,500)
 		Player:AoELoot()
+	end
+end
+
+gw2_common_tasks.swimUpLastUsed = 0
+gw2_common_tasks.swimUp = false
+function gw2_common_tasks.SwimUp(tickcount)
+	if( TimeSince(gw2_common_tasks.swimUpLastUsed) > 1000 ) then
+		gw2_common_tasks.swimUpLastUsed = tickcount + math.random(50,500)
+		if ( Player.swimming == GW2.SWIMSTATE.Diving ) then
+			gw2_common_tasks.swimUp = true
+			Player:SetMovement(GW2.MOVEMENTTYPE.SwimUp)
+		elseif( gw2_common_tasks.swimUp == true ) then
+			gw2_common_tasks.swimUp = false
+			Player:UnSetMovement(GW2.MOVEMENTTYPE.SwimUp)
+		end		
 	end
 end

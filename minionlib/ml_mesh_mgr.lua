@@ -785,7 +785,7 @@ function ml_mesh_mgr.AddOMCBridge(omctype)
 	
 	-- Distance is small enough for just 1 OMC
 	if ( intervals <= 1 ) then
-		d(MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,true,omctype))
+		d(MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,true,omctype, {x=ml_mesh_mgr.OMCP1.hx,y=ml_mesh_mgr.OMCP1.hy,z=ml_mesh_mgr.OMCP1.hz},{x=ml_mesh_mgr.OMCP2.hx,y=ml_mesh_mgr.OMCP2.hy,z=ml_mesh_mgr.OMCP2.hz}))
 	
 	else
 		local TOposition = {}
@@ -794,7 +794,7 @@ function ml_mesh_mgr.AddOMCBridge(omctype)
 			d("Invetval:" ..tostring(i))
 			-- Last point 
 			if ( i == intervals ) then
-				d(MeshManager:AddOffMeshConnection(FROMposition,ml_mesh_mgr.OMCP2,true,omctype))
+				d(MeshManager:AddOffMeshConnection(FROMposition,ml_mesh_mgr.OMCP2,true,omctype, {x=ml_mesh_mgr.OMCP1.hx,y=ml_mesh_mgr.OMCP1.hy,z=ml_mesh_mgr.OMCP1.hz},{x=ml_mesh_mgr.OMCP2.hx,y=ml_mesh_mgr.OMCP2.hy,z=ml_mesh_mgr.OMCP2.hz}))
 			
 			else
 				-- make OMCs with singlecells to bridge the whole distance between original start and end
@@ -805,7 +805,7 @@ function ml_mesh_mgr.AddOMCBridge(omctype)
 				TOposition.z = FROMposition.z + vector.z*350
 				
 				-- Add "To"-point
-				d(MeshManager:AddOffMeshConnection(FROMposition,TOposition,true,omctype))
+				d(MeshManager:AddOffMeshConnection(FROMposition,TOposition,true,omctype, {x=ml_mesh_mgr.OMCP1.hx,y=ml_mesh_mgr.OMCP1.hy,z=ml_mesh_mgr.OMCP1.hz},{x=ml_mesh_mgr.OMCP2.hx,y=ml_mesh_mgr.OMCP2.hy,z=ml_mesh_mgr.OMCP2.hz}))
 				
 				-- Add singleCell
 				local newVertexCenter = { x=TOposition.x, y=TOposition.y, z=TOposition.z }
@@ -835,17 +835,18 @@ end
 function ml_mesh_mgr.HandleOMC( event, OMCType ) 	
 	d("OMC REACHED : "..tostring(OMCType))
 	-- TODO: delayed Player:StopMovement()
-	if ( OMCType == 1 ) then -- Walk		
+	if ( OMCType == "OMC_WALK" ) then -- Walk		
 		ml_global_information.Lasttick = ml_global_information.Lasttick + 1500 -- tiny pause to not walk backwards and instead through the portal
 		Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
 		
-	elseif ( OMCType == 2 ) then -- Teleport		
+	elseif ( OMCType == "OMC_TELEPORT" ) then -- Teleport		
 		ml_global_information.Lasttick = ml_global_information.Lasttick + 1500 -- tiny pause to not walk backwards and instead through the portal
 	
-	elseif ( OMCType == 4 ) then -- Interact		
+	elseif ( OMCType == "OMC_INTERACT" ) then -- Interact		
 		ml_global_information.Lasttick = ml_global_information.Lasttick + 1500 -- tiny pause to not walk backwards and instead through the portal
-				
-	elseif ( OMCType == 4 ) then -- Portal		
+		Player:StopMovement()
+		Player:Interact()
+	elseif ( OMCType == "OMC_PORTAL" ) then -- Portal		
 		ml_global_information.Lasttick = ml_global_information.Lasttick + 1500 -- tiny pause to not walk backwards and instead through the portal
 		
 	end
