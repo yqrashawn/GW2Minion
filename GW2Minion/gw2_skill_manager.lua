@@ -460,7 +460,7 @@ function gw2_skill_manager.NewInstance(profileName)
 							end
 						else
 							-- MELEE
-							if ( Tdist < (T.radius + 5) and movedir.forward) then -- we are too close and moving towards enemy
+							if ( Tdist < (T.radius + 10) and movedir.forward) then -- we are too close and moving towards enemy
 								Player:UnSetMovement(0)	-- stop moving forward
 							elseif (Tdist > attackRange and movedir.backward) then -- we are too far away and moving backwards
 								Player:UnSetMovement(1)	-- stop moving backward
@@ -781,7 +781,7 @@ function gw2_skill_manager.UpdateMainWindow(openGroup)
 			
 			for key=1,#gw2_skill_manager.profile.skills do
 				local skill = gw2_skill_manager.profile.skills[key]
-				mainWindow:NewButton(skill.priority .. ":" .. skill.skill.name,skill.priority,GetString("profileSkills"))
+				mainWindow:NewButton(skill.priority .. ": " .. skill.skill.name,skill.priority,GetString("profileSkills"))
 				RegisterEventHandler(skill.priority,gw2_skill_manager.UpdateEditWindow)
 			end
 			if (openGroup) then mainWindow:UnFold(GetString("profileSkills")) end
@@ -790,8 +790,10 @@ function gw2_skill_manager.UpdateMainWindow(openGroup)
 end
 
 function gw2_skill_manager.UpdateEditWindow(skill)
+	gw2_skill_manager.CreateEditWindow()
 	local editWindow = WindowManager:GetWindow(gw2_skill_manager.editWindow.name)
 	if (skill and editWindow and gw2_skill_manager.profile) then
+		if (editWindow.visible and tonumber(skill) == tonumber(gw2_skill_manager.currentSkill)) then editWindow:Hide() return end
 		editWindow:Show()
 		gw2_skill_manager.currentSkill = tonumber(skill)
 		local lSkill = gw2_skill_manager.profile.skills[tonumber(skill)]
@@ -838,7 +840,7 @@ function gw2_skill_manager.UpdateEditWindow(skill)
 end
 
 function gw2_skill_manager.ToggleMenu()
-	gw2_skill_manager.CreateWindows()
+	gw2_skill_manager.CreateMainWindow()
 	local mainWindow = WindowManager:GetWindow(gw2_skill_manager.mainWindow.name)
 	if (mainWindow) then
 		if ( mainWindow.visible ) then
@@ -861,7 +863,7 @@ function gw2_skill_manager.ToggleMenu()
 	end
 end
 
-function gw2_skill_manager.CreateWindows()
+function gw2_skill_manager.CreateMainWindow()
 	if (WindowManager:GetWindow(gw2_skill_manager.mainWindow.name) == nil) then
 		-- Init Main Window
 		local mainWindow = WindowManager:NewWindow(gw2_skill_manager.mainWindow.name,gw2_skill_manager.mainWindow.x,gw2_skill_manager.mainWindow.y,gw2_skill_manager.mainWindow.w,gw2_skill_manager.mainWindow.h,false)
@@ -882,7 +884,10 @@ function gw2_skill_manager.CreateWindows()
 			mainWindow:Hide()
 		end
 	end
-	
+	gw2_skill_manager.UpdateMainWindow()
+end
+
+function gw2_skill_manager.CreateEditWindow()
 	if (WindowManager:GetWindow(gw2_skill_manager.editWindow.name) == nil) then
 		-- Init Edit Window
 		local editWindow = WindowManager:NewWindow(gw2_skill_manager.editWindow.name,gw2_skill_manager.editWindow.x,gw2_skill_manager.editWindow.y,gw2_skill_manager.editWindow.w,gw2_skill_manager.editWindow.h,true)
@@ -941,7 +946,6 @@ function gw2_skill_manager.CreateWindows()
 			editWindow:Hide()
 		end
 	end
-	gw2_skill_manager.UpdateMainWindow()
 end
 
 function gw2_skill_manager.SaveProfile()
