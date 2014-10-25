@@ -203,7 +203,9 @@ function mc_global.moduleinit()
 		ml_mesh_mgr.SetDefaultMesh(53,"Sparkfly Fen")
 		ml_mesh_mgr.SetDefaultMesh(54,"Brisban Wildlands")
 		ml_mesh_mgr.SetDefaultMesh(73,"BloodtideCoast")
-				
+		
+		ml_mesh_mgr.SetDefaultMesh(866,"Mad Kings Labyrinth")
+		
 		-- Setup the marker types we wanna use
 		   --[[ local mapMarker = ml_marker:Create("MapMarker")
 			mapMarker:SetType(GetString("mapMarker"))
