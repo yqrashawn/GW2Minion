@@ -398,6 +398,7 @@ function gw2_skill_manager.NewInstance(profileName)
 
 		_private.combatMoveTmr = 0
 		_private.lastEvadedSkill = 0
+		_private.combatMoveActive = false
 		function _private:DoCombatMovement()
 			local T = Player:GetTarget()
 			if ( T and ml_global_information.Player_Health.percent < 98 and gDoCombatMovement ~= "0") then
@@ -447,28 +448,16 @@ function gw2_skill_manager.NewInstance(profileName)
 					end
 
 					if (tonumber(Tdist) ~= nil) then
-						if (attackRange > 300) then
-							-- RANGE
-							if (Tdist < (attackRange / 2) and movedir.forward ) then -- we are too close and moving towards enemy
-								Player:UnSetMovement(0)	-- stop moving forward
-							elseif ( Tdist > attackRange and movedir.backward ) then -- we are too far away and moving backwards
-								Player:UnSetMovement(1)	-- stop moving backward
-							elseif (Tdist > attackRange and movedir.left) then -- we are strafing outside the maxrange
-								Player:UnSetMovement(2) -- stop moving Left
-							elseif (Tdist > attackRange and movedir.right) then -- we are strafing outside the maxrange
-								Player:UnSetMovement(3) -- stop moving Right
-							end
-						else
-							-- MELEE
-							if ( Tdist < (T.radius + 10) and movedir.forward) then -- we are too close and moving towards enemy
-								Player:UnSetMovement(0)	-- stop moving forward
-							elseif (Tdist > attackRange and movedir.backward) then -- we are too far away and moving backwards
-								Player:UnSetMovement(1)	-- stop moving backward
-							elseif ((Tdist > attackRange + 50 or Tdist < 50) and movedir.left) then -- we are strafing outside the maxrange
-								Player:UnSetMovement(2) -- stop moving Left
-							elseif ((Tdist > attackRange + 50 or Tdist < 50) and movedir.right) then -- we are strafing outside the maxrange
-								Player:UnSetMovement(3) -- stop moving Right
-							end
+						if (attackRange > 300 and Tdist < (attackRange / 4) and movedir.forward ) then -- we are too close and moving towards enemy
+							Player:UnSetMovement(0)	-- stop moving forward
+						elseif ( Tdist < (T.radius + 10) and movedir.forward) then
+							Player:UnSetMovement(0)	-- stop moving forward
+						elseif ( Tdist > attackRange and movedir.backward ) then -- we are too far away and moving backwards
+							Player:UnSetMovement(1)	-- stop moving backward
+						elseif (Tdist > attackRange and movedir.left) then -- we are strafing outside the maxrange
+							Player:UnSetMovement(2) -- stop moving Left
+						elseif (Tdist > attackRange and movedir.right) then -- we are strafing outside the maxrange
+							Player:UnSetMovement(3) -- stop moving Right
 						end
 					end
 				end
@@ -486,7 +475,7 @@ function gw2_skill_manager.NewInstance(profileName)
 							if (Tdist > (attackRange * 0.90)) then 
 								table.remove(dirs,2) -- We are too far away to walk backward
 							end
-							if (Tdist < 600) then 
+							if (Tdist < (attackRange / 4)) then 
 								table.remove(dirs,1) -- We are too close to walk forward
 							end	
 							if (Tdist < 250) then 
@@ -502,19 +491,11 @@ function gw2_skill_manager.NewInstance(profileName)
 
 					else
 						-- MELEE
-						if (Tdist < attackRange ) then
-							if (Tdist > 200) then 
-								table.remove(dirs,2) -- We are too far away to walk backwards
-							end
-							if (Tdist < 100) then 
-								table.remove(dirs,1) -- We are too close to walk forwards
-							end
-							if (movedir.left ) then 
-								--table.remove(dirs,4) -- We are moving left, so don't try to go right
-							end
-							if (movedir.right ) then
-								--table.remove(dirs,3) -- We are moving right, so don't try to go left
-							end
+						if (Tdist > attackRange) then 
+							table.remove(dirs,2) -- We are too far away to walk backwards
+						end
+						if (Tdist < (T.radius + 10)) then 
+							table.remove(dirs,1) -- We are too close to walk forwards
 						end
 					end
 					-- Forward = 0, Backward = 1, Left = 2, Right = 3, + stop
@@ -540,10 +521,14 @@ function gw2_skill_manager.NewInstance(profileName)
 					local dir = dirs[ math.random( #dirs ) ]
 					if (dir ~= 4) then
 						Player:SetMovement(dir)
+						_private.combatMoveActive = true
 					else 
 						Player:StopMovement()
 					end
 				end
+			elseif (_private.combatMoveActive) then
+				_private.combatMoveActive = false
+				Player:StopMovement()
 			end
 			return false
 		end
@@ -611,14 +596,13 @@ function gw2_skill_manager.NewInstance(profileName)
 		function newProfile:Attack(target)
 			if (_private:CheckTargetBuffs(target)) then
 				local skills,maxRange = _private:GetAvailableSkills()
-				
+				_private:DoCombatMovement()
 				if (target == nil or target.distance < maxRange) then
 					if (_private.runIntoCombatRange == true) then
 						_private.runIntoCombatRange = false
 						Player:StopMovement()
 					end
-					_private:DoCombatMovement()
-					
+
 					if (Player.castinfo.duration == 0  ) then						
 						if (ValidTable(skills)) then
 							for priority=1,TableSize(skills) do
