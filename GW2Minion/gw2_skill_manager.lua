@@ -413,19 +413,14 @@ function gw2_skill_manager.NewInstance(profileName)
 
 				-- EVADE
 				if (ml_global_information.Player_Endurance >= 50 and ml_global_information.Player_Health.percent < 100) then
-					-- Get target and check if casting.
-					local target = Player:GetTarget()
-					if (target) then
-						local targetOfTarget = target.castinfo.targetID
-						local skillofTarget = target.castinfo.skillID
-						if (targetOfTarget == Player.id and skillofTarget ~= 0 and skillofTarget ~= _private.lastEvadedSkill) then
+					local targetOfTarget = T.castinfo.targetID
+					local skillofTarget = T.castinfo.skillID
+					if (targetOfTarget == Player.id and skillofTarget ~= 0 and skillofTarget ~= _private.lastEvadedSkill) then
+						local direction = {[1]=1,[2]=2,[3]=0,[4]=6,[5]=7}
+						local dir = math.random(1,TableSize(direction))
+						if (Player:CanEvade(direction[dir],100)) then
 							_private.lastEvadedSkill = skillofTarget
-							Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z)
-							local direction = {[1]=1,[2]=2,[3]=0,[4]=6,[5]=7}
-							local dir = math.random(1,TableSize(direction))
-							if (Player:CanEvade(direction[dir],100)) then
-								Player:Evade(direction[dir])
-							end
+							Player:Evade(direction[dir])
 						end
 					end
 				end

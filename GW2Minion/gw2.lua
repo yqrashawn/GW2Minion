@@ -56,7 +56,10 @@ function gw2minion.ModuleInit()
 		mm:Dock(0)
 		mm:SetSize(18,14)
 		mm:SetPos(160,0)
-
+		
+		mw:NewButton(GetString("salvagemanager"),"ToggleSalvageMgr",GetString("advancedSettings"))
+		RegisterEventHandler("ToggleSalvageMgr", gw2_salvage_manager.ToggleMenu)
+		
 		mw:NewButton(GetString("checkChat"),"gw2minion.evToggleChatManager",GetString("advancedSettings"))
 		
 		mw:NewButton(GetString("blacklistManager"),"ToggleBlacklistMgr",GetString("advancedSettings"))		
