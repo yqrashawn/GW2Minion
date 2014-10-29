@@ -4,7 +4,6 @@ gw2_salvage_manager.mainWindow = { name = GetString("salvagemanager"), x = 350, 
 gw2minion.MainWindow.ChildWindows[gw2_salvage_manager.mainWindow.name] = gw2_salvage_manager.mainWindow.name
 gw2_salvage_manager.filterList = {}
 gw2_salvage_manager.currentFilter = nil
-gw2_salvage_manager.ticks = 0
 gw2_salvage_manager.kitlist = {
 					-- normal kits
 					[23038] = {name = GetString("buyCrude"),		rarity = 0,},		-- Crude Salvage Kit (rarity 1)
@@ -210,7 +209,6 @@ function gw2_salvage_manager.CreateDialog(filterID)
 		dialog:NewComboBox(GetString("rarity"),"SalvageManager_Rarity",GetString("filterdetails"),list)
 		list = GetString("rarityNone")..","..GetString("buyCrude")..","..GetString("buyBasic")..","..GetString("buyFine")..","..GetString("buyJourneyman")..","..GetString("buyMaster")..","..GetString("mysticKit")..","..GetString("unlimitedKit")
 		dialog:NewComboBox(GetString("preferedKit"),"SalvageManager_Kit",GetString("filterdetails"),list)
-		--RegisterEventHandler("SalvageManager_DeleteFilter",gw2_salvage_manager.deleteFilter)
 		dialog:UnFold(GetString("filterdetails"))
 
 		local bSize = {w = 60, h = 20}
@@ -232,25 +230,27 @@ function gw2_salvage_manager.CreateDialog(filterID)
 								rarity = SalvageManager_Rarity,
 								preferedKit = SalvageManager_Kit
 							}
-			if (type(filterID) ~= "number") then -- new filter, making sure name is not in use.
-				for _,filter in pairs(gw2_salvage_manager.filterList) do
-					if (saveFilter.name == filter.name) then
-						return ml_error("Filter with this name already exists, please change the name.")
-					end
-				end
-			end
 			if (ValidString(saveFilter.name) == false) then
 				ml_error("Please enter a filter name before saving.")
 			elseif (gw2_salvage_manager.validFilter(saveFilter)) then -- check if filter is valid.
-				table.insert(gw2_salvage_manager.filterList, saveFilter)
+				if (type(filterID) ~= "number") then -- new filter, making sure name is not in use.
+					for _,filter in pairs(gw2_salvage_manager.filterList) do
+						if (saveFilter.name == filter.name) then
+							return ml_error("Filter with this name already exists, please change the name.")
+						end
+					end
+					table.insert(gw2_salvage_manager.filterList, saveFilter)
+				else
+					gw2_salvage_manager.filterList[filterID] = saveFilter
+				end
 				Settings.GW2Minion.SalvageManager_FilterList = gw2_salvage_manager.filterList
 				gw2_salvage_manager.refreshFilterlist()
 				dialog:SetModal(false)
 				dialog:Hide()
 			else
 				ml_error("Filter Not Valid")
-				d("Filter needs to have both type and rarity set.")
-				d("Junk rarity can be set without any type.")
+				ml_error("Filter needs to have both type and rarity set.")
+				ml_error("Junk rarity can be set without any type.")
 			end
 		end
 		RegisterEventHandler("SAVEDialog",buttonFunction)
@@ -309,8 +309,7 @@ function gw2_salvage_manager.createItemList()
 	local items = Inventory("salvagable,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("salvageItems")))
 	local filteredItems = {}
 	if (items) then
-		local id, item = next(items)
-		while (id and item) do
+		for _,item in pairs(items) do
 			if (item.salvagable and item.soulbound == false) then
 				local addItem = false
 				for _,filter in pairs(gw2_salvage_manager.filterList) do
@@ -323,7 +322,7 @@ function gw2_salvage_manager.createItemList()
 						end
 					end
 				end
-				-- Check for single itemlist
+				-- Check single itemlist
 				if (addItem == false) then
 					for iID,lItem in pairs(SalvageManager_ItemIDInfo) do
 						if (item.itemID == lItem.itemID) then
@@ -333,12 +332,11 @@ function gw2_salvage_manager.createItemList()
 						end
 					end
 				end
-				
+				-- Add item if found in filters.
 				if (addItem) then
 					table.insert(filteredItems, item)
 				end
 			end
-			id, item = next(items, id)
 		end
 		if (ValidTable(filteredItems)) then
 			return filteredItems
@@ -347,7 +345,7 @@ function gw2_salvage_manager.createItemList()
 	return false
 end
 
---Have Salvagable items.
+--Have Salvageable items.
 function gw2_salvage_manager.haveSalvagebleItems()
 	if (ValidTable(gw2_salvage_manager.createItemList())) then
 		return true
@@ -355,7 +353,7 @@ function gw2_salvage_manager.haveSalvagebleItems()
 	return false
 end
 
---Have Salvaga tools.
+--Have Salvage tools.
 function gw2_salvage_manager.haveSalvageTools()
 	if (TableSize(Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool))>0) then
 		return true
@@ -404,4 +402,3 @@ function gw2_salvage_manager.ToggleMenu()
 end
 
 RegisterEventHandler("Module.Initalize",gw2_salvage_manager.ModuleInit)
-RegisterEventHandler("gw2_salvage_manager.toggle", gw2_salvage_manager.ToggleMenu)
