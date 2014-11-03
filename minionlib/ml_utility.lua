@@ -1,10 +1,14 @@
 -- flips a table so keys become values
 function table_invert(t)
-   local s={}
-   for k,v in pairs(t) do
-     s[v]=k
-   end
-   return s
+	if (ValidTable(t)) then
+		local s={}
+		for k,v in pairs(t) do
+			s[v]=k
+		end
+		return s
+	else
+		error("table_invert(), no valid table received.",2)
+	end
 end
 
 -- takes in a % number and gives back a random number near that value, for randomizing skill usage at x% hp
@@ -27,8 +31,11 @@ function randomize(val)
 end
 
 function TimeSince(previousTime)
-	previousTime = previousTime or 0
-    return ml_global_information.Now - previousTime
+	if (type(previousTime) == "number") then
+		previousTime = previousTime or 0
+		return ml_global_information.Now - previousTime
+	end
+	error("TimeSince(), no valid number received.",2)
 end
 
 function IsNullString( test ) 
@@ -87,6 +94,7 @@ function PathDistance(posTable)
 		end
 		return distance
 	end
+	error("PathDistance(), no valid position table received.",2)
 end
 
 function FileExists(file)
@@ -115,14 +123,18 @@ function LinesFrom(file)
 end
 
 function StringSplit(s,sep)
-	local lasti, done, g = 1, false, s:gmatch('(.-)'..sep..'()')
-	return function()
-		if done then return end
-		local v,i = g()
-		if s == '' or sep == '' then done = true return s end
-		if v == nil then done = true return s:sub(lasti) end
-		lasti = i
-		return v
+	if (ValidString(s) and ValidString(sep)) then
+		local lasti, done, g = 1, false, s:gmatch('(.-)'..sep..'()')
+		return function()
+			if done then return end
+			local v,i = g()
+			if s == '' or sep == '' then done = true return s end
+			if v == nil then done = true return s:sub(lasti) end
+			lasti = i
+			return v
+		end
+	else
+		error("StringSplit(), no valid string received.",2)
 	end
 end
 
