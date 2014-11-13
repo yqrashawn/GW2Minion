@@ -90,7 +90,7 @@ function gw2_sell_manager.ModuleInit()
 	local mainWindow = WindowManager:NewWindow(gw2_sell_manager.mainWindow.name,gw2_sell_manager.mainWindow.x,gw2_sell_manager.mainWindow.y,gw2_sell_manager.mainWindow.w,gw2_sell_manager.mainWindow.h,false)
 	if (mainWindow) then
 		mainWindow:NewCheckBox(GetString("active"),"SellManager_Active",GetString("sellGroup"))
-		mainWindow:NewButton(GetString("newfilter"),"SellManager_NewFilter",GetString("sellGroup"))
+		mainWindow:NewButton(GetString("newfilter"),"SellManager_NewFilter")
 		RegisterEventHandler("SellManager_NewFilter",gw2_sell_manager.CreateDialog)	
 		mainWindow:UnFold(GetString("sellGroup"))
 		mainWindow:Hide()
@@ -193,49 +193,28 @@ function gw2_sell_manager.CreateDialog(filterID)
 		filterID = tonumber(filterID)
 		gw2_sell_manager.currentFilter = filterID
 	end
-	local dialog = WindowManager:GetWindow(GetString("newfilter"))
-	local wSize = {w = 300, h = 170}
-	if ( not dialog ) then
-		dialog = WindowManager:NewWindow(GetString("newfilter"),nil,nil,nil,nil,true)
-		dialog:NewField(GetString("name"),"SellManager_Name",GetString("filterdetails"))
-		dialog:NewComboBox(GetString("soulbound"),"SellManager_Soulbound",GetString("filterdetails"),"true,false,either")
+	local dialog = gw2_dialog_manager:GetDialog(GetString("newsellfilter"))
+	if (dialog == nil) then
+		dialog = gw2_dialog_manager:NewDialog(GetString("newsellfilter"))
+		dialog:NewField(GetString("name"),"SellManager_Name")
+		dialog:NewComboBox(GetString("soulbound"),"SellManager_Soulbound","true,false,either")
 		local list = "None"
 		for name,_ in pairs(GW2.ITEMTYPE) do list = list .. "," .. name end
-		dialog:NewComboBox(GetString("itemtype"),"SellManager_Itemtype",GetString("filterdetails"),list)
+		dialog:NewComboBox(GetString("itemtype"),"SellManager_Itemtype",list)
 		list = GetString("rarityNone")..","..GetString("rarityJunk")..","..GetString("rarityCommon")..","..GetString("rarityFine")..","..GetString("rarityMasterwork")..","..GetString("rarityRare")..","..GetString("rarityExotic")
-		dialog:NewComboBox(GetString("rarity"),"SellManager_Rarity",GetString("filterdetails"),list)
+		dialog:NewComboBox(GetString("rarity"),"SellManager_Rarity",list)
 		list = "None"
 		for name,_ in pairs(GW2.WEAPONTYPE) do list = list .. "," .. name end
-		dialog:NewComboBox(GetString("weapontype"),"SellManager_Weapontype",GetString("filterdetails"),list)
-		dialog:UnFold(GetString("filterdetails"))
-
-		local bSize = {w = 60, h = 20}
-		-- Cancel Button
-		local cancel = dialog:NewButton("Cancel","CancelDialog")
-		cancel:Dock(0)
-		cancel:SetSize(bSize.w,bSize.h)
-		cancel:SetPos(((wSize.w - 12) - bSize.w),115)
-		RegisterEventHandler("CancelDialog", function() dialog:SetModal(false) dialog:Hide() end)
-		-- Save Button
-		local save = dialog:NewButton("Save","SAVEDialog")
-		save:Dock(0)
-		save:SetSize(bSize.w,bSize.h)
-		save:SetPos(((wSize.w - 12) - (bSize.w * 2 + 10)),115)
-		local buttonFunction = function()
-			local saveFilter = {
-								name = SellManager_Name,
-								itemtype = SellManager_Itemtype,
-								rarity = SellManager_Rarity,
-								weapontype = SellManager_Weapontype,
-								soulbound = SellManager_Soulbound,
-							}
+		dialog:NewComboBox(GetString("weapontype"),"SellManager_Weapontype",list)
+		dialog:SetOkFunction(function()
+			local saveFilter = {name = SellManager_Name,itemtype = SellManager_Itemtype,rarity = SellManager_Rarity,weapontype = SellManager_Weapontype,soulbound = SellManager_Soulbound,}
 			if (ValidString(saveFilter.name) == false) then
 				ml_error("Please enter a filter name before saving.")
 			elseif (gw2_sell_manager.validFilter(saveFilter)) then -- check if filter is valid.
 				if (type(filterID) ~= "number") then -- new filter, making sure name is not in use.
 					for _,filter in pairs(gw2_sell_manager.filterList) do
 						if (saveFilter.name == filter.name) then
-							return ml_error("Filter with this name already exists, please change the name.")
+							return "Filter with this name already exists, please change the name."
 						end
 					end
 					table.insert(gw2_sell_manager.filterList, saveFilter)
@@ -244,53 +223,27 @@ function gw2_sell_manager.CreateDialog(filterID)
 				end
 				Settings.GW2Minion.SellManager_FilterList = gw2_sell_manager.filterList
 				gw2_sell_manager.refreshFilterlist()
-				dialog:SetModal(false)
-				dialog:Hide()
+				return true
 			else
-				ml_error("Filter Not Valid")
-				ml_error("Filter needs to have both type and rarity set.")
-				ml_error("Junk rarity can be set without any type.")
+				return "Filter Not Valid. Filter needs to have both type and rarity set. Junk rarity can be set without any type."
 			end
-		end
-		RegisterEventHandler("SAVEDialog",buttonFunction)
-		-- Delete Button
-		local delete = dialog:NewButton("Delete","DELETEDialog")
-		delete:Dock(0)
-		delete:SetSize(bSize.w,bSize.h)
-		delete:SetPos(0,115)
-		local buttonFunction = function()
+		end)
+		dialog:SetDeleteFunction(function()
 			table.remove(gw2_sell_manager.filterList, gw2_sell_manager.currentFilter)
 			Settings.GW2Minion.SellManager_FilterList = gw2_sell_manager.filterList
 			gw2_sell_manager.refreshFilterlist()
-			dialog:SetModal(false)
-			dialog:Hide()
-		end
-		RegisterEventHandler("DELETEDialog",buttonFunction)
+			return true
+		end)
 	end
-	
-	if (type(filterID) == "number") then
-		local delete = dialog:GetControl("Delete")
-		delete:Show()
-		SellManager_Name = gw2_sell_manager.filterList[filterID].name
-		SellManager_Itemtype = gw2_sell_manager.filterList[filterID].itemtype
-		SellManager_Rarity = gw2_sell_manager.filterList[filterID].rarity
-		SellManager_Weapontype = gw2_sell_manager.filterList[filterID].weapontype
-		SellManager_Soulbound = gw2_sell_manager.filterList[filterID].soulbound
-	else
-		local delete = dialog:GetControl("Delete")
-		delete:Hide()
-		SellManager_Name = ""
-		SellManager_Itemtype = "None"
-		SellManager_Rarity = GetString("rarityNone")
-		SellManager_Weapontype = "None"
-		SellManager_Soulbound = "either"
+	if (dialog) then
+		local tType = (type(filterID) == "number")
+		dialog:Show(tType)
+		SellManager_Name = (tType and gw2_sell_manager.filterList[filterID].name or "")
+		SellManager_Itemtype = (tType and gw2_sell_manager.filterList[filterID].itemtype or "None")
+		SellManager_Rarity = (tType and gw2_sell_manager.filterList[filterID].rarity or GetString("rarityNone"))
+		SellManager_Weapontype = (tType and gw2_sell_manager.filterList[filterID].weapontype or "None")
+		SellManager_Soulbound = (tType and gw2_sell_manager.filterList[filterID].soulbound or "either")
 	end
-	
-	dialog:SetSize(wSize.w,wSize.h)
-	dialog:Dock(GW2.DOCK.Center)
-	dialog:Focus()
-	dialog:SetModal(true)	
-	dialog:Show()
 end
 
 -- Check if filter is valid:

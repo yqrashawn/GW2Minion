@@ -206,7 +206,7 @@ function StringContains(sString, item)
     if (sString == nil) then return false end
             
     for _orids in StringSplit(sString,",") do
-        if (item == tonumber(_orids)) then 
+        if (tostring(item) == tostring(_orids)) then 
             return true
         end        
     end
