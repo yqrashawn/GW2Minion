@@ -241,6 +241,6 @@ function ml_marker:Create(markerName)
 	
 	-- maxlevel
 	newMarker:AddField("int", strings[gCurrentLanguage].maxLevel, 0)
-	
+		
 	return newMarker
 end

@@ -22,7 +22,7 @@ function gw2_task_follow:Init()
 	
 	self:add(ml_element:create( "UpdateFollowPathData", c_UpdateFollowPathData, e_UpdateFollowPathData, 1000 ), self.process_elements)
 	self:add(ml_element:create( "FollowingTarget", c_FollowTarget, e_FollowTarget, 500 ), self.process_elements)
-	self:add(ml_element:create( "AttackBestCharacterTarget", c_AttackBestCharacterTarget, e_AttackBestCharacterTarget, 400 ), self.process_elements)	
+	self:add(ml_element:create( "AttackBestCharacterTarget", c_AttackBestNearbyCharacterTarget, e_AttackBestNearbyCharacterTarget, 400 ), self.process_elements)	
 	
 	
 	self:AddTaskCheckCEs()

@@ -14,8 +14,9 @@ function gw2_task_moveto.Create()
     newinst.process_elements = {}
     newinst.overwatch_elements = {}
 	
-	newinst.targetPos = nil
-	newinst.targetID = nil
+	newinst.targetPos = nil -- set this when creating the task
+	newinst.targetID = nil -- this is optional, will be used to update the targetPos
+	newinst.targetType = nil -- SET THIS if targetID should be checked! Valid options: "character" , "gadget"
 	newinst.targetRadius = 25
 	newinst.stoppingDistance = 25
 	newinst.use3d = true
@@ -39,8 +40,31 @@ function gw2_task_moveto:Process()
 		
 		-- Check for valid targetID only when in <2500 range, because gamedata tends to fade at distances. Update data in case it finds the target.
 		if ( dist < 2500 ) then
-			-- Charlist
-			-- Gadgetlist
+			
+			if ( ml_task_hub:CurrentTask().targetID ) then
+				
+				if ( ml_task_hub:CurrentTask().targetType == "character" ) then
+					local character = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
+					if ( character ~= nil ) then
+						ml_task_hub:CurrentTask().targetPos = character.pos
+						
+					else
+						d("MoveTo:Update Characterdata failed, no character with targetID found!")
+						ml_task_hub:CurrentTask().completed = true
+					end
+					
+				elseif ( ml_task_hub:CurrentTask().targetType == "gadget" ) then
+					
+					local gadget = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
+					if ( gadget ~= nil ) then
+						ml_task_hub:CurrentTask().targetPos = gadget.pos
+						
+					else
+						d("MoveTo:Update Gadgetdata failed, no gadget with targetID found!")
+						ml_task_hub:CurrentTask().completed = true
+					end
+				end
+			end	
 			-- check for closest point on mesh to compensate for 3D vs mesh differences
 			
 		end

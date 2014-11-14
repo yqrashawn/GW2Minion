@@ -1,4 +1,4 @@
--- Grind
+-- Assist
 gw2_task_assist = inheritsFrom(ml_task)
 gw2_task_assist.name = GetString("assistMode")
 
@@ -43,7 +43,7 @@ function gw2_task_assist:Process()
 			end
 			
 		elseif ( sMtargetmode ~= "None" ) then 
-			local target = w2_common_functions.GetBestCharacterTarget()
+			local target = w2_common_functions.GetBestCharacterTargetForAssist()
 			if ( target and target.alive and target.attackable ) then
 				gw2_skill_manager.Attack( target )
 			end

@@ -8,6 +8,9 @@ ml_global_information.LastGameState = 0
 ml_global_information.ShowDebug = false
 ml_global_information.idlePulseCount = 0
 ml_global_information.WorldMarkerType = 24 -- enum for "in current map", changes on larger patches sometimes
+ml_global_information.MarkerMinLevel = 1
+ml_global_information.MarkerMaxLevel = 50
+ml_global_information.MarkerTime = 0
 
 -- Global vars which are used very often and we can just reduce the hammering by getting them once per frame here
 function ml_global_information.OnUpdate()
@@ -26,7 +29,8 @@ function ml_global_information.OnUpdate()
 		ml_global_information.Player_CanMove = Player:CanMove() or false
 		ml_global_information.Player_MovementDirections = Player:GetMovement() or { forward=false, backward=false, left=false, right=false }
 		ml_global_information.Player_Inventory_SlotsFree = Inventory.freeSlotCount or 0
-		
+		ml_global_information.Player_SwimState = Player.swimming or 0
+		ml_global_information.Player_Party = Player:GetParty() or nil
 		
 		ml_global_information.CurrentMapID = Player:GetLocalMapID() or 0
 		if ( gw2_datamanager and ml_global_information.CurrentMapID ~= 0) then  

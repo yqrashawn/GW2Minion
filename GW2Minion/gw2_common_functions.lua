@@ -141,14 +141,73 @@ function gw2_common_functions.FinishEnemy()
 	return false
 end
 
+
 -- Tries to get a "best target" to attack
-function gw2_common_functions.GetBestCharacterTarget()
+function gw2_common_functions.GetBestCharacterTarget( maxrange )
+	
+	local range = maxrange
+	if ( range == nil ) then 
+		range = ml_global_information.AttackRange
+	end
+	
+	if ( range < 200 ) then range = 750 end -- extend search range a bit for melee chars
+	
+	-- Try to get Aggro Enemy with los in range first
+	local target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,lowesthealth,los,maxdistance="..tostring(range))
+	-- Try to get Aggro Enemy
+	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
+	-- Try to get Enemy with los in range 
+	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("lowesthealth,onmesh,los,maxdistance="..tostring(range)) end
+	-- Try to get Enemy without los
+	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("shortestpath,onmesh") end
+	
+	if ( target and target.id ) then
+		if ( target.distance < 1500 and target.los ) then
+			Player:SetTarget(target.id)
+		end
+		return target
+	else
+		
+		local currTarget = Player:GetTarget()
+		if ( currTarget ~= nil and currTarget.attackable and currTarget.alive ) then
+			return target
+		end
+	end
+	return nil 
+end
+-- Tries to get a "best target" to attack for assist mode (maxdistance limited)
+function gw2_common_functions.GetBestCharacterTargetForAssist()
 	-- Try to get Enemy with los in range first
-	local target = gw2_common_functions.GetCharacterTargetExtended(ml_global_information.AttackRange, 1)
+	local target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange)..",los")
 	-- Try to get Enemy without los in range 
-	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended(ml_global_information.AttackRange, 0) end
+	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange)) end
 	-- Try to get Enemy without los in range + 250
-	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended(ml_global_information.AttackRange + 250, 0) end
+	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange + 250)) end
+	
+	if ( target and target.id ) then
+		if ( target.distance < 1500 and target.los ) then
+			Player:SetTarget(target.id)
+		end
+		return target
+	else
+		
+		local currTarget = Player:GetTarget()
+		if ( currTarget ~= nil and currTarget.attackable ) then
+			return target
+		end
+	end
+	return nil 
+end
+-- Tries to get a "best aggro target" to attack
+function gw2_common_functions.GetBestAggroTarget()
+	local range = ml_global_information.AttackRange
+	if ( range < 200 ) then range = 750 end -- extend search range a bit for melee chars
+	if ( range > 1000 ) then range = 1000 end -- limit search range a bit for ranged chars
+	
+	-- Try to get Aggro Enemy with los in range first
+	local target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,lowesthealth,los,maxdistance="..tostring(range))
+	-- Try to get Aggro Enemy
+	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
 	
 	if ( target and target.id ) then
 		if ( target.distance < 1500 and target.los ) then
@@ -164,15 +223,20 @@ function gw2_common_functions.GetBestCharacterTarget()
 	end
 	return nil 
 end
-function gw2_common_functions.GetCharacterTargetExtended(maxrange, los)
-    
-	local filterstring = "attackable,alive,maxdistance="..tostring(maxrange)
+function gw2_common_functions.GetCharacterTargetExtended( filterstring )
+    if ( filterstring ) then
+		filterstring = filterstring..",attackable,alive,noCritter,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))
+	else
+		filterstring = "attackable,alive,noCritter,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))
+	end
 	
-	if (los == "1") then filterstring = filterstring..",los" end
-	if (sMmode == "Players Only") then filterstring = filterstring..",player" end
-	if (sMtargetmode == "LowestHealth") then filterstring = filterstring..",lowesthealth" end
-	if (sMtargetmode == "Closest") then filterstring = filterstring..",nearest" end
-	if (sMtargetmode == "Biggest Crowd") then filterstring = filterstring..",clustered=600" end
+	-- Only in AssistMode we want to allow these settings
+	if (gBotMode == GetString("assistMode")) then
+		if (sMmode == "Players Only") then filterstring = filterstring..",player" end		
+		if (sMtargetmode == "LowestHealth") then filterstring = filterstring..",lowesthealth" end
+		if (sMtargetmode == "Closest") then filterstring = filterstring..",nearest" end
+		if (sMtargetmode == "Biggest Crowd") then filterstring = filterstring..",clustered=600" end
+	end
 	
 	local TargetList = CharacterList(filterstring)
 	if ( TargetList ) then

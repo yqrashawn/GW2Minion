@@ -12,9 +12,9 @@ function gw2minion.ModuleInit()
 		mw:UnFold(GetString("botStatus") )
 		
 		mw:NewCheckBox(GetString("depositItems"),"gDepositItems",GetString("settings"))
-		mw:NewCheckBox(GetString("doEvents"),"gDoEvents",GetString("settings"))
+		
 		mw:NewCheckBox(GetString("combatMovement"),"gDoCombatMovement",GetString("settings"))
-		mw:NewCheckBox(GetString("gatherMode"),"gGather",GetString("settings"))
+		
 		mw:NewCheckBox(GetString("reviveplayers"),"gRevivePlayers",GetString("settings"))
 		mw:NewCheckBox(GetString("revivecharacters"),"gRevive",GetString("settings"))
 		mw:NewCheckBox(GetString("disabledrawing"),"gDisableRender",GetString("settings"))		
@@ -76,20 +76,16 @@ function gw2minion.ModuleInit()
 	Settings.GW2Minion.gBotRunning = Settings.GW2Minion.gBotRunning or "0"	
 	Settings.GW2Minion.gGuestServer = Settings.GW2Minion.gGuestServer or "None"
 	Settings.GW2Minion.gDisableRender = Settings.GW2Minion.gDisableRender or "0"
-	Settings.GW2Minion.gDepositItems = Settings.GW2Minion.gDepositItems or "1"
-	Settings.GW2Minion.gDoEvents = Settings.GW2Minion.gDoEvents or "1"
-	Settings.GW2Minion.gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement or "1"
-	Settings.GW2Minion.gGather = Settings.GW2Minion.gGather or "1"
+	Settings.GW2Minion.gDepositItems = Settings.GW2Minion.gDepositItems or "1"	
+	Settings.GW2Minion.gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement or "1"	
 	Settings.GW2Minion.gRevivePlayers = Settings.GW2Minion.gRevivePlayers or "1"
 	Settings.GW2Minion.gRevive = Settings.GW2Minion.gRevive or "1"	
 	
     gBotMode = Settings.GW2Minion.gBotMode
 	gBotRunning	= Settings.GW2Minion.gBotRunning
 	gPulseTime = Settings.GW2Minion.gPulseTime
-	gDepositItems = Settings.GW2Minion.gDepositItems
-	gDoEvents = Settings.GW2Minion.gDoEvents
-	gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement
-	gGather = Settings.GW2Minion.gGather	
+	gDepositItems = Settings.GW2Minion.gDepositItems	
+	gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement		
 	gRevivePlayers = Settings.GW2Minion.gRevivePlayers
 	gRevive = Settings.GW2Minion.gRevive
 	gDisableRender = Settings.GW2Minion.gDisableRender
@@ -118,7 +114,7 @@ function gw2minion.ModuleInit()
 	
 	-- DebugWindow
 	local dw = WindowManager:NewWindow(gw2minion.DebugWindow.Name,gw2minion.DebugWindow.x,gw2minion.DebugWindow.y,gw2minion.DebugWindow.width,gw2minion.DebugWindow.height,true)
-		dw:NewField("AttackRange","dAttackRange","GlobalStats")
+		dw:NewField("AttackRange","dAttackRange","Global")
 		dw:Hide()
 	gw2minion.MainWindow.ChildWindows[gw2minion.DebugWindow.Name] = gw2minion.DebugWindow.Name
 	
@@ -190,7 +186,8 @@ function gw2minion.ModuleInit()
 			grindMarker:SetType(GetString("grindMarker"))
 			grindMarker:SetMinLevel(1)
 			grindMarker:SetMaxLevel(50)
-			grindMarker:SetTime(300)		
+			grindMarker:SetTime(300)
+			grindMarker:AddField("int", GetString("maxRange"), 5000)
 			ml_marker_mgr.AddMarkerTemplate(grindMarker)			
 			
 			local vendorMarker = ml_marker:Create("vendorTemplate")
