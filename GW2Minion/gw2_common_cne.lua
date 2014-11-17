@@ -143,7 +143,7 @@ function e_RezzPartyMember:execute()
 				newTask.targetPos = tPos
 				newTask.targetID = e_RezzPartyMember.target.id
 				newTask.targetType = "character"
-				newTask.name = "MoveToRezz"
+				newTask.name = "MoveTo Revive PartyMember"
 				ml_task_hub:CurrentTask():AddSubTask(newTask)					
 				ml_log("MoveToDownedPartyMember..")
 				return ml_log(true)
@@ -180,7 +180,7 @@ end
 c_RezzOverWatchCheck = inheritsFrom( ml_cause )
 e_RezzOverWatchCheck = inheritsFrom( ml_effect )
 function c_RezzOverWatchCheck:evaluate()
-	if ( ml_task_hub:CurrentTask() ~= nil and ml_task_hub:CurrentTask().name == "MoveToRezz" and ml_task_hub:CurrentTask().targetPos ~= nil and ml_task_hub:CurrentTask().targetID ~= nil ) then
+	if ( ml_task_hub:CurrentTask() ~= nil and ( ml_task_hub:CurrentTask().name == "MoveTo Revive NPC" or ml_task_hub:CurrentTask().name == "MoveTo Revive Downed Player" or ml_task_hub:CurrentTask().name == "MoveTo Revive PartyMember") and ml_task_hub:CurrentTask().targetPos ~= nil and ml_task_hub:CurrentTask().targetID ~= nil ) then
 		local character = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
 		if ( character ~= nil and character.alive) then
 			return true
@@ -223,7 +223,7 @@ function e_reviveDownedPlayersInCombat:execute()
 				newTask.targetPos = tPos
 				newTask.targetID = e_reviveDownedPlayersInCombat.target.id
 				newTask.targetType = "character"
-				newTask.name = "MoveToRezz" -- giving it a special name so the overwatch knows when to kick in 
+				newTask.name = "MoveTo Revive Downed Player" -- giving it a special name so the overwatch knows when to kick in 
 				ml_task_hub:CurrentTask():AddSubTask(newTask)					
 				ml_log("MoveToDownedPartyMember..")
 				return ml_log(true)
@@ -258,6 +258,50 @@ function e_reviveDownedPlayersInCombat:execute()
 	return ml_log(false)	
 end
 
+------------
+c_reviveNPC = inheritsFrom( ml_cause )
+e_reviveNPC = inheritsFrom( ml_effect )
+function c_reviveNPC:evaluate()
+    return (gRevive == "1" and not ml_global_information.Player_InCombat and ml_global_information.Player_Health.percent > 75 and TableSize(CharacterList("nearest,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2000,exclude="..ml_blacklist.GetExcludeString(GetString("monsters")))) > 0)
+end
+function e_reviveNPC:execute()
+	ml_log("ReviveNPC ")
+	
+	if ( Player.castinfo.duration ~= 0 ) then
+		ml_log("Reviving NPC...")
+		return ml_log(true)
+	end
+				
+	local CList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500,exclude="..ml_blacklist.GetExcludeString(GetString("monsters")))
+	if ( TableSize(CList) > 0 ) then
+		local id,target = next(CList)
+		if ( id and target ) then
+			if ( not target.isInInteractRange ) then
+				
+				Player:StopMovement()
+				local newTask = gw2_task_moveto.Create()
+				newTask.name = "MoveTo Revive NPC" -- giving it a special name so the overwatch knows when to kick in 
+				newTask.targetPos = target.pos
+				ml_task_hub:CurrentTask():AddSubTask(newTask)			
+				return ml_log(true)
+				
+			else
+				gw2_common_functions.NecroLeaveDeathshroud()
+				if ( Player.castinfo.duration == 0 ) then
+					ml_log("Starting to Revive NPC...")
+					Player:Interact(target)
+					ml_global_information.Wait(1000)
+					
+				end
+				return ml_log(true)
+			end
+			
+		end
+	end
+	return ml_log(false)
+end
+
+
 -- Range limited to Attackrange 
 c_AttackBestNearbyCharacterTarget = inheritsFrom( ml_cause )
 e_AttackBestNearbyCharacterTarget = inheritsFrom( ml_effect )
@@ -281,13 +325,12 @@ c_FightAggro = inheritsFrom( ml_cause )
 e_FightAggro = inheritsFrom( ml_effect )
 c_FightAggro.target = nil
 function c_FightAggro:evaluate()
-	if ( c_MoveToMarker.markerreached == false and c_MoveToMarker.allowedToFight == true) then
-		local target = gw2_common_functions.GetBestAggroTarget()
-		if ( target ) then
-			c_FightAggro.target = target
-			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightAggro.target ~= nil			
-		end
+	local target = gw2_common_functions.GetBestAggroTarget()
+	if ( target ) then
+		c_FightAggro.target = target
+		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightAggro.target ~= nil			
 	end
+	
 	c_FightAggro.target = nil
 	return false
 end
@@ -308,3 +351,262 @@ function e_FightAggro:execute()
 end
 
 
+--: add this cne to move to a random position on the mesh most likely in levelrange of the player
+c_movetorandom = inheritsFrom(ml_cause)
+e_movetorandom = inheritsFrom(ml_effect)
+c_movetorandom.randompoint = nil
+c_movetorandom.randompointreached = false
+c_movetorandom.randomdistance = math.random(750,5000)
+function c_movetorandom:evaluate()
+	if (c_movetorandom.randompoint == nil) then
+				
+		-- Walk to Random Point in our levelrange
+		if ( TableSize(gw2_datamanager.levelmap) > 0 ) then
+			local pos = gw2_datamanager.GetRandomPositionInLevelRange( ml_global_information.Player_Level )
+			if (TableSize(pos) > 0 ) then
+				-- make sure the position can be reached
+				if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
+					d("c_movetorandom.randompoint path found")
+					c_movetorandom.randompoint = pos
+					c_movetorandom.randompointreached = false
+					c_movetorandom.randomdistance = math.random(750,5000)
+				else
+					d("c_movetorandom.randompoint no path found")
+				end
+			end
+		end
+	end
+
+	-- 2nd attempt to find a random point
+	if (c_movetorandom.randompoint == nil) then
+	
+		local pos = Player:GetRandomPoint(5000) -- 5000 beeing mindistance to player
+		if ( pos and pos ~= 0) then
+			if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
+				c_movetorandom.randompoint = pos
+				c_movetorandom.randompointreached = false
+				c_movetorandom.randomdistance = math.random(750,5000)
+			end
+		end
+	end
+	
+	if (c_movetorandom.randompoint and not c_movetorandom.randompointreached) then			
+		return true
+	end		
+		
+	c_movetorandom.randompoint = nil
+    return false
+end
+function e_movetorandom:execute()
+	ml_log("MoveToRandomPoint ")
+	if (c_movetorandom.randompoint) then
+		
+		local rpos = c_movetorandom.randompoint
+		
+		if ValidTable(rpos) then
+			local dist = Distance3D(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,rpos.x,rpos.y,rpos.z)
+			
+			if  (dist < c_movetorandom.randomdistance) then
+				c_movetorandom.randompointreached = true
+				c_movetorandom.randompoint = nil
+				return ml_log(true)
+			else						
+				ml_log(", distance " .. math.floor(dist) .. " -> ")
+				if ( not gw2_unstuck.HandleStuck() ) then
+					local result = tostring(Player:MoveTo(rpos.x,rpos.y,rpos.z,250,false,false,false))
+					if (tonumber(result) >= 0) then
+						return ml_log(true)
+					end
+				end
+			end
+		end
+	end
+	
+	return ml_log(false)
+end
+
+-- Looting chests and normal lootable enemies
+c_Looting = inheritsFrom( ml_cause )
+e_Looting = inheritsFrom( ml_effect )
+c_Looting.target = nil
+function c_Looting:evaluate()
+	--ml_log("c_Looting")
+	-- Find new loot target.
+	if (c_Looting.target == nil) then
+		local ChestCIDs = "17698,198260,232192,232193,232194,262863,236384"
+		c_Looting.target = (GadgetList("onmesh,lootable,selectable,nearest,maxdistance=2500,contentID="..ChestCIDs) or CharacterList("nearest,lootable,onmesh,maxdistance=3000"))
+	end
+	-- Check if we need to loot and have a valid target and enough space to store it.
+	if (ValidTable(c_Looting.target) and ml_global_information.Player_Inventory_SlotsFree > 0) then
+		return true
+	end
+	
+	c_Looting.target = nil
+	return false
+end
+
+function e_Looting:execute()	
+	ml_log("Looting ")
+	c_Looting.target = (GadgetList("onmesh,lootable,selectable,shortestpath,maxdistance=3500,contentID="..ChestCIDs) or CharacterList("shortestpath,lootable,onmesh,maxdistance=3500"))
+	if ( ValidTable(c_Looting.target) ) then 
+		local target = select(2,next(c_Looting.target))
+		-- Check for valid target.
+		if (target and target.lootable) then
+			
+			-- We are in range to loot
+			if (target.isInInteractRange) then
+				gw2_common_functions.NecroLeaveDeathshroud()
+				ml_log(": Interacting started.")
+				if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
+				Player:Interact(target.id)
+			
+			-- Loot not in range, walk there.			
+			else
+				ml_log(": Walking to Chest.")
+				gw2_common_functions.MoveOnlyStraightForward()
+				-- Moving to target position.
+				local tPos = target.pos
+				if ( not gw2_unstuck.HandleStuck() ) then
+					Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,false,false)
+				end
+			end		
+		end
+	end
+	-- Target gone? Stop moving and delete target.
+	if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
+	ml_log(": Looting done.")
+	c_Looting.target = nil
+end
+
+
+c_fleeToSafety = inheritsFrom( ml_cause )
+e_fleeToSafety = inheritsFrom( ml_effect )
+c_fleeToSafety.fleeing = false
+function c_fleeToSafety:evaluate()
+	
+	-- Check if were alive and if were low on health or already fleeing.
+	if (ml_global_information.Player_Alive and ml_global_information.Player_InCombat and ml_global_information.Player_Health.percent < 15) then
+		local safespot = select(2,next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest")))
+		local nmbrEnemies = TableSize(CharacterList("aggro,alive"))
+		local target = Player:GetTarget()
+		local tHealth = (target == nil and 100 or target.health.percent)
+		-- Check for safe-spot and enemy number or enemy health.
+		if (safespot and (nmbrEnemies > 1 or tHealth > 50)) then
+			return true
+		end
+	elseif ( ml_global_information.Player_Alive and c_fleeToSafety.fleeing == true) then
+		return true
+	end
+	
+	return false
+end
+function e_fleeToSafety:execute()	
+	ml_log("e_fleeToSafety")
+	-- Check if we still need to flee
+	c_fleeToSafety.fleeing = (ml_global_information.Player_Health.percent < 85)
+	-- Heal if we can
+	gw2_skill_manager.Heal()
+	-- Find enemies.
+	local nmbrEnemies = CharacterList("aggro,alive")
+	-- Enemies found, keep fleeing.
+	if (ValidTable(nmbrEnemies)) then
+		ml_log(": Walking to Safe-spot.")
+		-- Find safespot.
+		local safespot = select(2,next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest"))).pos
+		if ( safespot ) then 
+			gw2_common_functions.MoveOnlyStraightForward()
+			Player:MoveTo(safespot.x,safespot.y,safespot.z,50,false,true,true)
+		end
+		
+	-- No enemies found, safe-spot found stop moving and wait to heal.	
+	else
+		ml_log(": Found Safe-spot, waiting to heal.")
+		if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
+	end
+end
+
+
+c_waitToHeal = inheritsFrom( ml_cause )
+e_waitToHeal = inheritsFrom( ml_effect )
+c_waitToHeal.hpPercent = math.random(70,85)
+function c_waitToHeal:evaluate()
+	--d("c_waitToHeal")
+	-- Check players health, if below set value wait to heal.
+	local conditions = "736,720,737,722,861,721,791,727,738,742,723"
+	local buffs = Player.buffs
+	return ( not ml_global_information.Player_InCombat and (ml_global_information.Player_Health.percent < c_waitToHeal.hpPercent or gw2_common_functions.BufflistHasBuffs(buffs,conditions)) )
+end
+function e_waitToHeal:execute()	
+	ml_log("WaitToHeal")
+	-- Set new random HP trigger.
+	c_waitToHeal.hpPercent = math.random(70,85)
+	
+	-- If necro check for deathshroud.
+	gw2_common_functions.NecroLeaveDeathshroud()
+	-- Stop Player movement.
+	if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
+	-- Try skillmanager to heal
+	gw2_skill_manager.Heal()	
+end
+
+-- Finish downed enemies
+c_FinishEnemy = inheritsFrom( ml_cause )
+e_FinishEnemy = inheritsFrom( ml_effect )
+e_FinishEnemy.tmr = 0
+e_FinishEnemy.threshold = 2000
+function c_FinishEnemy:evaluate()
+    return ml_global_information.Player_SwimState == 0 and ml_global_information.Player_Health.percent > 15 and TableSize(CharacterList("nearest,downed,aggro,attackable,maxdistance=1200,onmesh")) > 0
+end
+function e_FinishEnemy:execute()
+	ml_log(" Finish Enemy ")
+	local EList = CharacterList("nearest,downed,aggro,attackable,maxdistance=1200,onmesh")
+	if ( EList ) then
+		local id,entity = next (EList)
+		if ( id and entity ) then
+			
+			if (not entity.isInInteractRange) then
+				-- MoveIntoInteractRange
+				local tPos = entity.pos
+				if ( tPos ) then
+					gw2_common_functions.MoveOnlyStraightForward()
+					if ( not gw2_unstuck.HandleStuck() ) then
+						local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,false,false))		
+						if (tonumber(navResult) < 0) then
+							d("e_FinishEnemy result: "..tonumber(navResult))					
+						end
+					end
+					if ( ml_global_information.Now - e_FinishEnemy.tmr > e_FinishEnemy.threshold ) then
+						e_FinishEnemy.tmr = ml_global_information.Now
+						e_FinishEnemy.threshold = math.random(1500,5000)
+						gw2_skill_manager.Heal()
+					end
+					ml_log("MoveTo_FinishHim..")
+					return true
+				end
+			else
+				-- Grab that thing
+				if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end 
+				
+				local t = Player:GetTarget()
+				if ( entity.selectable and (not t or t.id ~= id )) then
+					Player:SetTarget( id )
+				else
+					
+					-- If necro check for deathshroud.
+					gw2_common_functions.NecroLeaveDeathshroud()
+					
+					
+					if ( Player.castinfo.duration == 0 ) then
+						Player:Interact( id )
+						ml_log("Start Finishing Enemy..")
+						ml_global_information.Wait(1000)						
+					else
+						ml_log("Finishing Enemy....")
+					end
+					return ml_log(true)
+				end			
+			end
+		end
+	end
+	return ml_log(false)
+end

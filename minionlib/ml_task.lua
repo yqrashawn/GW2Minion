@@ -282,6 +282,10 @@ function ml_task:UIInit()
 	return true
 end
 
+function ml_task:UIDestroy()
+	return true
+end
+
 function ml_task:RegisterDebug()
     
 end

@@ -21,6 +21,11 @@ end
 function gw2_task_combat:Init()
 	d("gw2_task_combat:Init")
 	
+	-- Fleeing
+	self:add(ml_element:create( "Fleeing", c_fleeToSafety, e_fleeToSafety, 225 ), self.process_elements)
+	
+	-- Finish Enemy
+	self:add(ml_element:create( "FinishEnemy", c_FinishEnemy, e_FinishEnemy, 150 ), self.process_elements)
 	
 	
 	self:AddTaskCheckCEs()

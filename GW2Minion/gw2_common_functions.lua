@@ -225,9 +225,9 @@ function gw2_common_functions.GetBestAggroTarget()
 end
 function gw2_common_functions.GetCharacterTargetExtended( filterstring )
     if ( filterstring ) then
-		filterstring = filterstring..",attackable,alive,noCritter,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))
+		filterstring = filterstring..",attackable,alive,noCritter,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters"))
 	else
-		filterstring = "attackable,alive,noCritter,exclude_contentid="..mc_blacklist.GetExcludeString(GetString("monsters"))
+		filterstring = "attackable,alive,noCritter,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters"))
 	end
 	
 	-- Only in AssistMode we want to allow these settings

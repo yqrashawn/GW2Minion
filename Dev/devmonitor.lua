@@ -1287,12 +1287,13 @@ function Dev.UpdateWindow()
 				EVOPtr = string.format( "%x",tonumber(ob.ptr ))
 				EVOID = ob.id
 				EVOIsUnknown0 = ob.isUnknown0
+				EVOType = tostring(ot).."-Unknown"
 				local ot = ob.type
 				if ( ot == 0  ) then EVOType = "0-BreakMoral" end
-				if ( ot == 1  ) then EVOType = "1-CaptureLcoation" end
+				if ( ot == 1  ) then EVOType = "1-CaptureLocation" end
 				if ( ot == 2  ) then EVOType = "2-CollectItems" end
-				if ( ot == 3  ) then EVOType = "3-Counter" end
-				if ( ot == 4  ) then EVOType = "4-KillCount" end
+				if ( ot == 3  ) then EVOType = "3-KillCount" end
+				if ( ot == 4  ) then EVOType = "4-Counter" end
 				if ( ot == 5  ) then EVOType = "5-Cull" end
 				if ( ot == 8  ) then EVOType = "8-DefendGadget" end
 				if ( ot == 10 ) then EVOType = "10-Escort" end
@@ -1300,12 +1301,12 @@ function Dev.UpdateWindow()
 				if ( ot == 12 ) then EVOType = "12-InteractWithGadget" end
 				if ( ot == 13 ) then EVOType = "13-Intimidate" end
 				if ( ot == 14 ) then EVOType = "14-IntimidateScaled" end
-				if ( ot == 17 ) then EVOType = "17-RepairGadget" end
-				if ( ot == 18 ) then EVOType = "18-Timer" end
-				if ( ot == 19 ) then EVOType = "19-Tripwire" end
-				if ( ot == 20 ) then EVOType = "20-WvwHold" end
-				if ( ot == 21 ) then EVOType = "21-WvwOrbResetTimer" end
-				if ( ot == 22 ) then EVOType = "22-WvwUpgrade" end
+				if ( ot == 18 ) then EVOType = "18-RepairGadget" end
+				if ( ot == 20 ) then EVOType = "20-Timer" end
+				if ( ot == 21 ) then EVOType = "21-Tripwire" end
+				if ( ot == 22 ) then EVOType = "22-WvwHold" end
+				if ( ot == 23 ) then EVOType = "23-WvwOrbResetTimer" end
+				if ( ot == 24 ) then EVOType = "24-WvwUpgrade" end
 				
 				EVO1 = ob.value1
 				EVO2 = ob.value2

@@ -131,7 +131,7 @@ strings =
         deleteProfile                   = "Delete Current Profile",
         autoDetectSkills                 = "Autodetect Skills",
 		addinterrupt                    = "Add Interrupt",  
-    addblock                        = "Add Block",
+		addblock                        = "Add Block",
 		refreshSkillList                = "Clear & Refresh SkillList",
         skillEditor                     = "Skill Editor",
         enabled                         = "Enabled",
@@ -182,7 +182,7 @@ strings =
 		prevSkillID						= "Previous Skill ID",
 		AdvancedSettings				= "Advanced Settings",
 		Fightstyle						= "Fightstyle",
-    targetIsCasting       = "Target Is Casting",
+		targetIsCasting       = "Target Is Casting",
 --vendorManager
 		enableSelling					= "AutoSellItems",
 		vendorManager					= "VendorManager",
@@ -489,6 +489,7 @@ strings =
 		TargetCastingOnMe           = "Casting On Me",
 		TargetCastingTime           = "Casting Time >",
         botanyMarker                    = "Botany Marker",
+		gatherMarker                    = "Gather Marker",
         miningMarker                    = "Mining Marker",
         grindMarker                     = "Grind Marker",
         vendorMarker                    = "Vendor Marker",
@@ -609,8 +610,12 @@ strings =
 		followtarget					= "Follow Target",
 		--mc_main.lua
 		guestserver						= "GuestServer",
-		revivecharacters				= "Revive Others",
-		reviveplayers					= "Revive Players",		
+		revivecharacters				= "Revive NPCs",
+		reviveplayers					= "Revive Players",	
+		
+		
+		--taskmanager
+		customTasks						= "CustomTasks",
     },                                  
     ["cn"] =                            
     {                               
@@ -1112,6 +1117,7 @@ strings =
         TargetCastingOnMe               = "对我施法中",
         TargetCastingTime               = "施法时间 >",
         botanyMarker                    = "采植物标记",
+		gatherMarker                    = "Gather Marker",
         miningMarker                    = "采矿标记",
         grindMarker                     = "Grind标记",
         vendorMarker                    = "售卖标记",
@@ -1229,7 +1235,10 @@ strings =
 		--mc_main.lua
 		guestserver						= "访问其他服务器",
 		revivecharacters				= "复活其他人",
-		reviveplayers					= "复活角色",		
+		reviveplayers					= "复活角色",	
+		
+		--taskmanager
+		customTasks						= "CustomTasks",		
 	},
     ["jp"] =
     {
@@ -1716,6 +1725,7 @@ strings =
     TargetCastingOnMe           = "Casting On",
     TargetCastingTime           = "Casting Time >",
         botanyMarker                    = "Botany Marker",
+		gatherMarker                    = "Gather Marker",
         miningMarker                    = "Mining Marker",
         grindMarker                     = "Grind Marker",
         vendorMarker                    = "Vendor Marker",
@@ -1835,8 +1845,11 @@ strings =
 		followtarget					= "Follow Target",
 		--mc_main.lua
 		guestserver						= "GuestServer",
-		revivecharacters				= "Revive Others",
+		revivecharacters				= "Revive NPCs",
 		reviveplayers					= "Revive Players",
+		
+		--taskmanager
+		customTasks						= "CustomTasks",
 	},   
     ["de"] =
     {
@@ -2324,6 +2337,7 @@ strings =
     TargetCastingOnMe           = "Casting On",
     TargetCastingTime           = "Casting Time >",
         botanyMarker                    = "Botany Marker",
+		gatherMarker                    = "Gather Marker",
         miningMarker                    = "Mining Marker",
         grindMarker                     = "Grind Marker",
         vendorMarker                    = "Vendor Marker",
@@ -2443,8 +2457,11 @@ strings =
 		followtarget					= "Follow Target",
 		--mc_main.lua
 		guestserver						= "GuestServer",
-		revivecharacters				= "Revive Others",
+		revivecharacters				= "Revive NPCs",
 		reviveplayers					= "Revive Players",
+		
+		--taskmanager
+		customTasks						= "CustomTasks",
 	},     
     ["fr"] =
     {
@@ -2944,6 +2961,7 @@ strings =
     TargetCastingOnMe           = "Casting On",
     TargetCastingTime           = "Casting Time >",
         botanyMarker                    = "Botany Marker",
+		gatherMarker                    = "Gather Marker",
         miningMarker                    = "Mining Marker",
         grindMarker                     = "Grind Marker",
         vendorMarker                    = "Vendor Marker",
@@ -3063,8 +3081,11 @@ strings =
 		followtarget					= "Follow Target",
 		--mc_main.lua
 		guestserver						= "GuestServer",
-		revivecharacters				= "Revive Others",
+		revivecharacters				= "Revive NPCs",
 		reviveplayers					= "Revive Players",
+		
+		--taskmanager
+		customTasks						= "CustomTasks",
 	},       
     ["ru"] =
     {
@@ -3550,6 +3571,7 @@ strings =
         TargetCastingOnMe           = "Casting On",
         TargetCastingTime           = "Casting Time >",
         botanyMarker                    = "Botany Marker",
+		gatherMarker                    = "Gather Marker",
         miningMarker                    = "Mining Marker",
         grindMarker                     = "Grind Marker",
 		vendorMarker                    = "Vendor Marker",
@@ -3669,8 +3691,11 @@ strings =
 		followtarget					= "Follow Target",
 		--mc_main.lua
 		guestserver						= "GuestServer",
-		revivecharacters				= "Revive Others",
+		revivecharacters				= "Revive NPCs",
 		reviveplayers					= "Revive Players",
+		
+		--taskmanager
+		customTasks						= "CustomTasks",
 	},    	
 
 }

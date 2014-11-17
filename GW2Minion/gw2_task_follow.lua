@@ -42,9 +42,13 @@ function gw2_task_follow:UIInit()
 		mw:NewButton(GetString("followtarget"),"gw2_task_follow.FollowTarget",GetString("followmode"))
 		RegisterEventHandler("gw2_task_follow.FollowTarget", gw2_task_follow.SetFollowTarget)	
 		
-		mw:UnFold( GetString("followmode") );
+		mw:UnFold( GetString("followmode") )
 	end
+	
 	sMtargetmode = Settings.GW2Minion.sMtargetmode
+	if ( sMtargetmode == "None" ) then
+		sMtargetmode = "Closest"
+	end
 	sMmode = Settings.GW2Minion.sMmode
 	return true
 end

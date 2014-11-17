@@ -20,7 +20,7 @@ function ml_global_information.OnUpdate()
 		ml_global_information.Player_Health = Player.health or { current = 0, max = 0, percent = 0 }
 		ml_global_information.Player_Power = Player.power or 0
 		ml_global_information.Player_Endurance = Player.endurance or 0		
-		ml_global_information.Player_InCombat = Player.inCombat or false	
+		ml_global_information.Player_InCombat = Player.inCombat or false		
 		ml_global_information.Player_Position = Player.pos
 		ml_global_information.Player_Level = Player.level
 		ml_global_information.Player_OnMesh = Player.onmesh or false

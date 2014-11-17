@@ -26,11 +26,19 @@ function gw2_task_moveto.Create()
 	newinst.alwaysRandomMovement = false
 	newinst.smoothTurns = true	
 
+	newinst.terminateInCombat = false
+	newinst.terminateOnPlayerHPBelowPercent = 0
+	
     return newinst
 end
 
 function gw2_task_moveto:Process()
-	ml_log("MoveTo")
+		
+	-- terminate condition check
+	if ( ml_task_hub:CurrentTask().terminateInCombat and ml_global_information.Player_InCombat ) then ml_log("Terminate MoveTo because InCombat!") ml_task_hub:CurrentTask().completed = true end
+	if ( ml_task_hub:CurrentTask().terminateOnPlayerHPBelowPercent > 0 and ml_global_information.Player_Health < ml_task_hub:CurrentTask().terminateOnPlayerHPBelowPercent ) then ml_log("Terminate MoveTo because PlayerHP low!") ml_task_hub:CurrentTask().completed = true end
+	
+	
 	if ( ValidTable(ml_task_hub:CurrentTask().targetPos) ) then
 	
 		local dist = Distance3D(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
@@ -45,7 +53,7 @@ function gw2_task_moveto:Process()
 				
 				if ( ml_task_hub:CurrentTask().targetType == "character" ) then
 					local character = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
-					if ( character ~= nil ) then
+					if ( character ~= nil and character.onmesh) then						
 						ml_task_hub:CurrentTask().targetPos = character.pos
 						
 					else
@@ -56,7 +64,7 @@ function gw2_task_moveto:Process()
 				elseif ( ml_task_hub:CurrentTask().targetType == "gadget" ) then
 					
 					local gadget = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
-					if ( gadget ~= nil ) then
+					if ( gadget ~= nil and gadget.onmesh) then
 						ml_task_hub:CurrentTask().targetPos = gadget.pos
 						
 					else
@@ -136,6 +144,8 @@ function gw2_task_moveto:Process()
 						--ml_task_hub:CurrentTask().completed = true
 					
 					end			
+				else
+					ml_log(true)
 				end
 			end
 		end
@@ -169,4 +179,3 @@ function gw2_task_moveto:Process()
 	-- AoELoot check ? -> common OnUpdate probably	
 	
 end
-

@@ -32,17 +32,38 @@ function gw2_task_grind:Init()
 	-- Handle Rezz-Target is alive again or gone, deletes the subtask moveto in case it is needed
 	self:add(ml_element:create( "RevivePartyMemberOverWatch", c_RezzOverWatchCheck, e_RezzOverWatchCheck, 400 ), self.overwatch_elements)
 	
+
 	
 	-- Normal elements
 	-- Revive Downed/Dead Partymember
-	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 350 ), self.process_elements)	-- creates subtask: moveto
+	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 375 ), self.process_elements)	-- creates subtask: moveto
 	-- Revive other Players
-	self:add(ml_element:create( "RevivePlayer", c_reviveDownedPlayersInCombat, e_reviveDownedPlayersInCombat, 300 ), self.process_elements)	-- creates subtask: moveto
+	self:add(ml_element:create( "RevivePlayer", c_reviveDownedPlayersInCombat, e_reviveDownedPlayersInCombat, 350 ), self.process_elements)	-- creates subtask: moveto
 	-- FightAggro
-	self:add(ml_element:create( "FightAggro", c_FightAggro, e_FightAggro, 250 ), self.process_elements) --creates immediate queue task for combat
+	self:add(ml_element:create( "FightAggro", c_FightAggro, e_FightAggro, 325 ), self.process_elements) --creates immediate queue task for combat
 	
+	-- Resting / Wait to heal
+	self:add(ml_element:create( "Resting", c_waitToHeal, e_waitToHeal, 300 ), self.process_elements)
+	
+	-- Normal Looting & chests
+	self:add(ml_element:create( "Looting", c_Looting, e_Looting, 275 ), self.process_elements)
+	
+	-- Re-Equip Gathering Tools
+	--self:add(ml_element:create( "EquippingGatherTool", c_GatherToolsCheck, e_GatherToolsCheck, 250 ), self.process_elements)
 	
 
+	-- DoEvents
+	--self:add(ml_element:create( "DoEvent", c_doEvents, e_doEvents, 225 ), self.process_elements)
+	
+	-- ReviveNPCs
+	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 200 ), self.process_elements) -- creates subtask: moveto
+	
+	-- Gathering
+	self:add(ml_element:create( "Gathering", c_GatherTask, e_GatherTask, 175 ), self.process_elements) -- creates subtask: gatheringTask 
+		
+	-- Finish Enemy
+	self:add(ml_element:create( "FinishEnemy", c_FinishEnemy, e_FinishEnemy, 150 ), self.process_elements)
+		
 	-- Fight in a smaller radius towards the current marker ( this takes care of reaching it and also when running outside the markerradius and we need to move back to marker)
 	-- Only for GrindMarkers!
 	self:add(ml_element:create( "FightTowardsGrindMarker", c_FightToGrindMarker, e_FightToGrindMarker, 125 ), self.process_elements)--creates immediate queue task for combat
@@ -51,9 +72,10 @@ function gw2_task_grind:Init()
 	self:add( ml_element:create( "NextMarker", c_MoveToMarker, e_MoveToMarker, 75 ), self.process_elements)
 
 	-- Check for attackable Targets
-	--self:add(ml_element:create( "GetNextTarget", c_CombatTask, e_CombatTask, 50 ), self.process_elements)
+	self:add(ml_element:create( "GetNextTarget", c_CombatTask, e_CombatTask, 50 ), self.process_elements)
+	
 	-- Move to a Randompoint if there is nothing to fight around us
-	--self:add( ml_element:create( "movetorandom", c_movetorandom, e_movetorandom, 25 ), self.process_elements)
+	self:add( ml_element:create( "movetorandom", c_movetorandom, e_movetorandom, 25 ), self.process_elements)
 	
 
 	self:AddTaskCheckCEs()
@@ -82,13 +104,14 @@ end
 
 function gw2_task_grind.ModuleInit()
 	d("gw2_task_grind:ModuleInit")
-	
+
 	-- Setup Debug fields
 	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
 	if ( dw ) then
 		dw:NewField("CurrentMarker","dbCurrMarker","Global")
 	end
-		
+	
+	ml_task_mgr.AddTaskType(GetString("grindMode"), gw2_task_grind) -- Allow this task to be selectable in TaskManager
 end
 
 
@@ -171,7 +194,7 @@ function c_MoveToMarker:evaluate()
 		end
 		
 		-- Debug info
-		if ( ml_global_information.ShowDebug ) then dbCurrMarker = GetName() or "" end
+		if ( ml_global_information.ShowDebug ) then dbCurrMarker = ml_task_hub:CurrentTask().currentMarker:GetName() or "" end
 		
 		-- We haven't reached the currentMarker or ran outside its radius
 		if ( c_MoveToMarker.markerreached == false) then			
@@ -219,6 +242,7 @@ function e_MoveToMarker:execute()
 			if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
 				
 				local newTask = gw2_task_moveto.Create()
+				newTask.name = "MoveTo GrindMarker"
 				newTask.targetPos = pos
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				return ml_log(true)
@@ -234,9 +258,44 @@ function e_MoveToMarker:execute()
 	return ml_log(false)
 end
 
+--------- Creates a new IMMEDIATE_GOAL task to kill an enemy
+c_CombatTask = inheritsFrom( ml_cause )
+e_CombatTask = inheritsFrom( ml_effect )
+c_CombatTask.target = nil
+function c_CombatTask:evaluate()
+	local target = gw2_common_functions.GetBestCharacterTarget( 9999 ) -- maxrange 2000 where enemies should be searched for
+	if ( target ) then
+		c_CombatTask.target = target
+		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_CombatTask.target ~= nil			
+	end	
+	c_CombatTask.target = nil
+	return false
+end
+function e_CombatTask:execute()
+	ml_log("CombatTask ")
+			
+	if (c_CombatTask.target ~= nil) then
+		Player:StopMovement()
+		local newTask = gw2_task_combat.Create()
+		newTask.targetID = c_CombatTask.target.id		
+		newTask.targetPos = c_CombatTask.target.pos		
+		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
+		c_CombatTask.target = nil
+	else
+		ml_log("gw2_task_grind.CombatTask found no target")
+	end
+	return ml_log(false)
+end
 
 
 
+-- TaskManager functions
+function gw2_task_grind:UIInit_TM()
+	ml_task_mgr.NewField("testfield", "beer")
+	ml_task_mgr.NewNumeric("testnum", "vodka")
+	ml_task_mgr.NewCombobox("testcbox", "whiskey", "A,B,C")
+	
+end
 
 ml_global_information.AddBotMode(GetString("grindMode"), gw2_task_grind)
 RegisterEventHandler("Module.Initalize",gw2_task_grind.ModuleInit)

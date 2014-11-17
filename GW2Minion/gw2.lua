@@ -28,7 +28,7 @@ function gw2minion.ModuleInit()
 		local bd = mw:NewButton("D","gw2minion.evToggleDebugWindow")
 		bd:Dock(0)
 		bd:SetSize(15,14)
-		bd:SetPos(190,0)
+		bd:SetPos(180,0)
 		RegisterEventHandler("gw2minion.evToggleDebugWindow", gw2minion.ShowDebug)
 		
 		mw:NewButton(GetString("showradar"),"gw2minion.evToggleRadar",GetString("advancedSettings"))
@@ -62,7 +62,7 @@ function gw2minion.ModuleInit()
 		
 		mw:NewButton(GetString("salvagemanager"),"ToggleSalvageMgr",GetString("advancedSettings"))
 		RegisterEventHandler("ToggleSalvageMgr", gw2_salvage_manager.ToggleMenu)
-		
+
 		mw:NewButton(GetString("checkChat"),"gw2minion.evToggleChatManager",GetString("advancedSettings"))
 		
 		mw:NewButton(GetString("blacklistManager"),"ToggleBlacklistMgr",GetString("advancedSettings"))		
@@ -117,6 +117,8 @@ function gw2minion.ModuleInit()
 		dw:NewField("AttackRange","dAttackRange","Global")
 		dw:Hide()
 	gw2minion.MainWindow.ChildWindows[gw2minion.DebugWindow.Name] = gw2minion.DebugWindow.Name
+	gw2minion.MainWindow.ChildWindows[ml_task_mgr.mainWindow.name] = ml_task_mgr.mainWindow.name
+	gw2minion.MainWindow.ChildWindows[ml_task_mgr.editWindow.name] = ml_task_mgr.editWindow.name
 	
 	-- Setup marker manager callbacks and vars
 	if ( ml_marker_mgr ) then
@@ -189,6 +191,13 @@ function gw2minion.ModuleInit()
 			grindMarker:SetTime(300)
 			grindMarker:AddField("int", GetString("maxRange"), 5000)
 			ml_marker_mgr.AddMarkerTemplate(grindMarker)			
+			
+			local gatherMarker = ml_marker:Create("gatherMarker")
+			gatherMarker:SetType(GetString("gatherMarker"))
+			gatherMarker:SetMinLevel(1)
+			gatherMarker:SetMaxLevel(50)			
+			gatherMarker:AddField("int", GetString("maxRange"), 5000)
+			ml_marker_mgr.AddMarkerTemplate(gatherMarker)
 			
 			local vendorMarker = ml_marker:Create("vendorTemplate")
 			vendorMarker:SetType(GetString("vendorMarker"))
@@ -460,6 +469,8 @@ function ml_global_information.Stop()
     if (Player:IsMoving()) then
         Player:StopMovement()
     end
+	c_movetorandom.randompoint = nil
+	c_movetorandom.randompointreached = false
 	gw2_unstuck.Reset()
 end
 
