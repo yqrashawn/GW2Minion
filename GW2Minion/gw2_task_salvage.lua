@@ -25,8 +25,8 @@ end
 function gw2_task_salvage:task_complete_eval()
 	if (SalvageManager_Active == "1") then
 		if ( Inventory.freeSlotCount >= 2 ) then
-			if (TableSize(Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool))==0) then
-				if (TableSize(mc_salvagemanager.createItemList())==0) then
+			if (gw2_salvage_manager.haveSalvageTools() == false) then
+				if (gw2_salvage_manager.haveSalvagebleItems() == false) then
 					d("No items to salvage left")
 					ml_log("No items to salvage left")
 					return true
@@ -63,14 +63,14 @@ end
 c_salvage = inheritsFrom( ml_cause )
 e_salvage = inheritsFrom( ml_effect )
 function c_salvage:evaluate()
-	if (SalvageManager_Active == "1" and Inventory.freeSlotCount >= 2 and gw2_salvage_manager.haveSalvageTools() and gw2_salvage_manager.haveSalvagebleItems() ) then
+	if (SalvageManager_Active == "1" and Inventory.freeSlotCount >= 2 and gw2_salvage_manager.haveSalvageTools() and gw2_salvage_manager.haveSalvagebleItems()) then
 		return true
 	end
 	return false
 end
 function e_salvage:execute()
 	ml_log("e_need_salvage")
-	local iList = mc_salvagemanager.createItemList()
+	local iList = gw2_salvage_manager.createItemList()
 	local slowdown = math.random(0,3)
 	if ( iList and slowdown == 0 ) then 
 		for _,item in pairs(iList) do

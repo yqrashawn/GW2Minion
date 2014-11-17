@@ -91,9 +91,8 @@ function gw2_sell_manager.ModuleInit()
 	if (mainWindow) then
 		mainWindow:NewCheckBox(GetString("active"),"SellManager_Active",GetString("sellGroup"))
 		mainWindow:NewButton(GetString("newfilter"),"SellManager_NewFilter")
-		RegisterEventHandler("SellManager_NewFilter",gw2_sell_manager.CreateDialog)	
+		RegisterEventHandler("SellManager_NewFilter",gw2_sell_manager.CreateDialog)
 		mainWindow:UnFold(GetString("sellGroup"))
-		mainWindow:Hide()
 		
 		mainWindow:NewComboBox(GetString("sellByIDtems"),"SellManager_ItemToSell",GetString("sellByID"),"")
 		mainWindow:NewButton(GetString("sellByIDAddItem"),"SellManager_AdditemID",GetString("sellByID"))
@@ -102,6 +101,8 @@ function gw2_sell_manager.ModuleInit()
 		SellManager_ItemIDList = "None"
 		mainWindow:NewButton(GetString("sellByIDRemoveItem"),"SellManager_RemoveitemID",GetString("sellByID"))
 		RegisterEventHandler("SellManager_RemoveitemID",gw2_sell_manager.RemoveItemID)
+		
+		mainWindow:Hide()
 	end
 	
 	if (Player) then
@@ -267,7 +268,7 @@ function gw2_sell_manager.createItemList()
 			if (item.salvagable and item.soulbound == false) then
 				local addItem = false
 				for _,filter in pairs(gw2_sell_manager.filterList) do
-					if (mc_vendormanager.validFilter(filter)) then
+					if (gw2_sell_manager.validFilter(filter)) then
 						if ((filter.rarity == "None" or filter.rarity == nil or GW2.ITEMRARITY[filter.rarity] == item.rarity) and
 						(filter.itemtype == "None" or filter.itemtype == nil or GW2.ITEMTYPE[filter.itemtype] == item.itemtype) and
 						(filter.weapontype == "None" or filter.weapontype == nil or GW2.WEAPONTYPE[filter.weapontype] == item.weapontype) and					
@@ -302,6 +303,89 @@ end
 function gw2_sell_manager.haveItemToSell()
 	if (ValidTable(gw2_sell_manager.createItemList())) then
 		return true
+	end
+	return false
+end
+
+-- Get closest sellMarker
+function gw2_sell_manager.getClosestSellMarker(nearby)
+	local closestLocation = nil
+	local listArg = (nearby == true and ",maxdistance=5000" or "")
+	local markers = MapMarkerList("onmesh,worldmarkertype=24,markertype=25"..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("sellvendors")))
+	for _,marker in pairs(markers) do
+		local mCID = marker.contentID
+		if (mCID == GW2.MAPMARKER.Merchant or mCID == GW2.MAPMARKER.Armorsmith or mCID == GW2.MAPMARKER.Weaponsmith or mCID == GW2.MAPMARKER.Repair) then
+			if (closestLocation == nil or closestLocation.distance > marker.distance) then
+				if (nearby == true and marker.pathdistance < 4000) then
+					closestLocation = marker
+				elseif (nearby ~= true) then
+					closestLocation = marker
+				end
+			end
+		end
+	end
+	return closestLocation
+end
+
+-- Sell at vendor
+function gw2_sell_manager.sellAtVendor(vendorMarker)
+	if (vendorMarker) then
+		vendor = CharacterList:Get(vendorMarker.characterID)
+		if (vendor and vendor.isInInteractRange) then
+			Player:StopMovement()
+			local target = Player:GetTarget()
+			if (not target or target.id ~= vendor.id) then
+				Player:SetTarget(vendor.id)
+			else
+				if (Inventory:IsVendorOpened() == false and Player:IsConversationOpen() == false) then
+					ml_log(" Opening Vendor.. ")
+					Player:Interact(vendor.id)
+					ml_global_information.Wait(1500)
+					return true
+				else
+					local result = gw2_common_functions.handleConversation("sell")
+					if (result == false) then
+						d("Vendor blacklisted, cant handle opening conversation.")
+						ml_blacklist.AddBlacklistEntry(GetString("sellvendors"), vendor.id, vendor.name, true)
+						return false
+					elseif (result == nil) then
+						ml_global_information.Wait(math.random(520,1200))
+						return true
+					end
+				end
+				local iList = gw2_sell_manager.createItemList()
+				local slowdown = math.random(0,3)
+				if ( iList and slowdown == 0 ) then 
+					for _,item in pairs(iList) do
+						local tool = gw2_salvage_manager.getBestTool(item)
+						if (tool and Player:GetCurrentlyCastedSpell() == 17) then
+							d("Selling: "..item.name)
+							item:Sell()
+							return true
+						end
+					end
+				end
+			end
+		else
+			local pos = vendorMarker.pos
+			if ( pos ) then
+				local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))
+				ml_log("MoveToSellVendor..")
+				return true
+			end
+		end
+	end
+	return false
+end
+
+-- Need to sell
+function gw2_sell_manager.needToSell(nearby)
+	if (gw2_sell_manager.haveItemToSell() and gw2_sell_manager.getClosestSellMarker(nearby)) then
+		if (nearby and ((Inventory.freeSlotCount*100)/Inventory.slotCount) < 33) then
+			return true
+		elseif (Inventory.freeSlotCount <= 2) then
+			return true
+		end
 	end
 	return false
 end

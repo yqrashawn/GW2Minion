@@ -5,16 +5,16 @@ gw2minion.MainWindow.ChildWindows[gw2_salvage_manager.mainWindow.name] = gw2_sal
 gw2_salvage_manager.filterList = {}
 gw2_salvage_manager.currentFilter = nil
 gw2_salvage_manager.kitlist = {
-					-- normal kits
-					[23038] = {name = GetString("buyCrude"),		rarity = 0,},		-- Crude Salvage Kit (rarity 1)
-					[23040] = {name = GetString("buyBasic"),		rarity = 1,},		-- Basic Salvage Kit (rarity 1)
-					[23041] = {name = GetString("buyFine"),			rarity = 2,},		-- Fine (rarity 2)
-					[23042] = {name = GetString("buyJourneyman"),	rarity = 3,},	-- Journeyman (rarity 3)
-					[23043] = {name = GetString("buyMaster"),		rarity = 4,},		-- Master (rarity 4)
-					-- special kits
-					[23045] = {name = GetString("mysticKit"),		rarity = 4,},		-- Mystic Kit (rarity 4)
-					[44602] = {name = GetString("unlimitedKit"),	rarity = 1,},	-- Copper-Fed Kit (rarity 1)
-					[19986] = {name = GetString("blackLionKit"), 	rarity = 5,}, --Black Lion Kit (Rarity 5)
+	-- normal kits
+	[23038] = {name = GetString("buyCrude"),		rarity = 0,},	-- Crude Salvage Kit (rarity 1)
+	[23040] = {name = GetString("buyBasic"),		rarity = 1,},	-- Basic Salvage Kit (rarity 1)
+	[23041] = {name = GetString("buyFine"),			rarity = 2,},	-- Fine (rarity 2)
+	[23042] = {name = GetString("buyJourneyman"),	rarity = 3,},	-- Journeyman (rarity 3)
+	[23043] = {name = GetString("buyMaster"),		rarity = 4,},	-- Master (rarity 4)
+	-- special kits
+	[23045] = {name = GetString("mysticKit"),		rarity = 4,},	-- Mystic Kit (rarity 4)
+	[44602] = {name = GetString("unlimitedKit"),	rarity = 1,},	-- Copper-Fed Kit (rarity 1)
+	[19986] = {name = GetString("blackLionKit"), 	rarity = 5,},	--Black Lion Kit (Rarity 5)
 }
 
 

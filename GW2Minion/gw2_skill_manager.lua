@@ -16,6 +16,7 @@ gw2_skill_manager.detecting = false
 gw2_skill_manager.RecordRefreshTmr = 0
 gw2_skill_manager.attacking = false
 gw2_skill_manager.lastAttack = 0
+gw2_skill_manager.ticks = 0
 local _private = {}
 local profilePrototype = {}
 
@@ -447,8 +448,10 @@ _private.targetLosingHP = {id = 0, health = 0, timer = 0}
 _private.SwapTimer = 0
 _private.lastKitTable = {}
 _private.skillLastCast = {}
-_private.infSkillsActive = {targetID = nil, skills = {}}
+_private.infSkillsActive = {targetID = nil, skill = 0}
 _private.lastEvadedSkill = {targetID = 0, skillID = 0}
+_private.combatMoveTmr = 0
+_private.combatMoveActive = false
 
 -- **private functions**
 function _private.GetProfileList(newProfile)
@@ -498,7 +501,7 @@ function _private.CreateSkill(skillList,skillSlot)
 							name			= skillInfo.name,
 							groundTargeted	= (skillInfo.isGroundTargeted == true and "1" or "0"),
 							healing			= "0",
-							los				= "0",
+							los				= "1",
 							minRange		= skillInfo.minRange or 0,
 							maxRange		= skillInfo.maxRange or 0,
 							radius			= skillInfo.radius or 0,
@@ -576,6 +579,7 @@ function _private.TargetLosingHealth(target)
 			if (_private.targetLosingHP.health ~= 0 and _private.targetLosingHP.health < target.health.current) then
 				ml_blacklist.AddBlacklistEntry(GetString("monsters"), target.id, target.name, ml_global_information.Now + 90000)
 				Player:ClearTarget()
+				d("!!!!!!!!!!!!!!!!!!!!!!!!!! did we need to blacklist??")
 				return false
 			else
 				_private.lastHP = target.health.current
@@ -619,11 +623,9 @@ end
 
 function _private.CanCast(skill,target)
 	if (skill) then
-		-- infinite skill1 check
-		if (_private.infSkillsActive.skills[skill.skill.id]) then return false end
 		-- skill attributes
-		if (skill.skill.lastSkillID ~= nil and skill.skill.lastSkillID ~= "" and tostring(skill.skill.lastSkillID) ~= Player.castinfo.lastSkillID) then return false end
-		if (skill.skill.delay ~= nil and skill.skill.delay > 0 and (_private.skillLastCast[skill.id] == nil or skill.skill.delay*100 < TimeSince(_private.skillLastCast[skill.id]))) then return false end
+		if (skill.skill.lastSkillID ~= "" and tostring(skill.skill.lastSkillID) ~= Player.castinfo.lastSkillID) then return false end
+		if (skill.skill.delay > 0 and _private.skillLastCast[skill.skill.id] ~= nil and TimeSince(_private.skillLastCast[skill.skill.id]) < (skill.skill.delay+skill.maxCooldown)) then return false end
 		if (skill.skill.los == true and (target == nil or target.los == false)) then return false end
 		if (skill.skill.minRange > 0 and (target == nil or target.distance < skill.skill.minRange)) then return false end
 		if (skill.skill.maxRange > 0 and (target == nil or target.distance > skill.skill.maxRange)) then return false end
@@ -744,13 +746,6 @@ function _private.AttackSkill(target,availableSkills)
 				else
 					Player:CastSpell(skill.slot)
 				end
-				if (skill.maxCooldown == 0) then
-					if (_private.infSkillsActive.targetID == nil or _private.infSkillsActive.targetID ~= target) then
-						_private.infSkillsActive.targetID = target.id
-						_private.infSkillsActive.skills = {}
-					end
-					_private.infSkillsActive.skills[skill.skill.id] = true
-				end
 				_private.skillLastCast[skill.skill.id] = ml_global_information.Now
 				if (_private.TargetLosingHealth(target)) then
 					return false
@@ -773,8 +768,9 @@ function _private:Evade()
 				_private.lastEvadedSkill = {targetID = target.id, skillID = 0}
 			end
 			if (targetOfTarget == Player.id and skillofTarget ~= 0 and skillofTarget ~= _private.lastEvadedSkill.skillID) then
-				local direction = {[1]=1,[2]=2,[3]=0,[4]=6,[5]=7}
-				local dir = math.random(1,TableSize(direction))
+				--GW2.DODGEDIRECTIONS = {Backward = 0, BackwardLeft = 1, BackwardRight = 2, Forward = 3, ForwardLeft = 4, ForwardRight = 5, Left = 6, Right = 7}
+				local direction = {[1]=1,[2]=2,[3]=0,[4]=6,[5]=7,[6]=6,[7]=7,}
+				local dir = math.random(1,#direction)
 				if (Player:CanEvade(direction[dir],100)) then
 					_private.lastEvadedSkill.skillID = skillofTarget
 					Player:Evade(direction[dir])
@@ -782,6 +778,132 @@ function _private:Evade()
 				end
 			end
 		end
+	end
+	return false
+end
+
+function _private.canMoveDirection(dir,distance)
+	if (tonumber(dir) and tonumber(distance)) then
+		local checkDist = distance/10
+		for step=1,10 do
+			if (Player:CanMoveDirection(dir,(checkDist*step)) == false) then
+				return false
+			end
+		end
+		return true
+	end
+end
+
+function _private:DoCombatMovement()
+	local target = Player:GetTarget()
+	if (_private.combatMoveActive and target and ml_global_information.Player_Health.percent < 99 and gDoCombatMovement ~= "0") then
+		if ( gw2_common_functions.HasBuffs(Player, "791,727") ) then return false end
+		local Tdist = target.distance
+		local playerHP = ml_global_information.Player_Health.percent
+		local movedir = ml_global_information.Player_MovementDirections
+
+		-- SET FACING TARGET
+		Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z)
+
+		--CONTROL CURRENT COMBAT MOVEMENT
+		if ( Player:IsMoving() ) then
+
+			if ( not Player.onmeshexact and (movedir.backward or movedir.left or movedir.right) ) then
+				Player:UnSetMovement(1)
+				Player:UnSetMovement(2)
+				Player:UnSetMovement(3)
+				local pPos = Player.pos
+				if (pPos) then
+					local mPos = NavigationManager:GetClosestPointOnMesh(pPos)
+					if ( mPos ) then
+						Player:MoveTo(mPos.x,mPos.y,mPos.z,50,false,false,false)
+					end
+				end
+				return
+			end
+
+			if (tonumber(Tdist) ~= nil) then
+				if (_private.maxRange > 300 and Tdist < (_private.maxRange / 4) and movedir.forward ) then -- we are too close and moving towards enemy
+					Player:UnSetMovement(0)	-- stop moving forward
+				elseif ( Tdist < (target.radius + 10) and movedir.forward) then
+					Player:UnSetMovement(0)	-- stop moving forward
+				elseif ( Tdist > _private.maxRange and movedir.backward ) then -- we are too far away and moving backwards
+					Player:UnSetMovement(1)	-- stop moving backward
+				elseif (Tdist > _private.maxRange and movedir.left) then -- we are strafing outside the maxrange
+					Player:UnSetMovement(2) -- stop moving Left
+				elseif (Tdist > _private.maxRange and movedir.right) then -- we are strafing outside the maxrange
+					Player:UnSetMovement(3) -- stop moving Right
+				end
+			end
+		end
+
+		--Set New Movement
+		if ( Tdist ~= nil and TimeSince(_private.combatMoveTmr) > 0 and Player.onmesh) then
+
+			_private.combatMoveTmr = ml_global_information.Now + math.random(1000,2000)
+			--tablecount:  1, 2, 3, 4, 5   --Table index starts at 1, not 0 
+			local dirs = { 0, 1, 2, 3, 4 } --Forward = 0, Backward = 1, Left = 2, Right = 3, + stop
+
+			if (_private.maxRange > 300 ) then
+				-- RANGE
+				if (Tdist < _private.maxRange ) then
+					if (Tdist > (_private.maxRange * 0.90)) then 
+						table.remove(dirs,2) -- We are too far away to walk backward
+					end
+					if (Tdist < (_private.maxRange / 4)) then 
+						table.remove(dirs,1) -- We are too close to walk forward
+					end	
+					if (Tdist < 250) then 
+						table.remove(dirs,5) -- We are too close, remove "stop"
+						if (movedir.left ) then 
+							table.remove(dirs,3) -- We are moving left, so don't try to go left
+						end
+						if (movedir.right ) then
+							table.remove(dirs,4) -- We are moving right, so don't try to go right
+						end
+					end
+				end
+
+			else
+				-- MELEE
+				if (Tdist > _private.maxRange) then 
+					table.remove(dirs,2) -- We are too far away to walk backwards
+				end
+				if (Tdist < (target.radius)) then 
+					table.remove(dirs,1) -- We are too close to walk forwards
+				end
+			end
+			-- Forward = 0, Backward = 1, Left = 2, Right = 3, + stop
+			-- F = 3, B = 0, L = 6, R = 7, LF = 4, RF = 5, LB = 1, RB = 2
+			if (_private.canMoveDirection(3,400) == false or _private.canMoveDirection(4,350) == false or _private.canMoveDirection(5,350) == false) then 
+				Player:UnSetMovement(0)
+				table.remove(dirs,1)
+			end
+			if (_private.canMoveDirection(0,400) == false or _private.canMoveDirection(1,350) == false or _private.canMoveDirection(2,350) == false) then 
+				Player:UnSetMovement(1)
+				table.remove(dirs,2)
+			end
+			if (_private.canMoveDirection(6,400) == false or _private.canMoveDirection(4,350) == false or _private.canMoveDirection(1,350) == false) then 
+				Player:UnSetMovement(2)
+				table.remove(dirs,3)
+			end
+			if (_private.canMoveDirection(7,400) == false or _private.canMoveDirection(5,350) == false or _private.canMoveDirection(2,350) == false) then 
+				Player:UnSetMovement(3)
+				table.remove(dirs,4)
+			end
+
+			-- MOVE
+			local dir = dirs[ math.random( #dirs ) ]
+			if (dir ~= 4) then
+				Player:SetMovement(dir)
+				_private.combatMoveActive = true
+			else 
+				Player:StopMovement()
+			end
+		end
+	elseif (_private.combatMoveActive) then
+		_private.combatMoveActive = false
+		Player:StopMovement()
 	end
 	return false
 end
@@ -908,13 +1030,15 @@ function profilePrototype:Attack(target)
 	if (_private.CheckTargetBuffs(target)) then
 		local pSkills = self.skills
 		local skills,skillbarSkills = _private.GetAvailableSkills(pSkills)
-		if (target == nil or target.distance < _private.maxRange and target.los) then
-			if (_private.runningIntoCombatRange == true) then Player:StopMovement() end
-			_private.runningIntoCombatRange = false
+		local maxRange = (target.inCombat == false and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving and _private.maxRange-(_private.maxRange/10) or _private.maxRange-10)
+		if (target == nil or target.distance < maxRange and target.los) then
+		--if (target == nil or target.distance < _private.maxRange and target.los) then
+			if (_private.runningIntoCombatRange == true) then Player:StopMovement() _private.runningIntoCombatRange = false end
 			local lastSkillInfo = _private:ReturnSkillByID(pSkills,Player.castinfo.lastSkillID)
+			_private:Evade()
+			_private.combatMoveActive = true
+			Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z)
 			if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
-				_private:Evade()
-				Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z)
 				if (_private.AttackSkill(target,skills)) then
 					return true
 				end
@@ -923,8 +1047,10 @@ function profilePrototype:Attack(target)
 			if (_private.maxRange < 300 and target.distance > _private.maxRange) then _private:SwapWeapon() end
 			gw2_common_functions.MoveOnlyStraightForward()
 			local tPos = target.pos
-			Player:MoveTo(tPos.x,tPos.y,tPos.z,50 + target.radius,false,false,true)
-			_private.runningIntoCombatRange = true
+			if (gw2_unstuck.HandleStuck() == false) then
+				Player:MoveTo(tPos.x,tPos.y,tPos.z,50 + target.radius,false,false,true)
+				_private.runningIntoCombatRange = true
+			end
 		end
 	end
 	return false
@@ -1005,124 +1131,13 @@ function profilePrototype:GetSkillList() -- really needed??
 end
 
 
-
---[[
-
-_private.combatMoveTmr = 0
-_private.combatMoveActive = false
-function _private:DoCombatMovement()
-	local T = Player:GetTarget()
-	if ( T and ml_global_information.Player_Health.percent < 98 and gDoCombatMovement ~= "0") then
-		if ( gw2_common_functions.HasBuffs(Player, "791,727") ) then return false end
-		local Tdist = T.distance
-		local playerHP = ml_global_information.Player_Health.percent
-		local movedir = ml_global_information.Player_MovementDirections
-		local _,attackRange = _private:GetAvailableSkills()
-
-		-- SET FACING TARGET
-		Player:SetFacingExact(T.pos.x,T.pos.y,T.pos.z)
-
-		--CONTROL CURRENT COMBAT MOVEMENT
-		if ( Player:IsMoving() ) then
-
-			if ( not Player.onmeshexact and (movedir.backward or movedir.left or movedir.right) ) then
-				Player:UnSetMovement(1)
-				Player:UnSetMovement(2)
-				Player:UnSetMovement(3)
-				local pPos = Player.pos
-				if (pPos) then
-					local mPos = NavigationManager:GetClosestPointOnMesh(pPos)
-					if ( mPos ) then
-						Player:MoveTo(mPos.x,mPos.y,mPos.z,50,false,false,false)
-					end
-				end
-				return
-			end
-
-			if (tonumber(Tdist) ~= nil) then
-				if (attackRange > 300 and Tdist < (attackRange / 4) and movedir.forward ) then -- we are too close and moving towards enemy
-					Player:UnSetMovement(0)	-- stop moving forward
-				elseif ( Tdist < (T.radius + 10) and movedir.forward) then
-					Player:UnSetMovement(0)	-- stop moving forward
-				elseif ( Tdist > attackRange and movedir.backward ) then -- we are too far away and moving backwards
-					Player:UnSetMovement(1)	-- stop moving backward
-				elseif (Tdist > attackRange and movedir.left) then -- we are strafing outside the maxrange
-					Player:UnSetMovement(2) -- stop moving Left
-				elseif (Tdist > attackRange and movedir.right) then -- we are strafing outside the maxrange
-					Player:UnSetMovement(3) -- stop moving Right
-				end
-			end
+function gw2_skill_manager.OnUpdate(ticks)
+	if (TimeSince(gw2_skill_manager.ticks) > 500) then
+		gw2_skill_manager.ticks = ticks
+		_private:DoCombatMovement()
+		if (_private.runningIntoCombatRange and Player:GetTarget() == nil) then
+			Player:StopMovement()
+			_private.runningIntoCombatRange = false
 		end
-
-		--Set New Movement
-		if ( Tdist ~= nil and T_private.combatMoveTmr > 0 and Player.onmesh) then
-
-			_private.combatMoveTmr = ml_global_information.Now + math.random(1000,2000)
-			--tablecount:  1, 2, 3, 4, 5   --Table index starts at 1, not 0 
-			local dirs = { 0, 1, 2, 3, 4 } --Forward = 0, Backward = 1, Left = 2, Right = 3, + stop
-
-			if (attackRange > 300 ) then
-				-- RANGE
-				if (Tdist < attackRange ) then
-					if (Tdist > (attackRange * 0.90)) then 
-						table.remove(dirs,2) -- We are too far away to walk backward
-					end
-					if (Tdist < (attackRange / 4)) then 
-						table.remove(dirs,1) -- We are too close to walk forward
-					end	
-					if (Tdist < 250) then 
-						table.remove(dirs,5) -- We are too close, remove "stop"
-						if (movedir.left ) then 
-							table.remove(dirs,3) -- We are moving left, so don't try to go left
-						end
-						if (movedir.right ) then
-							table.remove(dirs,4) -- We are moving right, so don't try to go right
-						end
-					end
-				end
-
-			else
-				-- MELEE
-				if (Tdist > attackRange) then 
-					table.remove(dirs,2) -- We are too far away to walk backwards
-				end
-				if (Tdist < (T.radius)) then 
-					table.remove(dirs,1) -- We are too close to walk forwards
-				end
-			end
-			-- Forward = 0, Backward = 1, Left = 2, Right = 3, + stop
-			-- F = 3, B = 0, L = 6, R = 7, LF = 4, RF = 5, LB = 1, RB = 2
-			if (Player:CanMoveDirection(3,400) == false or Player:CanMoveDirection(4,350) == false or Player:CanMoveDirection(5,350) == false) then 
-				Player:UnSetMovement(0)
-				table.remove(dirs,1)
-			end
-			if (Player:CanMoveDirection(0,400) == false or Player:CanMoveDirection(1,350) == false or Player:CanMoveDirection(2,350) == false) then 
-				Player:UnSetMovement(1)
-				table.remove(dirs,2)
-			end
-			if (Player:CanMoveDirection(6,400) == false or Player:CanMoveDirection(4,350) == false or Player:CanMoveDirection(1,350) == false) then 
-				Player:UnSetMovement(2)
-				table.remove(dirs,3)
-			end
-			if (Player:CanMoveDirection(7,400) == false or Player:CanMoveDirection(5,350) == false or Player:CanMoveDirection(2,350) == false) then 
-				Player:UnSetMovement(3)
-				table.remove(dirs,4)
-			end
-
-			-- MOVE
-			local dir = dirs[ math.random( #dirs ) ]
-			if (dir ~= 4) then
-				Player:SetMovement(dir)
-				_private.combatMoveActive = true
-			else 
-				Player:StopMovement()
-			end
-		end
-	elseif (_private.combatMoveActive) then
-		_private.combatMoveActive = false
-		Player:StopMovement()
 	end
-	return false
 end
-
-]]

@@ -241,42 +241,60 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring )
 	local TargetList = CharacterList(filterstring)
 	if ( TargetList ) then
 		local id,entry = next(TargetList)
-		if (id and entry ) then			
+		if (id and entry ) then
 			return entry
 		end
 	end	
 	return nil
 end
 
-
-
-
-
--- trouble with deleting the stupid window while it has events registered, turns out that crashes / fucks stuff up if more than just 1 function is using this dialog with different args
-function gw2_common_functions.CreateDialog(name,func)
-
-	local dialog = WindowManager:NewWindow("Dialog",nil,nil,nil,nil,true)
-	
-	local wSize = {w = 300, h = 100}
-	dialog:SetSize(wSize.w,wSize.h)
-	dialog:Dock(GW2.DOCK.Center)
-	dialog:Focus()
-	dialog:SetModal(true)
-	dialog:NewField(name,"dialogfieldString",name)
-	dialog:Show()
-	dialog:UnFold(name)
-	
-	local bSize = {w = 60, h = 20}
-	-- Cancel Button
-	local cancel = dialog:NewButton("Cancel","CancelDialog")
-	cancel:Dock(0)
-	cancel:SetSize(bSize.w,bSize.h)
-	cancel:SetPos(((wSize.w - 12) - bSize.w),40)
-	RegisterEventHandler("CancelDialog", function() dialog:SetModal(false) dialog:Hide() dialog:Delete() end)
-	-- OK Button
-	local OK = dialog:NewButton("OK","OKDialog")
-	OK:Dock(0)
-	OK:SetSize(bSize.w,bSize.h)
-	OK:SetPos(((wSize.w - 12) - (bSize.w * 2 + 10)),40)
-	RegisterEventHandler("OKDialog", function() if (ValidString(dialogfieldString) == false) then ml_error("Please enter " .. name .. " first.") return false end dialog:SetModal(false) func(dialogfieldString) dialog:Hide() dialog:Delete() return true end)
+function gw2_common_functions.handleConversation(result)
+	if (Player:IsConversationOpen() and Inventory:IsVendorOpened() == false and ValidString(result)) then
+		local options = Player:GetConversationOptions()
+		if (options) then
+			for index=0, #options do
+				local conversation = options[index]
+				if (conversation.type == GW2.CONVERSATIONOPTIONS.Repair and result == "repair") then
+					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Repair)
+					return true
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Shop and (result == "sell" or result == "buy")) then
+					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Shop)
+					return
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.KarmaShop and result == "sell") then
+					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.KarmaShop)
+					return
+				end
+			end
+			for index=0, #options do
+				local conversation = options[index]
+				if (conversation.type == GW2.CONVERSATIONOPTIONS.Continue) then
+					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Continue)
+					return
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Story) then
+					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Story)
+					return
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Return) then
+					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Return)
+					return
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Close) then
+					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Close)
+					return false
+				end
+			end
+		end
+	elseif (Inventory:IsVendorOpened() and ValidString(result)) then
+		if (result == "buy") then
+			if (Inventory:GetVendorServiceType() == GW2.VENDORSERVICETYPE.VendorBuy) then
+				return true
+			else
+				Inventory:SetVendorServiceType(GW2.VENDORSERVICETYPE.VendorBuy)
+			end
+		elseif (result == "sell") then
+			if (Inventory:GetVendorServiceType() == GW2.VENDORSERVICETYPE.VendorSell) then
+				return true
+			else
+				Inventory:SetVendorServiceType(GW2.VENDORSERVICETYPE.VendorSell)
+			end
+		end
+	end
 end

@@ -1,2 +1,8 @@
 /gw2minion/settings.lua
 .gitignore
+GW2Minion/SkillManagerProfiles/
+*_settings.lua
+GW2Minion/CnEs/
+GW2Minion/gw2_skill_manager-1stGen.lua
+GW2Minion/smComboStuff.lua
+GW2Minion/blacklist.info

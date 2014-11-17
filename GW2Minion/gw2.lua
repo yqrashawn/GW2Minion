@@ -60,6 +60,9 @@ function gw2minion.ModuleInit()
 		mw:NewButton(GetString("sellmanager"),"ToggleSellMgr",GetString("advancedSettings"))
 		RegisterEventHandler("ToggleSellMgr", gw2_sell_manager.ToggleMenu)
 		
+		mw:NewButton(GetString("buymanager"),"ToggleBuyMgr",GetString("advancedSettings"))
+		RegisterEventHandler("ToggleBuyMgr", gw2_buy_manager.ToggleMenu)
+		
 		mw:NewButton(GetString("salvagemanager"),"ToggleSalvageMgr",GetString("advancedSettings"))
 		RegisterEventHandler("ToggleSalvageMgr", gw2_salvage_manager.ToggleMenu)
 
