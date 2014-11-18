@@ -278,7 +278,7 @@ function e_CombatTask:execute()
 		Player:StopMovement()
 		local newTask = gw2_task_combat.Create()
 		newTask.targetID = c_CombatTask.target.id		
-		newTask.targetPos = c_CombatTask.target.pos		
+		newTask.targetPos = c_CombatTask.target.pos	
 		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
 		c_CombatTask.target = nil
 	else
