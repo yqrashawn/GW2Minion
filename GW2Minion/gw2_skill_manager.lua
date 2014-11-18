@@ -13,7 +13,6 @@ gw2_skill_manager.currentSkill = nil
 gw2_skill_manager.currentCombo = nil
 gw2_skill_manager.currentComboSkill = nil
 gw2_skill_manager.detecting = false
-gw2_skill_manager.RecordRefreshTmr = 0
 gw2_skill_manager.attacking = false
 gw2_skill_manager.lastAttack = 0
 gw2_skill_manager.ticks = 0
@@ -1052,6 +1051,7 @@ function profilePrototype:DetectSkills()
 		local newSkill = _private.CreateSkill(self.skills,slot)
 		if (newSkill) then
 			self.skills[newSkill.priority] = newSkill
+			gw2_skill_manager.MainWindow(true)
 		end
 	end
 	return true
@@ -1119,10 +1119,6 @@ end
 
 function gw2_skill_manager.OnUpdate(ticks)
 	if (gw2_skill_manager.detecting == true) then
-		if (ticks - gw2_skill_manager.RecordRefreshTmr > 500) then
-			gw2_skill_manager.RecordRefreshTmr = ticks
-			gw2_skill_manager.MainWindow(true)
-		end
 		gw2_skill_manager.profile:DetectSkills()
 	end
 	if (TimeSince(gw2_skill_manager.ticks) > 500) then
