@@ -110,20 +110,6 @@ function gw2_skill_manager.GetMaxAttackRange()
 	end
 end
 
-function gw2_skill_manager.OnUpdate(tickcount)
-	if (gw2_skill_manager.detecting == true) then
-		if (tickcount - gw2_skill_manager.RecordRefreshTmr > 500) then
-			gw2_skill_manager.RecordRefreshTmr = tickcount
-			gw2_skill_manager.MainWindow(true)
-		end
-		gw2_skill_manager.profile:DetectSkills()
-	end
-	if (gw2_skill_manager.attacking == true and TimeSince(gw2_skill_manager.lastAttack) > 500) then
-		gw2_skill_manager.attacking = false
-		gw2_common_functions.MoveOnlyStraightForward()
-	end
-end
-
 function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
 		-- Changes in skills
@@ -1030,7 +1016,7 @@ function profilePrototype:Attack(target)
 	if (_private.CheckTargetBuffs(target)) then
 		local pSkills = self.skills
 		local skills,skillbarSkills = _private.GetAvailableSkills(pSkills)
-		local maxRange = (target.inCombat == false and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving and _private.maxRange-(_private.maxRange/10) or _private.maxRange-10)
+		local maxRange = (target.inCombat == false and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving and target.distance > _private.maxRange and _private.maxRange-(_private.maxRange/10) or _private.maxRange-10)
 		if (target == nil or target.distance < maxRange and target.los) then
 		--if (target == nil or target.distance < _private.maxRange and target.los) then
 			if (_private.runningIntoCombatRange == true) then Player:StopMovement() _private.runningIntoCombatRange = false end
@@ -1132,6 +1118,13 @@ end
 
 
 function gw2_skill_manager.OnUpdate(ticks)
+	if (gw2_skill_manager.detecting == true) then
+		if (ticks - gw2_skill_manager.RecordRefreshTmr > 500) then
+			gw2_skill_manager.RecordRefreshTmr = ticks
+			gw2_skill_manager.MainWindow(true)
+		end
+		gw2_skill_manager.profile:DetectSkills()
+	end
 	if (TimeSince(gw2_skill_manager.ticks) > 500) then
 		gw2_skill_manager.ticks = ticks
 		_private:DoCombatMovement()

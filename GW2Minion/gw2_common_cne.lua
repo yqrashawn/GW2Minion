@@ -152,14 +152,7 @@ function e_RezzPartyMember:execute()
 			-- Grab that thing
 			if ( ml_global_information.Player_IsMoving == true ) then Player:StopMovement() end 
 			
-			if (Player.profession == 8 ) then -- Necro, leave shroud
-				local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
-				if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17) then
-					Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
-					ml_global_information.Wait(500)
-					return
-				end
-			end
+			gw2_common_functions.NecroLeaveDeathshroud()
 					
 			local t = Player:GetTarget()
 			if ( not t or t.id ~= e_RezzPartyMember.target.id ) then
@@ -238,16 +231,7 @@ function e_reviveDownedPlayersInCombat:execute()
 			else
 				
 				-- yeah I know, but this usually doesnt break ;)											
-				if ( Player.profession == 8 ) then
-					local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
-					if ( skill ~= nil ) then
-						if ( skill.skillID == 10554 ) then
-							Player:CastSpell(GW2.SKILLBARSLOT.Slot_13) -- Leave Death Shroud
-							return
-						-- add more here if needed
-						end
-					end
-				end
+				gw2_common_functions.NecroLeaveDeathshroud()
 				ml_log("Reviving..")
 				Player:Interact( e_reviveDownedPlayersInCombat.target.id )
 				ml_global_information.Wait(1000)

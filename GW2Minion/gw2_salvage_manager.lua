@@ -328,7 +328,7 @@ function gw2_salvage_manager.getBestTool(item)
 					return tool
 				end
 				-- Search for besttool
-				if (math.abs(item.rarity - gw2_salvage_manager.kitlist[tool.itemID].rarity) < math.abs(item.rarity - returnTool.rarity)) then
+				if (returnTool == nil or math.abs(item.rarity - gw2_salvage_manager.kitlist[tool.itemID].rarity) < math.abs(item.rarity - returnTool.rarity)) then
 					returnTool = tool
 				end
 			end
