@@ -108,7 +108,7 @@ function e_AttackTarget:execute()
 		end
 		
 		-- Move Closer to target with a sub-moveto-task
-		if (dist > 2500) then
+		if (e_AttackTarget.target.distance > 2500) then
 			
 			local newTask = gw2_task_moveto.Create()
 			newTask.targetPos = ml_task_hub:CurrentTask().targetPos

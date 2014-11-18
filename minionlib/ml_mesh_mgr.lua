@@ -356,7 +356,7 @@ function ml_mesh_mgr.SwitchNavmesh()
 						
 						-- check if ml_mesh_mgr.currentMesh.MapID is our mapID
 						if ( ml_mesh_mgr.currentMesh.MapID ~= ml_mesh_mgr.GetMapID() ) then
-							ml_debug("WARNING: Loaded Navmesh MapID ~= current MapID() -> wrong NavMesh for this zone loaded ?")
+							d("WARNING: Loaded Navmesh MapID ~= current MapID() -> wrong NavMesh for this zone loaded ?")
 						end
 						
 						-- adding the AllowedMapIDs table to "old" .info files
@@ -369,7 +369,7 @@ function ml_mesh_mgr.SwitchNavmesh()
 												
 						-- check if the loaded ml_mesh_mgr.currentMesh.AllowedMapIDs contains our current mapID which we are in
 						if ( ml_mesh_mgr.currentMesh.AllowedMapIDs[ml_mesh_mgr.GetMapID()] == nil ) then
-							ml_debug("WARNING: Loaded Navmesh AllowedMapIDs dont contain current MapID -> wrong NavMesh for this zone loaded ?")
+							d("WARNING: Loaded Navmesh AllowedMapIDs dont contain current MapID -> wrong NavMesh for this zone loaded ?")
 							
 							-- This can cause a "allowed" for each wrong selected meshfile in the mesh-dropdown field.
 							ml_mesh_mgr.SetDefaultMesh(ml_mesh_mgr.GetMapID(), ml_mesh_mgr.nextNavMesh)
@@ -423,12 +423,12 @@ function ml_mesh_mgr.OnUpdate( tickcount )
 		return 
 	end
 	
-	-- Log Info
+	-- Log Info  (THIS IS FOR GW2 ONLY, IF YOU DONT EMPTY THE ml_log variable this will crash after a while...)
 	if ( navstate == GLOBAL.MESHSTATE.MESHEMPTY ) then
-		ml_debug("WARNING: NO NAVMESH LOADED! -> SELECT A NAVMESH IN THE MESHMANAGER FOR THIS ZONE")
+		ml_log("WARNING: NO NAVMESH LOADED! -> SELECT A NAVMESH IN THE MESHMANAGER FOR THIS ZONE")
 	elseif ( navstate == GLOBAL.MESHSTATE.MESHREADY ) then
 		if ( not ml_global_information.Player_OnMesh ) then			
-			ml_debug("WARNING: PLAYER IS NOT STANDING ON THE NAVMESH! ")
+			ml_log("WARNING: PLAYER IS NOT STANDING ON THE NAVMESH! ")
 		end
 	end
 	

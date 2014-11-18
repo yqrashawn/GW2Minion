@@ -341,38 +341,47 @@ e_movetorandom = inheritsFrom(ml_effect)
 c_movetorandom.randompoint = nil
 c_movetorandom.randompointreached = false
 c_movetorandom.randomdistance = math.random(750,5000)
+c_movetorandom.throttleTmr = 0
 function c_movetorandom:evaluate()
-	if (c_movetorandom.randompoint == nil) then
-				
-		-- Walk to Random Point in our levelrange
-		if ( TableSize(gw2_datamanager.levelmap) > 0 ) then
-			local pos = gw2_datamanager.GetRandomPositionInLevelRange( ml_global_information.Player_Level )
-			if (TableSize(pos) > 0 ) then
-				-- make sure the position can be reached
+	
+	-- This needs to be throttled else the bot nearly freezes when this is spammed and not mesh was loaded / no point found
+	if( TimeSince(c_movetorandom.throttleTmr) > 2500 ) then
+		
+		c_movetorandom.throttleTmr = ml_global_information.Now
+	
+		if (c_movetorandom.randompoint == nil) then
+					
+			-- Walk to Random Point in our levelrange
+			if ( TableSize(gw2_datamanager.levelmap) > 0 ) then
+				local pos = gw2_datamanager.GetRandomPositionInLevelRange( ml_global_information.Player_Level )
+				if (TableSize(pos) > 0 ) then
+					-- make sure the position can be reached
+					if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
+						d("c_movetorandom.randompoint path found")
+						c_movetorandom.randompoint = pos
+						c_movetorandom.randompointreached = false
+						c_movetorandom.randomdistance = math.random(750,5000)
+					else
+						d("c_movetorandom.randompoint no path found")
+					end
+				end
+			end
+		end
+
+		-- 2nd attempt to find a random point
+		if (c_movetorandom.randompoint == nil) then
+		
+			local pos = Player:GetRandomPoint(5000) -- 5000 beeing mindistance to player
+			if ( pos and pos ~= 0) then
 				if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
-					d("c_movetorandom.randompoint path found")
 					c_movetorandom.randompoint = pos
 					c_movetorandom.randompointreached = false
 					c_movetorandom.randomdistance = math.random(750,5000)
-				else
-					d("c_movetorandom.randompoint no path found")
 				end
 			end
 		end
 	end
-
-	-- 2nd attempt to find a random point
-	if (c_movetorandom.randompoint == nil) then
 	
-		local pos = Player:GetRandomPoint(5000) -- 5000 beeing mindistance to player
-		if ( pos and pos ~= 0) then
-			if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
-				c_movetorandom.randompoint = pos
-				c_movetorandom.randompointreached = false
-				c_movetorandom.randomdistance = math.random(750,5000)
-			end
-		end
-	end
 	
 	if (c_movetorandom.randompoint and not c_movetorandom.randompointreached) then			
 		return true
