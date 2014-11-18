@@ -33,7 +33,7 @@ function gw2_task_gather:Init()
 	self:add(ml_element:create( "Downed", c_Downed, e_Doened, 450 ), self.overwatch_elements)
 	-- Handle Rezz-Target is alive again or gone, deletes the subtask moveto in case it is needed
 	self:add(ml_element:create( "RevivePartyMemberOverWatch", c_RezzOverWatchCheck, e_RezzOverWatchCheck, 400 ), self.overwatch_elements)
-		
+	
 	-- FightAggro
 	self:add(ml_element:create( "FightAggro", c_FightAggro, e_FightAggro, 250 ), self.overwatch_elements) --creates immediate queue task for combat
 	
