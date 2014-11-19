@@ -80,11 +80,15 @@ function c_AttackTarget:evaluate()
 		-- check if target  still exist
 		if ( ml_task_hub:CurrentTask().targetType == "character" ) then
 			e_AttackTarget.target = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
-			return ( e_AttackTarget.target ~= nil and e_AttackTarget.target.attackable )
-		
+			if ( e_AttackTarget.target ~= nil and e_AttackTarget.target.attackable ) then
+				return true
+			end
+			
 		elseif( ml_task_hub:CurrentTask().targetType == "gadget" ) then
 			e_AttackTarget.target = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
-			return ( e_AttackTarget.target ~= nil and e_AttackTarget.target.attackable )		
+			if ( e_AttackTarget.target ~= nil and e_AttackTarget.target.attackable ) then
+				return true
+			end
 		end
 		
 	end

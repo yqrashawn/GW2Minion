@@ -35,7 +35,7 @@ function gw2_task_gather:Init()
 	self:add(ml_element:create( "RevivePartyMemberOverWatch", c_RezzOverWatchCheck, e_RezzOverWatchCheck, 400 ), self.overwatch_elements)
 	
 	-- FightAggro
-	self:add(ml_element:create( "FightAggro", c_FightAggro, e_FightAggro, 250 ), self.overwatch_elements) --creates immediate queue task for combat
+	self:add(ml_element:create( "FightAggro", c_HandleAggro, e_HandleAggro, 250 ), self.overwatch_elements) --creates immediate queue task for combat
 	
 	
 	-- Normal elements	
@@ -137,6 +137,39 @@ function e_GatherTask:execute()
 end
 
 
+
+-- Handles Aggro for gathering, doesnt fight everything basicly and tries to run towards the next gatherable instead 
+c_HandleAggro = inheritsFrom( ml_cause )
+e_HandleAggro = inheritsFrom( ml_effect )
+c_HandleAggro.target = nil
+c_HandleAggro.HealthTreshold = math.random(50,85)
+function c_HandleAggro:evaluate()
+	if ( ml_global_information.Player_Health.percent < c_HandleAggro.HealthTreshold or TableSize(GadgetList("onmesh,nearest,gatherable,maxdistance=500")) > 1 ) then
+		local target = gw2_common_functions.GetBestAggroTarget()
+		if ( target ) then
+			c_HandleAggro.target = target
+			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_HandleAggro.target ~= nil			
+		end
+	end
+	c_HandleAggro.target = nil
+	return false
+end
+function e_HandleAggro:execute()
+	ml_log("e_HandleAggro ")
+			
+	if (c_HandleAggro.target ~= nil) then
+		c_HandleAggro.HealthTreshold = math.random(50,85)
+		Player:StopMovement()
+		local newTask = gw2_task_combat.Create()
+		newTask.targetID = c_HandleAggro.target.id		
+		newTask.targetPos = c_HandleAggro.target.pos		
+		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
+		c_HandleAggro.target = nil
+	else
+		ml_log("e_HandleAggro found no target")
+	end
+	return ml_log(false)
+end
 
 
 --------- Creates a new IMMEDIATE_GOAL task to kill an enemy when we are fighting our way towards the current gatherMarker
@@ -410,6 +443,8 @@ function e_Gathering:execute()
 	ml_task_hub:CurrentTask().targetPos = nil
 	return ml_log(false)
 end
+
+
 
 
 
