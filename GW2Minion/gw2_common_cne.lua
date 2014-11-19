@@ -118,7 +118,7 @@ function c_RezzPartyMember:evaluate()
 			if ( pmember.id ~= 0 ) then
 				local char = CharacterList:Get(pmember.id)
 				if ( char ) then
-					if ( char.onmesh and (char.downed == true or char.dead == true) and ml_global_information.Player_Health.percent > 50 and char.pathdistance < 4000) then
+					if ( char.onmesh and (char.downed == true or char.dead == true) and ml_global_information.Player_Health.percent > 35 and char.pathdistance < 4000) then
 						e_RezzPartyMember.target = char
 						return true
 					end
@@ -174,10 +174,15 @@ c_RezzOverWatchCheck = inheritsFrom( ml_cause )
 e_RezzOverWatchCheck = inheritsFrom( ml_effect )
 function c_RezzOverWatchCheck:evaluate()
 	if ( ml_task_hub:CurrentTask() ~= nil and ( ml_task_hub:CurrentTask().name == "MoveTo Revive NPC" or ml_task_hub:CurrentTask().name == "MoveTo Revive Downed Player" or ml_task_hub:CurrentTask().name == "MoveTo Revive PartyMember") and ml_task_hub:CurrentTask().targetPos ~= nil and ml_task_hub:CurrentTask().targetID ~= nil ) then
-		local character = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
-		if ( character ~= nil and character.alive) then
-			return true
+		
+		local dist = Distance3D(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z)
+		if ( dist < 5000 ) then			
+			local character = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
+			if ( character ~= nil and character.alive) then
+				return true
+			end
 		end
+		
 	end
 	return false
 end
@@ -246,7 +251,10 @@ end
 c_reviveNPC = inheritsFrom( ml_cause )
 e_reviveNPC = inheritsFrom( ml_effect )
 function c_reviveNPC:evaluate()
-    return (gRevive == "1" and not ml_global_information.Player_InCombat and ml_global_information.Player_Health.percent > 75 and TableSize(CharacterList("nearest,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2000,exclude="..ml_blacklist.GetExcludeString(GetString("monsters")))) > 0)
+	if (gRevive == "1" and TableSize(CharacterList("nearest,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2000,exclude="..ml_blacklist.GetExcludeString(GetString("monsters")))) > 0)then
+		return true
+	end
+	return false
 end
 function e_reviveNPC:execute()
 	ml_log("ReviveNPC ")
@@ -260,6 +268,20 @@ function e_reviveNPC:execute()
 	if ( TableSize(CList) > 0 ) then
 		local id,target = next(CList)
 		if ( id and target ) then
+		
+			-- fight nearby enemies first
+			if ( ml_global_information.Player_Health.percent < 80 ) then
+				local TargetList = CharacterList("aggro,onmesh,lowesthealth,los,attackable,alive,noCritter,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+				if ( TargetList ) then
+					local id,entry = next(TargetList)
+					if (id and entry ) then
+						ml_log(" Killing nearby targets first..")
+						gw2_skill_manager.Attack(entry)
+						return ml_log(true)
+					end
+				end	
+			end
+		
 			if ( not target.isInInteractRange ) then
 				
 				Player:StopMovement()

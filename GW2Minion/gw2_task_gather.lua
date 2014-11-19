@@ -34,6 +34,7 @@ function gw2_task_gather:Init()
 	-- Handle Rezz-Target is alive again or gone, deletes the subtask moveto in case it is needed
 	self:add(ml_element:create( "RevivePartyMemberOverWatch", c_RezzOverWatchCheck, e_RezzOverWatchCheck, 400 ), self.overwatch_elements)
 	
+	
 	-- FightAggro
 	self:add(ml_element:create( "FightAggro", c_HandleAggro, e_HandleAggro, 250 ), self.overwatch_elements) --creates immediate queue task for combat
 	
@@ -58,13 +59,16 @@ function gw2_task_gather:Init()
 	self:add(ml_element:create( "FightTowardsGatherMarker", c_FightToGatherMarker, e_FightToGatherMarker, 125 ), self.process_elements)--creates immediate queue task for combat
 	
 	-- Pick the next/new Marker and makes sure we are staying near the current Marker
-	self:add( ml_element:create( "NextMarker", c_MoveToGatherMarker, e_MoveToGatherMarker, 75 ), self.process_elements)
+	self:add( ml_element:create( "NextMarker", c_MoveToGatherMarker, e_MoveToGatherMarker, 75 ), self.process_elements) -- creates subtask moveto
 
 	-- Re-Equip Gathering Tools
 	--self:add(ml_element:create( "EquippingGatherTool", c_GatherToolsCheck, e_GatherToolsCheck, 110 ), self.process_elements)
 	
+	
+	-- TODO: Add a check CnE here for aggro when we are close to our gather node to gather 
+	
 	-- Check for gatherable Target
-	self:add(ml_element:create( "GetNextGatherable", c_Gathering, e_Gathering, 50 ), self.process_elements)
+	self:add(ml_element:create( "GetNextGatherable", c_Gathering, e_Gathering, 50 ), self.process_elements) -- creates subtask moveto 
 		
 	-- Move to a Randompoint if there is nothing to fight around us
 	self:add( ml_element:create( "movetorandom", c_movetorandom, e_movetorandom, 25 ), self.process_elements)
@@ -160,6 +164,10 @@ function e_HandleAggro:execute()
 	if (c_HandleAggro.target ~= nil) then
 		c_HandleAggro.HealthTreshold = math.random(50,85)
 		Player:StopMovement()
+		-- stop the char from reviving else it doesnt do sh!t in combat task
+		if ( Player.castinfo.duration ~= 0 ) then
+			Player:Jump()
+		end
 		local newTask = gw2_task_combat.Create()
 		newTask.targetID = c_HandleAggro.target.id		
 		newTask.targetPos = c_HandleAggro.target.pos		
@@ -393,7 +401,7 @@ function e_Gathering:execute()
 			
 			if (Player.isGathering) then
 				ml_log(": Gathering busy.")
-				if ( Player:IsMoving() ) then Player:StopMovement() end
+				if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
 				return ml_log(true)
 				
 			else
@@ -417,10 +425,11 @@ function e_Gathering:execute()
 						end		
 						
 						ml_log(": Gathering starting.")
-						if ( Player:IsMoving() ) then Player:StopMovement() end
+						if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
 						
 						if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
 							Player:Interact(gadget.id)
+							ml_global_information.Wait(500)
 						end
 						
 					else
@@ -429,7 +438,7 @@ function e_Gathering:execute()
 						-- Moving to gadget position.
 						if ( not gw2_unstuck.HandleStuck() ) then
 							local tPos = gadget.pos
-							Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,false,false)
+							Player:MoveTo(tPos.x,tPos.y,tPos.z,25,false,false,false)
 						end
 					end
 					return ml_log(true)
