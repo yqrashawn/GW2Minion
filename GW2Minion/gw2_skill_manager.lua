@@ -428,7 +428,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 -- **pricate variables**
 _private.maxRange = 154
-_private.runningIntoCombatRange = false -- TODO: order all variables nicely
+--_private.runningIntoCombatRange = false -- TODO: order all variables nicely
 _private.targetLosingHP = {id = 0, health = 0, timer = 0}
 _private.SwapTimer = 0
 _private.lastKitTable = {}
@@ -537,6 +537,7 @@ function _private.CheckTargetBuffs(target)
 	if (target) then
 		if (gw2_common_functions.BufflistHasBuffs(target.buffs,"762")) then
 			ml_blacklist.AddBlacklistEntry(GetString("monsters"),target.id,target.name,ml_global_information.Now+90000)
+			d("this blacklisting so much?? :S!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 			Player:ClearTarget()
 			return false
 		end
@@ -732,7 +733,7 @@ function _private.AttackSkill(target,availableSkills)
 					Player:CastSpell(skill.slot)
 				end
 				_private.skillLastCast[skill.skill.id] = ml_global_information.Now
-				if (_private.TargetLosingHealth(target)) then
+				if (_private.TargetLosingHealth(target) == false) then
 					return false
 				end
 				return true
@@ -832,7 +833,7 @@ function _private:DoCombatMovement()
 			if (_private.maxRange > 300 ) then
 				-- RANGE
 				if (Tdist < _private.maxRange ) then
-					if (Tdist > (_private.maxRange * 0.90)) then 
+					if (Tdist > (_private.maxRange * 0.95)) then 
 						table.remove(dirs,2) -- We are too far away to walk backward
 					end
 					if (Tdist < (_private.maxRange / 4)) then 
@@ -1016,6 +1017,7 @@ function profilePrototype:Attack(target)
 		local pSkills = self.skills
 		local skills,skillbarSkills = _private.GetAvailableSkills(pSkills)
 		local maxRange = (target.inCombat == false and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving and target.distance > _private.maxRange and _private.maxRange-(_private.maxRange/10) or _private.maxRange-10)
+		if (target) then Player:SetTarget(target.id) end
 		if (target == nil or target.distance < maxRange and target.los) then
 		--if (target == nil or target.distance < _private.maxRange and target.los) then
 			if (_private.runningIntoCombatRange == true) then Player:StopMovement() _private.runningIntoCombatRange = false end
