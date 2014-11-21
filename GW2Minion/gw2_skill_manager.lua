@@ -301,6 +301,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 		editWindow:NewCheckBox(GetString("isGroundTargeted"),"SklMgr_GrndTarget",GetString("Skill"))
 		editWindow:NewCheckBox(GetString("smsktypeheal"),"SklMgr_Healing",GetString("Skill"))
 		editWindow:NewCheckBox(GetString("los"),"SklMgr_LOS",GetString("Skill"))
+		editWindow:NewCheckBox(GetString("setRange"),"SklMgr_SetRange",GetString("Skill"))
 		editWindow:NewNumeric(GetString("minRange"),"SklMgr_MinRange",GetString("Skill"),0,6000)
 		editWindow:NewNumeric(GetString("maxRange"),"SklMgr_MaxRange",GetString("Skill"),0,6000)
 		editWindow:NewCheckBox(GetString("instantCast"),"SklMgr_InstantCast",GetString("Skill"))
@@ -368,6 +369,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 			SklMgr_GrndTarget = lSkill.skill.groundTargeted
 			SklMgr_Healing = lSkill.skill.healing
 			SklMgr_LOS = lSkill.skill.los
+			SklMgr_SetRange = lSkill.skill.setRange
 			SklMgr_MinRange = lSkill.skill.minRange
 			SklMgr_MaxRange = lSkill.skill.maxRange
 			SklMgr_InstantCast = lSkill.skill.instantCast
@@ -487,6 +489,7 @@ function _private.CreateSkill(skillList,skillSlot)
 							groundTargeted	= (skillInfo.isGroundTargeted == true and "1" or "0"),
 							healing			= "0",
 							los				= "1",
+							setRange		= "1",
 							minRange		= skillInfo.minRange or 0,
 							maxRange		= skillInfo.maxRange or 0,
 							radius			= skillInfo.radius or 0,
@@ -594,7 +597,7 @@ function _private.GetAvailableSkills(skillList,heal)
 					returnSkillList[newPriority].slot = aSkill.slot
 					returnSkillList[newPriority].maxCooldown = aSkill.cooldownmax
 					newPriority = newPriority + 1
-					if ((aSkill.slot >= GW2.SKILLBARSLOT.Slot_1  and aSkill.slot <= GW2.SKILLBARSLOT.Slot_5 and skill.skill.maxRange > 0 or skill.skill.radius > 0)) then
+					if (skill.skill.setRange == "1") then
 						maxRange = (skill.skill.maxRange > 0 and skill.skill.maxRange > maxRange and skill.skill.maxRange or maxRange)
 						maxRange = (skill.skill.maxRange == 0 and skill.skill.radius > 0 and skill.skill.radius > maxRange and skill.skill.radius or maxRange)
 					end
