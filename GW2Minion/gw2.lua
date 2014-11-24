@@ -255,6 +255,10 @@ end
 
 function gw2minion.OnUpdate(event, tickcount )
 	ml_global_information.Now = tickcount
+	
+	-- OMC Handler
+	ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
+	
 	if ( TimeSince(ml_global_information.Lasttick) > tonumber(gPulseTime) ) then
 		ml_global_information.Lasttick = tickcount		
 		gw2minion.SwitchUIForGameState()

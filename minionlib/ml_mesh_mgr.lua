@@ -746,26 +746,30 @@ function ml_mesh_mgr.AddOMC()
 		
 		local omctype
 		if ( gOMCType == "Jump" ) then
-			omctype = 0
+			omctype = 8
 		elseif ( gOMCType == "Walk" ) then
-			ml_mesh_mgr.AddOMCBridge(1)
-			return
+			omctype = 9
+			--ml_mesh_mgr.AddOMCBridge(1)
+			--return
 		elseif ( gOMCType == "Teleport" ) then
-			ml_mesh_mgr.AddOMCBridge(2)
-			return
+			omctype = 10
+			--ml_mesh_mgr.AddOMCBridge(2)
+			--return
 		elseif ( gOMCType == "Interact" ) then
-			ml_mesh_mgr.AddOMCBridge(3)
-			return
+			omctype = 11
+			--ml_mesh_mgr.AddOMCBridge(3)
+			--return
 		elseif ( gOMCType == "Portal" ) then			
-			ml_mesh_mgr.AddOMCBridge(4)
-			return
+			omctype = 12
+			--ml_mesh_mgr.AddOMCBridge(4)
+			--return
 		end
 		
 		-- Default Short Range Jump		
 		if ( gBiDirOffMesh == "0" ) then
-			d(MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,false,omctype))
+			MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,false,omctype, {x=ml_mesh_mgr.OMCP1.hx,y=ml_mesh_mgr.OMCP1.hy,z=ml_mesh_mgr.OMCP1.hz},{x=ml_mesh_mgr.OMCP2.hx,y=ml_mesh_mgr.OMCP2.hy,z=ml_mesh_mgr.OMCP2.hz})
 		else
-			d(MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,true,omctype))
+			MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,true,omctype, {x=ml_mesh_mgr.OMCP1.hx,y=ml_mesh_mgr.OMCP1.hy,z=ml_mesh_mgr.OMCP1.hz},{x=ml_mesh_mgr.OMCP2.hx,y=ml_mesh_mgr.OMCP2.hy,z=ml_mesh_mgr.OMCP2.hz})
 		end
 		ml_mesh_mgr.OMC = 0
 	end	
@@ -832,25 +836,128 @@ function ml_mesh_mgr.DeleteOMC()
 end
 
 -- Handler for different OMC types
-function ml_mesh_mgr.HandleOMC( event, OMCType ) 	
+function ml_mesh_mgr.HandleOMC( ... ) 	
+	local args = {...}
+	local OMCType = args[2]	
+	local OMCStartPosition,OMCEndposition,OMCFacingDirection = ml_mesh_mgr.UnpackArgsForOMC( args )
 	d("OMC REACHED : "..tostring(OMCType))
-	-- TODO: delayed Player:StopMovement()
-	if ( OMCType == "OMC_WALK" ) then -- Walk		
-		ml_global_information.Lasttick = ml_global_information.Lasttick + 1500 -- tiny pause to not walk backwards and instead through the portal
-		Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+
+	ml_global_information.Lasttick = ml_global_information.Lasttick + 2000 -- tiny pause to not walk backwards and instead through the portal
 		
-	elseif ( OMCType == "OMC_TELEPORT" ) then -- Teleport		
-		ml_global_information.Lasttick = ml_global_information.Lasttick + 1500 -- tiny pause to not walk backwards and instead through the portal
-	
-	elseif ( OMCType == "OMC_INTERACT" ) then -- Interact		
-		ml_global_information.Lasttick = ml_global_information.Lasttick + 1500 -- tiny pause to not walk backwards and instead through the portal
-		Player:StopMovement()
-		Player:Interact()
-	elseif ( OMCType == "OMC_PORTAL" ) then -- Portal		
-		ml_global_information.Lasttick = ml_global_information.Lasttick + 1500 -- tiny pause to not walk backwards and instead through the portal
-		
+	if ( ValidTable(OMCStartPosition) and ValidTable(OMCEndposition) and ValidTable(OMCFacingDirection) ) then
+		ml_mesh_mgr.OMCStartPosition = OMCStartPosition
+		ml_mesh_mgr.OMCEndposition = OMCEndposition
+		ml_mesh_mgr.OMCFacingDirection = OMCFacingDirection
+		ml_mesh_mgr.OMCType = OMCType
+		ml_mesh_mgr.OMCIsHandled = true
 	end
-	--Player:StopMovement()	
+end
+
+ml_mesh_mgr.OMCStartPosition = nil
+ml_mesh_mgr.OMCEndposition = nil
+ml_mesh_mgr.OMCFacingDirection = nil
+ml_mesh_mgr.OMCType = nil
+ml_mesh_mgr.OMCIsHandled = false
+ml_mesh_mgr.OMCStartPositionReached = false
+function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount ) 
+	
+	if ( ml_mesh_mgr.OMCIsHandled ) then
+		
+		if ( ml_mesh_mgr.OMCStartPositionReached == false ) then
+			if ( ValidTable(ml_mesh_mgr.OMCStartPosition) ) then
+				if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
+				Player:SetFacing(tonumber(ml_mesh_mgr.OMCStartPosition[1]),tonumber(ml_mesh_mgr.OMCStartPosition[2]),tonumber(ml_mesh_mgr.OMCStartPosition[3]))
+				
+				ml_global_information.Player_Position = Player.pos
+				local dist = Distance3D(ml_mesh_mgr.OMCStartPosition[1],ml_mesh_mgr.OMCStartPosition[2],ml_mesh_mgr.OMCStartPosition[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
+				if ( dist < 35 ) then
+					d("OMC StartPosition reached..Facing Target Direction..")
+					Player:SetFacingH(tonumber(ml_mesh_mgr.OMCFacingDirection[1]),tonumber(ml_mesh_mgr.OMCFacingDirection[2]),tonumber(ml_mesh_mgr.OMCFacingDirection[3]))
+					 ml_mesh_mgr.OMCStartPositionReached = true				
+				end
+				return
+			end
+			
+		else
+			
+			if ( ml_mesh_mgr.OMCType == "OMC_JUMP" ) then
+				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
+					Player:SetFacing(tonumber(ml_mesh_mgr.OMCEndposition[1]),tonumber(ml_mesh_mgr.OMCEndposition[2]),tonumber(ml_mesh_mgr.OMCEndposition[3]))
+					ml_global_information.Player_Position = Player.pos					
+					if ( ml_global_information.Player_IsMoving ) then Player:Jump() end					
+					local dist = Distance3D(ml_mesh_mgr.OMCEndposition[1],ml_mesh_mgr.OMCEndposition[2],ml_mesh_mgr.OMCEndposition[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
+					if ( dist < 35 ) then
+						d("OMC Endposition reached..")
+						Player:StopMovement()						
+					else
+						return
+					end
+				end
+				
+			
+			elseif ( ml_mesh_mgr.OMCType == "OMC_WALK" ) then
+				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
+					Player:SetFacing(tonumber(ml_mesh_mgr.OMCEndposition[1]),tonumber(ml_mesh_mgr.OMCEndposition[2]),tonumber(ml_mesh_mgr.OMCEndposition[3]))
+					ml_global_information.Player_Position = Player.pos
+					local dist = Distance3D(ml_mesh_mgr.OMCEndposition[1],ml_mesh_mgr.OMCEndposition[2],ml_mesh_mgr.OMCEndposition[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)					
+					if ( dist < 50 ) then
+						d("OMC Endposition reached..")
+						Player:StopMovement()
+					else
+						return
+					end
+				end
+			
+			
+			elseif ( ml_mesh_mgr.OMCType == "OMC_TELEPORT" ) then
+				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+					if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
+					Player:Teleport(tonumber(ml_mesh_mgr.OMCEndposition[1]), tonumber(ml_mesh_mgr.OMCEndposition[2]), tonumber(ml_mesh_mgr.OMCEndposition[3]))
+					d("OMC Endposition reached..")
+					
+				end
+			
+			elseif ( ml_mesh_mgr.OMCType == "OMC_INTERACT" ) then
+				Player:StopMovement()				
+				d("OMC Endposition reached..")						
+				Player:Interact()
+			
+			elseif ( ml_mesh_mgr.OMCType == "OMC_PORTAL" ) then
+				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end					
+					ml_global_information.Player_Position = Player.pos
+					local dist = Distance3D(ml_mesh_mgr.OMCEndposition[1],ml_mesh_mgr.OMCEndposition[2],ml_mesh_mgr.OMCEndposition[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)					
+					if ( dist < 100 ) then
+						d("OMC Endposition reached..")
+						Player:StopMovement()
+					else
+						return
+					end
+				end
+			
+			end
+		
+		
+		end
+	end
+	
+	ml_mesh_mgr.OMCIsHandled = false
+	ml_mesh_mgr.OMCStartPositionReached = false
+end
+
+
+
+function ml_mesh_mgr.UnpackArgsForOMC( args )
+	if ( tonumber(args[3]) ~= nil and tonumber(args[4]) ~= nil and tonumber(args[5]) ~= nil -- OMC Start point
+	 and tonumber(args[6]) ~= nil and tonumber(args[7]) ~= nil and tonumber(args[8]) ~= nil -- OMC END point
+	 and tonumber(args[9]) ~= nil and tonumber(args[10]) ~= nil and tonumber(args[11]) ~= nil -- OMC Start point-Facing direction
+	 ) then
+		return {tonumber(args[3]),tonumber(args[4]),tonumber(args[5]) },{ tonumber(args[6]),tonumber(args[7]),tonumber(args[8])},{tonumber(args[9]),tonumber(args[10]),tonumber(args[11])}
+	 else
+		d("No valid positions for OMC reveived! ")
+	 end
 end
 
 function ml_mesh_mgr.CreateSingleCell()
