@@ -118,6 +118,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "SklMgr_GrndTarget" or
 				k == "SklMgr_Healing" or
 				k == "SklMgr_LOS" or
+				k == "SklMgr_SetRange" or
 				k == "SklMgr_MinRange" or
 				k == "SklMgr_MaxRange" or
 				k == "SklMgr_InstantCast" or
@@ -128,6 +129,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 							SklMgr_GrndTarget = "groundTargeted",
 							SklMgr_Healing = "healing",
 							SklMgr_LOS = "los",
+							SklMgr_SetRange = "setRange",
 							SklMgr_MinRange = "minRange",
 							SklMgr_MaxRange = "maxRange",
 							SklMgr_InstantCast = "instantCast",
