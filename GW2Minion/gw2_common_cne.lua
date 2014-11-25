@@ -444,12 +444,17 @@ end
 c_Looting = inheritsFrom( ml_cause )
 e_Looting = inheritsFrom( ml_effect )
 c_Looting.target = nil
+
+-- Unsure which one to use..contentID or contentID2 ..contentID changes sometimes I think
+-- 24.11.2014 : Splendid Chest, contentID = 41638 , contentID2 = 202375680
+c_Looting.contentID = "17698,198260,232192,232193,232194,262863,236384,41638"
+c_Looting.contentID2 = "202375680"
 function c_Looting:evaluate()
 	--ml_log("c_Looting")
 	-- Find new loot target.
 	if (c_Looting.target == nil) then
-		local ChestCIDs = "17698,198260,232192,232193,232194,262863,236384"
-		c_Looting.target = (GadgetList("onmesh,lootable,selectable,nearest,maxdistance=2500,contentID="..ChestCIDs) or CharacterList("nearest,lootable,onmesh,maxdistance=3000"))
+		
+		c_Looting.target = (GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID2="..c_Looting.contentID2) or GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID="..c_Looting.contentID) or CharacterList("nearest,lootable,onmesh,maxdistance=3000"))
 	end
 	-- Check if we need to loot and have a valid target and enough space to store it.
 	if (ValidTable(c_Looting.target) and ml_global_information.Player_Inventory_SlotsFree > 0) then
@@ -462,19 +467,19 @@ end
 
 function e_Looting:execute()	
 	ml_log("Looting ")
-	c_Looting.target = (GadgetList("onmesh,lootable,selectable,shortestpath,maxdistance=3500,contentID="..ChestCIDs) or CharacterList("shortestpath,lootable,onmesh,maxdistance=3500"))
+	c_Looting.target = (GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID2="..c_Looting.contentID2) or GadgetList("onmesh,interactable,selectable,shortestpath,maxdistance=4000,contentID="..c_Looting.contentID) or CharacterList("shortestpath,lootable,onmesh,maxdistance=4000"))
 	if ( ValidTable(c_Looting.target) ) then 
 		local target = select(2,next(c_Looting.target))
 		-- Check for valid target.
-		if (target and target.lootable) then
+		if (target and ( target.lootable or target.interactable ) ) then
 			
 			-- We are in range to loot
 			if (target.isInInteractRange) then
 				gw2_common_functions.NecroLeaveDeathshroud()
 				ml_log(": Interacting started.")
-				if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
+				if ( ml_global_information.Player_IsMoving and target.distance < 30 ) then Player:StopMovement() end -- isInInteractRange is sometimes too far to loot after opening chest
 				Player:Interact(target.id)
-			
+				
 			-- Loot not in range, walk there.			
 			else
 				ml_log(": Walking to Chest.")
@@ -482,15 +487,16 @@ function e_Looting:execute()
 				-- Moving to target position.
 				local tPos = target.pos
 				if ( not gw2_unstuck.HandleStuck() ) then
-					Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,false,false)
+					Player:MoveTo(tPos.x,tPos.y,tPos.z,25,false,false,false)
 				end
 			end		
 		end
+	else
+		-- Target gone? Stop moving and delete target.
+		if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
+		ml_log(": Looting done.")
+		c_Looting.target = nil
 	end
-	-- Target gone? Stop moving and delete target.
-	if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
-	ml_log(": Looting done.")
-	c_Looting.target = nil
 end
 
 

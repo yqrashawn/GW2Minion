@@ -52,7 +52,7 @@ function c_vendorsell:evaluate()
 	return false
 end
 function e_vendorsell:execute()
-	ml_log("e_need_salvage")
+	ml_log("e_vendorsell")
 	local vendorMarker = gw2_sell_manager.getClosestSellMarker()
 	if (vendorMarker and vendorMarker.characterID) then
 		if (gw2_sell_manager.sellAtVendor(vendorMarker)) then
@@ -74,7 +74,7 @@ function c_quickvendorsell:evaluate()
 	return false
 end
 function e_quickvendorsell:execute()
-	ml_log("e_need_salvage")
+	ml_log("e_quickvendorsell")
 	local vendorMarker = gw2_sell_manager.getClosestSellMarker(true)
 	if (vendorMarker and vendorMarker.characterID) then
 		if (gw2_sell_manager.sellAtVendor(vendorMarker)) then

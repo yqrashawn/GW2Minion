@@ -41,6 +41,11 @@ function gw2_task_gather:Init()
 	
 	-- Normal elements	
 	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 350 ), self.process_elements)	-- creates subtask: moveto
+	
+	self:add(ml_element:create( "Quickvendorsell", c_quickvendorsell, e_quickvendorsell, 335 ), self.process_elements)
+	self:add(ml_element:create( "Vendor-Sell", c_vendorsell, c_vendorsell, 330 ), self.process_elements)
+	
+	
 	-- Revive other Players
 	self:add(ml_element:create( "RevivePlayer", c_reviveDownedPlayersInCombat, e_reviveDownedPlayersInCombat, 300 ), self.process_elements)	-- creates subtask: moveto
 	
