@@ -491,7 +491,7 @@ function _private.CreateSkill(skillList,skillSlot)
 							groundTargeted	= (skillInfo.isGroundTargeted == true and "1" or "0"),
 							healing			= "0",
 							los				= "1",
-							setRange		= "1",
+							setRange		= (tonumber(skillSlot) >= 1 and tonumber(skillSlot) <= 5 and "1" or "0"),
 							minRange		= skillInfo.minRange or 0,
 							maxRange		= skillInfo.maxRange or 0,
 							radius			= skillInfo.radius or 0,
@@ -913,6 +913,7 @@ function _private.Delete()
 	gw2_skill_manager.profile = nil
 	Settings.GW2Minion.gCurrentProfile = "None"
 	gw2_skill_manager.MainWindow()
+	gw2_skill_manager.SkillEditWindow()
 end
 
 function _private.DetectSkills(newProfile)
