@@ -385,8 +385,8 @@ function gw2_skill_manager.SkillEditWindow(skill)
 			SklMgr_MaxPower = lSkill.player.maxPower
 			SklMgr_MinEndurance = lSkill.player.minEndurance
 			SklMgr_MaxEndurance = lSkill.player.maxEndurance
-			SklMgr_AllyCount = lSkill.skill.allyNearCount
-			SklMgr_AllyRange = lSkill.skill.allyRangeMax
+			SklMgr_AllyCount = lSkill.player.allyNearCount
+			SklMgr_AllyRange = lSkill.player.allyRangeMax
 			SklMgr_PHasBuffs = lSkill.player.hasBuffs
 			SklMgr_PHasNotBuffs = lSkill.player.hasNotBuffs
 			SklMgr_PCondCount = lSkill.player.conditionCount
@@ -395,8 +395,8 @@ function gw2_skill_manager.SkillEditWindow(skill)
 			SklMgr_Type = lSkill.target.type
 			SklMgr_TMinHP = lSkill.target.minHP
 			SklMgr_TMaxHP = lSkill.target.maxHP
-			SklMgr_EnemyCount = lSkill.skill.enemyNearCount
-			SklMgr_EnemyRange = lSkill.skill.enemyRangeMax
+			SklMgr_EnemyCount = lSkill.target.enemyNearCount
+			SklMgr_EnemyRange = lSkill.target.enemyRangeMax
 			SklMgr_Moving = lSkill.target.moving
 			SklMgr_THasBuffs = lSkill.target.hasBuffs
 			SklMgr_THasNotBuffs = lSkill.target.hasNotBuffs
