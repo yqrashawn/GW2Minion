@@ -616,6 +616,29 @@ strings =
 		
 		--taskmanager
 		customTasks						= "CustomTasks",
+		taskManager						= "TaskManager",
+		taskEditor						= "TaskEditor",
+		tasks							= "Current Tasks",
+		taskSetupTasks					= "Setup Tasks",
+		taskAddTask						= "Add New Task",
+		taskNewTaskProfile				= "Create New Profile",
+		taskStartConditions				= "Start Conditions",
+		taskCustomConditions			= "Custom Conditions",
+		taskType						= "Type",
+		taskPreTaskIDsComplete			= "PreTaskID Completed",
+		taskStartMapID					= "Start MapID",
+		taskStartMapPos					= "Start MapPosition",
+		taskUseCurretPos				= "Update Position & MapID",
+		taskMinLvl						= "Min PlayerLevel",
+		taskMaxLvl						= "Max PlayerLevel",
+		taskMinDuration					= "Min Task Duration",
+		taskMaxDuration					= "Max Task Duration",
+		taskCoolDownDuration			= "Task Cooldown",
+		taskPartySize					= "Min PartySize",
+		taskDeleteTask					= "Delete Task",
+		taskMoveDownTask				= "Move Task Down",
+		taskMoveUpTask					= "Move Task Up",
+		
     },                                  
     ["cn"] =                            
     {                               

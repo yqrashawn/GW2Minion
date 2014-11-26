@@ -460,31 +460,6 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 	end
 end
 
-function ml_global_information.Reset()
-    ml_task_hub:ClearQueues()
-	if (gBotMode ~= nil) then
-		local task = ml_global_information.BotModes[gBotMode]
-		if (task ~= nil) then			
-			ml_task_hub:Add(task.Create(), LONG_TERM_GOAL, TP_ASAP)
-			return true
-		end
-    end
-	return false
-end
-
-function ml_global_information.Stop()
-    if (Player:IsMoving()) then
-        Player:StopMovement()
-    end
-	c_movetorandom.randompoint = nil
-	c_movetorandom.randompointreached = false
-	gw2_unstuck.Reset()
-end
-
-function ml_global_information.Wait( mseconds )
-	ml_global_information.Lasttick = ml_global_information.Lasttick + mseconds
-	
-end
 
 -- To add a task to the BotMode Dropdown
 function ml_global_information.AddBotMode( botmode, task )

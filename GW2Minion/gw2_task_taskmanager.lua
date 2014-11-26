@@ -1,6 +1,6 @@
 -- TM Task , to run it in the main loop
 gw2_task_taskmanager = inheritsFrom(ml_task)
-gw2_task_taskmanager.name = GetString("grindMode")
+gw2_task_taskmanager.name = GetString("customTasks")
 
 function gw2_task_taskmanager.Create()
 	local newinst = inheritsFrom(gw2_task_taskmanager)
@@ -28,7 +28,7 @@ function gw2_task_taskmanager:UIInit()
 	d("gw2_task_taskmanager:UIInit")
 	local mw = WindowManager:GetWindow(gw2minion.MainWindow.Name)
 	if ( mw ) then	
-		mw:NewButton(GetString("Setup Tasks"),"gw2_task_taskmanager.Toggle",GetString("taskManager"))
+		mw:NewButton(GetString("taskSetupTasks"),"gw2_task_taskmanager.Toggle",GetString("taskManager"))
 		RegisterEventHandler("gw2_task_taskmanager.Toggle", ml_task_mgr.ToggleMenu)
 		mw:UnFold(GetString("taskManager"))
 	end	

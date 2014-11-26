@@ -2,12 +2,11 @@
 -- ml_task_mgr.AddTaskType( botmodename, task )  : to add a task to the dropdown "type" box
 -- Each task which needs custom variables, add (example):
 -- function gw2_task_grind:UIInit_TM()
--- Which creates TaskSettings elements:
+-- Which creates taskCustomConditions elements:
 -- 	ml_task_mgr.NewField("testfield", "beer")
 --	ml_task_mgr.NewNumeric("testnum", "vodka")
 --	ml_task_mgr.NewCombobox("testcbox", "whiskey", "A,B,C")
 -- On creation of the task, these custom variables "beer" will be set in the newinstance of the task, example newinstance.beer / gw2_task_grind.beer
-
 
 
 ml_task_mgr = {}
@@ -35,16 +34,14 @@ function ml_UITask.Create()
 	newinst.type = nil
 	newinst.requiredTaskIDsCompleted = nil
 	newinst.name = ""
-	newinst.completed = false
-	newinst.startMapName = ""
+	newinst.completed = false	
 	newinst.startMapID = ""
 	newinst.startMapPosition = ""
 	newinst.minLevel = 0
 	newinst.maxLevel = 80
 	newinst.minDuration = 0
 	newinst.maxDuration = 9999
-	newinst.cooldownDuration = 0
-	newinst.profession = nil
+	newinst.cooldownDuration = 0	
 	newinst.partyPlayerCount = 0
 	newinst.customVars = {}
     return newinst
@@ -195,14 +192,14 @@ function ml_task_mgr.CreateMainWindow()
 			-- Settings section
 			mainWindow:NewComboBox(GetString("profile"),"gTMCurrentProfileName",GetString("settings"),"")
 			gTMCurrentProfileName = Settings.GW2Minion.gCurrentTaskProfile
-			mainWindow:NewButton(GetString("newTaskProfile"),"gTMnewTaskProfile",GetString("settings"))
+			mainWindow:NewButton(GetString("taskNewTaskProfile"),"gTMnewTaskProfile",GetString("settings"))
 			RegisterEventHandler("gTMnewTaskProfile",function() ml_task_mgr.CreateDialog(GetString("newTaskProfileName"),ml_task_mgr.newTaskProfile) end)
 			
 			-- Main window elements
 			mainWindow:NewButton(GetString("saveProfile"),"gTMprofile")
 			RegisterEventHandler("gTMprofile",ml_task_mgr.SaveProfile)
 			
-			mainWindow:NewButton(GetString("addTask"),"gTMaddTask")
+			mainWindow:NewButton(GetString("taskAddTask"),"gTMaddTask")
 			RegisterEventHandler("gTMaddTask",ml_task_mgr.AddNewTask)
 			
 			mainWindow:UnFold(GetString("settings"))
@@ -235,24 +232,43 @@ function ml_task_mgr.CreateEditWindow()
 		local editWindow = WindowManager:NewWindow(ml_task_mgr.editWindow.name,ml_task_mgr.editWindow.x,ml_task_mgr.editWindow.y,ml_task_mgr.editWindow.w,ml_task_mgr.editWindow.h,true)
 		if (editWindow) then
 			-- Buttons
-			editWindow:NewButton(GetString("smDeletetask"),"gTMdeletetask")
+			editWindow:NewButton(GetString("taskDeleteTask"),"gTMdeletetask")
 			RegisterEventHandler("gTMdeletetask",ml_task_mgr.DeleteTask)
-			editWindow:NewButton(GetString("smMoveDowntask"),"gTMMoveTaskDown")
+			editWindow:NewButton(GetString("taskMoveDownTask"),"gTMMoveTaskDown")
 			RegisterEventHandler("gTMMoveTaskDown",ml_task_mgr.MoveTaskDown)
-			editWindow:NewButton(GetString("smMoveUptask"),"gTMMoveTaskUp")
+			editWindow:NewButton(GetString("taskMoveUpTask"),"gTMMoveTaskUp")
 			RegisterEventHandler("gTMMoveTaskUp",ml_task_mgr.MoveTaskUp)
 
 			-- Tasks
 			editWindow:NewField(GetString("name"),"TM_Name",GetString("task"))
-			editWindow:NewComboBox(GetString("type"),"TM_Type",GetString("task"),"")
+			editWindow:NewComboBox(GetString("taskType"),"TM_Type",GetString("task"),"")
 			TM_Type_listitems = ml_task_mgr.GetTasksAsString()
-			
-			editWindow:UnFold(GetString("task"))		
-			
+			editWindow:NewField(GetString("taskPreTaskIDsComplete"),"TM_PreTaskIDs",GetString("taskStartConditions"))
+			editWindow:NewField(GetString("taskStartMapID"),"TM_MapID",GetString("taskStartConditions"))
+			editWindow:NewField(GetString("taskStartMapPos"),"TM_MapPos",GetString("taskStartConditions"))
+			editWindow:NewButton(GetString("taskUseCurretPos"),"gTMUseMyPos",GetString("taskStartConditions"))
+			RegisterEventHandler("gTMUseMyPos",ml_task_mgr.UpdateTaskPositionData)
+			--newinst.completed = false
+			editWindow:NewNumeric(GetString("taskMinLvl"),"TM_MinLvl",GetString("taskStartConditions"),0,80)
+			editWindow:NewNumeric(GetString("taskMaxLvl"),"TM_MaxLvl",GetString("taskStartConditions"),0,80)
+			--editWindow:NewNumeric(GetString("taskMinDuration"),"TM_MinDuration",GetString("taskStartConditions"))
+			editWindow:NewNumeric(GetString("taskMaxDuration"),"TM_MaxDuration",GetString("taskStartConditions"))
+			editWindow:NewNumeric(GetString("taskCoolDownDuration"),"TM_CoolDownDuration",GetString("taskStartConditions"))
+			editWindow:NewNumeric(GetString("taskPartySize"),"TM_PartyPlayerCount",GetString("taskStartConditions"))
+									
+			editWindow:UnFold(GetString("task"))
+			editWindow:UnFold(GetString("taskStartConditions"))
+						
 			editWindow:Hide()
 		end
 	end
 end
+-- Updates StartMapID & StartMap Position in the current task
+function ml_task_mgr.UpdateTaskPositionData()
+	TM_MapPos = tostring(math.floor(ml_global_information.Player_Position.x)).."/"..tostring(math.floor(ml_global_information.Player_Position.y)).."/"..tostring(math.floor(ml_global_information.Player_Position.z))
+	TM_MapID = ml_global_information.CurrentMapID
+end
+
 function ml_task_mgr.DeleteTask()
 	if ( ml_task_mgr.currenttask and ml_task_mgr.profile.tasks[ml_task_mgr.currenttask]) then 
 		table.remove(ml_task_mgr.profile.tasks, ml_task_mgr.currenttask)
@@ -321,8 +337,14 @@ function ml_task_mgr.UpdateEditWindow(arg)
 		TM_Prio = task.priority
 		TM_Name = task.name
 		TM_Type = task.type or ""
-		
-		
+		TM_PreTaskIDs = task.pretaskid or ""
+		TM_MapID = task.mapid or ""
+		TM_MapPos = task.mappos or ""
+		TM_MinLvl = task.minlvl or 0
+		TM_MaxLvl = task.maxlvl or 80
+		TM_MaxDuration = task.maxduration or 0
+		TM_CoolDownDuration = task.cooldown or 0
+		TM_PartyPlayerCount = task.partysize or 0
 		
 		ml_task_mgr.UpdateTaskUIforType()
 		
@@ -337,21 +359,21 @@ function ml_task_mgr.UpdateTaskUIforType()
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile) then
 		
-		editWindow:DeleteGroup(GetString("taskSettings")) -- clear the old settings
+		editWindow:DeleteGroup(GetString("taskCustomConditions")) -- clear the old settings
 		local task = ml_task_mgr.taskTypes[TM_Type]
 		if ( task ) then
-			task:UIInit_TM() -- calls the task's UI Init function to populate the taskSettings group
-			editWindow:UnFold(GetString("taskSettings"))
+			task:UIInit_TM() -- calls the task's UI Init function to populate the taskCustomConditions group
+			editWindow:UnFold(GetString("taskCustomConditions"))
 		else
 			d("Unknown Tasktype selected?")
 		end
 	end	
 end
--- "API"-Functions to create UI elements in the taskSettings section
+-- "API"-Functions to create UI elements in the taskCustomConditions section
 function ml_task_mgr.NewField(label,globalvar)
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile and ValidString(label) and ValidString(globalvar)) then
-		editWindow:NewField(label,"TM_TASK_"..globalvar,GetString("taskSettings"))				
+		editWindow:NewField(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"))				
 		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil) then -- set the existing values
 			_G["TM_TASK_"..globalvar] = ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar].value
 		else -- create a new default entry		
@@ -362,7 +384,7 @@ end
 function ml_task_mgr.NewNumeric(label,globalvar)
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile and ValidString(label) and ValidString(globalvar)) then
-		editWindow:NewNumeric(label,"TM_TASK_"..globalvar,GetString("taskSettings"))
+		editWindow:NewNumeric(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"))
 		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil ) then -- set the existing values
 			_G["TM_TASK_"..globalvar] = ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar].value
 		else -- create a new default entry		
@@ -373,7 +395,7 @@ end
 function ml_task_mgr.NewCombobox(label,globalvar,liststring)
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile and ValidString(label) and ValidString(globalvar) and ValidString(liststring)) then
-		editWindow:NewComboBox(label,"TM_TASK_"..globalvar,GetString("taskSettings"),liststring)
+		editWindow:NewComboBox(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"),liststring)
 		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil ) then -- set the existing values
 			_G["TM_TASK_"..globalvar] = ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar].value
 		else -- create a new default entry	
@@ -385,7 +407,7 @@ end
 function ml_task_mgr.NewComboBox(label,globalvar,callbackfunc)
 	--[[local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile and ValidString(label) and ValidString(globalvar) and callbackfunc ~= nil) then
-		editWindow:NewButton(label,"TM_TASK_"..globalvar,GetString("taskSettings"))
+		editWindow:NewButton(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"))
 		RegisterEventHandler("TM_TASK_"..globalvar,callbackfunc) -- this should register only once a func to one global var ...not sure if that works
 		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil ) then -- set the existing values
 			_G["TM_TASK_"..globalvar] = ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar].value
@@ -404,7 +426,16 @@ function ml_task_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 		if ( k == "TM_Name" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].name = v
 		elseif ( k == "TM_Prio" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].priority = v
 		elseif ( k == "TM_Type" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].type = v ml_task_mgr.UpdateTaskUIforType()
-					
+		elseif ( k == "TM_PreTaskIDs" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].pretaskid = v
+		elseif ( k == "TM_MapID" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].mapid = v
+		elseif ( k == "TM_MapPos" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].TM_MapID = v
+		elseif ( k == "TM_MinLvl" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].minlvl = v
+		elseif ( k == "TM_MaxLvl" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].maxlvl = v
+		elseif ( k == "TM_MaxDuration" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].maxduration = v
+		elseif ( k == "TM_CoolDownDuration" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].cooldown = v
+		elseif ( k == "TM_PartyPlayerCount" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].partysize = v
+
+		
 		--	if (v == "true") then v = true elseif (v == "false") then v = false end
 		--	if (tonumber(v) ~= nil) then v = tonumber(v) end
 					

@@ -161,14 +161,21 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck()
 					gw2_unstuck.jumpCount = gw2_unstuck.jumpCount + 1
 					Player:Jump()
 					
-				elseif( gw2_unstuck.jumpCount <= 6 ) then
+				elseif( gw2_unstuck.jumpCount <= 5 ) then
 					d("Jump forward-sideways")				
 					gw2_unstuck.stuckthreshold = 125				
 					local dir = math.random(2,3)
 					Player:SetMovement(dir)
 					gw2_unstuck.jumpCount = gw2_unstuck.jumpCount + 1									
 					Player:Jump()
-								
+				
+				elseif( gw2_unstuck.jumpCount <= 7 ) then
+					d("Jump forward-sideways")				
+					gw2_unstuck.stuckthreshold = 125				
+					local dir = math.random(4,5)
+					gw2_unstuck.jumpCount = gw2_unstuck.jumpCount + 1									
+					Player:Evade(dir)
+				
 				else
 					d("Jumping didnt help, setting avoidance area and walking somewhere else a bit")
 					gw2_unstuck.stuckthreshold = 170

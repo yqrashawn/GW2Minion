@@ -112,6 +112,15 @@ function gw2_task_gather.ModuleInit()
 	ml_task_mgr.AddTaskType(GetString("gatherMode"), gw2_task_gather) -- Allow this task to be selectable in TaskManager
 end
 
+-- TaskManager functions
+function gw2_task_gather:UIInit_TM()
+	ml_task_mgr.NewNumeric("lalatest", "haha")
+	
+end
+
+
+
+
 -- for Creating this task as subtask
 c_GatherTask = inheritsFrom( ml_cause )
 e_GatherTask = inheritsFrom( ml_effect )
