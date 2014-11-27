@@ -589,9 +589,8 @@ function ml_task_mgr.GetNextTask()
 						
 			local p,nextTask = next(ml_task_mgr.profile.tasks,prio)
 			-- start from top of our profilelist again if we reached the bottom
-			if ( prio ~= nil and not p ) then 
-				prio = nil 
-				p,nextTask = next(ml_task_mgr.profile.tasks,prio)
+			if ( prio ~= nil and not p ) then
+				p,nextTask = next(ml_task_mgr.profile.tasks)
 			end
 			-- get the next task from profile
 			while ( p and nextTask ) do
