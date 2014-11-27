@@ -114,9 +114,21 @@ function gw2_task_grind.ModuleInit()
 	ml_task_mgr.AddTaskType(GetString("grindMode"), gw2_task_grind) -- Allow this task to be selectable in TaskManager
 end
 
-
-
-
+-- TaskManager functions
+function gw2_task_grind:UIInit_TM()
+	ml_task_mgr.NewField("testfield", "beer")
+	ml_task_mgr.NewNumeric("testnum", "vodka")
+	ml_task_mgr.NewCombobox("testcbox", "whiskey", "A,B,C")
+	
+end
+-- TaskManager function: Checks for custom conditions to start this task
+function gw2_task_grind.CanTaskStart_TM()
+	return true
+end
+-- TaskManager function: Checks for custom conditions to keep this task running
+function gw2_task_grind.CanTaskRun_TM()
+	return true
+end
 
 --------- Creates a new IMMEDIATE_GOAL task to kill an enemy when we are fighting our way towards the current grindmarker
 c_FightToGrindMarker = inheritsFrom( ml_cause )
@@ -289,13 +301,7 @@ end
 
 
 
--- TaskManager functions
-function gw2_task_grind:UIInit_TM()
-	ml_task_mgr.NewField("testfield", "beer")
-	ml_task_mgr.NewNumeric("testnum", "vodka")
-	ml_task_mgr.NewCombobox("testcbox", "whiskey", "A,B,C")
-	
-end
+
 
 ml_global_information.AddBotMode(GetString("grindMode"), gw2_task_grind)
 RegisterEventHandler("Module.Initalize",gw2_task_grind.ModuleInit)

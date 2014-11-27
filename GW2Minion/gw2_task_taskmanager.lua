@@ -20,7 +20,69 @@ function gw2_task_taskmanager:Init()
 end
 
 function gw2_task_taskmanager:Process()
-	d("gw2_task_taskmanager:Process")
+	
+	local mytask = ml_task_mgr.GetCurrentTask()
+	
+	
+	if ( not mytask ) then
+d("No current active task or current task doesnt meet the run-conditions anymore, getting the next task")
+		mytask = ml_task_mgr.GetNextTask()		
+	end
+	
+	if ( not mytask ) then 
+		d("TaskManager has no startable task left")
+		ml_global_information.Stop()
+		ml_global_information.Wait(5000)
+	else
+		
+		-- New task, move to starting position first
+		if ( not mytask.started ) then
+			if ( mytask.mapid ~= ml_global_information.CurrentMapID ) then
+				d("MYMAPID: "..tostring(mytask.mapid))
+				local pos = ml_nav_manager.GetNextPathPos(	ml_global_information.Player_Position, ml_global_information.CurrentMapID, mytask.mapid )
+				
+				if (ValidTable(pos)) then
+					local newTask = gw2_task_navtomap.Create()
+					newTask.targetMapID = mytask.mapid
+					newTask.name = "MoveTo Task StartMap"
+					ml_task_hub:CurrentTask():AddSubTask(newTask)
+									
+				else
+					ml_error("Cannot reach StartMap of Task, disabling Task : "..mytask.name)
+					ml_task_mgr.SetTaskDisabled(mytask)
+					
+				end
+				
+			else
+								
+				local startPos = {}
+				for pos in StringSplit(mytask.mappos,"/") do
+					table.insert(startPos,pos)
+				end
+				
+				local dist = Distance3D(startPos[1],startPos[2],startPos[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
+				d("Distance to TaskStartPosition : "..tostring(dist))
+				if ( dist > 50 ) then
+					local newTask = gw2_task_moveto.Create()
+					newTask.name = "MoveTo Task StartPosition"
+					newTask.targetPos = { x=tonumber(startPos[1]), y=tonumber(startPos[2]), z=tonumber(startPos[3]) }
+					ml_task_hub:CurrentTask():AddSubTask(newTask)
+					
+				else
+					d("Task Startposition reached, starting task...")
+					ml_task_mgr.SetActiveTaskStarted()
+				end
+				
+			end
+			
+		else
+		-- Do task
+			ml_log( mytask.name.."("..tostring(math.floor((ml_global_information.Now - mytask.startTimer)/1000)).."s/"..tostring(mytask.maxduration).."s)")
+			
+			
+		end
+	
+	end
 		
 end
 

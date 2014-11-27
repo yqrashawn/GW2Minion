@@ -17,6 +17,10 @@ ml_task_mgr.currentTask = nil
 ml_task_mgr.path = GetStartupPath() .. [[\LuaMods\GW2Minion\TaskManagerProfiles\]]
 ml_task_mgr.taskTypes = {}
 
+-- For Handling Tasks
+ml_task_mgr.taskHistory = {}
+ml_task_mgr.activeTask = nil
+
 function ml_task_mgr.ModuleInit()
 	-- Set Default Profile
 	if (Settings.GW2Minion.gCurrentTaskProfile == nil) then
@@ -31,18 +35,19 @@ function ml_UITask.Create()
 	local newinst = inheritsFrom( ml_UITask )
 	newinst.id = nil
 	newinst.priority = nil
-	newinst.type = nil
-	newinst.requiredTaskIDsCompleted = nil
+	newinst.type = GetString("grindMode")
+	newinst.pretaskid = nil
 	newinst.name = ""
-	newinst.completed = false	
-	newinst.startMapID = ""
-	newinst.startMapPosition = ""
-	newinst.minLevel = 0
-	newinst.maxLevel = 80
-	newinst.minDuration = 0
-	newinst.maxDuration = 9999
-	newinst.cooldownDuration = 0	
-	newinst.partyPlayerCount = 0
+	newinst.enabled = "1"
+	newinst.complete = false
+	newinst.mapid = ""	--startmapid
+	newinst.mappos = "" --startmappos
+	newinst.minlvl = 0
+	newinst.maxlvl = 80
+	newinst.minduration = 0
+	newinst.maxduration = 9999
+	newinst.cooldown = 0	
+	newinst.partysize = 0
 	newinst.customVars = {}
     return newinst
 end
@@ -77,7 +82,7 @@ function ml_UITaskProfile:Save()
 		currentTaskID = self.currentTaskID,
 		tasks = {}
 	}
-	for priority=1,TableSize(self.tasks) do
+	for priority=1,TableSize(self.tasks) do		
 		saveFile.tasks[priority] = self.tasks[priority]
 	end
 	persistence.store(ml_task_mgr.path .. self.name .. ".lua", saveFile)
@@ -122,13 +127,14 @@ function ml_task_mgr.InitProfile(profileName)
 				local newtask = ml_UITask.Create()
 				newtask = deepcopy(task)
 				ml_task_mgr.profile.tasks[newtask.priority] = newtask
-				
-				-- loading custom tasksetting variables
+
+				--[[ loading custom tasksetting variables				
 				if ( TableSize(ml_task_mgr.profile.tasks[newtask.priority].customVars) > 0 ) then
-					for globalvar,entry in pairs(newProfile.tasks) do
+					for globalvar,entry in pairs(newProfile.tasks[newtask.priority].customVars) do
+						d("WHAT : "..tostring(globalvar) .." :: "..tostring(entry.value))
 						_G[globalvar] = entry.value
 					end
-				end				
+				end]]
 			end
 		end 
 	
@@ -218,8 +224,12 @@ function ml_task_mgr.UpdateMainWindow()
 		if (ml_task_mgr.profile) then	
 			
 			for prio, task in pairs (ml_task_mgr.profile.tasks) do				
-				mainWindow:NewButton("ID "..task.id..": ".. task.name,"TM"..task.priority,GetString("tasks"))
-				RegisterEventHandler("TM"..task.priority,ml_task_mgr.UpdateEditWindow)
+				if ( task.enabled == "0" ) then 
+					mainWindow:NewButton("ID "..task.id..": ".. task.name.." (Disabled)","TM"..task.priority,GetString("tasks"))
+				else
+					mainWindow:NewButton("ID "..task.id..": ".. task.name,"TM"..task.priority,GetString("tasks"))
+				end
+				RegisterEventHandler("TM"..task.priority,ml_task_mgr.UpdateEditWindow)								
 			end
 			mainWindow:UnFold(GetString("tasks"))
 		end
@@ -242,13 +252,13 @@ function ml_task_mgr.CreateEditWindow()
 			-- Tasks
 			editWindow:NewField(GetString("name"),"TM_Name",GetString("task"))
 			editWindow:NewComboBox(GetString("taskType"),"TM_Type",GetString("task"),"")
+			editWindow:NewCheckBox(GetString("enabled"),"TM_Enabled",GetString("task"))			
 			TM_Type_listitems = ml_task_mgr.GetTasksAsString()
 			editWindow:NewField(GetString("taskPreTaskIDsComplete"),"TM_PreTaskIDs",GetString("taskStartConditions"))
 			editWindow:NewField(GetString("taskStartMapID"),"TM_MapID",GetString("taskStartConditions"))
 			editWindow:NewField(GetString("taskStartMapPos"),"TM_MapPos",GetString("taskStartConditions"))
 			editWindow:NewButton(GetString("taskUseCurretPos"),"gTMUseMyPos",GetString("taskStartConditions"))
-			RegisterEventHandler("gTMUseMyPos",ml_task_mgr.UpdateTaskPositionData)
-			--newinst.completed = false
+			RegisterEventHandler("gTMUseMyPos",ml_task_mgr.UpdateTaskPositionData)			
 			editWindow:NewNumeric(GetString("taskMinLvl"),"TM_MinLvl",GetString("taskStartConditions"),0,80)
 			editWindow:NewNumeric(GetString("taskMaxLvl"),"TM_MaxLvl",GetString("taskStartConditions"),0,80)
 			--editWindow:NewNumeric(GetString("taskMinDuration"),"TM_MinDuration",GetString("taskStartConditions"))
@@ -267,6 +277,8 @@ end
 function ml_task_mgr.UpdateTaskPositionData()
 	TM_MapPos = tostring(math.floor(ml_global_information.Player_Position.x)).."/"..tostring(math.floor(ml_global_information.Player_Position.y)).."/"..tostring(math.floor(ml_global_information.Player_Position.z))
 	TM_MapID = ml_global_information.CurrentMapID
+	ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].mapid = TM_MapID
+	ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].mappos = TM_MapPos
 end
 
 function ml_task_mgr.DeleteTask()
@@ -336,7 +348,8 @@ function ml_task_mgr.UpdateEditWindow(arg)
 		TM_ID = task.id
 		TM_Prio = task.priority
 		TM_Name = task.name
-		TM_Type = task.type or ""
+		TM_Enabled = task.enabled or "1"
+		TM_Type = task.type or GetString("grindMode") or ""
 		TM_PreTaskIDs = task.pretaskid or ""
 		TM_MapID = task.mapid or ""
 		TM_MapPos = task.mappos or ""
@@ -358,8 +371,8 @@ end
 function ml_task_mgr.UpdateTaskUIforType()
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile) then
-		
-		editWindow:DeleteGroup(GetString("taskCustomConditions")) -- clear the old settings
+				
+		editWindow:DeleteGroup(GetString("taskCustomConditions")) -- clear the old settings		
 		local task = ml_task_mgr.taskTypes[TM_Type]
 		if ( task ) then
 			task:UIInit_TM() -- calls the task's UI Init function to populate the taskCustomConditions group
@@ -372,11 +385,13 @@ end
 -- "API"-Functions to create UI elements in the taskCustomConditions section
 function ml_task_mgr.NewField(label,globalvar)
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
+
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile and ValidString(label) and ValidString(globalvar)) then
-		editWindow:NewField(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"))				
-		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil) then -- set the existing values
+		editWindow:NewField(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"))
+
+		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil ) then -- set the existing values			
 			_G["TM_TASK_"..globalvar] = ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar].value
-		else -- create a new default entry		
+		else -- create a new default entry			
 			ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] = { type = "Field", value = "" }
 		end
 	end
@@ -426,9 +441,10 @@ function ml_task_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 		if ( k == "TM_Name" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].name = v
 		elseif ( k == "TM_Prio" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].priority = v
 		elseif ( k == "TM_Type" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].type = v ml_task_mgr.UpdateTaskUIforType()
+		elseif ( k == "TM_Enabled" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].enabled = v
 		elseif ( k == "TM_PreTaskIDs" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].pretaskid = v
 		elseif ( k == "TM_MapID" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].mapid = v
-		elseif ( k == "TM_MapPos" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].TM_MapID = v
+		elseif ( k == "TM_MapPos" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].mappos = v
 		elseif ( k == "TM_MinLvl" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].minlvl = v
 		elseif ( k == "TM_MaxLvl" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].maxlvl = v
 		elseif ( k == "TM_MaxDuration" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].maxduration = v
@@ -526,6 +542,7 @@ function ml_task_mgr.GetTasksAsString() -- for combobox
 	return typestring
 end
 
+-- Adds a task to be available in the taskmanager
 function ml_task_mgr.AddTaskType( botmode, task )
 	ml_task_mgr.taskTypes[botmode] = task
 end
@@ -535,8 +552,148 @@ end
 --*********************************
 -- TM Logic and execution functions
 --*********************************
+-- Gets the current active task
+function ml_task_mgr.GetCurrentTask()
+	if ( ml_task_mgr.activeTask == nil or not ml_task_mgr.CanActiveTaskRun() ) then
+		return nil
+	end
+	return ml_task_mgr.activeTask
+end
 
+-- Checks if the currently active task is still valid to run / checks all "running" conditions
+function ml_task_mgr.CanActiveTaskRun()
+	-- Wait until the start map and position were reached
+	if ( ml_task_mgr.activeTask.started == false ) then return true end
+	
+	-- Checking Conditions	
+	if ( ml_global_information.Now - ml_task_mgr.activeTask.startTimer > tonumber(ml_task_mgr.activeTask.maxduration)*1000
+		or ( ml_task_mgr.activeTask.CanTaskRun_TM ~= nil and not ml_task_mgr.activeTask.CanTaskRun_TM() )) then
+		
+		d("Task : "..ml_task_mgr.activeTask.name.." finished. Task Duration: "..tostring(math.floor((ml_global_information.Now - ml_task_mgr.activeTask.startTimer)/1000)).." > "..tostring(ml_task_mgr.activeTask.maxduration))
+		
+		-- Enter it into our ml_task_mgr.taskHistory tabls
+		ml_task_mgr.taskHistory[ml_task_mgr.activeTask.id] = ml_global_information.Now
+		
+		return false
+	end
+	
+	return true
+end
 
+-- Returns the next valid task in our tasklist or nil if none is found
+function ml_task_mgr.GetNextTask()
+	if (ml_task_mgr.profile ~= nil ) then
+		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then
+			local prio = nil
+			if ( ml_task_mgr.activeTask ) then prio = ml_task_mgr.activeTask.priority end 
+						
+			local p,nextTask = next(ml_task_mgr.profile.tasks,prio)
+			-- start from top of our profilelist again if we reached the bottom
+			if ( prio ~= nil and not p ) then 
+				prio = nil 
+				p,nextTask = next(ml_task_mgr.profile.tasks,prio)
+			end
+			-- get the next task from profile
+			while ( p and nextTask ) do
+				if ( nextTask.enabled == "1" and ml_task_mgr.CanTaskStart(nextTask) ) then
+					break
+				end
+				p,nextTask = next(ml_task_mgr.profile.tasks,p)
+			end
+			if ( nextTask ) then
+				ml_task_mgr.activeTask = nil
+				ml_task_mgr.activeTask = ml_task_mgr.taskTypes[nextTask.type].Create()
+				ml_task_mgr.activeTask.startTimer = ml_global_information.Now
+				ml_task_mgr.activeTask.started = false
+				-- Load TM data into task
+				for key,entry in pairs(nextTask) do
+					ml_task_mgr.activeTask[key] = entry
+				end
+				-- Load custom fields into task
+				if ( TableSize(ml_task_mgr.activeTask.customVars) > 0 ) then				
+					
+					for globalvar,entry in pairs(ml_task_mgr.activeTask.customVars) do
+						local sPos = string.find(globalvar, "TM_TASK_") 
+						if ( sPos ) then
+							local vname = string.sub(globalvar,9)						
+							--d("Setting Task value : "..tostring(vname) .." == "..tostring(entry.value))
+							ml_task_mgr.activeTask[vname] = entry.value
+							
+						end
+					end
+				end				
+				return ml_task_mgr.activeTask
+			else				
+				ml_error("TaskManager Profile Selection has no next tasks !")
+			end			
+		else
+			ml_error("TaskManager Profile has no tasks setup!")
+		end
+	else
+		ml_error("No TaskManager Profile loaded or setup!")
+	end	
+	return nil
+end
+
+-- Returns true/false if a task in our profile meets all starting conditions
+function ml_task_mgr.CanTaskStart(nextTask)
+	
+	if ( nextTask ~= nil ) then
+		
+		if ( nextTask.pretaskid ~= nil and nextTask.pretaskid ~= "" ) then
+			for tid in StringSplit(nextTask.pretaskid,",") do
+				local p,Task = next(ml_task_mgr.profile.tasks)
+				local complete = false
+				while ( p and Task ) do
+					if ( tid == Task.id and Task.complete ) then
+						complete = true
+						break						
+					end					
+					p,Task = next(ml_task_mgr.profile.tasks,p)
+				end
+				if ( not complete ) then
+					return false -- a task needed to be completed was not found/not completed yet
+				end
+			end
+		end
+		if ( tonumber(nextTask.minlvl) > ml_global_information.Player_Level or tonumber(nextTask.maxlvl) < ml_global_information.Player_Level ) then
+			return false
+		end
+		
+		if ( ml_task_mgr.taskHistory[nextTask.id] and ml_global_information.Now - ml_task_mgr.taskHistory[nextTask.id] < tonumber(nextTask.cooldown)*1000 ) then			
+			return false
+		end
+		if ( tonumber(nextTask.partysize) > 0 and tonumber(nextTask.partysize) < TableSize(ml_global_information.Player_Party)) then
+			return false
+		end
+		if ( nextTask.CanTaskStart_TM and not nextTask.CanTaskStart_TM() ) then
+			return false
+		end
+		
+		return true -- all conditions are ok
+	end
+	return false
+end
+-- Set the task.started field to true
+function ml_task_mgr.SetActiveTaskStarted()
+	if (ml_task_mgr.activeTask ~= nil ) then
+		ml_task_mgr.activeTask.started = true
+		ml_task_mgr.activeTask.startTimer = ml_global_information.Now
+	end
+end
+-- Set the task.enabled field to false
+function ml_task_mgr.SetTaskDisabled(activetask)
+	if (ml_task_mgr.profile ~= nil ) then
+		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then						
+			for prio,task in pairs( ml_task_mgr.profile.tasks )do				
+				if ( task.id == activetask.id ) then
+					task.enabled = "0"
+					break
+				end
+			end
+		end
+	end
+end
 
 RegisterEventHandler("Module.Initalize",ml_task_mgr.ModuleInit)
 RegisterEventHandler("GUI.Update",ml_task_mgr.GUIVarUpdate)

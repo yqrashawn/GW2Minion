@@ -117,7 +117,14 @@ function gw2_task_gather:UIInit_TM()
 	ml_task_mgr.NewNumeric("lalatest", "haha")
 	
 end
-
+-- TaskManager function: Checks for custom conditions to start this task
+function gw2_task_gather.CanTaskStart_TM()
+	return true
+end
+-- TaskManager function: Checks for custom conditions to keep this task running
+function gw2_task_gather.CanTaskRun_TM()
+	return true
+end
 
 
 
