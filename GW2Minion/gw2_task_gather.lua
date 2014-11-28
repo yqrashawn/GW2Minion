@@ -180,10 +180,7 @@ function e_GatherTask:execute()
 	ml_log("e_GatherTask")
 	
 	if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
-	
-	-- For TM Conditions
-	ml_task_hub:CurrentTask().lastTargetID = c_GatherTask.target.id
-	
+
 	local newTask = gw2_task_gather.Create()
 	newTask.targetPos = c_GatherTask.target.pos
 	newTask.targetID = c_GatherTask.target.id
@@ -414,6 +411,9 @@ function c_Gathering:evaluate()
 			if ( id and gadget ~= nil ) then
 				ml_task_hub:CurrentTask().targetID = gadget.id
 				ml_task_hub:CurrentTask().targetPos = gadget.pos
+				
+				-- For TM Conditions
+				ml_task_hub:CurrentTask().lastTargetID = ml_task_hub:CurrentTask().targetID
 				
 				if ( ml_global_information.ShowDebug ) then 
 					dbCurrGatherTargetID = ml_task_hub:CurrentTask().targetID or "" 
