@@ -258,11 +258,6 @@ function c_reviveNPC:evaluate()
 end
 function e_reviveNPC:execute()
 	ml_log("ReviveNPC ")
-	
-	if ( Player.castinfo.duration ~= 0 ) then
-		ml_log("Reviving NPC...")
-		return ml_log(true)
-	end
 				
 	local CList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500,exclude="..ml_blacklist.GetExcludeString(GetString("monsters")))
 	if ( TableSize(CList) > 0 ) then
@@ -282,6 +277,10 @@ function e_reviveNPC:execute()
 				end	
 			end
 		
+			if ( Player.castinfo.duration ~= 0 ) then
+				ml_log("Reviving NPC...")
+				return ml_log(true)
+			end
 			if ( not target.isInInteractRange ) then
 				
 				Player:StopMovement()

@@ -18,6 +18,12 @@ function gw2_task_grind.Create()
 	newinst.currentMarker = false
 	newinst.filterLevel = true
 	
+	-- TaskManager fields
+	newinst.maxKills = 0 -- Amount of enemies to kill before task is completed, gets set by TaskManager Custom Conditions
+	newinst.currentKills = 0 -- Counter of current task
+	newinst.lastTargetID = nil -- set this value on each addsubtask(combat), this is used to determine if we killed one or not 
+	newinst.lastTargetType = "character" -- same as above
+
     return newinst
 end
 
@@ -73,7 +79,7 @@ function gw2_task_grind:Init()
 
 	-- Check for attackable Targets
 	self:add(ml_element:create( "GetNextTarget", c_CombatTask, e_CombatTask, 50 ), self.process_elements)
-	
+		
 	-- Move to a Randompoint if there is nothing to fight around us
 	self:add( ml_element:create( "movetorandom", c_movetorandom, e_movetorandom, 25 ), self.process_elements)
 	
@@ -109,6 +115,7 @@ function gw2_task_grind.ModuleInit()
 	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
 	if ( dw ) then
 		dw:NewField("CurrentMarker","dbCurrMarker","Global")
+		dw:NewField("KillCount","dbGrindKillcount","Task_Grind")
 	end
 	
 	ml_task_mgr.AddTaskType(GetString("grindMode"), gw2_task_grind) -- Allow this task to be selectable in TaskManager
@@ -116,9 +123,9 @@ end
 
 -- TaskManager functions
 function gw2_task_grind:UIInit_TM()
-	ml_task_mgr.NewField("testfield", "beer")
-	ml_task_mgr.NewNumeric("testnum", "vodka")
-	ml_task_mgr.NewCombobox("testcbox", "whiskey", "A,B,C")
+	--ml_task_mgr.NewField("maxkills", "beer")
+	ml_task_mgr.NewNumeric("Max Kills", "maxKills")	
+	--ml_task_mgr.NewCombobox("testcbox", "whiskey", "A,B,C")
 	
 end
 -- TaskManager function: Checks for custom conditions to start this task
@@ -127,6 +134,34 @@ function gw2_task_grind.CanTaskStart_TM()
 end
 -- TaskManager function: Checks for custom conditions to keep this task running
 function gw2_task_grind.CanTaskRun_TM()
+			
+	-- Check the maxkill counter
+	if ( ml_task_hub:CurrentTask().maxKills ~= nil and ml_task_hub:CurrentTask().maxKills ~= 0 ) then
+			
+		if ( ml_global_information.ShowDebug ) then 
+			dbGrindKillcount = tostring(ml_task_hub:CurrentTask().currentKills).."/"..tostring(ml_task_hub:CurrentTask().maxKills).." Kills"
+		end
+		
+		ml_log(" "..tostring(ml_task_hub:CurrentTask().currentKills).."/"..tostring(ml_task_hub:CurrentTask().maxKills).." Kills")
+		-- We killed enough
+		if ( tonumber(ml_task_hub:CurrentTask().maxKills) <=  ml_task_hub:CurrentTask().currentKills ) then return false end 
+		
+		-- Check if a targeted enemy got killed meanwhile
+		if ( ml_task_hub:CurrentTask().lastTargetID ~= nil and tonumber(ml_task_hub:CurrentTask().lastTargetID) ~= nil) then
+			local target = nil
+			
+			if ( ml_task_hub:CurrentTask().lastTargetType == "character" ) then
+				target = CharacterList:Get(tonumber(ml_task_hub:CurrentTask().lastTargetID))
+			else
+				target = GadgetList:Get(tonumber(ml_task_hub:CurrentTask().lastTargetID))
+			end
+			
+			if ( not target or not target.alive ) then
+				ml_task_hub:CurrentTask().currentKills = tonumber(ml_task_hub:CurrentTask().currentKills) + 1
+				ml_task_hub:CurrentTask().lastTargetID = nil
+			end
+		end
+	end	
 	return true
 end
 
@@ -150,9 +185,12 @@ function e_FightToGrindMarker:execute()
 			
 	if (c_FightToGrindMarker.target ~= nil) then
 		Player:StopMovement()
+		-- For TM Conditions
+		ml_task_hub:CurrentTask().lastTargetID = c_FightToGrindMarker.target.id
+		-- Create new Subtask combat
 		local newTask = gw2_task_combat.Create()
-		newTask.targetID = c_FightToGrindMarker.target.id		
-		newTask.targetPos = c_FightToGrindMarker.target.pos		
+		newTask.targetID = c_FightToGrindMarker.target.id
+		newTask.targetPos = c_FightToGrindMarker.target.pos	
 		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
 		c_FightToGrindMarker.target = nil
 	else
@@ -288,6 +326,10 @@ function e_CombatTask:execute()
 			
 	if (c_CombatTask.target ~= nil) then
 		Player:StopMovement()
+		-- For TM Conditions
+		ml_task_hub:CurrentTask().lastTargetID = c_CombatTask.target.id
+		
+		-- Create new Subtask Combat
 		local newTask = gw2_task_combat.Create()
 		newTask.targetID = c_CombatTask.target.id		
 		newTask.targetPos = c_CombatTask.target.pos	

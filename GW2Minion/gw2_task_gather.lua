@@ -19,6 +19,11 @@ function gw2_task_gather.Create()
 	newinst.filterLevel = true
 	newinst.targetPos = nil
 	newinst.targetID = nil
+	
+	-- TaskManager fields
+	newinst.maxGather = 0 -- Amount of Gatherables to collect before task is completed, gets set by TaskManager Custom Conditions
+	newinst.currentGather = 0 -- Counter of current task
+	newinst.lastTargetID = nil -- set this value on each gather, this is used to determine if we gathered one or not 
 		
     return newinst
 end
@@ -107,6 +112,7 @@ function gw2_task_gather.ModuleInit()
 	if ( dw ) then
 		dw:NewField("TargetID","dbCurrGatherTargetID","Task_Gather")
 		dw:NewField("TargetDist","dbCurrGatherTargetDist","Task_Gather")
+		dw:NewField("GatherCount","dbGatherCount","Task_Gather")		
 	end
 	
 	ml_task_mgr.AddTaskType(GetString("gatherMode"), gw2_task_gather) -- Allow this task to be selectable in TaskManager
@@ -114,7 +120,7 @@ end
 
 -- TaskManager functions
 function gw2_task_gather:UIInit_TM()
-	ml_task_mgr.NewNumeric("lalatest", "haha")
+	ml_task_mgr.NewNumeric("Max Gatherables", "maxGather")
 	
 end
 -- TaskManager function: Checks for custom conditions to start this task
@@ -123,6 +129,27 @@ function gw2_task_gather.CanTaskStart_TM()
 end
 -- TaskManager function: Checks for custom conditions to keep this task running
 function gw2_task_gather.CanTaskRun_TM()
+	
+	-- Check the maxgather counter
+	if ( ml_task_hub:CurrentTask().maxGather ~= nil and tonumber(ml_task_hub:CurrentTask().maxGather) ~= nil ) then
+		
+		if ( ml_global_information.ShowDebug ) then 
+			dbGatherCount = tostring(ml_task_hub:CurrentTask().currentGather).."/"..tostring(ml_task_hub:CurrentTask().maxGather).." Kills"
+		end
+		
+		ml_log(" "..tostring(ml_task_hub:CurrentTask().currentGather).."/"..tostring(ml_task_hub:CurrentTask().maxGather).." Gathered")
+		-- We gathered enough		
+		if ( tonumber(ml_task_hub:CurrentTask().maxGather) <=  ml_task_hub:CurrentTask().currentGather ) then return false end 
+		
+		-- Check if a targeted gatherable got collected meanwhile
+		if ( ml_task_hub:CurrentTask().lastTargetID ~= nil and tonumber(ml_task_hub:CurrentTask().lastTargetID) ~= nil) then
+			local target = GadgetList:Get(tonumber(ml_task_hub:CurrentTask().lastTargetID))
+			if ( not target or not target.interactable ) then
+				ml_task_hub:CurrentTask().currentGather = tonumber(ml_task_hub:CurrentTask().currentGather) + 1
+				ml_task_hub:CurrentTask().lastTargetID = nil
+			end
+		end
+	end	
 	return true
 end
 
@@ -153,6 +180,9 @@ function e_GatherTask:execute()
 	ml_log("e_GatherTask")
 	
 	if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
+	
+	-- For TM Conditions
+	ml_task_hub:CurrentTask().lastTargetID = c_GatherTask.target.id
 	
 	local newTask = gw2_task_gather.Create()
 	newTask.targetPos = c_GatherTask.target.pos

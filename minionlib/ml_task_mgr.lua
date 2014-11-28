@@ -45,7 +45,7 @@ function ml_UITask.Create()
 	newinst.minlvl = 0
 	newinst.maxlvl = 80
 	newinst.minduration = 0
-	newinst.maxduration = 9999
+	newinst.maxduration = 0
 	newinst.cooldown = 0	
 	newinst.partysize = 0
 	newinst.customVars = {}
@@ -254,7 +254,7 @@ function ml_task_mgr.CreateEditWindow()
 			editWindow:NewComboBox(GetString("taskType"),"TM_Type",GetString("task"),"")
 			editWindow:NewCheckBox(GetString("enabled"),"TM_Enabled",GetString("task"))			
 			TM_Type_listitems = ml_task_mgr.GetTasksAsString()
-			editWindow:NewField(GetString("taskPreTaskIDsComplete"),"TM_PreTaskIDs",GetString("taskStartConditions"))
+			--editWindow:NewField(GetString("taskPreTaskIDsComplete"),"TM_PreTaskIDs",GetString("taskStartConditions"))
 			editWindow:NewField(GetString("taskStartMapID"),"TM_MapID",GetString("taskStartConditions"))
 			editWindow:NewField(GetString("taskStartMapPos"),"TM_MapPos",GetString("taskStartConditions"))
 			editWindow:NewButton(GetString("taskUseCurretPos"),"gTMUseMyPos",GetString("taskStartConditions"))
@@ -563,17 +563,17 @@ end
 -- Checks if the currently active task is still valid to run / checks all "running" conditions
 function ml_task_mgr.CanActiveTaskRun()
 	-- Wait until the start map and position were reached
-	if ( ml_task_mgr.activeTask.started == false ) then return true end
+	if ( ml_task_mgr.activeTask.started == false or ml_task_hub:CurrentTask().name == GetString("customTasks")) then return true end
 	
 	-- Checking Conditions	
-	if ( ml_global_information.Now - ml_task_mgr.activeTask.startTimer > tonumber(ml_task_mgr.activeTask.maxduration)*1000
+	if ( ( tonumber(ml_task_mgr.activeTask.maxduration) ~= 0 and ml_global_information.Now - ml_task_mgr.activeTask.startTimer > tonumber(ml_task_mgr.activeTask.maxduration)*1000)
 		or ( ml_task_mgr.activeTask.CanTaskRun_TM ~= nil and not ml_task_mgr.activeTask.CanTaskRun_TM() )) then
-		
-		d("Task : "..ml_task_mgr.activeTask.name.." finished. Task Duration: "..tostring(math.floor((ml_global_information.Now - ml_task_mgr.activeTask.startTimer)/1000)).." > "..tostring(ml_task_mgr.activeTask.maxduration))
+
+		d("Task : "..ml_task_mgr.activeTask.name.." finished. Task Duration: "..tostring(math.floor((ml_global_information.Now - ml_task_mgr.activeTask.startTimer)/1000)).." > "..tostring(ml_task_mgr.activeTask.maxduration) .." CanRun:"..tostring(ml_task_mgr.activeTask.CanTaskRun_TM()))
 		
 		-- Enter it into our ml_task_mgr.taskHistory tabls
 		ml_task_mgr.taskHistory[ml_task_mgr.activeTask.id] = ml_global_information.Now
-		
+		ml_task_mgr.SetTaskComplete(ml_task_mgr.activeTask)
 		return false
 	end
 	
@@ -644,6 +644,7 @@ function ml_task_mgr.CanTaskStart(nextTask)
 				local p,Task = next(ml_task_mgr.profile.tasks)
 				local complete = false
 				while ( p and Task ) do
+					d(Task)
 					if ( tid == Task.id and Task.complete ) then
 						complete = true
 						break						
@@ -693,6 +694,18 @@ function ml_task_mgr.SetTaskDisabled(activetask)
 		end
 	end
 end
-
+-- Set the task.complete field to true
+function ml_task_mgr.SetTaskComplete(activetask)
+	if (ml_task_mgr.profile ~= nil ) then
+		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then						
+			for prio,task in pairs( ml_task_mgr.profile.tasks )do				
+				if ( task.id == activetask.id ) then
+					task.complete = true
+					break
+				end
+			end
+		end
+	end
+end
 RegisterEventHandler("Module.Initalize",ml_task_mgr.ModuleInit)
 RegisterEventHandler("GUI.Update",ml_task_mgr.GUIVarUpdate)

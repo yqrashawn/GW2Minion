@@ -46,7 +46,7 @@ function gw2_task_combat:Init()
 	self:add(ml_element:create( "Looting", c_Looting, e_Looting, 275 ), self.process_elements)	
 	
 	-- ReviveNPCs
-	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 250 ), self.process_elements) -- creates subtask: moveto
+	--self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 250 ), self.process_elements) -- creates subtask: moveto
 	
 	-- Attack Target
 	self:add(ml_element:create( "AttackTarget", c_AttackTarget, e_AttackTarget, 225 ), self.process_elements) -- creates subtask: moveto
@@ -80,13 +80,13 @@ function c_AttackTarget:evaluate()
 		-- check if target  still exist
 		if ( ml_task_hub:CurrentTask().targetType == "character" ) then
 			e_AttackTarget.target = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
-			if ( e_AttackTarget.target ~= nil and e_AttackTarget.target.attackable ) then
+			if ( e_AttackTarget.target ~= nil and e_AttackTarget.target.attackable and e_AttackTarget.target.alive) then
 				return true
 			end
 			
 		elseif( ml_task_hub:CurrentTask().targetType == "gadget" ) then
 			e_AttackTarget.target = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
-			if ( e_AttackTarget.target ~= nil and e_AttackTarget.target.attackable ) then
+			if ( e_AttackTarget.target ~= nil and e_AttackTarget.target.attackable and e_AttackTarget.target.alive) then
 				return true
 			end
 		end

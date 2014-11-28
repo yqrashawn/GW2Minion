@@ -151,7 +151,7 @@ function gw2minion.ModuleInit()
 		-- Set default meshes SetDefaultMesh(mapid, filename)
 		ml_mesh_mgr.SetDefaultMesh(15,"Queensdale")
 		ml_mesh_mgr.SetDefaultMesh(17,"Harathi Hinterlands")
-			
+		ml_mesh_mgr.SetDefaultMesh(18,"Divinitys Reach")	
 		ml_mesh_mgr.SetDefaultMesh(19,"PlainsOfAshford")
 		ml_mesh_mgr.SetDefaultMesh(20,"BlazzeridgeSteppes")
 		ml_mesh_mgr.SetDefaultMesh(21,"Fields of Ruin")
@@ -185,6 +185,7 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.SetDefaultMesh(326,"Hoelbrak")
 		ml_mesh_mgr.SetDefaultMesh(350,"Heart of the Mists")
 		ml_mesh_mgr.SetDefaultMesh(968,"EdgeOfTheMist")
+		ml_mesh_mgr.SetDefaultMesh(988,"Dry Top")
 		
 		-- Setup the marker types we wanna use
 		    local grindMarker = ml_marker:Create("grindMarker")
