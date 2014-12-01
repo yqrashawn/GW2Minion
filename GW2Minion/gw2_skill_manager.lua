@@ -60,6 +60,12 @@ function gw2_skill_manager.NewProfile(profileName)
 				PriorityAtt3 = "None",
 				PriorityAtt4 = "None",
 			},
+			switchSettings = {
+				switchOnRange = "0",
+				switchRandom = "0",
+				switchOnCooldown = "0",
+				swichToPrefKitOnly = "0",
+			},
 			skills = {},
 			combos = {},
 			clipboard = nil,
@@ -251,18 +257,27 @@ function gw2_skill_manager.MainWindow(openSkills,openCombos)
 		mainWindow:DeleteGroup(GetString("ProfessionSettings"))
 		mainWindow:DeleteGroup(GetString("comboList"))
 		mainWindow:DeleteGroup(GetString("skillList"))
+		mainWindow:DeleteGroup(GetString("switchSettings"))
 		if (gw2_skill_manager.profile) then
 			local name = gw2_skill_manager.profile.name
 			name = string.sub(name,select(2,string.find(name,"_"))+1,#name)
 			gSMCurrentProfileName_listitems = _private.GetProfileList(name)
 			gSMCurrentProfileName = name
 			
+			mainWindow:NewCheckBox(GetString("SwapRange"),"gSMSwitchOnRange",GetString("switchSettings"))
+			mainWindow:NewCheckBox(GetString("SwapR"),"gSMSwitchRandom",GetString("switchSettings"))
+			mainWindow:NewNumeric(GetString("SwapCD"),"gSMSwitchOnCooldown",GetString("switchSettings"),0,25)
+			
 			local profession = Player.profession
 			if (profession) then
 				if (profession == GW2.CHARCLASS.Engineer) then
+					mainWindow:NewCheckBox(GetString("PrefKitOnly"),"gSMPrefKitOnly",GetString("switchSettings"))
+					gSMPrefKitOnly = gw2_skill_manager.profile.switchSettings.swichToPrefKitOnly
 					mainWindow:NewComboBox(GetString("PrioritizeKit"),"gSMPrioKit",GetString("ProfessionSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
 					gSMPrioKit = gw2_skill_manager.profile.professionSettings.priorityKit
 				elseif(profession == GW2.CHARCLASS.Elementalist) then
+					mainWindow:NewCheckBox(GetString("PrefKitOnly"),"gSMPrefKitOnly",GetString("switchSettings"))
+					gSMPrefKitOnly = gw2_skill_manager.profile.switchSettings.swichToPrefKitOnly
 					mainWindow:NewComboBox(GetString("PriorizeAttunement1"),"gSMPrioAtt1",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
 					mainWindow:NewComboBox(GetString("PriorizeAttunement2"),"gSMPrioAtt2",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
 					mainWindow:NewComboBox(GetString("PriorizeAttunement3"),"gSMPrioAtt3",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
@@ -432,7 +447,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 -- **pricate variables**
 _private.maxRange = 154
---_private.runningIntoCombatRange = false -- TODO: order all variables nicely
+_private.runningIntoCombatRange = false -- TODO: order all variables nicely
 _private.targetLosingHP = {id = 0, health = 0, timer = 0}
 _private.SwapTimer = 0
 _private.lastKitTable = {}
@@ -594,7 +609,7 @@ function _private.GetAvailableSkills(skillList,heal)
 	if ( ValidTable(skillList) and ValidTable(skillbarSkills) ) then
 		for _,skill in ipairs(skillList) do
 			for _,aSkill in pairs(skillbarSkills) do
-				if (aSkill.skillID == skill.skill.id and aSkill.cooldown == 0 and (heal ~= true or skill.skill.healing == true)) then
+				if (aSkill.skillID == skill.skill.id and aSkill.cooldown == 0 and (heal ~= true or skill.skill.healing == "1")) then
 					returnSkillList[newPriority] = skill
 					returnSkillList[newPriority].slot = aSkill.slot
 					returnSkillList[newPriority].maxCooldown = aSkill.cooldownmax
@@ -617,9 +632,9 @@ function _private.CanCast(skill,target)
 		-- skill attributes
 		if (skill.skill.lastSkillID ~= "" and tostring(skill.skill.lastSkillID) ~= Player.castinfo.lastSkillID) then return false end
 		if (skill.skill.delay > 0 and _private.skillLastCast[skill.skill.id] ~= nil and TimeSince(_private.skillLastCast[skill.skill.id]) < (skill.skill.delay+skill.maxCooldown)) then return false end
-		if (skill.skill.los == true and (target == nil or target.los == false)) then return false end
-		if (skill.skill.minRange > 0 and (target == nil or target.distance < skill.skill.minRange)) then return false end
-		if (skill.skill.maxRange > 0 and (target == nil or target.distance > skill.skill.maxRange)) then return false end
+		if (skill.skill.los == true and (skill.skill.heal == "0" and (target == nil or target.los == false))) then return false end
+		if (skill.skill.minRange > 0 and (skill.skill.heal == "0" and (target == nil or target.distance < skill.skill.minRange))) then return false end
+		if (skill.skill.maxRange > 0 and (skill.skill.heal == "0" and (target == nil or target.distance > skill.skill.maxRange))) then return false end
 		-- player attributes
 		local playerBuffList = Player.buffs
 		if (skill.player.combatState == "InCombat" and ml_global_information.Player_InCombat == false ) then return false end
@@ -640,20 +655,20 @@ function _private.CanCast(skill,target)
 		if (skill.player.boonCount > 0 and playerBuffList and gw2_common_functions.CountBoons(playerBuffList) <= skill.player.boonCount) then return false end
 		-- target attributes
 		local targetBuffList = (target and target.buffs or false)
-		if (skill.target.minHP > 0 and (target == nil or ml_global_information.Player_Health.percent > skill.target.minHP)) then return false end
-		if (skill.target.maxHP > 0 and (target == nil or ml_global_information.Player_Health.percent < skill.target.maxHP)) then return false end
+		if (skill.target.minHP > 0 and (skill.skill.heal == "0" and (target == nil or ml_global_information.Player_Health.percent > skill.target.minHP))) then return false end
+		if (skill.target.maxHP > 0 and (skill.skill.heal == "0" and (target == nil or ml_global_information.Player_Health.percent < skill.target.maxHP))) then return false end
 		if ( skill.target.enemyNearCount > 0) then
 			local maxdistance = (skill.target.enemyRangeMax == 0 and "" or "maxdistance=" .. skill.target.enemyRangeMax .. ",")
-			if (target == nil or TableSize(CharacterList("alive,attackable," .. maxdistance .. ",distanceto=" .. target.id .. "exclude=" .. target.id)) < skill.target.enemyNearCount) then return false end
+			if (skill.skill.heal == "0" and (target == nil or TableSize(CharacterList("alive,attackable," .. maxdistance .. "distanceto=" .. target.id .. "exclude=" .. target.id)) < skill.target.enemyNearCount)) then return false end
 		end
-		if (skill.target.moving == "Yes" and (target == nil or target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving )) then return false end
-		if (skill.target.moving == "No" and (target == nil or target.movementstate == GW2.MOVEMENTSTATE.GroundMoving )) then return false end
-		if (skill.target.hasBuffs ~= "" and (target == nil or targetBuffList and not gw2_common_functions.BufflistHasBuffs(targetBuffList, tostring(skill.target.hasBuffs)))) then return false end
-		if (skill.target.hasNotBuffs ~= "" and (target == nil or targetBuffList and gw2_common_functions.BufflistHasBuffs(targetBuffList, tostring(skill.target.hasNotBuffs)))) then return false end
-		if (skill.target.conditionCount > 0 and (target == nil or targetBuffList and gw2_common_functions.CountConditions(targetBuffList) <= skill.target.conditionCount)) then return false end
-		if (skill.target.boonCount > 0 and (target == nil or targetBuffList and gw2_common_functions.CountBoons(targetBuffList) <= skill.target.boonCount)) then return false end
-		if (skill.target.type == "Character" and (target == nil or target.isCharacter == false)) then return false end
-		if (skill.target.type == "Gadget" and (target == nil or target.isGadget == false)) then return false end
+		if (skill.target.moving == "Yes" and (skill.skill.heal == "0" and (target == nil or target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving ))) then return false end
+		if (skill.target.moving == "No" and (skill.skill.heal == "0" and (target == nil or target.movementstate == GW2.MOVEMENTSTATE.GroundMoving ))) then return false end
+		if (skill.target.hasBuffs ~= "" and (skill.skill.heal == "0" and (target == nil or targetBuffList and not gw2_common_functions.BufflistHasBuffs(targetBuffList, tostring(skill.target.hasBuffs))))) then return false end
+		if (skill.target.hasNotBuffs ~= "" and (skill.skill.heal == "0" and (target == nil or targetBuffList and gw2_common_functions.BufflistHasBuffs(targetBuffList, tostring(skill.target.hasNotBuffs))))) then return false end
+		if (skill.target.conditionCount > 0 and (skill.skill.heal == "0" and (target == nil or targetBuffList and gw2_common_functions.CountConditions(targetBuffList) <= skill.target.conditionCount))) then return false end
+		if (skill.target.boonCount > 0 and (skill.skill.heal == "0" and (target == nil or targetBuffList and gw2_common_functions.CountBoons(targetBuffList) <= skill.target.boonCount))) then return false end
+		if (skill.target.type == "Character" and (skill.skill.heal == "0" and (target == nil or target.isCharacter == false))) then return false end
+		if (skill.target.type == "Gadget" and (skill.skill.heal == "0" and (target == nil or target.isGadget == false))) then return false end
 		-- skill can be cast
 		return true
 	end
@@ -662,8 +677,8 @@ end
 
 function _private.SwapWeapon()
 	if (TimeSince(_private.SwapTimer) > 750) then
-		if (Player.profession == GW2.CHARCLASS.Elementalist) then 
-			local switch
+		if (Player.profession == GW2.CHARCLASS.Elementalist) then
+			local switch = nil
 			local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
 			if ( skill ~= nil ) then
 				local sID = skill.skillID
@@ -901,8 +916,8 @@ end
 
 function _private.Save()
 	gw2_skill_manager.profile:Save()
-	gw2_skill_manager.MainWindow()
-	gw2_skill_manager.SkillEditWindow()
+	gw2_skill_manager.MainWindow(true)
+	gw2_skill_manager.SkillEditWindow(gw2_skill_manager.currentSkill)
 	local name = gw2_skill_manager.profile.name
 	name = string.sub(name,select(2,string.find(name,"_"))+1,#name)
 	Settings.GW2Minion.gCurrentProfile = name
@@ -1129,7 +1144,7 @@ function gw2_skill_manager.OnUpdate(ticks)
 	if (gw2_skill_manager.detecting == true) then
 		gw2_skill_manager.profile:DetectSkills()
 	end
-	if (TimeSince(gw2_skill_manager.ticks) > 500) then
+	if (TimeSince(gw2_skill_manager.ticks) > 150) then
 		gw2_skill_manager.ticks = ticks
 		_private:DoCombatMovement()
 		if (_private.runningIntoCombatRange and Player:GetTarget() == nil) then
