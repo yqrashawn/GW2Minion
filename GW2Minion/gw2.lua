@@ -453,14 +453,23 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "gGather" or			
 			k == "gRevivePlayers" or
 			k == "gRevive" or
-			k == "gDisableRender" 			
+			k == "gDisableRender" or 
+			k == "SellManager_Active" or 
+			k == "BuyManager_Active" or 
+			k == "BuyManager_Crudekit" or
+			k == "BuyManager_Basickit" or
+			k == "BuyManager_Finekit" or
+			k == "BuyManager_Journeymankit" or
+			k == "BuyManager_Masterkit" or
+			k == "BuyManager_toolStacks" or
+			k == "BuyManager_GarheringTool" or 
+			k == "SalvageManager_Active"			
 			) then
 			Settings.GW2Minion[tostring(k)] = v
 					
 		end
 	end
 end
-
 
 -- To add a task to the BotMode Dropdown
 function ml_global_information.AddBotMode( botmode, task )

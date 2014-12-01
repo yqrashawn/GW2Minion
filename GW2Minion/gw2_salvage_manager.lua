@@ -79,9 +79,7 @@ function gw2_salvage_manager.ModuleInit()
 			},
 		}
 	end
-	
-	SalvageManager_Active = Settings.GW2Minion.SalvageManager_Active
-	SalvageManager_ItemIDInfo = Settings.GW2Minion.SalvageManager_ItemIDInfo
+		
 	gw2_salvage_manager.filterList = Settings.GW2Minion.SalvageManager_FilterList
 	
 	-- Init Main Window
@@ -106,6 +104,9 @@ function gw2_salvage_manager.ModuleInit()
 		
 		mainWindow:Hide()
 	end
+	
+	SalvageManager_Active = Settings.GW2Minion.SalvageManager_Active
+	SalvageManager_ItemIDInfo = Settings.GW2Minion.SalvageManager_ItemIDInfo
 	
 	if (Player) then
 		gw2_salvage_manager.UpdateComboBox(Inventory("salvagable"),"SalvageManager_ItemToSalvage",SalvageManager_ItemIDInfo)

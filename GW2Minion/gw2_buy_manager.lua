@@ -181,6 +181,7 @@ end
 
 function gw2_buy_manager.NeedToBuyGatheringTools(nearby)
 	local neededTools = gw2_buy_manager.GetNeededGatheringToolList()
+
 	for itemID,count in pairs(neededTools) do
 		if (nearby == true and count > 0) then
 			return true
@@ -236,7 +237,7 @@ end
 function gw2_buy_manager.getClosestBuyMarker(nearby)
 	local closestLocation = nil
 	local listArg = (nearby == true and ",maxdistance=4000" or "")
-	local markers = MapMarkerList("onmesh,worldmarkertype=24,markertype=25,contentID="..GW2.MAPMARKER.Merchant..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("sellvendors")))
+	local markers = MapMarkerList("onmesh,shortestpath,worldmarkertype=24,markertype=25,contentID="..GW2.MAPMARKER.Merchant..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorsbuy")))
 	for _,merchant in pairs(markers) do
 		if (closestLocation == nil or closestLocation.distance > merchant.distance) then
 			if (nearby == true and merchant.pathdistance < 4000) then
@@ -252,7 +253,7 @@ end
 function gw2_buy_manager.buyAtMerchant(vendorMarker)
 	if (vendorMarker) then
 		vendor = CharacterList:Get(vendorMarker.characterID)
-		if (vendor and vendor.isInInteractRange) then
+		if (vendor and vendor.isInInteractRange and vendor.distance < 100) then
 			Player:StopMovement()
 			local target = Player:GetTarget()
 			if (not target or target.id ~= vendor.id) then
@@ -267,45 +268,59 @@ function gw2_buy_manager.buyAtMerchant(vendorMarker)
 					local result = gw2_common_functions.handleConversation("buy")
 					if (result == false) then
 						d("Vendor blacklisted, cant handle opening conversation.")
-						ml_blacklist.AddBlacklistEntry(GetString("sellvendors"), vendor.id, vendor.name, true)
+						ml_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)
 						return false
 					elseif (result == nil) then
+					
 						ml_global_information.Wait(math.random(520,1200))
 						return true
 					end
 				end
 				if (gw2_buy_manager.vendorSellsCheck() == false) then
 					d("Vendor blacklisted, does not have needed tools/kits.")
-					ml_blacklist.AddBlacklistEntry(GetString("sellvendors"), vendor.id, vendor.name, true)
+					ml_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)
 				end
 				local vendorItems = VendorItemList("")
 				local slowdown = math.random(0,3)
-				if (ValidTable(vendorItems) and slowdown == 0) then
-					local neededKits = gw2_buy_manager.GetNeededSalvageKitList()
-					local neededTools = gw2_buy_manager.GetNeededGatheringToolList()
-					for _,item in pairs(vendorItems) do
-						local itemID = item.itemID
-						for id,count in pairs(neededKits) do
-							if (id == itemID and count > 0) then
-								item:Buy()
-								return true
+				if (ValidTable(vendorItems) ) then
+					if ( slowdown == 0) then
+						local neededKits = gw2_buy_manager.GetNeededSalvageKitList()
+						local neededTools = gw2_buy_manager.GetNeededGatheringToolList()				
+						
+						for _,item in pairs(vendorItems) do
+							local itemID = item.itemID
+							for id,count in pairs(neededKits) do								
+								if (id == itemID and count > 0) then
+									item:Buy()
+									return true
+								end
+							end
+							for id,count in pairs(neededTools) do							
+								if (id == itemID and count > 0) then
+									item:Buy()
+									return true	
+								end
 							end
 						end
-						for id,count in pairs(neededTools) do
-							if (id == itemID and count > 0) then
-								item:Buy()
-								return true	
-							end
-						end
+						return false
 					end
+					
+					return true
 				end
 			end
 		else
 			local pos = vendorMarker.pos
 			if ( pos ) then
-				local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))
-				ml_log("MoveToSellVendor..")
+				local newTask = gw2_task_moveto.Create()
+				newTask.targetPos = pos
+				newTask.targetID = vendorMarker.characterID
+				newTask.targetType = "character"
+				newTask.name = "MoveTo Vendor(BUY)"
+				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				return true
+				--local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))
+				--ml_log("MoveToSellVendor..")
+				--return true
 			end
 		end
 	end

@@ -371,8 +371,11 @@ end
 function ml_task_mgr.UpdateTaskUIforType()
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile) then
-				
-		editWindow:DeleteGroup(GetString("taskCustomConditions")) -- clear the old settings		
+		-- clear the old settings			
+		editWindow:DeleteGroup(GetString("taskCustomConditions")) 	
+		ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars = {}
+		
+		-- build new settings
 		local task = ml_task_mgr.taskTypes[TM_Type]
 		if ( task ) then
 			task:UIInit_TM() -- calls the task's UI Init function to populate the taskCustomConditions group

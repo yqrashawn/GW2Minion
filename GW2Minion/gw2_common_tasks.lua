@@ -6,6 +6,7 @@ function gw2_common_tasks.OnUpdate( tickcount )
 	
 	gw2_common_tasks.DepositItems(tickcount)
 	gw2_common_tasks.AoELoot(tickcount)
+	gw2_common_tasks.SalvageItems(tickcount)
 	gw2_common_tasks.SwimUp(tickcount)
 	gw2_common_tasks.HealnBuff(tickcount) -- we have to see if this is a working solution for every botmode 
 	
@@ -29,6 +30,15 @@ function gw2_common_tasks.AoELoot(tickcount)
 	end
 end
 
+gw2_common_tasks.salvageItemsLastUsed = 0
+function gw2_common_tasks.SalvageItems(tickcount)
+	if( TimeSince(gw2_common_tasks.salvageItemsLastUsed) > 1050 and c_salvage:evaluate() ) then
+		gw2_common_tasks.salvageItemsLastUsed = tickcount + math.random(500,1500)
+		e_salvage:execute()
+	end
+end
+
+
 gw2_common_tasks.swimUpLastUsed = 0
 gw2_common_tasks.swimUp = false
 function gw2_common_tasks.SwimUp(tickcount)
@@ -51,4 +61,3 @@ function gw2_common_tasks.HealnBuff(tickcount)
 		gw2_skill_manager.Heal()
 	end
 end
-

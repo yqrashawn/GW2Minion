@@ -64,9 +64,7 @@ end
 
 -- Stops the Bot
 function ml_global_information.Stop()
-    if (Player:IsMoving()) then
-        Player:StopMovement()
-    end
+    Player:StopMovement()
 	c_movetorandom.randompoint = nil
 	c_movetorandom.randompointreached = false
 	gw2_unstuck.Reset()
