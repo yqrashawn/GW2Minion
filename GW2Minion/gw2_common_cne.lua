@@ -411,6 +411,7 @@ function c_movetorandom:evaluate()
 	c_movetorandom.randompoint = nil
     return false
 end
+e_movetorandom.counter = 0
 function e_movetorandom:execute()
 	ml_log("MoveToRandomPoint ")
 	if (c_movetorandom.randompoint) then
@@ -429,7 +430,14 @@ function e_movetorandom:execute()
 				if ( not gw2_unstuck.HandleStuck() ) then
 					local result = tostring(Player:MoveTo(rpos.x,rpos.y,rpos.z,250,false,false,false))
 					if (tonumber(result) >= 0) then
+						e_movetorandom.counter = 0
 						return ml_log(true)
+					else
+						e_movetorandom.counter = e_movetorandom.counter + 1
+						if ( e_movetorandom.counter > 15 ) then
+							c_movetorandom.randompoint = nil
+						end
+						
 					end
 				end
 			end
