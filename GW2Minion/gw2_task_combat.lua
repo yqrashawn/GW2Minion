@@ -43,7 +43,7 @@ function gw2_task_combat:Init()
 	self:add(ml_element:create( "FinishEnemy", c_FinishEnemy, e_FinishEnemy, 300 ), self.process_elements)
 		
 	-- Normal Looting & chests
-	self:add(ml_element:create( "Looting", c_Looting, e_Looting, 275 ), self.process_elements)	
+	--self:add(ml_element:create( "Looting", c_Looting, e_Looting, 275 ), self.process_elements)	walks a looong way while we are getting ass kicked...taking this out for now, combat task should only be active until the enemy dies anyway
 	
 	-- ReviveNPCs
 	--self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 250 ), self.process_elements) -- creates subtask: moveto

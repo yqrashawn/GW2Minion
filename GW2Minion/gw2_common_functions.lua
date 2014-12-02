@@ -305,11 +305,11 @@ end
 function gw2_common_functions.GetNextVendorMarker(oldmarker)
 			
 	local filterLevel = false
-	local vendormarker = ml_marker_mgr.GetNextMarker(GetString("vendorMarker"), ml_task_hub:CurrentTask().filterLevel)
+	local vendormarker = ml_marker_mgr.GetNextMarker(GetString("vendorMarker"), filterLevel)
 	
 	-- get a different marker
 	if (vendormarker and oldmarker ~= nil and oldmarker:GetName() == vendormarker:GetName()) then	
-		vendormarker = ml_marker_mgr.GetNextMarker(GetString("vendorMarker"), ml_task_hub:CurrentTask().filterLevel)
+		vendormarker = ml_marker_mgr.GetNextMarker(GetString("vendorMarker"), filterLevel)
 	end
 		
 	return vendormarker

@@ -38,7 +38,8 @@ function gw2_task_gather:Init()
 	self:add(ml_element:create( "Downed", c_Downed, e_Doened, 450 ), self.overwatch_elements)
 	-- Handle Rezz-Target is alive again or gone, deletes the subtask moveto in case it is needed
 	self:add(ml_element:create( "RevivePartyMemberOverWatch", c_RezzOverWatchCheck, e_RezzOverWatchCheck, 400 ), self.overwatch_elements)
-	
+	-- Stops the movetogatherMarker subtask in case something gatherable showed up on our path towards the marker
+	self:add(ml_element:create( "GatherableNearbyCheck", c_GatherableNearbyCheck, e_GatherableNearbyCheck, 350 ), self.overwatch_elements)
 	
 	-- FightAggro
 	self:add(ml_element:create( "FightAggro", c_HandleAggro, e_HandleAggro, 250 ), self.overwatch_elements) --creates immediate queue task for combat
@@ -46,9 +47,6 @@ function gw2_task_gather:Init()
 	
 	-- Normal elements	
 	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 350 ), self.process_elements)	-- creates subtask: moveto
-	
-	self:add(ml_element:create( "Quickvendorsell", c_quickvendorsell, e_quickvendorsell, 335 ), self.process_elements)
-	self:add(ml_element:create( "Vendor-Sell", c_vendorsell, c_vendorsell, 330 ), self.process_elements)
 	
 	
 	-- Revive other Players
@@ -65,13 +63,16 @@ function gw2_task_gather:Init()
 	self:add(ml_element:create( "VendorSell", c_createVendorSellTask, e_createVendorSellTask, 250 ), self.process_elements)
 	self:add(ml_element:create( "VendorBuy", c_createVendorBuyTask, e_createVendorBuyTask, 240 ), self.process_elements)
 	
+	-- Check for gatherable Target
+	self:add(ml_element:create( "GetNextGatherable", c_Gathering, e_Gathering, 200 ), self.process_elements) -- creates subtask moveto 
+		
 	-- ReviveNPCs
-	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 200 ), self.process_elements) -- creates subtask: moveto
-	
+	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 150 ), self.process_elements) -- creates subtask: moveto
+			
 	-- Fight in a smaller radius towards the current marker ( this takes care of reaching it and also when running outside the markerradius and we need to move back to marker)
 	-- Only for GatherMarkers...is this wanted ?
 	self:add(ml_element:create( "FightTowardsGatherMarker", c_FightToGatherMarker, e_FightToGatherMarker, 125 ), self.process_elements)--creates immediate queue task for combat
-	
+		
 	-- Pick the next/new Marker and makes sure we are staying near the current Marker
 	self:add( ml_element:create( "NextMarker", c_MoveToGatherMarker, e_MoveToGatherMarker, 75 ), self.process_elements) -- creates subtask moveto
 
@@ -81,8 +82,6 @@ function gw2_task_gather:Init()
 	
 	-- TODO: Add a check CnE here for aggro when we are close to our gather node to gather 
 	
-	-- Check for gatherable Target
-	self:add(ml_element:create( "GetNextGatherable", c_Gathering, e_Gathering, 50 ), self.process_elements) -- creates subtask moveto 
 		
 	-- Move to a Randompoint if there is nothing to fight around us
 	self:add( ml_element:create( "movetorandom", c_movetorandom, e_movetorandom, 25 ), self.process_elements)
@@ -192,6 +191,25 @@ function e_GatherTask:execute()
 	--ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)	
 end
 
+-- overwatch CnE, when our player is moving to the next gathermarker, it should terminate the moveto subtask if something we can gather is nearby
+c_GatherableNearbyCheck = inheritsFrom( ml_cause )
+e_GatherableNearbyCheck = inheritsFrom( ml_effect )
+function c_GatherableNearbyCheck:evaluate()
+	if ( ml_task_hub:CurrentTask().name == "MoveTo GatherMarker" ) then 
+		local GList = GadgetList("onmesh,gatherable,selectable,shortestpath,maxdistance=4000")
+		if ( TableSize(GList) > 0 ) then 
+			local id,gadget = next(GList)
+			if ( id and gadget ~= nil ) then								
+				return true
+			end
+		end
+	end
+	return false
+end
+function e_GatherableNearbyCheck:execute()
+	ml_log("e_GatherableNearbyCheck ")	
+	return ml_log(true)
+end
 
 
 -- Handles Aggro for gathering, doesnt fight everything basicly and tries to run towards the next gatherable instead 
@@ -236,6 +254,7 @@ end
 c_FightToGatherMarker = inheritsFrom( ml_cause )
 e_FightToGatherMarker = inheritsFrom( ml_effect )
 c_FightToGatherMarker.target = nil
+c_FightToGatherMarker.throttle = 30000
 function c_FightToGatherMarker:evaluate()
 	if ( c_MoveToGatherMarker.markerreached == false and c_MoveToGatherMarker.allowedToFight == true) then
 		local target = gw2_common_functions.GetBestCharacterTarget( 1250 ) -- maxrange 2000 where enemies should be searched for
@@ -448,6 +467,7 @@ function e_Gathering:execute()
 			
 			local newTask = gw2_task_moveto.Create()
 			newTask.targetPos = tPos
+			newTask.stoppingDistance = 50
 			newTask.name = "MoveTo Gatherable"
 			ml_task_hub:CurrentTask():AddSubTask(newTask)
 			return ml_log(true)
