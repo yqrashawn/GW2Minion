@@ -65,7 +65,7 @@ function gw2_task_grind:Init()
 	
 
 	-- DoEvents
-	--self:add(ml_element:create( "DoEvent", c_doEvents, e_doEvents, 215 ), self.process_elements)
+	self:add(ml_element:create( "DoEvent", c_doEvents, e_doEvents, 215 ), self.process_elements)
 	
 	-- ReviveNPCs
 	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 200 ), self.process_elements) -- creates subtask: moveto

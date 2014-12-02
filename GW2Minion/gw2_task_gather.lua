@@ -65,7 +65,10 @@ function gw2_task_gather:Init()
 	
 	-- Check for gatherable Target
 	self:add(ml_element:create( "GetNextGatherable", c_Gathering, e_Gathering, 200 ), self.process_elements) -- creates subtask moveto 
-		
+	
+	-- DoEvents
+	self:add(ml_element:create( "DoEvent", c_doEvents, e_doEvents, 175 ), self.process_elements)
+	
 	-- ReviveNPCs
 	self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 150 ), self.process_elements) -- creates subtask: moveto
 			

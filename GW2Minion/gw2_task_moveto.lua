@@ -16,7 +16,7 @@ function gw2_task_moveto.Create()
 	
 	newinst.targetPos = nil -- set this when creating the task
 	newinst.targetID = nil -- this is optional, will be used to update the targetPos
-	newinst.targetType = nil -- SET THIS if targetID should be checked! Valid options: "character" , "gadget"
+	newinst.targetType = nil -- SET THIS if targetID should be checked! Valid options: "character" , "gadget", "event"
 	newinst.targetRadius = 25
 	newinst.stoppingDistance = 25
 	newinst.use3d = true
@@ -72,6 +72,20 @@ function gw2_task_moveto:Process()
 						
 					else
 						d("MoveTo:Update Gadgetdata failed, no gadget with targetID found!")
+						ml_task_hub:CurrentTask().completed = true
+					end
+					
+				elseif ( ml_task_hub:CurrentTask().targetType == "event" ) then
+					
+					local eID = tonumber(ml_task_hub:CurrentTask().targetID) or 0
+					local evList = MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..ml_blacklist.GetExcludeString(GetString("event")))
+					if ( evList ) then 
+						local i,event = next(evList)
+						if ( i and event ) then						
+							ml_task_hub:CurrentTask().targetPos = event.pos
+						end
+					else
+						d("MoveTo:Update Eventdata failed, no event with targetID found!")
 						ml_task_hub:CurrentTask().completed = true
 					end
 				end
