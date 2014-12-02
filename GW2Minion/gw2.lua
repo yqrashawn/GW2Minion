@@ -36,7 +36,7 @@ function gw2minion.ModuleInit()
 		rm:Dock(0)
 		rm:SetSize(18,14)
 		rm:SetPos(100,0)
-		RegisterEventHandler("gw2minion.evToggleRadar", gw2minion.ShowDebug)
+		RegisterEventHandler("gw2minion.evToggleRadar", gw2_radar.ToggleMenu)
 		
 		mw:NewButton(GetString("skillManager"),"gw2minion.evToggleSkillManager",GetString("advancedSettings"))
 		local sm = mw:NewButton("SM","gw2minion.evToggleSkillManager")
