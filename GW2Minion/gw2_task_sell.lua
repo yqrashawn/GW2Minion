@@ -64,11 +64,11 @@ e_createVendorSellTask = inheritsFrom( ml_effect )
 c_createVendorSellTask.throttle = 5000
 function c_createVendorSellTask:evaluate()
 	if ( SellManager_Active ) then 
-		if ((gw2_sell_manager.needToSell() or c_vendorsell.selling) and ( TableSize(gw2_buy_manager.getClosestSellMarker())>0 or gw2_common_functions.GetNextVendorMarker())) then
+		if ((gw2_sell_manager.needToSell() or c_vendorsell.selling) and ( TableSize(gw2_sell_manager.getClosestSellMarker())>0 or gw2_common_functions.GetNextVendorMarker())) then
 			return true
 		end
 			
-		if ((gw2_sell_manager.needToSell(true) or c_quickvendorsell.selling) and ( TableSize(gw2_buy_manager.getClosestSellMarker(true))>0 or gw2_common_functions.GetNextVendorMarker())) then
+		if ((gw2_sell_manager.needToSell(true) or c_quickvendorsell.selling) and ( TableSize(gw2_sell_manager.getClosestSellMarker(true))>0 or gw2_common_functions.GetNextVendorMarker())) then
 			return true
 		end
 	end

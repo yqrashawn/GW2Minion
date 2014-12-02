@@ -268,7 +268,7 @@ function gw2_sell_manager.createItemList()
 	local filteredItems = {}
 	if (items) then
 		for _,item in pairs(items) do
-			if (item.salvagable and item.soulbound == false) then
+			if (item.accountbound == false and item.soulbound == false) then
 				local addItem = false
 				for _,filter in pairs(gw2_sell_manager.filterList) do
 					if (gw2_sell_manager.validFilter(filter)) then
