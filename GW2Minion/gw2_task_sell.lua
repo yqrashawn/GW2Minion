@@ -88,7 +88,7 @@ c_vendorsell = inheritsFrom( ml_cause )
 e_vendorsell = inheritsFrom( ml_effect )
 c_vendorsell.selling = false
 function c_vendorsell:evaluate()
-	if (SellManager_Active == "1" and (gw2_sell_manager.needToSell() or c_vendorsell.selling) and TableSize(gw2_sell_manager.getClosestSellMarker())>0) then
+	if (SellManager_Active == "1" and ( c_vendorsell.selling or gw2_sell_manager.needToSell() ) and TableSize(gw2_sell_manager.getClosestSellMarker())>0) then
 		return true
 	end
 	return false
@@ -110,7 +110,7 @@ c_quickvendorsell = inheritsFrom( ml_cause )
 e_quickvendorsell = inheritsFrom( ml_effect )
 c_quickvendorsell.selling = false
 function c_quickvendorsell:evaluate()
-	if (SellManager_Active == "1" and (gw2_sell_manager.needToSell(true) or c_quickvendorsell.selling) and TableSize(gw2_sell_manager.getClosestSellMarker(true))>0) then
+	if (SellManager_Active == "1" and (c_quickvendorsell.selling or gw2_sell_manager.needToSell(true)) and TableSize(gw2_sell_manager.getClosestSellMarker(true))>0) then
 		return true
 	end
 	return false

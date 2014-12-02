@@ -117,8 +117,15 @@ function gw2minion.ModuleInit()
 	
 	-- DebugWindow
 	local dw = WindowManager:NewWindow(gw2minion.DebugWindow.Name,gw2minion.DebugWindow.x,gw2minion.DebugWindow.y,gw2minion.DebugWindow.width,gw2minion.DebugWindow.height,true)
-		dw:NewField("AttackRange","dAttackRange","Global")
+		dw:NewField("AttackRange","dAttackRange","Global")		
+		dw:NewCheckBox("LogEnabled","gEnableLog","Global")
+		dw:NewCheckBox("LogCNE","gLogCNE","Global")
+		dw:NewNumeric("PulseTime","gPulseTime","Global",100,9999)		
 		dw:Hide()
+		gLogCNE = "0"
+		gEnableLog = "0"
+		gPulseTime = Settings.GW2Minion.gPulseTime
+		
 	gw2minion.MainWindow.ChildWindows[gw2minion.DebugWindow.Name] = gw2minion.DebugWindow.Name
 	gw2minion.MainWindow.ChildWindows[ml_task_mgr.mainWindow.name] = ml_task_mgr.mainWindow.name
 	gw2minion.MainWindow.ChildWindows[ml_task_mgr.editWindow.name] = ml_task_mgr.editWindow.name
@@ -555,9 +562,11 @@ function gw2minion.ShowDebug()
 		if ( dw.visible ) then
 			dw:Hide()
 			ml_global_information.ShowDebug = false
+			gEnableLog = "0"
+			gLogCNE = "0"
 		else
 			dw:Show()
-			ml_global_information.ShowDebug = true
+			ml_global_information.ShowDebug = true			
 		end
 	end
 end

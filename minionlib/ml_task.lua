@@ -213,7 +213,7 @@ function ml_task:IsGoodToAbort()
 end
 
 function ml_task:add( element, elementList )
-	ml_debug ( "adding element " .. tostring( element.name ) )
+	--ml_debug ( "adding element " .. tostring( element.name ) )
 	if ( element ~= nil and element.isa ~= nil and element:isa( ml_element ) ) then
 		table.insert( elementList, element )
 	else

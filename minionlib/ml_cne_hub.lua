@@ -8,17 +8,52 @@ function ml_cne_hub.clear_queue()
 	ml_cne_hub.execution_queue = {}
 end
 
+-- sorts the list acc. to the effect.priority 
+function effectCompare(w1,w2)
+    if w1.effect.priority > w2.effect.priority then
+        return true
+    end
+end
 function ml_cne_hub.eval_elements(elementList)
+	
+	-- Sort by priority,highest first
+	table.sort(elementList,effectCompare)
+			
+	for k, elem in pairs( elementList ) do
+
+		elem.eval = elem:evaluate()
+		if (gLogCNE == "1") then
+            ml_debug( "Evaluating:" .. tostring( elem.name ) .." Result: "..tostring( elem.eval ) )
+        end
+		
+		-- break when the first eval returned TRUE, since we wont execute more than one or a lower one anyway
+		if (elem.eval == true) then			
+			break
+		end
+	end
+end
+
+--[[ old version:
+function ml_cne_hub.eval_elements(elementList)
+	
+	-- Sort by priority,highest first
+	table.sort(elementList,effectCompare)
+			
 	for k, elem in pairs( elementList ) do
         if (gLogCNE == "1") then
             ml_debug( "Evaluating:" .. tostring( elem.name ) )
         end
 		elem.eval = elem:evaluate()
-    if (gLogCNE == "1") then
+		if (gLogCNE == "1") then
             ml_debug( elem.name .. " evaluation result:" .. tostring( elem.eval ) )
         end
+		
+		-- break when the first eval returned TRUE, since we wont execute more than one or a lower one anyway
+		if (elem.eval == true) then			
+			break
+		end
 	end
-end
+end--]]
 
 -- Queue effect. depending on the priority the effect will be executed
 function ml_cne_hub.queue_effect( effect )

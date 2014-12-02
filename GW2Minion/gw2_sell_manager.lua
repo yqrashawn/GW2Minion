@@ -314,17 +314,21 @@ end
 function gw2_sell_manager.getClosestSellMarker(nearby)
 	local closestLocation = nil
 	local listArg = (nearby == true and ",maxdistance=5000" or "")
-	local markers = MapMarkerList("onmesh,shortestpath,worldmarkertype=24,markertype=25"..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendors")))
-	for _,marker in pairs(markers) do
-		local mCID = marker.contentID
-		if (mCID == GW2.MAPMARKER.Merchant or mCID == GW2.MAPMARKER.Armorsmith or mCID == GW2.MAPMARKER.Weaponsmith or mCID == GW2.MAPMARKER.Repair) then
-			if (closestLocation == nil or closestLocation.distance > marker.distance) then
-				if (nearby == true and marker.pathdistance < 4000) then
-					closestLocation = marker
-				elseif (nearby ~= true) then
-					closestLocation = marker
+	local markers = MapMarkerList("onmesh,nearest,worldmarkertype=24,markertype=25"..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendors")))
+	if ( TableSize(markers) > 0 ) then 
+		local i,marker = next (markers)
+		while ( i and marker ) do
+			local mCID = marker.contentID
+			if (mCID == GW2.MAPMARKER.Merchant or mCID == GW2.MAPMARKER.Armorsmith or mCID == GW2.MAPMARKER.Weaponsmith or mCID == GW2.MAPMARKER.Repair) then
+				if (closestLocation == nil or closestLocation.distance > marker.distance) then
+					if (nearby == true and marker.pathdistance < 4000) then
+						closestLocation = marker
+					elseif (nearby ~= true) then
+						closestLocation = marker
+					end
 				end
 			end
+			i,marker = next (markers,i)
 		end
 	end
 	return closestLocation
@@ -365,10 +369,14 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 							d("Selling: "..item.name)
 							item:Sell()
 							return true						
-						end
+						end						
 						return false
 					end
 					return true
+				else
+					-- No more items to sell
+					d("Selling finished..")				
+					Inventory:SellJunk()
 				end
 			end
 		else
