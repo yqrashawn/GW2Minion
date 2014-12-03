@@ -859,6 +859,8 @@ ml_mesh_mgr.OMCFacingDirection = nil
 ml_mesh_mgr.OMCType = nil
 ml_mesh_mgr.OMCIsHandled = false
 ml_mesh_mgr.OMCStartPositionReached = false
+ml_mesh_mgr.OMCFacingTargetPos = false
+ml_mesh_mgr.OMCJumpStartedTimer = 0
 function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount ) 
 	
 	if ( ml_mesh_mgr.OMCIsHandled ) then
@@ -885,11 +887,34 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
 					Player:SetFacing(tonumber(ml_mesh_mgr.OMCEndposition[1]),tonumber(ml_mesh_mgr.OMCEndposition[2]),tonumber(ml_mesh_mgr.OMCEndposition[3]))
 					ml_global_information.Player_Position = Player.pos					
-					if ( ml_global_information.Player_IsMoving ) then Player:Jump() end					
+					if ( ml_mesh_mgr.OMCFacingTargetPos and ml_global_information.Player_IsMoving ) then 
+						Player:Jump()
+						if (ml_mesh_mgr.OMCJumpStartedTimer == 0 ) then -- to calc if our jump failed
+							ml_mesh_mgr.OMCJumpStartedTimer = ml_global_information.Now
+						end
+					end -- 1 pulse delay
+					ml_mesh_mgr.OMCFacingTargetPos = true
 					local dist = Distance3D(ml_mesh_mgr.OMCEndposition[1],ml_mesh_mgr.OMCEndposition[2],ml_mesh_mgr.OMCEndposition[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
+					ml_global_information.Player_MovementState = Player:GetMovementState() or 1
 					if ( dist < 35 ) then
 						d("OMC Endposition reached..")
+						ml_global_information.Lasttick = ml_global_information.Lasttick - 2000
 						Player:StopMovement()						
+					
+					elseif(ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Jumping and ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Falling and ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 250) then
+						d("We landed already")
+						Player:StopMovement()
+						ml_global_information.Lasttick = ml_global_information.Lasttick - 2000
+						
+					elseif( dist > 500 or ( ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 800))then					
+						d("We failed to land on the enposition..use teleport maybe?")
+						Player:StopMovement()
+										
+					elseif( math.abs(tonumber(ml_mesh_mgr.OMCEndposition[3])) - math.abs(ml_global_information.Player_Position.z) > 10 and ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 250 ) then
+						d("We felt below the OMCEndpoint height..means we missed the landingpoint..")						
+						Player:StopMovement()
+						ml_global_information.Lasttick = ml_global_information.Lasttick - 2000
+					
 					else
 						return
 					end
@@ -899,11 +924,12 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 			elseif ( ml_mesh_mgr.OMCType == "OMC_WALK" ) then
 				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
 					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
-					Player:SetFacing(tonumber(ml_mesh_mgr.OMCEndposition[1]),tonumber(ml_mesh_mgr.OMCEndposition[2]),tonumber(ml_mesh_mgr.OMCEndposition[3]))
+					Player:SetFacing(tonumber(ml_mesh_mgr.OMCEndposition[1]),tonumber(ml_mesh_mgr.OMCEndposition[2]),tonumber(ml_mesh_mgr.OMCEndposition[3]))					
 					ml_global_information.Player_Position = Player.pos
 					local dist = Distance3D(ml_mesh_mgr.OMCEndposition[1],ml_mesh_mgr.OMCEndposition[2],ml_mesh_mgr.OMCEndposition[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)					
 					if ( dist < 50 ) then
 						d("OMC Endposition reached..")
+						ml_global_information.Lasttick = ml_global_information.Lasttick - 2000
 						Player:StopMovement()
 					else
 						return
@@ -942,7 +968,8 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 		
 		end
 	end
-	
+	ml_mesh_mgr.OMCJumpStartedTimer = 0
+	ml_mesh_mgr.OMCFacingTargetPos = false
 	ml_mesh_mgr.OMCIsHandled = false
 	ml_mesh_mgr.OMCStartPositionReached = false
 end

@@ -31,6 +31,8 @@ function ml_global_information.OnUpdate()
 		ml_global_information.Player_MovementDirections = Player:GetMovement() or { forward=false, backward=false, left=false, right=false }
 		ml_global_information.Player_Inventory_SlotsFree = Inventory.freeSlotCount or 0
 		ml_global_information.Player_SwimState = Player.swimming or 0
+		ml_global_information.Player_MovementState = Player:GetMovementState() or 1
+		
 		ml_global_information.Player_Party = Player:GetParty() or nil
 		
 		ml_global_information.CurrentMapID = Player:GetLocalMapID() or 0
@@ -68,6 +70,8 @@ function ml_global_information.Stop()
     Player:StopMovement()
 	c_movetorandom.randompoint = nil
 	c_movetorandom.randompointreached = false
+	ml_mesh_mgr.OMCIsHandled = false
+	ml_mesh_mgr.OMCStartPositionReached = false
 	gw2_unstuck.Reset()
 end
 

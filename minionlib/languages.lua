@@ -641,6 +641,7 @@ strings =
 		taskMoveUpTask					= "Move Task Up",
 		taskMoveTo						= "MoveTo Position",
 		taskHeartQuest					= "HeartQuest",
+		taskVista						= "Vista",
 		
     },                                  
     ["cn"] =                            
@@ -1290,6 +1291,7 @@ strings =
 		taskMoveUpTask					= "Move Task Up",
 		taskMoveTo						= "MoveTo Position",
 		taskHeartQuest					= "HeartQuest",
+		taskVista						= "Vista",
 	},
     ["jp"] =
     {
@@ -1926,6 +1928,7 @@ strings =
 		taskMoveUpTask					= "Move Task Up",
 		taskMoveTo						= "MoveTo Position",
 		taskHeartQuest					= "HeartQuest",
+		taskVista						= "Vista",
 	},   
     ["de"] =
     {
@@ -2563,6 +2566,7 @@ strings =
 		taskMoveUpTask					= "Move Task Up",
 		taskMoveTo						= "MoveTo Position",
 		taskHeartQuest					= "HeartQuest",
+		taskVista						= "Vista",
 	},     
     ["fr"] =
     {
@@ -3212,6 +3216,7 @@ strings =
 		taskMoveUpTask					= "Move Task Up",
 		taskMoveTo						= "MoveTo Position",
 		taskHeartQuest					= "HeartQuest",
+		taskVista						= "Vista",
 	},       
     ["ru"] =
     {
@@ -3847,6 +3852,7 @@ strings =
 		taskMoveUpTask					= "Move Task Up",
 		taskMoveTo						= "MoveTo Position",
 		taskHeartQuest					= "HeartQuest",
+		taskVista						= "Vista",
 	},    	
 
 }

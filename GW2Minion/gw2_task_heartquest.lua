@@ -19,11 +19,9 @@ function gw2_task_heartquest.Create()
 	newinst.interactContentIDs = nil
 	newinst.interactContentID2s = nil
 	
-	--maxtimer
-	--kills
-	--pickupnreturn
-	--killnpickupnreturn
 	
+	-- Reset some stuff
+	e_StayNearHQ.walkingback = false
 
     return newinst
 end
@@ -50,7 +48,6 @@ function gw2_task_heartquest:Init()
 	
 	-- Buy & Repair & Vendoring
 	self:add(ml_element:create( "VendorSell", c_createVendorSellTask, e_createVendorSellTask, 250 ), self.process_elements)
-	self:add(ml_element:create( "VendorBuy", c_createVendorBuyTask, e_createVendorBuyTask, 240 ), self.process_elements)
 	
 	--self:add(ml_element:create( "QuickRepairItems", c_quickrepair, e_quickrepair, 240 ), self.process_elements)
 	
@@ -197,24 +194,37 @@ end
 -- Interact with stuff than we should interact with 
 c_StayNearHQ = inheritsFrom( ml_cause )
 e_StayNearHQ = inheritsFrom( ml_effect )
+e_StayNearHQ.walkingback = false
 function c_StayNearHQ:evaluate()
-	if ( ml_task_hub:CurrentTask().mappos ~= nil ) then
+	
+	if ( e_StayNearHQ.walkingback ) then return true end 
+	
+	if ( ml_task_hub:CurrentTask().pos ~= nil ) then
 		local startPos = ml_task_hub:CurrentTask().pos
 		local dist = Distance3D(startPos.x,startPos.y,startPos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
 		
 		local maxradius = tonumber(ml_task_hub:CurrentTask().radius) or 10000
 		if ( dist > maxradius ) then
 			--this will make the TM to walk back to the startposition of this task
-			d("We walked outside the maxradius for this HQ..walking back")
-			ml_task_hub:CurrentTask().started = false
+			return true
+			
 		end		
 	end
+	e_StayNearHQ.walkingback = false
 	return false
 end
 function e_StayNearHQ:execute()
 	ml_log("e_StayNearHQ ")
-			
-	
+	if ( not gw2_unstuck.HandleStuck() ) then
+		local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,250,false,false,false))		
+		if (tonumber(navResult) < 0) then					
+			d("e_StayNearHQ result: "..tonumber(navResult))
+		else
+			e_StayNearHQ.walkingback = true
+			return ml_log(true)
+		end
+	end
+	e_StayNearHQ.walkingback = false
 	return ml_log(false)
 end
 
@@ -222,31 +232,45 @@ end
 c_HQHandleInteract = inheritsFrom( ml_cause )
 e_HQHandleInteract = inheritsFrom( ml_effect )
 e_HQHandleInteract.lastTarget = nil
+e_HQHandleInteract.lastTargetID = nil
+e_HQHandleInteract.lastQueryTmr = 0
 function c_HQHandleInteract:evaluate()
+	local radius = tonumber(ml_task_hub:CurrentTask().radius) or 10000
+	
+	-- to prevent hammering the "shortestpath"
+	if ( e_HQHandleInteract.lastTarget ~= nil and e_HQHandleInteract.lastTargetID ~= nil and TimeSince(e_HQHandleInteract.lastQueryTmr) < 2000 ) then
+		if ( ValidTable(CharacterList:Get(e_HQHandleInteract.lastTargetID)) or ValidTable(GadgetList:Get(e_HQHandleInteract.lastTargetID)) ) then			
+			return true			
+		end	
+	end
+	
 	if ( ml_task_hub:CurrentTask().interactContentIDs ~= nil and ml_task_hub:CurrentTask().interactContentIDs ~= "" and ValidString(ml_task_hub:CurrentTask().interactContentIDs) ) then
-		
-		local radius = tonumber(ml_task_hub:CurrentTask().radius) or 10000
+				
 		-- Lets pray that no dumbnut entered bullshit into these ContentID fields -.-
 		-- Search Charlist and Gadgetlist for the wanted targets
-		local TargetList = CharacterList("nearest,onmesh,interactable,contentID="..ml_task_hub:CurrentTask().interactContentIDs)
+		local TargetList = CharacterList("shortestpath,onmesh,interactable,selectable,contentID="..ml_task_hub:CurrentTask().interactContentIDs..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then
 				local tPos = entry.pos				
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
 					e_HQHandleInteract.lastTarget = entry 
+					e_HQHandleInteract.lastTargetID = id
+					e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
 					return true
 				end
 			end
 		end	
 		
-		local TargetList = GadgetList("nearest,onmesh,interactable,contentID="..ml_task_hub:CurrentTask().interactContentIDs)
+		local TargetList = GadgetList("shortestpath,onmesh,interactable,selectable,contentID="..ml_task_hub:CurrentTask().interactContentIDs..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then
 				local tPos = entry.pos					
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
 					e_HQHandleInteract.lastTarget = entry 
+					e_HQHandleInteract.lastTargetID = id
+					e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
 					return true
 				end
 			end
@@ -256,24 +280,29 @@ function c_HQHandleInteract:evaluate()
 	
 	if ( ml_task_hub:CurrentTask().interactContentID2s ~= nil  and ml_task_hub:CurrentTask().interactContentID2s ~= "" and ValidString(ml_task_hub:CurrentTask().interactContentID2s) ) then
 		-- Search Gadgetlist for the wanted targets	
-		local TargetList = GadgetList("nearest,onmesh,interactable,contentID2="..ml_task_hub:CurrentTask().interactContentID2s)
+		local TargetList = GadgetList("shortestpath,onmesh,interactable,selectable,contentID2="..ml_task_hub:CurrentTask().interactContentID2s..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then				
 				local tPos = entry.pos
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
-					e_HQHandleInteract.lastTarget = entry 
+					e_HQHandleInteract.lastTarget = entry
+					e_HQHandleInteract.lastTargetID = id
+					e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
 					return true
 				end
 			end
 		end	
 	end
+	
 	e_HQHandleInteract.lastTarget = nil
+	e_HQHandleInteract.lastTargetID = nil
+	e_HQHandleInteract.lastQueryTmr = 0
 	return false
 end
 function e_HQHandleInteract:execute()
 	ml_log("HQHandleInteract ")
-	if ( e_HQHandleInteract.lastTarget ) then 
+	if ( e_HQHandleInteract.lastTarget and e_HQHandleInteract.lastTarget.onmesh and e_HQHandleInteract.lastTarget.interactable and e_HQHandleInteract.lastTarget.selectable) then 
 		if ( e_HQHandleInteract.lastTarget.isInInteractRange and e_HQHandleInteract.lastTarget.distance < 100) then
 			Player:StopMovement()
 			local target = Player:GetTarget()
@@ -294,18 +323,24 @@ function e_HQHandleInteract:execute()
 			
 		else
 			-- Get in range
+			ml_log(" Getting in InteractRange, Distance:"..tostring(math.floor(e_HQHandleInteract.lastTarget.distance)))			
 			local ePos = e_HQHandleInteract.lastTarget.pos
 			local tRadius = e_HQHandleInteract.lastTarget.radius or 50
 			if ( not gw2_unstuck.HandleStuck() ) then
-				local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,25+tRadius,false,false,false))		
+				local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,25+tRadius,false,false,true))		
 				if (tonumber(navResult) < 0) then					
 					d("MoveInRange result: "..tonumber(navResult))
 				else
 					return ml_log(true)
 				end
 			end		
-		end	
+		end
+	else
+		e_HQHandleInteract.lastTarget = nil
+		e_HQHandleInteract.lastTargetID = nil
+		e_HQHandleInteract.lastQueryTmr = 0
 	end
+	
 	return ml_log(false)
 end
 
@@ -313,30 +348,44 @@ end
 c_HQHandleKillEnemy = inheritsFrom( ml_cause )
 e_HQHandleKillEnemy = inheritsFrom( ml_effect )
 e_HQHandleKillEnemy.lastTarget = nil
+e_HQHandleKillEnemy.lastTargetID = nil
+e_HQHandleKillEnemy.lastQueryTmr = 0
 function c_HQHandleKillEnemy:evaluate()
 	if ( ml_task_hub:CurrentTask().enemyContentIDs ~= nil and ml_task_hub:CurrentTask().enemyContentIDs ~= "" and  ValidString(ml_task_hub:CurrentTask().enemyContentIDs) ) then
 		-- Lets pray that no dumbnut entered bullshit into these ContentID fields -.-
+		
+		-- to prevent hammering the "shortestpath"
+		if ( e_HQHandleInteract.lastTarget ~= nil and e_HQHandleInteract.lastTargetID ~= nil and TimeSince(e_HQHandleInteract.lastQueryTmr) < 2000 ) then
+			if ( ValidTable(CharacterList:Get(e_HQHandleInteract.lastTargetID)) or ValidTable(GadgetList:Get(e_HQHandleInteract.lastTargetID)) ) then			
+				return true			
+			end	
+		end
+		
 		-- Search Charlist and Gadgetlist for the wanted enemies
 		local radius = tonumber(ml_task_hub:CurrentTask().radius) or 10000
-		local TargetList = CharacterList("nearest,onmesh,attackable,alive,contentID="..ml_task_hub:CurrentTask().enemyContentIDs)
+		local TargetList = CharacterList("shortestpath,onmesh,attackable,selectable,alive,contentID="..ml_task_hub:CurrentTask().enemyContentIDs)
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then
 				local tPos = entry.pos				 
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
-					e_HQHandleKillEnemy.lastTarget = entry 
+					e_HQHandleKillEnemy.lastTarget = entry					
+					e_HQHandleKillEnemy.lastTargetID = id
+					e_HQHandleKillEnemy.lastQueryTmr = ml_global_information.Now
 					return true
 				end
 			end
 		end	
 		
-		local TargetList = GadgetList("nearest,onmesh,attackable,alive,contentID="..ml_task_hub:CurrentTask().enemyContentIDs)
+		local TargetList = GadgetList("shortestpath,onmesh,attackable,selectable,alive,contentID="..ml_task_hub:CurrentTask().enemyContentIDs)
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then
 				local tPos = entry.pos				 
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
-					e_HQHandleKillEnemy.lastTarget = entry 
+					e_HQHandleKillEnemy.lastTarget = entry					
+					e_HQHandleKillEnemy.lastTargetID = id
+					e_HQHandleKillEnemy.lastQueryTmr = ml_global_information.Now
 					return true
 				end
 			end
@@ -344,11 +393,13 @@ function c_HQHandleKillEnemy:evaluate()
 		
 	end
 	e_HQHandleKillEnemy.lastTarget = nil
+	e_HQHandleKillEnemy.lastTargetID = nil
+	e_HQHandleKillEnemy.lastQueryTmr = 0
 	return false
 end
 function e_HQHandleKillEnemy:execute()
 	ml_log("HQHandleKillEnemy ")
-	if ( e_HQHandleKillEnemy.lastTarget ) then 
+	if ( e_HQHandleKillEnemy.lastTarget and e_HQHandleKillEnemy.lastTarget.onmesh and e_HQHandleKillEnemy.lastTarget.attackable and e_HQHandleKillEnemy.lastTarget.alive) then 
 		Player:StopMovement()
 		-- For TM Conditions
 		ml_task_hub:CurrentTask().lastTargetID = e_HQHandleKillEnemy.lastTarget.id
@@ -361,9 +412,13 @@ function e_HQHandleKillEnemy:execute()
 			newTask.targetType = "gadget"
 		end
 		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-		e_HQHandleKillEnemy.lastTarget = nil
+		return ml_log(true)
 		
-	end	
+	end
+	
+	e_HQHandleKillEnemy.lastTarget = nil
+	e_HQHandleKillEnemy.lastTargetID = nil
+	e_HQHandleKillEnemy.lastQueryTmr = 0
 	return ml_log(false)
 end
 
