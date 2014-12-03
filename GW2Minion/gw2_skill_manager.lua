@@ -464,6 +464,7 @@ _private.SwapTimer = 0
 _private.lastKitTable = {}
 _private.skillLastCast = {}
 _private.lastEvadedSkill = {targetID = 0, skillID = 0}
+_private.evadeAt = {healthPercentage = math.random(75,90), enemiesAround = 3, timer = 0}
 _private.combatMoveTmr = 0
 _private.combatMoveActive = false
 
@@ -775,22 +776,26 @@ function _private.AttackSkill(target,availableSkills)
 end
 
 function _private:Evade()
-	if (ml_global_information.Player_Endurance >= 50) then
+	if (ml_global_information.Player_Endurance >= 50 and TimeSince(_private.evadeAt.timer) > 500) then
+		_private.evadeAt.timer = ml_global_information.Now
 		local targets = CharacterList("aggro")
-		for _,target in pairs(targets) do
-			local targetOfTarget = target.castinfo.targetID
-			local skillofTarget = target.castinfo.skillID
-			if (target.id ~= _private.lastEvadedSkill.targetID) then
-				_private.lastEvadedSkill = {targetID = target.id, skillID = 0}
-			end
-			if (targetOfTarget == Player.id and skillofTarget ~= 0 and skillofTarget ~= _private.lastEvadedSkill.skillID) then
-				--GW2.DODGEDIRECTIONS = {Backward = 0, BackwardLeft = 1, BackwardRight = 2, Forward = 3, ForwardLeft = 4, ForwardRight = 5, Left = 6, Right = 7}
-				local direction = {[1]=1,[2]=2,[3]=0,[4]=6,[5]=7,[6]=6,[7]=7,}
-				local dir = math.random(1,#direction)
-				if (Player:CanEvade(direction[dir],100)) then
-					_private.lastEvadedSkill.skillID = skillofTarget
-					Player:Evade(direction[dir])
-					return true
+		if (ml_global_information.Player_Health.percent < _private.evadeAt.healthPercentage or TableSize(targets) >= _private.evadeAt.enemiesAround) then
+			_private.evadeAt.healthPercentage = math.random(75,90)
+			for _,target in pairs(targets) do
+				local targetOfTarget = target.castinfo.targetID
+				local skillofTarget = target.castinfo.skillID
+				if (target.id ~= _private.lastEvadedSkill.targetID) then
+					_private.lastEvadedSkill = {targetID = target.id, skillID = 0}
+				end
+				if (targetOfTarget == Player.id and skillofTarget ~= 0 and skillofTarget ~= _private.lastEvadedSkill.skillID) then
+					--GW2.DODGEDIRECTIONS = {Backward = 0, BackwardLeft = 1, BackwardRight = 2, Forward = 3, ForwardLeft = 4, ForwardRight = 5, Left = 6, Right = 7}
+					local direction = {[1]=1,[2]=2,[3]=0,[4]=6,[5]=7,[6]=6,[7]=7,}
+					local dir = math.random(1,#direction)
+					if (Player:CanEvade(direction[dir],100)) then
+						_private.lastEvadedSkill.skillID = skillofTarget
+						Player:Evade(direction[dir])
+						return true
+					end
 				end
 			end
 		end
@@ -1049,15 +1054,16 @@ function profilePrototype:Attack(target)
 		local skills,skillbarSkills = _private.GetAvailableSkills(pSkills)
 		local maxRange = (target.inCombat == false and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving and target.distance > _private.maxRange and _private.maxRange-(_private.maxRange/7) or _private.maxRange-10)
 		if (target) then Player:SetTarget(target.id) end
-		if (target == nil or target.distance < maxRange and target.los) then
+		if (target == nil or (target.distance < maxRange and target.los)) then
 		--if (target == nil or target.distance < _private.maxRange and target.los) then
 			if (_private.runningIntoCombatRange == true) then Player:StopMovement() _private.runningIntoCombatRange = false end
 			local lastSkillInfo = _private:ReturnSkillByID(pSkills,Player.castinfo.lastSkillID)
-			_private:Evade()
 			_private.combatMoveActive = true
 			Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z)
 			if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
-				if (_private.AttackSkill(target,skills)) then
+				if (_private:Evade()) then
+					return true
+				elseif (_private.AttackSkill(target,skills)) then
 					return true
 				end
 			end

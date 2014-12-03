@@ -13,7 +13,8 @@ gw2_salvage_manager.kitlist = {
 	[23043] = {name = GetString("buyMaster"),		rarity = 4,},	-- Master (rarity 4)
 	-- special kits
 	[23045] = {name = GetString("mysticKit"),		rarity = 4,},	-- Mystic Kit (rarity 4)
-	[44602] = {name = GetString("unlimitedKit"),	rarity = 1,},	-- Copper-Fed Kit (rarity 1)
+	[44602] = {name = GetString("copperFedKit"),	rarity = 1,},	-- Copper-Fed Kit (rarity 1)
+	[67027] = {name = GetString("silverFedKit"),	rarity = 4,},	-- Silver-Fed Kit (rarity 4)
 	[19986] = {name = GetString("blackLionKit"), 	rarity = 5,},	--Black Lion Kit (Rarity 5)
 }
 
@@ -207,7 +208,7 @@ function gw2_salvage_manager.CreateDialog(filterID)
 		dialog:NewComboBox(GetString("itemtype"),"SalvageManager_Itemtype",list)
 		list = GetString("rarityNone")..","..GetString("rarityJunk")..","..GetString("rarityCommon")..","..GetString("rarityFine")..","..GetString("rarityMasterwork")..","..GetString("rarityRare")..","..GetString("rarityExotic")
 		dialog:NewComboBox(GetString("rarity"),"SalvageManager_Rarity",list)
-		list = GetString("rarityNone")..","..GetString("buyCrude")..","..GetString("buyBasic")..","..GetString("buyFine")..","..GetString("buyJourneyman")..","..GetString("buyMaster")..","..GetString("mysticKit")..","..GetString("unlimitedKit")
+		list = GetString("rarityNone")..","..GetString("buyCrude")..","..GetString("buyBasic")..","..GetString("buyFine")..","..GetString("buyJourneyman")..","..GetString("buyMaster")..","..GetString("mysticKit")..","..GetString("copperFedKit")..","..GetString("silverFedKit")
 		dialog:NewComboBox(GetString("preferedKit"),"SalvageManager_Kit",list)
 		dialog:SetOkFunction(function()
 			local saveFilter = {name = SalvageManager_Name,itemtype = SalvageManager_Itemtype,rarity = SalvageManager_Rarity,preferedKit = SalvageManager_Kit}
