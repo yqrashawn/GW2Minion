@@ -351,7 +351,7 @@ function gw2minion.OnUpdateCutscene(event, tickcount )
 		gw2minion.SwitchUIForGameState()
 		
 		Player:StopMovement()
-		if ( gSkipCutscene == "1" and TimeSince( gw2minion.Cinema_lastrun > 2000 )) then
+		if ( gSkipCutscene == "1" and TimeSince( gw2minion.Cinema_lastrun) > 2000 ) then
 			gw2minion.Cinema_lastrun = ml_global_information.Now
 			GUI_ToggleConsole(false)
 			d("Skipping Cutscene...")

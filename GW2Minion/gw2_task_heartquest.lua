@@ -244,6 +244,10 @@ function c_HQHandleInteract:evaluate()
 		end	
 	end
 	
+	-- dont spam it when no target was found
+	if (TimeSince(e_HQHandleInteract.lastQueryTmr) < 1000) then return false end 
+	e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
+	
 	if ( ml_task_hub:CurrentTask().interactContentIDs ~= nil and ml_task_hub:CurrentTask().interactContentIDs ~= "" and ValidString(ml_task_hub:CurrentTask().interactContentIDs) ) then
 				
 		-- Lets pray that no dumbnut entered bullshit into these ContentID fields -.-
@@ -255,8 +259,7 @@ function c_HQHandleInteract:evaluate()
 				local tPos = entry.pos				
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
 					e_HQHandleInteract.lastTarget = entry 
-					e_HQHandleInteract.lastTargetID = id
-					e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
+					e_HQHandleInteract.lastTargetID = id					
 					return true
 				end
 			end
@@ -270,7 +273,6 @@ function c_HQHandleInteract:evaluate()
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
 					e_HQHandleInteract.lastTarget = entry 
 					e_HQHandleInteract.lastTargetID = id
-					e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
 					return true
 				end
 			end
@@ -288,7 +290,6 @@ function c_HQHandleInteract:evaluate()
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
 					e_HQHandleInteract.lastTarget = entry
 					e_HQHandleInteract.lastTargetID = id
-					e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
 					return true
 				end
 			end
@@ -297,7 +298,7 @@ function c_HQHandleInteract:evaluate()
 	
 	e_HQHandleInteract.lastTarget = nil
 	e_HQHandleInteract.lastTargetID = nil
-	e_HQHandleInteract.lastQueryTmr = 0
+	e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
 	return false
 end
 function e_HQHandleInteract:execute()
@@ -338,7 +339,7 @@ function e_HQHandleInteract:execute()
 	else
 		e_HQHandleInteract.lastTarget = nil
 		e_HQHandleInteract.lastTargetID = nil
-		e_HQHandleInteract.lastQueryTmr = 0
+		e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
 	end
 	
 	return ml_log(false)
@@ -355,11 +356,16 @@ function c_HQHandleKillEnemy:evaluate()
 		-- Lets pray that no dumbnut entered bullshit into these ContentID fields -.-
 		
 		-- to prevent hammering the "shortestpath"
-		if ( e_HQHandleInteract.lastTarget ~= nil and e_HQHandleInteract.lastTargetID ~= nil and TimeSince(e_HQHandleInteract.lastQueryTmr) < 2000 ) then
-			if ( ValidTable(CharacterList:Get(e_HQHandleInteract.lastTargetID)) or ValidTable(GadgetList:Get(e_HQHandleInteract.lastTargetID)) ) then			
+		if ( e_HQHandleKillEnemy.lastTarget ~= nil and e_HQHandleKillEnemy.lastTargetID ~= nil and TimeSince(e_HQHandleKillEnemy.lastQueryTmr) < 2000 ) then
+			if ( ValidTable(CharacterList:Get(e_HQHandleKillEnemy.lastTargetID)) or ValidTable(GadgetList:Get(e_HQHandleKillEnemy.lastTargetID)) ) then			
 				return true			
 			end	
 		end
+		
+		-- dont spam it when no target was found
+		if (TimeSince(e_HQHandleKillEnemy.lastQueryTmr) < 1000) then return false end 
+		e_HQHandleKillEnemy.lastQueryTmr = ml_global_information.Now
+		
 		
 		-- Search Charlist and Gadgetlist for the wanted enemies
 		local radius = tonumber(ml_task_hub:CurrentTask().radius) or 10000
@@ -370,8 +376,7 @@ function c_HQHandleKillEnemy:evaluate()
 				local tPos = entry.pos				 
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
 					e_HQHandleKillEnemy.lastTarget = entry					
-					e_HQHandleKillEnemy.lastTargetID = id
-					e_HQHandleKillEnemy.lastQueryTmr = ml_global_information.Now
+					e_HQHandleKillEnemy.lastTargetID = id					
 					return true
 				end
 			end
@@ -385,7 +390,6 @@ function c_HQHandleKillEnemy:evaluate()
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
 					e_HQHandleKillEnemy.lastTarget = entry					
 					e_HQHandleKillEnemy.lastTargetID = id
-					e_HQHandleKillEnemy.lastQueryTmr = ml_global_information.Now
 					return true
 				end
 			end
@@ -394,7 +398,7 @@ function c_HQHandleKillEnemy:evaluate()
 	end
 	e_HQHandleKillEnemy.lastTarget = nil
 	e_HQHandleKillEnemy.lastTargetID = nil
-	e_HQHandleKillEnemy.lastQueryTmr = 0
+	e_HQHandleKillEnemy.lastQueryTmr = ml_global_information.Now
 	return false
 end
 function e_HQHandleKillEnemy:execute()
@@ -418,7 +422,7 @@ function e_HQHandleKillEnemy:execute()
 	
 	e_HQHandleKillEnemy.lastTarget = nil
 	e_HQHandleKillEnemy.lastTargetID = nil
-	e_HQHandleKillEnemy.lastQueryTmr = 0
+	e_HQHandleKillEnemy.lastQueryTmr = ml_global_information.Now
 	return ml_log(false)
 end
 

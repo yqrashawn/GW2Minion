@@ -170,6 +170,7 @@ function e_ViewVista:execute()
 					ml_global_information.Wait(1500)
 				end
 			end
+			e_ViewVista.marker = nil
 			return ml_log(true)
 		else
 			
