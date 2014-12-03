@@ -121,7 +121,6 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 		-- Changes in skills
 		-- Skill change
 		if (
-				k == "SklMgr_Target" or
 				k == "SklMgr_GrndTarget" or
 				k == "SklMgr_Healing" or
 				k == "SklMgr_LOS" or
@@ -132,20 +131,17 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "SklMgr_LastSkillID" or
 				k == "SklMgr_Delay")
 			then
-			local var = {	SklMgr_Target = "target",
-							SklMgr_GrndTarget = "groundTargeted",
-							SklMgr_Healing = "healing",
-							SklMgr_LOS = "los",
-							SklMgr_SetRange = "setRange",
-							SklMgr_MinRange = "minRange",
-							SklMgr_MaxRange = "maxRange",
-							SklMgr_InstantCast = "instantCast",
-							SklMgr_LastSkillID = "lastSkillID",
-							SklMgr_Delay = "delay",
+			local var = {	SklMgr_GrndTarget = {global = "groundTargeted", gType = "tostring",},
+							SklMgr_Healing = {global = "healing", gType = "tostring",},
+							SklMgr_LOS = {global = "los", gType = "tostring",},
+							SklMgr_SetRange = {global = "setRange", gType = "tostring",},
+							SklMgr_MinRange = {global = "minRange", gType = "tonumber",},
+							SklMgr_MaxRange = {global = "maxRange", gType = "tonumber",},
+							SklMgr_InstantCast = {global = "instantCast", gType = "tostring",},
+							SklMgr_LastSkillID = {global = "lastSkillID", gType = "tonumber",},
+							SklMgr_Delay = {global = "delay", gType = "tonumber",},
 			}
-			if (v == "true") then v = true elseif (v == "false") then v = false end
-			if (tonumber(v) ~= nil) then v = tonumber(v) end
-			gw2_skill_manager.profile.skills[gw2_skill_manager.currentSkill].skill[var[k]] = v
+			gw2_skill_manager.profile.skills[gw2_skill_manager.currentSkill].skill[var[k].global] = _G[var[k].gType](v)
 		-- Player change
 		elseif (
 				k == "SklMgr_CombatState" or
@@ -162,23 +158,21 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "SklMgr_PCondCount" or
 				k == "SklMgr_PBoonCount")
 			then
-			local var = {	SklMgr_CombatState = "combatState",
-							SklMgr_PMinHP = "minHP",
-							SklMgr_PMaxHP = "maxHP",
-							SklMgr_MinPower = "minPower",
-							SklMgr_MaxPower = "maxPower",
-							SklMgr_MinEndurance = "minEndurance",
-							SklMgr_MaxEndurance = "maxEndurance",
-							SklMgr_AllyCount = "allyNearCount",
-							SklMgr_AllyRange = "allyRangeMax",
-							SklMgr_PHasBuffs = "hasBuffs",
-							SklMgr_PHasNotBuffs = "hasNotBuffs",
-							SklMgr_PCondCount = "conditionCount",
-							SklMgr_PBoonCount = "boonCount",
+			local var = {	SklMgr_CombatState = {global = "combatState", gType = "tostring",},
+							SklMgr_PMinHP = {global = "minHP", gType = "tonumber",},
+							SklMgr_PMaxHP = {global = "maxHP", gType = "tonumber",},
+							SklMgr_MinPower = {global = "minPower", gType = "tonumber",},
+							SklMgr_MaxPower = {global = "maxPower", gType = "tonumber",},
+							SklMgr_MinEndurance = {global = "minEndurance", gType = "tonumber",},
+							SklMgr_MaxEndurance = {global = "maxEndurance", gType = "tonumber",},
+							SklMgr_AllyCount = {global = "allyNearCount", gType = "tonumber",},
+							SklMgr_AllyRange = {global = "allyRangeMax", gType = "tonumber",},
+							SklMgr_PHasBuffs = {global = "hasBuffs", gType = "tostring",},
+							SklMgr_PHasNotBuffs = {global = "hasNotBuffs", gType = "tostring",},
+							SklMgr_PCondCount = {global = "conditionCount", gType = "tonumber",},
+							SklMgr_PBoonCount = {global = "boonCount", gType = "tonumber",},
 			}
-			if (v == "true") then v = true elseif (v == "false") then v = false end
-			if (tonumber(v) ~= nil) then v = tonumber(v) end
-			gw2_skill_manager.profile.skills[gw2_skill_manager.currentSkill].player[var[k]] = v
+			gw2_skill_manager.profile.skills[gw2_skill_manager.currentSkill].player[var[k].global] = _G[var[k].gType](v)
 		-- Target change
 		elseif (
 				k == "SklMgr_Type" or
@@ -192,20 +186,18 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "SklMgr_TCondCount" or
 				k == "SklMgr_TBoonCount")
 			then
-			local var = {	SklMgr_Type = "type",
-							SklMgr_TMinHP = "minHP",
-							SklMgr_TMaxHP = "maxHP",
-							SklMgr_EnemyCount = "enemyNearCount",
-							SklMgr_EnemyRange = "enemyRangeMax",
-							SklMgr_Moving = "moving",
-							SklMgr_THasBuffs = "hasBuffs",
-							SklMgr_THasNotBuffs = "hasNotBuffs",
-							SklMgr_TCondCount = "conditionCount",
-							SklMgr_TBoonCount = "boonCount",
+			local var = {	SklMgr_Type = {global = "type", gType = "tostring",},
+							SklMgr_TMinHP = {global = "minHP", gType = "tonumber",},
+							SklMgr_TMaxHP = {global = "maxHP", gType = "tonumber",},
+							SklMgr_EnemyCount = {global = "enemyNearCount", gType = "tonumber",},
+							SklMgr_EnemyRange = {global = "enemyRangeMax", gType = "tonumber",},
+							SklMgr_Moving = {global = "moving", gType = "tostring",},
+							SklMgr_THasBuffs = {global = "hasBuffs", gType = "tostring",},
+							SklMgr_THasNotBuffs = {global = "hasNotBuffs", gType = "tostring",},
+							SklMgr_TCondCount = {global = "conditionCount", gType = "tonumber",},
+							SklMgr_TBoonCount = {global = "boonCount", gType = "tonumber",},
 			}
-			if (v == "true") then v = true elseif (v == "false") then v = false end
-			if (tonumber(v) ~= nil) then v = tonumber(v) end
-			gw2_skill_manager.profile.skills[gw2_skill_manager.currentSkill].target[var[k]] = v
+			gw2_skill_manager.profile.skills[gw2_skill_manager.currentSkill].target[var[k].global] = _G[var[k].gType](v)
 		elseif (k == "gSMSwitchOnRange") then
 			gw2_skill_manager.profile.switchSettings.switchOnRange = v
 		elseif (k == "gSMSwitchRandom") then
