@@ -18,6 +18,7 @@ function ml_global_information.OnUpdate()
 	if ( Player ~= nil ) then
 				
 		ml_global_information.Player_Health = Player.health or { current = 0, max = 0, percent = 0 }
+		ml_global_information.Player_Profession = Player.profession or 0
 		ml_global_information.Player_Power = Player.power or 0
 		ml_global_information.Player_Endurance = Player.endurance or 0		
 		ml_global_information.Player_InCombat = Player.inCombat or false		

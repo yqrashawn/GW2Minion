@@ -32,7 +32,7 @@ function gw2_skill_manager.GetProfile(profileName)
 	if (GetGameState() == 16) then
 		if (profileName == nil or profileName == "None") then return false end
 		profileName = string.gsub(profileName,'%W','')
-		profileName = table_invert(GW2.CHARCLASS)[Player.profession] .. "_" .. profileName
+		profileName = table_invert(GW2.CHARCLASS)[ml_global_information.Player_Profession] .. "_" .. profileName
 		local profile = persistence.load(gw2_skill_manager.path .. profileName .. ".lua")
 		if (profile) then
 			setmetatable(profile, {__index = profilePrototype})
@@ -49,10 +49,10 @@ function gw2_skill_manager.NewProfile(profileName)
 			if (name == profileName) then return gw2_skill_manager.GetProfile(profileName) end
 		end
 		profileName = string.gsub(profileName,'%W','')
-		profileName = table_invert(GW2.CHARCLASS)[Player.profession] .. "_" .. profileName
+		profileName = table_invert(GW2.CHARCLASS)[ml_global_information.Player_Profession] .. "_" .. profileName
 		local newProfile = {
 			name = profileName,
-			profession = Player.profession,
+			profession = ml_global_information.Player_Profession,
 			professionSettings = {
 				priorityKit = "None",
 				PriorityAtt1 = "None",
@@ -64,8 +64,6 @@ function gw2_skill_manager.NewProfile(profileName)
 				switchOnRange = "0",
 				switchRandom = "0",
 				switchOnCooldown = "0",
-				swichToPrefKitOnly = "0",
-				swichToPrefAttOnly = "0",
 			},
 			skills = {},
 			combos = {},
@@ -204,10 +202,6 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 			gw2_skill_manager.profile.switchSettings.switchRandom = v
 		elseif (k == "gSMSwitchOnCooldown") then
 			gw2_skill_manager.profile.switchSettings.switchOnCooldown = v
-		elseif (k == "gSMPrefKitOnly") then
-			gw2_skill_manager.profile.switchSettings.swichToPrefKitOnly = v
-		elseif (k == "gSMPrefAttOnly") then
-			gw2_skill_manager.profile.switchSettings.swichToPrefAttOnly = v
 		elseif (k == "gSMPrioKit") then
 			gw2_skill_manager.profile.professionSettings.priorityKit = v
 		elseif (k == "gSMPrioAtt1") then
@@ -268,19 +262,18 @@ function gw2_skill_manager.MainWindow(openSkills,openCombos)
 			gSMCurrentProfileName = name
 			
 			mainWindow:NewCheckBox(GetString("SwapRange"),"gSMSwitchOnRange",GetString("switchSettings"))
+			gSMSwitchOnRange = gw2_skill_manager.profile.switchSettings.switchOnRange
 			mainWindow:NewCheckBox(GetString("SwapR"),"gSMSwitchRandom",GetString("switchSettings"))
+			gSMSwitchRandom = gw2_skill_manager.profile.switchSettings.switchRandom
 			mainWindow:NewNumeric(GetString("SwapCD"),"gSMSwitchOnCooldown",GetString("switchSettings"),0,25)
+			gSMSwitchOnCooldown = gw2_skill_manager.profile.switchSettings.switchOnCooldown
 			
-			local profession = Player.profession
+			local profession = ml_global_information.Player_Profession
 			if (profession) then
 				if (profession == GW2.CHARCLASS.Engineer) then
-					mainWindow:NewCheckBox(GetString("PrefKitOnly"),"gSMPrefKitOnly",GetString("switchSettings"))
-					gSMPrefKitOnly = gw2_skill_manager.profile.switchSettings.swichToPrefKitOnly
 					mainWindow:NewComboBox(GetString("PrioritizeKit"),"gSMPrioKit",GetString("ProfessionSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
 					gSMPrioKit = gw2_skill_manager.profile.professionSettings.priorityKit
 				elseif(profession == GW2.CHARCLASS.Elementalist) then
-					mainWindow:NewCheckBox(GetString("PrefAttOnly"),"gSMPrefAttOnly",GetString("switchSettings"))
-					gSMPrefAttOnly = gw2_skill_manager.profile.switchSettings.swichToPrefKitOnly
 					mainWindow:NewComboBox(GetString("PriorizeAttunement1"),"gSMPrioAtt1",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
 					mainWindow:NewComboBox(GetString("PriorizeAttunement2"),"gSMPrioAtt2",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
 					mainWindow:NewComboBox(GetString("PriorizeAttunement3"),"gSMPrioAtt3",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
@@ -453,6 +446,7 @@ _private.maxRange = 154
 _private.runningIntoCombatRange = false -- TODO: order all variables nicely
 _private.targetLosingHP = {id = 0, health = 0, timer = 0}
 _private.SwapTimer = 0
+_private.SwapRandomTimer = 0
 _private.lastKitTable = {}
 _private.skillLastCast = {}
 _private.lastEvadedSkill = {targetID = 0, skillID = 0}
@@ -462,7 +456,7 @@ _private.combatMoveActive = false
 
 -- **private functions**
 function _private.GetProfileList(newProfile)
-	local profession = Player.profession
+	local profession = ml_global_information.Player_Profession
 	local list = "None"
 	if (profession) then
 		local profileList = dirlist(gw2_skill_manager.path,".*lua")
@@ -625,8 +619,8 @@ function _private.GetAvailableSkills(skillList,heal)
 				end
 			end
 		end
+		_private.maxRange = maxRange
 	end
-	_private.maxRange = maxRange
 	return (ValidTable(returnSkillList) and returnSkillList or {}),skillbarSkills
 end
 
@@ -679,66 +673,97 @@ function _private.CanCast(skill,target)
 end
 
 function _private.SwapWeapon()
-	if (TimeSince(_private.SwapTimer) > 750) then
-		if (Player.profession == GW2.CHARCLASS.Elementalist) then
-			local switch = nil
-			local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
-			if ( skill ~= nil ) then
-				local sID = skill.skillID
-				local attunement = {
-					["Fire"] = {[1] = GW2.SKILLBARSLOT.Slot_13 , [5491] = GW2.SKILLBARSLOT.Slot_13 , [15718] = GW2.SKILLBARSLOT.Slot_13 , [5508] = GW2.SKILLBARSLOT.Slot_13 ,},
-					["Water"] = {[1] = GW2.SKILLBARSLOT.Slot_14 , [5549] = GW2.SKILLBARSLOT.Slot_14 , [15716] = GW2.SKILLBARSLOT.Slot_14 , [5693] = GW2.SKILLBARSLOT.Slot_14 ,},
-					["Air"] = {[1] = GW2.SKILLBARSLOT.Slot_15 , [5518] = GW2.SKILLBARSLOT.Slot_15 , [5489] = GW2.SKILLBARSLOT.Slot_15 , [5526] = GW2.SKILLBARSLOT.Slot_15 ,},
-					["Earth"] = {[1] = GW2.SKILLBARSLOT.Slot_16 , [5519] = GW2.SKILLBARSLOT.Slot_16 , [15717] = GW2.SKILLBARSLOT.Slot_16 , [5500] = GW2.SKILLBARSLOT.Slot_16 ,},
-				}
-				local currentAttunement = (attunement["Fire"][sID] or attunement["Water"][sID] or attunement["Air"][sID] or attunement["Earth"][sID])
-				if (currentAttunement) then
-					switch = ((attunement[gSMPrioAtt1][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt1][1]) and attunement[gSMPrioAtt1][1]) or
-							(attunement[gSMPrioAtt2][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt2][1]) and attunement[gSMPrioAtt2][1]) or
-							(attunement[gSMPrioAtt3][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt3]) and attunement[gSMPrioAtt3][1]) or
-							(attunement[gSMPrioAtt4][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt4][1]) and attunement[gSMPrioAtt4][1]))
-				end
-				if (switch) then
-					Player:CastSpell(switch)
-					_private.SwapTimer = ml_global_information.Now
+	if (Player:CanSwapWeaponSet()) then
+		local swap = false
+		if (gw2_skill_manager.profile.switchSettings.switchOnRange == "1" and _private.maxRange < 300 and target.distance > _private.maxRange) then
+			swap = true
+		elseif (gw2_skill_manager.profile.switchSettings.switchRandom == "1" and TimeSince(_private.SwapRandomTimer) > 0) then
+			swap = true
+		elseif (tonumber(gw2_skill_manager.profile.switchSettings.switchOnCooldown) > 0) then
+			local _,skillbarSkills = _private.GetAvailableSkills()
+			local skillsOnCooldown = 0
+			for _,skill in pairs(skillbarSkills) do
+				if (skill.slot > GW2.SKILLBARSLOT.Slot_1  and skill.slot < GW2.SKILLBARSLOT.Slot_5 and skill.cooldown ~= 0) then
+					skillsOnCooldown = skillsOnCooldown + 1
 				end
 			end
-		elseif( Player.profession == GW2.CHARCLASS.Engineer ) then
-			local EngineerKits = {
-				[5812] = "BombKit",
-				[5927] = "FlameThrower",
-				[6020] = "GrenadeKit",
-				[5805] = "GrenadeKit",
-				[5904] = "ToolKit",
-				[5933] = "ElixirGun",
-			}
-			local availableSkills = _private.GetAvailableSkills()
-			local availableKits = { [1] = { slot=0, skillID=0} }-- Leave Kit Placeholder
-			for _,skill in ipairs(availableSkills) do
-				if (skill and EngineerKits[skill.skill.id] and _private.lastKitTable[skill.slot] == nil or TimeSince(_private.lastKitTable[skill.slot].lastused) > 1500) then
-					local kitcount = TableSize(availableKits)
-					availableKits[kitcount+1] = {}
-					availableKits[kitcount+1].slot = skill.slot
-					availableKits[kitcount+1].skillID = skill.skill.id
-				end
+			if (skillsOnCooldown >= tonumber(gw2_skill_manager.profile.switchSettings.switchOnCooldown)) then
+				swap = true
 			end
-			local key = math.random(1,TableSize(availableKits))
-			if (key ~= 1) then
-				Player:CastSpell(availableKits[key].slot)
-				if (gSMPrioKit ~= "None" and EngineerKits[availableKits[key].skillID] ~= tostring(gSMPrioKit))then
-					_private.lastKitTable[availableKits[key].slot] = { lastused = ml_global_information.Now + 15000 }
-				else
-					_private.lastKitTable[availableKits[key].slot] = { lastused = ml_global_information.Now }
-				end
-			elseif (Player:CanSwapWeaponSet()) then
-				Player:SwapWeaponSet()
-				_private.SwapTimer = ml_global_information.Now
-			end
-		elseif (Player:CanSwapWeaponSet()) then
-			Player:SwapWeaponSet()
+		end
+		if (swap) then
 			_private.SwapTimer = ml_global_information.Now
+			_private.SwapRandomTimer = ml_global_information.Now + math.random(5000,15000)
+			if (_private.SwapElementalistAttunement()) then return true end
+			if (_private.SwapEngineerKit()) then return true end
+			Player:SwapWeaponSet()
+			return true
 		end
 	end
+	return false
+end
+
+function _private.SwapEngineerKit()
+	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
+		local EngineerKits = {
+			[5812] = "BombKit",
+			[5927] = "FlameThrower",
+			[6020] = "GrenadeKit",
+			[5805] = "GrenadeKit",
+			[5904] = "ToolKit",
+			[5933] = "ElixirGun",
+		}
+		local availableSkills = _private.GetAvailableSkills()
+		local availableKits = { [1] = { slot=0, skillID=0} }-- Leave Kit Placeholder
+		local prefKitEquiped = false
+		for _,skill in ipairs(availableSkills) do
+			if (skill and EngineerKits[skill.skill.id] and _private.lastKitTable[skill.slot] == nil or TimeSince(_private.lastKitTable[skill.slot].lastused) > 1500) then
+				local kitcount = TableSize(availableKits)
+				availableKits[kitcount+1] = {}
+				availableKits[kitcount+1].slot = skill.slot
+				availableKits[kitcount+1].skillID = skill.skill.id
+			end
+		end
+		local key = math.random(1,TableSize(availableKits))
+		if (key ~= 1) then
+			Player:CastSpell(availableKits[key].slot)
+			if (gSMPrioKit ~= "None" and EngineerKits[availableKits[key].skillID] ~= tostring(gSMPrioKit))then
+				_private.lastKitTable[availableKits[key].slot] = { lastused = ml_global_information.Now + 15000 }
+			else
+				_private.lastKitTable[availableKits[key].slot] = { lastused = ml_global_information.Now }
+			end
+			return true
+		end
+	end
+	return false
+end
+
+function _private.SwapElementalistAttunement()
+	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist) then
+		local switch = nil
+		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
+		if ( skill ~= nil ) then
+			local sID = skill.skillID
+			local attunement = {
+				["Fire"] = {[1] = GW2.SKILLBARSLOT.Slot_13 , [5491] = GW2.SKILLBARSLOT.Slot_13 , [15718] = GW2.SKILLBARSLOT.Slot_13 , [5508] = GW2.SKILLBARSLOT.Slot_13 ,},
+				["Water"] = {[1] = GW2.SKILLBARSLOT.Slot_14 , [5549] = GW2.SKILLBARSLOT.Slot_14 , [15716] = GW2.SKILLBARSLOT.Slot_14 , [5693] = GW2.SKILLBARSLOT.Slot_14 ,},
+				["Air"] = {[1] = GW2.SKILLBARSLOT.Slot_15 , [5518] = GW2.SKILLBARSLOT.Slot_15 , [5489] = GW2.SKILLBARSLOT.Slot_15 , [5526] = GW2.SKILLBARSLOT.Slot_15 ,},
+				["Earth"] = {[1] = GW2.SKILLBARSLOT.Slot_16 , [5519] = GW2.SKILLBARSLOT.Slot_16 , [15717] = GW2.SKILLBARSLOT.Slot_16 , [5500] = GW2.SKILLBARSLOT.Slot_16 ,},
+			}
+			local currentAttunement = (attunement["Fire"][sID] or attunement["Water"][sID] or attunement["Air"][sID] or attunement["Earth"][sID])
+			if (currentAttunement) then
+				switch = ((attunement[gSMPrioAtt1][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt1][1]) and attunement[gSMPrioAtt1][1]) or
+						(attunement[gSMPrioAtt2][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt2][1]) and attunement[gSMPrioAtt2][1]) or
+						(attunement[gSMPrioAtt3][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt3]) and attunement[gSMPrioAtt3][1]) or
+						(attunement[gSMPrioAtt4][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt4][1]) and attunement[gSMPrioAtt4][1]))
+			end
+			if (switch) then
+				Player:CastSpell(switch)
+				return true
+			end
+		end
+	end
+	return false
 end
 
 function _private.AttackSkill(target,availableSkills)
@@ -762,7 +787,6 @@ function _private.AttackSkill(target,availableSkills)
 				return true
 			end
 		end
-		_private.SwapWeapon()
 	end
 	return false
 end
@@ -1053,14 +1077,15 @@ function profilePrototype:Attack(target)
 			_private.combatMoveActive = true
 			Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z)
 			if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
-				if (_private:Evade()) then
+				if (_private:SwapWeapon()) then
+					return true
+				elseif (_private:Evade()) then
 					return true
 				elseif (_private.AttackSkill(target,skills)) then
 					return true
 				end
 			end
 		elseif (target and gMoveIntoCombatRange ~= "0") then
-			if (_private.maxRange < 300 and target.distance > _private.maxRange) then _private:SwapWeapon() end
 			gw2_common_functions.MoveOnlyStraightForward()
 			local tPos = target.pos
 			if (gw2_unstuck.HandleStuck() == false) then
