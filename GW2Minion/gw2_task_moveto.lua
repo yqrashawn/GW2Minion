@@ -156,7 +156,7 @@ function gw2_task_moveto:Process()
 							ml_task_hub:CurrentTask().completed = true
 						end
 					else
-						ml_error("gw2_task_moveto result: "..tostring(newnodecount))
+						d("No Valid Path Found, Result: "..tostring(newnodecount).." To:"..tostring(math.floor(ml_task_hub:CurrentTask().targetPos.x)).."/"..tostring(math.floor(ml_task_hub:CurrentTask().targetPos.y)).."/"..tostring(math.floor(ml_task_hub:CurrentTask().targetPos.z)))
 						ml_log("gw2_task_moveto: No Valid Path : "..tostring(newnodecount))
 						--ml_task_hub:CurrentTask().completed = true
 					
@@ -198,3 +198,23 @@ function gw2_task_moveto:Process()
 	-- AoELoot check ? -> common OnUpdate probably	
 	
 end
+
+function gw2_task_moveto.ModuleInit()
+	ml_task_mgr.AddTaskType(GetString("taskMoveTo"), gw2_task_moveto) -- Allow this task to be selectable in TaskManager
+end
+
+-- TaskManager functions
+function gw2_task_moveto:UIInit_TM()
+	-- nothing needed here, the TM will move to the starting position and then terminate the moveto task, since we already arrived	
+end
+-- TaskManager function: Checks for custom conditions to start this task
+function gw2_task_moveto.CanTaskStart_TM()
+	return true
+end
+-- TaskManager function: Checks for custom conditions to keep this task running
+function gw2_task_moveto.CanTaskRun_TM()
+	
+	return true
+end
+
+RegisterEventHandler("Module.Initalize",gw2_task_moveto.ModuleInit)

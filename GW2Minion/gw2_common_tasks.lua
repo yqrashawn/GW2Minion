@@ -67,7 +67,7 @@ function gw2_common_tasks.ClaimRewards(tickcount)
 	if( TimeSince(gw2_common_tasks.claimRewardsLastUsed) > 15000 and ml_global_information.Player_Alive and ml_global_information.Player_Inventory_SlotsFree > 2) then
 		gw2_common_tasks.claimRewardsLastUsed = tickcount + math.random(5000,15000)
 		if ( Player:CanClaimReward() ) then
-			Player:ClaimRewards()
+			Player:ClaimReward()
 		end
 	end
 end

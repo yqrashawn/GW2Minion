@@ -42,12 +42,13 @@ function ml_UITask.Create()
 	newinst.complete = false
 	newinst.mapid = ""	--startmapid
 	newinst.mappos = "" --startmappos
+	newinst.radius = 0  --the radius around the startposition of where the bot should not walk beyond
 	newinst.minlvl = 0
 	newinst.maxlvl = 80
 	newinst.minduration = 0
-	newinst.maxduration = 0
+	newinst.maxduration = 0	
 	newinst.cooldown = 0	
-	newinst.partysize = 0
+	newinst.partysize = 0	
 	newinst.customVars = {}
     return newinst
 end
@@ -128,6 +129,7 @@ function ml_task_mgr.InitProfile(profileName)
 				newtask = deepcopy(task)
 				ml_task_mgr.profile.tasks[newtask.priority] = newtask
 
+				
 				--[[ loading custom tasksetting variables				
 				if ( TableSize(ml_task_mgr.profile.tasks[newtask.priority].customVars) > 0 ) then
 					for globalvar,entry in pairs(newProfile.tasks[newtask.priority].customVars) do
@@ -259,6 +261,7 @@ function ml_task_mgr.CreateEditWindow()
 			editWindow:NewField(GetString("taskStartMapPos"),"TM_MapPos",GetString("taskStartConditions"))
 			editWindow:NewButton(GetString("taskUseCurretPos"),"gTMUseMyPos",GetString("taskStartConditions"))
 			RegisterEventHandler("gTMUseMyPos",ml_task_mgr.UpdateTaskPositionData)			
+			editWindow:NewNumeric(GetString("taskRadius"),"TM_Radius",GetString("taskStartConditions"),0,999999)
 			editWindow:NewNumeric(GetString("taskMinLvl"),"TM_MinLvl",GetString("taskStartConditions"),0,80)
 			editWindow:NewNumeric(GetString("taskMaxLvl"),"TM_MaxLvl",GetString("taskStartConditions"),0,80)
 			--editWindow:NewNumeric(GetString("taskMinDuration"),"TM_MinDuration",GetString("taskStartConditions"))
@@ -344,6 +347,7 @@ function ml_task_mgr.UpdateEditWindow(arg)
 		end
 		ml_task_mgr.currenttask = tonumber(taskpriority)
 		local task = ml_task_mgr.profile.tasks[tonumber(taskpriority)]
+				
 		-- task
 		TM_ID = task.id
 		TM_Prio = task.priority
@@ -353,6 +357,7 @@ function ml_task_mgr.UpdateEditWindow(arg)
 		TM_PreTaskIDs = task.pretaskid or ""
 		TM_MapID = task.mapid or ""
 		TM_MapPos = task.mappos or ""
+		TM_Radius = task.radius or 0
 		TM_MinLvl = task.minlvl or 0
 		TM_MaxLvl = task.maxlvl or 80
 		TM_MaxDuration = task.maxduration or 0
@@ -368,12 +373,14 @@ function ml_task_mgr.UpdateEditWindow(arg)
 end
 
 -- gets called when the type of the task changes, updates the UI elements which are task specific
-function ml_task_mgr.UpdateTaskUIforType()
+function ml_task_mgr.UpdateTaskUIforType(typeswitched)
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile) then
 		-- clear the old settings			
-		editWindow:DeleteGroup(GetString("taskCustomConditions")) 	
-		ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars = {}
+		editWindow:DeleteGroup(GetString("taskCustomConditions"))
+		if ( typeswitched ) then
+			ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars = {}
+		end
 		
 		-- build new settings
 		local task = ml_task_mgr.taskTypes[TM_Type]
@@ -402,10 +409,10 @@ end
 function ml_task_mgr.NewNumeric(label,globalvar)
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile and ValidString(label) and ValidString(globalvar)) then
-		editWindow:NewNumeric(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"))
-		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil ) then -- set the existing values
+		editWindow:NewNumeric(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"))		
+		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil ) then -- set the existing values			
 			_G["TM_TASK_"..globalvar] = ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar].value
-		else -- create a new default entry		
+		else -- create a new default entry
 			ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] = { type = "Numeric", value = 0 }
 		end		
 	end
@@ -443,11 +450,12 @@ function ml_task_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 		-- task change
 		if ( k == "TM_Name" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].name = v
 		elseif ( k == "TM_Prio" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].priority = v
-		elseif ( k == "TM_Type" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].type = v ml_task_mgr.UpdateTaskUIforType()
+		elseif ( k == "TM_Type" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].type = v ml_task_mgr.UpdateTaskUIforType(true)
 		elseif ( k == "TM_Enabled" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].enabled = v
 		elseif ( k == "TM_PreTaskIDs" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].pretaskid = v
 		elseif ( k == "TM_MapID" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].mapid = v
-		elseif ( k == "TM_MapPos" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].mappos = v
+		elseif ( k == "TM_MapPos" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].mappos = v		
+		elseif ( k == "TM_Radius" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].radius = v
 		elseif ( k == "TM_MinLvl" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].minlvl = v
 		elseif ( k == "TM_MaxLvl" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].maxlvl = v
 		elseif ( k == "TM_MaxDuration" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].maxduration = v
@@ -569,8 +577,11 @@ function ml_task_mgr.CanActiveTaskRun()
 	if ( ml_task_mgr.activeTask.started == false or ml_task_hub:CurrentTask().name == GetString("customTasks")) then return true end
 	
 	-- Checking Conditions	
-	if ( ( tonumber(ml_task_mgr.activeTask.maxduration) ~= 0 and ml_global_information.Now - ml_task_mgr.activeTask.startTimer > tonumber(ml_task_mgr.activeTask.maxduration)*1000)
-		or ( ml_task_mgr.activeTask.CanTaskRun_TM ~= nil and not ml_task_mgr.activeTask.CanTaskRun_TM() )) then
+	if ( ml_task_mgr.activeTask.completed == true 
+		or ( tonumber(ml_task_mgr.activeTask.maxduration) ~= 0 and ml_global_information.Now - ml_task_mgr.activeTask.startTimer > tonumber(ml_task_mgr.activeTask.maxduration)*1000)
+		or ( ml_task_mgr.activeTask.CanTaskRun_TM ~= nil and not ml_task_mgr.activeTask.CanTaskRun_TM() )
+		-- or ( ml_task_mgr.activeTask.radius ~= nil and ml_task_mgr.activeTask.radius ~= 0 dont limit the radius in here, leave that to the tasks itself, else back n forth switching chaos may happen
+		) then
 
 		d("Task : "..ml_task_mgr.activeTask.name.." finished. Task Duration: "..tostring(math.floor((ml_global_information.Now - ml_task_mgr.activeTask.startTimer)/1000)).." > "..tostring(ml_task_mgr.activeTask.maxduration) .." CanRun:"..tostring(ml_task_mgr.activeTask.CanTaskRun_TM()))
 		
@@ -607,6 +618,24 @@ function ml_task_mgr.GetNextTask()
 				ml_task_mgr.activeTask = ml_task_mgr.taskTypes[nextTask.type].Create()
 				ml_task_mgr.activeTask.startTimer = ml_global_information.Now
 				ml_task_mgr.activeTask.started = false
+				local startPos = {}
+				if ( ValidString(nextTask.mappos)) then 
+					for pos in StringSplit(nextTask.mappos,"/") do
+						table.insert(startPos,pos)
+					end
+					if ( TableSize(startPos) == 3 ) then
+						ml_task_mgr.activeTask.pos = { x=tonumber(startPos[1]), y=tonumber(startPos[2]), z=tonumber(startPos[3]) }				
+					else
+						ml_error("TASK "..nextTask.name.." DOES NOT HAVE A VALID STARTPOSITION! ")
+						ml_task_mgr.SetTaskDisabled(nextTask)
+						return nil
+					end
+				else
+					ml_error("TASK "..nextTask.name.." DOES NOT HAVE A VALID START-POSITION! ")
+					ml_task_mgr.SetTaskDisabled(nextTask)
+					return nil
+				end
+				
 				-- Load TM data into task
 				for key,entry in pairs(nextTask) do
 					ml_task_mgr.activeTask[key] = entry

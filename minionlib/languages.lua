@@ -629,6 +629,7 @@ strings =
 		taskStartMapID					= "Start MapID",
 		taskStartMapPos					= "Start MapPosition",
 		taskUseCurretPos				= "Update Position & MapID",
+		taskRadius						= "Max Radius around Startposition",
 		taskMinLvl						= "Min PlayerLevel",
 		taskMaxLvl						= "Max PlayerLevel",
 		taskMinDuration					= "Min Task Duration (s)",
@@ -638,6 +639,8 @@ strings =
 		taskDeleteTask					= "Delete Task",
 		taskMoveDownTask				= "Move Task Down",
 		taskMoveUpTask					= "Move Task Up",
+		taskMoveTo						= "MoveTo Position",
+		taskHeartQuest					= "HeartQuest",
 		
     },                                  
     ["cn"] =                            
@@ -1275,6 +1278,7 @@ strings =
 		taskStartMapID					= "Start MapID",
 		taskStartMapPos					= "Start MapPosition",
 		taskUseCurretPos				= "Update Position & MapID",
+		taskRadius						= "Max Radius around Startposition",
 		taskMinLvl						= "Min PlayerLevel",
 		taskMaxLvl						= "Max PlayerLevel",
 		taskMinDuration					= "Min Task Duration (s)",
@@ -1283,7 +1287,9 @@ strings =
 		taskPartySize					= "Min PartySize",
 		taskDeleteTask					= "Delete Task",
 		taskMoveDownTask				= "Move Task Down",
-		taskMoveUpTask					= "Move Task Up",	
+		taskMoveUpTask					= "Move Task Up",
+		taskMoveTo						= "MoveTo Position",
+		taskHeartQuest					= "HeartQuest",
 	},
     ["jp"] =
     {
@@ -1908,6 +1914,7 @@ strings =
 		taskStartMapID					= "Start MapID",
 		taskStartMapPos					= "Start MapPosition",
 		taskUseCurretPos				= "Update Position & MapID",
+		taskRadius						= "Max Radius around Startposition",
 		taskMinLvl						= "Min PlayerLevel",
 		taskMaxLvl						= "Max PlayerLevel",
 		taskMinDuration					= "Min Task Duration (s)",
@@ -1917,6 +1924,8 @@ strings =
 		taskDeleteTask					= "Delete Task",
 		taskMoveDownTask				= "Move Task Down",
 		taskMoveUpTask					= "Move Task Up",
+		taskMoveTo						= "MoveTo Position",
+		taskHeartQuest					= "HeartQuest",
 	},   
     ["de"] =
     {
@@ -2542,6 +2551,7 @@ strings =
 		taskStartMapID					= "Start MapID",
 		taskStartMapPos					= "Start MapPosition",
 		taskUseCurretPos				= "Update Position & MapID",
+		taskRadius						= "Max Radius around Startposition",
 		taskMinLvl						= "Min PlayerLevel",
 		taskMaxLvl						= "Max PlayerLevel",
 		taskMinDuration					= "Min Task Dauer (s)",
@@ -2551,6 +2561,8 @@ strings =
 		taskDeleteTask					= "Lösche Task",
 		taskMoveDownTask				= "Move Task Down",
 		taskMoveUpTask					= "Move Task Up",
+		taskMoveTo						= "MoveTo Position",
+		taskHeartQuest					= "HeartQuest",
 	},     
     ["fr"] =
     {
@@ -3188,6 +3200,7 @@ strings =
 		taskStartMapID					= "Start MapID",
 		taskStartMapPos					= "Start MapPosition",
 		taskUseCurretPos				= "Update Position & MapID",
+		taskRadius						= "Max Radius around Startposition",
 		taskMinLvl						= "Min PlayerLevel",
 		taskMaxLvl						= "Max PlayerLevel",
 		taskMinDuration					= "Min Task Duration (s)",
@@ -3197,6 +3210,8 @@ strings =
 		taskDeleteTask					= "Delete Task",
 		taskMoveDownTask				= "Move Task Down",
 		taskMoveUpTask					= "Move Task Up",
+		taskMoveTo						= "MoveTo Position",
+		taskHeartQuest					= "HeartQuest",
 	},       
     ["ru"] =
     {
@@ -3820,6 +3835,7 @@ strings =
 		taskStartMapID					= "Start MapID",
 		taskStartMapPos					= "Start MapPosition",
 		taskUseCurretPos				= "Update Position & MapID",
+		taskRadius						= "Max Radius around Startposition",
 		taskMinLvl						= "Min PlayerLevel",
 		taskMaxLvl						= "Max PlayerLevel",
 		taskMinDuration					= "Min Task Duration (s)",
@@ -3829,6 +3845,8 @@ strings =
 		taskDeleteTask					= "Delete Task",
 		taskMoveDownTask				= "Move Task Down",
 		taskMoveUpTask					= "Move Task Up",
+		taskMoveTo						= "MoveTo Position",
+		taskHeartQuest					= "HeartQuest",
 	},    	
 
 }

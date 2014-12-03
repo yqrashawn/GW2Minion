@@ -96,17 +96,13 @@ function e_RunTask:execute()
 			
 		else
 							
-			local startPos = {}
-			for pos in StringSplit(ml_task_hub:CurrentTask().mytask.mappos,"/") do
-				table.insert(startPos,pos)
-			end
-			
-			local dist = Distance3D(startPos[1],startPos[2],startPos[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
+			local startPos = ml_task_hub:CurrentTask().mytask.pos
+			local dist = Distance3D(startPos.x,startPos.y,startPos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
 			d("Distance to TaskStartPosition : "..tostring(dist))
 			if ( dist > 50 ) then
 				local newTask = gw2_task_moveto.Create()
 				newTask.name = "MoveTo Task "..ml_task_hub:CurrentTask().mytask.name.." StartPosition"
-				newTask.targetPos = { x=tonumber(startPos[1]), y=tonumber(startPos[2]), z=tonumber(startPos[3]) }
+				newTask.targetPos = startPos				
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				
 			else
@@ -119,7 +115,7 @@ function e_RunTask:execute()
 	else
 		-- Do task
 		ml_task_hub:CurrentTask():AddSubTask(ml_task_hub:CurrentTask().mytask)
-
+		
 	end
 end
 
