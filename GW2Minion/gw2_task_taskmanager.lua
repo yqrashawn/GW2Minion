@@ -33,6 +33,8 @@ function gw2_task_taskmanager:Init()
 	
 	self:AddTaskCheckCEs()
 end
+
+-- Makes sure we have an active task running, else grabs the next one from the TM
 c_CheckTask = inheritsFrom( ml_cause )
 e_CheckTask = inheritsFrom( ml_effect )
 function c_CheckTask:evaluate()
@@ -56,11 +58,19 @@ function c_CheckTask:evaluate()
 end
 function e_CheckTask:execute()	
 	ml_task_hub:CurrentTask().mytask = ml_task_mgr.GetNextTask()
-	
+		
 	if ( not ml_task_hub:CurrentTask().mytask ) then 
 		d("TaskManager has no startable task left")
 		ml_global_information.Stop()
 		ml_global_information.Wait(5000)
+		gTMCurrentTask = ""
+		gTMLastTaskID = 1
+	else
+		--update current task UI
+		gTMCurrentTask = "ID "..ml_task_hub:CurrentTask().mytask.id..": "..string.gsub(ml_task_hub:CurrentTask().mytask.name, ",", "")
+		gTMLastTaskID = ml_task_hub:CurrentTask().mytask.id
+		Settings.GW2Minion.gTMLastTaskID = gTMLastTaskID
+		
 	end
 end
 
@@ -120,12 +130,12 @@ function e_RunTask:execute()
 end
 
 
-
 function gw2_task_taskmanager:UIInit()
 	d("gw2_task_taskmanager:UIInit")
 	local mw = WindowManager:GetWindow(gw2minion.MainWindow.Name)
-	if ( mw ) then	
+	if ( mw ) then
 		mw:NewButton(GetString("taskSetupTasks"),"gw2_task_taskmanager.Toggle",GetString("taskManager"))
+		mw:NewComboBox(GetString("taskCurrentTask"),"gTMCurrentTask",GetString("taskManager"),"")
 		RegisterEventHandler("gw2_task_taskmanager.Toggle", ml_task_mgr.ToggleMenu)
 		mw:UnFold(GetString("taskManager"))
 	end	
@@ -144,8 +154,73 @@ function gw2_task_taskmanager:UIDestroy()
 end
 
 function gw2_task_taskmanager.ModuleInit()
-	d("gw2_task_taskmanager:ModuleInit")		
+	d("gw2_task_taskmanager:ModuleInit")
+	gw2_task_taskmanager.UpdateCurrentTaskUI()
+	
+	Settings.GW2Minion.gTMLastTaskID = Settings.GW2Minion.gTMLastTaskID or 1	
+	gTMLastTaskID = Settings.GW2Minion.gTMLastTaskID
+	
+	-- try to load the last task we had running
+	gw2_task_taskmanager.UpdateCurrentTaskUI()
+	
 end
 
+-- gets called after the ml_task_mgr updates the main UI window, so we need to refresh our current task dropdown field
+function gw2_task_taskmanager.UpdateCurrentTaskUI()
+	d("PEEWPEWW")
+
+	-- Update dropdown field entries
+	local tasks = ml_task_mgr.GetTaskList()
+	local tasklist = ""
+	if ( tasks ) then
+		for prio,task in pairs( tasks )do			
+			tasklist = tasklist..",".."ID "..task.id..": "..string.gsub(task.name, ",", "")
+		end
+	end
+	gTMCurrentTask_listitems = tasklist
+	
+	-- Select/Set our last used/current task
+	local task = ml_task_mgr.GetTaskByID(tonumber(gTMLastTaskID))
+	if ( task ) then
+	
+		if ( not ml_task_mgr.SetNextTaskByID(tonumber(gTMLastTaskID)) ) then
+			
+			local currentTask = ml_task_mgr.GetCurrentTask()
+			if ( not currentTask ) then
+				gTMCurrentTask = ""
+			else
+				gTMCurrentTask = "ID "..currentTask.id..": "..string.gsub(currentTask.name, ",", "")
+			end
+		
+		else
+			
+			gTMCurrentTask = "ID "..task.id..": "..string.gsub(task.name, ",", "")
+			
+		end
+	end	
+end
+
+function gw2_task_taskmanager.GUIVarUpdate(Event, NewVals, OldVals)
+	for k,v in pairs(NewVals) do
+		if (k == "gTMCurrentTask" ) then
+			ml_global_information.Stop()
+			ml_global_information.Reset()
+			v = string.gsub(v, "ID ", "")
+			local sPos = string.find( v, ": " )
+			local id = 1
+			if ( sPos ) then
+				id = string.sub(v,0,sPos-1)
+			end
+			id = tonumber(id) or 1 
+			Settings.GW2Minion["gTMLastTaskID"] = id
+			ml_task_mgr.SetNextTaskByID(id)
+		end
+	end
+end
+			
+			
+
+RegisterEventHandler("GUI.Update",gw2_task_taskmanager.GUIVarUpdate)
 ml_global_information.AddBotMode(GetString("customTasks"), gw2_task_taskmanager)
 RegisterEventHandler("Module.Initalize",gw2_task_taskmanager.ModuleInit)
+RegisterEventHandler("ml_task_mgr.UpdateMainWindow",gw2_task_taskmanager.UpdateCurrentTaskUI)

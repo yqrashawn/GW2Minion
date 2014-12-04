@@ -20,6 +20,7 @@ ml_task_mgr.taskTypes = {}
 -- For Handling Tasks
 ml_task_mgr.taskHistory = {}
 ml_task_mgr.activeTask = nil
+ml_task_mgr.nextTaskPriority = nil
 
 function ml_task_mgr.ModuleInit()
 	-- Set Default Profile
@@ -236,6 +237,7 @@ function ml_task_mgr.UpdateMainWindow()
 			mainWindow:UnFold(GetString("tasks"))
 		end
 	end
+	RaiseEvent("ml_task_mgr.UpdateMainWindow")
 end
 
 function ml_task_mgr.CreateEditWindow()
@@ -598,7 +600,7 @@ end
 function ml_task_mgr.GetNextTask()
 	if (ml_task_mgr.profile ~= nil ) then
 		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then
-			local prio = nil
+			local prio = ml_task_mgr.nextTaskPriority or nil
 			if ( ml_task_mgr.activeTask ) then prio = ml_task_mgr.activeTask.priority end 
 						
 			local p,nextTask = next(ml_task_mgr.profile.tasks,prio)
@@ -739,5 +741,46 @@ function ml_task_mgr.SetTaskComplete(activetask)
 		end
 	end
 end
+-- Returns all tasks
+function ml_task_mgr.GetTaskList()
+	if ( ValidTable(ml_task_mgr.profile) ) then
+		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then	
+			return ml_task_mgr.profile.tasks
+		end
+	end
+	return nil
+end
+
+function ml_task_mgr.GetTaskByID(taskid)
+	if (ml_task_mgr.profile ~= nil and tonumber(taskid) ) then
+		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then						
+			for prio,task in pairs( ml_task_mgr.profile.tasks )do				
+				if ( task.id == taskid ) then
+					return task
+				end
+			end
+		end
+	end
+	return nil
+end
+
+-- Sets the task that should be run 
+function ml_task_mgr.SetNextTaskByID(taskid)
+	if (ml_task_mgr.profile ~= nil and tonumber(taskid) ) then
+		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then						
+			for prio,task in pairs( ml_task_mgr.profile.tasks )do				
+				if ( task.id == taskid ) then
+					ml_task_mgr.activeTask = nil
+					if ( task.priority > 1 ) then
+						ml_task_mgr.nextTaskPriority = task.priority - 1 
+					end
+					return true
+				end
+			end
+		end
+	end
+	return false
+end
+
 RegisterEventHandler("Module.Initalize",ml_task_mgr.ModuleInit)
 RegisterEventHandler("GUI.Update",ml_task_mgr.GUIVarUpdate)
