@@ -32,7 +32,7 @@ function gw2_skill_manager.GetProfile(profileName)
 	if (GetGameState() == 16) then
 		if (profileName == nil or profileName == "None") then return false end
 		profileName = string.gsub(profileName,'%W','')
-		profileName = table_invert(GW2.CHARCLASS)[ml_global_information.Player_Profession] .. "_" .. profileName
+		profileName = table_invert(GW2.CHARCLASS)[Player.profession] .. "_" .. profileName
 		local profile = persistence.load(gw2_skill_manager.path .. profileName .. ".lua")
 		if (profile) then
 			setmetatable(profile, {__index = profilePrototype})
@@ -672,10 +672,10 @@ function _private.CanCast(skill,target)
 	return false
 end
 
-function _private.SwapWeapon()
+function _private.SwapWeapon(target)
 	if (Player:CanSwapWeaponSet()) then
 		local swap = false
-		if (gw2_skill_manager.profile.switchSettings.switchOnRange == "1" and _private.maxRange < 300 and target.distance > _private.maxRange) then
+		if (gw2_skill_manager.profile.switchSettings.switchOnRange == "1" and _private.maxRange < 300 and target and target.distance > _private.maxRange) then
 			swap = true
 		elseif (gw2_skill_manager.profile.switchSettings.switchRandom == "1" and TimeSince(_private.SwapRandomTimer) > 0) then
 			swap = true
@@ -683,7 +683,7 @@ function _private.SwapWeapon()
 			local _,skillbarSkills = _private.GetAvailableSkills()
 			local skillsOnCooldown = 0
 			for _,skill in pairs(skillbarSkills) do
-				if (skill.slot > GW2.SKILLBARSLOT.Slot_1  and skill.slot < GW2.SKILLBARSLOT.Slot_5 and skill.cooldown ~= 0) then
+				if (skill.slot > GW2.SKILLBARSLOT.Slot_1  and skill.slot <= GW2.SKILLBARSLOT.Slot_5 and skill.cooldown ~= 0) then
 					skillsOnCooldown = skillsOnCooldown + 1
 				end
 			end
@@ -948,7 +948,7 @@ end
 function _private.Save()
 	gw2_skill_manager.profile:Save()
 	gw2_skill_manager.MainWindow(true)
-	gw2_skill_manager.SkillEditWindow(gw2_skill_manager.currentSkill)
+	gw2_skill_manager.SkillEditWindow()
 	local name = gw2_skill_manager.profile.name
 	name = string.sub(name,select(2,string.find(name,"_"))+1,#name)
 	Settings.GW2Minion.gCurrentProfile = name
@@ -1077,7 +1077,7 @@ function profilePrototype:Attack(target)
 			_private.combatMoveActive = true
 			Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z)
 			if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
-				if (_private:SwapWeapon()) then
+				if (_private.SwapWeapon(target)) then
 					return true
 				elseif (_private:Evade()) then
 					return true
@@ -1087,6 +1087,7 @@ function profilePrototype:Attack(target)
 			end
 		elseif (target and gMoveIntoCombatRange ~= "0") then
 			gw2_common_functions.MoveOnlyStraightForward()
+			_private.SwapWeapon(target)
 			local tPos = target.pos
 			if (gw2_unstuck.HandleStuck() == false) then
 				Player:MoveTo(tPos.x,tPos.y,tPos.z,50 + target.radius,false,false,true)
