@@ -510,12 +510,14 @@ end
 
 c_fleeToSafety = inheritsFrom( ml_cause )
 e_fleeToSafety = inheritsFrom( ml_effect )
+c_fleeToSafety.safespot = nil
 c_fleeToSafety.fleeing = false
 function c_fleeToSafety:evaluate()
-	
 	-- Check if were alive and if were low on health or already fleeing.
 	if (ml_global_information.Player_Alive and ml_global_information.Player_InCombat and ml_global_information.Player_Health.percent < 15) then
-		local safespot = select(2,next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest")))
+		if (c_fleeToSafety.safespot == nil) then
+			c_fleeToSafety.safespot = select(2,next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest")))
+		end
 		local nmbrEnemies = TableSize(CharacterList("aggro,alive"))
 		local target = Player:GetTarget()
 		local tHealth = (target == nil and 100 or target.health.percent)
@@ -526,7 +528,7 @@ function c_fleeToSafety:evaluate()
 	elseif ( ml_global_information.Player_Alive and c_fleeToSafety.fleeing == true) then
 		return true
 	end
-	
+	c_fleeToSafety.safespot = nil
 	return false
 end
 function e_fleeToSafety:execute()	
@@ -541,12 +543,13 @@ function e_fleeToSafety:execute()
 	if (ValidTable(nmbrEnemies)) then
 		ml_log(": Walking to Safe-spot.")
 		-- Find safespot.
-		local safespot = select(2,next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest"))).pos
-		if ( safespot ) then 
-			gw2_common_functions.MoveOnlyStraightForward()
-			Player:MoveTo(safespot.x,safespot.y,safespot.z,50,false,true,true)
+		if (c_fleeToSafety.safespot == nil) then
+			c_fleeToSafety.safespot = select(2,next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest"))).pos
 		end
-		
+		if ( c_fleeToSafety.safespot ) then 
+			gw2_common_functions.MoveOnlyStraightForward()
+			Player:MoveTo(c_fleeToSafety.safespot.x,c_fleeToSafety.safespot.y,c_fleeToSafety.safespot.z,50,false,true,true)
+		end
 	-- No enemies found, safe-spot found stop moving and wait to heal.	
 	else
 		ml_log(": Found Safe-spot, waiting to heal.")
