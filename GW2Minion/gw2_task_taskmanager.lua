@@ -167,8 +167,7 @@ end
 
 -- gets called after the ml_task_mgr updates the main UI window, so we need to refresh our current task dropdown field
 function gw2_task_taskmanager.UpdateCurrentTaskUI()
-	d("PEEWPEWW")
-
+	
 	-- Update dropdown field entries
 	local tasks = ml_task_mgr.GetTaskList()
 	local tasklist = ""

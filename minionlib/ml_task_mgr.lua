@@ -601,8 +601,10 @@ function ml_task_mgr.GetNextTask()
 	if (ml_task_mgr.profile ~= nil ) then
 		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then
 			local prio = ml_task_mgr.nextTaskPriority or nil
+			ml_task_mgr.nextTaskPriority = nil
+			
 			if ( ml_task_mgr.activeTask ) then prio = ml_task_mgr.activeTask.priority end 
-						
+			
 			local p,nextTask = next(ml_task_mgr.profile.tasks,prio)
 			-- start from top of our profilelist again if we reached the bottom
 			if ( prio ~= nil and not p ) then
@@ -717,7 +719,7 @@ function ml_task_mgr.SetActiveTaskStarted()
 end
 -- Set the task.enabled field to false
 function ml_task_mgr.SetTaskDisabled(activetask)
-	if (ml_task_mgr.profile ~= nil ) then
+	if (ValidTable(ml_task_mgr.profile) ) then
 		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then						
 			for prio,task in pairs( ml_task_mgr.profile.tasks )do				
 				if ( task.id == activetask.id ) then
@@ -730,7 +732,7 @@ function ml_task_mgr.SetTaskDisabled(activetask)
 end
 -- Set the task.complete field to true
 function ml_task_mgr.SetTaskComplete(activetask)
-	if (ml_task_mgr.profile ~= nil ) then
+	if (ValidTable(ml_task_mgr.profile)) then
 		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then						
 			for prio,task in pairs( ml_task_mgr.profile.tasks )do				
 				if ( task.id == activetask.id ) then
@@ -752,7 +754,7 @@ function ml_task_mgr.GetTaskList()
 end
 
 function ml_task_mgr.GetTaskByID(taskid)
-	if (ml_task_mgr.profile ~= nil and tonumber(taskid) ) then
+	if ( ValidTable(ml_task_mgr.profile) ~= nil and tonumber(taskid) ) then
 		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then						
 			for prio,task in pairs( ml_task_mgr.profile.tasks )do				
 				if ( task.id == taskid ) then
@@ -766,13 +768,15 @@ end
 
 -- Sets the task that should be run 
 function ml_task_mgr.SetNextTaskByID(taskid)
-	if (ml_task_mgr.profile ~= nil and tonumber(taskid) ) then
+	if (ValidTable(ml_task_mgr.profile) and tonumber(taskid) ) then
 		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then						
 			for prio,task in pairs( ml_task_mgr.profile.tasks )do				
 				if ( task.id == taskid ) then
 					ml_task_mgr.activeTask = nil
 					if ( task.priority > 1 ) then
 						ml_task_mgr.nextTaskPriority = task.priority - 1 
+					else
+						ml_task_mgr.nextTaskPriority = nil
 					end
 					return true
 				end
