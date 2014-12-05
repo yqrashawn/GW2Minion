@@ -424,7 +424,8 @@ function gw2_skill_manager.NewProfileDialog()
 	if (dialog == nil) then
 		dialog = gw2_dialog_manager:NewDialog(GetString("newProfileName"))
 		dialog:NewField(GetString("newProfileName"),"smDialogNewProfileName")
-		dialog:SetOkFunction(function(list)
+		dialog:SetOkFunction(
+			function(list)
 				if (ValidString(_G[list])) then
 					gw2_skill_manager.profile = gw2_skill_manager.NewProfile(_G[list])
 					gw2_skill_manager.MainWindow()
@@ -432,6 +433,26 @@ function gw2_skill_manager.NewProfileDialog()
 					return true
 				end
 				return "Please enter " .. GetString("newProfileName") .. " first."
+			end
+		)
+	end
+	if (dialog) then
+		dialog:Show()
+	end
+end
+
+function gw2_skill_manager.DeleteProfileDialog()
+	local dialog = gw2_dialog_manager:GetDialog(GetString("delete"))
+	if (dialog == nil) then
+		dialog = gw2_dialog_manager:NewDialog(GetString("delete"))
+		dialog:SetOkFunction(
+			function()
+				gw2_skill_manager.profile:Delete()
+				gw2_skill_manager.profile = nil
+				Settings.GW2Minion.gCurrentProfile = "None"
+				gw2_skill_manager.MainWindow()
+				gw2_skill_manager.SkillEditWindow()
+				return true
 			end
 		)
 	end
@@ -955,11 +976,12 @@ function _private.Save()
 end
 
 function _private.Delete()
-	gw2_skill_manager.profile:Delete()
+	gw2_skill_manager.DeleteProfileDialog()
+	--[[gw2_skill_manager.profile:Delete()
 	gw2_skill_manager.profile = nil
 	Settings.GW2Minion.gCurrentProfile = "None"
 	gw2_skill_manager.MainWindow()
-	gw2_skill_manager.SkillEditWindow()
+	gw2_skill_manager.SkillEditWindow()]]
 end
 
 function _private.DetectSkills(newProfile)
