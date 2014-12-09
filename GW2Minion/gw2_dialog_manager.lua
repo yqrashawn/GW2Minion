@@ -83,7 +83,6 @@ function dialogPrototype:NewField(name,globaleventname,defaultValue)
 		defaultValue = defaultValue or "",
 	}
 	table.insert(gw2_dialog_manager.dialogs[self.name].guiElements,newElement)
-	--self:Create()
 end
 
 function dialogPrototype:NewCheckBox(name,globaleventname,defaultValue)
@@ -94,7 +93,6 @@ function dialogPrototype:NewCheckBox(name,globaleventname,defaultValue)
 		defaultValue = defaultValue or "0",
 	}
 	table.insert(gw2_dialog_manager.dialogs[self.name].guiElements,newElement)
-	--self:Create()
 end
 
 function dialogPrototype:NewNumeric(name,globaleventname,minimumval,maximumval,defaultValue)
@@ -107,7 +105,6 @@ function dialogPrototype:NewNumeric(name,globaleventname,minimumval,maximumval,d
 		defaultValue = defaultValue or minimumval or 0,
 	}
 	table.insert(gw2_dialog_manager.dialogs[self.name].guiElements,newElement)
-	--self:Create()
 end
 
 function dialogPrototype:NewComboBox(name,globaleventname,itemlist,defaultValue)
@@ -119,7 +116,6 @@ function dialogPrototype:NewComboBox(name,globaleventname,itemlist,defaultValue)
 		defaultValue = defaultValue or "0",
 	}
 	table.insert(gw2_dialog_manager.dialogs[self.name].guiElements,newElement)
-	--self:Create()
 end
 
 function dialogPrototype:Create()

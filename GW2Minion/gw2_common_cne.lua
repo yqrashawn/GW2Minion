@@ -642,3 +642,48 @@ function e_FinishEnemy:execute()
 	end
 	return ml_log(false)
 end
+
+c_equipGatheringTools = inheritsFrom( ml_cause )
+e_equipGatheringTools = inheritsFrom( ml_effect )
+c_equipGatheringTools.timer = 0
+c_equipGatheringTools.randomTimer = math.random(750,1750)
+function c_equipGatheringTools:evaluate()
+	if(Player.inCombat == false and TimeSince(e_equipGatheringTools.timer) > c_equipGatheringTools.randomTimer) then -- timer to allow for equipping and random interval.
+		c_equipGatheringTools.timer = ml_global_information.Now
+		c_equipGatheringTools.randomTimer = math.random(750,1750)
+		local key = gw2_buy_manager.toolNameToKey(BuyManager_GarheringTool) -- Get key asociated with chosen tool type. Eg: "copper" = 1
+		if (key and ml_global_information.Player_Level >= gw2_buy_manager.LevelRestrictions[key]) then -- Check for valid key and if player level is high enough for the chosen tool.
+			if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and ValidTable(Inventory("itemID=" .. gw2_buy_manager.tools["foraging"][key]))) or
+			(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil and ValidTable(Inventory("itemID=" .. gw2_buy_manager.tools["logging"][key]))) or
+			(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil and ValidTable(Inventory("itemID=" .. gw2_buy_manager.tools["mining"][key]))) then
+				return true -- One or more tooltypes not equiped and matching tool in inventory.
+			end
+		end
+	end
+	return false
+end
+function e_equipGatheringTools:execute()
+	ml_log("e_equipGatheringTools")
+	if(Player.inCombat == false) then
+		local key = gw2_buy_manager.toolNameToKey(BuyManager_GarheringTool) -- Get key asociated with chosen tool type. Eg: "copper" = 1
+		if (key and ml_global_information.Player_Level >= gw2_buy_manager.LevelRestrictions[key]) then -- Check for valid key and if player level is high enough for the chosen tool.
+			local _,fTool = next(Inventory("itemID=" .. gw2_buy_manager.tools["foraging"][key])) -- Get correct tool in Inventory.
+			local _,lTool = next(Inventory("itemID=" .. gw2_buy_manager.tools["logging"][key]))
+			local _,mTool = next(Inventory("itemID=" .. gw2_buy_manager.tools["mining"][key]))
+			if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and ValidTable(fTool)) then
+				d("Equipping Sickle ..")
+				fTool:Equip(GW2.EQUIPMENTSLOT.ForagingTool)
+				return true
+			elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool) == nil and ValidTable(lTool)) then
+				d("Equipping Axe ..")
+				lTool:Equip(GW2.EQUIPMENTSLOT.LoggingTool)
+				return true
+			elseif (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool) == nil and ValidTable(mTool)) then
+				d("Equipping Pick ..")
+				mTool:Equip(GW2.EQUIPMENTSLOT.MiningTool)
+				return true
+			end
+		end
+	end
+	return false
+end
