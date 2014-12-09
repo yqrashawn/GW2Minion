@@ -984,13 +984,13 @@ function _private.Delete()
 	gw2_skill_manager.SkillEditWindow()]]
 end
 
-function _private.DetectSkills(newProfile)
+function _private.DetectSkills(onOff)
 	local mainWindow = WindowManager:GetWindow(gw2_skill_manager.mainWindow.name)
 	if (mainWindow) then 
 		local button = mainWindow:GetControl(GetString("autoDetectSkills"))
 		if (button and gw2_skill_manager.profile) then
-			if (newProfile == true) then
-				button:SetToggleState(true)
+			if (type(onOff) == "boolean") then
+				button:SetToggleState(onOff)
 			end
 			if (button.pressed) then
 				d("Recording Skills..")
@@ -1059,6 +1059,7 @@ end
 -- **profile prototype**
 -- main profile stuff
 function profilePrototype:Save()
+	_private.DetectSkills(false)
 	local saveFile = deepcopy(self)
 	saveFile.clipboard = nil
 	setmetatable(saveFile, {})
@@ -1067,6 +1068,7 @@ function profilePrototype:Save()
 end
 
 function profilePrototype:Delete()
+	_private.DetectSkills(false)
 	os.remove(gw2_skill_manager.path .. self.name .. ".lua")
 	return true
 end
