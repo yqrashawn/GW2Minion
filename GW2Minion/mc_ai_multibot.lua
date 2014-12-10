@@ -430,9 +430,9 @@ function e_SetAggroTarget_mb:execute()
 				-- nearest to leader first	
 				local TList = nil 
 				if (not Player.inCombat) then
-					TList = CharacterList("nearest,attackable,alive,aggro,onmesh,distanceto="..char.id..",maxdistance=750")
+					TList = CharacterList("nearest,attackable,alive,onmesh,distanceto="..char.id..",maxdistance=750")
 				else
-					TList = CharacterList("nearest,attackable,alive,aggro,onmesh,distanceto="..char.id..",maxdistance=1750")
+					TList = CharacterList("nearest,attackable,alive,onmesh,distanceto="..char.id..",maxdistance=1750")
 				end
 				if ( TableSize( TList ) > 0 ) then
 					local id, E  = next( TList )
@@ -449,7 +449,7 @@ function e_SetAggroTarget_mb:execute()
 	end
 	
 	-- lowesthealth in CombatRange first	
-	local TList = ( CharacterList("lowesthealth,attackable,alive,aggro,onmesh,maxdistance="..ml_global_information.AttackRange) )
+	local TList = ( CharacterList("lowesthealth,attackable,alive,onmesh,maxdistance="..ml_global_information.AttackRange) )
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
@@ -460,7 +460,7 @@ function e_SetAggroTarget_mb:execute()
 	end
 		
 	-- Then nearest Aggro Target
-	TList = ( CharacterList("attackable,alive,aggro,nearest,onmesh") )
+	TList = ( CharacterList("attackable,alive,nearest,onmesh") )
 	if ( TableSize( TList ) > 0 ) then
 		local id, E  = next( TList )
 		if ( id ~= nil and id ~= 0 and E ~= nil ) then
