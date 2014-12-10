@@ -17,8 +17,10 @@ function gw2minion.ModuleInit()
 		
 		mw:NewCheckBox(GetString("reviveplayers"),"gRevivePlayers",GetString("settings"))
 		mw:NewCheckBox(GetString("revivecharacters"),"gRevive",GetString("settings"))
-		mw:NewCheckBox(GetString("disabledrawing"),"gDisableRender",GetString("settings"))		
-				
+		mw:NewCheckBox(GetString("disabledrawing"),"gDisableRender",GetString("settings"))
+		mw:NewCheckBox(GetString("taskAllowTeleports"),"gAllowTeleport",GetString("settings"))
+		
+		
 		local b = mw:NewButton(GetString("startBot"),"gw2minion.evBotstartStop")
 		b:SetToggleState(false)
 		b:SetSize(25,30)
@@ -79,6 +81,7 @@ function gw2minion.ModuleInit()
 	Settings.GW2Minion.gBotRunning = Settings.GW2Minion.gBotRunning or "0"	
 	Settings.GW2Minion.gGuestServer = Settings.GW2Minion.gGuestServer or "None"
 	Settings.GW2Minion.gDisableRender = Settings.GW2Minion.gDisableRender or "0"
+	Settings.GW2Minion.gAllowTeleport = Settings.GW2Minion.gAllowTeleport or "0"
 	Settings.GW2Minion.gDepositItems = Settings.GW2Minion.gDepositItems or "1"	
 	Settings.GW2Minion.gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement or "1"	
 	Settings.GW2Minion.gRevivePlayers = Settings.GW2Minion.gRevivePlayers or "1"
@@ -92,6 +95,7 @@ function gw2minion.ModuleInit()
 	gRevivePlayers = Settings.GW2Minion.gRevivePlayers
 	gRevive = Settings.GW2Minion.gRevive
 	gDisableRender = Settings.GW2Minion.gDisableRender
+	gAllowTeleport = Settings.GW2Minion.gAllowTeleport
 	
 	if ( RenderManager ) then RenderManager:ToggleRendering(tonumber(gDisableRender)) end
 	
@@ -461,6 +465,7 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "gRevivePlayers" or
 			k == "gRevive" or
 			k == "gDisableRender" or 
+			k == "gAllowTeleport" or 
 			k == "SellManager_Active" or 
 			k == "BuyManager_Active" or 
 			k == "BuyManager_Crudekit" or

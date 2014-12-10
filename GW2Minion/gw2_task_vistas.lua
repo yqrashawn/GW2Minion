@@ -14,7 +14,8 @@ function gw2_task_vistas.Create()
 	
 	-- General fields	
 	newinst.startTime = ml_global_information.Now
-
+	newinst.usesTeleport = "0"
+	
     return newinst
 end
 
@@ -50,7 +51,7 @@ function gw2_task_vistas:task_complete_eval()
 		
 		local dist = Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)		
 		if ( dist < 8000 ) then
-			local evList = MapMarkerList("nearest,onmesh,isvista,contentID="..GW2.MAPMARKER.Vista)
+			local evList = MapMarkerList("nearest,onmesh,isvista,maxdistance=5000,contentID="..GW2.MAPMARKER.Vista)
 			if ( evList ) then 
 				local i,event = next(evList)
 				if ( i and event ) then
@@ -83,7 +84,8 @@ function gw2_task_vistas.ModuleInit()
 	-- Setup Debug fields
 	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
 	if ( dw ) then		
-		dw:NewField("Duration","dbVistaDuration","Task_Vista")		
+		dw:NewField("Duration","dbVistaDuration","Task_Vista")
+		dw:NewField("UsesTeleport","dbVistaTP","Task_Vista")
 	end
 	
 	ml_task_mgr.AddTaskType(GetString("taskVista"), gw2_task_vistas) -- Allow this task to be selectable in TaskManager
@@ -91,18 +93,28 @@ end
 
 -- TaskManager functions
 function gw2_task_vistas:UIInit_TM()
-
+	ml_task_mgr.NewCheckBox("Uses Short Teleports", "usesTeleport")
 end
 -- TaskManager function: Checks for custom conditions to start this task, this is checked before the task is selected to be enqueued/created
-function gw2_task_vistas.CanTaskStart_TM()	
+function gw2_task_vistas.CanTaskStart_TM(nextTask)	
+	if ( TableSize(nextTask.customVars) > 0 and TableSize(nextTask.customVars.TM_TASK_usesTeleport) > 0 ) then
+
+		if ( nextTask.customVars.TM_TASK_usesTeleport.value == "1" and gAllowTeleport == "0" ) then
+			d("This Task requires short teleports but teleports are not allowed (Settings -> AllowTeleport), finishing task")
+			return false
+		end
+	end
 	return true
 end
 -- TaskManager function: Checks for custom conditions to keep this task running, this is checked during the task is actively running
 function gw2_task_vistas.CanTaskRun_TM()
-		
-	-- since this is called independent of the tasksystem, it 
-	if ( ml_task_hub:CurrentTask().startTime ~= nil ) then
-		dbVistaDuration = tostring(math.floor((ml_global_information.Now-ml_task_hub:CurrentTask().startTime)/1000))
+
+	if ( ml_task_hub:CurrentTask().name == GetString("taskVista") ) then
+		-- since this is called independent of the tasksystem, it		
+		if ( ml_task_hub:CurrentTask().startTime ~= nil ) then
+			dbVistaDuration = tostring(math.floor((ml_global_information.Now-ml_task_hub:CurrentTask().startTime)/1000))
+			dbVistaTP = tostring(ml_task_hub:CurrentTask().usesTeleport)
+		end		
 	end		
 	return true
 end

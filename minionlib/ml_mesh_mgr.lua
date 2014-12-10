@@ -861,7 +861,12 @@ ml_mesh_mgr.OMCIsHandled = false
 ml_mesh_mgr.OMCStartPositionReached = false
 ml_mesh_mgr.OMCFacingTargetPos = false
 ml_mesh_mgr.OMCJumpStartedTimer = 0
+ml_mesh_mgr.OMCThrottle = 0
 function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount ) 
+	
+	if ( ml_mesh_mgr.OMCThrottle > tickcount ) then -- pause this for some seconds
+		return	
+	end
 	
 	if ( ml_mesh_mgr.OMCIsHandled ) then
 		
@@ -885,10 +890,10 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 			if ( ml_mesh_mgr.OMCType == "OMC_JUMP" ) then
 				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
 					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
-					Player:SetFacing(tonumber(ml_mesh_mgr.OMCEndposition[1]),tonumber(ml_mesh_mgr.OMCEndposition[2]),tonumber(ml_mesh_mgr.OMCEndposition[3]))
+					Player:SetFacing(tonumber(ml_mesh_mgr.OMCEndposition[1]),tonumber(ml_mesh_mgr.OMCEndposition[2]),tonumber(ml_mesh_mgr.OMCEndposition[3]))					
 					ml_global_information.Player_Position = Player.pos					
 					if ( ml_mesh_mgr.OMCFacingTargetPos and ml_global_information.Player_IsMoving ) then 
-						Player:Jump()
+						Player:Jump()						
 						if (ml_mesh_mgr.OMCJumpStartedTimer == 0 ) then -- to calc if our jump failed
 							ml_mesh_mgr.OMCJumpStartedTimer = ml_global_information.Now
 						end
@@ -901,7 +906,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 						ml_global_information.Lasttick = ml_global_information.Lasttick - 2000
 						Player:StopMovement()						
 					
-					elseif(ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Jumping and ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Falling and ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 250) then
+					elseif(ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Jumping and ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Falling and ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 350) then
 						d("We landed already")
 						Player:StopMovement()
 						ml_global_information.Lasttick = ml_global_information.Lasttick - 2000
@@ -940,8 +945,20 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 			elseif ( ml_mesh_mgr.OMCType == "OMC_TELEPORT" ) then
 				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
 					if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
+					-- Add playerdetection when distance to OMCEndposition is > xxx
+					local enddist = Distance3D(ml_mesh_mgr.OMCEndposition[1],ml_mesh_mgr.OMCEndposition[2],ml_mesh_mgr.OMCEndposition[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)					
+					if ( enddist > 220 ) then
+						if ( TableSize(CharacterList("nearest,player,maxdistance=1500"))>0 ) then
+							ml_log("Need to teleport but players are nearby..waiting..")
+							ml_mesh_mgr.OMCThrottle = tickcount + 2000
+							ml_global_information.Lasttick = ml_global_information.Lasttick + 2000
+							Player:StopMovement()
+							return
+						end
+					end
 					Player:Teleport(tonumber(ml_mesh_mgr.OMCEndposition[1]), tonumber(ml_mesh_mgr.OMCEndposition[2]), tonumber(ml_mesh_mgr.OMCEndposition[3]))
 					d("OMC Endposition reached..")
+					Player:StopMovement()
 					
 				end
 			

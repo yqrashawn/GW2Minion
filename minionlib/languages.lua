@@ -643,6 +643,9 @@ strings =
 		taskMoveTo						= "MoveTo Position",
 		taskHeartQuest					= "HeartQuest",
 		taskVista						= "Vista",
+		taskSkillpoint					= "Skillpoint",
+		taskTypeInteractKill			= "Interact&Kill",
+		taskAllowTeleports				= "Allow short Teleports",
 		
     },                                  
     ["cn"] =                            
@@ -1294,6 +1297,9 @@ strings =
 		taskMoveTo						= "MoveTo Position",
 		taskHeartQuest					= "HeartQuest",
 		taskVista						= "Vista",
+		taskSkillpoint					= "Skillpoint",
+		taskTypeInteractKill			= "Interact&Kill",
+		taskAllowTeleports				= "Allow short Teleports",
 	},
     ["jp"] =
     {
@@ -1932,6 +1938,9 @@ strings =
 		taskMoveTo						= "MoveTo Position",
 		taskHeartQuest					= "HeartQuest",
 		taskVista						= "Vista",
+		taskSkillpoint					= "Skillpoint",
+		taskTypeInteractKill			= "Interact&Kill",
+		taskAllowTeleports				= "Allow short Teleports",
 	},   
     ["de"] =
     {
@@ -2571,6 +2580,9 @@ strings =
 		taskMoveTo						= "MoveTo Position",
 		taskHeartQuest					= "HeartQuest",
 		taskVista						= "Vista",
+		taskSkillpoint					= "Skillpoint",
+		taskTypeInteractKill			= "Interact&Kill",
+		taskAllowTeleports				= "Allow short Teleports",
 	},     
     ["fr"] =
     {
@@ -3222,6 +3234,9 @@ strings =
 		taskMoveTo						= "MoveTo Position",
 		taskHeartQuest					= "HeartQuest",
 		taskVista						= "Vista",
+		taskSkillpoint					= "Skillpoint",
+		taskTypeInteractKill			= "Interact&Kill",
+		taskAllowTeleports				= "Allow short Teleports",
 	},       
     ["ru"] =
     {
@@ -3859,6 +3874,10 @@ strings =
 		taskMoveTo						= "MoveTo Position",
 		taskHeartQuest					= "HeartQuest",
 		taskVista						= "Vista",
+		taskSkillpoint					= "Skillpoint",
+		taskTypeInteractKill			= "Interact&Kill",
+		taskAllowTeleports				= "Allow short Teleports",
+		
 	},    	
 
 }

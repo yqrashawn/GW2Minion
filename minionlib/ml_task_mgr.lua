@@ -124,8 +124,12 @@ function ml_task_mgr.InitProfile(profileName)
 		ml_task_mgr.profile.version = newProfile.version
 		ml_task_mgr.profile.currentTask = newProfile.currentTask
 		
-		for key,task in pairs(newProfile.tasks) do
+		-- Sort table by task.id
+		--
+		
+		for key,task in ipairs(newProfile.tasks) do
 			if (key and task) then
+				
 				local newtask = ml_UITask.Create()
 				newtask = deepcopy(task)
 				ml_task_mgr.profile.tasks[newtask.priority] = newtask
@@ -139,11 +143,12 @@ function ml_task_mgr.InitProfile(profileName)
 					end
 				end]]
 			end
-		end 
-	
+		end
+		
 	end
 	return ml_task_mgr.profile
 end
+
 
 function ml_task_mgr.GetProfileList(newTaskProfile)	
 	local list = "None"
@@ -226,7 +231,7 @@ function ml_task_mgr.UpdateMainWindow()
 		mainWindow:DeleteGroup(GetString("tasks"))
 		if (ml_task_mgr.profile) then	
 			
-			for prio, task in pairs (ml_task_mgr.profile.tasks) do				
+			for prio, task in ipairs (ml_task_mgr.profile.tasks) do				
 				if ( task.enabled == "0" ) then 
 					mainWindow:NewButton("ID "..task.id..": ".. task.name.." (Disabled)","TM"..task.priority,GetString("tasks"))
 				else
@@ -430,8 +435,20 @@ function ml_task_mgr.NewCombobox(label,globalvar,liststring)
 		end		
 	end
 end
+function ml_task_mgr.NewCheckBox(label,globalvar)
+	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
+	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile and ValidString(label) and ValidString(globalvar)) then
+		editWindow:NewCheckBox(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"))		
+		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil ) then -- set the existing values			
+			_G["TM_TASK_"..globalvar] = ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar].value
+		else -- create a new default entry
+			ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] = { type = "CheckBox", value = "0" }
+		end		
+	end
+end
+
 -- not going to implement that button yet, would need a Item.GUI handler to handle the clicks
-function ml_task_mgr.NewComboBox(label,globalvar,callbackfunc)
+function ml_task_mgr.NewButton(label,globalvar,callbackfunc)
 	--[[local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile and ValidString(label) and ValidString(globalvar) and callbackfunc ~= nil) then
 		editWindow:NewButton(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"))
@@ -585,7 +602,7 @@ function ml_task_mgr.CanActiveTaskRun()
 		-- or ( ml_task_mgr.activeTask.radius ~= nil and ml_task_mgr.activeTask.radius ~= 0 dont limit the radius in here, leave that to the tasks itself, else back n forth switching chaos may happen
 		) then
 
-		d("Task : "..ml_task_mgr.activeTask.name.." finished. Task Duration: "..tostring(math.floor((ml_global_information.Now - ml_task_mgr.activeTask.startTimer)/1000)).." > "..tostring(ml_task_mgr.activeTask.maxduration) .." CanRun:"..tostring(ml_task_mgr.activeTask.CanTaskRun_TM()))
+		d("Task : "..ml_task_mgr.activeTask.name.." finished. Task completed: "..tostring(ml_task_mgr.activeTask.completed)..", Duration: "..tostring(math.floor((ml_global_information.Now - ml_task_mgr.activeTask.startTimer)/1000)).." > "..tostring(ml_task_mgr.activeTask.maxduration) .." CanRun:"..tostring(ml_task_mgr.activeTask.CanTaskRun_TM()))
 		
 		-- Enter it into our ml_task_mgr.taskHistory tabls
 		ml_task_mgr.taskHistory[ml_task_mgr.activeTask.id] = ml_global_information.Now
@@ -623,6 +640,7 @@ function ml_task_mgr.GetNextTask()
 				ml_task_mgr.activeTask.startTimer = ml_global_information.Now
 				ml_task_mgr.activeTask.started = false
 				local startPos = {}
+				-- Convert startposition string to usable numbers
 				if ( ValidString(nextTask.mappos)) then 
 					for pos in StringSplit(nextTask.mappos,"/") do
 						table.insert(startPos,pos)
@@ -656,7 +674,8 @@ function ml_task_mgr.GetNextTask()
 							
 						end
 					end
-				end				
+				end
+								
 				return ml_task_mgr.activeTask
 			else				
 				ml_error("TaskManager Profile Selection has no next tasks !")
@@ -702,7 +721,7 @@ function ml_task_mgr.CanTaskStart(nextTask)
 		if ( tonumber(nextTask.partysize) > 0 and tonumber(nextTask.partysize) < TableSize(ml_global_information.Player_Party)) then
 			return false
 		end
-		if ( nextTask.CanTaskStart_TM and not nextTask.CanTaskStart_TM() ) then
+		if ( ml_task_mgr.taskTypes[nextTask.type] and ml_task_mgr.taskTypes[nextTask.type].CanTaskStart_TM and not ml_task_mgr.taskTypes[nextTask.type].CanTaskStart_TM(nextTask) ) then
 			return false
 		end
 		

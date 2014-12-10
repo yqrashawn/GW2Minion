@@ -24,6 +24,8 @@ function gw2_task_heartquest.Create()
 	newinst.lastInteractTargetID = nil
 	newinst.currentInteracts = 0
 	newinst.subRegion = nil
+	newinst.pickupSkillID = nil
+	newinst.pickupTargetIDs = nil
 	
 	-- Reset some stuff
 	e_StayNearHQ.walkingback = false
@@ -41,6 +43,10 @@ function gw2_task_heartquest:Init()
 	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 375 ), self.process_elements)	-- creates subtask: moveto
 	-- Revive other Players
 	self:add(ml_element:create( "RevivePlayer", c_reviveDownedPlayersInCombat, e_reviveDownedPlayersInCombat, 350 ), self.process_elements)	-- creates subtask: moveto
+	
+	-- PickupNUseOnTarget - for items that need to be used on a target, higher placed than aggro..lets pray it works lol
+	self:add(ml_element:create( "PickupNUseOnTarget", c_PickupNUseOnTarget, e_PickupNUseOnTarget, 335 ), self.process_elements)
+	
 	-- FightAggro
 	self:add(ml_element:create( "FightAggro", c_FightAggro, e_FightAggro, 325 ), self.process_elements) --creates immediate queue task for combat
 	
@@ -74,12 +80,19 @@ function gw2_task_heartquest:Init()
 	-- Stay near HQ
 	self:add(ml_element:create( "StayNearHQ", c_StayNearHQ, e_StayNearHQ, 125 ), self.process_elements)
 
+	-- HandleConversation
+	self:add(ml_element:create( "HandleConversation", c_HandleConversation, e_HandleConversation, 100 ), self.process_elements)	
+
+	
+		
 	-- If a interact contentID / ID2 was given, this will make the bot walk there and interact
 	self:add( ml_element:create( "HandleInteract", c_HQHandleInteract, e_HQHandleInteract, 75 ), self.process_elements)
 
 	-- If a Enemy contentID was given, this will make the bot walk there and attack it
 	self:add( ml_element:create( "HandleKillEnemy", c_HQHandleKillEnemy, e_HQHandleKillEnemy, 50 ), self.process_elements)
 	
+	-- Idle check
+	self:add( ml_element:create( "IdleCheck", c_IdleCheck, e_IdleCheck, 25 ), self.process_elements)
 
 
 	self:AddTaskCheckCEs()
@@ -89,8 +102,10 @@ function gw2_task_heartquest:task_complete_eval()
 	if ( ml_task_hub:CurrentTask().started == true and ml_task_hub:CurrentTask().mappos ~= nil and ml_task_hub:CurrentTask().pos ~= nil  ) then
 		
 		local dist = Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)		
-		if ( dist < 8000 ) then
-		
+		local maxradius = tonumber(ml_task_hub:CurrentTask().radius)
+		if ( maxradius == 0 ) then maxradius = 6000 end
+		if ( dist < maxradius ) then
+		--d(TableSize(MapMarkerList("onmesh,contentID="..GW2.MAPMARKER.HeartQuest)))
 			if ( ml_task_hub:CurrentTask().subRegion ~= nil and tonumber(ml_task_hub:CurrentTask().subRegion) ) then
 				local evList = MapMarkerList("onmesh,issubregion,contentID="..GW2.MAPMARKER.HeartQuest)
 				local id,marker = next (evList)
@@ -154,14 +169,19 @@ end
 
 -- TaskManager functions
 function gw2_task_heartquest:UIInit_TM()
-	--ml_task_mgr.NewField("maxkills", "beer")	
-	ml_task_mgr.NewCombobox("HQ Type", "KillEnemies", "Interact&Kill") -- add more types here later if needed
+	--ml_task_mgr.NewField("maxkills", "beer")
+	ml_task_mgr.NewCombobox("HQ Type", "HQType", "Interact&Kill,Pickup&Use") -- add more types here later if needed
 	ml_task_mgr.NewField("HQ SubRegionID", "subRegion")
 	ml_task_mgr.NewNumeric("Max Kills", "maxKills")
 	ml_task_mgr.NewField("Enemy ContentIDs", "enemyContentIDs")
 	ml_task_mgr.NewNumeric("Max Interacts", "maxInteracts")
 	ml_task_mgr.NewField("Interact ContentIDs", "interactContentIDs")
 	ml_task_mgr.NewField("Interact ContentID2s", "interactContentID2s")
+	-- Pickup&Use
+	-- ml_task_mgr.NewField("Pickup ContentIDs", "pickupSkillID") using the interact contentIDs for now until there is a HQ where this doesnt work ^^
+	ml_task_mgr.NewField("Bundle SkillID", "pickupSkillID")
+	ml_task_mgr.NewField("Bundle TargetIDs", "pickupTargetIDs")
+	
 
 end
 -- TaskManager function: Checks for custom conditions to start this task, this is checked before the task is selected to be enqueued/created
@@ -176,12 +196,13 @@ function gw2_task_heartquest.CanTaskRun_TM()
 		dbHQDuration = tostring(math.floor((ml_global_information.Now-ml_task_hub:CurrentTask().startTime)/1000))
 	end
 	
-	dbHQKillIDs = tostring(ml_task_hub:CurrentTask().enemyContentIDs)
-	dbHQInteractIDs = tostring(ml_task_hub:CurrentTask().interactContentIDs)
-	dbHQInteractID2s = tostring(ml_task_hub:CurrentTask().interactContentID2s)
-	
+	if ( ml_global_information.ShowDebug ) then 
+		dbHQKillIDs = tostring(ml_task_hub:CurrentTask().enemyContentIDs)
+		dbHQInteractIDs = tostring(ml_task_hub:CurrentTask().interactContentIDs)
+		dbHQInteractID2s = tostring(ml_task_hub:CurrentTask().interactContentID2s)
+	end
 	-- Check the maxkill counter
-	if ( ml_task_hub:CurrentTask().maxKills ~= nil and ml_task_hub:CurrentTask().maxKills ~= 0 ) then
+	if ( ml_task_hub:CurrentTask().maxKills ~= nil and tonumber(ml_task_hub:CurrentTask().maxKills) and tonumber(ml_task_hub:CurrentTask().maxKills) ~= 0 ) then
 			
 		if ( ml_global_information.ShowDebug ) then 
 			dbHQKillcount = tostring(ml_task_hub:CurrentTask().currentKills).."/"..tostring(ml_task_hub:CurrentTask().maxKills).." Kills"
@@ -211,14 +232,14 @@ function gw2_task_heartquest.CanTaskRun_TM()
 			
 	
 	-- Check the maxinteract counter
-	if ( ml_task_hub:CurrentTask().maxInteracts ~= nil and ml_task_hub:CurrentTask().maxInteracts ~= 0 ) then
+	if ( ml_task_hub:CurrentTask().maxInteracts ~= nil and tonumber(ml_task_hub:CurrentTask().maxInteracts)and tonumber(ml_task_hub:CurrentTask().maxInteracts) ~= 0 ) then
 			
 		if ( ml_global_information.ShowDebug ) then 
 			dbHQInteractcount = tostring(ml_task_hub:CurrentTask().currentInteracts).."/"..tostring(ml_task_hub:CurrentTask().maxInteracts).." Interacts"
 		end
 		
 		ml_log(" "..tostring(ml_task_hub:CurrentTask().currentInteracts).."/"..tostring(ml_task_hub:CurrentTask().maxInteracts).." Interacts")
-		
+						
 		-- We killed enough
 		if ( tonumber(ml_task_hub:CurrentTask().maxInteracts) <=  ml_task_hub:CurrentTask().currentInteracts ) then return false end 
 				
@@ -240,7 +261,19 @@ function gw2_task_heartquest.CanTaskRun_TM()
 	return true
 end
 
-
+-- Custom c_FightAggro, to help not fuck up pickupnUse types of HQ
+c_FightAggroHQ = inheritsFrom( ml_cause )
+function c_FightAggroHQ:evaluate()
+	
+	if ( ml_task_hub:CurrentTask().HQType == "Pickup&Use") then
+		if ( e_PickupNUseOnTarget.lastSlotWithOurSkillID == nil ) then
+			return c_FightAggro:evaluate()
+		end		
+	else	
+		return c_FightAggro:evaluate()
+	end
+	return false
+end
 
 -- Interact with stuff than we should interact with 
 c_StayNearHQ = inheritsFrom( ml_cause )
@@ -280,6 +313,244 @@ function e_StayNearHQ:execute()
 	e_StayNearHQ.walkingback = false
 	return ml_log(false)
 end
+
+
+-- Handle conversations by the entered order of the task
+c_HandleConversation = inheritsFrom( ml_cause )
+e_HandleConversation = inheritsFrom( ml_effect )
+e_HandleConversation.lastChatOption = nil
+e_HandleConversation.nextChatOption = nil
+function c_HandleConversation:evaluate()
+	if ( not ml_global_information.Player_InCombat and Player:IsConversationOpen() ) then
+		
+		if ( e_HandleConversation.nextChatOption ~= nil ) then
+			return true
+		end
+		
+		if ( ml_task_hub:CurrentTask().conversationOrder ~= nil and ml_task_hub:CurrentTask().conversationOrder ~= "" ) then
+			for chatoption in StringSplit(ml_task_hub:CurrentTask().conversationOrder,",") do
+				if ( e_HandleConversation.lastChatOption == nil ) then
+					e_HandleConversation.lastChatOption = tonumber(chatoption)
+					e_HandleConversation.nextChatOption = tonumber(chatoption)
+					return true
+					
+				else
+					if ( chatoption ~= e_HandleConversation.lastChatOption ) then
+						e_HandleConversation.lastChatOption = tonumber(chatoption)
+						e_HandleConversation.nextChatOption = tonumber(chatoption)
+						return true
+					end				
+				end
+			end			
+		end
+		
+		if ( TableSize(Player:GetConversationOptions()) > 0 ) then
+		-- default select 1st option..usually does the job
+			return true
+		end
+	end
+	
+	e_HandleConversation.lastChatOption = nil
+	e_HandleConversation.nextChatOption = nil
+	return false
+end
+function e_HandleConversation:execute()
+	ml_log("e_HandleConversation ")
+	
+	local options = Player:GetConversationOptions()
+	if ( TableSize(options) > 0 ) then 
+				
+		local index,option = next ( options)
+		while ( index and option ) do 
+			if ( e_HandleConversation.nextChatOption ~= nil ) then
+				if( option.type == e_HandleConversation.nextChatOption) then
+					d("Selecting Chatoption by type:"..tostring(e_HandleConversation.nextChatOption))
+					Player:SelectConversationOption(e_HandleConversation.nextChatOption)
+					e_HandleConversation.nextChatOption = nil
+					ml_global_information.Wait(1200)
+					return ml_log(true)
+				end
+			else
+				if ( option.index == 0 ) then 
+					d("Selecting First Chatoption:"..tostring(option.type))
+					Player:SelectConversationOption(option.type)
+					e_HandleConversation.nextChatOption = nil
+					ml_global_information.Wait(1200)
+					return ml_log(true)
+				end
+			end
+			index,option = next ( options,index )
+		end
+		
+	else
+		ml_error("e_HandleConversation has no valid options")		
+	end
+	e_HandleConversation.lastChatOption = nil
+	e_HandleConversation.nextChatOption = nil
+	return ml_log(false)
+end
+
+
+-- Handles the usage of items on specific enemies
+c_PickupNUseOnTarget = inheritsFrom( ml_cause )
+e_PickupNUseOnTarget = inheritsFrom( ml_effect )
+e_PickupNUseOnTarget.lastSlotWithOurSkillID = nil
+e_PickupNUseOnTarget.lastTargetIDForOurSkillID = nil
+e_PickupNUseOnTarget.lastTargetForOurSkillID = nil
+function c_PickupNUseOnTarget:evaluate()
+	if ( ml_task_hub:CurrentTask().HQType == "Pickup&Use") then
+		-- c_HQHandleInteract should have picked up the item we wanted
+		
+		if ( ml_task_hub:CurrentTask().pickupSkillID ~= nil and ml_task_hub:CurrentTask().pickupSkillID ~= "" and ml_task_hub:CurrentTask().pickupTargetIDs ~= nil and ml_task_hub:CurrentTask().pickupTargetIDs ~= "") then 
+		
+			local skillready = false
+			
+			-- Check if we got the bundle/thing picked up by SkillID
+			if ( e_PickupNUseOnTarget.lastSlotWithOurSkillID ~= nil and tonumber(e_PickupNUseOnTarget.lastSlotWithOurSkillID) ) then
+				-- check if skillID is still there				
+				local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_"..e_PickupNUseOnTarget.lastSlotWithOurSkillID])
+				if ( skill and skill.skillID == tonumber(ml_task_hub:CurrentTask().pickupSkillID) ) then
+					skillready = true
+				end
+			
+			else
+				-- Check out current skillset for the skillID we need				
+				
+				for i = 1, 5, 1 do
+					local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_"..i])					
+					if (skill and skill.skillID == tonumber(ml_task_hub:CurrentTask().pickupSkillID) ) then
+						e_PickupNUseOnTarget.lastSlotWithOurSkillID = i
+						skillready = true						
+					end
+				end
+			end
+			
+			-- Check for targets for our skillID
+			if ( skillready ) then
+				-- to prevent hammering the "shortestpath"
+				if ( ValidTable(CharacterList:Get(e_PickupNUseOnTarget.lastTargetIDForOurSkillID)) or ValidTable(GadgetList:Get(e_PickupNUseOnTarget.lastTargetIDForOurSkillID)) ) then			
+					return true				
+				end
+						
+			
+				-- Check Gadget & Charlist for target
+				local radius = tonumber(ml_task_hub:CurrentTask().radius)
+				if ( radius == 0 ) then maxradius = 8000 end
+				local TargetList = CharacterList("shortestpath,onmesh,selectable,alive,contentID="..ml_task_hub:CurrentTask().pickupTargetIDs)
+				if ( TargetList ) then
+					local id,entry = next(TargetList)
+					if (id and entry ) then
+						local tPos = entry.pos				 
+						if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+							e_PickupNUseOnTarget.lastTargetIDForOurSkillID = id	
+							e_PickupNUseOnTarget.lastTargetForOurSkillID = entry
+							return true
+						end
+					end
+				end	
+				
+				local TargetList = GadgetList("shortestpath,onmesh,selectable,alive,contentID="..ml_task_hub:CurrentTask().pickupTargetIDs)
+				if ( TargetList ) then
+					local id,entry = next(TargetList)
+					if (id and entry ) then
+						local tPos = entry.pos				 
+						if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+							e_PickupNUseOnTarget.lastTargetIDForOurSkillID = id
+							e_PickupNUseOnTarget.lastTargetForOurSkillID = entry
+							return true
+						end
+					end
+				end	
+				local TargetList = GadgetList("shortestpath,onmesh,selectable,alive,contentID2="..ml_task_hub:CurrentTask().pickupTargetIDs)
+				if ( TargetList ) then
+					local id,entry = next(TargetList)
+					if (id and entry ) then
+						local tPos = entry.pos				 
+						if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+							e_PickupNUseOnTarget.lastTargetIDForOurSkillID = id
+							e_PickupNUseOnTarget.lastTargetForOurSkillID = entry
+							return true
+						end
+					end
+				end	
+			end
+		end
+	end
+	
+	e_PickupNUseOnTarget.lastSlotWithOurSkillID = nil
+	e_PickupNUseOnTarget.lastTargetIDForOurSkillID = nil	
+	return false
+end
+function e_PickupNUseOnTarget:execute()
+	ml_log("e_PickupNUseOnTarget ")
+	if ( e_PickupNUseOnTarget.lastTargetForOurSkillID and e_PickupNUseOnTarget.lastTargetForOurSkillID.onmesh and e_PickupNUseOnTarget.lastTargetForOurSkillID.selectable and e_PickupNUseOnTarget.lastTargetForOurSkillID.alive) then 
+		
+		-- For TM Conditions
+		ml_task_hub:CurrentTask().lastInteractTargetID = e_PickupNUseOnTarget.lastTargetIDForOurSkillID
+		ml_task_hub:CurrentTask().lastTargetType = "character"
+		
+		
+		-- get skill
+		local myskill = nil
+		if ( e_PickupNUseOnTarget.lastSlotWithOurSkillID ~= nil and tonumber(e_PickupNUseOnTarget.lastSlotWithOurSkillID) ) then		
+			local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. e_PickupNUseOnTarget.lastSlotWithOurSkillID])
+			if ( skill and skill.skillID == tonumber(ml_task_hub:CurrentTask().pickupSkillID) ) then
+				myskill = skill
+			end
+		end
+		
+		
+		if ( myskill ) then
+		
+			-- Try to use the skillID on the target
+			if ( e_PickupNUseOnTarget.lastTargetForOurSkillID.isGadget ) then			
+				ml_task_hub:CurrentTask().lastTargetType = "gadget"
+			end
+			
+			local attackdistance = myskill.maxRange - 50
+			if ( not attackdistance or attackdistance < 154 ) then
+				attackdistance = 154
+			end
+			
+			-- Get inrange
+			if ( e_PickupNUseOnTarget.lastTargetForOurSkillID.distance > attackdistance ) then
+				
+				local ePos = e_PickupNUseOnTarget.lastTargetForOurSkillID.pos
+				if ( not gw2_unstuck.HandleStuck() ) then					
+					
+					local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,50,false,false,false))		
+					if (tonumber(navResult) < 0) then					
+						d("e_PickupNUseOnTarget result: "..tonumber(navResult))
+					else
+						return ml_log(true)
+					end
+				end
+			
+			else
+				-- attack
+				
+				Player:StopMovement()
+				local t = Player:GetTarget()
+				if ( not t or t.id ~= e_PickupNUseOnTarget.lastTargetIDForOurSkillID ) then
+					Player:SetTarget(e_PickupNUseOnTarget.lastTargetIDForOurSkillID)
+				else
+					
+					Player:CastSpell(myskill.slot,e_PickupNUseOnTarget.lastTargetIDForOurSkillID)					
+					return ml_log(true)
+				end				
+				
+			end
+			
+		else
+			ml_error("e_PickupNUseOnTarget cant find the needed skill!")
+		end
+	end
+	
+	e_PickupNUseOnTarget.lastTargetForOurSkillID = nil
+	e_PickupNUseOnTarget.lastTargetIDForOurSkillID = nil	
+	return ml_log(false)
+end
+
 
 -- Makes sure we dont walk away too far
 c_HQHandleInteract = inheritsFrom( ml_cause )
@@ -432,7 +703,7 @@ function c_HQHandleKillEnemy:evaluate()
 			if (id and entry ) then
 				local tPos = entry.pos				 
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
-					e_HQHandleKillEnemy.lastTarget = entry					
+					e_HQHandleKillEnemy.lastTarget = entry	
 					e_HQHandleKillEnemy.lastTargetID = id					
 					return true
 				end
@@ -452,6 +723,18 @@ function c_HQHandleKillEnemy:evaluate()
 			end
 		end	
 		
+		local TargetList = GadgetList("shortestpath,onmesh,attackable,selectable,alive,contentID2="..ml_task_hub:CurrentTask().enemyContentIDs)
+		if ( TargetList ) then
+			local id,entry = next(TargetList)
+			if (id and entry ) then
+				local tPos = entry.pos				 
+				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+					e_HQHandleKillEnemy.lastTarget = entry					
+					e_HQHandleKillEnemy.lastTargetID = id
+					return true
+				end
+			end
+		end	
 	end
 	e_HQHandleKillEnemy.lastTarget = nil
 	e_HQHandleKillEnemy.lastTargetID = nil
@@ -487,4 +770,16 @@ function e_HQHandleKillEnemy:execute()
 	return ml_log(false)
 end
 
+-- to force moving back to our starting position after xxx seconds of nothing to do
+c_IdleCheck = inheritsFrom( ml_cause )
+e_IdleCheck = inheritsFrom( ml_effect )
+function c_IdleCheck:evaluate()
+	
+	return false
+end
+function e_IdleCheck:execute()
+	ml_log("e_IdleCheck ")
+	
+	return ml_log(false)
+end
 RegisterEventHandler("Module.Initalize",gw2_task_heartquest.ModuleInit)
