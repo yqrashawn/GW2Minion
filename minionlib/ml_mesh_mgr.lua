@@ -80,7 +80,7 @@ function ml_mesh_mgr.ModuleInit()
 	GUI_NewNumeric(ml_mesh_mgr.mainwindow.name,GetString("changeAreaSize"),"gChangeAreaSize",GetString("editor"),"1","10")
 	GUI_NewCheckbox(ml_mesh_mgr.mainwindow.name,GetString("biDirOffMesh"),"gBiDirOffMesh",GetString("connections"))
 	--GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("typeOffMeshSpot"),"gOMCType",GetString("connections"),"Jump,Walk,Teleport,Interact,Portal")	
-	GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("typeOffMeshSpot"),"gOMCType",GetString("connections"),"Jump,Walk,Teleport,Interact,Portal")	
+	GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("typeOffMeshSpot"),"gOMCType",GetString("connections"),"Jump,Walk,Lift,Teleport,Interact,Portal")	
 	GUI_NewButton(ml_mesh_mgr.mainwindow.name,GetString("addOffMeshSpot"),"offMeshSpotEvent",GetString("connections"))
 	RegisterEventHandler("offMeshSpotEvent", ml_mesh_mgr.AddOMC)
 	GUI_NewButton(ml_mesh_mgr.mainwindow.name,GetString("delOffMeshSpot"),"deleteoffMeshEvent",GetString("connections"))
@@ -751,6 +751,8 @@ function ml_mesh_mgr.AddOMC()
 			omctype = 9
 			--ml_mesh_mgr.AddOMCBridge(1)
 			--return
+		elseif ( gOMCType == "Lift" ) then
+			omctype = 13
 		elseif ( gOMCType == "Teleport" ) then
 			omctype = 10
 			--ml_mesh_mgr.AddOMCBridge(2)
@@ -933,6 +935,21 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 					ml_global_information.Player_Position = Player.pos
 					local dist = Distance3D(ml_mesh_mgr.OMCEndposition[1],ml_mesh_mgr.OMCEndposition[2],ml_mesh_mgr.OMCEndposition[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)					
 					if ( dist < 50 ) then
+						d("OMC Endposition reached..")
+						ml_global_information.Lasttick = ml_global_information.Lasttick - 2000
+						Player:StopMovement()
+					else
+						return
+					end
+				end
+			
+			
+			elseif ( ml_mesh_mgr.OMCType == "OMC_LIFT" ) then
+				if ( ValidTable(ml_mesh_mgr.OMCStartPosition) ) then
+					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
+					ml_global_information.Player_Position = Player.pos
+					local dist = Distance3D(ml_mesh_mgr.OMCStartPosition[1],ml_mesh_mgr.OMCStartPosition[2],ml_mesh_mgr.OMCStartPosition[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)					
+					if ( dist > 250 ) then
 						d("OMC Endposition reached..")
 						ml_global_information.Lasttick = ml_global_information.Lasttick - 2000
 						Player:StopMovement()

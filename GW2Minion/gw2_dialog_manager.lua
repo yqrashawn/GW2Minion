@@ -180,7 +180,7 @@ function dialogPrototype:Create()
 	dialog:Hide()
 end
 
-function dialogPrototype:Show(deleteB)
+function dialogPrototype:Show(deleteB,cancelB)
 	local dialog = WindowManager:GetWindow(self.windowname)
 	if (dialog) then
 		local windowHeight = 80
@@ -192,6 +192,12 @@ function dialogPrototype:Show(deleteB)
 		if (delete) then
 			delete:Hide()
 			if (deleteB) then delete:Show() end
+		end
+		if (cancelB) then
+			local cancel = dialog:GetControl("Cancel")
+			if (cancel) then
+				cancel:Disable()
+			end
 		end
 		
 		dialog:SetSize(wSize.w,wSize.h)
