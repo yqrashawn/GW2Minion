@@ -1,4 +1,4 @@
--- FollowTarget Task
+-- FollowTarget Task, this is utilizing optionally party and multibotserver data
 gw2_task_follow = inheritsFrom(ml_task)
 gw2_task_follow.name = GetString("followmode")
 gw2_task_follow.targetPath = {}
@@ -43,6 +43,12 @@ function gw2_task_follow:UIInit()
 		RegisterEventHandler("gw2_task_follow.FollowTarget", gw2_task_follow.SetFollowTarget)	
 		
 		mw:UnFold( GetString("followmode") )
+		
+		-- Multibot functions
+		mw:NewCheckBox(GetString("activated"),"gMultiBotEnabled",GetString("serverInfo"))
+		mw:NewField(GetString("status"),"dPartyStatus",GetString("serverInfo"))
+		mw:NewField(GetString("partyrole"),"gRole",GetString("serverInfo"))
+				
 	end
 	
 	sMtargetmode = Settings.GW2Minion.sMtargetmode

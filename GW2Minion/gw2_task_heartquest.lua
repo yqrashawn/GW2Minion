@@ -773,13 +773,32 @@ end
 -- to force moving back to our starting position after xxx seconds of nothing to do
 c_IdleCheck = inheritsFrom( ml_cause )
 e_IdleCheck = inheritsFrom( ml_effect )
+e_IdleCheck.lasttick = ml_global_information.Now
+e_IdleCheck.idleTimer = 0
 function c_IdleCheck:evaluate()
 	
-	return false
+	return true
 end
 function e_IdleCheck:execute()
 	ml_log("e_IdleCheck ")
-	
+	if ( TimeSince(e_IdleCheck.lasttick) > 2000 ) then
+		-- we did something else before, reset the timer
+		e_IdleCheck.idleTimer = 0
+		
+	else
+		-- we are here again, seems our bot just stands around doing nothing, start counting
+		if ( e_IdleCheck.idleTimer == 0 ) then 
+			e_IdleCheck.idleTimer = ml_global_information.Now
+		else
+			if (TimeSince(e_IdleCheck.idleTimer) > 10000 ) then
+				-- walk back to startposition
+				e_StayNearHQ.walkingback = true				
+				e_IdleCheck.idleTimer = 0
+			end
+		end
+		
+	end	
+	e_IdleCheck.lasttick = ml_global_information.Now
 	return ml_log(false)
 end
 RegisterEventHandler("Module.Initalize",gw2_task_heartquest.ModuleInit)

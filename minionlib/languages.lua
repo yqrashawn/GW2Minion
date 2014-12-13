@@ -605,6 +605,7 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		mbwarning						= "Start the MultibotServer.exe or press OK to disable Multibotting!",
 		--mc_followbot
 		followmode						= "FollowMode",
 		followtarget					= "Follow Target",
@@ -1260,6 +1261,7 @@ strings =
 		partyrole						= "角色",
 		usecurrentparty					= "使用当前队友的名字",
 		minionmode						= "Minion模式",
+		mbwarning						= "Start the MultibotServer.exe or press OK to disable Multibotting!",
 		--mc_followbot
 		followmode						= "跟随模式",
 		followtarget					= "跟随目标",
@@ -1901,6 +1903,7 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		mbwarning						= "Start the MultibotServer.exe or press OK to disable Multibotting!",
 		--mc_followbot
 		followmode						= "FollowMode",
 		followtarget					= "Follow Target",
@@ -2543,6 +2546,7 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		mbwarning						= "Start the MultibotServer.exe or press OK to disable Multibotting!",
 		--mc_followbot
 		followmode						= "FollowMode",
 		followtarget					= "Follow Target",
@@ -3197,6 +3201,7 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		mbwarning						= "Start the MultibotServer.exe or press OK to disable Multibotting!",
 		--mc_followbot
 		followmode						= "FollowMode",
 		followtarget					= "Follow Target",
@@ -3837,6 +3842,7 @@ strings =
 		partyrole						= "Role",
 		usecurrentparty					= "Use Current Partynames",
 		minionmode						= "MinionMode",
+		mbwarning						= "Start the MultibotServer.exe or press OK to disable Multibotting!",
 		--mc_followbot
 		followmode						= "FollowMode",
 		followtarget					= "Follow Target",

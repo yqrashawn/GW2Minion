@@ -1,5 +1,5 @@
 gw2minion = {}
-gw2minion.MainWindow = { Name="MainMenu", x=50, y=50, width=220, height=300, ChildWindows = {} }
+gw2minion.MainWindow = { Name="MainMenu", x=50, y=50, width=220, height=310, ChildWindows = {} }
 gw2minion.CinemaWindow = { Name="CinemaMenu", x=100, y=100 , width=250, height=100 }
 gw2minion.CharacterWindow = { Name="CharacterMenu", x=100, y=100 , width=250, height=100 }
 gw2minion.DebugWindow = { Name="DebugInfo", x=100, y=350 , width=200, height=350 }
@@ -70,7 +70,9 @@ function gw2minion.ModuleInit()
 
 		mw:NewButton(GetString("checkChat"),"gw2minion.evToggleChatManager",GetString("advancedSettings"))
 		
-		mw:NewButton(GetString("blacklistManager"),"ToggleBlacklistMgr",GetString("advancedSettings"))		
+		mw:NewButton(GetString("blacklistManager"),"ToggleBlacklistMgr",GetString("advancedSettings"))
+		
+		mw:NewButton(GetString("multibotmanager"),"MultiBotManager.toggle",GetString("advancedSettings"))
 		
 	end	
 	-- Setup default bot modes
@@ -233,30 +235,31 @@ function gw2minion.ModuleInit()
 		ml_blacklist_mgr.parentWindow = { Name=gw2minion.MainWindow.Name }
 		ml_blacklist_mgr.path = GetStartupPath() .. [[\LuaMods\GW2Minion\blacklist.info]]
 		ml_blacklist_mgr.ReadBlacklistFile(ml_blacklist_mgr.path)
-		if not ml_blacklist.BlacklistExists(GetString("monsters")) then
-			ml_blacklist.CreateBlacklist(GetString("monsters"))
-		end		
-		if not ml_blacklist.BlacklistExists(GetString("vendors")) then
-			ml_blacklist.CreateBlacklist(GetString("vendors"))
-		end
-		if not ml_blacklist.BlacklistExists(GetString("salvageItems")) then
-			ml_blacklist.CreateBlacklist(GetString("salvageItems"))
-		end
 		if not ml_blacklist.BlacklistExists(GetString("event")) then
 			ml_blacklist.CreateBlacklist(GetString("event"))
 		end
-		if not ml_blacklist.BlacklistExists(GetString("salvageItems")) then
-			ml_blacklist.CreateBlacklist(GetString("salvageItems"))
+		if not ml_blacklist.BlacklistExists(GetString("mapobjects")) then
+			ml_blacklist.CreateBlacklist(GetString("mapobjects"))
 		end
-		if not ml_blacklist.BlacklistExists(GetString("vendorsbuy")) then
-			ml_blacklist.CreateBlacklist(GetString("vendorsbuy"))
+		if not ml_blacklist.BlacklistExists(GetString("monsters")) then
+			ml_blacklist.CreateBlacklist(GetString("monsters"))
 		end
 		if not ml_blacklist.BlacklistExists(GetString("partymember")) then
 			ml_blacklist.CreateBlacklist(GetString("partymember"))
 		end
-		if not ml_blacklist.BlacklistExists(GetString("mapobjects")) then
-			ml_blacklist.CreateBlacklist(GetString("mapobjects"))
-		end			
+		if not ml_blacklist.BlacklistExists(GetString("salvageItems")) then
+			ml_blacklist.CreateBlacklist(GetString("salvageItems"))
+		end
+		if not ml_blacklist.BlacklistExists(GetString("salvageItems")) then
+			ml_blacklist.CreateBlacklist(GetString("salvageItems"))
+		end
+		if not ml_blacklist.BlacklistExists(GetString("vendors")) then
+			ml_blacklist.CreateBlacklist(GetString("vendors"))
+		end
+		if not ml_blacklist.BlacklistExists(GetString("vendorsbuy")) then
+			ml_blacklist.CreateBlacklist(GetString("vendorsbuy"))
+		end
+		
 	end
 	
 	gw2minion.SwitchMode(gBotMode)
@@ -284,7 +287,8 @@ function gw2minion.OnUpdate(event, tickcount )
 		ml_blacklist_mgr.UpdateEntries(tickcount)
 		-- SkillManager OnUpdate
 		gw2_skill_manager.OnUpdate(tickcount)
-
+		-- MultiBotManager OnUpdate
+		gw2_multibot_manager.OnUpdate(tickcount)
 		
 		if ( ml_global_information.Running ) then		
 			
@@ -475,7 +479,8 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "BuyManager_Masterkit" or
 			k == "BuyManager_toolStacks" or
 			k == "BuyManager_GarheringTool" or 
-			k == "SalvageManager_Active"			
+			k == "SalvageManager_Active" or
+			k == "gMultiBotEnabled"
 			) then
 			Settings.GW2Minion[tostring(k)] = v
 					
