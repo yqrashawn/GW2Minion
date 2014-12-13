@@ -145,7 +145,9 @@ function dialogPrototype:Create()
 		RegisterEventHandler(self.name .. "OKDialog",function()
 				local list = ""
 				for _,newElement in ipairs(self.guiElements) do
-					list = (list == "" and newElement.globaleventname or list .. "," .. newElement.globaleventname)
+					if (ValidString(newElement.globaleventname)) then
+						list = (list == "" and newElement.globaleventname or list .. "," .. newElement.globaleventname)
+					end
 				end
 				local result = self.okFunction(list)
 				if (result == true) then dialog:SetModal(false) dialog:Hide()
