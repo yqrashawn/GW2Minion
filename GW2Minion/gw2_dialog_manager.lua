@@ -10,7 +10,10 @@ end
 
 example usage:
 
-local dialog = gw2_dialog_manager:NewDialog("test") -- creates a new dialog(groupname is name?)
+local dialog = gw2_dialog_manager:NewDialog("mofo") -- creates a new dialog(groupname is name?)
+dialog:NewLabel("whooop")
+dialog:Show()
+
 dialog:NewField("testfieldname","testfieldglobal","")
 dialog:NewCheckBox("testcheckboxname","testcheckboxglobal","0")
 dialog:NewNumeric("testnumericname","testnumericglobal",1,10,5)
@@ -118,11 +121,19 @@ function dialogPrototype:NewComboBox(name,globaleventname,itemlist,defaultValue)
 	table.insert(gw2_dialog_manager.dialogs[self.name].guiElements,newElement)
 end
 
+function dialogPrototype:NewLabel(name)
+	local newElement = {
+		guitype = "NewLabel",
+		name = name,
+	}
+	table.insert(gw2_dialog_manager.dialogs[self.name].guiElements,newElement)
+end
+
 function dialogPrototype:Create()
 	local dialog = WindowManager:GetWindow(self.windowname) -- Get dialog
 	local windowHeight = 80 -- Set windowheight and ajust it dynamicly
 	for _,newElement in ipairs(self.guiElements) do
-		windowHeight = windowHeight + (newElement.guitype == "NewField" and 18 or newElement.guitype == "NewCheckBox" and 18 or newElement.guitype == "NewNumeric" and 22 or newElement.guitype == "NewComboBox" and 18)
+		windowHeight = windowHeight + (newElement.guitype == "NewField" and 18 or newElement.guitype == "NewCheckBox" and 18 or newElement.guitype == "NewNumeric" and 22 or newElement.guitype == "NewComboBox" and 18 or newElement.guitype == "NewLabel" and 22)
 	end
 	local wSize = {w = 300, h = windowHeight}
 	local bSize = {w = 60, h = 20}
@@ -167,14 +178,19 @@ function dialogPrototype:Create()
 	for _,newElement in ipairs(self.guiElements) do
 		if (newElement.guitype == "NewField") then
 			dialog:NewField(newElement.name,newElement.globaleventname,self.groupname)
+			_G[newElement.globaleventname] = newElement.defaultValue
 		elseif (newElement.guitype == "NewCheckBox") then
 			dialog:NewCheckBox(newElement.name,newElement.globaleventname,self.groupname)
+			_G[newElement.globaleventname] = newElement.defaultValue
 		elseif (newElement.guitype == "NewNumeric") then
 			dialog:NewNumeric(newElement.name,newElement.globaleventname,self.groupname,newElement.minimumval,newElement.maximumval)
+			_G[newElement.globaleventname] = newElement.defaultValue
 		elseif (newElement.guitype == "NewComboBox") then
 			dialog:NewComboBox(newElement.name,newElement.globaleventname,self.groupname,newElement.itemlist)
+			_G[newElement.globaleventname] = newElement.defaultValue
+		elseif (newElement.guitype == "NewLabel") then
+			dialog:NewLabel(newElement.name)
 		end
-		_G[newElement.globaleventname] = newElement.defaultValue
 		dialog:UnFold(self.groupname)
 	end
 	dialog:Hide()
@@ -185,7 +201,7 @@ function dialogPrototype:Show(deleteB,cancelB)
 	if (dialog) then
 		local windowHeight = 80
 		for _,newElement in ipairs(self.guiElements) do
-			windowHeight = windowHeight + (newElement.guitype == "NewField" and 18 or newElement.guitype == "NewCheckBox" and 18 or newElement.guitype == "NewNumeric" and 22 or newElement.guitype == "NewComboBox" and 18)
+			windowHeight = windowHeight + (newElement.guitype == "NewField" and 18 or newElement.guitype == "NewCheckBox" and 18 or newElement.guitype == "NewNumeric" and 22 or newElement.guitype == "NewComboBox" and 18 or newElement.guitype == "NewLabel" and 22)
 		end
 		local wSize = {w = 300, h = windowHeight}
 		local delete = dialog:GetControl("Delete")
