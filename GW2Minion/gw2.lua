@@ -133,6 +133,7 @@ function gw2minion.ModuleInit()
 		gPulseTime = Settings.GW2Minion.gPulseTime
 		
 	gw2minion.MainWindow.ChildWindows[gw2minion.DebugWindow.Name] = gw2minion.DebugWindow.Name
+	gw2minion.MainWindow.ChildWindows[ml_mesh_mgr.mainwindow] = ml_mesh_mgr.mainwindow
 	gw2minion.MainWindow.ChildWindows[ml_task_mgr.mainWindow.name] = ml_task_mgr.mainWindow.name
 	gw2minion.MainWindow.ChildWindows[ml_task_mgr.editWindow.name] = ml_task_mgr.editWindow.name
 	

@@ -424,9 +424,9 @@ function ml_mesh_mgr.OnUpdate( tickcount )
 	end
 	
 	-- Log Info  (THIS IS FOR GW2 ONLY, IF YOU DONT EMPTY THE ml_log variable this will crash after a while...)
-	if ( navstate == GLOBAL.MESHSTATE.MESHEMPTY ) then
+	if ( navstate == GLOBAL.MESHSTATE.MESHEMPTY and gNoMeshLoad == "0" ) then
 		ml_log("WARNING: NO NAVMESH LOADED! -> SELECT A NAVMESH IN THE MESHMANAGER FOR THIS ZONE")
-	elseif ( navstate == GLOBAL.MESHSTATE.MESHREADY ) then
+	elseif ( navstate == GLOBAL.MESHSTATE.MESHREADY and gNoMeshLoad == "0" ) then
 		if ( not ml_global_information.Player_OnMesh ) then			
 			ml_log("WARNING: PLAYER IS NOT STANDING ON THE NAVMESH! ")
 		end
@@ -882,7 +882,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 				if ( dist < 35 ) then
 					d("OMC StartPosition reached..Facing Target Direction..")
 					Player:SetFacingH(tonumber(ml_mesh_mgr.OMCFacingDirection[1]),tonumber(ml_mesh_mgr.OMCFacingDirection[2]),tonumber(ml_mesh_mgr.OMCFacingDirection[3]))
-					 ml_mesh_mgr.OMCStartPositionReached = true				
+					ml_mesh_mgr.OMCStartPositionReached = true
 				end
 				return
 			end

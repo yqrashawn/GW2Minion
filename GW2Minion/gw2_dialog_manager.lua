@@ -181,19 +181,22 @@ function dialogPrototype:Create()
 		if (newElement.guitype == "NewField") then
 			dialog:NewField(newElement.name,newElement.globaleventname,self.groupname)
 			_G[newElement.globaleventname] = newElement.defaultValue
+			dialog:UnFold(self.groupname)
 		elseif (newElement.guitype == "NewCheckBox") then
 			dialog:NewCheckBox(newElement.name,newElement.globaleventname,self.groupname)
 			_G[newElement.globaleventname] = newElement.defaultValue
+			dialog:UnFold(self.groupname)
 		elseif (newElement.guitype == "NewNumeric") then
 			dialog:NewNumeric(newElement.name,newElement.globaleventname,self.groupname,newElement.minimumval,newElement.maximumval)
 			_G[newElement.globaleventname] = newElement.defaultValue
+			dialog:UnFold(self.groupname)
 		elseif (newElement.guitype == "NewComboBox") then
 			dialog:NewComboBox(newElement.name,newElement.globaleventname,self.groupname,newElement.itemlist)
 			_G[newElement.globaleventname] = newElement.defaultValue
+			dialog:UnFold(self.groupname)
 		elseif (newElement.guitype == "NewLabel") then
 			dialog:NewLabel(newElement.name)
 		end
-		dialog:UnFold(self.groupname)
 	end
 	dialog:Hide()
 end
