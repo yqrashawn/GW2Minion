@@ -13,7 +13,7 @@ function gw2_datamanager.ModuleInit()
 end
 
 function gw2_datamanager.GetMapName( mapid )
-	local name = "Unknown"
+	local name = "Unknown ID:"..tostring(mapid)
 	if ( TableSize(gw2_datamanager.mapData) > 0 and tonumber(mapid)~=nil) then
 		if ( TableSize(gw2_datamanager.mapData[mapid]) > 0 ) then
 			name = gw2_datamanager.mapData[mapid]["map_name"]	

@@ -773,7 +773,7 @@ function ml_task_mgr.GetTaskList()
 end
 
 function ml_task_mgr.GetTaskByID(taskid)
-	if ( ValidTable(ml_task_mgr.profile) ~= nil and tonumber(taskid) ) then
+	if ( ValidTable(ml_task_mgr.profile) and tonumber(taskid) ) then
 		if ( TableSize(ml_task_mgr.profile.tasks) > 0 ) then						
 			for prio,task in pairs( ml_task_mgr.profile.tasks )do				
 				if ( task.id == taskid ) then

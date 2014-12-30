@@ -17,8 +17,6 @@ function gw2_task_navtomap.Create()
 	newinst.lastMapID = 0
 	newinst.gateReached = false
 	
-	
-	
     return newinst
 end
 

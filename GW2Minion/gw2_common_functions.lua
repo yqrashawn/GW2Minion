@@ -93,7 +93,7 @@ function gw2_common_functions.NecroLeaveDeathshroud()
 end
 
 function gw2_common_functions.GetPartyMemberByName( name )	
-	local partylist = Player:GetParty()
+	local partylist = ml_global_information.Player_Party
 	if ( TableSize(partylist) > 0 ) then
 		local index, player  = next( partylist )		
 		while ( index ~= nil and player ~= nil ) do

@@ -290,11 +290,14 @@ function gw2minion.OnUpdate(event, tickcount )
 		gw2_skill_manager.OnUpdate(tickcount)
 		-- MultiBotManager OnUpdate
 		gw2_multibot_manager.OnUpdate(tickcount)
-		
+						
 		if ( ml_global_information.Running ) then		
 			
 			-- Common Tasks (AoE loot, deposit items etc. )
 			gw2_common_tasks.OnUpdate( tickcount )
+			
+			-- FollowMode OnUpdate
+			gw2_task_follow.OnUpdate( tickcount)
 			
 			-- ChatAlert OnUpdate
 			gw2_chatmanager.ChatMonitor( tickcount )

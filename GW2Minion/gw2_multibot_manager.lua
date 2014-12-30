@@ -10,9 +10,11 @@ gw2_multibot_manager.leadername = ""
 gw2_multibot_manager.leaderserverID = 0
 gw2_multibot_manager.leaderWPID = 0
 gw2_multibot_manager.leaderMapID = nil
+gw2_multibot_manager.leaderPosition = nil
 gw2_multibot_manager.leaderBotMode = nil
 gw2_multibot_manager.leaderTMProfile = nil
 gw2_multibot_manager.leaderTMTaskID = nil
+gw2_multibot_manager.leaderTargetID = nil
 
 function gw2_multibot_manager.ModuleInit() 	
 	
@@ -122,7 +124,7 @@ end
 gw2_multibot_manager.multiBotConnectTmr = 0
 gw2_multibot_manager.multiBotConnectAttempts = 0
 function gw2_multibot_manager.OnUpdate( tickcount )
-    if ( TimeSince(gw2_multibot_manager.lasttick) > 500 ) then
+    if ( TimeSince(gw2_multibot_manager.lasttick) > 1000 ) then
         gw2_multibot_manager.lasttick = tickcount
         
 		-- Update main variables
@@ -143,7 +145,7 @@ function gw2_multibot_manager.OnUpdate( tickcount )
 					if ( not MultiBotConnect( gMultiIP , tonumber(gMultiPort) , gMultiPw) ) then
 						
 						gw2_multibot_manager.multiBotConnectAttempts = gw2_multibot_manager.multiBotConnectAttempts + 100					
-						dPartyStatus = "Start the MultibotServer.exe and/or setup the correct Password,IP and Port if you have changed them!"
+						dPartyStatus = "Start MultibotServer.exe or setup the correct Password,IP and Port if you have changed them!"
 						
 						if ( gw2_multibot_manager.multiBotConnectAttempts > 2 ) then 
 							-- Create a Dialog to inform the user
@@ -263,6 +265,14 @@ function gw2_multibot_manager.LeaderBroadCast(tickcount)
 				MultiBotSend( "8;"..gw2_multibot_manager.leaderTMTaskID,MBSGroup )
 			end
 			
+			-- current position
+			if ( ValidTable(ml_global_information.Player_Position) ) then
+				local posString = tostring(math.floor(ml_global_information.Player_Position.x)).."/"..tostring(math.floor(ml_global_information.Player_Position.y)).."/"..tostring(math.floor(ml_global_information.Player_Position.z))
+				if ( ValidString(posString) ) then
+					MultiBotSend( "9;"..posString,MBSGroup )
+				end
+			end
+						
 		end
 		
 		if ( TimeSince(gw2_multibot_manager.broadcastTmr2) > 1500 ) then
@@ -449,7 +459,7 @@ function HandleMultiBotMessages( event, message, channel )
 					
 					-- Leader sends Minions his TargetID to attack
 					elseif ( tonumber(msgID) == 4 and tonumber(msg) ~= nil and msg ~= "" and currentRole == 0) then
-						mc_followbot.KilltargetID = msg
+						gw2_multibot_manager.leaderTargetID = msg
 					
 					-- Leader sends Minions his current MapID
 					elseif ( tonumber(msgID) == 5 and msg ~= "" and tonumber(msg) and currentRole == 0) then
@@ -466,13 +476,22 @@ function HandleMultiBotMessages( event, message, channel )
 					-- Leader sends Minions his current TM TaskID
 					elseif ( tonumber(msgID) == 8 and msg ~= "" and tonumber(msg) and currentRole == 0) then
                         gw2_multibot_manager.leaderTMTaskID = tonumber(msg)						
+										
+					-- Leader sends his local Position
+					elseif ( tonumber(msgID) == 9 and msg ~= "" and ValidString(msg) and currentRole == 0) then
+						local leaderPos = {}
+						for pos in StringSplit(msg,"/") do
+							table.insert(leaderPos,pos)
+						end
+						if ( TableSize(leaderPos) == 3 ) then
+							gw2_multibot_manager.leaderPosition = { x=tonumber(leaderPos[1]), y=tonumber(leaderPos[2]), z=tonumber(leaderPos[3]) }
+						end
 					end
 				end
 			end
 		end
 	end
 end
-
 
 RegisterEventHandler("MultiBotManager.toggle", gw2_multibot_manager.ToggleMenu)
 RegisterEventHandler("Module.Initalize",gw2_multibot_manager.ModuleInit)

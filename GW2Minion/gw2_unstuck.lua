@@ -118,14 +118,17 @@ function gw2_unstuck.HandleStuck(mode)
 end
 
 -- Checks the moved distance and performs different actions in order to handle stuck situations
+gw2_unstuck.stuckPositionCount = 0
 function gw2_unstuck.HandleStuck_MovedDistanceCheck()
-		
+	
 	local distmoved = 0
 	-- calculate the moved distance depending on where we were stuck before or not
 	if ( gw2_unstuck.stuckPosition ~= nil ) then
 		distmoved = Distance2D ( ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, gw2_unstuck.stuckPosition.x,  gw2_unstuck.stuckPosition.y)
+		gw2_unstuck.stuckPositionCount = gw2_unstuck.stuckPositionCount + 1
 	else
 		distmoved = Distance2D ( ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, gw2_unstuck.lastPos.x,  gw2_unstuck.lastPos.y)
+		gw2_unstuck.stuckPositionCount = 0
 	end	
 	if ( ml_global_information.ShowDebug ) then dbDistMoved = distmoved end
 
@@ -140,7 +143,6 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck()
 		gw2_unstuck.lastResult = false
 		return
 	end
-	
 	
 	if ( distmoved < gw2_unstuck.stuckthreshold ) then
 		d("We are stuck.."..tostring(distmoved).. " < "..tostring(gw2_unstuck.stuckthreshold))
@@ -216,10 +218,11 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck()
 		end
 		
 	else
-		if ( ml_global_information.Player_OnMesh ) then
+		--if ( ml_global_information.Player_OnMesh ) then
 			gw2_unstuck.Reset()
 			gw2_unstuck.lastResult = false
-		end
+				
+		--end
 	end
 
 end
