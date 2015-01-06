@@ -1486,7 +1486,7 @@ local obj1 = {
 			}; 
 		}; 
 		[33] = { 
-			["map_name"] = "Ascalonian Catacombs";
+			["map_name"] = "Ascalonian Catacombs Story";
 			["min_level"] = 30;
 			["max_level"] = 32;
 			["default_floor"] = -2;
@@ -3011,7 +3011,7 @@ local obj1 = {
 			}; 
 		}; 
 		[36] = { 
-			["map_name"] = "Ascalonian Catacombs";
+			["map_name"] = "Ascalonian Catacombs Exploration";
 			["min_level"] = 35;
 			["max_level"] = 35;
 			["default_floor"] = -2;
@@ -17594,7 +17594,7 @@ local obj1 = {
 			}; 
 		}; 
 		[76] = { 
-			["map_name"] = "Caudecus's Manor";
+			["map_name"] = "Caudecus's Manor Exploration";
 			["min_level"] = 45;
 			["max_level"] = 45;
 			["default_floor"] = 4;
@@ -17610,7 +17610,7 @@ local obj1 = {
 			}; 
 		}; 
 		[75] = { 
-			["map_name"] = "Caudecus's Manor";
+			["map_name"] = "Caudecus's Manor Story";
 			["min_level"] = 40;
 			["max_level"] = 42;
 			["default_floor"] = 4;
@@ -19942,7 +19942,7 @@ local obj1 = {
 			}; 
 		}; 
 		[63] = { 
-			["map_name"] = "Sorrow's Embrace";
+			["map_name"] = "Sorrow's Embrace Story";
 			["min_level"] = 60;
 			["max_level"] = 62;
 			["default_floor"] = -7;
@@ -19958,7 +19958,7 @@ local obj1 = {
 			}; 
 		}; 
 		[64] = { 
-			["map_name"] = "Sorrow's Embrace";
+			["map_name"] = "Sorrow's Embrace Exploration";
 			["min_level"] = 65;
 			["max_level"] = 65;
 			["default_floor"] = -7;

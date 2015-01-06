@@ -70,7 +70,42 @@ function gw2_task_navtomap:Process()
 							else
 								ml_log("Moving through Portal/Gate/Door")
 							end
+							
+							-- Check for dungeon dialog
+							if ( nodedata.type == "Dungeon" ) then
+								if ( Player:IsInstanceDialogShown() ) then
+									local dInfo = Player:GetInstanceInfo()
+									
+									-- Join/Open dungeon depending on our role
+									if ( Player:JoinInstance() == false ) then
+										-- check for available dungeonModeIDs and selected them										
+										local modeID = 0
+										if ( nodedata.modeID ~= nil ) then
+											if ( dInfo.instanceModeID == tonumber(nodedata.modeID) ) then modeID = dInfo.instanceModeID end
+											if ( dInfo.instanceMode2ID == tonumber(nodedata.modeID) ) then modeID = dInfo.instanceMode2ID end
+										end
+																				
+										if ( nodedata.mode ~= nil and nodedata.mode == "Exploration" and modeID ~= 0 ) then
+											Player:OpenInstance(modeID,0)
+											d("Opening new Exploration instance.")
+											
+										elseif ( nodedata.mode ~= nil and nodedata.mode == "Story" and modeID ~= 0 ) then
+											Player:OpenInstance(modeID,0)
+											d("Opening new Story instance.")
+										else
+											Player:OpenInstance()
+										end
+										
+									else
+										d("Joining Dungeon...")										
+									end	
+									ml_global_information.Wait(2000)
+								end
+							
+							end
 						end
+						
+						
 					else
 						ml_error("gw2_task_navtomap:Process: nodedata.type is nil")
 					end					
@@ -112,13 +147,14 @@ function gw2_task_navtomap:Process()
 			end
 			
 			if ( id ~= 0 ) then			
-				d("Setting new path FROM "..gw2_datamanager.GetMapName( ml_global_information.CurrentMapID ).. " TO "..gNavToMap)
+				d("Setting new path FROM "..gw2_datamanager.GetMapName( ml_global_information.CurrentMapID ).. " TO "..gNavToMap.." ID:"..tostring(id))
 				local pos = ml_nav_manager.GetNextPathPos(	ml_global_information.Player_Position, ml_global_information.CurrentMapID, id	)
 				if (ValidTable(pos)) then					
 					ml_task_hub:CurrentTask().targetMapID = id				
 
 				else
-					ml_error("Cannot find a Path to Map ID "..tostring(id).." - "..gw2_datamanager.GetMapName( tonumber(id) ))		
+					ml_error("Cannot find a Path to Map ID "..tostring(id).." - "..gw2_datamanager.GetMapName( tonumber(id) ))
+					
 				end
 			end
 		else
@@ -177,7 +213,7 @@ function gw2_task_navtomap.GUIVarUpdate(Event, NewVals, OldVals)
 				if ( id ~= 0 ) then					
 					local pos = ml_nav_manager.GetNextPathPos(	ml_global_information.Player_Position, ml_global_information.CurrentMapID, id	)
 					if (ValidTable(pos)) then
-						d("Setting new path FROM "..gw2_datamanager.GetMapName( ml_global_information.CurrentMapID ).. " TO "..gNavToMap)
+						d("Setting new path FROM "..gw2_datamanager.GetMapName( ml_global_information.CurrentMapID ).. " TO "..gNavToMap.." ID:"..tostring(id))
 						
 						ml_global_information.Stop()
 						ml_task_hub:ClearQueues()
