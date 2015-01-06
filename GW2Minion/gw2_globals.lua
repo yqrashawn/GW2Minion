@@ -57,9 +57,10 @@ end
 function ml_global_information.Reset()
     ml_task_hub:ClearQueues()
 	if (gBotMode ~= nil) then
-		local task = ml_global_information.BotModes[gBotMode]
-		if (task ~= nil) then			
-			ml_task_hub:Add(task.Create(), LONG_TERM_GOAL, TP_ASAP)
+		local mode = ml_global_information.BotModes[gBotMode]
+		if (mode ~= nil) then
+			local newtask = mode.Create()
+			ml_task_hub:Add(newtask, LONG_TERM_GOAL, TP_ASAP)
 			return true
 		end
     end

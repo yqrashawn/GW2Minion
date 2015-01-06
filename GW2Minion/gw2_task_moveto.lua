@@ -29,6 +29,7 @@ function gw2_task_moveto.Create()
 	newinst.terminateOnDeath = true
 	newinst.terminateInCombat = false
 	newinst.terminateOnPlayerHPBelowPercent = 0
+	newinst.FailedNavAttemptsCounter = 0
 	
 	newinst.buffTmr = 0
     return newinst
@@ -160,10 +161,18 @@ function gw2_task_moveto:Process()
 						ml_log("gw2_task_moveto: No Valid Path : "..tostring(newnodecount))
 						--ml_task_hub:CurrentTask().completed = true
 					
-					end			
+					end
+
+					ml_task_hub:CurrentTask().FailedNavAttemptsCounter = ml_task_hub:CurrentTask().FailedNavAttemptsCounter + 10
+					
+					if ( ml_task_hub:CurrentTask().FailedNavAttemptsCounter > 10 ) then
+						d("10 x No Valid Path Found, terminating moveto task")
+						ml_task_hub:CurrentTask().completed = true
+					end
+					
 				else
 				
-					
+					ml_task_hub:CurrentTask().FailedNavAttemptsCounter = 0
 					ml_log(true)
 				end
 			end
@@ -194,8 +203,6 @@ function gw2_task_moveto:Process()
 	-- Blocked by gadget check
 	-- Water check
 	-- Stuck check
-	-- Cast Speedbuff check
-	-- AoELoot check ? -> common OnUpdate probably	
 	
 end
 

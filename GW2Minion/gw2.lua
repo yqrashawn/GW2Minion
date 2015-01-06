@@ -554,6 +554,8 @@ function gw2minion.SwitchMode(mode)
 		--Set marker type to the appropriate type.
 		if (gBotMode == GetString("grindMode")) then
 			ml_marker_mgr.SetMarkerType(GetString("grindMarker"))
+		elseif (gBotMode == GetString("gatherMode")) then
+			ml_marker_mgr.SetMarkerType(GetString("gatherMarker"))
 		end
 		
 		--Setup default options.
