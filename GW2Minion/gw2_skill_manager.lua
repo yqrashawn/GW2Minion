@@ -12,6 +12,12 @@ gw2_skill_manager.profile = nil
 gw2_skill_manager.currentSkill = nil
 gw2_skill_manager.currentCombo = nil
 gw2_skill_manager.currentComboSkill = nil
+gw2_skill_manager.groupsDeleted = true
+gw2_skill_manager.groupsCreated = true
+gw2_skill_manager.skillsDeleted = true
+gw2_skill_manager.skillsCreated = true
+gw2_skill_manager.openSkills = false
+gw2_skill_manager.openCombos = false
 gw2_skill_manager.detecting = false
 gw2_skill_manager.attacking = false
 gw2_skill_manager.lastAttack = 0
@@ -229,77 +235,106 @@ RegisterEventHandler("GUI.Update",gw2_skill_manager.GUIVarUpdate)
 function gw2_skill_manager.MainWindow(openSkills,openCombos)
 	local mainWindow = WindowManager:GetWindow(gw2_skill_manager.mainWindow.name)
 	if (mainWindow == nil) then
-		-- Init Main Window
-		mainWindow = WindowManager:NewWindow(gw2_skill_manager.mainWindow.name,gw2_skill_manager.mainWindow.x,gw2_skill_manager.mainWindow.y,gw2_skill_manager.mainWindow.w,gw2_skill_manager.mainWindow.h,false)
-		-- Settings section
-		mainWindow:NewComboBox(GetString("profile"),"gSMCurrentProfileName",GetString("settings"),_private.GetProfileList())
-		gSMCurrentProfileName = "None"
-		mainWindow:NewButton(GetString("newProfile"),"gSMNewProfile",GetString("settings"))
-		RegisterEventHandler("gSMNewProfile",gw2_skill_manager.NewProfileDialog)
-		local bb = mainWindow:NewButton(GetString("autoDetectSkills"),"gSMDetectSkills")
-		bb:SetToggleState(false)
-		RegisterEventHandler("gSMDetectSkills",_private.DetectSkills)
-		-- Main window elements
-		--mainWindow:NewButton(GetString("newCombo"),"gSMNewCombo")
-		--RegisterEventHandler("gSMNewCombo",gw2_skill_manager.CreateNewComboDialog)
-		mainWindow:NewButton(GetString("deleteProfile"),"gSMDeleteProfile")
-		RegisterEventHandler("gSMDeleteProfile",_private.Delete)
-		mainWindow:NewButton(GetString("saveProfile"),"gSMSaveProfile")
-		RegisterEventHandler("gSMSaveProfile",_private.Save)
-		mainWindow:UnFold(GetString("settings"))
-		
-		mainWindow:Hide()
+		gw2_skill_manager.CreateMainWindow()
+		mainWindow = WindowManager:GetWindow(gw2_skill_manager.mainWindow.name)
 	end
 	if (mainWindow) then
-		mainWindow:DeleteGroup(GetString("ProfessionSettings"))
-		mainWindow:DeleteGroup(GetString("comboList"))
-		mainWindow:DeleteGroup(GetString("skillList"))
-		mainWindow:DeleteGroup(GetString("switchSettings"))
 		if (gw2_skill_manager.profile) then
-			local name = gw2_skill_manager.profile.name
-			name = string.sub(name,select(2,string.find(name,"_"))+1,#name)
-			gSMCurrentProfileName_listitems = _private.GetProfileList(name)
-			gSMCurrentProfileName = name
-			
-			mainWindow:NewCheckBox(GetString("SwapRange"),"gSMSwitchOnRange",GetString("switchSettings"))
-			gSMSwitchOnRange = gw2_skill_manager.profile.switchSettings.switchOnRange
-			mainWindow:NewCheckBox(GetString("SwapR"),"gSMSwitchRandom",GetString("switchSettings"))
-			gSMSwitchRandom = gw2_skill_manager.profile.switchSettings.switchRandom
-			mainWindow:NewNumeric(GetString("SwapCD"),"gSMSwitchOnCooldown",GetString("switchSettings"),0,25)
-			gSMSwitchOnCooldown = gw2_skill_manager.profile.switchSettings.switchOnCooldown
-			
-			local profession = ml_global_information.Player_Profession
-			if (profession) then
-				if (profession == GW2.CHARCLASS.Engineer) then
-					mainWindow:NewComboBox(GetString("PrioritizeKit"),"gSMPrioKit",GetString("ProfessionSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
-					gSMPrioKit = gw2_skill_manager.profile.professionSettings.priorityKit
-				elseif(profession == GW2.CHARCLASS.Elementalist) then
-					mainWindow:NewComboBox(GetString("PriorizeAttunement1"),"gSMPrioAtt1",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
-					mainWindow:NewComboBox(GetString("PriorizeAttunement2"),"gSMPrioAtt2",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
-					mainWindow:NewComboBox(GetString("PriorizeAttunement3"),"gSMPrioAtt3",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
-					mainWindow:NewComboBox(GetString("PriorizeAttunement4"),"gSMPrioAtt4",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
-					gSMPrioAtt1 = gw2_skill_manager.profile.professionSettings.PriorityAtt1
-					gSMPrioAtt2 = gw2_skill_manager.profile.professionSettings.PriorityAtt2
-					gSMPrioAtt3 = gw2_skill_manager.profile.professionSettings.PriorityAtt3
-					gSMPrioAtt4 = gw2_skill_manager.profile.professionSettings.PriorityAtt4
-				end
-			end
-		
-			--for _,combo in ipairs(gw2_skill_manager.profile.combos) do
-			--	mainWindow:NewButton(combo.priority .. ": " .. combo.name,"ComboEditWindowButton"..combo.priority,GetString("comboList"))
-			--	RegisterEventHandler("ComboEditWindowButton"..combo.priority,gw2_skill_manager.ComboEditWindow)
-			--end
-			--if (openCombos) then mainWindow:UnFold(GetString("comboList")) end
-			
-			for _,skill in ipairs(gw2_skill_manager.profile.skills) do
-				mainWindow:NewButton(skill.priority .. ": " .. skill.skill.name,"SkillEditWindowButton"..skill.priority,GetString("skillList"))
-				RegisterEventHandler("SkillEditWindowButton"..skill.priority,gw2_skill_manager.SkillEditWindow)
-			end
-			if (openSkills) then mainWindow:UnFold(GetString("skillList")) end
+			gw2_skill_manager.openSkills = openSkills
+			gw2_skill_manager.openCombos = openCombos
+			gw2_skill_manager.groupsDeleted = false
+			gw2_skill_manager.groupsCreated = false
+			gw2_skill_manager.skillsDeleted = false
+			gw2_skill_manager.skillsCreated = false
 		else
+			gw2_skill_manager.groupsDeleted = false
+			gw2_skill_manager.skillsDeleted = false
 			gSMCurrentProfileName_listitems = _private.GetProfileList()
 			gSMCurrentProfileName = "None"
 		end
+	end
+end
+
+function gw2_skill_manager.UpdateSkillsMainWindow(openSkills)
+	gw2_skill_manager.skillsDeleted = false
+	gw2_skill_manager.skillsCreated = false
+	gw2_skill_manager.openSkills = openSkills
+end
+
+function gw2_skill_manager.CreateMainWindow()
+	-- Init Main Window
+	mainWindow = WindowManager:NewWindow(gw2_skill_manager.mainWindow.name,gw2_skill_manager.mainWindow.x,gw2_skill_manager.mainWindow.y,gw2_skill_manager.mainWindow.w,gw2_skill_manager.mainWindow.h,false)
+	-- Settings section
+	mainWindow:NewComboBox(GetString("profile"),"gSMCurrentProfileName",GetString("settings"),_private.GetProfileList())
+	gSMCurrentProfileName = "None"
+	mainWindow:NewButton(GetString("newProfile"),"gSMNewProfile",GetString("settings"))
+	RegisterEventHandler("gSMNewProfile",gw2_skill_manager.NewProfileDialog)
+	local bb = mainWindow:NewButton(GetString("autoDetectSkills"),"gSMDetectSkills")
+	bb:SetToggleState(false)
+	RegisterEventHandler("gSMDetectSkills",_private.DetectSkills)
+	mainWindow:NewButton(GetString("deleteProfile"),"gSMDeleteProfile")
+	RegisterEventHandler("gSMDeleteProfile",_private.Delete)
+	mainWindow:NewButton(GetString("saveProfile"),"gSMSaveProfile")
+	RegisterEventHandler("gSMSaveProfile",_private.Save)
+	mainWindow:UnFold(GetString("settings"))
+	
+	mainWindow:Hide()
+end
+
+function gw2_skill_manager.UpdateMainWindowGroups()
+	if (gw2_skill_manager.groupsDeleted == false) then
+		mainWindow:DeleteGroup(GetString("ProfessionSettings"))
+		mainWindow:DeleteGroup(GetString("comboList"))
+		mainWindow:DeleteGroup(GetString("switchSettings"))
+		gw2_skill_manager.groupsDeleted = true
+		return true
+	elseif (gw2_skill_manager.groupsCreated == false) then
+		local name = gw2_skill_manager.profile.name
+		name = string.sub(name,select(2,string.find(name,"_"))+1,#name)
+		gSMCurrentProfileName_listitems = _private.GetProfileList(name)
+		gSMCurrentProfileName = name
+		
+		mainWindow:NewCheckBox(GetString("SwapRange"),"gSMSwitchOnRange",GetString("switchSettings"))
+		gSMSwitchOnRange = gw2_skill_manager.profile.switchSettings.switchOnRange
+		mainWindow:NewCheckBox(GetString("SwapR"),"gSMSwitchRandom",GetString("switchSettings"))
+		gSMSwitchRandom = gw2_skill_manager.profile.switchSettings.switchRandom
+		mainWindow:NewNumeric(GetString("SwapCD"),"gSMSwitchOnCooldown",GetString("switchSettings"),0,25)
+		gSMSwitchOnCooldown = gw2_skill_manager.profile.switchSettings.switchOnCooldown
+		
+		local profession = ml_global_information.Player_Profession
+		if (profession) then
+			if (profession == GW2.CHARCLASS.Engineer) then
+				mainWindow:NewComboBox(GetString("PrioritizeKit"),"gSMPrioKit",GetString("ProfessionSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
+				gSMPrioKit = gw2_skill_manager.profile.professionSettings.priorityKit
+			elseif(profession == GW2.CHARCLASS.Elementalist) then
+				mainWindow:NewComboBox(GetString("PriorizeAttunement1"),"gSMPrioAtt1",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
+				mainWindow:NewComboBox(GetString("PriorizeAttunement2"),"gSMPrioAtt2",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
+				mainWindow:NewComboBox(GetString("PriorizeAttunement3"),"gSMPrioAtt3",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
+				mainWindow:NewComboBox(GetString("PriorizeAttunement4"),"gSMPrioAtt4",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
+				gSMPrioAtt1 = gw2_skill_manager.profile.professionSettings.PriorityAtt1
+				gSMPrioAtt2 = gw2_skill_manager.profile.professionSettings.PriorityAtt2
+				gSMPrioAtt3 = gw2_skill_manager.profile.professionSettings.PriorityAtt3
+				gSMPrioAtt4 = gw2_skill_manager.profile.professionSettings.PriorityAtt4
+			end
+		end
+		gw2_skill_manager.groupsCreated = true
+		return true
+	end
+end
+
+function gw2_skill_manager.UpdateMainWindowSkills()
+	if (gw2_skill_manager.skillsDeleted == false) then
+		mainWindow:DeleteGroup(GetString("skillList"))
+		gw2_skill_manager.skillsDeleted = true
+		return true
+	elseif (gw2_skill_manager.skillsCreated == false) then
+		for _,skill in ipairs(gw2_skill_manager.profile.skills) do
+			mainWindow:NewButton(skill.priority .. ": " .. skill.skill.name,"SkillEditWindowButton"..skill.priority,GetString("skillList"))
+			RegisterEventHandler("SkillEditWindowButton"..skill.priority,gw2_skill_manager.SkillEditWindow)
+		end
+		if (gw2_skill_manager.openSkills) then mainWindow:UnFold(GetString("skillList")) end
+		gw2_skill_manager.skillsCreated = true
+		return true
 	end
 end
 
@@ -388,6 +423,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 			SklMgr_InstantCast = lSkill.skill.instantCast
 			SklMgr_LastSkillID = lSkill.skill.lastSkillID
 			SklMgr_Delay = lSkill.skill.delay
+			editWindow:UnFold(GetString("Skill"))
 			-- Player
 			SklMgr_CombatState = lSkill.player.combatState
 			SklMgr_PMinHP = lSkill.player.minHP
@@ -474,6 +510,7 @@ _private.lastEvadedSkill = {targetID = 0, skillID = 0}
 _private.evadeAt = {healthPercentage = math.random(75,90), enemiesAround = 3, timer = 0}
 _private.combatMoveTmr = 0
 _private.combatMoveActive = false
+_private.lastTarget = {}
 
 -- **private functions**
 function _private.GetProfileList(newProfile)
@@ -574,8 +611,7 @@ end
 function _private.CheckTargetBuffs(target)
 	if (target) then
 		if (gw2_common_functions.BufflistHasBuffs(target.buffs,"762")) then
-			ml_blacklist.AddBlacklistEntry(GetString("monsters"),target.id,target.name,ml_global_information.Now+90000)
-			d("this blacklisting so much?? :S!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+			ml_blacklist.AddBlacklistEntry(GetString("monsters"),target.id,target.name,ml_global_information.Now+30000)
 			Player:ClearTarget()
 			return false
 		end
@@ -583,13 +619,29 @@ function _private.CheckTargetBuffs(target)
 	return true
 end
 
-function _private.GetPredictedLocation(target)
-	local tPos = target.pos
-	local tSpeed = target.speed
-	local tHeading = math.atan2(tPos.hx, tPos.hy)
-	local newX = tSpeed * math.sin(tHeading) + tPos.x
-	local newZ = tSpeed * math.cos(tHeading) + tPos.z
-	return {x = newX, y = tPos.y, z = newZ}
+function _private.GetPredictedLocation(target,skill)
+	local pPos = Player.pos
+	if (_private.lastTarget.id and _private.lastTarget.id == target.id and _private.lastTarget.pos) then
+		local tPos = target.pos
+		local dx = tPos.x-_private.lastTarget.pos.x
+		local dy = tPos.y-_private.lastTarget.pos.y
+		local targetSpeed = math.sqrt(dx*dx + dy*dy)
+		local targetHeading = math.atan2(dx, dy)
+		local ePos = {
+			x = tPos.x + math.sin(targetHeading) * targetSpeed/5 * (1 + target.distance / 30),
+			y = tPos.y + math.cos(targetHeading) * targetSpeed/5 * (1 + target.distance / 30),
+			z = tPos.z,
+		}
+		_private.lastTarget.pos = target.pos
+		local dist = Distance3D(pPos.x,pPos.y,pPos.z,ePos.x,ePos.y,ePos.z)
+		if (dist < skill.skill.maxRange) then
+			return ePos
+		end
+	else
+		_private.lastTarget.pos = target.pos
+		_private.lastTarget.id = target.id
+	end
+	return target.pos
 end
 
 function _private.TargetLosingHealth(target)
@@ -793,7 +845,7 @@ function _private.AttackSkill(target,availableSkills)
 			if (_private.CanCast(skill,target) == true) then
 				if (target) then
 					if (skill.skill.groundTargeted and target.movementstate == 3) then
-						local pos = _private.GetPredictedLocation(target)
+						local pos = _private.GetPredictedLocation(target,skill)
 						Player:CastSpell(skill.slot,pos.x,pos.y,pos.z)
 					else
 						Player:CastSpell(skill.slot,target.id)
@@ -812,7 +864,7 @@ function _private.AttackSkill(target,availableSkills)
 	return false
 end
 
-function _private:Evade()
+function _private.Evade()
 	if (ml_global_information.Player_Endurance >= 50 and TimeSince(_private.evadeAt.timer) > 500) then
 		_private.evadeAt.timer = ml_global_information.Now
 		local targets = CharacterList("aggro")
@@ -840,7 +892,7 @@ function _private:Evade()
 	return false
 end
 
-function _private.canMoveDirection(dir,distance)
+function _private.CanMoveDirection(dir,distance)
 	if (tonumber(dir) and tonumber(distance)) then
 		local checkDist = distance/10
 		for step=1,10 do
@@ -852,21 +904,20 @@ function _private.canMoveDirection(dir,distance)
 	end
 end
 
-function _private:DoCombatMovement()
+function _private.DoCombatMovement()
 	local target = Player:GetTarget()
-	if (_private.combatMoveActive and target and ml_global_information.Player_Health.percent < 99 and gDoCombatMovement ~= "0") then
-		if ( gw2_common_functions.HasBuffs(Player, "791,727") ) then return false end
-		local Tdist = target.distance
-		local playerHP = ml_global_information.Player_Health.percent
-		local movedir = ml_global_information.Player_MovementDirections
+	if (gDoCombatMovement ~= "0" and target and ml_global_information.Player_Health.percent < 99) then
+		if (gw2_common_functions.HasBuffs(Player,"791,727")) then return false end
+		local tDistance = target.distance
+		local moveDir = ml_global_information.Player_MovementDirections
 
 		-- SET FACING TARGET
-		Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z)
+		Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z) -- TODO: really needed?
 
 		--CONTROL CURRENT COMBAT MOVEMENT
-		if ( Player:IsMoving() ) then
+		if (Player:IsMoving()) then
 
-			if ( not Player.onmeshexact and (movedir.backward or movedir.left or movedir.right) ) then
+			if (Player.onmeshexact == false and (moveDir.backward or moveDir.left or moveDir.right) ) then
 				Player:UnSetMovement(1)
 				Player:UnSetMovement(2)
 				Player:UnSetMovement(3)
@@ -880,43 +931,42 @@ function _private:DoCombatMovement()
 				return
 			end
 
-			if (tonumber(Tdist) ~= nil) then
-				if (_private.maxRange > 300 and Tdist < (_private.maxRange / 4) and movedir.forward ) then -- we are too close and moving towards enemy
+			if (tonumber(tDistance) ~= nil) then
+				if (_private.maxRange > 300 and tDistance < (_private.maxRange / 4) and moveDir.forward) then -- we are too close and moving towards enemy
 					Player:UnSetMovement(0)	-- stop moving forward
-				elseif ( Tdist < (target.radius + 10) and movedir.forward) then
+				elseif (tDistance < (target.radius) and moveDir.forward) then
 					Player:UnSetMovement(0)	-- stop moving forward
-				elseif ( Tdist > _private.maxRange and movedir.backward ) then -- we are too far away and moving backwards
+				elseif (tDistance > _private.maxRange and moveDir.backward) then -- we are too far away and moving backwards
 					Player:UnSetMovement(1)	-- stop moving backward
-				elseif (Tdist > _private.maxRange and movedir.left) then -- we are strafing outside the maxrange
-					Player:UnSetMovement(2) -- stop moving Left
-				elseif (Tdist > _private.maxRange and movedir.right) then -- we are strafing outside the maxrange
-					Player:UnSetMovement(3) -- stop moving Right
+				elseif (tDistance > _private.maxRange and (moveDir.left or moveDir.right)) then -- we are strafing outside the maxrange
+					Player:UnSetMovement(2) -- stop moving Left -- TODO: Make sure left stops right.
+					--Player:UnSetMovement(3) -- stop moving Right
 				end
 			end
 		end
 
 		--Set New Movement
-		if ( Tdist ~= nil and TimeSince(_private.combatMoveTmr) > 0 and Player.onmesh) then
+		if (tonumber(tDistance) ~= nil and TimeSince(_private.combatMoveTmr) > 0 and Player.onmesh) then
 
-			_private.combatMoveTmr = ml_global_information.Now + math.random(1000,2000)
+			_private.combatMoveTmr = ml_global_information.Now + math.random(1000,3500)
 			--tablecount:  1, 2, 3, 4, 5   --Table index starts at 1, not 0 
 			local dirs = { 0, 1, 2, 3, 4 } --Forward = 0, Backward = 1, Left = 2, Right = 3, + stop
 
-			if (_private.maxRange > 300 ) then
+			if (_private.maxRange > 300) then
 				-- RANGE
-				if (Tdist < _private.maxRange ) then
-					if (Tdist > (_private.maxRange * 0.95)) then 
+				if (tDistance < _private.maxRange) then
+					if (tDistance > (_private.maxRange * 0.95)) then 
 						table.remove(dirs,2) -- We are too far away to walk backward
 					end
-					if (Tdist < (_private.maxRange / 4)) then 
+					if (tDistance < (_private.maxRange / 4)) then 
 						table.remove(dirs,1) -- We are too close to walk forward
 					end	
-					if (Tdist < 250) then 
+					if (tDistance < 250) then 
 						table.remove(dirs,5) -- We are too close, remove "stop"
-						if (movedir.left ) then 
+						if (moveDir.left) then 
 							table.remove(dirs,3) -- We are moving left, so don't try to go left
 						end
-						if (movedir.right ) then
+						if (moveDir.right) then
 							table.remove(dirs,4) -- We are moving right, so don't try to go right
 						end
 					end
@@ -924,28 +974,28 @@ function _private:DoCombatMovement()
 
 			else
 				-- MELEE
-				if (Tdist > _private.maxRange) then 
+				if (tDistance > _private.maxRange) then 
 					table.remove(dirs,2) -- We are too far away to walk backwards
 				end
-				if (Tdist < (target.radius)) then 
+				if (tDistance < (target.radius)) then 
 					table.remove(dirs,1) -- We are too close to walk forwards
 				end
 			end
 			-- Forward = 0, Backward = 1, Left = 2, Right = 3, + stop
 			-- F = 3, B = 0, L = 6, R = 7, LF = 4, RF = 5, LB = 1, RB = 2
-			if (_private.canMoveDirection(3,400) == false or _private.canMoveDirection(4,350) == false or _private.canMoveDirection(5,350) == false) then 
+			if (_private.CanMoveDirection(3,400) == false or _private.CanMoveDirection(4,350) == false or _private.CanMoveDirection(5,350) == false) then 
 				Player:UnSetMovement(0)
 				table.remove(dirs,1)
 			end
-			if (_private.canMoveDirection(0,400) == false or _private.canMoveDirection(1,350) == false or _private.canMoveDirection(2,350) == false) then 
+			if (_private.CanMoveDirection(0,400) == false or _private.CanMoveDirection(1,350) == false or _private.CanMoveDirection(2,350) == false) then 
 				Player:UnSetMovement(1)
 				table.remove(dirs,2)
 			end
-			if (_private.canMoveDirection(6,400) == false or _private.canMoveDirection(4,350) == false or _private.canMoveDirection(1,350) == false) then 
+			if (_private.CanMoveDirection(6,400) == false or _private.CanMoveDirection(4,350) == false or _private.CanMoveDirection(1,350) == false) then 
 				Player:UnSetMovement(2)
 				table.remove(dirs,3)
 			end
-			if (_private.canMoveDirection(7,400) == false or _private.canMoveDirection(5,350) == false or _private.canMoveDirection(2,350) == false) then 
+			if (_private.CanMoveDirection(7,400) == false or _private.CanMoveDirection(5,350) == false or _private.CanMoveDirection(2,350) == false) then 
 				Player:UnSetMovement(3)
 				table.remove(dirs,4)
 			end
@@ -959,9 +1009,6 @@ function _private:DoCombatMovement()
 				Player:StopMovement()
 			end
 		end
-	elseif (_private.combatMoveActive) then
-		_private.combatMoveActive = false
-		Player:StopMovement()
 	end
 	return false
 end
@@ -1009,14 +1056,14 @@ end
 
 function _private.DeleteSkill()
 	gw2_skill_manager.profile:DeleteSkill(gw2_skill_manager.currentSkill)
-	gw2_skill_manager.MainWindow(true)
+	gw2_skill_manager.UpdateSkillsMainWindow(true)
 	gw2_skill_manager.SkillEditWindow()
 end
 
 function _private.MoveSkillUp()
 	if (gw2_skill_manager.profile:MoveSkill(gw2_skill_manager.currentSkill,"up")) then
 		gw2_skill_manager.currentSkill = gw2_skill_manager.currentSkill - 1
-		gw2_skill_manager.MainWindow(true)
+		gw2_skill_manager.UpdateSkillsMainWindow(true)
 		gw2_skill_manager.SkillEditWindow(gw2_skill_manager.currentSkill)
 	end
 end
@@ -1024,7 +1071,7 @@ end
 function _private.MoveSkillDown()
 	if (gw2_skill_manager.profile:MoveSkill(gw2_skill_manager.currentSkill,"down")) then
 		gw2_skill_manager.currentSkill = gw2_skill_manager.currentSkill + 1
-		gw2_skill_manager.MainWindow(true)
+		gw2_skill_manager.UpdateSkillsMainWindow(true)
 		gw2_skill_manager.SkillEditWindow(gw2_skill_manager.currentSkill)
 	end
 end
@@ -1032,7 +1079,7 @@ end
 function _private.CloneSkill()
 	gw2_skill_manager.profile:CloneSkill(gw2_skill_manager.currentSkill)
 	gw2_skill_manager.currentSkill = gw2_skill_manager.currentSkill + 1
-	gw2_skill_manager.MainWindow(true)
+	gw2_skill_manager.UpdateSkillsMainWindow(true)
 	gw2_skill_manager.SkillEditWindow(gw2_skill_manager.currentSkill)
 end
 
@@ -1044,7 +1091,7 @@ function _private.PasteSkill()
 	gw2_skill_manager.profile:PasteSkill(gw2_skill_manager.currentSkill)
 end
 
-function _private:ReturnSkillByID(skills,id)
+function _private.ReturnSkillByID(skills,id)
 	if (ValidTable(skills) and tonumber(id)) then
 		for _,skill in ipairs(skills) do
 			if (skill.skill.id == id) then
@@ -1097,13 +1144,12 @@ function profilePrototype:Attack(target)
 		if (target == nil or (target.distance < maxRange and target.los)) then
 		--if (target == nil or target.distance < _private.maxRange and target.los) then
 			if (_private.runningIntoCombatRange == true) then Player:StopMovement() _private.runningIntoCombatRange = false end
-			local lastSkillInfo = _private:ReturnSkillByID(pSkills,Player.castinfo.lastSkillID)
-			_private.combatMoveActive = true
-			Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z)
+			local lastSkillInfo = _private.ReturnSkillByID(pSkills,Player.castinfo.lastSkillID)
+			_private.DoCombatMovement()
 			if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
 				if (_private.SwapWeapon(target)) then
 					return true
-				elseif (_private:Evade()) then
+				elseif (_private.Evade()) then
 					return true
 				elseif (_private.AttackSkill(target,skills)) then
 					return true
@@ -1132,7 +1178,7 @@ function profilePrototype:DetectSkills()
 		local newSkill = _private.CreateSkill(self.skills,slot)
 		if (newSkill) then
 			self.skills[newSkill.priority] = newSkill
-			gw2_skill_manager.MainWindow(true)
+			gw2_skill_manager.UpdateSkillsMainWindow(true)
 		end
 	end
 	return true
@@ -1204,10 +1250,19 @@ function gw2_skill_manager.OnUpdate(ticks)
 	end
 	if (TimeSince(gw2_skill_manager.ticks) > 150) then
 		gw2_skill_manager.ticks = ticks
-		_private:DoCombatMovement()
-		if (_private.runningIntoCombatRange and Player:GetTarget() == nil) then
+		local target = Player:GetTarget()
+		if (_private.combatMoveActive and target == nil) then
+			_private.combatMoveActive = false
+			Player:StopMovement()
+		end
+		if (_private.runningIntoCombatRange and target == nil) then
 			Player:StopMovement()
 			_private.runningIntoCombatRange = false
 		end
+	end
+	if (gw2_skill_manager.UpdateMainWindowGroups()) then
+		return true
+	elseif (gw2_skill_manager.UpdateMainWindowSkills()) then
+		return true
 	end
 end

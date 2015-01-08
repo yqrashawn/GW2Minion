@@ -20,7 +20,6 @@ function gw2_task_assist:Init()
 end
 
 gw2_task_assist.tmr = 0
-gw2_task_assist.threshold = 2000
 function gw2_task_assist:Process()
 	--ml_log("AssistMode_Process->")
 		
@@ -34,7 +33,6 @@ function gw2_task_assist:Process()
 								
 			if ( ml_global_information.Player_IsMoving ) then 
 				gw2_task_assist.tmr = ml_global_information.Now
-				gw2_task_assist.threshold = math.random(500,1500)
 				gw2_skill_manager.Heal()
 			end
 		end	
