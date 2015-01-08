@@ -645,12 +645,8 @@ end
 
 c_equipGatheringTools = inheritsFrom( ml_cause )
 e_equipGatheringTools = inheritsFrom( ml_effect )
-c_equipGatheringTools.timer = 0
-c_equipGatheringTools.randomTimer = math.random(3750,7750)
 function c_equipGatheringTools:evaluate()
-	if(ml_global_information.Player_InCombat == false and TimeSince(e_equipGatheringTools.timer) > c_equipGatheringTools.randomTimer) then -- timer to allow for equipping and random interval.
-		c_equipGatheringTools.timer = ml_global_information.Now
-		c_equipGatheringTools.randomTimer = math.random(3750,7750)
+	if(ml_global_information.Player_InCombat == false ) then 
 		local key = gw2_buy_manager.toolNameToKey(BuyManager_GarheringTool) -- Get key asociated with chosen tool type. Eg: "copper" = 1
 		if (key and ml_global_information.Player_Level >= gw2_buy_manager.LevelRestrictions[key]) then -- Check for valid key and if player level is high enough for the chosen tool.
 			if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool) == nil and ValidTable(Inventory("itemID=" .. gw2_buy_manager.tools["foraging"][key]))) or

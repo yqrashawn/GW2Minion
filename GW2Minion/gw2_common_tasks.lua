@@ -10,6 +10,7 @@ function gw2_common_tasks.OnUpdate( tickcount )
 	gw2_common_tasks.SwimUp(tickcount)
 	gw2_common_tasks.HealnBuff(tickcount) -- we have to see if this is a working solution for every botmode 
 	gw2_common_tasks.ClaimRewards(tickcount)
+	gw2_common_tasks.EquipGatheringTools(tickcount)
 end
 
 
@@ -71,3 +72,12 @@ function gw2_common_tasks.ClaimRewards(tickcount)
 		end
 	end
 end
+
+gw2_common_tasks.equipGatheringToolsLastUsed = 0
+function gw2_common_tasks.EquipGatheringTools(tickcount)
+	if( TimeSince(gw2_common_tasks.equipGatheringToolsLastUsed) > 10000 and ml_global_information.Player_Alive and c_equipGatheringTools:evaluate() == true) then
+		gw2_common_tasks.equipGatheringToolsLastUsed = tickcount + math.random(5000,15000)
+		e_equipGatheringTools:execute()
+	end
+end
+
