@@ -705,6 +705,7 @@ function _private.CanCast(skill,target)
 		if (skill.skill.los == true and (skill.skill.healing == "0" and (target == nil or target.los == false))) then return false end
 		if (skill.skill.minRange > 0 and (skill.skill.healing == "0" and (target == nil or target.distance < skill.skill.minRange))) then return false end
 		if (skill.skill.maxRange > 0 and (skill.skill.healing == "0" and (target == nil or target.distance > skill.skill.maxRange))) then return false end
+		if (skill.skill.maxRange == 0 and skill.skill.radius > 0 and (skill.skill.healing == "0" and (target == nil or target.distance > skill.skill.radius))) then return false end
 		-- player attributes
 		local playerBuffList = Player.buffs
 		if (skill.player.combatState == "InCombat" and ml_global_information.Player_InCombat == false ) then return false end
