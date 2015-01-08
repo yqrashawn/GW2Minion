@@ -219,9 +219,9 @@ end
 c_HandleAggro = inheritsFrom( ml_cause )
 e_HandleAggro = inheritsFrom( ml_effect )
 c_HandleAggro.target = nil
-c_HandleAggro.HealthTreshold = math.random(50,85)
+c_HandleAggro.HealthTreshold = math.random(70,90)
 function c_HandleAggro:evaluate()
-	if ( ml_global_information.Player_Health.percent < c_HandleAggro.HealthTreshold or TableSize(GadgetList("onmesh,nearest,gatherable,maxdistance=500")) > 1 ) then
+	if ( ml_global_information.Player_Health.percent < c_HandleAggro.HealthTreshold or TableSize(GadgetList("onmesh,nearest,gatherable,maxdistance=500")) > 0 ) then
 		local target = gw2_common_functions.GetBestAggroTarget()
 		if ( target ) then
 			c_HandleAggro.target = target
@@ -235,7 +235,7 @@ function e_HandleAggro:execute()
 	ml_log("e_HandleAggro ")
 			
 	if (c_HandleAggro.target ~= nil) then
-		c_HandleAggro.HealthTreshold = math.random(50,85)
+		c_HandleAggro.HealthTreshold = math.random(70,90)
 		Player:StopMovement()
 		-- stop the char from reviving else it doesnt do sh!t in combat task
 		if ( Player.castinfo.duration ~= 0 ) then

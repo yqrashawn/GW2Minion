@@ -156,8 +156,33 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck()
 		-- 	Try Jumping
 		if ( gw2_unstuck.stuckCount > 1 ) then
 			
-			if ( gw2_unstuck.stuckCount < 10) then
+			if ( gw2_unstuck.stuckCount < 12) then
+				
+				-- check for doors n stuff
+				if ( gw2_unstuck.stuckCount >=5 ) then 
+					-- seen gadgets: 
+					-- "South Gate", CID 0 , CID2 = 331554976, selectable, not attackable, isalive, isUnkown13,
+					
+					local contentID2 = "331554976"
+					--local TList = ( GadgetList("nearest,selectable,alive,onmesh,maxdistance=250,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("mapobjects"))) )
+					local TList = ( GadgetList("nearest,selectable,alive,onmesh,contentID2="..contentID2..",maxdistance=250,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("mapobjects"))) )	
+					if ( TableSize( TList ) > 0 ) then
+						local id, target  = next( TList )
+						if ( id and target ) then				
+							d("Path-Blocking Object found, trying to destroy it...")
 							
+							-- Create new Subtask Combat
+							local newTask = gw2_task_combat.Create()
+							newTask.targetID = target.id		
+							newTask.targetPos = target.pos
+							newTask.targetType = "gadget"
+							ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
+														
+							return ml_log(Player:SetTarget(target.id))
+						end		
+					end					
+				end
+				
 				if ( gw2_unstuck.jumpCount <= 2 ) then
 					gw2_unstuck.stuckthreshold = 65
 					gw2_unstuck.jumpCount = gw2_unstuck.jumpCount + 1

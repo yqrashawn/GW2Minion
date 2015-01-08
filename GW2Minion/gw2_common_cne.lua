@@ -451,7 +451,8 @@ end
 c_Looting = inheritsFrom( ml_cause )
 e_Looting = inheritsFrom( ml_effect )
 c_Looting.target = nil
-
+c_Looting.lastTargetID = 0
+c_Looting.LootingAttemptCounter = 0
 -- Unsure which one to use..contentID or contentID2 ..contentID changes sometimes I think
 -- 24.11.2014 : Splendid Chest, contentID = 41638 , contentID2 = 202375680
 c_Looting.contentID = "17698,198260,232192,232193,232194,262863,236384,41638"
@@ -485,8 +486,28 @@ function e_Looting:execute()
 			if (target.isInInteractRange) then
 				gw2_common_functions.NecroLeaveDeathshroud()
 				ml_log(": Interacting started.")
-				if ( ml_global_information.Player_IsMoving and target.distance < 30 ) then Player:StopMovement() end -- isInInteractRange is sometimes too far to loot after opening chest
+				if ( ml_global_information.Player_IsMoving and target.distance < 30 ) then Player:StopMovement() end -- isInInteractRange is sometimes too far to loot after opening chest				
 				Player:Interact(target.id)
+				-- another check for chests that "need time to open" while your bot gets kicked in the nuts n resets the openingprogress...
+				if ( c_Looting.lastTargetID ~= target.id ) then
+					c_Looting.lastTargetID = target.id
+					c_Looting.LootingAttemptCounter = 0
+				else
+					c_Looting.LootingAttemptCounter = c_Looting.LootingAttemptCounter + 1 
+					if ( c_Looting.LootingAttemptCounter > 15 ) then
+						-- Check if nearby are some enemies attacking us
+						d("Seems we can't loot that thing ? Checking for attacking enemies...")
+						local target = gw2_common_functions.GetBestAggroTarget()
+						if ( target ) then
+							local newTask = gw2_task_combat.Create()
+							newTask.targetID = c_HandleAggro.target.id		
+							newTask.targetPos = c_HandleAggro.target.pos		
+							ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
+						end
+						c_Looting.LootingAttemptCounter = 0
+					end
+				end
+				
 				
 			-- Loot not in range, walk there.			
 			else
