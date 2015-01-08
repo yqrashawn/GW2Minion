@@ -251,9 +251,6 @@ function gw2minion.ModuleInit()
 		if not ml_blacklist.BlacklistExists(GetString("salvageItems")) then
 			ml_blacklist.CreateBlacklist(GetString("salvageItems"))
 		end
-		if not ml_blacklist.BlacklistExists(GetString("salvageItems")) then
-			ml_blacklist.CreateBlacklist(GetString("salvageItems"))
-		end
 		if not ml_blacklist.BlacklistExists(GetString("vendors")) then
 			ml_blacklist.CreateBlacklist(GetString("vendors"))
 		end

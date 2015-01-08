@@ -248,35 +248,66 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring )
 	return nil
 end
 
+gw2_common_functions.lastVendorID = nil
+gw2_common_functions.lastVendorConversationHistory = { Repair=0, Shop=0, KarmaShop=0, Continue=0, Story=0, Return=0 } -- holds the already tried conversation IDs
 function gw2_common_functions.handleConversation(result)
 	if (Player:IsConversationOpen() and Inventory:IsVendorOpened() == false and ValidString(result)) then
-		local options = Player:GetConversationOptions()
+		local curVendor = Player:GetTarget()
+		-- Reset the conversationHistory when we got a new or different vendorMarker
+		if ( curVendor and curVendor.id ) then
+			if ( gw2_common_functions.lastVendorID == nil or gw2_common_functions.lastVendorID ~= curVendor.id ) then
+				gw2_common_functions.lastVendorID = curVendor.id
+				gw2_common_functions.lastVendorConversationHistory = { Repair=0, Shop=0, KarmaShop=0, Continue=0, Story=0, Return=0}
+			end
+		end
+		
+		local options = Player:GetConversationOptions()		
 		if (options) then
+			-- for sell&buy order: #shop , #karmashop, #repair, #Story, #Continue, #Back, #Close
+			-- for repair order: #repair, #Story, #Continue, #Back, #Close
 			for index=0, #options do
 				local conversation = options[index]
-				if (conversation.type == GW2.CONVERSATIONOPTIONS.Repair and result == "repair") then
+				if (conversation.type == GW2.CONVERSATIONOPTIONS.Repair and result == "repair" and gw2_common_functions.lastVendorConversationHistory["Repair"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Repair)
+					gw2_common_functions.lastVendorConversationHistory["Repair"] = gw2_common_functions.lastVendorConversationHistory["Repair"] + 1
 					return true
-				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Shop and (result == "sell" or result == "buy")) then
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Shop and (result == "sell" or result == "buy") and gw2_common_functions.lastVendorConversationHistory["Shop"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Shop)
+					gw2_common_functions.lastVendorConversationHistory["Shop"] = gw2_common_functions.lastVendorConversationHistory["Shop"] + 1
 					return
-				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.KarmaShop and result == "sell") then
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.KarmaShop and result == "sell" and gw2_common_functions.lastVendorConversationHistory["KarmaShop"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.KarmaShop)
+					gw2_common_functions.lastVendorConversationHistory["KarmaShop"] = gw2_common_functions.lastVendorConversationHistory["KarmaShop"] + 1
+					return
+				end
+			end
+			for index=0, #options do -- this is needed because NPCs often have the GW2.CONVERSATIONOPTIONS.Repair ID although they are offering vendoring
+				local conversation = options[index]
+				if (conversation.type == GW2.CONVERSATIONOPTIONS.Repair and (result == "sell" or result == "buy") and gw2_common_functions.lastVendorConversationHistory["Repair"] < 5) then
+					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Repair)
+					gw2_common_functions.lastVendorConversationHistory["Repair"] = gw2_common_functions.lastVendorConversationHistory["Repair"] + 1
 					return
 				end
 			end
 			for index=0, #options do
 				local conversation = options[index]
-				if (conversation.type == GW2.CONVERSATIONOPTIONS.Continue) then
+				if (conversation.type == GW2.CONVERSATIONOPTIONS.Continue and gw2_common_functions.lastVendorConversationHistory["Continue"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Continue)
+					gw2_common_functions.lastVendorConversationHistory["Continue"] = gw2_common_functions.lastVendorConversationHistory["Continue"] + 1
 					return
-				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Story) then
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Story and gw2_common_functions.lastVendorConversationHistory["Story"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Story)
+					gw2_common_functions.lastVendorConversationHistory["Story"] = gw2_common_functions.lastVendorConversationHistory["Story"] + 1
 					return
-				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Return) then
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Return and gw2_common_functions.lastVendorConversationHistory["Return"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Return)
+					gw2_common_functions.lastVendorConversationHistory["Return"] = gw2_common_functions.lastVendorConversationHistory["Return"] + 1
 					return
-				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Close) then
+				end
+			end
+			for index=0, #options do
+				local conversation = options[index]
+				if (conversation.type == GW2.CONVERSATIONOPTIONS.Close) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Close)
 					return false
 				end

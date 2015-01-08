@@ -264,7 +264,7 @@ end
 -- Working stuff here.
 --Create filtered sell item list.
 function gw2_sell_manager.createItemList()
-	local items = Inventory("")
+	local items = Inventory("exclude_contentid="..ml_blacklist.GetExcludeString(GetString("salvageItems")))
 	local filteredItems = {}
 	if (items) then
 		for _,item in pairs(items) do
@@ -335,11 +335,19 @@ function gw2_sell_manager.getClosestSellMarker(nearby)
 end
 
 -- Sell at vendor
+gw2_sell_manager.lastVendorID = nil
+gw2_sell_manager.VendorSellHistroy = {}
 function gw2_sell_manager.sellAtVendor(vendorMarker)
 	if (vendorMarker) then
 		vendor = CharacterList:Get(vendorMarker.characterID)
 		if (vendor and vendor.isInInteractRange and vendor.distance < 100) then
 			Player:StopMovement()
+			-- Reset vendorhistory on new vendor
+			if ( gw2_sell_manager.lastVendorID == nil or gw2_sell_manager.lastVendorID ~= vendor.id ) then
+				gw2_sell_manager.lastVendorID = vendor.id
+				gw2_sell_manager.VendorSellHistroy = {}
+			end
+			
 			local target = Player:GetTarget()
 			if (not target or target.id ~= vendor.id) then
 				Player:SetTarget(vendor.id)
@@ -362,22 +370,35 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 					end
 				end
 				local iList = gw2_sell_manager.createItemList()
-				local slowdown = math.random(0,3)
+				local slowdown = math.random(0,1)
+				local soldstuff = false
 				if ( iList ) then
 					if ( slowdown == 0 ) then 
 						for _,item in pairs(iList) do						
 							d("Selling: "..item.name)
 							item:Sell()
-							return true						
+							if ( not gw2_sell_manager.VendorSellHistroy[item.itemID] or gw2_sell_manager.VendorSellHistroy[item.itemID] < 10 ) then
+								
+								if ( not gw2_sell_manager.VendorSellHistroy[item.itemID] ) then 
+									gw2_sell_manager.VendorSellHistroy[item.itemID] = 1 
+								else
+									gw2_sell_manager.VendorSellHistroy[item.itemID] = gw2_sell_manager.VendorSellHistroy[item.itemID] + 1
+								end
+							else
+								d("Can't sell "..item.name..", blacklisting it")
+								ml_blacklist.AddBlacklistEntry(GetString("salvageItems"), item.itemID, item.name, true)
+							end
+							return true
 						end						
 						return false
 					end
 					return true
-				else
-					-- No more items to sell
-					d("Selling finished..")				
-					Inventory:SellJunk()
 				end
+				
+				-- No more items to sell
+				d("Selling finished..")				
+				Inventory:SellJunk()
+				
 			end
 		else
 			local pos = vendorMarker.pos

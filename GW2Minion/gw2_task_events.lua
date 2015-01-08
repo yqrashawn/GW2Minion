@@ -131,6 +131,9 @@ function c_MoveInEventRange:evaluate()
 					end
 				end			
 			end
+		else
+			-- event is gone, make sure we can exit this event task
+			ml_task_hub:CurrentTask().eventReached = true
 		end
 	end
 	e_MoveInEventRange.currentEvent = nil
