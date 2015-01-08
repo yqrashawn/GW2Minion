@@ -191,7 +191,7 @@ function e_GatherTask:execute()
 	newTask.targetPos = c_GatherTask.target.pos
 	newTask.targetID = c_GatherTask.target.id
 	ml_task_hub:CurrentTask():AddSubTask(newTask)
-	--ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)	
+	
 end
 
 -- overwatch CnE, when our player is moving to the next gathermarker, it should terminate the moveto subtask if something we can gather is nearby
@@ -420,7 +420,7 @@ function c_Gathering:evaluate()
 				return true
 			else
 				-- Our gatherable is gone, finishing this subtask / getting next gatherable in next pulse
-				if (gBotMode ~= GetString("gatherMode")) then
+				if (gBotMode ~= GetString("gatherMode")) then					
 					ml_task_hub:CurrentTask().completed = true
 					ml_task_hub:CurrentTask().targetID = nil
 					ml_task_hub:CurrentTask().targetPos = nil
@@ -431,6 +431,13 @@ function c_Gathering:evaluate()
 		
 	else		
 		
+		-- Our gatherable is gone, finishing this subtask / getting next gatherable in next pulse
+		if (gBotMode ~= GetString("gatherMode")) then					
+			ml_task_hub:CurrentTask().completed = true
+			ml_task_hub:CurrentTask().targetID = nil
+			ml_task_hub:CurrentTask().targetPos = nil
+		end
+				
 		local GList = GadgetList("onmesh,gatherable,selectable,shortestpath")
 		if ( TableSize(GList) > 0 ) then 
 			local id,gadget = next(GList)

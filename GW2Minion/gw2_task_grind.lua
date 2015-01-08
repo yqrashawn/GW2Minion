@@ -38,8 +38,6 @@ function gw2_task_grind:Init()
 	-- Handle Rezz-Target is alive again or gone, deletes the subtask moveto in case it is needed
 	self:add(ml_element:create( "RevivePartyMemberOverWatch", c_RezzOverWatchCheck, e_RezzOverWatchCheck, 400 ), self.overwatch_elements)
 	
-
-	
 	-- Normal elements
 	-- Revive Downed/Dead Partymember
 	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 375 ), self.process_elements)	-- creates subtask: moveto
@@ -53,17 +51,11 @@ function gw2_task_grind:Init()
 	
 	-- Normal Looting & chests
 	self:add(ml_element:create( "Looting", c_Looting, e_Looting, 275 ), self.process_elements)
-	
-	-- Re-Equip Gathering Tools
-	--self:add(ml_element:create( "EquippingGatherTool", c_GatherToolsCheck, e_GatherToolsCheck, 265 ), self.process_elements)	
-	
+		
 	-- Buy & Repair & Vendoring
 	self:add(ml_element:create( "VendorSell", c_createVendorSellTask, e_createVendorSellTask, 250 ), self.process_elements)
 	self:add(ml_element:create( "VendorBuy", c_createVendorBuyTask, e_createVendorBuyTask, 240 ), self.process_elements)
 	
-	--self:add(ml_element:create( "QuickRepairItems", c_quickrepair, e_quickrepair, 240 ), self.process_elements)
-	
-
 	-- DoEvents
 	self:add(ml_element:create( "DoEvent", c_doEvents, e_doEvents, 215 ), self.process_elements)
 	

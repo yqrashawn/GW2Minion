@@ -457,13 +457,16 @@ c_Looting.LootingAttemptCounter = 0
 -- 24.11.2014 : Splendid Chest, contentID = 41638 , contentID2 = 202375680
 c_Looting.contentID = "17698,198260,232192,232193,232194,262863,236384,41638"
 c_Looting.contentID2 = "202375680"
-c_Looting.contentIDExclude = "41024" -- diving googles 1.12.14
+c_Looting.contentIDExclude = "41024" -- diving goggles 1.12.14
 function c_Looting:evaluate()
 	--ml_log("c_Looting")
 	-- Find new loot target.
 	if (c_Looting.target == nil) then
 		
-		c_Looting.target = (GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID2="..c_Looting.contentID2..",exclude_contentid="..c_Looting.contentIDExclude) or GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID="..c_Looting.contentID) or CharacterList("nearest,lootable,onmesh,maxdistance=3000"))
+		-- dont use contentID2 now, it always picks things that are not a chest :/, only possible way is using the "name" containing "chest" maybe..
+		--c_Looting.target = (GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID2="..c_Looting.contentID2..",exclude_contentid="..c_Looting.contentIDExclude)
+		
+		c_Looting.target = GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID="..c_Looting.contentID) or CharacterList("nearest,lootable,onmesh,maxdistance=3000")
 	end
 	-- Check if we need to loot and have a valid target and enough space to store it.
 	if (ValidTable(c_Looting.target) and ml_global_information.Player_Inventory_SlotsFree > 0) then
@@ -476,7 +479,7 @@ end
 
 function e_Looting:execute()	
 	ml_log("Looting ")
-	c_Looting.target = (GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID2="..c_Looting.contentID2) or GadgetList("onmesh,interactable,selectable,shortestpath,maxdistance=4000,contentID="..c_Looting.contentID) or CharacterList("shortestpath,lootable,onmesh,maxdistance=4000"))
+	c_Looting.target = GadgetList("onmesh,interactable,selectable,shortestpath,maxdistance=4000,contentID="..c_Looting.contentID) or CharacterList("shortestpath,lootable,onmesh,maxdistance=4000")
 	if ( ValidTable(c_Looting.target) ) then 
 		local target = select(2,next(c_Looting.target))
 		-- Check for valid target.
