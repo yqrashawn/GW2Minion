@@ -501,6 +501,8 @@ end
 -- **pricate variables**
 _private.maxRange = 154
 _private.runningIntoCombatRange = false -- TODO: order all variables nicely
+_private.doingCombatMovement = false
+_private.combatMoveTmr = 0
 _private.targetLosingHP = {id = 0, health = 0, timer = 0}
 _private.SwapTimer = 0
 _private.SwapRandomTimer = 0
@@ -508,8 +510,6 @@ _private.lastKitTable = {}
 _private.skillLastCast = {}
 _private.lastEvadedSkill = {targetID = 0, skillID = 0}
 _private.evadeAt = {healthPercentage = math.random(75,90), enemiesAround = 3, timer = 0}
-_private.combatMoveTmr = 0
-_private.combatMoveActive = false
 _private.lastTarget = {}
 
 -- **private functions**
@@ -730,7 +730,7 @@ function _private.CanCast(skill,target)
 		if (skill.target.maxHP > 0 and (skill.skill.healing == "0" and (target == nil or ml_global_information.Player_Health.percent < skill.target.maxHP))) then return false end
 		if ( skill.target.enemyNearCount > 0) then
 			local maxdistance = (skill.target.enemyRangeMax == 0 and "" or "maxdistance=" .. skill.target.enemyRangeMax .. ",")
-			if (skill.skill.healing == "0" and (target == nil or TableSize(CharacterList("alive,attackable," .. maxdistance .. "distanceto=" .. target.id .. "exclude=" .. target.id)) < skill.target.enemyNearCount)) then return false end
+			if (skill.skill.healing == "0" and (target == nil or TableSize(CharacterList("alive,attackable," .. maxdistance .. "distanceto=" .. target.id .. ",exclude=" .. target.id)) < skill.target.enemyNearCount)) then return false end
 		end
 		if (skill.target.moving == "Yes" and (skill.skill.healing == "0" and (target == nil or target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving ))) then return false end
 		if (skill.target.moving == "No" and (skill.skill.healing == "0" and (target == nil or target.movementstate == GW2.MOVEMENTSTATE.GroundMoving ))) then return false end
@@ -845,7 +845,7 @@ function _private.AttackSkill(target,availableSkills)
 		for _,skill in ipairs(availableSkills) do
 			if (_private.CanCast(skill,target) == true) then
 				if (target) then
-					if (skill.skill.groundTargeted and target.movementstate == 3) then
+					if (skill.skill.groundTargeted and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
 						local pos = _private.GetPredictedLocation(target,skill)
 						Player:CastSpell(skill.slot,pos.x,pos.y,pos.z)
 					else
@@ -866,7 +866,7 @@ function _private.AttackSkill(target,availableSkills)
 end
 
 function _private.Evade()
-	if (ml_global_information.Player_Endurance >= 50 and TimeSince(_private.evadeAt.timer) > 500) then
+	if (ml_global_information.Player_Endurance >= 50 and TimeSince(_private.evadeAt.timer) > 300) then
 		_private.evadeAt.timer = ml_global_information.Now
 		local targets = CharacterList("aggro")
 		if (ml_global_information.Player_Health.percent < _private.evadeAt.healthPercentage or TableSize(targets) >= _private.evadeAt.enemiesAround) then
@@ -1005,11 +1005,15 @@ function _private.DoCombatMovement()
 			local dir = dirs[ math.random( #dirs ) ]
 			if (dir ~= 4) then
 				Player:SetMovement(dir)
-				_private.combatMoveActive = true
+				_private.doingCombatMovement = true
 			else 
 				Player:StopMovement()
 			end
+			
 		end
+	elseif (gDoCombatMovement ~= "0" and target and _private.doingCombatMovement == true) then
+		_private.doingCombatMovement = false
+		Player:StopMovement()
 	end
 	return false
 end
@@ -1096,7 +1100,8 @@ function _private.ReturnSkillByID(skills,id)
 	if (ValidTable(skills) and tonumber(id)) then
 		for _,skill in ipairs(skills) do
 			if (skill.skill.id == id) then
-				return deepcopy(skill)
+				return skill
+				--return deepcopy(skill)
 			end
 		end
 		return nil
@@ -1140,17 +1145,20 @@ function profilePrototype:Attack(target)
 	if (_private.CheckTargetBuffs(target)) then
 		local pSkills = self.skills
 		local skills,skillbarSkills = _private.GetAvailableSkills(pSkills)
-		local maxRange = (target.inCombat == false and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving and target.distance > _private.maxRange and _private.maxRange-(_private.maxRange/7) or _private.maxRange-10)
+		--local maxRange = (target.inCombat == false and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving and target.distance > _private.maxRange and _private.maxRange-(_private.maxRange/5) or _private.maxRange-10)
 		if (target) then Player:SetTarget(target.id) end
-		if (target == nil or (target.distance < maxRange and target.los)) then
+		--if (target == nil or (target.distance < maxRange)) then
+		--if (target == nil or (target.distance < maxRange and target.los)) then
 		--if (target == nil or target.distance < _private.maxRange and target.los) then
-			if (_private.runningIntoCombatRange == true) then Player:StopMovement() _private.runningIntoCombatRange = false end
+		if (target == nil or target.distance < _private.maxRange) then
+			--if (_private.runningIntoCombatRange == true) then Player:StopMovement() _private.runningIntoCombatRange = false end
+			if (_private.runningIntoCombatRange == true and (target.inCombat == true or target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving)) then Player:StopMovement() _private.runningIntoCombatRange = false end
 			local lastSkillInfo = _private.ReturnSkillByID(pSkills,Player.castinfo.lastSkillID)
 			_private.DoCombatMovement()
 			if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
-				if (_private.SwapWeapon(target)) then
+				if (_private.Evade()) then
 					return true
-				elseif (_private.Evade()) then
+				elseif (_private.SwapWeapon(target)) then
 					return true
 				elseif (_private.AttackSkill(target,skills)) then
 					return true
@@ -1252,8 +1260,8 @@ function gw2_skill_manager.OnUpdate(ticks)
 	if (TimeSince(gw2_skill_manager.ticks) > 150) then
 		gw2_skill_manager.ticks = ticks
 		local target = Player:GetTarget()
-		if (_private.combatMoveActive and target == nil) then
-			_private.combatMoveActive = false
+		if (_private.doingCombatMovement and target == nil) then
+			_private.doingCombatMovement = false
 			Player:StopMovement()
 		end
 		if (_private.runningIntoCombatRange and target == nil) then
