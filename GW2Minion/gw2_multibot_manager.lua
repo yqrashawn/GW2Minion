@@ -312,11 +312,11 @@ function gw2_multibot_manager.UpdatePartyStatus()
 						index, player  = next( party,index )
 					end
 					
-					if ( not found and mc_blacklist.IsBlacklisted(pname) == false) then	
+					if ( not found and ml_blacklist.IsBlacklisted(pname) == false) then	
 						d("Inviting "..pname)
 						dPartyStatus = "Inviting "..pname
 						SendChatMsg(GW2.CHATCHANNEL.Say,"/invite "..pname)												
-						mc_blacklist.AddBlacklistEntry(GetString("partymember"), idx, pname, mc_global.now + 30000)
+						ml_blacklist.AddBlacklistEntry(GetString("partymember"), idx, pname, ml_global_information.Now + 30000)
 						return 
 					end
 				end
@@ -430,7 +430,7 @@ function HandleMultiBotMessages( event, message, channel )
 			gw2_multibot_manager.leaderTMTaskID = nil			
 			gBotMode = GetString("followmode")			
 			ml_global_information.Stop()
-			gw2minion.SwitchMode(v)
+			gw2minion.SwitchMode(gBotMode)
 		end	
 		
 		if ( gw2_multibot_manager.multiBotIsConnected ) then

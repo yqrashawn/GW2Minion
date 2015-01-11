@@ -138,14 +138,14 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck()
 			d("HandleStuck_MovedDistanceCheck: Player not moving & stuckCount > 20")
 			
 		else
-			d("HandleStuck_MovedDistanceCheck: Player not moving")
+			--d("HandleStuck_MovedDistanceCheck: Player not moving")
 		end
 		gw2_unstuck.lastResult = false
 		return
 	end
 	
 	if ( distmoved < gw2_unstuck.stuckthreshold ) then
-		d("We are stuck.."..tostring(distmoved).. " < "..tostring(gw2_unstuck.stuckthreshold))
+		
 		gw2_unstuck.stuckCount = gw2_unstuck.stuckCount + 1
 
 		-- save this stuckposition
@@ -155,7 +155,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck()
 		
 		-- 	Try Jumping
 		if ( gw2_unstuck.stuckCount > 1 ) then
-			
+			d("We are stuck.."..tostring(distmoved).. " < "..tostring(gw2_unstuck.stuckthreshold))
 			if ( gw2_unstuck.stuckCount < 12) then
 				
 				-- check for doors n stuff

@@ -324,32 +324,35 @@ function gw2minion.OnUpdateCharSelect(event, tickcount )
 		ml_global_information.Lasttick = tickcount
 		gw2minion.SwitchUIForGameState()
 		
-		if ( gGuestServer ~= nil and gGuestServer ~= "None" and TimeSince(gw2minion.Charscreen_lastrun) > 2000 ) then
+		if ( TimeSince(gw2minion.Charscreen_lastrun) > 3000 ) then 
 			gw2minion.Charscreen_lastrun = ml_global_information.Now
-			local serverlist = {}
-			local homeserverid = GetHomeServer()
-			if ( homeserverid > 1000 and homeserverid < 2000 ) then
-				serverlist = ml_global_information.ServersUS
-			elseif ( homeserverid > 2000 and homeserverid < 3000 ) then
-				serverlist = ml_global_information.ServersEU
-			end	
-			if ( TableSize(serverlist) > 0) then
-				local i,entry = next ( serverlist)
-				while i and entry do			
-					if ( gGuestServer == entry.name ) then
-						SetServer(entry.id)
-						d("Selecting Guestserver: "..(entry.name) .." ID: ".. tostring(entry.id))
-						break
+			if ( gGuestServer ~= nil and gGuestServer ~= "None" ) then
+				
+				local serverlist = {}
+				local homeserverid = GetHomeServer()
+				if ( homeserverid > 1000 and homeserverid < 2000 ) then
+					serverlist = ml_global_information.ServersUS
+				elseif ( homeserverid > 2000 and homeserverid < 3000 ) then
+					serverlist = ml_global_information.ServersEU
+				end	
+				if ( TableSize(serverlist) > 0) then
+					local i,entry = next ( serverlist)
+					while i and entry do			
+						if ( gGuestServer == entry.name ) then
+							SetServer(entry.id)
+							d("Selecting Guestserver: "..(entry.name) .." ID: ".. tostring(entry.id))
+							break
+						end
+						i,entry = next ( serverlist,i)
 					end
-					i,entry = next ( serverlist,i)
-				end
-			end
+				end			
+			end	
 			if ( gAutostartbot == "1" ) then
 				GUI_ToggleConsole(false)
 				d("Pressing PLAY")
 				PressKey("RETURN")
 			end
-		end		
+		end
 	end
 end
 gw2minion.Cinema_lastrun = 0
@@ -360,7 +363,7 @@ function gw2minion.OnUpdateCutscene(event, tickcount )
 		gw2minion.SwitchUIForGameState()
 		
 		Player:StopMovement()
-		if ( gSkipCutscene == "1" and TimeSince( gw2minion.Cinema_lastrun) > 2000 ) then
+		if ( gSkipCutscene == "1" and TimeSince( gw2minion.Cinema_lastrun) > 3000 ) then
 			gw2minion.Cinema_lastrun = ml_global_information.Now
 			GUI_ToggleConsole(false)
 			d("Skipping Cutscene...")
@@ -441,11 +444,13 @@ function gw2minion.SwitchUIForGameState(tickcount)
 				manageChildWindows()
 				wCine:Show()
 				wChar:Hide()
+				gw2minion.Cinema_lastrun = ml_global_information.Now
 			elseif( currentGameState == 4 ) then --charscreen
 				wMain:Hide()
 				manageChildWindows()
 				wCine:Hide()
 				wChar:Show()
+				gw2minion.Charscreen_lastrun = ml_global_information.Now
 			end
 		end	
 	end

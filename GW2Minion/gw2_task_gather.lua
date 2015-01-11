@@ -140,7 +140,7 @@ function gw2_task_gather.CanTaskRun_TM()
 	if ( ml_task_hub:CurrentTask().maxGather ~= nil and tonumber(ml_task_hub:CurrentTask().maxGather) ~= nil ) then
 		
 		if ( ml_global_information.ShowDebug ) then 
-			dbGatherCount = tostring(ml_task_hub:CurrentTask().currentGather).."/"..tostring(ml_task_hub:CurrentTask().maxGather).." Kills"
+			dbGatherCount = tostring(ml_task_hub:CurrentTask().currentGather).."/"..tostring(ml_task_hub:CurrentTask().maxGather).." Gathered"
 		end
 		
 		ml_log(" "..tostring(ml_task_hub:CurrentTask().currentGather).."/"..tostring(ml_task_hub:CurrentTask().maxGather).." Gathered")
@@ -420,7 +420,7 @@ function c_Gathering:evaluate()
 				return true
 			else
 				-- Our gatherable is gone, finishing this subtask / getting next gatherable in next pulse
-				if (gBotMode ~= GetString("gatherMode")) then					
+				if (gBotMode ~= GetString("gatherMode") and gBotMode ~= GetString("customTasks")) then					
 					ml_task_hub:CurrentTask().completed = true
 					ml_task_hub:CurrentTask().targetID = nil
 					ml_task_hub:CurrentTask().targetPos = nil
@@ -432,7 +432,7 @@ function c_Gathering:evaluate()
 	else		
 		
 		-- Our gatherable is gone, finishing this subtask / getting next gatherable in next pulse
-		if (gBotMode ~= GetString("gatherMode")) then					
+		if (gBotMode ~= GetString("gatherMode") and gBotMode ~= GetString("customTasks")) then					
 			ml_task_hub:CurrentTask().completed = true
 			ml_task_hub:CurrentTask().targetID = nil
 			ml_task_hub:CurrentTask().targetPos = nil

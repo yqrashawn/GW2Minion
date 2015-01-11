@@ -164,9 +164,19 @@ end
 
 function gw2_task_follow:Init()
 	
-	self:add(ml_element:create( "FollowingTargetToMap", c_FollowTargetToMap, e_FollowTargetToMap, 750 ), self.process_elements) -- create subtask navigatetomap
-	self:add(ml_element:create( "FollowingTarget", c_FollowTarget, e_FollowTarget, 500 ), self.process_elements)
-	self:add(ml_element:create( "AttackBestCharacterTarget", c_AttackBestNearbyCharacterTarget, e_AttackBestNearbyCharacterTarget, 400 ), self.process_elements)	
+	-- Handle Dead
+	self:add(ml_element:create( "Dead", c_Dead, e_Dead, 500 ), self.overwatch_elements)	
+	-- Handle Downed
+	self:add(ml_element:create( "Downed", c_Downed, e_Doened, 450 ), self.overwatch_elements)
+	-- Handle Rezz-Target is alive again or gone, deletes the subtask moveto in case it is needed
+	self:add(ml_element:create( "RevivePartyMemberOverWatch", c_RezzOverWatchCheck, e_RezzOverWatchCheck, 400 ), self.overwatch_elements)
+	
+	-- Normal elements
+	-- Revive Downed/Dead Partymember
+	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 375 ), self.process_elements)	-- creates subtask: moveto
+	self:add(ml_element:create( "FollowingTargetToMap", c_FollowTargetToMap, e_FollowTargetToMap, 350 ), self.process_elements) -- create subtask navigatetomap
+	self:add(ml_element:create( "FollowingTarget", c_FollowTarget, e_FollowTarget, 300 ), self.process_elements)
+	self:add(ml_element:create( "AttackBestCharacterTarget", c_AttackBestNearbyCharacterTarget, e_AttackBestNearbyCharacterTarget, 200 ), self.process_elements)	
 	
 	
 	self:AddTaskCheckCEs()
@@ -375,8 +385,8 @@ function e_FollowTargetToMap:execute()
 		
 		if (ValidTable(pos)) then
 			local newTask = gw2_task_navtomap.Create()
-			newTask.targetMapID = ml_task_hub:CurrentTask().mytask.mapid
-			newTask.name = "MoveTo Task "..ml_task_hub:CurrentTask().mytask.name.." TargetMap"
+			newTask.targetMapID = e_FollowTargetToMap.targetMapID
+			newTask.name = "Moving to Map: "..gw2_datamanager.GetMapName( e_FollowTargetToMap.targetMapID )
 			ml_task_hub:CurrentTask():AddSubTask(newTask)
 							
 		else
