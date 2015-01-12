@@ -182,11 +182,13 @@ function e_GatherTask:execute()
 	if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
 
 	local _,target = next(c_GatherTask.target)
-	local newTask = gw2_task_gather.Create()
-	newTask.targetPos = target.pos
-	newTask.targetID = target.id
-	ml_task_hub:CurrentTask():AddSubTask(newTask)
-	
+	if ( target ) then 
+		local newTask = gw2_task_gather.Create()
+		newTask.targetPos = target.pos
+		newTask.targetID = target.id
+		ml_task_hub:CurrentTask():AddSubTask(newTask)
+	end
+	c_GatherTask.target = nil
 end
 
 -- overwatch CnE, when our player is moving to the next gathermarker, it should terminate the moveto subtask if something we can gather is nearby

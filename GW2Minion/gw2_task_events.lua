@@ -272,6 +272,10 @@ function e_DoEventObjectives:execute()
 					-- value 4 = amount of objects/enemies remaining 
 					ml_task_hub:CurrentTask().eventRadius = 3000
 						
+				elseif ( objType == GW2.OBJECTIVETYPE.Defend ) then 
+					ml_log("OBJECTIVETYPE.Defend")
+					ml_task_hub:CurrentTask().eventRadius = 2500
+					
 				elseif ( objType == GW2.OBJECTIVETYPE.DefendGadget ) then 
 					ml_log("OBJECTIVETYPE.DefendGadget")
 					ml_task_hub:CurrentTask().eventRadius = 2500
