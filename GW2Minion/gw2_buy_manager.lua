@@ -6,7 +6,7 @@ gw2_buy_manager.availableOnMap = {
 	salvage = {[1] = true, [2] = true, [3] = true, [4] = true, [5] = true,},
 	gathering = {[1] = true, [2] = true, [3] = true, [4] = true, [5] = true, [6] = true,},
 }
- gw2_buy_manager.LevelRestrictions = {
+gw2_buy_manager.LevelRestrictions = {
 	[1] = 0,
 	[2] = 10, -- lvl10
 	[3] = 20, -- lvl20

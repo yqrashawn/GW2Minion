@@ -63,7 +63,8 @@ end
 c_salvage = inheritsFrom( ml_cause )
 e_salvage = inheritsFrom( ml_effect )
 function c_salvage:evaluate()
-	if (SalvageManager_Active == "1" and Inventory.freeSlotCount >= 2 and gw2_salvage_manager.haveSalvageTools() and gw2_salvage_manager.haveSalvagebleItems()) then
+	local slowdown = math.random(0,3)
+	if (slowdown == 0 and SalvageManager_Active == "1" and Inventory.freeSlotCount >= 2 and gw2_salvage_manager.haveSalvageTools() and gw2_salvage_manager.haveSalvagebleItems()) then
 		return true
 	end
 	return false
@@ -71,8 +72,7 @@ end
 function e_salvage:execute()
 	--ml_log("e_need_salvage")
 	local iList = gw2_salvage_manager.createItemList()
-	local slowdown = math.random(0,3)
-	if ( iList and slowdown == 0 ) then 
+	if (iList) then 
 		for _,item in pairs(iList) do
 			local tool = gw2_salvage_manager.getBestTool(item)
 			if (tool and Player:GetCurrentlyCastedSpell() == 17) then

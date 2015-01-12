@@ -159,35 +159,32 @@ c_GatherTask = inheritsFrom( ml_cause )
 e_GatherTask = inheritsFrom( ml_effect )
 c_GatherTask.throttle = 1500
 c_GatherTask.target = nil
-function c_GatherTask:evaluate()	
+function c_GatherTask:evaluate()
 	if ( gGather == "1" and ml_global_information.Player_Inventory_SlotsFree > 0 ) then
 		-- Find new gather target.
-		if (c_GatherTask.target == nil) then
-			local GList = nil
+		if (c_GatherTask.target == nil or c_GatherTask.target.gatherable == false) then
 			if (gBotMode == GetString("gatherMode")) then
-				GList = GadgetList("onmesh,gatherable,selectable,shortestpath")
+				c_GatherTask.target = GadgetList("onmesh,gatherable,selectable,shortestpath")
 			else
-				GList = GadgetList("onmesh,gatherable,selectable,shortestpath,maxdistance=3500")
+				c_GatherTask.target = GadgetList("onmesh,gatherable,selectable,shortestpath,maxdistance=3500")
 			end
-			if ( ValidTable(GList) ) then
-				_,c_GatherTask.target = next(GList)
-			end			
-		end		
-		if (ValidTable(c_GatherTask.target) ) then
+		end
+		if (ValidTable(c_GatherTask.target)) then
 			return true
-		end		
+		end
 	end
-	c_GatherTask.target = nil	
+	c_GatherTask.target = nil
 	return false
 end
-function e_GatherTask:execute()	
+function e_GatherTask:execute()
 	ml_log("e_GatherTask")
 	
 	if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
 
+	local _,target = next(c_GatherTask.target)
 	local newTask = gw2_task_gather.Create()
-	newTask.targetPos = c_GatherTask.target.pos
-	newTask.targetID = c_GatherTask.target.id
+	newTask.targetPos = target.pos
+	newTask.targetID = target.id
 	ml_task_hub:CurrentTask():AddSubTask(newTask)
 	
 end
