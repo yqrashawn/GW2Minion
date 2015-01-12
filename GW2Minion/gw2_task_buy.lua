@@ -65,14 +65,11 @@ function c_createVendorBuyTask:evaluate()
 	
 		if ((gw2_buy_manager.NeedToBuySalvageKits() or gw2_buy_manager.NeedToBuyGatheringTools()) or c_vendorbuy.buying) and ( TableSize(gw2_buy_manager.getClosestBuyMarker())>0 or gw2_common_functions.GetNextVendorMarker()) then
 			return true
-		end
-		
+		end		
 			
 		if ((gw2_buy_manager.NeedToBuySalvageKits(true) or gw2_buy_manager.NeedToBuyGatheringTools(true)) or c_quickvendorbuy.buying) and ( TableSize(gw2_buy_manager.getClosestBuyMarker(true))>0 or gw2_common_functions.GetNextVendorMarker()) then
 			return true
 		end
-	
-		return true
 	end
 	return false
 end

@@ -78,13 +78,6 @@ function gw2_task_gather:Init()
 		
 	-- Pick the next/new Marker and makes sure we are staying near the current Marker
 	self:add( ml_element:create( "NextMarker", c_MoveToGatherMarker, e_MoveToGatherMarker, 75 ), self.process_elements) -- creates subtask moveto
-
-	-- Re-Equip Gathering Tools
-	--self:add(ml_element:create( "EquippingGatherTool", c_GatherToolsCheck, e_GatherToolsCheck, 110 ), self.process_elements)
-	
-	
-	-- TODO: Add a check CnE here for aggro when we are close to our gather node to gather 
-	
 		
 	-- Move to a Randompoint if there is nothing to fight around us
 	self:add( ml_element:create( "movetorandom", c_movetorandom, e_movetorandom, 25 ), self.process_elements)
@@ -170,14 +163,19 @@ function c_GatherTask:evaluate()
 	if ( gGather == "1" and ml_global_information.Player_Inventory_SlotsFree > 0 ) then
 		-- Find new gather target.
 		if (c_GatherTask.target == nil) then
+			local GList = nil
 			if (gBotMode == GetString("gatherMode")) then
-				c_GatherTask.target = GadgetList("onmesh,gatherable,selectable,shortestpath")
+				GList = GadgetList("onmesh,gatherable,selectable,shortestpath")
 			else
-				c_GatherTask.target = GadgetList("onmesh,gatherable,selectable,shortestpath,maxdistance=3500")
+				GList = GadgetList("onmesh,gatherable,selectable,shortestpath,maxdistance=3500")
+			end
+			if ( ValidTable(GList) ) then
+				_,c_GatherTask.target = next(GList)
 			end			
 		end		
-		return ( ValidTable(c_GatherTask.target) )		
-		
+		if (ValidTable(c_GatherTask.target) ) then
+			return true
+		end		
 	end
 	c_GatherTask.target = nil	
 	return false
@@ -399,7 +397,7 @@ end
 c_Gathering = inheritsFrom( ml_cause )
 e_Gathering = inheritsFrom( ml_effect )
 function c_Gathering:evaluate()
-	
+
 	if ( ml_task_hub:CurrentTask().targetID ~= nil and ml_task_hub:CurrentTask().targetPos ~= nil ) then 
 		-- this task is a subtask and should terminate once the targetPos is reached and no targetID nearby 
 		local pPos = ml_global_information.Player_Position
@@ -419,6 +417,7 @@ function c_Gathering:evaluate()
 			if ( gadget ~= nil ) then
 				return true
 			else
+
 				-- Our gatherable is gone, finishing this subtask / getting next gatherable in next pulse
 				if (gBotMode ~= GetString("gatherMode") and gBotMode ~= GetString("customTasks")) then					
 					ml_task_hub:CurrentTask().completed = true
@@ -467,7 +466,7 @@ function e_Gathering:execute()
 	ml_log("e_Gathering")
 	
 	if ( ml_task_hub:CurrentTask().targetID ~= nil and ml_task_hub:CurrentTask().targetPos ~= nil ) then 
-		
+
 		local pPos = ml_global_information.Player_Position
 		local tPos = ml_task_hub:CurrentTask().targetPos
 		local dist = Distance3D(tPos.x, tPos.y, tPos.z, pPos.x, pPos.y, pPos.z)
@@ -490,9 +489,9 @@ function e_Gathering:execute()
 				return ml_log(true)
 				
 			else
+			
 				local gadget = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
 				if ( gadget ~= nil and gadget.gatherable) then
-					
 					-- We are in range to gather
 					if (gadget.isInInteractRange) then
 						gw2_common_functions.NecroLeaveDeathshroud()
@@ -532,7 +531,6 @@ function e_Gathering:execute()
 			end
 		end
 	end
-	
 	ml_task_hub:CurrentTask().targetID = nil 
 	ml_task_hub:CurrentTask().targetPos = nil
 	return ml_log(false)
