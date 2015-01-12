@@ -392,7 +392,7 @@ function e_DoEventObjectives:execute()
 		if ( TableSize( TList ) > 0 ) then
 			local id, E  = next( TList )
 			if ( id ~= nil and id ~= 0 and E ~= nil ) then				
-				return ml_log(Player:SetTarget(target.id))
+				return ml_log(Player:SetTarget(id))
 			end		
 		end
 	end

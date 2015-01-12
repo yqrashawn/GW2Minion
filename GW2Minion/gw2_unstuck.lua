@@ -10,6 +10,7 @@ gw2_unstuck.jumpCount = 0
 gw2_unstuck.stuckthreshold = 45
 gw2_unstuck.respawntimer = 0
 gw2_unstuck.logoutTmr = 0
+gw2_unstuck.useWaypointTmr = 0
 gw2_unstuck.slowConditions = "721,722,727,791,872" --Cripple, Chill, Immobilize, Fear, Stun. -- Needs more! (all debufs that slow you down.)
 
 
@@ -70,10 +71,15 @@ function gw2_unstuck.HandleStuck(mode)
 					Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
 					gw2_unstuck.HandleStuck_MovedDistanceCheck()
 					gw2_unstuck.HandleStuck_ControlManualMovement()				
-				
+					gw2_unstuck.useWaypointTmr = ml_global_information.Now
+					
 				else
 					-- we are not on or nearby the mesh
-					gw2_unstuck.HandleStuck_UseWaypoint()
+					-- Another timer to prevent hickups when the p above fails
+					if ( TimeSince(gw2_unstuck.useWaypointTmr) > 10000 ) then
+						gw2_unstuck.useWaypointTmr = ml_global_information.Now
+						gw2_unstuck.HandleStuck_UseWaypoint()						
+					end
 					
 				end	
 				gw2_unstuck.lastResult = true 
@@ -109,6 +115,7 @@ function gw2_unstuck.HandleStuck(mode)
 	
 		-- Update time when the player was on the mesh the last time 
 		gw2_unstuck.lastOnMeshTime = ml_global_information.Now
+		gw2_unstuck.useWaypointTmr = ml_global_information.Now
 	end
 	
 	
@@ -328,6 +335,7 @@ function gw2_unstuck.Reset()
 	gw2_unstuck.jumpCount = 0
 	gw2_unstuck.stuckthreshold = 45
 	gw2_unstuck.respawntimer = 0
+	gw2_unstuck.useWaypointTmr = ml_global_information.Now
 	if ( ml_global_information.Player_IsMoving and ml_global_information.Player_CanMove) then
 		if ( ml_global_information.Player_MovementDirections.backward ) then Player:UnSetMovement(1) end 
 		if ( ml_global_information.Player_MovementDirections.left ) then Player:UnSetMovement(2) end

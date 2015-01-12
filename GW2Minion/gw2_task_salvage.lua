@@ -69,7 +69,7 @@ function c_salvage:evaluate()
 	return false
 end
 function e_salvage:execute()
-	ml_log("e_need_salvage")
+	--ml_log("e_need_salvage")
 	local iList = gw2_salvage_manager.createItemList()
 	local slowdown = math.random(0,3)
 	if ( iList and slowdown == 0 ) then 
