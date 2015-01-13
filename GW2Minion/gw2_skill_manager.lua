@@ -848,7 +848,7 @@ function _private.AttackSkill(target,availableSkills)
 			if (_private.CanCast(skill,target) == true) then
 				--d("Casting "..skill.skill.name.. " CanCast: "..tostring( Player:CanCast() ).." CurrentCastDuration: "..tostring(Player.castinfo.duration))
 				if (target) then
-					if (skill.skill.groundTargeted and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
+					if (skill.skill.groundTargeted == "1" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
 						local pos = _private.GetPredictedLocation(target,skill)
 						Player:CastSpell(skill.slot,pos.x,pos.y,pos.z)
 					else
