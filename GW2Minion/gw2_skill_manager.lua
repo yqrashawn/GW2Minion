@@ -120,6 +120,10 @@ function gw2_skill_manager.GetMaxAttackRange()
 	end
 end
 
+function gw2_skill_manager.UpdateSkillInfo()
+	gw2_skill_manager.profile:GetAvailableSkills()
+end
+
 function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 	for k,v in pairs(NewVals) do
 		-- Changes in skills
@@ -511,6 +515,9 @@ _private.skillLastCast = {}
 _private.lastEvadedSkill = {targetID = 0, skillID = 0}
 _private.evadeAt = {healthPercentage = math.random(75,90), enemiesAround = 3, timer = 0}
 _private.lastTarget = {}
+_private.currentSkills = {}
+_private.currentHealSkills = {}
+_private.skillbarSkills = {}
 
 -- **private functions**
 function _private.GetProfileList(newProfile)
@@ -664,40 +671,6 @@ function _private.TargetLosingHealth(target)
 	end
 end
 
-function _private.GetAvailableSkills(skillList,heal)
-	local skillbarSkills = {}
-	local returnSkillList = {}
-	for i = 1, 16, 1 do
-		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
-		if (skill) then
-			skillbarSkills[skill.skillID] = skill
-		end
-	end
-	local newPriority = 1
-	local maxRange = 154
-	if ( ValidTable(skillList) and ValidTable(skillbarSkills) ) then
-		for _,skill in ipairs(skillList) do
-			for _,aSkill in pairs(skillbarSkills) do
-				if (aSkill.skillID == skill.skill.id and aSkill.cooldown == 0 and (heal ~= true or skill.skill.healing == "1")) then
-					returnSkillList[newPriority] = skill
-					returnSkillList[newPriority].slot = aSkill.slot
-					returnSkillList[newPriority].maxCooldown = aSkill.cooldownmax
-					newPriority = newPriority + 1
-					if (skill.skill.setRange == "1") then
-						maxRange = (skill.skill.maxRange > 0 and skill.skill.maxRange > maxRange and skill.skill.maxRange or maxRange)
-						maxRange = (skill.skill.maxRange == 0 and skill.skill.radius > 0 and skill.skill.radius > maxRange and skill.skill.radius or maxRange)
-					end
-					break
-				end
-			end
-		end
-		if (heal ~= true) then
-			_private.maxRange = maxRange
-		end
-	end
-	return (ValidTable(returnSkillList) and returnSkillList or {}),skillbarSkills
-end
-
 function _private.CanCast(skill,target)
 	if (skill) then
 		-- skill attributes
@@ -755,9 +728,8 @@ function _private.SwapWeapon(target)
 		elseif (gw2_skill_manager.profile.switchSettings.switchRandom == "1" and TimeSince(_private.SwapRandomTimer) > 0) then
 			swap = true
 		elseif (tonumber(gw2_skill_manager.profile.switchSettings.switchOnCooldown) > 0) then
-			local _,skillbarSkills = _private.GetAvailableSkills()
 			local skillsOnCooldown = 0
-			for _,skill in pairs(skillbarSkills) do
+			for _,skill in pairs(_private.currentSkills) do
 				if (skill.slot > GW2.SKILLBARSLOT.Slot_1  and skill.slot <= GW2.SKILLBARSLOT.Slot_5 and skill.cooldown ~= 0) then
 					skillsOnCooldown = skillsOnCooldown + 1
 				end
@@ -791,10 +763,9 @@ function _private.SwapEngineerKit()
 		[5904] = "ToolKit",
 		[5933] = "ElixirGun",
 	}
-	local availableSkills = _private.GetAvailableSkills()
 	local availableKits = { [1] = { slot=0, skillID=0} }-- Leave Kit Placeholder
 	local prefKitEquiped = false
-	for _,skill in ipairs(availableSkills) do
+	for _,skill in ipairs(_private.currentSkills) do
 		if (skill and EngineerKits[skill.skill.id] and _private.lastKitTable[skill.slot] == nil or TimeSince(_private.lastKitTable[skill.slot].lastused) > 1500) then
 			local kitcount = TableSize(availableKits)
 			availableKits[kitcount+1] = {}
@@ -1131,10 +1102,8 @@ end
 
 function profilePrototype:Heal()
 	if (Player.castinfo.duration == 0) then
-		local pSkills = self.skills
-		local skills = _private.GetAvailableSkills(pSkills,true)
-		for priority=1,#skills do
-			local skill = skills[priority]
+		for priority=1,#_private.currentHealSkills do
+			local skill = _private.currentHealSkills[priority]
 			if (_private.CanCast(skill) == true) then			
 				Player:CastSpell(skill.slot)
 				return true
@@ -1146,8 +1115,6 @@ end
 
 function profilePrototype:Attack(target)
 	if (_private.CheckTargetBuffs(target)) then
-		local pSkills = self.skills
-		local skills,skillbarSkills = _private.GetAvailableSkills(pSkills)
 		--local maxRange = (target.inCombat == false and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving and target.distance > _private.maxRange and _private.maxRange-(_private.maxRange/5) or _private.maxRange-10)
 		if (target) then Player:SetTarget(target.id) end
 		--if (target == nil or (target.distance < maxRange)) then
@@ -1156,14 +1123,14 @@ function profilePrototype:Attack(target)
 		if (target == nil or target.distance < _private.maxRange) then
 			--if (_private.runningIntoCombatRange == true) then Player:StopMovement() _private.runningIntoCombatRange = false end
 			if (_private.runningIntoCombatRange == true and (target.inCombat == true or target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving)) then Player:StopMovement() _private.runningIntoCombatRange = false end
-			local lastSkillInfo = _private.ReturnSkillByID(pSkills,Player.castinfo.lastSkillID)
+			local lastSkillInfo = _private.ReturnSkillByID(self.skills,Player.castinfo.lastSkillID)
 			_private.DoCombatMovement()
 			if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
 				if (_private.Evade()) then
 					return true
 				elseif (_private.SwapWeapon(target)) then
 					return true
-				elseif (_private.AttackSkill(target,skills)) then
+				elseif (_private.AttackSkill(target,_private.currentSkills)) then
 					return true
 				end
 			end
@@ -1183,6 +1150,43 @@ end
 function profilePrototype:GetAttackRange()
 	return _private.maxRange
 end
+
+function profilePrototype:GetAvailableSkills(heal)
+	for i = 1, 16, 1 do
+		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
+		if (skill) then
+			_private.skillbarSkills[skill.skillID] = skill
+		end
+	end
+	local newPriority = 1
+	local newHealPriority = 1
+	local maxRange = 154
+	if ( ValidTable(self.skills) and ValidTable(_private.skillbarSkills) ) then
+		for _,skill in ipairs(self.skills) do
+			for _,aSkill in pairs(_private.skillbarSkills) do
+				if (aSkill.skillID == skill.skill.id and aSkill.cooldown == 0) then
+					_private.currentSkills[newPriority] = skill
+					_private.currentSkills[newPriority].slot = aSkill.slot
+					_private.currentSkills[newPriority].maxCooldown = aSkill.cooldownmax
+					newPriority = newPriority + 1
+					if (skill.skill.healing == "1") then
+						_private.currentHealSkills[newHealPriority] = skill
+						_private.currentHealSkills[newHealPriority].slot = aSkill.slot
+						_private.currentHealSkills[newHealPriority].maxCooldown = aSkill.cooldownmax
+						newHealPriority = newHealPriority + 1
+					end
+					if (skill.skill.setRange == "1") then
+						maxRange = (skill.skill.maxRange > 0 and skill.skill.maxRange > maxRange and skill.skill.maxRange or maxRange)
+						maxRange = (skill.skill.maxRange == 0 and skill.skill.radius > 0 and skill.skill.radius > maxRange and skill.skill.radius or maxRange)
+					end
+					break
+				end
+			end
+		end
+		_private.maxRange = maxRange
+	end
+end
+
 
 -- main skill stuff
 function profilePrototype:DetectSkills()
