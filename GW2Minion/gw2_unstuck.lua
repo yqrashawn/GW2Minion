@@ -66,7 +66,7 @@ function gw2_unstuck.HandleStuck(mode)
 			if ( mode == nil or mode == "combat") then 
 				-- if the bot is started not on the mesh try to walk back onto the mesh			
 				local p = NavigationManager:GetClosestPointOnMesh({ x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z })
-				d(tostring(gw2_unstuck.lastOnMeshTime).." "..tostring(TimeSince(gw2_unstuck.lastOnMeshTime)).." "..tostring(p.distance))			
+				--d(tostring(gw2_unstuck.lastOnMeshTime).." "..tostring(TimeSince(gw2_unstuck.lastOnMeshTime)).." "..tostring(p.distance))			
 				if ( (gw2_unstuck.lastOnMeshTime == 0 or TimeSince(gw2_unstuck.lastOnMeshTime) < 20000) and ValidTable(p) and p.distance > 0 and p.distance < 1000) then
 					ml_log("Move blindly to nearby mesh")
 					Player:SetFacingExact(p.x,p.y,p.z)

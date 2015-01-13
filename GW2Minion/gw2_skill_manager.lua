@@ -849,12 +849,12 @@ function _private.AttackSkill(target,availableSkills)
 				if (target) then
 					if (skill.skill.groundTargeted and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
 						local pos = _private.GetPredictedLocation(target,skill)
-						Player:CastSpellNoChecks(skill.slot,pos.x,pos.y,pos.z)
+						Player:CastSpell(skill.slot,pos.x,pos.y,pos.z)
 					else
-						Player:CastSpellNoChecks(skill.slot,target.id)
+						Player:CastSpell(skill.slot,target.id)
 					end
 				else
-					Player:CastSpellNoChecks(skill.slot)
+					Player:CastSpell(skill.slot)
 				end
 				_private.skillLastCast[skill.skill.id] = ml_global_information.Now
 				if (_private.TargetLosingHealth(target) == false) then
