@@ -655,7 +655,6 @@ function _private.TargetLosingHealth(target)
 			if (_private.targetLosingHP.health ~= 0 and _private.targetLosingHP.health < target.health.current) then
 				ml_blacklist.AddBlacklistEntry(GetString("monsters"), target.id, target.name, ml_global_information.Now + 90000)
 				Player:ClearTarget()
-				d("!!!!!!!!!!!!!!!!!!!!!!!!!! did we need to blacklist??")
 				return false
 			else
 				_private.lastHP = target.health.current
@@ -692,7 +691,9 @@ function _private.GetAvailableSkills(skillList,heal)
 				end
 			end
 		end
-		_private.maxRange = maxRange
+		if (heal ~= true) then
+			_private.maxRange = maxRange
+		end
 	end
 	return (ValidTable(returnSkillList) and returnSkillList or {}),skillbarSkills
 end
