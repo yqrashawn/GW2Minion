@@ -909,7 +909,7 @@ end
 
 function _private.DoCombatMovement()
 	local target = Player:GetTarget()
-	if (gDoCombatMovement ~= "0" and target and ml_global_information.Player_Health.percent < 99 and not gw2_unstuck.HandleStuck()) then
+	if (gDoCombatMovement ~= "0" and target and ml_global_information.Player_Health.percent < 99 and not gw2_unstuck.HandleStuck("combat")) then
 		if (gw2_common_functions.HasBuffs(Player,"791,727")) then Player:StopMovement() return false end
 		local tDistance = target.distance
 		local moveDir = ml_global_information.Player_MovementDirections
@@ -918,7 +918,7 @@ function _private.DoCombatMovement()
 		Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z) -- TODO: really needed?
 
 		--CONTROL CURRENT COMBAT MOVEMENT
-		if (Player:IsMoving()) then
+		if (Player:IsMoving() ) then
 
 			if (Player.onmeshexact == false and (moveDir.backward or moveDir.left or moveDir.right) ) then
 				Player:UnSetMovement(1)
@@ -1134,8 +1134,7 @@ function profilePrototype:Heal()
 		local skills = _private.GetAvailableSkills(pSkills,true)
 		for priority=1,#skills do
 			local skill = skills[priority]
-			if (_private.CanCast(skill) == true) then
-			d("CASTING HEAL :"..tostring(skill.slot))
+			if (_private.CanCast(skill) == true) then			
 				Player:CastSpell(skill.slot)
 				return true
 			end

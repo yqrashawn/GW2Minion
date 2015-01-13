@@ -510,6 +510,11 @@ function e_Gathering:execute()
 						ml_log(": Gathering starting.")
 						if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
 						
+						local t = Player:GetTarget()
+						if ( gadget.isselectable and (not t or t.id ~= gadget.id )) then
+							Player:SetTarget(gadget.id)
+						end
+						
 						if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
 							Player:Interact(gadget.id)
 							ml_global_information.Wait(500)

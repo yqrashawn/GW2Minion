@@ -63,7 +63,7 @@ function gw2_unstuck.HandleStuck(mode)
 		if ( TimeSince(gw2_unstuck.lastOnMeshTime) > 2000) then
 			ml_log("Player not on Navmesh!")
 			
-			if ( mode == nil ) then 
+			if ( mode == nil or mode == "combat") then 
 				-- if the bot is started not on the mesh try to walk back onto the mesh			
 				local p = NavigationManager:GetClosestPointOnMesh({ x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z })
 				d(tostring(gw2_unstuck.lastOnMeshTime).." "..tostring(TimeSince(gw2_unstuck.lastOnMeshTime)).." "..tostring(p.distance))			
@@ -71,7 +71,7 @@ function gw2_unstuck.HandleStuck(mode)
 					ml_log("Move blindly to nearby mesh")
 					Player:SetFacingExact(p.x,p.y,p.z)
 					Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
-					gw2_unstuck.HandleStuck_MovedDistanceCheck()
+					gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 					gw2_unstuck.HandleStuck_ControlManualMovement()				
 					gw2_unstuck.useWaypointTmr = ml_global_information.Now
 					
@@ -111,7 +111,7 @@ function gw2_unstuck.HandleStuck(mode)
 		end	
 		
 		
-		gw2_unstuck.HandleStuck_MovedDistanceCheck()
+		gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 		gw2_unstuck.HandleStuck_ControlManualMovement()
 	
 	
@@ -128,7 +128,7 @@ end
 
 -- Checks the moved distance and performs different actions in order to handle stuck situations
 gw2_unstuck.stuckPositionCount = 0
-function gw2_unstuck.HandleStuck_MovedDistanceCheck()
+function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 	
 	local distmoved = 0
 	-- calculate the moved distance depending on where we were stuck before or not
@@ -153,7 +153,10 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck()
 		return
 	end
 	
-	if ( distmoved < gw2_unstuck.stuckthreshold ) then
+	local StuckThreshOld = gw2_unstuck.stuckthreshold
+	if ( mode == "combat" ) then StuckThreshOld = gw2_unstuck.stuckthreshold - 25 end
+	
+	if ( distmoved < StuckThreshOld ) then
 		
 		gw2_unstuck.stuckCount = gw2_unstuck.stuckCount + 1
 
@@ -162,8 +165,11 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck()
 			gw2_unstuck.stuckPosition = ml_global_information.Player_Position
 		end
 		
+		local stuckCountTreshold = 1
+		if ( mode == "combat" ) then stuckCountTreshold = 3 end
+		
 		-- 	Try Jumping
-		if ( gw2_unstuck.stuckCount > 1 ) then
+		if ( gw2_unstuck.stuckCount > stuckCountTreshold ) then
 			d("We are stuck.."..tostring(distmoved).. " < "..tostring(gw2_unstuck.stuckthreshold))
 			if ( gw2_unstuck.stuckCount < 12) then
 				

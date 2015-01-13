@@ -41,26 +41,25 @@ function e_Dead:execute()
 		end
 	end
 	
-		if ( ( not found and TimeSince(c_Dead.deadTmr) > 5000) or TimeSince(c_Dead.deadTmr) > 30000 ) then -- wait a bit longer for other ppl to rezz us if they are around
-			
-			if ( c_Dead.deadTmr == 0 or c_Dead.lastHealth == nil or c_Dead.lastHealth < ml_global_information.Player_Health.current ) then
-				c_Dead.lastHealth = ml_global_information.Player_Health.current
-				c_Dead.deadTmr = ml_global_information.Now
-
+	if ( ( not found and TimeSince(c_Dead.deadTmr) > 5000) or TimeSince(c_Dead.deadTmr) > 30000 ) then -- wait a bit longer for other ppl to rezz us if they are around
+		
+		if ( c_Dead.deadTmr == 0 or c_Dead.lastHealth == nil or c_Dead.lastHealth < ml_global_information.Player_Health.current ) then
+			c_Dead.lastHealth = ml_global_information.Player_Health.current
+			c_Dead.deadTmr = ml_global_information.Now
 				if (c_Dead.lastHealth ~= 0) then
-					c_Dead.deadTmr = ml_global_information.Now + 10000
-				end
-				ml_log( "Dead: We are beeing revived...waiting a bit longer " )
-				
-			elseif ( c_Dead.deadTmr ~= 0 and c_Dead.lastHealth ~= nil ) then
-				c_Dead.lastHealth = nil
-				c_Dead.deadTmr = 0
-				d( "Dead: RESPAWN AT NEAREST WAYPOINT " )
-				d( Player:RespawnAtClosestWaypoint() )
-				ml_global_information.Stop()
-				ml_global_information.Reset() -- clear queues here ?
+				c_Dead.deadTmr = ml_global_information.Now + 10000
 			end
+			ml_log( "Dead: We are beeing revived...waiting a bit longer " )
+			
+		elseif ( c_Dead.deadTmr ~= 0 and c_Dead.lastHealth ~= nil ) then
+			c_Dead.lastHealth = nil
+			c_Dead.deadTmr = 0
+			d( "Dead: RESPAWN AT NEAREST WAYPOINT " )
+			d( Player:RespawnAtClosestWaypoint() )
+			ml_global_information.Stop()
+			ml_global_information.Reset() -- clear queues here ?
 		end
+	end
 end
 
 
