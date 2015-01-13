@@ -768,71 +768,12 @@ function _private.SwapWeapon(target)
 		if (swap) then
 			_private.SwapTimer = ml_global_information.Now
 			_private.SwapRandomTimer = ml_global_information.Now + math.random(5000,15000)
-			if (_private.SwapElementalistAttunement()) then return true end
-			if (_private.SwapEngineerKit()) then return true end
-			Player:SwapWeaponSet()
-			return true
-		end
-	end
-	return false
-end
-
-function _private.SwapEngineerKit()
-	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
-		local EngineerKits = {
-			[5812] = "BombKit",
-			[5927] = "FlameThrower",
-			[6020] = "GrenadeKit",
-			[5805] = "GrenadeKit",
-			[5904] = "ToolKit",
-			[5933] = "ElixirGun",
-		}
-		local availableSkills = _private.GetAvailableSkills()
-		local availableKits = { [1] = { slot=0, skillID=0} }-- Leave Kit Placeholder
-		local prefKitEquiped = false
-		for _,skill in ipairs(availableSkills) do
-			if (skill and EngineerKits[skill.skill.id] and _private.lastKitTable[skill.slot] == nil or TimeSince(_private.lastKitTable[skill.slot].lastused) > 1500) then
-				local kitcount = TableSize(availableKits)
-				availableKits[kitcount+1] = {}
-				availableKits[kitcount+1].slot = skill.slot
-				availableKits[kitcount+1].skillID = skill.skill.id
-			end
-		end
-		local key = math.random(1,TableSize(availableKits))
-		if (key ~= 1) then
-			Player:CastSpell(availableKits[key].slot)
-			if (gSMPrioKit ~= "None" and EngineerKits[availableKits[key].skillID] ~= tostring(gSMPrioKit))then
-				_private.lastKitTable[availableKits[key].slot] = { lastused = ml_global_information.Now + 15000 }
+			if (ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist) then
+				return _private.SwapElementalistAttunement()			
+			elseif (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
+				return _private.SwapEngineerKit()
 			else
-				_private.lastKitTable[availableKits[key].slot] = { lastused = ml_global_information.Now }
-			end
-			return true
-		end
-	end
-	return false
-end
-
-function _private.SwapElementalistAttunement()
-	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist) then
-		local switch = nil
-		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
-		if ( skill ~= nil ) then
-			local sID = skill.skillID
-			local attunement = {
-				["Fire"] = {[1] = GW2.SKILLBARSLOT.Slot_13 , [5491] = GW2.SKILLBARSLOT.Slot_13 , [15718] = GW2.SKILLBARSLOT.Slot_13 , [5508] = GW2.SKILLBARSLOT.Slot_13 ,},
-				["Water"] = {[1] = GW2.SKILLBARSLOT.Slot_14 , [5549] = GW2.SKILLBARSLOT.Slot_14 , [15716] = GW2.SKILLBARSLOT.Slot_14 , [5693] = GW2.SKILLBARSLOT.Slot_14 ,},
-				["Air"] = {[1] = GW2.SKILLBARSLOT.Slot_15 , [5518] = GW2.SKILLBARSLOT.Slot_15 , [5489] = GW2.SKILLBARSLOT.Slot_15 , [5526] = GW2.SKILLBARSLOT.Slot_15 ,},
-				["Earth"] = {[1] = GW2.SKILLBARSLOT.Slot_16 , [5519] = GW2.SKILLBARSLOT.Slot_16 , [15717] = GW2.SKILLBARSLOT.Slot_16 , [5500] = GW2.SKILLBARSLOT.Slot_16 ,},
-			}
-			local currentAttunement = (attunement["Fire"][sID] or attunement["Water"][sID] or attunement["Air"][sID] or attunement["Earth"][sID])
-			if (currentAttunement) then
-				switch = ((attunement[gSMPrioAtt1][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt1][1]) and attunement[gSMPrioAtt1][1]) or
-						(attunement[gSMPrioAtt2][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt2][1]) and attunement[gSMPrioAtt2][1]) or
-						(attunement[gSMPrioAtt3][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt3]) and attunement[gSMPrioAtt3][1]) or
-						(attunement[gSMPrioAtt4][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt4][1]) and attunement[gSMPrioAtt4][1]))
-			end
-			if (switch) then
-				Player:CastSpell(switch)
+				Player:SwapWeaponSet()
 				return true
 			end
 		end
@@ -840,19 +781,80 @@ function _private.SwapElementalistAttunement()
 	return false
 end
 
+function _private.SwapEngineerKit()
+	local EngineerKits = {
+		[5812] = "BombKit",
+		[5927] = "FlameThrower",
+		[6020] = "GrenadeKit",
+		[5805] = "GrenadeKit",
+		[5904] = "ToolKit",
+		[5933] = "ElixirGun",
+	}
+	local availableSkills = _private.GetAvailableSkills()
+	local availableKits = { [1] = { slot=0, skillID=0} }-- Leave Kit Placeholder
+	local prefKitEquiped = false
+	for _,skill in ipairs(availableSkills) do
+		if (skill and EngineerKits[skill.skill.id] and _private.lastKitTable[skill.slot] == nil or TimeSince(_private.lastKitTable[skill.slot].lastused) > 1500) then
+			local kitcount = TableSize(availableKits)
+			availableKits[kitcount+1] = {}
+			availableKits[kitcount+1].slot = skill.slot
+			availableKits[kitcount+1].skillID = skill.skill.id
+		end
+	end
+	local key = math.random(1,TableSize(availableKits))
+	if (key ~= 1) then
+		Player:CastSpell(availableKits[key].slot)
+		if (gSMPrioKit ~= "None" and EngineerKits[availableKits[key].skillID] ~= tostring(gSMPrioKit))then
+			_private.lastKitTable[availableKits[key].slot] = { lastused = ml_global_information.Now + 15000 }
+		else
+			_private.lastKitTable[availableKits[key].slot] = { lastused = ml_global_information.Now }
+		end
+		return true
+	end	
+	return false
+end
+
+function _private.SwapElementalistAttunement()
+	
+	local switch = nil
+	local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
+	if ( skill ~= nil ) then
+		local sID = skill.skillID
+		local attunement = {
+			["Fire"] = {[1] = GW2.SKILLBARSLOT.Slot_13 , [5491] = GW2.SKILLBARSLOT.Slot_13 , [15718] = GW2.SKILLBARSLOT.Slot_13 , [5508] = GW2.SKILLBARSLOT.Slot_13 ,},
+			["Water"] = {[1] = GW2.SKILLBARSLOT.Slot_14 , [5549] = GW2.SKILLBARSLOT.Slot_14 , [15716] = GW2.SKILLBARSLOT.Slot_14 , [5693] = GW2.SKILLBARSLOT.Slot_14 ,},
+			["Air"] = {[1] = GW2.SKILLBARSLOT.Slot_15 , [5518] = GW2.SKILLBARSLOT.Slot_15 , [5489] = GW2.SKILLBARSLOT.Slot_15 , [5526] = GW2.SKILLBARSLOT.Slot_15 ,},
+			["Earth"] = {[1] = GW2.SKILLBARSLOT.Slot_16 , [5519] = GW2.SKILLBARSLOT.Slot_16 , [15717] = GW2.SKILLBARSLOT.Slot_16 , [5500] = GW2.SKILLBARSLOT.Slot_16 ,},
+		}
+		local currentAttunement = (attunement["Fire"][sID] or attunement["Water"][sID] or attunement["Air"][sID] or attunement["Earth"][sID])
+		if (currentAttunement) then
+			switch = ((attunement[gSMPrioAtt1][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt1][1]) and attunement[gSMPrioAtt1][1]) or
+					(attunement[gSMPrioAtt2][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt2][1]) and attunement[gSMPrioAtt2][1]) or
+					(attunement[gSMPrioAtt3][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt3]) and attunement[gSMPrioAtt3][1]) or
+					(attunement[gSMPrioAtt4][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt4][1]) and attunement[gSMPrioAtt4][1]))
+		end
+		if (switch) then
+			Player:CastSpell(switch)
+			return true
+		end
+	end	
+	return false
+end
+
 function _private.AttackSkill(target,availableSkills)
 	if (ValidTable(availableSkills)) then
 		for _,skill in ipairs(availableSkills) do
 			if (_private.CanCast(skill,target) == true) then
+				--d("Casting "..skill.skill.name.. " CanCast: "..tostring( Player:CanCast() ).." CurrentCastDuration: "..tostring(Player.castinfo.duration))
 				if (target) then
 					if (skill.skill.groundTargeted and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
 						local pos = _private.GetPredictedLocation(target,skill)
-						Player:CastSpell(skill.slot,pos.x,pos.y,pos.z)
+						Player:CastSpellNoChecks(skill.slot,pos.x,pos.y,pos.z)
 					else
-						Player:CastSpell(skill.slot,target.id)
+						Player:CastSpellNoChecks(skill.slot,target.id)
 					end
 				else
-					Player:CastSpell(skill.slot)
+					Player:CastSpellNoChecks(skill.slot)
 				end
 				_private.skillLastCast[skill.skill.id] = ml_global_information.Now
 				if (_private.TargetLosingHealth(target) == false) then
@@ -1133,6 +1135,7 @@ function profilePrototype:Heal()
 		for priority=1,#skills do
 			local skill = skills[priority]
 			if (_private.CanCast(skill) == true) then
+			d("CASTING HEAL :"..tostring(skill.slot))
 				Player:CastSpell(skill.slot)
 				return true
 			end
