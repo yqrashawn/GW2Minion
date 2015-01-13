@@ -43,7 +43,6 @@ function ml_global_information.OnUpdate()
 			ml_global_information.CurrentMapName = ""
 		end
 		
-		gw2_skill_manager.UpdateSkillInfo()
 		ml_global_information.AttackRange = gw2_skill_manager.GetMaxAttackRange()
 		
 		-- Update Debug fields

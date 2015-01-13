@@ -21,7 +21,6 @@ gw2_skill_manager.openCombos = false
 gw2_skill_manager.detecting = false
 gw2_skill_manager.attacking = false
 gw2_skill_manager.lastAttack = 0
-gw2_skill_manager.ticks = 0
 local _private = {}
 local profilePrototype = {}
 
@@ -121,7 +120,9 @@ function gw2_skill_manager.GetMaxAttackRange()
 end
 
 function gw2_skill_manager.UpdateSkillInfo()
-	gw2_skill_manager.profile:GetAvailableSkills()
+	if ( gw2_skill_manager.profile ) then
+		gw2_skill_manager.profile:GetAvailableSkills()
+	end
 end
 
 function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
@@ -819,8 +820,8 @@ function _private.AttackSkill(target,availableSkills)
 			if (_private.CanCast(skill,target) == true) then
 				--d("Casting "..skill.skill.name.. " CanCast: "..tostring( Player:CanCast() ).." CurrentCastDuration: "..tostring(Player.castinfo.duration))
 				if (target) then
-					if (skill.skill.groundTargeted and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
-						local pos = _private.GetPredictedLocation(target,skill)
+					local pos = _private.GetPredictedLocation(target,skill)
+					if (skill.skill.groundTargeted == "1" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
 						Player:CastSpell(skill.slot,pos.x,pos.y,pos.z)
 					else
 						Player:CastSpell(skill.slot,target.id)
@@ -1261,20 +1262,18 @@ end
 
 
 function gw2_skill_manager.OnUpdate(ticks)
+	gw2_skill_manager.UpdateSkillInfo()
 	if (gw2_skill_manager.detecting == true) then
 		gw2_skill_manager.profile:DetectSkills()
 	end
-	if (TimeSince(gw2_skill_manager.ticks) > 150) then
-		gw2_skill_manager.ticks = ticks
-		local target = Player:GetTarget()
-		if (_private.doingCombatMovement and target == nil) then
-			_private.doingCombatMovement = false
-			Player:StopMovement()
-		end
-		if (_private.runningIntoCombatRange and target == nil) then
-			Player:StopMovement()
-			_private.runningIntoCombatRange = false
-		end
+	local target = Player:GetTarget()
+	if (_private.doingCombatMovement and target == nil) then
+		_private.doingCombatMovement = false
+		Player:StopMovement()
+	end
+	if (_private.runningIntoCombatRange and target == nil) then
+		Player:StopMovement()
+		_private.runningIntoCombatRange = false
 	end
 	if (gw2_skill_manager.UpdateMainWindowGroups()) then
 		return true
