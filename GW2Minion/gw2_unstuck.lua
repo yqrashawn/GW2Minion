@@ -44,6 +44,8 @@ function gw2_unstuck.HandleStuck(mode)
 				
 	-- Dont handle stuck when we cannot move because of some debuff
 	if ( gw2_common_functions.HasBuffs(Player, gw2_unstuck.slowConditions) ) then
+		gw2_unstuck.lastOnMeshTime = ml_global_information.Now
+		gw2_unstuck.useWaypointTmr = ml_global_information.Now
 		return gw2_unstuck.lastResult
 	end
 	
@@ -64,8 +66,8 @@ function gw2_unstuck.HandleStuck(mode)
 			if ( mode == nil ) then 
 				-- if the bot is started not on the mesh try to walk back onto the mesh			
 				local p = NavigationManager:GetClosestPointOnMesh({ x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z })
-				--d(tostring(gw2_unstuck.lastOnMeshTime).." "..tostring(TimeSince(gw2_unstuck.lastOnMeshTime)).." "..tostring(p.distance))			
-				if ( (gw2_unstuck.lastOnMeshTime == 0 or TimeSince(gw2_unstuck.lastOnMeshTime) < 10000) and ValidTable(p) and p.distance > 0) then
+				d(tostring(gw2_unstuck.lastOnMeshTime).." "..tostring(TimeSince(gw2_unstuck.lastOnMeshTime)).." "..tostring(p.distance))			
+				if ( (gw2_unstuck.lastOnMeshTime == 0 or TimeSince(gw2_unstuck.lastOnMeshTime) < 20000) and ValidTable(p) and p.distance > 0 and p.distance < 1000) then
 					ml_log("Move blindly to nearby mesh")
 					Player:SetFacingExact(p.x,p.y,p.z)
 					Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
@@ -76,7 +78,7 @@ function gw2_unstuck.HandleStuck(mode)
 				else
 					-- we are not on or nearby the mesh
 					-- Another timer to prevent hickups when the p above fails
-					if ( TimeSince(gw2_unstuck.useWaypointTmr) > 10000 ) then
+					if ( TimeSince(gw2_unstuck.useWaypointTmr) > 15000 ) then
 						gw2_unstuck.useWaypointTmr = ml_global_information.Now
 						gw2_unstuck.HandleStuck_UseWaypoint()						
 					end

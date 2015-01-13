@@ -909,7 +909,7 @@ end
 
 function _private.DoCombatMovement()
 	local target = Player:GetTarget()
-	if (gDoCombatMovement ~= "0" and target and ml_global_information.Player_Health.percent < 99) then
+	if (gDoCombatMovement ~= "0" and target and ml_global_information.Player_Health.percent < 99 and not gw2_unstuck.HandleStuck()) then
 		if (gw2_common_functions.HasBuffs(Player,"791,727")) then Player:StopMovement() return false end
 		local tDistance = target.distance
 		local moveDir = ml_global_information.Player_MovementDirections
