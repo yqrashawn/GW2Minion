@@ -136,7 +136,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "SklMgr_SetRange" or
 				k == "SklMgr_MinRange" or
 				k == "SklMgr_MaxRange" or
-				k == "SklMgr_InstantCast" or
+				k == "SklMgr_SlowCast" or
 				k == "SklMgr_LastSkillID" or
 				k == "SklMgr_Delay")
 			then
@@ -146,7 +146,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 							SklMgr_SetRange = {global = "setRange", gType = "tostring",},
 							SklMgr_MinRange = {global = "minRange", gType = "tonumber",},
 							SklMgr_MaxRange = {global = "maxRange", gType = "tonumber",},
-							SklMgr_InstantCast = {global = "instantCast", gType = "tostring",},
+							SklMgr_SlowCast = {global = "slowCast", gType = "tostring",},
 							SklMgr_LastSkillID = {global = "lastSkillID", gType = "tonumber",},
 							SklMgr_Delay = {global = "delay", gType = "tonumber",},
 			}
@@ -357,7 +357,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 		editWindow:NewCheckBox(GetString("setRange"),"SklMgr_SetRange",GetString("Skill"))
 		editWindow:NewNumeric(GetString("minRange"),"SklMgr_MinRange",GetString("Skill"),0,6000)
 		editWindow:NewNumeric(GetString("maxRange"),"SklMgr_MaxRange",GetString("Skill"),0,6000)
-		editWindow:NewCheckBox(GetString("instantCast"),"SklMgr_InstantCast",GetString("Skill"))
+		editWindow:NewCheckBox(GetString("slowCast"),"SklMgr_SlowCast",GetString("Skill"))
 		editWindow:NewField(GetString("prevSkillID"),"SklMgr_LastSkillID",GetString("Skill"))
 		editWindow:NewNumeric(GetString("smDelay"),"SklMgr_Delay",GetString("Skill"))
 		-- Player Section
@@ -425,7 +425,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 			SklMgr_SetRange = lSkill.skill.setRange
 			SklMgr_MinRange = lSkill.skill.minRange
 			SklMgr_MaxRange = lSkill.skill.maxRange
-			SklMgr_InstantCast = lSkill.skill.instantCast
+			SklMgr_SlowCast = lSkill.skill.slowCast
 			SklMgr_LastSkillID = lSkill.skill.lastSkillID
 			SklMgr_Delay = lSkill.skill.delay
 			editWindow:UnFold(GetString("Skill"))
@@ -574,7 +574,7 @@ function _private.CreateSkill(skillList,skillSlot)
 							minRange		= skillInfo.minRange or 0,
 							maxRange		= skillInfo.maxRange or 0,
 							radius			= skillInfo.radius or 0,
-							instantCast		= "0",
+							slowCast		= "0",
 							lastSkillID		= "",
 							delay			= 0,
 				},
@@ -821,7 +821,7 @@ function _private.AttackSkill(target)
 			if (_private.CanCast(skill,target) == true) then
 				--d(TimeSince(_private.lastSkill.cTime))
 				--local lastSkillInfo = _private.ReturnSkillByID(gw2_skill_manager.profile.skills,Player.castinfo.lastSkillID)
-				--if (TimeSince(_private.lastSkill.cTime) > 350 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
+				--if (TimeSince(_private.lastSkill.cTime) > 350 or (lastSkillInfo and lastSkillInfo.skill.slowCast == "1")) then
 					d("Casting "..skill.skill.name.. " CanCast: "..tostring( Player:CanCast() ).." CurrentCastDuration: "..tostring(Player.castinfo.duration))
 					if (target) then
 						local pos = _private.GetPredictedLocation(target,skill)
@@ -1128,9 +1128,9 @@ function profilePrototype:Attack(target)
 			if (_private.runningIntoCombatRange == true and (target.inCombat == true or target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving)) then Player:StopMovement() _private.runningIntoCombatRange = false end
 			local lastSkillInfo = _private.ReturnSkillByID(self.skills,_private.lastSkill.id)
 			_private.DoCombatMovement()
-			--if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
+			--if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.slowCast == "1")) then
 			--if (Player.castinfo.duration == 0) then
-			if (Player:CanCast() and Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
+			if (Player:CanCast() and Player:IsCasting() == false or (lastSkillInfo and lastSkillInfo.skill.slowCast == "0")) then
 				if (_private.Evade()) then
 					return true
 				elseif (_private.SwapWeapon(target)) then
