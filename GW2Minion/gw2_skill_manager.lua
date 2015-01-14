@@ -1130,7 +1130,7 @@ function profilePrototype:Attack(target)
 			_private.DoCombatMovement()
 			--if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
 			--if (Player.castinfo.duration == 0) then
-			if (Player:CanCast() or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
+			if (Player:CanCast() and Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
 				if (_private.Evade()) then
 					return true
 				elseif (_private.SwapWeapon(target)) then
