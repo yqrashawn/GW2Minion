@@ -1130,7 +1130,7 @@ function profilePrototype:Attack(target)
 			_private.DoCombatMovement()
 			--if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
 			--if (Player.castinfo.duration == 0) then
-			if (Player:CanCast() and Player:IsCasting() == false or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
+			if (Player:CanCast() or (lastSkillInfo and lastSkillInfo.skill.instantCast == "1")) then
 				if (_private.Evade()) then
 					return true
 				elseif (_private.SwapWeapon(target)) then
@@ -1172,7 +1172,7 @@ function profilePrototype:GetAvailableSkills()
 	if ( ValidTable(self.skills) and ValidTable(_private.skillbarSkills) ) then
 		for _,skill in ipairs(self.skills) do
 			for _,aSkill in pairs(_private.skillbarSkills) do
-				if (aSkill.skillID == skill.skill.id and skill.skill.id ~= _private.lastSkill.id and aSkill.cooldown == 0) then
+				if (aSkill.skillID == skill.skill.id and (skill.skill.id ~= _private.lastSkill.id or aSkill.slot == GW2.SKILLBARSLOT.Slot_1) and aSkill.cooldown == 0) then
 					_private.currentSkills[newPriority] = skill
 					_private.currentSkills[newPriority].slot = aSkill.slot
 					_private.currentSkills[newPriority].maxCooldown = aSkill.cooldownmax
