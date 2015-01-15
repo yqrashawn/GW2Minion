@@ -123,7 +123,7 @@ function script.e_goto:execute()
 		ml_log("("..tostring(math.floor(dist))..")")
 		if ( dist > 1500 ) then
 			--d(tostring(ml_task_hub:CurrentTask().Data["GotoX"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoY"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoZ"]))
-			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],125,false,false,true))		
+			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],35,false,false,true))		
 			if (tonumber(navResult) < 0) then					
 				ml_error("e_gotoPosition result: "..tonumber(navResult))					
 			end			
@@ -147,7 +147,7 @@ function script.e_goto:execute()
 						ml_error("Vista not in Range yet, trying to get closer..")
 						local mPos = entry.pos
 						if ( mPos ) then
-							local navResult = tostring(Player:MoveTo(mPos.x,mPos.y,mPos.z,50,false,false,false))
+							local navResult = tostring(Player:MoveTo(mPos.x,mPos.y,mPos.z,35,false,false,false))
 							if (tonumber(navResult) < 0) then					
 								ml_error("e_gotoVistaPosition result: "..tonumber(navResult))					
 							end

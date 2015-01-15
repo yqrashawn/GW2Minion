@@ -190,7 +190,7 @@ function script.e_gotoObject:execute()
 				-- Move into range of Object
 					local tPos = object.pos
 					if ( tPos ) then
-						local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+						local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,true,true))		
 						if (tonumber(navResult) < 0) then
 							ml_error("move to object result: "..tonumber(navResult))					
 						end
@@ -214,7 +214,7 @@ function script.e_gotoObject:execute()
 					-- Move into range of Target
 						local aPos = target.pos
 						if ( aPos ) then
-							local navResult = tostring(Player:MoveTo(aPos.x,aPos.y,aPos.z,50,false,true,true))		
+							local navResult = tostring(Player:MoveTo(aPos.x,aPos.y,aPos.z,35,false,true,true))		
 							if (tonumber(navResult) < 0) then
 								ml_error("move to Target location: "..tonumber(navResult))					
 							end

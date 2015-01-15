@@ -152,7 +152,7 @@ function script.e_MoveInEventRange:execute()
 				if ( c_MoveInEventRange.reached == false) then
 					-- 1st time get into event range
 					if ( Distance2D ( pPos.x, pPos.y, ePos.x, ePos.y) > 350 ) then
-						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
+						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,35,false,false,true))		
 						if (tonumber(navResult) < 0) then					
 							ml_error("DoEvent.MoveInEventRange result: "..tonumber(navResult))					
 						end
@@ -164,7 +164,7 @@ function script.e_MoveInEventRange:execute()
 				else
 					-- Check if we moved too far away from the event we are in
 					if ( Distance2D ( pPos.x, pPos.y, ePos.x, ePos.y) > c_MoveInEventRange.range ) then
-						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
+						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,35,false,false,true))		
 						if (tonumber(navResult) < 0) then					
 							ml_error("DoEvent.MoveBackIntoEventRange result: "..tonumber(navResult))					
 						end
@@ -274,7 +274,7 @@ function script.e_DoEventObjectives:execute()
 									if (not target.isInInteractRange) then
 										local tPos = target.pos
 										if ( tPos ) then
-											Player:MoveTo(tPos.x,tPos.y,tPos.z,130,false,true,true)
+											Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,true,true)
 											return true
 										end
 									else

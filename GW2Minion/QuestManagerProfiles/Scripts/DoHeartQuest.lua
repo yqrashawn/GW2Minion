@@ -153,7 +153,7 @@ function script.e_goto:execute()
 			--d(tostring(ml_task_hub:CurrentTask().Data["GotoX"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoY"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoZ"]))
 			if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
 			MoveOnlyStraightForward()
-			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],100,false,false,true))		
+			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],35,false,false,true))		
 			if (tonumber(navResult) < 0) then					
 				d("e_gotoPosition result: "..tonumber(navResult))					
 			end

@@ -138,7 +138,7 @@ function script.e_Interact:execute()
 				-- Move into range of npc
 					local tPos = npc.pos
 					if ( tPos ) then
-						local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+						local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,true,true))		
 						if (tonumber(navResult) < 0) then
 							ml_error("move to npc result: "..tonumber(navResult))					
 						end

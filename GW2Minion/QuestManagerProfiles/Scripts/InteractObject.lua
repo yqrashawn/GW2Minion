@@ -133,7 +133,7 @@ function script.e_MoveInObjectRange:execute()
 				if ( script.c_MoveInObjectRange.reached == false) then
 					-- 1st time get into object range
 					if ( Distance2D ( pPos.x, pPos.y, oPos.x, oPos.y) > 50 ) then
-						local navResult = tostring(Player:MoveTo(oPos.x,oPos.y,oPos.z,125,false,false,true))		
+						local navResult = tostring(Player:MoveTo(oPos.x,oPos.y,oPos.z,35,false,false,true))		
 						if (tonumber(navResult) < 0) then					
 							ml_error("InteractObject.c_MoveInObjectRange result: "..tonumber(navResult))					
 						end
@@ -145,7 +145,7 @@ function script.e_MoveInObjectRange:execute()
 				else
 					-- Check if we moved too far away from the object we are in
 					if ( Distance2D ( pPos.x, pPos.y, oPos.x, oPos.y) > script.c_MoveInObjectRange.range ) then
-						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
+						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,35,false,false,true))		
 						if (tonumber(navResult) < 0) then					
 							ml_error("InteractObject.MoveBackIntoObjectRange result: "..tonumber(navResult))					
 						end

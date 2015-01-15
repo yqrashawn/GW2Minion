@@ -126,7 +126,7 @@ function script.e_gotoComm:execute()
 		local id, commander = next(commList)
 		if (id and commander and commander.distance > 250) then
 			-- Player:MoveTo(x,y,z,stoppingdistance,navsystem(normal/follow),navpath(straight/random),smoothturns)
-			Player:MoveTo(commander.pos.x, commander.pos.y, commander.pos.z, 200, false, false, true)
+			Player:MoveTo(commander.pos.x, commander.pos.y, commander.pos.z, 35, false, false, true)
 		elseif (commander.distance < 250) then
 			script.commanderReached = true
 		end

@@ -140,7 +140,7 @@ function script.e_goto:execute()
 		if ( dist > 2500 ) then
 			--d(tostring(ml_task_hub:CurrentTask().Data["GotoX"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoY"]).." "..tostring(ml_task_hub:CurrentTask().Data["GotoZ"]))
 			MoveOnlyStraightForward()
-			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],100,false,false,true))		
+			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().Data["GotoX"],ml_task_hub:CurrentTask().Data["GotoY"],ml_task_hub:CurrentTask().Data["GotoZ"],35,false,false,true))		
 			if (tonumber(navResult) < 0) then					
 				d("e_gotoPosition result: "..tonumber(navResult))					
 			end
@@ -203,7 +203,7 @@ function script.e_goto:execute()
 							if ( mPos ) then
 								if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() return end
 								MoveOnlyStraightForward()
-								local navResult = tostring(Player:MoveTo(mPos.x,mPos.y,mPos.z,50,false,false,false))
+								local navResult = tostring(Player:MoveTo(mPos.x,mPos.y,mPos.z,35,false,false,false))
 								if (tonumber(navResult) < 0) then					
 									d("e_gotoSkillChallengePosition result: "..tonumber(navResult))					
 								end
