@@ -267,7 +267,7 @@ function e_FinishHim:execute()
 				if ( tPos ) then
 					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 					MoveOnlyStraightForward()
-					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,true,true))		
 					if (tonumber(navResult) < 0) then
 						d("e_FinishHim.MoveIntoCombatRange result: "..tonumber(navResult))					
 					end
@@ -455,7 +455,7 @@ function e_MoveIntoCombatRange:execute()
 				--d("MoveIntoCombatRange..Running")
 				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 				MoveOnlyStraightForward()
-				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,100+t.radius,false,false,true))		
+				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,false,true))		
 				if (tonumber(navResult) < 0) then					
 					d("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
 				end
@@ -653,7 +653,7 @@ function e_revive:execute()
 			local tPos = entity.pos
 			if ( tPos ) then
 				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
-				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,true,true))		
 				if (tonumber(navResult) < 0) then
 					d("e_revive.MoveInToCombatRange result: "..tonumber(navResult))
 					if ( e_revive.lastID ~= entity.id ) then
@@ -723,7 +723,7 @@ function e_reviveDownedPlayersInCombat:execute()
 				if ( tPos ) then
 					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 					MoveOnlyStraightForward()
-					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,true,true))		
 					if (tonumber(navResult) < 0) then
 						d("e_revive.MoveintoCombatRange result: "..tonumber(navResult))					
 					end
@@ -806,7 +806,7 @@ function DoCombatMovement()
 						local mPos = NavigationManager:GetClosestPointOnMesh(pPos)
 						if ( mPos ) then
 							--d("Moving back onto the NavMesh..")
-							Player:MoveTo(mPos.x,mPos.y,mPos.z,50,false,false,false)
+							Player:MoveTo(mPos.x,mPos.y,mPos.z,35,false,false,false)
 						end
 					end
 					return
@@ -1001,7 +1001,7 @@ function e_SearchAndKillNearby:execute()
 				--d("MoveIntoCombatRange..Running")
 				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 				MoveOnlyStraightForward()
-				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,100+t.radius,false,false,true))		
+				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,false,true))		
 				if (tonumber(navResult) < 0) then					
 					d("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
 				end

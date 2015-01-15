@@ -178,7 +178,7 @@ function e_MoveInEventRange:execute()
 					if ( c_MoveInEventRange.lastdist > 350 ) then
 						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 						MoveOnlyStraightForward()
-						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
+						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,35,false,false,true))		
 						if (tonumber(navResult) < 0) then					
 							d("mc_ai_events.MoveInEventRange result: "..tonumber(navResult))					
 						else
@@ -202,7 +202,7 @@ function e_MoveInEventRange:execute()
 					if ( c_MoveInEventRange.lastdist > c_MoveInEventRange.range ) then
 						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 						MoveOnlyStraightForward()
-						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,125,false,false,true))		
+						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,35,false,false,true))		
 						if (tonumber(navResult) < 0) then					
 							d("mc_ai_events.MoveBackIntoEventRange result: "..tonumber(navResult))					
 						end
@@ -322,7 +322,7 @@ function e_DoEventObjectives:execute()
 									if (not target.isInInteractRange) then
 										local tPos = target.pos
 										if ( tPos ) then
-											Player:MoveTo(tPos.x,tPos.y,tPos.z,130,false,true,true)
+											Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,true,true)
 											return true
 										end
 									else

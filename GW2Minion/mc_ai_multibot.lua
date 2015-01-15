@@ -201,7 +201,7 @@ function e_memberdown:execute()
 			if ( tPos ) then
 				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 				MoveOnlyStraightForward()
-				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,true,true))		
 				if (tonumber(navResult) < 0) then
 					d("e_memberdown.MoveIntoRange result: "..tonumber(navResult))					
 				end
@@ -352,10 +352,10 @@ function e_MoveToLeader:execute()
 						if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 						MoveOnlyStraightForward()
 						if (nPos) then						
-							navResult = tostring(Player:MoveTo(nPos.x,nPos.y,nPos.z,150,false,true,true))		
+							navResult = tostring(Player:MoveTo(nPos.x,nPos.y,nPos.z,35,false,true,true))		
 						end
 						if ( tonumber(navResult) < 0 ) then
-							navResult = tostring(Player:MoveTo(cPos.x,cPos.y,cPos.z,150,false,true,true))
+							navResult = tostring(Player:MoveTo(cPos.x,cPos.y,cPos.z,35,false,true,true))
 						end
 						
 						if (tonumber(navResult) < 0 and tonumber(navResult) ~= -3) then					

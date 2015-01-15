@@ -452,7 +452,7 @@ function e_MoveIntoCombatRange_fm:execute()
 					--d("MoveIntoCombatRange..Running")
 					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 					MoveOnlyStraightForward()
-					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,100+t.radius,false,false,true))		
+					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,false,true))		
 					if (tonumber(navResult) < 0) then					
 						d("mc_ai_combat.MoveIntoCombatRange result: "..tonumber(navResult))					
 					end

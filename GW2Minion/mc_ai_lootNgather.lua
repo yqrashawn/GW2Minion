@@ -190,7 +190,7 @@ function e_Loot:execute()
 				if ( tPos ) then
 					if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 					MoveOnlyStraightForward()
-					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+					local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,true,true))		
 					if (tonumber(navResult) < 0) then
 						d("e_Loot.MoveIntoCombatRange result: "..tonumber(navResult))					
 					end
@@ -252,7 +252,7 @@ function e_LootChests:execute()
 					local tPos = LT.pos
 					if ( tPos ) then
 						MoveOnlyStraightForward()
-						local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))		
+						local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,true,true))		
 						if (tonumber(navResult) < 0) then
 							d("e_lootchest.MoveIntoRange result: "..tonumber(navResult))					
 						end
@@ -317,7 +317,7 @@ function e_Gathering:execute()
 			if ( tPos ) then
 				if ( c_DestroyGadget:evaluate() ) then e_DestroyGadget:execute() end
 				MoveOnlyStraightForward()
-				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))
+				local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,true,true))
 				if (tonumber(navResult) < 0) then
 					d("mc_ai_gathering.MoveIntoRange result: "..tonumber(navResult))
 				end
@@ -362,7 +362,7 @@ function e_Gathering:execute()
 							local tPos = gadget.pos
 							if ( tPos ) then
 								ml_task_hub:CurrentTask().tPos = tPos
-								local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,50,false,true,true))
+								local navResult = tostring(Player:MoveTo(tPos.x,tPos.y,tPos.z,35,false,true,true))
 								if (tonumber(navResult) < 0) then
 									d("mc_ai_gathering.MoveToGatherableInteractRange result: "..tonumber(navResult))
 								end
