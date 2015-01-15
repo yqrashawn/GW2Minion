@@ -290,7 +290,7 @@ function gw2_skill_manager.UpdateMainWindowGroups()
 	if (gw2_skill_manager.groupsDeleted == false) then
 		mainWindow:DeleteGroup(GetString("ProfessionSettings"))
 		mainWindow:DeleteGroup(GetString("comboList"))
-		mainWindow:DeleteGroup(GetString("switchSettings"))
+		mainWindow:DeleteGroup(GetString("smSwitchSettings"))
 		gw2_skill_manager.groupsDeleted = true
 		return true
 	elseif (gw2_skill_manager.groupsCreated == false) then
@@ -299,11 +299,11 @@ function gw2_skill_manager.UpdateMainWindowGroups()
 		gSMCurrentProfileName_listitems = _private.GetProfileList(name)
 		gSMCurrentProfileName = name
 		
-		mainWindow:NewCheckBox(GetString("SwapRange"),"gSMSwitchOnRange",GetString("switchSettings"))
+		mainWindow:NewCheckBox(GetString("SwapRange"),"gSMSwitchOnRange",GetString("smSwitchSettings"))
 		gSMSwitchOnRange = gw2_skill_manager.profile.switchSettings.switchOnRange
-		mainWindow:NewCheckBox(GetString("SwapR"),"gSMSwitchRandom",GetString("switchSettings"))
+		mainWindow:NewCheckBox(GetString("SwapR"),"gSMSwitchRandom",GetString("smSwitchSettings"))
 		gSMSwitchRandom = gw2_skill_manager.profile.switchSettings.switchRandom
-		mainWindow:NewNumeric(GetString("SwapCD"),"gSMSwitchOnCooldown",GetString("switchSettings"),0,25)
+		mainWindow:NewNumeric(GetString("SwapCD"),"gSMSwitchOnCooldown",GetString("smSwitchSettings"),0,25)
 		gSMSwitchOnCooldown = gw2_skill_manager.profile.switchSettings.switchOnCooldown
 		
 		local profession = ml_global_information.Player_Profession
@@ -329,15 +329,15 @@ end
 
 function gw2_skill_manager.UpdateMainWindowSkills()
 	if (gw2_skill_manager.skillsDeleted == false) then
-		mainWindow:DeleteGroup(GetString("skillList"))
+		mainWindow:DeleteGroup(GetString("smSkillList"))
 		gw2_skill_manager.skillsDeleted = true
 		return true
 	elseif (gw2_skill_manager.skillsCreated == false) then
 		for _,skill in ipairs(gw2_skill_manager.profile.skills) do
-			mainWindow:NewButton(skill.priority .. ": " .. skill.skill.name,"SkillEditWindowButton"..skill.priority,GetString("skillList"))
+			mainWindow:NewButton(skill.priority .. ": " .. skill.skill.name,"SkillEditWindowButton"..skill.priority,GetString("smSkillList"))
 			RegisterEventHandler("SkillEditWindowButton"..skill.priority,gw2_skill_manager.SkillEditWindow)
 		end
-		if (gw2_skill_manager.openSkills) then mainWindow:UnFold(GetString("skillList")) end
+		if (gw2_skill_manager.openSkills) then mainWindow:UnFold(GetString("smSkillList")) end
 		gw2_skill_manager.skillsCreated = true
 		return true
 	end
@@ -349,31 +349,31 @@ function gw2_skill_manager.SkillEditWindow(skill)
 		-- Init Edit Window
 		editWindow = WindowManager:NewWindow(gw2_skill_manager.skillEditWindow.name,gw2_skill_manager.skillEditWindow.x,gw2_skill_manager.skillEditWindow.y,gw2_skill_manager.skillEditWindow.w,gw2_skill_manager.skillEditWindow.h,true)
 		-- Skill Section
-		editWindow:NewNumeric(GetString("smSkillID"),"SklMgr_ID",GetString("Skill"))
-		editWindow:NewField(GetString("name"),"SklMgr_Name",GetString("Skill"))
-		editWindow:NewCheckBox(GetString("isGroundTargeted"),"SklMgr_GrndTarget",GetString("Skill"))
-		editWindow:NewCheckBox(GetString("smsktypeheal"),"SklMgr_Healing",GetString("Skill"))
-		editWindow:NewCheckBox(GetString("los"),"SklMgr_LOS",GetString("Skill"))
-		editWindow:NewCheckBox(GetString("setRange"),"SklMgr_SetRange",GetString("Skill"))
-		editWindow:NewNumeric(GetString("minRange"),"SklMgr_MinRange",GetString("Skill"),0,6000)
-		editWindow:NewNumeric(GetString("maxRange"),"SklMgr_MaxRange",GetString("Skill"),0,6000)
-		editWindow:NewCheckBox(GetString("slowCast"),"SklMgr_SlowCast",GetString("Skill"))
-		editWindow:NewField(GetString("prevSkillID"),"SklMgr_LastSkillID",GetString("Skill"))
-		editWindow:NewNumeric(GetString("smDelay"),"SklMgr_Delay",GetString("Skill"))
+		editWindow:NewNumeric(GetString("smSkillID"),"SklMgr_ID",GetString("smSkill"))
+		editWindow:NewField(GetString("name"),"SklMgr_Name",GetString("smSkill"))
+		editWindow:NewCheckBox(GetString("isGroundTargeted"),"SklMgr_GrndTarget",GetString("smSkill"))
+		editWindow:NewCheckBox(GetString("smsktypeheal"),"SklMgr_Healing",GetString("smSkill"))
+		editWindow:NewCheckBox(GetString("los"),"SklMgr_LOS",GetString("smSkill"))
+		editWindow:NewCheckBox(GetString("smSetRange"),"SklMgr_SetRange",GetString("smSkill"))
+		editWindow:NewNumeric(GetString("minRange"),"SklMgr_MinRange",GetString("smSkill"),0,6000)
+		editWindow:NewNumeric(GetString("maxRange"),"SklMgr_MaxRange",GetString("smSkill"),0,6000)
+		editWindow:NewCheckBox(GetString("smSlowCast"),"SklMgr_SlowCast",GetString("smSkill"))
+		editWindow:NewField(GetString("prevSkillID"),"SklMgr_LastSkillID",GetString("smSkill"))
+		editWindow:NewNumeric(GetString("smDelay"),"SklMgr_Delay",GetString("smSkill"))
 		-- Player Section
-		editWindow:NewComboBox(GetString("useOutOfCombat"),"SklMgr_CombatState",GetString("Player"),"Either,InCombat,OutCombat")
-		editWindow:NewNumeric(GetString("playerHPLT"),"SklMgr_PMinHP",GetString("Player"),0,100)
-		editWindow:NewNumeric(GetString("playerHPGT"),"SklMgr_PMaxHP",GetString("Player"),0,99)
-		editWindow:NewNumeric(GetString("playerPowerLT"),"SklMgr_MinPower",GetString("Player"),0,100)
-		editWindow:NewNumeric(GetString("playerPowerGT"),"SklMgr_MaxPower",GetString("Player"),0,99)
-		editWindow:NewNumeric(GetString("playerEnduranceLT"),"SklMgr_MinEndurance",GetString("Player"),0,100)
-		editWindow:NewNumeric(GetString("playerEnduranceGT"),"SklMgr_MaxEndurance",GetString("Player"),0,99)
-		editWindow:NewNumeric(GetString("alliesNearCount"),"SklMgr_AllyCount",GetString("Player"))
-		editWindow:NewNumeric(GetString("alliesNearRange"),"SklMgr_AllyRange",GetString("Player"))
-		editWindow:NewField(GetString("playerHas"),"SklMgr_PHasBuffs",GetString("Player"))
-		editWindow:NewField(GetString("playerHasNot"),"SklMgr_PHasNotBuffs",GetString("Player"))
-		editWindow:NewNumeric(GetString("orPlayerCond"),"SklMgr_PCondCount",GetString("Player"))
-		editWindow:NewNumeric(GetString("smBoonCount"),"SklMgr_PBoonCount",GetString("Player"))
+		editWindow:NewComboBox(GetString("useOutOfCombat"),"SklMgr_CombatState",GetString("smPlayer"),"Either,InCombat,OutCombat")
+		editWindow:NewNumeric(GetString("playerHPLT"),"SklMgr_PMinHP",GetString("smPlayer"),0,100)
+		editWindow:NewNumeric(GetString("playerHPGT"),"SklMgr_PMaxHP",GetString("smPlayer"),0,99)
+		editWindow:NewNumeric(GetString("playerPowerLT"),"SklMgr_MinPower",GetString("smPlayer"),0,100)
+		editWindow:NewNumeric(GetString("playerPowerGT"),"SklMgr_MaxPower",GetString("smPlayer"),0,99)
+		editWindow:NewNumeric(GetString("playerEnduranceLT"),"SklMgr_MinEndurance",GetString("smPlayer"),0,100)
+		editWindow:NewNumeric(GetString("playerEnduranceGT"),"SklMgr_MaxEndurance",GetString("smPlayer"),0,99)
+		editWindow:NewNumeric(GetString("alliesNearCount"),"SklMgr_AllyCount",GetString("smPlayer"))
+		editWindow:NewNumeric(GetString("alliesNearRange"),"SklMgr_AllyRange",GetString("smPlayer"))
+		editWindow:NewField(GetString("playerHas"),"SklMgr_PHasBuffs",GetString("smPlayer"))
+		editWindow:NewField(GetString("playerHasNot"),"SklMgr_PHasNotBuffs",GetString("smPlayer"))
+		editWindow:NewNumeric(GetString("smCondCount"),"SklMgr_PCondCount",GetString("smPlayer"))
+		editWindow:NewNumeric(GetString("smBoonCount"),"SklMgr_PBoonCount",GetString("smPlayer"))
 		-- Target Section
 		editWindow:NewComboBox(GetString("targetType"),"SklMgr_Type",GetString("targetType"),"Either,Character,Gadget")
 		editWindow:NewNumeric(GetString("playerHPLT"),"SklMgr_TMinHP",GetString("targetType"),0,100)
@@ -428,7 +428,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 			SklMgr_SlowCast = lSkill.skill.slowCast
 			SklMgr_LastSkillID = lSkill.skill.lastSkillID
 			SklMgr_Delay = lSkill.skill.delay
-			editWindow:UnFold(GetString("Skill"))
+			editWindow:UnFold(GetString("smSkill"))
 			-- Player
 			SklMgr_CombatState = lSkill.player.combatState
 			SklMgr_PMinHP = lSkill.player.minHP
