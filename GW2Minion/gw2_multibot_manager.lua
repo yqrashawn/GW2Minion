@@ -251,18 +251,18 @@ function gw2_multibot_manager.LeaderBroadCast(tickcount)
 			end
 			
 			-- BotMode
-			if ( gw2_multibot_manager.leaderBotMode ~= nil ) then
-				MultiBotSend( "6;"..gw2_multibot_manager.leaderBotMode,MBSGroup )
+			if ( gBotMode ~= nil ) then
+				MultiBotSend( "6;"..gBotMode,MBSGroup )
 			end
 			
 			-- TMProfile
-			if ( gw2_multibot_manager.leaderTMProfile ~= nil ) then
-				MultiBotSend( "7;"..gw2_multibot_manager.leaderTMProfile,MBSGroup )
+			if ( gBotMode and gBotMode == GetString("customTasks") and gTMCurrentProfileName and gTMCurrentProfileName ~= "") then
+				MultiBotSend( "7;"..gTMCurrentProfileName,MBSGroup )
 			end
 			
 			-- TM TaskID
-			if ( gw2_multibot_manager.leaderTMTaskID ~= nil ) then
-				MultiBotSend( "8;"..gw2_multibot_manager.leaderTMTaskID,MBSGroup )
+			if ( gBotMode and gBotMode == GetString("customTasks") and gTMLastTaskID and gTMLastTaskID ~= "") then
+				MultiBotSend( "8;"..gTMLastTaskID,MBSGroup )
 			end
 			
 			-- current position
@@ -484,6 +484,7 @@ function HandleMultiBotMessages( event, message, channel )
 							table.insert(leaderPos,pos)
 						end
 						if ( TableSize(leaderPos) == 3 ) then
+							gw2_multibot_manager.leaderPosition = nil
 							gw2_multibot_manager.leaderPosition = { x=tonumber(leaderPos[1]), y=tonumber(leaderPos[2]), z=tonumber(leaderPos[3]) }
 						end
 					end

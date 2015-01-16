@@ -165,6 +165,10 @@ function c_GatherTask:evaluate()
 		if (c_GatherTask.target == nil or c_GatherTask.target.gatherable == false) then
 			if (gBotMode == GetString("gatherMode")) then
 				c_GatherTask.target = GadgetList("onmesh,gatherable,selectable,shortestpath")
+			
+			elseif (gBotMode == GetString("followmode")) then
+				c_GatherTask.target = GadgetList("onmesh,gatherable,selectable,shortestpath,maxdistance=1000")
+			
 			else
 				c_GatherTask.target = GadgetList("onmesh,gatherable,selectable,shortestpath,maxdistance=3500")
 			end
