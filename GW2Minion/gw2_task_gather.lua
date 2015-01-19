@@ -60,6 +60,7 @@ function gw2_task_gather:Init()
 	self:add(ml_element:create( "Looting", c_Looting, e_Looting, 260 ), self.process_elements)	
 	
 	-- Buy & Repair & Vendoring
+	self:add(ml_element:create( "VendorRepair", c_createVendorRepairTask, e_createVendorRepairTask, 260 ), self.process_elements)
 	self:add(ml_element:create( "VendorSell", c_createVendorSellTask, e_createVendorSellTask, 250 ), self.process_elements)
 	self:add(ml_element:create( "VendorBuy", c_createVendorBuyTask, e_createVendorBuyTask, 240 ), self.process_elements)
 	

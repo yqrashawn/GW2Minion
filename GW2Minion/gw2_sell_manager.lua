@@ -410,9 +410,6 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 				newTask.name = "MoveTo Vendor(SELL)"
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				return true
-				--local navResult = tostring(Player:MoveTo(pos.x,pos.y,pos.z,50,false,true,true))
-				--ml_log("MoveToSellVendor..")
-				--return true
 			end
 		end
 	end

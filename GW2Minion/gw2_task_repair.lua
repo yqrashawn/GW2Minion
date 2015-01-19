@@ -1,9 +1,9 @@
--- Selling
-gw2_task_sell = inheritsFrom(ml_task)
-gw2_task_sell.name = GetString("vendorEnabled") -- == Sell Items
+-- Repair
+gw2_task_repair = inheritsFrom(ml_task)
+gw2_task_repair.name = GetString("vendorEnabled") -- == Sell Items
 
-function gw2_task_sell.Create()
-	local newinst = inheritsFrom(gw2_task_sell)
+function gw2_task_repair.Create()
+	local newinst = inheritsFrom(gw2_task_repair)
 	
 	--ml_task members
 	newinst.valid = true
@@ -15,8 +15,8 @@ function gw2_task_sell.Create()
 	return newinst
 end
 
-function gw2_task_sell:Init()
-	-- ml_log("gw2_task_sell:Init")
+function gw2_task_repair:Init()
+	-- ml_log("gw2_task_repair:Init")
 	-- ProcessOverWatch() elements
 	
 	-- Handle Dead
@@ -31,100 +31,91 @@ function gw2_task_sell:Init()
 	-- Normal elements
 	-- Revive Downed/Dead Partymember
 	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 375 ), self.process_elements)	-- creates subtask: moveto
-	self:add(ml_element:create("VendorSell",c_vendorsell,e_vendorsell,100),self.process_elements)
-	self:add(ml_element:create("QuickVendorSell",c_quickvendorsell,e_quickvendorsell,110),self.process_elements)
-	self:add(ml_element:create("MoveToVendorMarker",c_MoveToVendorMarker,e_MoveToVendorMarker,50),self.process_elements)
+	self:add(ml_element:create("VendorSell",c_vendorrepair,e_vendorrepair,100),self.process_elements)
+	self:add(ml_element:create("QuickVendorSell",c_quickvendorrepair,e_quickvendorrepair,110),self.process_elements)
+	--self:add(ml_element:create("MoveToVendorMarker",c_MoveToVendorMarker,e_MoveToVendorMarker,50),self.process_elements)
 	
 	
 	self:AddTaskCheckCEs()
 end
-function gw2_task_sell:task_complete_eval()
-	if (c_vendorsell:evaluate() == false and c_quickvendorsell:evaluate() == false) then
+function gw2_task_repair:task_complete_eval()
+	if (c_vendorrepair:evaluate() == false and c_quickvendorrepair:evaluate() == false) then
 		return true
 	end
 	return false
 end
 
-function gw2_task_sell:UIInit()
-	d("gw2_task_sell:UIInit")
+function gw2_task_repair:UIInit()
+	d("gw2_task_repair:UIInit")
 	return true
 end
-function gw2_task_sell:UIDestroy()
-	d("gw2_task_sell:UIDestroy")
+function gw2_task_repair:UIDestroy()
+	d("gw2_task_repair:UIDestroy")
 end
-
-function gw2_task_sell:RegisterDebug()
-    d("gw2_task_sell:RegisterDebug")
+function gw2_task_repair:RegisterDebug()
+    d("gw2_task_repair:RegisterDebug")
 end
 
 
 -- Check for creating a VendorTask
-c_createVendorSellTask = inheritsFrom( ml_cause )
-e_createVendorSellTask = inheritsFrom( ml_effect )
-c_createVendorSellTask.throttle = 5000
-function c_createVendorSellTask:evaluate()
-	if ( SellManager_Active ) then 
-		if ((gw2_sell_manager.needToSell() or c_vendorsell.selling) and ( TableSize(gw2_sell_manager.getClosestSellMarker())>0 or gw2_common_functions.GetNextVendorMarker())) then
-			return true
-		end
-			
-		if ((gw2_sell_manager.needToSell(true) or c_quickvendorsell.selling) and ( TableSize(gw2_sell_manager.getClosestSellMarker(true))>0 or gw2_common_functions.GetNextVendorMarker())) then
-			return true
-		end
+c_createVendorRepairTask = inheritsFrom( ml_cause )
+e_createVendorRepairTask = inheritsFrom( ml_effect )
+c_createVendorRepairTask.throttle = 5000
+function c_createVendorRepairTask:evaluate()
+	if (gw2_repair_manager.NeedToRepair() and (TableSize(gw2_repair_manager.getClosestRepairMarker())>0 or gw2_common_functions.GetNextVendorMarker())) then
+		return true
+	end
+		
+	if (gw2_repair_manager.getClosestRepairMarker(true) and (TableSize(gw2_repair_manager.getClosestRepairMarker(true))>0 or gw2_common_functions.GetNextVendorMarker())) then
+		return true
 	end
 	return false
 end
-function e_createVendorSellTask:execute()
-	ml_log("e_createVendorSellTask")
+function e_createVendorRepairTask:execute()
+	ml_log("e_createRepairTask")
 	
-	local newTask = gw2_task_sell.Create()	
+	local newTask = gw2_task_repair.Create()	
 	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
 	
 	return ml_log(true)
 end
 
 
-c_vendorsell = inheritsFrom( ml_cause )
-e_vendorsell = inheritsFrom( ml_effect )
-c_vendorsell.selling = false
-function c_vendorsell:evaluate()
-	if (SellManager_Active == "1" and ( c_vendorsell.selling or gw2_sell_manager.needToSell() ) and TableSize(gw2_sell_manager.getClosestSellMarker())>0) then
+c_vendorrepair = inheritsFrom( ml_cause )
+e_vendorrepair = inheritsFrom( ml_effect )
+function c_vendorrepair:evaluate()
+	if (gw2_repair_manager.NeedToRepair() and TableSize(gw2_repair_manager.getClosestRepairMarker()) > 0) then
 		return true
 	end
 	return false
 end
-function e_vendorsell:execute()
-	ml_log("e_vendorsell")
-	local vendorMarker = gw2_sell_manager.getClosestSellMarker()
-	if (vendorMarker and vendorMarker.characterID) then
-		if (gw2_sell_manager.sellAtVendor(vendorMarker)) then
-			c_vendorsell.selling = true
+function e_vendorrepair:execute()
+	ml_log("e_vendorrepair")
+	local repairMarker = gw2_repair_manager.getClosestRepairMarker()
+	if (repairMarker and repairMarker.characterID) then
+		if (gw2_repair_manager.RepairAtVendor(repairMarker)) then
 			return true
 		end
 	end
-	c_vendorsell.selling = false
 	return ml_log(false)
 end
 
-c_quickvendorsell = inheritsFrom( ml_cause )
-e_quickvendorsell = inheritsFrom( ml_effect )
-c_quickvendorsell.selling = false
-function c_quickvendorsell:evaluate()
-	if (SellManager_Active == "1" and (c_quickvendorsell.selling or gw2_sell_manager.needToSell(true)) and TableSize(gw2_sell_manager.getClosestSellMarker(true))>0) then
+c_quickvendorrepair = inheritsFrom( ml_cause )
+e_quickvendorrepair = inheritsFrom( ml_effect )
+function c_quickvendorrepair:evaluate()
+	if (gw2_repair_manager.NeedToRepair(true) and TableSize(gw2_repair_manager.getClosestRepairMarker(true)) > 0) then
 		return true
 	end
 	return false
 end
-function e_quickvendorsell:execute()
-	ml_log("e_quickvendorsell")
-	local vendorMarker = gw2_sell_manager.getClosestSellMarker(true)
-	if (vendorMarker and vendorMarker.characterID) then
-		if (gw2_sell_manager.sellAtVendor(vendorMarker)) then
-			c_quickvendorsell.selling = true
+function e_quickvendorrepair:execute()
+	ml_log("e_quickvendorrepair")
+	local repairMarker = gw2_repair_manager.getClosestRepairMarker(true)
+	if (repairMarker and repairMarker.characterID) then
+		if (gw2_repair_manager.RepairAtVendor(repairMarker)) then
 			return true
 		end
 	end
-	c_quickvendorsell.selling = false
 	return ml_log(false)
 end
 
