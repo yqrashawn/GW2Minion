@@ -776,7 +776,7 @@ function Dev.Move ( arg )
 		local t = Player:GetTarget()
 		if ( t ) then
 			local pos = t.pos
-			d(Player:SetFacingExact(pos.x,pos.y,pos.z))
+			d(Player:SetFacingExact(pos.x,pos.y,pos.z,true))
 		end	
 	elseif ( arg == "Dev.playerPosition") then
 			local p = Player.pos
