@@ -25,7 +25,7 @@ function gw2_repair_manager.NeedToRepair(nearby)
 		local equipedItem = Inventory:GetEquippedItemBySlot(i)
 		if (equipedItem) then
 			local durability = equipedItem.durability 
-			if (durability == GW2.ITEMDURABILITY.Broken) then broken = broken + 1 end
+			if (durability == GW2.ITEMDURABILITY.Broken) then broken = broken + 1 damaged = damaged + 1 end
 			if (durability == GW2.ITEMDURABILITY.Damaged) then damaged = damaged + 1 end
 		end
 	end
