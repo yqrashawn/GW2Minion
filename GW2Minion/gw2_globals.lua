@@ -96,7 +96,9 @@ ml_global_information.ConditionsEnum = {
 		[727] = "Immobilized",
 		[738] = "Vulnerability",
 		[742] = "Weakness",
-		[723] = "Poison",		
+		[723] = "Poison",
+		[890] = "Revealed", --you cannot stealth
+		[872] = "Stun",
 	};
 	
 ml_global_information.BoonsEnum = {
@@ -110,6 +112,8 @@ ml_global_information.BoonsEnum = {
 		[719] = "Swiftness",
 		[726] = "Vigor",
 		[762] = "Determined",
+		[5979] = "Heal Turret Toggle",
+		[5891] = "Thumper Toggle",
 	};
 
 ml_global_information.ServersUS = {		

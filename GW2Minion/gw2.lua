@@ -17,6 +17,7 @@ function gw2minion.ModuleInit()
 		
 		mw:NewCheckBox(GetString("reviveplayers"),"gRevivePlayers",GetString("settings"))
 		mw:NewCheckBox(GetString("revivecharacters"),"gRevive",GetString("settings"))
+		mw:NewCheckBox(GetString("gatherMode"),"gGather",GetString("settings"))
 		mw:NewCheckBox(GetString("disabledrawing"),"gDisableRender",GetString("settings"))
 		mw:NewCheckBox(GetString("taskAllowTeleports"),"gAllowTeleport",GetString("settings"))
 		
@@ -88,6 +89,7 @@ function gw2minion.ModuleInit()
 	Settings.GW2Minion.gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement or "1"	
 	Settings.GW2Minion.gRevivePlayers = Settings.GW2Minion.gRevivePlayers or "1"
 	Settings.GW2Minion.gRevive = Settings.GW2Minion.gRevive or "1"	
+	Settings.GW2Minion.gGather = Settings.GW2Minion.gGather or "1"
 	
     gBotMode = Settings.GW2Minion.gBotMode
 	gBotRunning	= Settings.GW2Minion.gBotRunning
@@ -98,6 +100,7 @@ function gw2minion.ModuleInit()
 	gRevive = Settings.GW2Minion.gRevive
 	gDisableRender = Settings.GW2Minion.gDisableRender
 	gAllowTeleport = Settings.GW2Minion.gAllowTeleport
+	gGather = Settings.GW2Minion.gGather
 	
 	if ( RenderManager ) then RenderManager:ToggleRendering(tonumber(gDisableRender)) end
 	

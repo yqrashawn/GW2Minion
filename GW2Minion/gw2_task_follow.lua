@@ -175,8 +175,18 @@ function gw2_task_follow:Init()
 	-- Revive Downed/Dead Partymember
 	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 375 ), self.process_elements)	-- creates subtask: moveto
 	self:add(ml_element:create( "FollowingTargetToMap", c_FollowTargetToMap, e_FollowTargetToMap, 350 ), self.process_elements) -- create subtask navigatetomap
-	self:add(ml_element:create( "FollowingTarget", c_FollowTarget, e_FollowTarget, 300 ), self.process_elements)
-	self:add(ml_element:create( "AttackBestCharacterTarget", c_AttackBestNearbyCharacterTarget, e_AttackBestNearbyCharacterTarget, 200 ), self.process_elements)	
+	
+	--Buy & Repair & Vendoring this would need some special Cause that only vendors when a vendor is really nearby, else the followers are running away always from the one it should follow
+	self:add(ml_element:create( "VendorSell", c_createVendorSellTask, e_createVendorSellTask, 250 ), self.process_elements)
+	self:add(ml_element:create( "VendorBuy", c_createVendorBuyTask, e_createVendorBuyTask, 240 ), self.process_elements)
+	
+	-- ReviveNPCs
+	--self:add(ml_element:create( "ReviveNPC", c_reviveNPC, e_reviveNPC, 200 ), self.process_elements) -- creates subtask: moveto	
+	-- Gathering
+	self:add(ml_element:create( "Gathering", c_GatherTask, e_GatherTask, 225 ), self.process_elements) -- creates subtask: gatheringTask 
+	
+	self:add(ml_element:create( "FollowingTarget", c_FollowTarget, e_FollowTarget, 200 ), self.process_elements)
+	self:add(ml_element:create( "AttackBestCharacterTarget", c_AttackBestNearbyCharacterTarget, e_AttackBestNearbyCharacterTarget, 100 ), self.process_elements)	
 	
 	
 	self:AddTaskCheckCEs()
@@ -218,6 +228,7 @@ end
 function gw2_task_follow:UIDestroy()
 	d("gw2_task_follow:UIDestroy")
 	GUI_DeleteGroup(gw2minion.MainWindow.Name, GetString("followmode"))
+	GUI_DeleteGroup(gw2minion.MainWindow.Name, GetString("serverInfo"))	
 end
 
 function gw2_task_follow.ModuleInit()
@@ -383,7 +394,8 @@ function e_FollowTargetToMap:execute()
 	if ( e_FollowTargetToMap.targetMapID ) then
 		local pos = ml_nav_manager.GetNextPathPos(	ml_global_information.Player_Position, ml_global_information.CurrentMapID, e_FollowTargetToMap.targetMapID )
 		
-		if (ValidTable(pos)) then
+		if (ValidTable(pos)) then		
+			d("Moving to Map: "..gw2_datamanager.GetMapName( e_FollowTargetToMap.targetMapID ))
 			local newTask = gw2_task_navtomap.Create()
 			newTask.targetMapID = e_FollowTargetToMap.targetMapID
 			newTask.name = "Moving to Map: "..gw2_datamanager.GetMapName( e_FollowTargetToMap.targetMapID )

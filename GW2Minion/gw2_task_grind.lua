@@ -96,10 +96,8 @@ function gw2_task_grind:UIInit()
 	end
 	
 	Settings.GW2Minion.gDoEvents = Settings.GW2Minion.gDoEvents or "1"
-	Settings.GW2Minion.gGather = Settings.GW2Minion.gGather or "1"
 	
 	gDoEvents = Settings.GW2Minion.gDoEvents
-	gGather = Settings.GW2Minion.gGather
 	return true
 end
 function gw2_task_grind:UIDestroy()
