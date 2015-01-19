@@ -875,7 +875,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 		if ( ml_mesh_mgr.OMCStartPositionReached == false ) then
 			if ( ValidTable(ml_mesh_mgr.OMCStartPosition) ) then
 				if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
-				Player:SetFacing(tonumber(ml_mesh_mgr.OMCStartPosition[1]),tonumber(ml_mesh_mgr.OMCStartPosition[2]),tonumber(ml_mesh_mgr.OMCStartPosition[3]))
+				Player:SetFacingExact(tonumber(ml_mesh_mgr.OMCStartPosition[1]),tonumber(ml_mesh_mgr.OMCStartPosition[2]),tonumber(ml_mesh_mgr.OMCStartPosition[3]),true)
 				
 				ml_global_information.Player_Position = Player.pos
 				local dist = Distance3D(ml_mesh_mgr.OMCStartPosition[1],ml_mesh_mgr.OMCStartPosition[2],ml_mesh_mgr.OMCStartPosition[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
@@ -892,7 +892,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 			if ( ml_mesh_mgr.OMCType == "OMC_JUMP" ) then
 				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
 					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
-					Player:SetFacing(tonumber(ml_mesh_mgr.OMCEndposition[1]),tonumber(ml_mesh_mgr.OMCEndposition[2]),tonumber(ml_mesh_mgr.OMCEndposition[3]))					
+					Player:SetFacingExact(tonumber(ml_mesh_mgr.OMCEndposition[1]),tonumber(ml_mesh_mgr.OMCEndposition[2]),tonumber(ml_mesh_mgr.OMCEndposition[3]),true)					
 					ml_global_information.Player_Position = Player.pos					
 					if ( ml_mesh_mgr.OMCFacingTargetPos and ml_global_information.Player_IsMoving ) then 
 						Player:Jump()						
@@ -931,7 +931,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 			elseif ( ml_mesh_mgr.OMCType == "OMC_WALK" ) then
 				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
 					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
-					Player:SetFacing(tonumber(ml_mesh_mgr.OMCEndposition[1]),tonumber(ml_mesh_mgr.OMCEndposition[2]),tonumber(ml_mesh_mgr.OMCEndposition[3]))					
+					Player:SetFacingExact(tonumber(ml_mesh_mgr.OMCEndposition[1]),tonumber(ml_mesh_mgr.OMCEndposition[2]),tonumber(ml_mesh_mgr.OMCEndposition[3]),true)					
 					ml_global_information.Player_Position = Player.pos
 					local dist = Distance3D(ml_mesh_mgr.OMCEndposition[1],ml_mesh_mgr.OMCEndposition[2],ml_mesh_mgr.OMCEndposition[3],ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)					
 					if ( dist < 50 ) then
