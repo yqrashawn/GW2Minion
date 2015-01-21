@@ -72,7 +72,7 @@ function ml_global_information.Stop()
     Player:StopMovement()
 	c_movetorandom.randompoint = nil
 	c_movetorandom.randompointreached = false
-	ml_mesh_mgr.OMCIsHandled = false
+	ml_mesh_mgr.ResetOMC()
 	ml_mesh_mgr.OMCStartPositionReached = false
 	gw2_unstuck.Reset()
 end
