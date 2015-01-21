@@ -371,7 +371,7 @@ function Dev.LoadModule()
 	-- Navigation - World
 	DevNWTempData = {}
 	DevNWTempDataB = {}
-	DevNWTempData = persistence.load(ml_global_information.Path..[[\LuaMods\GW2Minion\]].."worldnav_data.lua")
+	DevNWTempData = persistence.load(GetStartupPath()..[[GW2Minion\]].."worldnav_data.lua")
 	if ( not ValidTable(DevNWTempData)) then DevNWTempData = {} end
 	
 	GUI_NewField("Dev","#Total_Transitions: ","NWTotal","NavigationSystem_World")
@@ -747,7 +747,7 @@ function Dev.Func ( arg )
 					type = gdevNWTransType,
 		}		
 		table.insert(DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID],TableSize(DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID])+1,wtf)
-		persistence.store(ml_global_information.Path..[[\LuaMods\GW2Minion\]].."worldnav_data.lua",DevNWTempData)
+		persistence.store(GetStartupPath()..[[GW2Minion\]].."worldnav_data.lua",DevNWTempData)
 		d("New Transition Saved")		
 	end	
 end

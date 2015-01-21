@@ -158,7 +158,7 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.averagegameunitsize = 50
 		
 		-- Set worldnavigation data
-		ml_mesh_mgr.navData = persistence.load(ml_global_information.Path..[[\LuaMods\GW2Minion\]].."worldnav_data.lua")
+		ml_mesh_mgr.navData = persistence.load(GetStartupPath()..[[GW2Minion\]].."worldnav_data.lua")
 		if ( not ValidTable(ml_mesh_mgr.navData)) then 
 			ml_mesh_mgr.navData = {} 
 		else
@@ -237,7 +237,7 @@ function gw2minion.ModuleInit()
 	-- Setup blacklists
 	if ( ml_blacklist_mgr ) then
 		ml_blacklist_mgr.parentWindow = { Name=gw2minion.MainWindow.Name }
-		ml_blacklist_mgr.path = GetStartupPath() .. [[\LuaMods\GW2Minion\blacklist.info]]
+		ml_blacklist_mgr.path = GetAddonPath() .. [[GW2Minion\blacklist.info]]
 		ml_blacklist_mgr.ReadBlacklistFile(ml_blacklist_mgr.path)
 		if not ml_blacklist.BlacklistExists(GetString("event")) then
 			ml_blacklist.CreateBlacklist(GetString("event"))

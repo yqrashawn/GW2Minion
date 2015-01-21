@@ -7,7 +7,7 @@ gw2_skill_manager.comboEditWindow = {name = GetString("comboEditor"), x = 600, y
 gw2minion.MainWindow.ChildWindows[gw2_skill_manager.comboEditWindow.name] = gw2_skill_manager.comboEditWindow.name
 gw2_skill_manager.comboSkillEditWindow = {name = GetString("comboSkillEditor"), x = 850, y = 50, w = 250, h = 550}
 gw2minion.MainWindow.ChildWindows[gw2_skill_manager.comboSkillEditWindow.name] = gw2_skill_manager.comboSkillEditWindow.name
-gw2_skill_manager.path = GetStartupPath() .. [[\LuaMods\GW2Minion\SkillManagerProfiles\]]
+gw2_skill_manager.path = GetAddonPath() .. [[GW2Minion\SkillManagerProfiles\]]
 gw2_skill_manager.profile = nil
 gw2_skill_manager.currentSkill = nil
 gw2_skill_manager.currentCombo = nil

@@ -14,7 +14,7 @@ ml_task_mgr.mainWindow = {name = GetString("taskManager"), x = 350, y = 50, w = 
 ml_task_mgr.editWindow = {name = GetString("taskEditor"), x = 600, y = 50, w = 250, h = 550}
 ml_task_mgr.profile = nil
 ml_task_mgr.currentTask = nil
-ml_task_mgr.path = GetStartupPath() .. [[\LuaMods\GW2Minion\TaskManagerProfiles\]]
+ml_task_mgr.path = GetAddonPath() .. [[GW2Minion\TaskManagerProfiles\]]
 ml_task_mgr.taskTypes = {}
 
 -- For Handling Tasks
