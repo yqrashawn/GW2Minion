@@ -131,7 +131,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 		-- Skill change
 		if (
 				k == "SklMgr_GrndTarget" or
-				k == "SklMgr_Healing" or
+				k == "SklMgr_HealnBuff" or
 				k == "SklMgr_LOS" or
 				k == "SklMgr_SetRange" or
 				k == "SklMgr_MinRange" or
@@ -141,7 +141,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "SklMgr_Delay")
 			then
 			local var = {	SklMgr_GrndTarget = {global = "groundTargeted", gType = "tostring",},
-							SklMgr_Healing = {global = "healing", gType = "tostring",},
+							SklMgr_HealnBuff = {global = "healing", gType = "tostring",},
 							SklMgr_LOS = {global = "los", gType = "tostring",},
 							SklMgr_SetRange = {global = "setRange", gType = "tostring",},
 							SklMgr_MinRange = {global = "minRange", gType = "tonumber",},
@@ -352,7 +352,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 		editWindow:NewNumeric(GetString("smSkillID"),"SklMgr_ID",GetString("smSkill"))
 		editWindow:NewField(GetString("name"),"SklMgr_Name",GetString("smSkill"))
 		editWindow:NewCheckBox(GetString("isGroundTargeted"),"SklMgr_GrndTarget",GetString("smSkill"))
-		editWindow:NewCheckBox(GetString("smsktypeheal"),"SklMgr_Healing",GetString("smSkill"))
+		editWindow:NewCheckBox(GetString("smHealBuff"),"SklMgr_HealnBuff",GetString("smSkill"))
 		editWindow:NewCheckBox(GetString("los"),"SklMgr_LOS",GetString("smSkill"))
 		editWindow:NewCheckBox(GetString("smSetRange"),"SklMgr_SetRange",GetString("smSkill"))
 		editWindow:NewNumeric(GetString("minRange"),"SklMgr_MinRange",GetString("smSkill"),0,6000)
@@ -420,7 +420,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 			SklMgr_ID = lSkill.skill.id
 			SklMgr_Name = lSkill.skill.name
 			SklMgr_GrndTarget = lSkill.skill.groundTargeted
-			SklMgr_Healing = lSkill.skill.healing
+			SklMgr_HealnBuff = lSkill.skill.healing
 			SklMgr_LOS = lSkill.skill.los
 			SklMgr_SetRange = lSkill.skill.setRange
 			SklMgr_MinRange = lSkill.skill.minRange

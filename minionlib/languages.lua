@@ -199,6 +199,7 @@ strings =
 		smCopy							= "Copy Skill",
 		smPaste							= "Paste Skill",
 		smDelete						= "Delete Skill",
+		smHealBuff						= "Heal & Buff",
 --vendorManager
 		enableSelling					= "AutoSellItems",
 		vendorManager					= "VendorManager",
@@ -871,6 +872,7 @@ strings =
 		smCopy							= "Copy Skill",
 		smPaste							= "Paste Skill",
 		smDelete						= "Delete Skill",
+		smHealBuff						= "Heal & Buff",
 
 		--vendorManager
 		enableSelling					= "自动卖物品",
@@ -1530,6 +1532,7 @@ strings =
 		smCopy							= "Copy Skill",
 		smPaste							= "Paste Skill",
 		smDelete						= "Delete Skill",
+		smHealBuff						= "Heal & Buff",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -2189,6 +2192,7 @@ strings =
 		smCopy							= "Copy Skill",
 		smPaste							= "Paste Skill",
 		smDelete						= "Delete Skill",
+		smHealBuff						= "Heal & Buff",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -2849,6 +2853,7 @@ strings =
 		smCopy							= "Copy Skill",
 		smPaste							= "Paste Skill",
 		smDelete						= "Delete Skill",
+		smHealBuff						= "Heal & Buff",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -3517,6 +3522,7 @@ strings =
 		smCopy							= "Copy Skill",
 		smPaste							= "Paste Skill",
 		smDelete						= "Delete Skill",
+		smHealBuff						= "Heal & Buff",
 
 		--vendorManager
 		enableSelling					= "AutoSellItems",
