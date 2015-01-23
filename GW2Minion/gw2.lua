@@ -86,7 +86,8 @@ function gw2minion.ModuleInit()
 	Settings.GW2Minion.gDisableRender = Settings.GW2Minion.gDisableRender or "0"
 	Settings.GW2Minion.gAllowTeleport = Settings.GW2Minion.gAllowTeleport or "0"
 	Settings.GW2Minion.gDepositItems = Settings.GW2Minion.gDepositItems or "1"	
-	Settings.GW2Minion.gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement or "1"	
+	Settings.GW2Minion.gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement or "1"
+	Settings.GW2Minion.gMoveIntoCombatRange = Settings.GW2Minion.gMoveIntoCombatRange or "1"
 	Settings.GW2Minion.gRevivePlayers = Settings.GW2Minion.gRevivePlayers or "1"
 	Settings.GW2Minion.gRevive = Settings.GW2Minion.gRevive or "1"	
 	Settings.GW2Minion.gGather = Settings.GW2Minion.gGather or "1"
@@ -95,7 +96,8 @@ function gw2minion.ModuleInit()
 	gBotRunning	= Settings.GW2Minion.gBotRunning
 	gPulseTime = Settings.GW2Minion.gPulseTime
 	gDepositItems = Settings.GW2Minion.gDepositItems	
-	gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement		
+	gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement
+	gMoveIntoCombatRange = Settings.GW2Minion.gMoveIntoCombatRange
 	gRevivePlayers = Settings.GW2Minion.gRevivePlayers
 	gRevive = Settings.GW2Minion.gRevive
 	gDisableRender = Settings.GW2Minion.gDisableRender
@@ -474,6 +476,7 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "gDepositItems" or
 			k == "gDoEvents" or
 			k == "gDoCombatMovement" or
+			k == "gMoveIntoCombatRange" or
 			k == "gGather" or			
 			k == "gRevivePlayers" or
 			k == "gRevive" or

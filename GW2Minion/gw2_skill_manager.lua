@@ -30,6 +30,7 @@ function gw2_skill_manager.ModuleInit()
 		Settings.GW2Minion.gCurrentProfile = "None"
 	end
 	gw2_skill_manager.profile = gw2_skill_manager.GetProfile(Settings.GW2Minion.gCurrentProfile)
+	gMoveIntoCombatRange = Settings.GW2Minion.gMoveIntoCombatRange
 end
 RegisterEventHandler("Module.Initalize",gw2_skill_manager.ModuleInit)
 
@@ -1135,7 +1136,7 @@ function profilePrototype:Attack(target)
 					return true
 				end
 			end
-		elseif (target and gMoveIntoCombatRange ~= "0") then
+		elseif (target and (gBotMode ~= GetString("assistMode") or gMoveIntoCombatRange == "1")) then
 			gw2_common_functions.MoveOnlyStraightForward()
 			_private.SwapWeapon(target)
 			local tPos = target.pos
