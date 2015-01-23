@@ -555,10 +555,10 @@ function _private.CreateSkill(skillList,skillSlot)
 		local newSkill = {}
 		if (skillInfo and skillInfo.skillID ~= 10586 and ValidString(skillInfo.name)) then
 			for priority,skill in pairs(skillList) do
-				if (skill.skill.name == skillInfo.name) then
-					if (skill.skill.id ~= skillInfo.skillID) then
+				if (skill.skill.id == skillInfo.skillID) then
+					if (skill.skill.name ~= skillInfo.name) then
 						newSkill = deepcopy(skill)
-						newSkill.skill.id = skillInfo.skillID
+						newSkill.skill.name = skillInfo.name
 						return newSkill
 					end
 					return false
