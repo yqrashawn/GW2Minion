@@ -60,7 +60,7 @@ function gw2_task_assist:UIInit()
 	if ( mw ) then		
 		mw:NewComboBox(GetString("sMtargetmode"),"sMtargetmode",GetString("assistMode"),"None,LowestHealth,Closest,Biggest Crowd");
 		mw:NewComboBox(GetString("sMmode"),"sMmode",GetString("assistMode"),"Everything,Players Only")
-		mw:NewCheckBox(GetString("moveIntoCombatRange"),"gMoveIntoCombatRange",GetString("assistMode"))
+		mw:NewCheckBox(GetString("smMoveIntoCombatRange"),"gMoveIntoCombatRange",GetString("assistMode"))
 		mw:UnFold( GetString("assistMode") );
 	end	
 	sMtargetmode = Settings.GW2Minion.sMtargetmode

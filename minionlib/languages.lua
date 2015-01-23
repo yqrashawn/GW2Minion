@@ -200,6 +200,7 @@ strings =
 		smPaste							= "Paste Skill",
 		smDelete						= "Delete Skill",
 		smHealBuff						= "Heal & Buff",
+		smMoveIntoCombatRange			= "Move Into Combat Range",
 --vendorManager
 		enableSelling					= "AutoSellItems",
 		vendorManager					= "VendorManager",
@@ -873,6 +874,7 @@ strings =
 		smPaste							= "Paste Skill",
 		smDelete						= "Delete Skill",
 		smHealBuff						= "Heal & Buff",
+		smMoveIntoCombatRange			= "Move Into Combat Range",
 
 		--vendorManager
 		enableSelling					= "自动卖物品",
@@ -1533,6 +1535,7 @@ strings =
 		smPaste							= "Paste Skill",
 		smDelete						= "Delete Skill",
 		smHealBuff						= "Heal & Buff",
+		smMoveIntoCombatRange			= "Move Into Combat Range",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -2193,6 +2196,7 @@ strings =
 		smPaste							= "Paste Skill",
 		smDelete						= "Delete Skill",
 		smHealBuff						= "Heal & Buff",
+		smMoveIntoCombatRange			= "Move Into Combat Range",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -2854,6 +2858,7 @@ strings =
 		smPaste							= "Paste Skill",
 		smDelete						= "Delete Skill",
 		smHealBuff						= "Heal & Buff",
+		smMoveIntoCombatRange			= "Move Into Combat Range",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -3523,6 +3528,7 @@ strings =
 		smPaste							= "Paste Skill",
 		smDelete						= "Delete Skill",
 		smHealBuff						= "Heal & Buff",
+		smMoveIntoCombatRange			= "Move Into Combat Range",
 
 		--vendorManager
 		enableSelling					= "AutoSellItems",
