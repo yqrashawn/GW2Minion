@@ -819,23 +819,19 @@ function _private.AttackSkill(target)
 	if (ValidTable(_private.currentSkills)) then
 		for _,skill in ipairs(_private.currentSkills) do
 			if (_private.CanCast(skill,target) == true) then
-				--d(TimeSince(_private.lastSkill.cTime))
-				--local lastSkillInfo = _private.ReturnSkillByID(gw2_skill_manager.profile.skills,Player.castinfo.lastSkillID)
-				--if (TimeSince(_private.lastSkill.cTime) > 350 or (lastSkillInfo and lastSkillInfo.skill.slowCast == "1")) then
-					d("Casting "..skill.skill.name.. " CanCast: "..tostring( Player:CanCast() ).." CurrentCastDuration: "..tostring(Player.castinfo.duration))
-					if (target) then
-						local pos = _private.GetPredictedLocation(target,skill)
-						if (skill.skill.groundTargeted == "1" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
-							Player:CastSpell(skill.slot,pos.x,pos.y,pos.z)
-						else
-							Player:CastSpell(skill.slot,target.id)
-						end
+				--d("Casting "..skill.skill.name.. " CanCast: "..tostring( Player:CanCast() ).." CurrentCastDuration: "..tostring(Player.castinfo.duration))
+				if (target) then
+					local pos = _private.GetPredictedLocation(target,skill)
+					if (skill.skill.groundTargeted == "1" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
+						Player:CastSpell(skill.slot,pos.x,pos.y,pos.z)
 					else
-						Player:CastSpell(skill.slot)
+						Player:CastSpell(skill.slot,target.id)
 					end
-					_private.lastSkill = {cTime = ml_global_information.Now, id = skill.skill.id}
-					_private.skillLastCast[skill.skill.id] = ml_global_information.Now
-				--end
+				else
+					Player:CastSpell(skill.slot)
+				end
+				_private.lastSkill = {cTime = ml_global_information.Now, id = skill.skill.id}
+				_private.skillLastCast[skill.skill.id] = ml_global_information.Now
 				if (_private.TargetLosingHealth(target) == false) then
 					return false
 				end
@@ -1130,7 +1126,7 @@ function profilePrototype:Attack(target)
 			_private.DoCombatMovement()
 			--if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.slowCast == "1")) then
 			--if (Player.castinfo.duration == 0) then
-			if (Player:CanCast() and Player:IsCasting() == false or (lastSkillInfo and lastSkillInfo.skill.slowCast == "0")) then
+			if ((Player:CanCast() and Player:IsCasting() == false) or (lastSkillInfo and lastSkillInfo.skill.slowCast == "0")) then
 				if (_private.Evade()) then
 					return true
 				elseif (_private.SwapWeapon(target)) then
