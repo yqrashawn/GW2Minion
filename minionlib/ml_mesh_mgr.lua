@@ -946,7 +946,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 						ml_mesh_mgr.ResetOMC()
 						ml_global_information.Lasttick = ml_global_information.Lasttick + 100
 						
-					elseif( dist > 500 or ( ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 1500))then
+					elseif( dist > 500 and  ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 1500)then
 						d("We failed to land on the enposition..use teleport maybe?")
 						Player:StopMovement()
 						ml_mesh_mgr.ResetOMC()

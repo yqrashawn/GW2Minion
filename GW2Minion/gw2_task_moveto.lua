@@ -105,8 +105,8 @@ function gw2_task_moveto:Process()
 				
 				-- randomize the randomized movement (lol)
 				local randommovement = ml_task_hub:CurrentTask().randomMovement
-				if ( not ml_task_hub:CurrentTask().alwaysRandomMovement and math.random(1,2) == 1) then
-					randommovement = true
+				if ( randommovement and not ml_task_hub:CurrentTask().alwaysRandomMovement and math.random(1,2) == 1) then
+					randommovement = false
 				end
 								
 				local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_task_hub:CurrentTask().stoppingDistance+ml_task_hub:CurrentTask().targetRadius,ml_task_hub:CurrentTask().followNavSystem,randommovement,ml_task_hub:CurrentTask().smoothTurns)
