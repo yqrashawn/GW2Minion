@@ -122,15 +122,17 @@ end
 
 function gw2_common_functions.FinishEnemy()    
 	if ( ml_global_information.Player_IsMoving == false and ml_global_information.Player_Health.percent > 15 ) then
-		local EList = CharacterList("nearest,downed,aggro,attackable,interactable,selectable,maxdistance=150,onmesh")
+		local EList = CharacterList("nearest,downed,attackable,interactable,selectable,maxdistance=150")
 		if ( EList ) then
 			local id,entity = next (EList)
 			if ( id and entity ) then
 				if ( entity.isInInteractRange ) then
-					local t = Player:GetTarget()
-					if ( t and t.id == id ) then						
-						Player:Interact( id )
-						ml_log("Finishing..")						
+					local target = Player:GetTarget()
+					if ( not target or target.id ~= entity.id ) then
+						Player:SetTarget(entity.id)					
+					else
+						Player:Interact( entity.id )
+						ml_log("Finishing Enemy..")
 						ml_global_information.Wait(1000)
 						return true						
 					end

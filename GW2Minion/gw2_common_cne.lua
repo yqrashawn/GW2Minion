@@ -72,11 +72,15 @@ end
 function e_Downed:execute()
 	ml_log("e_Downed")
 	
-	if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end 
+	Player:StopMovement() 
 	
 	if ( Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_4 ) ) then
 		-- Try to Fight
-		local TList = ( CharacterList("lowesthealth,attackable,aggro,alive,los,maxdistance="..ml_global_information.AttackRange) )
+		local TList = CharacterList("lowesthealth,attackable,aggro,alive,los,maxdistance="..ml_global_information.AttackRange) 
+		
+		if ( TableSize( TList ) == 0 ) then
+			TList = CharacterList("lowesthealth,attackable,aggro,downed,los,maxdistance="..ml_global_information.AttackRange) 
+		end
 		
 		if ( TableSize( TList ) == 0 ) then
 			TList = ( GadgetList("attackable,alive,aggro,los,maxdistance="..ml_global_information.AttackRange) )
@@ -87,12 +91,13 @@ function e_Downed:execute()
 			if ( id ~= nil and id ~= 0 and E ~= nil ) then
 				
 				local target = Player:GetTarget()
-				if ( not target or target.id ~= id ) then
-					Player:SetTarget(id)
-					return ml_log(true)				
+				if ( not target or target.id ~= E.id ) then
+					Player:SetTarget(E.id)
+					
 				else
-					return ml_log(gw2_skill_manager.Attack( target ))
-				end			
+					gw2_skill_manager.Attack( target )
+				end	
+				return ml_log(true)				
 			end
 		end
 		
