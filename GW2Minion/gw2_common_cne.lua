@@ -542,7 +542,7 @@ function c_fleeToSafety:evaluate()
 		local target = Player:GetTarget()
 		local tHealth = (target == nil and 100 or target.health.percent)
 		-- Check for safe-spot and enemy number or enemy health.
-		if (safespot and (nmbrEnemies > 1 or tHealth > 50)) then
+		if (c_fleeToSafety.safespot and (nmbrEnemies > 1 or tHealth > 50)) then
 			return true
 		end
 	elseif ( ml_global_information.Player_Alive and c_fleeToSafety.fleeing == true) then

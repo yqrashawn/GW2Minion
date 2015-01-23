@@ -45,7 +45,7 @@ gw2_common_tasks.swimUp = false
 function gw2_common_tasks.SwimUp(tickcount)
 	if( TimeSince(gw2_common_tasks.swimUpLastUsed) > 1000 ) then
 		gw2_common_tasks.swimUpLastUsed = tickcount + math.random(50,500)
-		if ( ml_global_information.Player_SwimState == GW2.SWIMSTATE.Diving ) then
+		if ( gBotMode ~= GetString("assistMode") and ml_global_information.Player_SwimState == GW2.SWIMSTATE.Diving ) then
 			gw2_common_tasks.swimUp = true
 			Player:SetMovement(GW2.MOVEMENTTYPE.SwimUp)
 		elseif( gw2_common_tasks.swimUp == true ) then
