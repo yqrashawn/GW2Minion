@@ -408,7 +408,7 @@ function ml_task_mgr.UpdateTaskUIforType(typeswitched)
 	end	
 end
 -- "API"-Functions to create UI elements in the taskCustomConditions section
-function ml_task_mgr.NewField(label,globalvar)
+function ml_task_mgr.NewField(label,globalvar,newvalue)
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile and ValidString(label) and ValidString(globalvar)) then
@@ -417,40 +417,40 @@ function ml_task_mgr.NewField(label,globalvar)
 		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil ) then -- set the existing values			
 			_G["TM_TASK_"..globalvar] = ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar].value
 		else -- create a new default entry			
-			ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] = { type = "Field", value = "" }
+			ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] = { type = "Field", value = newvalue or "" }
 		end
 	end
 end
-function ml_task_mgr.NewNumeric(label,globalvar)
+function ml_task_mgr.NewNumeric(label,globalvar,newvalue)
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile and ValidString(label) and ValidString(globalvar)) then
 		editWindow:NewNumeric(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"))		
 		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil ) then -- set the existing values			
 			_G["TM_TASK_"..globalvar] = ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar].value
 		else -- create a new default entry
-			ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] = { type = "Numeric", value = 0 }
+			ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] = { type = "Numeric", value = newvalue or 0 }
 		end		
 	end
 end	
-function ml_task_mgr.NewCombobox(label,globalvar,liststring)
+function ml_task_mgr.NewCombobox(label,globalvar,liststring,newvalue)
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile and ValidString(label) and ValidString(globalvar) and ValidString(liststring)) then
 		editWindow:NewComboBox(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"),liststring)
 		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil ) then -- set the existing values
 			_G["TM_TASK_"..globalvar] = ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar].value
 		else -- create a new default entry	
-			ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] = { type = "ComboBox", value = "" }
+			ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] = { type = "ComboBox", value = newvalue or "" }
 		end		
 	end
 end
-function ml_task_mgr.NewCheckBox(label,globalvar)
+function ml_task_mgr.NewCheckBox(label,globalvar,newvalue)
 	local editWindow = WindowManager:GetWindow(ml_task_mgr.editWindow.name)
 	if (ml_task_mgr.currenttask and editWindow and ml_task_mgr.profile and ValidString(label) and ValidString(globalvar)) then
 		editWindow:NewCheckBox(label,"TM_TASK_"..globalvar,GetString("taskCustomConditions"))		
 		if ( ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] ~= nil ) then -- set the existing values			
 			_G["TM_TASK_"..globalvar] = ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar].value
 		else -- create a new default entry
-			ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] = { type = "CheckBox", value = "0" }
+			ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].customVars["TM_TASK_"..globalvar] = { type = "CheckBox", value = newvalue or "0" }
 		end		
 	end
 end
