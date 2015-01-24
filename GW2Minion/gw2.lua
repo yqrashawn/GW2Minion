@@ -70,6 +70,7 @@ function gw2minion.ModuleInit()
 		RegisterEventHandler("ToggleSalvageMgr", gw2_salvage_manager.ToggleMenu)
 
 		mw:NewButton(GetString("checkChat"),"gw2minion.evToggleChatManager",GetString("advancedSettings"))
+		RegisterEventHandler("gw2minion.evToggleChatManager", gw2_chatmanager.ToggleMenu)
 		
 		mw:NewButton(GetString("blacklistManager"),"ToggleBlacklistMgr",GetString("advancedSettings"))
 		
@@ -160,7 +161,7 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.averagegameunitsize = 50
 		
 		-- Set worldnavigation data
-		ml_mesh_mgr.navData = persistence.load(GetStartupPath()..[[\LuaMods\GW2Minion\]].."worldnav_data.lua")
+		ml_mesh_mgr.navData = persistence.load(GetAddonPath()..[[GW2Minion\]].."worldnav_data.lua")
 		if ( not ValidTable(ml_mesh_mgr.navData)) then 
 			ml_mesh_mgr.navData = {} 
 		else
