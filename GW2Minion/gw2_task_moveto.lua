@@ -106,17 +106,24 @@ function gw2_task_moveto:Process()
 			if ( not gw2_unstuck.HandleStuck() ) then
 				
 				-- randomize the randomized movement (lol)
-				local randommovement = ml_task_hub:CurrentTask().randomMovement
+				
+				d("Current task info randomMovement: "..tostring(ml_task_hub:CurrentTask().randomMovement))
+				d("Current task info smoothTurns: "..tostring(ml_task_hub:CurrentTask().smoothTurns))
+				
+				local randommovement = (ml_task_hub:CurrentTask().randomMovement == true or ml_task_hub:CurrentTask().randomMovement == "1")
+				d("!!!!!!!!!!!!!!! randommovement: "..tostring(randommovement))
 				if ( randommovement and not ml_task_hub:CurrentTask().alwaysRandomMovement and math.random(1,2) == 1) then
 					randommovement = false
 				end
-								
-				local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_task_hub:CurrentTask().stoppingDistance+ml_task_hub:CurrentTask().targetRadius,ml_task_hub:CurrentTask().followNavSystem,randommovement,ml_task_hub:CurrentTask().smoothTurns)
-							
+				
+				local smoothTurns = (ml_task_hub:CurrentTask().smoothTurns == true or ml_task_hub:CurrentTask().smoothTurns == "1")
+				d("!!!!!!!!!!!!!!! smoothTurns: "..tostring(smoothTurns))
+				local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_task_hub:CurrentTask().stoppingDistance+ml_task_hub:CurrentTask().targetRadius,ml_task_hub:CurrentTask().followNavSystem,randommovement,smoothTurns)
+				
 				if ( ml_global_information.ShowDebug and newnodecount ~= dbPNodes ) then
 					dbPNodesLast = dbPNodes
 					dbPNodes = newnodecount
-				end			
+				end
 				-- Check for increased node count when the targetpos is the same to prevent back n forth twisting and stuck 
 				
 				
@@ -214,7 +221,8 @@ end
 
 -- TaskManager functions
 function gw2_task_moveto:UIInit_TM()
-	-- nothing needed here, the TM will move to the starting position and then terminate the moveto task, since we already arrived	
+	ml_task_mgr.NewCheckBox(GetString("taskRandomMove"), "randomMovement", "0")
+	ml_task_mgr.NewCheckBox(GetString("taskSmoothTurn"), "smoothTurns", "1")
 end
 -- TaskManager function: Checks for custom conditions to start this task
 function gw2_task_moveto.CanTaskStart_TM()

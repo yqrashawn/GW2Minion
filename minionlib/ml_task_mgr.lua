@@ -43,8 +43,6 @@ function ml_UITask.Create()
 	newinst.complete = false
 	newinst.mapid = ""	--startmapid
 	newinst.mappos = "" --startmappos
-	--newinst.randomovement = "0"
-	--newinst.smoothturns = "1"
 	newinst.radius = 0  --the radius around the startposition of where the bot should not walk beyond
 	newinst.minlvl = 0
 	newinst.maxlvl = 80
@@ -79,6 +77,7 @@ function ml_UITaskProfile:UpdateTaskPriority()
 	end
 end
 function ml_UITaskProfile:Save()
+	d(self)
 	local saveFile = {
 		name = self.name,
 		idcounter = self.idcounter,
@@ -270,10 +269,6 @@ function ml_task_mgr.CreateEditWindow()
 			editWindow:NewField(GetString("taskStartMapPos"),"TM_MapPos",GetString("taskStartConditions"))
 			editWindow:NewButton(GetString("taskUseCurretPos"),"gTMUseMyPos",GetString("taskStartConditions"))
 			RegisterEventHandler("gTMUseMyPos",ml_task_mgr.UpdateTaskPositionData)
-			
-			--editWindow:NewCheckBox(GetString("taskRandomMove"),"TM_RandomMovement",GetString("taskStartConditions"))
-			--editWindow:NewCheckBox(GetString("taskSmoothTurn"),"TM_SmoothTurns",GetString("taskStartConditions"))
-			
 			editWindow:NewNumeric(GetString("taskRadius"),"TM_Radius",GetString("taskStartConditions"),0,999999)
 			editWindow:NewNumeric(GetString("taskMinLvl"),"TM_MinLvl",GetString("taskStartConditions"),0,80)
 			editWindow:NewNumeric(GetString("taskMaxLvl"),"TM_MaxLvl",GetString("taskStartConditions"),0,80)
@@ -370,8 +365,6 @@ function ml_task_mgr.UpdateEditWindow(arg)
 		TM_PreTaskIDs = task.pretaskid or ""
 		TM_MapID = task.mapid or ""
 		TM_MapPos = task.mappos or ""
-		--TM_RandomMovement = task.randomovement or "0"
-		--TM_SmoothTurns = task.smoothturns or "1"
 		TM_Radius = task.radius or 0
 		TM_MinLvl = task.minlvl or 0
 		TM_MaxLvl = task.maxlvl or 80
@@ -482,8 +475,6 @@ function ml_task_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 		elseif ( k == "TM_PreTaskIDs" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].pretaskid = v
 		elseif ( k == "TM_MapID" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].mapid = v
 		elseif ( k == "TM_MapPos" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].mappos = v
-		--elseif ( k == "TM_RandomMovement" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].randomovement = v
-		--elseif ( k == "TM_SmoothTurns" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].smoothturns = v
 		elseif ( k == "TM_Radius" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].radius = v
 		elseif ( k == "TM_MinLvl" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].minlvl = v
 		elseif ( k == "TM_MaxLvl" ) then ml_task_mgr.profile.tasks[ml_task_mgr.currenttask].maxlvl = v
