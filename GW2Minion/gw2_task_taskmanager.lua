@@ -111,8 +111,12 @@ function e_RunTask:execute()
 				local newTask = gw2_task_moveto.Create()
 				newTask.name = "MoveTo Task "..ml_task_hub:CurrentTask().mytask.name.." StartPosition"
 				newTask.targetPos = startPos
-				--newTask.randomMovement = ml_task_hub:CurrentTask().mytask.randomMovement == "1"
-				--newTask.smoothTurns = ml_task_hub:CurrentTask().mytask.smoothTurns == "1"
+				if (ml_task_hub:CurrentTask().mytask.randomMovement) then
+					newTask.randomMovement = ml_task_hub:CurrentTask().mytask.randomMovement == "1"
+				end
+				if (ml_task_hub:CurrentTask().mytask.smoothTurns) then
+					newTask.smoothTurns = ml_task_hub:CurrentTask().mytask.smoothTurns == "1"
+				end
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				
 			else
