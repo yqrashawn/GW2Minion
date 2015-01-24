@@ -45,9 +45,11 @@ function gw2_task_moveto:Process()
 	
 	if ( ValidTable(ml_task_hub:CurrentTask().targetPos) ) then
 	
-		local dist = Distance3D(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
+		local dist = nil
 		if ( not ml_task_hub:CurrentTask().use3d ) then
-			dist = Distance3D(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y)
+			dist = Distance2D(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y)
+		else
+			dist = Distance3D(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
 		end
 		
 		-- Check for valid targetID only when in <2500 range, because gamedata tends to fade at distances. Update data in case it finds the target.

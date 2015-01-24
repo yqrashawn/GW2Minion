@@ -160,7 +160,7 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.averagegameunitsize = 50
 		
 		-- Set worldnavigation data
-		ml_mesh_mgr.navData = persistence.load(GetStartupPath()..[[GW2Minion\]].."worldnav_data.lua")
+		ml_mesh_mgr.navData = persistence.load(GetStartupPath()..[[\LuaMods\GW2Minion\]].."worldnav_data.lua")
 		if ( not ValidTable(ml_mesh_mgr.navData)) then 
 			ml_mesh_mgr.navData = {} 
 		else
