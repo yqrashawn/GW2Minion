@@ -110,8 +110,6 @@ function gw2_task_moveto:Process()
 				if ( randommovement and not ml_task_hub:CurrentTask().alwaysRandomMovement and math.random(1,2) == 1) then
 					randommovement = false
 				end
-				d("randommovement: "..tostring(randommovement))
-				d("smoothTurns: "..tostring(ml_task_hub:CurrentTask().smoothTurns))
 				local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_task_hub:CurrentTask().stoppingDistance+ml_task_hub:CurrentTask().targetRadius,ml_task_hub:CurrentTask().followNavSystem,randommovement,ml_task_hub:CurrentTask().smoothTurns)
 				
 				if ( ml_global_information.ShowDebug and newnodecount ~= dbPNodes ) then
