@@ -1181,7 +1181,7 @@ function profilePrototype:GetAvailableSkills()
 						_private.currentHealSkills[newHealPriority].maxCooldown = aSkill.cooldownmax
 						newHealPriority = newHealPriority + 1
 					end
-					local canCastCheck = (target and _private:canCast(skill,target) or true)
+					local canCastCheck = (target and _private.CanCast(skill,target) or true)
 					if (skill.skill.setRange == "1" and canCastCheck) then
 						maxRange = (skill.skill.maxRange > 0 and skill.skill.maxRange > maxRange and skill.skill.maxRange or maxRange)
 						maxRange = (skill.skill.maxRange == 0 and skill.skill.radius > 0 and skill.skill.radius > maxRange and skill.skill.radius or maxRange)
