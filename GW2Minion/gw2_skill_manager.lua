@@ -724,7 +724,7 @@ function _private.CanCast(skill,target)
 end
 
 function _private.SwapWeapon(target)
-	if (Player:CanSwapWeaponSet()) then
+	if (Player:CanSwapWeaponSet() and TimeSince(_private.SwapTimer) > 0) then
 		local swap = false
 		if (gw2_skill_manager.profile.switchSettings.switchOnRange == "1" and _private.maxRange < 300 and target and target.distance > _private.maxRange) then
 			swap = true
@@ -742,7 +742,7 @@ function _private.SwapWeapon(target)
 			end
 		end
 		if (swap) then
-			_private.SwapTimer = ml_global_information.Now
+			_private.SwapTimer = ml_global_information.Now + 500
 			_private.SwapRandomTimer = ml_global_information.Now + math.random(5000,15000)
 			if (ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist) then
 				return _private.SwapElementalistAttunement()			
@@ -1166,6 +1166,7 @@ function profilePrototype:GetAvailableSkills()
 	local newPriority = 1
 	local newHealPriority = 1
 	local maxRange = 154
+	local target = Player:GetTarget()
 	if ( ValidTable(self.skills) and ValidTable(_private.skillbarSkills) ) then
 		for _,skill in ipairs(self.skills) do
 			for _,aSkill in pairs(_private.skillbarSkills) do
@@ -1180,7 +1181,8 @@ function profilePrototype:GetAvailableSkills()
 						_private.currentHealSkills[newHealPriority].maxCooldown = aSkill.cooldownmax
 						newHealPriority = newHealPriority + 1
 					end
-					if (skill.skill.setRange == "1") then
+					local canCastCheck = (target and _private:canCast(skill,target) or true)
+					if (skill.skill.setRange == "1" and canCastCheck) then
 						maxRange = (skill.skill.maxRange > 0 and skill.skill.maxRange > maxRange and skill.skill.maxRange or maxRange)
 						maxRange = (skill.skill.maxRange == 0 and skill.skill.radius > 0 and skill.skill.radius > maxRange and skill.skill.radius or maxRange)
 					end
