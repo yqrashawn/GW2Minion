@@ -26,6 +26,7 @@ function gw2_task_heartquest.Create()
 	newinst.subRegion = nil
 	newinst.pickupSkillID = nil
 	newinst.pickupTargetIDs = nil
+	newinst.checkHQNPCTimer = 0
 	
 	-- Reset some stuff
 	e_StayNearHQ.walkingback = false
@@ -65,6 +66,8 @@ function gw2_task_heartquest:Init()
 	
 	--self:add(ml_element:create( "QuickRepairItems", c_quickrepair, e_quickrepair, 240 ), self.process_elements)
 	
+	-- Checks if we have the HQ completed by walking to where the NPC should stand
+	self:add(ml_element:create( "CheckHQCompleted", c_CheckHQCompleted, e_CheckHQCompleted, 230 ), self.process_elements)	
 
 	-- DoEvents
 	--self:add(ml_element:create( "DoEvent", c_doEvents, e_doEvents, 215 ), self.process_elements) would need a custom c_doEvents to not run away from the spot here
@@ -77,15 +80,13 @@ function gw2_task_heartquest:Init()
 		
 	-- Finish Enemy
 	self:add(ml_element:create( "FinishEnemy", c_FinishEnemy, e_FinishEnemy, 150 ), self.process_elements)
-		
+	
 	-- Stay near HQ
 	self:add(ml_element:create( "StayNearHQ", c_StayNearHQ, e_StayNearHQ, 125 ), self.process_elements)
 
 	-- HandleConversation
 	self:add(ml_element:create( "HandleConversation", c_HandleConversation, e_HandleConversation, 100 ), self.process_elements)	
-
-	
-		
+			
 	-- If a interact contentID / ID2 was given, this will make the bot walk there and interact
 	self:add( ml_element:create( "HandleInteract", c_HQHandleInteract, e_HQHandleInteract, 75 ), self.process_elements)
 
@@ -98,6 +99,7 @@ function gw2_task_heartquest:Init()
 
 	self:AddTaskCheckCEs()
 end
+
 function gw2_task_heartquest:task_complete_eval()
 	-- Check for nearby unfinished HQs
 	if ( ml_task_hub:CurrentTask().started == true and ml_task_hub:CurrentTask().mappos ~= nil and ml_task_hub:CurrentTask().pos ~= nil  ) then
@@ -108,29 +110,62 @@ function gw2_task_heartquest:task_complete_eval()
 		if ( dist < maxradius ) then
 		--d(TableSize(MapMarkerList("onmesh,contentID="..GW2.MAPMARKER.HeartQuest)))
 			if ( ml_task_hub:CurrentTask().subRegion ~= nil and tonumber(ml_task_hub:CurrentTask().subRegion) ) then
-				local evList = MapMarkerList("onmesh,issubregion,contentID="..GW2.MAPMARKER.HeartQuest)
+				
+				-- HQs are tricky, there are always 2 markers, 1 permanently available and 1 only available when beeing nearby, representing the connected NPC (where we get the "complete" info from)
+				-- Try to get the NPC-Marker first
+				local evList = MapMarkerList("onmesh,issubregion")
 				local id,marker = next (evList)
 				while ( id and marker ) do
-					if ( marker.subregionID == tonumber(ml_task_hub:CurrentTask().subRegion) ) then
-						-- we found our unfinished HQ
-						return false
+					if ( marker.subregionID == tonumber(ml_task_hub:CurrentTask().subRegion) ) then						
+						
+						if ( marker.contentID == GW2.MAPMARKER.HeartQuest ) then							
+							c_CheckHQCompleted.markerPos = nil
+							c_CheckHQCompleted.needCompletionCheck = false
+							return false-- we found our unfinished HQ NPC
+						
+						elseif ( marker.contentID == GW2.MAPMARKER.HeartQuestComplete ) then							
+							d("Completed Heartquest with SubRegionID "..tostring(ml_task_hub:CurrentTask().subRegion).." found, exiting task")
+							c_CheckHQCompleted.markerPos = nil
+							c_CheckHQCompleted.needCompletionCheck = false
+							ml_task_hub:CurrentTask().completed = true
+							return true -- we found our finished HQ NPC
+						end
 					end
 					id,marker = next(evList,id)					
 				end
-				d("No unfinished HeartQuest with SubRegionID "..tostring(ml_task_hub:CurrentTask().subRegion).." nearby found, I guess we are done here.")
-				ml_task_hub:CurrentTask().completed = true
-				return true
-			else
-				-- no subregion was given, try a default way of checking for HQ
-				local evList = MapMarkerList("nearest,onmesh,issubregion,contentID="..GW2.MAPMARKER.HeartQuest)
-				if ( evList ) then 
-					local i,marker = next(evList)
-					if ( i and marker ) then
-						return false
-					end				
+				
+				-- If we are here, it means we are not close enough to the HQ to see the NPC (and completion data)
+				-- 1st time this is the case, we walk back to where the HQ position actually is and check if we completed the HQ or not				
+				if ( ml_task_hub:CurrentTask().checkHQNPCTimer == 0 ) then
+					-- Walk back to HQ
+					c_CheckHQCompleted.needCompletionCheck = true
+					ml_task_hub:CurrentTask().checkHQNPCTimer = ml_global_information.Now
+				
+				else
+				
+					if ( c_CheckHQCompleted.needCompletionCheck == false ) then
+						-- we should have visited/found the HQ-NPC by now and the StayNearHQ should move our bot back to the HQtask position
+						-- reset the checkHQNPCTimer that makes the bot walk to HQ NPC again after half the HQ task time or 10 minutes
+						local nextHQCheck = 600
+						if ( tonumber(ml_task_hub:CurrentTask().maxduration) ~= 0 and tonumber(ml_task_hub:CurrentTask().maxduration) > 180 and tonumber(ml_task_hub:CurrentTask().maxduration) < 6000) then
+							nextHQCheck = tonumber(ml_task_hub:CurrentTask().maxduration)
+						end
+						
+						if ( (nextHQCheck-(TimeSince(ml_task_hub:CurrentTask().checkHQNPCTimer)/1000)) < 0 ) then
+							ml_task_hub:CurrentTask().checkHQNPCTimer = ml_global_information.Now
+							c_CheckHQCompleted.needCompletionCheck = true
+							d("Walking to HQ for completion check..")
+							
+						else
+							ml_log(", HQ Check: "..tostring(nextHQCheck-(TimeSince(ml_task_hub:CurrentTask().checkHQNPCTimer)/1000)).."s, ")
+						end
+						
+					end					
 				end
-				-- We are close to the startpoint of the HQ but no unfinished HQ was found
-				d("No unfinished HeartQuest nearby found, I guess we are done here.")
+			
+			else
+				
+				ml_error("No subregion was set in HeartQuest Task, YOU NEED TO SET THE SUBREGION ID!")
 				ml_task_hub:CurrentTask().completed = true
 				return true
 			end
@@ -276,7 +311,70 @@ function c_FightAggroHQ:evaluate()
 	return false
 end
 
--- Interact with stuff than we should interact with 
+
+c_CheckHQCompleted = inheritsFrom( ml_cause )
+e_CheckHQCompleted = inheritsFrom( ml_effect )
+c_CheckHQCompleted.needCompletionCheck = false
+c_CheckHQCompleted.markerPos = nil
+function c_CheckHQCompleted:evaluate()
+	
+	if ( c_CheckHQCompleted.needCompletionCheck ) then
+		
+		if ( c_CheckHQCompleted.markerPos == nil ) then
+		-- get our current HQ marker pos
+		
+			local evList = MapMarkerList("issubregion")
+			local id,marker = next (evList)
+			while ( id and marker ) do
+				if ( marker.subregionID == tonumber(ml_task_hub:CurrentTask().subRegion) ) then						
+					c_CheckHQCompleted.markerPos = marker.pos
+					return true
+				end
+				id,marker = next(evList,id)					
+			end
+			
+			-- no marker with our subregion ID found..we should never be here
+			ml_error("HeartQuest SubRegionID "..tostring(ml_task_hub:CurrentTask().subRegion).." could NOT be found, make sure it is correct!")
+			c_CheckHQCompleted.needCompletionCheck = true
+			
+		else
+		
+			return true
+		end
+	end
+	c_CheckHQCompleted.markerPos = nil
+	c_CheckHQCompleted.needCompletionCheck = false
+	return false
+end
+function e_CheckHQCompleted:execute()
+	ml_log("Returning to HQ, for completion check")
+		
+	local dist = Distance3D(c_CheckHQCompleted.markerPos.x,c_CheckHQCompleted.markerPos.y,c_CheckHQCompleted.markerPos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
+	
+	if ( dist > 500 ) then
+		if ( not gw2_unstuck.HandleStuck() ) then
+			local navResult = tostring(Player:MoveTo(c_CheckHQCompleted.markerPos.x,c_CheckHQCompleted.markerPos.y,c_CheckHQCompleted.markerPos.z,250,false,false,false))		
+			if (tonumber(navResult) < 0) then					
+				d("e_CheckHQCompleted result: "..tonumber(navResult))
+			else				
+				return ml_log(true)
+			end
+		end
+		ml_task_hub:CurrentTask().checkHQNPCTimer = ml_global_information.Now
+	
+	else
+		-- we arrived at the HQ position
+		c_CheckHQCompleted.markerPos = nil
+		c_CheckHQCompleted.needCompletionCheck = false
+		
+	end
+
+	ml_task_hub:CurrentTask().checkHQNPCTimer = ml_global_information.Now
+	return ml_log(true)
+end
+
+
+-- Makes sure we stay inside the radius of our Task, near the task position
 c_StayNearHQ = inheritsFrom( ml_cause )
 e_StayNearHQ = inheritsFrom( ml_effect )
 e_StayNearHQ.walkingback = false
@@ -292,9 +390,8 @@ function c_StayNearHQ:evaluate()
 		if ( maxradius == 0 ) then maxradius = 6000 end
 		
 		if ( dist > maxradius ) then
-			--this will make the TM to walk back to the startposition of this task
-			return true
-			
+			--this will make the TM to walk back to the startposition of this task			
+			return true			
 		end		
 	end
 	e_StayNearHQ.walkingback = false
@@ -308,6 +405,7 @@ function e_StayNearHQ:execute()
 			d("e_StayNearHQ result: "..tonumber(navResult))
 		else
 			e_StayNearHQ.walkingback = true
+			ml_task_hub:CurrentTask().checkHQNPCTimer = ml_global_information.Now -- update the timer for HQ check while walking back
 			return ml_log(true)
 		end
 	end
@@ -580,7 +678,7 @@ function c_HQHandleInteract:evaluate()
 				
 		-- Lets pray that no dumbnut entered bullshit into these ContentID fields -.-
 		-- Search Charlist and Gadgetlist for the wanted targets
-		local TargetList = CharacterList("shortestpath,onmesh,interactable,selectable,contentID="..ml_task_hub:CurrentTask().interactContentIDs..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+		local TargetList = CharacterList("shortestpath,onmesh,interactable,selectable,contentID="..string.gsub(ml_task_hub:CurrentTask().interactContentIDs,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then
@@ -593,7 +691,7 @@ function c_HQHandleInteract:evaluate()
 			end
 		end	
 		
-		local TargetList = GadgetList("shortestpath,onmesh,interactable,selectable,contentID="..ml_task_hub:CurrentTask().interactContentIDs..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+		local TargetList = GadgetList("shortestpath,onmesh,interactable,selectable,contentID="..string.gsub(ml_task_hub:CurrentTask().interactContentIDs,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then
@@ -610,7 +708,7 @@ function c_HQHandleInteract:evaluate()
 	
 	if ( ml_task_hub:CurrentTask().interactContentID2s ~= nil  and ml_task_hub:CurrentTask().interactContentID2s ~= "" and ValidString(ml_task_hub:CurrentTask().interactContentID2s) ) then
 		-- Search Gadgetlist for the wanted targets	
-		local TargetList = GadgetList("shortestpath,onmesh,interactable,selectable,contentID2="..ml_task_hub:CurrentTask().interactContentID2s..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+		local TargetList = GadgetList("shortestpath,onmesh,interactable,selectable,contentID2="..string.gsub(ml_task_hub:CurrentTask().interactContentID2s,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then				
@@ -698,7 +796,7 @@ function c_HQHandleKillEnemy:evaluate()
 		-- Search Charlist and Gadgetlist for the wanted enemies
 		local radius = tonumber(ml_task_hub:CurrentTask().radius)
 		if ( radius == 0 ) then maxradius = 8000 end
-		local TargetList = CharacterList("shortestpath,onmesh,attackable,selectable,alive,contentID="..ml_task_hub:CurrentTask().enemyContentIDs)
+		local TargetList = CharacterList("shortestpath,onmesh,attackable,selectable,alive,contentID="..string.gsub(ml_task_hub:CurrentTask().enemyContentIDs,",",";"))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then
@@ -711,7 +809,7 @@ function c_HQHandleKillEnemy:evaluate()
 			end
 		end	
 		
-		local TargetList = GadgetList("shortestpath,onmesh,attackable,selectable,alive,contentID="..ml_task_hub:CurrentTask().enemyContentIDs)
+		local TargetList = GadgetList("shortestpath,onmesh,attackable,selectable,alive,contentID="..string.gsub(ml_task_hub:CurrentTask().enemyContentIDs,",",";"))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then
@@ -724,7 +822,7 @@ function c_HQHandleKillEnemy:evaluate()
 			end
 		end	
 		
-		local TargetList = GadgetList("shortestpath,onmesh,attackable,selectable,alive,contentID2="..ml_task_hub:CurrentTask().enemyContentIDs)
+		local TargetList = GadgetList("shortestpath,onmesh,attackable,selectable,alive,contentID2="..string.gsub(ml_task_hub:CurrentTask().enemyContentIDs,",",";"))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then

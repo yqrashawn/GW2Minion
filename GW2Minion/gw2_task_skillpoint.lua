@@ -66,16 +66,16 @@ function gw2_task_skillpoint:Init()
 	self:add(ml_element:create( "UseItem", c_UseItem, e_UseItem, 120 ), self.process_elements)	
 	
 	-- HandleConversation
-	self:add(ml_element:create( "HandleConversation", c_HandleConversation, e_HandleConversation, 100 ), self.process_elements)		
+	self:add(ml_element:create( "HandleConversation", c_SPHandleConversation, e_SPHandleConversation, 100 ), self.process_elements)		
 	
 	-- HandleCommune
 	self:add(ml_element:create( "HandleCommune", c_HandleCommune, e_HandleCommune, 85 ), self.process_elements)	
 	
 	-- If a interact contentID / ID2 was given, this will make the bot walk there and interact
-	self:add( ml_element:create( "HandleInteract", c_HQHandleInteract, e_HQHandleInteract, 75 ), self.process_elements)
+	self:add( ml_element:create( "HandleInteract", c_SPHandleInteract, e_SPHandleInteract, 75 ), self.process_elements)
 
 	-- If a Enemy contentID was given, this will make the bot walk there and attack it
-	self:add( ml_element:create( "HandleKillEnemy", c_HQHandleKillEnemy, e_HQHandleKillEnemy, 50 ), self.process_elements)
+	self:add( ml_element:create( "HandleKillEnemy", c_SPHandleKillEnemy, e_SPHandleKillEnemy, 50 ), self.process_elements)
 	
 
 	self:AddTaskCheckCEs()
@@ -228,28 +228,28 @@ end
 
 
 -- Handle conversations by the entered order of the task
-c_HandleConversation = inheritsFrom( ml_cause )
-e_HandleConversation = inheritsFrom( ml_effect )
-e_HandleConversation.lastChatOption = nil
-e_HandleConversation.nextChatOption = nil
-function c_HandleConversation:evaluate()
+c_SPHandleConversation = inheritsFrom( ml_cause )
+e_SPHandleConversation = inheritsFrom( ml_effect )
+e_SPHandleConversation.lastChatOption = nil
+e_SPHandleConversation.nextChatOption = nil
+function c_SPHandleConversation:evaluate()
 	if ( not ml_global_information.Player_InCombat and Player:IsConversationOpen() ) then
 		
-		if ( e_HandleConversation.nextChatOption ~= nil ) then
+		if ( e_SPHandleConversation.nextChatOption ~= nil ) then
 			return true
 		end
 		
 		if ( ml_task_hub:CurrentTask().conversationOrder ~= nil and ml_task_hub:CurrentTask().conversationOrder ~= "" ) then
 			for chatoption in StringSplit(ml_task_hub:CurrentTask().conversationOrder,",") do
-				if ( e_HandleConversation.lastChatOption == nil ) then
-					e_HandleConversation.lastChatOption = tonumber(chatoption)
-					e_HandleConversation.nextChatOption = tonumber(chatoption)
+				if ( e_SPHandleConversation.lastChatOption == nil ) then
+					e_SPHandleConversation.lastChatOption = tonumber(chatoption)
+					e_SPHandleConversation.nextChatOption = tonumber(chatoption)
 					return true
 					
 				else
-					if ( chatoption ~= e_HandleConversation.lastChatOption ) then
-						e_HandleConversation.lastChatOption = tonumber(chatoption)
-						e_HandleConversation.nextChatOption = tonumber(chatoption)
+					if ( chatoption ~= e_SPHandleConversation.lastChatOption ) then
+						e_SPHandleConversation.lastChatOption = tonumber(chatoption)
+						e_SPHandleConversation.nextChatOption = tonumber(chatoption)
 						return true
 					end				
 				end
@@ -262,25 +262,27 @@ function c_HandleConversation:evaluate()
 		end
 	end
 	
-	e_HandleConversation.lastChatOption = nil
-	e_HandleConversation.nextChatOption = nil
+	e_SPHandleConversation.lastChatOption = nil
+	e_SPHandleConversation.nextChatOption = nil
 	return false
 end
-function e_HandleConversation:execute()
-	ml_log("e_HandleConversation ")
+function e_SPHandleConversation:execute()
+	ml_log("e_SPHandleConversation ")
 	
 	local options = Player:GetConversationOptions()
 	if ( TableSize(options) > 0 ) then 
 				
 		local index,option = next ( options)
 		while ( index and option ) do 
-			if ( e_HandleConversation.nextChatOption ~= nil ) then
-				if( option.type == e_HandleConversation.nextChatOption) then
-					d("Selecting Chatoption by type:"..tostring(e_HandleConversation.nextChatOption))
-					Player:SelectConversationOption(e_HandleConversation.nextChatOption)
-					e_HandleConversation.nextChatOption = nil
+			if ( e_SPHandleConversation.nextChatOption ~= nil ) then
+				if( option.type == e_SPHandleConversation.nextChatOption) then
+					d("Selecting Chatoption by type:"..tostring(e_SPHandleConversation.nextChatOption))
+					if ( Player.castinfo.duration == 0 ) then
+						Player:SelectConversationOption(e_SPHandleConversation.nextChatOption)
+					end
+					e_SPHandleConversation.nextChatOption = nil
 					if ( ml_task_hub:CurrentTask().SPType == "Commune" ) then
-						ml_global_information.Wait(5000)
+						ml_global_information.Wait(3000)
 					else
 						ml_global_information.Wait(1200)
 					end
@@ -289,10 +291,12 @@ function e_HandleConversation:execute()
 			else
 				if ( option.index == 0 ) then 
 					d("Selecting First Chatoption:"..tostring(option.type))
-					Player:SelectConversationOption(option.type)
-					e_HandleConversation.nextChatOption = nil
+					if ( Player.castinfo.duration == 0 ) then
+						Player:SelectConversationOption(option.type)
+					end
+					e_SPHandleConversation.nextChatOption = nil
 					if ( ml_task_hub:CurrentTask().SPType == "Commune" ) then
-						ml_global_information.Wait(5000)
+						ml_global_information.Wait(3000)
 					else
 						ml_global_information.Wait(1200)
 					end
@@ -303,80 +307,122 @@ function e_HandleConversation:execute()
 		end
 		
 	else
-		ml_error("e_HandleConversation has no valid options")		
+		ml_error("e_SPHandleConversation has no valid options")		
 	end
-	e_HandleConversation.lastChatOption = nil
-	e_HandleConversation.nextChatOption = nil
+	e_SPHandleConversation.lastChatOption = nil
+	e_SPHandleConversation.nextChatOption = nil
 	return ml_log(false)
 end
 
 c_HandleCommune = inheritsFrom( ml_cause )
 e_HandleCommune = inheritsFrom( ml_effect )
+e_HandleCommune.walkingback = false
+e_HandleCommune.commune = false
 function c_HandleCommune:evaluate()
-	if ( ml_task_hub:CurrentTask().SPType == "Commune" and not ml_global_information.Player_InCombat and not Player:IsConversationOpen() ) then
-		
-		
-	end
+	if ( not ml_global_information.Player_InCombat and not Player:IsConversationOpen() ) then
+		-- goto our task position
+		if ( e_HandleCommune.walkingback ) then return true end 
 	
+		if ( ml_task_hub:CurrentTask().pos ~= nil ) then
+			local startPos = ml_task_hub:CurrentTask().pos
+			local dist = Distance3D(startPos.x,startPos.y,startPos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
+			
+			if ( dist > 100 ) then
+				--this will make the TM to walk back to the startposition of this task			
+				e_HandleCommune.commune = false
+				return true			
+			else			
+				local t = Player:GetInteractableTarget()
+				if ( t and t.interactable and t.selectable ) then
+					e_HandleCommune.commune = true
+					return true
+				end				
+			end		
+		end
+	end
+	e_HandleCommune.commune = false
+	e_HandleCommune.walkingback = false
 	return false
 end
 function e_HandleCommune:execute()
 	ml_log("e_HandleCommune ")
+	if ( not e_HandleCommune.commune ) then
+		if ( not gw2_unstuck.HandleStuck() ) then
+			local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,35,false,false,false))		
+			if (tonumber(navResult) < 0) then					
+				d("e_HandleCommune result: "..tonumber(navResult))
+			else
+				e_HandleCommune.walkingback = true			
+				return ml_log(true)
+			end
+		end
+		e_HandleCommune.walkingback = false
+	end
 	
+	if ( e_HandleCommune.commune == true ) then
+		local t = Player:GetInteractableTarget()
+		if ( t and t.interactable and t.selectable ) then
+			if ( Player.castinfo.duration == 0 ) then
+				Player:Interact(t.id)
+			end
+			ml_global_information.Wait(2000)
+			return true
+		end		
+	end
 	
 	return ml_log(false)
 end
 
 -- Makes sure we dont walk away too far
-c_HQHandleInteract = inheritsFrom( ml_cause )
-e_HQHandleInteract = inheritsFrom( ml_effect )
-e_HQHandleInteract.lastTarget = nil
-e_HQHandleInteract.lastTargetID = nil
-e_HQHandleInteract.lastQueryTmr = 0
-e_HQHandleInteract.WasChecked = false -- to make sure handleinteract is done before enemy checks
-function c_HQHandleInteract:evaluate()
+c_SPHandleInteract = inheritsFrom( ml_cause )
+e_SPHandleInteract = inheritsFrom( ml_effect )
+e_SPHandleInteract.lastTarget = nil
+e_SPHandleInteract.lastTargetID = nil
+e_SPHandleInteract.lastQueryTmr = 0
+e_SPHandleInteract.WasChecked = false -- to make sure handleinteract is done before enemy checks
+function c_SPHandleInteract:evaluate()
 
 	if ( ml_task_hub:CurrentTask().SPType == GetString("taskTypeInteractKill") or ml_task_hub:CurrentTask().SPType == "Commune" ) then 
 		local radius = tonumber(ml_task_hub:CurrentTask().radius)
 		if ( radius == 0 ) then radius = 8000 end
 		
 		-- to prevent hammering the "shortestpath"
-		if ( e_HQHandleInteract.lastTarget ~= nil and e_HQHandleInteract.lastTargetID ~= nil and TimeSince(e_HQHandleInteract.lastQueryTmr) < 2000 ) then
-			if ( ValidTable(CharacterList:Get(e_HQHandleInteract.lastTargetID)) or ValidTable(GadgetList:Get(e_HQHandleInteract.lastTargetID)) ) then			
+		if ( e_SPHandleInteract.lastTarget ~= nil and e_SPHandleInteract.lastTargetID ~= nil and TimeSince(e_SPHandleInteract.lastQueryTmr) < 2000 ) then
+			if ( ValidTable(CharacterList:Get(e_SPHandleInteract.lastTargetID)) or ValidTable(GadgetList:Get(e_SPHandleInteract.lastTargetID)) ) then			
 				return true			
 			end	
 		end
 		
 		-- dont spam it when no target was found
-		if (TimeSince(e_HQHandleInteract.lastQueryTmr) < 1000) then e_HQHandleInteract.WasChecked = false return false end 
-		e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
-		e_HQHandleInteract.WasChecked = true
+		if (TimeSince(e_SPHandleInteract.lastQueryTmr) < 1000) then e_SPHandleInteract.WasChecked = false return false end 
+		e_SPHandleInteract.lastQueryTmr = ml_global_information.Now
+		e_SPHandleInteract.WasChecked = true
 		
 		if ( ml_task_hub:CurrentTask().interactContentIDs ~= nil and ml_task_hub:CurrentTask().interactContentIDs ~= "" and ValidString(ml_task_hub:CurrentTask().interactContentIDs) ) then
 					
 			-- Lets pray that no dumbnut entered bullshit into these ContentID fields -.-
 			-- Search Charlist and Gadgetlist for the wanted targets
-			local TargetList = CharacterList("shortestpath,onmesh,interactable,selectable,contentID="..ml_task_hub:CurrentTask().interactContentIDs..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+			local TargetList = CharacterList("shortestpath,onmesh,interactable,selectable,contentID="..string.gsub(ml_task_hub:CurrentTask().interactContentIDs,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 			if ( TargetList ) then
 				local id,entry = next(TargetList)
 				if (id and entry ) then
 					local tPos = entry.pos				
 					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
-						e_HQHandleInteract.lastTarget = entry 
-						e_HQHandleInteract.lastTargetID = id					
+						e_SPHandleInteract.lastTarget = entry 
+						e_SPHandleInteract.lastTargetID = id					
 						return true
 					end
 				end
 			end	
 			
-			local TargetList = GadgetList("shortestpath,onmesh,interactable,selectable,contentID="..ml_task_hub:CurrentTask().interactContentIDs..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+			local TargetList = GadgetList("shortestpath,onmesh,interactable,selectable,contentID="..string.gsub(ml_task_hub:CurrentTask().interactContentIDs,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 			if ( TargetList ) then
 				local id,entry = next(TargetList)
 				if (id and entry ) then
 					local tPos = entry.pos					
 					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
-						e_HQHandleInteract.lastTarget = entry 
-						e_HQHandleInteract.lastTargetID = id
+						e_SPHandleInteract.lastTarget = entry 
+						e_SPHandleInteract.lastTargetID = id
 						return true
 					end
 				end
@@ -386,42 +432,42 @@ function c_HQHandleInteract:evaluate()
 		
 		if ( ml_task_hub:CurrentTask().interactContentID2s ~= nil  and ml_task_hub:CurrentTask().interactContentID2s ~= "" and ValidString(ml_task_hub:CurrentTask().interactContentID2s) ) then
 			-- Search Gadgetlist for the wanted targets	
-			local TargetList = GadgetList("shortestpath,onmesh,interactable,selectable,contentID2="..ml_task_hub:CurrentTask().interactContentID2s..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+			local TargetList = GadgetList("shortestpath,onmesh,interactable,selectable,contentID2="..string.gsub(ml_task_hub:CurrentTask().interactContentID2s,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 			if ( TargetList ) then
 				local id,entry = next(TargetList)
 				if (id and entry ) then				
 					local tPos = entry.pos
 					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
-						e_HQHandleInteract.lastTarget = entry
-						e_HQHandleInteract.lastTargetID = id
+						e_SPHandleInteract.lastTarget = entry
+						e_SPHandleInteract.lastTargetID = id
 						return true
 					end
 				end
 			end	
 		end
 		
-		e_HQHandleInteract.lastTarget = nil
-		e_HQHandleInteract.lastTargetID = nil
-		e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
+		e_SPHandleInteract.lastTarget = nil
+		e_SPHandleInteract.lastTargetID = nil
+		e_SPHandleInteract.lastQueryTmr = ml_global_information.Now
 	end
 	return false
 end
-function e_HQHandleInteract:execute()
+function e_SPHandleInteract:execute()
 	ml_log("HQHandleInteract ")
-	if ( e_HQHandleInteract.lastTarget and e_HQHandleInteract.lastTarget.onmesh and e_HQHandleInteract.lastTarget.interactable and e_HQHandleInteract.lastTarget.selectable) then 
-		if ( e_HQHandleInteract.lastTarget.isInInteractRange and e_HQHandleInteract.lastTarget.distance < 100) then
+	if ( e_SPHandleInteract.lastTarget and e_SPHandleInteract.lastTarget.onmesh and e_SPHandleInteract.lastTarget.interactable and e_SPHandleInteract.lastTarget.selectable) then 
+		if ( e_SPHandleInteract.lastTarget.isInInteractRange and e_SPHandleInteract.lastTarget.distance < 100) then
 			Player:StopMovement()
 			local target = Player:GetTarget()
-			if (not target or target.id ~= e_HQHandleInteract.lastTarget.id) then
-				Player:SetTarget(e_HQHandleInteract.lastTarget.id)
+			if (not target or target.id ~= e_SPHandleInteract.lastTarget.id) then
+				Player:SetTarget(e_SPHandleInteract.lastTarget.id)
 				return true
 				
 			else
 				ml_log("Interact with Target.. ")
 				if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
-					Player:Interact(e_HQHandleInteract.lastTarget.id)
+					Player:Interact(e_SPHandleInteract.lastTarget.id)
 					-- For TM Conditions
-					ml_task_hub:CurrentTask().lastInteractTargetID = e_HQHandleInteract.lastTarget.id				
+					ml_task_hub:CurrentTask().lastInteractTargetID = e_SPHandleInteract.lastTarget.id				
 					ml_global_information.Wait(1000)					
 				end
 				return ml_log(true)				
@@ -429,9 +475,9 @@ function e_HQHandleInteract:execute()
 			
 		else
 			-- Get in range
-			ml_log(" Getting in InteractRange, Distance:"..tostring(math.floor(e_HQHandleInteract.lastTarget.distance)))			
-			local ePos = e_HQHandleInteract.lastTarget.pos
-			local tRadius = e_HQHandleInteract.lastTarget.radius or 50
+			ml_log(" Getting in InteractRange, Distance:"..tostring(math.floor(e_SPHandleInteract.lastTarget.distance)))			
+			local ePos = e_SPHandleInteract.lastTarget.pos
+			local tRadius = e_SPHandleInteract.lastTarget.radius or 50
 			if ( not gw2_unstuck.HandleStuck() ) then
 				local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,25+tRadius,false,false,true))		
 				if (tonumber(navResult) < 0) then					
@@ -442,87 +488,87 @@ function e_HQHandleInteract:execute()
 			end		
 		end
 	else
-		e_HQHandleInteract.lastTarget = nil
-		e_HQHandleInteract.lastTargetID = nil
-		e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
+		e_SPHandleInteract.lastTarget = nil
+		e_SPHandleInteract.lastTargetID = nil
+		e_SPHandleInteract.lastQueryTmr = ml_global_information.Now
 	end
 	
 	return ml_log(false)
 end
 
 -- Search n Kill the wanted Enemies
-c_HQHandleKillEnemy = inheritsFrom( ml_cause )
-e_HQHandleKillEnemy = inheritsFrom( ml_effect )
-e_HQHandleKillEnemy.lastTarget = nil
-e_HQHandleKillEnemy.lastTargetID = nil
-e_HQHandleKillEnemy.lastQueryTmr = 0
-function c_HQHandleKillEnemy:evaluate()
+c_SPHandleKillEnemy = inheritsFrom( ml_cause )
+e_SPHandleKillEnemy = inheritsFrom( ml_effect )
+e_SPHandleKillEnemy.lastTarget = nil
+e_SPHandleKillEnemy.lastTargetID = nil
+e_SPHandleKillEnemy.lastQueryTmr = 0
+function c_SPHandleKillEnemy:evaluate()
 	
 	if ( ml_task_hub:CurrentTask().SPType == GetString("taskTypeInteractKill") ) then 
 		if ( ml_task_hub:CurrentTask().enemyContentIDs ~= nil and ml_task_hub:CurrentTask().enemyContentIDs ~= "" and  ValidString(ml_task_hub:CurrentTask().enemyContentIDs) ) then
 			-- Lets pray that no dumbnut entered bullshit into these ContentID fields -.-
 			
 			-- to prevent hammering the "shortestpath"
-			if ( e_HQHandleKillEnemy.lastTarget ~= nil and e_HQHandleKillEnemy.lastTargetID ~= nil and TimeSince(e_HQHandleKillEnemy.lastQueryTmr) < 2000 ) then
-				if ( ValidTable(CharacterList:Get(e_HQHandleKillEnemy.lastTargetID)) or ValidTable(GadgetList:Get(e_HQHandleKillEnemy.lastTargetID)) ) then			
+			if ( e_SPHandleKillEnemy.lastTarget ~= nil and e_SPHandleKillEnemy.lastTargetID ~= nil and TimeSince(e_SPHandleKillEnemy.lastQueryTmr) < 2000 ) then
+				if ( ValidTable(CharacterList:Get(e_SPHandleKillEnemy.lastTargetID)) or ValidTable(GadgetList:Get(e_SPHandleKillEnemy.lastTargetID)) ) then			
 					return true			
 				end	
 			end
 			
 			-- dont spam it when no target was found
-			if (e_HQHandleInteract.WasChecked == false or TimeSince(e_HQHandleKillEnemy.lastQueryTmr) < 1000) then return false end 
-			e_HQHandleKillEnemy.lastQueryTmr = ml_global_information.Now
+			if (e_SPHandleInteract.WasChecked == false or TimeSince(e_SPHandleKillEnemy.lastQueryTmr) < 1000) then return false end 
+			e_SPHandleKillEnemy.lastQueryTmr = ml_global_information.Now
 			
 			
 			-- Search Charlist and Gadgetlist for the wanted enemies
 			local radius = tonumber(ml_task_hub:CurrentTask().radius)
 			if ( radius == 0 ) then maxradius = 8000 end
-			local TargetList = CharacterList("shortestpath,onmesh,attackable,selectable,alive,contentID="..ml_task_hub:CurrentTask().enemyContentIDs)
+			local TargetList = CharacterList("shortestpath,onmesh,attackable,selectable,alive,contentID="..string.gsub(ml_task_hub:CurrentTask().enemyContentIDs,",",";"))
 			if ( TargetList ) then
 				local id,entry = next(TargetList)
 				if (id and entry ) then
 					local tPos = entry.pos				 
 					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
-						e_HQHandleKillEnemy.lastTarget = entry					
-						e_HQHandleKillEnemy.lastTargetID = id					
+						e_SPHandleKillEnemy.lastTarget = entry					
+						e_SPHandleKillEnemy.lastTargetID = id					
 						return true
 					end
 				end
 			end	
 			
-			local TargetList = GadgetList("shortestpath,onmesh,attackable,selectable,alive,contentID="..ml_task_hub:CurrentTask().enemyContentIDs)
+			local TargetList = GadgetList("shortestpath,onmesh,attackable,selectable,alive,contentID="..string.gsub(ml_task_hub:CurrentTask().enemyContentIDs,",",";"))
 			if ( TargetList ) then
 				local id,entry = next(TargetList)
 				if (id and entry ) then
 					local tPos = entry.pos				 
 					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
-						e_HQHandleKillEnemy.lastTarget = entry					
-						e_HQHandleKillEnemy.lastTargetID = id
+						e_SPHandleKillEnemy.lastTarget = entry					
+						e_SPHandleKillEnemy.lastTargetID = id
 						return true
 					end
 				end
 			end	
 			
 		end
-		e_HQHandleKillEnemy.lastTarget = nil
-		e_HQHandleKillEnemy.lastTargetID = nil
-		e_HQHandleKillEnemy.lastQueryTmr = ml_global_information.Now
+		e_SPHandleKillEnemy.lastTarget = nil
+		e_SPHandleKillEnemy.lastTargetID = nil
+		e_SPHandleKillEnemy.lastQueryTmr = ml_global_information.Now
 	end
 	return false
 end
-function e_HQHandleKillEnemy:execute()
+function e_SPHandleKillEnemy:execute()
 	ml_log("HQHandleKillEnemy ")
-	if ( e_HQHandleKillEnemy.lastTarget and e_HQHandleKillEnemy.lastTarget.onmesh and e_HQHandleKillEnemy.lastTarget.attackable and e_HQHandleKillEnemy.lastTarget.alive) then 
+	if ( e_SPHandleKillEnemy.lastTarget and e_SPHandleKillEnemy.lastTarget.onmesh and e_SPHandleKillEnemy.lastTarget.attackable and e_SPHandleKillEnemy.lastTarget.alive) then 
 		Player:StopMovement()
 		-- For TM Conditions
-		ml_task_hub:CurrentTask().lastEnemyTargetID = e_HQHandleKillEnemy.lastTarget.id
+		ml_task_hub:CurrentTask().lastEnemyTargetID = e_SPHandleKillEnemy.lastTarget.id
 		ml_task_hub:CurrentTask().lastTargetType = "character"
 		
 		-- Create new Subtask Combat
 		local newTask = gw2_task_combat.Create()
-		newTask.targetID = e_HQHandleKillEnemy.lastTarget.id		
-		newTask.targetPos = e_HQHandleKillEnemy.lastTarget.pos
-		if ( e_HQHandleKillEnemy.lastTarget.isGadget ) then
+		newTask.targetID = e_SPHandleKillEnemy.lastTarget.id		
+		newTask.targetPos = e_SPHandleKillEnemy.lastTarget.pos
+		if ( e_SPHandleKillEnemy.lastTarget.isGadget ) then
 			newTask.targetType = "gadget"
 			ml_task_hub:CurrentTask().lastTargetType = "gadget"
 		end
@@ -533,9 +579,9 @@ function e_HQHandleKillEnemy:execute()
 		
 	end
 	
-	e_HQHandleKillEnemy.lastTarget = nil
-	e_HQHandleKillEnemy.lastTargetID = nil
-	e_HQHandleKillEnemy.lastQueryTmr = ml_global_information.Now
+	e_SPHandleKillEnemy.lastTarget = nil
+	e_SPHandleKillEnemy.lastTargetID = nil
+	e_SPHandleKillEnemy.lastQueryTmr = ml_global_information.Now
 	return ml_log(false)
 end
 

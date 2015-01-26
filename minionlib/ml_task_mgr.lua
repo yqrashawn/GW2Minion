@@ -76,8 +76,7 @@ function ml_UITaskProfile:UpdateTaskPriority()
 		self.tasks[priority].priority = priority
 	end
 end
-function ml_UITaskProfile:Save()
-	d(self)
+function ml_UITaskProfile:Save()	
 	local saveFile = {
 		name = self.name,
 		idcounter = self.idcounter,

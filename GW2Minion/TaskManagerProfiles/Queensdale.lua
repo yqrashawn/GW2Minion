@@ -293,24 +293,36 @@ local obj1 = {
 					["value"] = "219";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "216438";
-					["type"] = "Field";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["value"] = "135266816";
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_KillEnemies"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
 				};
+				["TM_TASK_interactContentID2s"] = {
+					["value"] = "135266816";
+					["type"] = "Field";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["value"] = "44300,44168,44255";
+					["type"] = "Field";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
 				["TM_TASK_maxInteracts"] = {
 					["value"] = "25";
 					["type"] = "Numeric";
 				};
-				["TM_TASK_enemyContentIDs"] = {
-					["value"] = "44300,44168,44255";
+				["TM_TASK_HQType"] = {
+					["value"] = "Interact&Kill";
+					["type"] = "ComboBox";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "216438";
 					["type"] = "Field";
 				};
 				["TM_TASK_maxKills"] = {
@@ -318,10 +330,10 @@ local obj1 = {
 					["type"] = "Numeric";
 				};
 			};
-			["radius"] = 0;
+			["radius"] = "3500";
 			["minlvl"] = "3";
 			["id"] = 11;
-			["maxlvl"] = 80;
+			["maxlvl"] = "80";
 			["partysize"] = 0;
 			["enabled"] = "1";
 			["complete"] = true;
@@ -331,7 +343,7 @@ local obj1 = {
 			["type"] = "HeartQuest";
 			["maxduration"] = "600";
 			["priority"] = 11;
-			["cooldown"] = "300";
+			["cooldown"] = "0";
 			["mappos"] = "-37827/24200/-551";
 		};
 		[12] = {
@@ -374,9 +386,9 @@ local obj1 = {
 		};
 		[14] = {
 			["enabled"] = "1";
-			["radius"] = "8500";
+			["radius"] = "5500";
 			["minlvl"] = "5";
-			["maxlvl"] = 80;
+			["maxlvl"] = "80";
 			["id"] = 14;
 			["partysize"] = 0;
 			["customVars"] = {
@@ -384,28 +396,36 @@ local obj1 = {
 					["value"] = "220";
 					["type"] = "Field";
 				};
-				["TM_TASK_HQType"] = {
-					["value"] = "";
-					["type"] = "ComboBox";
-				};
 				["TM_TASK_interactContentIDs"] = {
 					["value"] = "240811,216400";
-					["type"] = "Field";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["value"] = "135266816";
 					["type"] = "Field";
 				};
 				["TM_TASK_KillEnemies"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
 				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
 				["TM_TASK_maxInteracts"] = {
 					["value"] = "25";
 					["type"] = "Numeric";
 				};
+				["TM_TASK_interactContentID2s"] = {
+					["value"] = "135266816";
+					["type"] = "Field";
+				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "43462,301454,43469,301460,43475";
+					["type"] = "Field";
+				};
+				["TM_TASK_HQType"] = {
+					["value"] = "Interact&Kill";
+					["type"] = "ComboBox";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_maxKills"] = {
@@ -420,7 +440,7 @@ local obj1 = {
 			["type"] = "HeartQuest";
 			["maxduration"] = "1000";
 			["priority"] = 14;
-			["cooldown"] = "300";
+			["cooldown"] = "0";
 			["mappos"] = "-38501/11006/-1057";
 		};
 		[15] = {
@@ -500,6 +520,12 @@ local obj1 = {
 			["mappos"] = "-19948/-4909/-482";
 		};
 		[19] = {
+			["enabled"] = "1";
+			["radius"] = "0";
+			["minlvl"] = "0";
+			["maxlvl"] = 80;
+			["id"] = 69;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_SPType"] = {
 					["value"] = "Interact&Kill";
@@ -526,25 +552,15 @@ local obj1 = {
 					["type"] = "Field";
 				};
 			};
-			["superClass"] = nil --[[functions with upvalue not supported]];
-			["class"] = nil --[[functions with upvalue not supported]];
 			["complete"] = false;
 			["mapid"] = 15;
-			["priority"] = 19;
-			["mappos"] = "-29312/-3945/-1338";
-			["isa"] = nil --[[functions with upvalue not supported]];
-			["radius"] = "0";
-			["minlvl"] = "0";
-			["maxlvl"] = 80;
-			["Create"] = nil --[[functions with upvalue not supported]];
-			["maxduration"] = "0";
 			["minduration"] = 0;
 			["name"] = "SP_Bandit Loot";
-			["id"] = 69;
-			["partysize"] = 0;
-			["enabled"] = "1";
-			["cooldown"] = 0;
 			["type"] = "Skillpoint";
+			["maxduration"] = "0";
+			["priority"] = 19;
+			["cooldown"] = 0;
+			["mappos"] = "-29312/-3945/-1338";
 		};
 		[20] = {
 			["enabled"] = "1";
@@ -1049,7 +1065,7 @@ local obj1 = {
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
-			["name"] = "HQ_Scaver Plateau";
+			["name"] = "HQ_Assist_Seraph";
 			["type"] = "HeartQuest";
 			["maxduration"] = "1000";
 			["priority"] = 37;
@@ -1059,11 +1075,11 @@ local obj1 = {
 		[38] = {
 			["customVars"] = {
 				["TM_TASK_SPType"] = {
-					["value"] = "Commune";
+					["value"] = "";
 					["type"] = "ComboBox";
 				};
 				["TM_TASK_interactContentIDs"] = {
-					["value"] = "243782";
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_conversationOrder"] = {
@@ -1075,7 +1091,7 @@ local obj1 = {
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentID2s"] = {
-					["value"] = "135270912";
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_usableItemIDs"] = {
@@ -1152,10 +1168,6 @@ local obj1 = {
 					["value"] = "148119,232891,43338,";
 					["type"] = "Field";
 				};
-				["TM_TASK_HQType"] = {
-					["value"] = "Interact&Kill";
-					["type"] = "ComboBox";
-				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "43620,43615,43621,43339,337264";
 					["type"] = "Field";
@@ -1164,9 +1176,21 @@ local obj1 = {
 					["value"] = "202375680,135266816";
 					["type"] = "Field";
 				};
+				["TM_TASK_HQType"] = {
+					["value"] = "Interact&Kill";
+					["type"] = "ComboBox";
+				};
 				["TM_TASK_maxInteracts"] = {
 					["value"] = "35";
 					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
 				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "55";
@@ -1187,7 +1211,7 @@ local obj1 = {
 			["maxduration"] = "1000";
 			["priority"] = 40;
 			["cooldown"] = 0;
-			["mappos"] = "8686/16348/-122";
+			["mappos"] = "8510/16311/-96";
 		};
 		[41] = {
 			["customVars"] = {
@@ -1221,15 +1245,15 @@ local obj1 = {
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentIDs"] = {
-					["value"] = "228174,44717";
+					["value"] = "228174";
 					["type"] = "Field";
 				};
-				["TM_TASK_HQType"] = {
-					["value"] = "Interact&Kill";
-					["type"] = "ComboBox";
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
+					["type"] = "Field";
 				};
-				["TM_TASK_enemyContentIDs"] = {
-					["value"] = "44412,43272";
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentID2s"] = {
@@ -1239,6 +1263,14 @@ local obj1 = {
 				["TM_TASK_maxInteracts"] = {
 					["value"] = "50";
 					["type"] = "Numeric";
+				};
+				["TM_TASK_HQType"] = {
+					["value"] = "Interact&Kill";
+					["type"] = "ComboBox";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["value"] = "44412,43272";
+					["type"] = "Field";
 				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "50";
@@ -1259,10 +1291,18 @@ local obj1 = {
 			["enabled"] = "1";
 			["radius"] = "0";
 			["minlvl"] = "9";
-			["maxlvl"] = 80;
+			["maxlvl"] = "80";
 			["id"] = 45;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -1275,33 +1315,12 @@ local obj1 = {
 			["mappos"] = "21269/18218/-1488";
 		};
 		[44] = {
-			["customVars"] = {
-				["TM_TASK_maxKills"] = {
-					["value"] = "35";
-					["type"] = "Numeric";
-				};
-			};
-			["superClass"] = nil --[[functions with upvalue not supported]];
-			["class"] = nil --[[functions with upvalue not supported]];
-			["complete"] = false;
-			["mapid"] = 15;
-			["priority"] = 44;
-			["mappos"] = "29765/20041/-9";
-			["isa"] = nil --[[functions with upvalue not supported]];
-			["radius"] = "2500";
+			["enabled"] = "1";
+			["radius"] = "5000";
 			["minlvl"] = "9";
 			["maxlvl"] = 80;
-			["Create"] = nil --[[functions with upvalue not supported]];
-			["maxduration"] = "300";
-			["minduration"] = 0;
-			["name"] = "HQ_Grind_AssitFisherman Will";
 			["id"] = 68;
 			["partysize"] = 0;
-			["enabled"] = "1";
-			["cooldown"] = 0;
-			["type"] = "Grind";
-		};
-		[45] = {
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "228";
@@ -1324,7 +1343,7 @@ local obj1 = {
 					["type"] = "Field";
 				};
 				["TM_TASK_maxInteracts"] = {
-					["value"] = "35";
+					["value"] = "20";
 					["type"] = "Numeric";
 				};
 				["TM_TASK_HQType"] = {
@@ -1332,33 +1351,78 @@ local obj1 = {
 					["type"] = "ComboBox";
 				};
 				["TM_TASK_enemyContentIDs"] = {
-					["value"] = "283692";
+					["value"] = "283692,301495";
 					["type"] = "Field";
+				};
+				["TM_TASK_maxKills"] = {
+					["value"] = "25";
+					["type"] = "Numeric";
+				};
+			};
+			["complete"] = true;
+			["mapid"] = 15;
+			["minduration"] = 0;
+			["name"] = "HQ_Grind_AssitFisherman Will";
+			["type"] = "HeartQuest";
+			["maxduration"] = "500";
+			["priority"] = 44;
+			["cooldown"] = 0;
+			["mappos"] = "29765/20041/-9";
+		};
+		[45] = {
+			["enabled"] = "1";
+			["radius"] = "8000";
+			["minlvl"] = "9";
+			["maxlvl"] = 80;
+			["id"] = 67;
+			["partysize"] = 0;
+			["customVars"] = {
+				["TM_TASK_subRegion"] = {
+					["value"] = "228";
+					["type"] = "Field";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "35";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["value"] = "283692,301495";
+					["type"] = "Field";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_HQType"] = {
+					["value"] = "Interact&Kill";
+					["type"] = "ComboBox";
 				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "35";
 					["type"] = "Numeric";
 				};
 			};
-			["superClass"] = nil --[[functions with upvalue not supported]];
-			["class"] = nil --[[functions with upvalue not supported]];
 			["complete"] = true;
 			["mapid"] = 15;
-			["priority"] = 45;
-			["mappos"] = "30130/20713/-10";
-			["isa"] = nil --[[functions with upvalue not supported]];
-			["radius"] = "8000";
-			["minlvl"] = "9";
-			["maxlvl"] = 80;
-			["Create"] = nil --[[functions with upvalue not supported]];
-			["maxduration"] = "1000";
 			["minduration"] = 0;
 			["name"] = "HQ_Assist Fisherman Will";
-			["id"] = 67;
-			["partysize"] = 0;
-			["enabled"] = "1";
-			["cooldown"] = 0;
 			["type"] = "HeartQuest";
+			["maxduration"] = "1000";
+			["priority"] = 45;
+			["cooldown"] = 0;
+			["mappos"] = "30130/20713/-10";
 		};
 		[46] = {
 			["enabled"] = "1";
@@ -1662,12 +1726,12 @@ local obj1 = {
 					["value"] = "246268";
 					["type"] = "Field";
 				};
-				["TM_TASK_enemyContentIDs"] = {
-					["value"] = "44150,43494,232674";
-					["type"] = "Field";
-				};
 				["TM_TASK_interactContentID2s"] = {
 					["value"] = "135266816";
+					["type"] = "Field";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["value"] = "44150,43494,232674";
 					["type"] = "Field";
 				};
 				["TM_TASK_HQType"] = {
@@ -1836,11 +1900,11 @@ local obj1 = {
 					["value"] = "43494,232674,43492";
 					["type"] = "Field";
 				};
-				["TM_TASK_enemyContentIDs"] = {
+				["TM_TASK_interactContentID2s"] = {
 					["value"] = "";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentID2s"] = {
+				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "";
 					["type"] = "Field";
 				};
@@ -1961,15 +2025,7 @@ local obj1 = {
 					["value"] = "224";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "43455";
-					["type"] = "Field";
-				};
 				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_pickupSkillID"] = {
 					["value"] = "";
 					["type"] = "Field";
 				};
@@ -1981,13 +2037,21 @@ local obj1 = {
 					["value"] = "30";
 					["type"] = "Numeric";
 				};
-				["TM_TASK_HQType"] = {
-					["value"] = "Interact&Kill";
-					["type"] = "ComboBox";
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
 				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "544,193445,43942,43954";
 					["type"] = "Field";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "43455";
+					["type"] = "Field";
+				};
+				["TM_TASK_HQType"] = {
+					["value"] = "Interact&Kill";
+					["type"] = "ComboBox";
 				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "50";
