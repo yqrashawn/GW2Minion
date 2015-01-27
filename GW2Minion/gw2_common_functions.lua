@@ -3,9 +3,9 @@ gw2_common_functions = {}
 function gw2_common_functions.HasBuffs(entity, buffIDs)
     if ( entity ) then
 		local buffs = entity.buffs
-		if (buffs == nil or TableSize(buffs) == 0) then return false end
+		if (ValidTable(buffs) == false) then return false end
 			
-			for _orids in StringSplit(buffIDs,",") do
+			for _orids in StringSplit(tostring(buffIDs),",") do
 				local found = false
 				for _andid in StringSplit(_orids,"+") do
 					found = false
@@ -29,9 +29,9 @@ end
 
 function gw2_common_functions.BufflistHasBuffs(bufflist, buffIDs)
 	
-	if (bufflist == nil or TableSize(bufflist) == 0) then return false end
+	if (ValidTable(bufflist) == false) then return false end
 		
-	for _orids in StringSplit(buffIDs,",") do
+	for _orids in StringSplit(tostring(buffIDs),",") do
 		local found = false
 		for _andid in StringSplit(_orids,"+") do
 				found = false
