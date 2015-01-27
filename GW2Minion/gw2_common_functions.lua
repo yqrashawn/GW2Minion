@@ -149,7 +149,7 @@ function gw2_common_functions.GetClosestWaypointToPos(mapID,pos)
 	if (ValidTable(mapData)) then
 		local closestDist = 999999
 		for id,wdata in pairs(mapData) do
-			if (data.contested == false) then
+			if (data.contested == false and data.onmesh) then
 				local wPos = data.pos
 				local dist = Distance2D(wPos.x,wPos.y,pos.x,pos.y)
 				if (dist < closestDist) then
