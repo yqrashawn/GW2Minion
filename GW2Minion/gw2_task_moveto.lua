@@ -110,6 +110,7 @@ function gw2_task_moveto:Process()
 					local wDist = Distance2D(waypoint.pos.x,waypoint.pos.y,ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y)
 					if (wDist < (dist/2)) then
 						Player:TeleportToWaypoint(waypoint.id)
+						ml_global_information.Wait(5000)
 					end
 				end
 			else
