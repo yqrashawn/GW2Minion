@@ -32,6 +32,43 @@ function gw2_datamanager.GetLocalMapData( mapid )
 	return mdata
 end
 
+function gw2_datamanager.GetLocalWaypointList( mapid )
+	wdata = {}
+	if (ValidTable(gw2_datamanager.mapData) and tonumber(mapid)) then
+		d("step 1")
+		local mapData = gw2_datamanager.mapData[mapid]
+		if (ValidTable(mapData) and ValidTable(mapData["floors"]) and ValidTable(mapData["floors"])) then
+			d("step 2")
+			local _,floorData = next(mapData["floors"])
+			if (ValidTable(floorData)) then
+				d("step 3")
+				local poiData = floorData["points_of_interest"]
+				if (ValidTable(poiData)) then
+					for id,data in pairs(poiData) do
+						local wInfo = WaypointList:Get(id)
+						if (ValidTable(data) and ValidTable(wInfo) and data["type"] == "waypoint") then
+							local pos = {
+								x = gw2_datamanager.recalc_coords(mapData["continent_rect"],mapData["map_rect"],data["coord"])[1],
+								y = gw2_datamanager.recalc_coords(mapData["continent_rect"],mapData["map_rect"],data["coord"])[2],
+								z = 0,
+							}
+							wdata[id] = {
+								id = id,
+								name = data["name"],
+								pos = (ValidTable(wInfo.pos) and wInfo.pos or pos),
+								discovered = ValidTable(wInfo),
+								contested =  not (wInfo.contested == false)
+								onmesh = not (wInfo.onmesh == false)
+							}
+						end
+					end
+				end
+			end
+		end
+	end
+	return ValidTable(wdata) and wdata or nil
+end
+
 -- converts the coordinates from the data file to ingame coordinates
 function gw2_datamanager.recalc_coords(continent_rect, map_rect, coords)
 	local contrec = {}

@@ -21,6 +21,7 @@ function gw2_task_moveto.Create()
 	newinst.stoppingDistance = 25
 	newinst.use3d = true
 	
+	newinst.useWaypoint = false -- [OPTIONAL] set this when creating the task to use waypoints if closer.
 	newinst.followNavSystem = false
 	newinst.randomMovement = false
 	newinst.alwaysRandomMovement = false
@@ -102,79 +103,91 @@ function gw2_task_moveto:Process()
 			ml_task_hub:CurrentTask().completed = true
 		else
 
-			-- HandleStuck
-			if ( not gw2_unstuck.HandleStuck() ) then
-				
-				-- randomize the randomized movement (lol)
-				local randommovement = ml_task_hub:CurrentTask().randomMovement == true
-				if ( randommovement and not ml_task_hub:CurrentTask().alwaysRandomMovement and math.random(1,2) == 1) then
-					randommovement = false
+			-- Waypoint Usage
+			if (dist > 15000 and ml_task_hub:CurrentTask().useWaypoint == true) then
+				local waypoint = gw2_common_functions.GetClosestWaypointToPos(ml_global_information.CurrentMapID,ml_task_hub:CurrentTask().targetPos)
+				if (ValidTable(waypoint)) then
+					local wDist = Distance2D(waypoint.pos.x,waypoint.pos.y,ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y)
+					if (wDist < (dist/2)) then
+						Player:TeleportToWaypoint(waypoint.id)
+					end
 				end
-				local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_task_hub:CurrentTask().stoppingDistance+ml_task_hub:CurrentTask().targetRadius,ml_task_hub:CurrentTask().followNavSystem,randommovement,ml_task_hub:CurrentTask().smoothTurns)
+			else
 				
-				if ( ml_global_information.ShowDebug and newnodecount ~= dbPNodes ) then
-					dbPNodesLast = dbPNodes
-					dbPNodes = newnodecount
-				end
-				-- Check for increased node count when the targetpos is the same to prevent back n forth twisting and stuck 
-				
-				
-				-- Errorhandling
-				if ( newnodecount < 0 ) then			
-				--[[
-				-1 : Startpoint not on navmesh
-				-2 : Endpoint not on navmesh
-				-3 : No path between start and endpoint found
-				-4 : Path between start and endpoint has a lenght of 0
-				-5 : No path between start and endpoint found
-				-6 : Couldn't find a path
-				-7 : Distance Playerpos-Targetpos < stoppingthreshold
-				-8 : NavMesh is not ready/loaded
-				-9 : Player object not valid
-				-10 : Moveto coordinates are crap
-				]]
+				-- HandleStuck
+				if ( not gw2_unstuck.HandleStuck() ) then
 					
-					if ( newnodecount == -1 ) then
-						ml_error(" -1: Player not on navmesh")
-						-- try to get to the closest point on the navmesh first
-						-- NavigationManager:GetPointToMeshDistance(x,y,z)
-						-- NavigationManager:GetClosestPointOnMesh(x,y,z)
-					elseif ( newnodecount == -2 ) then
-						ml_error(" -2: Endpoint not on navmesh")
-						-- try to get instead to the closest point near the endpoint on the navmesh
-						-- NavigationManager:GetPointToMeshDistance(x,y,z)
-						-- NavigationManager:GetClosestPointOnMesh(x,y,z)
-					elseif ( newnodecount == -7 ) then
-						ml_error(" -7: Distance Playerpos-Targetpos < stoppingthreshold")
-						-- try to lower the targetRadius & stoppingDistance
-						if ( ml_task_hub:CurrentTask().targetRadius > 0 ) then
-							ml_task_hub:CurrentTask().targetRadius = 0 
+					-- randomize the randomized movement (lol)
+					local randommovement = ml_task_hub:CurrentTask().randomMovement == true
+					if ( randommovement and not ml_task_hub:CurrentTask().alwaysRandomMovement and math.random(1,2) == 1) then
+						randommovement = false
+					end
+					local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_task_hub:CurrentTask().stoppingDistance+ml_task_hub:CurrentTask().targetRadius,ml_task_hub:CurrentTask().followNavSystem,randommovement,ml_task_hub:CurrentTask().smoothTurns)
+					
+					if ( ml_global_information.ShowDebug and newnodecount ~= dbPNodes ) then
+						dbPNodesLast = dbPNodes
+						dbPNodes = newnodecount
+					end
+					-- Check for increased node count when the targetpos is the same to prevent back n forth twisting and stuck 
+					
+					
+					-- Errorhandling
+					if ( newnodecount < 0 ) then			
+					--[[
+					-1 : Startpoint not on navmesh
+					-2 : Endpoint not on navmesh
+					-3 : No path between start and endpoint found
+					-4 : Path between start and endpoint has a lenght of 0
+					-5 : No path between start and endpoint found
+					-6 : Couldn't find a path
+					-7 : Distance Playerpos-Targetpos < stoppingthreshold
+					-8 : NavMesh is not ready/loaded
+					-9 : Player object not valid
+					-10 : Moveto coordinates are crap
+					]]
 						
-						elseif ( ml_task_hub:CurrentTask().targetRadius == 0 and ml_task_hub:CurrentTask().stoppingDistance > 0 ) then
-							ml_task_hub:CurrentTask().stoppingDistance = 10 
+						if ( newnodecount == -1 ) then
+							ml_error(" -1: Player not on navmesh")
+							-- try to get to the closest point on the navmesh first
+							-- NavigationManager:GetPointToMeshDistance(x,y,z)
+							-- NavigationManager:GetClosestPointOnMesh(x,y,z)
+						elseif ( newnodecount == -2 ) then
+							ml_error(" -2: Endpoint not on navmesh")
+							-- try to get instead to the closest point near the endpoint on the navmesh
+							-- NavigationManager:GetPointToMeshDistance(x,y,z)
+							-- NavigationManager:GetClosestPointOnMesh(x,y,z)
+						elseif ( newnodecount == -7 ) then
+							ml_error(" -7: Distance Playerpos-Targetpos < stoppingthreshold")
+							-- try to lower the targetRadius & stoppingDistance
+							if ( ml_task_hub:CurrentTask().targetRadius > 0 ) then
+								ml_task_hub:CurrentTask().targetRadius = 0 
 							
-						elseif ( ml_task_hub:CurrentTask().targetRadius == 0 and ml_task_hub:CurrentTask().stoppingDistance <= 10 ) then
-							ml_log("gw2_task_moveto: Distance Playerpos-Targetpos < stoppingthreshold : "..tostring(newnodecount))
+							elseif ( ml_task_hub:CurrentTask().targetRadius == 0 and ml_task_hub:CurrentTask().stoppingDistance > 0 ) then
+								ml_task_hub:CurrentTask().stoppingDistance = 10 
+								
+							elseif ( ml_task_hub:CurrentTask().targetRadius == 0 and ml_task_hub:CurrentTask().stoppingDistance <= 10 ) then
+								ml_log("gw2_task_moveto: Distance Playerpos-Targetpos < stoppingthreshold : "..tostring(newnodecount))
+								ml_task_hub:CurrentTask().completed = true
+							end
+						else
+							d("No Valid Path Found, Result: "..tostring(newnodecount).." To:"..tostring(math.floor(ml_task_hub:CurrentTask().targetPos.x)).."/"..tostring(math.floor(ml_task_hub:CurrentTask().targetPos.y)).."/"..tostring(math.floor(ml_task_hub:CurrentTask().targetPos.z)))
+							ml_log("gw2_task_moveto: No Valid Path : "..tostring(newnodecount))
+							--ml_task_hub:CurrentTask().completed = true
+						
+						end
+
+						ml_task_hub:CurrentTask().FailedNavAttemptsCounter = ml_task_hub:CurrentTask().FailedNavAttemptsCounter + 10
+						
+						if ( ml_task_hub:CurrentTask().FailedNavAttemptsCounter > 10 ) then
+							d("10 x No Valid Path Found, terminating moveto task")
 							ml_task_hub:CurrentTask().completed = true
 						end
+						
 					else
-						d("No Valid Path Found, Result: "..tostring(newnodecount).." To:"..tostring(math.floor(ml_task_hub:CurrentTask().targetPos.x)).."/"..tostring(math.floor(ml_task_hub:CurrentTask().targetPos.y)).."/"..tostring(math.floor(ml_task_hub:CurrentTask().targetPos.z)))
-						ml_log("gw2_task_moveto: No Valid Path : "..tostring(newnodecount))
-						--ml_task_hub:CurrentTask().completed = true
 					
+						ml_task_hub:CurrentTask().FailedNavAttemptsCounter = 0
+						ml_log(true)
 					end
-
-					ml_task_hub:CurrentTask().FailedNavAttemptsCounter = ml_task_hub:CurrentTask().FailedNavAttemptsCounter + 10
-					
-					if ( ml_task_hub:CurrentTask().FailedNavAttemptsCounter > 10 ) then
-						d("10 x No Valid Path Found, terminating moveto task")
-						ml_task_hub:CurrentTask().completed = true
-					end
-					
-				else
-				
-					ml_task_hub:CurrentTask().FailedNavAttemptsCounter = 0
-					ml_log(true)
 				end
 			end
 		end

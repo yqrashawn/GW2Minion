@@ -143,6 +143,24 @@ function gw2_common_functions.FinishEnemy()
 	return false
 end
 
+function gw2_common_functions.GetClosestWaypointToPos(mapID,pos)
+	local waypoint = nil
+	local mapData = gw2_datamanager.GetLocalWaypointList(mapID)
+	if (ValidTable(mapData)) then
+		local closestDist = 999999
+		for id,wdata in pairs(mapData) do
+			if (data.contested == false) then
+				local wPos = data.pos
+				local dist = Distance2D(wPos.x,wPos.y,pos.x,pos.y)
+				if (dist < closestDist) then
+					waypoint = data
+					closestDist = dist
+				end
+			end
+		end
+	end
+	return waypoint
+end
 
 -- Tries to get a "best target" to attack
 function gw2_common_functions.GetBestCharacterTarget( maxrange )
