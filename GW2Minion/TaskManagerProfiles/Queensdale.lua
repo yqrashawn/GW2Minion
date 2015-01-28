@@ -7,6 +7,18 @@ local obj1 = {
 	["tasks"] = {
 		[1] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["type"] = "MoveTo Position";
 			["minlvl"] = 0;
@@ -25,10 +37,22 @@ local obj1 = {
 		};
 		[2] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["type"] = "MoveTo Position";
 			["minlvl"] = 0;
-			["maxlvl"] = 80;
+			["maxlvl"] = "80";
 			["id"] = 2;
 			["enabled"] = "1";
 			["partysize"] = 0;
@@ -43,6 +67,18 @@ local obj1 = {
 		};
 		[3] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["type"] = "MoveTo Position";
 			["minlvl"] = 0;
@@ -61,6 +97,18 @@ local obj1 = {
 		};
 		[4] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["type"] = "MoveTo Position";
 			["minlvl"] = 0;
@@ -251,6 +299,18 @@ local obj1 = {
 		};
 		[9] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["radius"] = "0";
 			["minlvl"] = "0";
@@ -270,6 +330,18 @@ local obj1 = {
 		};
 		[10] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["radius"] = 0;
 			["minlvl"] = 0;
@@ -348,19 +420,31 @@ local obj1 = {
 		};
 		[12] = {
 			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = 0;
+			["radius"] = "0";
+			["minlvl"] = "0";
 			["maxlvl"] = "80";
 			["id"] = 12;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
 			["name"] = "WP_Orchard Waypoint";
 			["type"] = "MoveTo Position";
-			["maxduration"] = 0;
+			["maxduration"] = "0";
 			["priority"] = 12;
 			["cooldown"] = 0;
 			["mappos"] = "-37282/19264/-583";
@@ -373,6 +457,18 @@ local obj1 = {
 			["id"] = 13;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -451,6 +547,10 @@ local obj1 = {
 			["id"] = 15;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_usesTeleport"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -470,6 +570,18 @@ local obj1 = {
 			["id"] = 16;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -503,11 +615,23 @@ local obj1 = {
 		[18] = {
 			["enabled"] = "1";
 			["radius"] = "6";
-			["minlvl"] = 0;
+			["minlvl"] = "0";
 			["maxlvl"] = 80;
 			["id"] = 18;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -570,6 +694,18 @@ local obj1 = {
 			["id"] = 19;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -589,6 +725,18 @@ local obj1 = {
 			["id"] = 20;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -608,6 +756,18 @@ local obj1 = {
 			["id"] = 21;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -714,6 +874,18 @@ local obj1 = {
 		};
 		[26] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["radius"] = 0;
 			["minlvl"] = "8";
@@ -835,6 +1007,18 @@ local obj1 = {
 		};
 		[29] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["radius"] = "0";
 			["minlvl"] = "9";
@@ -854,6 +1038,18 @@ local obj1 = {
 		};
 		[30] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["radius"] = 0;
 			["minlvl"] = "9";
@@ -873,6 +1069,18 @@ local obj1 = {
 		};
 		[31] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["radius"] = 0;
 			["minlvl"] = "9";
@@ -900,21 +1108,29 @@ local obj1 = {
 					["value"] = "232891,147778";
 					["type"] = "Field";
 				};
-				["TM_TASK_HQType"] = {
-					["value"] = "Interact&Kill";
-					["type"] = "ComboBox";
+				["TM_TASK_interactContentID2s"] = {
+					["value"] = "135266816";
+					["type"] = "Field";
 				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "223760";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentID2s"] = {
-					["value"] = "135266816";
-					["type"] = "Field";
+				["TM_TASK_HQType"] = {
+					["value"] = "Interact&Kill";
+					["type"] = "ComboBox";
 				};
 				["TM_TASK_maxInteracts"] = {
 					["value"] = "34";
 					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
 				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "35";
@@ -939,6 +1155,18 @@ local obj1 = {
 		};
 		[33] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["radius"] = 0;
 			["minlvl"] = "7";
@@ -951,13 +1179,25 @@ local obj1 = {
 			["minduration"] = 0;
 			["name"] = "WP_Scaver Waypoint";
 			["type"] = "MoveTo Position";
-			["maxduration"] = 0;
+			["maxduration"] = "0";
 			["priority"] = 33;
 			["cooldown"] = 0;
 			["mappos"] = "-6500/2892/-121";
 		};
 		[34] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["radius"] = 0;
 			["minlvl"] = "7";
@@ -977,6 +1217,18 @@ local obj1 = {
 		};
 		[35] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["radius"] = 0;
 			["minlvl"] = "6";
@@ -1001,7 +1253,7 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = 0;
+			["radius"] = "0";
 			["minlvl"] = "7";
 			["id"] = 38;
 			["maxlvl"] = 80;
@@ -1012,7 +1264,7 @@ local obj1 = {
 			["minduration"] = 0;
 			["name"] = "Vista_Garrison";
 			["type"] = "Vista";
-			["maxduration"] = 0;
+			["maxduration"] = "0";
 			["priority"] = 36;
 			["cooldown"] = 0;
 			["mappos"] = "-6546/11131/-1744";
@@ -1168,12 +1420,12 @@ local obj1 = {
 					["value"] = "148119,232891,43338,";
 					["type"] = "Field";
 				};
-				["TM_TASK_enemyContentIDs"] = {
-					["value"] = "43620,43615,43621,43339,337264";
-					["type"] = "Field";
-				};
 				["TM_TASK_interactContentID2s"] = {
 					["value"] = "202375680,135266816";
+					["type"] = "Field";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["value"] = "43620,43615,43621,43339,337264";
 					["type"] = "Field";
 				};
 				["TM_TASK_HQType"] = {
@@ -1215,6 +1467,18 @@ local obj1 = {
 		};
 		[41] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["radius"] = "8";
 			["minlvl"] = "0";
@@ -1244,15 +1508,7 @@ local obj1 = {
 					["value"] = "227";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "228174";
-					["type"] = "Field";
-				};
 				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_pickupSkillID"] = {
 					["value"] = "";
 					["type"] = "Field";
 				};
@@ -1264,13 +1520,21 @@ local obj1 = {
 					["value"] = "50";
 					["type"] = "Numeric";
 				};
-				["TM_TASK_HQType"] = {
-					["value"] = "Interact&Kill";
-					["type"] = "ComboBox";
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
 				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "44412,43272";
 					["type"] = "Field";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "228174";
+					["type"] = "Field";
+				};
+				["TM_TASK_HQType"] = {
+					["value"] = "Interact&Kill";
+					["type"] = "ComboBox";
 				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "50";
@@ -1295,6 +1559,10 @@ local obj1 = {
 			["id"] = 45;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
 				["TM_TASK_smoothTurns"] = {
 					["value"] = "1";
 					["type"] = "CheckBox";
@@ -1326,15 +1594,7 @@ local obj1 = {
 					["value"] = "228";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
 				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_pickupSkillID"] = {
 					["value"] = "";
 					["type"] = "Field";
 				};
@@ -1346,13 +1606,21 @@ local obj1 = {
 					["value"] = "20";
 					["type"] = "Numeric";
 				};
-				["TM_TASK_HQType"] = {
-					["value"] = "Interact&Kill";
-					["type"] = "ComboBox";
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
 				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "283692,301495";
 					["type"] = "Field";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_HQType"] = {
+					["value"] = "Interact&Kill";
+					["type"] = "ComboBox";
 				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "25";
@@ -1426,6 +1694,111 @@ local obj1 = {
 		};
 		[46] = {
 			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = "6";
+			["maxlvl"] = "80";
+			["id"] = 70;
+			["partysize"] = 0;
+			["customVars"] = {
+				["TM_TASK_usesTeleport"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_tIDuration"] = {
+					["value"] = "3";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "206768";
+					["type"] = "Field";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+			};
+			["complete"] = true;
+			["mapid"] = 15;
+			["minduration"] = 0;
+			["name"] = "I_Erase_Graffiti_1";
+			["type"] = "Interact";
+			["maxduration"] = 0;
+			["priority"] = 46;
+			["cooldown"] = "5";
+			["mappos"] = "35172/21859/-559";
+		};
+		[47] = {
+			["customVars"] = {
+				["TM_TASK_usesTeleport"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_tIDuration"] = {
+					["value"] = "3";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "206768";
+					["type"] = "Field";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+			};
+			["radius"] = 0;
+			["minlvl"] = "0";
+			["id"] = 71;
+			["maxlvl"] = 80;
+			["enabled"] = "1";
+			["partysize"] = 0;
+			["complete"] = true;
+			["mapid"] = 15;
+			["minduration"] = 0;
+			["name"] = "I_Erase_Graffiti_II";
+			["type"] = "Interact";
+			["maxduration"] = 0;
+			["priority"] = 47;
+			["cooldown"] = "0";
+			["mappos"] = "35341/20948/-576";
+		};
+		[48] = {
+			["customVars"] = {
+				["TM_TASK_usesTeleport"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_tIDuration"] = {
+					["value"] = "3";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "206768";
+					["type"] = "Field";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+			};
+			["radius"] = 0;
+			["minlvl"] = 0;
+			["id"] = 72;
+			["maxlvl"] = 80;
+			["enabled"] = "1";
+			["partysize"] = 0;
+			["complete"] = true;
+			["mapid"] = 15;
+			["minduration"] = 0;
+			["name"] = "I_Erase_Graffiti_III";
+			["type"] = "Interact";
+			["maxduration"] = 0;
+			["priority"] = 48;
+			["cooldown"] = 0;
+			["mappos"] = "36050/21961/-595";
+		};
+		[49] = {
+			["enabled"] = "1";
 			["radius"] = "6000";
 			["minlvl"] = "12";
 			["maxlvl"] = "80";
@@ -1475,11 +1848,11 @@ local obj1 = {
 			["name"] = "HQ_Help the citizens of Beetletun";
 			["type"] = "HeartQuest";
 			["maxduration"] = "1000";
-			["priority"] = 46;
+			["priority"] = 49;
 			["cooldown"] = 0;
 			["mappos"] = "34395/21453/-557";
 		};
-		[47] = {
+		[50] = {
 			["enabled"] = "1";
 			["radius"] = "0";
 			["minlvl"] = "12";
@@ -1487,6 +1860,18 @@ local obj1 = {
 			["id"] = 47;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -1494,11 +1879,11 @@ local obj1 = {
 			["name"] = "WP_Beetletun Waypoint";
 			["type"] = "MoveTo Position";
 			["maxduration"] = "0";
-			["priority"] = 47;
+			["priority"] = 50;
 			["cooldown"] = 0;
 			["mappos"] = "37242/21398/-840";
 		};
-		[48] = {
+		[51] = {
 			["enabled"] = "1";
 			["radius"] = 0;
 			["minlvl"] = "12";
@@ -1537,11 +1922,11 @@ local obj1 = {
 			["name"] = "SP_Carnie Jeb";
 			["type"] = "Skillpoint";
 			["maxduration"] = 0;
-			["priority"] = 48;
+			["priority"] = 51;
 			["cooldown"] = 0;
 			["mappos"] = "40021/22966/-1084";
 		};
-		[49] = {
+		[52] = {
 			["enabled"] = "1";
 			["radius"] = 0;
 			["minlvl"] = "12";
@@ -1560,15 +1945,15 @@ local obj1 = {
 			["name"] = "Vista_Shire of Beetletun";
 			["type"] = "Vista";
 			["maxduration"] = 0;
-			["priority"] = 49;
+			["priority"] = 52;
 			["cooldown"] = 0;
 			["mappos"] = "37853/18823/-904";
 		};
-		[50] = {
+		[53] = {
 			["enabled"] = "1";
 			["radius"] = "15000";
 			["minlvl"] = "12";
-			["maxlvl"] = 80;
+			["maxlvl"] = "80";
 			["id"] = 50;
 			["partysize"] = 0;
 			["customVars"] = {
@@ -1580,24 +1965,32 @@ local obj1 = {
 					["value"] = "44575";
 					["type"] = "Field";
 				};
-				["TM_TASK_HQType"] = {
-					["value"] = "Interact&Kill";
-					["type"] = "ComboBox";
+				["TM_TASK_interactContentID2s"] = {
+					["value"] = "";
+					["type"] = "Field";
 				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "43494,232674,43492";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentID2s"] = {
-					["value"] = "";
-					["type"] = "Field";
+				["TM_TASK_HQType"] = {
+					["value"] = "Interact&Kill";
+					["type"] = "ComboBox";
 				};
 				["TM_TASK_maxInteracts"] = {
 					["value"] = "50";
 					["type"] = "Numeric";
 				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
 				["TM_TASK_maxKills"] = {
-					["value"] = "50";
+					["value"] = "25";
 					["type"] = "Numeric";
 				};
 			};
@@ -1607,11 +2000,11 @@ local obj1 = {
 			["name"] = "HQ_Protect Beetletun farmers";
 			["type"] = "HeartQuest";
 			["maxduration"] = "1500";
-			["priority"] = 50;
+			["priority"] = 53;
 			["cooldown"] = 0;
 			["mappos"] = "37618/-5845/-2887";
 		};
-		[51] = {
+		[54] = {
 			["enabled"] = "1";
 			["radius"] = "0";
 			["minlvl"] = "12";
@@ -1619,6 +2012,18 @@ local obj1 = {
 			["id"] = 51;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -1626,11 +2031,11 @@ local obj1 = {
 			["name"] = "POI_BeetletunFarms";
 			["type"] = "MoveTo Position";
 			["maxduration"] = "0";
-			["priority"] = 51;
+			["priority"] = 54;
 			["cooldown"] = 0;
 			["mappos"] = "28882/10112/-1166";
 		};
-		[52] = {
+		[55] = {
 			["enabled"] = "1";
 			["radius"] = 0;
 			["minlvl"] = "12";
@@ -1638,6 +2043,18 @@ local obj1 = {
 			["id"] = 52;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -1645,11 +2062,11 @@ local obj1 = {
 			["name"] = "POI_QueensForest";
 			["type"] = "MoveTo Position";
 			["maxduration"] = 0;
-			["priority"] = 52;
+			["priority"] = 55;
 			["cooldown"] = 0;
 			["mappos"] = "14880/8493/-1522";
 		};
-		[53] = {
+		[56] = {
 			["enabled"] = "1";
 			["radius"] = 0;
 			["minlvl"] = "10";
@@ -1668,11 +2085,11 @@ local obj1 = {
 			["name"] = "Vista_Krytan Freeholds";
 			["type"] = "Vista";
 			["maxduration"] = 0;
-			["priority"] = 53;
+			["priority"] = 56;
 			["cooldown"] = 0;
 			["mappos"] = "15059/5934/-2036";
 		};
-		[54] = {
+		[57] = {
 			["enabled"] = "1";
 			["radius"] = 0;
 			["minlvl"] = "11";
@@ -1680,6 +2097,18 @@ local obj1 = {
 			["id"] = 54;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -1687,11 +2116,11 @@ local obj1 = {
 			["name"] = "WP_Krytan Freeholds";
 			["type"] = "MoveTo Position";
 			["maxduration"] = 0;
-			["priority"] = 54;
+			["priority"] = 57;
 			["cooldown"] = 0;
 			["mappos"] = "17611/5566/-1436";
 		};
-		[55] = {
+		[58] = {
 			["enabled"] = "1";
 			["radius"] = 0;
 			["minlvl"] = "11";
@@ -1699,6 +2128,18 @@ local obj1 = {
 			["id"] = 55;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -1706,13 +2147,13 @@ local obj1 = {
 			["name"] = "POI_Krytan Freeholds";
 			["type"] = "MoveTo Position";
 			["maxduration"] = 0;
-			["priority"] = 55;
+			["priority"] = 58;
 			["cooldown"] = 0;
 			["mappos"] = "18610/1223/-1432";
 		};
-		[56] = {
+		[59] = {
 			["enabled"] = "1";
-			["radius"] = "6000";
+			["radius"] = "7000";
 			["minlvl"] = "11";
 			["maxlvl"] = "80";
 			["id"] = 56;
@@ -1760,12 +2201,12 @@ local obj1 = {
 			["minduration"] = 0;
 			["name"] = "HQ_Keep the monastery";
 			["type"] = "HeartQuest";
-			["maxduration"] = 0;
-			["priority"] = 56;
+			["maxduration"] = "0";
+			["priority"] = 59;
 			["cooldown"] = 0;
 			["mappos"] = "18075/-32/-1426";
 		};
-		[57] = {
+		[60] = {
 			["enabled"] = "1";
 			["radius"] = "0";
 			["minlvl"] = "12";
@@ -1773,6 +2214,18 @@ local obj1 = {
 			["id"] = 57;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -1780,11 +2233,11 @@ local obj1 = {
 			["name"] = "POI_KrytanFreeholds";
 			["type"] = "MoveTo Position";
 			["maxduration"] = 0;
-			["priority"] = 57;
+			["priority"] = 60;
 			["cooldown"] = 0;
 			["mappos"] = "26540/1311/-1708";
 		};
-		[58] = {
+		[61] = {
 			["enabled"] = "1";
 			["radius"] = 0;
 			["minlvl"] = "12";
@@ -1792,6 +2245,18 @@ local obj1 = {
 			["id"] = 58;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -1799,11 +2264,11 @@ local obj1 = {
 			["name"] = "WP_Tunwatch Redoubt Waypoint";
 			["type"] = "MoveTo Position";
 			["maxduration"] = 0;
-			["priority"] = 58;
+			["priority"] = 61;
 			["cooldown"] = 0;
 			["mappos"] = "30629/4010/-1171";
 		};
-		[59] = {
+		[62] = {
 			["enabled"] = "1";
 			["radius"] = "0";
 			["minlvl"] = "13";
@@ -1811,6 +2276,18 @@ local obj1 = {
 			["id"] = 59;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -1818,11 +2295,11 @@ local obj1 = {
 			["name"] = "POI_Salmas Heath";
 			["type"] = "MoveTo Position";
 			["maxduration"] = "0";
-			["priority"] = 59;
+			["priority"] = 62;
 			["cooldown"] = 0;
 			["mappos"] = "39667/-5355/-3057";
 		};
-		[60] = {
+		[63] = {
 			["enabled"] = "1";
 			["radius"] = 0;
 			["minlvl"] = "13";
@@ -1830,18 +2307,30 @@ local obj1 = {
 			["id"] = 60;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
 			["name"] = "POI_Orlaf Escarpments";
 			["type"] = "MoveTo Position";
-			["maxduration"] = 0;
-			["priority"] = 60;
+			["maxduration"] = "0";
+			["priority"] = 63;
 			["cooldown"] = 0;
 			["mappos"] = "29861/-7230/-3625";
 		};
-		[61] = {
+		[64] = {
 			["enabled"] = "1";
 			["radius"] = "0";
 			["minlvl"] = "14";
@@ -1880,15 +2369,15 @@ local obj1 = {
 			["name"] = "SP_Tamini Place of Power";
 			["type"] = "Skillpoint";
 			["maxduration"] = "500";
-			["priority"] = 61;
+			["priority"] = 64;
 			["cooldown"] = 0;
 			["mappos"] = "35157/-20316/-2289";
 		};
-		[62] = {
+		[65] = {
 			["enabled"] = "1";
-			["radius"] = 0;
+			["radius"] = "3000";
 			["minlvl"] = "14";
-			["maxlvl"] = 80;
+			["maxlvl"] = "80";
 			["id"] = 62;
 			["partysize"] = 0;
 			["customVars"] = {
@@ -1897,7 +2386,7 @@ local obj1 = {
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentIDs"] = {
-					["value"] = "43494,232674,43492";
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentID2s"] = {
@@ -1905,7 +2394,7 @@ local obj1 = {
 					["type"] = "Field";
 				};
 				["TM_TASK_enemyContentIDs"] = {
-					["value"] = "";
+					["value"] = "43494,232674,43492";
 					["type"] = "Field";
 				};
 				["TM_TASK_HQType"] = {
@@ -1932,14 +2421,14 @@ local obj1 = {
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
-			["name"] = "HQ_Taminn Foothills";
+			["name"] = "HQ_Unite the ettins";
 			["type"] = "HeartQuest";
-			["maxduration"] = "1000";
-			["priority"] = 62;
+			["maxduration"] = "500";
+			["priority"] = 65;
 			["cooldown"] = 0;
 			["mappos"] = "33263/-20301/-2238";
 		};
-		[63] = {
+		[66] = {
 			["enabled"] = "1";
 			["radius"] = 0;
 			["minlvl"] = "13";
@@ -1947,6 +2436,18 @@ local obj1 = {
 			["id"] = 63;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -1954,11 +2455,11 @@ local obj1 = {
 			["name"] = "POI_Taminn Footholds";
 			["type"] = "MoveTo Position";
 			["maxduration"] = "0";
-			["priority"] = 63;
+			["priority"] = 66;
 			["cooldown"] = 0;
 			["mappos"] = "27561/-23441/-2281";
 		};
-		[64] = {
+		[67] = {
 			["enabled"] = "1";
 			["radius"] = 0;
 			["minlvl"] = "13";
@@ -1966,19 +2467,43 @@ local obj1 = {
 			["id"] = 64;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
 			["name"] = "WP_Godslost Swamp";
 			["type"] = "MoveTo Position";
-			["maxduration"] = 0;
-			["priority"] = 64;
+			["maxduration"] = "0";
+			["priority"] = 67;
 			["cooldown"] = 0;
 			["mappos"] = "13095/-24613/-270";
 		};
-		[65] = {
+		[68] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["radius"] = "0";
 			["minlvl"] = "14";
@@ -1992,11 +2517,11 @@ local obj1 = {
 			["name"] = "POI_Godslost Swamp";
 			["type"] = "MoveTo Position";
 			["maxduration"] = "0";
-			["priority"] = 65;
+			["priority"] = 68;
 			["cooldown"] = 0;
 			["mappos"] = "11108/-12840/18";
 		};
-		[66] = {
+		[69] = {
 			["customVars"] = {
 				["TM_TASK_usesTeleport"] = {
 					["value"] = "0";
@@ -2015,11 +2540,11 @@ local obj1 = {
 			["name"] = "Vista_Godslost Swamp";
 			["type"] = "Vista";
 			["maxduration"] = "0";
-			["priority"] = 66;
+			["priority"] = 69;
 			["cooldown"] = 0;
 			["mappos"] = "11518/-11686/-1198";
 		};
-		[67] = {
+		[70] = {
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "224";
@@ -2070,12 +2595,24 @@ local obj1 = {
 			["name"] = "HQ_Help historian Garrod";
 			["type"] = "HeartQuest";
 			["maxduration"] = "1000";
-			["priority"] = 67;
+			["priority"] = 70;
 			["cooldown"] = 0;
 			["mappos"] = "13712/-8581/-71";
 		};
-		[68] = {
+		[71] = {
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["radius"] = "0";
 			["minlvl"] = "14";
@@ -2089,11 +2626,11 @@ local obj1 = {
 			["name"] = "POI_Godslost Swamp2";
 			["type"] = "MoveTo Position";
 			["maxduration"] = "0";
-			["priority"] = 68;
+			["priority"] = 71;
 			["cooldown"] = 0;
 			["mappos"] = "17557/-10779/-44";
 		};
-		[69] = {
+		[72] = {
 			["enabled"] = "1";
 			["radius"] = 0;
 			["minlvl"] = "14";
@@ -2101,6 +2638,18 @@ local obj1 = {
 			["id"] = 65;
 			["partysize"] = 0;
 			["customVars"] = {
+				["TM_TASK_randomTargetPosition"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["value"] = "1";
+					["type"] = "CheckBox";
+				};
+				["TM_TASK_randomMovement"] = {
+					["value"] = "0";
+					["type"] = "CheckBox";
+				};
 			};
 			["complete"] = true;
 			["mapid"] = 15;
@@ -2108,12 +2657,12 @@ local obj1 = {
 			["name"] = "WP_godslostSwamp";
 			["type"] = "MoveTo Position";
 			["maxduration"] = 0;
-			["priority"] = 69;
+			["priority"] = 72;
 			["cooldown"] = 0;
 			["mappos"] = "20626/-10645/-76";
 		};
 	};
-	["idcounter"] = 69;
+	["idcounter"] = 72;
 	["version"] = 1;
 }
 return obj1

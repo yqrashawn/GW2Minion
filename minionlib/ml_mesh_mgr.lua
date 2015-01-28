@@ -911,8 +911,8 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 						
 						-- give the bot some time to gain speed before we jump for longer jumps
 						local dist = Distance2D(ePos.x,ePos.y,sPos.x,sPos.y)
-						--local heightdiff = math.abs(ePos.z - pPos.z)
-						
+						local heightdiff = math.abs(ePos.z - pPos.z)
+						--d(heightdiff)
 						if ( dist > 125) then
 							ml_mesh_mgr.OMCThrottle = tickcount + 100
 							return

@@ -227,8 +227,9 @@ end
 
 -- TaskManager functions
 function gw2_task_moveto:UIInit_TM()
-	ml_task_mgr.NewCheckBox(GetString("taskRandomMove"), "randomMovement", "0")
+	ml_task_mgr.NewCheckBox(GetString("randomPaths"), "randomMovement", "0")
 	ml_task_mgr.NewCheckBox(GetString("taskSmoothTurn"), "smoothTurns", "1")
+	ml_task_mgr.NewCheckBox(GetString("taskRandomPos"), "randomTargetPosition", "0")
 end
 -- TaskManager function: Checks for custom conditions to start this task
 function gw2_task_moveto.CanTaskStart_TM()

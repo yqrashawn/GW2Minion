@@ -103,13 +103,21 @@ function e_RunTask:execute()
 			end
 			
 		else
-							
+			-- Moving to startposition of task			
 			local startPos = ml_task_hub:CurrentTask().mytask.pos
+			-- Randomize the targetpos a bit, to not make all bots walk to the exact point..
+			if ( ml_task_hub:CurrentTask().name == "MoveTo" and ml_task_hub:CurrentTask().randomTargetPosition and ml_task_hub:CurrentTask().randomTargetPosition == "1" )  then
+				local rPos = NavigationManager:GetRandomPointOnCircle(startPos.x,startPos.y,startPos.z,50,350)
+				if ( ValidTable(rPos) ) then
+					startPos = rPos
+				end
+			end
+			
 			local dist = Distance3D(startPos.x,startPos.y,startPos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
 			d("Distance to TaskStartPosition : "..tostring(dist))
 			if ( dist > 50 ) then
 				local newTask = gw2_task_moveto.Create()
-				newTask.name = "MoveTo Task "..ml_task_hub:CurrentTask().mytask.name.." StartPosition"
+				newTask.name = "Moveing to StartPosition of "..ml_task_hub:CurrentTask().mytask.name
 				newTask.targetPos = startPos
 				if (ml_task_hub:CurrentTask().mytask.randomMovement) then
 					newTask.randomMovement = ml_task_hub:CurrentTask().mytask.randomMovement == "1"

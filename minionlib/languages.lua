@@ -665,6 +665,9 @@ strings =
 		taskSkillpoint					= "Skillpoint",
 		taskTypeInteractKill			= "Interact&Kill",
 		taskAllowTeleports				= "Allow short Teleports",
+		taskTypeInteract				= "Interact",
+		taskSmoothTurn					= "Smooth Turning",
+		taskRandomPos					= "Randomize Targetposition",
 		
     },                                  
     ["cn"] =                            
@@ -1338,6 +1341,9 @@ strings =
 		taskSkillpoint					= "Skillpoint",
 		taskTypeInteractKill			= "Interact&Kill",
 		taskAllowTeleports				= "Allow short Teleports",
+		taskTypeInteract				= "Interact",
+		taskSmoothTurn					= "Smooth Turning",
+		taskRandomPos					= "Randomize Targetposition",
 	},
     ["jp"] =
     {
@@ -1998,6 +2004,9 @@ strings =
 		taskSkillpoint					= "Skillpoint",
 		taskTypeInteractKill			= "Interact&Kill",
 		taskAllowTeleports				= "Allow short Teleports",
+		taskTypeInteract				= "Interact",
+		taskSmoothTurn					= "Smooth Turning",
+		taskRandomPos					= "Randomize Targetposition",
 	},   
     ["de"] =
     {
@@ -2659,6 +2668,9 @@ strings =
 		taskSkillpoint					= "Skillpoint",
 		taskTypeInteractKill			= "Interact&Kill",
 		taskAllowTeleports				= "Allow short Teleports",
+		taskTypeInteract				= "Interact",
+		taskSmoothTurn					= "Smooth Turning",
+		taskRandomPos					= "Randomize Targetposition",
 	},     
     ["fr"] =
     {
@@ -3332,6 +3344,9 @@ strings =
 		taskSkillpoint					= "Skillpoint",
 		taskTypeInteractKill			= "Interact&Kill",
 		taskAllowTeleports				= "Allow short Teleports",
+		taskTypeInteract				= "Interact",
+		taskSmoothTurn					= "Smooth Turning",
+		taskRandomPos					= "Randomize Targetposition",
 	},       
     ["ru"] =
     {
@@ -3991,7 +4006,9 @@ strings =
 		taskSkillpoint					= "Skillpoint",
 		taskTypeInteractKill			= "Interact&Kill",
 		taskAllowTeleports				= "Allow short Teleports",
-		
+		taskTypeInteract				= "Interact",
+		taskSmoothTurn					= "Smooth Turning",
+		taskRandomPos					= "Randomize Targetposition",
 	},    	
 
 }

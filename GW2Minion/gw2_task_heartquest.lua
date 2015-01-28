@@ -120,7 +120,7 @@ function gw2_task_heartquest:task_complete_eval()
 						
 						if ( marker.contentID == GW2.MAPMARKER.HeartQuest ) then							
 							c_CheckHQCompleted.markerPos = nil
-							c_CheckHQCompleted.needCompletionCheck = false
+							c_CheckHQCompleted.needCompletionCheck = false							
 							return false-- we found our unfinished HQ NPC
 						
 						elseif ( marker.contentID == GW2.MAPMARKER.HeartQuestComplete ) then							
@@ -378,6 +378,7 @@ end
 c_StayNearHQ = inheritsFrom( ml_cause )
 e_StayNearHQ = inheritsFrom( ml_effect )
 e_StayNearHQ.walkingback = false
+e_StayNearHQ.walkingbackRandomPos = nil
 function c_StayNearHQ:evaluate()
 	
 	if ( e_StayNearHQ.walkingback ) then return true end 
@@ -390,17 +391,31 @@ function c_StayNearHQ:evaluate()
 		if ( maxradius == 0 ) then maxradius = 6000 end
 		
 		if ( dist > maxradius ) then
-			--this will make the TM to walk back to the startposition of this task			
+			--this will make the TM to walk back to the startposition of this task, randomize this pos a bit
+			if ( maxradius > 750 ) then
+				local rPos = NavigationManager:GetRandomPointOnCircle(startPos.x,startPos.y,startPos.z,250,750)
+				if ( rPos ) then
+					e_StayNearHQ.walkingbackRandomPos = rPos
+				else
+					e_StayNearHQ.walkingbackRandomPos = nil
+				end
+			end
 			return true			
 		end		
 	end
+	e_StayNearHQ.walkingbackRandomPos = nil
 	e_StayNearHQ.walkingback = false
 	return false
 end
 function e_StayNearHQ:execute()
 	ml_log("e_StayNearHQ ")
 	if ( not gw2_unstuck.HandleStuck() ) then
-		local navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,250,false,false,false))		
+		local navResult = 0
+		if ( e_StayNearHQ.walkingbackRandomPos ~= nil ) then
+			navResult = tostring(Player:MoveTo(e_StayNearHQ.walkingbackRandomPos.x,e_StayNearHQ.walkingbackRandomPos.y,e_StayNearHQ.walkingbackRandomPos.z,100,false,false,false))
+		else
+			navResult = tostring(Player:MoveTo(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,250,false,false,false))
+		end
 		if (tonumber(navResult) < 0) then					
 			d("e_StayNearHQ result: "..tonumber(navResult))
 		else
@@ -730,7 +745,7 @@ end
 function e_HQHandleInteract:execute()
 	ml_log("HQHandleInteract ")
 	if ( e_HQHandleInteract.lastTarget and e_HQHandleInteract.lastTarget.onmesh and e_HQHandleInteract.lastTarget.interactable and e_HQHandleInteract.lastTarget.selectable) then 
-		if ( e_HQHandleInteract.lastTarget.isInInteractRange and e_HQHandleInteract.lastTarget.distance < 100) then
+		if ( e_HQHandleInteract.lastTarget.isInInteractRange and e_HQHandleInteract.lastTarget.distance < 120) then
 			Player:StopMovement()
 			local target = Player:GetTarget()
 			if (not target or target.id ~= e_HQHandleInteract.lastTarget.id) then
@@ -754,7 +769,7 @@ function e_HQHandleInteract:execute()
 			local ePos = e_HQHandleInteract.lastTarget.pos
 			local tRadius = e_HQHandleInteract.lastTarget.radius or 50
 			if ( not gw2_unstuck.HandleStuck() ) then
-				local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,25+tRadius,false,false,true))		
+				local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,tRadius,false,false,true))		
 				if (tonumber(navResult) < 0) then					
 					d("MoveInRange result: "..tonumber(navResult))
 				else
