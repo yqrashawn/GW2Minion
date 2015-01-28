@@ -538,20 +538,24 @@ e_fleeToSafety = inheritsFrom( ml_effect )
 c_fleeToSafety.safespot = nil
 c_fleeToSafety.fleeing = false
 function c_fleeToSafety:evaluate()
-	-- Check if were alive and if were low on health or already fleeing.
-	if (ml_global_information.Player_Alive and ml_global_information.Player_InCombat and ml_global_information.Player_Health.percent < 15) then
+	-- Check if were alive and if already fleeing.
+	if ( ml_global_information.Player_Alive and c_fleeToSafety.fleeing == true) then
+		return true
+	-- Check if were alive and low on health.
+	elseif (ml_global_information.Player_Alive and ml_global_information.Player_InCombat and ml_global_information.Player_Health.percent < 15) then
 		if (c_fleeToSafety.safespot == nil) then
-			c_fleeToSafety.safespot = select(2,next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest")))
+			local _,safespot = next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest"))
+			if (ValidTable(safespot)) then
+				c_fleeToSafety.safespot = safespot.pos
+			end
 		end
 		local nmbrEnemies = TableSize(CharacterList("aggro,alive"))
 		local target = Player:GetTarget()
 		local tHealth = (target == nil and 100 or target.health.percent)
 		-- Check for safe-spot and enemy number or enemy health.
-		if (c_fleeToSafety.safespot and (nmbrEnemies > 1 or tHealth > 50)) then
+		if (c_fleeToSafety.safespot and (nmbrEnemies > 1 or tHealth > 40)) then
 			return true
 		end
-	elseif ( ml_global_information.Player_Alive and c_fleeToSafety.fleeing == true) then
-		return true
 	end
 	c_fleeToSafety.safespot = nil
 	return false
@@ -567,15 +571,20 @@ function e_fleeToSafety:execute()
 	-- Enemies found, keep fleeing.
 	if (ValidTable(nmbrEnemies)) then
 		ml_log(": Walking to Safe-spot.")
-		-- Find safespot.
-		if (c_fleeToSafety.safespot == nil) then
-			c_fleeToSafety.safespot = select(2,next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest"))).pos
+		-- Find new safespot if were near current and still under attack.
+		local dist = Distance2D(Player.pos.x,Player.pos.y,c_fleeToSafety.safespot.x,c_fleeToSafety.safespot.y)
+		if (dist < 250) then
+			local _,safespot = next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest"))
+			if (ValidTable(safespot)) then
+				c_fleeToSafety.safespot = safespot.pos
+			end
 		end
 		if ( c_fleeToSafety.safespot ) then 
 			gw2_common_functions.MoveOnlyStraightForward()
+			local pos = c_fleeToSafety.safespot.pos
 			Player:MoveTo(c_fleeToSafety.safespot.x,c_fleeToSafety.safespot.y,c_fleeToSafety.safespot.z,50,false,true,true)
 		end
-	-- No enemies found, safe-spot found stop moving and wait to heal.	
+	-- No enemies found, safe-spot found stop moving and wait to heal.
 	else
 		ml_log(": Found Safe-spot, waiting to heal.")
 		if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
