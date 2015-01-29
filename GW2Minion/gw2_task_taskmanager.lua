@@ -94,6 +94,7 @@ function e_RunTask:execute()
 				local newTask = gw2_task_navtomap.Create()
 				newTask.targetMapID = ml_task_hub:CurrentTask().mytask.mapid
 				newTask.name = "MoveTo Task "..ml_task_hub:CurrentTask().mytask.name.." StartMap"
+				newTask.targetPos = ml_task_hub:CurrentTask().mytask.pos
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 								
 			else
@@ -119,6 +120,9 @@ function e_RunTask:execute()
 				local newTask = gw2_task_moveto.Create()
 				newTask.name = "Moveing to StartPosition of "..ml_task_hub:CurrentTask().mytask.name
 				newTask.targetPos = startPos
+				if (ml_task_hub:CurrentTask().mytask.useWaypoint) then
+					newTask.useWaypoint = ml_task_hub:CurrentTask().mytask.useWaypoint == "1"
+				end
 				if (ml_task_hub:CurrentTask().mytask.randomMovement) then
 					newTask.randomMovement = ml_task_hub:CurrentTask().mytask.randomMovement == "1"
 				end

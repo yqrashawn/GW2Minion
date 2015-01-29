@@ -14,6 +14,8 @@ function gw2_task_navtomap.Create()
     newinst.overwatch_elements = {}
 	
 	newinst.targetMapID = 0
+	newinst.useWaypoint = true -- [OPTIONAL] set this when creating the task to use waypoints if closer. default true.
+	newinst.targetPos = {} -- [OPTIONAL] set this if you use waypoints and want closest one to end pos.
 	newinst.lastMapID = 0
 	newinst.gateReached = false
 		
@@ -26,6 +28,24 @@ function gw2_task_navtomap:Process()
 		
 		-- We did not yet arrive in our targetmap
 		if ( ml_task_hub:CurrentTask().targetMapID ~= ml_global_information.CurrentMapID ) then
+			
+			-- Waypoint Usage
+			if (ml_task_hub:CurrentTask().useWaypoint == true and Player:GetWalletEntry(1) > 500) then
+				local waypoint = {}
+				if (ValidTable(ml_task_hub:CurrentTask().targetPos)) then
+					waypoint = gw2_common_functions.GetClosestWaypointToPos(ml_task_hub:CurrentTask().targetMapID,ml_task_hub:CurrentTask().targetPos)
+				else
+					local wpList = gw2_datamanager.GetLocalWaypointList(ml_task_hub:CurrentTask().targetMapID)
+					waypoint = wpList[math.random(1,TableSize(wpList))]
+				end
+				if (ValidTable(waypoint)) then
+					Player:TeleportToWaypoint(waypoint.id)
+					ml_global_information.Wait(5000)
+					ml_task_hub:CurrentTask().useWaypoint = false
+					return ml_log("Using waypoint :" .. waypoint.name .. ".")
+				end
+				ml_task_hub:CurrentTask().useWaypoint = false
+			end
 			
 			local nodedata = ml_nav_manager.GetNextPathPos(	ml_global_information.Player_Position, ml_global_information.CurrentMapID, ml_task_hub:CurrentTask().targetMapID )
 			if (ValidTable(nodedata)) then
@@ -114,7 +134,6 @@ function gw2_task_navtomap:Process()
 				ml_error("gw2_task_navtomap: Cannot find a path to the targetmap!, aborting task")
 				ml_task_hub:CurrentTask().completed = true
 			end
-			
 		else
 			ml_log("TargetMap Reached")
 			Player:StopMovement()
