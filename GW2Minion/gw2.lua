@@ -370,8 +370,7 @@ function gw2minion.OnUpdateCutscene(event, tickcount )
 		
 		Player:StopMovement()
 		if ( gSkipCutscene == "1" and TimeSince( gw2minion.Cinema_lastrun) > 3000 ) then
-			gw2minion.Cinema_lastrun = ml_global_information.Now
-			GUI_ToggleConsole(false)
+			gw2minion.Cinema_lastrun = tickcount
 			d("Skipping Cutscene...")
 			PressKey("ESC")
 		end
@@ -427,6 +426,12 @@ function gw2minion.SwitchUIForGameState(tickcount)
 		if ( wMain and wCine and wChar) then
 
 			local manageChildWindows = function(arg)
+				if (arg ~= true) then
+					gw2minion.lastWindowState[wMain.name] = wMain.visible
+					wMain:Hide()
+				elseif ( gw2minion.lastWindowState[wMain.name] ) then
+					wMain:Show()
+				end
 				for name,_ in pairs(gw2minion.MainWindow.ChildWindows) do
 					local wnd = WindowManager:GetWindow(name)
 					if ( wnd ) then
@@ -441,18 +446,15 @@ function gw2minion.SwitchUIForGameState(tickcount)
 			end
 
 			if ( currentGameState == 16 ) then --ingame
-				wMain:Show()
 				manageChildWindows(true)
 				wCine:Hide()
 				wChar:Hide()
 			elseif( currentGameState == 14 or currentGameState == 10 ) then --cinematic
-				wMain:Hide()
 				manageChildWindows()
 				wCine:Show()
 				wChar:Hide()
 				gw2minion.Cinema_lastrun = ml_global_information.Now
 			elseif( currentGameState == 4 ) then --charscreen
-				wMain:Hide()
 				manageChildWindows()
 				wCine:Hide()
 				wChar:Show()
