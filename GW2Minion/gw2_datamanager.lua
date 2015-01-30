@@ -49,7 +49,7 @@ function gw2_datamanager.GetLocalWaypointList( mapid )
 								y = gw2_datamanager.recalc_coords(mapData["continent_rect"],mapData["map_rect"],data["coord"])[2],
 								z = 0,
 							}
-							wdata[id] = {
+							local newWdata = {
 								id = id,
 								name = data["name"],
 								pos = (ValidTable(wInfo.pos) and wInfo.pos or pos),
@@ -57,6 +57,7 @@ function gw2_datamanager.GetLocalWaypointList( mapid )
 								contested =  wInfo.contested == true,
 								onmesh = not (wInfo.onmesh == false),
 							}
+							table.insert(wdata,newWdata)
 						end
 					end
 				end
