@@ -247,6 +247,7 @@ function e_InteractObject:execute()
 			return ml_log(true)				
 			
 			
+			
 		else
 			-- Get in range
 			ml_log(" Getting in InteractRange, Distance:"..tostring(math.floor(e_InteractObject.lastTarget.distance)))			

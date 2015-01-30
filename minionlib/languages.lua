@@ -668,6 +668,7 @@ strings =
 		taskTypeInteract				= "Interact",
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
+		taskTalk						= "Talk",
 		
     },                                  
     ["cn"] =                            
@@ -1344,6 +1345,7 @@ strings =
 		taskTypeInteract				= "Interact",
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
+		taskTalk						= "Talk",
 	},
     ["jp"] =
     {
@@ -2007,6 +2009,7 @@ strings =
 		taskTypeInteract				= "Interact",
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
+		taskTalk						= "Talk",
 	},   
     ["de"] =
     {
@@ -2671,6 +2674,7 @@ strings =
 		taskTypeInteract				= "Interact",
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
+		taskTalk						= "Talk",
 	},     
     ["fr"] =
     {
@@ -3347,6 +3351,7 @@ strings =
 		taskTypeInteract				= "Interact",
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
+		taskTalk						= "Talk",
 	},       
     ["ru"] =
     {
@@ -4009,6 +4014,7 @@ strings =
 		taskTypeInteract				= "Interact",
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
+		taskTalk						= "Talk",
 	},    	
 
 }
