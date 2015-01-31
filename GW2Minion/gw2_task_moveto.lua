@@ -229,6 +229,7 @@ end
 
 -- TaskManager functions
 function gw2_task_moveto:UIInit_TM()
+	ml_task_mgr.NewCheckBox(GetString("useWaypoint"), "useWaypoint", "1")
 	ml_task_mgr.NewCheckBox(GetString("randomPaths"), "randomMovement", "0")
 	ml_task_mgr.NewCheckBox(GetString("taskSmoothTurn"), "smoothTurns", "1")
 	ml_task_mgr.NewCheckBox(GetString("taskRandomPos"), "randomTargetPosition", "0")

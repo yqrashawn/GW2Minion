@@ -33,6 +33,7 @@ function ml_global_information.OnUpdate()
 		ml_global_information.Player_Inventory_SlotsFree = Inventory.freeSlotCount or 0
 		ml_global_information.Player_SwimState = Player.swimming or 0
 		ml_global_information.Player_MovementState = Player:GetMovementState() or 1
+		ml_global_information.Player_Target = Player:GetTarget() or {}
 		
 		ml_global_information.Player_Party = Player:GetParty() or nil
 		

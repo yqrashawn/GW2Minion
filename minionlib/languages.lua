@@ -669,6 +669,7 @@ strings =
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
 		taskTalk						= "Talk",
+		useWaypoint						= "Use Waypoint",
 		
     },                                  
     ["cn"] =                            
@@ -1346,6 +1347,7 @@ strings =
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
 		taskTalk						= "Talk",
+		useWaypoint						= "Use Waypoint",
 	},
     ["jp"] =
     {
@@ -2010,6 +2012,7 @@ strings =
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
 		taskTalk						= "Talk",
+		useWaypoint						= "Use Waypoint",
 	},   
     ["de"] =
     {
@@ -2675,6 +2678,7 @@ strings =
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
 		taskTalk						= "Talk",
+		useWaypoint						= "Use Waypoint",
 	},     
     ["fr"] =
     {
@@ -3352,6 +3356,7 @@ strings =
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
 		taskTalk						= "Talk",
+		useWaypoint						= "Use Waypoint",
 	},       
     ["ru"] =
     {
@@ -4015,6 +4020,7 @@ strings =
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
 		taskTalk						= "Talk",
+		useWaypoint						= "Use Waypoint",
 	},    	
 
 }

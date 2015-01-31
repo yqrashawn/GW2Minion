@@ -107,7 +107,7 @@ function e_RunTask:execute()
 			-- Moving to startposition of task			
 			local startPos = ml_task_hub:CurrentTask().mytask.pos
 			-- Randomize the targetpos a bit, to not make all bots walk to the exact point..
-			if ( ml_task_hub:CurrentTask().name == "MoveTo" and ml_task_hub:CurrentTask().randomTargetPosition and ml_task_hub:CurrentTask().randomTargetPosition == "1" )  then
+			if ( ml_task_hub:CurrentTask().name == "MoveTo" and ml_task_hub:CurrentTask().mytask.randomTargetPosition and ml_task_hub:CurrentTask().mytask.randomTargetPosition == "1" )  then
 				local rPos = NavigationManager:GetRandomPointOnCircle(startPos.x,startPos.y,startPos.z,50,350)
 				if ( ValidTable(rPos) ) then
 					startPos = rPos
