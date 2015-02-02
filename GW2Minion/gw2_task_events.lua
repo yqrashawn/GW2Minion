@@ -16,8 +16,8 @@ function gw2_task_events.Create()
 	newinst.pos = nil
 	newinst.eventReached = false
 	newinst.eventRadius = 2500
-	newinst.maxduration = 900000 --15min
-	newinst.curduration = 0
+	newinst.maxeventduration = 900000 --15min
+	newinst.cureventduration = 0
 	newinst.lastEventActionTmr = 0
 	
     return newinst
@@ -51,12 +51,19 @@ function gw2_task_events:Init()
 end
 function gw2_task_events:task_complete_eval()
 	-- Event timer check
-	if ( ml_task_hub:CurrentTask().curduration == 0 ) then 
-		ml_task_hub:CurrentTask().curduration = ml_global_information.Now
+	if ( ml_task_hub:CurrentTask().cureventduration == 0 ) then 
+		ml_task_hub:CurrentTask().cureventduration = ml_global_information.Now
 		
-	elseif ( ml_global_information.Now - ml_task_hub:CurrentTask().curduration > ml_task_hub:CurrentTask().maxduration ) then
+	elseif ( ml_global_information.Now - ml_task_hub:CurrentTask().cureventduration > ml_task_hub:CurrentTask().maxeventduration and not ml_task_hub:CurrentTask().isTMTask) then
 	
 		d("Event maxduration (15 minutes) have passed...moving on")
+		ml_blacklist.AddBlacklistEntry(GetString("event"), ml_task_hub:CurrentTask().eventID, "Event", ml_global_information.Now + 1800000)
+		return true
+	
+	-- for taskmanager, quit task after the set max time is gone or 15min
+	elseif ( ml_task_hub:CurrentTask().eventMaxTaskTimer and ml_global_information.Now - ml_task_hub:CurrentTask().cureventduration > ( tonumber(ml_task_hub:CurrentTask().eventMaxTaskTimer)==nil and 90000 or tonumber(ml_task_hub:CurrentTask().eventMaxTaskTimer)) and ml_task_hub:CurrentTask().isTMTask) then
+	
+		d("Task Event maxduration have passed...finishing task")
 		ml_blacklist.AddBlacklistEntry(GetString("event"), ml_task_hub:CurrentTask().eventID, "Event", ml_global_information.Now + 1800000)
 		return true		
 	end
@@ -64,13 +71,62 @@ function gw2_task_events:task_complete_eval()
 	-- Event gone
 	local eID = ml_task_hub:CurrentTask().eventID
 	if ( eID == nil or TableSize(MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..ml_blacklist.GetExcludeString(GetString("event"))))==0 ) then		
-		
-		d("Event Done..")
-		if ( ml_task_hub:CurrentTask().eventReached == true and not Player:IsMoving() )  then			
-			return true
+		if ( not ml_task_hub:CurrentTask().isTMTask or (ml_task_hub:CurrentTask().isTMTask and ml_task_hub:CurrentTask().eventStarted and ml_task_hub:CurrentTask().eventStarted == true )) then
+			d("Event Done..")
+			if ( ml_task_hub:CurrentTask().eventReached == true and not Player:IsMoving() )  then			
+				return true
+			end
 		end
 	end
 	return false
+end
+
+function gw2_task_events.ModuleInit()
+	d("gw2_task_events:ModuleInit")
+
+		
+	ml_task_mgr.AddTaskType(GetString("doEvents"), gw2_task_events) -- Allow this task to be selectable in TaskManager
+end
+RegisterEventHandler("Module.Initalize",gw2_task_events.ModuleInit)
+
+-- TaskManager functions
+function gw2_task_events:UIInit_TM()	
+	ml_task_mgr.NewNumeric("EventID", "eventID")
+	ml_task_mgr.NewNumeric("Waiting for Eventstart (s)", "eventMaxTaskTimer")
+	
+end
+-- TaskManager function: Checks for custom conditions to start this task
+function gw2_task_events.CanTaskStart_TM()
+	return true
+end
+-- TaskManager function: Checks for custom conditions to keep this task running
+function gw2_task_events.CanTaskRun_TM()
+	-- check for the wanted eventID ...
+	ml_task_hub:CurrentTask().isTMTask = true
+	ml_task_hub:CurrentTask().eventID = tonumber(ml_task_hub:CurrentTask().eventID)
+	if ( ml_task_hub:CurrentTask().eventID and tonumber(ml_task_hub:CurrentTask().eventID)>0) then
+		local evList = MapMarkerList("isevent,onmesh,worldmarkertype="..ml_global_information.WorldMarkerType..",exclude_eventid="..ml_blacklist.GetExcludeString(GetString("event")))
+		local i,e = next(evList)
+		while ( i and e ) do
+			if ( e.eventID == tonumber(ml_task_hub:CurrentTask().eventID)) then			
+				ml_task_hub:CurrentTask().eventStarted = true
+				return true
+			end
+			i,e = next(evList,i)
+		end
+		
+		-- If we are here, our event was not found, if it started already, we can quit the task now
+		if ( ml_task_hub:CurrentTask().eventStarted and ml_task_hub:CurrentTask().eventStarted == true ) then
+			d("EventTask is done, finishing it.")
+			return false
+		
+		else
+			ml_log("Waiting for event to start "..tostring(ml_task_hub:CurrentTask().eventMaxTaskTimer).."s")
+		
+		end
+	end
+	
+	return true
 end
 
 
@@ -112,7 +168,8 @@ e_MoveInEventRange = inheritsFrom( ml_effect )
 e_MoveInEventRange.currentEvent = nil
 function c_MoveInEventRange:evaluate()
 	local eID = ml_task_hub:CurrentTask().eventID
-	if ( tonumber(eID)~=nil ) then
+	
+	if ( tonumber(eID)~=nil and tonumber(eID)>0 ) then
 		local evList = MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..ml_blacklist.GetExcludeString(GetString("event")))
 		local i,e = next(evList)
 		if ( i and e ) then
@@ -133,7 +190,9 @@ function c_MoveInEventRange:evaluate()
 			end
 		else
 			-- event is gone, make sure we can exit this event task
-			ml_task_hub:CurrentTask().eventReached = true
+			if ( not ml_task_hub:CurrentTask().isTMTask or ( ml_task_hub:CurrentTask().isTMTask and ml_task_hub:CurrentTask().eventStarted )) then
+				ml_task_hub:CurrentTask().eventReached = true
+			end
 		end
 	end
 	e_MoveInEventRange.currentEvent = nil
@@ -193,7 +252,7 @@ e_DoEventObjectives.currentEvent = nil
 e_DoEventObjectives.PathThrottleTmr = 0
 function c_DoEventObjectives:evaluate()
 	local eID = ml_task_hub:CurrentTask().eventID
-	if ( tonumber(eID)~=nil ) then
+	if ( tonumber(eID)~=nil and tonumber(eID)>0) then
 		local evList = MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..ml_blacklist.GetExcludeString(GetString("event")))
 		if ( TableSize(evList)>0) then
 			local i,e = next(evList)
@@ -415,20 +474,21 @@ function e_DoEventObjectives:execute()
 	end
 	
 	-- Seems there is nothing to attack nearby...
-	if ( ml_task_hub:CurrentTask().lastEventActionTmr == 0 ) then 
-		ml_task_hub:CurrentTask().lastEventActionTmr = ml_global_information.Now 
+	if ( not ml_task_hub:CurrentTask().isTMTask or ( ml_task_hub:CurrentTask().isTMTask and ml_task_hub:CurrentTask().eventStarted )) then
+		if ( ml_task_hub:CurrentTask().lastEventActionTmr == 0 ) then 
+			ml_task_hub:CurrentTask().lastEventActionTmr = ml_global_information.Now 
+			
+		else
+			ml_log("Idle in Event: "..tostring(math.floor((ml_global_information.Now - ml_task_hub:CurrentTask().lastEventActionTmr)/1000)).."s/60s")
+			if ( ml_global_information.Now - ml_task_hub:CurrentTask().lastEventActionTmr > 60000 ) then
 		
-	else
-		ml_log("Idle in Event: "..tostring(math.floor((ml_global_information.Now - ml_task_hub:CurrentTask().lastEventActionTmr)/1000)).."s/60s")
-		if ( ml_global_information.Now - ml_task_hub:CurrentTask().lastEventActionTmr > 60000 ) then
-	
-			d("Seems there is a problem with the Event, nothing to attack in the last 60sec, blacklisting it..")
-			ml_blacklist.AddBlacklistEntry(GetString("event"), ml_task_hub:CurrentTask().eventID, "Event", ml_global_information.Now + 1800000)
-			ml_task_hub:CurrentTask().completed = true
-			ml_task_hub:CurrentTask().lastEventActionTmr = 0
+				d("Seems there is a problem with the Event, nothing to attack in the last 60sec, blacklisting it..")
+				ml_blacklist.AddBlacklistEntry(GetString("event"), ml_task_hub:CurrentTask().eventID, "Event", ml_global_information.Now + 1800000)
+				ml_task_hub:CurrentTask().completed = true
+				ml_task_hub:CurrentTask().lastEventActionTmr = 0
+			end
 		end
 	end
-	
 	return ml_log(false)
 end
 
@@ -440,7 +500,7 @@ function c_event_reviveNPC:evaluate()
 		local CList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500")
 		if ( TableSize(CList) > 0 ) then
 			local eID = ml_task_hub:CurrentTask().eventID
-			if ( tonumber(eID)~=nil ) then
+			if ( tonumber(eID)~=nil and tonumber(eID)>0) then
 				local evList = MapMarkerList("nearest,onmesh,eventID="..eID..",exclude_eventid="..ml_blacklist.GetExcludeString(GetString("event")))
 				local i,e = next(evList)
 				if ( i and e ) then

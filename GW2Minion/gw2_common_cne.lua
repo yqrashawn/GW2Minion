@@ -466,8 +466,9 @@ function c_Looting:evaluate()
 	--ml_log("c_Looting")
 	-- Find new loot target.
 	if (c_Looting.target == nil) then
-		
-		c_Looting.target = (GadgetList("onmesh,interactable,selectable,noncombatant,resourcetype=3,nearest,maxdistance=3000,contentID2="..c_Looting.contentID2..",exclude_contentid="..c_Looting.contentIDExclude) or GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID="..c_Looting.contentID) or CharacterList("nearest,lootable,onmesh,maxdistance=3000"))
+		-- contentid2 doesnt work generally, there are too many little things the bot thinks he can loot while it actually is nothing to loot :(
+		--c_Looting.target = (GadgetList("onmesh,interactable,selectable,noncombatant,resourcetype=3,nearest,maxdistance=3000,contentID2="..c_Looting.contentID2..",exclude_contentid="..c_Looting.contentIDExclude) or GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID="..c_Looting.contentID) or CharacterList("nearest,lootable,onmesh,maxdistance=3000"))
+		c_Looting.target = (GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID="..c_Looting.contentID) or CharacterList("nearest,lootable,onmesh,maxdistance=3000"))
 	end
 	-- Check if we need to loot and have a valid target and enough space to store it.
 	if (ValidTable(c_Looting.target) and ml_global_information.Player_Inventory_SlotsFree > 0) then
@@ -480,7 +481,8 @@ end
 
 function e_Looting:execute()	
 	ml_log("Looting ")
-	c_Looting.target = (GadgetList("onmesh,interactable,selectable,noncombatant,resourcetype=3,nearest,maxdistance=3000,contentID2="..c_Looting.contentID2) or GadgetList("onmesh,interactable,selectable,shortestpath,maxdistance=4000,contentID="..c_Looting.contentID) or CharacterList("shortestpath,lootable,onmesh,maxdistance=4000"))
+	c_Looting.target = (GadgetList("onmesh,interactable,selectable,shortestpath,maxdistance=4000,contentID="..c_Looting.contentID) or CharacterList("shortestpath,lootable,onmesh,maxdistance=4000"))
+	--c_Looting.target = (GadgetList("onmesh,interactable,selectable,noncombatant,resourcetype=3,nearest,maxdistance=3000,contentID2="..c_Looting.contentID2) or GadgetList("onmesh,interactable,selectable,shortestpath,maxdistance=4000,contentID="..c_Looting.contentID) or CharacterList("shortestpath,lootable,onmesh,maxdistance=4000"))
 	if ( ValidTable(c_Looting.target) ) then 
 		local target = select(2,next(c_Looting.target))
 		-- Check for valid target.
