@@ -823,8 +823,12 @@ function _private.AttackSkill(target)
 				--d("Casting "..skill.skill.name.. " CanCast: "..tostring( Player:CanCast() ).." CurrentCastDuration: "..tostring(Player.castinfo.duration))
 				if (target) then
 					local pos = _private.GetPredictedLocation(target,skill)
-					if (skill.skill.groundTargeted == "1" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving) then
-						Player:CastSpell(skill.slot,pos.x,pos.y,pos.z)
+					if (skill.skill.groundTargeted == "1") then
+						if (target.isCharacter) then
+							Player:CastSpell(skill.slot,pos.x,pos.y,pos.z)
+						elseif (target.isGadget) then
+							Player:CastSpell(skill.slot,pos.x,pos.y,pos.z-target.height)
+						end
 					else
 						Player:CastSpell(skill.slot,target.id)
 					end
@@ -1120,13 +1124,12 @@ end
 
 function profilePrototype:Attack(target)
 	if (_private.CheckTargetBuffs(target)) then
-		if (target) then Player:SetTarget(target.id) end
+		if (target and target.id ~= ml_global_information.Player_Target.id) then Player:SetTarget(target.id) end
 		if (target == nil or target.distance < _private.maxRange) then
 			if (_private.runningIntoCombatRange == true and (target.inCombat == true or target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving)) then Player:StopMovement() _private.runningIntoCombatRange = false end
 			local lastSkillInfo = _private.ReturnSkillByID(self.skills,_private.lastSkill.id)
 			_private.DoCombatMovement()
 			--if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.slowCast == "1")) then
-			--if (Player.castinfo.duration == 0) then
 			if ((Player:CanCast() and Player:IsCasting() == false) or (lastSkillInfo and lastSkillInfo.skill.slowCast == "0")) then
 				if (_private.Evade()) then
 					return true
@@ -1166,7 +1169,6 @@ function profilePrototype:GetAvailableSkills()
 	local newPriority = 1
 	local newHealPriority = 1
 	local maxRange = 154
-	local target = Player:GetTarget()
 	if ( ValidTable(self.skills) and ValidTable(_private.skillbarSkills) ) then
 		for _,skill in ipairs(self.skills) do
 			for _,aSkill in pairs(_private.skillbarSkills) do
@@ -1181,7 +1183,7 @@ function profilePrototype:GetAvailableSkills()
 						_private.currentHealSkills[newHealPriority].maxCooldown = aSkill.cooldownmax
 						newHealPriority = newHealPriority + 1
 					end
-					local canCastCheck = (target == nil or (target and _private.CanCast(skill,target)))
+					local canCastCheck = (ValidTable(ml_global_information.Player_Target) == false or _private.CanCast(skill,ml_global_information.Player_Target))
 					if (skill.skill.setRange == "1" and canCastCheck) then
 						maxRange = (skill.skill.maxRange > 0 and skill.skill.maxRange > maxRange and skill.skill.maxRange or maxRange)
 						maxRange = (skill.skill.maxRange == 0 and skill.skill.radius > 0 and skill.skill.radius > maxRange and skill.skill.radius or maxRange)
@@ -1272,12 +1274,11 @@ function gw2_skill_manager.OnUpdate(ticks)
 	if (gw2_skill_manager.detecting == true) then
 		gw2_skill_manager.profile:DetectSkills()
 	end
-	local target = Player:GetTarget()
-	if (_private.doingCombatMovement and target == nil) then
+	if (_private.doingCombatMovement and ValidTable(ml_global_information.Player_Target) == false) then
 		_private.doingCombatMovement = false
 		Player:StopMovement()
 	end
-	if (_private.runningIntoCombatRange and target == nil) then
+	if (_private.runningIntoCombatRange and ValidTable(ml_global_information.Player_Target) == false) then
 		_private.runningIntoCombatRange = false
 		Player:StopMovement()
 	end
