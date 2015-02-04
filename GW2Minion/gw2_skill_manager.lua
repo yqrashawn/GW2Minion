@@ -131,7 +131,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 		-- Changes in skills
 		-- Skill change
 		if (
-				k == "SklMgr_GrndTarget" or
+				--k == "SklMgr_GrndTarget" or
 				k == "SklMgr_HealnBuff" or
 				k == "SklMgr_LOS" or
 				k == "SklMgr_SetRange" or
@@ -142,7 +142,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "SklMgr_LastSkillID" or
 				k == "SklMgr_Delay")
 			then
-			local var = {	SklMgr_GrndTarget = {global = "groundTargeted", gType = "tostring",},
+			local var = {	--SklMgr_GrndTarget = {global = "groundTargeted", gType = "tostring",},
 							SklMgr_HealnBuff = {global = "healing", gType = "tostring",},
 							SklMgr_LOS = {global = "los", gType = "tostring",},
 							SklMgr_SetRange = {global = "setRange", gType = "tostring",},
@@ -354,7 +354,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 		-- Skill Section
 		editWindow:NewNumeric(GetString("smSkillID"),"SklMgr_ID",GetString("smSkill"))
 		editWindow:NewField(GetString("name"),"SklMgr_Name",GetString("smSkill"))
-		editWindow:NewCheckBox(GetString("isGroundTargeted"),"SklMgr_GrndTarget",GetString("smSkill"))
+		--editWindow:NewCheckBox(GetString("isGroundTargeted"),"SklMgr_GrndTarget",GetString("smSkill"))
 		editWindow:NewCheckBox(GetString("smHealBuff"),"SklMgr_HealnBuff",GetString("smSkill"))
 		editWindow:NewCheckBox(GetString("los"),"SklMgr_LOS",GetString("smSkill"))
 		editWindow:NewCheckBox(GetString("smSetRange"),"SklMgr_SetRange",GetString("smSkill"))
@@ -423,7 +423,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 			-- Skill
 			SklMgr_ID = lSkill.skill.id
 			SklMgr_Name = lSkill.skill.name
-			SklMgr_GrndTarget = lSkill.skill.groundTargeted
+			--SklMgr_GrndTarget = lSkill.skill.groundTargeted
 			SklMgr_HealnBuff = lSkill.skill.healing
 			SklMgr_LOS = lSkill.skill.los
 			SklMgr_SetRange = lSkill.skill.setRange
@@ -660,12 +660,10 @@ end
 
 function _private.TargetLosingHealth(target)
 	if (target) then
-		if ( _private.targetLosingHP.id ~= target.id ) then
+		if (_private.targetLosingHP.id ~= target.id) then
 			d("new target for health check")
-			_private.targetLosingHP.id = target.id
-			_private.targetLosingHP.health = target.health.current
-			_private.targetLosingHP.timer = ml_global_information.Now
-		elseif (TimeSince(_private.targetLosingHP.timer) > 10000 ) then
+			_private.targetLosingHP = {id = target.id, health = target.health.current, timer = ml_global_information.Now}
+		elseif (_private.targetLosingHP.id == target.id and TimeSince(_private.targetLosingHP.timer) > 15000 ) then
 			d("10s up for health check")
 			_private.targetLosingHP.timer = ml_global_information.Now
 			if (_private.targetLosingHP.health ~= 0 and _private.targetLosingHP.health < target.health.current) then
@@ -679,6 +677,8 @@ function _private.TargetLosingHealth(target)
 			end
 		end
 		return true
+	else
+		_private.targetLosingHP = {id = 0, health = 0, timer = 0}
 	end
 end
 
