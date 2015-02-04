@@ -196,7 +196,7 @@ function e_MoveToVendorMarker:execute()
 			if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
 				
 				local newTask = gw2_task_moveto.Create()
-				newTask.name = "MoveTo VendorMarker(BUY)"
+				newTask.name = "MoveTo VendorMarker(REPAIR)"
 				newTask.targetPos = pos
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				return ml_log(true)

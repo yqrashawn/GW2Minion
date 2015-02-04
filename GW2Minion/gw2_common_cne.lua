@@ -262,29 +262,31 @@ function c_reviveNPC:evaluate()
 end
 function e_reviveNPC:execute()
 	ml_log("ReviveNPC ")
-				
+	
+	-- fight nearby enemies first
+	if ( ml_global_information.Player_Health.percent < 80 ) then
+		local TargetList = CharacterList("aggro,onmesh,lowesthealth,los,attackable,alive,noCritter,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+		if ( TargetList ) then
+			local id,entry = next(TargetList)
+			if (id and entry ) then
+				ml_log(" Killing nearby targets first..")
+				gw2_skill_manager.Attack(entry) -- we should create a combat task here ...
+				return ml_log(true)
+			end
+		end	
+	end
+	
+	if ( Player.castinfo.duration ~= 0 ) then
+		ml_log("Reviving NPC...")
+		ml_global_information.Wait(1000)
+		return ml_log(true)
+	end
+			
 	local CList = CharacterList("shortestpath,selectable,interactable,dead,friendly,npc,onmesh,maxdistance=2500,exclude="..ml_blacklist.GetExcludeString(GetString("monsters")))
 	if ( TableSize(CList) > 0 ) then
 		local id,target = next(CList)
 		if ( id and target ) then
-		
-			-- fight nearby enemies first
-			if ( ml_global_information.Player_Health.percent < 80 ) then
-				local TargetList = CharacterList("aggro,onmesh,lowesthealth,los,attackable,alive,noCritter,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
-				if ( TargetList ) then
-					local id,entry = next(TargetList)
-					if (id and entry ) then
-						ml_log(" Killing nearby targets first..")
-						gw2_skill_manager.Attack(entry)
-						return ml_log(true)
-					end
-				end	
-			end
-		
-			if ( Player.castinfo.duration ~= 0 ) then
-				ml_log("Reviving NPC...")
-				return ml_log(true)
-			end
+					
 			if ( not target.isInInteractRange ) then
 				
 				Player:StopMovement()
@@ -299,9 +301,8 @@ function e_reviveNPC:execute()
 				if ( Player.castinfo.duration == 0 ) then
 					ml_log("Starting to Revive NPC...")
 					Player:Interact(target)
-					ml_global_information.Wait(1000)
-					
 				end
+				ml_global_information.Wait(1000)
 				return ml_log(true)
 			end
 			

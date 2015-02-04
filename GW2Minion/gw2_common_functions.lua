@@ -271,7 +271,7 @@ end
 gw2_common_functions.lastVendorID = nil
 gw2_common_functions.lastVendorConversationHistory = { Repair=0, Shop=0, KarmaShop=0, Continue=0, Story=0, Return=0 } -- holds the already tried conversation IDs
 function gw2_common_functions.handleConversation(result)
-	if (Player:IsConversationOpen() and Inventory:IsVendorOpened() == false and ValidString(result)) then
+	if (Player:IsConversationOpen() and (Inventory:IsVendorOpened() == false or result == "repair") and ValidString(result)) then
 		local curVendor = Player:GetTarget()
 		-- Reset the conversationHistory when we got a new or different vendorMarker
 		if ( curVendor and curVendor.id ) then
