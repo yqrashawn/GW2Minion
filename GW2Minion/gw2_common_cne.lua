@@ -7,7 +7,7 @@ e_Dead = inheritsFrom( ml_effect )
 c_Dead.lastHealth = nil
 c_Dead.deadTmr = 0
 function c_Dead:evaluate()
-	if ( ml_global_information.Player_Alive == false ) then
+	if ( Player.healthstate == GW2.HEALTHSTATE.Defeated ) then
 		return true
 	end
 	c_Dead.deadTmr = 0

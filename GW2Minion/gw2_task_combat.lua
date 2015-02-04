@@ -13,8 +13,9 @@ function gw2_task_combat.Create()
     newinst.overwatch_elements = {}
 	
 	newinst.targetID = nil
-	newinst.targetPos = nil 
 	newinst.targetType = "character" -- change this to "gadget" if needed
+	
+	newinst.swimmingCancels = true -- incase we ever figure that stuff out
 	
     return newinst
 end
@@ -71,64 +72,59 @@ end
 -- Moveto & Attack Target
 c_AttackTarget = inheritsFrom( ml_cause )
 e_AttackTarget = inheritsFrom( ml_effect )
-e_AttackTarget.target = nil
 function c_AttackTarget:evaluate()
 			
-	if ( ml_task_hub:CurrentTask().targetID ~= nil and ml_task_hub:CurrentTask().targetPos ~= nil ) then
-		
-		-- check if target  still exist
-		if ( ml_task_hub:CurrentTask().targetType == "character" ) then
-			e_AttackTarget.target = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
-			if ( e_AttackTarget.target ~= nil and e_AttackTarget.target.attackable and e_AttackTarget.target.alive) then
-				return true
-			end
-			
-		elseif( ml_task_hub:CurrentTask().targetType == "gadget" ) then
-			e_AttackTarget.target = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
-			if ( e_AttackTarget.target ~= nil and e_AttackTarget.target.attackable and e_AttackTarget.target.alive) then
-				return true
-			end
-		end
-		
+	if ( ml_task_hub:CurrentTask().targetID ~= nil ) then
+		return true
 	end
 	
 	-- our target is gone / we dont have a valid target anymore, finish this task
 	ml_task_hub:CurrentTask().completed = true
 	ml_task_hub:CurrentTask().targetID = nil
-	ml_task_hub:CurrentTask().targetPos = nil
-	e_AttackTarget.target = nil
 	return false
 end
 function e_AttackTarget:execute()
 	ml_log("e_AttackTarget: ")
-	if ( e_AttackTarget.target ~= nil and ml_task_hub:CurrentTask().targetID ~= nil and ml_task_hub:CurrentTask().targetPos ~= nil ) then 
+	if ( ml_task_hub:CurrentTask().targetID ~= nil ) then 
 		
-		ml_task_hub:CurrentTask().targetPos = e_AttackTarget.target.pos
+		local target = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
 		
-		if ( ml_global_information.ShowDebug ) then 
-			dbCurrTargetID = ml_task_hub:CurrentTask().targetID or "" 
-			dbCurrTargetDist = math.floor(e_AttackTarget.target.distance) 
-		end
-		
-		-- Move Closer to target with a sub-moveto-task
-		if (e_AttackTarget.target.distance > 2500) then
-			
-			local newTask = gw2_task_moveto.Create()
-			newTask.targetPos = ml_task_hub:CurrentTask().targetPos
-			newTask.targetID = ml_task_hub:CurrentTask().targetID
-			newTask.targetType = ml_task_hub:CurrentTask().targetType
-			newTask.stoppingDistance = 1500
-			newTask.name = "MoveTo Attackable Target"
-			ml_task_hub:CurrentTask():AddSubTask(newTask)
-			return ml_log(true)
-		
+		if (ValidTable(target) and target.attackable and target.alive) then
+			if ( ml_global_information.ShowDebug ) then 
+				dbCurrTargetID = target.id or "" 
+				dbCurrTargetDist = math.floor(target.distance) 
+			end
+			if (ml_blacklist.CheckBlacklistEntry(GetString("monsters"),target.contentID)) then
+				-- target got blacklisted, cancel combat task.
+				ml_task_hub:CurrentTask().completed = true
+				return ml_log(false)
+			elseif (ml_task_hub:CurrentTask().swimmingCancels and (Player.swimming == 1 or (target.isCharacter and target.swimming == 1) or (target.isGadget and target.pos and target.pos.z > 40))) then
+				-- target or player is in the water, cancel combat task.
+				ml_blacklist.AddBlacklistEntry(GetString("monsters"),target.contentID,target.name,ml_global_information.Now+30000)
+				ml_task_hub:CurrentTask().completed = true
+				return ml_log(false)
+			elseif (target.distance > 2500) then
+				-- move to target task (stops on not finding target entity in moveto task, entity being dead does not stop it ATM)
+				local newTask = gw2_task_moveto.Create()
+				newTask.targetPos = target.pos
+				newTask.targetID = target.id
+				newTask.targetType = ml_task_hub:CurrentTask().targetType
+				newTask.stoppingDistance = 2000
+				newTask.name = "MoveTo Attackable Target"
+				ml_task_hub:CurrentTask():AddSubTask(newTask)
+				return ml_log(true)
+			else
+				-- Let SkillManager handle the rest	
+				gw2_skill_manager.Attack(target)
+				return ml_log(true)
+			end
 		else
-			-- Let SkillManager handle the rest	
-			gw2_skill_manager.Attack(e_AttackTarget.target)
-			return ml_log(true)
+			-- Target is no longer valid
+			ml_task_hub:CurrentTask().completed = true
 		end
 	else
 		ml_error("e_AttackTarget: No valid target")
+		ml_task_hub:CurrentTask().completed = true
 	end
 	return ml_log(false)
 end

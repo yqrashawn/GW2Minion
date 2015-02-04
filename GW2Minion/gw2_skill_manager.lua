@@ -122,7 +122,7 @@ end
 
 function gw2_skill_manager.UpdateSkillInfo()
 	if ( gw2_skill_manager.profile ) then
-		gw2_skill_manager.profile:GetAvailableSkills()
+		gw2_skill_manager.profile:UpdateSkillInfo()
 	end
 end
 
@@ -137,6 +137,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "SklMgr_SetRange" or
 				k == "SklMgr_MinRange" or
 				k == "SklMgr_MaxRange" or
+				k == "SklMgr_Radius" or
 				k == "SklMgr_SlowCast" or
 				k == "SklMgr_LastSkillID" or
 				k == "SklMgr_Delay")
@@ -147,6 +148,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 							SklMgr_SetRange = {global = "setRange", gType = "tostring",},
 							SklMgr_MinRange = {global = "minRange", gType = "tonumber",},
 							SklMgr_MaxRange = {global = "maxRange", gType = "tonumber",},
+							SklMgr_Radius = {global = "radius", gType = "tonumber",},
 							SklMgr_SlowCast = {global = "slowCast", gType = "tostring",},
 							SklMgr_LastSkillID = {global = "lastSkillID", gType = "tonumber",},
 							SklMgr_Delay = {global = "delay", gType = "tonumber",},
@@ -358,6 +360,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 		editWindow:NewCheckBox(GetString("smSetRange"),"SklMgr_SetRange",GetString("smSkill"))
 		editWindow:NewNumeric(GetString("minRange"),"SklMgr_MinRange",GetString("smSkill"),0,6000)
 		editWindow:NewNumeric(GetString("maxRange"),"SklMgr_MaxRange",GetString("smSkill"),0,6000)
+		editWindow:NewNumeric(GetString("smRadius"),"SklMgr_Radius",GetString("smSkill"),0,6000)
 		editWindow:NewCheckBox(GetString("smSlowCast"),"SklMgr_SlowCast",GetString("smSkill"))
 		editWindow:NewField(GetString("prevSkillID"),"SklMgr_LastSkillID",GetString("smSkill"))
 		editWindow:NewNumeric(GetString("smDelay"),"SklMgr_Delay",GetString("smSkill"))
@@ -426,6 +429,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 			SklMgr_SetRange = lSkill.skill.setRange
 			SklMgr_MinRange = lSkill.skill.minRange
 			SklMgr_MaxRange = lSkill.skill.maxRange
+			SklMgr_Radius = lSkill.skill.radius
 			SklMgr_SlowCast = lSkill.skill.slowCast
 			SklMgr_LastSkillID = lSkill.skill.lastSkillID
 			SklMgr_Delay = lSkill.skill.delay
@@ -621,7 +625,7 @@ end
 function _private.CheckTargetBuffs(target)
 	if (target) then
 		if (gw2_common_functions.BufflistHasBuffs(target.buffs,"762")) then
-			ml_blacklist.AddBlacklistEntry(GetString("monsters"),target.id,target.name,ml_global_information.Now+30000)
+			ml_blacklist.AddBlacklistEntry(GetString("monsters"),target.contentID,target.name,ml_global_information.Now+30000)
 			Player:ClearTarget()
 			return false
 		end
@@ -657,17 +661,21 @@ end
 function _private.TargetLosingHealth(target)
 	if (target) then
 		if ( _private.targetLosingHP.id ~= target.id ) then
+			d("new target for health check")
 			_private.targetLosingHP.id = target.id
 			_private.targetLosingHP.health = target.health.current
 			_private.targetLosingHP.timer = ml_global_information.Now
 		elseif (TimeSince(_private.targetLosingHP.timer) > 10000 ) then
+			d("10s up for health check")
 			_private.targetLosingHP.timer = ml_global_information.Now
 			if (_private.targetLosingHP.health ~= 0 and _private.targetLosingHP.health < target.health.current) then
-				ml_blacklist.AddBlacklistEntry(GetString("monsters"), target.id, target.name, ml_global_information.Now + 90000)
+				ml_blacklist.AddBlacklistEntry(GetString("monsters"), target.contentID, target.name, ml_global_information.Now + 90000)
 				Player:ClearTarget()
+				d("WHOOOOOOP")
 				return false
 			else
-				_private.lastHP = target.health.current
+				d("target losing health, setting new checktimes")
+				_private.targetLosingHP.health = target.health.current
 			end
 		end
 		return true
@@ -790,7 +798,6 @@ function _private.SwapEngineerKit()
 end
 
 function _private.SwapElementalistAttunement()
-	
 	local switch = nil
 	local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
 	if ( skill ~= nil ) then
@@ -835,11 +842,11 @@ function _private.AttackSkill(target)
 				else
 					Player:CastSpell(skill.slot)
 				end
-				_private.lastSkill = {cTime = ml_global_information.Now, id = skill.skill.id}
-				_private.skillLastCast[skill.skill.id] = ml_global_information.Now
 				if (_private.TargetLosingHealth(target) == false) then
 					return false
 				end
+				_private.lastSkill = {cTime = ml_global_information.Now, id = skill.skill.id}
+				_private.skillLastCast[skill.skill.id] = ml_global_information.Now
 				return true
 			end
 		end
@@ -848,7 +855,7 @@ function _private.AttackSkill(target)
 end
 
 function _private.Evade()
-	if (ml_global_information.Player_Endurance >= 50 and TimeSince(_private.evadeAt.timer) > 300) then
+	if (gDoCombatMovement ~= "0" and ml_global_information.Player_Endurance >= 50 and TimeSince(_private.evadeAt.timer) > 300) then
 		_private.evadeAt.timer = ml_global_information.Now
 		local targets = CharacterList("aggro")
 		if (ml_global_information.Player_Health.percent < _private.evadeAt.healthPercentage or TableSize(targets) >= _private.evadeAt.enemiesAround) then
@@ -889,8 +896,8 @@ function _private.CanMoveDirection(dir,distance)
 end
 
 function _private.DoCombatMovement()
-	local target = Player:GetTarget()
-	if (gDoCombatMovement ~= "0" and target and ml_global_information.Player_Health.percent < 99 and not gw2_unstuck.HandleStuck("combat")) then
+	local target = ml_global_information.Player_Target
+	if (gDoCombatMovement ~= "0" and ValidTable(target) and ml_global_information.Player_Health.percent < 99 and not gw2_unstuck.HandleStuck("combat")) then
 		if (gw2_common_functions.HasBuffs(Player,"791,727")) then Player:StopMovement() return false end
 		local tDistance = target.distance
 		local moveDir = ml_global_information.Player_MovementDirections
@@ -1156,7 +1163,7 @@ function profilePrototype:GetAttackRange()
 	return _private.maxRange
 end
 
-function profilePrototype:GetAvailableSkills()
+function profilePrototype:UpdateSkillInfo()
 	_private.skillbarSkills = {}
 	_private.currentSkills = {}
 	_private.currentHealSkills = {}
