@@ -460,9 +460,9 @@ c_Looting.lastTargetID = 0
 c_Looting.LootingAttemptCounter = 0
 -- Unsure which one to use..contentID or contentID2 ..contentID changes sometimes I think
 -- 24.11.2014 : Splendid Chest, contentID = 41638 , contentID2 = 202375680
-c_Looting.contentID = "17698,198260,232192,232193,232194,262863,236384,41638"
+c_Looting.contentID = "17698;198260;232192;232193;232194;262863;236384;41638;297323"
 c_Looting.contentID2 = "202375680"
-c_Looting.contentIDExclude = "41024,297323" -- diving goggles 1.12.14
+c_Looting.contentIDExclude = "41024;297323" -- diving goggles 1.12.14
 function c_Looting:evaluate()
 	--ml_log("c_Looting")
 	-- Find new loot target.
