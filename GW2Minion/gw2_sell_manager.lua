@@ -192,11 +192,9 @@ end
 
 -- Create New Filter Dialog.
 function gw2_sell_manager.CreateDialog(filterID)
-	d(filterID)
 	if (filterID:find("SellManager_Filter")) then
 		filterID = string.gsub(filterID, "SellManager_Filter", "")
 		filterID = tonumber(filterID)
-		d(filterID)
 		gw2_sell_manager.currentFilter = filterID
 	end
 	local dialog = gw2_dialog_manager:GetDialog(GetString("newsellfilter"))
@@ -212,37 +210,8 @@ function gw2_sell_manager.CreateDialog(filterID)
 		list = "None"
 		for name,_ in pairs(GW2.WEAPONTYPE) do list = list .. "," .. name end
 		dialog:NewComboBox(GetString("weapontype"),"SellManager_Weapontype",list)
-		dialog:SetOkFunction(function()
-			local saveFilter = {name = SellManager_Name,itemtype = SellManager_Itemtype,rarity = SellManager_Rarity,weapontype = SellManager_Weapontype,soulbound = SellManager_Soulbound,}
-			if (ValidString(saveFilter.name) == false) then
-				ml_error("Please enter a filter name before saving.")
-			elseif (gw2_sell_manager.validFilter(saveFilter)) then -- check if filter is valid.
-				if (type(gw2_sell_manager.currentFilter) ~= "number") then -- new filter, making sure name is not in use.
-					for _,filter in pairs(gw2_sell_manager.filterList) do
-						if (saveFilter.name == filter.name) then
-							return "Filter with this name already exists, please change the name."
-						end
-					end
-					d("new filter")
-					table.insert(gw2_sell_manager.filterList, saveFilter)
-				else
-					d("old filter")
-					d(gw2_sell_manager.currentFilter)
-					gw2_sell_manager.filterList[gw2_sell_manager.currentFilter] = saveFilter
-				end
-				Settings.GW2Minion.SellManager_FilterList = gw2_sell_manager.filterList
-				gw2_sell_manager.refreshFilterlist()
-				return true
-			else
-				return "Filter Not Valid. Filter needs to have both type and rarity set. Junk rarity can be set without any type."
-			end
-		end)
-		dialog:SetDeleteFunction(function()
-			table.remove(gw2_sell_manager.filterList, gw2_sell_manager.currentFilter)
-			Settings.GW2Minion.SellManager_FilterList = gw2_sell_manager.filterList
-			gw2_sell_manager.refreshFilterlist()
-			return true
-		end)
+		dialog:SetOkFunction(gw2_sell_manager.DialogOK)
+		dialog:SetDeleteFunction(gw2_sell_manager.DialogDelete)
 	end
 	if (dialog) then
 		local tType = (type(filterID) == "number")
@@ -253,6 +222,38 @@ function gw2_sell_manager.CreateDialog(filterID)
 		SellManager_Weapontype = (tType and gw2_sell_manager.filterList[filterID].weapontype or "None")
 		SellManager_Soulbound = (tType and gw2_sell_manager.filterList[filterID].soulbound or "either")
 	end
+end
+
+-- Dialog OK button function.
+function gw2_sell_manager.DialogOK()
+	local saveFilter = {name = SellManager_Name,itemtype = SellManager_Itemtype,rarity = SellManager_Rarity,weapontype = SellManager_Weapontype,soulbound = SellManager_Soulbound,}
+	if (ValidString(saveFilter.name) == false) then
+		ml_error("Please enter a filter name before saving.")
+	elseif (gw2_sell_manager.validFilter(saveFilter)) then -- check if filter is valid.
+		if (type(gw2_sell_manager.currentFilter) ~= "number") then -- new filter, making sure name is not in use.
+			for _,filter in pairs(gw2_sell_manager.filterList) do
+				if (saveFilter.name == filter.name) then
+					return "Filter with this name already exists, please change the name."
+				end
+			end
+			table.insert(gw2_sell_manager.filterList, saveFilter)
+		else
+			gw2_sell_manager.filterList[gw2_sell_manager.currentFilter] = saveFilter
+		end
+		Settings.GW2Minion.SellManager_FilterList = gw2_sell_manager.filterList
+		gw2_sell_manager.refreshFilterlist()
+		return true
+	else
+		return "Filter Not Valid. Filter needs to have both type and rarity set. Junk rarity can be set without any type."
+	end
+end
+
+-- Dialog DELETE button function.
+function gw2_sell_manager.DialogDelete()
+	table.remove(gw2_sell_manager.filterList, gw2_sell_manager.currentFilter)
+	Settings.GW2Minion.SellManager_FilterList = gw2_sell_manager.filterList
+	gw2_sell_manager.refreshFilterlist()
+	return true
 end
 
 -- Check if filter is valid:

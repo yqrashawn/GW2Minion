@@ -228,6 +228,6 @@ function dialogPrototype:Show(deleteB,cancelB)
 		dialog:Show()
 	else
 		self:Create()
-		self:Show()
+		self:Show(deleteB,cancelB)
 	end
 end
