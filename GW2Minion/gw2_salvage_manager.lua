@@ -215,7 +215,7 @@ function gw2_salvage_manager.CreateDialog(filterID)
 			if (ValidString(saveFilter.name) == false) then
 				return "Please enter a filter name before saving."
 			elseif (gw2_salvage_manager.validFilter(saveFilter)) then -- check if filter is valid.
-				if (type(filterID) ~= "number") then -- new filter, making sure name is not in use.
+				if (type(gw2_salvage_manager.currentFilter) ~= "number") then -- new filter, making sure name is not in use.
 					for _,filter in pairs(gw2_salvage_manager.filterList) do
 						if (saveFilter.name == filter.name) then
 							return "Filter with this name already exists, please change the name."
@@ -223,7 +223,7 @@ function gw2_salvage_manager.CreateDialog(filterID)
 					end
 					table.insert(gw2_salvage_manager.filterList, saveFilter)
 				else
-					gw2_salvage_manager.filterList[filterID] = saveFilter
+					gw2_salvage_manager.filterList[gw2_salvage_manager.currentFilter] = saveFilter
 				end
 				Settings.GW2Minion.SalvageManager_FilterList = gw2_salvage_manager.filterList
 				gw2_salvage_manager.refreshFilterlist()

@@ -192,9 +192,11 @@ end
 
 -- Create New Filter Dialog.
 function gw2_sell_manager.CreateDialog(filterID)
+	d(filterID)
 	if (filterID:find("SellManager_Filter")) then
 		filterID = string.gsub(filterID, "SellManager_Filter", "")
 		filterID = tonumber(filterID)
+		d(filterID)
 		gw2_sell_manager.currentFilter = filterID
 	end
 	local dialog = gw2_dialog_manager:GetDialog(GetString("newsellfilter"))
@@ -215,15 +217,18 @@ function gw2_sell_manager.CreateDialog(filterID)
 			if (ValidString(saveFilter.name) == false) then
 				ml_error("Please enter a filter name before saving.")
 			elseif (gw2_sell_manager.validFilter(saveFilter)) then -- check if filter is valid.
-				if (type(filterID) ~= "number") then -- new filter, making sure name is not in use.
+				if (type(gw2_sell_manager.currentFilter) ~= "number") then -- new filter, making sure name is not in use.
 					for _,filter in pairs(gw2_sell_manager.filterList) do
 						if (saveFilter.name == filter.name) then
 							return "Filter with this name already exists, please change the name."
 						end
 					end
+					d("new filter")
 					table.insert(gw2_sell_manager.filterList, saveFilter)
 				else
-					gw2_sell_manager.filterList[filterID] = saveFilter
+					d("old filter")
+					d(gw2_sell_manager.currentFilter)
+					gw2_sell_manager.filterList[gw2_sell_manager.currentFilter] = saveFilter
 				end
 				Settings.GW2Minion.SellManager_FilterList = gw2_sell_manager.filterList
 				gw2_sell_manager.refreshFilterlist()

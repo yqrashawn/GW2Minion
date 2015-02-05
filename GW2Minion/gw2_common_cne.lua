@@ -542,10 +542,11 @@ c_fleeToSafety.safespot = nil
 c_fleeToSafety.fleeing = false
 function c_fleeToSafety:evaluate()
 	-- Check if were alive and if already fleeing.
-	if ( ml_global_information.Player_Alive and c_fleeToSafety.fleeing == true) then
+	if ( ml_global_information.Player_Alive and c_fleeToSafety.fleeing == true and c_fleeToSafety.safespot) then
 		return true
 	-- Check if were alive and low on health.
-	elseif (ml_global_information.Player_Alive and ml_global_information.Player_InCombat and ml_global_information.Player_Health.percent < 15) then
+	--elseif (ml_global_information.Player_Alive and ml_global_information.Player_InCombat and ml_global_information.Player_Health.percent < 15) then
+	elseif (ml_global_information.Player_Alive and ml_global_information.Player_Health.percent < 15) then
 		if (c_fleeToSafety.safespot == nil) then
 			local _,safespot = next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest"))
 			if (ValidTable(safespot)) then
