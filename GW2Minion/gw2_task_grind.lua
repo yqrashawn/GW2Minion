@@ -185,7 +185,7 @@ function e_FightToGrindMarker:execute()
 		-- Create new Subtask combat
 		local newTask = gw2_task_combat.Create()
 		newTask.targetID = c_FightToGrindMarker.target.id
-		newTask.targetPos = c_FightToGrindMarker.target.pos	
+		newTask.terminateOnAggro = true
 		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
 		c_FightToGrindMarker.target = nil
 	else
@@ -326,8 +326,8 @@ function e_CombatTask:execute()
 		
 		-- Create new Subtask Combat
 		local newTask = gw2_task_combat.Create()
-		newTask.targetID = c_CombatTask.target.id		
-		newTask.targetPos = c_CombatTask.target.pos	
+		newTask.targetID = c_CombatTask.target.id
+		newTask.terminateOnAggro = true
 		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
 		c_CombatTask.target = nil
 	else

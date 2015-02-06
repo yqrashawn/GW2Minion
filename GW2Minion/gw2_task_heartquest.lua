@@ -865,8 +865,7 @@ function e_HQHandleKillEnemy:execute()
 		
 		-- Create new Subtask Combat
 		local newTask = gw2_task_combat.Create()
-		newTask.targetID = e_HQHandleKillEnemy.lastTarget.id		
-		newTask.targetPos = e_HQHandleKillEnemy.lastTarget.pos
+		newTask.targetID = e_HQHandleKillEnemy.lastTarget.id
 		if ( e_HQHandleKillEnemy.lastTarget.isGadget ) then
 			newTask.targetType = "gadget"
 			ml_task_hub:CurrentTask().lastTargetType = "gadget"

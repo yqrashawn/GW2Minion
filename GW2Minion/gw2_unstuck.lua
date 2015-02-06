@@ -11,6 +11,7 @@ gw2_unstuck.stuckthreshold = 45
 gw2_unstuck.respawntimer = 0
 gw2_unstuck.logoutTmr = 0
 gw2_unstuck.useWaypointTmr = 0
+gw2_unstuck.moveDirSet = {[GW2.MOVEMENTTYPE.Forward] = false, [GW2.MOVEMENTTYPE.Backward] = false, [GW2.MOVEMENTTYPE.Left] = false, [GW2.MOVEMENTTYPE.Right] = false,}
 gw2_unstuck.slowConditions = "721,722,727,791,872" --Cripple, Chill, Immobilize, Fear, Stun. -- Needs more! (all debufs that slow you down.)
 
 
@@ -71,6 +72,7 @@ function gw2_unstuck.HandleStuck(mode)
 					ml_log("Move blindly to nearby mesh")
 					Player:SetFacingExact(p.x,p.y,p.z)
 					Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+					gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Forward] = true
 					gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 					gw2_unstuck.HandleStuck_ControlManualMovement()				
 					gw2_unstuck.useWaypointTmr = ml_global_information.Now
@@ -156,6 +158,8 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 	local StuckThreshOld = gw2_unstuck.stuckthreshold
 	if ( mode == "combat" ) then StuckThreshOld = gw2_unstuck.stuckthreshold - 25 end
 	
+	d("distmoved: " .. tostring(distmoved))
+	d("stuckThreshold: " .. tostring(StuckThreshOld))
 	if ( distmoved < StuckThreshOld ) then
 		
 		gw2_unstuck.stuckCount = gw2_unstuck.stuckCount + 1
@@ -183,19 +187,18 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 					local TList = ( GadgetList("nearest,selectable,alive,onmesh,contentID2="..contentID2..",maxdistance=250,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("mapobjects"))) )	
 					if ( TableSize( TList ) > 0 ) then
 						local id, target  = next( TList )
-						if ( id and target ) then				
+						if ( id and target ) then
 							d("Path-Blocking Object found, trying to destroy it...")
 							
 							-- Create new Subtask Combat
 							local newTask = gw2_task_combat.Create()
-							newTask.targetID = target.id		
-							newTask.targetPos = target.pos
+							newTask.targetID = target.id
 							newTask.targetType = "gadget"
 							ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-														
+							
 							return ml_log(Player:SetTarget(target.id))
-						end		
-					end					
+						end
+					end
 				end
 				
 				if ( gw2_unstuck.jumpCount <= 2 ) then
@@ -208,6 +211,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 					gw2_unstuck.stuckthreshold = 125				
 					local dir = math.random(2,3)
 					Player:SetMovement(dir)
+					gw2_unstuck.moveDirSet[dir] = true
 					gw2_unstuck.jumpCount = gw2_unstuck.jumpCount + 1									
 					Player:Jump()
 				
@@ -228,7 +232,8 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 					d("Adding AvoidanceArea ...")
 					NavigationManager:SetAvoidanceAreas(ml_mesh_mgr.currentMesh.AvoidanceAreas)
 					Player:StopMovement()
-					Player:SetMovement(1)
+					Player:SetMovement(GW2.MOVEMENTTYPE.Backward)
+					gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] = true
 					ml_global_information.Wait( 2000 )
 					Player:Jump()
 				end
@@ -247,7 +252,8 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 				d("Adding new Obstacle for navigating around the stuck")
 				NavigationManager:AddNavObstacles(ml_mesh_mgr.currentMesh.Obstacles)
 				Player:StopMovement()
-				Player:SetMovement(1)
+				Player:SetMovement(GW2.MOVEMENTTYPE.Backward)
+				gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] = true
 				ml_global_information.Wait( 2000 )
 				Player:Jump()
 				
@@ -270,13 +276,13 @@ end
 -- Tries to stop the player from moving offside the mesh in case of "manual" antistuck movement
 function gw2_unstuck.HandleStuck_ControlManualMovement()	
 	if ( ml_global_information.Player_MovementDirections.backward or ml_global_information.Player_MovementDirections.left or ml_global_information.Player_MovementDirections.right ) then		
-		if ( ml_global_information.Player_MovementDirections.backward and not Player:CanEvade(0,75) ) then Player:UnSetMovement(1) end
-		if ( ml_global_information.Player_MovementDirections.left and not ml_global_information.Player_MovementDirections.backward and not ml_global_information.Player_MovementDirections.forward and not Player:CanEvade(6,75) ) then Player:UnSetMovement(2) end
-		if ( ml_global_information.Player_MovementDirections.right and not ml_global_information.Player_MovementDirections.backward and not ml_global_information.Player_MovementDirections.forward and not Player:CanEvade(7,75) ) then Player:UnSetMovement(3) end
-		if ( ml_global_information.Player_MovementDirections.left and ml_global_information.Player_MovementDirections.backward and not Player:CanEvade(1,75) ) then Player:UnSetMovement(2) end
-		if ( ml_global_information.Player_MovementDirections.right and ml_global_information.Player_MovementDirections.backward and not Player:CanEvade(2,75) ) then Player:UnSetMovement(3) end
-		if ( ml_global_information.Player_MovementDirections.left and ml_global_information.Player_MovementDirections.forward and not Player:CanEvade(4,75) ) then Player:UnSetMovement(2) end
-		if ( ml_global_information.Player_MovementDirections.right and ml_global_information.Player_MovementDirections.forward and not Player:CanEvade(5,75) ) then Player:UnSetMovement(3) end						
+		if ( ml_global_information.Player_MovementDirections.backward and not Player:CanMoveDirection(0,75) ) then Player:UnSetMovement(1) end
+		if ( ml_global_information.Player_MovementDirections.left and not ml_global_information.Player_MovementDirections.backward and not ml_global_information.Player_MovementDirections.forward and not Player:CanMoveDirection(6,75) ) then Player:UnSetMovement(2) end
+		if ( ml_global_information.Player_MovementDirections.right and not ml_global_information.Player_MovementDirections.backward and not ml_global_information.Player_MovementDirections.forward and not Player:CanMoveDirection(7,75) ) then Player:UnSetMovement(3) end
+		if ( ml_global_information.Player_MovementDirections.left and ml_global_information.Player_MovementDirections.backward and not Player:CanMoveDirection(1,75) ) then Player:UnSetMovement(2) end
+		if ( ml_global_information.Player_MovementDirections.right and ml_global_information.Player_MovementDirections.backward and not Player:CanMoveDirection(2,75) ) then Player:UnSetMovement(3) end
+		if ( ml_global_information.Player_MovementDirections.left and ml_global_information.Player_MovementDirections.forward and not Player:CanMoveDirection(4,75) ) then Player:UnSetMovement(2) end
+		if ( ml_global_information.Player_MovementDirections.right and ml_global_information.Player_MovementDirections.forward and not Player:CanMoveDirection(5,75) ) then Player:UnSetMovement(3) end						
 	end	
 end
 
@@ -335,9 +341,9 @@ function gw2_unstuck.Start()
 	gw2_unstuck.stuckTimer = ml_global_information.Now
 end
 
-function gw2_unstuck.Reset()	
+function gw2_unstuck.Reset()
 	gw2_unstuck.lastPos = ml_global_information.Player_Position
-	gw2_unstuck.stuckCount = 0	
+	gw2_unstuck.stuckCount = 0
 	gw2_unstuck.antiStuckPos = nil
 	gw2_unstuck.stuckPosition = nil
 	gw2_unstuck.jumpCount = 0
@@ -345,9 +351,9 @@ function gw2_unstuck.Reset()
 	gw2_unstuck.respawntimer = 0
 	gw2_unstuck.useWaypointTmr = ml_global_information.Now
 	if ( ml_global_information.Player_IsMoving and ml_global_information.Player_CanMove) then
-		if ( ml_global_information.Player_MovementDirections.backward ) then Player:UnSetMovement(1) end 
-		if ( ml_global_information.Player_MovementDirections.left ) then Player:UnSetMovement(2) end
-		if ( ml_global_information.Player_MovementDirections.right ) then Player:UnSetMovement(3) end		
+		if ( ml_global_information.Player_MovementDirections.backward and gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] ) then gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] = false Player:UnSetMovement(GW2.MOVEMENTTYPE.Backward) end 
+		if ( ml_global_information.Player_MovementDirections.left and gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Left] ) then gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Left] = false Player:UnSetMovement(GW2.MOVEMENTTYPE.Left) end
+		if ( ml_global_information.Player_MovementDirections.right and gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Right] ) then gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Right] = false Player:UnSetMovement(GW2.MOVEMENTTYPE.Right) end
 	end
 end
 

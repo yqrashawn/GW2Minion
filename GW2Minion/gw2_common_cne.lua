@@ -350,8 +350,7 @@ function e_FightAggro:execute()
 	if (c_FightAggro.target ~= nil) then
 		Player:StopMovement()
 		local newTask = gw2_task_combat.Create()
-		newTask.targetID = c_FightAggro.target.id		
-		newTask.targetPos = c_FightAggro.target.pos		
+		newTask.targetID = c_FightAggro.target.id
 		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
 		c_FightAggro.target = nil
 	else
@@ -507,8 +506,7 @@ function e_Looting:execute()
 						local target = gw2_common_functions.GetBestAggroTarget()
 						if ( target ) then
 							local newTask = gw2_task_combat.Create()
-							newTask.targetID = c_HandleAggro.target.id		
-							newTask.targetPos = c_HandleAggro.target.pos		
+							newTask.targetID = c_HandleAggro.target.id
 							ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
 						end
 						c_Looting.LootingAttemptCounter = 0

@@ -243,8 +243,7 @@ function e_HandleAggro:execute()
 			Player:Jump()
 		end
 		local newTask = gw2_task_combat.Create()
-		newTask.targetID = c_HandleAggro.target.id		
-		newTask.targetPos = c_HandleAggro.target.pos		
+		newTask.targetID = c_HandleAggro.target.id
 		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
 		c_HandleAggro.target = nil
 	else
@@ -276,8 +275,7 @@ function e_FightToGatherMarker:execute()
 	if (c_FightToGatherMarker.target ~= nil) then
 		Player:StopMovement()
 		local newTask = gw2_task_combat.Create()
-		newTask.targetID = c_FightToGatherMarker.target.id		
-		newTask.targetPos = c_FightToGatherMarker.target.pos		
+		newTask.targetID = c_FightToGatherMarker.target.id
 		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
 		c_FightToGatherMarker.target = nil
 	else

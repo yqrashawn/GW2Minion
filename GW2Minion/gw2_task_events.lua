@@ -311,10 +311,9 @@ function e_DoEventObjectives:execute()
 							
 								-- Create new Subtask Combat
 								local newTask = gw2_task_combat.Create()
-								newTask.targetID = target.id		
-								newTask.targetPos = target.pos
+								newTask.targetID = target.id
 								newTask.name = "Event Combat"
-								ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)																
+								ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
 								return
 							end
 						end

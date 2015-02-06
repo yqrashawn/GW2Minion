@@ -15,7 +15,8 @@ function gw2_task_combat.Create()
 	newinst.targetID = nil
 	newinst.targetType = "character" -- change this to "gadget" if needed
 	
-	newinst.swimmingCancels = true -- incase we ever figure that stuff out
+	newinst.terminateOnAggro = false -- if true, terminates task if curr target has no aggro but others have
+	newinst.terminateInWater = true -- in case we ever figure that stuff out
 	
     return newinst
 end
@@ -94,11 +95,18 @@ function e_AttackTarget:execute()
 				dbCurrTargetID = target.id or "" 
 				dbCurrTargetDist = math.floor(target.distance) 
 			end
+			if (ml_task_hub:CurrentTask().terminateOnAggro and target.isAggro == false) then
+				if (TableSize(CharacterList("onmesh,aggro,attackable,maxdistance=1500,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))) > 0) then
+					d("cancel target, no aggro on current, aggro on other")
+					ml_task_hub:CurrentTask().completed = true
+					return ml_log(false)
+				end
+			end
 			if (ml_blacklist.CheckBlacklistEntry(GetString("monsters"),target.contentID)) then
 				-- target got blacklisted, cancel combat task.
 				ml_task_hub:CurrentTask().completed = true
 				return ml_log(false)
-			elseif (ml_task_hub:CurrentTask().swimmingCancels and (Player.swimming == 1 or (target.isCharacter and target.swimming == 1) or (target.isGadget and target.pos and target.pos.z > 40))) then
+			elseif (ml_task_hub:CurrentTask().terminateInWater and (Player.swimming == 1 or (target.isCharacter and target.swimming == 1) or (target.isGadget and target.pos and target.pos.z > 40))) then
 				-- target or player is in the water, cancel combat task.
 				ml_blacklist.AddBlacklistEntry(GetString("monsters"),target.contentID,target.name,ml_global_information.Now+30000)
 				ml_task_hub:CurrentTask().completed = true
