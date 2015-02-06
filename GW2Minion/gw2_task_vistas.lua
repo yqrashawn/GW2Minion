@@ -51,7 +51,7 @@ function gw2_task_vistas:task_complete_eval()
 		
 		local dist = Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)		
 		if ( dist < 8000 ) then
-			local evList = MapMarkerList("nearest,onmesh,isvista,maxdistance=5000,contentID="..GW2.MAPMARKER.Vista)
+			local evList = MapMarkerList("nearest,onmesh,isvista,maxdistance=500,contentID="..GW2.MAPMARKER.Vista)
 			if ( evList ) then 
 				local i,event = next(evList)
 				if ( i and event ) then
@@ -144,6 +144,7 @@ function e_MoveToVista:execute()
 		local newTask = gw2_task_moveto.Create()
 		newTask.name = "e_MoveToVista "..ml_task_hub:CurrentTask().mytask.name.." StartPosition"
 		newTask.targetPos = e_MoveToVista.targetPos				
+		newTask.smoothTurns = false
 		ml_task_hub:CurrentTask():AddSubTask(newTask)
 		return ml_log(true)
 		

@@ -22,7 +22,7 @@ function gw2_task_combat.Create()
 end
 
 function gw2_task_combat:Init()
-	d("gw2_task_combat:Init")
+	--d("gw2_task_combat:Init")
 	-- ProcessOverWatch() elements
 	
 	-- Handle Dead
@@ -59,7 +59,7 @@ function gw2_task_combat:Init()
 end
 
 function gw2_task_combat.ModuleInit()
-	d("gw2_task_combat:ModuleInit")
+	--d("gw2_task_combat:ModuleInit")
 	-- Setup Debug fields
 	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
 	if ( dw ) then
