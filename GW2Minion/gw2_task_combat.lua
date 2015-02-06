@@ -96,7 +96,7 @@ function e_AttackTarget:execute()
 				dbCurrTargetDist = math.floor(target.distance) 
 			end
 			if (ml_task_hub:CurrentTask().terminateOnAggro and target.isAggro == false) then
-				if (TableSize(CharacterList("onmesh,aggro,attackable,maxdistance=1500,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))) > 0) then
+				if (TableSize(CharacterList("onmesh,aggro,attackable,alive,maxdistance=1500,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))) > 0) then
 					d("cancel target, no aggro on current, aggro on other")
 					ml_task_hub:CurrentTask().completed = true
 					return ml_log(false)

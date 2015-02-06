@@ -624,7 +624,7 @@ end
 
 function _private.CheckTargetBuffs(target)
 	if (target) then
-		if (gw2_common_functions.BufflistHasBuffs(target.buffs,"762")) then
+		if (gw2_common_functions.BufflistHasBuffs(target.buffs,"762,785")) then
 			ml_blacklist.AddBlacklistEntry(GetString("monsters"),target.contentID,target.name,ml_global_information.Now+30000)
 			Player:ClearTarget()
 			return false
@@ -661,18 +661,15 @@ end
 function _private.TargetLosingHealth(target)
 	if (target) then
 		if (_private.targetLosingHP.id ~= target.id) then
-			d("new target for health check")
 			_private.targetLosingHP = {id = target.id, health = target.health.current, timer = ml_global_information.Now}
 		elseif (_private.targetLosingHP.id == target.id and TimeSince(_private.targetLosingHP.timer) > 15000 ) then
-			d("10s up for health check")
 			_private.targetLosingHP.timer = ml_global_information.Now
-			if (_private.targetLosingHP.health ~= 0 and _private.targetLosingHP.health < target.health.current) then
+			if (_private.targetLosingHP.health ~= 0 and _private.targetLosingHP.health == target.health.current) then
 				ml_blacklist.AddBlacklistEntry(GetString("monsters"), target.contentID, target.name, ml_global_information.Now + 90000)
 				Player:ClearTarget()
-				d("WHOOOOOOP")
+				d("BlackListed some target, health not changeing AT ALL!")
 				return false
 			else
-				d("target losing health, setting new checktimes")
 				_private.targetLosingHP.health = target.health.current
 			end
 		end
@@ -907,20 +904,6 @@ function _private.DoCombatMovement()
 
 		--CONTROL CURRENT COMBAT MOVEMENT
 		if (Player:IsMoving() ) then
-
-			if (Player.onmeshexact == false and (moveDir.backward or moveDir.left or moveDir.right) ) then
-				Player:UnSetMovement(1)
-				Player:UnSetMovement(2)
-				Player:UnSetMovement(3)
-				local pPos = Player.pos
-				if (pPos) then
-					local mPos = NavigationManager:GetClosestPointOnMesh(pPos)
-					if ( mPos ) then
-						Player:MoveTo(mPos.x,mPos.y,mPos.z,50,false,false,false)
-					end
-				end
-				return
-			end
 
 			if (tonumber(tDistance) ~= nil) then
 				if (_private.maxRange > 300 and tDistance < (_private.maxRange / 4) and moveDir.forward) then -- we are too close and moving towards enemy
