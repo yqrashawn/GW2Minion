@@ -158,8 +158,6 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 	local StuckThreshOld = gw2_unstuck.stuckthreshold
 	if ( mode == "combat" ) then StuckThreshOld = gw2_unstuck.stuckthreshold - 25 end
 	
-	d("distmoved: " .. tostring(distmoved))
-	d("stuckThreshold: " .. tostring(StuckThreshOld))
 	if ( distmoved < StuckThreshOld ) then
 		
 		gw2_unstuck.stuckCount = gw2_unstuck.stuckCount + 1
