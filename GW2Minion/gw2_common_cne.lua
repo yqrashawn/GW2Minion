@@ -568,6 +568,8 @@ function e_fleeToSafety:execute()
 	c_fleeToSafety.fleeing = (ml_global_information.Player_Health.percent < 85)
 	-- Heal if we can
 	gw2_skill_manager.Heal()
+	-- Clear target, no need for char to break neck looking back at targer XD
+	Player:ClearTarget()
 	-- Find enemies.
 	local nmbrEnemies = CharacterList("aggro,alive")
 	-- Enemies found, keep fleeing.

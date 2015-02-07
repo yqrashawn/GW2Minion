@@ -179,7 +179,7 @@ function e_FightToGrindMarker:execute()
 	ml_log("e_FightToGrindMarker ")
 			
 	if (c_FightToGrindMarker.target ~= nil) then
-		Player:StopMovement()
+		--Player:StopMovement()
 		-- For TM Conditions
 		ml_task_hub:CurrentTask().lastTargetID = c_FightToGrindMarker.target.id
 		-- Create new Subtask combat
@@ -320,7 +320,7 @@ function e_CombatTask:execute()
 	ml_log("CombatTask ")
 			
 	if (c_CombatTask.target ~= nil) then
-		Player:StopMovement()
+		--Player:StopMovement()
 		-- For TM Conditions
 		ml_task_hub:CurrentTask().lastTargetID = c_CombatTask.target.id
 		
