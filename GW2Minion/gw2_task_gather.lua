@@ -420,7 +420,7 @@ function c_Gathering:evaluate()
 			else
 
 				-- Our gatherable is gone, finishing this subtask / getting next gatherable in next pulse
-				if (gBotMode ~= GetString("gatherMode") and gBotMode ~= GetString("customTasks")) then					
+				if (gBotMode ~= GetString("gatherMode") and ml_task_hub:CurrentTask().name == GetString("gatherMode")) then
 					ml_task_hub:CurrentTask().completed = true
 					ml_task_hub:CurrentTask().targetID = nil
 					ml_task_hub:CurrentTask().targetPos = nil
@@ -432,7 +432,7 @@ function c_Gathering:evaluate()
 	else		
 		
 		-- Our gatherable is gone, finishing this subtask / getting next gatherable in next pulse
-		if (gBotMode ~= GetString("gatherMode") and gBotMode ~= GetString("customTasks")) then					
+		if (gBotMode ~= GetString("gatherMode") and ml_task_hub:CurrentTask().name == GetString("gatherMode")) then
 			ml_task_hub:CurrentTask().completed = true
 			ml_task_hub:CurrentTask().targetID = nil
 			ml_task_hub:CurrentTask().targetPos = nil

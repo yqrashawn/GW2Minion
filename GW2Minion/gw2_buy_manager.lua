@@ -316,9 +316,7 @@ function gw2_buy_manager.buyAtMerchant(vendorMarker)
 				newTask.targetID = vendorMarker.characterID
 				newTask.targetType = "character"
 				newTask.name = "MoveTo Vendor(BUY)"
-				if (gUseWaypoints == "1") then
-					newTask.useWaypoint = true
-				end
+				newTask.useWaypoint = true
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				return true
 			end

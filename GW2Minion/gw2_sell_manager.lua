@@ -414,9 +414,7 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 				newTask.targetID = vendorMarker.characterID
 				newTask.targetType = "character"
 				newTask.name = "MoveTo Vendor(SELL)"
-				if (gUseWaypoints == "1") then
-					newTask.useWaypoint = true
-				end
+				newTask.useWaypoint = true
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				return true
 			end

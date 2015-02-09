@@ -867,7 +867,7 @@ function _private.Evade()
 					--GW2.DODGEDIRECTIONS = {Backward = 0, BackwardLeft = 1, BackwardRight = 2, Forward = 3, ForwardLeft = 4, ForwardRight = 5, Left = 6, Right = 7}
 					local direction = {[1]=1,[2]=2,[3]=0,[4]=6,[5]=7,[6]=6,[7]=7,}
 					local dir = math.random(1,#direction)
-					if (Player:CanEvade(direction[dir],100)) then
+					if (_private.CanMoveDirection(direction[dir],320)) then
 						_private.lastEvadedSkill.skillID = skillofTarget
 						Player:Evade(direction[dir])
 						return true

@@ -104,7 +104,7 @@ function gw2_task_moveto:Process()
 		else
 
 			-- Waypoint Usage
-			if (ml_task_hub:CurrentTask().useWaypoint == true and dist > 15000 and Player:GetWalletEntry(1) > 500) then
+			if (ml_task_hub:CurrentTask().useWaypoint == true and ml_global_information.Player_InCombat == false and Player.healthstate == GW2.HEALTHSTATE.Alive and dist > 15000 and Player:GetWalletEntry(1) > 500) then
 				local waypoint = gw2_common_functions.GetClosestWaypointToPos(ml_global_information.CurrentMapID,ml_task_hub:CurrentTask().targetPos)
 				if (ValidTable(waypoint)) then
 					local wDist = Distance2D(waypoint.pos.x,waypoint.pos.y,ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y)
