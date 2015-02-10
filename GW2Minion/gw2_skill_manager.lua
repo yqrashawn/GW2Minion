@@ -773,12 +773,12 @@ function _private.SwapEngineerKit()
 	}
 	local availableKits = { [1] = { slot=0, skillID=0} }-- Leave Kit Placeholder
 	local prefKitEquiped = false
-	for _,skill in ipairs(_private.currentSkills) do
-		if (skill and EngineerKits[skill.skill.id] and (_private.lastKitTable[skill.slot] == nil or TimeSince(_private.lastKitTable[skill.slot].lastused) > 1500)) then
+	for _,skill in pairs(_private.skillbarSkills) do
+		if (skill and EngineerKits[skill.skillID] and (_private.lastKitTable[skill.slot] == nil or TimeSince(_private.lastKitTable[skill.slot].lastused) > 1500)) then
 			local kitcount = TableSize(availableKits) + 1
 			availableKits[kitcount] = {}
 			availableKits[kitcount].slot = skill.slot
-			availableKits[kitcount].skillID = skill.skill.id
+			availableKits[kitcount].skillID = skill.skillID
 		end
 	end
 	local key = math.random(1,TableSize(availableKits))
