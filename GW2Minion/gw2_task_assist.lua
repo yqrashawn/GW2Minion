@@ -46,7 +46,7 @@ function gw2_task_assist:Process()
 		elseif ( sMtargetmode ~= "None" ) then 
 			
 			local target = gw2_common_functions.GetBestCharacterTargetForAssist()			
-			if ( target and target.alive and target.attackable ) then				
+			if ( target and target.alive and target.attackable ) then
 				gw2_skill_manager.Attack( target )
 			end
 		end

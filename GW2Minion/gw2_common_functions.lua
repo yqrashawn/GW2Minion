@@ -205,7 +205,7 @@ function gw2_common_functions.GetBestCharacterTargetForAssist()
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange + 250)) end
 	
 	if ( target and target.id ) then
-		if ( target.distance < 1500 and target.los ) then
+		if ( target.distance < 1600 and target.los ) then
 			Player:SetTarget(target.id)
 		end
 		return target

@@ -205,6 +205,7 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.SetDefaultMesh(218,"Black Citadel")
 		ml_mesh_mgr.SetDefaultMesh(326,"Hoelbrak")
 		ml_mesh_mgr.SetDefaultMesh(350,"Heart of the Mists")
+		ml_mesh_mgr.SetDefaultMesh(650,"Applied Development Lab") --Asura Home
 		ml_mesh_mgr.SetDefaultMesh(968,"EdgeOfTheMist")
 		ml_mesh_mgr.SetDefaultMesh(988,"Dry Top")
 		

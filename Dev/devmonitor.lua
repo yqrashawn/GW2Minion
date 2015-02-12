@@ -747,7 +747,7 @@ function Dev.Func ( arg )
 					type = gdevNWTransType,
 		}		
 		table.insert(DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID],TableSize(DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID])+1,wtf)
-		persistence.store(GetStartupPath()..[[GW2Minion\]].."worldnav_data.lua",DevNWTempData)
+		persistence.store(GetAddonPath()..[[GW2Minion\]].."worldnav_data.lua",DevNWTempData)
 		d("New Transition Saved")		
 	end	
 end

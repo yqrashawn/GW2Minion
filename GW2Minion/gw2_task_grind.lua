@@ -308,7 +308,7 @@ c_CombatTask = inheritsFrom( ml_cause )
 e_CombatTask = inheritsFrom( ml_effect )
 c_CombatTask.target = nil
 function c_CombatTask:evaluate()
-	local target = gw2_common_functions.GetBestCharacterTarget( 9999 ) -- maxrange 2000 where enemies should be searched for
+	local target = gw2_common_functions.GetBestCharacterTarget( 9999 ) -- maxrange where enemies should be searched for
 	if ( target ) then
 		c_CombatTask.target = target
 		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_CombatTask.target ~= nil			

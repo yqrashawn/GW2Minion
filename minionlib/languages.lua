@@ -670,6 +670,7 @@ strings =
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
 		taskTalk						= "Talk",
+		taskspvp						= "sPvP",
 		useWaypoint						= "Use Waypoint",
 		
     },                                  
@@ -1349,6 +1350,7 @@ strings =
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
 		taskTalk						= "Talk",
+		taskspvp						= "sPvP",
 		useWaypoint						= "Use Waypoint",
 	},
     ["jp"] =
@@ -2015,6 +2017,7 @@ strings =
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
 		taskTalk						= "Talk",
+		taskspvp						= "sPvP",
 		useWaypoint						= "Use Waypoint",
 	},   
     ["de"] =
@@ -2682,6 +2685,7 @@ strings =
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
 		taskTalk						= "Talk",
+		taskspvp						= "sPvP",
 		useWaypoint						= "Use Waypoint",
 	},     
     ["fr"] =
@@ -3361,6 +3365,7 @@ strings =
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
 		taskTalk						= "Talk",
+		taskspvp						= "sPvP",
 		useWaypoint						= "Use Waypoint",
 	},       
     ["ru"] =
@@ -4026,6 +4031,7 @@ strings =
 		taskSmoothTurn					= "Smooth Turning",
 		taskRandomPos					= "Randomize Targetposition",
 		taskTalk						= "Talk",
+		taskspvp						= "sPvP",
 		useWaypoint						= "Use Waypoint",
 	},    	
 
