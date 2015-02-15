@@ -21,7 +21,7 @@ end
 
 function gw2_task_vistas:Init()
 
-			
+	
 	-- Normal elements
 	-- Revive Downed/Dead Partymember
 	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 375 ), self.process_elements)	-- creates subtask: moveto

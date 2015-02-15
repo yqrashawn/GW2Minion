@@ -22,6 +22,9 @@ function gw2_task_sell:Init()
 	-- Handle Dead
 	self:add(ml_element:create( "Dead", c_Dead, e_Dead, 500 ), self.overwatch_elements)	
 	
+	-- Downed 
+	self:add(ml_element:create( "Downed", c_Downed, e_DownedEmpty, 450 ), self.overwatch_elements)
+	
 	-- Handle Rezz-Target is alive again or gone, deletes the subtask moveto in case it is needed
 	self:add(ml_element:create( "RevivePartyMemberOverWatch", c_RezzOverWatchCheck, e_RezzOverWatchCheck, 400 ), self.overwatch_elements)
 	

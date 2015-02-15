@@ -66,8 +66,12 @@ end
 -- Handle Downed state, heal and attack nearby aggro targets
 c_Downed = inheritsFrom( ml_cause )
 e_Downed = inheritsFrom( ml_effect )
+e_DownedEmpty = inheritsFrom( ml_effect )
 function c_Downed:evaluate()
 	return Player.healthstate == GW2.HEALTHSTATE.Downed
+end
+function e_DownedEmpty:execute()
+-- simple placeholder for other tasks so they are not doing anything while we are down
 end
 function e_Downed:execute()
 	ml_log("e_Downed")

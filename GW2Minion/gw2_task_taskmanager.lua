@@ -21,7 +21,9 @@ function gw2_task_taskmanager:Init()
 -- ProcessOverWatch() elements
 	-- Handle Dead
 	self:add(ml_element:create( "Dead", c_Dead, e_Dead, 500 ), self.overwatch_elements)	
-		
+	
+	-- Downed 
+	self:add(ml_element:create( "Downed", c_Downed, e_DownedEmpty, 450 ), self.overwatch_elements)
 	
 	-- CheckTask - makes sure we have a active task, controls subtask conditions too
 	self:add(ml_element:create( "CheckTask", c_CheckTask, e_CheckTask, 350), self.overwatch_elements)

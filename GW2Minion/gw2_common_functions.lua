@@ -189,7 +189,7 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 	else
 		
 		local currTarget = Player:GetTarget()
-		if ( currTarget ~= nil and currTarget.attackable and currTarget.alive ) then
+		if ( currTarget ~= nil and currTarget.attackable and currTarget.alive and currTarget.onmesh) then
 			return target
 		end
 	end

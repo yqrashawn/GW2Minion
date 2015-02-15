@@ -28,10 +28,12 @@ function gw2_task_combat:Init()
 	-- Handle Dead
 	self:add(ml_element:create( "Dead", c_Dead, e_Dead, 500 ), self.overwatch_elements)	
 	
+	-- Downed 
+	self:add(ml_element:create( "Downed", c_Downed, e_DownedEmpty, 450 ), self.overwatch_elements)
+		
 	-- Handle Rezz-Target is alive again or gone, deletes the subtask moveto in case it is needed
 	self:add(ml_element:create( "RevivePartyMemberOverWatch", c_RezzOverWatchCheck, e_RezzOverWatchCheck, 400 ), self.overwatch_elements)
-	
-	
+		
 	-- Normal Elements
 	-- RevivePartyMember
 	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 375 ), self.process_elements)	-- creates subtask: moveto
