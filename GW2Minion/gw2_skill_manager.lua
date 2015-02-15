@@ -29,6 +29,14 @@ function gw2_skill_manager.ModuleInit()
 	if (Settings.GW2Minion.gCurrentProfile == nil) then
 		Settings.GW2Minion.gCurrentProfile = "None"
 	end
+	
+	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
+	if ( dw ) then
+		dw:NewField("CurrentAction","gSMCurrentAction","SkillManager")
+		dw:NewField("CurrentCast","gSMCurrentCast","SkillManager")
+		
+	end
+	
 	gw2_skill_manager.profile = gw2_skill_manager.GetProfile(Settings.GW2Minion.gCurrentProfile)
 	gMoveIntoCombatRange = Settings.GW2Minion.gMoveIntoCombatRange
 end
@@ -524,7 +532,7 @@ _private.lastTarget = {}
 _private.currentSkills = {}
 _private.currentHealSkills = {}
 _private.skillbarSkills = {}
-_private.lastSkill = {cTime = ml_global_information.Now, id = 0}
+_private.lastSkillID = 0
 
 -- **private functions**
 function _private.GetProfileList(newProfile)
@@ -683,10 +691,10 @@ function _private.CanCast(skill,target)
 	if (skill) then
 		-- skill attributes
 		if (skill.skill.lastSkillID ~= "" and tostring(skill.skill.lastSkillID) ~= Player.castinfo.lastSkillID) then return false end
-		if (skill.skill.delay > 0 and _private.skillLastCast[skill.skill.id] ~= nil and TimeSince(_private.skillLastCast[skill.skill.id]) < (skill.skill.delay+skill.maxCooldown)) then return false end
+		if (skill.skill.delay > 0 and _private.skillLastCast[skill.skill.id] ~= nil and TimeSince(_private.skillLastCast[skill.skill.id]) < (skill.skill.delay+skill.cooldown)) then return false end
 		if (skill.skill.los == "1" and (skill.skill.healing == "0" and (target == nil or target.los == false))) then return false end
-		if (skill.skill.minRange > 0 and (skill.skill.healing == "0" and (target == nil or target.distance < skill.skill.minRange))) then return false end
-		if (skill.skill.maxRange > 0 and (skill.skill.healing == "0" and (target == nil or target.distance > (skill.skill.maxRange < 154 and 154 or skill.skill.maxRange)))) then return false end
+		if (skill.skill.minRange > 0 and (skill.skill.healing == "0" and (target == nil or (target.distance+target.radius) < skill.skill.minRange))) then return false end
+		if (skill.skill.maxRange > 0 and (skill.skill.healing == "0" and (target == nil or (target.distance+target.radius) > (skill.skill.maxRange < 154 and 154 or skill.skill.maxRange)))) then return false end
 		if (skill.skill.maxRange == 0 and skill.skill.radius > 0 and (skill.skill.healing == "0" and (target == nil or target.distance > skill.skill.radius))) then return false end
 		-- player attributes
 		local playerBuffList = Player.buffs
@@ -729,8 +737,8 @@ function _private.CanCast(skill,target)
 end
 
 function _private.SwapWeapon(target)
-	if (Player:CanSwapWeaponSet() and TimeSince(_private.SwapTimer) > 0) then
-		local swap = false
+	if (Player:CanCast() and Player:IsCasting() == false and Player:CanSwapWeaponSet() and TimeSince(_private.SwapTimer) > 500) then
+		local swap,cause = false,nil
 		if (gw2_skill_manager.profile.switchSettings.switchOnRange == "1" and _private.maxRange < 300 and target and target.distance > _private.maxRange) then
 			swap = true
 		elseif (gw2_skill_manager.profile.switchSettings.switchRandom == "1" and TimeSince(_private.SwapRandomTimer) > 0) then
@@ -747,13 +755,16 @@ function _private.SwapWeapon(target)
 			end
 		end
 		if (swap) then
-			_private.SwapTimer = ml_global_information.Now + 500
+			_private.SwapTimer = ml_global_information.Now
 			_private.SwapRandomTimer = ml_global_information.Now + math.random(5000,15000)
 			if (ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist) then
 				return _private.SwapElementalistAttunement()			
 			elseif (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
 				return _private.SwapEngineerKit()
 			else
+				if (ml_global_information.ShowDebug) then
+					gSMCurrentAction = "Swap weapons: Mode = normal."
+				end
 				Player:SwapWeaponSet()
 				return true
 			end
@@ -783,6 +794,9 @@ function _private.SwapEngineerKit()
 	end
 	local key = math.random(1,TableSize(availableKits))
 	if (key ~= 1) then
+		if (ml_global_information.ShowDebug) then
+			gSMCurrentAction = "Swap weapons: Mode = engineer."
+		end
 		Player:CastSpell(availableKits[key].slot)
 		if (gSMPrioKit ~= "None" and EngineerKits[availableKits[key].skillID] ~= tostring(gSMPrioKit))then
 			_private.lastKitTable[availableKits[key].slot] = { lastused = ml_global_information.Now + 15000 }
@@ -814,6 +828,9 @@ function _private.SwapElementalistAttunement()
 		end
 		if (switch) then
 			Player:CastSpell(switch)
+			if (ml_global_information.ShowDebug) then
+				gSMCurrentAction = "Swap weapons: Mode = Elementalist."
+			end
 			return true
 		end
 	end	
@@ -825,6 +842,9 @@ function _private.AttackSkill(target)
 		for _,skill in ipairs(_private.currentSkills) do
 			if (_private.CanCast(skill,target) == true) then
 				--d("Casting "..skill.skill.name.. " CanCast: "..tostring( Player:CanCast() ).." CurrentCastDuration: "..tostring(Player.castinfo.duration))
+				if (ml_global_information.ShowDebug) then
+					gSMCurrentCast = "Casting "..skill.skill.name.. " CanCast: "..tostring( Player:CanCast() ).." CurrentCastDuration: "..tostring(Player.castinfo.duration)
+				end
 				if (target) then
 					local pos = _private.GetPredictedLocation(target,skill)
 					if (skill.skill.groundTargeted == "1") then
@@ -839,11 +859,14 @@ function _private.AttackSkill(target)
 				else
 					Player:CastSpell(skill.slot)
 				end
+				if (ml_global_information.ShowDebug) then
+					gSMCurrentAction = "Casting skills"
+				end
+				_private.lastSkillID = skill.skill.id
+				_private.skillLastCast[skill.skill.id] = ml_global_information.Now
 				if (_private.TargetLosingHealth(target) == false) then
 					return false
 				end
-				_private.lastSkill = {cTime = ml_global_information.Now, id = skill.skill.id}
-				_private.skillLastCast[skill.skill.id] = ml_global_information.Now
 				return true
 			end
 		end
@@ -870,6 +893,9 @@ function _private.Evade()
 					if (_private.CanMoveDirection(direction[dir],320)) then
 						_private.lastEvadedSkill.skillID = skillofTarget
 						Player:Evade(direction[dir])
+						if (ml_global_information.ShowDebug) then
+							gSMCurrentAction = "Evading: dir = "..dir.."."
+						end
 						return true
 					end
 				end
@@ -1117,9 +1143,9 @@ function profilePrototype:Attack(target)
 		if (target and target.id ~= ml_global_information.Player_Target.id) then Player:SetTarget(target.id) end
 		if (target == nil or target.distance < _private.maxRange) then
 			if (_private.runningIntoCombatRange == true and (target.inCombat == true or target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving)) then Player:StopMovement() _private.runningIntoCombatRange = false end
-			local lastSkillInfo = _private.ReturnSkillByID(self.skills,_private.lastSkill.id)
+			local lastSkillInfo = _private.ReturnSkillByID(self.skills,_private.lastSkillID)
 			_private.DoCombatMovement()
-			--if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.slowCast == "1")) then
+			--if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.slowCast == "0")) then
 			if ((Player:CanCast() and Player:IsCasting() == false) or (lastSkillInfo and lastSkillInfo.skill.slowCast == "0")) then
 				if (_private.Evade()) then
 					return true
@@ -1162,14 +1188,16 @@ function profilePrototype:UpdateSkillInfo()
 	if ( ValidTable(self.skills) and ValidTable(_private.skillbarSkills) ) then
 		for _,skill in ipairs(self.skills) do
 			for _,aSkill in pairs(_private.skillbarSkills) do
-				if (aSkill.skillID == skill.skill.id and (skill.skill.id ~= _private.lastSkill.id or aSkill.slot == GW2.SKILLBARSLOT.Slot_1) and aSkill.cooldown == 0) then
+				if (aSkill.skillID == skill.skill.id and (skill.skill.id ~= _private.lastSkillID or aSkill.slot == GW2.SKILLBARSLOT.Slot_1) and aSkill.cooldown == 0) then
 					_private.currentSkills[newPriority] = skill
 					_private.currentSkills[newPriority].slot = aSkill.slot
+					_private.currentSkills[newPriority].cooldown = aSkill.cooldown
 					_private.currentSkills[newPriority].maxCooldown = aSkill.cooldownmax
 					newPriority = newPriority + 1
 					if (skill.skill.healing == "1") then
 						_private.currentHealSkills[newHealPriority] = skill
 						_private.currentHealSkills[newHealPriority].slot = aSkill.slot
+						_private.currentHealSkills[newHealPriority].cooldown = aSkill.cooldown
 						_private.currentHealSkills[newHealPriority].maxCooldown = aSkill.cooldownmax
 						newHealPriority = newHealPriority + 1
 					end

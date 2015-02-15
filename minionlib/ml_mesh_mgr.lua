@@ -936,24 +936,20 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 					
 					if ( dist < 25 or (dist < 35 and dist2d < 10)) then
 						d("OMC Endposition reached..")
-						Player:StopMovement()
 						ml_mesh_mgr.ResetOMC() -- turn off omc handler
 						ml_global_information.Lasttick = ml_global_information.Lasttick + 100 -- delay bot after doing omc
 					
 					elseif(ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Jumping and ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Falling and ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 350) then
 						d("We landed already")
-						Player:StopMovement()
 						ml_mesh_mgr.ResetOMC()
 						ml_global_information.Lasttick = ml_global_information.Lasttick + 100
-						
+					
 					elseif( dist > 500 and  ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 1500)then
 						d("We failed to land on the enposition..use teleport maybe?")
-						Player:StopMovement()
 						ml_mesh_mgr.ResetOMC()
-										
+					
 					elseif(ePos.z < sPos.z and ePos.z < pPos.z and math.abs(ePos.z - pPos.z) > 30 and ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 500 ) then
 						d("We felt below the OMCEndpoint height..means we missed the landingpoint..")
-						Player:StopMovement()
 						ml_mesh_mgr.ResetOMC()
 						ml_global_information.Lasttick = ml_global_information.Lasttick + 500
 					
@@ -961,7 +957,6 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 						return
 					end
 				end
-				
 			
 			elseif ( ml_mesh_mgr.OMCType == "OMC_WALK" ) then
 				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
@@ -972,12 +967,10 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 						d("OMC Endposition reached..")
 						--ml_global_information.Lasttick = ml_global_information.Lasttick + 2000
 						ml_mesh_mgr.ResetOMC()
-						Player:StopMovement()
 					else
 						return
 					end
 				end
-			
 			
 			elseif ( ml_mesh_mgr.OMCType == "OMC_LIFT" ) then
 				if ( ValidTable(ml_mesh_mgr.OMCStartPosition) ) then
@@ -987,12 +980,10 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 						d("OMC Endposition reached..")
 						ml_global_information.Lasttick = ml_global_information.Lasttick + 2000
 						ml_mesh_mgr.ResetOMC()
-						Player:StopMovement()
 					else
 						return
 					end
 				end
-			
 			
 			elseif ( ml_mesh_mgr.OMCType == "OMC_TELEPORT" ) then
 				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
@@ -1011,15 +1002,13 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 					Player:Teleport(ePos.x, ePos.y, ePos.z)
 					d("OMC Endposition reached..")
 					ml_mesh_mgr.ResetOMC()
-					Player:StopMovement()
 					
 				end
 			
 			elseif ( ml_mesh_mgr.OMCType == "OMC_INTERACT" ) then
-				Player:StopMovement()
 				d("OMC Endposition reached..")
-				ml_mesh_mgr.ResetOMC()
 				Player:Interact()
+				ml_mesh_mgr.ResetOMC()
 			
 			elseif ( ml_mesh_mgr.OMCType == "OMC_PORTAL" ) then
 				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
@@ -1029,7 +1018,6 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 						d("OMC Endposition reached..")
 						ml_global_information.Lasttick = ml_global_information.Lasttick + 2000
 						ml_mesh_mgr.ResetOMC()
-						Player:StopMovement()
 					else
 						return
 					end
@@ -1043,6 +1031,8 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 end
 
 function ml_mesh_mgr.ResetOMC()
+	Player:UnSetMovement(GW2.MOVEMENTTYPE.Forward)
+	Player:StopMovement()
 	ml_mesh_mgr.OMCStartPosition = nil
 	ml_mesh_mgr.OMCEndposition = nil
 	ml_mesh_mgr.OMCFacingDirection = nil
