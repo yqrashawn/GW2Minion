@@ -694,7 +694,8 @@ function _private.CanCast(skill,target)
 		if (skill.skill.delay > 0 and _private.skillLastCast[skill.skill.id] ~= nil and TimeSince(_private.skillLastCast[skill.skill.id]) < (skill.skill.delay+skill.cooldown)) then return false end
 		if (skill.skill.los == "1" and (skill.skill.healing == "0" and (target == nil or target.los == false))) then return false end
 		if (skill.skill.minRange > 0 and (skill.skill.healing == "0" and (target == nil or (target.distance+target.radius) < skill.skill.minRange))) then return false end
-		if (skill.skill.maxRange > 0 and (skill.skill.healing == "0" and (target == nil or (target.distance+target.radius) > (skill.skill.maxRange < 154 and 154 or skill.skill.maxRange)))) then return false end
+		if (skill.skill.maxRange > 0 and (skill.skill.healing == "0" and (target == nil or (target.distance-target.radius) > (skill.skill.maxRange < 154 and 154 or skill.skill.maxRange)))) then return false end
+		--if (skill.skill.maxRange > 0 and (skill.skill.healing == "0" and (target == nil or (target.distance) > (skill.skill.maxRange < 154 and 154 or skill.skill.maxRange)))) then return false end
 		if (skill.skill.maxRange == 0 and skill.skill.radius > 0 and (skill.skill.healing == "0" and (target == nil or target.distance > skill.skill.radius))) then return false end
 		-- player attributes
 		local playerBuffList = Player.buffs
