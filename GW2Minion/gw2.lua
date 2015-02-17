@@ -8,8 +8,8 @@ function gw2minion.ModuleInit()
 	--Init MainMenu Window
 	mw = WindowManager:NewWindow(gw2minion.MainWindow.Name,gw2minion.MainWindow.x,gw2minion.MainWindow.y,gw2minion.MainWindow.width,gw2minion.MainWindow.height)
 	if ( mw ) then
-		mw:NewComboBox(GetString("botMode"),"gBotMode",GetString("botStatus"),"")
-		mw:UnFold(GetString("botStatus") )
+		mw:NewComboBox(GetString("botMode"),"gBotMode","    ","")
+		mw:UnFold("    ")
 		
 		mw:NewCheckBox(GetString("depositItems"),"gDepositItems",GetString("settings"))
 		

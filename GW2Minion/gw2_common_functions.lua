@@ -54,29 +54,25 @@ end
 
 function gw2_common_functions.CountConditions(bufflist)
 	local count = 0
-	if ( bufflist ) then	
-		local i,buff = next(bufflist)
-		while i and buff do							
+	if ( bufflist ) then
+		for _,buff in pairs(bufflist) do
 			local bskID = buff.skillID
 			if ( bskID and ml_global_information.ConditionsEnum[bskID] ~= nil) then
 				count = count + 1
 			end
-			i,buff = next(bufflist,i)
-		end		
+		end
 	end
 	return count
 end
 function gw2_common_functions.CountBoons(bufflist)
 	local count = 0
-	if ( bufflist ) then	
-		local i,buff = next(bufflist)
-		while i and buff do							
+	if ( bufflist ) then
+		for _,buff in pairs(bufflist) do
 			local bskID = buff.skillID
 			if ( bskID and ml_global_information.BoonsEnum[bskID] ~= nil) then
 				count = count + 1
 			end
-			i,buff = next(bufflist,i)
-		end		
+		end
 	end
 	return count
 end
