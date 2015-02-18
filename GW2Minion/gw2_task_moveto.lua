@@ -54,7 +54,7 @@ function gw2_task_moveto:Process()
 		end
 		
 		-- Check for valid targetID only when in <2500 range, because gamedata tends to fade at distances. Update data in case it finds the target.
-		if ( dist < 2500 ) then
+		if ( dist < 3500 ) then
 			
 			if ( ml_task_hub:CurrentTask().targetID ) then
 				

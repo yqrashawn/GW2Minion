@@ -691,7 +691,7 @@ function _private.CanCast(skill,target)
 	if (skill) then
 		-- skill attributes
 		if (skill.skill.lastSkillID ~= "" and tostring(skill.skill.lastSkillID) ~= Player.castinfo.lastSkillID) then return false end
-		if (skill.skill.delay > 0 and _private.skillLastCast[skill.skill.id] ~= nil and TimeSince(_private.skillLastCast[skill.skill.id]) < (skill.skill.delay+skill.cooldown)) then return false end
+		if (skill.skill.delay > 0 and _private.skillLastCast[skill.skill.id] ~= nil and TimeSince(_private.skillLastCast[skill.skill.id]+skill.maxCooldown) < (skill.skill.delay)) then return false end
 		if (skill.skill.los == "1" and (skill.skill.healing == "0" and (target == nil or target.los == false))) then return false end
 		if (skill.skill.minRange > 0 and (skill.skill.healing == "0" and (target == nil or (target.distance+target.radius) < skill.skill.minRange))) then return false end
 		if (skill.skill.maxRange > 0 and (skill.skill.healing == "0" and (target == nil or (target.distance-target.radius) > (skill.skill.maxRange < 154 and 154 or skill.skill.maxRange)))) then return false end
@@ -799,7 +799,8 @@ function _private.SwapEngineerKit()
 			gSMCurrentAction = "Swap weapons: Mode = engineer."
 		end
 		Player:CastSpell(availableKits[key].slot)
-		if (gSMPrioKit ~= "None" and EngineerKits[availableKits[key].skillID] ~= tostring(gSMPrioKit))then
+		local prioKit = gw2_skill_manager.profile.professionSettings.priorityKit
+		if (prioKit ~= "None" and EngineerKits[availableKits[key].skillID] ~= prioKit)then
 			_private.lastKitTable[availableKits[key].slot] = { lastused = ml_global_information.Now + 15000 }
 		else
 			_private.lastKitTable[availableKits[key].slot] = { lastused = ml_global_information.Now }
@@ -822,10 +823,23 @@ function _private.SwapElementalistAttunement()
 		}
 		local currentAttunement = (attunement["Fire"][sID] or attunement["Water"][sID] or attunement["Air"][sID] or attunement["Earth"][sID])
 		if (currentAttunement) then
-			switch = ((attunement[gSMPrioAtt1][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt1][1]) and attunement[gSMPrioAtt1][1]) or
-					(attunement[gSMPrioAtt2][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt2][1]) and attunement[gSMPrioAtt2][1]) or
-					(attunement[gSMPrioAtt3][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt3]) and attunement[gSMPrioAtt3][1]) or
-					(attunement[gSMPrioAtt4][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[gSMPrioAtt4][1]) and attunement[gSMPrioAtt4][1]))
+			local randomAttunement = nil
+			for attempts=1,10 do
+				local randomPick = GetRandomTableEntry(attunement)[1]
+				if (randomPick ~= currentAttunement and not Player:IsSpellOnCooldown(randomPick)) then
+					randomAttunement = randomPick
+					break
+				end
+			end
+			local att1 = gw2_skill_manager.profile.professionSettings.PriorityAtt1
+			local att2 = gw2_skill_manager.profile.professionSettings.PriorityAtt2
+			local att3 = gw2_skill_manager.profile.professionSettings.PriorityAtt3
+			local att4 = gw2_skill_manager.profile.professionSettings.PriorityAtt4
+			switch = ((att1 ~= "None" and attunement[att1][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[att1][1]) and attunement[att1][1]) or
+					(att2 ~= "None" and attunement[att2][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[att2][1]) and attunement[att2][1]) or
+					(att3 ~= "None" and attunement[att3][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[att3][1]) and attunement[att3][1]) or
+					(att4 ~= "None" and attunement[att4][1] ~= currentAttunement and not Player:IsSpellOnCooldown(attunement[att4][1]) and attunement[att4][1]) or
+					(att1 == "None" and att2 == "None" and att3 == "None" and att4 == "None" and randomAttunement))
 		end
 		if (switch) then
 			Player:CastSpell(switch)
