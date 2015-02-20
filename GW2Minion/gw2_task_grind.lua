@@ -183,7 +183,7 @@ function gw2_task_grind.task_complete_eval()
 		if(ml_task_mgr.GetCurrentTask().currentMarker ~= nil and ml_task_mgr.GetCurrentTask().currentMarker ~= false) then
 			if(ml_task_mgr.GetCurrentTask().markerTime > 0) then
 				dbCurrentMarkerTime = math.floor(TimeSince(ml_task_mgr.GetCurrentTask().markerTime) / 1000)
-				dbCurrentMarkerTimeRemaining = math.floor(ml_task_mgr.GetCurrentTask().currentMarker:GetTime() - gCurrentMarkerTime)
+				dbCurrentMarkerTimeRemaining = math.floor(ml_task_mgr.GetCurrentTask().currentMarker:GetTime() - dbCurrentMarkerTime)
 			end
 
 			dbCurrentMarkerName = ml_task_mgr.GetCurrentTask().currentMarker:GetName()
