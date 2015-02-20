@@ -64,11 +64,11 @@ c_createVendorRepairTask = inheritsFrom( ml_cause )
 e_createVendorRepairTask = inheritsFrom( ml_effect )
 c_createVendorRepairTask.throttle = 5000
 function c_createVendorRepairTask:evaluate()
-	if (gw2_repair_manager.NeedToRepair() and (TableSize(gw2_repair_manager.getClosestRepairMarker())>0 or gw2_common_functions.GetNextVendorMarker())) then
+	if (gw2_repair_manager.NeedToRepair() and (TableSize(gw2_repair_manager.getClosestRepairMarker())>0 or gw2_marker_manager.GetNextVendorMarker())) then
 		return true
 	end
 
-	if (gw2_repair_manager.getClosestRepairMarker(true) and (TableSize(gw2_repair_manager.getClosestRepairMarker(true))>0 or gw2_common_functions.GetNextVendorMarker())) then
+	if (gw2_repair_manager.getClosestRepairMarker(true) and (TableSize(gw2_repair_manager.getClosestRepairMarker(true))>0 or gw2_marker_manager.GetNextVendorMarker())) then
 		return true
 	end
 	return false

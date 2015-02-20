@@ -302,12 +302,12 @@ function c_MoveToGatherMarker:evaluate()
 		or ( ml_task_hub:CurrentTask().filterLevel and ml_task_hub:CurrentTask().currentMarker:GetMinLevel() and ml_task_hub:CurrentTask().currentMarker:GetMaxLevel() and (ml_global_information.Player_Level < ml_task_hub:CurrentTask().currentMarker:GetMinLevel() or ml_global_information.Player_Level > ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()))
 		or ( ml_task_hub:CurrentTask().currentMarker:GetTime() and ml_task_hub:CurrentTask().currentMarker:GetTime() ~= 0 and TimeSince(ml_task_hub:CurrentTask().markerTime) > ml_task_hub:CurrentTask().currentMarker:GetTime() * 1000 )) then
 		-- TODO: ADD TIMEOUT FOR MARKER
-		ml_task_hub:CurrentTask().currentMarker = gw2_common_functions.GetNextMarker(GetString("gatherMarker"), ml_task_hub:CurrentTask().filterLevel)
+		ml_task_hub:CurrentTask().currentMarker = gw2_marker_manager.GetNextMarker(GetString("gatherMarker"), ml_task_hub:CurrentTask().filterLevel)
 
 		-- disable the levelfilter in case we didnt find any other marker
 		if (ml_task_hub:CurrentTask().currentMarker == nil) then
 			ml_task_hub:CurrentTask().filterLevel = false
-			ml_task_hub:CurrentTask().currentMarker = gw2_common_functions.GetNextMarker(GetString("gatherMarker"), ml_task_hub:CurrentTask().filterLevel)
+			ml_task_hub:CurrentTask().currentMarker = gw2_marker_manager.GetNextMarker(GetString("gatherMarker"), ml_task_hub:CurrentTask().filterLevel)
 		end
 
 		-- we found a new marker, setup vars

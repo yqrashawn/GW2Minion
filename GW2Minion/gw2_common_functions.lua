@@ -346,27 +346,3 @@ function gw2_common_functions.handleConversation(result)
 	end
 end
 
-
--- Try to get the next custom VendorMarker in our map where a vendor should be nearby, used by buy and sell task
-function gw2_common_functions.GetNextVendorMarker(oldmarker)
-
-	local filterLevel = false
-	local vendormarker = gw2_common_functions.GetNextMarker(GetString("vendorMarker"), filterLevel)
-
-	-- get a different marker
-	if (vendormarker and oldmarker ~= nil and oldmarker:GetName() == vendormarker:GetName()) then
-		vendormarker = gw2_common_functions.GetNextMarker(GetString("vendorMarker"), filterLevel)
-	end
-
-	return vendormarker
-end
-
-gw2_common_functions.lastMarkerOfType = {}
-function gw2_common_functions.GetNextMarker(markerType, filterLevel)
-	-- Reset manager marker
-	ml_marker_mgr.currentMarker = gw2_common_functions.lastMarkerOfType[markerType] or nil
-
-	local marker = ml_marker_mgr.GetNextMarker(markerType, filterLevel)
-	gw2_common_functions.lastMarkerOfType[markerType] = marker
-	return marker
-end

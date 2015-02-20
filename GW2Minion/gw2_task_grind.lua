@@ -18,7 +18,6 @@ function gw2_task_grind.Create()
 	newinst.currentMarker = false
 	newinst.filterLevel = true
 
-	-- TaskManager fields
 	newinst.maxKills = 0 -- Amount of enemies to kill before task is completed, gets set by TaskManager Custom Conditions
 	newinst.currentKills = 0 -- Counter of current task
 	newinst.lastTargetID = nil -- set this value on each addsubtask(combat), this is used to determine if we killed one or not
@@ -112,13 +111,6 @@ function gw2_task_grind.ModuleInit()
 	-- Setup Debug fields
 	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
 	if ( dw ) then
-		dw:NewField("MarkerName","dbCurrentMarkerName",GetString("markers"))
-		dw:NewField("MarkerTime","dbCurrentMarkerTime",GetString("markers"))
-		dw:NewField("MarkerTimeRemaining","dbCurrentMarkerTimeRemaining",GetString("markers"))
-		dw:NewField("MarkerReached","dbCurrentMarkerReached",GetString("markers"))
-		dw:NewField("MarkerReachedFirsttime","dbCurrentMarkerReachedFirst",GetString("markers"))
-		dw:NewField("MarkerDistance","dbMarkerDistance",GetString("markers"))
-
 		dw:NewField("KillCount","dbGrindKillcount","Task_Grind")
 	end
 
@@ -169,32 +161,6 @@ function gw2_task_grind.CanTaskRun_TM()
 	return true
 end
 
-
-function gw2_task_grind.task_complete_eval()
-
-	if ( ml_global_information.ShowDebug ) then
-		dbCurrentMarkerTime = "novalue"
-		dbCurrentMarkerName = "novalue"
-		dbCurrentMarkerTimeRemaining = "novalue"
-		dbCurrentMarkerReached = "novalue"
-		dbCurrentMarkerReachedFirst = "novalue"
-		dbMarkerDistance = "novalue"
-
-		if(ml_task_mgr.GetCurrentTask().currentMarker ~= nil and ml_task_mgr.GetCurrentTask().currentMarker ~= false) then
-			if(ml_task_mgr.GetCurrentTask().markerTime > 0) then
-				dbCurrentMarkerTime = math.floor(TimeSince(ml_task_mgr.GetCurrentTask().markerTime) / 1000)
-				dbCurrentMarkerTimeRemaining = math.floor(ml_task_mgr.GetCurrentTask().currentMarker:GetTime() - dbCurrentMarkerTime)
-			end
-
-			dbCurrentMarkerName = ml_task_mgr.GetCurrentTask().currentMarker:GetName()
-			dbCurrentMarkerReached = tostring(c_MoveToMarker.markerreached)
-			dbCurrentMarkerReachedFirst  = tostring(c_MoveToMarker.markerreachedfirsttime)
-		end
-	end
-
-	return false
-end
-
 --------- Creates a new IMMEDIATE_GOAL task to kill an enemy when we are fighting our way towards the current grindmarker
 c_FightToGrindMarker = inheritsFrom( ml_cause )
 e_FightToGrindMarker = inheritsFrom( ml_effect )
@@ -204,12 +170,15 @@ c_FightToGrindMarker.tick = 0
 function c_FightToGrindMarker:evaluate()
 	if ( c_MoveToMarker.markerreached == false and c_MoveToMarker.allowedToFight == true) then
 		local target = gw2_common_functions.GetBestCharacterTarget( 2000 ) -- maxrange 2000 where enemies should be searched for
-		if ( target and TimeSince(ml_task_hub:CurrentTask().markerTime) < ml_task_hub:CurrentTask().currentMarker:GetTime() * 1000 and c_FightToGrindMarker.tick < c_FightToGrindMarker.maxtick) then
+		if (target and (ml_task_hub:CurrentTask().currentMarker ~= nil and ml_task_hub:CurrentTask().currentMarker ~= false
+				and TimeSince(ml_task_hub:CurrentTask().markerTime) < ml_task_hub:CurrentTask().currentMarker:GetTime() * 1000 and c_FightToGrindMarker.tick < c_FightToGrindMarker.maxtick)
+		) then
 			c_FightToGrindMarker.target = target
 			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGrindMarker.target ~= nil
 		end
 	end
 	c_FightToGrindMarker.tick = 0
+	c_FightToGrindMarker.maxtick = math.random(10, 30)
 	c_FightToGrindMarker.target = nil
 	return false
 end
@@ -248,11 +217,11 @@ function c_MoveToMarker:evaluate()
 		or ( ml_task_hub:CurrentTask().filterLevel and ml_task_hub:CurrentTask().currentMarker:GetMinLevel() and ml_task_hub:CurrentTask().currentMarker:GetMaxLevel() and (ml_global_information.Player_Level < ml_task_hub:CurrentTask().currentMarker:GetMinLevel() or ml_global_information.Player_Level > ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()))
 		or (c_MoveToMarker.markerreachedfirsttime == true and ml_task_hub:CurrentTask().currentMarker:GetTime() and ml_task_hub:CurrentTask().currentMarker:GetTime() ~= 0 and TimeSince(ml_task_hub:CurrentTask().markerTime) > ml_task_hub:CurrentTask().currentMarker:GetTime() * 1000 )) then
 		-- TODO: ADD TIMEOUT FOR MARKER
-		ml_task_hub:CurrentTask().currentMarker = gw2_common_functions.GetNextMarker(GetString("grindMarker"), ml_task_hub:CurrentTask().filterLevel)
+		ml_task_hub:CurrentTask().currentMarker = gw2_marker_manager.GetNextMarker(GetString("grindMarker"), ml_task_hub:CurrentTask().filterLevel)
 
 		-- disable the levelfilter in case we didnt find any other marker
 		if (ml_task_hub:CurrentTask().currentMarker == nil) then
-			ml_task_hub:CurrentTask().currentMarker = gw2_common_functions.GetNextMarker(GetString("grindMarker"), false)
+			ml_task_hub:CurrentTask().currentMarker = gw2_marker_manager.GetNextMarker(GetString("grindMarker"), false)
 		end
 
 		-- we found a new marker, setup vars
@@ -305,19 +274,17 @@ function e_MoveToMarker:execute()
 
 		local pos = ml_task_hub:CurrentTask().currentMarker:GetPosition()
 		local dist = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
-
-		if ( ml_global_information.ShowDebug ) then
-			dbMarkerDistance = math.floor(dist)
-		end
+		local markerRange = 200
+		local maxRange = ml_task_hub:CurrentTask().currentMarker:GetFieldValue(GetString("maxRange"))
 
 		-- Allow fighting when we are far away from the "outside radius of the marker" , else the bot goes back n forth spinning trying to reach the target outside n going back inside right after
-		if ( dist < ml_task_hub:CurrentTask().currentMarker:GetFieldValue(GetString("maxRange"))) then
+		if (dist < maxRange and (maxRange < markerRange and dist > markerRange)) then
 			c_MoveToMarker.allowedToFight = true
 		else
 			c_MoveToMarker.allowedToFight = false
 		end
 
-		if  ( dist < 200) then
+		if  (dist < markerRange) then
 			-- We reached our Marker
 			c_MoveToMarker.markerreached = true
 			c_MoveToMarker.markerreachedfirsttime = true

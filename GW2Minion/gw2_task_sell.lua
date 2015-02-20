@@ -66,11 +66,11 @@ e_createVendorSellTask = inheritsFrom( ml_effect )
 c_createVendorSellTask.throttle = 5000
 function c_createVendorSellTask:evaluate()
 	if ( SellManager_Active ) then
-		if ((gw2_sell_manager.needToSell() or c_vendorsell.selling) and ( TableSize(gw2_sell_manager.getClosestSellMarker())>0 or gw2_common_functions.GetNextVendorMarker())) then
+		if ((gw2_sell_manager.needToSell() or c_vendorsell.selling) and ( TableSize(gw2_sell_manager.getClosestSellMarker())>0 or gw2_marker_manager.GetNextVendorMarker())) then
 			return true
 		end
 
-		if ((gw2_sell_manager.needToSell(true) or c_quickvendorsell.selling) and ( TableSize(gw2_sell_manager.getClosestSellMarker(true))>0 or gw2_common_functions.GetNextVendorMarker())) then
+		if ((gw2_sell_manager.needToSell(true) or c_quickvendorsell.selling) and ( TableSize(gw2_sell_manager.getClosestSellMarker(true))>0 or gw2_marker_manager.GetNextVendorMarker())) then
 			return true
 		end
 	end
@@ -142,12 +142,12 @@ function c_MoveToVendorMarker:evaluate()
 		or ( ml_task_hub:CurrentTask().filterLevel and ml_task_hub:CurrentTask().currentMarker:GetMinLevel() and ml_task_hub:CurrentTask().currentMarker:GetMaxLevel() and (ml_global_information.Player_Level < ml_task_hub:CurrentTask().currentMarker:GetMinLevel() or ml_global_information.Player_Level > ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()))
 		or ( ml_task_hub:CurrentTask().currentMarker:GetTime() and ml_task_hub:CurrentTask().currentMarker:GetTime() ~= 0 and TimeSince(ml_task_hub:CurrentTask().markerTime) > ml_task_hub:CurrentTask().currentMarker:GetTime() * 1000 )) then
 		-- TODO: ADD TIMEOUT FOR MARKER
-		ml_task_hub:CurrentTask().currentMarker = gw2_common_functions.GetNextMarker(GetString("vendorMarker"), ml_task_hub:CurrentTask().filterLevel)
+		ml_task_hub:CurrentTask().currentMarker = gw2_marker_manager.GetNextMarker(GetString("vendorMarker"), ml_task_hub:CurrentTask().filterLevel)
 
 		-- disable the levelfilter in case we didnt find any other marker
 		if (ml_task_hub:CurrentTask().currentMarker == nil) then
 			ml_task_hub:CurrentTask().filterLevel = false
-			ml_task_hub:CurrentTask().currentMarker = gw2_common_functions.GetNextMarker(GetString("vendorMarker"), ml_task_hub:CurrentTask().filterLevel)
+			ml_task_hub:CurrentTask().currentMarker = gw2_marker_manager.GetNextMarker(GetString("vendorMarker"), ml_task_hub:CurrentTask().filterLevel)
 		end
 
 		-- we found a new marker, setup vars
@@ -177,7 +177,6 @@ function c_MoveToVendorMarker:evaluate()
 		-- We haven't reached the currentMarker or ran outside its radius
 		if ( c_MoveToVendorMarker.markerreached == false) then
 			return true
-
 		else
 			-- the other CnEs should pick up a vendor before we reach our marker..if we are here then it means no vendor nearby, so lets pick a next marker
 			d("No Vendor nearby, Trying next VendorMarker...")
