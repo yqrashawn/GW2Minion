@@ -25,7 +25,7 @@ function gw2_marker_manager.OnUpdateHandler(Event, ticks)
 end
 
 function gw2_marker_manager.DebugUpdate()
-	if ( ml_global_information.ShowDebug and gBotRunning == "1") then
+	if ( ml_global_information.ShowDebug and gBotRunning == "1" and ml_task_mgr.GetCurrentTask() ~= nil) then
 		local marker = ml_task_mgr.GetCurrentTask().currentMarker or nil
 
 		dbCurrentMarkerTime = "novalue"
@@ -78,6 +78,13 @@ function gw2_marker_manager.GetNextVendorMarker(oldmarker)
 	return vendormarker
 end
 
+function gw2_marker_manager.GetClosestVendorMarker(range)
+	if(range == nil) then
+		range = 30000
+	end
+
+	return ml_marker_mgr.GetClosestMarker( ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, ml_global_information.Player_Position.z, range, GetString("vendorMarker")) or nil
+end
 
 RegisterEventHandler("Module.Initalize",gw2_marker_manager.ModuleInit)
 RegisterEventHandler("Gameloop.Update",gw2_marker_manager.OnUpdateHandler)

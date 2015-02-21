@@ -40,9 +40,11 @@ function gw2_task_buy:Init()
 	self:AddTaskCheckCEs()
 end
 function gw2_task_buy:task_complete_eval()
-	if (c_vendorbuy:evaluate() == false and c_quickvendorbuy:evaluate() == false) then
+	c_MoveToVendorMarker.vendormanager = BuyManager_Active
+	if (c_vendorbuy:evaluate() == false and c_quickvendorbuy:evaluate() == false and c_MoveToVendorMarker:evaluate() == false) then
 		return true
 	end
+	c_MoveToVendorMarker.vendormanager = false
 	return false
 end
 

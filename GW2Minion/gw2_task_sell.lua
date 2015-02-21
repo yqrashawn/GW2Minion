@@ -41,9 +41,11 @@ function gw2_task_sell:Init()
 	self:AddTaskCheckCEs()
 end
 function gw2_task_sell:task_complete_eval()
-	if (c_vendorsell:evaluate() == false and c_quickvendorsell:evaluate() == false) then
+	c_MoveToVendorMarker.vendormanager = SellManager_Active
+	if (c_vendorsell:evaluate() == false and c_quickvendorsell:evaluate() == false and c_MoveToVendorMarker:evaluate() == false) then
 		return true
 	end
+	c_MoveToVendorMarker.vendormanager = SellManager_Active
 	return false
 end
 
@@ -90,7 +92,7 @@ c_vendorsell = inheritsFrom( ml_cause )
 e_vendorsell = inheritsFrom( ml_effect )
 c_vendorsell.selling = false
 function c_vendorsell:evaluate()
-	if (SellManager_Active == "1" and ( c_vendorsell.selling or gw2_sell_manager.needToSell() ) and TableSize(gw2_sell_manager.getClosestSellMarker())>0) then
+	if (SellManager_Active == "1" and ( c_vendorsell.selling or gw2_sell_manager.needToSell() ) and TableSize(gw2_sell_manager.getClosestSellMarker())>0 ) then
 		return true
 	end
 	return false
@@ -98,12 +100,14 @@ end
 function e_vendorsell:execute()
 	ml_log("e_vendorsell")
 	local vendorMarker = gw2_sell_manager.getClosestSellMarker()
+
 	if (vendorMarker and vendorMarker.characterID) then
 		if (gw2_sell_manager.sellAtVendor(vendorMarker)) then
 			c_vendorsell.selling = true
 			return true
 		end
 	end
+
 	c_vendorsell.selling = false
 	return ml_log(false)
 end
@@ -136,13 +140,17 @@ c_MoveToVendorMarker = inheritsFrom( ml_cause )
 e_MoveToVendorMarker = inheritsFrom( ml_effect )
 c_MoveToVendorMarker.markerreachedfirsttime = false
 c_MoveToVendorMarker.markerreached = false
+c_MoveToVendorMarker.vendormanager = false
 function c_MoveToVendorMarker:evaluate()
+
 	-- Get a new/next Marker if we need one ( no marker , out of level, time up )
 	if (ml_task_hub:CurrentTask().currentMarker == nil or ml_task_hub:CurrentTask().currentMarker == false
 		or ( ml_task_hub:CurrentTask().filterLevel and ml_task_hub:CurrentTask().currentMarker:GetMinLevel() and ml_task_hub:CurrentTask().currentMarker:GetMaxLevel() and (ml_global_information.Player_Level < ml_task_hub:CurrentTask().currentMarker:GetMinLevel() or ml_global_information.Player_Level > ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()))
-		or ( ml_task_hub:CurrentTask().currentMarker:GetTime() and ml_task_hub:CurrentTask().currentMarker:GetTime() ~= 0 and TimeSince(ml_task_hub:CurrentTask().markerTime) > ml_task_hub:CurrentTask().currentMarker:GetTime() * 1000 )) then
+		or ( ml_task_hub:CurrentTask().currentMarker:GetTime() and ml_task_hub:CurrentTask().currentMarker:GetTime() ~= 0 and TimeSince(ml_task_hub:CurrentTask().markerTime) > ml_task_hub:CurrentTask().currentMarker:GetTime() * 1000 )
+		) and (c_MoveToVendorMarker.vendormanager == "1" and ( c_vendorsell.selling or gw2_sell_manager.needToSell())) then
 		-- TODO: ADD TIMEOUT FOR MARKER
-		ml_task_hub:CurrentTask().currentMarker = gw2_marker_manager.GetNextMarker(GetString("vendorMarker"), ml_task_hub:CurrentTask().filterLevel)
+
+		ml_task_hub:CurrentTask().currentMarker = gw2_marker_manager.GetClosestVendorMarker()
 
 		-- disable the levelfilter in case we didnt find any other marker
 		if (ml_task_hub:CurrentTask().currentMarker == nil) then
@@ -207,7 +215,7 @@ function e_MoveToVendorMarker:execute()
 			if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
 
 				local newTask = gw2_task_moveto.Create()
-				newTask.name = "MoveTo VendorMarker(BUY)"
+				newTask.name = "MoveTo VendorMarker(" .. ml_task_hub:CurrentTask().name .. ")"
 				newTask.targetPos = pos
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				return ml_log(true)
