@@ -290,6 +290,8 @@ function gw2_skill_manager.CreateMainWindow()
 	RegisterEventHandler("gSMDetectSkills",_private.DetectSkills)
 	mainWindow:NewButton(GetString("deleteProfile"),"gSMDeleteProfile")
 	RegisterEventHandler("gSMDeleteProfile",_private.Delete)
+	mainWindow:NewButton(GetString("smCloneProfile"),"gSMCloneProfile")
+	RegisterEventHandler("gSMCloneProfile",gw2_skill_manager.CloneProfileDialog)
 	mainWindow:NewButton(GetString("saveProfile"),"gSMSaveProfile")
 	RegisterEventHandler("gSMSaveProfile",_private.Save)
 	mainWindow:UnFold(GetString("settings"))
@@ -495,6 +497,29 @@ function gw2_skill_manager.NewProfileDialog()
 	end
 end
 
+function gw2_skill_manager.CloneProfileDialog()
+	local dialog = gw2_dialog_manager:GetDialog(GetString("smCloneProfile"))
+	if (dialog == nil) then
+		dialog = gw2_dialog_manager:NewDialog(GetString("smCloneProfile"))
+		dialog:NewField(GetString("smCloneProfile"),"smDialogCloneProfileName")
+		dialog:SetOkFunction(
+			function(list)
+				if (ValidString(_G[list])) then
+					local newName = table_invert(GW2.CHARCLASS)[Player.profession] .. "_" .. _G[list]
+					gw2_skill_manager.profile:Clone(newName)
+					gw2_skill_manager.profile = gw2_skill_manager.GetProfile(_G[list])
+					gw2_skill_manager.MainWindow()
+					return true
+				end
+				return "Please enter " .. GetString("smCloneProfile") .. " name first."
+			end
+		)
+	end
+	if (dialog) then
+		dialog:Show()
+	end
+end
+
 function gw2_skill_manager.DeleteProfileDialog()
 	local dialog = gw2_dialog_manager:GetDialog(GetString("delete"))
 	if (dialog == nil) then
@@ -541,13 +566,17 @@ function _private.GetProfileList(newProfile)
 	if (profession) then
 		local profileList = dirlist(gw2_skill_manager.path,".*lua")
 		if (ValidTable(profileList)) then
-			for _,profile in pairs(profileList) do
-				profile = string.gsub(profile, ".lua", "")
-				local prof = string.sub(profile,1,select(2,string.find(profile,"_"))-1)
-				if (GW2.CHARCLASS[prof] == profession) then
-					local name = string.sub(profile,select(2,string.find(profile,"_"))+1,#profile)
-					if (name:match("%W") == nil) then
-						list = list .. "," .. name
+			for _,profileName in pairs(profileList) do
+				local profile = persistence.load(gw2_skill_manager.path .. profileName)
+				if (ValidTable(profile)) then
+					if (profile.profession == ml_global_information.Player_Profession and ValidString(profile.name)) then
+						local _,found = string.find(profile.name,"_")
+						if (found) then
+							local name = string.sub(profile.name,found+1,#profile.name)
+							if (ValidString(name) and name:match("%W") == nil) then
+								list = list .. "," .. name
+							end
+						end
 					end
 				end
 			end
@@ -1132,6 +1161,19 @@ function profilePrototype:Save()
 	setmetatable(saveFile, {})
 	persistence.store(gw2_skill_manager.path .. self.name .. ".lua", saveFile)
 	return true
+end
+
+function profilePrototype:Clone(newName)
+	if (ValidString(newName)) then
+		_private.DetectSkills(false)
+		local saveFile = deepcopy(self)
+		saveFile.name = newName
+		saveFile.clipboard = nil
+		setmetatable(saveFile, {})
+		persistence.store(gw2_skill_manager.path .. saveFile.name .. ".lua", saveFile)
+		return true
+	end
+	return false
 end
 
 function profilePrototype:Delete()

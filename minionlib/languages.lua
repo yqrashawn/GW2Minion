@@ -202,6 +202,8 @@ strings =
 		smDelete						= "Delete Skill",
 		smHealBuff						= "Heal & Buff",
 		smMoveIntoCombatRange			= "Move Into Combat Range",
+		smCloneProfile					= "Clone Profile",
+		
 --vendorManager
 		enableSelling					= "AutoSellItems",
 		vendorManager					= "VendorManager",
@@ -883,6 +885,7 @@ strings =
 		smDelete						= "Delete Skill",
 		smHealBuff						= "Heal & Buff",
 		smMoveIntoCombatRange			= "Move Into Combat Range",
+		smCloneProfile					= "Clone Profile",
 
 		--vendorManager
 		enableSelling					= "自动卖物品",
@@ -1551,6 +1554,7 @@ strings =
 		smDelete						= "Delete Skill",
 		smHealBuff						= "Heal & Buff",
 		smMoveIntoCombatRange			= "Move Into Combat Range",
+		smCloneProfile					= "Clone Profile",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -2219,6 +2223,7 @@ strings =
 		smDelete						= "Delete Skill",
 		smHealBuff						= "Heal & Buff",
 		smMoveIntoCombatRange			= "Move Into Combat Range",
+		smCloneProfile					= "Clone Profile",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -2888,6 +2893,7 @@ strings =
 		smDelete						= "Delete Skill",
 		smHealBuff						= "Heal & Buff",
 		smMoveIntoCombatRange			= "Move Into Combat Range",
+		smCloneProfile					= "Clone Profile",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -3565,6 +3571,7 @@ strings =
 		smDelete						= "Delete Skill",
 		smHealBuff						= "Heal & Buff",
 		smMoveIntoCombatRange			= "Move Into Combat Range",
+		smCloneProfile					= "Clone Profile",
 
 		--vendorManager
 		enableSelling					= "AutoSellItems",
