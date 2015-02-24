@@ -266,8 +266,8 @@ c_FightToGatherMarker.tick = 0
 function c_FightToGatherMarker:evaluate()
 	if ( c_MoveToGatherMarker.markerreached == false and c_MoveToGatherMarker.allowedToFight == true) then
 		local target = gw2_common_functions.GetBestCharacterTarget( 1250 ) -- maxrange 2000 where enemies should be searched for
-		if ( target  and (gw2_marker_manager.ValidMarker(GetString("gatherMode"))
-				and gw2_marker_manager.MarkerExpired() == false and c_FightToGatherMarker.tick < c_FightToGatherMarker.maxtick)) then
+		if ( target  and (gw2_marker_manager.ValidMarker(GetString("gatherMarker"))
+				and gw2_marker_manager.MarkerExpired(GetString("gatherMarker")) == false and c_FightToGatherMarker.tick < c_FightToGatherMarker.maxtick)) then
 			c_FightToGatherMarker.target = target
 			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGatherMarker.target ~= nil
 		end
