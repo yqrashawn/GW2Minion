@@ -167,7 +167,7 @@ function gw2_marker_manager.MoveToMarker(cause, randomize, marker)
 		gw2_marker_manager.SetMarkerInfo("allowedToFight", false)
 	end
 
-	if  (dist < markerRange) then
+	if  ((userandom and dist < 50) or dist < markerRange) then
 		Player:StopMovement()
 		-- We reached our Marker
 		cause.markerreached = true

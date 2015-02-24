@@ -341,7 +341,7 @@ c_FightAggro.target = nil
 function c_FightAggro:evaluate()
 	-- Make sure that we reach the marker in high aggro scenarios, let FightToMarker handle that
 	if(gw2_marker_manager.ValidMarker()) then
-		if(gw2_marker_manager.GetMarkerInfo("markerreachedfirsttime") == true) then
+		if(gw2_marker_manager.GetMarkerInfo("markerreachedfirsttime") == false) then
 			c_FightAggro.target = nil
 			return false
 		end
