@@ -332,7 +332,7 @@ function c_MoveToGatherMarker:evaluate()
 end
 function e_MoveToGatherMarker:execute()
 	-- Move to our current marker
-	if (gw2_marker_manager.ValidMarker()) then
+	if (gw2_marker_manager.ValidMarker(GetString("gatherMarker"))) then
 		ml_log(" e_MoveToGatherMarker ")
 		return gw2_marker_manager.MoveToMarker(c_MoveToGatherMarker, false)
 	end
