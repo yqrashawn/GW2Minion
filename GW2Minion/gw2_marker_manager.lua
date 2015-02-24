@@ -153,6 +153,7 @@ function gw2_marker_manager.MoveToMarker(cause, randomize, marker)
 
 	if(pos == nil) then
 		pos = markerpos
+		userandom = false
 	end
 
 	local dist = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
@@ -203,10 +204,10 @@ end
 
 function gw2_marker_manager.ReturnToMarker(botmode, cause, marker)
 	marker = marker or gw2_marker_manager.GetCurrentMarker()
-
 	local pos = marker:GetPosition()
 	local distance = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
-	if  (gw2_marker_manager.GetPrimaryTask() ~= nil and (gBotMode == botmode or gw2_marker_manager.GetPrimaryTask().type == botmode) and distance > marker:GetFieldValue(GetString("maxRange"))) then
+
+	if  (gw2_marker_manager.GetPrimaryTask() ~= nil and (botmode == nil or gBotMode == botmode or gw2_marker_manager.GetPrimaryTask().type == botmode) and distance > marker:GetFieldValue(GetString("maxRange"))) then
 		d("We need to move back to our current Marker!")
 		cause.markerreached = false
 		cause.allowedToFight = false
@@ -252,8 +253,9 @@ function gw2_marker_manager.MarkerInLevelRange(markerType, marker)
 end
 
 function gw2_marker_manager.ValidMarker(markerType, marker)
+	markerType = markerType or nil
 	marker = marker or gw2_marker_manager.GetCurrentMarker()
-	return (gw2_marker_manager.GetPrimaryTask() ~= nil and marker ~= nil and marker ~= false and (markerType == false or markerType == nil or marker:GetType() == markerType))
+	return (gw2_marker_manager.GetPrimaryTask() ~= nil and marker ~= nil and marker ~= false and (markerType == nil or marker:GetType() == markerType))
 end
 
 RegisterEventHandler("Module.Initalize",gw2_marker_manager.ModuleInit)

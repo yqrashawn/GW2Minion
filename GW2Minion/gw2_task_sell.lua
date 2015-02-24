@@ -164,7 +164,7 @@ function c_MoveToVendorMarker:evaluate()
 		if ( c_MoveToVendorMarker.markerreached == false) then
 			return true
 		else
-			return gw2_marker_manager.ReturnToMarker(GetString("vendorMarker"), c_MoveToVendorMarker)
+			return gw2_marker_manager.ReturnToMarker(nil, c_MoveToVendorMarker)
 		end
 	end
 

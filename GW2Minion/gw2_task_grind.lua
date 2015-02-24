@@ -234,7 +234,7 @@ function c_MoveToMarker:evaluate()
 		if ( c_MoveToMarker.markerreached == false) then
 			return true
 		else
-			return gw2_marker_manager.ReturnToMarker(GetString("grindMarker"), c_MoveToMarker)
+			return gw2_marker_manager.ReturnToMarker(GetString("grindMode"), c_MoveToMarker)
 		end
 	end
 

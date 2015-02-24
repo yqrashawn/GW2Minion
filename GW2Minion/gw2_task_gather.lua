@@ -324,7 +324,7 @@ function c_MoveToGatherMarker:evaluate()
 		if ( c_MoveToGatherMarker.markerreached == false) then
 			return true
 		else
-			return gw2_marker_manager.ReturnToMarker(GetString("gatherMarker"), c_MoveToGatherMarker)
+			return gw2_marker_manager.ReturnToMarker(GetString("gatherMode"), c_MoveToGatherMarker)
 		end
 	end
 
