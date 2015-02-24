@@ -142,91 +142,40 @@ c_MoveToVendorMarker.markerreachedfirsttime = false
 c_MoveToVendorMarker.markerreached = false
 c_MoveToVendorMarker.vendormanager = false
 function c_MoveToVendorMarker:evaluate()
-
 	-- Get a new/next Marker if we need one ( no marker , out of level, time up )
-	if (ml_task_hub:CurrentTask().currentMarker == nil or ml_task_hub:CurrentTask().currentMarker == false
-		or ( ml_task_hub:CurrentTask().filterLevel and ml_task_hub:CurrentTask().currentMarker:GetMinLevel() and ml_task_hub:CurrentTask().currentMarker:GetMaxLevel() and (ml_global_information.Player_Level < ml_task_hub:CurrentTask().currentMarker:GetMinLevel() or ml_global_information.Player_Level > ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()))
-		or ( ml_task_hub:CurrentTask().currentMarker:GetTime() and ml_task_hub:CurrentTask().currentMarker:GetTime() ~= 0 and TimeSince(ml_task_hub:CurrentTask().markerTime) > ml_task_hub:CurrentTask().currentMarker:GetTime() * 1000 )
-		) and (c_MoveToVendorMarker.vendormanager == "1" and ( c_vendorsell.selling or gw2_sell_manager.needToSell())) then
-		-- TODO: ADD TIMEOUT FOR MARKER
+	if (gw2_marker_manager.ValidMarker(GetString("vendorMarker")) == false
+		or gw2_marker_manager.MarkerInLevelRange(GetString("vendorMarker"))
+		or (c_MoveToVendorMarker.markerreachedfirsttime == true and gw2_marker_manager.MarkerExpired(GetString("vendorMarker"))))
+		and (c_MoveToVendorMarker.vendormanager == "1" and ( c_vendorsell.selling or gw2_sell_manager.needToSell())) then
 
-		ml_task_hub:CurrentTask().currentMarker = gw2_marker_manager.GetClosestVendorMarker()
-
-		-- disable the levelfilter in case we didnt find any other marker
-		if (ml_task_hub:CurrentTask().currentMarker == nil) then
-			ml_task_hub:CurrentTask().filterLevel = false
-			ml_task_hub:CurrentTask().currentMarker = gw2_marker_manager.GetNextMarker(GetString("vendorMarker"), ml_task_hub:CurrentTask().filterLevel)
-		end
-
-		-- we found a new marker, setup vars
-		if ( ml_task_hub:CurrentTask().currentMarker ~= nil ) then
-			d("New VendorMarker Marker set!")
-			ml_task_hub:CurrentTask().markerTime = ml_global_information.Now -- Are BOTH needed to get updated ?
-			ml_global_information.MarkerTime = ml_global_information.Now     -- This needs to be global else we cannot access the stuff in parent or subtasks
-			ml_global_information.MarkerMinLevel = ml_task_hub:CurrentTask().currentMarker:GetMinLevel()
-			ml_global_information.MarkerMaxLevel = ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()
-			c_MoveToVendorMarker.markerreached = false
-			c_MoveToVendorMarker.markerreachedfirsttime = false
-		end
+		gw2_marker_manager.SetCurrentMarker(gw2_marker_manager.CreateMarker(GetString("vendorMarker"), c_MoveToVendorMarker))
 	end
 
-	-- We have a valid current vendorMarker
-    if (ml_task_hub:CurrentTask().currentMarker ~= false and ml_task_hub:CurrentTask().currentMarker ~= nil) then
+	-- We have a valid current Vendor marker
+    if (gw2_marker_manager.ValidMarker(GetString("vendorMarker"))) then
 
 		-- Reset the Markertime until we actually reached the marker the first time and then let it count down
 		if (c_MoveToVendorMarker.markerreachedfirsttime == false ) then
-			ml_task_hub:CurrentTask().markerTime = ml_global_information.Now
+			gw2_marker_manager.GetPrimaryTask().markerTime = ml_global_information.Now
 			ml_global_information.MarkerTime = ml_global_information.Now
 		end
-
-		-- Debug info
-		if ( ml_global_information.ShowDebug ) then dbCurrMarker = ml_task_hub:CurrentTask().currentMarker:GetName() or "" end
 
 		-- We haven't reached the currentMarker or ran outside its radius
 		if ( c_MoveToVendorMarker.markerreached == false) then
 			return true
 		else
-			-- the other CnEs should pick up a vendor before we reach our marker..if we are here then it means no vendor nearby, so lets pick a next marker
-			d("No Vendor nearby, Trying next VendorMarker...")
-			ml_task_hub:CurrentTask().currentMarker = nil
+			return gw2_marker_manager.ReturnToMarker(GetString("vendorMarker"), c_MoveToVendorMarker)
 		end
 	end
 
     return false
 end
+
 function e_MoveToVendorMarker:execute()
-	ml_log(" e_MoveToVendorMarker ")
 	-- Move to our current marker
-	if (ml_task_hub:CurrentTask().currentMarker ~= nil and ml_task_hub:CurrentTask().currentMarker ~= false) then
-
-		local pos = ml_task_hub:CurrentTask().currentMarker:GetPosition()
-		local dist = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
-
-
-		if  ( dist < 200) then
-			-- We reached our Marker
-			c_MoveToVendorMarker.markerreached = true
-			c_MoveToVendorMarker.markerreachedfirsttime = true
-			d("Reached current VendorMarker...")
-			return ml_log(true)
-		else
-			-- We need to reach our Marker yet
-			-- make sure the next marker is reachable & onmesh
-			if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
-
-				local newTask = gw2_task_moveto.Create()
-				newTask.name = "MoveTo VendorMarker(" .. ml_task_hub:CurrentTask().name .. ")"
-				newTask.targetPos = pos
-				ml_task_hub:CurrentTask():AddSubTask(newTask)
-				return ml_log(true)
-
-			else
-				d("WARNING: Cannot reach next VendorMarker, trying to pick another one...")
-				ml_task_hub:CurrentTask().currentMarker = nil
-				-- Debug info
-				if ( ml_global_information.ShowDebug ) then dbCurrMarker = "" end
-			end
-		end
+	if (gw2_marker_manager.ValidMarker(GetString("vendorMarker"))) then
+		ml_log(" e_MoveToVendorMarker ")
+		return gw2_marker_manager.MoveToMarker(c_MoveToVendorMarker, false)
 	end
 	return ml_log(false)
 end

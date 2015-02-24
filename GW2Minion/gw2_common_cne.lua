@@ -340,8 +340,8 @@ e_FightAggro = inheritsFrom( ml_effect )
 c_FightAggro.target = nil
 function c_FightAggro:evaluate()
 	-- Make sure that we reach the marker in high aggro scenarios, let FightToMarker handle that
-	if(ml_task_hub:CurrentTask() ~= nil and (ml_task_hub:CurrentTask().currentMarker ~= nil or ml_task_hub:CurrentTask().currentMarker ~= false)) then
-		if(c_MoveToMarker.markerreachedfirsttime == false) then
+	if(gw2_marker_manager.ValidMarker()) then
+		if(gw2_marker_manager.GetMarkerInfo("markerreachedfirsttime") == true) then
 			c_FightAggro.target = nil
 			return false
 		end
