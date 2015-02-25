@@ -2,7 +2,7 @@ gw2_marker_manager = {}
 gw2_marker_manager.lastMarkerOfType = {}
 gw2_marker_manager.tick = 0
 gw2_marker_manager.markerinfo = {}
-
+gw2_marker_manager.randompos = nil
 function gw2_marker_manager.ModuleInit()
 	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
 	if ( dw ) then
@@ -147,14 +147,20 @@ function gw2_marker_manager.MoveToMarker(cause, randomize, marker)
 	local userandom = (randomize == true and cause.markerreachedfirsttime == true)
 
 	-- Don't go back to the exact same spot every time
-	if(userandom) then
+	if(userandom and gw2_marker_manager.randompos == nil) then
 		pos = NavigationManager:GetRandomPointOnCircle(markerpos.x, markerpos.y, markerpos.z, markerRange, maxRadius)
+		gw2_marker_manager.randompos = pos
+	end
+
+	if(gw2_marker_manager.randompos ~= nil) then
+		pos = gw2_marker_manager.randompos
 	end
 
 	if(pos == nil) then
 		pos = markerpos
 		userandom = false
 	end
+
 
 	local dist = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
 
@@ -173,7 +179,7 @@ function gw2_marker_manager.MoveToMarker(cause, randomize, marker)
 		cause.markerreached = true
 		cause.markerreachedfirsttime = true
 		cause.allowedToFight = false
-
+		gw2_marker_manager.randompos = nil
 		gw2_marker_manager.SetMarkerInfo("markerreached", true)
 		gw2_marker_manager.SetMarkerInfo("allowedToFight", false)
 		gw2_marker_manager.SetMarkerInfo("markerreachedfirsttime", true)
