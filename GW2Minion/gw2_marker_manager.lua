@@ -285,7 +285,7 @@ function gw2_marker_manager.CreateMarker(type, cause)
 	return marker
 end
 
-function gw2_marker_manager.CanFightToMarker(cause. markermode)
+function gw2_marker_manager.CanFightToMarker(cause, markermode)
 	local maxtick = cause.maxtick or math.random(10, 30)
 	if ( cause.markerreached == false and cause.allowedToFight == true) then
 		local target = gw2_common_functions.GetBestCharacterTarget( 1250 ) -- maxrange 2000 where enemies should be searched for
