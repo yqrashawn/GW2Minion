@@ -285,12 +285,12 @@ function gw2_marker_manager.CreateMarker(type, cause)
 	return marker
 end
 
-function gw2_marker_manager.CanFightToMarker(cause)
+function gw2_marker_manager.CanFightToMarker(cause. markermode)
 	local maxtick = cause.maxtick or math.random(10, 30)
 	if ( cause.markerreached == false and cause.allowedToFight == true) then
 		local target = gw2_common_functions.GetBestCharacterTarget( 1250 ) -- maxrange 2000 where enemies should be searched for
-		if ( target  and (gw2_marker_manager.ValidMarker(GetString("gatherMarker"))
-				and gw2_marker_manager.MarkerExpired(GetString("gatherMarker")) == false and cause.tick < maxtick)) then
+		if ( target  and (gw2_marker_manager.ValidMarker(markermode)
+				and gw2_marker_manager.MarkerExpired(markermode) == false and cause.tick < maxtick)) then
 			cause.target = target
 			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and cause.target ~= nil
 		end
@@ -302,7 +302,7 @@ function gw2_marker_manager.CanFightToMarker(cause)
 	return false
 end
 
-function gw2_marker_manager.FightToMarker(cause)
+function gw2_marker_manager.FightToMarker(cause, markermode)
 	if (cause.target ~= nil) then
 		Player:StopMovement()
 		local newTask = gw2_task_combat.Create()

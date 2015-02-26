@@ -264,11 +264,11 @@ c_FightToGatherMarker.throttle = 30000
 c_FightToGatherMarker.maxtick = math.random(10, 30)
 c_FightToGatherMarker.tick = 0
 function c_FightToGatherMarker:evaluate()
-	return gw2_marker_manager.CanFightToMarker(c_FightToGatherMarker)
+	return gw2_marker_manager.CanFightToMarker(c_FightToGatherMarker, GetString("gatherMarker"))
 end
 function e_FightToGatherMarker:execute()
 	ml_log("e_FightToGatherMarker ")
-	return gw2_marker_manager.FightToMarker(c_FightToGatherMarker)
+	return gw2_marker_manager.FightToMarker(c_FightToGatherMarker, GetString("gatherMarker"))
 end
 
 ---------

@@ -174,11 +174,11 @@ c_FightToGrindMarker.target = nil
 c_FightToGrindMarker.maxtick = math.random(10, 30)
 c_FightToGrindMarker.tick = 0
 function c_FightToGrindMarker:evaluate()
-	return gw2_marker_manager.CanFightToMarker(c_FightToGrindMarker)
+	return gw2_marker_manager.CanFightToMarker(c_FightToGrindMarker, GetString("grindMarker"))
 end
 
 function e_FightToGrindMarker:execute()
-	return gw2_marker_manager.FightToMarker(c_FightToGrindMarker)
+	return gw2_marker_manager.FightToMarker(c_FightToGrindMarker, GetString("grindMarker"))
 end
 
 ---------
