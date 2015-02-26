@@ -112,6 +112,7 @@ function gw2_task_grind.ModuleInit()
 	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
 	if ( dw ) then
 		dw:NewField("KillCount","dbGrindKillcount","Task_Grind")
+		dw:NewField("DoEvents","dbDoEvents","Task_Grind")
 	end
 
 	ml_task_mgr.AddTaskType(GetString("grindMode"), gw2_task_grind) -- Allow this task to be selectable in TaskManager
@@ -119,17 +120,22 @@ end
 
 -- TaskManager functions
 function gw2_task_grind:UIInit_TM()
-	--ml_task_mgr.NewField("maxkills", "beer")
 	ml_task_mgr.NewNumeric("Max Kills", "maxKills")
-	--ml_task_mgr.NewCombobox("testcbox", "whiskey", "A,B,C")
-
+	ml_task_mgr.NewCheckBox("Do events", "doEvents")
+	ml_task_mgr.NewCheckBox("Use waypoint to reach start", "useWaypoint")
 end
+
 -- TaskManager function: Checks for custom conditions to start this task
 function gw2_task_grind.CanTaskStart_TM()
 	return true
 end
 -- TaskManager function: Checks for custom conditions to keep this task running
 function gw2_task_grind.CanTaskRun_TM()
+
+	if(ml_task_hub:CurrentTask().doEvents ~= nil) then
+		gDoEvents = tostring(ml_task_hub:CurrentTask().doEvents)
+		dbDoEvents = gDoEvents
+	end
 
 	-- Check the maxkill counter
 	if ( ml_task_hub:CurrentTask().maxKills ~= nil and ml_task_hub:CurrentTask().maxKills ~= 0 ) then
@@ -168,39 +174,11 @@ c_FightToGrindMarker.target = nil
 c_FightToGrindMarker.maxtick = math.random(10, 30)
 c_FightToGrindMarker.tick = 0
 function c_FightToGrindMarker:evaluate()
-	if ( c_MoveToMarker.markerreached == false and c_MoveToMarker.allowedToFight == true) then
-		local target = gw2_common_functions.GetBestCharacterTarget( 2000 ) -- maxrange 2000 where enemies should be searched for
-		if (target and (gw2_marker_manager.ValidMarker(GetString("grindMarker"))
-				and gw2_marker_manager.MarkerExpired(GetString("grindMarker")) == false and c_FightToGrindMarker.tick < c_FightToGrindMarker.maxtick)
-		) then
-			c_FightToGrindMarker.target = target
-			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGrindMarker.target ~= nil
-		end
-	end
-	c_FightToGrindMarker.tick = 0
-	c_FightToGrindMarker.maxtick = math.random(10, 30)
-	c_FightToGrindMarker.target = nil
-	return false
+	return gw2_marker_manager.CanFightToMarker(c_FightToGrindMarker)
 end
 
 function e_FightToGrindMarker:execute()
-	if (c_FightToGrindMarker.target ~= nil) then
-		ml_log("e_FightToGrindMarker")
-
-		--Player:StopMovement()
-		-- For TM Conditions
-		ml_task_hub:CurrentTask().lastTargetID = c_FightToGrindMarker.target.id
-		-- Create new Subtask combat
-		local newTask = gw2_task_combat.Create()
-		newTask.targetID = c_FightToGrindMarker.target.id
-		newTask.terminateOnAggro = true
-		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-		c_FightToGrindMarker.target = nil
-		c_FightToGrindMarker.tick = c_FightToGrindMarker.tick + 1
-	else
-		d("e_FightToGrindMarker found no target")
-	end
-	return ml_log(false)
+	return gw2_marker_manager.FightToMarker(c_FightToGrindMarker)
 end
 
 ---------
@@ -213,31 +191,31 @@ c_MoveToMarker.markerreachedfirsttime = false
 c_MoveToMarker.markerreached = false
 c_MoveToMarker.allowedToFight = false -- this sh*t is needed else he will go back n forth on the outer side of the marker's min radius if an enemy sits at larger-min-dist behind that radius -.-
 function c_MoveToMarker:evaluate()
-	-- Get a new/next Marker if we need one ( no marker , out of level, time up )
-	if (gw2_marker_manager.ValidMarker(GetString("grindMarker")) == false
-		or gw2_marker_manager.MarkerInLevelRange(GetString("grindMarker"))
-		or (c_MoveToMarker.markerreachedfirsttime == true and gw2_marker_manager.MarkerExpired(GetString("grindMarker")))) then
+	if(gw2_marker_manager.MarkerMode(GetString("grindMode"))) then
+		-- Get a new/next Marker if we need one ( no marker , out of level, time up )
+		if (gw2_marker_manager.ValidMarker(GetString("grindMarker")) == false
+			or gw2_marker_manager.MarkerInLevelRange(GetString("grindMarker"))
+			or (c_MoveToMarker.markerreachedfirsttime == true and gw2_marker_manager.MarkerExpired(GetString("grindMarker")))) then
 
-		gw2_marker_manager.SetCurrentMarker(gw2_marker_manager.CreateMarker(GetString("grindMarker"), c_MoveToMarker))
-	end
-
-	-- We have a valid current Grindmarker
-    if (gw2_marker_manager.ValidMarker(GetString("grindMarker"))) then
-
-		-- Reset the Markertime until we actually reached the marker the first time and then let it count down
-		if (c_MoveToMarker.markerreachedfirsttime == false ) then
-			gw2_marker_manager.GetPrimaryTask().markerTime = ml_global_information.Now
-			ml_global_information.MarkerTime = ml_global_information.Now
+			gw2_marker_manager.SetCurrentMarker(gw2_marker_manager.CreateMarker(GetString("grindMarker"), c_MoveToMarker))
 		end
 
-		-- We haven't reached the currentMarker or ran outside its radius
-		if ( c_MoveToMarker.markerreached == false) then
-			return true
-		else
-			return gw2_marker_manager.ReturnToMarker(GetString("grindMode"), c_MoveToMarker)
+		-- We have a valid current Grindmarker
+		if (gw2_marker_manager.ValidMarker(GetString("grindMarker"))) then
+
+			-- Reset the Markertime until we actually reached the marker the first time and then let it count down
+			if (c_MoveToMarker.markerreachedfirsttime == false ) then
+				gw2_marker_manager.SetTime()
+			end
+
+			-- We haven't reached the currentMarker or ran outside its radius
+			if ( c_MoveToMarker.markerreached == false) then
+				return true
+			else
+				return gw2_marker_manager.ReturnToMarker(GetString("grindMode"), c_MoveToMarker)
+			end
 		end
 	end
-
     return false
 end
 

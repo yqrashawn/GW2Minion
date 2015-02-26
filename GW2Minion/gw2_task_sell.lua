@@ -156,8 +156,7 @@ function c_MoveToVendorMarker:evaluate()
 
 		-- Reset the Markertime until we actually reached the marker the first time and then let it count down
 		if (c_MoveToVendorMarker.markerreachedfirsttime == false ) then
-			gw2_marker_manager.GetPrimaryTask().markerTime = ml_global_information.Now
-			ml_global_information.MarkerTime = ml_global_information.Now
+			gw2_marker_manager.SetTime()
 		end
 
 		-- We haven't reached the currentMarker or ran outside its radius

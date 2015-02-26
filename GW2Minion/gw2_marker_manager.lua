@@ -45,8 +45,8 @@ function gw2_marker_manager.DebugUpdate()
 			local marker = gw2_marker_manager.GetCurrentMarker()
 
 			if(gw2_marker_manager.ValidMarker(false)) then
-				if(ml_global_information.MarkerTime ~= nil and ml_global_information.MarkerTime > 0) then
-					dbCurrentMarkerTime = math.floor(TimeSince(ml_global_information.MarkerTime) / 1000)
+				if(gw2_marker_manager.GetTime(marker)) then
+					dbCurrentMarkerTime = math.floor(TimeSince(gw2_marker_manager.GetTime(marker)) / 1000)
 					dbCurrentMarkerTimeRemaining = math.floor(marker:GetTime() - dbCurrentMarkerTime)
 				end
 
@@ -100,6 +100,20 @@ function gw2_marker_manager.SetMarkerInfo(key, value, marker)
 	if(marker ~= nil) then
 		gw2_marker_manager.markerinfo[marker:GetName()][key] = value
 	end
+end
+
+function gw2_marker_manager.SetTime(time, marker)
+	marker = marker or gw2_marker_manager.GetCurrentMarker()
+	time = time or ml_global_information.Now
+
+	gw2_marker_manager.GetPrimaryTask().markerTime = time
+	ml_global_information.MarkerTime = time
+end
+
+function gw2_marker_manager.GetTime(marker)
+	marker = marker or gw2_marker_manager.GetCurrentMarker()
+
+	return gw2_marker_manager.GetPrimaryTask().markerTime or ml_global_information.MarkerTime
 end
 
 function gw2_marker_manager.GetNextMarker(markerType, filterLevel)
@@ -191,11 +205,34 @@ function gw2_marker_manager.MoveToMarker(cause, randomize, marker)
 		-- We need to reach our Marker yet
 		-- make sure the next marker is reachable & onmesh
 		if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
+			local markertime = TimeSince(gw2_marker_manager.GetTime())
 
 			local newTask = gw2_task_moveto.Create()
 			newTask.name = "MoveTo " .. marker:GetName() .. " (" .. marker:GetType() .. ")"
 			newTask.targetPos = pos
 			newTask.useWaypoint = true
+			newTask.randomMovement = true
+
+			newTask.onMoveToProcess = function()
+				-- Pause the timer while moving to the marker
+				gw2_marker_manager.SetTime(ml_global_information.Now - markertime)
+			end
+
+			newTask.terminateOnCustomCondition = function()
+				local dist = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
+
+				if(cause.markerreachedfirsttime == true and ((userandom and dist < maxRadius) or dist < markerRange)) then
+					d("We are inside the marker range again")
+					if(ml_global_information.Player_InCombat and type(cause.allowedToFight) == "boolean") then
+						cause.allowedToFight = true
+					end
+
+					return true
+				end
+
+				return false
+			end
+
 			gw2_marker_manager.GetPrimaryTask():AddSubTask(newTask)
 			return ml_log(true)
 
@@ -248,9 +285,41 @@ function gw2_marker_manager.CreateMarker(type, cause)
 	return marker
 end
 
+function gw2_marker_manager.CanFightToMarker(cause)
+	local maxtick = cause.maxtick or math.random(10, 30)
+	if ( cause.markerreached == false and cause.allowedToFight == true) then
+		local target = gw2_common_functions.GetBestCharacterTarget( 1250 ) -- maxrange 2000 where enemies should be searched for
+		if ( target  and (gw2_marker_manager.ValidMarker(GetString("gatherMarker"))
+				and gw2_marker_manager.MarkerExpired(GetString("gatherMarker")) == false and cause.tick < maxtick)) then
+			cause.target = target
+			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and cause.target ~= nil
+		end
+	end
+
+	cause.target = nil
+	cause.tick = 0
+	cause.maxtick = maxtick
+	return false
+end
+
+function gw2_marker_manager.FightToMarker(cause)
+	if (cause.target ~= nil) then
+		Player:StopMovement()
+		local newTask = gw2_task_combat.Create()
+		newTask.targetID = c_FightToGatherMarker.target.id
+		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
+		cause.target = nil
+		cause.tick = cause.tick + 1
+	else
+		ml_log("gw2_marker_manager.FightToMarker found no target")
+	end
+
+	return ml_log(false)
+end
+
 function gw2_marker_manager.MarkerExpired(markerType, marker)
 	marker = marker or gw2_marker_manager.GetCurrentMarker()
-	return gw2_marker_manager.GetPrimaryTask() ~= nil and gw2_marker_manager.ValidMarker(markerType, marker) and marker:GetTime() and marker:GetTime() ~= 0 and TimeSince(gw2_marker_manager.GetPrimaryTask().markerTime) > marker:GetTime() * 1000
+	return gw2_marker_manager.GetPrimaryTask() ~= nil and gw2_marker_manager.ValidMarker(markerType, marker) and marker:GetTime() and marker:GetTime() ~= 0 and TimeSince(gw2_marker_manager.GetTime()) > marker:GetTime() * 1000
 end
 
 function gw2_marker_manager.MarkerInLevelRange(markerType, marker)
@@ -262,6 +331,10 @@ function gw2_marker_manager.ValidMarker(markerType, marker)
 	markerType = markerType or nil
 	marker = marker or gw2_marker_manager.GetCurrentMarker()
 	return (gw2_marker_manager.GetPrimaryTask() ~= nil and marker ~= nil and marker ~= false and (markerType == nil or marker:GetType() == markerType))
+end
+
+function gw2_marker_manager.MarkerMode(botmode)
+	return (botmode == nil or gBotMode == botmode or gw2_marker_manager.GetPrimaryTask().type == botmode)
 end
 
 RegisterEventHandler("Module.Initalize",gw2_marker_manager.ModuleInit)

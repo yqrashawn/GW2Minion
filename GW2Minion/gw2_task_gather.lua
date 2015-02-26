@@ -264,33 +264,11 @@ c_FightToGatherMarker.throttle = 30000
 c_FightToGatherMarker.maxtick = math.random(10, 30)
 c_FightToGatherMarker.tick = 0
 function c_FightToGatherMarker:evaluate()
-	if ( c_MoveToGatherMarker.markerreached == false and c_MoveToGatherMarker.allowedToFight == true) then
-		local target = gw2_common_functions.GetBestCharacterTarget( 1250 ) -- maxrange 2000 where enemies should be searched for
-		if ( target  and (gw2_marker_manager.ValidMarker(GetString("gatherMarker"))
-				and gw2_marker_manager.MarkerExpired(GetString("gatherMarker")) == false and c_FightToGatherMarker.tick < c_FightToGatherMarker.maxtick)) then
-			c_FightToGatherMarker.target = target
-			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGatherMarker.target ~= nil
-		end
-	end
-	c_FightToGatherMarker.target = nil
-	c_FightToGatherMarker.tick = 0
-	c_FightToGatherMarker.maxtick = math.random(10, 30)
-	return false
+	return gw2_marker_manager.CanFightToMarker(c_FightToGatherMarker)
 end
 function e_FightToGatherMarker:execute()
 	ml_log("e_FightToGatherMarker ")
-
-	if (c_FightToGatherMarker.target ~= nil) then
-		Player:StopMovement()
-		local newTask = gw2_task_combat.Create()
-		newTask.targetID = c_FightToGatherMarker.target.id
-		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-		c_FightToGatherMarker.target = nil
-		c_FightToGatherMarker.tick = c_FightToGrindMarker.tick + 1
-	else
-		ml_log("e_FightToGatherMarker found no target")
-	end
-	return ml_log(false)
+	return gw2_marker_manager.FightToMarker(c_FightToGatherMarker)
 end
 
 ---------
@@ -303,28 +281,29 @@ c_MoveToGatherMarker.markerreachedfirsttime = false
 c_MoveToGatherMarker.markerreached = false
 c_MoveToGatherMarker.allowedToFight = false -- this sh*t is needed else he will go back n forth on the outer side of the marker's min radius if an enemy sits at larger-min-dist behind that radius -.-
 function c_MoveToGatherMarker:evaluate()
-	-- Get a new/next Marker if we need one ( no marker , out of level, time up )
-	if (gw2_marker_manager.ValidMarker(GetString("gatherMarker")) == false
-		or gw2_marker_manager.MarkerInLevelRange(GetString("gatherMarker"))
-		or (c_MoveToGatherMarker.markerreachedfirsttime == true and gw2_marker_manager.MarkerExpired(GetString("grindMarker")))) then
+	if(gw2_marker_manager.MarkerMode(GetString("gatherMode"))) then
+		-- Get a new/next Marker if we need one ( no marker , out of level, time up )
+		if (gw2_marker_manager.ValidMarker(GetString("gatherMarker")) == false
+			or gw2_marker_manager.MarkerInLevelRange(GetString("gatherMarker"))
+			or (c_MoveToGatherMarker.markerreachedfirsttime == true and gw2_marker_manager.MarkerExpired(GetString("grindMarker")))) then
 
-		gw2_marker_manager.SetCurrentMarker(gw2_marker_manager.CreateMarker(GetString("gatherMarker"), c_MoveToGatherMarker))
-	end
-
-	-- We have a valid current Gathermarker
-    if (gw2_marker_manager.ValidMarker(GetString("gatherMarker"))) then
-
-		-- Reset the Markertime until we actually reached the marker the first time and then let it count down
-		if (c_MoveToGatherMarker.markerreachedfirsttime == false ) then
-			gw2_marker_manager.GetPrimaryTask().markerTime = ml_global_information.Now
-			ml_global_information.MarkerTime = ml_global_information.Now
+			gw2_marker_manager.SetCurrentMarker(gw2_marker_manager.CreateMarker(GetString("gatherMarker"), c_MoveToGatherMarker))
 		end
 
-		-- We haven't reached the currentMarker or ran outside its radius
-		if ( c_MoveToGatherMarker.markerreached == false) then
-			return true
-		else
-			return gw2_marker_manager.ReturnToMarker(GetString("gatherMode"), c_MoveToGatherMarker)
+		-- We have a valid current Gathermarker
+		if (gw2_marker_manager.ValidMarker(GetString("gatherMarker"))) then
+
+			-- Reset the Markertime until we actually reached the marker the first time and then let it count down
+			if (c_MoveToGatherMarker.markerreachedfirsttime == false ) then
+				gw2_marker_manager.SetTime()
+			end
+
+			-- We haven't reached the currentMarker or ran outside its radius
+			if ( c_MoveToGatherMarker.markerreached == false) then
+				return true
+			else
+				return gw2_marker_manager.ReturnToMarker(GetString("gatherMode"), c_MoveToGatherMarker)
+			end
 		end
 	end
 
