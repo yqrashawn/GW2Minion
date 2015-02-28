@@ -1,5 +1,6 @@
 gw2_marker_manager = {}
 gw2_marker_manager.lastMarkerOfType = {}
+gw2_marker_manager.lastMapID = ""
 gw2_marker_manager.tick = 0
 gw2_marker_manager.markerinfo = {}
 gw2_marker_manager.randompos = nil
@@ -117,6 +118,12 @@ function gw2_marker_manager.GetTime(marker)
 end
 
 function gw2_marker_manager.GetNextMarker(markerType, filterLevel)
+	if(gw2_marker_manager.lastMapID ~= ml_global_information.CurrentMapID) then
+		d("Map changed, resetting last used markers")
+		gw2_marker_manager.lastMarkerOfType = {}
+		gw2_marker_manager.lastMapID = ml_global_information.CurrentMapID
+	end
+
 	-- Reset manager marker
 	ml_marker_mgr.currentMarker = gw2_marker_manager.lastMarkerOfType[markerType] or nil
 
