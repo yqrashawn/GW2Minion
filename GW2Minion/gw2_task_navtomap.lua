@@ -36,7 +36,9 @@ function gw2_task_navtomap:Process()
 					waypoint = gw2_common_functions.GetClosestWaypointToPos(ml_task_hub:CurrentTask().targetMapID,ml_task_hub:CurrentTask().targetPos)
 				else
 					local wpList = gw2_datamanager.GetLocalWaypointList(ml_task_hub:CurrentTask().targetMapID)
-					waypoint = wpList[math.random(1,TableSize(wpList))]
+					if (ValidTable(wpList)) then
+						waypoint = wpList[math.random(1,TableSize(wpList))]
+					end
 				end
 				if (ValidTable(waypoint)) then
 					Player:TeleportToWaypoint(waypoint.id)

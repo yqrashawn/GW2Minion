@@ -5308,7 +5308,7 @@ local obj1 = {
 				["los"] = "1";
 				["maxRange"] = 1200;
 				["slowCast"] = "0";
-				["delay"] = 1050;
+				["delay"] = 0;
 				["setRange"] = "1";
 			};
 			["slot"] = 5;

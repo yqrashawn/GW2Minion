@@ -549,6 +549,7 @@ _private.combatMoveTmr = 0
 _private.targetLosingHP = {id = 0, health = 0, timer = 0}
 _private.SwapTimer = 0
 _private.SwapRandomTimer = 0
+_private.SwapPetTimer = 0
 _private.lastKitTable = {}
 _private.skillLastCast = {}
 _private.lastEvadedSkill = {targetID = 0, skillID = 0}
@@ -795,6 +796,11 @@ function _private.SwapWeapon(target)
 				if (ml_global_information.ShowDebug) then
 					gSMCurrentAction = "Swap weapons: Mode = normal."
 				end
+				if (ml_global_information.Player_Profession == GW2.CHARCLASS.Ranger and TimeSince(_private.SwapPetTimer) > 2500) then
+					_private.SwapPetTimer = ml_global_information.Now
+					_private.SwapRangerPet()
+				end
+				_private.SwapRangerPet()
 				Player:SwapWeaponSet()
 				return true
 			end
@@ -878,6 +884,18 @@ function _private.SwapElementalistAttunement()
 			return true
 		end
 	end	
+	return false
+end
+
+function _private.SwapRangerPet()
+	local pet = Player:GetPet()
+	if ( pet ~= nil and Player:CanSwitchPet() and Player.healthstate == GW2.HEALTHSTATE.Alive and (pet.alive == false or pet.health.percent < 12)) then	
+		if (ml_global_information.ShowDebug) then
+			gSMCurrentAction = "Swap weapons: Mode = Ranger."
+		end
+		Player:SwitchPet()
+		return true
+	end
 	return false
 end
 

@@ -466,82 +466,62 @@ end
 -- Looting chests and normal lootable enemies
 c_Looting = inheritsFrom( ml_cause )
 e_Looting = inheritsFrom( ml_effect )
-c_Looting.target = nil
-c_Looting.lastTargetID = 0
-c_Looting.LootingAttemptCounter = 0
--- Unsure which one to use..contentID or contentID2 ..contentID changes sometimes I think
--- 24.11.2014 : Splendid Chest, contentID = 41638 , contentID2 = 202375680
+c_Looting.lastAoE = 0
+c_Looting.lastTargetID = nil
+c_Looting.lootAttempts = 0
 c_Looting.contentID = "17698;198260;232192;232193;232194;262863;236384;41638;297323"
-c_Looting.contentID2 = "202375680"
-c_Looting.contentIDExclude = "41024;297323" -- diving goggles 1.12.14
 function c_Looting:evaluate()
-	--ml_log("c_Looting")
-	-- Find new loot target.
-	if (c_Looting.target == nil) then
-		-- contentid2 doesnt work generally, there are too many little things the bot thinks he can loot while it actually is nothing to loot :(
-		--c_Looting.target = (GadgetList("onmesh,interactable,selectable,noncombatant,resourcetype=3,nearest,maxdistance=3000,contentID2="..c_Looting.contentID2..",exclude_contentid="..c_Looting.contentIDExclude) or GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID="..c_Looting.contentID) or CharacterList("nearest,lootable,onmesh,maxdistance=3000"))
-		c_Looting.target = (GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID="..c_Looting.contentID) or CharacterList("nearest,lootable,onmesh,maxdistance=3000"))
-	end
-	-- Check if we need to loot and have a valid target and enough space to store it.
-	if (ValidTable(c_Looting.target) and ml_global_information.Player_Inventory_SlotsFree > 0) then
-		return true
-	end
-
-	c_Looting.target = nil
-	return false
+	local target = (GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID="..c_Looting.contentID) or CharacterList("nearest,lootable,onmesh,maxdistance=3000"))
+	return (ValidTable(target) and Inventory.freeSlotCount > 0)
 end
-
 function e_Looting:execute()
-	ml_log("Looting ")
-	c_Looting.target = (GadgetList("onmesh,interactable,selectable,shortestpath,maxdistance=4000,contentID="..c_Looting.contentID) or CharacterList("shortestpath,lootable,onmesh,maxdistance=4000"))
-	--c_Looting.target = (GadgetList("onmesh,interactable,selectable,noncombatant,resourcetype=3,nearest,maxdistance=3000,contentID2="..c_Looting.contentID2) or GadgetList("onmesh,interactable,selectable,shortestpath,maxdistance=4000,contentID="..c_Looting.contentID) or CharacterList("shortestpath,lootable,onmesh,maxdistance=4000"))
-	if ( ValidTable(c_Looting.target) ) then
-		local target = select(2,next(c_Looting.target))
-		-- Check for valid target.
-		if (target and ( target.lootable or target.interactable ) ) then
-
-			-- We are in range to loot
-			if (target.isInInteractRange) then
-				gw2_common_functions.NecroLeaveDeathshroud()
-				ml_log(": Interacting started.")
-				if ( ml_global_information.Player_IsMoving and target.distance < 30 ) then Player:StopMovement() end -- isInInteractRange is sometimes too far to loot after opening chest
-				Player:Interact(target.id)
-				-- another check for chests that "need time to open" while your bot gets kicked in the nuts n resets the openingprogress...
-				if ( c_Looting.lastTargetID ~= target.id ) then
-					c_Looting.lastTargetID = target.id
-					c_Looting.LootingAttemptCounter = 0
-				else
-					c_Looting.LootingAttemptCounter = c_Looting.LootingAttemptCounter + 1
-					if ( c_Looting.LootingAttemptCounter > 15 ) then
-						-- Check if nearby are some enemies attacking us
-						d("Seems we can't loot that thing ? Checking for attacking enemies...")
-						local target = gw2_common_functions.GetBestAggroTarget()
-						if ( target ) then
-							local newTask = gw2_task_combat.Create()
-							newTask.targetID = c_HandleAggro.target.id
-							ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-						end
-						c_Looting.LootingAttemptCounter = 0
-					end
-				end
-
-
-			-- Loot not in range, walk there.
+	ml_log("e_Looting: ")
+	local target = (GadgetList("onmesh,interactable,selectable,shortestpath,maxdistance=4000,contentID="..c_Looting.contentID) or CharacterList("shortestpath,lootable,onmesh,maxdistance=4000"))
+	-- Check for valid target.
+	if (ValidTable(target) and (target.lootable or target.interactable)) then
+		-- Target Close enough to AoE Loot
+		if (target.isCharacter and target.distance < 900 and TimeSince(e_Looting.lastAoE) > 1050) then
+			Player:AoELoot()
+			e_Looting.lastAoE = Now()
+		-- Player is looting, wait to be done.
+		elseif (Player.castinfo.duration ~= 0) then
+			ml_log(": Looting busy.")
+		-- We are in range to loot
+		elseif (target.isInInteractRange) then
+			mc_helper.NecroLeaveDeathshroud()
+			ml_log(": Looting starting.")
+			if ( Player:IsMoving() ) then Player:StopMovement() end
+			Player:Interact(target.id)
+			-- Prevent looting loops while being attacked.
+			if (target.id ~= c_Looting.lastTargetID) then
+				-- Set new loot ID.
+				c_Looting.lastTargetID = target.id
+				c_Looting.lootAttempts = 0
 			else
-				ml_log(": Walking to Chest.")
-				gw2_common_functions.MoveOnlyStraightForward()
-				-- Moving to target position.
-				local tPos = target.pos
-				if ( not gw2_unstuck.HandleStuck() ) then
-					Player:MoveTo(tPos.x,tPos.y,tPos.z,25,false,false,false)
+				-- Increase loot attempt counter.
+				c_Looting.lootAttempts = c_Looting.lootAttempts + 1
+				-- Check if we aggro'd nearby enemie's.
+				if ( c_Looting.lootAttempts > 15 ) then
+					local target = gw2_common_functions.GetBestAggroTarget()
+					if ( target ) then
+						d("Being attacked while looting, killing target.")
+						local newTask = gw2_task_combat.Create()
+						newTask.targetID = c_HandleAggro.target.id
+						ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
+					end
+					c_Looting.lootAttempts = 0
 				end
 			end
+		-- Loot not in range, walk there.
+		elseif (target.isInInteractRange == false) then
+			ml_log(": Walking to Loot.")
+			gw2_common_functions.MoveOnlyStraightForward()
+			-- Moving to target position.
+			local tPos = target.pos
+			if ( not gw2_unstuck.HandleStuck() ) then
+				Player:MoveTo(tPos.x,tPos.y,tPos.z,target.radius+10,false,false,true)
+			end
 		end
-	else
-		-- Target gone? Stop moving and delete target.
-		if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
-		ml_log(": Looting done.")
-		c_Looting.target = nil
 	end
 end
 
