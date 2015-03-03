@@ -346,7 +346,10 @@ gw2_sell_manager.lastVendorID = nil
 gw2_sell_manager.VendorSellHistroy = {}
 function gw2_sell_manager.sellAtVendor(vendorMarker)
 	if (vendorMarker) then
-		vendor = CharacterList:Get(vendorMarker.characterID)
+		local vendor = CharacterList:Get(vendorMarker.characterID)
+		if (vendor == nil) then
+			vendor = GadgetList:Get(vendorMarker.characterID)
+		end
 		if (vendor and vendor.isInInteractRange and vendor.distance < 100) then
 			Player:StopMovement()
 			-- Reset vendorhistory on new vendor
@@ -413,7 +416,7 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 				local newTask = gw2_task_moveto.Create()
 				newTask.targetPos = pos
 				newTask.targetID = vendorMarker.characterID
-				newTask.targetType = "character"
+				newTask.targetType = "markerCharacterID"
 				newTask.name = "MoveTo Vendor(SELL)"
 				newTask.useWaypoint = true
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
