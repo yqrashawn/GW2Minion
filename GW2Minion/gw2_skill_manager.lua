@@ -785,6 +785,10 @@ function _private.SwapWeapon(target)
 				swap = true
 			end
 		end
+		if (ml_global_information.Player_Profession == GW2.CHARCLASS.Ranger and TimeSince(_private.SwapPetTimer) > 2500) then
+			_private.SwapPetTimer = ml_global_information.Now
+			_private.SwapRangerPet()
+		end
 		if (swap) then
 			_private.SwapTimer = ml_global_information.Now
 			_private.SwapRandomTimer = ml_global_information.Now + math.random(5000,15000)
@@ -795,10 +799,6 @@ function _private.SwapWeapon(target)
 			else
 				if (ml_global_information.ShowDebug) then
 					gSMCurrentAction = "Swap weapons: Mode = normal."
-				end
-				if (ml_global_information.Player_Profession == GW2.CHARCLASS.Ranger and TimeSince(_private.SwapPetTimer) > 2500) then
-					_private.SwapPetTimer = ml_global_information.Now
-					_private.SwapRangerPet()
 				end
 				_private.SwapRangerPet()
 				Player:SwapWeaponSet()

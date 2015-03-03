@@ -87,6 +87,20 @@ function gw2_task_moveto:Process()
 						ml_task_hub:CurrentTask().completed = true
 					end
 
+				elseif ( ml_task_hub:CurrentTask().targetType == "markerCharacterID" ) then
+
+					local target = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
+					if (target == nil) then
+						target = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
+					end
+					if ( target ~= nil and target.onmesh) then
+						ml_task_hub:CurrentTask().targetPos = target.pos
+
+					else
+						d("MoveTo:Update MarkerID-Data failed, no target found!")
+						ml_task_hub:CurrentTask().completed = true
+					end
+
 				elseif ( ml_task_hub:CurrentTask().targetType == "event" ) then
 
 					local eID = tonumber(ml_task_hub:CurrentTask().targetID) or 0

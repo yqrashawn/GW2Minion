@@ -39,7 +39,10 @@ end
 
 function gw2_repair_manager.RepairAtVendor(marker)
 	if (marker) then
-		repair = CharacterList:Get(marker.characterID)
+		local repair = CharacterList:Get(marker.characterID)
+		if (repair == nil) then
+			repair = GadgetList:Get(marker.characterID)
+		end
 		if (repair and repair.isInInteractRange and repair.distance < 100) then
 			Player:StopMovement()
 			local target = Player:GetTarget()
@@ -70,7 +73,7 @@ function gw2_repair_manager.RepairAtVendor(marker)
 				local newTask = gw2_task_moveto.Create()
 				newTask.targetPos = pos
 				newTask.targetID = marker.characterID
-				newTask.targetType = "character"
+				newTask.targetType = "markerCharacterID"
 				newTask.name = "MoveTo Vendor(Repair)"
 				newTask.useWaypoint = true
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
