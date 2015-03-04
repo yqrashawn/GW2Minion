@@ -26,8 +26,17 @@ local profilePrototype = {}
 
 -- Init module
 function gw2_skill_manager.ModuleInit()
-	if (Settings.GW2Minion.gCurrentProfile == nil) then
-		Settings.GW2Minion.gCurrentProfile = "None"
+	if (Settings.GW2Minion.gCurrentProfile == nil or ValidTable(Settings.GW2Minion.gCurrentProfile) == false) then
+		Settings.GW2Minion.gCurrentProfile = {
+			["Elementalist"] = "GW2Minion",
+			["Engineer"] = "GW2Minion",
+			["Guardian"] = "GW2Minion",
+			["Mesmer"] = "GW2Minion",
+			["Necromancer"] = "GW2Minion",
+			["Ranger"] = "GW2Minion",
+			["Thief"] = "GW2Minion",
+			["Warrior"] = "GW2Minion",
+		}
 	end
 	
 	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
@@ -37,7 +46,8 @@ function gw2_skill_manager.ModuleInit()
 		
 	end
 	
-	gw2_skill_manager.profile = gw2_skill_manager.GetProfile(Settings.GW2Minion.gCurrentProfile)
+	gSMCurrentProfileName = Settings.GW2Minion.gCurrentProfile[table_invert(GW2.CHARCLASS)[Player.profession]]
+	gw2_skill_manager.profile = gw2_skill_manager.GetProfile(gSMCurrentProfileName)
 	gMoveIntoCombatRange = Settings.GW2Minion.gMoveIntoCombatRange
 end
 RegisterEventHandler("Module.Initalize",gw2_skill_manager.ModuleInit)
@@ -66,7 +76,7 @@ function gw2_skill_manager.NewProfile(profileName)
 			if (name == profileName) then return gw2_skill_manager.GetProfile(profileName) end
 		end
 		profileName = string.gsub(profileName,'%W','')
-		profileName = table_invert(GW2.CHARCLASS)[ml_global_information.Player_Profession] .. "_" .. profileName
+		profileName = ml_global_information.Player_ProfessionName .. "_" .. profileName
 		local newProfile = {
 			name = profileName,
 			profession = ml_global_information.Player_Profession,
@@ -245,7 +255,8 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 			gw2_skill_manager.MainWindow()
 			gw2_skill_manager.currentSkill = nil
 			gw2_skill_manager.SkillEditWindow()
-			Settings.GW2Minion.gCurrentProfile = gSMCurrentProfileName
+			Settings.GW2Minion.gCurrentProfile[ml_global_information.Player_ProfessionName] = gSMCurrentProfileName
+			Settings.GW2Minion.gCurrentProfile = Settings.GW2Minion.gCurrentProfile
 		end
 	end
 end
@@ -512,7 +523,7 @@ function gw2_skill_manager.CloneProfileDialog()
 		dialog:SetOkFunction(
 			function(list)
 				if (ValidString(_G[list])) then
-					local newName = table_invert(GW2.CHARCLASS)[Player.profession] .. "_" .. _G[list]
+					local newName = ml_global_information.Player_ProfessionName .. "_" .. _G[list]
 					gw2_skill_manager.profile:Clone(newName)
 					gw2_skill_manager.profile = gw2_skill_manager.GetProfile(_G[list])
 					gw2_skill_manager.MainWindow()
@@ -535,7 +546,8 @@ function gw2_skill_manager.DeleteProfileDialog()
 			function()
 				gw2_skill_manager.profile:Delete()
 				gw2_skill_manager.profile = nil
-				Settings.GW2Minion.gCurrentProfile = "None"
+				Settings.GW2Minion.gCurrentProfile[ml_global_information.Player_ProfessionName] = "None"
+				Settings.GW2Minion.gCurrentProfile = Settings.GW2Minion.gCurrentProfile
 				gw2_skill_manager.MainWindow()
 				gw2_skill_manager.SkillEditWindow()
 				return true
@@ -1140,14 +1152,16 @@ function _private.Save()
 	gw2_skill_manager.SkillEditWindow()
 	local name = gw2_skill_manager.profile.name
 	name = string.sub(name,select(2,string.find(name,"_"))+1,#name)
-	Settings.GW2Minion.gCurrentProfile = name
+	Settings.GW2Minion.gCurrentProfile[ml_global_information.Player_ProfessionName] = name
+	Settings.GW2Minion.gCurrentProfile = Settings.GW2Minion.gCurrentProfile
 end
 
 function _private.Delete()
 	gw2_skill_manager.DeleteProfileDialog()
 	--[[gw2_skill_manager.profile:Delete()
 	gw2_skill_manager.profile = nil
-	Settings.GW2Minion.gCurrentProfile = "None"
+	Settings.GW2Minion.gCurrentProfile[ml_global_information.Player_ProfessionName] = "None"
+	Settings.GW2Minion.gCurrentProfile = Settings.GW2Minion.gCurrentProfile
 	gw2_skill_manager.MainWindow()
 	gw2_skill_manager.SkillEditWindow()]]
 end
