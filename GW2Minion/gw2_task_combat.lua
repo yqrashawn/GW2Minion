@@ -119,7 +119,6 @@ function e_AttackTarget:execute()
 				newTask.targetPos = target.pos
 				newTask.targetID = target.id
 				newTask.targetType = ml_task_hub:CurrentTask().targetType
-				newTask.terminateInCombat = true
 				newTask.stoppingDistance = 2000
 				newTask.name = "MoveTo Attackable Target"
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
