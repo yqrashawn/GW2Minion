@@ -49,7 +49,7 @@ function gw2_repair_manager.RepairAtVendor(marker)
 			if (not target or target.id ~= repair.id) then
 				Player:SetTarget(repair.id)
 			else
-				if (Inventory:IsVendorOpened() == false and Player:IsConversationOpen() == false) then
+				if (Player:IsConversationOpen() == false) then
 					ml_log(" Opening Repair.. ")
 					Player:Interact(repair.id)
 					ml_global_information.Wait(1500)
