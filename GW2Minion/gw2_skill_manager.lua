@@ -50,6 +50,9 @@ function gw2_skill_manager.GetProfile(profileName)
 		local profile = persistence.load(gw2_skill_manager.path .. profileName .. ".lua")
 		if (profile) then
 			setmetatable(profile, {__index = profilePrototype})
+			for _,skill in pairs(profile.skills) do
+				setmetatable(skill, {__index = _private.skillTemplate})
+			end
 			return profile
 		end
 	end
@@ -148,7 +151,8 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 				k == "SklMgr_Radius" or
 				k == "SklMgr_SlowCast" or
 				k == "SklMgr_LastSkillID" or
-				k == "SklMgr_Delay")
+				k == "SklMgr_Delay" or
+				k == "SklMgr_StopsMovement")
 			then
 			local var = {	--SklMgr_GrndTarget = {global = "groundTargeted", gType = "tostring",},
 							SklMgr_HealnBuff = {global = "healing", gType = "tostring",},
@@ -160,6 +164,7 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals)
 							SklMgr_SlowCast = {global = "slowCast", gType = "tostring",},
 							SklMgr_LastSkillID = {global = "lastSkillID", gType = "tonumber",},
 							SklMgr_Delay = {global = "delay", gType = "tonumber",},
+							SklMgr_StopsMovement = {global = "stopsMovement", gType = "tostring",},
 			}
 			gw2_skill_manager.profile.skills[gw2_skill_manager.currentSkill].skill[var[k].global] = _G[var[k].gType](v)
 		-- Player change
@@ -374,6 +379,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 		editWindow:NewCheckBox(GetString("smSlowCast"),"SklMgr_SlowCast",GetString("smSkill"))
 		editWindow:NewField(GetString("prevSkillID"),"SklMgr_LastSkillID",GetString("smSkill"))
 		editWindow:NewNumeric(GetString("smDelay"),"SklMgr_Delay",GetString("smSkill"))
+		editWindow:NewCheckBox(GetString("smStopsMovement"),"SklMgr_StopsMovement",GetString("smSkill"))
 		-- Player Section
 		editWindow:NewComboBox(GetString("useOutOfCombat"),"SklMgr_CombatState",GetString("smPlayer"),"Either,InCombat,OutCombat")
 		editWindow:NewNumeric(GetString("playerHPLT"),"SklMgr_PMinHP",GetString("smPlayer"),0,100)
@@ -443,6 +449,7 @@ function gw2_skill_manager.SkillEditWindow(skill)
 			SklMgr_SlowCast = lSkill.skill.slowCast
 			SklMgr_LastSkillID = lSkill.skill.lastSkillID
 			SklMgr_Delay = lSkill.skill.delay
+			SklMgr_StopsMovement = lSkill.skill.stopsMovement
 			editWindow:UnFold(GetString("smSkill"))
 			-- Player
 			SklMgr_CombatState = lSkill.player.combatState
@@ -548,6 +555,7 @@ _private.doingCombatMovement = false
 _private.combatMoveTmr = 0
 _private.targetLosingHP = {id = 0, health = 0, timer = 0}
 _private.SwapTimer = 0
+_private.SwapRangeTimer = 0
 _private.SwapRandomTimer = 0
 _private.SwapPetTimer = 0
 _private.lastKitTable = {}
@@ -559,6 +567,48 @@ _private.currentSkills = {}
 _private.currentHealSkills = {}
 _private.skillbarSkills = {}
 _private.lastSkillID = 0
+_private.skillTemplate = {
+	skill = {	id				= 0,
+				name			= "",
+				groundTargeted	= "0",
+				healing			= "0",
+				los				= "1",
+				setRange		= "0",
+				minRange		= 0,
+				maxRange		= 0,
+				radius			= 0,
+				slowCast		= "0",
+				lastSkillID		= "",
+				delay			= 0,
+				stopsMovement	= "0",
+	},
+	player = {	combatState		= "Either",
+				minHP			= 0,
+				maxHP			= 0,
+				minPower		= 0,
+				maxPower		= 0,
+				minEndurance	= 0,
+				maxEndurance	= 0,
+				allyNearCount	= 0,
+				allyRangeMax	= 0,
+				hasBuffs		= "",
+				hasNotBuffs		= "",
+				conditionCount	= 0,
+				boonCount		= 0,
+				moving			= "Either",
+	},
+	target = {	type			= "Either",
+				minHP			= 0,
+				maxHP			= 0,
+				enemyNearCount	= 0,
+				enemyRangeMax	= 0,
+				moving			= "Either",
+				hasBuffs		= "",
+				hasNotBuffs		= "",
+				conditionCount	= 0,
+				boonCount		= 0,
+	},
+}
 
 -- **private functions**
 function _private.GetProfileList(newProfile)
@@ -606,6 +656,7 @@ function _private.CreateSkill(skillList,skillSlot)
 					return false
 				end
 			end
+			setmetatable(newSkill, {__index = _private.skillTemplate})
 			newSkill = {
 				priority = #skillList+1,
 				skill = {	id				= skillInfo.skillID,
@@ -620,6 +671,7 @@ function _private.CreateSkill(skillList,skillSlot)
 							slowCast		= "0",
 							lastSkillID		= "",
 							delay			= 0,
+							stopsMovement	= "0",
 				},
 				player = {	combatState		= "Either",
 							minHP			= 0,
@@ -745,6 +797,8 @@ function _private.CanCast(skill,target)
 		if (skill.player.hasNotBuffs ~= "" and playerBuffList and gw2_common_functions.BufflistHasBuffs(playerBuffList, tostring(skill.player.hasNotBuffs))) then return false end
 		if (skill.player.conditionCount > 0 and playerBuffList and gw2_common_functions.CountConditions(playerBuffList) <= skill.player.conditionCount) then return false end
 		if (skill.player.boonCount > 0 and playerBuffList and gw2_common_functions.CountBoons(playerBuffList) <= skill.player.boonCount) then return false end
+		if (skill.player.moving == "Yes" and (skill.skill.healing == "0" and ml_global_information.Player_MovementState == GW2.MOVEMENTSTATE.GroundNotMoving )) then return false end
+		if (skill.player.moving == "No" and (skill.skill.healing == "0" and ml_global_information.Player_MovementState == GW2.MOVEMENTSTATE.GroundMoving )) then return false end
 		-- target attributes
 		local targetBuffList = (target and target.buffs or false)
 		if (skill.target.minHP > 0 and (skill.skill.healing == "0" and (target == nil or ml_global_information.Player_Health.percent > skill.target.minHP))) then return false end
@@ -770,9 +824,11 @@ end
 function _private.SwapWeapon(target)
 	if (Player:CanCast() and Player:IsCasting() == false and Player:CanSwapWeaponSet() and TimeSince(_private.SwapTimer) > 500) then
 		local swap,cause = false,nil
-		if (gw2_skill_manager.profile.switchSettings.switchOnRange == "1" and _private.maxRange < 300 and target and target.distance > _private.maxRange) then
+		if (gw2_skill_manager.profile.switchSettings.switchOnRange == "1" and _private.maxRange < 300 and target and target.distance > _private.maxRange and TimeSince(_private.SwapRangeTimer) > 0) then
+			_private.SwapRangeTimer = ml_global_information.Now + math.random(5000,10000)
 			swap = true
 		elseif (gw2_skill_manager.profile.switchSettings.switchRandom == "1" and TimeSince(_private.SwapRandomTimer) > 0) then
+			_private.SwapRandomTimer = ml_global_information.Now + math.random(5000,15000)
 			swap = true
 		elseif (tonumber(gw2_skill_manager.profile.switchSettings.switchOnCooldown) > 0) then
 			local skillsOnCooldown = 0
@@ -791,7 +847,6 @@ function _private.SwapWeapon(target)
 		end
 		if (swap) then
 			_private.SwapTimer = ml_global_information.Now
-			_private.SwapRandomTimer = ml_global_information.Now + math.random(5000,15000)
 			if (ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist) then
 				return _private.SwapElementalistAttunement()			
 			elseif (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
@@ -982,7 +1037,7 @@ end
 
 function _private.DoCombatMovement()
 	local target = ml_global_information.Player_Target
-	if (gDoCombatMovement ~= "0" and ValidTable(target) and ml_global_information.Player_Health.percent < 99 and not gw2_unstuck.HandleStuck("combat")) then
+	if (gDoCombatMovement ~= "0" and ValidTable(target) and ml_global_information.Player_Health.percent < 99 and not gw2_unstuck.HandleStuck("combat") and ml_global_information.Player_OnMesh) then
 		if (gw2_common_functions.HasBuffs(Player,"791,727")) then Player:StopMovement() return false end
 		local tDistance = target.distance
 		local moveDir = ml_global_information.Player_MovementDirections
@@ -1008,7 +1063,7 @@ function _private.DoCombatMovement()
 		end
 
 		--Set New Movement
-		if (tonumber(tDistance) ~= nil and TimeSince(_private.combatMoveTmr) > 0 and ml_global_information.Player_OnMesh) then
+		if (tonumber(tDistance) ~= nil and TimeSince(_private.combatMoveTmr) > 0) then
 
 			_private.combatMoveTmr = ml_global_information.Now + math.random(1000,3500)
 			--tablecount:  1, 2, 3, 4, 5   --Table index starts at 1, not 0 
@@ -1219,7 +1274,11 @@ function profilePrototype:Attack(target)
 		if (target == nil or target.distance < _private.maxRange) then
 			if (_private.runningIntoCombatRange == true and (target.inCombat == true or target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving)) then Player:StopMovement() _private.runningIntoCombatRange = false end
 			local lastSkillInfo = _private.ReturnSkillByID(self.skills,_private.lastSkillID)
-			_private.DoCombatMovement()
+			if (lastSkillInfo and lastSkillInfo.skill.stopsMovement == "1" and lastSkillInfo.skill.slowCast == "1" and Player:IsCasting()) then
+				Player:StopMovement()
+			else
+				_private.DoCombatMovement()
+			end
 			--if (Player.castinfo.duration == 0 or (lastSkillInfo and lastSkillInfo.skill.slowCast == "0")) then
 			if ((Player:CanCast() and Player:IsCasting() == false) or (lastSkillInfo and lastSkillInfo.skill.slowCast == "0")) then
 				if (_private.Evade()) then
@@ -1231,10 +1290,10 @@ function profilePrototype:Attack(target)
 				end
 			end
 		elseif (target and (gBotMode ~= GetString("assistMode") or gMoveIntoCombatRange == "1")) then
-			gw2_common_functions.MoveOnlyStraightForward()
 			_private.SwapWeapon(target)
 			local tPos = target.pos
 			if (gw2_unstuck.HandleStuck() == false and ml_global_information.Player_OnMesh) then
+				gw2_common_functions.MoveOnlyStraightForward()
 				Player:MoveTo(tPos.x,tPos.y,tPos.z,target.radius,false,false,true)
 				_private.runningIntoCombatRange = true
 			end
@@ -1367,11 +1426,11 @@ function gw2_skill_manager.OnUpdate(ticks)
 	if (gw2_skill_manager.detecting == true) then
 		gw2_skill_manager.profile:DetectSkills()
 	end
-	if (_private.doingCombatMovement and ValidTable(ml_global_information.Player_Target) == false) then
+	if (_private.doingCombatMovement and (ValidTable(ml_global_information.Player_Target) == false or ml_global_information.Player_OnMesh == false)) then
 		_private.doingCombatMovement = false
 		Player:StopMovement()
 	end
-	if (_private.runningIntoCombatRange and ValidTable(ml_global_information.Player_Target) == false) then
+	if (_private.runningIntoCombatRange and (ValidTable(ml_global_information.Player_Target) == false or ml_global_information.Player_OnMesh == false)) then
 		_private.runningIntoCombatRange = false
 		Player:StopMovement()
 	end

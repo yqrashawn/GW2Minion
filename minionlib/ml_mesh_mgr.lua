@@ -556,6 +556,11 @@ function ml_mesh_mgr.SaveMesh()
 		MeshManager:ShowTriMesh(false)
 		NavigationManager:ShowNavMesh(false)
 		
+		if (NavigationManager:IsObjectFileLoaded() == false) then
+			d("No Mesh to save, either check 'Show Triangles' or Record a new mesh.")
+			return
+		end
+		
 		local filename = ""
 		-- If a new Meshname is given, create a new file and save it in there
 		if ( gnewmeshname ~= nil and gnewmeshname ~= "" ) then

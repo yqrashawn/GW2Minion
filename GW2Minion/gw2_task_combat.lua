@@ -92,7 +92,7 @@ function e_AttackTarget:execute()
 		
 		local target = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
 		
-		if (ValidTable(target) and target.attackable and target.alive) then
+		if (ValidTable(target) and target.attackable and target.alive and target.onmesh and ml_global_information.Player_OnMesh) then
 			if ( ml_global_information.ShowDebug ) then 
 				dbCurrTargetID = target.id or "" 
 				dbCurrTargetDist = math.floor(target.distance) 
