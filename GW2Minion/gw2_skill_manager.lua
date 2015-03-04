@@ -1008,7 +1008,7 @@ function _private.DoCombatMovement()
 		end
 
 		--Set New Movement
-		if (tonumber(tDistance) ~= nil and TimeSince(_private.combatMoveTmr) > 0 and Player.onmesh) then
+		if (tonumber(tDistance) ~= nil and TimeSince(_private.combatMoveTmr) > 0 and ml_global_information.Player_OnMesh) then
 
 			_private.combatMoveTmr = ml_global_information.Now + math.random(1000,3500)
 			--tablecount:  1, 2, 3, 4, 5   --Table index starts at 1, not 0 
@@ -1234,7 +1234,7 @@ function profilePrototype:Attack(target)
 			gw2_common_functions.MoveOnlyStraightForward()
 			_private.SwapWeapon(target)
 			local tPos = target.pos
-			if (gw2_unstuck.HandleStuck() == false) then
+			if (gw2_unstuck.HandleStuck() == false and ml_global_information.Player_OnMesh) then
 				Player:MoveTo(tPos.x,tPos.y,tPos.z,target.radius,false,false,true)
 				_private.runningIntoCombatRange = true
 			end
