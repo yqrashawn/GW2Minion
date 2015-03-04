@@ -24,6 +24,13 @@ function gw2_unstuck.HandleStuck(mode)
 	-- Update MainThrottle		
 	gw2_unstuck.stuckTimer = ml_global_information.Now
 	
+	-- Botmode Cannot be: Assist
+	if (gBotMode == GetString("assistMode")) then
+		gw2_unstuck.Reset() 
+		gw2_unstuck.lastResult = false
+		return gw2_unstuck.lastResult
+	end
+	
 	-- Player must be alive
 	if ( not ml_global_information.Player_Alive ) then 
 		gw2_unstuck.Reset() 
