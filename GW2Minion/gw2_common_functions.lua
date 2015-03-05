@@ -264,17 +264,31 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring )
 	return nil
 end
 
-gw2_common_functions.lastVendorID = nil
-gw2_common_functions.lastVendorConversationHistory = { Repair=0, Shop=0, KarmaShop=0, Continue=0, Story=0, Return=0 } -- holds the already tried conversation IDs
+gw2_common_functions.vendorHistory = {
+	LastID = 0,
+	EntryTime = 0,
+	repair = 0,
+	Shop=0,
+	KarmaShop=0,
+	Continue=0,
+	Story=0,
+	Return=0,
+}
 function gw2_common_functions.handleConversation(result)
 	if (Player:IsConversationOpen() and (Inventory:IsVendorOpened() == false or result == "repair") and ValidString(result)) then
 		local curVendor = Player:GetTarget()
 		-- Reset the conversationHistory when we got a new or different vendorMarker
-		if ( curVendor and curVendor.id ) then
-			if ( gw2_common_functions.lastVendorID == nil or gw2_common_functions.lastVendorID ~= curVendor.id ) then
-				gw2_common_functions.lastVendorID = curVendor.id
-				gw2_common_functions.lastVendorConversationHistory = { Repair=0, Shop=0, KarmaShop=0, Continue=0, Story=0, Return=0}
-			end
+		if (curVendor and curVendor.id and (gw2_common_functions.vendorHistory.LastID ~= curVendor.id or TimeSince(gw2_common_functions.vendorHistory.EntryTime) > 60000)) then
+			gw2_common_functions.vendorHistory = {
+				LastID = curVendor.id,
+				EntryTime = ml_global_information.Now,
+				Repair = 0,
+				Shop=0,
+				KarmaShop=0,
+				Continue=0,
+				Story=0,
+				Return=0,
+			}
 		end
 
 		local options = Player:GetConversationOptions()
@@ -283,41 +297,41 @@ function gw2_common_functions.handleConversation(result)
 			-- for repair order: #repair, #Story, #Continue, #Back, #Close
 			for index=0, #options do
 				local conversation = options[index]
-				if (conversation.type == GW2.CONVERSATIONOPTIONS.Repair and result == "repair" and gw2_common_functions.lastVendorConversationHistory["Repair"] < 5) then
+				if (conversation.type == GW2.CONVERSATIONOPTIONS.Repair and result == "repair" and gw2_common_functions.vendorHistory["Repair"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Repair)
-					gw2_common_functions.lastVendorConversationHistory["Repair"] = gw2_common_functions.lastVendorConversationHistory["Repair"] + 1
+					gw2_common_functions.vendorHistory["Repair"] = gw2_common_functions.vendorHistory["Repair"] + 1
 					return true
-				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Shop and (result == "sell" or result == "buy") and gw2_common_functions.lastVendorConversationHistory["Shop"] < 5) then
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Shop and (result == "sell" or result == "buy") and gw2_common_functions.vendorHistory["Shop"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Shop)
-					gw2_common_functions.lastVendorConversationHistory["Shop"] = gw2_common_functions.lastVendorConversationHistory["Shop"] + 1
+					gw2_common_functions.vendorHistory["Shop"] = gw2_common_functions.vendorHistory["Shop"] + 1
 					return
-				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.KarmaShop and result == "sell" and gw2_common_functions.lastVendorConversationHistory["KarmaShop"] < 5) then
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.KarmaShop and result == "sell" and gw2_common_functions.vendorHistory["KarmaShop"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.KarmaShop)
-					gw2_common_functions.lastVendorConversationHistory["KarmaShop"] = gw2_common_functions.lastVendorConversationHistory["KarmaShop"] + 1
+					gw2_common_functions.vendorHistory["KarmaShop"] = gw2_common_functions.vendorHistory["KarmaShop"] + 1
 					return
 				end
 			end
 			for index=0, #options do -- this is needed because NPCs often have the GW2.CONVERSATIONOPTIONS.Repair ID although they are offering vendoring
 				local conversation = options[index]
-				if (conversation.type == GW2.CONVERSATIONOPTIONS.Repair and (result == "sell" or result == "buy") and gw2_common_functions.lastVendorConversationHistory["Repair"] < 5) then
+				if (conversation.type == GW2.CONVERSATIONOPTIONS.Repair and (result == "sell" or result == "buy") and gw2_common_functions.vendorHistory["Repair"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Repair)
-					gw2_common_functions.lastVendorConversationHistory["Repair"] = gw2_common_functions.lastVendorConversationHistory["Repair"] + 1
+					gw2_common_functions.vendorHistory["Repair"] = gw2_common_functions.vendorHistory["Repair"] + 1
 					return
 				end
 			end
 			for index=0, #options do
 				local conversation = options[index]
-				if (conversation.type == GW2.CONVERSATIONOPTIONS.Continue and gw2_common_functions.lastVendorConversationHistory["Continue"] < 5) then
+				if (conversation.type == GW2.CONVERSATIONOPTIONS.Continue and gw2_common_functions.vendorHistory["Continue"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Continue)
-					gw2_common_functions.lastVendorConversationHistory["Continue"] = gw2_common_functions.lastVendorConversationHistory["Continue"] + 1
+					gw2_common_functions.vendorHistory["Continue"] = gw2_common_functions.vendorHistory["Continue"] + 1
 					return
-				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Story and gw2_common_functions.lastVendorConversationHistory["Story"] < 5) then
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Story and gw2_common_functions.vendorHistory["Story"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Story)
-					gw2_common_functions.lastVendorConversationHistory["Story"] = gw2_common_functions.lastVendorConversationHistory["Story"] + 1
+					gw2_common_functions.vendorHistory["Story"] = gw2_common_functions.vendorHistory["Story"] + 1
 					return
-				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Return and gw2_common_functions.lastVendorConversationHistory["Return"] < 5) then
+				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Return and gw2_common_functions.vendorHistory["Return"] < 5) then
 					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Return)
-					gw2_common_functions.lastVendorConversationHistory["Return"] = gw2_common_functions.lastVendorConversationHistory["Return"] + 1
+					gw2_common_functions.vendorHistory["Return"] = gw2_common_functions.vendorHistory["Return"] + 1
 					return
 				end
 			end

@@ -46,8 +46,9 @@ function gw2_blacklistmanager.buttonEventHandler( arg )
 		local t = Player:GetTarget()
 		if ( t ) then			   
 			d("Blacklisting Vendor "..t.name)
-			ml_blacklist.AddBlacklistEntry(GetString("vendors"), t.id, t.name, true)			
+			ml_blacklist.AddBlacklistEntry(GetString("vendorssell"), t.id, t.name, true)
 			ml_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), t.id, t.name, true)
+			ml_blacklist.AddBlacklistEntry(GetString("vendorsrepair"), t.id, t.name, true)
 		else
 			d("Invalid target or no target selected")
 		end

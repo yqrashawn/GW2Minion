@@ -270,7 +270,7 @@ end
 -- Working stuff here.
 --Create filtered sell item list.
 function gw2_sell_manager.createItemList()
-	local items = Inventory("exclude_contentid="..ml_blacklist.GetExcludeString(GetString("salvageItems")))
+	local items = Inventory("exclude_contentid="..ml_blacklist.GetExcludeString(GetString("sellItems")))
 	local filteredItems = {}
 	if (items) then
 		for _,item in pairs(items) do
@@ -320,7 +320,7 @@ end
 function gw2_sell_manager.getClosestSellMarker(nearby)
 	local closestLocation = nil
 	local listArg = (nearby == true and ",maxdistance=5000" or "")
-	local markers = MapMarkerList("onmesh,nearest,worldmarkertype=24,markertype=25"..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendors")))
+	local markers = MapMarkerList("onmesh,nearest,worldmarkertype=24,markertype=25"..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorssell")))
 	if ( TableSize(markers) > 0 ) then
 		local i,marker = next (markers)
 		while ( i and marker ) do
@@ -372,7 +372,7 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 					local result = gw2_common_functions.handleConversation("sell")
 					if (result == false) then
 						d("Vendor blacklisted, cant handle opening conversation.")
-						ml_blacklist.AddBlacklistEntry(GetString("vendors"), vendor.id, vendor.name, true)
+						ml_blacklist.AddBlacklistEntry(GetString("vendorssell"), vendor.id, vendor.name, true)
 						return false
 					elseif (result == nil) then
 						ml_global_information.Wait(math.random(520,1200))
@@ -396,7 +396,7 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 								end
 							else
 								d("Can't sell "..item.name..", blacklisting it")
-								ml_blacklist.AddBlacklistEntry(GetString("salvageItems"), item.itemID, item.name, true)
+								ml_blacklist.AddBlacklistEntry(GetString("sellItems"), item.itemID, item.name, true)
 							end
 							return true
 						end

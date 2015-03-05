@@ -813,8 +813,8 @@ function _private.CanCast(skill,target)
 		if (skill.player.moving == "No" and (skill.skill.healing == "0" and ml_global_information.Player_MovementState == GW2.MOVEMENTSTATE.GroundMoving )) then return false end
 		-- target attributes
 		local targetBuffList = (target and target.buffs or false)
-		if (skill.target.minHP > 0 and (skill.skill.healing == "0" and (target == nil or ml_global_information.Player_Health.percent > skill.target.minHP))) then return false end
-		if (skill.target.maxHP > 0 and (skill.skill.healing == "0" and (target == nil or ml_global_information.Player_Health.percent < skill.target.maxHP))) then return false end
+		if (skill.target.minHP > 0 and (skill.skill.healing == "0" and (target == nil or target.health.percent > skill.target.minHP))) then return false end
+		if (skill.target.maxHP > 0 and (skill.skill.healing == "0" and (target == nil or target.health.percent < skill.target.maxHP))) then return false end
 		if ( skill.target.enemyNearCount > 0) then
 			local maxdistance = (skill.target.enemyRangeMax == 0 and "" or "maxdistance=" .. skill.target.enemyRangeMax .. ",")
 			if (skill.skill.healing == "0" and (target == nil or TableSize(CharacterList("alive,attackable," .. maxdistance .. "distanceto=" .. target.id .. ",exclude=" .. target.id)) < skill.target.enemyNearCount)) then return false end
