@@ -556,8 +556,8 @@ function ml_mesh_mgr.SaveMesh()
 		MeshManager:ShowTriMesh(false)
 		NavigationManager:ShowNavMesh(false)
 		
-		if (NavigationManager:IsObjectFileLoaded() == false) then
-			d("No Mesh to save, either check 'Show Triangles' or Record a new mesh.")
+		if (NavigationManager:IsObjectFileLoaded() == false and gmeshname ~= "none") then
+			d("Current mesh has to be loaded before you can save it, please press 'Show Triangles' and let it load before you save again.")
 			return
 		end
 		
@@ -1053,6 +1053,11 @@ function ml_mesh_mgr.UnpackArgsForOMC( args )
 	 and tonumber(args[6]) ~= nil and tonumber(args[7]) ~= nil and tonumber(args[8]) ~= nil -- OMC END point
 	 and tonumber(args[9]) ~= nil and tonumber(args[10]) ~= nil and tonumber(args[11]) ~= nil -- OMC Start point-Facing direction
 	 ) then
+		d("ml_mesh_mgr.UnpackArgsForOMC( args )")
+		d("facing dirs:")
+		d("hx = "..args[9])
+		d("hy = "..args[10])
+		d("hz = "..args[11])
 		return {tonumber(args[3]),tonumber(args[4]),tonumber(args[5]) },{ tonumber(args[6]),tonumber(args[7]),tonumber(args[8])},{tonumber(args[9]),tonumber(args[10]),tonumber(args[11])}
 	 else
 		d("No valid positions for OMC reveived! ")
