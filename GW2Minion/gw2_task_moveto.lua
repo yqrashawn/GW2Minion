@@ -30,15 +30,7 @@ function gw2_task_moveto.Create()
 	newinst.terminateOnDeath = true
 	newinst.terminateInCombat = false
 	newinst.terminateOnPlayerHPBelowPercent = 0
-	newinst.terminateOnCustomCondition = function()
-		return false
-	end
-
 	newinst.FailedNavAttemptsCounter = 0
-
-	newinst.onMoveToProcess = function()
-
-	end
 
 	newinst.buffTmr = 0
     return newinst
@@ -50,7 +42,7 @@ function gw2_task_moveto:Process()
 	if ( ml_task_hub:CurrentTask().terminateOnDeath and not ml_global_information.Player_Alive ) then ml_log("Terminate MoveTo because Player is dead!") ml_task_hub:CurrentTask().completed = true Player:StopMovement() end
 	if ( ml_task_hub:CurrentTask().terminateInCombat and ml_global_information.Player_InCombat ) then ml_log("Terminate MoveTo because InCombat!") ml_task_hub:CurrentTask().completed = true Player:StopMovement() end
 	if ( ml_task_hub:CurrentTask().terminateOnPlayerHPBelowPercent > 0 and ml_global_information.Player_Health < ml_task_hub:CurrentTask().terminateOnPlayerHPBelowPercent ) then ml_log("Terminate MoveTo because PlayerHP low!") ml_task_hub:CurrentTask().completed = true Player:StopMovement() end
-	if (type(ml_task_hub:CurrentTask().terminateOnCustomCondition) == "function" and ml_task_hub:CurrentTask().terminateOnCustomCondition() ) then ml_log("Terminate MoveTo because the custom terminate function returned true!") ml_task_hub:CurrentTask().completed = true Player:StopMovement() end
+	
 
 	if ( ValidTable(ml_task_hub:CurrentTask().targetPos) ) then
 
@@ -210,9 +202,6 @@ function gw2_task_moveto:Process()
 					end
 
 				else
-					if(type(ml_task_hub:CurrentTask().onMoveToProcess) == "function") then
-						ml_task_hub:CurrentTask().onMoveToProcess()
-					end
 
 					ml_task_hub:CurrentTask().FailedNavAttemptsCounter = 0
 					ml_log(true)

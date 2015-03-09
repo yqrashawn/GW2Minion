@@ -429,7 +429,7 @@ end
 
 -- Need to sell
 function gw2_sell_manager.needToSell(nearby)
-	if (gw2_sell_manager.haveItemToSell() and (gw2_sell_manager.getClosestSellMarker(nearby) or gw2_marker_manager.GetClosestVendorMarker() ~= nil)) then
+	if (gw2_sell_manager.haveItemToSell()) then
 		if (nearby and ((ml_global_information.Player_Inventory_SlotsFree*100)/Inventory.slotCount) < 33) then
 			return true
 		elseif (ml_global_information.Player_Inventory_SlotsFree <= 2) then

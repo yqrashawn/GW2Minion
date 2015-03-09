@@ -40,11 +40,9 @@ function gw2_task_buy:Init()
 	self:AddTaskCheckCEs()
 end
 function gw2_task_buy:task_complete_eval()
-	c_MoveToVendorMarker.vendormanager = BuyManager_Active
-	if (c_vendorbuy:evaluate() == false and c_quickvendorbuy:evaluate() == false and c_MoveToVendorMarker:evaluate() == false) then
+	if (c_vendorbuy:evaluate() == false and c_quickvendorbuy:evaluate() == false) then
 		return true
 	end
-	c_MoveToVendorMarker.vendormanager = false
 	return false
 end
 
@@ -67,11 +65,11 @@ c_createVendorBuyTask.throttle = 5000
 function c_createVendorBuyTask:evaluate()
 	if (BuyManager_Active == "1" ) then
 
-		if ((gw2_buy_manager.NeedToBuySalvageKits() or gw2_buy_manager.NeedToBuyGatheringTools()) or c_vendorbuy.buying) and ( TableSize(gw2_buy_manager.getClosestBuyMarker())>0 or gw2_marker_manager.GetNextVendorMarker()) then
+		if ((gw2_buy_manager.NeedToBuySalvageKits() or gw2_buy_manager.NeedToBuyGatheringTools()) or c_vendorbuy.buying) and ( ValidTable(gw2_buy_manager.getClosestBuyMarker()) or gw2_common_functions.GetNextVendorMarker()) then
 			return true
 		end
 
-		if ((gw2_buy_manager.NeedToBuySalvageKits(true) or gw2_buy_manager.NeedToBuyGatheringTools(true)) or c_quickvendorbuy.buying) and ( TableSize(gw2_buy_manager.getClosestBuyMarker(true))>0 or gw2_marker_manager.GetNextVendorMarker()) then
+		if ((gw2_buy_manager.NeedToBuySalvageKits(true) or gw2_buy_manager.NeedToBuyGatheringTools(true)) or c_quickvendorbuy.buying) and ( ValidTable(gw2_buy_manager.getClosestBuyMarker(true)) or gw2_common_functions.GetNextVendorMarker()) then
 			return true
 		end
 	end

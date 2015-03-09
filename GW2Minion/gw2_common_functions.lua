@@ -1,5 +1,45 @@
 gw2_common_functions = {}
 
+-- Draw Marker function
+function gw2_common_functions.DrawMarker( marker )
+	local markertype = marker:GetType()
+	local pos = marker:GetPosition()
+
+    local color = 0
+    local s = 25
+    local h = 150
+	
+    if ( markertype == GetString("grindMarker") ) then
+        color = 1 -- red
+    elseif ( markertype == GetString("miningMarker") ) then 
+        color = 4 --blue
+    elseif ( markertype == GetString("fishingMarker") ) then
+        color = 7 -- yellow	
+    elseif ( markertype == GetString("vendorMarker") ) then
+        color = 8 -- orange
+    end
+    --Building the vertices for the object
+    local t = { 
+        [1] = { pos.x-s, pos.y+s, pos.z-s-h, color },
+        [2] = { pos.x+s, pos.y+s, pos.z-s-h, color  },	
+        [3] = { pos.x,   pos.y-s,   pos.z-h, color  },
+        
+        [4] = { pos.x+s, pos.y+s, pos.z-s-h, color },
+        [5] = { pos.x+s, pos.y+s, pos.z+s-h, color  },	
+        [6] = { pos.x,   pos.y-s,   pos.z-h, color  },
+        
+        [7] = { pos.x+s, pos.y+s, pos.z+s-h, color },
+        [8] = { pos.x-s, pos.y+s, pos.z+s-h, color  },	
+        [9] = { pos.x,   pos.y-s,   pos.z-h, color  },
+        
+        [10] = { pos.x-s, pos.y+s, pos.z+s-h, color },
+        [11] = { pos.x-s, pos.y+s, pos.z-s-h, color  },	
+        [12] = { pos.x,   pos.y-s,   pos.z-h, color  },
+    }
+    local id = RenderManager:AddObject(t)
+    return id
+end
+
 function gw2_common_functions.HasBuffs(entity, buffIDs)
     if ( entity ) then
 		local buffs = entity.buffs
@@ -360,3 +400,23 @@ function gw2_common_functions.handleConversation(result)
 	end
 end
 
+
+
+-- Try to get the next custom VendorMarker in our map where a vendor should be nearby, used by buy and sell task
+function gw2_common_functions.GetNextVendorMarker(oldmarker)
+			
+	local filterLevel = false
+	local vendormarker = ml_marker_mgr.GetNextMarker(GetString("vendorMarker"), filterLevel)
+	
+	-- get a different marker
+	if (vendormarker and oldmarker ~= nil and oldmarker:GetName() == vendormarker:GetName()) then	
+		vendormarker = ml_marker_mgr.GetNextMarker(GetString("vendorMarker"), filterLevel)
+	end
+		
+	return vendormarker
+end
+
+function gw2_common_functions.GetTargetByID(targetID)
+	local target = (CharacterList:Get(targetID) or GadgetList:Get(targetID) or nil)
+	return target
+end

@@ -165,8 +165,8 @@ function c_ViewVista:evaluate()
 		local i,marker = next(MList)
 		if ( i and marker ) then
 			e_ViewVista.marker = marker
-			return true			
-		end				
+			return true
+		end
 	end
 	e_ViewVista.marker = nil
 	return false
@@ -178,8 +178,8 @@ function e_ViewVista:execute()
 		if ( e_ViewVista.marker.distance < 100 ) then
 			local vista = Player:GetInteractableTarget()
 			if ( vista ) then 
-				if ( Player:GetCurrentlyCastedSpell() == 17 ) then					
-					Player:Interact(vista.id)	
+				if ( Player:GetCurrentlyCastedSpell() == 17 ) then
+					Player:Interact(vista.id)
 					ml_global_information.Wait(1500)
 				end
 			end
@@ -189,8 +189,8 @@ function e_ViewVista:execute()
 			
 			local ePos = e_ViewVista.marker.pos
 			if ( not gw2_unstuck.HandleStuck() ) then
-				local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,50,false,false,false))		
-				if (tonumber(navResult) < 0) then					
+				local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,50,false,false,false))
+				if (tonumber(navResult) < 0) then
 					d("MoveToVista result: "..tonumber(navResult))
 				else
 					return ml_log(true)

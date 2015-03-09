@@ -146,11 +146,11 @@ function gw2minion.ModuleInit()
 	
 	-- Setup marker manager callbacks and vars
 	if ( ml_marker_mgr ) then
-		ml_marker_mgr.GetPosition = 	function () return ml_global_information.Player_Position end
-		ml_marker_mgr.GetLevel = 		function () return ml_global_information.Player_Level end
-		ml_marker_mgr.DrawMarker =		ml_global_information.DrawMarker
+		ml_marker_mgr.GetPosition = function () return ml_global_information.Player_Position end
+		ml_marker_mgr.GetLevel = function () return ml_global_information.Player_Level end
+		ml_marker_mgr.DrawMarker = gw2_common_functions.DrawMarker
 		ml_marker_mgr.parentWindow = { Name=gw2minion.MainWindow.Name}
-		ml_marker_mgr.markerPath = ml_global_information.Path.. [[\Navigation\]]		
+		ml_marker_mgr.markerPath = ml_global_information.Path.. [[\Navigation\]]
 	end
 	
 	-- setup meshmanager
