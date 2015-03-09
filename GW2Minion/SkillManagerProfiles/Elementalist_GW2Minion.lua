@@ -5,7 +5,7 @@ local multiRefObjects = {
 local obj1 = {
 	["combos"] = {
 	};
-	["name"] = "Elementalist_ele";
+	["name"] = "Elementalist_GW2Minion";
 	["profession"] = 6;
 	["skills"] = {
 		[1] = {

@@ -488,7 +488,7 @@ function e_Looting:execute()
 			ml_log(": Looting busy.")
 		-- We are in range to loot
 		elseif (target.isInInteractRange) then
-			mc_helper.NecroLeaveDeathshroud()
+			gw2_common_functions.NecroLeaveDeathshroud()
 			ml_log(": Looting starting.")
 			if ( Player:IsMoving() ) then Player:StopMovement() end
 			Player:Interact(target.id)

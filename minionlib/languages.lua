@@ -203,6 +203,13 @@ strings =
 		smHealBuff						= "Heal & Buff",
 		smMoveIntoCombatRange			= "Move Into Combat Range",
 		smCloneProfile					= "Clone Profile",
+		smStopsMovement					= "Stops Movement",
+		smProfessionSettings			= "Profession Settings",
+		smPriorityKit					= "Priority Kit",
+		smPriorityAttunement1			= "Priority Attunement 1",
+		smPriorityAttunement2			= "Priority Attunement 2",
+		smPriorityAttunement3			= "Priority Attunement 3",
+		smPriorityAttunement4			= "Priority Attunement 4",
 		
 --vendorManager
 		enableSelling					= "AutoSellItems",
@@ -886,6 +893,13 @@ strings =
 		smHealBuff						= "Heal & Buff",
 		smMoveIntoCombatRange			= "Move Into Combat Range",
 		smCloneProfile					= "Clone Profile",
+		smStopsMovement					= "Stops Movement",
+		smProfessionSettings			= "Profession Settings",
+		smPriorityKit					= "Priority Kit",
+		smPriorityAttunement1			= "Priority Attunement 1",
+		smPriorityAttunement2			= "Priority Attunement 2",
+		smPriorityAttunement3			= "Priority Attunement 3",
+		smPriorityAttunement4			= "Priority Attunement 4",
 
 		--vendorManager
 		enableSelling					= "自动卖物品",
@@ -1555,6 +1569,13 @@ strings =
 		smHealBuff						= "Heal & Buff",
 		smMoveIntoCombatRange			= "Move Into Combat Range",
 		smCloneProfile					= "Clone Profile",
+		smStopsMovement					= "Stops Movement",
+		smProfessionSettings			= "Profession Settings",
+		smPriorityKit					= "Priority Kit",
+		smPriorityAttunement1			= "Priority Attunement 1",
+		smPriorityAttunement2			= "Priority Attunement 2",
+		smPriorityAttunement3			= "Priority Attunement 3",
+		smPriorityAttunement4			= "Priority Attunement 4",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -2224,6 +2245,13 @@ strings =
 		smHealBuff						= "Heal & Buff",
 		smMoveIntoCombatRange			= "Move Into Combat Range",
 		smCloneProfile					= "Clone Profile",
+		smStopsMovement					= "Stops Movement",
+		smProfessionSettings			= "Profession Settings",
+		smPriorityKit					= "Priority Kit",
+		smPriorityAttunement1			= "Priority Attunement 1",
+		smPriorityAttunement2			= "Priority Attunement 2",
+		smPriorityAttunement3			= "Priority Attunement 3",
+		smPriorityAttunement4			= "Priority Attunement 4",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -2894,6 +2922,13 @@ strings =
 		smHealBuff						= "Heal & Buff",
 		smMoveIntoCombatRange			= "Move Into Combat Range",
 		smCloneProfile					= "Clone Profile",
+		smStopsMovement					= "Stops Movement",
+		smProfessionSettings			= "Profession Settings",
+		smPriorityKit					= "Priority Kit",
+		smPriorityAttunement1			= "Priority Attunement 1",
+		smPriorityAttunement2			= "Priority Attunement 2",
+		smPriorityAttunement3			= "Priority Attunement 3",
+		smPriorityAttunement4			= "Priority Attunement 4",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -3572,6 +3607,13 @@ strings =
 		smHealBuff						= "Heal & Buff",
 		smMoveIntoCombatRange			= "Move Into Combat Range",
 		smCloneProfile					= "Clone Profile",
+		smStopsMovement					= "Stops Movement",
+		smProfessionSettings			= "Profession Settings",
+		smPriorityKit					= "Priority Kit",
+		smPriorityAttunement1			= "Priority Attunement 1",
+		smPriorityAttunement2			= "Priority Attunement 2",
+		smPriorityAttunement3			= "Priority Attunement 3",
+		smPriorityAttunement4			= "Priority Attunement 4",
 
 		--vendorManager
 		enableSelling					= "AutoSellItems",

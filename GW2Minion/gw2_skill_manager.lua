@@ -61,7 +61,9 @@ function gw2_skill_manager.GetProfile(profileName)
 		if (profile) then
 			setmetatable(profile, {__index = profilePrototype})
 			for _,skill in pairs(profile.skills) do
-				setmetatable(skill, {__index = _private.skillTemplate})
+				setmetatable(skill.skill, {__index = _private.skillTemplate.skill})
+				setmetatable(skill.player, {__index = _private.skillTemplate.player})
+				setmetatable(skill.target, {__index = _private.skillTemplate.target})
 			end
 			return profile
 		end
@@ -317,7 +319,7 @@ end
 
 function gw2_skill_manager.UpdateMainWindowGroups()
 	if (gw2_skill_manager.groupsDeleted == false) then
-		mainWindow:DeleteGroup(GetString("ProfessionSettings"))
+		mainWindow:DeleteGroup(GetString("smProfessionSettings"))
 		mainWindow:DeleteGroup(GetString("comboList"))
 		mainWindow:DeleteGroup(GetString("smSwitchSettings"))
 		gw2_skill_manager.groupsDeleted = true
@@ -338,13 +340,13 @@ function gw2_skill_manager.UpdateMainWindowGroups()
 		local profession = ml_global_information.Player_Profession
 		if (profession) then
 			if (profession == GW2.CHARCLASS.Engineer) then
-				mainWindow:NewComboBox(GetString("PrioritizeKit"),"gSMPrioKit",GetString("ProfessionSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
+				mainWindow:NewComboBox(GetString("smPriorityKit"),"gSMPrioKit",GetString("smProfessionSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
 				gSMPrioKit = gw2_skill_manager.profile.professionSettings.priorityKit
 			elseif(profession == GW2.CHARCLASS.Elementalist) then
-				mainWindow:NewComboBox(GetString("PriorizeAttunement1"),"gSMPrioAtt1",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
-				mainWindow:NewComboBox(GetString("PriorizeAttunement2"),"gSMPrioAtt2",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
-				mainWindow:NewComboBox(GetString("PriorizeAttunement3"),"gSMPrioAtt3",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
-				mainWindow:NewComboBox(GetString("PriorizeAttunement4"),"gSMPrioAtt4",GetString("ProfessionSettings"),"None,Fire,Water,Air,Earth")
+				mainWindow:NewComboBox(GetString("smPriorityAttunement1"),"gSMPrioAtt1",GetString("smProfessionSettings"),"None,Fire,Water,Air,Earth")
+				mainWindow:NewComboBox(GetString("smPriorityAttunement2"),"gSMPrioAtt2",GetString("smProfessionSettings"),"None,Fire,Water,Air,Earth")
+				mainWindow:NewComboBox(GetString("smPriorityAttunement3"),"gSMPrioAtt3",GetString("smProfessionSettings"),"None,Fire,Water,Air,Earth")
+				mainWindow:NewComboBox(GetString("smPriorityAttunement4"),"gSMPrioAtt4",GetString("smProfessionSettings"),"None,Fire,Water,Air,Earth")
 				gSMPrioAtt1 = gw2_skill_manager.profile.professionSettings.PriorityAtt1
 				gSMPrioAtt2 = gw2_skill_manager.profile.professionSettings.PriorityAtt2
 				gSMPrioAtt3 = gw2_skill_manager.profile.professionSettings.PriorityAtt3
@@ -668,7 +670,6 @@ function _private.CreateSkill(skillList,skillSlot)
 					return false
 				end
 			end
-			setmetatable(newSkill, {__index = _private.skillTemplate})
 			newSkill = {
 				priority = #skillList+1,
 				skill = {	id				= skillInfo.skillID,
@@ -711,6 +712,9 @@ function _private.CreateSkill(skillList,skillSlot)
 							boonCount		= 0,
 				},
 			}
+			setmetatable(newSkill.skill, {__index = _private.skillTemplate.skill})
+			setmetatable(newSkill.player, {__index = _private.skillTemplate.player})
+			setmetatable(newSkill.target, {__index = _private.skillTemplate.target})
 			return newSkill
 		end
 	end
