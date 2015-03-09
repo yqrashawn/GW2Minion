@@ -34,13 +34,13 @@ function gw2_task_buy:Init()
 	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 375 ), self.process_elements)	-- creates subtask: moveto
 	self:add(ml_element:create("VendorBuy",c_vendorbuy,e_vendorbuy,100),self.process_elements)
 	self:add(ml_element:create("QuickVendorBuy",c_quickvendorbuy,e_quickvendorbuy,110),self.process_elements)
-	self:add(ml_element:create("MoveToVendorMarker",c_MoveToVendorMarker,e_MoveToVendorMarker,50),self.process_elements)
+	self:add(ml_element:create("MoveToVendorMarker",c_moveToVendorMarkerBuy,e_moveToVendorMarkerBuy,50),self.process_elements)
 
 
 	self:AddTaskCheckCEs()
 end
 function gw2_task_buy:task_complete_eval()
-	if (c_vendorbuy:evaluate() == false and c_quickvendorbuy:evaluate() == false) then
+	if (c_vendorbuy:evaluate() == false and c_quickvendorbuy:evaluate() == false and c_moveToVendorMarkerBuy:evaluate() == false) then
 		return true
 	end
 	return false
@@ -78,7 +78,6 @@ end
 function e_createVendorBuyTask:execute()
 	ml_log("e_createVendorBuyTask")
 
-	c_quickvendorbuy.buying = false
 	local newTask = gw2_task_buy.Create()
 	ml_task_hub:Add(newTask.Create(), REACTIVE_GOAL, TP_ASAP)
 
@@ -90,7 +89,7 @@ c_vendorbuy = inheritsFrom( ml_cause )
 e_vendorbuy = inheritsFrom( ml_effect )
 c_vendorbuy.buying = false
 function c_vendorbuy:evaluate()
-	if (BuyManager_Active == "1" and ((gw2_buy_manager.NeedToBuySalvageKits() or gw2_buy_manager.NeedToBuyGatheringTools()) or c_vendorbuy.buying) and TableSize(gw2_buy_manager.getClosestBuyMarker())>0) then
+	if (BuyManager_Active == "1" and ((gw2_buy_manager.NeedToBuySalvageKits() or gw2_buy_manager.NeedToBuyGatheringTools()) or c_vendorbuy.buying) and ValidTable(gw2_buy_manager.getClosestBuyMarker())) then
 		return true
 	end
 	return false
@@ -113,7 +112,7 @@ c_quickvendorbuy = inheritsFrom( ml_cause )
 e_quickvendorbuy = inheritsFrom( ml_effect )
 c_quickvendorbuy.buying = false
 function c_quickvendorbuy:evaluate()
-	if (BuyManager_Active == "1" and ((gw2_buy_manager.NeedToBuySalvageKits(true) or gw2_buy_manager.NeedToBuyGatheringTools(true)) or c_quickvendorbuy.buying) and TableSize(gw2_buy_manager.getClosestBuyMarker(true))>0) then
+	if (BuyManager_Active == "1" and ((gw2_buy_manager.NeedToBuySalvageKits(true) or gw2_buy_manager.NeedToBuyGatheringTools(true)) or c_quickvendorbuy.buying) and ValidTable(gw2_buy_manager.getClosestBuyMarker(true))) then
 		return true
 	end
 	return false
@@ -129,4 +128,16 @@ function e_quickvendorbuy:execute()
 	end
 	c_quickvendorbuy.buying = false
 	return ml_log(false)
+end
+
+c_moveToVendorMarkerBuy = inheritsFrom( ml_cause )
+e_moveToVendorMarkerBuy = inheritsFrom( ml_effect )
+function c_moveToVendorMarkerBuy:evaluate()
+	if (BuyManager_Active == "1" and ((gw2_buy_manager.NeedToBuySalvageKits() or gw2_buy_manager.NeedToBuyGatheringTools())) and c_MoveToVendorMarker:evaluate()) then
+		return true
+	end
+	return false
+end
+function e_moveToVendorMarkerBuy:execute()
+	e_MoveToVendorMarker:execute()
 end

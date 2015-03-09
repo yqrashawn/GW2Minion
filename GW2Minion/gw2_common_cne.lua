@@ -777,14 +777,14 @@ function e_MoveToVendorMarker:execute()
 			c_MoveToVendorMarker.markerreached = true
 			c_MoveToVendorMarker.markerreachedfirsttime = true
 			d("Reached current VendorMarker...")
-			return ml_log(true)		
+			return ml_log(true)
 		else
 			-- We need to reach our Marker yet
 			-- make sure the next marker is reachable & onmesh
 			if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
 				
 				local newTask = gw2_task_moveto.Create()
-				newTask.name = "MoveTo VendorMarker(BUY)"
+				newTask.name = "MoveTo VendorMarker"
 				newTask.targetPos = pos
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				return ml_log(true)
