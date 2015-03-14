@@ -371,7 +371,7 @@ function Dev.LoadModule()
 	-- Navigation - World
 	DevNWTempData = {}
 	DevNWTempDataB = {}
-	DevNWTempData = persistence.load(GetStartupPath()..[[GW2Minion\]].."worldnav_data.lua")
+	DevNWTempData = persistence.load(GetAddonPath()..[[GW2Minion\]].."worldnav_data.lua")
 	if ( not ValidTable(DevNWTempData)) then DevNWTempData = {} end
 	
 	GUI_NewField("Dev","#Total_Transitions: ","NWTotal","NavigationSystem_World")

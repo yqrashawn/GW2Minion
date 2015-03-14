@@ -463,31 +463,34 @@ c_Looting.lastTargetID = nil
 c_Looting.lootAttempts = 0
 c_Looting.contentID = "17698;198260;232192;232193;232194;262863;236384;41638;297323"
 function c_Looting:evaluate()
-	local target = (GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID="..c_Looting.contentID) or CharacterList("nearest,lootable,onmesh,maxdistance=3000"))
-	return (ValidTable(target) and Inventory.freeSlotCount > 0)
+	local lootTarget = (GadgetList("onmesh,interactable,selectable,nearest,maxdistance=3000,contentID="..c_Looting.contentID) or CharacterList("nearest,lootable,onmesh,maxdistance=3000"))
+	return (ValidTable(lootTarget) and Inventory.freeSlotCount > 0)
 end
 function e_Looting:execute()
 	ml_log("e_Looting: ")
-	local target = (GadgetList("onmesh,interactable,selectable,shortestpath,maxdistance=4000,contentID="..c_Looting.contentID) or CharacterList("shortestpath,lootable,onmesh,maxdistance=4000"))
-	-- Check for valid target.
-	if (ValidTable(target) and (target.lootable or target.interactable)) then
-		-- Target Close enough to AoE Loot
-		if (target.isCharacter and target.distance < 900 and TimeSince(e_Looting.lastAoE) > 1050) then
+	local lootTarget = (GadgetList("onmesh,interactable,selectable,shortestpath,maxdistance=4000,contentID="..c_Looting.contentID) or CharacterList("shortestpath,lootable,onmesh,maxdistance=4000"))
+	if (ValidTable(lootTarget)) then
+		lootTarget = select(2,next(lootTarget))
+	end
+	-- Check for valid lootTarget.
+	if (ValidTable(lootTarget) and (lootTarget.lootable or lootTarget.interactable)) then
+		-- lootTarget Close enough to AoE Loot
+		if (lootTarget.isCharacter and lootTarget.distance < 900 and TimeSince(e_Looting.lastAoE) > 1050) then
 			Player:AoELoot()
 			e_Looting.lastAoE = Now()
 		-- Player is looting, wait to be done.
 		elseif (Player.castinfo.duration ~= 0) then
 			ml_log(": Looting busy.")
 		-- We are in range to loot
-		elseif (target.isInInteractRange) then
+		elseif (lootTarget.isInInteractRange) then
 			gw2_common_functions.NecroLeaveDeathshroud()
 			ml_log(": Looting starting.")
 			if ( Player:IsMoving() ) then Player:StopMovement() end
-			Player:Interact(target.id)
+			Player:Interact(lootTarget.id)
 			-- Prevent looting loops while being attacked.
-			if (target.id ~= c_Looting.lastTargetID) then
+			if (lootTarget.id ~= c_Looting.lastTargetID) then
 				-- Set new loot ID.
-				c_Looting.lastTargetID = target.id
+				c_Looting.lastTargetID = lootTarget.id
 				c_Looting.lootAttempts = 0
 			else
 				-- Increase loot attempt counter.
@@ -505,13 +508,13 @@ function e_Looting:execute()
 				end
 			end
 		-- Loot not in range, walk there.
-		elseif (target.isInInteractRange == false) then
+		elseif (lootTarget.isInInteractRange == false) then
 			ml_log(": Walking to Loot.")
 			gw2_common_functions.MoveOnlyStraightForward()
-			-- Moving to target position.
-			local tPos = target.pos
+			-- Moving to lootTarget position.
+			local tPos = lootTarget.pos
 			if ( not gw2_unstuck.HandleStuck() ) then
-				Player:MoveTo(tPos.x,tPos.y,tPos.z,target.radius+10,false,false,true)
+				Player:MoveTo(tPos.x,tPos.y,tPos.z,lootTarget.radius+10,false,false,true)
 			end
 		end
 	end
