@@ -232,7 +232,7 @@ function e_InteractObject:execute()
 			end
 			
 			d("Interact with Target.. ")
-			if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
+			if ( Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then	
 				Player:Interact(e_InteractObject.lastTarget.id)
 				
 				-- For TM Conditions					

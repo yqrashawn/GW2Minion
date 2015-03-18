@@ -252,6 +252,7 @@ function Dev.LoadModule()
 	GUI_NewField("Dev","Name","EVName","EventInfo")
 	GUI_NewField("Dev","Type","EVType","EventInfo")
 	GUI_NewField("Dev","MarkerType","EVMType","EventInfo")
+	GUI_NewField("Dev","MarkerObjType","EVMObjType","EventInfo")
 	GUI_NewField("Dev","WorldMarkerType","EVWMType","EventInfo")	
 	GUI_NewField("Dev","EventID","EVEventID","EventInfo")
 	GUI_NewField("Dev","CharacterID","EVCharID","EventInfo")
@@ -392,7 +393,7 @@ function Dev.LoadModule()
 	GUI_NewField("Dev","CanSwapWeapons","SCCanSwap","Spell&CastingInfo")
 	GUI_NewButton("Dev","SwapWeapons","Dev.SwapWeapons","Spell&CastingInfo")
 	RegisterEventHandler("Dev.SwapWeapons", Dev.Func)	
-	GUI_NewNumeric("Dev","ListIndex","SCindex","Spell&CastingInfo","0","16");
+	GUI_NewNumeric("Dev","ListIndex","SCindex","Spell&CastingInfo","0","17");
 	GUI_NewField("Dev","Ptr","SCPtr","Spell&CastingInfo")
 	GUI_NewField("Dev","Slot","SCSlot","Spell&CastingInfo")
 	GUI_NewField("Dev","SkillID","SCID","Spell&CastingInfo")
@@ -1230,6 +1231,7 @@ function Dev.UpdateWindow()
 		EVPtr = string.format( "%x",tonumber(ev.ptr ))		
 		EVType = ev.type
 		EVMType = ev.markertype
+		EVMObjType = ev.markerobjecttype
 		EVWMType = ev.worldmarkertype		
 		EVEventID = ev.eventID
 		EVQuestID = ev.contentID
@@ -1340,6 +1342,7 @@ function Dev.UpdateWindow()
 		EVPtr = 0
 		EVType = 0
 		EVMType = 0
+		EVMObjType = 0
 		EVWMType = 0		
 		EVEventID = 0
 		EVCharID = 0

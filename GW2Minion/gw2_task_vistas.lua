@@ -178,7 +178,7 @@ function e_ViewVista:execute()
 		if ( e_ViewVista.marker.distance < 100 ) then
 			local vista = Player:GetInteractableTarget()
 			if ( vista ) then 
-				if ( Player:GetCurrentlyCastedSpell() == 17 ) then
+				if ( Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then
 					Player:Interact(vista.id)
 					ml_global_information.Wait(1500)
 				end

@@ -364,7 +364,7 @@ function e_DoEventObjectives:execute()
 									if ( not t or t.id ~= id ) then
 										Player:SetTarget( id )
 									else
-										if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
+										if ( Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then								
 											Player:Interact( id )
 											ml_log("Reviving EventTarget..")
 											ml_global_information.Wait(1000)

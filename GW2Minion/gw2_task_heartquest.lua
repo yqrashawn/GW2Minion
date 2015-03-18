@@ -754,7 +754,7 @@ function e_HQHandleInteract:execute()
 				
 			else
 				ml_log("Interact with Target.. ")
-				if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
+				if ( Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then	
 					Player:Interact(e_HQHandleInteract.lastTarget.id)
 					-- For TM Conditions
 					ml_task_hub:CurrentTask().lastInteractTargetID = e_HQHandleInteract.lastTarget.id				

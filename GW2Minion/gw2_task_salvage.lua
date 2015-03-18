@@ -75,7 +75,7 @@ function e_salvage:execute()
 	if (iList) then 
 		for _,item in pairs(iList) do
 			local tool = gw2_salvage_manager.getBestTool(item)
-			if (tool and Player:GetCurrentlyCastedSpell() == 17) then
+			if (tool and Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS) then
 				d("Salvaging "..item.name.." with "..tool.name)
 				tool:Use(item)
 				return ml_log(true)

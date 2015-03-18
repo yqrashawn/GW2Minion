@@ -306,7 +306,7 @@ function e_StartConversation:execute()
 			end
 			
 			d("Interact with Target.. ")
-			if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
+			if ( Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then	
 				Player:Interact(e_StartConversation.lastTarget.id)
 				ml_global_information.Wait(1500)
 			end

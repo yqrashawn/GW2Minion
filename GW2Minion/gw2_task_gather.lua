@@ -520,7 +520,7 @@ function e_Gathering:execute()
 							Player:SetTarget(gadget.id)
 						end
 
-						if ( Player:GetCurrentlyCastedSpell() == 17 ) then
+						if ( Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then
 							Player:Interact(gadget.id)
 							ml_global_information.Wait(500)
 						end

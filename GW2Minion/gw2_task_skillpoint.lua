@@ -464,7 +464,7 @@ function e_SPHandleInteract:execute()
 				
 			else
 				ml_log("Interact with Target.. ")
-				if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
+				if ( Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then	
 					Player:Interact(e_SPHandleInteract.lastTarget.id)
 					-- For TM Conditions
 					ml_task_hub:CurrentTask().lastInteractTargetID = e_SPHandleInteract.lastTarget.id				
