@@ -63,7 +63,7 @@ function e_salvage:execute()
 			end
 			-- Salvage the item with correct tool.
 			local sTool = prefTool or bestTool
-			if (sTool and Player:GetCurrentlyCastedSpell() == 17) then
+			if (sTool and Player:GetCurrentlyCastedSpell() == 18) then
 				d("Salvaging "..item.name.." with "..sTool.name)
 				sTool:Use(item)
 				return ml_log(true)

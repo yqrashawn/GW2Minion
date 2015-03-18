@@ -331,7 +331,7 @@ function e_DoEventObjectives:execute()
 										if ( not t or t.id ~= id ) then
 											Player:SetTarget( id )
 										else
-											if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
+											if ( Player:GetCurrentlyCastedSpell() == 18 ) then								
 												Player:Interact( id )
 												ml_log("Reviving..")
 												mc_global.Wait(1000)

@@ -287,7 +287,7 @@ function e_interactNearby:execute()
 		else				
 			if (Player.profession == 8 ) then -- Necro, leave shroud
 				local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
-				if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17) then
+				if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 18) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
 					mc_global.Wait(350)
 					return
@@ -295,7 +295,7 @@ function e_interactNearby:execute()
 			end
 			
 			-- yeah I know, but this usually doesnt break ;)
-			if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
+			if ( Player:GetCurrentlyCastedSpell() == 18 ) then	
 				Player:Interact( t.id )
 				ml_log("Interacting..")						
 				mc_global.Wait(400)

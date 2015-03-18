@@ -290,7 +290,7 @@ function e_FinishHim:execute()
 					
 					if (Player.profession == 8 ) then -- Necro, leave shroud
 						local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
-						if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17) then
+						if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 18) then
 							Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
 							mc_global.Wait(500)
 							return
@@ -298,7 +298,7 @@ function e_FinishHim:execute()
 					end
 					
 					-- yeah I know, but this usually doesnt break ;)
-					if ( Player:GetCurrentlyCastedSpell() == 17 ) then	
+					if ( Player:GetCurrentlyCastedSpell() == 18 ) then	
 						Player:Interact( id )
 						ml_log("Finishing..")						
 						mc_global.Wait(1000)
@@ -538,7 +538,7 @@ function e_resting:execute()
 	c_resting.hpPercent = math.random(45,85)
 	if (Player.profession == 8 ) then -- Necro, leave shroud
 		local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
-		if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17) then
+		if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 18) then
 			Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
 			mc_global.Wait(500)
 			return
@@ -554,7 +554,7 @@ function e_resting:execute()
 	
 		-- else cast our normal heal skill if possible
 		local s6 = Player:GetSpellInfo( GW2.SKILLBARSLOT.Slot_6 )
-		if( s6 and Player:GetCurrentlyCastedSpell() == 17 and s6.cooldown == 0 ) then
+		if( s6 and Player:GetCurrentlyCastedSpell() == 18 and s6.cooldown == 0 ) then
 			Player:CastSpell( GW2.SKILLBARSLOT.Slot_6 )
 			mc_global.Wait(750)
 		end		

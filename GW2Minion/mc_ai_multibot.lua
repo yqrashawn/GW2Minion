@@ -214,7 +214,7 @@ function e_memberdown:execute()
 			
 			if (Player.profession == 8 ) then -- Necro, leave shroud
 				local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
-				if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17) then
+				if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 18) then
 					Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
 					mc_global.Wait(500)
 					return

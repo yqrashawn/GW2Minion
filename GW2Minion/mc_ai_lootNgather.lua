@@ -205,7 +205,7 @@ function e_Loot:execute()
 					Player:SetTarget( id )
 				else
 					-- yeah I know, but this usually doesnt break ;)
-					if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
+					if ( Player:GetCurrentlyCastedSpell() == 18 ) then								
 						Player:Interact( id )
 						ml_log("Looting..")
 						mc_global.Wait(1000)
@@ -267,7 +267,7 @@ function e_LootChests:execute()
 						Player:SetTarget( id )
 					else
 						-- yeah I know, but this usually doesnt break ;)
-						if ( Player:GetCurrentlyCastedSpell() == 17 ) then								
+						if ( Player:GetCurrentlyCastedSpell() == 18 ) then								
 							Player:Interact( id )
 							ml_log("Looting..")
 							mc_global.Wait(1000)
@@ -344,14 +344,14 @@ function e_Gathering:execute()
 							Player:StopMovement()
 							if ( Player.profession == 8 ) then -- Necro, leave shroud
 								local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
-								if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 17 ) then
+								if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == 18 ) then
 									Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
 									mc_global.Wait(500)
 									return
 								end
 							end
 							-- yeah I know, but this usually doesnt break ;)
-							if ( Player:GetCurrentlyCastedSpell() == 17 ) then
+							if ( Player:GetCurrentlyCastedSpell() == 18 ) then
 								Player:Interact( gadget.id )
 								ml_log("Gathering..")
 								mc_global.Wait(1000)
