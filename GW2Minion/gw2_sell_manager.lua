@@ -274,31 +274,29 @@ function gw2_sell_manager.createItemList()
 	local filteredItems = {}
 	if (items) then
 		for _,item in pairs(items) do
-			if (item.accountbound == false and item.soulbound == false) then
-				local addItem = false
-				for _,filter in pairs(gw2_sell_manager.filterList) do
-					if (gw2_sell_manager.validFilter(filter)) then
-						if ((filter.rarity == "None" or filter.rarity == nil or GW2.ITEMRARITY[filter.rarity] == item.rarity) and
-						(filter.itemtype == "None" or filter.itemtype == nil or GW2.ITEMTYPE[filter.itemtype] == item.itemtype) and
-						(filter.weapontype == "None" or filter.weapontype == nil or GW2.WEAPONTYPE[filter.weapontype] == item.weapontype) and
-						(filter.soulbound == "either" or (filter.soulbound == nil and item.soulbound == false) or filter.soulbound == tostring(item.soulbound))) then
-							addItem = true
-						end
+			local addItem = false
+			for _,filter in pairs(gw2_sell_manager.filterList) do
+				if (gw2_sell_manager.validFilter(filter)) then
+					if ((filter.rarity == "None" or filter.rarity == nil or GW2.ITEMRARITY[filter.rarity] == item.rarity) and
+					(filter.itemtype == "None" or filter.itemtype == nil or GW2.ITEMTYPE[filter.itemtype] == item.itemtype) and
+					(filter.weapontype == "None" or filter.weapontype == nil or GW2.WEAPONTYPE[filter.weapontype] == item.weapontype) and
+					(filter.soulbound == "either" or (filter.soulbound == nil and item.soulbound == false) or filter.soulbound == tostring(item.soulbound))) then
+						addItem = true
 					end
 				end
-				-- Check for single itemlist
-				if (addItem == false) then
-					for iID,lItem in pairs(SellManager_ItemIDInfo) do
-						if (item.itemID == lItem.itemID) then
-							addItem = true
-							break
-						end
+			end
+			-- Check for single itemlist
+			if (addItem == false) then
+				for iID,lItem in pairs(SellManager_ItemIDInfo) do
+					if (item.itemID == lItem.itemID) then
+						addItem = true
+						break
 					end
 				end
-				-- Add item if found in filters.
-				if (addItem) then
-					table.insert(filteredItems, item)
-				end
+			end
+			-- Add item if found in filters.
+			if (addItem) then
+				table.insert(filteredItems, item)
 			end
 		end
 		if (ValidTable(filteredItems)) then
@@ -387,7 +385,7 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 						for _,item in pairs(iList) do
 							d("Selling: "..item.name)
 							item:Sell()
-							if ( not gw2_sell_manager.VendorSellHistroy[item.itemID] or gw2_sell_manager.VendorSellHistroy[item.itemID] < 10 ) then
+							if ( not gw2_sell_manager.VendorSellHistroy[item.itemID] or gw2_sell_manager.VendorSellHistroy[item.itemID] < 5 ) then
 
 								if ( not gw2_sell_manager.VendorSellHistroy[item.itemID] ) then
 									gw2_sell_manager.VendorSellHistroy[item.itemID] = 1
