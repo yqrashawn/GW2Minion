@@ -252,6 +252,7 @@ function Dev.LoadModule()
 	GUI_NewField("Dev","Name","EVName","EventInfo")
 	GUI_NewField("Dev","Type","EVType","EventInfo")
 	GUI_NewField("Dev","MarkerType","EVMType","EventInfo")
+	GUI_NewField("Dev","MarkerObjType","EVMObjType","EventInfo")
 	GUI_NewField("Dev","WorldMarkerType","EVWMType","EventInfo")	
 	GUI_NewField("Dev","EventID","EVEventID","EventInfo")
 	GUI_NewField("Dev","CharacterID","EVCharID","EventInfo")
@@ -368,6 +369,22 @@ function Dev.LoadModule()
 	GUI_NewButton("Dev","ClearAvoidanceareas","Dev.ClearAA","NavigationSystem")
 	RegisterEventHandler("Dev.ClearAA", Dev.Move)
 	
+	-- Navigation - World
+	DevNWTempData = {}
+	DevNWTempDataB = {}
+	DevNWTempData = persistence.load(GetAddonPath()..[[GW2Minion\]].."worldnav_data.lua")
+	if ( not ValidTable(DevNWTempData)) then DevNWTempData = {} end
+	
+	GUI_NewField("Dev","#Total_Transitions: ","NWTotal","NavigationSystem_World")
+	GUI_NewField("Dev","#Out_Transitions: ","NWOut","NavigationSystem_World")
+	GUI_NewField("Dev","#In_Transitions: ","NWIn","NavigationSystem_World")
+	GUI_NewComboBox("Dev","TransitionType","gdevNWTransType","NavigationSystem_World","Normal,Dungeon,Interact")
+	GUI_NewButton("Dev","From Here","Dev.NWFrom","NavigationSystem_World")
+	RegisterEventHandler("Dev.NWFrom", Dev.Func)
+	GUI_NewButton("Dev","To Here","Dev.NWTo","NavigationSystem_World")
+	RegisterEventHandler("Dev.NWTo", Dev.Func)
+	gdevNWTransType = "Normal"
+	
 	-- Spell&CastingInfo
 	GUI_NewField("Dev","IsCasting","SCIsCast","Spell&CastingInfo")
 	GUI_NewField("Dev","CanCast","SCCanC","Spell&CastingInfo")
@@ -376,7 +393,7 @@ function Dev.LoadModule()
 	GUI_NewField("Dev","CanSwapWeapons","SCCanSwap","Spell&CastingInfo")
 	GUI_NewButton("Dev","SwapWeapons","Dev.SwapWeapons","Spell&CastingInfo")
 	RegisterEventHandler("Dev.SwapWeapons", Dev.Func)	
-	GUI_NewNumeric("Dev","ListIndex","SCindex","Spell&CastingInfo","0","16");
+	GUI_NewNumeric("Dev","ListIndex","SCindex","Spell&CastingInfo","0","17");
 	GUI_NewField("Dev","Ptr","SCPtr","Spell&CastingInfo")
 	GUI_NewField("Dev","Slot","SCSlot","Spell&CastingInfo")
 	GUI_NewField("Dev","SkillID","SCID","Spell&CastingInfo")
@@ -545,7 +562,7 @@ function Dev.LoadModule()
 	GUI_SizeWindow("Dev",250,550)	
 	end		
 	
-	Dev.Test1()	
+	Dev.Test1()
 end
 
 function Dev.GUIVarUpdate(Event, NewVals, OldVals)
@@ -683,8 +700,59 @@ function Dev.Func ( arg )
 		if ( tonumber(HackGravS)~=nil ) then Player:SetGravity(tonumber(HackGravS)) end
 		if ( tonumber(HackSCL)~=nil ) then Player:SetCrawlHeight(tonumber(HackSCL)) end
 	
+	elseif ( arg == "Dev.NWFrom" and ml_global_information.CurrentMapID ~= nil and ml_global_information.CurrentMapID~=0) then
+			
+		DevNWTempDataB = { 
+			FromID=ml_global_information.CurrentMapID, 
+			x=ml_global_information.Player_Position.x,
+			y=ml_global_information.Player_Position.y,
+			z=ml_global_information.Player_Position.z,
+			hx=ml_global_information.Player_Position.hx,
+			hy=ml_global_information.Player_Position.hy,
+			hz=ml_global_information.Player_Position.hz,
+			ttype = gdevNWTransType
+		}
+	elseif ( arg == "Dev.NWTo" and DevNWTempData ~= nil and ValidTable(DevNWTempDataB)and ml_global_information.CurrentMapID ~= nil and ml_global_information.CurrentMapID~=0) then
+		
+		if ( DevNWTempData[DevNWTempDataB.FromID] == nil ) then
+			DevNWTempData[DevNWTempDataB.FromID] = {}
+		end
+		if ( DevNWTempData[DevNWTempDataB.FromID][ml_global_information.CurrentMapID] == nil ) then
+			DevNWTempData[DevNWTempDataB.FromID][ml_global_information.CurrentMapID] = {}
+		end
+		local wtf = {
+					x = DevNWTempDataB.x,
+					y = DevNWTempDataB.y,
+					z = DevNWTempDataB.z,
+					hx = DevNWTempDataB.hx,
+					hy = DevNWTempDataB.hy,
+					hz = DevNWTempDataB.hz,
+					type = DevNWTempDataB.ttype,
+		}
+		table.insert(DevNWTempData[DevNWTempDataB.FromID][ml_global_information.CurrentMapID],TableSize(DevNWTempData[DevNWTempDataB.FromID][ml_global_information.CurrentMapID])+1,wtf)
+		
+		--and back
+		if ( DevNWTempData[ml_global_information.CurrentMapID] == nil ) then
+			DevNWTempData[ml_global_information.CurrentMapID] = {}
+		end
+		if ( DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID] == nil ) then
+			DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID] = {}
+		end
+		wtf = {
+					x = ml_global_information.Player_Position.x,
+					y = ml_global_information.Player_Position.y,
+					z = ml_global_information.Player_Position.z,
+					hx = ml_global_information.Player_Position.hx,
+					hy = ml_global_information.Player_Position.hy,
+					hz = ml_global_information.Player_Position.hz,
+					type = gdevNWTransType,
+		}		
+		table.insert(DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID],TableSize(DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID])+1,wtf)
+		persistence.store(GetAddonPath()..[[GW2Minion\]].."worldnav_data.lua",DevNWTempData)
+		d("New Transition Saved")		
 	end	
 end
+
 
 Dev.Obstacles = {}
 Dev.AvoidanceAreas = {}
@@ -709,7 +777,7 @@ function Dev.Move ( arg )
 		local t = Player:GetTarget()
 		if ( t ) then
 			local pos = t.pos
-			d(Player:SetFacingExact(pos.x,pos.y,pos.z))
+			d(Player:SetFacingExact(pos.x,pos.y,pos.z,true))
 		end	
 	elseif ( arg == "Dev.playerPosition") then
 			local p = Player.pos
@@ -1163,6 +1231,7 @@ function Dev.UpdateWindow()
 		EVPtr = string.format( "%x",tonumber(ev.ptr ))		
 		EVType = ev.type
 		EVMType = ev.markertype
+		EVMObjType = ev.markerobjecttype
 		EVWMType = ev.worldmarkertype		
 		EVEventID = ev.eventID
 		EVQuestID = ev.contentID
@@ -1220,12 +1289,13 @@ function Dev.UpdateWindow()
 				EVOPtr = string.format( "%x",tonumber(ob.ptr ))
 				EVOID = ob.id
 				EVOIsUnknown0 = ob.isUnknown0
+				EVOType = tostring(ot).."-Unknown"
 				local ot = ob.type
 				if ( ot == 0  ) then EVOType = "0-BreakMoral" end
-				if ( ot == 1  ) then EVOType = "1-CaptureLcoation" end
+				if ( ot == 1  ) then EVOType = "1-CaptureLocation" end
 				if ( ot == 2  ) then EVOType = "2-CollectItems" end
-				if ( ot == 3  ) then EVOType = "3-Counter" end
-				if ( ot == 4  ) then EVOType = "4-KillCount" end
+				if ( ot == 3  ) then EVOType = "3-KillCount" end
+				if ( ot == 4  ) then EVOType = "4-Counter" end
 				if ( ot == 5  ) then EVOType = "5-Cull" end
 				if ( ot == 8  ) then EVOType = "8-DefendGadget" end
 				if ( ot == 10 ) then EVOType = "10-Escort" end
@@ -1233,12 +1303,12 @@ function Dev.UpdateWindow()
 				if ( ot == 12 ) then EVOType = "12-InteractWithGadget" end
 				if ( ot == 13 ) then EVOType = "13-Intimidate" end
 				if ( ot == 14 ) then EVOType = "14-IntimidateScaled" end
-				if ( ot == 17 ) then EVOType = "17-RepairGadget" end
-				if ( ot == 18 ) then EVOType = "18-Timer" end
-				if ( ot == 19 ) then EVOType = "19-Tripwire" end
-				if ( ot == 20 ) then EVOType = "20-WvwHold" end
-				if ( ot == 21 ) then EVOType = "21-WvwOrbResetTimer" end
-				if ( ot == 22 ) then EVOType = "22-WvwUpgrade" end
+				if ( ot == 18 ) then EVOType = "18-RepairGadget" end
+				if ( ot == 20 ) then EVOType = "20-Timer" end
+				if ( ot == 21 ) then EVOType = "21-Tripwire" end
+				if ( ot == 22 ) then EVOType = "22-WvwHold" end
+				if ( ot == 23 ) then EVOType = "23-WvwOrbResetTimer" end
+				if ( ot == 24 ) then EVOType = "24-WvwUpgrade" end
 				
 				EVO1 = ob.value1
 				EVO2 = ob.value2
@@ -1272,6 +1342,7 @@ function Dev.UpdateWindow()
 		EVPtr = 0
 		EVType = 0
 		EVMType = 0
+		EVMObjType = 0
 		EVWMType = 0		
 		EVEventID = 0
 		EVCharID = 0
@@ -1357,6 +1428,31 @@ function Dev.UpdateWindow()
 		mifacet = "Behind"
 	elseif( facedir == false) then
 		mifacet = "Not Facing"
+	end
+	
+	--NavigationSystem_World
+	
+	if ( DevNWTempData ~= nil and ValidTable(DevNWTempData) ) then
+		NWTotal = TableSize(DevNWTempData)		
+		NWOut = TableSize(DevNWTempData[ml_global_information.CurrentMapID])
+		
+		local transInMap = 0
+		local outID,inTable = next(DevNWTempData)
+		while outID and inTable do
+			local a,b = next (inTable)
+			while a and b do
+				if ( a == ml_global_information.CurrentMapID) then
+					transInMap = transInMap + 1
+				end
+				a,b = next(inTable,a)
+			end
+			outID,inTable = next(DevNWTempData,outID)
+		end
+		NWIn = transInMap
+	else
+		NWTotal = 0
+		NWOut = 0
+		NWIn = 0
 	end
 	
 	-- Spell&CastingInfo

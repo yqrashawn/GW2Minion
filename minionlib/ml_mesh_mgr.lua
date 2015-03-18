@@ -65,9 +65,10 @@ function ml_mesh_mgr.ModuleInit()
 	GUI_NewCheckbox(ml_mesh_mgr.mainwindow.name,GetString("showMesh"),"gShowMesh",GetString("generalSettings"))
 	GUI_NewCheckbox(ml_mesh_mgr.mainwindow.name,GetString("showPath"),"gShowPath",GetString("generalSettings"))
 	GUI_UnFoldGroup(ml_mesh_mgr.mainwindow.name,GetString("generalSettings"))	
+	
 	GUI_NewButton(ml_mesh_mgr.mainwindow.name, GetString("setEvacPoint"), "setEvacPointEvent",GetString("recoder"))
     RegisterEventHandler("setEvacPointEvent",ml_mesh_mgr.SetEvacPoint)
-	 
+	
 	GUI_NewField(ml_mesh_mgr.mainwindow.name,GetString("newMeshName"),"gnewmeshname",GetString("recoder"))
 	GUI_NewButton(ml_mesh_mgr.mainwindow.name,GetString("newMesh"),"newMeshEvent",GetString("recoder"))
 	RegisterEventHandler("newMeshEvent",ml_mesh_mgr.ClearNavMesh)
@@ -78,8 +79,8 @@ function ml_mesh_mgr.ModuleInit()
 	GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("changeAreaType"),"gChangeAreaType",GetString("editor"),"Delete,Road,Lowdanger,Highdanger")
 	GUI_NewNumeric(ml_mesh_mgr.mainwindow.name,GetString("changeAreaSize"),"gChangeAreaSize",GetString("editor"),"1","10")
 	GUI_NewCheckbox(ml_mesh_mgr.mainwindow.name,GetString("biDirOffMesh"),"gBiDirOffMesh",GetString("connections"))
-	--GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("typeOffMeshSpot"),"gOMCType",GetString("connections"),"Jump,Teleport,Portal,Interact")	
-	GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("typeOffMeshSpot"),"gOMCType",GetString("connections"),"Jump")	
+	--GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("typeOffMeshSpot"),"gOMCType",GetString("connections"),"Jump,Walk,Teleport,Interact,Portal")	
+	GUI_NewComboBox(ml_mesh_mgr.mainwindow.name,GetString("typeOffMeshSpot"),"gOMCType",GetString("connections"),"Jump,Walk,Lift,Teleport,Interact,Portal")	
 	GUI_NewButton(ml_mesh_mgr.mainwindow.name,GetString("addOffMeshSpot"),"offMeshSpotEvent",GetString("connections"))
 	RegisterEventHandler("offMeshSpotEvent", ml_mesh_mgr.AddOMC)
 	GUI_NewButton(ml_mesh_mgr.mainwindow.name,GetString("delOffMeshSpot"),"deleteoffMeshEvent",GetString("connections"))
@@ -92,6 +93,7 @@ function ml_mesh_mgr.ModuleInit()
 	RegisterEventHandler("saveMeshEvent",ml_mesh_mgr.SaveMesh)   
 	
 	GUI_NewButton(ml_mesh_mgr.mainwindow.name,"CTRL+M:ChangeMeshRenderDepth","ChangeMeshDepth")
+	RegisterEventHandler("ChangeMeshDepth", function() RenderManager:ChangeMeshDepth() end)  
 	
 	GUI_SizeWindow(ml_mesh_mgr.mainwindow.name,ml_mesh_mgr.mainwindow.w,ml_mesh_mgr.mainwindow.h)
 	GUI_WindowVisible(ml_mesh_mgr.mainwindow.name,false)
@@ -124,6 +126,9 @@ function ml_mesh_mgr.ModuleInit()
 	ml_mesh_mgr.loadingMesh = false
 	ml_mesh_mgr.UpdateMeshfiles() --update the mesh-selection-dropdownfield
 	
+	
+	ml_mesh_mgr.SetupNavNodes()
+		
 end
 
 -- initializes the marker group, this needs to be called from the main.lua's HandleInit, after all possible marker templates were created or when templatelist was updated
@@ -209,6 +214,7 @@ function ml_mesh_mgr.SetDefaultMesh(mapid,mapname)
 			Settings.minionlib.DefaultMaps = Settings.minionlib.DefaultMaps -- trigger saving of settings
 			d( "New DEFAULT mesh "..mapname.." set for mapID "..tostring(mapid))
 		end
+		
 		-- Updating the .data file
 		if ( ml_mesh_mgr.navmeshfilepath ~= nil and ml_mesh_mgr.navmeshfilepath ~= "" ) then
 			
@@ -250,6 +256,7 @@ function ml_mesh_mgr.SetDefaultMesh(mapid,mapname)
 		
 			d( "Error setting default mesh: navmeshfilepath is nil or empty!")
 		end
+		
 	else
 		d( "Error setting default mesh, mapID or name invalid! : "..tostring(mapid).." / "..mapname)
 	end	
@@ -289,6 +296,7 @@ end
 
 -- Handles the loading of navmeshes and markerdata when switching maps/meshes, gets called on each OnUpdate()
 function ml_mesh_mgr.SwitchNavmesh()
+
 	if (gNoMeshLoad == "1") then
 		return false
 	end
@@ -298,29 +306,34 @@ function ml_mesh_mgr.SwitchNavmesh()
 		if ( ml_mesh_mgr.navmeshfilepath ~= nil and ml_mesh_mgr.navmeshfilepath ~= "" ) then
 			-- Check if the file exist
 			d("Loading Navmesh : " ..ml_mesh_mgr.nextNavMesh)
+			-- To prevent (re-)loading or saving of mesh data while the mesh is beeing build/loaded
+			ml_mesh_mgr.loadingMesh = true
 			if (not NavigationManager:LoadNavMesh(ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh,ml_mesh_mgr.loadObjectFile)) then
 				ml_error("Error while trying to load Navmesh: "..ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh)
 				ml_marker_mgr.ClearMarkerList()
 				ml_marker_mgr.RefreshMarkerNames()
 				gmeshname = ""
 				gnewmeshname = ""
+				ml_mesh_mgr.loadingMesh = false
 				
 			else
+			
 				-- Dont reload the obj file again
 				ml_mesh_mgr.loadObjectFile = false
-				-- To prevent (re-)loading or saving of mesh data while the mesh is beeing build/loaded
-				ml_mesh_mgr.loadingMesh = true
-				
+								
 				-- Update MarkerData from .info file
 				ml_marker_mgr.ClearMarkerList()
 				
 				if (FileExists(ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh..".info")) then					
+					-- REMOVE THIS OLD COMPATIBILITY SHIT AFTER SOME MONTHS WHEN EVERYTHING IS CONVERTED:
 					ml_marker_mgr.ReadMarkerFile(ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh..".info")					
 					ml_marker_mgr.DrawMarkerList()
 					ml_marker_mgr.RefreshMarkerNames()					
 				else
 					ml_marker_mgr.markerPath = ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh..".info" -- this needs to be set, else the markermanager doesnt work when there is no .info file..should probably be fixed on markermanager side and not here
 					d("WARNING: ml_mesh_mgr.SwitchNavmesh: No Marker-file exist  : "..ml_mesh_mgr.navmeshfilepath..ml_mesh_mgr.nextNavMesh..".info")
+					-- create a new file for now, until we decide to move markerdata into mesh data
+					ml_marker_mgr.WriteMarkerFile(ml_marker_mgr.markerPath)
 				end				
 				
 				-- Update MeshData from .data file
@@ -343,7 +356,7 @@ function ml_mesh_mgr.SwitchNavmesh()
 						
 						-- check if ml_mesh_mgr.currentMesh.MapID is our mapID
 						if ( ml_mesh_mgr.currentMesh.MapID ~= ml_mesh_mgr.GetMapID() ) then
-							ml_debug("WARNING: Loaded Navmesh MapID ~= current MapID() -> wrong NavMesh for this zone loaded ?")
+							d("WARNING: Loaded Navmesh MapID ~= current MapID() -> wrong NavMesh for this zone loaded ?")
 						end
 						
 						-- adding the AllowedMapIDs table to "old" .info files
@@ -356,7 +369,7 @@ function ml_mesh_mgr.SwitchNavmesh()
 												
 						-- check if the loaded ml_mesh_mgr.currentMesh.AllowedMapIDs contains our current mapID which we are in
 						if ( ml_mesh_mgr.currentMesh.AllowedMapIDs[ml_mesh_mgr.GetMapID()] == nil ) then
-							ml_debug("WARNING: Loaded Navmesh AllowedMapIDs dont contain current MapID -> wrong NavMesh for this zone loaded ?")
+							d("WARNING: Loaded Navmesh AllowedMapIDs dont contain current MapID -> wrong NavMesh for this zone loaded ?")
 							
 							-- This can cause a "allowed" for each wrong selected meshfile in the mesh-dropdown field.
 							ml_mesh_mgr.SetDefaultMesh(ml_mesh_mgr.GetMapID(), ml_mesh_mgr.nextNavMesh)
@@ -369,7 +382,7 @@ function ml_mesh_mgr.SwitchNavmesh()
 					ml_mesh_mgr.currentMesh.MapID = ml_mesh_mgr.GetMapID()
 					ml_mesh_mgr.currentMesh.AllowedMapIDs[ml_mesh_mgr.currentMesh.MapID] = ml_mesh_mgr.currentMesh.MapID
 					ml_mesh_mgr.currentMesh.Name = ml_mesh_mgr.GetMapName()
-				end						
+				end				
 				
 				
 				gmeshname = ml_mesh_mgr.nextNavMesh
@@ -381,6 +394,7 @@ function ml_mesh_mgr.SwitchNavmesh()
 		end
 		ml_mesh_mgr.nextNavMesh = nil
 	end
+	
 	return false
 end
 
@@ -398,9 +412,8 @@ end
 
 -- Main loop
 function ml_mesh_mgr.OnUpdate( tickcount )
-	
 	local navstate = NavigationManager:GetNavMeshState()
-		
+	
 	if ( ml_mesh_mgr.loadingMesh or 
 		navstate == GLOBAL.MESHSTATE.MESHBUILDING or 
 		ml_mesh_mgr.GetMapID() == nil or 
@@ -410,25 +423,23 @@ function ml_mesh_mgr.OnUpdate( tickcount )
 		return 
 	end
 	
-	-- Log Info
-	if ( navstate == GLOBAL.MESHSTATE.MESHEMPTY ) then
+	-- Log Info  (THIS IS FOR GW2 ONLY, IF YOU DONT EMPTY THE ml_log variable this will crash after a while...)
+	if ( navstate == GLOBAL.MESHSTATE.MESHEMPTY and gNoMeshLoad == "0" ) then
 		ml_log("WARNING: NO NAVMESH LOADED! -> SELECT A NAVMESH IN THE MESHMANAGER FOR THIS ZONE")
-	elseif ( navstate == GLOBAL.MESHSTATE.MESHREADY ) then
-		if ( not Player.onmesh ) then			
+	elseif ( navstate == GLOBAL.MESHSTATE.MESHREADY and gNoMeshLoad == "0" ) then
+		if ( not ml_global_information.Player_OnMesh ) then			
 			ml_log("WARNING: PLAYER IS NOT STANDING ON THE NAVMESH! ")
 		end
 	end
 	
 	-- Init default mesh	
 	if ( ml_mesh_mgr.currentMesh.MapID == 0 ) then
-				
 		ml_mesh_mgr.LoadNavMeshForCurrentMap()		
-		
 	else
 	-- Check for changed MapID
 		if ( ml_mesh_mgr.currentMesh.MapID ~= ml_mesh_mgr.GetMapID() and ml_mesh_mgr.currentMesh.AllowedMapIDs[ml_mesh_mgr.GetMapID()] == nil and gNoMeshLoad == "0") then
-		
-			d("MAP CHANGED")
+										
+			d("MAP/ZONE CHANGED")
 			
 			-- save old meshdata if meshrecorder is active			
 			if ( gMeshrec == "1" ) then
@@ -445,7 +456,7 @@ function ml_mesh_mgr.OnUpdate( tickcount )
 					local newMarker = ml_marker:Create("MapMarker")
 					newMarker:SetType(GetString("mapMarker"))
 					newMarker:AddField("int", "Target MapID", ml_mesh_mgr.GetMapID())
-					newMarker:SetName(tostring(ml_mesh_mgr.currentMesh.MapID).."to"..tostring(ml_mesh_mgr.GetMapID()))
+					newMarker:SetName(tostring(ml_mesh_mgr.currentMesh.Name).." to "..tostring(ml_mesh_mgr.GetMapName()))
 					if ( ml_marker_mgr.GetMarker(newMarker:GetName()) ~= nil ) then
 						--add a random number onto the name until the string is unique
 						local name = ""
@@ -469,13 +480,13 @@ function ml_mesh_mgr.OnUpdate( tickcount )
 			end
 						
 			-- load new mesh
+			
 			ml_mesh_mgr.LoadNavMeshForCurrentMap()			
 			
 		else			
 			-- update currentmeshdata position
 			local myPos = ml_mesh_mgr.GetPlayerPos()
 			if (ValidTable(myPos)) then
-
 				ml_mesh_mgr.currentMesh.LastPlayerPosition = {				
 					x = myPos.x, 
 					y = myPos.y, 
@@ -499,13 +510,6 @@ function ml_mesh_mgr.OnUpdate( tickcount )
 			
 			-- Record Mesh & Gamedata
 			if ( gMeshrec == "1" or gMeshChange == "1") then
-				
-				
-				--TODO: REC MESH DATA STUFF N SAVE IT IN THE INFO FILE
-				
-				
-				
-				
 				-- Key-Input-Handler
 				-- 162 = Left CTRL + Left Mouse
 				if ( MeshManager:IsKeyPressed(162) and MeshManager:IsKeyPressed(1)) then --162 is the integervalue of the virtualkeycode (hex)
@@ -552,6 +556,11 @@ function ml_mesh_mgr.SaveMesh()
 		MeshManager:ShowTriMesh(false)
 		NavigationManager:ShowNavMesh(false)
 		
+		if (NavigationManager:IsObjectFileLoaded() == false and gmeshname ~= "none") then
+			d("Current mesh has to be loaded before you can save it, please press 'Show Triangles' and let it load before you save again.")
+			return
+		end
+		
 		local filename = ""
 		-- If a new Meshname is given, create a new file and save it in there
 		if ( gnewmeshname ~= nil and gnewmeshname ~= "" ) then
@@ -586,7 +595,7 @@ function ml_mesh_mgr.SaveMesh()
 			d("Saving NavMesh : "..filename)		
 			if (NavigationManager:SaveNavMesh(filename)) then
 								
-				-- Saving of Default Mesh
+				-- Saving of Default Mesh				
 				ml_mesh_mgr.UpdateDefaultMesh(ml_mesh_mgr.currentMesh.MapID,filename)
 				
 				-- Updating mapIDs (this has to be seperated, else the allowedmapids will get the map of the new zone when zoning while recording is on nad the "old" mesh is autosaved
@@ -595,14 +604,13 @@ function ml_mesh_mgr.SaveMesh()
 				else
 					ml_mesh_mgr.currentMesh.AllowedMapIDs[ml_mesh_mgr.GetMapID()] = ml_mesh_mgr.GetMapID()
 				end
-				-- Save MeshData				
-				d("Saving MeshData..")
-				ml_mesh_mgr.SaveMeshData(filename)
-									
-							
-				-- Update UI
-				gmeshname = ml_mesh_mgr.nextNavMesh
 				
+				-- Save MeshData				
+				d("Saving MeshData..")				
+				ml_mesh_mgr.SaveMeshData(filename)
+				
+				-- Update UI
+				gmeshname = ml_mesh_mgr.nextNavMesh				
 				ml_mesh_mgr.currentMesh.MapID = 0 -- triggers the reloading of the default mesh
 				
 			else
@@ -618,9 +626,7 @@ end
 -- Saves the additional mesh data into to the data file
 function ml_mesh_mgr.SaveMeshData(filename)
 	persistence.store(ml_mesh_mgr.navmeshfilepath..filename..".data", ml_mesh_mgr.currentMesh)
-	
 end
-
 
 -- Deletes the current meshdata and resets the meshmanagerdata
 function ml_mesh_mgr.ClearNavMesh()
@@ -634,6 +640,7 @@ function ml_mesh_mgr.ClearNavMesh()
 	-- Create Default Meshdata
 	ml_mesh_mgr.currentMesh = ml_mesh.Create()
 	ml_mesh_mgr.currentMesh.MapID = ml_mesh_mgr.GetMapID()
+	ml_mesh_mgr.currentMesh.AllowedMapIDs[ml_mesh_mgr.currentMesh.MapID] = ml_mesh_mgr.currentMesh.MapID
 	ml_mesh_mgr.currentMesh.Name = ml_mesh_mgr.GetMapName()
 	gnewmeshname = ml_mesh_mgr.currentMesh.Name or ""
 	gmeshname = "none"
@@ -650,7 +657,6 @@ function ml_mesh_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 			else
 				ml_mesh_mgr.ClearNavMesh()
 			end
-			
 		elseif( k == "gShowRealMesh") then
 			if (v == "1") then
 				NavigationManager:ShowNavMesh(true)
@@ -709,7 +715,7 @@ function ml_mesh_mgr.GUIVarUpdate(Event, NewVals, OldVals)
 		elseif( k == "gnewmeshname" ) then
 			ml_mesh_mgr.currentMesh.Name = v
 		elseif( k == "gNoMeshLoad" ) then
-			Settings.FFXIVMINION[tostring(k)] = v
+			Settings.GW2Minion[tostring(k)] = v
 		end
 	end
 end
@@ -720,6 +726,7 @@ function ml_mesh_mgr.NavMeshUpdate()
 	gnewmeshname = ""
 	ml_mesh_mgr.loadingMesh = false
 	if ( gShowMesh == "1" ) then
+		ml_mesh_mgr.LoadObjectFile()
 		MeshManager:ShowTriMesh(true)
 	end
 	if ( gShowPath == "1" ) then
@@ -735,57 +742,338 @@ end
 
 -- add offmesh connection
 function ml_mesh_mgr.AddOMC()
-	local pos = Player.pos
 	
 	ml_mesh_mgr.OMC = ml_mesh_mgr.OMC+1
 	if (ml_mesh_mgr.OMC == 1 ) then
-		ml_mesh_mgr.OMCP1 = pos
-		ml_mesh_mgr.OMCP1.y = ml_mesh_mgr.OMCP1.y
+		ml_mesh_mgr.OMCP1 = ml_global_information.Player_Position
+		
 	elseif (ml_mesh_mgr.OMC == 2 ) then
-		ml_mesh_mgr.OMCP2 = pos
-		ml_mesh_mgr.OMCP2.y = ml_mesh_mgr.OMCP2.y
+		ml_mesh_mgr.OMCP2 = ml_global_information.Player_Position
+		
 		local omctype
 		if ( gOMCType == "Jump" ) then
-			omctype = 0
+			omctype = 8
+		elseif ( gOMCType == "Walk" ) then
+			omctype = 9
+			--ml_mesh_mgr.AddOMCBridge(1)
+			--return
+		elseif ( gOMCType == "Lift" ) then
+			omctype = 13
 		elseif ( gOMCType == "Teleport" ) then
-			omctype = 1
+			omctype = 10
+			--ml_mesh_mgr.AddOMCBridge(2)
+			--return
 		elseif ( gOMCType == "Interact" ) then
-			omctype = 2
-		elseif ( gOMCType == "Portal" ) then
-			omctype = 3
+			omctype = 11
+			--ml_mesh_mgr.AddOMCBridge(3)
+			--return
+		elseif ( gOMCType == "Portal" ) then			
+			omctype = 12
+			--ml_mesh_mgr.AddOMCBridge(4)
+			--return
 		end
 		
+		-- Default Short Range Jump		
 		if ( gBiDirOffMesh == "0" ) then
-			d(MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,false,omctype))
+			MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,false,omctype, {x=ml_mesh_mgr.OMCP1.hx,y=ml_mesh_mgr.OMCP1.hy,z=ml_mesh_mgr.OMCP1.hz},{x=ml_mesh_mgr.OMCP2.hx,y=ml_mesh_mgr.OMCP2.hy,z=ml_mesh_mgr.OMCP2.hz})
 		else
-			d(MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,true,omctype))
+			MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,true,omctype, {x=ml_mesh_mgr.OMCP1.hx,y=ml_mesh_mgr.OMCP1.hy,z=ml_mesh_mgr.OMCP1.hz},{x=ml_mesh_mgr.OMCP2.hx,y=ml_mesh_mgr.OMCP2.hy,z=ml_mesh_mgr.OMCP2.hz})
 		end
 		ml_mesh_mgr.OMC = 0
 	end	
 end
+--d(tostring(vector.x).." / "..tostring(vector.y).." / "..tostring(vector.z))
+--d(Player:MoveTo(ml_mesh_mgr.OMCP1.x+vector.x,ml_mesh_mgr.OMCP1.y+vector.y,ml_mesh_mgr.OMCP1.z+vector.z,30,false,true,true)	)
+
+-- will bridge larger distances with singlecells and multiple short range OMCs
+function ml_mesh_mgr.AddOMCBridge(omctype)	
+	
+	-- Get Distance and cut it in "shorter" intervals which we have to bridge with omcs and single cells
+	local length = Distance3D(ml_mesh_mgr.OMCP1.x,ml_mesh_mgr.OMCP1.y,ml_mesh_mgr.OMCP1.z,ml_mesh_mgr.OMCP2.x,ml_mesh_mgr.OMCP2.y,ml_mesh_mgr.OMCP2.z)
+	
+	local intervals = math.ceil(length / 350)
+	
+	local vector = { x = (ml_mesh_mgr.OMCP2.x-ml_mesh_mgr.OMCP1.x)/length, y = (ml_mesh_mgr.OMCP2.y-ml_mesh_mgr.OMCP1.y)/length, z = (ml_mesh_mgr.OMCP2.z-ml_mesh_mgr.OMCP1.z)/length }
+	
+	-- Distance is small enough for just 1 OMC
+	if ( intervals <= 1 ) then
+		d(MeshManager:AddOffMeshConnection(ml_mesh_mgr.OMCP1,ml_mesh_mgr.OMCP2,true,omctype, {x=ml_mesh_mgr.OMCP1.hx,y=ml_mesh_mgr.OMCP1.hy,z=ml_mesh_mgr.OMCP1.hz},{x=ml_mesh_mgr.OMCP2.hx,y=ml_mesh_mgr.OMCP2.hy,z=ml_mesh_mgr.OMCP2.hz}))
+	
+	else
+		local TOposition = {}
+		local FROMposition = { x = ml_mesh_mgr.OMCP1.x, y = ml_mesh_mgr.OMCP1.y, z = ml_mesh_mgr.OMCP1.z}
+		for i=1,intervals,1 do
+			d("Invetval:" ..tostring(i))
+			-- Last point 
+			if ( i == intervals ) then
+				d(MeshManager:AddOffMeshConnection(FROMposition,ml_mesh_mgr.OMCP2,true,omctype, {x=ml_mesh_mgr.OMCP1.hx,y=ml_mesh_mgr.OMCP1.hy,z=ml_mesh_mgr.OMCP1.hz},{x=ml_mesh_mgr.OMCP2.hx,y=ml_mesh_mgr.OMCP2.hy,z=ml_mesh_mgr.OMCP2.hz}))
+			
+			else
+				-- make OMCs with singlecells to bridge the whole distance between original start and end
+				
+				-- get next interval point
+				TOposition.x = FROMposition.x + vector.x*350
+				TOposition.y = FROMposition.y + vector.y*350
+				TOposition.z = FROMposition.z + vector.z*350
+				
+				-- Add "To"-point
+				d(MeshManager:AddOffMeshConnection(FROMposition,TOposition,true,omctype, {x=ml_mesh_mgr.OMCP1.hx,y=ml_mesh_mgr.OMCP1.hy,z=ml_mesh_mgr.OMCP1.hz},{x=ml_mesh_mgr.OMCP2.hx,y=ml_mesh_mgr.OMCP2.hy,z=ml_mesh_mgr.OMCP2.hz}))
+				
+				-- Add singleCell
+				local newVertexCenter = { x=TOposition.x, y=TOposition.y, z=TOposition.z }
+				if ( not NavigationManager:IsOnMeshExact(TOposition) ) then
+					d(MeshManager:CreateSingleCell( newVertexCenter))
+				end
+				
+				-- Update "From"-point
+				FROMposition.x = TOposition.x
+				FROMposition.y = TOposition.y
+				FROMposition.z = TOposition.z
+				
+			end
+		end
+	end
+	ml_mesh_mgr.OMC = 0
+end
+
 -- delete offmesh connection
 function ml_mesh_mgr.DeleteOMC()
-	local pos = Player.pos
+	local pos = ml_global_information.Player_Position
 	MeshManager:DeleteOffMeshConnection(pos)
 	ml_mesh_mgr.OMC = 0
 end
 
 -- Handler for different OMC types
-function ml_mesh_mgr.HandleOMC( event, OMCType ) 	
+function ml_mesh_mgr.HandleOMC( ... )
+	local args = {...}
+	local OMCType = args[2]	
+	local OMCStartPosition,OMCEndposition,OMCFacingDirection = ml_mesh_mgr.UnpackArgsForOMC( args )
 	d("OMC REACHED : "..tostring(OMCType))
-	--Player:StopMovement()	
+	
+	if ( ValidTable(OMCStartPosition) and ValidTable(OMCEndposition) and ValidTable(OMCFacingDirection) ) then
+		ml_mesh_mgr.OMCStartPosition = OMCStartPosition
+		ml_mesh_mgr.OMCEndposition = OMCEndposition
+		ml_mesh_mgr.OMCFacingDirection = OMCFacingDirection
+		ml_mesh_mgr.OMCType = OMCType
+		ml_mesh_mgr.OMCIsHandled = true -- Turn on omc handler
+	end
+end
+
+ml_mesh_mgr.OMCStartPosition = nil
+ml_mesh_mgr.OMCEndposition = nil
+ml_mesh_mgr.OMCFacingDirection = nil
+ml_mesh_mgr.OMCType = nil
+ml_mesh_mgr.OMCIsHandled = false
+ml_mesh_mgr.OMCStartPositionReached = false
+ml_mesh_mgr.OMCJumpStartedTimer = 0
+ml_mesh_mgr.OMCThrottle = 0
+function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount ) 
+	if ( ml_mesh_mgr.OMCIsHandled ) then
+		ml_global_information.Lasttick = ml_global_information.Now -- Pauses the main bot-loop, no unstuck or continues path creation.
+		
+		if ( ml_mesh_mgr.OMCThrottle > tickcount ) then -- Throttles OMC actions
+			return
+		end
+		
+		-- Update IsMoving with exact data
+		ml_global_information.Player_IsMoving = Player:IsMoving() or false
+		ml_global_information.Player_Position = Player.pos
+		-- Set all position data, pPos = Player pos, sPos = start omc pos and heading, ePos = end omc pos
+		local pPos = ml_global_information.Player_Position
+		local sPos = {
+						x = tonumber(ml_mesh_mgr.OMCStartPosition[1]), y = tonumber(ml_mesh_mgr.OMCStartPosition[2]), z = tonumber(ml_mesh_mgr.OMCStartPosition[3]),
+						hx = tonumber(ml_mesh_mgr.OMCFacingDirection[1]), hy = tonumber(ml_mesh_mgr.OMCFacingDirection[2]), hz = tonumber(ml_mesh_mgr.OMCFacingDirection[3]),
+					}
+		local ePos = {
+						x = tonumber(ml_mesh_mgr.OMCEndposition[1]), y = tonumber(ml_mesh_mgr.OMCEndposition[2]), z = tonumber(ml_mesh_mgr.OMCEndposition[3]),
+					}
+		
+		if ( ml_mesh_mgr.OMCStartPositionReached == false ) then
+			if ( ValidTable(sPos) ) then
+				local dist = Distance3D(sPos.x,sPos.y,sPos.z,pPos.x,pPos.y,pPos.z)
+				if ( dist < 35 ) then -- Close enough to start
+					d("OMC StartPosition reached..Facing Target Direction..")
+					
+					Player:SetFacingH(sPos.hx,sPos.hy,sPos.hz) -- Set heading
+					ml_mesh_mgr.OMCThrottle = tickcount + 450 -- Pause omc update loop to allow camera to turn (timing untested)
+					Player:StopMovement()
+					ml_mesh_mgr.OMCStartPositionReached = true
+					return
+				end
+				
+				if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end -- Move towards start location
+				Player:SetFacingExact(sPos.x,sPos.y,sPos.z,true) -- Face start location (4th arg: true, turns camera)
+				return
+			end
+			
+		else
+			
+			if ( ml_mesh_mgr.OMCType == "OMC_JUMP" ) then
+				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+					-- We are at our start OMC point and are facing the correct direction, now start moving forward and jump
+					if ( not ml_global_information.Player_IsMoving ) then
+						Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+						
+						-- give the bot some time to gain speed before we jump for longer jumps
+						local dist = Distance2D(ePos.x,ePos.y,sPos.x,sPos.y)
+						local heightdiff = math.abs(ePos.z - pPos.z)
+						--d(heightdiff)
+						if ( dist > 125) then
+							ml_mesh_mgr.OMCThrottle = tickcount + 100
+							return
+						end
+						
+					end
+					
+					Player:SetFacingExact(ePos.x,ePos.y,ePos.z,true)
+					
+					if (ml_mesh_mgr.OMCJumpStartedTimer == 0 ) then
+						Player:Jump()
+						ml_mesh_mgr.OMCJumpStartedTimer = ml_global_information.Now
+					end
+					
+					local dist = Distance3D(ePos.x,ePos.y,ePos.z,pPos.x,pPos.y,pPos.z)
+					ml_global_information.Player_MovementState = Player:GetMovementState() or 1
+					
+					local dist2d = Distance2D(ePos.x,ePos.y,pPos.x,pPos.y)
+					
+					--d("DISTCHECK: "..tostring(dist).."  2d: "..tostring(dist2d))
+					
+					if ( dist < 25 or (dist < 35 and dist2d < 10)) then
+						d("OMC Endposition reached..")
+						ml_mesh_mgr.ResetOMC() -- turn off omc handler
+						ml_global_information.Lasttick = ml_global_information.Lasttick + 100 -- delay bot after doing omc
+					
+					elseif(ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Jumping and ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Falling and ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 350) then
+						d("We landed already")
+						ml_mesh_mgr.ResetOMC()
+						ml_global_information.Lasttick = ml_global_information.Lasttick + 100
+					
+					elseif( dist > 500 and  ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 1500)then
+						d("We failed to land on the enposition..use teleport maybe?")
+						ml_mesh_mgr.ResetOMC()
+					
+					elseif(ePos.z < sPos.z and ePos.z < pPos.z and math.abs(ePos.z - pPos.z) > 30 and ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 500 ) then
+						d("We felt below the OMCEndpoint height..means we missed the landingpoint..")
+						ml_mesh_mgr.ResetOMC()
+						ml_global_information.Lasttick = ml_global_information.Lasttick + 500
+					
+					else
+						return
+					end
+				end
+			
+			elseif ( ml_mesh_mgr.OMCType == "OMC_WALK" ) then
+				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
+					Player:SetFacingExact(ePos.x,ePos.y,ePos.z,true)
+					local dist = Distance3D(ePos.x,ePos.y,ePos.z,pPos.x,pPos.y,pPos.z)
+					if ( dist < 50 ) then
+						d("OMC Endposition reached..")
+						--ml_global_information.Lasttick = ml_global_information.Lasttick + 2000
+						ml_mesh_mgr.ResetOMC()
+					else
+						return
+					end
+				end
+			
+			elseif ( ml_mesh_mgr.OMCType == "OMC_LIFT" ) then
+				if ( ValidTable(ml_mesh_mgr.OMCStartPosition) ) then
+					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
+					local dist = Distance3D(sPos.x,sPos.y,sPos.z,pPos.x,pPos.y,pPos.z)
+					if ( dist > 250 ) then
+						d("OMC Endposition reached..")
+						ml_global_information.Lasttick = ml_global_information.Lasttick + 2000
+						ml_mesh_mgr.ResetOMC()
+					else
+						return
+					end
+				end
+			
+			elseif ( ml_mesh_mgr.OMCType == "OMC_TELEPORT" ) then
+				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+					if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
+					-- Add playerdetection when distance to OMCEndposition is > xxx
+					local enddist = Distance3D(ePos.x,ePos.y,ePos.z,pPos.x,pPos.y,pPos.z)
+					if ( enddist > 220 ) then
+						if ( TableSize(CharacterList("nearest,player,maxdistance=1500"))>0 ) then
+							ml_log("Need to teleport but players are nearby..waiting..")
+							ml_mesh_mgr.OMCThrottle = tickcount + 2000
+							ml_global_information.Lasttick = ml_global_information.Lasttick + 2000
+							Player:StopMovement()
+							return
+						end
+					end
+					Player:Teleport(ePos.x, ePos.y, ePos.z)
+					d("OMC Endposition reached..")
+					ml_mesh_mgr.ResetOMC()
+					
+				end
+			
+			elseif ( ml_mesh_mgr.OMCType == "OMC_INTERACT" ) then
+				d("OMC Endposition reached..")
+				Player:Interact()
+				ml_mesh_mgr.ResetOMC()
+			
+			elseif ( ml_mesh_mgr.OMCType == "OMC_PORTAL" ) then
+				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
+					local dist = Distance3D(ePos.x,ePos.y,ePos.z,pPos.x,pPos.y,pPos.z)
+					if ( dist < 100 ) then
+						d("OMC Endposition reached..")
+						ml_global_information.Lasttick = ml_global_information.Lasttick + 2000
+						ml_mesh_mgr.ResetOMC()
+					else
+						return
+					end
+				end
+			
+			end
+		
+		
+		end
+	end
+end
+
+function ml_mesh_mgr.ResetOMC()
+	Player:UnSetMovement(GW2.MOVEMENTTYPE.Forward)
+	Player:StopMovement()
+	ml_mesh_mgr.OMCStartPosition = nil
+	ml_mesh_mgr.OMCEndposition = nil
+	ml_mesh_mgr.OMCFacingDirection = nil
+	ml_mesh_mgr.OMCType = nil
+	ml_mesh_mgr.OMCIsHandled = false
+	ml_mesh_mgr.OMCStartPositionReached = false
+	ml_mesh_mgr.OMCJumpStartedTimer = 0
+	ml_mesh_mgr.OMCThrottle = 0
+end
+
+function ml_mesh_mgr.UnpackArgsForOMC( args )
+	if ( tonumber(args[3]) ~= nil and tonumber(args[4]) ~= nil and tonumber(args[5]) ~= nil -- OMC Start point
+	 and tonumber(args[6]) ~= nil and tonumber(args[7]) ~= nil and tonumber(args[8]) ~= nil -- OMC END point
+	 and tonumber(args[9]) ~= nil and tonumber(args[10]) ~= nil and tonumber(args[11]) ~= nil -- OMC Start point-Facing direction
+	 ) then
+		d("ml_mesh_mgr.UnpackArgsForOMC( args )")
+		d("facing dirs:")
+		d("hx = "..args[9])
+		d("hy = "..args[10])
+		d("hz = "..args[11])
+		return {tonumber(args[3]),tonumber(args[4]),tonumber(args[5]) },{ tonumber(args[6]),tonumber(args[7]),tonumber(args[8])},{tonumber(args[9]),tonumber(args[10]),tonumber(args[11])}
+	 else
+		d("No valid positions for OMC reveived! ")
+	 end
 end
 
 function ml_mesh_mgr.CreateSingleCell()
 	d("Creating a single cell outside the raster!")
-	local pPos = Player.pos
+	local pPos = ml_global_information.Player_Position
 	local newVertexCenter = { x=pPos.x, y=pPos.y, z=pPos.z }
 	d(MeshManager:CreateSingleCell( newVertexCenter))
 end
 
 -- Toggle meshmanager Window
 function ml_mesh_mgr.ToggleMenu()
-    if (ml_mesh_mgr.visible) then
+	if (ml_mesh_mgr.visible) then
         GUI_WindowVisible(ml_mesh_mgr.mainwindow.name,false)
         ml_mesh_mgr.visible = false
     else
@@ -793,8 +1081,8 @@ function ml_mesh_mgr.ToggleMenu()
         if (wnd) then
             GUI_MoveWindow( ml_mesh_mgr.mainwindow.name, wnd.x+wnd.width,wnd.y) 
             GUI_WindowVisible(ml_mesh_mgr.mainwindow.name,true)
-        end
-        
+			GUI_SizeWindow(ml_mesh_mgr.mainwindow.name,ml_mesh_mgr.mainwindow.w,ml_mesh_mgr.mainwindow.h)
+        end        
         ml_mesh_mgr.visible = true
     end
 end
@@ -827,9 +1115,10 @@ function ml_mesh_mgr.SetupNavNodes()
 		end
 	end
 end
+
+
 RegisterEventHandler("ToggleMeshManager", ml_mesh_mgr.ToggleMenu)
 RegisterEventHandler("GUI.Update",ml_mesh_mgr.GUIVarUpdate)
 RegisterEventHandler("Module.Initalize",ml_mesh_mgr.ModuleInit)
 RegisterEventHandler("Gameloop.MeshReady",ml_mesh_mgr.NavMeshUpdate)
 RegisterEventHandler("Gameloop.OffMeshConnectionReached",ml_mesh_mgr.HandleOMC)
-RegisterEventHandler("ChangeMeshDepth", function() RenderManager:ChangeMeshDepth() end)

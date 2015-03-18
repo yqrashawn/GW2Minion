@@ -8,17 +8,52 @@ function ml_cne_hub.clear_queue()
 	ml_cne_hub.execution_queue = {}
 end
 
+-- sorts the list acc. to the effect.priority 
+function effectCompare(w1,w2)
+    if w1.effect.priority > w2.effect.priority then
+        return true
+    end
+end
 function ml_cne_hub.eval_elements(elementList)
+	
+	-- Sort by priority,highest first
+	table.sort(elementList,effectCompare)
+			
+	for k, elem in pairs( elementList ) do
+
+		elem.eval = elem:evaluate()
+		if (gLogCNE == "1") then
+            ml_debug( "Evaluating:" .. tostring( elem.name ) .." Result: "..tostring( elem.eval ) )
+        end
+		
+		-- break when the first eval returned TRUE, since we wont execute more than one or a lower one anyway
+		if (elem.eval == true) then			
+			break
+		end
+	end
+end
+
+--[[ old version:
+function ml_cne_hub.eval_elements(elementList)
+	
+	-- Sort by priority,highest first
+	table.sort(elementList,effectCompare)
+			
 	for k, elem in pairs( elementList ) do
         if (gLogCNE == "1") then
             ml_debug( "Evaluating:" .. tostring( elem.name ) )
         end
 		elem.eval = elem:evaluate()
-    if (gLogCNE == "1") then
+		if (gLogCNE == "1") then
             ml_debug( elem.name .. " evaluation result:" .. tostring( elem.eval ) )
         end
+		
+		-- break when the first eval returned TRUE, since we wont execute more than one or a lower one anyway
+		if (elem.eval == true) then			
+			break
+		end
 	end
-end
+end--]]
 
 -- Queue effect. depending on the priority the effect will be executed
 function ml_cne_hub.queue_effect( effect )
@@ -31,6 +66,12 @@ end
 
 -- add a effect to be executed
 function ml_cne_hub.queue_to_execute( )
+	if(TableSize(ml_cne_hub.effect_queue) == 0) then
+		ml_global_information.idlePulseCount = ml_global_information.idlePulseCount + 1
+	else
+		ml_global_information.idlePulseCount = 0
+	end
+
 	local highestPriority = 0
 	-- Get the hightest priority in the effect_queue
 	for k, effect in pairs( ml_cne_hub.effect_queue ) do
@@ -68,13 +109,9 @@ function ml_cne_hub.execute()
 	for k, effect in pairs( ml_cne_hub.execution_queue ) do
 		if ( effect:isvalid() and effect:SafetyCheck() ) then
 			effect.execution_count = effect.execution_count + 1
-			--ml_global_information.LastEffect = effect
+			ml_global_information.LastEffect = effect
 			effect.last_execution = ml_global_information.Now
 			effect.first_execution = 0					
-			if ( gFFXIVMinionEffect ~= nil ) then
-				gFFXIVMinionEffect = self.name.."."..effect.name
-				GUI_SetStatusBar(effect.name)
-			end
             if (gLogCNE == "1") then
                 ml_debug( "execute:" .. effect.name .. " (P:"..effect.priority..")" )
             end

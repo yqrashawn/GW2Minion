@@ -128,6 +128,7 @@ end
 function ml_blacklist_mgr.UpdateEntries(tickcount)
     if (tickcount - ml_blacklist_mgr.ticks > 500) then
         ml_blacklist_mgr.ticks = tickcount
+		ml_blacklist.ClearBlacklists()
         local blacklist = ml_blacklist.blacklist[gBlacklistName]
         if (TableSize(blacklist) ~= ml_blacklist_mgr.currentEntryCount) then
             ml_blacklist_mgr.RefreshEntries()

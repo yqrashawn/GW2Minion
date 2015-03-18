@@ -14,7 +14,7 @@ ml_task_hub.shouldRun = false
 ml_task_hub.currentTask = nil
 ml_task_hub.thisTask = nil
 
-function ml_task_hub:Add(task, queueIndex, priority)	
+function ml_task_hub:Add(task, queueIndex, priority)
 	if( task ~= nil and queueIndex < 4 and priority < 2) then
 		ml_debug("Add: "..task.name.." to queue "..tostring(queueIndex).." with priority "..tostring(priority))
 		ml_task_hub.queues[queueIndex]:Add(task, priority)
@@ -35,16 +35,20 @@ function ml_task_hub:Update()
 		end
 		local currQueueId = 0
 		local didUpdate = false
+		
 		for index, queue in pairs(ml_task_hub.queues)  do
 			ml_task_hub:HandlePending( queue, prevQueue )
 			if ( queue:HasOrders() ) then
 				ml_task_hub.prevQueueId = index
-				queue:Update()
-				didUpdate = true
-				break
+				local result = queue:Update()
+				
+				-- dont leave the loop when a task was completed/failed to prevent the slow task-switching
+				if ( result == TS_PROGRESSING ) then
+					didUpdate = true
+					break
+				end
 			end
-		end
-		
+		end		
 		return didUpdate
 	end
 end
@@ -68,6 +72,15 @@ function ml_task_hub:CurrentTask()
 		
 		return currTask
 	end
+end
+
+function ml_task_hub:RootTask()
+    if (ml_task_hub.prevQueueId ~= nil) then
+		local task = ml_task_hub.queues[ml_task_hub.prevQueueId].rootTask
+		return task
+	end
+	
+	return nil
 end
 
 -- ThisTask() returns the task which is currently in its Update() function
@@ -105,9 +118,9 @@ function ml_task_hub:HandlePending(currQueue, prevQueue)
 			if ( prevQueue ~= nil ) then
 				if ( currQueue == prevQueue ) then
 					prevQueue:Terminate()
-				else
+				--else
 					--Not going to sleep the previous queue for now as I see no benefit
-					prevQueue:Sleep()
+					--prevQueue:Sleep()
 				end
 			end
 			currQueue:PromotePending()
@@ -123,9 +136,27 @@ function ml_task_hub:ClearQueues()
 	end
 end
 
+-- on/off switch
+function ml_task_hub.ToggleRun()	
+	if ( ml_task_hub.shouldRun ) then
+		ml_task_hub.shouldRun = false
+		gBotRunning = "0"
+	else
+		ml_task_hub.shouldRun = true
+		gBotRunning = "1"
+	end	
+	-- don't reset information when we stop or else we lose debugging info
+	if (ml_task_hub.shouldRun and ml_global_information.UnstuckTimer == 0) then
+		ml_global_information.Reset()
+	else
+		ml_global_information.Stop()
+	end
+	--ml_debug("Task Hub Update: "..tostring(ml_task_hub.shouldRun))	
+end
+
 function ml_task_hub:ShowDebugWindow()
 	if ( self.DebugWindowCreated == nil ) then
-		d( "Opening Hub Debug Window" )
+		wt_debug( "Opening Hub Debug Window" )
 		GUI_NewWindow( "ML_TASK_QUEUES", 10, 10, 100, 50 + TableSize( 3 ) * 14)
 
 		for k, queue in pairs( ml_task_hub.queues ) do
@@ -150,8 +181,8 @@ function ml_task_hub.HandleStateDebugButtons( Event, Button )
 					if ( state.name == k ) then
 						for ek, elmt in pairs( state.kelement_list ) do
 							if ( elmt.name == v ) then
-								d( "Executing elmt:evaluate() = " .. tostring( elmt:evaluate() ) )
-								d( "Executing effect" )
+								wt_debug( "Executing elmt:evaluate() = " .. tostring( elmt:evaluate() ) )
+								wt_debug( "Executing effect" )
 								elmt.effect:execute()
 							end
 						end
@@ -171,3 +202,4 @@ function ml_task_hub.Stop()
 end
 
 RegisterEventHandler( "GUI_REQUEST_RUN_TOGGLE", ml_task_hub.ToggleRun )
+RegisterEventHandler( "GW2MINION.toggle", ml_task_hub.ToggleRun )
