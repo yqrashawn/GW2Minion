@@ -1353,7 +1353,7 @@ function profilePrototype:UpdateSkillInfo()
 						_private.currentHealSkills[newHealPriority].maxCooldown = aSkill.cooldownmax
 						newHealPriority = newHealPriority + 1
 					end
-					local canCastCheck = (ValidTable(ml_global_information.Player_Target) == false or _private.CanCast(skill,ml_global_information.Player_Target))
+					local canCastCheck = (ValidTable(ml_global_information.Player_Target) == false or ml_global_information.Player_Target.health == nil or _private.CanCast(skill,ml_global_information.Player_Target))
 					if (skill.skill.setRange == "1" and canCastCheck) then
 						maxRange = (skill.skill.maxRange > 0 and skill.skill.maxRange > maxRange and skill.skill.maxRange or maxRange)
 						maxRange = (skill.skill.maxRange == 0 and skill.skill.radius > 0 and skill.skill.radius > maxRange and skill.skill.radius or maxRange)
