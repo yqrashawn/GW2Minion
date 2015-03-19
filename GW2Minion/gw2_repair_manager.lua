@@ -5,7 +5,7 @@ gw2_repair_manager.brokenLimit = 1
 function gw2_repair_manager.getClosestRepairMarker(nearby)
 	local closestLocation = nil
 	local listArg = (nearby == true and ",maxdistance=4000" or "")
-	local markers = MapMarkerList("onmesh,nearest,worldmarkertype=24,markertype=25,contentID="..GW2.MAPMARKER.Repair..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorsrepair")))
+	local markers = MapMarkerList("onmesh,nearest,worldmarkertype="..ml_global_information.WorldMarkerType..",contentID="..GW2.MAPMARKER.Repair..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorsrepair")))
 	for _,repair in pairs(markers) do
 		if (closestLocation == nil or closestLocation.distance > repair.distance) then
 			if (nearby == true and repair.pathdistance < 4000) then
