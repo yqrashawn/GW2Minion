@@ -823,8 +823,8 @@ function _private.CanCast(skill,target)
 			local maxdistance = (skill.target.enemyRangeMax == 0 and "" or "maxdistance=" .. skill.target.enemyRangeMax .. ",")
 			if (skill.skill.healing == "0" and (target == nil or TableSize(CharacterList("alive,attackable," .. maxdistance .. "distanceto=" .. target.id .. ",exclude=" .. target.id)) < skill.target.enemyNearCount)) then return false end
 		end
-		if (skill.target.moving == "Yes" and (skill.skill.healing == "0" and (target == nil or target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving ))) then return false end
-		if (skill.target.moving == "No" and (skill.skill.healing == "0" and (target == nil or target.movementstate == GW2.MOVEMENTSTATE.GroundMoving ))) then return false end
+		if (skill.target.moving == "Moving" and (skill.skill.healing == "0" and (target == nil or target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving ))) then return false end
+		if (skill.target.moving == "NotMoving" and (skill.skill.healing == "0" and (target == nil or target.movementstate == GW2.MOVEMENTSTATE.GroundMoving ))) then return false end
 		if (skill.target.hasBuffs ~= "" and (skill.skill.healing == "0" and (target == nil or targetBuffList and not gw2_common_functions.BufflistHasBuffs(targetBuffList, tostring(skill.target.hasBuffs))))) then return false end
 		if (skill.target.hasNotBuffs ~= "" and (skill.skill.healing == "0" and (target == nil or targetBuffList and gw2_common_functions.BufflistHasBuffs(targetBuffList, tostring(skill.target.hasNotBuffs))))) then return false end
 		if (skill.target.conditionCount > 0 and (skill.skill.healing == "0" and (target == nil or targetBuffList and gw2_common_functions.CountConditions(targetBuffList) <= skill.target.conditionCount))) then return false end

@@ -500,7 +500,7 @@ function e_Gathering:execute()
 					if (gadget.isInInteractRange) then
 						gw2_common_functions.NecroLeaveDeathshroud()
 						-- Check if in water and prevent stuck.
-						if (Player.swimming == GW2.SWIMSTATE.Swimming) then
+						if (ml_global_information.Player_SwimState == GW2.SWIMSTATE.Swimming) then
 							Player:SetMovement(0)
 							Player:SetMovement(4)
 							e_Gathering.circling = true

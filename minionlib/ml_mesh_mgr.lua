@@ -983,7 +983,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 					local dist = Distance3D(sPos.x,sPos.y,sPos.z,pPos.x,pPos.y,pPos.z)
 					if ( dist > 250 ) then
 						d("OMC Endposition reached..")
-						ml_global_information.Lasttick = ml_global_information.Lasttick + 2000
+						--ml_global_information.Lasttick = ml_global_information.Lasttick + 200
 						ml_mesh_mgr.ResetOMC()
 					else
 						return
@@ -999,7 +999,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 						if ( TableSize(CharacterList("nearest,player,maxdistance=1500"))>0 ) then
 							ml_log("Need to teleport but players are nearby..waiting..")
 							ml_mesh_mgr.OMCThrottle = tickcount + 2000
-							ml_global_information.Lasttick = ml_global_information.Lasttick + 2000
+							ml_global_information.Lasttick = ml_global_information.Lasttick + 1500
 							Player:StopMovement()
 							return
 						end

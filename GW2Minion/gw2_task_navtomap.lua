@@ -29,6 +29,12 @@ function gw2_task_navtomap:Process()
 		-- We did not yet arrive in our targetmap
 		if ( ml_task_hub:CurrentTask().targetMapID ~= ml_global_information.CurrentMapID ) then
 			
+			-- Exit instance
+			if (gw2_common_functions.PlayerInInstance()) then
+				Player:LeaveInstance()
+				return ml_log("Exiting instance.")
+			end
+			
 			-- Waypoint Usage
 			if (ml_task_hub:CurrentTask().useWaypoint == true and Player:GetWalletEntry(1) > 500) then
 				local waypoint = {}
@@ -40,13 +46,14 @@ function gw2_task_navtomap:Process()
 						waypoint = wpList[math.random(1,TableSize(wpList))]
 					end
 				end
-				if (ValidTable(waypoint)) then
+				if (ValidTable(waypoint) and ml_global_information.Player_InCombat == false) then
 					Player:TeleportToWaypoint(waypoint.id)
 					ml_global_information.Wait(5000)
 					ml_task_hub:CurrentTask().useWaypoint = false
 					return ml_log("Using waypoint :" .. waypoint.name .. ".")
+				elseif (ValidTable(waypoint) == false) then
+					ml_task_hub:CurrentTask().useWaypoint = false
 				end
-				ml_task_hub:CurrentTask().useWaypoint = false
 			end
 			
 			local nodedata = ml_nav_manager.GetNextPathPos(	ml_global_information.Player_Position, ml_global_information.CurrentMapID, ml_task_hub:CurrentTask().targetMapID )
@@ -117,6 +124,7 @@ function gw2_task_navtomap:Process()
 											
 										else
 											Player:OpenInstance()
+											d("Opening instance.")
 										end
 										
 									else
