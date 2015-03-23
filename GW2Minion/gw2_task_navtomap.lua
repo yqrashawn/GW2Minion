@@ -108,12 +108,13 @@ function gw2_task_navtomap:Process()
 										end
 																				
 										if ( nodedata.mode ~= nil and nodedata.mode == "Exploration" and modeID ~= 0 ) then
-											Player:OpenInstance(modeID,0)
 											d("Opening new Exploration instance.")
+											Player:OpenInstance(modeID,0)											
 											
 										elseif ( nodedata.mode ~= nil and nodedata.mode == "Story" and modeID ~= 0 ) then
-											Player:OpenInstance(modeID,0)
 											d("Opening new Story instance.")
+											Player:OpenInstance(modeID,0)
+											
 										else
 											Player:OpenInstance()
 										end
