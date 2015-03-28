@@ -198,6 +198,8 @@ function gw2_salvage_manager.CreateDialog(filterID)
 		filterID = string.gsub(filterID, "SalvageManager_Filter", "")
 		filterID = tonumber(filterID)
 		gw2_salvage_manager.currentFilter = filterID
+	else
+		gw2_salvage_manager.currentFilter = nil
 	end
 	local dialog = gw2_dialog_manager:GetDialog(GetString("newsalvagefilter"))
 	if (dialog == nil) then

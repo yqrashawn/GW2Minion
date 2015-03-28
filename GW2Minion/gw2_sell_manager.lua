@@ -196,6 +196,8 @@ function gw2_sell_manager.CreateDialog(filterID)
 		filterID = string.gsub(filterID, "SellManager_Filter", "")
 		filterID = tonumber(filterID)
 		gw2_sell_manager.currentFilter = filterID
+	else
+		gw2_sell_manager.currentFilter = nil
 	end
 	local dialog = gw2_dialog_manager:GetDialog(GetString("newsellfilter"))
 	if (dialog == nil) then
