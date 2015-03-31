@@ -420,6 +420,7 @@ function gw2_common_functions.GetTargetByID(targetID)
 	local target = (CharacterList:Get(targetID) or GadgetList:Get(targetID) or nil)
 	return target
 end
+
 -- return true/false if player is in an instance (only works for dungeons and normal instances, not while using "home instance stone" or "hall of monuments portal stone") 
 function gw2_common_functions.PlayerInInstance()
 	local partyInfo = ml_global_information.Player_Party

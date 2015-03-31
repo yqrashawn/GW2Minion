@@ -1021,8 +1021,8 @@ function _private.Evade()
 				end
 				if (targetOfTarget == Player.id and skillofTarget ~= 0 and skillofTarget ~= _private.lastEvadedSkill.skillID) then
 					--GW2.DODGEDIRECTIONS = {Backward = 0, BackwardLeft = 1, BackwardRight = 2, Forward = 3, ForwardLeft = 4, ForwardRight = 5, Left = 6, Right = 7}
-					local direction = {[1]=1,[2]=2,[3]=0,[4]=6,[5]=7,[6]=6,[7]=7,}
-					local dir = math.random(1,#direction)
+					local direction = {[0]=0,[1]=1,[2]=2,[3]=0,[4]=6,[5]=7,[6]=6,[7]=7,}
+					local dir = math.random(0,#direction)
 					if (_private.CanMoveDirection(direction[dir],320)) then
 						_private.lastEvadedSkill.skillID = skillofTarget
 						Player:Evade(direction[dir])
@@ -1040,10 +1040,14 @@ end
 
 function _private.CanMoveDirection(dir,distance)
 	if (tonumber(dir) and tonumber(distance)) then
+		--GW2.DODGEDIRECTIONS = {Backward = 0, BackwardLeft = 1, BackwardRight = 2, Forward = 3, ForwardLeft = 4, ForwardRight = 5, Left = 6, Right = 7}
+		-- forward = 0, backward = 180, right = 90, left = 270, forwardright = 45, forwardleft = 315, backwardright = 225, backwardleft = 135 (all in degrees)
+		--local dirs = {Forward = 0,ForwardLeft = 315, ForwardRight = 45, Backward = 180, BackwardLeft = 135, BackwardRight = 225, Left = 270, Right = 90,}
+		local dirs = {[0]=180,[1]=135,[2]=225,[3]=0,[4]=315,[5]=45,[6]=270,[7]=90,}
 		local timesToCheck = 15
 		local checkDist = distance/timesToCheck
 		for step=1,timesToCheck do
-			if (Player:CanMoveDirection(dir,(checkDist*step)) == false) then
+			if (Player:CanMoveDirection(dirs[dir],(checkDist*step)) == false) then
 				return false
 			end
 		end
