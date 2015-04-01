@@ -237,7 +237,7 @@ end
 function gw2_buy_manager.getClosestBuyMarker(nearby)
 	local closestLocation = nil
 	local listArg = (nearby == true and ",maxdistance=4000" or "")
-	local markers = MapMarkerList("onmesh,nearest,worldmarkertype="..ml_global_information.WorldMarkerType..",contentID="..GW2.MAPMARKER.Merchant..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorsbuy")))
+	local markers = MapMarkerList("onmesh,nearest,contentID="..GW2.MAPMARKER.Merchant..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorsbuy")))
 	for _,merchant in pairs(markers) do
 		if (closestLocation == nil or closestLocation.distance > merchant.distance) then
 			if (nearby == true and merchant.pathdistance < 4000) then

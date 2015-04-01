@@ -320,7 +320,7 @@ end
 function gw2_sell_manager.getClosestSellMarker(nearby)
 	local closestLocation = nil
 	local listArg = (nearby == true and ",maxdistance=5000" or "")
-	local markers = MapMarkerList("onmesh,nearest,worldmarkertype="..ml_global_information.WorldMarkerType..","..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorssell")))
+	local markers = MapMarkerList("onmesh,nearest,"..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorssell")))
 	if ( TableSize(markers) > 0 ) then
 		local i,marker = next (markers)
 		while ( i and marker ) do

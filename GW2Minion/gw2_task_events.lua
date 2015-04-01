@@ -105,7 +105,7 @@ function gw2_task_events.CanTaskRun_TM()
 	ml_task_hub:CurrentTask().isTMTask = true
 	ml_task_hub:CurrentTask().eventID = tonumber(ml_task_hub:CurrentTask().eventID)
 	if ( ml_task_hub:CurrentTask().eventID and tonumber(ml_task_hub:CurrentTask().eventID)>0) then
-		local evList = MapMarkerList("isevent,onmesh,worldmarkertype="..ml_global_information.WorldMarkerType..",exclude_eventid="..ml_blacklist.GetExcludeString(GetString("event")))
+		local evList = MapMarkerList("isevent,onmesh,exclude_eventid="..ml_blacklist.GetExcludeString(GetString("event")))
 		local i,e = next(evList)
 		while ( i and e ) do
 			if ( e.eventID == tonumber(ml_task_hub:CurrentTask().eventID)) then			
@@ -136,7 +136,7 @@ e_doEvents = inheritsFrom( ml_effect )
 e_doEvents.currentEvent = nil
 function c_doEvents:evaluate()	
 	if ( gDoEvents == "1" ) then
-		local evList = MapMarkerList("nearest,isevent,onmesh,worldmarkertype="..ml_global_information.WorldMarkerType..",exclude_eventid="..ml_blacklist.GetExcludeString(GetString("event")))
+		local evList = MapMarkerList("nearest,isevent,onmesh,exclude_eventid="..ml_blacklist.GetExcludeString(GetString("event")))
 		local i,e = next(evList)
 		if ( i and e ) then
 			local evi = e.eventinfo
