@@ -570,7 +570,7 @@ function e_fleeToSafety:execute()
 				c_fleeToSafety.safespot = safespot.pos
 			end
 		end
-		if ( c_fleeToSafety.safespot ) then
+		if ( c_fleeToSafety.safespot and not gw2_unstuck.HandleStuck() ) then
 			gw2_common_functions.MoveOnlyStraightForward()
 			local pos = c_fleeToSafety.safespot.pos
 			Player:MoveTo(c_fleeToSafety.safespot.x,c_fleeToSafety.safespot.y,c_fleeToSafety.safespot.z,50,false,true,true)
