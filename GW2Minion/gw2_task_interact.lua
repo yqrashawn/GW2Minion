@@ -133,88 +133,79 @@ e_InteractObject.lastTargetID = nil
 e_InteractObject.lastQueryTmr = 0
 e_InteractObject.WasChecked = false -- to make sure handleinteract is done before enemy checks
 function c_InteractObject:evaluate()
+	if ( ValidString(ml_task_hub:CurrentTask().interactContentIDs) ) then
+		-- to prevent hammering the "shortestpath"
+		if ( e_InteractObject.lastTarget ~= nil and e_InteractObject.lastTargetID ~= nil and TimeSince(e_InteractObject.lastQueryTmr) < 2000 ) then
+			if ( ValidTable(CharacterList:Get(e_InteractObject.lastTargetID)) or ValidTable(GadgetList:Get(e_InteractObject.lastTargetID)) ) then
+				return true
+			end
+		end
 
-	-- to prevent hammering the "shortestpath"
-	if ( e_InteractObject.lastTarget ~= nil and e_InteractObject.lastTargetID ~= nil and TimeSince(e_InteractObject.lastQueryTmr) < 2000 ) then
-		if ( ValidTable(CharacterList:Get(e_InteractObject.lastTargetID)) or ValidTable(GadgetList:Get(e_InteractObject.lastTargetID)) ) then			
-			return true		
-		end	
-	end
-
-	-- dont spam it when no target was found
-	if (TimeSince(e_InteractObject.lastQueryTmr) < 1000) then e_InteractObject.WasChecked = false return false end 
-	e_InteractObject.lastQueryTmr = ml_global_information.Now
-	e_InteractObject.WasChecked = true
-	
-	if ( ml_task_hub:CurrentTask().interactContentIDs ~= nil and ml_task_hub:CurrentTask().interactContentIDs ~= "" and ValidString(ml_task_hub:CurrentTask().interactContentIDs) ) then
-				
-		-- Lets pray that no dumbnut entered bullshit into these ContentID fields -.-
+		-- dont spam it when no target was found
+		if (TimeSince(e_InteractObject.lastQueryTmr) < 1000) then e_InteractObject.WasChecked = false return false end 
+		e_InteractObject.lastQueryTmr = ml_global_information.Now
+		e_InteractObject.WasChecked = true
 		
 		-- Check nearest interactable target 
 		local nearTarget = Player:GetInteractableTarget()
-
 		if ( nearTarget ) then 
 			local contentID = nearTarget.contentID
-			if ( contentID ~= nil and string.find(ml_task_hub:CurrentTask().interactContentIDs,tostring(contentID)) ~= nil ) then				
+			if ( contentID ~= nil and string.find(ml_task_hub:CurrentTask().interactContentIDs,tostring(contentID)) ~= nil ) then
 				e_InteractObject.lastTarget = nearTarget 
-				e_InteractObject.lastTargetID = nearTarget.id					
-				return true		
-			end			
+				e_InteractObject.lastTargetID = nearTarget.id
+				return true
+			end
 		end
 		
-		-- if we are here and havent found anything to interact with, task done
-		d("Nothing to interact nearby, finishing task")
-		ml_task_hub:CurrentTask().completed = true
-		
-		--[[ Search Charlist and Gadgetlist for the wanted targets
+		--Search Charlist and Gadgetlist for the wanted targets
+		local radius = tonumber(ml_task_hub:CurrentTask().radius)
+		if ( radius == 0 ) then radius = 3500 end
 		local TargetList = CharacterList("nearest,interactable,selectable,contentID="..string.gsub(ml_task_hub:CurrentTask().interactContentIDs,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
-			if (id and entry ) then			
-				e_InteractObject.lastTarget = entry 
-				e_InteractObject.lastTargetID = id					
-				return true				
+			if (id and entry ) then
+				local tPos = entry.pos
+				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+					e_InteractObject.lastTarget = entry 
+					e_InteractObject.lastTargetID = id
+					return true
+				end
 			end
-		end	
+		end
 		
 		local TargetList = GadgetList("nearest,interactable,selectable,contentID="..string.gsub(ml_task_hub:CurrentTask().interactContentIDs,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
-			if (id and entry ) then			
-				e_InteractObject.lastTarget = entry 
-				e_InteractObject.lastTargetID = id
-				return true				
+			if (id and entry ) then
+				local tPos = entry.pos
+					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+					e_InteractObject.lastTarget = entry 
+					e_InteractObject.lastTargetID = id
+					return true
+				end
 			end
-		end	]]		
-	end
-	
-	--[[if ( ml_task_hub:CurrentTask().interactContentID2s ~= nil  and ml_task_hub:CurrentTask().interactContentID2s ~= "" and ValidString(ml_task_hub:CurrentTask().interactContentID2s) ) then
-		-- Search Gadgetlist for the wanted targets	
-		local TargetList = GadgetList("nearest,interactable,selectable,contentID2="..string.gsub(ml_task_hub:CurrentTask().interactContentID2s,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
-		if ( TargetList ) then
-			local id,entry = next(TargetList)
-			if (id and entry ) then				
-				e_InteractObject.lastTarget = entry
-				e_InteractObject.lastTargetID = id
-				return true				
+		end
+		
+		if ( ml_task_hub:CurrentTask().interactContentID2s ~= nil  and ml_task_hub:CurrentTask().interactContentID2s ~= "" and ValidString(ml_task_hub:CurrentTask().interactContentID2s) ) then
+			-- Search Gadgetlist for the wanted targets	
+			local TargetList = GadgetList("nearest,interactable,selectable,contentID2="..string.gsub(ml_task_hub:CurrentTask().interactContentID2s,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+			if ( TargetList ) then
+				local id,entry = next(TargetList)
+				if (id and entry ) then
+					local tPos = entry.pos
+					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+						e_InteractObject.lastTarget = entry
+						e_InteractObject.lastTargetID = id
+						return true
+					end
+				end
 			end
-		end	
-	end]]
-	
-	
-	local nearTarget = Player:GetInteractableTarget()
-
-		if ( nearTarget ) then						
-			e_InteractObject.lastTarget = nearTarget 
-			e_InteractObject.lastTargetID = nearTarget.id					
-			return true				
 		end
 		
 		-- if we are here and havent found anything to interact with, task done
 		d("Nothing to interact nearby, finishing task")
 		ml_task_hub:CurrentTask().completed = true
-	
-	
+	end
 	e_InteractObject.lastTarget = nil
 	e_InteractObject.lastTargetID = nil
 	e_InteractObject.lastQueryTmr = ml_global_information.Now
