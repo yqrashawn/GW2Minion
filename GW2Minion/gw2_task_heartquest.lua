@@ -549,7 +549,7 @@ function c_PickupNUseOnTarget:evaluate()
 			
 				-- Check Gadget & Charlist for target
 				local radius = tonumber(ml_task_hub:CurrentTask().radius)
-				if ( radius == 0 ) then maxradius = 8000 end
+				if ( radius == 0 ) then radius = 8000 end
 				local TargetList = CharacterList("shortestpath,onmesh,selectable,alive,contentID="..ml_task_hub:CurrentTask().pickupTargetIDs)
 				if ( TargetList ) then
 					local id,entry = next(TargetList)
@@ -810,7 +810,7 @@ function c_HQHandleKillEnemy:evaluate()
 		
 		-- Search Charlist and Gadgetlist for the wanted enemies
 		local radius = tonumber(ml_task_hub:CurrentTask().radius)
-		if ( radius == 0 ) then maxradius = 8000 end
+		if ( radius == 0 ) then radius = 8000 end
 		local TargetList = CharacterList("shortestpath,onmesh,attackable,selectable,alive,contentID="..string.gsub(ml_task_hub:CurrentTask().enemyContentIDs,",",";"))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
