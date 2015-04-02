@@ -796,7 +796,6 @@ function _private.CanCast(skill,target)
 		--if (skill.skill.maxRange > 0 and (skill.skill.healing == "0" and (target == nil or (target.distance) > (skill.skill.maxRange < 154 and 154 or skill.skill.maxRange)))) then return false end
 		if (skill.skill.maxRange == 0 and skill.skill.radius > 0 and (skill.skill.healing == "0" and (target == nil or target.distance > skill.skill.radius))) then return false end
 		-- player attributes
-		local playerBuffList = Player.buffs
 		if (skill.player.combatState == "InCombat" and ml_global_information.Player_InCombat == false ) then return false end
 		if (skill.player.combatState == "OutCombat" and ml_global_information.Player_InCombat == true ) then return false end
 		if (skill.player.minHP > 0 and ml_global_information.Player_Health.percent > skill.player.minHP) then return false end
@@ -809,10 +808,11 @@ function _private.CanCast(skill,target)
 			local maxdistance = (skill.player.allyRangeMax == 0 and "" or "maxdistance=" .. skill.player.allyRangeMax .. ",")
 			if (TableSize(CharacterList("friendly," .. maxdistance .. "distanceto=" .. Player.id .. ",exclude=" .. Player.id)) < skill.player.allyNearCount) then return false end
 		end
-		if (skill.player.hasBuffs ~= "" and playerBuffList and not gw2_common_functions.BufflistHasBuffs(playerBuffList, tostring(skill.player.hasBuffs))) then return false end
-		if (skill.player.hasNotBuffs ~= "" and playerBuffList and gw2_common_functions.BufflistHasBuffs(playerBuffList, tostring(skill.player.hasNotBuffs))) then return false end
-		if (skill.player.conditionCount > 0 and playerBuffList and gw2_common_functions.CountConditions(playerBuffList) <= skill.player.conditionCount) then return false end
-		if (skill.player.boonCount > 0 and playerBuffList and gw2_common_functions.CountBoons(playerBuffList) <= skill.player.boonCount) then return false end
+		local playerBuffList = Player.buffs
+		if (skill.player.hasBuffs ~= "" and ValidTable(playerBuffList) and not gw2_common_functions.BufflistHasBuffs(playerBuffList, tostring(skill.player.hasBuffs))) then return false end
+		if (skill.player.hasNotBuffs ~= "" and ValidTable(playerBuffList) and gw2_common_functions.BufflistHasBuffs(playerBuffList, tostring(skill.player.hasNotBuffs))) then return false end
+		if (skill.player.conditionCount > 0 and ValidTable(playerBuffList) and gw2_common_functions.CountConditions(playerBuffList) < skill.player.conditionCount) then return false end
+		if (skill.player.boonCount > 0 and ValidTable(playerBuffList) and gw2_common_functions.CountBoons(playerBuffList) < skill.player.boonCount) then return false end
 		if (skill.player.moving == "Yes" and (skill.skill.healing == "0" and ml_global_information.Player_MovementState == GW2.MOVEMENTSTATE.GroundNotMoving )) then return false end
 		if (skill.player.moving == "No" and (skill.skill.healing == "0" and ml_global_information.Player_MovementState == GW2.MOVEMENTSTATE.GroundMoving )) then return false end
 		-- target attributes
