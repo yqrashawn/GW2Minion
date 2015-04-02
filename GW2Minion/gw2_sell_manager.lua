@@ -416,7 +416,7 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 				local newTask = gw2_task_moveto.Create()
 				newTask.targetPos = pos
 				newTask.targetID = vendorMarker.characterID
-				newTask.targetType = "markerCharacterID"
+				newTask.targetType = "characterID"
 				newTask.name = "MoveTo Vendor(SELL)"
 				newTask.useWaypoint = true
 				ml_task_hub:CurrentTask():AddSubTask(newTask)

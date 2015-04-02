@@ -79,7 +79,7 @@ function gw2_task_moveto:Process()
 						ml_task_hub:CurrentTask().completed = true
 					end
 
-				elseif ( ml_task_hub:CurrentTask().targetType == "markerCharacterID" ) then
+				elseif ( ml_task_hub:CurrentTask().targetType == "characterID" ) then -- either character OR gadget ID will work here (never know if a marker.characterID is gadget or char.)
 
 					local target = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
 					if (target == nil) then

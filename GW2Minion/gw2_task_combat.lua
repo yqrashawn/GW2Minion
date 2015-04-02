@@ -90,7 +90,7 @@ function e_AttackTarget:execute()
 	ml_log("e_AttackTarget: ")
 	if ( ml_task_hub:CurrentTask().targetID ~= nil ) then 
 		
-		local target = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
+		local target = (CharacterList:Get(ml_task_hub:CurrentTask().targetID) or GadgetList:Get(ml_task_hub:CurrentTask().targetID))
 		
 		if (ValidTable(target) and target.attackable and target.alive and target.onmesh) then
 			if ( ml_global_information.ShowDebug ) then 

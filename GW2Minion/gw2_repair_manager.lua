@@ -73,7 +73,7 @@ function gw2_repair_manager.RepairAtVendor(marker)
 				local newTask = gw2_task_moveto.Create()
 				newTask.targetPos = pos
 				newTask.targetID = marker.characterID
-				newTask.targetType = "markerCharacterID"
+				newTask.targetType = "characterID"
 				newTask.name = "MoveTo Vendor(Repair)"
 				newTask.useWaypoint = true
 				ml_task_hub:CurrentTask():AddSubTask(newTask)

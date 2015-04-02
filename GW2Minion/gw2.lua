@@ -406,6 +406,7 @@ function gw2minion.ToggleBot(arg)
 				ml_global_information.Running = true
 				ml_task_hub.shouldRun = true
 				Settings.GW2Minion.gBotRunning = "1"
+				gBotRunning = Settings.GW2Minion.gBotRunning
 				sb:SetText(GetString("stopBot"))
 				gw2_unstuck.Start()
 			else
@@ -413,6 +414,7 @@ function gw2minion.ToggleBot(arg)
 				ml_global_information.Running = false
 				ml_task_hub.shouldRun = false		
 				Settings.GW2Minion.gBotRunning = "0"
+				gBotRunning = Settings.GW2Minion.gBotRunning
 				ml_global_information.Stop()
 				ml_global_information.Reset()				
 				sb:SetText(GetString("startBot"))
