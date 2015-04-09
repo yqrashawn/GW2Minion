@@ -29,7 +29,7 @@ function gw2_task_moveto.Create()
 
 	newinst.terminateOnDeath = true
 	newinst.terminateInCombat = false
-	newinst.terminateOnOffMeshCounter = 0
+	newinst.terminateOnOffMeshTime = 0
 	newinst.terminateOnPlayerHPBelowPercent = 0
 	newinst.FailedNavAttemptsCounter = 0
 
@@ -61,11 +61,12 @@ function gw2_task_moveto:Process()
 
 				if ( ml_task_hub:CurrentTask().targetType == "character" ) then
 					local character = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
-					if ( character ~= nil and ml_task_hub:CurrentTask().terminateOnOffMeshCounter < 10) then
+					if ( character ~= nil and (ml_task_hub:CurrentTask().terminateOnOffMeshTime == 0 or TimeSince(ml_task_hub:CurrentTask().terminateOnOffMeshTime) < 10000)) then
 						if (character.onmesh) then
 							ml_task_hub:CurrentTask().targetPos = character.pos
-						else
-							ml_task_hub:CurrentTask().terminateOnOffMeshCounter = ml_task_hub:CurrentTask().terminateOnOffMeshCounter + 1
+							ml_task_hub:CurrentTask().terminateOnOffMeshTime = ml_global_information.Now
+						elseif (ml_task_hub:CurrentTask().terminateOnOffMeshTime == 0) then
+							ml_task_hub:CurrentTask().terminateOnOffMeshTime = ml_global_information.Now
 						end
 
 					else
@@ -76,11 +77,12 @@ function gw2_task_moveto:Process()
 				elseif ( ml_task_hub:CurrentTask().targetType == "gadget" ) then
 
 					local gadget = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
-					if ( gadget ~= nil and ml_task_hub:CurrentTask().terminateOnOffMeshCounter < 10) then
+					if ( gadget ~= nil and (ml_task_hub:CurrentTask().terminateOnOffMeshTime == 0 or TimeSince(ml_task_hub:CurrentTask().terminateOnOffMeshTime) < 10000)) then
 						if (gadget.onmesh) then
 							ml_task_hub:CurrentTask().targetPos = gadget.pos
-						else
-							ml_task_hub:CurrentTask().terminateOnOffMeshCounter = ml_task_hub:CurrentTask().terminateOnOffMeshCounter + 1
+							ml_task_hub:CurrentTask().terminateOnOffMeshTime = ml_global_information.Now
+						elseif (ml_task_hub:CurrentTask().terminateOnOffMeshTime == 0) then
+							ml_task_hub:CurrentTask().terminateOnOffMeshTime = ml_global_information.Now
 						end
 
 					else
@@ -94,11 +96,12 @@ function gw2_task_moveto:Process()
 					if (target == nil) then
 						target = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
 					end
-					if ( target ~= nil and ml_task_hub:CurrentTask().terminateOnOffMeshCounter < 10) then
-						if (gadget.onmesh) then
+					if ( target ~= nil and (ml_task_hub:CurrentTask().terminateOnOffMeshTime == 0 or TimeSince(ml_task_hub:CurrentTask().terminateOnOffMeshTime) < 10000)) then
+						if (target.onmesh) then
 							ml_task_hub:CurrentTask().targetPos = target.pos
-						else
-							ml_task_hub:CurrentTask().terminateOnOffMeshCounter = ml_task_hub:CurrentTask().terminateOnOffMeshCounter + 1
+							ml_task_hub:CurrentTask().terminateOnOffMeshTime = ml_global_information.Now
+						elseif (ml_task_hub:CurrentTask().terminateOnOffMeshTime == 0) then
+							ml_task_hub:CurrentTask().terminateOnOffMeshTime = ml_global_information.Now
 						end
 
 					else
