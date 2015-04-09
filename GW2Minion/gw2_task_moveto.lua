@@ -99,6 +99,7 @@ function gw2_task_moveto:Process()
 					if ( target ~= nil and (ml_task_hub:CurrentTask().terminateOnOffMeshTime == 0 or TimeSince(ml_task_hub:CurrentTask().terminateOnOffMeshTime) < 10000)) then
 						if (target.onmesh) then
 							ml_task_hub:CurrentTask().targetPos = target.pos
+							ml_task_hub:CurrentTask().targetRadius = target.radius
 							ml_task_hub:CurrentTask().terminateOnOffMeshTime = ml_global_information.Now
 						elseif (ml_task_hub:CurrentTask().terminateOnOffMeshTime == 0) then
 							ml_task_hub:CurrentTask().terminateOnOffMeshTime = ml_global_information.Now
