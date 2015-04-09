@@ -38,9 +38,9 @@ end
 
 gw2_common_tasks.salvageItemsLastUsed = 0
 function gw2_common_tasks.SalvageItems(tickcount)
-	if( TimeSince(gw2_common_tasks.salvageItemsLastUsed) > 1050 and c_salvage:evaluate() and ml_global_information.Player_Alive) then
+	if( TimeSince(gw2_common_tasks.salvageItemsLastUsed) > 1050 and ml_global_information.Player_InCombat == false and ml_global_information.Player_Alive) then
 		gw2_common_tasks.salvageItemsLastUsed = tickcount + math.random(500,1500)
-		e_salvage:execute()
+		gw2_salvage_manager.salvage()
 	end
 end
 

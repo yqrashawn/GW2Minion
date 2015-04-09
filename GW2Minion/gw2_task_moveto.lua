@@ -29,6 +29,7 @@ function gw2_task_moveto.Create()
 
 	newinst.terminateOnDeath = true
 	newinst.terminateInCombat = false
+	newinst.terminateOnOffMeshCounter = 0
 	newinst.terminateOnPlayerHPBelowPercent = 0
 	newinst.FailedNavAttemptsCounter = 0
 
@@ -41,7 +42,7 @@ function gw2_task_moveto:Process()
 	-- terminate condition check
 	if ( ml_task_hub:CurrentTask().terminateOnDeath and not ml_global_information.Player_Alive ) then ml_log("Terminate MoveTo because Player is dead!") ml_task_hub:CurrentTask().completed = true Player:StopMovement() end
 	if ( ml_task_hub:CurrentTask().terminateInCombat and ml_global_information.Player_InCombat ) then ml_log("Terminate MoveTo because InCombat!") ml_task_hub:CurrentTask().completed = true Player:StopMovement() end
-	if ( ml_task_hub:CurrentTask().terminateOnPlayerHPBelowPercent > 0 and ml_global_information.Player_Health < ml_task_hub:CurrentTask().terminateOnPlayerHPBelowPercent ) then ml_log("Terminate MoveTo because PlayerHP low!") ml_task_hub:CurrentTask().completed = true Player:StopMovement() end
+	if ( ml_task_hub:CurrentTask().terminateOnPlayerHPBelowPercent > 0 and ml_global_information.Player_Health.percent < ml_task_hub:CurrentTask().terminateOnPlayerHPBelowPercent ) then ml_log("Terminate MoveTo because PlayerHP low!") ml_task_hub:CurrentTask().completed = true Player:StopMovement() end
 	
 
 	if ( ValidTable(ml_task_hub:CurrentTask().targetPos) ) then
@@ -60,8 +61,12 @@ function gw2_task_moveto:Process()
 
 				if ( ml_task_hub:CurrentTask().targetType == "character" ) then
 					local character = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
-					if ( character ~= nil and character.onmesh) then
-						ml_task_hub:CurrentTask().targetPos = character.pos
+					if ( character ~= nil and ml_task_hub:CurrentTask().terminateOnOffMeshCounter < 10) then
+						if (character.onmesh) then
+							ml_task_hub:CurrentTask().targetPos = character.pos
+						else
+							ml_task_hub:CurrentTask().terminateOnOffMeshCounter = ml_task_hub:CurrentTask().terminateOnOffMeshCounter + 1
+						end
 
 					else
 						d("MoveTo:Update Characterdata failed, no character with targetID found!")
@@ -71,8 +76,12 @@ function gw2_task_moveto:Process()
 				elseif ( ml_task_hub:CurrentTask().targetType == "gadget" ) then
 
 					local gadget = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
-					if ( gadget ~= nil and gadget.onmesh) then
-						ml_task_hub:CurrentTask().targetPos = gadget.pos
+					if ( gadget ~= nil and ml_task_hub:CurrentTask().terminateOnOffMeshCounter < 10) then
+						if (gadget.onmesh) then
+							ml_task_hub:CurrentTask().targetPos = gadget.pos
+						else
+							ml_task_hub:CurrentTask().terminateOnOffMeshCounter = ml_task_hub:CurrentTask().terminateOnOffMeshCounter + 1
+						end
 
 					else
 						d("MoveTo:Update Gadgetdata failed, no gadget with targetID found!")
@@ -85,8 +94,12 @@ function gw2_task_moveto:Process()
 					if (target == nil) then
 						target = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
 					end
-					if ( target ~= nil and target.onmesh) then
-						ml_task_hub:CurrentTask().targetPos = target.pos
+					if ( target ~= nil and ml_task_hub:CurrentTask().terminateOnOffMeshCounter < 10) then
+						if (gadget.onmesh) then
+							ml_task_hub:CurrentTask().targetPos = target.pos
+						else
+							ml_task_hub:CurrentTask().terminateOnOffMeshCounter = ml_task_hub:CurrentTask().terminateOnOffMeshCounter + 1
+						end
 
 					else
 						d("MoveTo:Update MarkerID-Data failed, no target found!")
@@ -112,8 +125,9 @@ function gw2_task_moveto:Process()
 
 		end
 
-
-		if ( dist <= ml_task_hub:CurrentTask().stoppingDistance + ml_task_hub:CurrentTask().targetRadius ) then
+		local stopDistance = ml_task_hub:CurrentTask().stoppingDistance > ml_task_hub:CurrentTask().targetRadius and ml_task_hub:CurrentTask().stoppingDistance or  ml_task_hub:CurrentTask().targetRadius
+		--if ( dist <= ml_task_hub:CurrentTask().stoppingDistance + ml_task_hub:CurrentTask().targetRadius ) then
+		if ( dist <= stopDistance) then
 			ml_task_hub:CurrentTask().completed = true
 		else
 
@@ -140,7 +154,8 @@ function gw2_task_moveto:Process()
 				if ( randommovement and not ml_task_hub:CurrentTask().alwaysRandomMovement and math.random(1,2) == 1) then
 					randommovement = false
 				end
-				local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_task_hub:CurrentTask().stoppingDistance+ml_task_hub:CurrentTask().targetRadius,ml_task_hub:CurrentTask().followNavSystem,randommovement,ml_task_hub:CurrentTask().smoothTurns)
+				--local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,ml_task_hub:CurrentTask().stoppingDistance+ml_task_hub:CurrentTask().targetRadius,ml_task_hub:CurrentTask().followNavSystem,randommovement,ml_task_hub:CurrentTask().smoothTurns)
+				local newnodecount = Player:MoveTo(ml_task_hub:CurrentTask().targetPos.x,ml_task_hub:CurrentTask().targetPos.y,ml_task_hub:CurrentTask().targetPos.z,stopDistance,ml_task_hub:CurrentTask().followNavSystem,randommovement,ml_task_hub:CurrentTask().smoothTurns)
 
 				if ( ml_global_information.ShowDebug and newnodecount ~= dbPNodes ) then
 					dbPNodesLast = dbPNodes

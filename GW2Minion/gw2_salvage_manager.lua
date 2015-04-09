@@ -17,7 +17,7 @@ gw2_salvage_manager.kitlist = {
 	[67027] = {name = GetString("silverFedKit"),	rarity = 4,},	-- Silver-Fed Kit (rarity 4)
 	[19986] = {name = GetString("blackLionKit"), 	rarity = 5,},	--Black Lion Kit (Rarity 5)
 }
-
+gw2_salvage_manager.customChecks = {}
 
 function gw2_salvage_manager.ModuleInit()
 	if (Settings.GW2Minion.SalvageManager_Active == nil ) then
@@ -347,6 +347,44 @@ function gw2_salvage_manager.getBestTool(item)
 			end
 		end
 	end
+end
+
+-- Add custom checks. Functions added HAVE to return true(can salvage) or false(cant salvage).
+function gw2_salvage_manager.addCustomChecks(newFunction)
+	if (type(newFunction) == "function") then
+		table.insert(gw2_salvage_manager.customChecks,newFunction)
+	end
+end
+
+-- Custom checks check.
+function gw2_salvage_manager.checkCustomChecks()
+	for _,customCheck in ipairs(gw2_salvage_manager.customChecks) do
+		if (type(customCheck) == "function") then
+			if (customCheck() == false) then
+				return false
+			end
+		end
+	end
+	return true
+end
+
+-- Salvage function.
+function gw2_salvage_manager.salvage()
+	if ((SalvageManager_Active == "1" and math.random(0,3) == 0 and ml_global_information.Player_Inventory_SlotsFree >= 2) and
+	(gw2_salvage_manager.haveSalvageTools() and gw2_salvage_manager.haveSalvagebleItems() and gw2_salvage_manager.checkCustomChecks())) then
+		local salvageItems = gw2_salvage_manager.createItemList()
+		if (ValidTable(salvageItems)) then
+			for _,item in pairs(salvageItems) do
+				local tool = gw2_salvage_manager.getBestTool(item)
+				if (tool and Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS) then
+					d("Salvaging "..item.name.." with "..tool.name)
+					tool:Use(item)
+					return true
+				end
+			end
+		end
+	end
+	return false
 end
 
 -- Toggle menu.

@@ -501,7 +501,7 @@ function e_Looting:execute()
 					if ( target ) then
 						d("Being attacked while looting, killing target.")
 						local newTask = gw2_task_combat.Create()
-						newTask.targetID = c_HandleAggro.target.id
+						newTask.targetID = target.id
 						ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
 					end
 					c_Looting.lootAttempts = 0

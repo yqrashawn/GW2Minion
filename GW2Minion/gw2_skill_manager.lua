@@ -125,7 +125,7 @@ end
 
 function gw2_skill_manager.Attack(target)
 	if (gw2_skill_manager.profile) then
-		gw2_skill_manager.profile:Attack(target)
+		return gw2_skill_manager.profile:Attack(target)
 	end
 end
 
@@ -1318,6 +1318,7 @@ function profilePrototype:Attack(target)
 				gw2_common_functions.MoveOnlyStraightForward()
 				Player:MoveTo(tPos.x,tPos.y,tPos.z,target.radius,false,false,true)
 				_private.runningIntoCombatRange = true
+				return true
 			end
 		end
 	end

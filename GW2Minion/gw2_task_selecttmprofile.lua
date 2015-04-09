@@ -23,6 +23,7 @@ function gw2_task_selecttmprofile:Process()
 		ml_task_mgr.UpdateMainWindow()
 		gTMCurrentProfileName = ml_task_hub:CurrentTask().newTaskName
 		ml_task_mgr.currenttask = nil
+		ml_task_mgr.nextTaskPriority = nil
 		ml_task_mgr.UpdateEditWindow()
 		Settings.GW2Minion.gCurrentTaskProfile = ml_task_hub:CurrentTask().newTaskName
 	end
