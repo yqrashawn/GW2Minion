@@ -50,7 +50,7 @@ function gw2_task_events:Init()
 	self:AddTaskCheckCEs()
 end
 function gw2_task_events:task_complete_eval()
-	local eventMaxTaskTimer = tonumber(ml_task_hub:CurrentTask().eventMaxTaskTimer) * 1000 or 0
+	local eventMaxTaskTimer = ml_task_hub:CurrentTask().eventMaxTaskTimer and tonumber(ml_task_hub:CurrentTask().eventMaxTaskTimer) * 1000 or 0
 	-- Event timer check
 	if ( ml_task_hub:CurrentTask().cureventduration == 0 ) then 
 		ml_task_hub:CurrentTask().cureventduration = ml_global_information.Now
