@@ -50,6 +50,7 @@ function gw2_task_events:Init()
 	self:AddTaskCheckCEs()
 end
 function gw2_task_events:task_complete_eval()
+	local eventMaxTaskTimer = tonumber(ml_task_hub:CurrentTask().eventMaxTaskTimer) * 1000 or 0
 	-- Event timer check
 	if ( ml_task_hub:CurrentTask().cureventduration == 0 ) then 
 		ml_task_hub:CurrentTask().cureventduration = ml_global_information.Now
@@ -61,7 +62,7 @@ function gw2_task_events:task_complete_eval()
 		return true
 	
 	-- for taskmanager, quit task after the set max time is gone or 15min
-	elseif ( ml_task_hub:CurrentTask().eventMaxTaskTimer and ml_global_information.Now - ml_task_hub:CurrentTask().cureventduration > ( tonumber(ml_task_hub:CurrentTask().eventMaxTaskTimer)==nil and 90000 or tonumber(ml_task_hub:CurrentTask().eventMaxTaskTimer)) and ml_task_hub:CurrentTask().isTMTask) then
+	elseif ( eventMaxTaskTimer and ml_global_information.Now - ml_task_hub:CurrentTask().cureventduration > ( eventMaxTaskTimer == 0 and 90000 or eventMaxTaskTimer) and ml_task_hub:CurrentTask().isTMTask) then
 	
 		d("Task Event maxduration have passed...finishing task")
 		ml_blacklist.AddBlacklistEntry(GetString("event"), ml_task_hub:CurrentTask().eventID, "Event", ml_global_information.Now + 1800000)
