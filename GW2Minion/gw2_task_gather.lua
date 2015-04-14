@@ -139,9 +139,13 @@ function gw2_task_gather.CanTaskRun_TM()
 			dbGatherCount = tostring(ml_task_hub:CurrentTask().currentGather).."/"..tostring(ml_task_hub:CurrentTask().maxGather).." Gathered"
 		end
 
-		ml_log(" "..tostring(ml_task_hub:CurrentTask().currentGather).."/"..tostring(ml_task_hub:CurrentTask().maxGather).." Gathered")
-		-- We gathered enough
-		if ( tonumber(ml_task_hub:CurrentTask().maxGather) <=  ml_task_hub:CurrentTask().currentGather ) then return false end
+		if (tonumber(ml_task_hub:CurrentTask().maxGather) > 0) then
+			ml_log(" "..tostring(ml_task_hub:CurrentTask().currentGather).."/"..tonumber(ml_task_hub:CurrentTask().maxGather).." Gathered")
+			-- We gathered enough
+			if ( tonumber(ml_task_hub:CurrentTask().maxGather) <=  ml_task_hub:CurrentTask().currentGather ) then return false end
+		else
+			ml_log(" "..tostring(ml_task_hub:CurrentTask().currentGather).." Gathered")
+		end
 
 		-- Check if a targeted gatherable got collected meanwhile
 		if ( ml_task_hub:CurrentTask().lastTargetID ~= nil and tonumber(ml_task_hub:CurrentTask().lastTargetID) ~= nil) then

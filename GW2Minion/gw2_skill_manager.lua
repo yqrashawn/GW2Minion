@@ -1192,6 +1192,7 @@ function _private.DetectSkills(onOff)
 				button:SetText(GetString("autoDetectSkills"))
 			end
 		else
+			button:SetToggleState(false)
 			d("No current profile, please create profile first.")
 		end
 	end
@@ -1333,7 +1334,7 @@ function profilePrototype:UpdateSkillInfo()
 	_private.skillbarSkills = {}
 	_private.currentSkills = {}
 	_private.currentHealSkills = {}
-	for i = 1, 16, 1 do
+	for i = 1, ml_global_information.MAX_SKILLBAR_SLOTS, 1 do
 		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
 		if (skill) then
 			_private.skillbarSkills[skill.skillID] = skill
