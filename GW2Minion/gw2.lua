@@ -15,6 +15,8 @@ function gw2minion.ModuleInit()
 		
 		mw:NewCheckBox(GetString("combatMovement"),"gDoCombatMovement",GetString("settings"))
 		
+		mw:NewCheckBox(GetString("ignoreYellowMob"),"gIgnoreYellowMob",GetString("settings"))
+		
 		mw:NewCheckBox(GetString("reviveplayers"),"gRevivePlayers",GetString("settings"))
 		mw:NewCheckBox(GetString("revivecharacters"),"gRevive",GetString("settings"))
 		mw:NewCheckBox(GetString("gatherMode"),"gGather",GetString("settings"))
@@ -88,6 +90,7 @@ function gw2minion.ModuleInit()
 	Settings.GW2Minion.gAllowTeleport = Settings.GW2Minion.gAllowTeleport or "0"
 	Settings.GW2Minion.gDepositItems = Settings.GW2Minion.gDepositItems or "1"	
 	Settings.GW2Minion.gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement or "1"
+	Settings.GW2Minion.gIgnoreYellowMob = Settings.GW2Minion.gIgnoreYellowMob or "0"
 	Settings.GW2Minion.gMoveIntoCombatRange = Settings.GW2Minion.gMoveIntoCombatRange or "1"
 	Settings.GW2Minion.gRevivePlayers = Settings.GW2Minion.gRevivePlayers or "1"
 	Settings.GW2Minion.gRevive = Settings.GW2Minion.gRevive or "1"	
@@ -98,6 +101,7 @@ function gw2minion.ModuleInit()
 	gPulseTime = Settings.GW2Minion.gPulseTime
 	gDepositItems = Settings.GW2Minion.gDepositItems	
 	gDoCombatMovement = Settings.GW2Minion.gDoCombatMovement
+	gIgnoreYellowMob = Settings.GW2Minion.gIgnoreYellowMob
 	gMoveIntoCombatRange = Settings.GW2Minion.gMoveIntoCombatRange
 	gRevivePlayers = Settings.GW2Minion.gRevivePlayers
 	gRevive = Settings.GW2Minion.gRevive

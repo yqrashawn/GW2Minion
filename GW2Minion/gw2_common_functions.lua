@@ -208,6 +208,7 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 
 	if ( range < 200 ) then range = 750 end -- extend search range a bit for melee chars
 
+--[[
 	-- Try to get Aggro Enemy with los in range first
 	local target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,lowesthealth,los,maxdistance="..tostring(range))
 	-- Try to get Aggro Enemy
@@ -216,7 +217,21 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("lowesthealth,onmesh,los,maxdistance="..tostring(range)) end
 	-- Try to get Enemy without los
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("shortestpath,onmesh") end
+]]
 
+	local hostileCheck = gIgnoreYellowMob == "1" and "hostile," or ""
+	-- 
+	local target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest,los,maxdistance="..tostring(range))
+	-- 
+	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh," .. hostileCheck .. "nearest,los,maxdistance="..tostring(range)) end
+	-- 
+	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
+	-- 
+	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh," .. hostileCheck .. "nearest") end
+	-- 
+	if (target == nil and gIgnoreYellowMob == "1") then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,los,maxlevel=15") end
+	-- 
+	if (target == nil and gIgnoreYellowMob == "1") then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,maxlevel=15") end
 
 	if ( target and target.id ) then
 		if ( target.distance < 1500 and target.los ) then
