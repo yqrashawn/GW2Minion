@@ -208,7 +208,6 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 
 	if ( range < 200 ) then range = 750 end -- extend search range a bit for melee chars
 
---[[
 	-- Try to get Aggro Enemy with los in range first
 	local target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,lowesthealth,los,maxdistance="..tostring(range))
 	-- Try to get Aggro Enemy
@@ -217,20 +216,7 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("lowesthealth,onmesh,los,maxdistance="..tostring(range)) end
 	-- Try to get Enemy without los
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("shortestpath,onmesh") end
-]]
 
-	-- 
-	local target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest,los,maxdistance="..tostring(range))
-	-- 
-	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,hostile,nearest,los,maxdistance="..tostring(range)) end
-	-- 
-	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
-	-- 
-	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,hostile,nearest") end
-	-- 
-	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,los,maxlevel=15") end
-	-- 
-	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,maxlevel=15") end
 
 	if ( target and target.id ) then
 		if ( target.distance < 1500 and target.los ) then
@@ -434,6 +420,17 @@ end
 function gw2_common_functions.GetTargetByID(targetID)
 	local target = (CharacterList:Get(targetID) or GadgetList:Get(targetID) or nil)
 	return target
+end
+
+function gw2_common_functions.GetProfessionName(profession)
+	profession = profession or Player.profession or 10
+	if (type(profession) == "number" and profession < 10) then
+		local name = table_invert(GW2.CHARCLASS)[profession]
+		if (ValidString(name)) then
+			return name
+		end
+	end
+	return "NoClass"
 end
 
 -- return true/false if player is in an instance (only works for dungeons and normal instances, not while using "home instance stone" or "hall of monuments portal stone") 
