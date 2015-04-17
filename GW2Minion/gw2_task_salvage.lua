@@ -63,8 +63,7 @@ end
 c_salvage = inheritsFrom( ml_cause )
 e_salvage = inheritsFrom( ml_effect )
 function c_salvage:evaluate()
-	local slowdown = math.random(0,3)
-	if (slowdown == 0 and SalvageManager_Active == "1" and Inventory.freeSlotCount >= 2 and gw2_salvage_manager.haveSalvageTools() and gw2_salvage_manager.haveSalvagebleItems()) then
+	if (SalvageManager_Active == "1" and Inventory.freeSlotCount >= 2 and gw2_salvage_manager.haveSalvageTools() and gw2_salvage_manager.haveSalvagebleItems()) then
 		return true
 	end
 	return false
@@ -84,3 +83,5 @@ function e_salvage:execute()
 	end
 	return ml_log(false)
 end
+
+ml_global_information.AddBotMode(GetString("salvage"), gw2_task_salvage)
