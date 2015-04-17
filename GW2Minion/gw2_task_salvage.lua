@@ -63,7 +63,7 @@ end
 c_salvage = inheritsFrom( ml_cause )
 e_salvage = inheritsFrom( ml_effect )
 function c_salvage:evaluate()
-	if (SalvageManager_Active == "1" and Inventory.freeSlotCount >= 2 and gw2_salvage_manager.haveSalvageTools() and gw2_salvage_manager.haveSalvagebleItems()) then
+	if (SalvageManager_Active == "1" and Inventory.freeSlotCount >= 2 and gw2_salvage_manager.haveSalvageTools() and gw2_salvage_manager.haveSalvagebleItems() and gw2_salvage_manager.checkCustomChecks()) then
 		return true
 	end
 	return false
