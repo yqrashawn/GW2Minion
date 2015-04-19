@@ -197,7 +197,8 @@ function c_GatherTask:evaluate()
 					end
 				end 
 			end
-		else
+		end
+		if (c_GatherTask.targetID) then
 			return true
 		end
 	end
