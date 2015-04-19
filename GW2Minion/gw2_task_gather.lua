@@ -215,7 +215,7 @@ function e_GatherTask:execute()
 		newTask.targetID = target.id
 		ml_task_hub:CurrentTask():AddSubTask(newTask)
 	else
-		c_GatherTask.target = nil
+		c_GatherTask.targetID = nil
 	end
 end
 
