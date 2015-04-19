@@ -165,41 +165,57 @@ end
 c_GatherTask = inheritsFrom( ml_cause )
 e_GatherTask = inheritsFrom( ml_effect )
 c_GatherTask.throttle = 1500
-c_GatherTask.target = nil
+c_GatherTask.targetID = nil
 function c_GatherTask:evaluate()
 	if ( gGather == "1" and ml_global_information.Player_Inventory_SlotsFree > 0 ) then
 		-- Find new gather target.
-		if (c_GatherTask.target == nil or c_GatherTask.target.gatherable == false) then
+		if (c_GatherTask.targetID == nil) then
 			if (gBotMode == GetString("gatherMode")) then
-				c_GatherTask.target = GadgetList("onmesh,gatherable,selectable,shortestpath")
+				local gatherables = GadgetList("onmesh,gatherable,selectable,shortestpath")
+				if (ValidTable(gatherables)) then
+					local _,getherable = next(gatherables)
+					if (ValidTable(getherable)) then
+						c_GatherTask.targetID = getherable.id
+					end
+				end
 
 			elseif (gBotMode == GetString("followmode")) then
-				c_GatherTask.target = GadgetList("onmesh,gatherable,selectable,shortestpath,maxdistance=1000")
+				local gatherables = GadgetList("onmesh,gatherable,selectable,shortestpath,maxdistance=1000")
+				if (ValidTable(gatherables)) then
+					local _,getherable = next(gatherables)
+					if (ValidTable(getherable)) then
+						c_GatherTask.targetID = getherable.id
+					end
+				end
 
 			else
-				c_GatherTask.target = GadgetList("onmesh,gatherable,selectable,shortestpath,maxdistance=3500")
+				local gatherables = GadgetList("onmesh,gatherable,selectable,shortestpath,maxdistance=3500")
+				if (ValidTable(gatherables)) then
+					local _,getherable = next(gatherables)
+					if (ValidTable(getherable)) then
+						c_GatherTask.targetID = getherable.id
+					end
+				end 
 			end
-		end
-		if (ValidTable(c_GatherTask.target)) then
+		else
 			return true
 		end
 	end
-	c_GatherTask.target = nil
+	c_GatherTask.targetID = nil
 	return false
 end
 function e_GatherTask:execute()
 	ml_log("e_GatherTask")
-
 	if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
-
-	local _,target = next(c_GatherTask.target)
-	if ( target ) then
+	local target = GadgetList:Get(c_GatherTask.targetID)
+	if (target and target.gatherable) then
 		local newTask = gw2_task_gather.Create()
 		newTask.targetPos = target.pos
 		newTask.targetID = target.id
 		ml_task_hub:CurrentTask():AddSubTask(newTask)
+	else
+		c_GatherTask.target = nil
 	end
-	c_GatherTask.target = nil
 end
 
 -- overwatch CnE, when our player is moving to the next gathermarker, it should terminate the moveto subtask if something we can gather is nearby
