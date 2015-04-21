@@ -117,64 +117,53 @@ end
 
 c_RezzPartyMember = inheritsFrom( ml_cause )
 e_RezzPartyMember = inheritsFrom( ml_effect )
-e_RezzPartyMember.target = nil
+e_RezzPartyMember.targetID = nil
 function c_RezzPartyMember:evaluate()
 	local party = ml_global_information.Player_Party
-	if ( TableSize(party) >0 ) then
-		local idx,pmember = next(party)
-		while (idx and pmember) do
-			if ( pmember.id ~= 0 ) then
-				local char = CharacterList:Get(pmember.id)
-				if ( char ) then
-					if ( char.onmesh and (char.downed == true or char.dead == true) and ml_global_information.Player_Health.percent > 35 and char.pathdistance < 4000) then
-						e_RezzPartyMember.target = char
-						return true
-					end
-				end
+	if (ValidTable(party)) then
+		for _,pMember in pairs(party) do
+			local target = CharacterList:Get(pMember.id)
+			if (ValidTable(target) and target.onmesh and (target.downed == true or target.dead == true) and ml_global_information.Player_Health.percent > 35 and target.pathdistance < 4000) then
+				e_RezzPartyMember.targetID = target.id
+				return true
 			end
-			idx,pmember=next(party,idx)
 		end
 	end
-	e_RezzPartyMember.target = nil
+	e_RezzPartyMember.targetID = nil
 	return false
 end
 function e_RezzPartyMember:execute()
 	ml_log("e_RezzPartyMember")
-
-	if ( e_RezzPartyMember.target ) then
-		if (not e_RezzPartyMember.target.isInInteractRange) then
-			-- MoveIntoInteractRange
-			local tPos = e_RezzPartyMember.target.pos
-			if ( tPos ) then
-
-				local newTask = gw2_task_moveto.Create()
-				newTask.targetPos = tPos
-				newTask.targetID = e_RezzPartyMember.target.id
-				newTask.targetType = "character"
-				newTask.name = "MoveTo Revive PartyMember"
-				ml_task_hub:CurrentTask():AddSubTask(newTask)
-				ml_log("MoveToDownedPartyMember..")
-				return ml_log(true)
-			end
-		else
-			-- Grab that thing
-			if ( ml_global_information.Player_IsMoving == true ) then Player:StopMovement() end
-
-			gw2_common_functions.NecroLeaveDeathshroud()
-
-			local t = Player:GetTarget()
-			if ( not t or t.id ~= e_RezzPartyMember.target.id ) then
-				Player:SetTarget( e_RezzPartyMember.target.id )
-			else
-				ml_log("Rezzing PartyMember..")
-				Player:Interact( e_RezzPartyMember.target.id )
-				ml_global_information.Wait(1000)
-				return ml_log(true)
+	if ( e_RezzPartyMember.targetID ) then
+		local target = CharacterList:Get(e_RezzPartyMember.targetID)
+		if (ValidTable(target)) then
+			if (not target.isInInteractRange) then
+				-- MoveIntoInteractRange
+				local tPos = target.pos
+				if ( tPos ) then
+					local newTask = gw2_task_moveto.Create()
+					newTask.targetPos = tPos
+					newTask.targetID = target.id
+					newTask.targetType = "character"
+					newTask.name = "MoveTo Revive PartyMember"
+					ml_task_hub:CurrentTask():AddSubTask(newTask)
+					ml_log("MoveToDownedPartyMember..")
+					return ml_log(true)
+				end
+			else -- Grab that thing
+				if ( ml_global_information.Player_IsMoving == true ) then Player:StopMovement() end
+				gw2_common_functions.NecroLeaveDeathshroud()
+				local t = Player:GetTarget()
+				if ( not t or t.id ~= target.id ) then
+					Player:SetTarget(target.id)
+				else
+					ml_log("Rezzing PartyMember..")
+					Player:Interact(target.id)
+					ml_global_information.Wait(1000)
+					return ml_log(true)
+				end
 			end
 		end
-
-	else
-		ml_error("There should be a downed/dead partymember but we cant find him!")
 	end
 end
 -- used for example in task_grind Overwatch when running a subtask moveto which brings the player to the target that should be rezzed
@@ -201,54 +190,52 @@ end
 
 c_reviveDownedPlayersInCombat = inheritsFrom( ml_cause )
 e_reviveDownedPlayersInCombat = inheritsFrom( ml_effect )
-e_reviveDownedPlayersInCombat.target = nil
+e_reviveDownedPlayersInCombat.targetID = nil
 function c_reviveDownedPlayersInCombat:evaluate()
 	if ( gRevivePlayers == "1" and ml_global_information.Player_Health.percent > 50 ) then
-		local CList = CharacterList("shortestpath,selectable,interactable,downed,friendly,player,onmesh,maxdistance=2000")
-		if ( TableSize( CList ) > 0 ) then
-			local id,entity = next (CList)
-			if ( id and entity ) then
-				e_reviveDownedPlayersInCombat.target = entity
-				return true
+		local targetList = CharacterList("shortestpath,selectable,interactable,downed,friendly,player,onmesh,maxdistance=2000")
+		if (ValidTable(targetList)) then
+			for _,target in pairs(targetList) do
+				if (ValidTable(target)) then
+					e_reviveDownedPlayersInCombat.targetID = target.id
+					return true
+				end
 			end
 		end
 	end
-	e_reviveDownedPlayersInCombat.target = nil
+	e_reviveDownedPlayersInCombat.targetID = nil
 	return false
 end
 function e_reviveDownedPlayersInCombat:execute()
 	ml_log("e_reviveDownedPlayersInCombat")
-	if ( e_reviveDownedPlayersInCombat.target ) then
-
-		if (not e_reviveDownedPlayersInCombat.target.isInInteractRange) then
-			-- MoveIntoInteractRange
-			local tPos = e_reviveDownedPlayersInCombat.target.pos
-			if ( tPos ) then
-
-				local newTask = gw2_task_moveto.Create()
-				newTask.targetPos = tPos
-				newTask.targetID = e_reviveDownedPlayersInCombat.target.id
-				newTask.targetType = "character"
-				newTask.name = "MoveTo Revive Downed Player" -- giving it a special name so the overwatch knows when to kick in
-				ml_task_hub:CurrentTask():AddSubTask(newTask)
-				ml_log("MoveToDownedPartyMember..")
-				return ml_log(true)
-			end
-		else
-			-- Grab that thing
-			if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
-
-			local t = Player:GetTarget()
-			if ( not t or t.id ~= e_reviveDownedPlayersInCombat.target.id ) then
-				Player:SetTarget( e_reviveDownedPlayersInCombat.target.id )
-			else
-
-				-- yeah I know, but this usually doesnt break ;)
+	if (e_reviveDownedPlayersInCombat.targetID) then
+		local target = CharacterList:Get(e_reviveDownedPlayersInCombat.targetID)
+		if (ValidTable(target)) then
+			if (not e_reviveDownedPlayersInCombat.targetID.isInInteractRange) then
+				-- MoveIntoInteractRange
+				local tPos = target.pos
+				if ( tPos ) then
+					local newTask = gw2_task_moveto.Create()
+					newTask.targetPos = tPos
+					newTask.targetID = target.id
+					newTask.targetType = "character"
+					newTask.name = "MoveTo Revive Downed Player" -- giving it a special name so the overwatch knows when to kick in
+					ml_task_hub:CurrentTask():AddSubTask(newTask)
+					ml_log("MoveToDownedPartyMember..")
+					return ml_log(true)
+				end
+			else -- Grab that thing
+				if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
 				gw2_common_functions.NecroLeaveDeathshroud()
-				ml_log("Reviving..")
-				Player:Interact( e_reviveDownedPlayersInCombat.target.id )
-				ml_global_information.Wait(1000)
-				return true
+				local t = Player:GetTarget()
+				if (not t or t.id ~= target.id) then
+					Player:SetTarget(target.id)
+				else
+					ml_log("Reviving..")
+					Player:Interact(target.id)
+					ml_global_information.Wait(1000)
+					return true
+				end
 			end
 		end
 	end
