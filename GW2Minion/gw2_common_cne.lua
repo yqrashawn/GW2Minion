@@ -211,7 +211,7 @@ function e_reviveDownedPlayersInCombat:execute()
 	if (e_reviveDownedPlayersInCombat.targetID) then
 		local target = CharacterList:Get(e_reviveDownedPlayersInCombat.targetID)
 		if (ValidTable(target)) then
-			if (not e_reviveDownedPlayersInCombat.targetID.isInInteractRange) then
+			if (not target.isInInteractRange) then
 				-- MoveIntoInteractRange
 				local tPos = target.pos
 				if ( tPos ) then
