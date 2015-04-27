@@ -552,7 +552,7 @@ function e_Gathering:execute()
 						-- Moving to gadget position.
 						if ( not gw2_unstuck.HandleStuck() ) then
 							local tPos = gadget.pos
-							Player:MoveTo(tPos.x,tPos.y,tPos.z,25,false,false,false)
+							Player:MoveTo(tPos.x,tPos.y,tPos.z,gadget.radius,false,false,false)
 						end
 					end
 					return ml_log(true)
