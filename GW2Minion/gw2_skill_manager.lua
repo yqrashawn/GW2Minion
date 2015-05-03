@@ -788,7 +788,7 @@ end
 function _private.CanCast(skill,target)
 	if (skill) then
 		-- skill attributes
-		if (skill.skill.lastSkillID ~= "" and tostring(skill.skill.lastSkillID) ~= Player.castinfo.lastSkillID) then return false end
+		if (skill.skill.lastSkillID ~= "" and tostring(skill.skill.lastSkillID) ~= tostring(_private.lastSkillID)) then return false end
 		if (skill.skill.delay > 0 and _private.skillLastCast[skill.skill.id] ~= nil and TimeSince(_private.skillLastCast[skill.skill.id]+skill.maxCooldown) < (skill.skill.delay)) then return false end
 		if (skill.skill.los == "1" and (skill.skill.healing == "0" and (target == nil or target.los == false))) then return false end
 		if (skill.skill.minRange > 0 and (skill.skill.healing == "0" and (target == nil or (target.distance+target.radius) < skill.skill.minRange))) then return false end
@@ -1004,6 +1004,7 @@ function _private.AttackSkill(target)
 			end
 		end
 	end
+	gSMCurrentCast = ""
 	return false
 end
 

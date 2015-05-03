@@ -179,7 +179,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 		
 		-- 	Try Jumping
 		if ( gw2_unstuck.stuckCount > stuckCountTreshold ) then
-			d("We are stuck.."..tostring(distmoved).. " < "..tostring(gw2_unstuck.stuckthreshold))
+			d("We are stuck.."..tostring(distmoved).. " < "..tostring(StuckThreshOld))
 			if ( gw2_unstuck.stuckCount < 12) then
 				
 				-- check for doors n stuff

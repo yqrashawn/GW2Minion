@@ -195,7 +195,7 @@ function c_GatherTask:evaluate()
 					if (ValidTable(getherable)) then
 						c_GatherTask.targetID = getherable.id
 					end
-				end 
+				end
 			end
 		end
 		if (c_GatherTask.targetID) then
@@ -243,33 +243,36 @@ end
 -- Handles Aggro for gathering, doesnt fight everything basicly and tries to run towards the next gatherable instead
 c_HandleAggro = inheritsFrom( ml_cause )
 e_HandleAggro = inheritsFrom( ml_effect )
-c_HandleAggro.target = nil
+c_HandleAggro.targetID = nil
 c_HandleAggro.HealthTreshold = math.random(70,90)
 function c_HandleAggro:evaluate()
 	if ( ml_global_information.Player_Health.percent < c_HandleAggro.HealthTreshold or TableSize(GadgetList("onmesh,nearest,gatherable,maxdistance=500")) > 0 ) then
 		local target = gw2_common_functions.GetBestAggroTarget()
 		if ( target ) then
-			c_HandleAggro.target = target
-			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_HandleAggro.target ~= nil
+			c_HandleAggro.targetID = target.id
+			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_HandleAggro.targetID ~= nil
 		end
 	end
-	c_HandleAggro.target = nil
+	c_HandleAggro.targetID = nil
 	return false
 end
 function e_HandleAggro:execute()
 	ml_log("e_HandleAggro ")
 
-	if (c_HandleAggro.target ~= nil) then
-		c_HandleAggro.HealthTreshold = math.random(70,90)
-		Player:StopMovement()
-		-- stop the char from reviving else it doesnt do sh!t in combat task
-		if ( Player.castinfo.duration ~= 0 ) then
-			Player:Jump()
+	if (c_HandleAggro.targetID ~= nil) then
+		local target = CharacterList:Get(c_HandleAggro.targetID)
+		if(target ~= nil) then
+			c_HandleAggro.HealthTreshold = math.random(70,90)
+			Player:StopMovement()
+			-- stop the char from reviving else it doesnt do sh!t in combat task
+			if ( Player.castinfo.duration ~= 0 ) then
+				Player:Jump()
+			end
+			local newTask = gw2_task_combat.Create()
+			newTask.targetID = c_HandleAggro.targetID
+			ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
+			c_HandleAggro.targetID = nil
 		end
-		local newTask = gw2_task_combat.Create()
-		newTask.targetID = c_HandleAggro.target.id
-		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-		c_HandleAggro.target = nil
 	else
 		ml_log("e_HandleAggro found no target")
 	end
@@ -280,28 +283,31 @@ end
 --------- Creates a new IMMEDIATE_GOAL task to kill an enemy when we are fighting our way towards the current gatherMarker
 c_FightToGatherMarker = inheritsFrom( ml_cause )
 e_FightToGatherMarker = inheritsFrom( ml_effect )
-c_FightToGatherMarker.target = nil
+c_FightToGatherMarker.targetID = nil
 c_FightToGatherMarker.throttle = 30000
 function c_FightToGatherMarker:evaluate()
 	if ( c_MoveToGatherMarker.markerreached == false and c_MoveToGatherMarker.allowedToFight == true) then
 		local target = gw2_common_functions.GetBestCharacterTarget( 1250 ) -- maxrange 2000 where enemies should be searched for
 		if ( target ) then
-			c_FightToGatherMarker.target = target
-			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGatherMarker.target ~= nil			
+			c_FightToGatherMarker.targetID = target.id
+			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGatherMarker.targetID ~= nil
 		end
 	end
-	c_FightToGatherMarker.target = nil
+	c_FightToGatherMarker.targetID = nil
 	return false
 end
 function e_FightToGatherMarker:execute()
 	ml_log("e_FightToGatherMarker ")
-			
-	if (c_FightToGatherMarker.target ~= nil) then
-		Player:StopMovement()
-		local newTask = gw2_task_combat.Create()
-		newTask.targetID = c_FightToGatherMarker.target.id
-		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-		c_FightToGatherMarker.target = nil
+
+	if (c_FightToGatherMarker.targetID ~= nil) then
+		local target = CharacterList:Get(c_FightToGatherMarker.targetID)
+		if(target ~= nil) then
+			Player:StopMovement()
+			local newTask = gw2_task_combat.Create()
+			newTask.targetID = c_FightToGatherMarker.targetID
+			ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
+			c_FightToGatherMarker.targetID = nil
+		end
 	else
 		ml_log("e_FightToGatherMarker found no target")
 	end
@@ -319,25 +325,25 @@ c_MoveToGatherMarker.markerreached = false
 c_MoveToGatherMarker.allowedToFight = false -- this sh*t is needed else he will go back n forth on the outer side of the marker's min radius if an enemy sits at larger-min-dist behind that radius -.-
 function c_MoveToGatherMarker:evaluate()
 		-- Get a new/next Marker if we need one ( no marker , out of level, time up )
-	if (ml_task_hub:CurrentTask().currentMarker == nil or ml_task_hub:CurrentTask().currentMarker == false 
-		or ( ml_task_hub:CurrentTask().filterLevel and ml_task_hub:CurrentTask().currentMarker:GetMinLevel() and ml_task_hub:CurrentTask().currentMarker:GetMaxLevel() and (ml_global_information.Player_Level < ml_task_hub:CurrentTask().currentMarker:GetMinLevel() or ml_global_information.Player_Level > ml_task_hub:CurrentTask().currentMarker:GetMaxLevel())) 
+	if (ml_task_hub:CurrentTask().currentMarker == nil or ml_task_hub:CurrentTask().currentMarker == false
+		or ( ml_task_hub:CurrentTask().filterLevel and ml_task_hub:CurrentTask().currentMarker:GetMinLevel() and ml_task_hub:CurrentTask().currentMarker:GetMaxLevel() and (ml_global_information.Player_Level < ml_task_hub:CurrentTask().currentMarker:GetMinLevel() or ml_global_information.Player_Level > ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()))
 		or ( ml_task_hub:CurrentTask().currentMarker:GetTime() and ml_task_hub:CurrentTask().currentMarker:GetTime() ~= 0 and TimeSince(ml_task_hub:CurrentTask().markerTime) > ml_task_hub:CurrentTask().currentMarker:GetTime() * 1000 )) then
 		-- TODO: ADD TIMEOUT FOR MARKER
 		ml_task_hub:CurrentTask().currentMarker = ml_marker_mgr.GetNextMarker(GetString("gatherMarker"), ml_task_hub:CurrentTask().filterLevel)
-		
+
 		-- disable the levelfilter in case we didnt find any other marker
 		if (ml_task_hub:CurrentTask().currentMarker == nil) then
 			ml_task_hub:CurrentTask().filterLevel = false
 			ml_task_hub:CurrentTask().currentMarker = ml_marker_mgr.GetNextMarker(GetString("gatherMarker"), ml_task_hub:CurrentTask().filterLevel)
 		end
-		
+
 		-- we found a new marker, setup vars
 		if ( ml_task_hub:CurrentTask().currentMarker ~= nil ) then
 			d("New Grind Marker set!")
 			ml_task_hub:CurrentTask().markerTime = ml_global_information.Now -- Are BOTH needed to get updated ?
 			ml_global_information.MarkerTime = ml_global_information.Now     -- This needs to be global else we cannot access the stuff in parent or subtasks
 			ml_global_information.MarkerMinLevel = ml_task_hub:CurrentTask().currentMarker:GetMinLevel()
-			ml_global_information.MarkerMaxLevel = ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()	
+			ml_global_information.MarkerMaxLevel = ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()
 			c_MoveToGatherMarker.markerreached = false
 			c_MoveToGatherMarker.markerreachedfirsttime = false
 		end
@@ -354,15 +360,15 @@ function c_MoveToGatherMarker:evaluate()
 
 		-- Debug info
 		if ( ml_global_information.ShowDebug ) then dbCurrMarker = ml_task_hub:CurrentTask().currentMarker:GetName() or "" end
-		
+
 			-- We haven't reached the currentMarker or ran outside its radius
 			if ( c_MoveToGatherMarker.markerreached == false) then
 				return true
-		
+
 			else
 			-- check if we ran outside the currentMarker radius and if so, we need to walk back to the currentMarker
 			local pos = ml_task_hub:CurrentTask().currentMarker:GetPosition()
-			local distance = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)			
+			local distance = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
 			if  (gBotMode == GetString("grindMode") and distance > ml_task_hub:CurrentTask().currentMarker:GetFieldValue(GetString("maxRange"))) then
 				d("We need to move back to our current Marker!")
 				c_MoveToGatherMarker.markerreached = false
@@ -378,39 +384,39 @@ function e_MoveToGatherMarker:execute()
 	ml_log(" e_MoveToGatherMarker ")
 	-- Move to our current marker
 	if (ml_task_hub:CurrentTask().currentMarker ~= nil and ml_task_hub:CurrentTask().currentMarker ~= false) then
-		
+
 		local pos = ml_task_hub:CurrentTask().currentMarker:GetPosition()
 		local dist = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
-		
+
 		-- Allow fighting when we are far away from the "outside radius of the marker" , else the bot goes back n forth spinning trying to reach the target outside n going back inside right after
 		if ( dist < ml_task_hub:CurrentTask().currentMarker:GetFieldValue(GetString("maxRange"))) then
 			c_MoveToGatherMarker.allowedToFight = true
 		else
 			c_MoveToGatherMarker.allowedToFight = false
 		end
-		
+
 		if  ( dist < 200) then
 			-- We reached our Marker
 			c_MoveToGatherMarker.markerreached = true
 			c_MoveToGatherMarker.markerreachedfirsttime = true
 			d("Reached current Marker...")
-			return ml_log(true)		
+			return ml_log(true)
 		else
 			-- We need to reach our Marker yet
 			-- make sure the next marker is reachable & onmesh
 			if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
-				
+
 				local newTask = gw2_task_moveto.Create()
 				newTask.name = "MoveTo GatherMarker"
 				newTask.targetPos = pos
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				return ml_log(true)
-				
+
 			else
 				d("WARNING: Cannot reach next Marker, trying to pick another one...")
 				ml_task_hub:CurrentTask().currentMarker = nil
 				-- Debug info
-				if ( ml_global_information.ShowDebug ) then dbCurrMarker = "" end 
+				if ( ml_global_information.ShowDebug ) then dbCurrMarker = "" end
 			end
 		end
 	end
@@ -501,7 +507,7 @@ function e_Gathering:execute()
 
 			local newTask = gw2_task_moveto.Create()
 			newTask.targetPos = tPos
-			newTask.stoppingDistance = 50
+			newTask.stoppingDistance = 150
 			newTask.name = "MoveTo Gatherable"
 			ml_task_hub:CurrentTask():AddSubTask(newTask)
 			return ml_log(true)

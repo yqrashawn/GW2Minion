@@ -92,10 +92,7 @@ function gw2_task_moveto:Process()
 
 				elseif ( ml_task_hub:CurrentTask().targetType == "characterID" ) then -- either character OR gadget ID will work here (never know if a marker.characterID is gadget or char.)
 
-					local target = CharacterList:Get(ml_task_hub:CurrentTask().targetID)
-					if (target == nil) then
-						target = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
-					end
+					local target = CharacterList:Get(ml_task_hub:CurrentTask().targetID) or GadgetList:Get(ml_task_hub:CurrentTask().targetID)
 					if ( target ~= nil and (ml_task_hub:CurrentTask().terminateOnOffMeshTime == 0 or TimeSince(ml_task_hub:CurrentTask().terminateOnOffMeshTime) < 10000)) then
 						if (target.onmesh) then
 							ml_task_hub:CurrentTask().targetPos = target.pos

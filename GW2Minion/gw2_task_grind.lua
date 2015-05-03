@@ -43,13 +43,13 @@ function gw2_task_grind:Init()
 	-- Normal elements
 	-- Revive Downed/Dead Partymember
 	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 375 ), self.process_elements)	-- creates subtask: moveto
-	
+
 	-- Revive other Players
 	self:add(ml_element:create( "RevivePlayer", c_reviveDownedPlayersInCombat, e_reviveDownedPlayersInCombat, 350 ), self.process_elements)	-- creates subtask: moveto
-	
+
 	-- Normal Looting & chests
 	self:add(ml_element:create( "Looting", c_Looting, e_Looting, 335 ), self.process_elements)
-	
+
 	-- FightAggro
 	self:add(ml_element:create( "FightAggro", c_FightAggro, e_FightAggro, 325 ), self.process_elements) --creates immediate queue task for combat
 
@@ -126,7 +126,7 @@ function gw2_task_grind:UIInit_TM()
 	--ml_task_mgr.NewField("maxkills", "beer")
 	ml_task_mgr.NewNumeric("Max Kills", "maxKills")
 	--ml_task_mgr.NewCombobox("testcbox", "whiskey", "A,B,C")
-	
+
 end
 -- TaskManager function: Checks for custom conditions to start this task
 function gw2_task_grind.CanTaskStart_TM()
@@ -168,31 +168,34 @@ end
 --------- Creates a new IMMEDIATE_GOAL task to kill an enemy when we are fighting our way towards the current grindmarker
 c_FightToGrindMarker = inheritsFrom( ml_cause )
 e_FightToGrindMarker = inheritsFrom( ml_effect )
-c_FightToGrindMarker.target = nil
+c_FightToGrindMarker.targetID = nil
 function c_FightToGrindMarker:evaluate()
 	if ( c_MoveToMarker.markerreached == false and c_MoveToMarker.allowedToFight == true) then
 		local target = gw2_common_functions.GetBestCharacterTarget( 1500 ) -- maxrange 2000 where enemies should be searched for
 		if ( target ) then
-			c_FightToGrindMarker.target = target
-			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGrindMarker.target ~= nil			
+			c_FightToGrindMarker.targetID = target.id
+			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGrindMarker.targetID ~= nil
 		end
 	end
-	c_FightToGrindMarker.target = nil
+	c_FightToGrindMarker.targetID = nil
 	return false
 end
 function e_FightToGrindMarker:execute()
 	ml_log("e_FightToGrindMarker ")
 
-	if (c_FightToGrindMarker.target ~= nil) then
+	if (c_FightToGrindMarker.targetID ~= nil) then
+		local target = CharacterList:Get(c_FightToGrindMarker.targetID)
 		--Player:StopMovement()
 		-- For TM Conditions
-		ml_task_hub:CurrentTask().lastTargetID = c_FightToGrindMarker.target.id
-		-- Create new Subtask combat
-		local newTask = gw2_task_combat.Create()
-		newTask.targetID = c_FightToGrindMarker.target.id
-		newTask.terminateOnAggro = true
-		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-		c_FightToGrindMarker.target = nil
+		if(target ~= nil) then
+			ml_task_hub:CurrentTask().lastTargetID = c_FightToGrindMarker.targetID
+			-- Create new Subtask combat
+			local newTask = gw2_task_combat.Create()
+			newTask.targetID = c_FightToGrindMarker.targetID
+			newTask.terminateOnAggro = true
+			ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
+			c_FightToGrindMarker.targetID = nil
+		end
 	else
 		ml_log("e_FightToGrindMarker found no target")
 	end
@@ -210,12 +213,12 @@ c_MoveToMarker.markerreached = false
 c_MoveToMarker.allowedToFight = false -- this sh*t is needed else he will go back n forth on the outer side of the marker's min radius if an enemy sits at larger-min-dist behind that radius -.-
 function c_MoveToMarker:evaluate()
 		-- Get a new/next Marker if we need one ( no marker , out of level, time up )
-	if (ml_task_hub:CurrentTask().currentMarker == nil or ml_task_hub:CurrentTask().currentMarker == false 
-		or ( ml_task_hub:CurrentTask().filterLevel and ml_task_hub:CurrentTask().currentMarker:GetMinLevel() and ml_task_hub:CurrentTask().currentMarker:GetMaxLevel() and (ml_global_information.Player_Level < ml_task_hub:CurrentTask().currentMarker:GetMinLevel() or ml_global_information.Player_Level > ml_task_hub:CurrentTask().currentMarker:GetMaxLevel())) 
+	if (ml_task_hub:CurrentTask().currentMarker == nil or ml_task_hub:CurrentTask().currentMarker == false
+		or ( ml_task_hub:CurrentTask().filterLevel and ml_task_hub:CurrentTask().currentMarker:GetMinLevel() and ml_task_hub:CurrentTask().currentMarker:GetMaxLevel() and (ml_global_information.Player_Level < ml_task_hub:CurrentTask().currentMarker:GetMinLevel() or ml_global_information.Player_Level > ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()))
 		or ( ml_task_hub:CurrentTask().currentMarker:GetTime() and ml_task_hub:CurrentTask().currentMarker:GetTime() ~= 0 and TimeSince(ml_task_hub:CurrentTask().markerTime) > ml_task_hub:CurrentTask().currentMarker:GetTime() * 1000 )) then
 		-- TODO: ADD TIMEOUT FOR MARKER
 		ml_task_hub:CurrentTask().currentMarker = ml_marker_mgr.GetNextMarker(GetString("grindMarker"), ml_task_hub:CurrentTask().filterLevel)
-		
+
 		-- disable the levelfilter in case we didnt find any other marker
 		if (ml_task_hub:CurrentTask().currentMarker == nil) then
 			ml_task_hub:CurrentTask().filterLevel = false
@@ -228,7 +231,7 @@ function c_MoveToMarker:evaluate()
 			ml_task_hub:CurrentTask().markerTime = ml_global_information.Now -- Are BOTH needed to get updated ?
 			ml_global_information.MarkerTime = ml_global_information.Now     -- This needs to be global else we cannot access the stuff in parent or subtasks
 			ml_global_information.MarkerMinLevel = ml_task_hub:CurrentTask().currentMarker:GetMinLevel()
-			ml_global_information.MarkerMaxLevel = ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()	
+			ml_global_information.MarkerMaxLevel = ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()
 			c_MoveToMarker.markerreached = false
 			c_MoveToMarker.markerreachedfirsttime = false
 		end
@@ -245,15 +248,15 @@ function c_MoveToMarker:evaluate()
 
 		-- Debug info
 		if ( ml_global_information.ShowDebug ) then dbCurrMarker = ml_task_hub:CurrentTask().currentMarker:GetName() or "" end
-		
+
 			-- We haven't reached the currentMarker or ran outside its radius
 			if ( c_MoveToMarker.markerreached == false) then
 				return true
-		
+
 			else
 			-- check if we ran outside the currentMarker radius and if so, we need to walk back to the currentMarker
 			local pos = ml_task_hub:CurrentTask().currentMarker:GetPosition()
-			local distance = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)			
+			local distance = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
 			if  (gBotMode == GetString("grindMode") and distance > ml_task_hub:CurrentTask().currentMarker:GetFieldValue(GetString("maxRange"))) then
 				d("We need to move back to our current Marker!")
 				c_MoveToMarker.markerreached = false
@@ -262,35 +265,35 @@ function c_MoveToMarker:evaluate()
 			end
 		end
 	end
-	
+
     return false
 end
 function e_MoveToMarker:execute()
 	ml_log(" e_MoveToMarker ")
 	-- Move to our current marker
 	if (ml_task_hub:CurrentTask().currentMarker ~= nil and ml_task_hub:CurrentTask().currentMarker ~= false) then
-		
+
 		local pos = ml_task_hub:CurrentTask().currentMarker:GetPosition()
 		local dist = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
-		
+
 		-- Allow fighting when we are far away from the "outside radius of the marker" , else the bot goes back n forth spinning trying to reach the target outside n going back inside right after
 		if ( dist < ml_task_hub:CurrentTask().currentMarker:GetFieldValue(GetString("maxRange"))) then
 			c_MoveToMarker.allowedToFight = true
 		else
 			c_MoveToMarker.allowedToFight = false
 		end
-		
+
 		if  ( dist < 200) then
 			-- We reached our Marker
 			c_MoveToMarker.markerreached = true
 			c_MoveToMarker.markerreachedfirsttime = true
 			d("Reached current Marker...")
-			return ml_log(true)		
+			return ml_log(true)
 		else
 			-- We need to reach our Marker yet
 			-- make sure the next marker is reachable & onmesh
 			if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
-				
+
 				local newTask = gw2_task_moveto.Create()
 				newTask.name = "MoveTo GrindMarker"
 				newTask.targetPos = pos
@@ -299,12 +302,12 @@ function e_MoveToMarker:execute()
 				end
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				return ml_log(true)
-				
+
 			else
 				d("WARNING: Cannot reach next Marker, trying to pick another one...")
 				ml_task_hub:CurrentTask().currentMarker = nil
 				-- Debug info
-				if ( ml_global_information.ShowDebug ) then dbCurrMarker = "" end 
+				if ( ml_global_information.ShowDebug ) then dbCurrMarker = "" end
 			end
 		end
 	end
@@ -314,30 +317,33 @@ end
 --------- Creates a new IMMEDIATE_GOAL task to kill an enemy
 c_CombatTask = inheritsFrom( ml_cause )
 e_CombatTask = inheritsFrom( ml_effect )
-c_CombatTask.target = nil
+c_CombatTask.targetID = nil
 function c_CombatTask:evaluate()
 	local target = gw2_common_functions.GetBestCharacterTarget( 9999 ) -- maxrange where enemies should be searched for
 	if ( target ) then
-		c_CombatTask.target = target
-		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_CombatTask.target ~= nil
+		c_CombatTask.targetID = target.id
+		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_CombatTask.targetID ~= nil
 	end
-	c_CombatTask.target = nil
+	c_CombatTask.targetID = nil
 	return false
 end
 function e_CombatTask:execute()
 	ml_log("CombatTask ")
 
-	if (c_CombatTask.target ~= nil) then
-		--Player:StopMovement()
-		-- For TM Conditions
-		ml_task_hub:CurrentTask().lastTargetID = c_CombatTask.target.id
+	if (c_CombatTask.targetID ~= nil) then
+		local target = CharacterList:Get(c_CombatTask.targetID) or Gadgetlist:Get(c_CombatTask.targetID)
+		if(target ~= nil) then
+			--Player:StopMovement()
+			-- For TM Conditions
+			ml_task_hub:CurrentTask().lastTargetID = c_CombatTask.targetID
 
-		-- Create new Subtask Combat
-		local newTask = gw2_task_combat.Create()
-		newTask.targetID = c_CombatTask.target.id
-		newTask.terminateOnAggro = true
-		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-		c_CombatTask.target = nil
+			-- Create new Subtask Combat
+			local newTask = gw2_task_combat.Create()
+			newTask.targetID = c_CombatTask.targetID
+			newTask.terminateOnAggro = true
+			ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
+			c_CombatTask.targetID = nil
+		end
 	else
 		ml_log("gw2_task_grind.CombatTask found no target")
 	end

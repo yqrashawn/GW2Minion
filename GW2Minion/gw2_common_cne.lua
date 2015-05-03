@@ -306,44 +306,48 @@ end
 -- Range limited to Attackrange
 c_AttackBestNearbyCharacterTarget = inheritsFrom( ml_cause )
 e_AttackBestNearbyCharacterTarget = inheritsFrom( ml_effect )
-c_AttackBestNearbyCharacterTarget.target = nil
+c_AttackBestNearbyCharacterTarget.targetID = nil
 function c_AttackBestNearbyCharacterTarget:evaluate()
-	c_AttackBestNearbyCharacterTarget.target = gw2_common_functions.GetBestCharacterTargetForAssist()
-	if ( c_AttackBestNearbyCharacterTarget.target ~= nil ) then
+	local target = gw2_common_functions.GetBestCharacterTargetForAssist()
+	if (target ~= nil ) then
+		c_AttackBestNearbyCharacterTarget.targetID = target.id
 		return true
 	end
-	c_AttackBestNearbyCharacterTarget.target = nil
+	c_AttackBestNearbyCharacterTarget.targetID = nil
 	return false
 end
 function e_AttackBestNearbyCharacterTarget:execute()
 	ml_log( "AttackBestCharacterTarget" )
-	gw2_skill_manager.Attack( c_AttackBestNearbyCharacterTarget.target )
-	c_AttackBestNearbyCharacterTarget.target = nil
+	local target = CharacterList:Get(c_AttackBestNearbyCharacterTarget.targetID) or GadgetList:Get(c_AttackBestNearbyCharacterTarget.targetID)
+	if(target ~= nil) then
+		gw2_skill_manager.Attack(target)
+	end
+	c_AttackBestNearbyCharacterTarget.targetID = nil
 end
 
 --
 c_FightAggro = inheritsFrom( ml_cause )
 e_FightAggro = inheritsFrom( ml_effect )
-c_FightAggro.target = nil
+c_FightAggro.targetID = nil
 function c_FightAggro:evaluate()
 	local target = gw2_common_functions.GetBestAggroTarget()
 	if ( target ) then
-		c_FightAggro.target = target
-		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightAggro.target ~= nil
+		c_FightAggro.targetID = target.id
+		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightAggro.targetID ~= nil
 	end
 
-	c_FightAggro.target = nil
+	c_FightAggro.targetID = nil
 	return false
 end
 function e_FightAggro:execute()
 	ml_log("e_FightAggro ")
-
-	if (c_FightAggro.target ~= nil) then
+	local target = CharacterList:Get(c_FightAggro.targetID)
+	if (target ~= nil) then
 		Player:StopMovement()
 		local newTask = gw2_task_combat.Create()
-		newTask.targetID = c_FightAggro.target.id
+		newTask.targetID = target.id
 		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-		c_FightAggro.target = nil
+		c_FightAggro.targetID = nil
 	else
 		ml_log("e_FightAggro found no target")
 	end
@@ -704,25 +708,25 @@ c_MoveToVendorMarker.markerreachedfirsttime = false
 c_MoveToVendorMarker.markerreached = false
 function c_MoveToVendorMarker:evaluate()
 	-- Get a new/next Marker if we need one ( no marker , out of level, time up )
-	if (ml_task_hub:CurrentTask().currentMarker == nil or ml_task_hub:CurrentTask().currentMarker == false 
-		or ( ml_task_hub:CurrentTask().filterLevel and ml_task_hub:CurrentTask().currentMarker:GetMinLevel() and ml_task_hub:CurrentTask().currentMarker:GetMaxLevel() and (ml_global_information.Player_Level < ml_task_hub:CurrentTask().currentMarker:GetMinLevel() or ml_global_information.Player_Level > ml_task_hub:CurrentTask().currentMarker:GetMaxLevel())) 
+	if (ml_task_hub:CurrentTask().currentMarker == nil or ml_task_hub:CurrentTask().currentMarker == false
+		or ( ml_task_hub:CurrentTask().filterLevel and ml_task_hub:CurrentTask().currentMarker:GetMinLevel() and ml_task_hub:CurrentTask().currentMarker:GetMaxLevel() and (ml_global_information.Player_Level < ml_task_hub:CurrentTask().currentMarker:GetMinLevel() or ml_global_information.Player_Level > ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()))
 		or ( ml_task_hub:CurrentTask().currentMarker:GetTime() and ml_task_hub:CurrentTask().currentMarker:GetTime() ~= 0 and TimeSince(ml_task_hub:CurrentTask().markerTime) > ml_task_hub:CurrentTask().currentMarker:GetTime() * 1000 )) then
 		-- TODO: ADD TIMEOUT FOR MARKER
 		ml_task_hub:CurrentTask().currentMarker = ml_marker_mgr.GetNextMarker(GetString("vendorMarker"), ml_task_hub:CurrentTask().filterLevel)
-		
+
 		-- disable the levelfilter in case we didnt find any other marker
 		if (ml_task_hub:CurrentTask().currentMarker == nil) then
 			ml_task_hub:CurrentTask().filterLevel = false
 			ml_task_hub:CurrentTask().currentMarker = ml_marker_mgr.GetNextMarker(GetString("vendorMarker"), ml_task_hub:CurrentTask().filterLevel)
 		end
-		
+
 		-- we found a new marker, setup vars
 		if ( ml_task_hub:CurrentTask().currentMarker ~= nil ) then
 			d("New VendorMarker Marker set!")
 			ml_task_hub:CurrentTask().markerTime = ml_global_information.Now -- Are BOTH needed to get updated ?
 			ml_global_information.MarkerTime = ml_global_information.Now     -- This needs to be global else we cannot access the stuff in parent or subtasks
 			ml_global_information.MarkerMinLevel = ml_task_hub:CurrentTask().currentMarker:GetMinLevel()
-			ml_global_information.MarkerMaxLevel = ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()	
+			ml_global_information.MarkerMaxLevel = ml_task_hub:CurrentTask().currentMarker:GetMaxLevel()
 			c_MoveToVendorMarker.markerreached = false
 			c_MoveToVendorMarker.markerreachedfirsttime = false
 		end
@@ -739,11 +743,11 @@ function c_MoveToVendorMarker:evaluate()
 
 		-- Debug info
 		if ( ml_global_information.ShowDebug ) then dbCurrMarker = ml_task_hub:CurrentTask().currentMarker:GetName() or "" end
-		
+
 		-- We haven't reached the currentMarker or ran outside its radius
 		if ( c_MoveToVendorMarker.markerreached == false) then
 			return true
-		
+
 		else
 			-- the other CnEs should pick up a vendor before we reach our marker..if we are here then it means no vendor nearby, so lets pick a next marker
 			d("No Vendor nearby, Trying next VendorMarker...")
@@ -757,11 +761,11 @@ function e_MoveToVendorMarker:execute()
 	ml_log(" e_MoveToVendorMarker ")
 	-- Move to our current marker
 	if (ml_task_hub:CurrentTask().currentMarker ~= nil and ml_task_hub:CurrentTask().currentMarker ~= false) then
-		
+
 		local pos = ml_task_hub:CurrentTask().currentMarker:GetPosition()
 		local dist = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
-		
-		
+
+
 		if  ( dist < 200) then
 			-- We reached our Marker
 			c_MoveToVendorMarker.markerreached = true
@@ -772,18 +776,18 @@ function e_MoveToVendorMarker:execute()
 			-- We need to reach our Marker yet
 			-- make sure the next marker is reachable & onmesh
 			if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then
-				
+
 				local newTask = gw2_task_moveto.Create()
 				newTask.name = "MoveTo VendorMarker"
 				newTask.targetPos = pos
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				return ml_log(true)
-				
+
 			else
 				d("WARNING: Cannot reach next VendorMarker, trying to pick another one...")
 				ml_task_hub:CurrentTask().currentMarker = nil
 				-- Debug info
-				if ( ml_global_information.ShowDebug ) then dbCurrMarker = "" end 
+				if ( ml_global_information.ShowDebug ) then dbCurrMarker = "" end
 			end
 		end
 	end
