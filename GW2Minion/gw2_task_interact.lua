@@ -207,10 +207,9 @@ function e_InteractObject:execute()
 			if ( target.interactable and target.selectable) then
 				if ( target.isInInteractRange) then
 					Player:StopMovement()
-					local target = Player:GetTarget()
-					if (not target or target.id ~= target.id) then
+					local ptarget = Player:GetTarget()
+					if (not ptarget or ptarget.id ~= target.id) then
 						Player:SetTarget(target.id)
-
 					end
 
 					d("Interact with Target.. ")
