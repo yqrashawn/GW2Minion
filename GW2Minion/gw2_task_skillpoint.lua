@@ -196,7 +196,7 @@ c_UseItem = inheritsFrom( ml_cause )
 e_UseItem = inheritsFrom( ml_effect )
 e_UseItem.item = nil
 function c_UseItem:evaluate()
-	if ( not ml_global_information.Player_InCombat and ml_task_hub:CurrentTask().usableItemIDs ~= nil and ml_task_hub:CurrentTask().usableItemIDs ~= "") then
+	if ( not ml_global_information.Player_InCombat and ValidString(ml_task_hub:CurrentTask().usableItemIDs) ) then
 		
 		for itemid in StringSplit(ml_task_hub:CurrentTask().usableItemIDs,",") do
 			
