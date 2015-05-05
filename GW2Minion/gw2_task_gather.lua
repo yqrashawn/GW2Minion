@@ -243,25 +243,23 @@ end
 -- Handles Aggro for gathering, doesnt fight everything basicly and tries to run towards the next gatherable instead
 c_HandleAggro = inheritsFrom( ml_cause )
 e_HandleAggro = inheritsFrom( ml_effect )
-c_HandleAggro.targetID = nil
+c_HandleAggro.target = nil
 c_HandleAggro.HealthTreshold = math.random(70,90)
 function c_HandleAggro:evaluate()
 	if ( ml_global_information.Player_Health.percent < c_HandleAggro.HealthTreshold or TableSize(GadgetList("onmesh,nearest,gatherable,maxdistance=500")) > 0 ) then
 		local target = gw2_common_functions.GetBestAggroTarget()
 		if ( target ) then
-			c_HandleAggro.targetID = target.id
-			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_HandleAggro.targetID ~= nil
+			c_HandleAggro.target = target
+			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_HandleAggro.target ~= nil
 		end
 	end
-	c_HandleAggro.targetID = nil
+	c_HandleAggro.target = nil
 	return false
 end
 function e_HandleAggro:execute()
 	ml_log("e_HandleAggro ")
 
-	if (c_HandleAggro.targetID ~= nil) then
-		local target = CharacterList:Get(c_HandleAggro.targetID)
-		if(target ~= nil) then
+	if (c_HandleAggro.target ~= nil) then
 			c_HandleAggro.HealthTreshold = math.random(70,90)
 			Player:StopMovement()
 			-- stop the char from reviving else it doesnt do sh!t in combat task
@@ -269,10 +267,9 @@ function e_HandleAggro:execute()
 				Player:Jump()
 			end
 			local newTask = gw2_task_combat.Create()
-			newTask.targetID = c_HandleAggro.targetID
+		newTask.targetID = c_HandleAggro.target.id
 			ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-			c_HandleAggro.targetID = nil
-		end
+		c_HandleAggro.target = nil
 	else
 		ml_log("e_HandleAggro found no target")
 	end
@@ -283,31 +280,28 @@ end
 --------- Creates a new IMMEDIATE_GOAL task to kill an enemy when we are fighting our way towards the current gatherMarker
 c_FightToGatherMarker = inheritsFrom( ml_cause )
 e_FightToGatherMarker = inheritsFrom( ml_effect )
-c_FightToGatherMarker.targetID = nil
+c_FightToGatherMarker.target = nil
 c_FightToGatherMarker.throttle = 30000
 function c_FightToGatherMarker:evaluate()
 	if ( c_MoveToGatherMarker.markerreached == false and c_MoveToGatherMarker.allowedToFight == true) then
 		local target = gw2_common_functions.GetBestCharacterTarget( 1250 ) -- maxrange 2000 where enemies should be searched for
 		if ( target ) then
-			c_FightToGatherMarker.targetID = target.id
-			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGatherMarker.targetID ~= nil
+			c_FightToGatherMarker.target = target
+			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGatherMarker.target ~= nil			
 		end
 	end
-	c_FightToGatherMarker.targetID = nil
+	c_FightToGatherMarker.target = nil
 	return false
 end
 function e_FightToGatherMarker:execute()
 	ml_log("e_FightToGatherMarker ")
 
-	if (c_FightToGatherMarker.targetID ~= nil) then
-		local target = CharacterList:Get(c_FightToGatherMarker.targetID)
-		if(target ~= nil) then
+	if (c_FightToGatherMarker.target ~= nil) then
 			Player:StopMovement()
 			local newTask = gw2_task_combat.Create()
-			newTask.targetID = c_FightToGatherMarker.targetID
+		newTask.targetID = c_FightToGatherMarker.target.id
 			ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-			c_FightToGatherMarker.targetID = nil
-		end
+		c_FightToGatherMarker.target = nil
 	else
 		ml_log("e_FightToGatherMarker found no target")
 	end
@@ -507,7 +501,7 @@ function e_Gathering:execute()
 
 			local newTask = gw2_task_moveto.Create()
 			newTask.targetPos = tPos
-			newTask.stoppingDistance = 150
+			newTask.stoppingDistance = 50
 			newTask.name = "MoveTo Gatherable"
 			ml_task_hub:CurrentTask():AddSubTask(newTask)
 			return ml_log(true)

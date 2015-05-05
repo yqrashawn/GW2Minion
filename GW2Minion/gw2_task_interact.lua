@@ -128,13 +128,14 @@ end
 -- Interact with stuff than we should interact with
 c_InteractObject = inheritsFrom( ml_cause )
 e_InteractObject = inheritsFrom( ml_effect )
+e_InteractObject.lastTarget = nil
 e_InteractObject.lastTargetID = nil
 e_InteractObject.lastQueryTmr = 0
 e_InteractObject.WasChecked = false -- to make sure handleinteract is done before enemy checks
 function c_InteractObject:evaluate()
 	if ( ValidString(ml_task_hub:CurrentTask().interactContentIDs) ) then
 		-- to prevent hammering the "shortestpath"
-		if (e_InteractObject.lastTargetID ~= nil and TimeSince(e_InteractObject.lastQueryTmr) < 2000 ) then
+		if ( e_InteractObject.lastTarget ~= nil and e_InteractObject.lastTargetID ~= nil and TimeSince(e_InteractObject.lastQueryTmr) < 2000 ) then
 			if ( ValidTable(CharacterList:Get(e_InteractObject.lastTargetID)) or ValidTable(GadgetList:Get(e_InteractObject.lastTargetID)) ) then
 				return true
 			end
@@ -150,6 +151,7 @@ function c_InteractObject:evaluate()
 		if ( nearTarget ) then
 			local contentID = nearTarget.contentID
 			if ( contentID ~= nil and string.find(ml_task_hub:CurrentTask().interactContentIDs,tostring(contentID)) ~= nil ) then
+				e_InteractObject.lastTarget = nearTarget 
 				e_InteractObject.lastTargetID = nearTarget.id
 				return true
 			end
@@ -158,63 +160,71 @@ function c_InteractObject:evaluate()
 		--Search Charlist and Gadgetlist for the wanted targets
 		local radius = tonumber(ml_task_hub:CurrentTask().radius)
 		if ( radius == 0 ) then radius = 3500 end
-		local TargetList = CharacterList("nearest,maxdistance=" .. radius .. ",interactable,selectable,contentID="..string.gsub(ml_task_hub:CurrentTask().interactContentIDs,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+		local TargetList = CharacterList("nearest,interactable,selectable,contentID="..string.gsub(ml_task_hub:CurrentTask().interactContentIDs,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then
+				local tPos = entry.pos
+				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
 				e_InteractObject.lastTarget = entry 
 				e_InteractObject.lastTargetID = id
 				return true
 			end
 		end
+		end
 		
-		local TargetList = GadgetList("nearest,maxdistance=" .. radius .. ",interactable,selectable,contentID="..string.gsub(ml_task_hub:CurrentTask().interactContentIDs,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+		local TargetList = GadgetList("nearest,interactable,selectable,contentID="..string.gsub(ml_task_hub:CurrentTask().interactContentIDs,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 		if ( TargetList ) then
 			local id,entry = next(TargetList)
 			if (id and entry ) then
+				local tPos = entry.pos
+					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
 				e_InteractObject.lastTarget = entry 
 				e_InteractObject.lastTargetID = id
 				return true
 			end
 		end
+		end
 		
-		if (ValidString(ml_task_hub:CurrentTask().interactContentID2s)) then
+		if ( ml_task_hub:CurrentTask().interactContentID2s ~= nil  and ml_task_hub:CurrentTask().interactContentID2s ~= "" and ValidString(ml_task_hub:CurrentTask().interactContentID2s) ) then
 			-- Search Gadgetlist for the wanted targets	
-			local TargetList = GadgetList("nearest,maxdistance=" .. radius .. ",interactable,selectable,contentID2="..string.gsub(ml_task_hub:CurrentTask().interactContentID2s,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+			local TargetList = GadgetList("nearest,interactable,selectable,contentID2="..string.gsub(ml_task_hub:CurrentTask().interactContentID2s,",",";")..",exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
 			if ( TargetList ) then
 				local id,entry = next(TargetList)
 				if (id and entry ) then
+					local tPos = entry.pos
+					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
 					e_InteractObject.lastTarget = entry
 					e_InteractObject.lastTargetID = id
 					return true
 				end
 			end
 		end
+		end
 
 		-- if we are here and havent found anything to interact with, task done
 		d("Nothing to interact nearby, finishing task")
 		ml_task_hub:CurrentTask().completed = true
 	end
+	e_InteractObject.lastTarget = nil
 	e_InteractObject.lastTargetID = nil
 	e_InteractObject.lastQueryTmr = ml_global_information.Now
 	return false
 end
 function e_InteractObject:execute()
 	ml_log("e_InteractObject ")
-	if(e_InteractObject.lastTargetID ~= nil) then
-		local target = CharacterList:Get(e_InteractObject.lastTargetID) or GadgetList:Get(e_InteractObject.lastTargetID)
-		if(target ~= nil) then
-			if ( target.interactable and target.selectable) then
-				if ( target.isInInteractRange) then
+	if ( e_InteractObject.lastTarget and e_InteractObject.lastTarget.interactable and e_InteractObject.lastTarget.selectable) then 
+		if ( e_InteractObject.lastTarget.isInInteractRange) then
 					Player:StopMovement()
-					local ptarget = Player:GetTarget()
-					if (not ptarget or ptarget.id ~= target.id) then
-						Player:SetTarget(target.id)
+					local target = Player:GetTarget()
+			if (not target or target.id ~= e_InteractObject.lastTarget.id) then
+				Player:SetTarget(e_InteractObject.lastTarget.id)
+
 					end
 
 					d("Interact with Target.. ")
 					if ( Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then
-						Player:Interact(target.id)
+				Player:Interact(e_InteractObject.lastTarget.id)
 
 						-- For TM Conditions
 						if ( tonumber(ml_task_hub:CurrentTask().tIDuration) > 1 ) then
@@ -231,9 +241,9 @@ function e_InteractObject:execute()
 
 				else
 					-- Get in range
-					ml_log(" Getting in InteractRange, Distance:"..tostring(math.floor(target.distance)))
-					local ePos = target.pos
-					local tRadius = target.radius or 50
+			ml_log(" Getting in InteractRange, Distance:"..tostring(math.floor(e_InteractObject.lastTarget.distance)))			
+			local ePos = e_InteractObject.lastTarget.pos
+			local tRadius = e_InteractObject.lastTarget.radius or 50
 					if ( tRadius < 25 ) then tRadius = 35 end
 					if ( not gw2_unstuck.HandleStuck() ) then
 						local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,tRadius,false,false,true))
@@ -246,11 +256,10 @@ function e_InteractObject:execute()
 					end
 				end
 			else
+		e_InteractObject.lastTarget = nil
 				e_InteractObject.lastTargetID = nil
 				e_InteractObject.lastQueryTmr = ml_global_information.Now
 			end
-		end
-	end
 
 	return ml_log(false)
 end

@@ -157,25 +157,25 @@ end
 -- Interact with stuff than we should interact with
 c_ViewVista = inheritsFrom( ml_cause )
 e_ViewVista = inheritsFrom( ml_effect )
-e_ViewVista.markerPos = nil
+e_ViewVista.marker = nil
 function c_ViewVista:evaluate()
 	-- we should be near a vista now..
 	local MList = MapMarkerList("nearest,onmesh,isvista,contentID="..GW2.MAPMARKER.Vista)
 	if ( MList ) then
 		local i,marker = next(MList)
 		if ( i and marker ) then
-			e_ViewVista.markerPos = marker.pos
+			e_ViewVista.marker = marker
 			return true
 		end
 	end
-	e_ViewVista.markerPos = nil
+	e_ViewVista.marker = nil
 	return false
 end
 function e_ViewVista:execute()
 	ml_log("e_ViewVista ")
-	if ( ValidTable(e_ViewVista.markerPos) ) then
-		local dist = Distance3D(e_ViewVista.markerPos.x,e_ViewVista.markerPos.y,e_ViewVista.markerPos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
-		if ( dist < 100 ) then
+	if ( e_ViewVista.marker ~= nil ) then
+				
+		if ( e_ViewVista.marker.distance < 100 ) then
 			local vista = Player:GetInteractableTarget()
 			if ( vista ) then
 				if ( Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then
@@ -183,11 +183,11 @@ function e_ViewVista:execute()
 					ml_global_information.Wait(1500)
 				end
 			end
-			e_ViewVista.markerPos = nil
+			e_ViewVista.marker = nil
 			return ml_log(true)
 		else
 
-			local ePos = e_ViewVista.markerPos
+			local ePos = e_ViewVista.marker.pos
 			if ( not gw2_unstuck.HandleStuck() ) then
 				local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,50,false,false,false))
 				if (tonumber(navResult) < 0) then
@@ -198,7 +198,6 @@ function e_ViewVista:execute()
 			end
 		end
 	end
-	e_ViewVista.markerPos = nil
 	return ml_log(false)
 end
 

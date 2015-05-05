@@ -196,8 +196,10 @@ c_UseItem = inheritsFrom( ml_cause )
 e_UseItem = inheritsFrom( ml_effect )
 e_UseItem.item = nil
 function c_UseItem:evaluate()
-	if ( not ml_global_information.Player_InCombat and ValidString(ml_task_hub:CurrentTask().usableItemIDs)) then
+	if ( not ml_global_information.Player_InCombat and ml_task_hub:CurrentTask().usableItemIDs ~= nil and ml_task_hub:CurrentTask().usableItemIDs ~= "") then
+		
 		for itemid in StringSplit(ml_task_hub:CurrentTask().usableItemIDs,",") do
+			
 			local IList = Inventory("itemID="..itemid)
 			if ( IList ) then
 				for id,item in pairs (IList) do
@@ -374,6 +376,7 @@ end
 -- Makes sure we dont walk away too far
 c_SPHandleInteract = inheritsFrom( ml_cause )
 e_SPHandleInteract = inheritsFrom( ml_effect )
+e_SPHandleInteract.lastTarget = nil
 e_SPHandleInteract.lastTargetID = nil
 e_SPHandleInteract.lastQueryTmr = 0
 e_SPHandleInteract.WasChecked = false -- to make sure handleinteract is done before enemy checks
@@ -384,7 +387,7 @@ function c_SPHandleInteract:evaluate()
 		if ( radius == 0 ) then radius = 8000 end
 
 		-- to prevent hammering the "shortestpath"
-		if ( e_SPHandleInteract.lastTargetID ~= nil and TimeSince(e_SPHandleInteract.lastQueryTmr) < 2000 ) then
+		if ( e_SPHandleInteract.lastTarget ~= nil and e_SPHandleInteract.lastTargetID ~= nil and TimeSince(e_SPHandleInteract.lastQueryTmr) < 2000 ) then
 			if ( ValidTable(CharacterList:Get(e_SPHandleInteract.lastTargetID)) or ValidTable(GadgetList:Get(e_SPHandleInteract.lastTargetID)) ) then
 				return true
 			end
@@ -405,6 +408,7 @@ function c_SPHandleInteract:evaluate()
 				if (id and entry ) then
 					local tPos = entry.pos
 					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+						e_SPHandleInteract.lastTarget = entry 
 						e_SPHandleInteract.lastTargetID = id
 						return true
 					end
@@ -417,6 +421,7 @@ function c_SPHandleInteract:evaluate()
 				if (id and entry ) then
 					local tPos = entry.pos
 					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+						e_SPHandleInteract.lastTarget = entry 
 						e_SPHandleInteract.lastTargetID = id
 						return true
 					end
@@ -433,12 +438,15 @@ function c_SPHandleInteract:evaluate()
 				if (id and entry ) then
 					local tPos = entry.pos
 					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+						e_SPHandleInteract.lastTarget = entry
 						e_SPHandleInteract.lastTargetID = id
 						return true
 					end
 				end
 			end
 		end
+		
+		e_SPHandleInteract.lastTarget = nil
 		e_SPHandleInteract.lastTargetID = nil
 		e_SPHandleInteract.lastQueryTmr = ml_global_information.Now
 	end
@@ -446,23 +454,20 @@ function c_SPHandleInteract:evaluate()
 end
 function e_SPHandleInteract:execute()
 	ml_log("HQHandleInteract ")
-	if(e_SPHandleInteract.lastTargetID ~= nil) then
-		local target = CharacterList:Get(e_SPHandleInteract.lastTargetID) or GadgetList:Get(e_SPHandleInteract.lastTargetID)
-
-		if ( target and target.onmesh and target.interactable and target.selectable) then
-			if ( target.isInInteractRange and target.distance < 100) then
+	if ( e_SPHandleInteract.lastTarget and e_SPHandleInteract.lastTarget.onmesh and e_SPHandleInteract.lastTarget.interactable and e_SPHandleInteract.lastTarget.selectable) then 
+		if ( e_SPHandleInteract.lastTarget.isInInteractRange and e_SPHandleInteract.lastTarget.distance < 100) then
 				Player:StopMovement()
 				local target = Player:GetTarget()
-				if (not target or target.id ~= target.id) then
-					Player:SetTarget(target.id)
+			if (not target or target.id ~= e_SPHandleInteract.lastTarget.id) then
+				Player:SetTarget(e_SPHandleInteract.lastTarget.id)
 					return true
 
 				else
 					ml_log("Interact with Target.. ")
 					if ( Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then
-						Player:Interact(target.id)
+					Player:Interact(e_SPHandleInteract.lastTarget.id)
 						-- For TM Conditions
-						ml_task_hub:CurrentTask().lastInteractTargetID = target.id
+					ml_task_hub:CurrentTask().lastInteractTargetID = e_SPHandleInteract.lastTarget.id				
 						ml_global_information.Wait(1000)
 					end
 					return ml_log(true)
@@ -470,9 +475,9 @@ function e_SPHandleInteract:execute()
 
 			else
 				-- Get in range
-				ml_log(" Getting in InteractRange, Distance:"..tostring(math.floor(target.distance)))
-				local ePos = target.pos
-				local tRadius = target.radius or 50
+			ml_log(" Getting in InteractRange, Distance:"..tostring(math.floor(e_SPHandleInteract.lastTarget.distance)))			
+			local ePos = e_SPHandleInteract.lastTarget.pos
+			local tRadius = e_SPHandleInteract.lastTarget.radius or 50
 				if ( not gw2_unstuck.HandleStuck() ) then
 					local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,25+tRadius,false,false,true))
 					if (tonumber(navResult) < 0) then
@@ -483,10 +488,10 @@ function e_SPHandleInteract:execute()
 				end
 			end
 		else
+		e_SPHandleInteract.lastTarget = nil
 			e_SPHandleInteract.lastTargetID = nil
 			e_SPHandleInteract.lastQueryTmr = ml_global_information.Now
 		end
-	end
 
 	return ml_log(false)
 end
@@ -494,6 +499,7 @@ end
 -- Search n Kill the wanted Enemies
 c_SPHandleKillEnemy = inheritsFrom( ml_cause )
 e_SPHandleKillEnemy = inheritsFrom( ml_effect )
+e_SPHandleKillEnemy.lastTarget = nil
 e_SPHandleKillEnemy.lastTargetID = nil
 e_SPHandleKillEnemy.lastQueryTmr = 0
 function c_SPHandleKillEnemy:evaluate()
@@ -503,7 +509,7 @@ function c_SPHandleKillEnemy:evaluate()
 			-- Lets pray that no dumbnut entered bullshit into these ContentID fields -.-
 
 			-- to prevent hammering the "shortestpath"
-			if ( e_SPHandleKillEnemy.lastTargetID ~= nil and TimeSince(e_SPHandleKillEnemy.lastQueryTmr) < 2000 ) then
+			if ( e_SPHandleKillEnemy.lastTarget ~= nil and e_SPHandleKillEnemy.lastTargetID ~= nil and TimeSince(e_SPHandleKillEnemy.lastQueryTmr) < 2000 ) then
 				if ( ValidTable(CharacterList:Get(e_SPHandleKillEnemy.lastTargetID)) or ValidTable(GadgetList:Get(e_SPHandleKillEnemy.lastTargetID)) ) then
 					return true
 				end
@@ -523,6 +529,7 @@ function c_SPHandleKillEnemy:evaluate()
 				if (id and entry ) then
 					local tPos = entry.pos
 					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+						e_SPHandleKillEnemy.lastTarget = entry					
 						e_SPHandleKillEnemy.lastTargetID = id
 						return true
 					end
@@ -535,6 +542,7 @@ function c_SPHandleKillEnemy:evaluate()
 				if (id and entry ) then
 					local tPos = entry.pos
 					if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+						e_SPHandleKillEnemy.lastTarget = entry					
 						e_SPHandleKillEnemy.lastTargetID = id
 						return true
 					end
@@ -542,7 +550,7 @@ function c_SPHandleKillEnemy:evaluate()
 			end
 
 		end
-
+		e_SPHandleKillEnemy.lastTarget = nil
 		e_SPHandleKillEnemy.lastTargetID = nil
 		e_SPHandleKillEnemy.lastQueryTmr = ml_global_information.Now
 	end
@@ -550,19 +558,16 @@ function c_SPHandleKillEnemy:evaluate()
 end
 function e_SPHandleKillEnemy:execute()
 	ml_log("HQHandleKillEnemy ")
-	if(e_SPHandleKillEnemy.lastTargetID ~= nil) then
-		local target = CharacterList:Get(e_SPHandleKillEnemy.lastTargetID) or GadgetList:Get(e_SPHandleKillEnemy.lastTargetID)
-
-		if ( target and target.onmesh and target.attackable and target.alive) then
+	if ( e_SPHandleKillEnemy.lastTarget and e_SPHandleKillEnemy.lastTarget.onmesh and e_SPHandleKillEnemy.lastTarget.attackable and e_SPHandleKillEnemy.lastTarget.alive) then 
 			Player:StopMovement()
 			-- For TM Conditions
-			ml_task_hub:CurrentTask().lastEnemyTargetID = target.id
+		ml_task_hub:CurrentTask().lastEnemyTargetID = e_SPHandleKillEnemy.lastTarget.id
 			ml_task_hub:CurrentTask().lastTargetType = "character"
 
 			-- Create new Subtask Combat
 			local newTask = gw2_task_combat.Create()
-			newTask.targetID = target.id
-			if ( target.isGadget ) then
+		newTask.targetID = e_SPHandleKillEnemy.lastTarget.id		
+		if ( e_SPHandleKillEnemy.lastTarget.isGadget ) then
 				newTask.targetType = "gadget"
 				ml_task_hub:CurrentTask().lastTargetType = "gadget"
 			end
@@ -572,8 +577,8 @@ function e_SPHandleKillEnemy:execute()
 			return ml_log(true)
 
 		end
-	end
 
+	e_SPHandleKillEnemy.lastTarget = nil
 	e_SPHandleKillEnemy.lastTargetID = nil
 	e_SPHandleKillEnemy.lastQueryTmr = ml_global_information.Now
 	return ml_log(false)

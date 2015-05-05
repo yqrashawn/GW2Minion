@@ -168,34 +168,31 @@ end
 --------- Creates a new IMMEDIATE_GOAL task to kill an enemy when we are fighting our way towards the current grindmarker
 c_FightToGrindMarker = inheritsFrom( ml_cause )
 e_FightToGrindMarker = inheritsFrom( ml_effect )
-c_FightToGrindMarker.targetID = nil
+c_FightToGrindMarker.target = nil
 function c_FightToGrindMarker:evaluate()
 	if ( c_MoveToMarker.markerreached == false and c_MoveToMarker.allowedToFight == true) then
 		local target = gw2_common_functions.GetBestCharacterTarget( 1500 ) -- maxrange 2000 where enemies should be searched for
 		if ( target ) then
-			c_FightToGrindMarker.targetID = target.id
-			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGrindMarker.targetID ~= nil
+			c_FightToGrindMarker.target = target
+			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGrindMarker.target ~= nil			
 		end
 	end
-	c_FightToGrindMarker.targetID = nil
+	c_FightToGrindMarker.target = nil
 	return false
 end
 function e_FightToGrindMarker:execute()
 	ml_log("e_FightToGrindMarker ")
 
-	if (c_FightToGrindMarker.targetID ~= nil) then
-		local target = CharacterList:Get(c_FightToGrindMarker.targetID)
+	if (c_FightToGrindMarker.target ~= nil) then
 		--Player:StopMovement()
 		-- For TM Conditions
-		if(target ~= nil) then
-			ml_task_hub:CurrentTask().lastTargetID = c_FightToGrindMarker.targetID
+		ml_task_hub:CurrentTask().lastTargetID = c_FightToGrindMarker.target.id
 			-- Create new Subtask combat
 			local newTask = gw2_task_combat.Create()
-			newTask.targetID = c_FightToGrindMarker.targetID
+		newTask.targetID = c_FightToGrindMarker.target.id
 			newTask.terminateOnAggro = true
 			ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-			c_FightToGrindMarker.targetID = nil
-		end
+		c_FightToGrindMarker.target = nil
 	else
 		ml_log("e_FightToGrindMarker found no target")
 	end
@@ -317,33 +314,30 @@ end
 --------- Creates a new IMMEDIATE_GOAL task to kill an enemy
 c_CombatTask = inheritsFrom( ml_cause )
 e_CombatTask = inheritsFrom( ml_effect )
-c_CombatTask.targetID = nil
+c_CombatTask.target = nil
 function c_CombatTask:evaluate()
 	local target = gw2_common_functions.GetBestCharacterTarget( 9999 ) -- maxrange where enemies should be searched for
 	if ( target ) then
-		c_CombatTask.targetID = target.id
-		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_CombatTask.targetID ~= nil
+		c_CombatTask.target = target
+		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_CombatTask.target ~= nil
 	end
-	c_CombatTask.targetID = nil
+	c_CombatTask.target = nil
 	return false
 end
 function e_CombatTask:execute()
 	ml_log("CombatTask ")
 
-	if (c_CombatTask.targetID ~= nil) then
-		local target = CharacterList:Get(c_CombatTask.targetID) or Gadgetlist:Get(c_CombatTask.targetID)
-		if(target ~= nil) then
+	if (c_CombatTask.target ~= nil) then
 			--Player:StopMovement()
 			-- For TM Conditions
-			ml_task_hub:CurrentTask().lastTargetID = c_CombatTask.targetID
+		ml_task_hub:CurrentTask().lastTargetID = c_CombatTask.target.id
 
 			-- Create new Subtask Combat
 			local newTask = gw2_task_combat.Create()
-			newTask.targetID = c_CombatTask.targetID
+		newTask.targetID = c_CombatTask.target.id
 			newTask.terminateOnAggro = true
 			ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-			c_CombatTask.targetID = nil
-		end
+		c_CombatTask.target = nil
 	else
 		ml_log("gw2_task_grind.CombatTask found no target")
 	end

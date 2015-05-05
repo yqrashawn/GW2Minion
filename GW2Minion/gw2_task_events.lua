@@ -134,8 +134,7 @@ end
 -- For adding a doEvent Subtask
 c_doEvents = inheritsFrom( ml_cause )
 e_doEvents = inheritsFrom( ml_effect )
-e_doEvents.currentEventID = nil
-e_doEvents.currentEventPos = nil
+e_doEvents.currentEvent = nil
 function c_doEvents:evaluate()
 	if ( gDoEvents == "1" ) then
 		local evList = MapMarkerList("nearest,isevent,onmesh,exclude_eventid="..ml_blacklist.GetExcludeString(GetString("event")))
@@ -143,25 +142,21 @@ function c_doEvents:evaluate()
 		if ( i and e ) then
 			local evi = e.eventinfo
 			if ( evi and evi.level <= Player.level + 3 ) then
-				e_doEvents.currentEventID = e.eventID
-				e_doEvents.currentEventPos = e.pos
+				e_doEvents.currentEvent = e
 				return true
 			end
 		end
 	end
-	e_doEvents.currentEventID = nil
-	e_doEvents.currentEventPos = nil
+	e_doEvents.currentEvent = nil
 	return false
 end
 function e_doEvents:execute()
 	ml_log("e_doEvents")
-	if ( e_doEvents.currentEventID ~= nil and e_doEvents.currentEventPos ~= nil) then
+	if ( e_doEvents.currentEvent ) then		
 		local newTask = gw2_task_events.Create()
-		newTask.eventID = e_doEvents.currentEventID
-		newTask.eventPos = e_doEvents.currentEventPos
+		newTask.eventID = e_doEvents.currentEvent.eventID
+		newTask.eventPos = e_doEvents.currentEvent.pos
 		ml_task_hub:CurrentTask():AddSubTask(newTask)
-		e_doEvents.currentEventID = nil
-		e_doEvents.currentEventPos = nil
 		return ml_log(true)
 	end
 	return ml_log(false)
@@ -171,8 +166,7 @@ end
 
 c_MoveInEventRange = inheritsFrom( ml_cause )
 e_MoveInEventRange = inheritsFrom( ml_effect )
-e_MoveInEventRange.currentEventID = nil
-e_MoveInEventRange.currentEventPos = nil
+e_MoveInEventRange.currentEvent = nil
 function c_MoveInEventRange:evaluate()
 	local eID = ml_task_hub:CurrentTask().eventID
 
@@ -181,8 +175,7 @@ function c_MoveInEventRange:evaluate()
 		local i,e = next(evList)
 		if ( i and e ) then
 
-			e_MoveInEventRange.currentEventID = e.eventID
-			e_MoveInEventRange.currentEventPos = e.pos
+			e_MoveInEventRange.currentEvent = e
 			if ( ml_task_hub:CurrentTask().eventReached == false) then
 				return true
 
@@ -203,16 +196,15 @@ function c_MoveInEventRange:evaluate()
 			end
 		end
 	end
-	e_MoveInEventRange.currentEventID = nil
-	e_MoveInEventRange.currentEventPos = nil
+	e_MoveInEventRange.currentEvent = nil
 	return false
 end
 
 function e_MoveInEventRange:execute()
 	ml_log("e_MoveInEventRange")
-	if ( e_MoveInEventRange.currentEventID ) then
-		local ePos = e_MoveInEventRange.currentEventPos
-		if (ePos ~= nil) then
+	if ( e_MoveInEventRange.currentEvent ) then
+		local ePos = e_MoveInEventRange.currentEvent.pos
+		if (ePos) then
 			local dist = Distance2D ( ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, ePos.x, ePos.y)
 			ml_log("Distance: "..tostring(math.floor(dist)))
 
@@ -223,7 +215,7 @@ function e_MoveInEventRange:execute()
 					local newTask = gw2_task_moveto.Create()
 					newTask.name = "MoveTo Event"
 					newTask.targetPos = ePos
-					newTask.targetID = e_MoveInEventRange.currentEventID
+					newTask.targetID = e_MoveInEventRange.currentEvent.eventID
 					newTask.targetType = "event"
 					newTask.stoppingDistance = math.random(100,300)
 					ml_task_hub:CurrentTask():AddSubTask(newTask)
@@ -251,15 +243,13 @@ function e_MoveInEventRange:execute()
 			end
 		end
 	end
-	e_MoveInEventRange.currentEventID = nil
-	e_MoveInEventRange.currentEventPos = nil
 	return ml_log(false)
 end
 
 
 c_DoEventObjectives = inheritsFrom( ml_cause )
 e_DoEventObjectives = inheritsFrom( ml_effect )
-e_DoEventObjectives.currentEventID = nil
+e_DoEventObjectives.currentEvent = nil
 e_DoEventObjectives.PathThrottleTmr = 0
 function c_DoEventObjectives:evaluate()
 	local eID = ml_task_hub:CurrentTask().eventID
@@ -268,27 +258,20 @@ function c_DoEventObjectives:evaluate()
 		if ( TableSize(evList)>0) then
 			local i,e = next(evList)
 			if ( i and e ) then
-				e_DoEventObjectives.currentEventID = e.eventID
+				e_DoEventObjectives.currentEvent = e
 				return true
 			end
 		end
 	end
-	e_DoEventObjectives.currentEventID = nil
+	e_DoEventObjectives.currentEvent = nil
 	return false
 end
 function e_DoEventObjectives:execute()
 	ml_log("Do Event Objectives")
-	if ( e_DoEventObjectives.currentEventID ) then
-		local evList = MapMarkerList("nearest,onmesh,eventID="..e_DoEventObjectives.currentEventID..",exclude_eventid="..ml_blacklist.GetExcludeString(GetString("event")))
-		local currentEvent = nil
+	if ( e_DoEventObjectives.currentEvent ) then
 
-		if(ValidTable(evList)) then
-			currentEvent = select(2, next(evList))
-		end
-
-		if(currentEvent ~= nil) then
 			--pick out the first objective
-			local evoList = currentEvent.eventobjectivelist
+		local evoList = e_DoEventObjectives.currentEvent.eventobjectivelist				
 			if ( evoList ) then
 				local oid,obj = next(evoList)
 				if ( oid and obj ) then
@@ -307,7 +290,7 @@ function e_DoEventObjectives:execute()
 						ml_task_hub:CurrentTask().eventRadius = 4000
 
 						d("Bot cant handle CollectItems-Events, blacklisting it..")
-						ml_blacklist.AddBlacklistEntry(GetString("event"), currentEvent.eventID, "CollectItems", ml_global_information.Now + 1800000)
+					ml_blacklist.AddBlacklistEntry(GetString("event"), e_DoEventObjectives.currentEvent.eventID, "CollectItems", ml_global_information.Now + 1800000)
 						ml_task_hub:CurrentTask().completed = true
 
 					elseif ( objType == GW2.OBJECTIVETYPE.Counter ) then
@@ -442,13 +425,13 @@ function e_DoEventObjectives:execute()
 					else
 						ml_error("Unhandled EventType !!!! : "..tostring(objType))
 						d("Bot cant handle this Event, blacklisting it..")
-						ml_blacklist.AddBlacklistEntry(GetString("event"), currentEvent.eventID, "UnknownName", ml_global_information.Now + 1800000)
+					ml_blacklist.AddBlacklistEntry(GetString("event"), e_DoEventObjectives.currentEvent.eventID, "UnknownName", ml_global_information.Now + 1800000)
 						ml_task_hub:CurrentTask().completed = true
 						end
 					end
 				end
 			end
-		end
+
 
 	-- Kill enemies around us
 	local target = Player:GetTarget()

@@ -669,6 +669,7 @@ end
 -- Makes sure we dont walk away too far
 c_HQHandleInteract = inheritsFrom( ml_cause )
 e_HQHandleInteract = inheritsFrom( ml_effect )
+e_HQHandleInteract.lastTarget = nil
 e_HQHandleInteract.lastTargetID = nil
 e_HQHandleInteract.lastQueryTmr = 0
 e_HQHandleInteract.WasChecked = false -- to make sure handleinteract is done before enemy checks
@@ -677,7 +678,7 @@ function c_HQHandleInteract:evaluate()
 	if ( radius == 0 ) then radius = 8000 end
 
 	-- to prevent hammering the "shortestpath"
-	if ( e_HQHandleInteract.lastTargetID ~= nil and TimeSince(e_HQHandleInteract.lastQueryTmr) < 2000 ) then
+	if ( e_HQHandleInteract.lastTarget ~= nil and e_HQHandleInteract.lastTargetID ~= nil and TimeSince(e_HQHandleInteract.lastQueryTmr) < 2000 ) then
 		if ( ValidTable(CharacterList:Get(e_HQHandleInteract.lastTargetID)) or ValidTable(GadgetList:Get(e_HQHandleInteract.lastTargetID)) ) then
 			return true
 		end
@@ -698,6 +699,7 @@ function c_HQHandleInteract:evaluate()
 			if (id and entry ) then
 				local tPos = entry.pos
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+					e_HQHandleInteract.lastTarget = entry 
 					e_HQHandleInteract.lastTargetID = id
 					return true
 				end
@@ -710,6 +712,7 @@ function c_HQHandleInteract:evaluate()
 			if (id and entry ) then
 				local tPos = entry.pos
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+					e_HQHandleInteract.lastTarget = entry 
 					e_HQHandleInteract.lastTargetID = id
 					return true
 				end
@@ -726,6 +729,7 @@ function c_HQHandleInteract:evaluate()
 			if (id and entry ) then
 				local tPos = entry.pos
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+					e_HQHandleInteract.lastTarget = entry
 					e_HQHandleInteract.lastTargetID = id
 					return true
 				end
@@ -733,29 +737,27 @@ function c_HQHandleInteract:evaluate()
 		end
 	end
 
+	e_HQHandleInteract.lastTarget = nil
 	e_HQHandleInteract.lastTargetID = nil
 	e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
 	return false
 end
 function e_HQHandleInteract:execute()
 	ml_log("HQHandleInteract ")
-	if(e_HQHandleInteract.lastTargetID ~= nil) then
-		local target = CharacterList:Get(e_HQHandleInteract.lastTargetID) or GadgetList:Get(e_HQHandleInteract.lastTargetID)
-
-		if ( target and target.onmesh and target.interactable and target.selectable) then
-			if ( target.isInInteractRange and target.distance < 120) then
+	if ( e_HQHandleInteract.lastTarget and e_HQHandleInteract.lastTarget.onmesh and e_HQHandleInteract.lastTarget.interactable and e_HQHandleInteract.lastTarget.selectable) then 
+		if ( e_HQHandleInteract.lastTarget.isInInteractRange and e_HQHandleInteract.lastTarget.distance < 120) then
 				Player:StopMovement()
 				local target = Player:GetTarget()
-				if (not target or target.id ~= target.id) then
-					Player:SetTarget(target.id)
+			if (not target or target.id ~= e_HQHandleInteract.lastTarget.id) then
+				Player:SetTarget(e_HQHandleInteract.lastTarget.id)
 					return true
 
 				else
 					ml_log("Interact with Target.. ")
 					if ( Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then
-						Player:Interact(target.id)
+					Player:Interact(e_HQHandleInteract.lastTarget.id)
 						-- For TM Conditions
-						ml_task_hub:CurrentTask().lastInteractTargetID = target.id
+					ml_task_hub:CurrentTask().lastInteractTargetID = e_HQHandleInteract.lastTarget.id				
 						ml_global_information.Wait(1000)
 					end
 					return ml_log(true)
@@ -763,9 +765,9 @@ function e_HQHandleInteract:execute()
 
 			else
 				-- Get in range
-				ml_log(" Getting in InteractRange, Distance:"..tostring(math.floor(target.distance)))
-				local ePos = target.pos
-				local tRadius = target.radius or 50
+			ml_log(" Getting in InteractRange, Distance:"..tostring(math.floor(e_HQHandleInteract.lastTarget.distance)))			
+			local ePos = e_HQHandleInteract.lastTarget.pos
+			local tRadius = e_HQHandleInteract.lastTarget.radius or 50
 				if ( not gw2_unstuck.HandleStuck() ) then
 					local navResult = tostring(Player:MoveTo(ePos.x,ePos.y,ePos.z,tRadius,false,false,true))
 					if (tonumber(navResult) < 0) then
@@ -776,12 +778,10 @@ function e_HQHandleInteract:execute()
 				end
 			end
 		else
+		e_HQHandleInteract.lastTarget = nil
 			e_HQHandleInteract.lastTargetID = nil
 			e_HQHandleInteract.lastQueryTmr = ml_global_information.Now
 		end
-	end
-
-	e_HQHandleInteract.lastTargetID = nil
 
 	return ml_log(false)
 end
@@ -789,6 +789,7 @@ end
 -- Search n Kill the wanted Enemies
 c_HQHandleKillEnemy = inheritsFrom( ml_cause )
 e_HQHandleKillEnemy = inheritsFrom( ml_effect )
+e_HQHandleKillEnemy.lastTarget = nil
 e_HQHandleKillEnemy.lastTargetID = nil
 e_HQHandleKillEnemy.lastQueryTmr = 0
 function c_HQHandleKillEnemy:evaluate()
@@ -796,7 +797,7 @@ function c_HQHandleKillEnemy:evaluate()
 		-- Lets pray that no dumbnut entered bullshit into these ContentID fields -.-
 
 		-- to prevent hammering the "shortestpath"
-		if ( e_HQHandleKillEnemy.lastTargetID ~= nil and TimeSince(e_HQHandleKillEnemy.lastQueryTmr) < 2000 ) then
+		if ( e_HQHandleKillEnemy.lastTarget ~= nil and e_HQHandleKillEnemy.lastTargetID ~= nil and TimeSince(e_HQHandleKillEnemy.lastQueryTmr) < 2000 ) then
 			if ( ValidTable(CharacterList:Get(e_HQHandleKillEnemy.lastTargetID)) or ValidTable(GadgetList:Get(e_HQHandleKillEnemy.lastTargetID)) ) then
 				return true
 			end
@@ -816,6 +817,7 @@ function c_HQHandleKillEnemy:evaluate()
 			if (id and entry ) then
 				local tPos = entry.pos
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+					e_HQHandleKillEnemy.lastTarget = entry	
 					e_HQHandleKillEnemy.lastTargetID = id
 					return true
 				end
@@ -828,6 +830,7 @@ function c_HQHandleKillEnemy:evaluate()
 			if (id and entry ) then
 				local tPos = entry.pos
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+					e_HQHandleKillEnemy.lastTarget = entry					
 					e_HQHandleKillEnemy.lastTargetID = id
 					return true
 				end
@@ -840,30 +843,30 @@ function c_HQHandleKillEnemy:evaluate()
 			if (id and entry ) then
 				local tPos = entry.pos
 				if ( Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,tPos.x,tPos.y,tPos.z) < radius ) then
+					e_HQHandleKillEnemy.lastTarget = entry					
 					e_HQHandleKillEnemy.lastTargetID = id
 					return true
 				end
 			end
 		end
 	end
+	e_HQHandleKillEnemy.lastTarget = nil
 	e_HQHandleKillEnemy.lastTargetID = nil
 	e_HQHandleKillEnemy.lastQueryTmr = ml_global_information.Now
 	return false
 end
 function e_HQHandleKillEnemy:execute()
 	ml_log("HQHandleKillEnemy ")
-	if(e_HQHandleKillEnemy.lastTargetID ~= nil) then
-		local target = CharacterList:Get(e_HQHandleKillEnemy.lastTargetID) or GadgetList:Get(e_HQHandleKillEnemy.lastTargetID)
-		if ( target and target.onmesh and target.attackable and target.alive) then
+	if ( e_HQHandleKillEnemy.lastTarget and e_HQHandleKillEnemy.lastTarget.onmesh and e_HQHandleKillEnemy.lastTarget.attackable and e_HQHandleKillEnemy.lastTarget.alive) then 
 			Player:StopMovement()
 			-- For TM Conditions
-			ml_task_hub:CurrentTask().lastEnemyTargetID = target.id
+		ml_task_hub:CurrentTask().lastEnemyTargetID = e_HQHandleKillEnemy.lastTarget.id
 			ml_task_hub:CurrentTask().lastTargetType = "character"
 
 			-- Create new Subtask Combat
 			local newTask = gw2_task_combat.Create()
-			newTask.targetID = target.id
-			if ( target.isGadget ) then
+		newTask.targetID = e_HQHandleKillEnemy.lastTarget.id
+		if ( e_HQHandleKillEnemy.lastTarget.isGadget ) then
 				newTask.targetType = "gadget"
 				ml_task_hub:CurrentTask().lastTargetType = "gadget"
 			end
@@ -873,8 +876,8 @@ function e_HQHandleKillEnemy:execute()
 			return ml_log(true)
 
 		end
-	end
 
+	e_HQHandleKillEnemy.lastTarget = nil
 	e_HQHandleKillEnemy.lastTargetID = nil
 	e_HQHandleKillEnemy.lastQueryTmr = ml_global_information.Now
 	return ml_log(false)

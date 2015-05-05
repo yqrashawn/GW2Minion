@@ -306,48 +306,44 @@ end
 -- Range limited to Attackrange
 c_AttackBestNearbyCharacterTarget = inheritsFrom( ml_cause )
 e_AttackBestNearbyCharacterTarget = inheritsFrom( ml_effect )
-c_AttackBestNearbyCharacterTarget.targetID = nil
+c_AttackBestNearbyCharacterTarget.target = nil
 function c_AttackBestNearbyCharacterTarget:evaluate()
-	local target = gw2_common_functions.GetBestCharacterTargetForAssist()
-	if (target ~= nil ) then
-		c_AttackBestNearbyCharacterTarget.targetID = target.id
+	c_AttackBestNearbyCharacterTarget.target = gw2_common_functions.GetBestCharacterTargetForAssist()
+	if ( c_AttackBestNearbyCharacterTarget.target ~= nil ) then
 		return true
 	end
-	c_AttackBestNearbyCharacterTarget.targetID = nil
+	c_AttackBestNearbyCharacterTarget.target = nil
 	return false
 end
 function e_AttackBestNearbyCharacterTarget:execute()
 	ml_log( "AttackBestCharacterTarget" )
-	local target = CharacterList:Get(c_AttackBestNearbyCharacterTarget.targetID) or GadgetList:Get(c_AttackBestNearbyCharacterTarget.targetID)
-	if(target ~= nil) then
-		gw2_skill_manager.Attack(target)
-	end
-	c_AttackBestNearbyCharacterTarget.targetID = nil
+	gw2_skill_manager.Attack( c_AttackBestNearbyCharacterTarget.target )
+	c_AttackBestNearbyCharacterTarget.target = nil
 end
 
 --
 c_FightAggro = inheritsFrom( ml_cause )
 e_FightAggro = inheritsFrom( ml_effect )
-c_FightAggro.targetID = nil
+c_FightAggro.target = nil
 function c_FightAggro:evaluate()
 	local target = gw2_common_functions.GetBestAggroTarget()
 	if ( target ) then
-		c_FightAggro.targetID = target.id
-		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightAggro.targetID ~= nil
+		c_FightAggro.target = target
+		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightAggro.target ~= nil
 	end
 
-	c_FightAggro.targetID = nil
+	c_FightAggro.target = nil
 	return false
 end
 function e_FightAggro:execute()
 	ml_log("e_FightAggro ")
-	local target = CharacterList:Get(c_FightAggro.targetID)
-	if (target ~= nil) then
+
+	if (c_FightAggro.target ~= nil) then
 		Player:StopMovement()
 		local newTask = gw2_task_combat.Create()
-		newTask.targetID = target.id
+		newTask.targetID = c_FightAggro.target.id
 		ml_task_hub:Add(newTask.Create(), IMMEDIATE_GOAL, TP_IMMEDIATE)
-		c_FightAggro.targetID = nil
+		c_FightAggro.target = nil
 	else
 		ml_log("e_FightAggro found no target")
 	end
