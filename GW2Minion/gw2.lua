@@ -160,18 +160,25 @@ function gw2minion.ModuleInit()
 
 
 
+	-- setup worldnav for gw2
+	if ( ml_nav_manager) then
+		ml_nav_manager.isgw2 = true
+	end
 	
 	-- setup meshmanager
 	if ( ml_mesh_mgr ) then
 
 
+		GUI_NewButton(ml_mesh_mgr.mainwindow.name,"CTRL+M:ChangeMeshRenderDepth","ChangeMeshDepth")
+		RegisterEventHandler("ChangeMeshDepth", function() RenderManager:ChangeMeshDepth() end)  
 		ml_mesh_mgr.parentWindow.Name = gw2minion.MainWindow.Name
 		ml_mesh_mgr.GetMapID = function () return ml_global_information.CurrentMapID end
 		ml_mesh_mgr.GetMapName = function () return ml_global_information.CurrentMapName end
 		ml_mesh_mgr.GetPlayerPos = function () return ml_global_information.Player_Position end
 		ml_mesh_mgr.averagegameunitsize = 50
-		
 
+
+		ml_mesh_mgr.useQuaternion = true
 		-- Set worldnavigation data
 		ml_mesh_mgr.navData = persistence.load(GetAddonPath()..[[GW2Minion\]].."worldnav_data.lua")
 		if ( not ValidTable(ml_mesh_mgr.navData)) then 
@@ -218,7 +225,9 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.SetDefaultMesh(350,"Heart of the Mists")
 
 
-		ml_mesh_mgr.SetDefaultMesh(650,"Applied Development Lab") --Asura Home
+		ml_mesh_mgr.SetDefaultMesh(647,"Dreamers Terrace (Home)") --Sylvari Home
+		ml_mesh_mgr.SetDefaultMesh(648,"The Omphalos Chamber") --Sylvari Home
+		ml_mesh_mgr.SetDefaultMesh(650,"Applied Development Lab") --Asura Home		
 		ml_mesh_mgr.SetDefaultMesh(968,"EdgeOfTheMist")
 		ml_mesh_mgr.SetDefaultMesh(988,"Dry Top")
 		
@@ -340,12 +349,12 @@ function gw2minion.OnUpdate(event, tickcount )
 			end
 				
 		end
-		-- gonna love backward compatibility
-		if ( ml_GetTraceString == nil ) then 
-			GUI_SetStatusBar(ml_GetLogString())
-		else
-			GUI_SetStatusBar(ml_GetTraceString())
-		end
+
+
+		--GUI_SetStatusBar(ml_GetTraceString())
+
+
+
 	end
 end
 
@@ -523,8 +532,9 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "BuyManager_toolStacks" or
 			k == "BuyManager_GarheringTool" or 
 			k == "SalvageManager_Active" or
-			k == "gMultiBotEnabled"
+			k == "gMultiBotEnabled" or
 
+			k == "gNoMeshLoad"			
 			) then
 			Settings.GW2Minion[tostring(k)] = v
 					
@@ -631,3 +641,5 @@ RegisterEventHandler("GUI.Update",gw2minion.GUIVarUpdate)
 RegisterEventHandler("Gameloop.Update",gw2minion.OnUpdate)
 RegisterEventHandler("Gameloop.CharSelectUpdate",gw2minion.OnUpdateCharSelect)
 RegisterEventHandler("Gameloop.CutsceneUpdate",gw2minion.OnUpdateCutscene)
+
+RegisterEventHandler( "GW2MINION.toggle", ml_task_hub.ToggleRun )
