@@ -6,6 +6,11 @@ local obj1 = {
 	["name"] = "Queensdale";
 	["tasks"] = {
 		[1] = {
+			["enabled"] = "1";
+			["type"] = "MoveTo Position";
+			["minlvl"] = 0;
+			["id"] = 1;
+			["maxlvl"] = "80";
 			["customVars"] = {
 				["TM_TASK_useWaypoint"] = {
 					["value"] = "1";
@@ -24,11 +29,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["type"] = "MoveTo Position";
-			["minlvl"] = 0;
-			["maxlvl"] = "80";
-			["id"] = 1;
-			["enabled"] = "1";
 			["partysize"] = 0;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -40,6 +40,11 @@ local obj1 = {
 			["mappos"] = "-16512/17324/-1371";
 		};
 		[2] = {
+			["enabled"] = "1";
+			["type"] = "MoveTo Position";
+			["minlvl"] = 0;
+			["id"] = 2;
+			["maxlvl"] = "80";
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -54,11 +59,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["type"] = "MoveTo Position";
-			["minlvl"] = 0;
-			["maxlvl"] = "80";
-			["id"] = 2;
-			["enabled"] = "1";
 			["partysize"] = 0;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -70,6 +70,11 @@ local obj1 = {
 			["mappos"] = "-18959/14484/-839";
 		};
 		[3] = {
+			["enabled"] = "1";
+			["type"] = "MoveTo Position";
+			["minlvl"] = 0;
+			["id"] = 3;
+			["maxlvl"] = 80;
 			["customVars"] = {
 				["TM_TASK_useWaypoint"] = {
 					["value"] = "1";
@@ -88,11 +93,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["type"] = "MoveTo Position";
-			["minlvl"] = 0;
-			["maxlvl"] = 80;
-			["id"] = 3;
-			["enabled"] = "1";
 			["partysize"] = 0;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -104,6 +104,11 @@ local obj1 = {
 			["mappos"] = "-25394/14145/-866";
 		};
 		[4] = {
+			["enabled"] = "1";
+			["type"] = "MoveTo Position";
+			["minlvl"] = 0;
+			["id"] = 4;
+			["maxlvl"] = 80;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -118,11 +123,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["type"] = "MoveTo Position";
-			["minlvl"] = 0;
-			["maxlvl"] = 80;
-			["id"] = 4;
-			["enabled"] = "1";
 			["partysize"] = 0;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -134,6 +134,12 @@ local obj1 = {
 			["mappos"] = "-29539/15816/-846";
 		};
 		[5] = {
+			["enabled"] = "1";
+			["type"] = "HeartQuest";
+			["minlvl"] = 0;
+			["maxlvl"] = "80";
+			["id"] = 5;
+			["radius"] = "3500";
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "215";
@@ -168,12 +174,6 @@ local obj1 = {
 					["type"] = "Numeric";
 				};
 			};
-			["radius"] = "3500";
-			["minlvl"] = 0;
-			["maxlvl"] = "80";
-			["id"] = 5;
-			["type"] = "HeartQuest";
-			["enabled"] = "1";
 			["partysize"] = 0;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -185,12 +185,6 @@ local obj1 = {
 			["mappos"] = "-28904/14536/-864";
 		};
 		[6] = {
-			["enabled"] = "1";
-			["radius"] = "4000";
-			["minlvl"] = "1";
-			["maxlvl"] = "80";
-			["id"] = 6;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "216";
@@ -225,6 +219,12 @@ local obj1 = {
 					["type"] = "Numeric";
 				};
 			};
+			["radius"] = "4000";
+			["minlvl"] = "1";
+			["id"] = 6;
+			["maxlvl"] = "80";
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -236,6 +236,12 @@ local obj1 = {
 			["mappos"] = "-28362/22339/-237";
 		};
 		[7] = {
+			["enabled"] = "1";
+			["radius"] = "8000";
+			["minlvl"] = "2";
+			["maxlvl"] = "80";
+			["id"] = 7;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "218";
@@ -270,12 +276,6 @@ local obj1 = {
 					["type"] = "Numeric";
 				};
 			};
-			["radius"] = "8000";
-			["minlvl"] = "2";
-			["id"] = 7;
-			["maxlvl"] = "80";
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -287,14 +287,14 @@ local obj1 = {
 			["mappos"] = "-26035/23685/-772";
 		};
 		[8] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "2";
-			["maxlvl"] = "80";
-			["id"] = 8;
-			["partysize"] = 0;
 			["customVars"] = {
 			};
+			["radius"] = 0;
+			["minlvl"] = "2";
+			["id"] = 8;
+			["maxlvl"] = "80";
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -306,6 +306,12 @@ local obj1 = {
 			["mappos"] = "-31813/28433/-1305";
 		};
 		[9] = {
+			["enabled"] = "1";
+			["radius"] = "0";
+			["minlvl"] = "0";
+			["maxlvl"] = 80;
+			["id"] = 9;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -320,12 +326,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = "0";
-			["minlvl"] = "0";
-			["id"] = 9;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -337,6 +337,12 @@ local obj1 = {
 			["mappos"] = "-37242/19280/-583";
 		};
 		[10] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = 0;
+			["maxlvl"] = 80;
+			["id"] = 10;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -351,12 +357,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = 0;
-			["id"] = 10;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -368,26 +368,24 @@ local obj1 = {
 			["mappos"] = "-38007/21689/-578";
 		};
 		[11] = {
+			["enabled"] = "1";
+			["radius"] = "3500";
+			["minlvl"] = "3";
+			["maxlvl"] = "80";
+			["id"] = 11;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "219";
 					["type"] = "Field";
 				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "216438";
 					["type"] = "Field";
 				};
 				["TM_TASK_KillEnemies"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["value"] = "135266816";
-					["type"] = "Field";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["value"] = "44300,44168,44255";
-					["type"] = "Field";
 				};
 				["TM_TASK_pickupSkillID"] = {
 					["value"] = "";
@@ -397,12 +395,20 @@ local obj1 = {
 					["value"] = "25";
 					["type"] = "Numeric";
 				};
+				["TM_TASK_interactContentID2s"] = {
+					["value"] = "135266816";
+					["type"] = "Field";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["value"] = "44300,44168,44255";
+					["type"] = "Field";
+				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "216438";
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_maxKills"] = {
@@ -410,12 +416,6 @@ local obj1 = {
 					["type"] = "Numeric";
 				};
 			};
-			["radius"] = "3500";
-			["minlvl"] = "3";
-			["id"] = 11;
-			["maxlvl"] = "80";
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -427,12 +427,6 @@ local obj1 = {
 			["mappos"] = "-37827/24200/-551";
 		};
 		[12] = {
-			["enabled"] = "1";
-			["radius"] = "0";
-			["minlvl"] = "0";
-			["maxlvl"] = "80";
-			["id"] = 12;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -447,6 +441,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = "0";
+			["minlvl"] = "0";
+			["id"] = 12;
+			["maxlvl"] = "80";
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -458,12 +458,6 @@ local obj1 = {
 			["mappos"] = "-37282/19264/-583";
 		};
 		[13] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = 0;
-			["maxlvl"] = 80;
-			["id"] = 13;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -478,6 +472,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = 0;
+			["id"] = 13;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -489,32 +489,18 @@ local obj1 = {
 			["mappos"] = "-37709/13990/-1067";
 		};
 		[14] = {
-			["enabled"] = "1";
-			["radius"] = "5500";
-			["minlvl"] = "4";
-			["maxlvl"] = "80";
-			["id"] = 14;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "220";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "240811,216400";
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_KillEnemies"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = "25";
-					["type"] = "Numeric";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["value"] = "135266816";
@@ -524,12 +510,20 @@ local obj1 = {
 					["value"] = "43462,301454,43469,301460,43475";
 					["type"] = "Field";
 				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "25";
+					["type"] = "Numeric";
+				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
 				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "240811,216400";
 					["type"] = "Field";
 				};
 				["TM_TASK_maxKills"] = {
@@ -537,6 +531,12 @@ local obj1 = {
 					["type"] = "Numeric";
 				};
 			};
+			["radius"] = "5500";
+			["minlvl"] = "4";
+			["id"] = 14;
+			["maxlvl"] = "80";
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -554,39 +554,35 @@ local obj1 = {
 					["type"] = "Numeric";
 				};
 			};
-			["superClass"] = nil --[[functions with upvalue not supported]];
-			["class"] = nil --[[functions with upvalue not supported]];
-			["complete"] = false;
-			["mapid"] = 15;
-			["priority"] = 15;
-			["mappos"] = "-37475/6835/-672";
-			["isa"] = nil --[[functions with upvalue not supported]];
 			["radius"] = "3500";
 			["minlvl"] = "0";
+			["id"] = 73;
 			["maxlvl"] = "5";
-			["Create"] = nil --[[functions with upvalue not supported]];
-			["maxduration"] = "600";
+			["enabled"] = "1";
+			["partysize"] = 0;
+			["complete"] = false;
+			["mapid"] = 15;
 			["minduration"] = 0;
 			["name"] = "GrindToLvl6";
-			["id"] = 73;
-			["partysize"] = 0;
-			["enabled"] = "1";
-			["cooldown"] = 0;
 			["type"] = "Grind";
+			["maxduration"] = "600";
+			["priority"] = 15;
+			["cooldown"] = 0;
+			["mappos"] = "-37475/6835/-672";
 		};
 		[16] = {
-			["enabled"] = "1";
-			["radius"] = "5";
-			["minlvl"] = "0";
-			["maxlvl"] = 80;
-			["id"] = 15;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_usesTeleport"] = {
 					["value"] = "0";
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = "5";
+			["minlvl"] = "0";
+			["id"] = 15;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -598,12 +594,6 @@ local obj1 = {
 			["mappos"] = "-29497/2477/-937";
 		};
 		[17] = {
-			["enabled"] = "1";
-			["radius"] = "0";
-			["minlvl"] = "5";
-			["maxlvl"] = 80;
-			["id"] = 16;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -618,6 +608,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = "0";
+			["minlvl"] = "5";
+			["id"] = 16;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -629,14 +625,14 @@ local obj1 = {
 			["mappos"] = "-23141/5929/-2887";
 		};
 		[18] = {
-			["enabled"] = "1";
-			["radius"] = "5";
-			["minlvl"] = "0";
-			["maxlvl"] = 80;
-			["id"] = 17;
-			["partysize"] = 0;
 			["customVars"] = {
 			};
+			["radius"] = "5";
+			["minlvl"] = "0";
+			["id"] = 17;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -648,12 +644,6 @@ local obj1 = {
 			["mappos"] = "-20536/7733/-2685";
 		};
 		[19] = {
-			["enabled"] = "1";
-			["radius"] = "6";
-			["minlvl"] = "0";
-			["maxlvl"] = 80;
-			["id"] = 18;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -668,6 +658,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = "6";
+			["minlvl"] = "0";
+			["id"] = 18;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -679,12 +675,6 @@ local obj1 = {
 			["mappos"] = "-19948/-4909/-482";
 		};
 		[20] = {
-			["enabled"] = "1";
-			["radius"] = "0";
-			["minlvl"] = "0";
-			["maxlvl"] = 80;
-			["id"] = 69;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_SPType"] = {
 					["value"] = "Interact&Kill";
@@ -711,6 +701,12 @@ local obj1 = {
 					["type"] = "Field";
 				};
 			};
+			["radius"] = "0";
+			["minlvl"] = "0";
+			["id"] = 69;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = false;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -722,12 +718,6 @@ local obj1 = {
 			["mappos"] = "-29312/-3945/-1338";
 		};
 		[21] = {
-			["enabled"] = "1";
-			["radius"] = "6";
-			["minlvl"] = 0;
-			["maxlvl"] = 80;
-			["id"] = 19;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_useWaypoint"] = {
 					["value"] = "1";
@@ -746,6 +736,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = "6";
+			["minlvl"] = 0;
+			["id"] = 19;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -757,12 +753,6 @@ local obj1 = {
 			["mappos"] = "-17485/-5824/-343";
 		};
 		[22] = {
-			["enabled"] = "1";
-			["radius"] = "0";
-			["minlvl"] = "6";
-			["maxlvl"] = 80;
-			["id"] = 20;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -777,6 +767,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = "0";
+			["minlvl"] = "6";
+			["id"] = 20;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -788,12 +784,6 @@ local obj1 = {
 			["mappos"] = "-28822/-9854/-227";
 		};
 		[23] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "6";
-			["maxlvl"] = 80;
-			["id"] = 21;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -808,6 +798,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "6";
+			["id"] = 21;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -819,18 +815,18 @@ local obj1 = {
 			["mappos"] = "-34066/-9221/-825";
 		};
 		[24] = {
-			["enabled"] = "1";
-			["radius"] = "0";
-			["minlvl"] = "7";
-			["maxlvl"] = "80";
-			["id"] = 22;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_usesTeleport"] = {
 					["value"] = "0";
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = "0";
+			["minlvl"] = "7";
+			["id"] = 22;
+			["maxlvl"] = "80";
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -842,6 +838,12 @@ local obj1 = {
 			["mappos"] = "-36801/-11906/-1937";
 		};
 		[25] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = "9";
+			["maxlvl"] = "80";
+			["id"] = 23;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_SPType"] = {
 					["value"] = "Interact&Kill";
@@ -872,12 +874,6 @@ local obj1 = {
 					["type"] = "Field";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = "9";
-			["id"] = 23;
-			["maxlvl"] = "80";
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -889,18 +885,18 @@ local obj1 = {
 			["mappos"] = "-40836/-4774/-2802";
 		};
 		[26] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = 0;
+			["maxlvl"] = "80";
+			["id"] = 24;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_usesTeleport"] = {
 					["value"] = "1";
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = 0;
-			["id"] = 24;
-			["maxlvl"] = "80";
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -912,6 +908,12 @@ local obj1 = {
 			["mappos"] = "-31749/-20307/-440";
 		};
 		[27] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = "8";
+			["maxlvl"] = "80";
+			["id"] = 25;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -926,12 +928,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = "8";
-			["id"] = 25;
-			["maxlvl"] = "80";
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = false;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -943,50 +939,50 @@ local obj1 = {
 			["mappos"] = "-22420/-15851/-1379";
 		};
 		[28] = {
+			["enabled"] = "1";
+			["radius"] = "1500";
+			["minlvl"] = "7";
+			["maxlvl"] = "80";
+			["id"] = 66;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "212";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "";
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "57164";
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentID2s"] = {
-					["value"] = "135266816";
+					["value"] = "9926";
+					["type"] = "Field";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = 0;
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "8204";
 					["type"] = "Field";
 				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "0";
 					["type"] = "Field";
 				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Pickup&Use";
 					["type"] = "ComboBox";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = 0;
-					["type"] = "Numeric";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "57164";
-					["type"] = "Field";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["value"] = "8204";
-					["type"] = "Field";
 				};
 				["TM_TASK_maxKills"] = {
 					["value"] = 0;
 					["type"] = "Numeric";
 				};
 			};
-			["radius"] = "1500";
-			["minlvl"] = "7";
-			["id"] = 66;
-			["maxlvl"] = "80";
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -998,6 +994,12 @@ local obj1 = {
 			["mappos"] = "-21867/-16362/-1395";
 		};
 		[29] = {
+			["enabled"] = "1";
+			["radius"] = "5500";
+			["minlvl"] = "9";
+			["maxlvl"] = 80;
+			["id"] = 26;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "211";
@@ -1028,12 +1030,6 @@ local obj1 = {
 					["type"] = "Numeric";
 				};
 			};
-			["radius"] = "5500";
-			["minlvl"] = "9";
-			["id"] = 26;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1045,6 +1041,12 @@ local obj1 = {
 			["mappos"] = "-8936/-16770/-652";
 		};
 		[30] = {
+			["enabled"] = "1";
+			["radius"] = "0";
+			["minlvl"] = "9";
+			["maxlvl"] = 80;
+			["id"] = 27;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_useWaypoint"] = {
 					["value"] = "1";
@@ -1063,12 +1065,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = "0";
-			["minlvl"] = "9";
-			["id"] = 27;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1080,6 +1076,12 @@ local obj1 = {
 			["mappos"] = "-4232/-18246/-1367";
 		};
 		[31] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = "9";
+			["maxlvl"] = 80;
+			["id"] = 28;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_useWaypoint"] = {
 					["value"] = "1";
@@ -1098,12 +1100,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = "9";
-			["id"] = 28;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1115,6 +1111,12 @@ local obj1 = {
 			["mappos"] = "-3563/-9504/-128";
 		};
 		[32] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = "9";
+			["maxlvl"] = 80;
+			["id"] = 29;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_useWaypoint"] = {
 					["value"] = "1";
@@ -1133,12 +1135,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = "9";
-			["id"] = 29;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1150,50 +1146,50 @@ local obj1 = {
 			["mappos"] = "3263/-11854/-1145";
 		};
 		[33] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = "7";
+			["maxlvl"] = 80;
+			["id"] = 34;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "214";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "232891,147778";
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["value"] = "135266816";
 					["type"] = "Field";
 				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "34";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "223760";
+					["type"] = "Field";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "232891,147778";
 					["type"] = "Field";
 				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
 				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = "34";
-					["type"] = "Numeric";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "35";
 					["type"] = "Numeric";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = "7";
-			["id"] = 34;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1205,6 +1201,12 @@ local obj1 = {
 			["mappos"] = "-13298/-2185/-107";
 		};
 		[34] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = "7";
+			["maxlvl"] = 80;
+			["id"] = 36;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -1219,12 +1221,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = "7";
-			["id"] = 36;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1236,6 +1232,12 @@ local obj1 = {
 			["mappos"] = "-6500/2892/-121";
 		};
 		[35] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = "7";
+			["maxlvl"] = 80;
+			["id"] = 35;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -1250,12 +1252,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = "7";
-			["id"] = 35;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1267,6 +1263,12 @@ local obj1 = {
 			["mappos"] = "-8421/-1548/-391";
 		};
 		[36] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = "6";
+			["maxlvl"] = 80;
+			["id"] = 37;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -1281,12 +1283,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = "6";
-			["id"] = 37;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1298,18 +1294,18 @@ local obj1 = {
 			["mappos"] = "-7707/12199/-1125";
 		};
 		[37] = {
+			["enabled"] = "1";
+			["radius"] = "0";
+			["minlvl"] = "7";
+			["maxlvl"] = 80;
+			["id"] = 38;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_usesTeleport"] = {
 					["value"] = "0";
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = "0";
-			["minlvl"] = "7";
-			["id"] = 38;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1321,50 +1317,50 @@ local obj1 = {
 			["mappos"] = "-6546/11131/-1744";
 		};
 		[38] = {
+			["enabled"] = "1";
+			["radius"] = "8000";
+			["minlvl"] = "6";
+			["maxlvl"] = "80";
+			["id"] = 39;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "213";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "216400";
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["value"] = "168821248";
 					["type"] = "Field";
 				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "35";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "43494,232674";
+					["type"] = "Field";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "216400";
 					["type"] = "Field";
 				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
 				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = "35";
-					["type"] = "Numeric";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "45";
 					["type"] = "Numeric";
 				};
 			};
-			["radius"] = "8000";
-			["minlvl"] = "6";
-			["id"] = 39;
-			["maxlvl"] = "80";
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1376,6 +1372,12 @@ local obj1 = {
 			["mappos"] = "-4188/6022/-1242";
 		};
 		[39] = {
+			["enabled"] = "1";
+			["radius"] = "0";
+			["minlvl"] = "6";
+			["maxlvl"] = "80";
+			["id"] = 40;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_SPType"] = {
 					["value"] = "";
@@ -1402,12 +1404,6 @@ local obj1 = {
 					["type"] = "Field";
 				};
 			};
-			["radius"] = "0";
-			["minlvl"] = "6";
-			["id"] = 40;
-			["maxlvl"] = "80";
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1419,6 +1415,12 @@ local obj1 = {
 			["mappos"] = "-5636/6384/-1272";
 		};
 		[40] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = 0;
+			["maxlvl"] = "80";
+			["id"] = 41;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_SPType"] = {
 					["value"] = "Interact&Kill";
@@ -1445,12 +1447,6 @@ local obj1 = {
 					["type"] = "Field";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = 0;
-			["id"] = 41;
-			["maxlvl"] = "80";
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1462,50 +1458,50 @@ local obj1 = {
 			["mappos"] = "1358/6887/-2325";
 		};
 		[41] = {
+			["enabled"] = "1";
+			["radius"] = "12000";
+			["minlvl"] = "8";
+			["maxlvl"] = "80";
+			["id"] = 42;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "226";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "148119,232891,43338,";
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["value"] = "202375680,135266816";
 					["type"] = "Field";
 				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "35";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "43620,43615,43621,43339,337264";
+					["type"] = "Field";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "148119,232891,43338,";
 					["type"] = "Field";
 				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
 				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = "35";
-					["type"] = "Numeric";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "55";
 					["type"] = "Numeric";
 				};
 			};
-			["radius"] = "12000";
-			["minlvl"] = "8";
-			["id"] = 42;
-			["maxlvl"] = "80";
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1517,6 +1513,12 @@ local obj1 = {
 			["mappos"] = "8510/16311/-96";
 		};
 		[42] = {
+			["enabled"] = "1";
+			["radius"] = "8";
+			["minlvl"] = "0";
+			["maxlvl"] = 80;
+			["id"] = 43;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -1531,12 +1533,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = "8";
-			["minlvl"] = "0";
-			["id"] = 43;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1548,50 +1544,50 @@ local obj1 = {
 			["mappos"] = "7193/16671/-38";
 		};
 		[43] = {
-			["enabled"] = "1";
-			["radius"] = "12000";
-			["minlvl"] = "9";
-			["maxlvl"] = "80";
-			["id"] = 44;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "227";
-					["type"] = "Field";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["value"] = "202379776";
-					["type"] = "Field";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = "50";
-					["type"] = "Numeric";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["value"] = "44412,43272";
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["value"] = "228174";
 					["type"] = "Field";
 				};
+				["TM_TASK_interactContentID2s"] = {
+					["value"] = "202379776";
+					["type"] = "Field";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["value"] = "44412,43272";
+					["type"] = "Field";
+				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "50";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
 				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "50";
 					["type"] = "Numeric";
 				};
 			};
+			["radius"] = "12000";
+			["minlvl"] = "9";
+			["id"] = 44;
+			["maxlvl"] = "80";
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1603,12 +1599,6 @@ local obj1 = {
 			["mappos"] = "17637/18649/-965";
 		};
 		[44] = {
-			["enabled"] = "1";
-			["radius"] = "0";
-			["minlvl"] = "9";
-			["maxlvl"] = "80";
-			["id"] = 45;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -1623,6 +1613,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = "0";
+			["minlvl"] = "9";
+			["id"] = 45;
+			["maxlvl"] = "80";
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1634,18 +1630,12 @@ local obj1 = {
 			["mappos"] = "21269/18218/-1488";
 		};
 		[45] = {
-			["enabled"] = "1";
-			["radius"] = "5000";
-			["minlvl"] = "9";
-			["maxlvl"] = 80;
-			["id"] = 68;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "228";
 					["type"] = "Field";
 				};
-				["TM_TASK_pickupTargetIDs"] = {
+				["TM_TASK_interactContentIDs"] = {
 					["value"] = "";
 					["type"] = "Field";
 				};
@@ -1653,31 +1643,37 @@ local obj1 = {
 					["value"] = "";
 					["type"] = "Field";
 				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = "20";
-					["type"] = "Numeric";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "283692,301495";
-					["type"] = "Field";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
 				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "20";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "25";
 					["type"] = "Numeric";
 				};
 			};
+			["radius"] = "5000";
+			["minlvl"] = "9";
+			["id"] = 68;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1689,18 +1685,12 @@ local obj1 = {
 			["mappos"] = "29765/20041/-9";
 		};
 		[46] = {
-			["enabled"] = "1";
-			["radius"] = "8000";
-			["minlvl"] = "9";
-			["maxlvl"] = 80;
-			["id"] = 67;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "228";
 					["type"] = "Field";
 				};
-				["TM_TASK_pickupTargetIDs"] = {
+				["TM_TASK_interactContentIDs"] = {
 					["value"] = "";
 					["type"] = "Field";
 				};
@@ -1708,31 +1698,37 @@ local obj1 = {
 					["value"] = "";
 					["type"] = "Field";
 				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = "35";
-					["type"] = "Numeric";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "283692,301495";
-					["type"] = "Field";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
 				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "35";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "35";
 					["type"] = "Numeric";
 				};
 			};
+			["radius"] = "8000";
+			["minlvl"] = "9";
+			["id"] = 67;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1744,12 +1740,6 @@ local obj1 = {
 			["mappos"] = "30130/20713/-10";
 		};
 		[47] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "6";
-			["maxlvl"] = "80";
-			["id"] = 70;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_usesTeleport"] = {
 					["value"] = "0";
@@ -1768,6 +1758,12 @@ local obj1 = {
 					["type"] = "Field";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "6";
+			["id"] = 70;
+			["maxlvl"] = "80";
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1779,6 +1775,12 @@ local obj1 = {
 			["mappos"] = "35172/21859/-559";
 		};
 		[48] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = "0";
+			["maxlvl"] = 80;
+			["id"] = 71;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_usesTeleport"] = {
 					["value"] = "0";
@@ -1797,12 +1799,6 @@ local obj1 = {
 					["type"] = "Field";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = "0";
-			["id"] = 71;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1814,6 +1810,12 @@ local obj1 = {
 			["mappos"] = "35341/20948/-576";
 		};
 		[49] = {
+			["enabled"] = "1";
+			["radius"] = 0;
+			["minlvl"] = 0;
+			["maxlvl"] = 80;
+			["id"] = 72;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_usesTeleport"] = {
 					["value"] = "0";
@@ -1832,12 +1834,6 @@ local obj1 = {
 					["type"] = "Field";
 				};
 			};
-			["radius"] = 0;
-			["minlvl"] = 0;
-			["id"] = 72;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1849,50 +1845,50 @@ local obj1 = {
 			["mappos"] = "36050/21961/-595";
 		};
 		[50] = {
-			["enabled"] = "1";
-			["radius"] = "6000";
-			["minlvl"] = "12";
-			["maxlvl"] = "80";
-			["id"] = 46;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "222";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "197341,206768";
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["value"] = "202375680,135266304";
 					["type"] = "Field";
 				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "50";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "197341,206768";
 					["type"] = "Field";
 				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
 				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = "50";
-					["type"] = "Numeric";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "50";
 					["type"] = "Numeric";
 				};
 			};
+			["radius"] = "6000";
+			["minlvl"] = "12";
+			["id"] = 46;
+			["maxlvl"] = "80";
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1904,12 +1900,6 @@ local obj1 = {
 			["mappos"] = "34395/21453/-557";
 		};
 		[51] = {
-			["enabled"] = "1";
-			["radius"] = "0";
-			["minlvl"] = "12";
-			["maxlvl"] = 80;
-			["id"] = 47;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -1924,6 +1914,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = "0";
+			["minlvl"] = "12";
+			["id"] = 47;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1935,12 +1931,6 @@ local obj1 = {
 			["mappos"] = "37242/21398/-840";
 		};
 		[52] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "12";
-			["maxlvl"] = 80;
-			["id"] = 48;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_SPType"] = {
 					["value"] = "Interact&Kill";
@@ -1967,6 +1957,12 @@ local obj1 = {
 					["type"] = "Field";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "12";
+			["id"] = 48;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -1978,18 +1974,18 @@ local obj1 = {
 			["mappos"] = "40021/22966/-1084";
 		};
 		[53] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "12";
-			["maxlvl"] = 80;
-			["id"] = 49;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_usesTeleport"] = {
 					["value"] = "0";
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "12";
+			["id"] = 49;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2001,22 +1997,24 @@ local obj1 = {
 			["mappos"] = "37853/18823/-904";
 		};
 		[54] = {
-			["enabled"] = "1";
-			["radius"] = "15000";
-			["minlvl"] = "12";
-			["maxlvl"] = "80";
-			["id"] = 50;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "221";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "44575";
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentID2s"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "50";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupSkillID"] = {
 					["value"] = "";
 					["type"] = "Field";
 				};
@@ -2024,27 +2022,25 @@ local obj1 = {
 					["value"] = "43494,232674,43492";
 					["type"] = "Field";
 				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "44575";
+					["type"] = "Field";
+				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = "50";
-					["type"] = "Numeric";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["value"] = "";
-					["type"] = "Field";
 				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "25";
 					["type"] = "Numeric";
 				};
 			};
+			["radius"] = "15000";
+			["minlvl"] = "12";
+			["id"] = 50;
+			["maxlvl"] = "80";
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2056,12 +2052,6 @@ local obj1 = {
 			["mappos"] = "37618/-5845/-2887";
 		};
 		[55] = {
-			["enabled"] = "1";
-			["radius"] = "0";
-			["minlvl"] = "12";
-			["maxlvl"] = 80;
-			["id"] = 51;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -2076,6 +2066,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = "0";
+			["minlvl"] = "12";
+			["id"] = 51;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2087,12 +2083,6 @@ local obj1 = {
 			["mappos"] = "28882/10112/-1166";
 		};
 		[56] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "12";
-			["maxlvl"] = 80;
-			["id"] = 52;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_useWaypoint"] = {
 					["value"] = "1";
@@ -2111,6 +2101,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "12";
+			["id"] = 52;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2122,18 +2118,18 @@ local obj1 = {
 			["mappos"] = "14880/8493/-1522";
 		};
 		[57] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "10";
-			["maxlvl"] = 80;
-			["id"] = 53;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_usesTeleport"] = {
 					["value"] = "0";
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "10";
+			["id"] = 53;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2145,12 +2141,6 @@ local obj1 = {
 			["mappos"] = "15059/5934/-2036";
 		};
 		[58] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "11";
-			["maxlvl"] = 80;
-			["id"] = 54;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -2165,6 +2155,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "11";
+			["id"] = 54;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2176,12 +2172,6 @@ local obj1 = {
 			["mappos"] = "17611/5566/-1436";
 		};
 		[59] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "11";
-			["maxlvl"] = 80;
-			["id"] = 55;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -2196,6 +2186,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "11";
+			["id"] = 55;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2207,50 +2203,50 @@ local obj1 = {
 			["mappos"] = "18610/1223/-1432";
 		};
 		[60] = {
-			["enabled"] = "1";
-			["radius"] = "7000";
-			["minlvl"] = "11";
-			["maxlvl"] = "80";
-			["id"] = 56;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "225";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "246268";
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["value"] = "135266816";
 					["type"] = "Field";
 				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "35";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "44150,43494,232674";
+					["type"] = "Field";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "246268";
 					["type"] = "Field";
 				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
 				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = "35";
-					["type"] = "Numeric";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "35";
 					["type"] = "Numeric";
 				};
 			};
+			["radius"] = "7000";
+			["minlvl"] = "11";
+			["id"] = 56;
+			["maxlvl"] = "80";
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2262,12 +2258,6 @@ local obj1 = {
 			["mappos"] = "18075/-32/-1426";
 		};
 		[61] = {
-			["enabled"] = "1";
-			["radius"] = "0";
-			["minlvl"] = "12";
-			["maxlvl"] = 80;
-			["id"] = 57;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -2282,6 +2272,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = "0";
+			["minlvl"] = "12";
+			["id"] = 57;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2293,12 +2289,6 @@ local obj1 = {
 			["mappos"] = "26540/1311/-1708";
 		};
 		[62] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "12";
-			["maxlvl"] = 80;
-			["id"] = 58;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -2313,6 +2303,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "12";
+			["id"] = 58;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2324,12 +2320,6 @@ local obj1 = {
 			["mappos"] = "30629/4010/-1171";
 		};
 		[63] = {
-			["enabled"] = "1";
-			["radius"] = "0";
-			["minlvl"] = "13";
-			["maxlvl"] = 80;
-			["id"] = 59;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -2344,6 +2334,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = "0";
+			["minlvl"] = "13";
+			["id"] = 59;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2355,12 +2351,6 @@ local obj1 = {
 			["mappos"] = "39667/-5355/-3057";
 		};
 		[64] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "13";
-			["maxlvl"] = 80;
-			["id"] = 60;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -2375,6 +2365,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "13";
+			["id"] = 60;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2386,12 +2382,6 @@ local obj1 = {
 			["mappos"] = "29861/-7230/-3625";
 		};
 		[65] = {
-			["enabled"] = "1";
-			["radius"] = "0";
-			["minlvl"] = "14";
-			["maxlvl"] = 80;
-			["id"] = 61;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_SPType"] = {
 					["value"] = "Commune";
@@ -2418,6 +2408,12 @@ local obj1 = {
 					["type"] = "Field";
 				};
 			};
+			["radius"] = "0";
+			["minlvl"] = "14";
+			["id"] = 61;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2429,18 +2425,12 @@ local obj1 = {
 			["mappos"] = "35157/-20316/-2289";
 		};
 		[66] = {
-			["enabled"] = "1";
-			["radius"] = "3000";
-			["minlvl"] = "14";
-			["maxlvl"] = "80";
-			["id"] = 62;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "223";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
+				["TM_TASK_pickupTargetIDs"] = {
 					["value"] = "";
 					["type"] = "Field";
 				};
@@ -2448,31 +2438,37 @@ local obj1 = {
 					["value"] = "";
 					["type"] = "Field";
 				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "0";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
 				["TM_TASK_enemyContentIDs"] = {
 					["value"] = "43494,232674,43492";
+					["type"] = "Field";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "";
 					["type"] = "Field";
 				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
 				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = "0";
-					["type"] = "Numeric";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "45";
 					["type"] = "Numeric";
 				};
 			};
+			["radius"] = "3000";
+			["minlvl"] = "14";
+			["id"] = 62;
+			["maxlvl"] = "80";
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2484,12 +2480,6 @@ local obj1 = {
 			["mappos"] = "33263/-20301/-2238";
 		};
 		[67] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "13";
-			["maxlvl"] = 80;
-			["id"] = 63;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -2504,6 +2494,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "13";
+			["id"] = 63;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2515,12 +2511,6 @@ local obj1 = {
 			["mappos"] = "27561/-23441/-2281";
 		};
 		[68] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "13";
-			["maxlvl"] = 80;
-			["id"] = 64;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -2535,6 +2525,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "13";
+			["id"] = 64;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2546,6 +2542,12 @@ local obj1 = {
 			["mappos"] = "13095/-24613/-270";
 		};
 		[69] = {
+			["enabled"] = "1";
+			["radius"] = "0";
+			["minlvl"] = "14";
+			["maxlvl"] = 80;
+			["id"] = 30;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -2560,12 +2562,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = "0";
-			["minlvl"] = "14";
-			["id"] = 30;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2577,18 +2573,18 @@ local obj1 = {
 			["mappos"] = "11108/-12840/18";
 		};
 		[70] = {
+			["enabled"] = "1";
+			["radius"] = "0";
+			["minlvl"] = "14";
+			["maxlvl"] = 80;
+			["id"] = 31;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_usesTeleport"] = {
 					["value"] = "0";
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = "0";
-			["minlvl"] = "14";
-			["id"] = 31;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2600,24 +2596,22 @@ local obj1 = {
 			["mappos"] = "11518/-11686/-1198";
 		};
 		[71] = {
+			["enabled"] = "1";
+			["radius"] = "8000";
+			["minlvl"] = "14";
+			["maxlvl"] = "80";
+			["id"] = 32;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_subRegion"] = {
 					["value"] = "224";
 					["type"] = "Field";
 				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["value"] = "";
+				["TM_TASK_interactContentIDs"] = {
+					["value"] = "43455";
 					["type"] = "Field";
 				};
 				["TM_TASK_interactContentID2s"] = {
-					["value"] = "";
-					["type"] = "Field";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["value"] = "30";
-					["type"] = "Numeric";
-				};
-				["TM_TASK_pickupSkillID"] = {
 					["value"] = "";
 					["type"] = "Field";
 				};
@@ -2625,25 +2619,27 @@ local obj1 = {
 					["value"] = "544,193445,43942,43954";
 					["type"] = "Field";
 				};
-				["TM_TASK_interactContentIDs"] = {
-					["value"] = "43455";
-					["type"] = "Field";
-				};
 				["TM_TASK_HQType"] = {
 					["value"] = "Interact&Kill";
 					["type"] = "ComboBox";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["value"] = "30";
+					["type"] = "Numeric";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["value"] = "";
+					["type"] = "Field";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["value"] = "";
+					["type"] = "Field";
 				};
 				["TM_TASK_maxKills"] = {
 					["value"] = "50";
 					["type"] = "Numeric";
 				};
 			};
-			["radius"] = "8000";
-			["minlvl"] = "14";
-			["id"] = 32;
-			["maxlvl"] = "80";
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2655,6 +2651,12 @@ local obj1 = {
 			["mappos"] = "13712/-8581/-71";
 		};
 		[72] = {
+			["enabled"] = "1";
+			["radius"] = "0";
+			["minlvl"] = "14";
+			["maxlvl"] = 80;
+			["id"] = 33;
+			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -2669,12 +2671,6 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
-			["radius"] = "0";
-			["minlvl"] = "14";
-			["id"] = 33;
-			["maxlvl"] = 80;
-			["partysize"] = 0;
-			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
@@ -2686,12 +2682,6 @@ local obj1 = {
 			["mappos"] = "17557/-10779/-44";
 		};
 		[73] = {
-			["enabled"] = "1";
-			["radius"] = 0;
-			["minlvl"] = "14";
-			["maxlvl"] = 80;
-			["id"] = 65;
-			["partysize"] = 0;
 			["customVars"] = {
 				["TM_TASK_randomTargetPosition"] = {
 					["value"] = "1";
@@ -2706,6 +2696,12 @@ local obj1 = {
 					["type"] = "CheckBox";
 				};
 			};
+			["radius"] = 0;
+			["minlvl"] = "14";
+			["id"] = 65;
+			["maxlvl"] = 80;
+			["partysize"] = 0;
+			["enabled"] = "1";
 			["complete"] = true;
 			["mapid"] = 15;
 			["minduration"] = 0;
