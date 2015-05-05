@@ -156,15 +156,22 @@ function gw2minion.ModuleInit()
 		ml_marker_mgr.parentWindow = { Name=gw2minion.MainWindow.Name}
 		ml_marker_mgr.markerPath = ml_global_information.Path.. [[\Navigation\]]
 	end
+
+
+
+
 	
 	-- setup meshmanager
 	if ( ml_mesh_mgr ) then
+
+
 		ml_mesh_mgr.parentWindow.Name = gw2minion.MainWindow.Name
 		ml_mesh_mgr.GetMapID = function () return ml_global_information.CurrentMapID end
 		ml_mesh_mgr.GetMapName = function () return ml_global_information.CurrentMapName end
 		ml_mesh_mgr.GetPlayerPos = function () return ml_global_information.Player_Position end
 		ml_mesh_mgr.averagegameunitsize = 50
 		
+
 		-- Set worldnavigation data
 		ml_mesh_mgr.navData = persistence.load(GetAddonPath()..[[GW2Minion\]].."worldnav_data.lua")
 		if ( not ValidTable(ml_mesh_mgr.navData)) then 
@@ -209,6 +216,8 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.SetDefaultMesh(218,"Black Citadel")
 		ml_mesh_mgr.SetDefaultMesh(326,"Hoelbrak")
 		ml_mesh_mgr.SetDefaultMesh(350,"Heart of the Mists")
+
+
 		ml_mesh_mgr.SetDefaultMesh(650,"Applied Development Lab") --Asura Home
 		ml_mesh_mgr.SetDefaultMesh(968,"EdgeOfTheMist")
 		ml_mesh_mgr.SetDefaultMesh(988,"Dry Top")
@@ -510,6 +519,7 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "BuyManager_GarheringTool" or 
 			k == "SalvageManager_Active" or
 			k == "gMultiBotEnabled"
+
 			) then
 			Settings.GW2Minion[tostring(k)] = v
 					
