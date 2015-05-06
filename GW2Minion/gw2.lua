@@ -349,12 +349,12 @@ function gw2minion.OnUpdate(event, tickcount )
 			end
 				
 		end
-
-
-		--GUI_SetStatusBar(ml_GetTraceString())
-
-
-
+		
+		if (ml_GetTraceString ~= nil ) then
+			GUI_SetStatusBar(ml_GetTraceString())
+		else
+			GUI_SetStatusBar(ml_GetLogString())
+		end
 	end
 end
 
