@@ -501,7 +501,7 @@ function e_Gathering:execute()
 
 			local newTask = gw2_task_moveto.Create()
 			newTask.targetPos = tPos
-			newTask.stoppingDistance = 50
+			newTask.stoppingDistance = 150
 			newTask.name = "MoveTo Gatherable"
 			ml_task_hub:CurrentTask():AddSubTask(newTask)
 			return ml_log(true)
