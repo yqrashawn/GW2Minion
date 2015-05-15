@@ -51,11 +51,13 @@ function gw2_task_vistas:task_complete_eval()
 
 		local dist = Distance3D(ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y,ml_task_hub:CurrentTask().pos.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z)
 		if ( dist < 8000 ) then
-			local evList = MapMarkerList("nearest,onmesh,isvista,maxdistance=500,contentID="..GW2.MAPMARKER.Vista)
+			local evList = MapMarkerList("maxdistance=8000,onmesh,isvista,contentID="..GW2.MAPMARKER.Vista)
 			if ( evList ) then
-				local i,event = next(evList)
-				if ( i and event ) then
-					return false
+				for _,event in pairs(evList) do
+					local dist = Distance2D(event.pos.x,event.pos.y,ml_task_hub:CurrentTask().pos.x,ml_task_hub:CurrentTask().pos.y)
+					if (dist < 500) then
+						return false
+					end
 				end
 			end
 			-- We are close to the startpoint of the Vista but no unfinished HQ was found

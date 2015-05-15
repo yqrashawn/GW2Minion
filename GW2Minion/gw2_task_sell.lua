@@ -65,7 +65,7 @@ c_createVendorSellTask = inheritsFrom( ml_cause )
 e_createVendorSellTask = inheritsFrom( ml_effect )
 c_createVendorSellTask.throttle = 5000
 function c_createVendorSellTask:evaluate()
-	if ( SellManager_Active ) then
+	if ( SellManager_Active == "1" ) then
 		if ((gw2_sell_manager.needToSell() or c_vendorsell.selling) and ( ValidTable(gw2_sell_manager.getClosestSellMarker()) or gw2_common_functions.GetNextVendorMarker())) then
 			return true
 		end
