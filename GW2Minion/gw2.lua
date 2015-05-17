@@ -190,7 +190,6 @@ function gw2minion.ModuleInit()
 		-- Set default meshes SetDefaultMesh(mapid, filename)
 		ml_mesh_mgr.SetDefaultMesh(15,"Queensdale")
 		ml_mesh_mgr.SetDefaultMesh(17,"Harathi Hinterlands")
-		ml_mesh_mgr.SetDefaultMesh(18,"Divinitys Reach")	
 		ml_mesh_mgr.SetDefaultMesh(19,"PlainsOfAshford")
 		ml_mesh_mgr.SetDefaultMesh(20,"BlazzeridgeSteppes")
 		ml_mesh_mgr.SetDefaultMesh(21,"Fields of Ruin")
@@ -209,7 +208,6 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.SetDefaultMesh(35,"MetricaProvince")
 		ml_mesh_mgr.SetDefaultMesh(39,"MountMaelstrom")
 		
-		ml_mesh_mgr.SetDefaultMesh(50,"Lions Arch")		
 		ml_mesh_mgr.SetDefaultMesh(51,"Straits of Devastation")
 		ml_mesh_mgr.SetDefaultMesh(53,"Sparkfly Fen")
 		ml_mesh_mgr.SetDefaultMesh(54,"Brisban Wildlands")
@@ -218,16 +216,35 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.SetDefaultMesh(65,"Malchors Leap")
 		ml_mesh_mgr.SetDefaultMesh(73,"BloodtideCoast")
 		
-		ml_mesh_mgr.SetDefaultMesh(91,"The Grove")
-		ml_mesh_mgr.SetDefaultMesh(139,"Rata Sum")
+		-- Lions Arch
+		ml_mesh_mgr.SetDefaultMesh(50,"Lion's Arch")
+		-- Black Citadel
 		ml_mesh_mgr.SetDefaultMesh(218,"Black Citadel")
+		ml_mesh_mgr.SetDefaultMesh(371,"Hero's Canton")
+		ml_mesh_mgr.SetDefaultMesh(833,"Ash Tribune Quarters")
+		ml_mesh_mgr.SetDefaultMesh(460,"Citadel Stockade")
+		-- Divitnity's Reach
+		ml_mesh_mgr.SetDefaultMesh(18,"Divinity's Reach")
+		ml_mesh_mgr.SetDefaultMesh(378,"Queen's Throne Room")
+		ml_mesh_mgr.SetDefaultMesh(248,"Salma District (Home)")
+		ml_mesh_mgr.SetDefaultMesh(914,"The Dead End")
+		-- Hoelbrak
 		ml_mesh_mgr.SetDefaultMesh(326,"Hoelbrak")
+		ml_mesh_mgr.SetDefaultMesh(374,"Knut Whitebear's Loft")
+		ml_mesh_mgr.SetDefaultMesh(375,"Hunter's Hearth (Home)")
+		ml_mesh_mgr.SetDefaultMesh(376,"Stonewright's Steading")
+		-- Rata Sum
+		ml_mesh_mgr.SetDefaultMesh(139,"Rata Sum")
+		ml_mesh_mgr.SetDefaultMesh(650,"Applied Development Lab (Home)")
+		ml_mesh_mgr.SetDefaultMesh(651,"Council Level")
+		ml_mesh_mgr.SetDefaultMesh(649,"Snaff Memorial Lab")
+		-- The Grove
+		ml_mesh_mgr.SetDefaultMesh(91,"The Grove")
+		ml_mesh_mgr.SetDefaultMesh(647,"Dreamer's Terrace (Home)")
+		ml_mesh_mgr.SetDefaultMesh(646,"The House of Caithe")
+		ml_mesh_mgr.SetDefaultMesh(648,"The Omphalos Chamber")
+
 		ml_mesh_mgr.SetDefaultMesh(350,"Heart of the Mists")
-
-
-		ml_mesh_mgr.SetDefaultMesh(647,"Dreamers Terrace (Home)") --Sylvari Home
-		ml_mesh_mgr.SetDefaultMesh(648,"The Omphalos Chamber") --Sylvari Home
-		ml_mesh_mgr.SetDefaultMesh(650,"Applied Development Lab") --Asura Home		
 		ml_mesh_mgr.SetDefaultMesh(968,"EdgeOfTheMist")
 		ml_mesh_mgr.SetDefaultMesh(988,"Dry Top")
 		
