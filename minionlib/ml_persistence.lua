@@ -144,7 +144,7 @@ writers = {
 			else
 				-- Single use table
 				file:write("{\n");
-				for k, v in pairs(item) do
+				for k, v in pairsByKeys(item) do
 					writeIndent(file, level+1);
 					file:write("[");
 					write(file, k, level+1, objRefNames);
