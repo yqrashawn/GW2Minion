@@ -599,6 +599,7 @@ function ml_task_mgr.CanActiveTaskRun()
 	if ( ml_task_mgr.activeTask.completed == true 
 		or ( tonumber(ml_task_mgr.activeTask.maxduration) ~= 0 and ml_global_information.Now - ml_task_mgr.activeTask.startTimer > tonumber(ml_task_mgr.activeTask.maxduration)*1000)
 		or ( ml_task_mgr.activeTask.CanTaskRun_TM ~= nil and not ml_task_mgr.activeTask.CanTaskRun_TM() )
+		or ( tonumber(ml_task_mgr.activeTask.maxlvl) ~= 0 and ml_global_information.Player_Level > tonumber(ml_task_mgr.activeTask.maxlvl) )
 		-- or ( ml_task_mgr.activeTask.radius ~= nil and ml_task_mgr.activeTask.radius ~= 0 dont limit the radius in here, leave that to the tasks itself, else back n forth switching chaos may happen
 		) then
 

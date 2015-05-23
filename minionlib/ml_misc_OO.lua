@@ -69,6 +69,15 @@ function inheritsFrom( baseClass )
     return new_class
 end
 
+function inheritTable( baseClass, origin )
+	local origin = origin or {}
+	for k,v in pairs(baseClass) do
+		if (type(v) == "table") then
+			origin[k] = inheritTable(v, origin[k])
+		end
+	end
+	return setmetatable (origin, {__index = baseClass})
+end
 
 function TableSize( T )
 	

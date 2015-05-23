@@ -68,7 +68,7 @@ function c_createVendorRepairTask:evaluate()
 		return true
 	end
 
-	if (gw2_repair_manager.getClosestRepairMarker(true) and (TableSize(gw2_repair_manager.getClosestRepairMarker(true))>0 or gw2_common_functions.GetNextVendorMarker())) then
+	if (gw2_repair_manager.NeedToRepair(true) and (TableSize(gw2_repair_manager.getClosestRepairMarker(true))>0 or gw2_common_functions.GetNextVendorMarker())) then
 		return true
 	end
 	return false

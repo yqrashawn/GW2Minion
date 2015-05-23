@@ -34,6 +34,10 @@ function gw2_task_combat:Init()
 	-- Handle Rezz-Target is alive again or gone, deletes the subtask moveto in case it is needed
 	self:add(ml_element:create( "RevivePartyMemberOverWatch", c_RezzOverWatchCheck, e_RezzOverWatchCheck, 400 ), self.overwatch_elements)
 		
+	-- Handle combat target switching.
+	self:add(ml_element:create( "TargetSwitchOverWatch", c_CombatOverWatchCheck, e_CombatOverWatchCheck, 420 ), self.overwatch_elements)
+	
+		
 	-- Normal Elements
 	-- RevivePartyMember
 	self:add(ml_element:create( "RevivePartyMember", c_RezzPartyMember, e_RezzPartyMember, 375 ), self.process_elements)	-- creates subtask: moveto
@@ -97,18 +101,7 @@ function e_AttackTarget:execute()
 				dbCurrTargetID = target.id or "" 
 				dbCurrTargetDist = math.floor(target.distance) 
 			end
-			if (ml_task_hub:CurrentTask().terminateOnAggro and target.isAggro == false) then
-				if (TableSize(CharacterList("onmesh,aggro,attackable,alive,maxdistance=1500,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))) > 0) then
-					d("cancel target, no aggro on current, aggro on other")
-					ml_task_hub:CurrentTask().completed = true
-					return ml_log(false)
-				end
-			end
-			if (ml_blacklist.CheckBlacklistEntry(GetString("monsters"),target.contentID)) then
-				-- target got blacklisted, cancel combat task.
-				ml_task_hub:CurrentTask().completed = true
-				return ml_log(false)
-			elseif (ml_task_hub:CurrentTask().terminateInWater and (Player.swimming == 1 or (target.isCharacter and target.swimming == 1) or (target.isGadget and target.pos and target.pos.z > 40))) then
+			if (ml_task_hub:CurrentTask().terminateInWater and (Player.swimming == 1 or (target.isCharacter and target.swimming == 1) or (target.isGadget and target.pos and target.pos.z > 40))) then
 				-- target or player is in the water, cancel combat task.
 				ml_blacklist.AddBlacklistEntry(GetString("monsters"),target.contentID,target.name,ml_global_information.Now+30000)
 				ml_task_hub:CurrentTask().completed = true
@@ -139,6 +132,25 @@ function e_AttackTarget:execute()
 	return ml_log(false)
 end
 
+-- combatOverwatch.
+c_CombatOverWatchCheck = inheritsFrom( ml_cause )
+e_CombatOverWatchCheck = inheritsFrom( ml_effect )
+function c_CombatOverWatchCheck:evaluate()
+	local target = CharacterList:Get(ml_task_hub:CurrentTask().targetID) or GadgetList:Get(ml_task_hub:CurrentTask().targetID)
+	if (ValidTable(target) and ml_blacklist.CheckBlacklistEntry(GetString("monsters"),target.contentID)) then
+		return true
+	elseif ( ml_task_hub:CurrentTask() ~= nil and ml_task_hub:CurrentTask().targetID ~= nil ) then
+		local pTarget = gw2_common_functions.GetBestAggroTarget()
+		if (ValidTable(pTarget) and ml_task_hub:CurrentTask().targetID ~= pTarget.id and (ValidTable(target) and target.isAggro == false or ValidTable(target) == false)) then
+			return true
+		end
+	end
+	return false
+end
+function e_CombatOverWatchCheck:execute()
+	ml_task_hub:RootTask().completed = true
+	ml_log("e_CombatOverWatchCheck")
+end
 
 
 RegisterEventHandler("Module.Initalize",gw2_task_combat.ModuleInit)

@@ -169,6 +169,10 @@ end
 function gw2_task_taskmanager:UIDestroy()
 	d("gw2_task_taskmanager:UIDestroy")
 	GUI_DeleteGroup(gw2minion.MainWindow.Name, GetString("taskManager"))
+	local mainWindow = WindowManager:GetWindow(ml_task_mgr.mainWindow.name)
+	if (mainWindow and mainWindow.visible) then
+		ml_task_mgr.ToggleMenu()
+	end
 end
 
 function gw2_task_taskmanager.ModuleInit()
