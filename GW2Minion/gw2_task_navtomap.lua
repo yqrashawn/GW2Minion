@@ -71,6 +71,7 @@ function gw2_task_navtomap:Process()
 				
 					local newTask = gw2_task_moveto.Create()
 					newTask.targetPos = nodedata					
+					newTask.name = ml_task_hub:CurrentTask().name
 					ml_task_hub:CurrentTask():AddSubTask(newTask)
 					
 				else
