@@ -109,7 +109,7 @@ function gw2minion.ModuleInit()
 	gAllowTeleport = Settings.GW2Minion.gAllowTeleport
 	gGather = Settings.GW2Minion.gGather
 		
-	if ( RenderManager and gDisableRender == 1) then RenderManager:ToggleRendering(tonumber(gDisableRender)) end
+	if ( RenderManager and gDisableRender == "1") then RenderManager:ToggleRendering(tonumber(gDisableRender)) end
 	
 	-- CinemaWindow	
 	Settings.GW2Minion.gSkipCutscene = Settings.GW2Minion.gSkipCutscene or "0"
