@@ -101,6 +101,7 @@ end
 -- Handle conversations by the entered order of the task
 c_THandleConversation = inheritsFrom( ml_cause )
 e_THandleConversation = inheritsFrom( ml_effect )
+e_THandleConversation.lastChatOptionReached = false
 e_THandleConversation.lastChatOption = nil
 e_THandleConversation.nextChatOption = nil
 function c_THandleConversation:evaluate()
@@ -111,6 +112,7 @@ function c_THandleConversation:evaluate()
 		end
 
 		if ( ml_task_hub:CurrentTask().conversationOrder ~= nil and ml_task_hub:CurrentTask().conversationOrder ~= "" ) then
+			e_THandleConversation.lastChatOptionReached = false
 			for chatoption in StringSplit(ml_task_hub:CurrentTask().conversationOrder,",") do
 				if ( e_THandleConversation.lastChatOption == nil ) then
 					e_THandleConversation.lastChatOption = tonumber(chatoption)
@@ -118,7 +120,11 @@ function c_THandleConversation:evaluate()
 					return true
 
 				else
-					if ( chatoption ~= e_THandleConversation.lastChatOption ) then
+					if ( tonumber(chatoption) == e_THandleConversation.lastChatOption ) then
+						e_THandleConversation.lastChatOptionReached = true
+					end
+					
+					if ( e_THandleConversation.lastChatOptionReached and tonumber(chatoption) ~= e_THandleConversation.lastChatOption ) then
 						e_THandleConversation.lastChatOption = tonumber(chatoption)
 						e_THandleConversation.nextChatOption = tonumber(chatoption)
 						return true
@@ -132,7 +138,8 @@ function c_THandleConversation:evaluate()
 			return true
 		end
 	end
-
+	
+	e_THandleConversation.lastChatOptionReached = false
 	e_THandleConversation.lastChatOption = nil
 	e_THandleConversation.nextChatOption = nil
 	return false
