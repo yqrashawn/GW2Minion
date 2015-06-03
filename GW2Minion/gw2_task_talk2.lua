@@ -108,8 +108,8 @@ function e_THandleConversationByIndex:execute()
 		local index,option = next ( options)
 		while ( index and option ) do
 			if ( e_THandleConversation.nextChatOption ~= nil ) then
-				if( option.type == e_THandleConversation.nextChatOption) then
-					d("Selecting Chatoption by type:"..tostring(e_THandleConversation.nextChatOption))
+				if( option.index == e_THandleConversation.nextChatOption) then
+					d("Selecting Chatoption by index:"..tostring(e_THandleConversation.nextChatOption))
 
 					Player:SelectConversationOptionByIndex(e_THandleConversation.nextChatOption)
 
