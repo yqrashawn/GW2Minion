@@ -518,7 +518,7 @@ function e_Gathering:execute()
 				local gadget = GadgetList:Get(ml_task_hub:CurrentTask().targetID)
 				if ( gadget ~= nil and gadget.gatherable) then
 					-- We are in range to gather
-					if (gadget.isInInteractRange) then
+					if (gadget.isInInteractRange and dist < 100) then
 						gw2_common_functions.NecroLeaveDeathshroud()
 						-- Check if in water and prevent stuck.
 						if (ml_global_information.Player_SwimState == GW2.SWIMSTATE.Swimming) then
