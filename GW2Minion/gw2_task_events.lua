@@ -439,7 +439,7 @@ function e_DoEventObjectives:execute()
 		if (ml_global_information.Player_SwimState == 0 and target.alive and target.attackable and target.onmesh and target.pathdistance <= ml_task_hub:CurrentTask().eventRadius + 250) then
 
 			ml_task_hub:CurrentTask().lastEventActionTmr = 0
-			gw2_skill_manager.Attack(target)
+			gw2_skill_manager:Use(target)
 			return true
 		end
 	end

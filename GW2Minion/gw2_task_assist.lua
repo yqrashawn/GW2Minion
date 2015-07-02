@@ -33,21 +33,20 @@ function gw2_task_assist:Process()
 								
 			if ( ml_global_information.Player_IsMoving ) then 
 				gw2_task_assist.tmr = ml_global_information.Now
-				gw2_skill_manager.Heal()
 			end
 		end	
 		
 		if ( sMtargetmode == "None" ) then
 			local target = Player:GetTarget()
 			if ( target and target.alive and target.attackable ) then				
-				gw2_skill_manager.Attack( target )
+				gw2_skill_manager:Use(target.id)
 			end
 			
 		elseif ( sMtargetmode ~= "None" ) then 
 			
 			local target = gw2_common_functions.GetBestCharacterTargetForAssist()			
 			if ( target and target.alive and target.attackable ) then
-				gw2_skill_manager.Attack( target )
+				gw2_skill_manager:Use(target.id)
 			end
 		end
 	end

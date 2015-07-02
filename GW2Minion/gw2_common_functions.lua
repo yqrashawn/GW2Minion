@@ -433,8 +433,7 @@ function gw2_common_functions.GetNextVendorMarker(oldmarker)
 end
 
 function gw2_common_functions.GetTargetByID(targetID)
-	local target = (CharacterList:Get(targetID) or GadgetList:Get(targetID) or nil)
-	return target
+	return CharacterList:Get(targetID) or GadgetList:Get(targetID)
 end
 
 function gw2_common_functions.GetProfessionName(profession)
@@ -459,4 +458,121 @@ function gw2_common_functions.PlayerInInstance()
 		end
 	end
 	return false
+end
+
+-- Can move in direction(dir=0->7).
+function gw2_common_functions.CanMoveDirection(direction,distance)
+	if (direction and type(direction) == "number") then
+		local forwardLeft,forwardRight,backwardLeft,backwardRight = 4,5,6,7
+		local directionToDegree = {[GW2.MOVEMENTTYPE.Forward] = 0, [GW2.MOVEMENTTYPE.Backward] = 180, [GW2.MOVEMENTTYPE.Left] = 270, [GW2.MOVEMENTTYPE.Right] = 90, [forwardLeft] = 315, [forwardRight] = 45, [backwardLeft] = 225, [backwardRight] = 135,}
+		local stepSize = 25
+		local steps = distance / stepSize
+		for step=1,steps do
+			if (Player:CanMoveDirection(directionToDegree[direction],(stepSize*step)) == false) then
+				return false
+			end
+		end
+		return true
+	end
+	return false
+end
+
+-- Can evade in direction(dir=0->7).
+function gw2_common_functions.CanEvadeDirection(direction)
+	if (direction and type(direction) == "number") then
+		local stepSize = 15
+		local steps = 350 / stepSize
+		for step=1,steps do
+			if (Player:CanEvade(direction,(stepSize*step)) == false) then
+				return false
+			end
+		end
+		return true
+	end
+	return false
+end
+
+-- Evade(dir=0->7).
+gw2_common_functions.lastEvade = 0
+function gw2_common_functions.Evade(direction)
+	if (ml_global_information.Player_Endurance >= 50) then
+		local evadeTarget = false
+		if (type(direction) ~= "number") then
+			local aggroTargets = CharacterList("aggro,alive")
+			if (ValidTable(aggroTargets)) then
+				for _,target in pairs(aggroTargets) do
+					if (target.castinfo.targetID == Player.id and Player.castinfo.duration == 0 and TimeSince(gw2_common_functions.lastEvade) > 1500) then
+						evadeTarget = true
+					end
+				end
+			end
+		end
+		if (type(direction) == "number" or evadeTarget) then
+			direction = tonumber(direction) or math.random(0,7)
+			if (gw2_common_functions.CanEvadeDirection(direction)) then
+				Player:Evade(direction)
+				gw2_common_functions.lastEvade = ml_global_information.Now
+				return true
+			end
+		end
+		return false
+	end
+end
+
+-- heading to radian.
+function gw2_common_functions.headingToRadian(pos)
+	if (ValidTable(pos)) then
+		local radian = math.atan2(pos.hx,pos.hy)
+		if (radian < 0) then radian = radian + math.pi * 2 end
+		return radian
+	end
+end
+
+-- radian to degrees.
+function gw2_common_functions.radianToDegrees(radian)
+	local degrees = ((radian * 180) / math.pi) + 90
+	if (degrees > 360) then
+		degrees = degrees - 360
+	end
+	return degrees
+end
+
+-- get differance in degrees.
+function gw2_common_functions.getDegreeDiffTargets(targetIDA,targetIDB) -- gw2_common_functions.getDegreeDiffTargets(targetID,Player.id) player relative to target.
+	local targetA = CharacterList:Get(targetIDA) or GadgetList:Get(targetIDA)
+	local targetB = CharacterList:Get(targetIDB) or GadgetList:Get(targetIDB)
+	if (ValidTable(targetA) and ValidTable(targetB)) then
+		local radianA = gw2_common_functions.headingToRadian(targetA.pos)
+		local degreeA = gw2_common_functions.radianToDegrees(radianA)
+		local radianB = math.atan2(targetB.pos.x - targetA.pos.x, targetB.pos.y - targetA.pos.y)
+		local degreeB = gw2_common_functions.radianToDegrees(radianB)
+		local diffDegree = degreeB - degreeA
+		if (targetA.isGadget or targetB.isGadget) then diffDegree = diffDegree - 90 end
+		if (diffDegree < 0) then diffDegree = 360 + diffDegree end
+		return diffDegree
+	end
+end
+
+-- Filter entity list by relative position.
+function gw2_common_functions.filterRelativePostion(entityList,dir)
+	local returnList = {}
+	if (ValidTable(entityList)) then
+		local playerID = Player.id
+		for _,entity in pairs(entityList) do
+			if (ValidTable(entity.pos)) then
+				local diffDegree = gw2_common_functions.getDegreeDiffTargets(playerID, entity.id)
+				--local degrees = {[0] = 0, [1] = 45, [2] = 90, [3] = 135, [4] = 180, [5] = 225, [6] = 270, [7] = 315,}
+				local forwardLeft,forwardRight,backwardLeft,backwardRight = 4,5,6,7
+				local directionToDegree = {[GW2.MOVEMENTTYPE.Forward] = 0, [GW2.MOVEMENTTYPE.Backward] = 180, [GW2.MOVEMENTTYPE.Left] = 270, [GW2.MOVEMENTTYPE.Right] = 90, [forwardLeft] = 315, [forwardRight] = 45, [backwardLeft] = 225, [backwardRight] = 135,}
+				local minDegree = directionToDegree[dir] - 22.5 < 0 and 360 - 22.5 or directionToDegree[dir] - 22.5
+				local maxDegree = directionToDegree[dir] + 22.5 > 360 and 0 + 22.5 or directionToDegree[dir] + 22.5
+				if (tonumber(minDegree) < tonumber(maxDegree) and tonumber(diffDegree) >= tonumber(minDegree) and tonumber(diffDegree) <= tonumber(maxDegree)) then
+					table.insert(returnList,entity)
+				elseif (tonumber(minDegree) > tonumber(maxDegree) and (tonumber(diffDegree) >= tonumber(minDegree) or tonumber(diffDegree) <= tonumber(maxDegree))) then
+					table.insert(returnList,entity)
+				end
+			end
+		end
+	end
+	return returnList
 end

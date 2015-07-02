@@ -536,8 +536,9 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "gDepositItems" or
 			k == "gDoEvents" or
 			k == "gDoCombatMovement" or
+			k == "gIgnoreYellowMob" or
 			k == "gMoveIntoCombatRange" or
-			k == "gGather" or			
+			k == "gGather" or
 			k == "gRevivePlayers" or
 			k == "gRevive" or
 			k == "gDisableRender" or 
@@ -553,8 +554,7 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "BuyManager_GarheringTool" or 
 			k == "SalvageManager_Active" or
 			k == "gMultiBotEnabled" or
-
-			k == "gNoMeshLoad"			
+			k == "gNoMeshLoad"
 			) then
 			Settings.GW2Minion[tostring(k)] = v
 					

@@ -99,7 +99,7 @@ function e_Downed:execute()
 					Player:SetTarget(E.id)
 
 				else
-					gw2_skill_manager.Attack( target )
+					gw2_skill_manager:Use( target )
 				end
 				return ml_log(true)
 			end
@@ -261,7 +261,7 @@ function e_reviveNPC:execute()
 			local id,entry = next(TargetList)
 			if (id and entry ) then
 				ml_log(" Killing nearby targets first..")
-				gw2_skill_manager.Attack(entry) -- we should create a combat task here ...
+				gw2_skill_manager:Use(entry) -- we should create a combat task here ...
 				return ml_log(true)
 			end
 		end
@@ -317,7 +317,7 @@ function c_AttackBestNearbyCharacterTarget:evaluate()
 end
 function e_AttackBestNearbyCharacterTarget:execute()
 	ml_log( "AttackBestCharacterTarget" )
-	gw2_skill_manager.Attack( c_AttackBestNearbyCharacterTarget.target )
+	gw2_skill_manager:Use( c_AttackBestNearbyCharacterTarget.target )
 	c_AttackBestNearbyCharacterTarget.target = nil
 end
 
@@ -540,8 +540,6 @@ function e_fleeToSafety:execute()
 	ml_log("e_fleeToSafety")
 	-- Check if we still need to flee
 	c_fleeToSafety.fleeing = (ml_global_information.Player_Health.percent < 85)
-	-- Heal if we can
-	gw2_skill_manager.Heal()
 	-- Clear target, no need for char to break neck looking back at targer XD
 	Player:ClearTarget()
 	-- Find enemies.
@@ -589,8 +587,6 @@ function e_waitToHeal:execute()
 	gw2_common_functions.NecroLeaveDeathshroud()
 	-- Stop Player movement.
 	if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
-	-- Try skillmanager to heal
-	gw2_skill_manager.Heal()
 end
 
 -- Finish downed enemies
@@ -622,7 +618,6 @@ function e_FinishEnemy:execute()
 					if ( ml_global_information.Now - e_FinishEnemy.tmr > e_FinishEnemy.threshold ) then
 						e_FinishEnemy.tmr = ml_global_information.Now
 						e_FinishEnemy.threshold = math.random(1500,5000)
-						gw2_skill_manager.Heal()
 					end
 					ml_log("MoveTo_FinishHim..")
 					return true

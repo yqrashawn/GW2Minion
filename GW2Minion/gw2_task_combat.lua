@@ -117,8 +117,8 @@ function e_AttackTarget:execute()
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 				return ml_log(true)
 			else
-				-- Let SkillManager handle the rest	
-				gw2_skill_manager.Attack(target)
+				-- Let SkillManager handle the rest
+				gw2_skill_manager:Use(target.id)
 				return ml_log(true)
 			end
 		else
