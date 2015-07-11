@@ -5,18 +5,21 @@ local multiRefObjects = {
 local obj1 = {
 	["combos"] = {
 	};
-	["name"] = "Engineer_GW2Minion";
+	["name"] = "GW2Minion";
 	["profession"] = 3;
 	["professionSettings"] = {
-		["PriorityAtt1"] = "None";
-		["PriorityAtt2"] = "None";
-		["PriorityAtt3"] = "None";
-		["PriorityAtt4"] = "None";
-		["priorityKit"] = "None";
+		["elementalist"] = {
+			["attunement_1"] = "None";
+			["attunement_2"] = "None";
+			["attunement_3"] = "None";
+			["attunement_4"] = "None";
+		};
+		["engineer"] = {
+			["kit"] = "None";
+		};
 	};
 	["skills"] = {
 		[1] = {
-			["maxCooldown"] = 25000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -32,11 +35,10 @@ local obj1 = {
 				["minHP"] = 80;
 				["minPower"] = 0;
 			};
-			["priority"] = 1;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5834;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -47,7 +49,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 0;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -62,7 +63,6 @@ local obj1 = {
 			};
 		};
 		[2] = {
-			["maxCooldown"] = 60000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -78,11 +78,10 @@ local obj1 = {
 				["minHP"] = 10;
 				["minPower"] = 0;
 			};
-			["priority"] = 2;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5861;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -93,7 +92,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 3;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -108,7 +106,6 @@ local obj1 = {
 			};
 		};
 		[3] = {
-			["maxCooldown"] = 25000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -124,11 +121,10 @@ local obj1 = {
 				["minHP"] = 80;
 				["minPower"] = 0;
 			};
-			["priority"] = 3;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 6176;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -139,7 +135,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 12;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -154,7 +149,6 @@ local obj1 = {
 			};
 		};
 		[4] = {
-			["maxCooldown"] = 15000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -170,11 +164,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 4;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5980;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -185,7 +178,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 0;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -200,7 +192,6 @@ local obj1 = {
 			};
 		};
 		[5] = {
-			["maxCooldown"] = 40000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -216,11 +207,10 @@ local obj1 = {
 				["minHP"] = 75;
 				["minPower"] = 0;
 			};
-			["priority"] = 5;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 21659;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -231,7 +221,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 0;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -246,7 +235,6 @@ local obj1 = {
 			};
 		};
 		[6] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -262,11 +250,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 6;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5961;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -277,7 +264,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 12;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -292,7 +278,6 @@ local obj1 = {
 			};
 		};
 		[7] = {
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -308,11 +293,10 @@ local obj1 = {
 				["minHP"] = 70;
 				["minPower"] = 0;
 			};
-			["priority"] = 7;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5857;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -323,7 +307,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 0;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -338,7 +321,6 @@ local obj1 = {
 			};
 		};
 		[8] = {
-			["maxCooldown"] = 40000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -354,11 +336,10 @@ local obj1 = {
 				["minHP"] = 80;
 				["minPower"] = 0;
 			};
-			["priority"] = 8;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5966;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -369,7 +350,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 15;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -384,7 +364,6 @@ local obj1 = {
 			};
 		};
 		[9] = {
-			["maxCooldown"] = 40000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -400,11 +379,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 9;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5966;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -415,7 +393,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 15;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -430,8 +407,6 @@ local obj1 = {
 			};
 		};
 		[10] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -447,11 +422,10 @@ local obj1 = {
 				["minHP"] = 75;
 				["minPower"] = 0;
 			};
-			["priority"] = 10;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5819;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -462,7 +436,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 12;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -477,8 +450,6 @@ local obj1 = {
 			};
 		};
 		[11] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 12000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -494,11 +465,10 @@ local obj1 = {
 				["minHP"] = 90;
 				["minPower"] = 0;
 			};
-			["priority"] = 11;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5803;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -509,7 +479,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 7;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -524,8 +493,6 @@ local obj1 = {
 			};
 		};
 		[12] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 15000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -541,11 +508,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 12;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 6000;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -556,7 +522,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -571,8 +536,6 @@ local obj1 = {
 			};
 		};
 		[13] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -588,11 +551,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 13;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 6001;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -603,7 +565,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 9;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -618,7 +579,6 @@ local obj1 = {
 			};
 		};
 		[14] = {
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -634,11 +594,10 @@ local obj1 = {
 				["minHP"] = 95;
 				["minPower"] = 0;
 			};
-			["priority"] = 14;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "1";
 				["id"] = 5937;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -649,7 +608,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 9;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -664,8 +622,6 @@ local obj1 = {
 			};
 		};
 		[15] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -681,11 +637,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 15;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 6109;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -696,7 +651,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 0;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -711,7 +665,6 @@ local obj1 = {
 			};
 		};
 		[16] = {
-			["maxCooldown"] = 15000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -727,11 +680,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 16;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5831;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -742,7 +694,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -757,7 +708,6 @@ local obj1 = {
 			};
 		};
 		[17] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -773,11 +723,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 17;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 5830;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -788,7 +737,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 9;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -803,8 +751,6 @@ local obj1 = {
 			};
 		};
 		[18] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 180000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -820,11 +766,10 @@ local obj1 = {
 				["minHP"] = 75;
 				["minPower"] = 0;
 			};
-			["priority"] = 18;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "1";
 				["id"] = 5868;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -835,7 +780,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 4;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -850,7 +794,6 @@ local obj1 = {
 			};
 		};
 		[19] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -866,11 +809,10 @@ local obj1 = {
 				["minHP"] = 95;
 				["minPower"] = 0;
 			};
-			["priority"] = 19;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "1";
 				["id"] = 5978;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -881,7 +823,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 12;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -896,7 +837,6 @@ local obj1 = {
 			};
 		};
 		[20] = {
-			["maxCooldown"] = 25000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -912,11 +852,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 20;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5811;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -927,7 +866,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -942,7 +880,6 @@ local obj1 = {
 			};
 		};
 		[21] = {
-			["maxCooldown"] = 40000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -958,11 +895,10 @@ local obj1 = {
 				["minHP"] = 90;
 				["minPower"] = 0;
 			};
-			["priority"] = 21;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5865;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -973,7 +909,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 2;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -988,7 +923,6 @@ local obj1 = {
 			};
 		};
 		[22] = {
-			["maxCooldown"] = 40000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1004,11 +938,10 @@ local obj1 = {
 				["minHP"] = 90;
 				["minPower"] = 0;
 			};
-			["priority"] = 22;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5865;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1019,7 +952,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 2;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1034,7 +966,6 @@ local obj1 = {
 			};
 		};
 		[23] = {
-			["maxCooldown"] = 60000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1050,11 +981,10 @@ local obj1 = {
 				["minHP"] = 25;
 				["minPower"] = 0;
 			};
-			["priority"] = 23;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 5972;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1065,7 +995,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 15;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1080,7 +1009,6 @@ local obj1 = {
 			};
 		};
 		[24] = {
-			["maxCooldown"] = 15000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1096,11 +1024,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 24;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5982;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -1111,7 +1038,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1126,7 +1052,6 @@ local obj1 = {
 			};
 		};
 		[25] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1142,11 +1067,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 25;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5975;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -1157,7 +1081,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 14;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1172,7 +1095,6 @@ local obj1 = {
 			};
 		};
 		[26] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1188,11 +1110,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 26;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 21661;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -1203,7 +1124,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 12;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1218,7 +1138,6 @@ local obj1 = {
 			};
 		};
 		[27] = {
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1234,11 +1153,10 @@ local obj1 = {
 				["minHP"] = 80;
 				["minPower"] = 0;
 			};
-			["priority"] = 27;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5910;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -1249,7 +1167,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1264,7 +1181,6 @@ local obj1 = {
 			};
 		};
 		[28] = {
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1280,11 +1196,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 28;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5983;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -1295,7 +1210,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1310,7 +1224,6 @@ local obj1 = {
 			};
 		};
 		[29] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1326,11 +1239,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 29;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "1";
 				["id"] = 5969;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1341,7 +1253,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1356,7 +1267,6 @@ local obj1 = {
 			};
 		};
 		[30] = {
-			["maxCooldown"] = 40000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1372,11 +1282,10 @@ local obj1 = {
 				["minHP"] = 90;
 				["minPower"] = 0;
 			};
-			["priority"] = 30;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5860;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1387,7 +1296,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1402,7 +1310,6 @@ local obj1 = {
 			};
 		};
 		[31] = {
-			["maxCooldown"] = 18000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1418,11 +1325,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 31;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "1";
 				["id"] = 6161;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1433,7 +1339,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1448,7 +1353,6 @@ local obj1 = {
 			};
 		};
 		[32] = {
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1464,11 +1368,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 32;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 6164;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -1479,7 +1382,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 1;
 				["conditionCount"] = 0;
@@ -1494,7 +1396,6 @@ local obj1 = {
 			};
 		};
 		[33] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1510,11 +1411,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 33;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5968;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1525,7 +1425,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1540,7 +1439,6 @@ local obj1 = {
 			};
 		};
 		[34] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1556,11 +1454,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 34;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5968;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1571,7 +1468,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1586,7 +1482,6 @@ local obj1 = {
 			};
 		};
 		[35] = {
-			["maxCooldown"] = 120000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1602,11 +1497,10 @@ local obj1 = {
 				["minHP"] = 60;
 				["minPower"] = 0;
 			};
-			["priority"] = 35;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "1";
 				["id"] = 5867;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1617,7 +1511,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1632,7 +1525,6 @@ local obj1 = {
 			};
 		};
 		[36] = {
-			["maxCooldown"] = 40000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1648,11 +1540,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 36;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5821;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1663,7 +1554,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 2;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1678,7 +1568,6 @@ local obj1 = {
 			};
 		};
 		[37] = {
-			["maxCooldown"] = 10000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1694,11 +1583,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 37;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 6178;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -1709,7 +1597,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1724,7 +1611,6 @@ local obj1 = {
 			};
 		};
 		[38] = {
-			["maxCooldown"] = 40000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1740,11 +1626,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 38;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5821;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1755,7 +1640,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 2;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1770,7 +1654,6 @@ local obj1 = {
 			};
 		};
 		[39] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1786,11 +1669,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 39;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 5967;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -1801,7 +1683,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 14;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1816,8 +1697,6 @@ local obj1 = {
 			};
 		};
 		[40] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1833,11 +1712,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 40;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6177;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -1848,7 +1726,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 15;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1863,7 +1740,6 @@ local obj1 = {
 			};
 		};
 		[41] = {
-			["maxCooldown"] = 50000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1879,11 +1755,10 @@ local obj1 = {
 				["minHP"] = 90;
 				["minPower"] = 0;
 			};
-			["priority"] = 41;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5862;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1894,7 +1769,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1909,7 +1783,6 @@ local obj1 = {
 			};
 		};
 		[42] = {
-			["maxCooldown"] = 50000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1925,11 +1798,10 @@ local obj1 = {
 				["minHP"] = 90;
 				["minPower"] = 0;
 			};
-			["priority"] = 42;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5862;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1940,7 +1812,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -1955,7 +1826,6 @@ local obj1 = {
 			};
 		};
 		[43] = {
-			["maxCooldown"] = 60000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1971,11 +1841,10 @@ local obj1 = {
 				["minHP"] = 70;
 				["minPower"] = 0;
 			};
-			["priority"] = 43;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "1";
 				["id"] = 5970;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -1986,7 +1855,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2001,7 +1869,6 @@ local obj1 = {
 			};
 		};
 		[44] = {
-			["maxCooldown"] = 8000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2017,11 +1884,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 44;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5935;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2032,7 +1898,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 6;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2047,7 +1912,6 @@ local obj1 = {
 			};
 		};
 		[45] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2063,11 +1927,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 45;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5889;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2078,7 +1941,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2093,7 +1955,6 @@ local obj1 = {
 			};
 		};
 		[46] = {
-			["maxCooldown"] = 12000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2109,11 +1970,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 46;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5965;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2124,7 +1984,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 7;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2139,7 +1998,6 @@ local obj1 = {
 			};
 		};
 		[47] = {
-			["maxCooldown"] = 15000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2155,11 +2013,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 47;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5936;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2170,7 +2027,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2185,7 +2041,6 @@ local obj1 = {
 			};
 		};
 		[48] = {
-			["maxCooldown"] = 50000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2201,11 +2056,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 48;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5838;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2216,7 +2070,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2231,7 +2084,6 @@ local obj1 = {
 			};
 		};
 		[49] = {
-			["maxCooldown"] = 45000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2247,11 +2099,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 49;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 6180;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2262,7 +2113,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2277,8 +2127,6 @@ local obj1 = {
 			};
 		};
 		[50] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2294,11 +2142,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 50;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6021;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2310,7 +2157,6 @@ local obj1 = {
 				["slowCast"] = "0";
 				["stopsMovement"] = "0";
 			};
-			["slot"] = 14;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2325,7 +2171,6 @@ local obj1 = {
 			};
 		};
 		[51] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2341,11 +2186,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 51;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5960;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -2356,7 +2200,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2371,7 +2214,6 @@ local obj1 = {
 			};
 		};
 		[52] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2387,11 +2229,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 52;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5837;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2402,7 +2243,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 2;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2417,7 +2257,6 @@ local obj1 = {
 			};
 		};
 		[53] = {
-			["maxCooldown"] = 45000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2433,11 +2272,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 53;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 6179;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2448,7 +2286,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 14;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2463,7 +2300,6 @@ local obj1 = {
 			};
 		};
 		[54] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2479,11 +2315,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 54;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5893;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2494,7 +2329,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 2;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2509,7 +2343,6 @@ local obj1 = {
 			};
 		};
 		[55] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2525,11 +2358,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 55;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5984;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -2540,7 +2372,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 14;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2555,7 +2386,6 @@ local obj1 = {
 			};
 		};
 		[56] = {
-			["maxCooldown"] = 25000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2571,11 +2401,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 56;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5836;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2586,7 +2415,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2601,7 +2429,6 @@ local obj1 = {
 			};
 		};
 		[57] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2617,11 +2444,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 57;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6181;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2632,7 +2458,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2647,7 +2472,6 @@ local obj1 = {
 			};
 		};
 		[58] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2663,11 +2487,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 58;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5900;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2678,7 +2501,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2693,7 +2515,6 @@ local obj1 = {
 			};
 		};
 		[59] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2709,11 +2530,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 59;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5985;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -2724,7 +2544,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2739,7 +2558,6 @@ local obj1 = {
 			};
 		};
 		[60] = {
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2755,11 +2573,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 60;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5818;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2770,7 +2587,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2785,7 +2601,6 @@ local obj1 = {
 			};
 		};
 		[61] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2801,11 +2616,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 61;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5874;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2816,7 +2630,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 1;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2831,7 +2644,6 @@ local obj1 = {
 			};
 		};
 		[62] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2847,11 +2659,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 62;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5957;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -2862,7 +2673,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2877,8 +2687,6 @@ local obj1 = {
 			};
 		};
 		[63] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 50000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2894,11 +2702,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 63;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5912;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2909,7 +2716,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 3;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2924,8 +2730,6 @@ local obj1 = {
 			};
 		};
 		[64] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2941,11 +2745,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 64;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5913;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -2956,7 +2759,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 3;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -2971,8 +2773,6 @@ local obj1 = {
 			};
 		};
 		[65] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2988,11 +2788,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 65;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 6134;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -3003,7 +2802,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 15;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3018,7 +2816,6 @@ local obj1 = {
 			};
 		};
 		[66] = {
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3034,11 +2831,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 66;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5999;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3049,7 +2845,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 14;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3064,7 +2859,6 @@ local obj1 = {
 			};
 		};
 		[67] = {
-			["maxCooldown"] = 10000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3080,11 +2874,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 67;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5995;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3095,7 +2888,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 6;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3110,7 +2902,6 @@ local obj1 = {
 			};
 		};
 		[68] = {
-			["maxCooldown"] = 15000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3126,11 +2917,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 68;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5905;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3141,7 +2931,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 7;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3156,7 +2945,6 @@ local obj1 = {
 			};
 		};
 		[69] = {
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3172,11 +2960,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 69;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5998;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3187,7 +2974,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3202,7 +2988,6 @@ local obj1 = {
 			};
 		};
 		[70] = {
-			["maxCooldown"] = 25000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3218,11 +3003,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 70;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5996;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3233,7 +3017,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 9;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3248,7 +3031,6 @@ local obj1 = {
 			};
 		};
 		[71] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3264,11 +3046,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 71;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5993;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3279,7 +3060,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3294,7 +3074,6 @@ local obj1 = {
 			};
 		};
 		[72] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3310,11 +3089,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 72;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5994;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3325,7 +3103,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3340,7 +3117,6 @@ local obj1 = {
 			};
 		};
 		[73] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3356,11 +3132,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 73;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 17260;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3371,7 +3146,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 6;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3386,7 +3160,6 @@ local obj1 = {
 			};
 		};
 		[74] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3402,11 +3175,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 74;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5813;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3417,7 +3189,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3432,7 +3203,6 @@ local obj1 = {
 			};
 		};
 		[75] = {
-			["maxCooldown"] = 10000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3448,11 +3218,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 75;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5823;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3463,7 +3232,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 6;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3478,7 +3246,6 @@ local obj1 = {
 			};
 		};
 		[76] = {
-			["maxCooldown"] = 25000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3494,11 +3261,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 76;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5824;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3509,7 +3275,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3524,7 +3289,6 @@ local obj1 = {
 			};
 		};
 		[77] = {
-			["maxCooldown"] = 25000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3540,11 +3304,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 77;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5939;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3555,7 +3318,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 9;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3570,7 +3332,6 @@ local obj1 = {
 			};
 		};
 		[78] = {
-			["maxCooldown"] = 18000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3586,11 +3347,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 78;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5822;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3601,7 +3361,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 7;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3616,8 +3375,6 @@ local obj1 = {
 			};
 		};
 		[79] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 60000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3633,11 +3390,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 79;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5977;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3648,7 +3404,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 13;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3663,8 +3418,6 @@ local obj1 = {
 			};
 		};
 		[80] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 6000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3680,11 +3433,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 80;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5931;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3695,7 +3447,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 6;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3710,8 +3461,6 @@ local obj1 = {
 			};
 		};
 		[81] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 15000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3727,11 +3476,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 81;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5930;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3742,7 +3490,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 7;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3757,8 +3504,6 @@ local obj1 = {
 			};
 		};
 		[82] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3774,11 +3519,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 82;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 5929;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3789,7 +3533,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3804,8 +3547,6 @@ local obj1 = {
 			};
 		};
 		[83] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3821,11 +3562,10 @@ local obj1 = {
 				["minHP"] = 90;
 				["minPower"] = 0;
 			};
-			["priority"] = 83;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 6159;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3836,7 +3576,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 9;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3851,8 +3590,6 @@ local obj1 = {
 			};
 		};
 		[84] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 5000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3868,11 +3605,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 84;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 5807;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3883,7 +3619,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 6;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3898,8 +3633,6 @@ local obj1 = {
 			};
 		};
 		[85] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 10000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3915,11 +3648,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 85;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 5808;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3930,7 +3662,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 7;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3945,8 +3676,6 @@ local obj1 = {
 			};
 		};
 		[86] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3962,11 +3691,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 86;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 5809;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -3977,7 +3705,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -3992,8 +3719,6 @@ local obj1 = {
 			};
 		};
 		[87] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 25000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4009,11 +3734,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 87;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 5806;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4024,7 +3748,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 9;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4039,7 +3762,6 @@ local obj1 = {
 			};
 		};
 		[88] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4055,11 +3777,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 88;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 15820;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4070,7 +3791,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 14;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4085,7 +3805,6 @@ local obj1 = {
 			};
 		};
 		[89] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4101,11 +3820,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 89;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 15811;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4116,7 +3834,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 14;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4131,8 +3848,6 @@ local obj1 = {
 			};
 		};
 		[90] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4148,11 +3863,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 90;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6016;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4164,7 +3878,6 @@ local obj1 = {
 				["slowCast"] = "0";
 				["stopsMovement"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4179,7 +3892,6 @@ local obj1 = {
 			};
 		};
 		[91] = {
-			["maxCooldown"] = 12000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4195,11 +3907,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 91;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6068;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -4210,7 +3921,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 6;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4225,7 +3935,6 @@ local obj1 = {
 			};
 		};
 		[92] = {
-			["maxCooldown"] = 15000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4241,11 +3950,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 92;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6072;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -4256,7 +3964,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 7;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4271,7 +3978,6 @@ local obj1 = {
 			};
 		};
 		[93] = {
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4287,11 +3993,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 93;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6069;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -4302,7 +4007,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4317,7 +4021,6 @@ local obj1 = {
 			};
 		};
 		[94] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4333,11 +4036,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 94;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6070;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -4348,7 +4050,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 9;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4363,8 +4064,6 @@ local obj1 = {
 			};
 		};
 		[95] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 10000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4380,11 +4079,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 95;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6015;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4396,7 +4094,6 @@ local obj1 = {
 				["slowCast"] = "0";
 				["stopsMovement"] = "0";
 			};
-			["slot"] = 7;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4411,8 +4108,6 @@ local obj1 = {
 			};
 		};
 		[96] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 25000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4428,11 +4123,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 96;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6018;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4444,7 +4138,6 @@ local obj1 = {
 				["slowCast"] = "0";
 				["stopsMovement"] = "0";
 			};
-			["slot"] = 9;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4459,7 +4152,6 @@ local obj1 = {
 			};
 		};
 		[97] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4475,11 +4167,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 97;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6067;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -4490,7 +4181,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4505,8 +4195,6 @@ local obj1 = {
 			};
 		};
 		[98] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 5000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4522,11 +4210,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 98;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6019;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4538,7 +4225,6 @@ local obj1 = {
 				["slowCast"] = "0";
 				["stopsMovement"] = "0";
 			};
-			["slot"] = 6;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4553,7 +4239,6 @@ local obj1 = {
 			};
 		};
 		[99] = {
-			["maxCooldown"] = 30000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4569,11 +4254,10 @@ local obj1 = {
 				["minHP"] = 50;
 				["minPower"] = 0;
 			};
-			["priority"] = 99;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 6053;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4584,7 +4268,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4599,7 +4282,6 @@ local obj1 = {
 			};
 		};
 		[100] = {
-			["maxCooldown"] = 40000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4615,11 +4297,10 @@ local obj1 = {
 				["minHP"] = 70;
 				["minPower"] = 0;
 			};
-			["priority"] = 100;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 6054;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4630,7 +4311,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 9;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4645,7 +4325,6 @@ local obj1 = {
 			};
 		};
 		[101] = {
-			["maxCooldown"] = 105000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4661,11 +4340,10 @@ local obj1 = {
 				["minHP"] = 50;
 				["minPower"] = 0;
 			};
-			["priority"] = 101;
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "1";
 				["id"] = 5832;
 				["lastSkillID"] = "";
 				["los"] = "0";
@@ -4676,7 +4354,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 4;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4691,7 +4368,6 @@ local obj1 = {
 			};
 		};
 		[102] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4707,11 +4383,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 102;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 6126;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4722,7 +4397,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4737,7 +4411,6 @@ local obj1 = {
 			};
 		};
 		[103] = {
-			["maxCooldown"] = 10000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4753,11 +4426,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 103;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5828;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4768,7 +4440,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 6;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4783,7 +4454,6 @@ local obj1 = {
 			};
 		};
 		[104] = {
-			["maxCooldown"] = 15000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4799,11 +4469,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 104;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5829;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4814,7 +4483,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 7;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4829,8 +4497,6 @@ local obj1 = {
 			};
 		};
 		[105] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 10000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4846,11 +4512,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 105;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5815;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4861,7 +4526,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 6;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4876,8 +4540,6 @@ local obj1 = {
 			};
 		};
 		[106] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 10000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4893,11 +4555,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 106;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5816;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4908,7 +4569,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 7;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4923,8 +4583,6 @@ local obj1 = {
 			};
 		};
 		[107] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 15000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4940,11 +4598,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 107;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5801;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -4955,7 +4612,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -4970,8 +4626,6 @@ local obj1 = {
 			};
 		};
 		[108] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4987,11 +4641,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 108;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 5817;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5002,7 +4655,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 9;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5017,7 +4669,6 @@ local obj1 = {
 			};
 		};
 		[109] = {
-			["maxCooldown"] = 6000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5033,11 +4684,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 109;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 14488;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5048,7 +4698,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 6;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5063,7 +4712,6 @@ local obj1 = {
 			};
 		};
 		[110] = {
-			["maxCooldown"] = 6000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5079,11 +4727,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 110;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 14489;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5094,7 +4741,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 7;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5109,7 +4755,6 @@ local obj1 = {
 			};
 		};
 		[111] = {
-			["maxCooldown"] = 12000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5125,11 +4770,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 111;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 14556;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5140,7 +4784,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5155,7 +4798,6 @@ local obj1 = {
 			};
 		};
 		[112] = {
-			["maxCooldown"] = 15000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5171,11 +4813,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 112;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 14490;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5186,7 +4827,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 9;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5201,7 +4841,6 @@ local obj1 = {
 			};
 		};
 		[113] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5217,11 +4856,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 113;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 10700;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5232,7 +4870,6 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "0";
 			};
-			["slot"] = 4;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5247,7 +4884,6 @@ local obj1 = {
 			};
 		};
 		[114] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5263,11 +4899,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 114;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 14486;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5278,7 +4913,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5293,7 +4927,6 @@ local obj1 = {
 			};
 		};
 		[115] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5309,11 +4942,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 115;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 14487;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5324,7 +4956,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5339,7 +4970,6 @@ local obj1 = {
 			};
 		};
 		[116] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5355,11 +4985,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 116;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 14485;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5370,7 +4999,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5385,8 +5013,6 @@ local obj1 = {
 			};
 		};
 		[117] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5402,11 +5028,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 117;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5814;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5417,7 +5042,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5432,7 +5056,6 @@ local obj1 = {
 			};
 		};
 		[118] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5448,11 +5071,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 118;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5827;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5463,7 +5085,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5478,7 +5099,6 @@ local obj1 = {
 			};
 		};
 		[119] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5494,11 +5114,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 119;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5934;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5509,7 +5128,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5524,8 +5142,6 @@ local obj1 = {
 			};
 		};
 		[120] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5541,11 +5157,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 120;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5928;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5556,7 +5171,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5571,7 +5185,6 @@ local obj1 = {
 			};
 		};
 		[121] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5587,11 +5200,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 121;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5992;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5602,7 +5214,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5617,8 +5228,6 @@ local obj1 = {
 			};
 		};
 		[122] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5634,11 +5243,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 122;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 6017;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5650,7 +5258,6 @@ local obj1 = {
 				["slowCast"] = "0";
 				["stopsMovement"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5665,8 +5272,6 @@ local obj1 = {
 			};
 		};
 		[123] = {
-			["cooldown"] = 0;
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5682,11 +5287,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 123;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["healing"] = "0";
 				["id"] = 5882;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5697,7 +5301,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5712,7 +5315,6 @@ local obj1 = {
 			};
 		};
 		[124] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5728,11 +5330,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 124;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5842;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5743,7 +5344,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5758,7 +5358,6 @@ local obj1 = {
 			};
 		};
 		[125] = {
-			["maxCooldown"] = 5000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5774,11 +5373,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 125;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 1175;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5789,7 +5387,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 8;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5804,7 +5401,6 @@ local obj1 = {
 			};
 		};
 		[126] = {
-			["maxCooldown"] = 10000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5820,11 +5416,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 126;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5962;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5835,7 +5430,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 6;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5850,7 +5444,6 @@ local obj1 = {
 			};
 		};
 		[127] = {
-			["maxCooldown"] = 20000;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5866,11 +5459,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 127;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5963;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5881,7 +5473,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 7;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;
@@ -5896,7 +5487,6 @@ local obj1 = {
 			};
 		};
 		[128] = {
-			["maxCooldown"] = 0;
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -5912,11 +5502,10 @@ local obj1 = {
 				["minHP"] = 0;
 				["minPower"] = 0;
 			};
-			["priority"] = 128;
 			["skill"] = {
+				["castOnSelf"] = "0";
 				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["healing"] = "0";
 				["id"] = 5820;
 				["lastSkillID"] = "";
 				["los"] = "1";
@@ -5927,7 +5516,6 @@ local obj1 = {
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
-			["slot"] = 5;
 			["target"] = {
 				["boonCount"] = 0;
 				["conditionCount"] = 0;

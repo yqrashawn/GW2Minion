@@ -34,7 +34,8 @@ local profilePrototype = {
 	},
 	skills = {},
 	tmp = {
-		maxAttackRange = 154,
+		maxAttackRange = 0,
+		activeSkillRange = 154,
 		combatMovement = {
 			moving = false,
 			allowed = true,
@@ -45,7 +46,7 @@ local profilePrototype = {
 			lastRangeSwap = 0,
 		},
 		targetCheck = {
-			ticks = 0,
+			lastTicks = 0,
 			id = 0,
 			contentID = 0,
 			health = {},
@@ -809,7 +810,7 @@ end
 
 -- Use profile.
 function profilePrototype:Use(targetID)
-	self.tmp.maxAttackRange = 154
+	self.tmp.activeSkillRange = 154
 	Player:SetTarget(targetID)
 	self:Swap(targetID)
 	self:CheckTargetBuffs(targetID)
@@ -828,7 +829,7 @@ end
 function profilePrototype:DoCombatMovement(targetID)
 	local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
 	local noStopMovementBuffs = gw2_common_functions.HasBuffs(Player,"791,727") == false
-	if (ValidTable(target) and self.tmp.combatMovement.allowed and target.distance <= (self.tmp.maxAttackRange + 250) and noStopMovementBuffs and gDoCombatMovement ~= "0" and ml_global_information.Player_OnMesh and ml_global_information.Player_Health.percent < 99) then
+	if (ValidTable(target) and self.tmp.combatMovement.allowed and target.distance <= (self.tmp.activeSkillRange + 250) and noStopMovementBuffs and gDoCombatMovement ~= "0" and ml_global_information.Player_OnMesh and ml_global_information.Player_Health.percent < 99) then
 		gw2_common_functions.Evade()
 		local forward,backward,left,right,forwardLeft,forwardRight,backwardLeft,backwardRight = GW2.MOVEMENTTYPE.Forward,GW2.MOVEMENTTYPE.Backward,GW2.MOVEMENTTYPE.Left,GW2.MOVEMENTTYPE.Right,4,5,6,7
 		local currentMovement = ml_global_information.Player_MovementDirections
@@ -837,15 +838,15 @@ function profilePrototype:DoCombatMovement(targetID)
 		-- Face target.
 		if (ValidTable(target)) then Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z) end
 		-- Range, walking too close to enemy, stop walking forward.
-		if (self.tmp.maxAttackRange > 300 and tDistance < (self.tmp.maxAttackRange / 6)) then movementDirection[forward] = false end
+		if (self.tmp.activeSkillRange > 300 and tDistance < (self.tmp.activeSkillRange / 6)) then movementDirection[forward] = false end
 		-- Range, walking too far from enemy, stop walking backward.
-		if (self.tmp.maxAttackRange > 300 and tDistance > self.tmp.maxAttackRange * 0.95) then movementDirection[backward] = false end
+		if (self.tmp.activeSkillRange > 300 and tDistance > self.tmp.activeSkillRange * 0.95) then movementDirection[backward] = false end
 		-- Melee, walking too close to enemy, stop walking forward.
 		if (tDistance < target.radius) then movementDirection[forward] = false end
 		-- Melee, walking too far from enemy, stop walking backward.
-		if (tDistance > self.tmp.maxAttackRange) then movementDirection[backward] = false end
+		if (tDistance > self.tmp.activeSkillRange) then movementDirection[backward] = false end
 		-- We are strafing too far from target, stop walking left or right.
-		if (tDistance > self.tmp.maxAttackRange) then 
+		if (tDistance > self.tmp.activeSkillRange) then 
 			movementDirection[left] = false
 			movementDirection[right] = false
 		end
@@ -930,10 +931,10 @@ function profilePrototype:DoCombatMovement(targetID)
 			end
 		end
 		self.tmp.combatMovement.moving = true
-	elseif (ValidTable(target) and target.distance > self.tmp.maxAttackRange and noStopMovementBuffs and (gBotMode ~= GetString("assistMode") or gMoveIntoCombatRange == "1") and not gw2_unstuck.HandleStuck("combat") and ml_global_information.Player_OnMesh) then
+	elseif (ValidTable(target) and target.distance > self.tmp.activeSkillRange and noStopMovementBuffs and (gBotMode ~= GetString("assistMode") or gMoveIntoCombatRange == "1") and not gw2_unstuck.HandleStuck("combat") and ml_global_information.Player_OnMesh) then
 		local tPos = target.pos
 		--gw2_common_functions.MoveOnlyStraightForward()
-		Player:MoveTo(tPos.x,tPos.y,tPos.z,self.tmp.maxAttackRange,false,false,true)
+		Player:MoveTo(tPos.x,tPos.y,tPos.z,self.tmp.activeSkillRange/2,false,false,true)
 		self.tmp.combatMovement.moving = true
 	elseif (self.tmp.combatMovement.moving) then -- Stop active combat movement.
 		Player:StopMovement()
@@ -943,7 +944,7 @@ end
 
 -- Detect skills.
 function profilePrototype:DetectSkills()
-	for slot=1, ml_global_information.MAX_SKILLBAR_SLOTS-2 do
+	for slot=1, ml_global_information.MAX_SKILLBAR_SLOTS-1 do
 		self:CreateSkill(slot)
 	end
 	return true
@@ -1061,14 +1062,14 @@ function profilePrototype:CheckTargetHealth(targetID)
 				health = target.health,
 				lastTicks = ml_global_information.Now,
 			}
-		elseif (ml_global_information.Now - self.lastTicks > 5000) then
+		elseif (ml_global_information.Now - self.tmp.lastTicks > 2500) then
 			self.tmp.targetCheck = {
 				id = target.id,
 				contentID = target.conentID,
 				health = target.health,
 				lastTicks = ml_global_information.Now,
 			}
-			if (target.health.percent > (self.health.percent + 10)) then
+			if (target.health.percent > (self.health.percent + 10) or (ml_global_information.Now - self.tmp.lastTicks > 15000 and target.health.percent == 100)) then
 				d("!!!!!!!!!!!!!!! TARGET BLACKLISTED, NOT DYING !!!!!!!!!!!!!!!")
 				ml_blacklist.AddBlacklistEntry(GetString("monsters"), target.contentID, target.name, ml_global_information.Now + 90000)
 			end
@@ -1152,7 +1153,7 @@ function profilePrototype:Swap(targetID)
 			canSwap = true
 		end
 	end
-	if (settings.switchRandom == "1" and TimeSince(timers.lastRandomSwap) > 0) then
+	if (settings.switchRandom == "1" and (ml_global_information.Player_InCombat or ml_global_information.Player_IsMoving) and TimeSince(timers.lastRandomSwap) > 0) then
 		timers.lastRandomSwap = ml_global_information.Now + math.random(3000,15000)
 		canSwap = true
 	end
@@ -1185,6 +1186,11 @@ function skillPrototype:CanCast(targetID)
 	local skillOnBar = gw2_skill_manager.currentSkillbarSkills[self.skill.id] or {}
 	local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
 	if (ValidTable(skillOnBar) and (ValidTable(target) or self.skill.castOnSelf == "1") ) then
+		-- update profile range.
+		if (self.skill.setRange == "1") then
+			self.parent.tmp.maxAttackRange = (self.skill.maxRange > 0 and self.skill.maxRange > self.parent.tmp.maxAttackRange and self.skill.maxRange or self.parent.tmp.maxAttackRange)
+			self.parent.tmp.maxAttackRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.maxAttackRange and self.skill.radius or self.parent.tmp.maxAttackRange)
+		end
 		-- Check lastSkill attributes.
 		local lastSkillID = (Player.castinfo.skillID == 0 and Player.castinfo.lastSkillID or Player.castinfo.skillID)
 		local lastSkill = self.parent:GetSkillByID(lastSkillID)
@@ -1226,12 +1232,10 @@ function skillPrototype:CanCast(targetID)
 			local maxdistance = (self.player.allyRangeMax == 0 and "" or "maxdistance=" .. self.player.allyRangeMax .. ",")
 			if (TableSize(CharacterList("friendly," .. maxdistance .. "distanceto=" .. Player.id .. ",exclude=" .. Player.id)) < self.player.allyNearCount) then return false end
 		end
-		-- NEW!!
 		if (self.player.allyDownedNearCount > 0) then
 			local maxdistance = (self.player.allyDownedRangeMax > 0 and self.player.allyDownedRangeMax or 2500)
 			if (TableSize(CharacterList("friendly,maxdistance=" .. maxdistance .. ",distanceto=" .. Player.id .. ",downed,exclude=" .. Player.id)) < self.player.allyDownedNearCount) then return false end
 		end
-		-- END!!
 		local playerBuffList = Player.buffs
 		if (self.player.hasBuffs ~= "" and ValidTable(playerBuffList) and not gw2_common_functions.BufflistHasBuffs(playerBuffList, tostring(self.player.hasBuffs))) then return false end
 		if (self.player.hasNotBuffs ~= "" and ValidTable(playerBuffList) and gw2_common_functions.BufflistHasBuffs(playerBuffList, tostring(self.player.hasNotBuffs))) then return false end
@@ -1257,17 +1261,15 @@ function skillPrototype:CanCast(targetID)
 			if (self.target.type == "Character" and target.isCharacter == false) then return false end
 			if (self.target.type == "Gadget" and target.isGadget == false) then return false end
 		end
+		-- update active skill range.
+		self.parent.tmp.activeSkillRange = (self.skill.maxRange > 0 and self.skill.maxRange > self.parent.tmp.activeSkillRange and self.skill.maxRange or self.parent.tmp.activeSkillRange)
+		self.parent.tmp.activeSkillRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.activeSkillRange and self.skill.radius or self.parent.tmp.activeSkillRange)
 		-- update combatMovement status.
 		self.parent.tmp.combatMovement.allowed = (self.skill.stopsMovement == "0")
-		-- update profile range.
-		if (self.skill.setRange == "1") then
-			self.parent.tmp.maxAttackRange = (self.skill.maxRange > 0 and self.skill.maxRange > self.parent.tmp.maxAttackRange and self.skill.maxRange or self.parent.tmp.maxAttackRange)
-			self.parent.tmp.maxAttackRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.maxAttackRange and self.skill.radius or self.parent.tmp.maxAttackRange)
-		end
 		-- skill can be cast now.
 		return true
 	-- update profile range.
-	elseif (self.skill.setRange == "1" and ValidTable(skillOnBar) and skillOnBar.cooldown == 0) then
+	elseif (ValidTable(target) == false and self.skill.setRange == "1" and ValidTable(skillOnBar) and skillOnBar.cooldown == 0) then
 		self.parent.tmp.maxAttackRange = (self.skill.maxRange > 0 and self.skill.maxRange > self.parent.tmp.maxAttackRange and self.skill.maxRange or self.parent.tmp.maxAttackRange)
 		self.parent.tmp.maxAttackRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.maxAttackRange and self.skill.radius or self.parent.tmp.maxAttackRange)
 	end
@@ -1278,7 +1280,7 @@ end
 function skillPrototype:Cast(targetID)
 	local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
 	-- Face target.
-	if (ValidTable(target)) then Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z) end
+	--if (ValidTable(target)) then Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z) end
 	-- Target self if needed.
 	target = (self.skill.castOnSelf == "1" and Player or ValidTable(target) and target or nil)
 	if (ValidTable(target)) then
