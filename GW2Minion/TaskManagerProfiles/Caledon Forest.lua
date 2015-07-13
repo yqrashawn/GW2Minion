@@ -3,8 +3,8 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
-	["idcounter"] = 92;
-	["name"] = "QueensdaleStandalone";
+	["idcounter"] = 97;
+	["name"] = "CaledonStandalone";
 	["tasks"] = {
 		[1] = {
 			["complete"] = true;
@@ -16,7 +16,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -29,16 +29,16 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 1;
-			["mapid"] = 15;
-			["mappos"] = "-16512/17324/-1371";
+			["mapid"] = 34;
+			["mappos"] = "-6816/-39805/-190";
 			["maxduration"] = 0;
 			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "WP_ShaemoorWaypoint";
+			["minlvl"] = 0;
+			["name"] = "WP_Astorea";
 			["partysize"] = 0;
 			["priority"] = 1;
-			["radius"] = "0";
+			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
 		[2] = {
@@ -51,7 +51,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -64,50 +64,72 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 2;
-			["mapid"] = 15;
-			["mappos"] = "-18959/14484/-839";
+			["mapid"] = 34;
+			["mappos"] = "-9494/-38053/19";
 			["maxduration"] = 0;
-			["maxlvl"] = "80";
+			["maxlvl"] = 80;
 			["minduration"] = 0;
 			["minlvl"] = 0;
-			["name"] = "POI_TrainersTerrace";
+			["name"] = "POI_Rimes_Garden";
 			["partysize"] = 0;
 			["priority"] = 2;
+			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
 		[3] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
+				["TM_TASK_HQType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
 				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "43306";
 				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
 				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "11749,14940,15380,4817,29772";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
+					["value"] = "10";
+				};
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = "20";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
+					["type"] = "Field";
+					["value"] = "355";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 3;
-			["mapid"] = 15;
-			["mappos"] = "-25394/14145/-866";
-			["maxduration"] = 0;
-			["maxlvl"] = 80;
+			["mapid"] = 34;
+			["mappos"] = "-8872/-37894/-40";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
 			["minduration"] = 0;
 			["minlvl"] = 0;
-			["name"] = "WP_Fields";
+			["name"] = "HQ_Help_Deliah";
 			["partysize"] = 0;
 			["priority"] = 3;
-			["type"] = "MoveTo Position";
+			["radius"] = "4500";
+			["type"] = "HeartQuest";
 		};
 		[4] = {
 			["complete"] = true;
@@ -119,7 +141,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -132,13 +154,13 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 4;
-			["mapid"] = 15;
-			["mappos"] = "-29539/15816/-846";
-			["maxduration"] = 0;
+			["mapid"] = 34;
+			["mappos"] = "-2832/-40408/-122";
+			["maxduration"] = "0";
 			["maxlvl"] = 80;
 			["minduration"] = 0;
 			["minlvl"] = 0;
-			["name"] = "POI_JebsWheatfield";
+			["name"] = "POI_Solitaire_ Island";
 			["partysize"] = 0;
 			["priority"] = 4;
 			["radius"] = "0";
@@ -148,213 +170,13 @@ local obj1 = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_HQType"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
-				["TM_TASK_KillEnemies"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "44322";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "8958,4284,18083,29589,24128,27505,26261,23433,14662,32346,22465,11370";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_subRegion"] = {
-					["type"] = "Field";
-					["value"] = "215";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 5;
-			["mapid"] = 15;
-			["mappos"] = "-29230/15860/-824";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "HQ_Help Diah Tend Her Farm";
-			["partysize"] = 0;
-			["priority"] = 5;
-			["radius"] = "2500";
-			["type"] = "HeartQuest";
-		};
-		[6] = {
-			["complete"] = true;
-			["cooldown"] = "0";
-			["customVars"] = {
-				["TM_TASK_HQType"] = {
-					["type"] = "ComboBox";
-					["value"] = "";
-				};
-				["TM_TASK_KillEnemies"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "301506,44214";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "8954,30449,12285,28224,11921,4341,1361,1877,3244,29599";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_subRegion"] = {
-					["type"] = "Field";
-					["value"] = "216";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 6;
-			["mapid"] = 15;
-			["mappos"] = "-28362/22339/-237";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "1";
-			["name"] = "HQ_Help Fisher Travis maintain the river";
-			["partysize"] = 0;
-			["priority"] = 6;
-			["radius"] = "4000";
-			["type"] = "HeartQuest";
-		};
-		[7] = {
-			["complete"] = true;
-			["cooldown"] = "0";
-			["customVars"] = {
-				["TM_TASK_HQType"] = {
-					["type"] = "ComboBox";
-					["value"] = "";
-				};
-				["TM_TASK_KillEnemies"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "178571,301489,178572,43522";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "17279,29497,11801,15776,17990,15903,7084,26583,5380,14488,19572,11186";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_subRegion"] = {
-					["type"] = "Field";
-					["value"] = "218";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 7;
-			["mapid"] = 15;
-			["mappos"] = "-26035/23685/-772";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "2";
-			["name"] = "HQ_Help Foreman Flannum...";
-			["partysize"] = 0;
-			["priority"] = 7;
-			["radius"] = "8000";
-			["type"] = "HeartQuest";
-		};
-		[8] = {
-			["complete"] = true;
-			["cooldown"] = "0";
-			["customVars"] = {
-				["TM_TASK_usesTeleport"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 8;
-			["mapid"] = 15;
-			["mappos"] = "-31813/28433/-1305";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "2";
-			["name"] = "Vista_Near Foreman ";
-			["partysize"] = 0;
-			["priority"] = 8;
-			["radius"] = "0";
-			["type"] = "Vista";
-		};
-		[9] = {
-			["complete"] = true;
-			["cooldown"] = "0";
-			["customVars"] = {
 				["TM_TASK_randomMovement"] = {
 					["type"] = "CheckBox";
 					["value"] = "0";
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -366,18 +188,218 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 9;
-			["mapid"] = 15;
-			["mappos"] = "-37242/19280/-583";
+			["id"] = 5;
+			["mapid"] = 34;
+			["mappos"] = "271/-26030/-713";
 			["maxduration"] = "0";
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "WP_Orchard Waypoint";
+			["minlvl"] = 0;
+			["name"] = "WP_Wardenhurst";
+			["partysize"] = 0;
+			["priority"] = 5;
+			["radius"] = "0";
+			["type"] = "MoveTo Position";
+		};
+		[6] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_HQType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "43630,43629,";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "29578,28788,14459,22581,6656,32503,15790,17992,27360,15028,9102,6865,18471,9096,28819,24566,8954";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = 0;
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
+					["type"] = "Field";
+					["value"] = "274";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 6;
+			["mapid"] = 34;
+			["mappos"] = "393/-26271/-721";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_Gemai";
+			["partysize"] = 0;
+			["priority"] = 6;
+			["radius"] = "5000";
+			["type"] = "HeartQuest";
+		};
+		[7] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 7;
+			["mapid"] = 34;
+			["mappos"] = "6501/-34755/-20";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "POI_Dannadors_Kannel";
+			["partysize"] = 0;
+			["priority"] = 7;
+			["radius"] = "0";
+			["type"] = "MoveTo Position";
+		};
+		[8] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_HQType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "368835";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "150483";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
+					["type"] = "Field";
+					["value"] = "263";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 8;
+			["mapid"] = 34;
+			["mappos"] = "6417/-34070/-33";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_Danador";
+			["partysize"] = 0;
+			["priority"] = 8;
+			["radius"] = "5000";
+			["type"] = "HeartQuest";
+		};
+		[9] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_HQType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "382665,44369,301495";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "24828,26646,21409,29606,3722";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
+					["type"] = "Field";
+					["value"] = "262";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 9;
+			["mapid"] = 34;
+			["mappos"] = "7787/-25422/-134";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_Elain";
 			["partysize"] = 0;
 			["priority"] = 9;
 			["radius"] = "0";
-			["type"] = "MoveTo Position";
+			["type"] = "HeartQuest";
 		};
 		[10] = {
 			["complete"] = true;
@@ -389,7 +411,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -402,33 +424,64 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 10;
-			["mapid"] = 15;
-			["mappos"] = "-38007/21689/-578";
-			["maxduration"] = 0;
-			["maxlvl"] = 80;
+			["mapid"] = 34;
+			["mappos"] = "12208/-34117/-1102";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
 			["minduration"] = 0;
 			["minlvl"] = 0;
-			["name"] = "POI_Edas Orchard";
+			["name"] = "WP_Sleives";
 			["partysize"] = 0;
 			["priority"] = 10;
-			["radius"] = 0;
+			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
 		[11] = {
 			["complete"] = true;
-			["cooldown"] = "0";
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 11;
+			["mapid"] = 34;
+			["mappos"] = "11245/-35912/-1452";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "POI_Caer_Verdant";
+			["partysize"] = 0;
+			["priority"] = 11;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[12] = {
+			["complete"] = true;
+			["cooldown"] = 0;
 			["customVars"] = {
 				["TM_TASK_HQType"] = {
 					["type"] = "ComboBox";
 					["value"] = "Interact&Kill";
 				};
-				["TM_TASK_KillEnemies"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
 				["TM_TASK_enemyContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "44300,44168,44255";
+					["value"] = "445363,43629,216733,301463,43630";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
@@ -436,7 +489,7 @@ local obj1 = {
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "31376,831,515,12214,25899,26827,18548,19980,4470,16298,25899,28189";
+					["value"] = "394856,26673,";
 				};
 				["TM_TASK_maxInteracts"] = {
 					["type"] = "Numeric";
@@ -456,108 +509,92 @@ local obj1 = {
 				};
 				["TM_TASK_subRegion"] = {
 					["type"] = "Field";
-					["value"] = "219";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 11;
-			["mapid"] = 15;
-			["mappos"] = "-37973/22610/-573";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "3";
-			["name"] = "HQ_Assist Farmer Eda";
-			["partysize"] = 0;
-			["priority"] = 11;
-			["radius"] = "5500";
-			["type"] = "HeartQuest";
-		};
-		[12] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
+					["value"] = "261";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 12;
-			["mapid"] = 15;
-			["mappos"] = "-37282/19264/-583";
-			["maxduration"] = "0";
+			["mapid"] = 34;
+			["mappos"] = "13424/-37151/-69";
+			["maxduration"] = "600";
 			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "4";
-			["name"] = "WP_Orchard Waypoint";
+			["minlvl"] = 0;
+			["name"] = "HQ_Assist_Caillech";
 			["partysize"] = 0;
 			["priority"] = 12;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
+			["radius"] = "8000";
+			["type"] = "HeartQuest";
 		};
 		[13] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
+				["TM_TASK_usesTeleport"] = {
 					["type"] = "CheckBox";
 					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 13;
-			["mapid"] = 15;
-			["mappos"] = "-37709/13990/-1067";
-			["maxduration"] = 0;
+			["mapid"] = 34;
+			["mappos"] = "10358/-39444/-931";
+			["maxduration"] = "0";
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "POI_Mepis Moa Ranch";
+			["minlvl"] = 0;
+			["name"] = "Vista_Sleive";
 			["partysize"] = 0;
 			["priority"] = 13;
 			["radius"] = 0;
-			["type"] = "MoveTo Position";
+			["type"] = "Vista";
 		};
 		[14] = {
 			["complete"] = true;
-			["cooldown"] = "0";
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 14;
+			["mapid"] = 34;
+			["mappos"] = "17323/-25447/-486";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "WP_Spiral";
+			["partysize"] = 0;
+			["priority"] = 14;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[15] = {
+			["complete"] = true;
+			["cooldown"] = 0;
 			["customVars"] = {
 				["TM_TASK_HQType"] = {
 					["type"] = "ComboBox";
 					["value"] = "Interact&Kill";
 				};
-				["TM_TASK_KillEnemies"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
 				["TM_TASK_enemyContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "43462,301454,43469,301460,43475";
+					["value"] = "43630,306196,216733,4362";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
@@ -565,7 +602,7 @@ local obj1 = {
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "12195,1479,24531,12363,8241,923,13915";
+					["value"] = "301464,14680,9086,10708,17738,26769,5379";
 				};
 				["TM_TASK_maxInteracts"] = {
 					["type"] = "Numeric";
@@ -585,70 +622,94 @@ local obj1 = {
 				};
 				["TM_TASK_subRegion"] = {
 					["type"] = "Field";
-					["value"] = "220";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 14;
-			["mapid"] = 15;
-			["mappos"] = "-38402/10954/-1046";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "4";
-			["name"] = "HQ_Help Cassie";
-			["partysize"] = 0;
-			["priority"] = 14;
-			["radius"] = "5500";
-			["type"] = "HeartQuest";
-		};
-		[15] = {
-			["complete"] = false;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = 0;
+					["value"] = "260";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 15;
-			["mapid"] = 15;
-			["mappos"] = "-36386/6768/-620";
-			["maxduration"] = 0;
-			["maxlvl"] = "4";
+			["mapid"] = 34;
+			["mappos"] = "18359/-28044/-21";
+			["maxduration"] = "600";
+			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "Grindtolvl5";
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_Warden_Brulians";
 			["partysize"] = 0;
 			["priority"] = 15;
-			["radius"] = "0";
-			["type"] = "Grind";
+			["radius"] = 0;
+			["type"] = "HeartQuest";
 		};
 		[16] = {
 			["complete"] = true;
-			["cooldown"] = "0";
+			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_usesTeleport"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
+				["TM_TASK_SPType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_conversationOrder"] = {
+					["type"] = "Field";
+					["value"] = "13";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "30274";
+				};
+				["TM_TASK_usableItemIDs"] = {
+					["type"] = "Field";
+					["value"] = "22434";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 16;
-			["mapid"] = 15;
-			["mappos"] = "-29497/2477/-937";
+			["mapid"] = 34;
+			["mappos"] = "18634/-28031/-28";
 			["maxduration"] = "0";
-			["maxlvl"] = 80;
+			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "5";
-			["name"] = "Vista_Bandithaunt Caverns";
+			["minlvl"] = 0;
+			["name"] = "SP_Sylvari_Tower";
 			["partysize"] = 0;
 			["priority"] = 16;
-			["radius"] = "5";
-			["type"] = "Vista";
+			["radius"] = 0;
+			["type"] = "Skillpoint";
 		};
 		[17] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_conversationOrder"] = {
+					["type"] = "Field";
+					["value"] = "13,13,6";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "175347";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 17;
+			["mapid"] = 34;
+			["mappos"] = "18974/-18550/-51";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "PRE_HQ_Disrupt_the_Nightmare";
+			["partysize"] = 0;
+			["priority"] = 17;
+			["radius"] = "0";
+			["type"] = "Talk";
+		};
+		[18] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -658,115 +719,293 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
 					["value"] = "1";
 				};
 				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 17;
-			["mapid"] = 15;
-			["mappos"] = "-23141/5929/-2887";
-			["maxduration"] = "0";
-			["maxlvl"] = 80;
-			["minduration"] = 0;
-			["minlvl"] = "5";
-			["name"] = "POI_Dalins Pumping Station";
-			["partysize"] = 0;
-			["priority"] = 17;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
-		};
-		[18] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_usesTeleport"] = {
 					["type"] = "CheckBox";
 					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 18;
-			["mapid"] = 15;
-			["mappos"] = "-20536/7733/-2685";
+			["mapid"] = 34;
+			["mappos"] = "21880/-16181/11";
 			["maxduration"] = "0";
 			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "Vista_Shaemoor Fields";
+			["minlvl"] = 0;
+			["name"] = "POI_Briathron_Den";
 			["partysize"] = 0;
 			["priority"] = 18;
-			["radius"] = "5";
-			["type"] = "Vista";
+			["radius"] = "0";
+			["type"] = "MoveTo Position";
 		};
 		[19] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
+				["TM_TASK_SPType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
 				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
+				["TM_TASK_conversationOrder"] = {
+					["type"] = "Field";
+					["value"] = "";
 				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "7303,5159";
 				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "18021";
+				};
+				["TM_TASK_usableItemIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 19;
-			["mapid"] = 15;
-			["mappos"] = "-7707/12199/-1125";
-			["maxduration"] = "0";
+			["mapid"] = 34;
+			["mappos"] = "23374/-13503/-663";
+			["maxduration"] = "30";
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "5";
-			["name"] = "WP_Garrison Waypoint";
+			["minlvl"] = 0;
+			["name"] = "SP_Dark_Thorn_Patch";
 			["partysize"] = 0;
 			["priority"] = 19;
 			["radius"] = "0";
-			["type"] = "MoveTo Position";
+			["type"] = "Skillpoint";
 		};
 		[20] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_usesTeleport"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
+				["TM_TASK_conversationOrder"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "43670,43655,174864,175626";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 20;
-			["mapid"] = 15;
-			["mappos"] = "-6546/11131/-1744";
+			["mapid"] = 34;
+			["mappos"] = "22427/-16570/-31";
 			["maxduration"] = "0";
 			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "5";
-			["name"] = "Vista_Garrison";
+			["minlvl"] = 0;
+			["name"] = "Duel1";
 			["partysize"] = 0;
 			["priority"] = 20;
-			["radius"] = "0";
-			["type"] = "Vista";
+			["radius"] = "100";
+			["type"] = "Talk";
 		};
 		[21] = {
 			["complete"] = true;
-			["cooldown"] = "0";
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_eventID"] = {
+					["type"] = "Numeric";
+					["value"] = "9999999";
+				};
+				["TM_TASK_eventMaxTaskTimer"] = {
+					["type"] = "Numeric";
+					["value"] = "30";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 21;
+			["mapid"] = 34;
+			["mappos"] = "22427/-16570/-31";
+			["maxduration"] = 0;
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "KillDuell1";
+			["partysize"] = 0;
+			["priority"] = 21;
+			["radius"] = "0";
+			["type"] = "Do Events";
+		};
+		[22] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_conversationOrder"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "43670,43655,174864,175626";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 22;
+			["mapid"] = 34;
+			["mappos"] = "21234/-16154/-87";
+			["maxduration"] = 0;
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "Duel2";
+			["partysize"] = 0;
+			["priority"] = 22;
+			["radius"] = "100";
+			["type"] = "Talk";
+		};
+		[23] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_eventID"] = {
+					["type"] = "Numeric";
+					["value"] = "9999999";
+				};
+				["TM_TASK_eventMaxTaskTimer"] = {
+					["type"] = "Numeric";
+					["value"] = "30";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 23;
+			["mapid"] = 34;
+			["mappos"] = "21234/-16154/-87";
+			["maxduration"] = 0;
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "KillDuel2";
+			["partysize"] = 0;
+			["priority"] = 23;
+			["radius"] = "0";
+			["type"] = "Do Events";
+		};
+		[24] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_conversationOrder"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "43670,43655,174864,175626";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 24;
+			["mapid"] = 34;
+			["mappos"] = "21448/-15338/-193";
+			["maxduration"] = 0;
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "Duel3";
+			["partysize"] = 0;
+			["priority"] = 24;
+			["radius"] = "100";
+			["type"] = "Talk";
+		};
+		[25] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_eventID"] = {
+					["type"] = "Numeric";
+					["value"] = "9999999";
+				};
+				["TM_TASK_eventMaxTaskTimer"] = {
+					["type"] = "Numeric";
+					["value"] = "30";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 25;
+			["mapid"] = 34;
+			["mappos"] = "21448/-15338/-193";
+			["maxduration"] = 0;
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "KillDuel3";
+			["partysize"] = 0;
+			["priority"] = 25;
+			["radius"] = "0";
+			["type"] = "Do Events";
+		};
+		[26] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_conversationOrder"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "43670,43655,174864,175626";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 26;
+			["mapid"] = 34;
+			["mappos"] = "21510/-17916/-15";
+			["maxduration"] = 0;
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "Duel4";
+			["partysize"] = 0;
+			["priority"] = 26;
+			["radius"] = "0";
+			["type"] = "Talk";
+		};
+		[27] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_eventID"] = {
+					["type"] = "Numeric";
+					["value"] = "9999999";
+				};
+				["TM_TASK_eventMaxTaskTimer"] = {
+					["type"] = "Numeric";
+					["value"] = "30";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 27;
+			["mapid"] = 34;
+			["mappos"] = "21510/-17916/-15";
+			["maxduration"] = 0;
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "Killduel4";
+			["partysize"] = 0;
+			["priority"] = 27;
+			["radius"] = 0;
+			["type"] = "Do Events";
+		};
+		[28] = {
+			["complete"] = true;
+			["cooldown"] = 0;
 			["customVars"] = {
 				["TM_TASK_HQType"] = {
 					["type"] = "ComboBox";
@@ -774,23 +1013,23 @@ local obj1 = {
 				};
 				["TM_TASK_enemyContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "43494,232674,47844,8940,24688,13699";
+					["value"] = "43655,174864,175626";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
-					["value"] = "1343226368";
+					["value"] = "";
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "26241,23879,31926,31518,20371,7433,8939,886,";
+					["value"] = "2950,29831,18750,6318,29525,5186,9118,16642,26602,9113,18789,9460";
 				};
 				["TM_TASK_maxInteracts"] = {
 					["type"] = "Numeric";
-					["value"] = "0";
+					["value"] = 0;
 				};
 				["TM_TASK_maxKills"] = {
 					["type"] = "Numeric";
-					["value"] = "0";
+					["value"] = 0;
 				};
 				["TM_TASK_pickupSkillID"] = {
 					["type"] = "Field";
@@ -802,24 +1041,51 @@ local obj1 = {
 				};
 				["TM_TASK_subRegion"] = {
 					["type"] = "Field";
-					["value"] = "213";
+					["value"] = "276";
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 21;
-			["mapid"] = 15;
-			["mappos"] = "-4188/6022/-1242";
+			["id"] = 28;
+			["mapid"] = 34;
+			["mappos"] = "21601/-16827/18";
 			["maxduration"] = "0";
-			["maxlvl"] = "80";
+			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "5";
-			["name"] = "HQ_Assist_Seraph";
+			["minlvl"] = 0;
+			["name"] = "HQ_Disrupt_the_Nightmare";
 			["partysize"] = 0;
-			["priority"] = 21;
-			["radius"] = "8000";
+			["priority"] = 28;
+			["radius"] = "0";
 			["type"] = "HeartQuest";
 		};
-		[22] = {
+		[29] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_conversationOrder"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "18743";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 29;
+			["mapid"] = 34;
+			["mappos"] = "19848/-18736/0";
+			["maxduration"] = "600";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "POST_HQ_Disrupt_the_Nightmare";
+			["partysize"] = 0;
+			["priority"] = 29;
+			["radius"] = "1000";
+			["type"] = "Talk";
+		};
+		[30] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -829,306 +1095,18 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 22;
-			["mapid"] = 15;
-			["mappos"] = "-5009/5831/-1272";
-			["maxduration"] = 0;
+			["id"] = 30;
+			["mapid"] = 34;
+			["mappos"] = "18943/-21864/-87";
+			["maxduration"] = "0";
 			["maxlvl"] = "6";
 			["minduration"] = 0;
-			["minlvl"] = "0";
+			["minlvl"] = 0;
 			["name"] = "Grindtolvl7";
-			["partysize"] = 0;
-			["priority"] = 22;
-			["radius"] = "0";
-			["type"] = "Grind";
-		};
-		[23] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 23;
-			["mapid"] = 15;
-			["mappos"] = "-6500/2892/-121";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "7";
-			["name"] = "WP_Scaver Waypoint";
-			["partysize"] = 0;
-			["priority"] = 23;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
-		};
-		[24] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 24;
-			["mapid"] = 15;
-			["mappos"] = "-8510/-1358/-390";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "7";
-			["name"] = "POI_Altar Brook Trading Post";
-			["partysize"] = 0;
-			["priority"] = 24;
-			["radius"] = "5";
-			["type"] = "MoveTo Position";
-		};
-		[25] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_HQType"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "223760,462659,43494";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "17271,29887,23648,8942,19901,26351,1172,17469,5920,8943,5063,17987,9191,7303,5031";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_subRegion"] = {
-					["type"] = "Field";
-					["value"] = "214";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 25;
-			["mapid"] = 15;
-			["mappos"] = "-15599/-2950/-63";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "7";
-			["name"] = "HQ_Help Lexi Price";
-			["partysize"] = 0;
-			["priority"] = 25;
-			["radius"] = "0";
-			["type"] = "HeartQuest";
-		};
-		[26] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 26;
-			["mapid"] = 15;
-			["mappos"] = "-19948/-4909/-482";
-			["maxduration"] = "0";
-			["maxlvl"] = 80;
-			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "WP_Crossing Waypoint";
-			["partysize"] = 0;
-			["priority"] = 26;
-			["radius"] = "6";
-			["type"] = "MoveTo Position";
-		};
-		[27] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 27;
-			["mapid"] = 15;
-			["mappos"] = "-17485/-5824/-343";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "POI_Altar Brook Crossing";
-			["partysize"] = 0;
-			["priority"] = 27;
-			["radius"] = "6";
-			["type"] = "MoveTo Position";
-		};
-		[28] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 28;
-			["mapid"] = 15;
-			["mappos"] = "-28822/-9854/-227";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "6";
-			["name"] = "POI_Bar Curtis Range";
-			["partysize"] = 0;
-			["priority"] = 28;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
-		};
-		[29] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 29;
-			["mapid"] = 15;
-			["mappos"] = "-34066/-9221/-825";
-			["maxduration"] = 0;
-			["maxlvl"] = 80;
-			["minduration"] = 0;
-			["minlvl"] = "6";
-			["name"] = "WP_Vale Waypoint";
-			["partysize"] = 0;
-			["priority"] = 29;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
-		};
-		[30] = {
-			["complete"] = true;
-			["cooldown"] = "0";
-			["customVars"] = {
-				["TM_TASK_usesTeleport"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 30;
-			["mapid"] = 15;
-			["mappos"] = "-36801/-11906/-1937";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "7";
-			["name"] = "Vista_Altars Windings";
 			["partysize"] = 0;
 			["priority"] = 30;
 			["radius"] = "0";
-			["type"] = "Vista";
+			["type"] = "Grind";
 		};
 		[31] = {
 			["complete"] = true;
@@ -1153,132 +1131,19 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 31;
-			["mapid"] = 15;
-			["mappos"] = "-31178/-19641/-37";
-			["maxduration"] = 0;
-			["maxlvl"] = 80;
-			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "POI_DuranBrothersDocks";
-			["partysize"] = 0;
-			["priority"] = 31;
-			["radius"] = "5";
-			["type"] = "MoveTo Position";
-		};
-		[32] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_usesTeleport"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 32;
-			["mapid"] = 15;
-			["mappos"] = "-31705/-20320/-439";
-			["maxduration"] = 0;
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "Vista_ClayentFalls";
-			["partysize"] = 0;
-			["priority"] = 32;
-			["radius"] = "0";
-			["type"] = "Vista";
-		};
-		[33] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 33;
-			["mapid"] = 15;
-			["mappos"] = "-22420/-15851/-1379";
-			["maxduration"] = 0;
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "8";
-			["name"] = "WP_Claypool Waypoint";
-			["partysize"] = 0;
-			["priority"] = 33;
-			["radius"] = 0;
-			["type"] = "MoveTo Position";
-		};
-		[34] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_HQType"] = {
-					["type"] = "ComboBox";
-					["value"] = "Pickup&Use";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "0";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "8933";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["type"] = "Numeric";
-					["value"] = 0;
-				};
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = 0;
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["type"] = "Field";
-					["value"] = "8204";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["type"] = "Field";
-					["value"] = "57164";
-				};
-				["TM_TASK_subRegion"] = {
-					["type"] = "Field";
-					["value"] = "212";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 34;
-			["mapid"] = 15;
-			["mappos"] = "-21867/-16362/-1395";
+			["mapid"] = 34;
+			["mappos"] = "-9293/-28260/-1734";
 			["maxduration"] = "0";
 			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "7";
-			["name"] = "HQ_Train with the militia";
+			["minlvl"] = 0;
+			["name"] = "WP_Caer_Astorea";
 			["partysize"] = 0;
-			["priority"] = 34;
-			["radius"] = "1500";
-			["type"] = "HeartQuest";
+			["priority"] = 31;
+			["radius"] = "0";
+			["type"] = "MoveTo Position";
 		};
-		[35] = {
+		[32] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1288,7 +1153,7 @@ local obj1 = {
 				};
 				["TM_TASK_enemyContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "232674,43494,232693,33554976,478444,22316,22317";
+					["value"] = "175032,43665,174699,43653,44316";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
@@ -1296,7 +1161,7 @@ local obj1 = {
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "";
+					["value"] = "24039,9122,24358,31484,6517,24037,30779,";
 				};
 				["TM_TASK_maxInteracts"] = {
 					["type"] = "Numeric";
@@ -1316,22 +1181,143 @@ local obj1 = {
 				};
 				["TM_TASK_subRegion"] = {
 					["type"] = "Field";
-					["value"] = "211";
+					["value"] = "275";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 32;
+			["mapid"] = 34;
+			["mappos"] = "-8327/-28230/-1271";
+			["maxduration"] = "600";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_Defend_Caer_Astorea";
+			["partysize"] = 0;
+			["priority"] = 32;
+			["radius"] = 0;
+			["type"] = "HeartQuest";
+		};
+		[33] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_HQType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "43659,14831,43653,43665,175347,44120,44262,";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
+					["value"] = 0;
+				};
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = 0;
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
+					["type"] = "Field";
+					["value"] = "277";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 33;
+			["mapid"] = 34;
+			["mappos"] = "-18370/-35881/-1116";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "HQ_Assist_Arias";
+			["partysize"] = 0;
+			["priority"] = 33;
+			["radius"] = "4000";
+			["type"] = "HeartQuest";
+		};
+		[34] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_usesTeleport"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 34;
+			["mapid"] = 34;
+			["mappos"] = "-16664/-27269/-646";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "Vista_Ogham_Wild";
+			["partysize"] = 0;
+			["priority"] = 34;
+			["radius"] = "0";
+			["type"] = "Vista";
+		};
+		[35] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_SPType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Commune";
+				};
+				["TM_TASK_conversationOrder"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "24378";
+				};
+				["TM_TASK_usableItemIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 35;
-			["mapid"] = 15;
-			["mappos"] = "-11412/-19009/-1367";
+			["mapid"] = 34;
+			["mappos"] = "-19180/-27758/-335";
 			["maxduration"] = "0";
-			["maxlvl"] = "80";
+			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "8";
-			["name"] = "HQ_Help the Seraph";
+			["minlvl"] = 0;
+			["name"] = "SP_Waterfall";
 			["partysize"] = 0;
 			["priority"] = 35;
-			["radius"] = "7500";
-			["type"] = "HeartQuest";
+			["radius"] = 0;
+			["type"] = "Skillpoint";
 		};
 		[36] = {
 			["complete"] = true;
@@ -1343,7 +1329,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -1356,13 +1342,13 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 36;
-			["mapid"] = 15;
-			["mappos"] = "-4232/-18246/-1367";
-			["maxduration"] = 0;
-			["maxlvl"] = 80;
+			["mapid"] = 34;
+			["mappos"] = "-11337/-21872/-210";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "8";
-			["name"] = "WP_HeartWoodPass Camp Waypoint";
+			["minlvl"] = 0;
+			["name"] = "WP_Gleaners_Cover";
 			["partysize"] = 0;
 			["priority"] = 36;
 			["radius"] = "0";
@@ -1372,36 +1358,56 @@ local obj1 = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
+				["TM_TASK_HQType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "44201,43912,";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "9092,26767,22594,5512,6944";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
 					["value"] = "0";
 				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
 					["value"] = "0";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
+					["type"] = "Field";
+					["value"] = "268";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 37;
-			["mapid"] = 15;
-			["mappos"] = "-3563/-9504/-128";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
+			["mapid"] = 34;
+			["mappos"] = "-9379/-17762/11";
+			["maxduration"] = "600";
+			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "8";
-			["name"] = "POI_The Heartwoods";
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_Harvester_Mavad";
 			["partysize"] = 0;
 			["priority"] = 37;
 			["radius"] = "0";
-			["type"] = "MoveTo Position";
+			["type"] = "HeartQuest";
 		};
 		[38] = {
 			["complete"] = true;
@@ -1413,7 +1419,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -1426,13 +1432,13 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 38;
-			["mapid"] = 15;
-			["mappos"] = "3263/-11854/-1145";
-			["maxduration"] = 0;
+			["mapid"] = 34;
+			["mappos"] = "-18692/-20425/-587";
+			["maxduration"] = "0";
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "8";
-			["name"] = "WP_Phinney Waypoint";
+			["minlvl"] = 0;
+			["name"] = "POI_Dolorous_Vale";
 			["partysize"] = 0;
 			["priority"] = 38;
 			["radius"] = 0;
@@ -1448,7 +1454,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -1461,74 +1467,19 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 39;
-			["mapid"] = 15;
-			["mappos"] = "7193/16671/-38";
+			["mapid"] = 34;
+			["mappos"] = "-1358/-20204/-123";
 			["maxduration"] = "0";
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "WP_Ojons Lumbermill";
+			["minlvl"] = 0;
+			["name"] = "POI_Golotl_Grounds";
 			["partysize"] = 0;
 			["priority"] = 39;
-			["radius"] = "8";
+			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
 		[40] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_HQType"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "43620,43615,43621,43339,337264,43614,43618,511914";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "17440,14215,938,27836,28857,27655";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_subRegion"] = {
-					["type"] = "Field";
-					["value"] = "226";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 40;
-			["mapid"] = 15;
-			["mappos"] = "8510/16311/-96";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "8";
-			["name"] = "HQ_Assist Laborer Cardy";
-			["partysize"] = 0;
-			["priority"] = 40;
-			["radius"] = "6000";
-			["type"] = "HeartQuest";
-		};
-		[41] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1538,7 +1489,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -1550,18 +1501,41 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 41;
-			["mapid"] = 15;
-			["mappos"] = "21269/18218/-1488";
+			["id"] = 40;
+			["mapid"] = 34;
+			["mappos"] = "-9595/-12846/-1198";
 			["maxduration"] = "0";
-			["maxlvl"] = "80";
+			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "9";
-			["name"] = "POI_Queens Forest";
+			["minlvl"] = 0;
+			["name"] = "POI_Bay_Heaven";
+			["partysize"] = 0;
+			["priority"] = 40;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[41] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_usesTeleport"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 41;
+			["mapid"] = 34;
+			["mappos"] = "-10425/-11698/-1416";
+			["maxduration"] = 0;
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "Vista_Bay_Haven";
 			["partysize"] = 0;
 			["priority"] = 41;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
+			["radius"] = 0;
+			["type"] = "Vista";
 		};
 		[42] = {
 			["complete"] = true;
@@ -1573,7 +1547,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -1586,312 +1560,74 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 42;
-			["mapid"] = 15;
-			["mappos"] = "14880/8493/-1522";
+			["mapid"] = 34;
+			["mappos"] = "-8131/-6252/-346";
 			["maxduration"] = "0";
-			["maxlvl"] = "80";
+			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "8";
-			["name"] = "POI_Kappas Corral";
+			["minlvl"] = 0;
+			["name"] = "POI_The_Weeping_Isle";
 			["partysize"] = 0;
 			["priority"] = 42;
-			["radius"] = "0";
+			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
 		[43] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
+				["TM_TASK_HQType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "16705,27747,14068,22945,";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
 				["TM_TASK_maxKills"] = {
 					["type"] = "Numeric";
 					["value"] = 0;
 				};
+				["TM_TASK_pickupSkillID"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
+					["type"] = "Field";
+					["value"] = "269";
+				};
 			};
 			["enabled"] = "1";
 			["id"] = 43;
-			["mapid"] = 15;
-			["mappos"] = "14442/8689/-1505";
-			["maxduration"] = "0";
-			["maxlvl"] = "9";
-			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "Grindtolvl10";
-			["partysize"] = 0;
-			["priority"] = 43;
-			["radius"] = "0";
-			["type"] = "Grind";
-		};
-		[44] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_HQType"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "43272,540546";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "228174";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_subRegion"] = {
-					["type"] = "Field";
-					["value"] = "227";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 44;
-			["mapid"] = 15;
-			["mappos"] = "17637/18649/-965";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "9";
-			["name"] = "HQ_Assist Hunter Block";
-			["partysize"] = 0;
-			["priority"] = 44;
-			["radius"] = "12000";
-			["type"] = "HeartQuest";
-		};
-		[45] = {
-			["complete"] = true;
-			["cooldown"] = "0";
-			["customVars"] = {
-				["TM_TASK_HQType"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "283692";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_subRegion"] = {
-					["type"] = "Field";
-					["value"] = "228";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 45;
-			["mapid"] = 15;
-			["mappos"] = "30400/20588/-21";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "9";
-			["name"] = "HQ_Grind_AssitFisherman Will";
-			["partysize"] = 0;
-			["priority"] = 45;
-			["radius"] = "7000";
-			["type"] = "HeartQuest";
-		};
-		[46] = {
-			["complete"] = true;
-			["cooldown"] = "5";
-			["customVars"] = {
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "206768";
-				};
-				["TM_TASK_tIDuration"] = {
-					["type"] = "Numeric";
-					["value"] = "3";
-				};
-				["TM_TASK_usesTeleport"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 46;
-			["mapid"] = 15;
-			["mappos"] = "35172/21859/-559";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "6";
-			["name"] = "I_Erase_Graffiti_1";
-			["partysize"] = 0;
-			["priority"] = 46;
-			["radius"] = "0";
-			["type"] = "Interact";
-		};
-		[47] = {
-			["complete"] = true;
-			["cooldown"] = "0";
-			["customVars"] = {
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "206768";
-				};
-				["TM_TASK_tIDuration"] = {
-					["type"] = "Numeric";
-					["value"] = "3";
-				};
-				["TM_TASK_usesTeleport"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 47;
-			["mapid"] = 15;
-			["mappos"] = "35341/20948/-576";
-			["maxduration"] = 0;
-			["maxlvl"] = 80;
-			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "I_Erase_Graffiti_II";
-			["partysize"] = 0;
-			["priority"] = 47;
-			["radius"] = 0;
-			["type"] = "Interact";
-		};
-		[48] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "206768";
-				};
-				["TM_TASK_tIDuration"] = {
-					["type"] = "Numeric";
-					["value"] = "3";
-				};
-				["TM_TASK_usesTeleport"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 48;
-			["mapid"] = 15;
-			["mappos"] = "36050/21961/-595";
-			["maxduration"] = 0;
+			["mapid"] = 34;
+			["mappos"] = "-7594/-6446/-379";
+			["maxduration"] = "1200";
 			["maxlvl"] = 80;
 			["minduration"] = 0;
 			["minlvl"] = 0;
-			["name"] = "I_Erase_Graffiti_III";
+			["name"] = "HQ_Help_The_Soundless";
 			["partysize"] = 0;
-			["priority"] = 48;
-			["radius"] = 0;
-			["type"] = "Interact";
-		};
-		[49] = {
-			["complete"] = true;
-			["cooldown"] = "0";
-			["customVars"] = {
-				["TM_TASK_HQType"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "540913";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "2526";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_subRegion"] = {
-					["type"] = "Field";
-					["value"] = "222";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 49;
-			["mapid"] = 15;
-			["mappos"] = "34395/21453/-557";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "10";
-			["name"] = "HQ_Help the citizens of Beetletun";
-			["partysize"] = 0;
-			["priority"] = 49;
+			["priority"] = 43;
 			["radius"] = "6000";
 			["type"] = "HeartQuest";
 		};
-		[50] = {
+		[44] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1901,7 +1637,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -1913,20 +1649,223 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 50;
-			["mapid"] = 15;
-			["mappos"] = "37242/21398/-840";
+			["id"] = 44;
+			["mapid"] = 34;
+			["mappos"] = "-15625/-1278/-669";
 			["maxduration"] = "0";
-			["maxlvl"] = 80;
+			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "10";
-			["name"] = "WP_Beetletun Waypoint";
+			["minlvl"] = 0;
+			["name"] = "POI_Naulshead_Refuge";
 			["partysize"] = 0;
-			["priority"] = 50;
+			["priority"] = 44;
 			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
-		[51] = {
+		[45] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 45;
+			["mapid"] = 34;
+			["mappos"] = "-15429/5288/-1395";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "POI_Hemlock_Coil";
+			["partysize"] = 0;
+			["priority"] = 45;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[46] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_HQType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "175347,43665,4946,8809,6187,246638,44316,";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "15030,21929,19078,4788,28857,4491,4580";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
+					["type"] = "Field";
+					["value"] = "270";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 46;
+			["mapid"] = 34;
+			["mappos"] = "-14695/3772/-1180";
+			["maxduration"] = "600";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_Tovar";
+			["partysize"] = 0;
+			["priority"] = 46;
+			["radius"] = "5000";
+			["type"] = "HeartQuest";
+		};
+		[47] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = 0;
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 47;
+			["mapid"] = 34;
+			["mappos"] = "-8821/-18903/-13";
+			["maxduration"] = "0";
+			["maxlvl"] = "9";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "Grindtolvl10";
+			["partysize"] = 0;
+			["priority"] = 47;
+			["radius"] = 0;
+			["type"] = "Grind";
+		};
+		[48] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_HQType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "43621,43620,43615,";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "9708,17054,17601,17328,10378";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
+					["value"] = "15";
+				};
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = "25";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
+					["type"] = "Field";
+					["value"] = "271";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 48;
+			["mapid"] = 34;
+			["mappos"] = "-5600/9914/-958";
+			["maxduration"] = "600";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_Zippti";
+			["partysize"] = 0;
+			["priority"] = 48;
+			["radius"] = "5000";
+			["type"] = "HeartQuest";
+		};
+		[49] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 49;
+			["mapid"] = 34;
+			["mappos"] = "-7643/6806/-1799";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "Movetovista";
+			["partysize"] = 0;
+			["priority"] = 49;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[50] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1936,18 +1875,53 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 51;
-			["mapid"] = 15;
-			["mappos"] = "37853/18823/-904";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
+			["id"] = 50;
+			["mapid"] = 34;
+			["mappos"] = "-6834/9088/-1915";
+			["maxduration"] = "180";
+			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "10";
-			["name"] = "Vista_Shire of Beetletun";
+			["minlvl"] = 0;
+			["name"] = "Vista_Ruins_of_Unseen";
 			["partysize"] = 0;
-			["priority"] = 51;
+			["priority"] = 50;
 			["radius"] = "0";
 			["type"] = "Vista";
+		};
+		[51] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 51;
+			["mapid"] = 34;
+			["mappos"] = "-3328/652/-138";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "WP_Mabon";
+			["partysize"] = 0;
+			["priority"] = 51;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
 		};
 		[52] = {
 			["complete"] = true;
@@ -1959,7 +1933,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -1967,80 +1941,88 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "0";
+					["value"] = "1";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 52;
-			["mapid"] = 15;
-			["mappos"] = "28882/10112/-1166";
-			["maxduration"] = "0";
+			["mapid"] = 34;
+			["mappos"] = "1289/-12158/-1224";
+			["maxduration"] = 0;
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "10";
-			["name"] = "POI_BeetletunFarms";
+			["minlvl"] = 0;
+			["name"] = "WP_Brigids";
 			["partysize"] = 0;
 			["priority"] = 52;
-			["radius"] = "0";
+			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
 		[53] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_usesTeleport"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
+				["TM_TASK_SPType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_conversationOrder"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "248502,44381";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "5045";
+				};
+				["TM_TASK_usableItemIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 53;
-			["mapid"] = 15;
-			["mappos"] = "15059/5934/-2036";
+			["mapid"] = 34;
+			["mappos"] = "5428/-10052/-1309";
 			["maxduration"] = 0;
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "10";
-			["name"] = "Vista_Krytan Freeholds";
+			["minlvl"] = 0;
+			["name"] = "SP_Patch_of_Ground";
 			["partysize"] = 0;
 			["priority"] = 53;
 			["radius"] = 0;
-			["type"] = "Vista";
+			["type"] = "Skillpoint";
 		};
 		[54] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = 0;
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 54;
-			["mapid"] = 15;
-			["mappos"] = "17611/5566/-1436";
+			["mapid"] = 34;
+			["mappos"] = "-489/-10915/-696";
 			["maxduration"] = 0;
-			["maxlvl"] = 80;
+			["maxlvl"] = "10";
 			["minduration"] = 0;
-			["minlvl"] = "10";
-			["name"] = "WP_Krytan";
+			["minlvl"] = 0;
+			["name"] = "Grindtolvl11";
 			["partysize"] = 0;
 			["priority"] = 54;
-			["radius"] = 0;
-			["type"] = "MoveTo Position";
+			["radius"] = "0";
+			["type"] = "Grind";
 		};
 		[55] = {
 			["complete"] = true;
@@ -2052,7 +2034,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -2065,19 +2047,54 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 55;
-			["mapid"] = 15;
-			["mappos"] = "18610/1223/-1432";
-			["maxduration"] = "0";
+			["mapid"] = 34;
+			["mappos"] = "18064/-10001/-896";
+			["maxduration"] = 0;
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "10";
-			["name"] = "POI_Monastery";
+			["minlvl"] = 0;
+			["name"] = "WP_Sperrins";
 			["partysize"] = 0;
 			["priority"] = 55;
-			["radius"] = "0";
+			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
 		[56] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 56;
+			["mapid"] = 34;
+			["mappos"] = "18010/-5501/-112";
+			["maxduration"] = 0;
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "POI_Zopatl_Grounds";
+			["partysize"] = 0;
+			["priority"] = 56;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[57] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2087,7 +2104,7 @@ local obj1 = {
 				};
 				["TM_TASK_enemyContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "44150,43494,232674";
+					["value"] = "390479";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
@@ -2095,7 +2112,7 @@ local obj1 = {
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "30562,18287,17401,8945";
+					["value"] = "7320,9090,30564,26735";
 				};
 				["TM_TASK_maxInteracts"] = {
 					["type"] = "Numeric";
@@ -2115,57 +2132,22 @@ local obj1 = {
 				};
 				["TM_TASK_subRegion"] = {
 					["type"] = "Field";
-					["value"] = "225";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 56;
-			["mapid"] = 15;
-			["mappos"] = "18578/20/-1434";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "10";
-			["name"] = "HQ_Keep the monastery";
-			["partysize"] = 0;
-			["priority"] = 56;
-			["radius"] = "7000";
-			["type"] = "HeartQuest";
-		};
-		[57] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
+					["value"] = "266";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 57;
-			["mapid"] = 15;
-			["mappos"] = "26540/1311/-1708";
-			["maxduration"] = 0;
+			["mapid"] = 34;
+			["mappos"] = "17765/-4302/13";
+			["maxduration"] = "600";
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "10";
-			["name"] = "POI_KrytanHoltland";
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_the_Atzinitli";
 			["partysize"] = 0;
 			["priority"] = 57;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
+			["radius"] = "5000";
+			["type"] = "HeartQuest";
 		};
 		[58] = {
 			["complete"] = true;
@@ -2177,7 +2159,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -2185,18 +2167,18 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "0";
+					["value"] = "1";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 58;
-			["mapid"] = 15;
-			["mappos"] = "30629/4010/-1171";
+			["mapid"] = 34;
+			["mappos"] = "15321/-422/1600";
 			["maxduration"] = "0";
-			["maxlvl"] = "80";
+			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "10";
-			["name"] = "WP_Tunwatch Redoubt Waypoint";
+			["minlvl"] = 0;
+			["name"] = "POI_Stormwreck_Deeps";
 			["partysize"] = 0;
 			["priority"] = 58;
 			["radius"] = "0";
@@ -2206,79 +2188,59 @@ local obj1 = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = 0;
+				["TM_TASK_usesTeleport"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 59;
-			["mapid"] = 15;
-			["mappos"] = "31665/765/-1892";
-			["maxduration"] = 0;
-			["maxlvl"] = "11";
+			["mapid"] = 34;
+			["mappos"] = "9705/-2120/-1002";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "Grindtolvl12";
+			["minlvl"] = 0;
+			["name"] = "Vista_Ventry_Bay";
 			["partysize"] = 0;
 			["priority"] = 59;
-			["radius"] = "0";
-			["type"] = "Grind";
+			["radius"] = 0;
+			["type"] = "Vista";
 		};
 		[60] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_HQType"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "43494,232674,43492,478444";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "44575";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["type"] = "Numeric";
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
 					["value"] = "0";
 				};
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
 					["value"] = "0";
 				};
-				["TM_TASK_pickupSkillID"] = {
-					["type"] = "Field";
-					["value"] = "";
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
 				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_subRegion"] = {
-					["type"] = "Field";
-					["value"] = "221";
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 60;
-			["mapid"] = 15;
-			["mappos"] = "37618/-5845/-2887";
+			["mapid"] = 34;
+			["mappos"] = "-16907/13554/-1591";
 			["maxduration"] = "0";
-			["maxlvl"] = "80";
+			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "12";
-			["name"] = "HQ_Protect Beetletun farmers";
+			["minlvl"] = 0;
+			["name"] = "WP_Town_of_Cathal";
 			["partysize"] = 0;
 			["priority"] = 60;
-			["radius"] = "15000";
-			["type"] = "HeartQuest";
+			["radius"] = "0";
+			["type"] = "MoveTo Position";
 		};
 		[61] = {
 			["complete"] = true;
@@ -2290,7 +2252,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -2298,24 +2260,47 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "0";
+					["value"] = "1";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 61;
-			["mapid"] = 15;
-			["mappos"] = "39667/-5355/-3057";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
+			["mapid"] = 34;
+			["mappos"] = "-8564/17376/-2197";
+			["maxduration"] = 0;
+			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "12";
-			["name"] = "POI_Salmas Heath";
+			["minlvl"] = 0;
+			["name"] = "WP_Caledon_Haven";
 			["partysize"] = 0;
 			["priority"] = 61;
-			["radius"] = "0";
+			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
 		[62] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_usesTeleport"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 62;
+			["mapid"] = 34;
+			["mappos"] = "-6696/17679/-2692";
+			["maxduration"] = "600";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "Vista_Caledon_Haven";
+			["partysize"] = 0;
+			["priority"] = 62;
+			["radius"] = 0;
+			["type"] = "Vista";
+		};
+		[63] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2325,7 +2310,42 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
 					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 63;
+			["mapid"] = 34;
+			["mappos"] = "2994/19488/-2461";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "POI_Hanto_Trading_Post";
+			["partysize"] = 0;
+			["priority"] = 63;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[64] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -2337,139 +2357,41 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 62;
-			["mapid"] = 15;
-			["mappos"] = "29861/-7230/-3625";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "12";
-			["name"] = "POI_Orlaf Escarpments";
-			["partysize"] = 0;
-			["priority"] = 62;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
-		};
-		[63] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = 0;
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 63;
-			["mapid"] = 15;
-			["mappos"] = "28762/-817/-2699";
-			["maxduration"] = 0;
-			["maxlvl"] = "12";
-			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "Grindtolvl13";
-			["partysize"] = 0;
-			["priority"] = 63;
-			["radius"] = "8000";
-			["type"] = "Grind";
-		};
-		[64] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_HQType"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "43494,232674,43492";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_maxInteracts"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = "0";
-				};
-				["TM_TASK_pickupSkillID"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_pickupTargetIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_subRegion"] = {
-					["type"] = "Field";
-					["value"] = "223";
-				};
-			};
-			["enabled"] = "1";
 			["id"] = 64;
-			["mapid"] = 15;
-			["mappos"] = "33263/-20301/-2238";
+			["mapid"] = 34;
+			["mappos"] = "4906/19920/-2801";
 			["maxduration"] = "0";
 			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "12";
-			["name"] = "HQ_Unite the ettins";
+			["minlvl"] = 0;
+			["name"] = "MovetoVista";
 			["partysize"] = 0;
 			["priority"] = 64;
-			["radius"] = "3000";
-			["type"] = "HeartQuest";
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
 		};
 		[65] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_SPType"] = {
-					["type"] = "ComboBox";
-					["value"] = "Commune";
-				};
-				["TM_TASK_conversationOrder"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "243782";
-				};
-				["TM_TASK_usableItemIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
+				["TM_TASK_usesTeleport"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 65;
-			["mapid"] = 15;
-			["mappos"] = "35157/-20316/-2289";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
+			["mapid"] = 34;
+			["mappos"] = "6640/17531/-1261";
+			["maxduration"] = "600";
+			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "13";
-			["name"] = "SP_Tamini Place of Power";
+			["minlvl"] = 0;
+			["name"] = "Vista_Hanto";
 			["partysize"] = 0;
 			["priority"] = 65;
-			["radius"] = "0";
-			["type"] = "Skillpoint";
+			["radius"] = 0;
+			["type"] = "Vista";
 		};
 		[66] = {
 			["complete"] = true;
@@ -2481,7 +2403,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -2489,21 +2411,21 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "0";
+					["value"] = "1";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 66;
-			["mapid"] = 15;
-			["mappos"] = "27561/-23441/-2281";
-			["maxduration"] = "0";
+			["mapid"] = 34;
+			["mappos"] = "8620/20404/-373";
+			["maxduration"] = "600";
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "12";
-			["name"] = "POI_Taminn Footholds";
+			["minlvl"] = 0;
+			["name"] = "POI_Hazupl_Grounds";
 			["partysize"] = 0;
 			["priority"] = 66;
-			["radius"] = "0";
+			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
 		[67] = {
@@ -2516,7 +2438,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -2524,38 +2446,34 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 67;
-			["mapid"] = 15;
-			["mappos"] = "37895/21536/-953";
-			["maxduration"] = 0;
+			["mapid"] = 34;
+			["mappos"] = "14025/9512/-702";
+			["maxduration"] = "0";
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "MovetoSPBeetle";
+			["minlvl"] = 0;
+			["name"] = "WP_Titans_Staircase";
 			["partysize"] = 0;
 			["priority"] = 67;
-			["radius"] = "0";
+			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
 		[68] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_SPType"] = {
+				["TM_TASK_HQType"] = {
 					["type"] = "ComboBox";
 					["value"] = "Interact&Kill";
 				};
-				["TM_TASK_conversationOrder"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
 				["TM_TASK_enemyContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "267540";
+					["value"] = "512631,536450,390479";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
@@ -2563,69 +2481,50 @@ local obj1 = {
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "267540";
+					["value"] = "";
 				};
-				["TM_TASK_usableItemIDs"] = {
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
+				["TM_TASK_pickupSkillID"] = {
 					["type"] = "Field";
 					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
+					["type"] = "Field";
+					["value"] = "264";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 68;
-			["mapid"] = 15;
-			["mappos"] = "39980/22901/-1084";
-			["maxduration"] = 0;
+			["mapid"] = 34;
+			["mappos"] = "16328/12840/-24";
+			["maxduration"] = "0";
 			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "13";
-			["name"] = "SP_Beetletun";
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_Yoal";
 			["partysize"] = 0;
 			["priority"] = 68;
-			["radius"] = 0;
-			["type"] = "Skillpoint";
+			["radius"] = "10000";
+			["type"] = "HeartQuest";
 		};
 		[69] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 69;
-			["mapid"] = 15;
-			["mappos"] = "-7565/12254/-1133";
-			["maxduration"] = 0;
-			["maxlvl"] = 80;
-			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "MoveToSPScavenger";
-			["partysize"] = 0;
-			["priority"] = 69;
-			["radius"] = 0;
-			["type"] = "MoveTo Position";
-		};
-		[70] = {
-			["complete"] = true;
-			["cooldown"] = "0";
-			["customVars"] = {
 				["TM_TASK_SPType"] = {
 					["type"] = "ComboBox";
-					["value"] = "Commune";
+					["value"] = "Interact&Kill";
 				};
 				["TM_TASK_conversationOrder"] = {
 					["type"] = "Field";
@@ -2633,7 +2532,7 @@ local obj1 = {
 				};
 				["TM_TASK_enemyContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "";
+					["value"] = "283752";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
@@ -2641,7 +2540,7 @@ local obj1 = {
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "19445";
+					["value"] = "283752";
 				};
 				["TM_TASK_usableItemIDs"] = {
 					["type"] = "Field";
@@ -2649,34 +2548,88 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 70;
-			["mapid"] = 15;
-			["mappos"] = "-5636/6384/-1272";
+			["id"] = 69;
+			["mapid"] = 34;
+			["mappos"] = "21696/9054/-763";
 			["maxduration"] = "0";
 			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "13";
-			["name"] = "SP_Scaver Plateau";
+			["minlvl"] = 0;
+			["name"] = "SP_Swift_Arrow";
 			["partysize"] = 0;
-			["priority"] = 70;
+			["priority"] = 69;
 			["radius"] = "0";
 			["type"] = "Skillpoint";
+		};
+		[70] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = 0;
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 70;
+			["mapid"] = 34;
+			["mappos"] = "9872/17443/6";
+			["maxduration"] = "0";
+			["maxlvl"] = "12";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "Grindtolvl13";
+			["partysize"] = 0;
+			["priority"] = 70;
+			["radius"] = 0;
+			["type"] = "Grind";
 		};
 		[71] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_SPType"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 71;
+			["mapid"] = 34;
+			["mappos"] = "17898/23653/3620";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "POI_Soggorsort";
+			["partysize"] = 0;
+			["priority"] = 71;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[72] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_HQType"] = {
 					["type"] = "ComboBox";
 					["value"] = "Interact&Kill";
 				};
-				["TM_TASK_conversationOrder"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
 				["TM_TASK_enemyContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "45413";
+					["value"] = "";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
@@ -2684,28 +2637,44 @@ local obj1 = {
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "45413";
+					["value"] = "";
 				};
-				["TM_TASK_usableItemIDs"] = {
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
+					["value"] = 0;
+				};
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = 0;
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
 					["type"] = "Field";
 					["value"] = "";
 				};
 			};
-			["enabled"] = "1";
-			["id"] = 71;
-			["mapid"] = 15;
-			["mappos"] = "1358/6887/-2325";
-			["maxduration"] = 0;
+			["enabled"] = "0";
+			["id"] = 72;
+			["mapid"] = "";
+			["mappos"] = "";
+			["maxduration"] = "0";
 			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "13";
-			["name"] = "SP_Chhk the Windmill King";
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_Fisher_Leudap";
 			["partysize"] = 0;
-			["priority"] = 71;
-			["radius"] = 0;
-			["type"] = "Skillpoint";
+			["priority"] = 72;
+			["radius"] = "9500";
+			["type"] = "HeartQuest";
 		};
-		[72] = {
+		[73] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2715,7 +2684,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -2727,108 +2696,53 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 72;
-			["mapid"] = 15;
-			["mappos"] = "-28170/-5745/-834";
+			["id"] = 73;
+			["mapid"] = 34;
+			["mappos"] = "8112/32758/-407";
 			["maxduration"] = 0;
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "MovetoSPBandit";
-			["partysize"] = 0;
-			["priority"] = 72;
-			["radius"] = 0;
-			["type"] = "MoveTo Position";
-		};
-		[73] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_SPType"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
-				};
-				["TM_TASK_conversationOrder"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "43469,301457";
-				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "135270912";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "240811";
-				};
-				["TM_TASK_usableItemIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 73;
-			["mapid"] = 15;
-			["mappos"] = "-29312/-3945/-1338";
-			["maxduration"] = "0";
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = "13";
-			["name"] = "SP_Bandit Loot";
+			["minlvl"] = 0;
+			["name"] = "WP_Hamlet_of_Annwen";
 			["partysize"] = 0;
 			["priority"] = 73;
-			["radius"] = "0";
-			["type"] = "Skillpoint";
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
 		};
 		[74] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_SPType"] = {
-					["type"] = "ComboBox";
-					["value"] = "Interact&Kill";
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
 				};
-				["TM_TASK_conversationOrder"] = {
-					["type"] = "Field";
-					["value"] = "22";
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
 				};
-				["TM_TASK_enemyContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "";
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
 				};
-				["TM_TASK_interactContentID2s"] = {
-					["type"] = "Field";
-					["value"] = "135270400";
-				};
-				["TM_TASK_interactContentIDs"] = {
-					["type"] = "Field";
-					["value"] = "26991";
-				};
-				["TM_TASK_usableItemIDs"] = {
-					["type"] = "Field";
-					["value"] = "22375";
-				};
-				["TM_TASK_waitingTime"] = {
-					["type"] = "Field";
-					["value"] = "";
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
 			["id"] = 74;
-			["mapid"] = 15;
-			["mappos"] = "-40814/-4799/-2805";
+			["mapid"] = 34;
+			["mappos"] = "16933/33444/-71";
 			["maxduration"] = 0;
 			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "13";
-			["name"] = "SP_Take a Glob";
+			["minlvl"] = 0;
+			["name"] = "POI_Morgatl_Grounds";
 			["partysize"] = 0;
 			["priority"] = 74;
-			["radius"] = "0";
-			["type"] = "Skillpoint";
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
 		};
 		[75] = {
 			["complete"] = true;
@@ -2840,7 +2754,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -2853,13 +2767,13 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 75;
-			["mapid"] = 15;
-			["mappos"] = "2898/-11490/-1090";
-			["maxduration"] = 0;
-			["maxlvl"] = 80;
+			["mapid"] = 34;
+			["mappos"] = "11524/40795/-344";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "MoveToWP";
+			["minlvl"] = 0;
+			["name"] = "WP_Kraitbane_haven";
 			["partysize"] = 0;
 			["priority"] = 75;
 			["radius"] = 0;
@@ -2875,7 +2789,7 @@ local obj1 = {
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 				["TM_TASK_smoothTurns"] = {
 					["type"] = "CheckBox";
@@ -2888,52 +2802,60 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 76;
-			["mapid"] = 15;
-			["mappos"] = "13095/-24613/-270";
-			["maxduration"] = "0";
+			["mapid"] = 34;
+			["mappos"] = "19307/39254/1293";
+			["maxduration"] = 0;
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "13";
-			["name"] = "WP_Godslost Swamp";
+			["minlvl"] = 0;
+			["name"] = "POI_Slavers_Deeps";
 			["partysize"] = 0;
 			["priority"] = 76;
-			["radius"] = 0;
+			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
 		[77] = {
-			["complete"] = true;
+			["complete"] = false;
 			["cooldown"] = 0;
 			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
+				["TM_TASK_SPType"] = {
+					["type"] = "ComboBox";
+					["value"] = "";
 				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
+				["TM_TASK_conversationOrder"] = {
+					["type"] = "Field";
+					["value"] = "";
 				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
 				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_usableItemIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
 				};
 			};
-			["enabled"] = "1";
+			["enabled"] = "0";
 			["id"] = 77;
-			["mapid"] = 15;
-			["mappos"] = "11108/-12840/18";
-			["maxduration"] = "0";
+			["mapid"] = "";
+			["mappos"] = "";
+			["maxduration"] = 0;
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "13";
-			["name"] = "POI_Godslost Swamp";
+			["minlvl"] = 0;
+			["name"] = "SP_Slavers_Deeps";
 			["partysize"] = 0;
 			["priority"] = 77;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
+			["radius"] = 0;
+			["type"] = "Skillpoint";
 		};
 		[78] = {
 			["complete"] = true;
@@ -2946,89 +2868,19 @@ local obj1 = {
 			};
 			["enabled"] = "1";
 			["id"] = 78;
-			["mapid"] = 15;
-			["mappos"] = "11518/-11686/-1198";
-			["maxduration"] = "0";
-			["maxlvl"] = 80;
+			["mapid"] = 34;
+			["mappos"] = "13042/38083/-1936";
+			["maxduration"] = "600";
+			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "13";
-			["name"] = "Vista_Godslost Swamp";
+			["minlvl"] = 0;
+			["name"] = "Vista_Kraitbane_haven";
 			["partysize"] = 0;
 			["priority"] = 78;
-			["radius"] = "0";
+			["radius"] = 0;
 			["type"] = "Vista";
 		};
 		[79] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 79;
-			["mapid"] = 15;
-			["mappos"] = "17557/-10779/-44";
-			["maxduration"] = "0";
-			["maxlvl"] = 80;
-			["minduration"] = 0;
-			["minlvl"] = "13";
-			["name"] = "POI_Godslost Swamp2";
-			["partysize"] = 0;
-			["priority"] = 79;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
-		};
-		[80] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 80;
-			["mapid"] = 15;
-			["mappos"] = "20626/-10645/-76";
-			["maxduration"] = "0";
-			["maxlvl"] = 80;
-			["minduration"] = 0;
-			["minlvl"] = "13";
-			["name"] = "WP_godslostSwamp";
-			["partysize"] = 0;
-			["priority"] = 80;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
-		};
-		[81] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -3038,7 +2890,7 @@ local obj1 = {
 				};
 				["TM_TASK_enemyContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "544,193445,43942,43954,9198,8944";
+					["value"] = "390479,536450,512631";
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
@@ -3046,7 +2898,190 @@ local obj1 = {
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "43455";
+					["value"] = "";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
+					["value"] = 0;
+				};
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
+					["type"] = "Field";
+					["value"] = "267";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 79;
+			["mapid"] = 34;
+			["mappos"] = "17874/42440/-96";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_Lionguard_Hester";
+			["partysize"] = 0;
+			["priority"] = 79;
+			["radius"] = "7500";
+			["type"] = "HeartQuest";
+		};
+		[80] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = 0;
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 80;
+			["mapid"] = 34;
+			["mappos"] = "10406/43274/11";
+			["maxduration"] = 0;
+			["maxlvl"] = "13";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "Grindtolvl14";
+			["partysize"] = 0;
+			["priority"] = 80;
+			["radius"] = "10000";
+			["type"] = "Grind";
+		};
+		[81] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 81;
+			["mapid"] = 34;
+			["mappos"] = "-2943/33647/-654";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "WP_Lionguard_Waystation";
+			["partysize"] = 0;
+			["priority"] = 81;
+			["radius"] = "0";
+			["type"] = "MoveTo Position";
+		};
+		[82] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 82;
+			["mapid"] = 34;
+			["mappos"] = "-13498/27592/-168";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "WP_Falias_Thorp";
+			["partysize"] = 0;
+			["priority"] = 82;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[83] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 83;
+			["mapid"] = 34;
+			["mappos"] = "-16890/20516/-15";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "POI_Dengatl_Grounds";
+			["partysize"] = 0;
+			["priority"] = 83;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[84] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_HQType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "43670,246638";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "17561,26871";
 				};
 				["TM_TASK_maxInteracts"] = {
 					["type"] = "Numeric";
@@ -3066,24 +3101,227 @@ local obj1 = {
 				};
 				["TM_TASK_subRegion"] = {
 					["type"] = "Field";
-					["value"] = "224";
+					["value"] = "272";
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 81;
-			["mapid"] = 15;
-			["mappos"] = "13712/-8581/-71";
-			["maxduration"] = "1000";
+			["id"] = 84;
+			["mapid"] = 34;
+			["mappos"] = "-13898/32120/26";
+			["maxduration"] = "600";
 			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = "13";
-			["name"] = "HQ_Help historian Garrod";
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_the_Wardens";
 			["partysize"] = 0;
-			["priority"] = 81;
+			["priority"] = 84;
+			["radius"] = "5000";
+			["type"] = "HeartQuest";
+		};
+		[85] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 85;
+			["mapid"] = 34;
+			["mappos"] = "-12738/38087/-330";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "POI_Banshees_Kenn";
+			["partysize"] = 0;
+			["priority"] = 85;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[86] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 86;
+			["mapid"] = 34;
+			["mappos"] = "-15569/38345/-28";
+			["maxduration"] = "0";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "WP_Twilight_Arbor";
+			["partysize"] = 0;
+			["priority"] = 86;
+			["radius"] = "0";
+			["type"] = "MoveTo Position";
+		};
+		[87] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_SPType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_conversationOrder"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "520490,43655";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "7367";
+				};
+				["TM_TASK_usableItemIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 87;
+			["mapid"] = 34;
+			["mappos"] = "-14611/40884/-633";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "SP_Powerfull_Darkness";
+			["partysize"] = 0;
+			["priority"] = 87;
+			["radius"] = "0";
+			["type"] = "Skillpoint";
+		};
+		[88] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 88;
+			["mapid"] = 34;
+			["mappos"] = "-18018/44981/-248";
+			["maxduration"] = "0";
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "WP_Wychmire";
+			["partysize"] = 0;
+			["priority"] = 88;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[89] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_HQType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Interact&Kill";
+				};
+				["TM_TASK_enemyContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "370446";
+				};
+				["TM_TASK_interactContentID2s"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_interactContentIDs"] = {
+					["type"] = "Field";
+					["value"] = "9482,16113,13557,18704,17227,26870,2342";
+				};
+				["TM_TASK_maxInteracts"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = "0";
+				};
+				["TM_TASK_pickupSkillID"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_pickupTargetIDs"] = {
+					["type"] = "Field";
+					["value"] = "";
+				};
+				["TM_TASK_subRegion"] = {
+					["type"] = "Field";
+					["value"] = "273";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 89;
+			["mapid"] = 34;
+			["mappos"] = "-11748/44294/-97";
+			["maxduration"] = "600";
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "HQ_Help_Lionguard_Cern";
+			["partysize"] = 0;
+			["priority"] = 89;
 			["radius"] = "8000";
 			["type"] = "HeartQuest";
 		};
-		[82] = {
+		[90] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -3093,16 +3331,16 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 82;
-			["mapid"] = 15;
-			["mappos"] = "30175/-3084/-2598";
+			["id"] = 90;
+			["mapid"] = 34;
+			["mappos"] = "-8684/38453/15";
 			["maxduration"] = "0";
 			["maxlvl"] = "14";
 			["minduration"] = 0;
-			["minlvl"] = "0";
+			["minlvl"] = 0;
 			["name"] = "Grindtolvl15";
 			["partysize"] = 0;
-			["priority"] = 82;
+			["priority"] = 90;
 			["radius"] = "0";
 			["type"] = "Grind";
 		};
