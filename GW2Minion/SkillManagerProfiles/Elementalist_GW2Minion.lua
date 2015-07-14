@@ -3,8 +3,6 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
-	["combos"] = {
-	};
 	["name"] = "GW2Minion";
 	["profession"] = 6;
 	["professionSettings"] = {
@@ -12,79 +10,22 @@ local obj1 = {
 			["attunement_1"] = "Fire";
 			["attunement_2"] = "Air";
 			["attunement_3"] = "Earth";
-			["attunement_4"] = "Water";
+			["attunement_4"] = "None";
 		};
 		["engineer"] = {
-			["kit"] = "None";
 		};
 	};
 	["skills"] = {
 		[1] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 70;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 21656;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Arcane Brilliance";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[2] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
+				["combatState"] = "InCombat";
 				["minHP"] = 80;
-				["minPower"] = 0;
 			};
+			["priority"] = 1;
 			["skill"] = {
 				["castOnSelf"] = "1";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 5503;
-				["lastSkillID"] = "";
 				["los"] = "0";
 				["maxRange"] = 0;
 				["minRange"] = 0;
@@ -92,131 +33,20 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 6;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[3] = {
+		[2] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 75;
-				["minPower"] = 0;
+				["minHP"] = 95;
 			};
+			["priority"] = 2;
 			["skill"] = {
 				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 22012;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Antitoxin Spray";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[4] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 70;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5569;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Glyph of Elemental Harmony";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[5] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 85;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 5507;
-				["lastSkillID"] = "";
 				["los"] = "0";
 				["maxRange"] = 0;
 				["minRange"] = 0;
@@ -224,4796 +54,1608 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 6;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+			};
+		};
+		[3] = {
+			["player"] = {
+				["minHP"] = 70;
+			};
+			["priority"] = 3;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5569;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Glyph of Elemental Harmony";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 6;
+			["target"] = {
+			};
+		};
+		[4] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 75;
+			};
+			["priority"] = 4;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 21656;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Arcane Brilliance";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 6;
+			["target"] = {
+			};
+		};
+		[5] = {
+			["player"] = {
+				["combatState"] = "Either";
+				["minHP"] = 20;
+			};
+			["priority"] = 5;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 10700;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Leave Transform";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 10;
+			["target"] = {
 			};
 		};
 		[6] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 20;
-				["minPower"] = 0;
+				["conditionCount"] = 1;
+				["minHP"] = 0;
 			};
+			["priority"] = 6;
 			["skill"] = {
 				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5554;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Mist Form";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[7] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 2;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5535;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Cleansing Fire";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[8] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 70;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5641;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Arcane Shield";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[9] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 80;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5639;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Armor of Earth";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[10] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5762;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Renewal of Fire";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Character";
-			};
-		};
-		[11] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5678;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Fire Shield";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[12] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 1175;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Bandage";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[13] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5682;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Windborne Speed";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[14] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 80;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5521;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Obsidian Flesh";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[15] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5685;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Magnetic Aura";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[16] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5527;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Shocking Aura";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[17] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5530;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Swirling Winds";
-				["radius"] = 400;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[18] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5695;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Rock Barrier";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-				["stopsMovement"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[19] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 80;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5551;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Healing Rain";
-				["radius"] = 360;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-				["stopsMovement"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[20] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 75;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5681;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Geyser";
-				["radius"] = 180;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[21] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5516;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Conjure Fiery Greatsword";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[22] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 25492;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["los"] = "0";
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Crashing Waves";
 				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 10;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["hasNotBuffs"] = "1122,906,905\
+";
 			};
 		};
-		[23] = {
+		[7] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 7;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 25480;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Shocking Bolt";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[24] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["castOnSelf"] = "1";
 				["groundTargeted"] = "0";
 				["id"] = 25499;
-				["lastSkillID"] = "";
 				["los"] = "1";
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Flame Barrage";
 				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 10;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[25] = {
+		[8] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
+				["minHP"] = 10;
 			};
+			["priority"] = 8;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 25498;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Stomp";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[26] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 25489;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Glyph of Elementals";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[27] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 25490;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Glyph of Elementals";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[28] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 25491;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Glyph of Elementals";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[29] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 60;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5534;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Tornado";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[30] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 25488;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Glyph of Elementals";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 2;
-				["enemyRangeMax"] = 500;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[31] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5539;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1500;
-				["minRange"] = 0;
-				["name"] = "Arcane Blast";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[32] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["castOnSelf"] = "1";
 				["groundTargeted"] = "1";
-				["id"] = 5540;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Conjure Flame Axe";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[33] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5546;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Conjure Earth Shield";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[34] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5624;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Conjure Lightning Hammer";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[35] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5567;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Conjure Frost Bow";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[36] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5536;
-				["lastSkillID"] = "";
+				["id"] = 5762;
 				["los"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Lightning Flash";
-				["radius"] = 0;
+				["name"] = "Renewal of Fire";
+				["radius"] = 180;
 				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
+				["slowCast"] = "1";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[37] = {
+		[9] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5638;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Arcane Wave";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
+				["hasBuffs"] = "872,833";
 				["maxHP"] = 0;
 				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
-		};
-		[38] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 30;
-				["minPower"] = 0;
-			};
+			["priority"] = 9;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5542;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Signet of Fire";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 5;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Character";
-			};
-		};
-		[39] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 30;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["castOnSelf"] = "1";
 				["groundTargeted"] = "0";
 				["id"] = 5572;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
+				["los"] = "0";
+				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Signet of Air";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
+				["setRange"] = "0";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 5;
 				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Character";
 			};
 		};
-		[40] = {
+		[10] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
+			};
+			["priority"] = 10;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 5761;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Renewal of Earth";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 8;
+			["target"] = {
+				["enemyNearCount"] = 0;
+				["enemyRangeMax"] = 0;
+			};
+		};
+		[11] = {
+			["player"] = {
 				["combatState"] = "InCombat";
 				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 30;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5571;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Signet of Earth";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 5;
+				["hasBuffs"] = "872,833";
 				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Character";
+			};
+			["priority"] = 11;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5639;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Armor of Earth";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
 			};
 		};
-		[41] = {
+		[12] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
+				["allyDownedNearCount"] = 1;
+				["allyDownedRangeMax"] = 900;
+			};
+			["priority"] = 12;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 24410;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Renewal of Water";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[13] = {
+			["player"] = {
+				["allyDownedNearCount"] = 1;
+				["allyDownedRangeMax"] = 900;
+			};
+			["priority"] = 13;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 24407;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Renewal of Fire";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[14] = {
+			["player"] = {
+				["combatState"] = "OutCombat";
+				["hasNotBuffs"] = "719";
+				["minHP"] = 0;
+				["moving"] = "Moving";
+			};
+			["priority"] = 14;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5554;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Mist Form";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[15] = {
+			["player"] = {
+			};
+			["priority"] = 15;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 5763;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Renewal of Water";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 8;
+			["target"] = {
+			};
+		};
+		[16] = {
+			["player"] = {
+			};
+			["priority"] = 16;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 5760;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Renewal of Air";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 8;
+			["target"] = {
+			};
+		};
+		[17] = {
+			["player"] = {
 				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 30;
-				["minPower"] = 0;
+				["minHP"] = 0;
 			};
+			["priority"] = 17;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5570;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Signet of Water";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 5;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Character";
-			};
-		};
-		[42] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 25478;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Windborne Speed";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[43] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 25500;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Flame Burst";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[44] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 25476;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Frozen Ground";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[45] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["castOnSelf"] = "1";
 				["groundTargeted"] = "0";
 				["id"] = 5635;
-				["lastSkillID"] = "";
 				["los"] = "1";
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Arcane Power";
 				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 8;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["type"] = "Character";
 			};
 		};
-		[46] = {
+		[18] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
+				["combatState"] = "InCombat";
+				["minHP"] = 40;
+				["moving"] = "Either";
 			};
+			["priority"] = 18;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["castOnSelf"] = "1";
 				["groundTargeted"] = "0";
-				["id"] = 25494;
-				["lastSkillID"] = "";
+				["id"] = 5554;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Mist Form";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[19] = {
+			["player"] = {
+				["conditionCount"] = 2;
+			};
+			["priority"] = 19;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5535;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Cleansing Fire";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[20] = {
+			["player"] = {
+				["hasNotBuffs"] = "";
+				["moving"] = "Moving";
+			};
+			["priority"] = 20;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 25478;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Windborne Speed";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[21] = {
+			["player"] = {
+				["allyDownedNearCount"] = 1;
+				["allyDownedRangeMax"] = 900;
+			};
+			["priority"] = 21;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 24409;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Renewal of Air";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[22] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["conditionCount"] = 0;
+				["minHP"] = 80;
+			};
+			["priority"] = 22;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5639;
 				["los"] = "1";
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Enervating Punch";
+				["name"] = "Armor of Earth";
 				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[47] = {
+		[23] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
 				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
+				["hasBuffs"] = "872,833";
 			};
+			["priority"] = 23;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["castOnSelf"] = "1";
 				["groundTargeted"] = "0";
 				["id"] = 5506;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["los"] = "0";
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Glyph of Elemental Power";
 				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
+			};
+		};
+		[24] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 60;
+			};
+			["priority"] = 24;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5641;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Arcane Shield";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 9;
+			["target"] = {
+			};
+		};
+		[25] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 25;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5506;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Glyph of Elemental Power";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[26] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 26;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5695;
+				["los"] = "1";
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Rock Barrier";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[27] = {
+			["player"] = {
+			};
+			["priority"] = 27;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 5610;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Steam Vent";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[28] = {
+			["player"] = {
+				["conditionCount"] = 1;
 				["minHP"] = 0;
-				["moving"] = "Either";
+			};
+			["priority"] = 28;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5558;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Cleansing Wave";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[29] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["conditionCount"] = 0;
+				["minHP"] = 50;
+			};
+			["priority"] = 29;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5521;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Obsidian Flesh";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[30] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 70;
+			};
+			["priority"] = 30;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5678;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Fire Shield";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[31] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 90;
+			};
+			["priority"] = 31;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5558;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Cleansing Wave";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[32] = {
+			["player"] = {
+				["conditionCount"] = 2;
+			};
+			["priority"] = 32;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5555;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Magnetic Wave";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[33] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["conditionCount"] = 1;
+				["minHP"] = 90;
+			};
+			["priority"] = 33;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 5551;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Healing Rain";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[34] = {
+			["player"] = {
+			};
+			["priority"] = 34;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 1175;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Bandage";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[35] = {
+			["player"] = {
+				["moving"] = "Moving";
+			};
+			["priority"] = 35;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5682;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Windborne Speed";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[36] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 36;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5685;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Magnetic Aura";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[37] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 37;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5520;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Frost Aura";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 4;
+			["target"] = {
 				["type"] = "Either";
+			};
+		};
+		[38] = {
+			["player"] = {
+			};
+			["priority"] = 38;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["delay"] = 5000;
+				["groundTargeted"] = "0";
+				["id"] = 5614;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Detonate";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 3;
+			["target"] = {
+				["enemyNearCount"] = 1;
+				["enemyRangeMax"] = 600;
+			};
+		};
+		[39] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 90;
+			};
+			["priority"] = 39;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 5510;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Water Trident";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[40] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 40;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5527;
+				["los"] = "1";
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Shocking Aura";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[41] = {
+			["player"] = {
+				["minHP"] = 85;
+			};
+			["priority"] = 41;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 5681;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Geyser";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[42] = {
+			["player"] = {
+			};
+			["priority"] = 42;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5564;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Vapor Form";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[43] = {
+			["player"] = {
+				["minHP"] = 0;
+			};
+			["priority"] = 43;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5746;
+				["lastSkillID"] = 21646;
+				["maxRange"] = 450;
+				["minRange"] = 0;
+				["name"] = "Crippling Shield";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[44] = {
+			["player"] = {
+			};
+			["priority"] = 44;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5728;
+				["lastSkillID"] = 5727;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Thunderclap";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[45] = {
+			["player"] = {
+			};
+			["priority"] = 45;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5727;
+				["lastSkillID"] = 5726;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Static Swing";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[46] = {
+			["player"] = {
+			};
+			["priority"] = 46;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 21646;
+				["lastSkillID"] = 5621;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Shield Smash";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[47] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["conditionCount"] = 2;
+			};
+			["priority"] = 47;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5493;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Water Attunement";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 14;
+			["target"] = {
+				["conditionCount"] = 0;
 			};
 		};
 		[48] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
+				["combatState"] = "OutCombat";
+				["moving"] = "Moving";
 			};
+			["priority"] = 48;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5736;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 5494;
+				["los"] = "0";
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Firestorm";
-				["radius"] = 240;
+				["name"] = "Air Attunement";
+				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 15;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[49] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
 				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 49;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5735;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
+				["groundTargeted"] = "0";
+				["id"] = 25488;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Ice Storm";
-				["radius"] = 240;
-				["setRange"] = "0";
+				["name"] = "Glyph of Elementals";
+				["radius"] = 0;
+				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 10;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["type"] = "Character";
 			};
 		};
 		[50] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 50;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["id"] = 5737;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
+				["id"] = 5516;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Lightning Storm";
-				["radius"] = 240;
-				["setRange"] = "0";
+				["name"] = "Conjure Fiery Greatsword";
+				["radius"] = 150;
+				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 10;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[51] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 51;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5738;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
+				["groundTargeted"] = "0";
+				["id"] = 25490;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Sandstorm";
-				["radius"] = 240;
-				["setRange"] = "0";
+				["name"] = "Glyph of Elementals";
+				["radius"] = 0;
+				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 10;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[52] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 52;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 25495;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
+				["id"] = 25489;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Glyph of Lesser Elementals";
+				["name"] = "Glyph of Elementals";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 10;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["type"] = "Character";
 			};
 		};
 		[53] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 53;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 25486;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
+				["id"] = 25491;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Glyph of Lesser Elementals";
+				["name"] = "Glyph of Elementals";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 10;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[54] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 54;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 25487;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
+				["id"] = 5602;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Glyph of Lesser Elementals";
+				["name"] = "Whirlpool";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 10;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["type"] = "Character";
 			};
 		};
 		[55] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 55;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 25497;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
+				["id"] = 25498;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Glyph of Lesser Elementals";
+				["name"] = "Stomp";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
+				["setRange"] = "1";
 			};
+			["slot"] = 10;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[56] = {
 			["player"] = {
-				["allyNearCount"] = 1;
-				["allyRangeMax"] = 900;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 56;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5760;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
+				["groundTargeted"] = "0";
+				["id"] = 25480;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Renewal of Air";
-				["radius"] = 180;
+				["name"] = "Shocking Bolt";
+				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "1";
 			};
+			["slot"] = 10;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "NotMoving";
+				["hasNotBuffs"] = "1122,906,905";
 				["type"] = "Character";
 			};
 		};
 		[57] = {
 			["player"] = {
-				["allyNearCount"] = 1;
-				["allyRangeMax"] = 900;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 57;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5761;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
+				["groundTargeted"] = "0";
+				["id"] = 5534;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Renewal of Earth";
-				["radius"] = 360;
+				["name"] = "Tornado";
+				["radius"] = 240;
 				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "1";
 			};
+			["slot"] = 10;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "NotMoving";
-				["type"] = "Either";
+				["type"] = "Character";
 			};
 		};
 		[58] = {
 			["player"] = {
-				["allyNearCount"] = 1;
-				["allyRangeMax"] = 900;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
 				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
 				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 58;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["id"] = 5763;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["id"] = 5738;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Renewal of Water";
-				["radius"] = 180;
+				["name"] = "Sandstorm";
+				["radius"] = 240;
 				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "1";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
 				["moving"] = "NotMoving";
 				["type"] = "Character";
 			};
 		};
 		[59] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
 				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 59;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5686;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Shock Wave";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[60] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5562;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Gale";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[61] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5719;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 550;
-				["minRange"] = 0;
-				["name"] = "Flame Leap";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[62] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5557;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 300;
-				["minRange"] = 0;
-				["name"] = "Fire Grab";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[63] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5732;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Static Field";
-				["radius"] = 180;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[64] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5687;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 150;
-				["minRange"] = 0;
-				["name"] = "Updraft";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[65] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5490;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Comet";
-				["radius"] = 180;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[66] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 17008;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Magnetic Leap";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[67] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5517;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Fiery Rush";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[68] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5556;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Freezing Gust";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[69] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5725;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 360;
-				["minRange"] = 0;
-				["name"] = "Lightning Storm";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[70] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5680;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 250;
-				["minRange"] = 0;
-				["name"] = "Burning Retreat";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[71] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5690;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 240;
-				["minRange"] = 0;
-				["name"] = "Earthquake";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[72] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5529;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Ride the Lightning";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[73] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["id"] = 5515;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Frozen Ground";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[74] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5553;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Gust";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[75] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5671;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Static Field";
-				["radius"] = 180;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[76] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5683;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Unsteady Ground";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[77] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5559;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["id"] = 5736;
 				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Magnetic Grasp";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[78] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5568;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Frost Fan";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[79] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5694;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Blinding Flash";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[80] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5721;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Deep Freeze";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[81] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5497;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Flamewall";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[82] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5696;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Dust Devil";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[83] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5780;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Hurl";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[84] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5644;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Burning Speed";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[85] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5547;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Magnetic Surge";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[86] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5754;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 450;
-				["minRange"] = 0;
-				["name"] = "Debris Tornado";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[87] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5522;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 360;
-				["minRange"] = 0;
-				["name"] = "Churning Earth";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[88] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5717;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 250;
-				["minRange"] = 0;
-				["name"] = "Burning Retreat";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Character";
-			};
-		};
-		[89] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5487;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 240;
-				["minRange"] = 0;
-				["name"] = "Frozen Burst";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[90] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5679;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Flame Burst";
-				["radius"] = 180;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[91] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5733;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Wind Blast";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[92] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5558;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Cleansing Wave";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[93] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5720;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Frost Volley";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[94] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5561;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Lightning Strike";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[95] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5505;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Grasping Earth";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[96] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5531;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Firestorm";
 				["radius"] = 240;
 				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "1";
+				["slowCast"] = "1";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[97] = {
+		[60] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 80;
-				["minPower"] = 0;
+				["maxHP"] = 80;
+				["minHP"] = 0;
 			};
+			["priority"] = 60;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 5747;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
+				["id"] = 5572;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Magnetic Shield";
+				["name"] = "Signet of Air";
+				["radius"] = 240;
+				["setRange"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+				["minHP"] = 20;
+				["moving"] = "Moving";
+				["type"] = "Character";
+			};
+		};
+		[61] = {
+			["player"] = {
+			};
+			["priority"] = 61;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 25497;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Glyph of Lesser Elementals";
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[98] = {
+		[62] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 62;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 5625;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
+				["id"] = 25495;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Lightning Leap";
+				["name"] = "Glyph of Lesser Elementals";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
+				["slowCast"] = "1";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[99] = {
+		[63] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 63;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 5753;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 450;
+				["id"] = 25486;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Dust Tornado";
+				["name"] = "Glyph of Lesser Elementals";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
+				["slowCast"] = "1";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[100] = {
+		[64] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 64;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 5646;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 300;
+				["id"] = 25487;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Lightning Touch";
+				["name"] = "Glyph of Lesser Elementals";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
+				["slowCast"] = "1";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[101] = {
+		[65] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 65;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5691;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Ring of Fire";
-				["radius"] = 240;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[102] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5718;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Ring of Fire";
-				["radius"] = 240;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[103] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5520;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Frost Aura";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[104] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["id"] = 5593;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Explosive Lava Axe";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[105] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5675;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Phoenix";
-				["radius"] = 240;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[106] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5723;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["id"] = 5735;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Ice Storm";
-				["radius"] = 0;
+				["radius"] = 240;
 				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "1";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["moving"] = "NotMoving";
 			};
 		};
-		[107] = {
+		[66] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 66;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["id"] = 5510;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["id"] = 5737;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Water Trident";
-				["radius"] = 180;
+				["name"] = "Lightning Storm";
+				["radius"] = 240;
 				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
+				["slowCast"] = "1";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["moving"] = "NotMoving";
 			};
 		};
-		[108] = {
+		[67] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
+				["allyDownedNearCount"] = 0;
+				["allyDownedRangeMax"] = 0;
 			};
+			["priority"] = 67;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5697;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 22572;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Fiery Whirl";
-				["radius"] = 130;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[109] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5537;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 400;
-				["minRange"] = 0;
-				["name"] = "Cone of Cold";
+				["name"] = "Arcane Wave";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[110] = {
+		[68] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
 				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 68;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5496;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 400;
-				["minRange"] = 0;
-				["name"] = "Drake's Breath";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[111] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 21647;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 240;
-				["minRange"] = 0;
-				["name"] = "Stone Sheath";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[112] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "1";
-				["id"] = 5548;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["id"] = 5638;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Arcane Wave";
+				["radius"] = 360;
+				["setRange"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[69] = {
+			["player"] = {
+				["maxHP"] = 80;
+			};
+			["priority"] = 69;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5571;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Lava Font";
+				["name"] = "Signet of Earth";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+				["minHP"] = 20;
+				["moving"] = "Moving";
+			};
+		};
+		[70] = {
+			["player"] = {
+				["maxHP"] = 80;
+				["minHP"] = 0;
+			};
+			["priority"] = 70;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5570;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Signet of Water";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+				["minHP"] = 20;
+				["moving"] = "Moving";
+				["type"] = "Character";
+			};
+		};
+		[71] = {
+			["player"] = {
+				["minHP"] = 20;
+			};
+			["priority"] = 71;
+			["skill"] = {
+				["castOnSelf"] = "0";
+				["groundTargeted"] = "0";
+				["id"] = 5542;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Signet of Fire";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[72] = {
+			["player"] = {
+			};
+			["priority"] = 72;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5539;
+				["maxRange"] = 1500;
+				["minRange"] = 0;
+				["name"] = "Arcane Blast";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[73] = {
+			["player"] = {
+			};
+			["priority"] = 73;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 25494;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Enervating Punch";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[74] = {
+			["player"] = {
+				["minHP"] = 0;
+			};
+			["priority"] = 74;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5540;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Conjure Flame Axe";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[75] = {
+			["player"] = {
+			};
+			["priority"] = 75;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5536;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Lightning Flash";
 				["radius"] = 120;
 				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[113] = {
+		[76] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 76;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5552;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 5567;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Lightning Surge";
+				["name"] = "Conjure Frost Bow";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[77] = {
+			["player"] = {
+			};
+			["priority"] = 77;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5546;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Conjure Earth Shield";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[78] = {
+			["player"] = {
+			};
+			["priority"] = 78;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5624;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Conjure Lightning Hammer";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[79] = {
+			["player"] = {
+				["allyDownedNearCount"] = 1;
+				["allyDownedRangeMax"] = 900;
+			};
+			["priority"] = 79;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 24411;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Renewal of Earth";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[80] = {
+			["player"] = {
+			};
+			["priority"] = 80;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 25476;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Frozen Ground";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[81] = {
+			["player"] = {
+			};
+			["priority"] = 81;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5661;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Murky Water";
 				["radius"] = 120;
 				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 5;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[114] = {
+		[82] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 82;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 5607;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Tidal Wave";
+				["radius"] = 240;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[83] = {
+			["player"] = {
+			};
+			["priority"] = 83;
+			["skill"] = {
 				["groundTargeted"] = "1";
 				["id"] = 5501;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Meteor Shower";
@@ -5022,307 +1664,62 @@ local obj1 = {
 				["slowCast"] = "1";
 				["stopsMovement"] = "1";
 			};
+			["slot"] = 5;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
 				["maxHP"] = 10;
-				["minHP"] = 0;
 				["moving"] = "NotMoving";
-				["type"] = "Either";
 			};
 		};
-		[115] = {
+		[84] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
 				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 84;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 5555;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
+				["id"] = 5522;
+				["maxRange"] = 360;
 				["minRange"] = 0;
-				["name"] = "Magnetic Wave";
-				["radius"] = 300;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[116] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5692;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Dragon's Tooth";
-				["radius"] = 180;
-				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "NotMoving";
-				["type"] = "Either";
-			};
-		};
-		[117] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5538;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Shatterstone";
-				["radius"] = 180;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[118] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5550;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Ice Spike";
-				["radius"] = 240;
-				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[119] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5787;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Eruption";
-				["radius"] = 240;
-				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[120] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5564;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Vapor Form";
+				["name"] = "Churning Earth";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
+				["slowCast"] = "1";
 			};
+			["slot"] = 5;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["type"] = "Character";
 			};
 		};
-		[121] = {
+		[85] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 60;
-				["minPower"] = 0;
 			};
+			["priority"] = 85;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5600;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Heat Wave";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[86] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 95;
+			};
+			["priority"] = 86;
 			["skill"] = {
 				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 5623;
-				["lastSkillID"] = "";
 				["los"] = "1";
-				["maxRange"] = 0;
+				["maxRange"] = 200;
 				["minRange"] = 0;
 				["name"] = "Fortify";
 				["radius"] = 0;
@@ -5330,1166 +1727,1780 @@ local obj1 = {
 				["slowCast"] = "1";
 				["stopsMovement"] = "1";
 			};
+			["slot"] = 5;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
+			};
+		};
+		[87] = {
+			["player"] = {
+			};
+			["priority"] = 87;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5721;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Deep Freeze";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+				["hasNotBuffs"] = "1122,905";
+				["moving"] = "Either";
+				["type"] = "Character";
+			};
+		};
+		[88] = {
+			["player"] = {
+			};
+			["priority"] = 88;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5531;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Firestorm";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "0";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[89] = {
+			["player"] = {
+			};
+			["priority"] = 89;
+			["skill"] = {
+				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 5748;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Undercurrent";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["hasNotBuffs"] = "1122,906,905";
+			};
+		};
+		[90] = {
+			["player"] = {
+			};
+			["priority"] = 90;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5648;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Air Bubble";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["hasNotBuffs"] = "1122,906,905";
+				["type"] = "Character";
+			};
+		};
+		[91] = {
+			["player"] = {
+				["minHP"] = 0;
+			};
+			["priority"] = 91;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5754;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Debris Tornado";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "0";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[92] = {
+			["player"] = {
+				["minHP"] = 0;
+			};
+			["priority"] = 92;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5515;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Frozen Ground";
+				["radius"] = 300;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[93] = {
+			["player"] = {
+			};
+			["priority"] = 93;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5605;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Ice Globe";
+				["radius"] = 240;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
 				["enemyNearCount"] = 0;
 				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
+			};
+		};
+		[94] = {
+			["player"] = {
+			};
+			["priority"] = 94;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5671;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Static Field";
+				["radius"] = 180;
+				["setRange"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+				["hasNotBuffs"] = "1122,743";
+				["moving"] = "Moving";
+				["type"] = "Character";
+			};
+		};
+		[95] = {
+			["player"] = {
+			};
+			["priority"] = 95;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5552;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Lightning Surge";
+				["radius"] = 180;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[96] = {
+			["player"] = {
+			};
+			["priority"] = 96;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5529;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Ride the Lightning";
+				["radius"] = 180;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[97] = {
+			["player"] = {
+			};
+			["priority"] = 97;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5686;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Shock Wave";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[98] = {
+			["player"] = {
+				["allyDownedNearCount"] = 0;
+				["allyDownedRangeMax"] = 0;
+			};
+			["priority"] = 98;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5652;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Air Pocket";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[99] = {
+			["player"] = {
+			};
+			["priority"] = 99;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5692;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Dragon's Tooth";
+				["radius"] = 180;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+				["moving"] = "NotMoving";
+			};
+		};
+		[100] = {
+			["player"] = {
+			};
+			["priority"] = 100;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5490;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Comet";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[101] = {
+			["player"] = {
+			};
+			["priority"] = 101;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5650;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Lightning Cage";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+				["hasNotBuffs"] = "1122,906,905";
+				["type"] = "Character";
+			};
+		};
+		[102] = {
+			["player"] = {
 				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+			};
+			["priority"] = 102;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5556;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Freezing Gust";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[103] = {
+			["player"] = {
+			};
+			["priority"] = 103;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5562;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Gale";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+				["hasNotBuffs"] = "1122,906,905";
+			};
+		};
+		[104] = {
+			["player"] = {
+			};
+			["priority"] = 104;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5723;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Ice Storm";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["moving"] = "NotMoving";
+			};
+		};
+		[105] = {
+			["player"] = {
+			};
+			["priority"] = 105;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5694;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Blinding Flash";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[106] = {
+			["player"] = {
+			};
+			["priority"] = 106;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5719;
+				["maxRange"] = 550;
+				["minRange"] = 0;
+				["name"] = "Flame Leap";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[107] = {
+			["player"] = {
+			};
+			["priority"] = 107;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5528;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Eruption";
+				["radius"] = 300;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+				["moving"] = "NotMoving";
+			};
+		};
+		[108] = {
+			["player"] = {
+			};
+			["priority"] = 108;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5679;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Flame Burst";
+				["radius"] = 240;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[109] = {
+			["player"] = {
+			};
+			["priority"] = 109;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5557;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Fire Grab";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[110] = {
+			["player"] = {
+			};
+			["priority"] = 110;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5732;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Static Field";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+				["hasNotBuffs"] = "1122,906,905";
+				["moving"] = "Moving";
+			};
+		};
+		[111] = {
+			["player"] = {
+			};
+			["priority"] = 111;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5659;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Rock Anchor";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["hasNotBuffs"] = "1122,906,905";
+			};
+		};
+		[112] = {
+			["player"] = {
+				["minHP"] = 0;
+			};
+			["priority"] = 112;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5550;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Ice Spike";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[113] = {
+			["player"] = {
+			};
+			["priority"] = 113;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5599;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Lava Chains";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["hasNotBuffs"] = "1122,906,905";
+			};
+		};
+		[114] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 114;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5687;
+				["maxRange"] = 180;
+				["minRange"] = 0;
+				["name"] = "Updraft";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+				["hasNotBuffs"] = "1122,906,905";
+			};
+		};
+		[115] = {
+			["player"] = {
+			};
+			["priority"] = 115;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5733;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Wind Blast";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+				["hasNotBuffs"] = "1122,906,905";
+			};
+		};
+		[116] = {
+			["player"] = {
+			};
+			["priority"] = 116;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5753;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Dust Tornado";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "0";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[117] = {
+			["player"] = {
+			};
+			["priority"] = 117;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5517;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Fiery Rush";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[118] = {
+			["player"] = {
+			};
+			["priority"] = 118;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5747;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Magnetic Shield";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[119] = {
+			["player"] = {
+			};
+			["priority"] = 119;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5533;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Fiery Eruption";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[120] = {
+			["player"] = {
+			};
+			["priority"] = 120;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5655;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Electrocute";
+				["radius"] = 240;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[121] = {
+			["player"] = {
+			};
+			["priority"] = 121;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5597;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Boil";
+				["radius"] = 240;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
 			};
 		};
 		[122] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 122;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 5533;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
+				["id"] = 5537;
+				["maxRange"] = 400;
 				["minRange"] = 0;
-				["name"] = "Fiery Eruption";
-				["radius"] = 150;
+				["name"] = "Cone of Cold";
+				["radius"] = 0;
 				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "1";
 			};
+			["slot"] = 2;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[123] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
+				["allyDownedNearCount"] = 0;
+				["allyDownedRangeMax"] = 0;
 			};
+			["priority"] = 123;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5528;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
+				["groundTargeted"] = "0";
+				["id"] = 5658;
+				["maxRange"] = 400;
 				["minRange"] = 0;
-				["name"] = "Eruption";
-				["radius"] = 240;
+				["name"] = "Rock Spray";
+				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "1";
 			};
+			["slot"] = 2;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[124] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 124;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 5525;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
+				["id"] = 5496;
+				["maxRange"] = 400;
 				["minRange"] = 0;
-				["name"] = "Ring of Earth";
-				["radius"] = 240;
+				["name"] = "Drake's Breath";
+				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
+				["slowCast"] = "1";
 			};
+			["slot"] = 2;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[125] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 125;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 5519;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
+				["id"] = 5530;
+				["maxRange"] = 400;
 				["minRange"] = 0;
-				["name"] = "Stoning";
+				["name"] = "Swirling Winds";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 4;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[126] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 126;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5725;
+				["maxRange"] = 360;
+				["minRange"] = 0;
+				["name"] = "Lightning Storm";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[127] = {
+			["player"] = {
+			};
+			["priority"] = 127;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5555;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Magnetic Wave";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[128] = {
+			["player"] = {
+				["conditionCount"] = 0;
+			};
+			["priority"] = 128;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5717;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Burning Retreat";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+				["moving"] = "Moving";
+			};
+		};
+		[129] = {
+			["player"] = {
+			};
+			["priority"] = 129;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5718;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Ring of Fire";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["moving"] = "Moving";
+			};
+		};
+		[130] = {
+			["player"] = {
+			};
+			["priority"] = 130;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5690;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Earthquake";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["hasNotBuffs"] = "1122,906,905";
+			};
+		};
+		[131] = {
+			["player"] = {
+			};
+			["priority"] = 131;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 21647;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Stone Sheath";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[132] = {
+			["player"] = {
+			};
+			["priority"] = 132;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5691;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Ring of Fire";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["moving"] = "Moving";
+			};
+		};
+		[133] = {
+			["player"] = {
+			};
+			["priority"] = 133;
+			["skill"] = {
+				["delay"] = 1200;
+				["groundTargeted"] = "0";
+				["id"] = 5653;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Vacuum";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[134] = {
+			["player"] = {
+			};
+			["priority"] = 134;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5553;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Gust";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+				["hasNotBuffs"] = "1122,906,905";
+			};
+		};
+		[135] = {
+			["player"] = {
+			};
+			["priority"] = 135;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5566;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Steam";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[136] = {
+			["player"] = {
+			};
+			["priority"] = 136;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5683;
+				["maxRange"] = 1175;
+				["minRange"] = 0;
+				["name"] = "Unsteady Ground";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["moving"] = "Moving";
+			};
+		};
+		[137] = {
+			["player"] = {
+			};
+			["priority"] = 137;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5559;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Magnetic Grasp";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[138] = {
+			["player"] = {
+			};
+			["priority"] = 138;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5662;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Magnetic Current";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[139] = {
+			["player"] = {
+			};
+			["priority"] = 139;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5497;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Flamewall";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["moving"] = "NotMoving";
+			};
+		};
+		[140] = {
+			["player"] = {
+			};
+			["priority"] = 140;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5505;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Grasping Earth";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[141] = {
+			["player"] = {
+			};
+			["priority"] = 141;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5696;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Dust Devil";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[142] = {
+			["player"] = {
+			};
+			["priority"] = 142;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5568;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Frost Fan";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[143] = {
+			["player"] = {
+				["minHP"] = 0;
+			};
+			["priority"] = 143;
 			["skill"] = {
 				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["groundTargeted"] = "1";
+				["id"] = 5538;
+				["los"] = "1";
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Shatterstone";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+				["moving"] = "NotMoving";
+			};
+		};
+		[144] = {
+			["player"] = {
+			};
+			["priority"] = 144;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 17008;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Magnetic Leap";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[145] = {
+			["player"] = {
+			};
+			["priority"] = 145;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5547;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Magnetic Surge";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+				["hasNotBuffs"] = "1122,906,905";
+			};
+		};
+		[146] = {
+			["player"] = {
+			};
+			["priority"] = 146;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5548;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Lava Font";
+				["radius"] = 180;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[147] = {
+			["player"] = {
+			};
+			["priority"] = 147;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5606;
+				["maxRange"] = 320;
+				["minRange"] = 0;
+				["name"] = "Ice Wall";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[148] = {
+			["player"] = {
+			};
+			["priority"] = 148;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5644;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Burning Speed";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[149] = {
+			["player"] = {
+			};
+			["priority"] = 149;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5487;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Frozen Burst";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[150] = {
+			["player"] = {
+			};
+			["priority"] = 150;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5680;
+				["maxRange"] = 0;
+				["minRange"] = 200;
+				["name"] = "Burning Retreat";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[151] = {
+			["player"] = {
+			};
+			["priority"] = 151;
+			["skill"] = {
+				["delay"] = 2000;
+				["groundTargeted"] = "0";
+				["id"] = 5611;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Ice Globe";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[152] = {
+			["player"] = {
+			};
+			["priority"] = 152;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5593;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Explosive Lava Axe";
+				["radius"] = 240;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[153] = {
+			["player"] = {
+			};
+			["priority"] = 153;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5561;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Lightning Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[154] = {
+			["player"] = {
+			};
+			["priority"] = 154;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5780;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Hurl";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[155] = {
+			["player"] = {
+			};
+			["priority"] = 155;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5697;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Fiery Whirl";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[156] = {
+			["player"] = {
+			};
+			["priority"] = 156;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 5675;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Phoenix";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[157] = {
+			["player"] = {
+			};
+			["priority"] = 157;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5720;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Frost Volley";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[158] = {
+			["player"] = {
+			};
+			["priority"] = 158;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5609;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Stone Kick";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[159] = {
+			["player"] = {
+			};
+			["priority"] = 159;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5625;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Lightning Leap";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[160] = {
+			["player"] = {
+			};
+			["priority"] = 160;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5646;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Lightning Touch";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[161] = {
+			["player"] = {
+			};
+			["priority"] = 161;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5525;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Ring of Earth";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[162] = {
+			["player"] = {
+				["conditionCount"] = 0;
+			};
+			["priority"] = 162;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5491;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Fireball";
+				["radius"] = 180;
+				["setRange"] = "1";
+				["slowCast"] = "0";
+			};
+			["slot"] = 1;
+			["target"] = {
+				["conditionCount"] = 0;
+			};
+		};
+		[163] = {
+			["player"] = {
+			};
+			["priority"] = 163;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5549;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Water Blast";
+				["radius"] = 240;
+				["setRange"] = "1";
+				["slowCast"] = "0";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[164] = {
+			["player"] = {
+				["allyDownedNearCount"] = 0;
+				["allyDownedRangeMax"] = 0;
+			};
+			["priority"] = 164;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5598;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Magma Orb";
+				["radius"] = 120;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[165] = {
+			["player"] = {
+			};
+			["priority"] = 165;
+			["skill"] = {
 				["groundTargeted"] = "0";
 				["id"] = 5518;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Chain Lightning";
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slowCast"] = "0";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 1;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[127] = {
+		[166] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 166;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 5504;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Discharge Lightning";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[128] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5541;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Lava Axe";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[129] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5693;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Ice Shards";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[130] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5595;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Water Arrow";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[131] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 15716;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Vapor Blade";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[132] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5746;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 450;
-				["minRange"] = 0;
-				["name"] = "Crippling Shield";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[133] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 15718;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 400;
-				["minRange"] = 0;
-				["name"] = "Dragon's Claw";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[134] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5489;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 300;
-				["minRange"] = 0;
-				["name"] = "Lightning Whip";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[135] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 15717;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 300;
-				["minRange"] = 0;
-				["name"] = "Impale";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[136] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5549;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["id"] = 5519;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Water Blast";
-				["radius"] = 180;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[137] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5491;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Fireball";
-				["radius"] = 120;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[138] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5726;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 150;
-				["minRange"] = 0;
-				["name"] = "Lightning Swing";
+				["name"] = "Stoning";
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slowCast"] = "0";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 1;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[139] = {
+		[167] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 167;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5727;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 150;
-				["minRange"] = 0;
-				["name"] = "Static Swing";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[140] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5728;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 150;
-				["minRange"] = 0;
-				["name"] = "Thunderclap";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[141] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 21646;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Shield Smash";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[142] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5621;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Shield Smack";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[143] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5508;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Flamestrike";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "1";
-				["stopsMovement"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[144] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 5500;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Stone Shards";
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 1;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[145] = {
+		[168] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 168;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 5526;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Arc Lightning";
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 1;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[146] = {
+		[169] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 169;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 5532;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Flame Wave";
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slowCast"] = "1";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 1;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[147] = {
+		[170] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
 				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 170;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 15718;
+				["maxRange"] = 400;
+				["minRange"] = 0;
+				["name"] = "Dragon's Claw";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[171] = {
+			["player"] = {
+			};
+			["priority"] = 171;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5657;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Rock Blade";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[172] = {
+			["player"] = {
+			};
+			["priority"] = 172;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5604;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Water Missile";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[173] = {
+			["player"] = {
+			};
+			["priority"] = 173;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5656;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Forked Lightning";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[174] = {
+			["player"] = {
+			};
+			["priority"] = 174;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5504;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Discharge Lightning";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[175] = {
+			["player"] = {
+			};
+			["priority"] = 175;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5595;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Water Arrow";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[176] = {
+			["player"] = {
+			};
+			["priority"] = 176;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5508;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Flamestrike";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[177] = {
+			["player"] = {
+			};
+			["priority"] = 177;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5541;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Lava Axe";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[178] = {
+			["player"] = {
+			};
+			["priority"] = 178;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5693;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Ice Shards";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[179] = {
+			["player"] = {
+			};
+			["priority"] = 179;
+			["skill"] = {
 				["groundTargeted"] = "0";
 				["id"] = 5752;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 450;
+				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Electrified Tornado";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
-				["stopsMovement"] = "0";
 			};
+			["slot"] = 1;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+			};
+		};
+		[180] = {
+			["player"] = {
+			};
+			["priority"] = 180;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5608;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Water Fist";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[181] = {
+			["player"] = {
+			};
+			["priority"] = 181;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 15716;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Vapor Blade";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[182] = {
+			["player"] = {
+			};
+			["priority"] = 182;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 15717;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Impale";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[183] = {
+			["player"] = {
+			};
+			["priority"] = 183;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5489;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Lightning Whip";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[184] = {
+			["player"] = {
+			};
+			["priority"] = 184;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5726;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Lightning Swing";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[185] = {
+			["player"] = {
+			};
+			["priority"] = 185;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5621;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Shield Smack";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
 			};
 		};
 	};
 	["switchSettings"] = {
-		["switchOnCooldown"] = "0";
+		["switchOnCooldown"] = 0;
 		["switchOnRange"] = "0";
 		["switchRandom"] = "1";
 	};
