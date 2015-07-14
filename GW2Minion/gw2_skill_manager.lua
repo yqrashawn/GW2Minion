@@ -380,7 +380,7 @@ function gw2_skill_manager:SkillWindowUpdate(skillPriority)
 		SklMgr_MaxEndurance = currentSkill.player.maxEndurance
 		SklMgr_AllyCount = currentSkill.player.allyNearCount
 		SklMgr_AllyRange = currentSkill.player.allyRangeMax
-		SklMgr_AllDownedCount = currentSkill.player.allyDownedNearCount
+		SklMgr_AllyDownedCount = currentSkill.player.allyDownedNearCount
 		SklMgr_AllyDownedRange = currentSkill.player.allyDownedRangeMax
 		SklMgr_PHasBuffs = currentSkill.player.hasBuffs
 		SklMgr_PHasNotBuffs = currentSkill.player.hasNotBuffs
@@ -685,8 +685,8 @@ function gw2_skill_manager:UpdateProfiles()
 						skill.priority = nil
 						skill.maxCooldown = nil
 					end
+					persistence.store(gw2_skill_manager.path .. class .. "_" .. profile.name .. ".lua", profile)
 				end
-				persistence.store(gw2_skill_manager.path .. class .. "_" .. profile.name .. ".lua", profile)
 			end
 		end
 	end
@@ -838,7 +838,7 @@ function profilePrototype:DoCombatMovement(targetID)
 		-- Face target.
 		if (ValidTable(target)) then Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z) end
 		-- Range, walking too close to enemy, stop walking forward.
-		if (self.tmp.activeSkillRange > 300 and tDistance < (self.tmp.activeSkillRange / 6)) then movementDirection[forward] = false end
+		if (self.tmp.activeSkillRange > 300 and tDistance < (self.tmp.activeSkillRange / 2)) then movementDirection[forward] = false end
 		-- Range, walking too far from enemy, stop walking backward.
 		if (self.tmp.activeSkillRange > 300 and tDistance > self.tmp.activeSkillRange * 0.95) then movementDirection[backward] = false end
 		-- Melee, walking too close to enemy, stop walking forward.
@@ -895,10 +895,10 @@ function profilePrototype:DoCombatMovement(targetID)
 		-- We know where we can move, decide where to go.
 		if (movementDirection[forward] and movementDirection[backward]) then -- Can move forward and backward, choose.
 			if (currentMovement.forward) then -- We are moving forward already.
-				if (math.random(0,25) ~= 3) then -- Keep moving forward gets higher chance.
-					movementDirection[backward] = false
-				else
+				if (math.random(0,25) ~= 3) then -- Keep moving backwards gets higher chance.
 					movementDirection[forward] = false
+				else
+					movementDirection[backward] = false
 				end
 			elseif (currentMovement.backward) then -- We are moving backward already.
 				if (math.random(0,25) ~= 3) then -- Keep moving backward gets higher chance.
@@ -1191,13 +1191,14 @@ function skillPrototype:CanCast(targetID)
 			self.parent.tmp.maxAttackRange = (self.skill.maxRange > 0 and self.skill.maxRange > self.parent.tmp.maxAttackRange and self.skill.maxRange or self.parent.tmp.maxAttackRange)
 			self.parent.tmp.maxAttackRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.maxAttackRange and self.skill.radius or self.parent.tmp.maxAttackRange)
 		end
-		-- Check lastSkill attributes.
+		
+		-- get last skill.
 		local lastSkillID = (Player.castinfo.skillID == 0 and Player.castinfo.lastSkillID or Player.castinfo.skillID)
-		local lastSkill = self.parent:GetSkillByID(lastSkillID)
-		if (lastSkill and lastSkill.skill.slowCast == "1" and Player.castinfo.slot == lastSkill.tmp.slot) then return false end
+		
 		-- skillBar attributes.
 		if (skillOnBar.cooldown == 1) then return false end
 		self.tmp.slot = skillOnBar.slot
+		
 		-- skill attributes.
 		if (self.skill.id == Player.castinfo.skillID and self.tmp.slot ~= GW2.SKILLBARSLOT.Slot_1) then return false end
 		if (self.skill.lastSkillID ~= "" and StringContains(tostring(self.skill.lastSkillID),tostring(lastSkillID)) == false) then return false end
@@ -1266,6 +1267,11 @@ function skillPrototype:CanCast(targetID)
 		self.parent.tmp.activeSkillRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.activeSkillRange and self.skill.radius or self.parent.tmp.activeSkillRange)
 		-- update combatMovement status.
 		self.parent.tmp.combatMovement.allowed = (self.skill.stopsMovement == "0")
+		
+		-- Check lastSkill attributes.
+		local lastSkill = self.parent:GetSkillByID(lastSkillID)
+		if (lastSkill and lastSkill.skill.slowCast == "1" and Player.castinfo.slot == lastSkill.tmp.slot) then return false end
+		
 		-- skill can be cast now.
 		return true
 	-- update profile range.
@@ -1374,6 +1380,8 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals) -- not done
 				k == "SklMgr_MaxEndurance" or
 				k == "SklMgr_AllyCount" or
 				k == "SklMgr_AllyRange" or
+				k == "SklMgr_AllyDownedCount" or
+				k == "SklMgr_AllyDownedRange" or
 				k == "SklMgr_PHasBuffs" or
 				k == "SklMgr_PHasNotBuffs" or
 				k == "SklMgr_PCondCount" or
@@ -1389,6 +1397,8 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals) -- not done
 							SklMgr_MaxEndurance = {global = "maxEndurance", gType = "tonumber",},
 							SklMgr_AllyCount = {global = "allyNearCount", gType = "tonumber",},
 							SklMgr_AllyRange = {global = "allyRangeMax", gType = "tonumber",},
+							SklMgr_AllyDownedCount = {global = "allyDownedNearCount", gType = "tonumber",},
+							SklMgr_AllyDownedRange = {global = "allyDownedRangeMax", gType = "tonumber",},
 							SklMgr_PHasBuffs = {global = "hasBuffs", gType = "tostring",},
 							SklMgr_PHasNotBuffs = {global = "hasNotBuffs", gType = "tostring",},
 							SklMgr_PCondCount = {global = "conditionCount", gType = "tonumber",},

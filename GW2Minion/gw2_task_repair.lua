@@ -42,6 +42,10 @@ function gw2_task_repair:Init()
 end
 function gw2_task_repair:task_complete_eval()
 	if (c_vendorrepair:evaluate() == false and c_quickvendorrepair:evaluate() == false) then
+		-- Close converstation if open.
+		if (Player:IsConversationOpen()) then
+			Player:SelectConversationOptionByIndex(0)
+		end
 		return true
 	end
 	return false

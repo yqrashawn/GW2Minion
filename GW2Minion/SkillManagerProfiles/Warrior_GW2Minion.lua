@@ -3,861 +3,169 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
-	["combos"] = {
-	};
 	["name"] = "GW2Minion";
 	["profession"] = 2;
 	["professionSettings"] = {
 		["elementalist"] = {
-			["attunement_1"] = "None";
-			["attunement_2"] = "None";
-			["attunement_3"] = "None";
-			["attunement_4"] = "None";
 		};
 		["engineer"] = {
-			["kit"] = "None";
 		};
 	};
 	["skills"] = {
 		[1] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
 				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 35;
-				["minPower"] = 0;
+				["minHP"] = 75;
 			};
+			["priority"] = 1;
 			["skill"] = {
 				["castOnSelf"] = "1";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 14389;
-				["lastSkillID"] = "";
+				["id"] = 14402;
 				["los"] = "0";
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Healing Signet";
+				["name"] = "\"To the Limit!\"";
 				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "0";
+				["slowCast"] = "1";
 			};
+			["slot"] = 6;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[2] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
 				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 60;
-				["minPower"] = 0;
+				["minHP"] = 75;
 			};
+			["priority"] = 2;
 			["skill"] = {
 				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14402;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Healing Surge";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[3] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 60;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 14401;
-				["lastSkillID"] = "";
 				["los"] = "0";
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Mending";
 				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "0";
+				["slowCast"] = "1";
 			};
+			["slot"] = 6;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[4] = {
+		[3] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
 				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 60;
-				["minPower"] = 0;
+				["minHP"] = 90;
 			};
+			["priority"] = 3;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["castOnSelf"] = "1";
 				["groundTargeted"] = "0";
 				["id"] = 21815;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["los"] = "0";
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Defiant Stance";
 				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "0";
 			};
+			["slot"] = 6;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+			};
+		};
+		[4] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 10;
+			};
+			["priority"] = 4;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14389;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Healing Signet";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 6;
+			["target"] = {
 			};
 		};
 		[5] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 2;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 60;
-				["minPower"] = 0;
 			};
+			["priority"] = 5;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["castOnSelf"] = "1";
 				["groundTargeted"] = "0";
-				["id"] = 22007;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["id"] = 14495;
+				["los"] = "0";
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Antitoxin Spray";
+				["name"] = "Sprint";
 				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "0";
+				["slowCast"] = "1";
 			};
+			["slot"] = 4;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[6] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 30;
-				["minPower"] = 0;
 			};
+			["priority"] = 6;
 			["skill"] = {
 				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14392;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Endure Pain";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[7] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 1175;
-				["lastSkillID"] = "";
 				["los"] = "0";
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Bandage";
 				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "1";
 			};
+			["slot"] = 4;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+			};
+		};
+		[7] = {
+			["player"] = {
+				["moving"] = "Moving";
+			};
+			["priority"] = 7;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14393;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Charge";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 4;
+			["target"] = {
 			};
 		};
 		[8] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 1;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 8;
 			["skill"] = {
 				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14372;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "\"Shake It Off!\"";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[9] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 3;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 50;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14479;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Signet of Stamina";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[10] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 50;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14413;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Dolyak Signet";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[11] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14412;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Balanced Stance";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[12] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 1;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14406;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Berserker Stance";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[13] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14355;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Signet of Rage";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[14] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 30;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14410;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Signet of Fury";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[15] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14404;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Signet of Might";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "|";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[16] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14562;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Furious Rally";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[17] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14403;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "\"For Great Justice!\"";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[18] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14564;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Compassionate Banner";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[19] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14566;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Whirlwind Banner";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[20] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 14477;
-				["lastSkillID"] = "";
 				["los"] = "0";
 				["maxRange"] = 1200;
 				["minRange"] = 0;
@@ -866,4668 +174,2646 @@ local obj1 = {
 				["setRange"] = "0";
 				["slowCast"] = "1";
 			};
+			["slot"] = 3;
 			["target"] = {
-				["boonCount"] = 0;
+			};
+		};
+		[9] = {
+			["player"] = {
+			};
+			["priority"] = 9;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14562;
+				["los"] = "0";
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Furious Rally";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[10] = {
+			["player"] = {
+			};
+			["priority"] = 10;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14564;
+				["los"] = "0";
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Compassionate Banner";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[11] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 11;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14368;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 1500;
+				["name"] = "Frenzy";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+				["maxHP"] = 10;
+				["type"] = "Character";
+			};
+		};
+		[12] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 40;
+			};
+			["priority"] = 12;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14392;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 1200;
+				["name"] = "Endure Pain";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[13] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 13;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14403;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "\"For Great Justice!\"";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 9;
+			["target"] = {
+			};
+		};
+		[14] = {
+			["player"] = {
 				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
+				["hasBuffs"] = "791";
+				["minEndurance"] = 0;
+			};
+			["priority"] = 14;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14413;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Dolyak Signet";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[15] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["conditionCount"] = 0;
+				["hasBuffs"] = "872,791,727";
 				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+			};
+			["priority"] = 15;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14412;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Balanced Stance";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[16] = {
+			["player"] = {
+				["moving"] = "Moving";
+			};
+			["priority"] = 16;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14394;
+				["los"] = "0";
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Call to Arms";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[17] = {
+			["player"] = {
+				["maxPower"] = 0;
+				["minHP"] = 0;
+				["moving"] = "Moving";
+			};
+			["priority"] = 62;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14355;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Signet of Rage";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 10;
+			["target"] = {
+			};
+		};
+		[18] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 17;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 14528;
+				["los"] = "1";
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Banner of Defense";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+				["maxHP"] = 0;
+				["type"] = "Character";
+			};
+		};
+		[19] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 0;
+			};
+			["priority"] = 18;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14406;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Berserker Stance";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[20] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 19;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 14408;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Banner of Tactics";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+				["type"] = "Character";
 			};
 		};
 		[21] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 20;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 14405;
+				["los"] = "1";
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Banner of Strength";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[22] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 21;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 14407;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Banner of Discipline";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 7;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[23] = {
+			["player"] = {
+				["combatState"] = "InCombat";
 				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
 				["minPower"] = 0;
 			};
+			["priority"] = 22;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14400;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Riposte";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[24] = {
+			["player"] = {
+				["conditionCount"] = 3;
+			};
+			["priority"] = 23;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14479;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Signet of Stamina";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[25] = {
+			["player"] = {
+				["conditionCount"] = 1;
+			};
+			["priority"] = 24;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14372;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "\"Shake It Off!\"";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[26] = {
+			["player"] = {
+				["maxPower"] = 90;
+				["minPower"] = 0;
+			};
+			["priority"] = 27;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 14512;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Earthshaker";
+				["radius"] = 240;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+				["hasNotBuffs"] = "905,906,1122";
+				["type"] = "Character";
+			};
+		};
+		[27] = {
+			["player"] = {
+				["maxPower"] = 90;
+				["minPower"] = 0;
+			};
+			["priority"] = 28;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 14514;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Earthshaker";
+				["radius"] = 240;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+				["hasNotBuffs"] = "905,906,1122";
+				["type"] = "Character";
+			};
+		};
+		[28] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 44;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 14513;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Earthshaker";
+				["radius"] = 240;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+				["hasNotBuffs"] = "905,906,1122";
+				["type"] = "Character";
+			};
+		};
+		[29] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 45;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 14387;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Earthshaker";
+				["radius"] = 240;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+				["hasNotBuffs"] = "905,906,1122";
+				["type"] = "Character";
+			};
+		};
+		[30] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 25;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14396;
+				["maxRange"] = 1500;
+				["minRange"] = 0;
+				["name"] = "Kill Shot";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[31] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 29;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14475;
+				["maxRange"] = 1500;
+				["minRange"] = 0;
+				["name"] = "Kill Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[32] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 30;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14474;
+				["maxRange"] = 1500;
+				["minRange"] = 0;
+				["name"] = "Kill Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[33] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 31;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14473;
+				["maxRange"] = 1500;
+				["minRange"] = 0;
+				["name"] = "Kill Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[34] = {
+			["player"] = {
+				["maxPower"] = 90;
+				["minHP"] = 0;
+			};
+			["priority"] = 26;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14544;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Forceful Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[35] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 33;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14469;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Forceful Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[36] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 34;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14471;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Forceful Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[37] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 35;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14470;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Forceful Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[38] = {
+			["player"] = {
+				["maxPower"] = 90;
+				["minPower"] = 0;
+			};
+			["priority"] = 36;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14549;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Whirling Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[39] = {
+			["player"] = {
+				["maxPower"] = 90;
+				["minPower"] = 0;
+			};
+			["priority"] = 37;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14551;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Whirling Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[40] = {
+			["player"] = {
+				["maxPower"] = 0;
+				["minPower"] = 90;
+			};
+			["priority"] = 38;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14443;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Whirling Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[41] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 42;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14546;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Arcing Slice";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[42] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 39;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14375;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Arcing Slice";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[43] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 40;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14547;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Arcing Slice";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[44] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 41;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14545;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Arcing Slice";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[45] = {
+			["player"] = {
+			};
+			["priority"] = 46;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 14419;
+				["los"] = "0";
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Battle Standard";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 10;
+			["target"] = {
+			};
+		};
+		[46] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 32;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14423;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Eviscerate";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[47] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 47;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14353;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Eviscerate";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[48] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 48;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14424;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Eviscerate";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[49] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 49;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14422;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Eviscerate";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[50] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 50;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 14521;
+				["isProjectile"] = "1";
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Combustive Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[51] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 51;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 14522;
+				["isProjectile"] = "1";
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Combustive Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[52] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 52;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 14520;
+				["isProjectile"] = "1";
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Combustive Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[53] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 53;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 14506;
+				["isProjectile"] = "1";
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Combustive Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[54] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 54;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14550;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Whirling Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[55] = {
+			["player"] = {
+			};
+			["priority"] = 56;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14414;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Skull Crack";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+				["hasNotBuffs"] = "743,717,1122";
+				["type"] = "Character";
+			};
+		};
+		[56] = {
+			["player"] = {
+			};
+			["priority"] = 57;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14425;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Skull Crack";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+				["hasNotBuffs"] = "743,717,1122";
+				["type"] = "Character";
+			};
+		};
+		[57] = {
+			["player"] = {
+			};
+			["priority"] = 58;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14426;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Skull Crack";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+				["hasNotBuffs"] = "743,717,1122";
+				["type"] = "Character";
+			};
+		};
+		[58] = {
+			["player"] = {
+			};
+			["priority"] = 59;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14427;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Skull Crack";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+				["hasNotBuffs"] = "743,717,1122";
+				["type"] = "Character";
+			};
+		};
+		[59] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 43;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14429;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Flurry";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "0";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[60] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 55;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14430;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Flurry";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[61] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 60;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14428;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Flurry";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[62] = {
+			["player"] = {
+				["maxPower"] = 90;
+			};
+			["priority"] = 61;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14367;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Flurry";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 13;
+			["target"] = {
+			};
+		};
+		[63] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 63;
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 14483;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Rampage";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 10;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[64] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["priority"] = 64;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14510;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Bladetrail";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[65] = {
+			["player"] = {
+			};
+			["priority"] = 65;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14467;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Knot Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[66] = {
+			["player"] = {
+			};
+			["priority"] = 66;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14505;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Smoldering Arrow";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[67] = {
+			["player"] = {
+			};
+			["priority"] = 67;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14395;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Brutal Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[68] = {
+			["player"] = {
+			};
+			["priority"] = 68;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14501;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Rip";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["conditionCount"] = 0;
+				["hasBuffs"] = "19426";
+				["moving"] = "Moving";
+			};
+		};
+		[69] = {
+			["player"] = {
+			};
+			["priority"] = 69;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14498;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Impale";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[70] = {
+			["player"] = {
+			};
+			["priority"] = 70;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14556;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Throw Boulder";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["hasNotBuffs"] = "743,717,1122";
+			};
+		};
+		[71] = {
+			["player"] = {
+			};
+			["priority"] = 71;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14361;
+				["maxRange"] = 450;
+				["minRange"] = 0;
+				["name"] = "Shield Bash";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["hasNotBuffs"] = "905,906,1122";
+			};
+		};
+		[72] = {
+			["player"] = {
+			};
+			["priority"] = 72;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14418;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Dual Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[73] = {
+			["player"] = {
+			};
+			["priority"] = 73;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14359;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Staggering Blow";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+				["hasNotBuffs"] = "905,906,1122";
+			};
+		};
+		[74] = {
+			["player"] = {
+			};
+			["priority"] = 74;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14518;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Crushing Blow";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[75] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 75;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14441;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Parry";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 4;
+			["target"] = {
+			};
+		};
+		[76] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["priority"] = 76;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14519;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Fan of Fire";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[77] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["priority"] = 77;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14466;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Brutal Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[78] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["priority"] = 78;
+			["skill"] = {
 				["groundTargeted"] = "0";
 				["id"] = 14515;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Hammer Toss";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
+				["slowCast"] = "1";
 			};
+			["slot"] = 2;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "36298";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["hasNotBuffs"] = "743,717,1122";
 			};
 		};
-		[22] = {
+		[79] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 5;
-				["minPower"] = 0;
 			};
+			["priority"] = 79;
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 14391;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Vengeance";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[23] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14390;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Throw Rock";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[24] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14409;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "\"Fear Me!\"";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "905,14453,36298";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[25] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14575;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["id"] = 14416;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "\"On My Mark!\"";
+				["name"] = "Aimed Shot";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
+				["setRange"] = "1";
 			};
+			["slot"] = 2;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "14453";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[26] = {
+		[80] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
+			};
+			["priority"] = 80;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14481;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Split Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[81] = {
+			["player"] = {
+			};
+			["priority"] = 81;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14472;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Volley";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[82] = {
+			["player"] = {
 				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
 				["minPower"] = 0;
 			};
+			["priority"] = 82;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 14507;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Counterblow";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+				["type"] = "Character";
+			};
+		};
+		[83] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["priority"] = 83;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14497;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Final Thrust";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[84] = {
+			["player"] = {
+			};
+			["priority"] = 84;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14489;
+				["maxRange"] = 1000;
+				["minRange"] = 0;
+				["name"] = "Dash";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[85] = {
+			["player"] = {
+			};
+			["priority"] = 85;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14398;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Throw Axe";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[86] = {
+			["player"] = {
+			};
+			["priority"] = 86;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14482;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Hammer Shock";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[87] = {
+			["player"] = {
+			};
+			["priority"] = 87;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14448;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Harpoon Pull";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+				["hasNotBuffs"] = "905,906,1122";
+			};
+		};
+		[88] = {
+			["player"] = {
+			};
+			["priority"] = 88;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14366;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Savage Leap";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[89] = {
+			["player"] = {
+			};
+			["priority"] = 89;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14566;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Whirlwind Banner";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[90] = {
+			["player"] = {
+			};
+			["priority"] = 90;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14488;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Kick";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+				["hasNotBuffs"] = "905,906,1122";
+			};
+		};
+		[91] = {
+			["player"] = {
+			};
+			["priority"] = 91;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 14381;
+				["isProjectile"] = "1";
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Arcing Arrow";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[92] = {
+			["player"] = {
+			};
+			["priority"] = 92;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14386;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Fierce Blow";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[93] = {
+			["player"] = {
+			};
+			["priority"] = 93;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14440;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Mariner's Frenzy";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[94] = {
+			["player"] = {
+			};
+			["priority"] = 94;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14421;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Cyclone Axe";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[95] = {
+			["player"] = {
+			};
+			["priority"] = 95;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14503;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Pommel Bash";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+			};
+		};
+		[96] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 96;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14561;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Staggering Banner";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+				["hasNotBuffs"] = "";
+				["type"] = "Character";
+			};
+		};
+		[97] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 97;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14563;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Brutal Banner";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[98] = {
+			["player"] = {
+			};
+			["priority"] = 98;
+			["skill"] = {
 				["groundTargeted"] = "0";
 				["id"] = 14554;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Hundred Blades";
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slowCast"] = "1";
+				["stopsMovement"] = "1";
 			};
+			["slot"] = 2;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[27] = {
+		[99] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 99;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "1";
 				["id"] = 14447;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 450;
 				["minRange"] = 0;
 				["name"] = "Whirlwind Attack";
-				["radius"] = 800;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[28] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14510;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Bladetrail";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 3;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[29] = {
+		[100] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
+				["combatState"] = "InCombat";
 			};
+			["priority"] = 100;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 14446;
-				["lastSkillID"] = "";
+				["id"] = 14391;
 				["los"] = "1";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Vengeance";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 3;
+			["target"] = {
+				["enemyNearCount"] = 1;
+				["enemyRangeMax"] = 400;
+				["minHP"] = 0;
+			};
+		};
+		[101] = {
+			["player"] = {
+				["minPower"] = 20;
+			};
+			["priority"] = 101;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14548;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Adrenaline Rush";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 2;
+			["target"] = {
+			};
+		};
+		[102] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["conditionCount"] = 0;
+			};
+			["priority"] = 102;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14575;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Rush";
+				["name"] = "\"On My Mark!\"";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "1";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["type"] = "Character";
 			};
 		};
-		[30] = {
+		[103] = {
 			["player"] = {
-				["allyNearCount"] = 2;
-				["allyRangeMax"] = 600;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 103;
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14419;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Battle Standard";
-				["radius"] = 360;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[31] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14483;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Rampage";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[32] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 50;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14368;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Frenzy";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 50;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[33] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14528;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Banner of Defense";
-				["radius"] = 120;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 3;
-				["enemyRangeMax"] = 500;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[34] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14405;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Banner of Strength";
-				["radius"] = 120;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 3;
-				["enemyRangeMax"] = 500;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[35] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14407;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Banner of Discipline";
-				["radius"] = 120;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 3;
-				["enemyRangeMax"] = 500;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[36] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14408;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Banner of Tactics";
-				["radius"] = 120;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 3;
-				["enemyRangeMax"] = 500;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[37] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14502;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 300;
-				["minRange"] = 0;
-				["name"] = "Kick";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "905,36298";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[38] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14516;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Bull's Charge";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "905,14453,36298";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[39] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14388;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 240;
-				["minRange"] = 0;
-				["name"] = "Stomp";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "905,36298";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[40] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 14354;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Throw Bolas";
 				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "0";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "14453";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["hasNotBuffs"] = "1122";
+				["moving"] = "Moving";
+				["type"] = "Character";
 			};
 		};
-		[41] = {
+		[104] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
 				["combatState"] = "InCombat";
 				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 104;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 14485;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
+				["id"] = 14409;
+				["maxRange"] = 600;
 				["minRange"] = 0;
-				["name"] = "Smash";
+				["name"] = "\"Fear Me!\"";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
 				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["type"] = "Character";
 			};
 		};
-		[42] = {
+		[105] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 105;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 14486;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
+				["id"] = 14516;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Bash";
+				["name"] = "Bull's Charge";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
+				["slowCast"] = "1";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["hasNotBuffs"] = "905,906,1122";
+				["type"] = "Character";
 			};
 		};
-		[43] = {
+		[106] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 106;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 14487;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Uppercut";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[44] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14489;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1000;
-				["minRange"] = 0;
-				["name"] = "Dash";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[45] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14488;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["id"] = 14502;
 				["maxRange"] = 300;
 				["minRange"] = 0;
 				["name"] = "Kick";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "905,14453,36298";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["hasNotBuffs"] = "905,906,1122";
+				["type"] = "Character";
 			};
 		};
-		[46] = {
+		[107] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
 				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 107;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 14556;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
+				["id"] = 14388;
+				["maxRange"] = 240;
 				["minRange"] = 0;
-				["name"] = "Throw Boulder";
+				["name"] = "Stomp";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 7;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["hasNotBuffs"] = "905,906";
+				["type"] = "Character";
 			};
 		};
-		[47] = {
+		[108] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
 				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 108;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14490;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Seismic Leap";
-				["radius"] = 240;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[48] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 14495;
-				["lastSkillID"] = "";
-				["los"] = "0";
+				["id"] = 14465;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Repeating Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+				["hasNotBuffs"] = "905,906,1122\
+";
+				["type"] = "Character";
+			};
+		};
+		[109] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["priority"] = 109;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14504;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Pin Down";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+				["hasNotBuffs"] = "743,717,1122";
+				["type"] = "Character";
+			};
+		};
+		[110] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minPower"] = 0;
+				["moving"] = "Moving";
+			};
+			["priority"] = 110;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14404;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Sprint";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[49] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14494;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 150;
-				["minRange"] = 0;
-				["name"] = "Stab";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[50] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14436;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Plant Standard";
+				["name"] = "Signet of Might";
 				["radius"] = 0;
 				["setRange"] = "0";
-				["slowCast"] = "0";
 			};
+			["slot"] = 8;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[51] = {
+		[111] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 111;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 14561;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
+				["id"] = 14446;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Staggering Banner";
+				["name"] = "Rush";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 5;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "36298";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["type"] = "Character";
 			};
 		};
-		[52] = {
+		[112] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 112;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14563;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Brutal Banner";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[53] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14398;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Throw Axe";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[54] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 14415;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Tremor";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 5;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["hasNotBuffs"] = "905,906,1122\
+";
 			};
 		};
-		[55] = {
+		[113] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
 				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 113;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14421;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Cyclone Axe";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[56] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14518;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Crushing Blow";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[57] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14507;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Counterblow";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[58] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14503;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Pommel Bash";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[59] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14418;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Dual Strike";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[60] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 19547;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Whirling Axe";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[61] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14498;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Impale";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[62] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14501;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 150;
-				["minRange"] = 0;
-				["name"] = "Rip";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[63] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 90;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0.04;
-				["groundTargeted"] = "0";
-				["id"] = 14400;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Riposte";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[64] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14557;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Adrenaline Rush";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[65] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14366;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Savage Leap";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[66] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14497;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Final Thrust";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[67] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14361;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 450;
-				["minRange"] = 0;
-				["name"] = "Shield Bash";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "36298";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[68] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14362;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Shield Stance";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[69] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14393;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Charge";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[70] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14394;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Call to Arms";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[71] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14519;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1000;
-				["minRange"] = 0;
-				["name"] = "Fan of Fire";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[72] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14381;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1000;
-				["minRange"] = 0;
-				["name"] = "Arcing Arrow";
-				["radius"] = 240;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[73] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14505;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1000;
-				["minRange"] = 0;
-				["name"] = "Smoldering Arrow";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[74] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14504;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1000;
-				["minRange"] = 0;
-				["name"] = "Pin Down";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[75] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14386;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 150;
-				["minRange"] = 0;
-				["name"] = "Fierce Blow";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[76] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14482;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Hammer Shock";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[77] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14359;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Staggering Blow";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[78] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14511;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Backbreaker";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[79] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14416;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Aimed Shot";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[80] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14472;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Volley";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[81] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14395;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Brutal Shot";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[82] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 14360;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Rifle Butt";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 5;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "36298";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+				["hasNotBuffs"] = "905,906,1122";
+				["type"] = "Character";
 			};
 		};
-		[83] = {
+		[114] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
 				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 114;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 14548;
-				["lastSkillID"] = "";
-				["los"] = "1";
+				["id"] = 14511;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Backbreaker";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+				["hasNotBuffs"] = "743,717,1122";
+			};
+		};
+		[115] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 0;
+				["minPower"] = 40;
+			};
+			["priority"] = 115;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14410;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Signet of Fury";
+				["radius"] = 0;
+				["setRange"] = "0";
+			};
+			["slot"] = 7;
+			["target"] = {
+			};
+		};
+		[116] = {
+			["player"] = {
+			};
+			["priority"] = 116;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14480;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Tsunami Slash";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[117] = {
+			["player"] = {
+			};
+			["priority"] = 117;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 19547;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Whirling Axe";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[118] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+			};
+			["priority"] = 118;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14362;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Shield Stance";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+				["enemyNearCount"] = 0;
+				["enemyRangeMax"] = 0;
+			};
+		};
+		[119] = {
+			["player"] = {
+			};
+			["priority"] = 119;
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 14490;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Seismic Leap";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[120] = {
+			["player"] = {
+			};
+			["priority"] = 120;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14436;
+				["lastSkillID"] = 14477;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Plant Standard";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
+			};
+			["slot"] = 5;
+			["target"] = {
+			};
+		};
+		[121] = {
+			["player"] = {
+				["minPower"] = 40;
+			};
+			["priority"] = 121;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14557;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Adrenaline Rush";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 5;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[84] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14353;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 300;
-				["minRange"] = 0;
-				["name"] = "Eviscerate";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[85] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14422;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 300;
-				["minRange"] = 0;
-				["name"] = "Eviscerate";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[86] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14423;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 300;
-				["minRange"] = 0;
-				["name"] = "Eviscerate";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[87] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14424;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 300;
-				["minRange"] = 0;
-				["name"] = "Eviscerate";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[88] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14546;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 150;
-				["minRange"] = 0;
-				["name"] = "Arcing Slice";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[89] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14547;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 150;
-				["minRange"] = 0;
-				["name"] = "Arcing Slice";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[90] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14375;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 150;
-				["minRange"] = 0;
-				["name"] = "Arcing Slice";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[91] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14545;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 150;
-				["minRange"] = 0;
-				["name"] = "Arcing Slice";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[92] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14513;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Earthshaker";
-				["radius"] = 240;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[93] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14387;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Earthshaker";
-				["radius"] = 240;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[94] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14514;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Earthshaker";
-				["radius"] = 240;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[95] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14512;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Earthshaker";
-				["radius"] = 240;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[96] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14475;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1500;
-				["minRange"] = 0;
-				["name"] = "Kill Shot";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[97] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14396;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1500;
-				["minRange"] = 0;
-				["name"] = "Kill Shot";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[98] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14473;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1500;
-				["minRange"] = 0;
-				["name"] = "Kill Shot";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[99] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14474;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1500;
-				["minRange"] = 0;
-				["name"] = "Kill Shot";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[100] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14414;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Skull Crack";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[101] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14426;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Skull Crack";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[102] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14425;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Skull Crack";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[103] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14427;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Skull Crack";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[104] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14521;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Combustive Shot";
-				["radius"] = 240;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[105] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14522;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Combustive Shot";
-				["radius"] = 360;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[106] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14506;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Combustive Shot";
-				["radius"] = 240;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[107] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 14520;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Combustive Shot";
-				["radius"] = 180;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[108] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14367;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Flurry";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[109] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14428;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Flurry";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[110] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14430;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Flurry";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[111] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "861";
-				["maxEndurance"] = 75;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14429;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Flurry";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "873";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[112] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14369;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Chop";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[113] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14370;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Double Chop";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[114] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14371;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Triple Chop";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[115] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14373;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Greatsword Slice";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[116] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14356;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Greatsword Swing";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[117] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14374;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Brutal Strike";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[118] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14358;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Hammer Swing";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[119] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14385;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Hammer Smash";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[120] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14384;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Hammer Bash";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[121] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14431;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1000;
-				["minRange"] = 0;
-				["name"] = "Dual Shot";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[122] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 122;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 14431;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Dual Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[123] = {
+			["player"] = {
+			};
+			["priority"] = 123;
+			["skill"] = {
 				["groundTargeted"] = "0";
 				["id"] = 14432;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Fierce Shot";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 1;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[123] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14378;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Pulverize";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[124] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 124;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 14376;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
+				["id"] = 14552;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Mace Smash";
+				["name"] = "Mariner's Shot";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 1;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[125] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 126;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 14377;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
+				["id"] = 14390;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Mace Bash";
+				["name"] = "Throw Rock";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 1;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
 		[126] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
+			["priority"] = 127;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 14437;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Stab";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[127] = {
+			["player"] = {
+			};
+			["priority"] = 128;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14494;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Stab";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[128] = {
+			["player"] = {
+			};
+			["priority"] = 129;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14438;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Jab";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[129] = {
+			["player"] = {
+			};
+			["priority"] = 130;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14439;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Impale";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[130] = {
+			["player"] = {
+			};
+			["priority"] = 132;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14371;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Triple Chop";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[131] = {
+			["player"] = {
+			};
+			["priority"] = 136;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14370;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Double Chop";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[132] = {
+			["player"] = {
+			};
+			["priority"] = 135;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14369;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Chop";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[133] = {
+			["player"] = {
+			};
+			["priority"] = 145;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14374;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Brutal Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[134] = {
+			["player"] = {
+			};
+			["priority"] = 141;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14373;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Greatsword Slice";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[135] = {
+			["player"] = {
+			};
+			["priority"] = 139;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14356;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Greatsword Swing";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[136] = {
+			["player"] = {
+			};
+			["priority"] = 140;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14487;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Uppercut";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[137] = {
+			["player"] = {
+			};
+			["priority"] = 146;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14486;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Bash";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[138] = {
+			["player"] = {
+			};
+			["priority"] = 131;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14485;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Smash";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[139] = {
+			["player"] = {
+			};
+			["priority"] = 134;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14385;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Hammer Smash";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[140] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["priority"] = 125;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14384;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Hammer Bash";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[141] = {
+			["player"] = {
+			};
+			["priority"] = 143;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14358;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Hammer Swing";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[142] = {
+			["player"] = {
+			};
+			["priority"] = 137;
+			["skill"] = {
 				["groundTargeted"] = "0";
 				["id"] = 14363;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Hamstring";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 1;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
 			};
 		};
-		[127] = {
+		[143] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
 				["minPower"] = 0;
 			};
+			["priority"] = 138;
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 14364;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 130;
-				["minRange"] = 0;
-				["name"] = "Sever Artery";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[128] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 14365;
-				["lastSkillID"] = "";
-				["los"] = "1";
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Gash";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
 			};
+			["slot"] = 1;
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+			};
+		};
+		[144] = {
+			["player"] = {
+			};
+			["priority"] = 144;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14364;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Sever Artery";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[145] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["priority"] = 142;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14378;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Pulverize";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[146] = {
+			["player"] = {
+			};
+			["priority"] = 147;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14377;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Mace Bash";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[147] = {
+			["player"] = {
+			};
+			["priority"] = 133;
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 14376;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Mace Smash";
+				["radius"] = 0;
+				["setRange"] = "1";
+			};
+			["slot"] = 1;
+			["target"] = {
 			};
 		};
 	};
 	["switchSettings"] = {
-		["switchOnCooldown"] = "2";
+		["switchOnCooldown"] = 0;
 		["switchOnRange"] = "0";
-		["switchRandom"] = "0";
+		["switchRandom"] = "1";
 	};
 }
 return obj1
