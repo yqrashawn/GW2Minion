@@ -4,7 +4,7 @@ local multiRefObjects = {
 } -- multiRefObjects
 local obj1 = {
 	["idcounter"] = 72;
-	["name"] = "WayfarerStandalone";
+	["name"] = "WayfarerFoothills";
 	["tasks"] = {
 		[1] = {
 			["complete"] = true;
@@ -122,7 +122,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -180,7 +180,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -215,7 +215,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -328,7 +328,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -382,7 +382,7 @@ local obj1 = {
 			["maxlvl"] = "80";
 			["minduration"] = 0;
 			["minlvl"] = "0";
-			["name"] = "Bear Shaman Marga Skill Challenge";
+			["name"] = "SP_Marga";
 			["partysize"] = 0;
 			["priority"] = 10;
 			["radius"] = "0";
@@ -461,7 +461,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -496,7 +496,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -531,7 +531,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -621,7 +621,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -656,7 +656,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -749,7 +749,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -772,7 +772,11 @@ local obj1 = {
 			["customVars"] = {
 				["TM_TASK_conversationOrder"] = {
 					["type"] = "Field";
-					["value"] = "13 14";
+					["value"] = "13,14";
+				};
+				["TM_TASK_conversationType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Type";
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
@@ -921,7 +925,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -956,7 +960,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1002,7 +1006,7 @@ local obj1 = {
 			["customVars"] = {
 				["TM_TASK_randomMovement"] = {
 					["type"] = "CheckBox";
-					["value"] = "0";
+					["value"] = "1";
 				};
 				["TM_TASK_randomTargetPosition"] = {
 					["type"] = "CheckBox";
@@ -1014,7 +1018,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1049,7 +1053,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1063,7 +1067,7 @@ local obj1 = {
 			["name"] = "POI_Haivoissen_Kenning";
 			["partysize"] = 0;
 			["priority"] = 28;
-			["radius"] = 0;
+			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
 		[29] = {
@@ -1142,7 +1146,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1177,7 +1181,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1267,7 +1271,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1325,7 +1329,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1403,7 +1407,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1559,7 +1563,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1672,7 +1676,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1707,7 +1711,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1777,7 +1781,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1812,7 +1816,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -1823,7 +1827,7 @@ local obj1 = {
 			["maxlvl"] = "80";
 			["minduration"] = 0;
 			["minlvl"] = "0";
-			["name"] = "Edenvar's Homestead";
+			["name"] = "POI_Edenvar's Homestead";
 			["partysize"] = 0;
 			["priority"] = 49;
 			["radius"] = 0;
@@ -2018,7 +2022,7 @@ local obj1 = {
 			["id"] = 54;
 			["mapid"] = 28;
 			["mappos"] = "16744/21984/-2871";
-			["maxduration"] = 0;
+			["maxduration"] = "0";
 			["maxlvl"] = 80;
 			["minduration"] = 0;
 			["minlvl"] = "0";
@@ -2046,7 +2050,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -2202,7 +2206,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -2294,7 +2298,7 @@ local obj1 = {
 			["name"] = "Grindtolvl13";
 			["partysize"] = 0;
 			["priority"] = 61;
-			["radius"] = 0;
+			["radius"] = "0";
 			["type"] = "Grind";
 		};
 		[62] = {
@@ -2315,7 +2319,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -2448,7 +2452,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -2561,7 +2565,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -2639,7 +2643,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";

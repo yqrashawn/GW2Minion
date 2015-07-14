@@ -4,7 +4,7 @@ local multiRefObjects = {
 } -- multiRefObjects
 local obj1 = {
 	["idcounter"] = 97;
-	["name"] = "CaledonStandalone";
+	["name"] = "CaledonForest";
 	["tasks"] = {
 		[1] = {
 			["complete"] = true;
@@ -34,7 +34,7 @@ local obj1 = {
 			["maxduration"] = 0;
 			["maxlvl"] = "80";
 			["minduration"] = 0;
-			["minlvl"] = 0;
+			["minlvl"] = "0";
 			["name"] = "WP_Astorea";
 			["partysize"] = 0;
 			["priority"] = 1;
@@ -546,7 +546,7 @@ local obj1 = {
 			["name"] = "Vista_Sleive";
 			["partysize"] = 0;
 			["priority"] = 13;
-			["radius"] = 0;
+			["radius"] = "0";
 			["type"] = "Vista";
 		};
 		[14] = {
@@ -690,6 +690,10 @@ local obj1 = {
 					["type"] = "Field";
 					["value"] = "13,13,6";
 				};
+				["TM_TASK_conversationType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Type";
+				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
 					["value"] = "175347";
@@ -795,6 +799,10 @@ local obj1 = {
 					["type"] = "Field";
 					["value"] = "";
 				};
+				["TM_TASK_conversationType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Index";
+				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
 					["value"] = "43670,43655,174864,175626";
@@ -848,6 +856,10 @@ local obj1 = {
 				["TM_TASK_conversationOrder"] = {
 					["type"] = "Field";
 					["value"] = "";
+				};
+				["TM_TASK_conversationType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Index";
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
@@ -903,6 +915,10 @@ local obj1 = {
 					["type"] = "Field";
 					["value"] = "";
 				};
+				["TM_TASK_conversationType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Index";
+				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
 					["value"] = "43670,43655,174864,175626";
@@ -956,6 +972,10 @@ local obj1 = {
 				["TM_TASK_conversationOrder"] = {
 					["type"] = "Field";
 					["value"] = "";
+				};
+				["TM_TASK_conversationType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Index";
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
@@ -1064,7 +1084,11 @@ local obj1 = {
 			["customVars"] = {
 				["TM_TASK_conversationOrder"] = {
 					["type"] = "Field";
-					["value"] = "";
+					["value"] = "0";
+				};
+				["TM_TASK_conversationType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Index";
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
@@ -1527,7 +1551,7 @@ local obj1 = {
 			["id"] = 41;
 			["mapid"] = 34;
 			["mappos"] = "-10425/-11698/-1416";
-			["maxduration"] = 0;
+			["maxduration"] = "0";
 			["maxlvl"] = 80;
 			["minduration"] = 0;
 			["minlvl"] = 0;
@@ -2050,7 +2074,7 @@ local obj1 = {
 			["mapid"] = 34;
 			["mappos"] = "18064/-10001/-896";
 			["maxduration"] = 0;
-			["maxlvl"] = 80;
+			["maxlvl"] = "80";
 			["minduration"] = 0;
 			["minlvl"] = 0;
 			["name"] = "WP_Sperrins";
@@ -2225,7 +2249,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -2260,7 +2284,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -2318,7 +2342,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -2411,7 +2435,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -2460,7 +2484,7 @@ local obj1 = {
 			["name"] = "WP_Titans_Staircase";
 			["partysize"] = 0;
 			["priority"] = 67;
-			["radius"] = 0;
+			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
 		[68] = {
@@ -2692,7 +2716,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -2706,7 +2730,7 @@ local obj1 = {
 			["name"] = "WP_Hamlet_of_Annwen";
 			["partysize"] = 0;
 			["priority"] = 73;
-			["radius"] = 0;
+			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
 		[74] = {
@@ -2762,7 +2786,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -2820,7 +2844,7 @@ local obj1 = {
 			["customVars"] = {
 				["TM_TASK_SPType"] = {
 					["type"] = "ComboBox";
-					["value"] = "";
+					["value"] = "Commune";
 				};
 				["TM_TASK_conversationOrder"] = {
 					["type"] = "Field";
@@ -2976,7 +3000,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -3046,7 +3070,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -3136,7 +3160,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -3150,7 +3174,7 @@ local obj1 = {
 			["name"] = "POI_Banshees_Kenn";
 			["partysize"] = 0;
 			["priority"] = 85;
-			["radius"] = 0;
+			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
 		[86] = {
@@ -3171,7 +3195,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -3249,7 +3273,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";

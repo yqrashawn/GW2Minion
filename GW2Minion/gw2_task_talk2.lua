@@ -100,40 +100,31 @@ end
 
 e_THandleConversationByIndex = inheritsFrom( ml_effect )
 function e_THandleConversationByIndex:execute()
-	ml_log("e_THandleConversationByIndex ")
-
-	local options = Player:GetConversationOptions()
-	if ( TableSize(options) > 0 ) then
-
-		local index,option = next ( options)
-		while ( index and option ) do
-			if ( e_THandleConversation.nextChatOption ~= nil ) then
-				if( option.index == e_THandleConversation.nextChatOption) then
-					d("Selecting Chatoption by index:"..tostring(e_THandleConversation.nextChatOption))
-
-					Player:SelectConversationOptionByIndex(e_THandleConversation.nextChatOption)
-
-					e_THandleConversation.nextChatOption = nil
-					ml_global_information.Wait(1200)
-					return ml_log(true)
-				end
-			else
-				if ( option.index == 0 ) then
-					d("Selecting First Chatoption:"..tostring(option.type))
-					Player:SelectConversationOptionByIndex(option.type)
-					e_THandleConversation.nextChatOption = nil
+	ml_log("e_THandleConversationByIndex")
+	local chatOptions = Player:GetConversationOptions()
+	if (ValidTable(chatOptions)) then
+		local nextChatOption = c_THandleConversation.chatOptionsTable[1]
+		if (nextChatOption ~= nil) then
+			for _,chatOption in pairs(chatOptions) do
+				if(chatOption.index == nextChatOption) then
+					d("Selecting Chatoption by index:"..tostring(nextChatOption))
+					Player:SelectConversationOptionByIndex(nextChatOption)
+					table.remove(c_THandleConversation.chatOptionsTable,1)
 					ml_global_information.Wait(1200)
 					return ml_log(true)
 				end
 			end
-			index,option = next ( options,index )
+			ml_error("e_THandleConversationByIndex indexed option not found")
+		else
+			d("Selecting First Chatoption.")
+			Player:SelectConversationOptionByIndex(0)
+			ml_global_information.Wait(1200)
+			return ml_log(true)
 		end
-
 	else
-		ml_error("e_THandleConversation has no valid options")
+		ml_error("e_THandleConversationByIndex has no valid chat options")
 	end
-	e_THandleConversation.lastChatOption = nil
-	e_THandleConversation.nextChatOption = nil
+	c_THandleConversation.chatOptionsTable = {}
 	return ml_log(false)
 end
 

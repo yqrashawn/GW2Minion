@@ -4,7 +4,7 @@ local multiRefObjects = {
 } -- multiRefObjects
 local obj1 = {
 	["idcounter"] = 90;
-	["name"] = "MetricaStandalone";
+	["name"] = "MetricaProvince";
 	["tasks"] = {
 		[1] = {
 			["complete"] = true;
@@ -823,7 +823,7 @@ local obj1 = {
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
-					["value"] = "135266816";
+					["value"] = "";
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
@@ -1736,7 +1736,7 @@ local obj1 = {
 			["mapid"] = 35;
 			["mappos"] = "18706/-21898/-1716";
 			["maxduration"] = "600";
-			["maxlvl"] = 80;
+			["maxlvl"] = "80";
 			["minduration"] = 0;
 			["minlvl"] = "8";
 			["name"] = "Vista_Akk Wilds";
@@ -1786,14 +1786,18 @@ local obj1 = {
 			["customVars"] = {
 				["TM_TASK_conversationOrder"] = {
 					["type"] = "Field";
-					["value"] = "0,0,0,0";
+					["value"] = "0,0,0,0,0,1,2,1,2,0";
+				};
+				["TM_TASK_conversationType"] = {
+					["type"] = "ComboBox";
+					["value"] = "Index";
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
-					["value"] = "43352";
+					["value"] = "23192";
 				};
 			};
-			["enabled"] = "0";
+			["enabled"] = "1";
 			["id"] = 47;
 			["mapid"] = 35;
 			["mappos"] = "23816/-6201/-941";
@@ -1801,11 +1805,11 @@ local obj1 = {
 			["maxlvl"] = "80";
 			["minduration"] = 0;
 			["minlvl"] = "0";
-			["name"] = "SP_Oola_NOT_WORKING_ATM";
+			["name"] = "SP_Oola";
 			["partysize"] = 0;
 			["priority"] = 47;
 			["radius"] = "0";
-			["type"] = "Talk_Index";
+			["type"] = "Talk";
 		};
 		[48] = {
 			["complete"] = true;
@@ -2106,7 +2110,7 @@ local obj1 = {
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
-					["value"] = "135270912";
+					["value"] = "";
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
@@ -2149,7 +2153,7 @@ local obj1 = {
 				};
 				["TM_TASK_useWaypoint"] = {
 					["type"] = "CheckBox";
-					["value"] = "1";
+					["value"] = "0";
 				};
 			};
 			["enabled"] = "1";
@@ -2632,7 +2636,7 @@ local obj1 = {
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
-					["value"] = "135270912";
+					["value"] = "";
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";
@@ -2648,7 +2652,7 @@ local obj1 = {
 			["mapid"] = 35;
 			["mappos"] = "19939/16051/-885";
 			["maxduration"] = "600";
-			["maxlvl"] = 80;
+			["maxlvl"] = "80";
 			["minduration"] = 0;
 			["minlvl"] = "12";
 			["name"] = "SP_Luminates Plant";
@@ -3041,7 +3045,7 @@ local obj1 = {
 				};
 				["TM_TASK_interactContentID2s"] = {
 					["type"] = "Field";
-					["value"] = "135270912";
+					["value"] = "";
 				};
 				["TM_TASK_interactContentIDs"] = {
 					["type"] = "Field";

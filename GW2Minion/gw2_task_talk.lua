@@ -34,7 +34,7 @@ function gw2_task_talk:Init()
 	self:add(ml_element:create( "Resting", c_waitToHeal, e_waitToHeal, 300 ), self.process_elements)
 
 	-- HandleConversation
-	self:add(ml_element:create( "HandleConversation", c_THandleConversation, e_THandleConversation, 200 ), self.process_elements)
+	self:add(ml_element:create( "HandleConversation", c_THandleConversation, e_THandleConversationByType, 200 ), self.process_elements)
 
 	-- MoveToInteractTarget
 	self:add(ml_element:create( "MoveToInteractTarget", c_MoveToInteractTarget, e_MoveToInteractTarget, 125 ), self.process_elements)
@@ -77,7 +77,8 @@ end
 
 -- TaskManager functions
 function gw2_task_talk:UIInit_TM()
-	ml_task_mgr.NewField("Conversation Order (Type)", "conversationOrder")
+	ml_task_mgr.NewCombobox("Conversation Type", "conversationType", "Type,Index")
+	ml_task_mgr.NewField("Conversation Order", "conversationOrder")
 	ml_task_mgr.NewField("Interact ContentIDs", "interactContentIDs")
 end
 -- TaskManager function: Checks for custom conditions to start this task, this is checked before the task is selected to be enqueued/created
@@ -100,85 +101,52 @@ end
 
 -- Handle conversations by the entered order of the task
 c_THandleConversation = inheritsFrom( ml_cause )
-e_THandleConversation = inheritsFrom( ml_effect )
-e_THandleConversation.lastChatOptionReached = false
-e_THandleConversation.lastChatOption = nil
-e_THandleConversation.nextChatOption = nil
+e_THandleConversationByType = inheritsFrom( ml_effect )
+c_THandleConversation.chatOptionsTable = {}
 function c_THandleConversation:evaluate()
-	if ( not ml_global_information.Player_InCombat and Player:IsConversationOpen() ) then
-
-		if ( e_THandleConversation.nextChatOption ~= nil ) then
-			return true
-		end
-
-		if ( ml_task_hub:CurrentTask().conversationOrder ~= nil and ml_task_hub:CurrentTask().conversationOrder ~= "" ) then
-			e_THandleConversation.lastChatOptionReached = false
-			for chatoption in StringSplit(ml_task_hub:CurrentTask().conversationOrder,",") do
-				if ( e_THandleConversation.lastChatOption == nil ) then
-					e_THandleConversation.lastChatOption = tonumber(chatoption)
-					e_THandleConversation.nextChatOption = tonumber(chatoption)
-					return true
-
-				else
-					if ( tonumber(chatoption) == e_THandleConversation.lastChatOption ) then
-						e_THandleConversation.lastChatOptionReached = true
-					end
-					
-					if ( e_THandleConversation.lastChatOptionReached and tonumber(chatoption) ~= e_THandleConversation.lastChatOption ) then
-						e_THandleConversation.lastChatOption = tonumber(chatoption)
-						e_THandleConversation.nextChatOption = tonumber(chatoption)
-						return true
-					end
-				end
+	if (ml_global_information.Player_InCombat ~= true and Player:IsConversationOpen() and ValidTable(Player:GetConversationOptions())) then
+		if (ValidTable(c_THandleConversation.chatOptionsTable) == false and ValidString(ml_task_hub:CurrentTask().conversationOrder)) then
+			for chatOption in StringSplit(ml_task_hub:CurrentTask().conversationOrder,",") do
+				table.insert(c_THandleConversation.chatOptionsTable,tonumber(chatOption))
 			end
 		end
-
-		if ( TableSize(Player:GetConversationOptions()) > 0 ) then
-		-- default select 1st option..usually does the job
-			return true
-		end
+		return true
 	end
-	
-	e_THandleConversation.lastChatOptionReached = false
-	e_THandleConversation.lastChatOption = nil
-	e_THandleConversation.nextChatOption = nil
+	c_THandleConversation.chatOptionsTable = {}
 	return false
 end
-function e_THandleConversation:execute()
-	ml_log("e_THandleConversation ")
-
-	local options = Player:GetConversationOptions()
-	if ( TableSize(options) > 0 ) then
-
-		local index,option = next ( options)
-		while ( index and option ) do
-			if ( e_THandleConversation.nextChatOption ~= nil ) then
-				if( option.type == e_THandleConversation.nextChatOption) then
-					d("Selecting Chatoption by type:"..tostring(e_THandleConversation.nextChatOption))
-
-					Player:SelectConversationOption(e_THandleConversation.nextChatOption)
-
-					e_THandleConversation.nextChatOption = nil
+function e_THandleConversationByType:execute()
+	ml_log("e_THandleConversationByType")
+	local chatOptions = Player:GetConversationOptions()
+	if (ValidTable(chatOptions)) then
+		local nextChatOption = c_THandleConversation.chatOptionsTable[1]
+		if (nextChatOption ~= nil) then
+			for _,chatOption in pairs(chatOptions) do
+				if(ml_task_hub:CurrentTask().conversationType == "Index" and chatOption.index == nextChatOption) then
+					d("Selecting Chatoption by index:"..tostring(nextChatOption))
+					Player:SelectConversationOptionByIndex(nextChatOption)
+					table.remove(c_THandleConversation.chatOptionsTable,1)
 					ml_global_information.Wait(1200)
 					return ml_log(true)
-				end
-			else
-				if ( option.index == 0 ) then
-					d("Selecting First Chatoption:"..tostring(option.type))
-					Player:SelectConversationOption(option.type)
-					e_THandleConversation.nextChatOption = nil
+				elseif(--[[ml_task_hub:CurrentTask().conversationType == "Type" and]] chatOption.type == nextChatOption) then
+					d("Selecting Chatoption by type:"..tostring(nextChatOption))
+					Player:SelectConversationOption(nextChatOption)
+					table.remove(c_THandleConversation.chatOptionsTable,1)
 					ml_global_information.Wait(1200)
 					return ml_log(true)
 				end
 			end
-			index,option = next ( options,index )
+			ml_error("e_THandleConversationByType option of that type not found")
+		else
+			d("Selecting First Chatoption.")
+			Player:SelectConversationOptionByIndex(0)
+			ml_global_information.Wait(1200)
+			return ml_log(true)
 		end
-
 	else
-		ml_error("e_THandleConversation has no valid options")
+		ml_error("e_THandleConversationByType has no valid chat options")
 	end
-	e_THandleConversation.lastChatOption = nil
-	e_THandleConversation.nextChatOption = nil
+	c_THandleConversation.chatOptionsTable = {}
 	return ml_log(false)
 end
 
