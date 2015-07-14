@@ -554,7 +554,9 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "BuyManager_GarheringTool" or 
 			k == "SalvageManager_Active" or
 			k == "gMultiBotEnabled" or
-			k == "gNoMeshLoad"
+			k == "gNoMeshLoad" or
+			k == "sMtargetmode" or
+			k == "sMmode"
 			) then
 			Settings.GW2Minion[tostring(k)] = v
 					
