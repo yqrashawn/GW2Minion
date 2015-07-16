@@ -99,7 +99,7 @@ function e_Downed:execute()
 					Player:SetTarget(E.id)
 
 				else
-					gw2_skill_manager:Use( target )
+					gw2_skill_manager:Use( target.id )
 				end
 				return ml_log(true)
 			end
@@ -261,7 +261,7 @@ function e_reviveNPC:execute()
 			local id,entry = next(TargetList)
 			if (id and entry ) then
 				ml_log(" Killing nearby targets first..")
-				gw2_skill_manager:Use(entry) -- we should create a combat task here ...
+				gw2_skill_manager:Use(entry.id) -- we should create a combat task here ...
 				return ml_log(true)
 			end
 		end
@@ -317,7 +317,7 @@ function c_AttackBestNearbyCharacterTarget:evaluate()
 end
 function e_AttackBestNearbyCharacterTarget:execute()
 	ml_log( "AttackBestCharacterTarget" )
-	gw2_skill_manager:Use( c_AttackBestNearbyCharacterTarget.target )
+	gw2_skill_manager:Use( c_AttackBestNearbyCharacterTarget.target.id )
 	c_AttackBestNearbyCharacterTarget.target = nil
 end
 
