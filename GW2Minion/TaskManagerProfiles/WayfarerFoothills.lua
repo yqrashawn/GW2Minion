@@ -3,8 +3,8 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
-	["idcounter"] = 72;
-	["name"] = "WayfarerFoothills";
+	["idcounter"] = 73;
+	["name"] = "WayfarerStandalone";
 	["tasks"] = {
 		[1] = {
 			["complete"] = true;
@@ -2091,6 +2091,41 @@ local obj1 = {
 			["type"] = "Grind";
 		};
 		[57] = {
+			["complete"] = false;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 57;
+			["mapid"] = 28;
+			["mappos"] = "10310/30504/-2917";
+			["maxduration"] = 0;
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "POI_Kevachs_Homestead";
+			["partysize"] = 0;
+			["priority"] = 57;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[58] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2120,7 +2155,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 57;
+			["id"] = 58;
 			["mapid"] = 28;
 			["mappos"] = "7136/27423/-1133";
 			["maxduration"] = 0;
@@ -2129,11 +2164,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "SP_Aging_Ale_Barrels";
 			["partysize"] = 0;
-			["priority"] = 57;
+			["priority"] = 58;
 			["radius"] = "0";
 			["type"] = "Skillpoint";
 		};
-		[58] = {
+		[59] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2175,7 +2210,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 58;
+			["id"] = 59;
 			["mapid"] = 28;
 			["mappos"] = "10707/28608/-2771";
 			["maxduration"] = 0;
@@ -2184,11 +2219,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "HQ_Help_Kevach";
 			["partysize"] = 0;
-			["priority"] = 58;
+			["priority"] = 59;
 			["radius"] = "6000";
 			["type"] = "HeartQuest";
 		};
-		[59] = {
+		[60] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2210,7 +2245,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 59;
+			["id"] = 60;
 			["mapid"] = 28;
 			["mappos"] = "-5030/32241/-4677";
 			["maxduration"] = 0;
@@ -2219,11 +2254,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "WP_Crossroads_Haven";
 			["partysize"] = 0;
-			["priority"] = 59;
+			["priority"] = 60;
 			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
-		[60] = {
+		[61] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2265,7 +2300,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 60;
+			["id"] = 61;
 			["mapid"] = 28;
 			["mappos"] = "-3963/28629/-4696";
 			["maxduration"] = 0;
@@ -2274,11 +2309,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "HQ_Crossroads_Haven";
 			["partysize"] = 0;
-			["priority"] = 60;
+			["priority"] = 61;
 			["radius"] = "50000";
 			["type"] = "HeartQuest";
 		};
-		[61] = {
+		[62] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2288,7 +2323,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 61;
+			["id"] = 62;
 			["mapid"] = 28;
 			["mappos"] = "-3966/27756/-4693";
 			["maxduration"] = 0;
@@ -2297,11 +2332,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Grindtolvl13";
 			["partysize"] = 0;
-			["priority"] = 61;
+			["priority"] = 62;
 			["radius"] = "0";
 			["type"] = "Grind";
 		};
-		[62] = {
+		[63] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2323,7 +2358,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 62;
+			["id"] = 63;
 			["mapid"] = 28;
 			["mappos"] = "14416/38330/-4835";
 			["maxduration"] = 0;
@@ -2332,11 +2367,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "WP_Dolyak_Pass";
 			["partysize"] = 0;
-			["priority"] = 62;
+			["priority"] = 63;
 			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
-		[63] = {
+		[64] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2378,7 +2413,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 63;
+			["id"] = 64;
 			["mapid"] = 28;
 			["mappos"] = "15307/38089/-4944";
 			["maxduration"] = 0;
@@ -2387,11 +2422,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "HQ_Help_Maxtar";
 			["partysize"] = 0;
-			["priority"] = 63;
+			["priority"] = 64;
 			["radius"] = "10000";
 			["type"] = "HeartQuest";
 		};
-		[64] = {
+		[65] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2421,7 +2456,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 64;
+			["id"] = 65;
 			["mapid"] = 28;
 			["mappos"] = "15730/49042/-6396";
 			["maxduration"] = 0;
@@ -2430,11 +2465,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "SP_Ancient_Cave_Spring";
 			["partysize"] = 0;
-			["priority"] = 64;
+			["priority"] = 65;
 			["radius"] = "0";
 			["type"] = "Skillpoint";
 		};
-		[65] = {
+		[66] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2456,7 +2491,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 65;
+			["id"] = 66;
 			["mapid"] = 28;
 			["mappos"] = "10427/48652/-7762";
 			["maxduration"] = 0;
@@ -2465,11 +2500,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "WP_Solitude";
 			["partysize"] = 0;
-			["priority"] = 65;
+			["priority"] = 66;
 			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
-		[66] = {
+		[67] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2511,7 +2546,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 66;
+			["id"] = 67;
 			["mapid"] = 28;
 			["mappos"] = "3773/42761/-6209";
 			["maxduration"] = 0;
@@ -2520,11 +2555,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "HQ_Challenge_Jormag_Minions";
 			["partysize"] = 0;
-			["priority"] = 66;
+			["priority"] = 67;
 			["radius"] = "9000";
 			["type"] = "HeartQuest";
 		};
-		[67] = {
+		[68] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2534,7 +2569,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 67;
+			["id"] = 68;
 			["mapid"] = 28;
 			["mappos"] = "1500/42080/-8221";
 			["maxduration"] = 0;
@@ -2543,11 +2578,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "Vista_Solitude";
 			["partysize"] = 0;
-			["priority"] = 67;
+			["priority"] = 68;
 			["radius"] = "0";
 			["type"] = "Vista";
 		};
-		[68] = {
+		[69] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2569,7 +2604,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 68;
+			["id"] = 69;
 			["mapid"] = 28;
 			["mappos"] = "955/46672/-7411";
 			["maxduration"] = 0;
@@ -2578,11 +2613,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "POI_Dragonblest Hold";
 			["partysize"] = 0;
-			["priority"] = 68;
+			["priority"] = 69;
 			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
-		[69] = {
+		[70] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2612,7 +2647,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 69;
+			["id"] = 70;
 			["mapid"] = 28;
 			["mappos"] = "-3006/46868/-8610";
 			["maxduration"] = 0;
@@ -2621,11 +2656,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "SP_Bjords_Banner";
 			["partysize"] = 0;
-			["priority"] = 69;
+			["priority"] = 70;
 			["radius"] = 0;
 			["type"] = "Skillpoint";
 		};
-		[70] = {
+		[71] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2647,7 +2682,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 70;
+			["id"] = 71;
 			["mapid"] = 28;
 			["mappos"] = "-12829/40747/-4483";
 			["maxduration"] = 0;
@@ -2656,11 +2691,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "WP_Dawnrise";
 			["partysize"] = 0;
-			["priority"] = 70;
+			["priority"] = 71;
 			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
-		[71] = {
+		[72] = {
 			["complete"] = false;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2670,7 +2705,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 71;
+			["id"] = 72;
 			["mapid"] = 28;
 			["mappos"] = "205/43665/-7236";
 			["maxduration"] = 0;
@@ -2679,7 +2714,7 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Grindtolvl15";
 			["partysize"] = 0;
-			["priority"] = 71;
+			["priority"] = 72;
 			["radius"] = 0;
 			["type"] = "Grind";
 		};

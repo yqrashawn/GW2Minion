@@ -3,8 +3,8 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
-	["idcounter"] = 86;
-	["name"] = "PlainsOfAshford";
+	["idcounter"] = 87;
+	["name"] = "AshfordStandalone";
 	["tasks"] = {
 		[1] = {
 			["complete"] = false;
@@ -1322,6 +1322,49 @@ local obj1 = {
 			["type"] = "MoveTo Position";
 		};
 		[34] = {
+			["Create"] = nil --[[thread]]
+;
+			["class"] = nil --[[thread]]
+;
+			["complete"] = false;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 34;
+			["isa"] = nil --[[thread]]
+;
+			["mapid"] = 19;
+			["mappos"] = "-12891/-12372/-332";
+			["maxduration"] = 0;
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "WP_Adorea";
+			["partysize"] = 0;
+			["priority"] = 34;
+			["radius"] = 0;
+			["superClass"] = nil --[[thread]]
+;
+			["type"] = "MoveTo Position";
+		};
+		[35] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1331,7 +1374,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 34;
+			["id"] = 35;
 			["mapid"] = 19;
 			["mappos"] = "-16682/-10232/-925";
 			["maxduration"] = 0;
@@ -1340,11 +1383,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Grindtolvl9";
 			["partysize"] = 0;
-			["priority"] = 34;
+			["priority"] = 35;
 			["radius"] = 0;
 			["type"] = "Grind";
 		};
-		[35] = {
+		[36] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1366,7 +1409,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 35;
+			["id"] = 36;
 			["mapid"] = 19;
 			["mappos"] = "-1988/-10344/-1732";
 			["maxduration"] = 0;
@@ -1375,11 +1418,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "WP_Ashford";
 			["partysize"] = 0;
-			["priority"] = 35;
+			["priority"] = 36;
 			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
-		[36] = {
+		[37] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1421,7 +1464,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 36;
+			["id"] = 37;
 			["mapid"] = 19;
 			["mappos"] = "-7987/-5521/-2319";
 			["maxduration"] = 0;
@@ -1430,11 +1473,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "HQ_Help_Paenula";
 			["partysize"] = 0;
-			["priority"] = 36;
+			["priority"] = 37;
 			["radius"] = "0";
 			["type"] = "HeartQuest";
 		};
-		[37] = {
+		[38] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1464,7 +1507,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 37;
+			["id"] = 38;
 			["mapid"] = 19;
 			["mappos"] = "-5142/-7702/-1985";
 			["maxduration"] = 0;
@@ -1473,11 +1516,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "SP_Centurio_Micka";
 			["partysize"] = 0;
-			["priority"] = 37;
+			["priority"] = 38;
 			["radius"] = "0";
 			["type"] = "Skillpoint";
 		};
-		[38] = {
+		[39] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1487,7 +1530,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 38;
+			["id"] = 39;
 			["mapid"] = 19;
 			["mappos"] = "-10577/-20187/-1466";
 			["maxduration"] = 0;
@@ -1496,11 +1539,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Vista_Adorea";
 			["partysize"] = 0;
-			["priority"] = 38;
+			["priority"] = 39;
 			["radius"] = 0;
 			["type"] = "Vista";
 		};
-		[39] = {
+		[40] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1510,7 +1553,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 39;
+			["id"] = 40;
 			["mapid"] = 19;
 			["mappos"] = "-13247/-11694/-378";
 			["maxduration"] = 0;
@@ -1519,11 +1562,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Grindtolvl10";
 			["partysize"] = 0;
-			["priority"] = 39;
+			["priority"] = 40;
 			["radius"] = 0;
 			["type"] = "Grind";
 		};
-		[40] = {
+		[41] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1553,7 +1596,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 40;
+			["id"] = 41;
 			["mapid"] = 19;
 			["mappos"] = "-15200/-23978/-1255";
 			["maxduration"] = 0;
@@ -1562,11 +1605,11 @@ local obj1 = {
 			["minlvl"] = "10";
 			["name"] = "SP_Flame_Legion_Effigy";
 			["partysize"] = 0;
-			["priority"] = 40;
+			["priority"] = 41;
 			["radius"] = 0;
 			["type"] = "Skillpoint";
 		};
-		[41] = {
+		[42] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1608,7 +1651,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 41;
+			["id"] = 42;
 			["mapid"] = 19;
 			["mappos"] = "3684/-2934/-696";
 			["maxduration"] = 0;
@@ -1617,44 +1660,9 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "HQ_Help_Gavros";
 			["partysize"] = 0;
-			["priority"] = 41;
+			["priority"] = 42;
 			["radius"] = "6500";
 			["type"] = "HeartQuest";
-		};
-		[42] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 42;
-			["mapid"] = 19;
-			["mappos"] = "-1092/-1205/-674";
-			["maxduration"] = 0;
-			["maxlvl"] = "80";
-			["minduration"] = 0;
-			["minlvl"] = 0;
-			["name"] = "Area_Abbey_Ruins";
-			["partysize"] = 0;
-			["priority"] = 42;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
 		};
 		[43] = {
 			["complete"] = true;
@@ -1680,15 +1688,15 @@ local obj1 = {
 			["enabled"] = "1";
 			["id"] = 43;
 			["mapid"] = 19;
-			["mappos"] = "-138/5964/-1969";
+			["mappos"] = "-1092/-1205/-674";
 			["maxduration"] = 0;
 			["maxlvl"] = "80";
 			["minduration"] = 0;
 			["minlvl"] = 0;
-			["name"] = "WP_Spirit_Hunter";
+			["name"] = "Area_Abbey_Ruins";
 			["partysize"] = 0;
 			["priority"] = 43;
-			["radius"] = 0;
+			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
 		[44] = {
@@ -1715,41 +1723,18 @@ local obj1 = {
 			["enabled"] = "1";
 			["id"] = 44;
 			["mapid"] = 19;
-			["mappos"] = "-1115/15274/-1355";
+			["mappos"] = "-138/5964/-1969";
 			["maxduration"] = 0;
-			["maxlvl"] = 80;
+			["maxlvl"] = "80";
 			["minduration"] = 0;
 			["minlvl"] = 0;
-			["name"] = "POI_Deadgos_Lair";
+			["name"] = "WP_Spirit_Hunter";
 			["partysize"] = 0;
 			["priority"] = 44;
 			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
 		[45] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_maxKills"] = {
-					["type"] = "Numeric";
-					["value"] = 0;
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 45;
-			["mapid"] = 19;
-			["mappos"] = "-285/8128/-1601";
-			["maxduration"] = 0;
-			["maxlvl"] = "10";
-			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "Grinddtolvl11";
-			["partysize"] = 0;
-			["priority"] = 45;
-			["radius"] = "0";
-			["type"] = "Grind";
-		};
-		[46] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1771,18 +1756,41 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 46;
+			["id"] = 45;
 			["mapid"] = 19;
-			["mappos"] = "3082/12743/-12";
+			["mappos"] = "-1115/15274/-1355";
 			["maxduration"] = 0;
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = "0";
-			["name"] = "POI_Shards_of_War";
+			["minlvl"] = 0;
+			["name"] = "POI_Deadgos_Lair";
 			["partysize"] = 0;
-			["priority"] = 46;
+			["priority"] = 45;
 			["radius"] = 0;
 			["type"] = "MoveTo Position";
+		};
+		[46] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_maxKills"] = {
+					["type"] = "Numeric";
+					["value"] = 0;
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 46;
+			["mapid"] = 19;
+			["mappos"] = "-285/8128/-1601";
+			["maxduration"] = 0;
+			["maxlvl"] = "10";
+			["minduration"] = 0;
+			["minlvl"] = "0";
+			["name"] = "Grinddtolvl11";
+			["partysize"] = 0;
+			["priority"] = 46;
+			["radius"] = "0";
+			["type"] = "Grind";
 		};
 		[47] = {
 			["complete"] = true;
@@ -1808,12 +1816,12 @@ local obj1 = {
 			["enabled"] = "1";
 			["id"] = 47;
 			["mapid"] = 19;
-			["mappos"] = "8820/13016/-2306";
+			["mappos"] = "3082/12743/-12";
 			["maxduration"] = 0;
 			["maxlvl"] = 80;
 			["minduration"] = 0;
 			["minlvl"] = "0";
-			["name"] = "POI_Ghostsummit";
+			["name"] = "POI_Shards_of_War";
 			["partysize"] = 0;
 			["priority"] = 47;
 			["radius"] = 0;
@@ -1843,12 +1851,12 @@ local obj1 = {
 			["enabled"] = "1";
 			["id"] = 48;
 			["mapid"] = 19;
-			["mappos"] = "12702/12908/-1370";
+			["mappos"] = "8820/13016/-2306";
 			["maxduration"] = 0;
 			["maxlvl"] = 80;
 			["minduration"] = 0;
-			["minlvl"] = 0;
-			["name"] = "WP_Ascalon_Catacombs";
+			["minlvl"] = "0";
+			["name"] = "POI_Ghostsummit";
 			["partysize"] = 0;
 			["priority"] = 48;
 			["radius"] = 0;
@@ -1878,41 +1886,18 @@ local obj1 = {
 			["enabled"] = "1";
 			["id"] = 49;
 			["mapid"] = 19;
-			["mappos"] = "16076/6605/-1153";
+			["mappos"] = "12702/12908/-1370";
 			["maxduration"] = 0;
-			["maxlvl"] = "80";
+			["maxlvl"] = 80;
 			["minduration"] = 0;
 			["minlvl"] = 0;
-			["name"] = "POI_Swordcross_Outpost";
+			["name"] = "WP_Ascalon_Catacombs";
 			["partysize"] = 0;
 			["priority"] = 49;
 			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
 		[50] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_usesTeleport"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 50;
-			["mapid"] = 19;
-			["mappos"] = "14057/3437/-1906";
-			["maxduration"] = 0;
-			["maxlvl"] = 80;
-			["minduration"] = 0;
-			["minlvl"] = 0;
-			["name"] = "Vistaa_Swordcross";
-			["partysize"] = 0;
-			["priority"] = 50;
-			["radius"] = 0;
-			["type"] = "Vista";
-		};
-		[51] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -1934,18 +1919,41 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
+			["id"] = 50;
+			["mapid"] = 19;
+			["mappos"] = "16076/6605/-1153";
+			["maxduration"] = 0;
+			["maxlvl"] = "80";
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "POI_Swordcross_Outpost";
+			["partysize"] = 0;
+			["priority"] = 50;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[51] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_usesTeleport"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
 			["id"] = 51;
 			["mapid"] = 19;
-			["mappos"] = "24385/6990/-511";
+			["mappos"] = "14057/3437/-1906";
 			["maxduration"] = 0;
 			["maxlvl"] = 80;
 			["minduration"] = 0;
 			["minlvl"] = 0;
-			["name"] = "WP_Phasmatis";
+			["name"] = "Vistaa_Swordcross";
 			["partysize"] = 0;
 			["priority"] = 51;
 			["radius"] = 0;
-			["type"] = "MoveTo Position";
+			["type"] = "Vista";
 		};
 		[52] = {
 			["complete"] = true;
@@ -1971,6 +1979,41 @@ local obj1 = {
 			["enabled"] = "1";
 			["id"] = 52;
 			["mapid"] = 19;
+			["mappos"] = "24385/6990/-511";
+			["maxduration"] = 0;
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "WP_Phasmatis";
+			["partysize"] = 0;
+			["priority"] = 52;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[53] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 53;
+			["mapid"] = 19;
 			["mappos"] = "22909/-8873/-88";
 			["maxduration"] = 0;
 			["maxlvl"] = 80;
@@ -1978,11 +2021,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "WP_Irondock_Shipyard";
 			["partysize"] = 0;
-			["priority"] = 52;
+			["priority"] = 53;
 			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
-		[53] = {
+		[54] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2024,7 +2067,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 53;
+			["id"] = 54;
 			["mapid"] = 19;
 			["mappos"] = "22905/-8891/-85";
 			["maxduration"] = 0;
@@ -2033,11 +2076,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "HQ_Assist_Sesto";
 			["partysize"] = 0;
-			["priority"] = 53;
+			["priority"] = 54;
 			["radius"] = "3000";
 			["type"] = "HeartQuest";
 		};
-		[54] = {
+		[55] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2059,7 +2102,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 54;
+			["id"] = 55;
 			["mapid"] = 19;
 			["mappos"] = "43082/-7165/-1342";
 			["maxduration"] = 0;
@@ -2068,11 +2111,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "WP_Duskrend_Overlook";
 			["partysize"] = 0;
-			["priority"] = 54;
+			["priority"] = 55;
 			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
-		[55] = {
+		[56] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2114,7 +2157,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 55;
+			["id"] = 56;
 			["mapid"] = 19;
 			["mappos"] = "40965/-16184/0";
 			["maxduration"] = 0;
@@ -2123,11 +2166,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "HQ_Help_Researcher_Irkz";
 			["partysize"] = 0;
-			["priority"] = 55;
+			["priority"] = 56;
 			["radius"] = "5000";
 			["type"] = "HeartQuest";
 		};
-		[56] = {
+		[57] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2149,7 +2192,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 56;
+			["id"] = 57;
 			["mapid"] = 19;
 			["mappos"] = "30219/-17805/-103";
 			["maxduration"] = 0;
@@ -2158,11 +2201,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "WP_Loreclawq";
 			["partysize"] = 0;
-			["priority"] = 56;
+			["priority"] = 57;
 			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
-		[57] = {
+		[58] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2172,7 +2215,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 57;
+			["id"] = 58;
 			["mapid"] = 19;
 			["mappos"] = "29361/-21655/-786";
 			["maxduration"] = 0;
@@ -2181,11 +2224,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Gather_Potatoes";
 			["partysize"] = 0;
-			["priority"] = 57;
+			["priority"] = 58;
 			["radius"] = "1000";
 			["type"] = "Gather";
 		};
-		[58] = {
+		[59] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2207,7 +2250,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 58;
+			["id"] = 59;
 			["mapid"] = 19;
 			["mappos"] = "22947/-21262/-1095";
 			["maxduration"] = 0;
@@ -2216,11 +2259,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "POI_Camp_Cairan";
 			["partysize"] = 0;
-			["priority"] = 58;
+			["priority"] = 59;
 			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
-		[59] = {
+		[60] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2262,7 +2305,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 59;
+			["id"] = 60;
 			["mapid"] = 19;
 			["mappos"] = "21886/-20097/-1065";
 			["maxduration"] = 0;
@@ -2271,11 +2314,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "HQ_Help_Mai";
 			["partysize"] = 0;
-			["priority"] = 59;
+			["priority"] = 60;
 			["radius"] = "6500";
 			["type"] = "HeartQuest";
 		};
-		[60] = {
+		[61] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2297,7 +2340,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 60;
+			["id"] = 61;
 			["mapid"] = 19;
 			["mappos"] = "26398/-18060/-1821";
 			["maxduration"] = 0;
@@ -2306,11 +2349,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "MovetoVista";
 			["partysize"] = 0;
-			["priority"] = 60;
+			["priority"] = 61;
 			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
-		[61] = {
+		[62] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2320,7 +2363,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 61;
+			["id"] = 62;
 			["mapid"] = 19;
 			["mappos"] = "23902/-15209/-1952";
 			["maxduration"] = 0;
@@ -2329,11 +2372,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Vista_Loreclaws";
 			["partysize"] = 0;
-			["priority"] = 61;
+			["priority"] = 62;
 			["radius"] = 0;
 			["type"] = "Vista";
 		};
-		[62] = {
+		[63] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2355,7 +2398,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 62;
+			["id"] = 63;
 			["mapid"] = 19;
 			["mappos"] = "24052/-15178/-1950";
 			["maxduration"] = 0;
@@ -2364,11 +2407,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "Diving_Goolges";
 			["partysize"] = 0;
-			["priority"] = 62;
+			["priority"] = 63;
 			["radius"] = "0";
 			["type"] = "Interact";
 		};
-		[63] = {
+		[64] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2378,7 +2421,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 63;
+			["id"] = 64;
 			["mapid"] = 19;
 			["mappos"] = "40862/-15271/-4";
 			["maxduration"] = 0;
@@ -2387,11 +2430,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Grindtolvl13";
 			["partysize"] = 0;
-			["priority"] = 63;
+			["priority"] = 64;
 			["radius"] = 0;
 			["type"] = "Grind";
 		};
-		[64] = {
+		[65] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2413,7 +2456,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 64;
+			["id"] = 65;
 			["mapid"] = 19;
 			["mappos"] = "38567/3783/-1364";
 			["maxduration"] = 0;
@@ -2422,11 +2465,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "WP_Watchcrag_Tower";
 			["partysize"] = 0;
-			["priority"] = 64;
+			["priority"] = 65;
 			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
-		[65] = {
+		[66] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2436,7 +2479,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 65;
+			["id"] = 66;
 			["mapid"] = 19;
 			["mappos"] = "39123/1889/-1576";
 			["maxduration"] = 0;
@@ -2445,11 +2488,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Vista_Watchcrag_Tower";
 			["partysize"] = 0;
-			["priority"] = 65;
+			["priority"] = 66;
 			["radius"] = 0;
 			["type"] = "Vista";
 		};
-		[66] = {
+		[67] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2491,7 +2534,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 66;
+			["id"] = 67;
 			["mapid"] = 19;
 			["mappos"] = "40517/5188/-1254";
 			["maxduration"] = 0;
@@ -2500,44 +2543,9 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "HQ_Help_Androchus";
 			["partysize"] = 0;
-			["priority"] = 66;
+			["priority"] = 67;
 			["radius"] = "12500";
 			["type"] = "HeartQuest";
-		};
-		[67] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_randomMovement"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_randomTargetPosition"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-				["TM_TASK_smoothTurns"] = {
-					["type"] = "CheckBox";
-					["value"] = "1";
-				};
-				["TM_TASK_useWaypoint"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 67;
-			["mapid"] = 19;
-			["mappos"] = "43749/10433/-1825";
-			["maxduration"] = 0;
-			["maxlvl"] = 80;
-			["minduration"] = 0;
-			["minlvl"] = 0;
-			["name"] = "POI_Stonecrag_Kraal_Disabled";
-			["partysize"] = 0;
-			["priority"] = 67;
-			["radius"] = "0";
-			["type"] = "MoveTo Position";
 		};
 		[68] = {
 			["complete"] = true;
@@ -2563,41 +2571,18 @@ local obj1 = {
 			["enabled"] = "1";
 			["id"] = 68;
 			["mapid"] = 19;
-			["mappos"] = "45878/21228/-1966";
+			["mappos"] = "43749/10433/-1825";
 			["maxduration"] = 0;
 			["maxlvl"] = 80;
 			["minduration"] = 0;
 			["minlvl"] = 0;
-			["name"] = "Movetosafespot";
+			["name"] = "POI_Stonecrag_Kraal_Disabled";
 			["partysize"] = 0;
 			["priority"] = 68;
-			["radius"] = 0;
+			["radius"] = "0";
 			["type"] = "MoveTo Position";
 		};
 		[69] = {
-			["complete"] = true;
-			["cooldown"] = 0;
-			["customVars"] = {
-				["TM_TASK_usesTeleport"] = {
-					["type"] = "CheckBox";
-					["value"] = "0";
-				};
-			};
-			["enabled"] = "1";
-			["id"] = 69;
-			["mapid"] = 19;
-			["mappos"] = "45512/21495/-1942";
-			["maxduration"] = 0;
-			["maxlvl"] = 80;
-			["minduration"] = 0;
-			["minlvl"] = 0;
-			["name"] = "Vista_Humans_Lament";
-			["partysize"] = 0;
-			["priority"] = 69;
-			["radius"] = 0;
-			["type"] = "Vista";
-		};
-		[70] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2619,18 +2604,41 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 70;
+			["id"] = 69;
 			["mapid"] = 19;
-			["mappos"] = "32183/20084/-1500";
+			["mappos"] = "45878/21228/-1966";
 			["maxduration"] = 0;
 			["maxlvl"] = 80;
 			["minduration"] = 0;
 			["minlvl"] = 0;
-			["name"] = "POI_Foefire_Heart";
+			["name"] = "Movetosafespot";
+			["partysize"] = 0;
+			["priority"] = 69;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[70] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_usesTeleport"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 70;
+			["mapid"] = 19;
+			["mappos"] = "45512/21495/-1942";
+			["maxduration"] = 0;
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "Vista_Humans_Lament";
 			["partysize"] = 0;
 			["priority"] = 70;
 			["radius"] = 0;
-			["type"] = "MoveTo Position";
+			["type"] = "Vista";
 		};
 		[71] = {
 			["complete"] = true;
@@ -2656,6 +2664,41 @@ local obj1 = {
 			["enabled"] = "1";
 			["id"] = 71;
 			["mapid"] = 19;
+			["mappos"] = "32183/20084/-1500";
+			["maxduration"] = 0;
+			["maxlvl"] = 80;
+			["minduration"] = 0;
+			["minlvl"] = 0;
+			["name"] = "POI_Foefire_Heart";
+			["partysize"] = 0;
+			["priority"] = 71;
+			["radius"] = 0;
+			["type"] = "MoveTo Position";
+		};
+		[72] = {
+			["complete"] = true;
+			["cooldown"] = 0;
+			["customVars"] = {
+				["TM_TASK_randomMovement"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_randomTargetPosition"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+				["TM_TASK_smoothTurns"] = {
+					["type"] = "CheckBox";
+					["value"] = "1";
+				};
+				["TM_TASK_useWaypoint"] = {
+					["type"] = "CheckBox";
+					["value"] = "0";
+				};
+			};
+			["enabled"] = "1";
+			["id"] = 72;
+			["mapid"] = 19;
 			["mappos"] = "26163/19752/-1436";
 			["maxduration"] = 0;
 			["maxlvl"] = 80;
@@ -2663,11 +2706,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "WP_Ascalon_City";
 			["partysize"] = 0;
-			["priority"] = 71;
+			["priority"] = 72;
 			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
-		[72] = {
+		[73] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2709,7 +2752,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 72;
+			["id"] = 73;
 			["mapid"] = 19;
 			["mappos"] = "32257/19519/-1411";
 			["maxduration"] = 0;
@@ -2718,11 +2761,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "HQ_Help_Ghyrtratus";
 			["partysize"] = 0;
-			["priority"] = 72;
+			["priority"] = 73;
 			["radius"] = 0;
 			["type"] = "HeartQuest";
 		};
-		[73] = {
+		[74] = {
 			["complete"] = false;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2732,7 +2775,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 73;
+			["id"] = 74;
 			["mapid"] = 19;
 			["mappos"] = "32396/19636/-1422";
 			["maxduration"] = 0;
@@ -2741,11 +2784,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Grindtolvl14";
 			["partysize"] = 0;
-			["priority"] = 73;
+			["priority"] = 74;
 			["radius"] = 0;
 			["type"] = "Grind";
 		};
-		[74] = {
+		[75] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2767,7 +2810,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 74;
+			["id"] = 75;
 			["mapid"] = 19;
 			["mappos"] = "36317/22925/-3722";
 			["maxduration"] = 0;
@@ -2776,11 +2819,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Movetosafespot";
 			["partysize"] = 0;
-			["priority"] = 74;
+			["priority"] = 75;
 			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
-		[75] = {
+		[76] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2794,7 +2837,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 75;
+			["id"] = 76;
 			["mapid"] = 19;
 			["mappos"] = "36305/22925/-3710";
 			["maxduration"] = 0;
@@ -2803,11 +2846,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "WaitForAggroReset";
 			["partysize"] = 0;
-			["priority"] = 75;
+			["priority"] = 76;
 			["radius"] = "1";
 			["type"] = "Do Events";
 		};
-		[76] = {
+		[77] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2837,7 +2880,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 76;
+			["id"] = 77;
 			["mapid"] = 19;
 			["mappos"] = "36507/22693/-3690";
 			["maxduration"] = 0;
@@ -2846,11 +2889,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "SP_Ruins_of_Ascalon";
 			["partysize"] = 0;
-			["priority"] = 76;
+			["priority"] = 77;
 			["radius"] = "0";
 			["type"] = "Skillpoint";
 		};
-		[77] = {
+		[78] = {
 			["complete"] = false;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2880,7 +2923,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "0";
-			["id"] = 77;
+			["id"] = 78;
 			["mapid"] = 19;
 			["mappos"] = "31018/13286/761";
 			["maxduration"] = 0;
@@ -2889,11 +2932,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "SP_Ruins_Underwater_Disabled";
 			["partysize"] = 0;
-			["priority"] = 77;
+			["priority"] = 78;
 			["radius"] = "0";
 			["type"] = "Skillpoint";
 		};
-		[78] = {
+		[79] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2903,7 +2946,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 78;
+			["id"] = 79;
 			["mapid"] = 19;
 			["mappos"] = "23042/18426/-2222";
 			["maxduration"] = 0;
@@ -2912,11 +2955,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Vista_Ruins_of_Ascalon";
 			["partysize"] = 0;
-			["priority"] = 78;
+			["priority"] = 79;
 			["radius"] = 0;
 			["type"] = "Vista";
 		};
-		[79] = {
+		[80] = {
 			["complete"] = false;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2938,7 +2981,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 79;
+			["id"] = 80;
 			["mapid"] = 19;
 			["mappos"] = "19861/17020/-1432";
 			["maxduration"] = 0;
@@ -2947,11 +2990,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "POI_Viewing_HIll";
 			["partysize"] = 0;
-			["priority"] = 79;
+			["priority"] = 80;
 			["radius"] = 0;
 			["type"] = "MoveTo Position";
 		};
-		[80] = {
+		[81] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -2981,7 +3024,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 80;
+			["id"] = 81;
 			["mapid"] = 19;
 			["mappos"] = "1485/-5435/-1165";
 			["maxduration"] = 0;
@@ -2990,11 +3033,11 @@ local obj1 = {
 			["minlvl"] = "13";
 			["name"] = "SP_Etheral_Vanguard";
 			["partysize"] = 0;
-			["priority"] = 80;
+			["priority"] = 81;
 			["radius"] = 0;
 			["type"] = "Skillpoint";
 		};
-		[81] = {
+		[82] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -3004,7 +3047,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 81;
+			["id"] = 82;
 			["mapid"] = 19;
 			["mappos"] = "4479/17170/-2466";
 			["maxduration"] = 0;
@@ -3013,11 +3056,11 @@ local obj1 = {
 			["minlvl"] = "0";
 			["name"] = "Vista_Shards_of_War";
 			["partysize"] = 0;
-			["priority"] = 81;
+			["priority"] = 82;
 			["radius"] = 0;
 			["type"] = "Vista";
 		};
-		[82] = {
+		[83] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -3059,7 +3102,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 82;
+			["id"] = 83;
 			["mapid"] = 19;
 			["mappos"] = "8289/19083/-1465";
 			["maxduration"] = 0;
@@ -3068,11 +3111,11 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "HQ_Help_Sagum";
 			["partysize"] = 0;
-			["priority"] = 82;
+			["priority"] = 83;
 			["radius"] = "8000";
 			["type"] = "HeartQuest";
 		};
-		[83] = {
+		[84] = {
 			["complete"] = true;
 			["cooldown"] = 0;
 			["customVars"] = {
@@ -3082,7 +3125,7 @@ local obj1 = {
 				};
 			};
 			["enabled"] = "1";
-			["id"] = 83;
+			["id"] = 84;
 			["mapid"] = 19;
 			["mappos"] = "8029/18830/-1415";
 			["maxduration"] = 0;
@@ -3091,7 +3134,7 @@ local obj1 = {
 			["minlvl"] = 0;
 			["name"] = "Grindtolvl15";
 			["partysize"] = 0;
-			["priority"] = 83;
+			["priority"] = 84;
 			["radius"] = "0";
 			["type"] = "Grind";
 		};
