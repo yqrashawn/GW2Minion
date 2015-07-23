@@ -46,19 +46,23 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 		if ( ml_mesh_mgr.OMCStartPositionReached == false ) then
 			if ( ValidTable(sPos) ) then
 				local dist = Distance3D(sPos.x,sPos.y,sPos.z,pPos.x,pPos.y,pPos.z)
-				if ( dist < 35 ) then -- Close enough to start
-					d("OMC StartPosition reached..Facing Target Direction..")
+				if (dist > 150) then
+					ml_mesh_mgr.ResetOMC()
+				else
+					if ( dist < 35 ) then -- Close enough to start
+						d("OMC StartPosition reached..Facing Target Direction..")
+						
+						Player:SetFacingH(sPos.hx,sPos.hy,sPos.hz) -- Set heading
+						ml_mesh_mgr.OMCThrottle = tickcount + 450 -- Pause omc update loop to allow camera to turn (timing untested)
+						Player:StopMovement()
+						ml_mesh_mgr.OMCStartPositionReached = true
+						return
+					end
 					
-					Player:SetFacingH(sPos.hx,sPos.hy,sPos.hz) -- Set heading
-					ml_mesh_mgr.OMCThrottle = tickcount + 450 -- Pause omc update loop to allow camera to turn (timing untested)
-					Player:StopMovement()
-					ml_mesh_mgr.OMCStartPositionReached = true
+					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end -- Move towards start location
+					Player:SetFacingExact(sPos.x,sPos.y,sPos.z,true) -- Face start location (4th arg: true, turns camera)
 					return
 				end
-				
-				if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end -- Move towards start location
-				Player:SetFacingExact(sPos.x,sPos.y,sPos.z,true) -- Face start location (4th arg: true, turns camera)
-				return
 			end
 			
 		else
