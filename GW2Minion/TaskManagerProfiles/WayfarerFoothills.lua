@@ -4,7 +4,7 @@ local multiRefObjects = {
 } -- multiRefObjects
 local obj1 = {
 	["idcounter"] = 73;
-	["name"] = "WayfarerStandalone";
+	["name"] = "WayfarerFoothills";
 	["tasks"] = {
 		[1] = {
 			["complete"] = true;
