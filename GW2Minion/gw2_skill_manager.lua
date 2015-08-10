@@ -37,7 +37,8 @@ local profilePrototype = {
 		maxAttackRange = 0,
 		activeSkillRange = 154,
 		combatMovement = {
-			moving = false,
+			combat = false,
+			range = false,
 			allowed = true,
 		},
 		swapTimers = {
@@ -835,6 +836,8 @@ function profilePrototype:DoCombatMovement(targetID)
 		local currentMovement = ml_global_information.Player_MovementDirections
 		local movementDirection = {[forward] = true, [backward] = true,[left] = true,[right] = true,}
 		local tDistance = target.distance
+		-- Stop walking into range.
+		if (self.tmp.combatMovement.range) then Player:StopMovement() self.tmp.combatMovement.range = false end
 		-- Face target.
 		if (ValidTable(target)) then Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z) end
 		-- Range, walking too close to enemy, stop walking forward.
@@ -930,15 +933,16 @@ function profilePrototype:DoCombatMovement(targetID)
 				Player:SetMovement(direction)
 			end
 		end
-		self.tmp.combatMovement.moving = true
+		self.tmp.combatMovement.combat = true
 	elseif (ValidTable(target) and target.distance > self.tmp.activeSkillRange and noStopMovementBuffs and (gBotMode ~= GetString("assistMode") or gMoveIntoCombatRange == "1") and not gw2_unstuck.HandleStuck("combat") and ml_global_information.Player_OnMesh) then
 		local tPos = target.pos
-		--gw2_common_functions.MoveOnlyStraightForward()
+		if (self.tmp.combatMovement.combat) then Player:StopMovement() self.tmp.combatMovement.combat = false end
 		Player:MoveTo(tPos.x,tPos.y,tPos.z,self.tmp.activeSkillRange/2,false,false,true)
-		self.tmp.combatMovement.moving = true
-	elseif (self.tmp.combatMovement.moving) then -- Stop active combat movement.
+		self.tmp.combatMovement.range = true
+	elseif (self.tmp.combatMovement.combat or self.tmp.combatMovement.range) then -- Stop active combat movement.
 		Player:StopMovement()
-		self.tmp.combatMovement.moving = false
+		self.tmp.combatMovement.combat = false
+		self.tmp.combatMovement.range = false
 	end
 end
 
@@ -1069,7 +1073,7 @@ function profilePrototype:CheckTargetHealth(targetID)
 				health = target.health,
 				lastTicks = ml_global_information.Now,
 			}
-			if (target.health.percent > (self.health.percent + 10) or (ml_global_information.Now - self.tmp.lastTicks > 15000 and target.health.percent == 100)) then
+			if (target.health.percent > (self.tmp.health.percent + 10) or (ml_global_information.Now - self.tmp.lastTicks > 15000 and target.health.percent == 100)) then
 				d("!!!!!!!!!!!!!!! TARGET BLACKLISTED, NOT DYING !!!!!!!!!!!!!!!")
 				ml_blacklist.AddBlacklistEntry(GetString("monsters"), target.contentID, target.name, ml_global_information.Now + 90000)
 			end
