@@ -78,33 +78,15 @@ function e_Downed:execute()
 
 	Player:StopMovement()
 
-	if ( Player:IsSpellOnCooldown( GW2.SKILLBARSLOT.Slot_4 ) ) then
-		-- Try to Fight
-		local TList = CharacterList("lowesthealth,attackable,aggro,alive,los,maxdistance="..ml_global_information.AttackRange)
+	local target = gw2_common_functions.GetBestAggroTarget()
 
-		if ( TableSize( TList ) == 0 ) then
-			TList = CharacterList("lowesthealth,attackable,aggro,downed,los,maxdistance="..ml_global_information.AttackRange)
+	if ( ValidTable( target ) ) then
+		local currentTarget = Player:GetTarget()
+		if ( not currentTarget or currentTarget.id ~= target.id ) then
+			Player:SetTarget(target.id)
 		end
-
-		if ( TableSize( TList ) == 0 ) then
-			TList = ( GadgetList("attackable,alive,aggro,los,maxdistance="..ml_global_information.AttackRange) )
-		end
-
-		if ( TableSize( TList ) > 0 ) then
-			local id, E  = next( TList )
-			if ( id ~= nil and id ~= 0 and E ~= nil ) then
-
-				local target = Player:GetTarget()
-				if ( not target or target.id ~= E.id ) then
-					Player:SetTarget(E.id)
-
-				else
-					gw2_skill_manager:Use( target.id )
-				end
-				return ml_log(true)
-			end
-		end
-
+		gw2_skill_manager:Use( target.id )
+		return ml_log(true)
 	else
 		-- Heal
 		if ( Player.castinfo.duration == 0 ) then
@@ -112,6 +94,7 @@ function e_Downed:execute()
 			ml_global_information.Wait(500)
 		end
 	end
+
 end
 
 
