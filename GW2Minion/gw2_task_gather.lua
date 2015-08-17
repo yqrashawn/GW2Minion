@@ -522,14 +522,18 @@ function e_Gathering:execute()
 						gw2_common_functions.NecroLeaveDeathshroud()
 						-- Check if in water and prevent stuck.
 						if (ml_global_information.Player_SwimState == GW2.SWIMSTATE.Swimming) then
-							Player:SetMovement(0)
-							Player:SetMovement(4)
+							--Player:SetMovement(0)
+							--Player:SetMovement(4)
+							Player:SetMovement(3)
+							local gPos = gadget.pos
+							Player:SetFacingExact(gPos.x,gPos.y,gPos.z)
 							e_Gathering.circling = true
 							ml_log(": Moving out of water.")
 
 						elseif (e_Gathering.circling == true) then
-							Player:UnSetMovement(0)
-							Player:UnSetMovement(4)
+							--Player:UnSetMovement(0)
+							--Player:UnSetMovement(4)
+							Player:UnSetMovement(3)
 							e_Gathering.circling = false
 						end
 

@@ -837,7 +837,7 @@ function profilePrototype:DoCombatMovement(targetID)
 		local movementDirection = {[forward] = true, [backward] = true,[left] = true,[right] = true,}
 		local tDistance = target.distance
 		-- Stop walking into range.
-		if (self.tmp.combatMovement.range) then Player:StopMovement() self.tmp.combatMovement.range = false end
+		if (self.tmp.combatMovement.range and target.distance < self.tmp.activeSkillRange - 250) then Player:StopMovement() self.tmp.combatMovement.range = false end
 		-- Face target.
 		if (ValidTable(target)) then Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z) end
 		-- Range, walking too close to enemy, stop walking forward.
