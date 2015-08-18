@@ -363,7 +363,7 @@ function c_MoveToGatherMarker:evaluate()
 			-- check if we ran outside the currentMarker radius and if so, we need to walk back to the currentMarker
 			local pos = ml_task_hub:CurrentTask().currentMarker:GetPosition()
 			local distance = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
-			if  (gBotMode == GetString("grindMode") and distance > ml_task_hub:CurrentTask().currentMarker:GetFieldValue(GetString("maxRange"))) then
+			if  (gBotMode == GetString("grindMode") and distance > ml_task_hub:CurrentTask().currentMarker:GetFieldValue(GetUSString("maxRange"))) then
 				d("We need to move back to our current Marker!")
 				c_MoveToGatherMarker.markerreached = false
 				c_MoveToGatherMarker.allowedToFight = false
@@ -383,7 +383,7 @@ function e_MoveToGatherMarker:execute()
 		local dist = Distance2D(ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, pos.x, pos.y)
 
 		-- Allow fighting when we are far away from the "outside radius of the marker" , else the bot goes back n forth spinning trying to reach the target outside n going back inside right after
-		if ( dist < ml_task_hub:CurrentTask().currentMarker:GetFieldValue(GetString("maxRange"))) then
+		if ( dist < ml_task_hub:CurrentTask().currentMarker:GetFieldValue(GetUSString("maxRange"))) then
 			c_MoveToGatherMarker.allowedToFight = true
 		else
 			c_MoveToGatherMarker.allowedToFight = false
