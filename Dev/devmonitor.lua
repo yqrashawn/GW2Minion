@@ -94,6 +94,7 @@ function Dev.LoadModule()
 	GUI_NewField("Dev","Type","GTType","GadgetInfo")	
 	GUI_NewField("Dev","Type2","GTType2","GadgetInfo")	
 	GUI_NewField("Dev","Name","GTName","GadgetInfo")
+	GUI_NewField("Dev","AnimStatus","GTAnimStatus","GadgetInfo")
 	GUI_NewField("Dev","Health","GTHP","GadgetInfo")
 	GUI_NewField("Dev","Position","GTPos","GadgetInfo")
 	GUI_NewField("Dev","Heading","GTHead","GadgetInfo")	
@@ -115,7 +116,7 @@ function Dev.LoadModule()
 	GUI_NewField("Dev","IsCombatant","GTIsCombat","GadgetInfo")
 	GUI_NewField("Dev","IsGatherable","GTIsGather","GadgetInfo")
 	GUI_NewField("Dev","HasHPBar","GTHasHP","GadgetInfo")	
-	GUI_NewField("Dev","IsOurs","GTIsOurs","GadgetInfo")
+	GUI_NewField("Dev","IsOurs","GTIsOurs","GadgetInfo")	
 	GUI_NewField("Dev","IsUnknown0","GTIsUnknown0","GadgetInfo")
 	GUI_NewField("Dev","IsUnknown1","GTIsUnknown1","GadgetInfo")
 	GUI_NewField("Dev","IsUnknown2","GTIsUnknown2","GadgetInfo")
@@ -957,6 +958,7 @@ function Dev.UpdateWindow()
 			GTType = mytarget.type
 			GTType2 = mytarget.type2
 			GTName = tostring(mytarget.name)
+			GTAnimStatus = mytarget.status
 			if (mytarget.health) then
 				GTHP = tostring(mytarget.health.current.." / "..mytarget.health.max.." / "..mytarget.health.percent.."%")
 			else
