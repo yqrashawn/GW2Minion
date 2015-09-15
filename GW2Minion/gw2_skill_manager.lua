@@ -735,9 +735,51 @@ end
 function gw2_skill_manager:UpdateCurrentSkillbarSkills() -- TODO:check curentskill list garbage stuff
 	self.currentSkillbarSkills = {}
 	for i = 1, ml_global_information.MAX_SKILLBAR_SLOTS do
-		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
-		if (skill) then
-			self.currentSkillbarSkills[skill.skillID] = skill
+		local currentSkill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
+		if (currentSkill) then			
+			local sName = currentSkill.name
+			local sID = currentSkill.skillID
+			self.currentSkillbarSkills[currentSkill.skillID] = currentSkill
+			
+			--Auto-update Profile with changed skillnames and skillIDs .. any ideas if that is a bad idea?			
+			if ( self.profile ~= nil and sID and sName and sName ~= "") then 
+				local profilechanged = false
+				local inList = false
+				for priority,skill in pairs(self.profile.skills) do
+					if (skill.skill.id == sID) then
+						if (skill.skill.name ~= sName) then
+							skill.skill.name = sName
+							d("CHANGED SKILLNAME FOUND: ".. skill.skill.name.. " != "..sName)
+							profilechanged = true
+						end
+						inList = true
+						break
+					end
+				end
+				if ( not inList ) then
+					for priority,skill in pairs(self.profile.skills) do
+						if (skill.skill.name == sName and skill.skill.id ~= sID) then
+							d("NEW SKILLID FOR EXISTING SKILL FOUND.."..tostring(sID).." "..sName)
+							-- We have a skill with the same name but a different skillID, add it automatically..bad idea ?
+							if (self.profile.skills[priority]) then
+								local clone = deepcopy(self.profile.skills[priority])
+								clone.skill.id = sID
+								clone.skill.groundTargeted	= (currentSkill.isGroundTargeted == true and "1" or "0")
+								clone.skill.setRange		= (tonumber(i) >= 1 and tonumber(i) <= 5 and "1" or "0")
+								clone.skill.minRange		= currentSkill.minRange or 0
+								clone.skill.maxRange		= currentSkill.maxRange or 0
+								clone.skill.radius			= currentSkill.radius or 0
+								table.insert(self.profile.skills, priority+1, clone)
+								profilechanged = true
+							end
+							break
+						end
+					end
+				end
+				if ( profilechanged == true ) then
+					self:MainWindowDeleteSkills() -- Refresh UI
+				end
+			end
 		end
 	end
 end
@@ -960,6 +1002,7 @@ function profilePrototype:CreateSkill(skillSlot)
 		local skillInfo = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. skillSlot])
 		local newSkill = {}
 		if (skillInfo and skillInfo.skillID ~= 10586 and ValidString(skillInfo.name)) then
+			-- Check if skill is already in our current Profile
 			for priority,skill in pairs(self.skills) do
 				if (skill.skill.id == skillInfo.skillID) then
 					if (skill.skill.name ~= skillInfo.name) then
@@ -968,7 +1011,7 @@ function profilePrototype:CreateSkill(skillSlot)
 					end
 					return false
 				end
-			end
+			end			
 			newSkill = {
 				skill = {	id				= skillInfo.skillID,
 							name			= skillInfo.name,
@@ -981,6 +1024,13 @@ function profilePrototype:CreateSkill(skillSlot)
 				parent = setmetatable({},{__index = self, __newindex = self}),
 			}
 			newSkill = inheritTable(skillPrototype, newSkill)
+			-- If the skillname exists already in our List, add it right behind the existing one, I hate to move every skill "up" 100 lines ;)
+			for priority,skill in pairs(self.skills) do
+				if (skill.skill.name == skillInfo.name) then
+					table.insert(self.skills, priority+1, newSkill)
+					return true
+				end
+			end
 			table.insert(self.skills,newSkill)
 			return true
 		end
@@ -1121,7 +1171,7 @@ end
 -- Swap kit.
 function profilePrototype:SwapKit()
 	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
-		local EngineerKits = {[5812] = "BombKit", [5927] = "FlameThrower", [6020] = "GrenadeKit", [5805] = "GrenadeKit", [5904] = "ToolKit", [5933] = "ElixirGun",}
+		local EngineerKits = {[5812] = "BombKit", [5927] = "FlameThrower", [6020] = "GrenadeKit", [5805] = "GrenadeKit", [5904] = "ToolKit", [5933] = "ElixirGun", [30800] = "EliteMortarKit",}
 		local availableKits = {}
 		for _,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
 			if (ValidTable(skill) and EngineerKits[skill.skillID]) then
