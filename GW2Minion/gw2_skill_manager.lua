@@ -72,6 +72,7 @@ local skillPrototype = {
 				lastSkillID			= "",
 				delay				= 0,
 				stopsMovement		= "0",
+				slot				= ml_global_information.MAX_SKILLBAR_SLOTS,
 	},
 	player = {	combatState			= "Either",
 				minHP				= 0,
@@ -104,7 +105,7 @@ local skillPrototype = {
 	tmp = {
 		lastCastTime = 0,
 		slot = ml_global_information.MAX_SKILLBAR_SLOTS,
-		
+
 	},
 }
 
@@ -127,14 +128,14 @@ function gw2_skill_manager.ModuleInit()
 			["Warrior"] = "GW2Minion",
 		}
 	end
-	
+
 	gw2_skill_manager.profile = gw2_skill_manager:GetProfile(Settings.GW2Minion.gCurrentProfile[gw2_common_functions.GetProfessionName()])
-	
+
 	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
 	if ( dw ) then
 		--dw:NewField("CurrentAction","gSMCurrentAction",GetString("skillManager"))
 	end
-	
+
 end
 RegisterEventHandler("Module.Initalize",gw2_skill_manager.ModuleInit)
 
@@ -255,7 +256,7 @@ function gw2_skill_manager.ToggleMenu()
 		if ( mainWindow.visible ) then
 			mainWindow:Hide()
 			local skillWindow = WindowManager:GetWindow(gw2_skill_manager.skillWindow.name)
-			if ( skillWindow ) then 
+			if ( skillWindow ) then
 				skillWindow:Hide()
 			end
 		else
@@ -518,7 +519,7 @@ end
 -- Detect skills button.
 function gw2_skill_manager:DetectSkillsButton(status)
 	local mainWindow = WindowManager:GetWindow(self.mainWindow.name)
-	if (mainWindow) then 
+	if (mainWindow) then
 		local button = mainWindow:GetControl(GetString("autoDetectSkills"))
 		if (self:ProfileReady() and button) then
 			if (type(status) == "boolean") then
@@ -607,6 +608,14 @@ function gw2_skill_manager:DeleteSkillButton()
 	return false
 end
 
+-- Sort skills
+function gw2_skill_manager:SortSkills()
+	if (self:ProfileReady()) then
+		self.profile:SortSkills()
+		gw2_skill_manager:MainWindowDeleteSkills()
+		gw2_skill_manager:SkillWindowUpdate()
+	end
+end
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 -- **Profile functions**
@@ -623,7 +632,7 @@ function gw2_skill_manager:NewProfile(profileName)
 		local newProfile = {
 			name = profileName,
 			profession = ml_global_information.Player_Profession,
-			
+
 		}
 		newProfile = inheritTable(profilePrototype, newProfile)
 		return newProfile
@@ -891,7 +900,7 @@ function profilePrototype:DoCombatMovement(targetID)
 		-- Melee, walking too far from enemy, stop walking backward.
 		if (tDistance > self.tmp.activeSkillRange) then movementDirection[backward] = false end
 		-- We are strafing too far from target, stop walking left or right.
-		if (tDistance > self.tmp.activeSkillRange) then 
+		if (tDistance > self.tmp.activeSkillRange) then
 			movementDirection[left] = false
 			movementDirection[right] = false
 		end
@@ -900,7 +909,7 @@ function profilePrototype:DoCombatMovement(targetID)
 		if (movementDirection[backward] and gw2_common_functions.CanMoveDirection(backward,400) == false) then movementDirection[backward] = false end
 		if (movementDirection[left] and gw2_common_functions.CanMoveDirection(left,400) == false) then movementDirection[left] = false end
 		if (movementDirection[right] and gw2_common_functions.CanMoveDirection(right,400) == false) then movementDirection[right] = false end
-		-- 
+		--
 		if (movementDirection[forward]) then
 			if (movementDirection[left] and gw2_common_functions.CanMoveDirection(forwardLeft,300) == false) then
 				movementDirection[left] = false
@@ -914,15 +923,15 @@ function profilePrototype:DoCombatMovement(targetID)
 				movementDirection[right] = false
 			end
 		end
-		
+
 		-- Can we move in direction, while not walking towards potential enemy's.
 		local targets = CharacterList("alive,los,notaggro,attackable,hostile,maxdistance=1500,exclude="..target.id)
-		
+
 		if (movementDirection[forward] and TableSize(gw2_common_functions.filterRelativePostion(targets,forward)) > 0) then movementDirection[forward] = false end
 		if (movementDirection[backward] and TableSize(gw2_common_functions.filterRelativePostion(targets,backward)) > 0) then movementDirection[backward] = false end
 		if (movementDirection[left] and TableSize(gw2_common_functions.filterRelativePostion(targets,left)) > 0) then movementDirection[left] = false end
 		if (movementDirection[right] and TableSize(gw2_common_functions.filterRelativePostion(targets,right)) > 0) then movementDirection[right] = false end
-		-- 
+		--
 		if (movementDirection[forward]) then
 			if (movementDirection[left] and TableSize(gw2_common_functions.filterRelativePostion(targets,forwardLeft)) > 0) then
 				movementDirection[left] = false
@@ -936,7 +945,7 @@ function profilePrototype:DoCombatMovement(targetID)
 				movementDirection[right] = false
 			end
 		end
-		
+
 		-- We know where we can move, decide where to go.
 		if (movementDirection[forward] and movementDirection[backward]) then -- Can move forward and backward, choose.
 			if (currentMovement.forward) then -- We are moving forward already.
@@ -968,7 +977,7 @@ function profilePrototype:DoCombatMovement(targetID)
 				end
 			end
 		end
-		
+
 		-- Execute combat movement.
 		for direction,canMove in pairs(movementDirection) do
 			if (canMove) then
@@ -1002,7 +1011,6 @@ function profilePrototype:CreateSkill(skillSlot)
 		local skillInfo = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. skillSlot])
 		local newSkill = {}
 		if (skillInfo and skillInfo.skillID ~= 10586 and ValidString(skillInfo.name)) then
-			-- Check if skill is already in our current Profile
 			for priority,skill in pairs(self.skills) do
 				if (skill.skill.id == skillInfo.skillID) then
 					if (skill.skill.name ~= skillInfo.name) then
@@ -1011,7 +1019,7 @@ function profilePrototype:CreateSkill(skillSlot)
 					end
 					return false
 				end
-			end			
+			end
 			newSkill = {
 				skill = {	id				= skillInfo.skillID,
 							name			= skillInfo.name,
@@ -1020,6 +1028,7 @@ function profilePrototype:CreateSkill(skillSlot)
 							minRange		= skillInfo.minRange or 0,
 							maxRange		= skillInfo.maxRange or 0,
 							radius			= skillInfo.radius or 0,
+							slot			= skillInfo.slot or ml_global_information.MAX_SKILLBAR_SLOTS,
 				},
 				parent = setmetatable({},{__index = self, __newindex = self}),
 			}
@@ -1231,6 +1240,84 @@ function profilePrototype:Swap(targetID)
 	end
 end
 
+function profilePrototype:SortSkills()
+	-- Sort skills by type first.
+	local skillsByType = {{}, {}, {}, {}, {}} -- 1: Healing, 2: Previous skill id, 3: F skills, 4: Normal skills, 5: Autoattack
+	for priority,skill in ipairs(self.skills) do
+		local slot = skill.skill.slot
+		local skillType = 4
+		if(slot > 10) then
+			skillType = 3
+		elseif((skill.skill.castOnSelf ~= nil and skill.skill.castOnSelf == "1") or slot == 0) then
+			skillType = 1
+			skill.skill.castOnSelf = "1"
+		elseif(skill.skill.lastSkillID ~= nil and skill.skill.lastSkillID ~= "") then
+			skillType = 2
+		elseif(slot == 5) then
+			skillType = 5
+		end
+		table.insert(skillsByType[skillType],skill)
+	end
+
+	local sortedSkillList = {}
+	-- Sort skills from each type.
+	for skillType,skillList in ipairs(skillsByType) do
+		-- by id.
+		local function sortByID(skill1, skill2)
+			return skill1.skill.id > skill2.skill.id
+		end
+		table.sort(skillList,sortByID)
+
+		-- by name.
+		local function sortByName(skill1, skill2)
+			return skill1.skill.name > skill2.skill.name
+		end
+		table.sort(skillList, sortByName)
+
+		-- by attributes.
+		local function attributeCount(skill)
+			local result = 0
+
+			if (ValidTable(skill)) then
+				-- Healing -> Elites -> F skills -> Slot skills -> Weapon skills in reverse
+				if (skill.skill.slot == 0) then
+					result = result + 400000
+					if ( skill.player.minHP and skill.player.minHP == 0 ) then
+						skill.player.minHP = 75
+					end
+				elseif (skill.skill.slot == 4) then
+					result = result + 100000
+				elseif (skill.skill.slot > 10) then
+					result = result + 60000
+				elseif (skill.skill.slot >= 1 and skill.skill.slot <= 3) then
+					result = result + 40000
+				else
+					result = result + skill.skill.slot
+				end
+				-- Longer range higher.
+				result = skill.skill.maxRange / 1000 > 0 and result + skill.skill.maxRange / 1000 or result
+				result = skill.skill.minRange / 1000 > 0 and result + skill.skill.minRange / 1000 or result
+				-- skills with less checks first
+				result = result + TableSize(skill.skill) + TableSize(skill.player) + TableSize(skill.target)
+			end
+
+			return result
+		end
+		local function sortByAttributeScore(skill1, skill2)
+			return attributeCount(skill1) > attributeCount(skill2)
+		end
+
+		table.sort(skillList, sortByAttributeScore)
+		-- add sorted skills to sortedSkillList
+		for _,skill in ipairs(skillList) do
+			table.insert(sortedSkillList, skill)
+		end
+	end
+
+	self.skills = sortedSkillList
+	
+end
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 -- **skill prototype**
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1245,14 +1332,14 @@ function skillPrototype:CanCast(targetID)
 			self.parent.tmp.maxAttackRange = (self.skill.maxRange > 0 and self.skill.maxRange > self.parent.tmp.maxAttackRange and self.skill.maxRange or self.parent.tmp.maxAttackRange)
 			self.parent.tmp.maxAttackRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.maxAttackRange and self.skill.radius or self.parent.tmp.maxAttackRange)
 		end
-		
+
 		-- get last skill.
 		local lastSkillID = (Player.castinfo.skillID == 0 and Player.castinfo.lastSkillID or Player.castinfo.skillID)
-		
+
 		-- skillBar attributes.
 		if (skillOnBar.cooldown == 1) then return false end
 		self.tmp.slot = skillOnBar.slot
-		
+
 		-- skill attributes.
 		if (self.skill.id == Player.castinfo.skillID and self.tmp.slot ~= GW2.SKILLBARSLOT.Slot_1) then return false end
 		if (self.skill.lastSkillID ~= "" and StringContains(tostring(self.skill.lastSkillID),tostring(lastSkillID)) == false) then return false end
@@ -1321,11 +1408,11 @@ function skillPrototype:CanCast(targetID)
 		self.parent.tmp.activeSkillRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.activeSkillRange and self.skill.radius or self.parent.tmp.activeSkillRange)
 		-- update combatMovement status.
 		self.parent.tmp.combatMovement.allowed = (self.skill.stopsMovement == "0")
-		
+
 		-- Check lastSkill attributes.
 		local lastSkill = self.parent:GetSkillByID(lastSkillID)
 		if (lastSkill and lastSkill.skill.slowCast == "1" and Player.castinfo.slot == lastSkill.tmp.slot) then return false end
-		
+
 		-- skill can be cast now.
 		return true
 	-- update profile range.
@@ -1547,15 +1634,15 @@ function gw2_skill_manager.HandleButton(event, button)
 	elseif (button == "gSMmoveUpSkill") then
 		gw2_skill_manager:MoveSkillUpButton()
 	elseif (button == "") then
-		
+
 	elseif (button == "") then
-		
+
 	elseif (button == "") then
-		
+
 	elseif (button == "") then
-		
+
 	elseif (button == "") then
-		
+
 	end
 end
 RegisterEventHandler( "GUI.Item", gw2_skill_manager.HandleButton)

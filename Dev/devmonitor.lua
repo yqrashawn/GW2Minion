@@ -537,6 +537,27 @@ function Dev.LoadModule()
 	GUI_NewField("Dev","XPNextLevel","TXpNL","PlayerInfo")
 	GUI_NewField("Dev","XPToNextLevel","TXpTNL","PlayerInfo")
 	GUI_NewField("Dev","XPCurrent","TXpC","PlayerInfo")
+
+	-- PvPManager
+	GUI_NewField("Dev","IsInPvPLobby","pvpIsInLobby","PvPManager")
+	GUI_NewField("Dev","IsInMatch","pvpIsInArena","PvPManager")
+	GUI_NewField("Dev","IsArenaQueued","pvpIsQueued","PvPManager")
+	GUI_NewField("Dev","IsMatchAvailable","pvpIsMatchAvailable","PvPManager")
+	GUI_NewField("Dev","IsMatchStarted","pvpIsMatchStarted","PvPManager")
+	GUI_NewField("Dev","IsMatchFinished","pvpIsMatchFinished","PvPManager")
+	GUI_NewField("Dev","MatchDuration","pvpMatchDuration","PvPManager")
+	
+	GUI_NewButton("Dev","JoinPvPLobby","Dev.PvPJoinPvPLobby","PvPManager")
+	RegisterEventHandler("Dev.PvPJoinPvPLobby", Dev.Func)	
+	GUI_NewButton("Dev","LeavePvPLobby","Dev.PvPLeavePvPLobby","PvPManager")
+	RegisterEventHandler("Dev.PvPLeavePvPLobby", Dev.Func)	
+	GUI_NewButton("Dev","JoinUnrankedQueue","Dev.PvPJoinUnrankedQueue","PvPManager")
+	RegisterEventHandler("Dev.PvPJoinUnrankedQueue", Dev.Func)	
+	GUI_NewButton("Dev","LeaveUnrankedQueue","Dev.PvPLeaveUnrankedQueue","PvPManager")
+	RegisterEventHandler("Dev.PvPLeaveUnrankedQueue", Dev.Func)
+	GUI_NewButton("Dev","SetReady","Dev.PvPSetReady","PvPManager")
+	RegisterEventHandler("Dev.PvPSetReady", Dev.Func)	
+
 	
 	-- GeneralInfo
 	GUI_NewField("Dev","Language","GILang","GeneralInfo")
@@ -751,6 +772,28 @@ function Dev.Func ( arg )
 		table.insert(DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID],TableSize(DevNWTempData[ml_global_information.CurrentMapID][DevNWTempDataB.FromID])+1,wtf)
 		persistence.store(GetAddonPath()..[[GW2Minion\]].."worldnav_data.lua",DevNWTempData)
 		d("New Transition Saved")		
+	
+	elseif ( arg == "Dev.PvPJoinPvPLobby" ) then
+		if ( not PvPManager:IsInPvPLobby() ) then		
+			PvPManager:JoinPvPLobby()
+		end
+	elseif ( arg == "Dev.PvPLeavePvPLobby" ) then
+		if ( PvPManager:IsInPvPLobby() ) then		
+			PvPManager:LeavePvPLobby()
+		end
+	
+	elseif ( arg == "Dev.PvPJoinUnrankedQueue" ) then
+		if ( not PvPManager:IsArenaQueued() ) then
+			PvPManager:JoinArenaQueue(1)
+		end
+	elseif ( arg == "Dev.PvPLeaveUnrankedQueue" ) then
+		if ( PvPManager:IsArenaQueued() ) then
+			PvPManager:LeaveArenaQueue()
+		end
+	elseif ( arg == "Dev.PvPSetReady" ) then
+		if ( PvPManager:IsMatchAvailable() ) then
+			PvPManager:SetReady()
+		end
 	end	
 end
 
@@ -1699,6 +1742,19 @@ function Dev.UpdateWindow()
 		TXpTNL = tostring(myplayer.XPToNextLevel)
 		TXpC = tostring(myplayer.XPCurrent)
 	end
+	
+	
+	-- PvPManager
+	pvpIsInLobby = tostring(PvPManager:IsInPvPLobby())
+	pvpIsInArena = tostring(PvPManager:IsInMatch())
+	pvpIsQueued = tostring(PvPManager:IsArenaQueued())
+	pvpIsMatchAvailable = tostring(PvPManager:IsMatchAvailable())
+	pvpIsMatchStarted = tostring(PvPManager:IsMatchStarted())
+	pvpIsMatchFinished = tostring(PvPManager:IsMatchFinished())
+	pvpMatchDuration = tostring(PvPManager:GetMatchDuration())
+	
+	-- map ready, map selection
+	
 	
 	-- GeneralInfo
 	local mousepos = MeshManager:GetMousePos()
