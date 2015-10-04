@@ -1981,6 +1981,186 @@ local obj1 = {
 		};
 		[100] = {
 			["player"] = {
+				["minHP"] = 85;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29415;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Overload Water";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 13;
+			};
+			["target"] = {
+			};
+		};
+		[101] = {
+			["player"] = {
+				["minHP"] = 85;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29719;
+				["maxRange"] = 360;
+				["minRange"] = 0;
+				["name"] = "Overload Air";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 14;
+			};
+			["target"] = {
+			};
+		};
+		[102] = {
+			["player"] = {
+				["minHP"] = 85;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29618;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Overload Earth";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 15;
+			};
+			["target"] = {
+			};
+		};
+		[103] = {
+			["player"] = {
+				["minHP"] = 85;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29706;
+				["maxRange"] = 180;
+				["minRange"] = 0;
+				["name"] = "Overload Fire";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 12;
+			};
+			["target"] = {
+			};
+		};
+		[104] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29968;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "\"Rebound.\"";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 4;
+			};
+			["target"] = {
+			};
+		};
+		[105] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29948;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "\"Flash-Freeze!\"";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+			};
+		};
+		[106] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30047;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "\"Eye of the Storm!\"";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+			};
+		};
+		[107] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30432;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "\"Shock and Aftershock!\"";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+			};
+		};
+		[108] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30662;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "\"Feel the Burn!\"";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+			};
+		};
+		[109] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29453;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Sand Squall";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[110] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30336;
+				["maxRange"] = 750;
+				["minRange"] = 0;
+				["name"] = "Dust Storm";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[111] = {
+			["player"] = {
 			};
 			["priority"] = 100;
 			["skill"] = {
@@ -1996,7 +2176,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[101] = {
+		[112] = {
 			["player"] = {
 			};
 			["priority"] = 101;
@@ -2015,7 +2195,7 @@ local obj1 = {
 				["type"] = "Character";
 			};
 		};
-		[102] = {
+		[113] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -2033,7 +2213,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[103] = {
+		[114] = {
 			["player"] = {
 			};
 			["priority"] = 103;
@@ -2051,7 +2231,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[104] = {
+		[115] = {
 			["player"] = {
 			};
 			["priority"] = 104;
@@ -2071,7 +2251,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[105] = {
+		[116] = {
 			["player"] = {
 			};
 			["priority"] = 105;
@@ -2089,7 +2269,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[106] = {
+		[117] = {
 			["player"] = {
 			};
 			["priority"] = 106;
@@ -2106,7 +2286,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[107] = {
+		[118] = {
 			["player"] = {
 			};
 			["priority"] = 107;
@@ -2125,7 +2305,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[108] = {
+		[119] = {
 			["player"] = {
 			};
 			["priority"] = 108;
@@ -2142,7 +2322,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[109] = {
+		[120] = {
 			["player"] = {
 			};
 			["priority"] = 109;
@@ -2159,7 +2339,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[110] = {
+		[121] = {
 			["player"] = {
 			};
 			["priority"] = 110;
@@ -2178,7 +2358,7 @@ local obj1 = {
 				["moving"] = "Moving";
 			};
 		};
-		[111] = {
+		[122] = {
 			["player"] = {
 			};
 			["priority"] = 111;
@@ -2196,7 +2376,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[112] = {
+		[123] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -2215,7 +2395,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[113] = {
+		[124] = {
 			["player"] = {
 			};
 			["priority"] = 113;
@@ -2233,7 +2413,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[114] = {
+		[125] = {
 			["player"] = {
 				["combatState"] = "InCombat";
 			};
@@ -2252,7 +2432,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[115] = {
+		[126] = {
 			["player"] = {
 			};
 			["priority"] = 115;
@@ -2271,7 +2451,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[116] = {
+		[127] = {
 			["player"] = {
 			};
 			["priority"] = 116;
@@ -2289,7 +2469,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[117] = {
+		[128] = {
 			["player"] = {
 			};
 			["priority"] = 117;
@@ -2306,7 +2486,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[118] = {
+		[129] = {
 			["player"] = {
 			};
 			["priority"] = 118;
@@ -2323,7 +2503,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[119] = {
+		[130] = {
 			["player"] = {
 			};
 			["priority"] = 119;
@@ -2342,7 +2522,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[120] = {
+		[131] = {
 			["player"] = {
 			};
 			["priority"] = 120;
@@ -2359,7 +2539,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[121] = {
+		[132] = {
 			["player"] = {
 			};
 			["priority"] = 121;
@@ -2376,7 +2556,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[122] = {
+		[133] = {
 			["player"] = {
 			};
 			["priority"] = 122;
@@ -2394,7 +2574,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[123] = {
+		[134] = {
 			["player"] = {
 				["allyDownedNearCount"] = 0;
 				["allyDownedRangeMax"] = 0;
@@ -2413,7 +2593,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[124] = {
+		[135] = {
 			["player"] = {
 			};
 			["priority"] = 124;
@@ -2431,7 +2611,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[125] = {
+		[136] = {
 			["player"] = {
 			};
 			["priority"] = 125;
@@ -2448,7 +2628,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[126] = {
+		[137] = {
 			["player"] = {
 			};
 			["priority"] = 126;
@@ -2465,7 +2645,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[127] = {
+		[138] = {
 			["player"] = {
 			};
 			["priority"] = 127;
@@ -2482,7 +2662,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[128] = {
+		[139] = {
 			["player"] = {
 				["conditionCount"] = 0;
 			};
@@ -2501,7 +2681,7 @@ local obj1 = {
 				["moving"] = "Moving";
 			};
 		};
-		[129] = {
+		[140] = {
 			["player"] = {
 			};
 			["priority"] = 129;
@@ -2519,7 +2699,7 @@ local obj1 = {
 				["moving"] = "Moving";
 			};
 		};
-		[130] = {
+		[141] = {
 			["player"] = {
 			};
 			["priority"] = 130;
@@ -2537,7 +2717,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[131] = {
+		[142] = {
 			["player"] = {
 			};
 			["priority"] = 131;
@@ -2556,7 +2736,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[132] = {
+		[143] = {
 			["player"] = {
 			};
 			["priority"] = 132;
@@ -2574,7 +2754,7 @@ local obj1 = {
 				["moving"] = "Moving";
 			};
 		};
-		[133] = {
+		[144] = {
 			["player"] = {
 			};
 			["priority"] = 133;
@@ -2592,7 +2772,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[134] = {
+		[145] = {
 			["player"] = {
 			};
 			["priority"] = 134;
@@ -2610,7 +2790,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[135] = {
+		[146] = {
 			["player"] = {
 			};
 			["priority"] = 135;
@@ -2627,7 +2807,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[136] = {
+		[147] = {
 			["player"] = {
 			};
 			["priority"] = 136;
@@ -2645,7 +2825,7 @@ local obj1 = {
 				["moving"] = "Moving";
 			};
 		};
-		[137] = {
+		[148] = {
 			["player"] = {
 			};
 			["priority"] = 137;
@@ -2662,7 +2842,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[138] = {
+		[149] = {
 			["player"] = {
 			};
 			["priority"] = 138;
@@ -2679,7 +2859,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[139] = {
+		[150] = {
 			["player"] = {
 			};
 			["priority"] = 139;
@@ -2697,7 +2877,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[140] = {
+		[151] = {
 			["player"] = {
 			};
 			["priority"] = 140;
@@ -2714,7 +2894,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[141] = {
+		[152] = {
 			["player"] = {
 			};
 			["priority"] = 141;
@@ -2731,7 +2911,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[142] = {
+		[153] = {
 			["player"] = {
 			};
 			["priority"] = 142;
@@ -2748,7 +2928,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[143] = {
+		[154] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -2769,7 +2949,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[144] = {
+		[155] = {
 			["player"] = {
 			};
 			["priority"] = 144;
@@ -2786,7 +2966,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[145] = {
+		[156] = {
 			["player"] = {
 			};
 			["priority"] = 145;
@@ -2804,7 +2984,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[146] = {
+		[157] = {
 			["player"] = {
 			};
 			["priority"] = 146;
@@ -2821,7 +3001,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[147] = {
+		[158] = {
 			["player"] = {
 			};
 			["priority"] = 147;
@@ -2838,7 +3018,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[148] = {
+		[159] = {
 			["player"] = {
 			};
 			["priority"] = 148;
@@ -2855,7 +3035,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[149] = {
+		[160] = {
 			["player"] = {
 			};
 			["priority"] = 149;
@@ -2872,7 +3052,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[150] = {
+		[161] = {
 			["player"] = {
 			};
 			["priority"] = 150;
@@ -2890,7 +3070,7 @@ local obj1 = {
 				["type"] = "Character";
 			};
 		};
-		[151] = {
+		[162] = {
 			["player"] = {
 			};
 			["priority"] = 151;
@@ -2908,7 +3088,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[152] = {
+		[163] = {
 			["player"] = {
 			};
 			["priority"] = 152;
@@ -2925,7 +3105,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[153] = {
+		[164] = {
 			["player"] = {
 			};
 			["priority"] = 153;
@@ -2942,7 +3122,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[154] = {
+		[165] = {
 			["player"] = {
 			};
 			["priority"] = 154;
@@ -2959,7 +3139,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[155] = {
+		[166] = {
 			["player"] = {
 			};
 			["priority"] = 155;
@@ -2976,7 +3156,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[156] = {
+		[167] = {
 			["player"] = {
 			};
 			["priority"] = 156;
@@ -2993,7 +3173,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[157] = {
+		[168] = {
 			["player"] = {
 			};
 			["priority"] = 157;
@@ -3010,7 +3190,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[158] = {
+		[169] = {
 			["player"] = {
 			};
 			["priority"] = 158;
@@ -3027,7 +3207,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[159] = {
+		[170] = {
 			["player"] = {
 			};
 			["priority"] = 159;
@@ -3044,7 +3224,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[160] = {
+		[171] = {
 			["player"] = {
 			};
 			["priority"] = 160;
@@ -3061,7 +3241,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[161] = {
+		[172] = {
 			["player"] = {
 			};
 			["priority"] = 161;
@@ -3078,7 +3258,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[162] = {
+		[173] = {
 			["player"] = {
 				["conditionCount"] = 0;
 			};
@@ -3098,7 +3278,7 @@ local obj1 = {
 				["conditionCount"] = 0;
 			};
 		};
-		[163] = {
+		[174] = {
 			["player"] = {
 			};
 			["priority"] = 163;
@@ -3116,7 +3296,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[164] = {
+		[175] = {
 			["player"] = {
 				["allyDownedNearCount"] = 0;
 				["allyDownedRangeMax"] = 0;
@@ -3135,7 +3315,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[165] = {
+		[176] = {
 			["player"] = {
 			};
 			["priority"] = 165;
@@ -3153,7 +3333,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[166] = {
+		[177] = {
 			["player"] = {
 			};
 			["priority"] = 166;
@@ -3171,7 +3351,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[167] = {
+		[178] = {
 			["player"] = {
 			};
 			["priority"] = 167;
@@ -3189,7 +3369,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[168] = {
+		[179] = {
 			["player"] = {
 			};
 			["priority"] = 168;
@@ -3207,7 +3387,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[169] = {
+		[180] = {
 			["player"] = {
 			};
 			["priority"] = 169;
@@ -3225,7 +3405,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[170] = {
+		[181] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -3243,7 +3423,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[171] = {
+		[182] = {
 			["player"] = {
 			};
 			["priority"] = 171;
@@ -3260,7 +3440,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[172] = {
+		[183] = {
 			["player"] = {
 			};
 			["priority"] = 172;
@@ -3277,7 +3457,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[173] = {
+		[184] = {
 			["player"] = {
 			};
 			["priority"] = 173;
@@ -3294,7 +3474,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[174] = {
+		[185] = {
 			["player"] = {
 			};
 			["priority"] = 174;
@@ -3311,7 +3491,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[175] = {
+		[186] = {
 			["player"] = {
 			};
 			["priority"] = 175;
@@ -3328,7 +3508,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[176] = {
+		[187] = {
 			["player"] = {
 			};
 			["priority"] = 176;
@@ -3345,7 +3525,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[177] = {
+		[188] = {
 			["player"] = {
 			};
 			["priority"] = 177;
@@ -3362,7 +3542,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[178] = {
+		[189] = {
 			["player"] = {
 			};
 			["priority"] = 178;
@@ -3379,7 +3559,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[179] = {
+		[190] = {
 			["player"] = {
 			};
 			["priority"] = 179;
@@ -3396,7 +3576,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[180] = {
+		[191] = {
 			["player"] = {
 			};
 			["priority"] = 180;
@@ -3413,7 +3593,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[181] = {
+		[192] = {
 			["player"] = {
 			};
 			["priority"] = 181;
@@ -3430,7 +3610,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[182] = {
+		[193] = {
 			["player"] = {
 			};
 			["priority"] = 182;
@@ -3447,7 +3627,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[183] = {
+		[194] = {
 			["player"] = {
 			};
 			["priority"] = 183;
@@ -3464,7 +3644,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[184] = {
+		[195] = {
 			["player"] = {
 			};
 			["priority"] = 184;
@@ -3481,7 +3661,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[185] = {
+		[196] = {
 			["player"] = {
 			};
 			["priority"] = 185;

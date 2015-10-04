@@ -401,6 +401,7 @@ function Dev.LoadModule()
 	GUI_NewField("Dev","Name","SCName","Spell&CastingInfo")
 	GUI_NewField("Dev","Cooldown","SCCD","Spell&CastingInfo")
 	GUI_NewField("Dev","CooldownMax","SCCDM","Spell&CastingInfo")
+	GUI_NewField("Dev","Required Power","SCMinPwr","Spell&CastingInfo")
 	GUI_NewField("Dev","MinRange","SCMinR","Spell&CastingInfo")
 	GUI_NewField("Dev","MaxRange","SCMaxR","Spell&CastingInfo")
 	GUI_NewField("Dev","Radius","SCRad","Spell&CastingInfo")
@@ -558,6 +559,12 @@ function Dev.LoadModule()
 	GUI_NewButton("Dev","SetReady","Dev.PvPSetReady","PvPManager")
 	RegisterEventHandler("Dev.PvPSetReady", Dev.Func)	
 
+	GUI_NewField("Dev","CanJoinTeamRED","pvpcanjoinred","PvPManager")
+	GUI_NewField("Dev","CanJoinTeamBLUE","pvpcanjoinblue","PvPManager")
+	GUI_NewButton("Dev","JoinRED","Dev.PvPJoinRed","PvPManager")
+	RegisterEventHandler("Dev.PvPJoinRed", Dev.Func)
+	GUI_NewButton("Dev","JoinBLUE","Dev.PvPJoinBlue","PvPManager")
+	RegisterEventHandler("Dev.PvPJoinBlue", Dev.Func)
 	
 	-- GeneralInfo
 	GUI_NewField("Dev","Language","GILang","GeneralInfo")
@@ -794,6 +801,14 @@ function Dev.Func ( arg )
 		if ( PvPManager:IsMatchAvailable() ) then
 			PvPManager:SetReady()
 		end
+	elseif ( arg == "Dev.PvPJoinRed" ) then
+		if ( PvPManager:CanJoinTeam(1) ) then
+			PvPManager:JoinTeam(1)
+		end
+	elseif ( arg == "Dev.PvPJoinBlue" ) then
+		if ( PvPManager:CanJoinTeam(2) ) then
+			PvPManager:JoinTeam(2)
+		end		
 	end	
 end
 
@@ -1514,6 +1529,7 @@ function Dev.UpdateWindow()
 		SCName = spell.name
 		SCCD = spell.cooldown
 		SCCDM = spell.cooldownmax
+		SCMinPwr = spell.power
 		SCMinR = spell.minRange
 		SCMaxR = spell.maxRange
 		SCRad = spell.radius
@@ -1526,6 +1542,7 @@ function Dev.UpdateWindow()
 		SCName = 0
 		SCCD = 0
 		SCCDM = 0
+		SCMinPwr = 0
 		SCMinR = 0
 		SCMaxR = 0
 		SCRad = 0
@@ -1752,6 +1769,9 @@ function Dev.UpdateWindow()
 	pvpIsMatchStarted = tostring(PvPManager:IsMatchStarted())
 	pvpIsMatchFinished = tostring(PvPManager:IsMatchFinished())
 	pvpMatchDuration = tostring(PvPManager:GetMatchDuration())
+	pvpcanjoinred = tostring(PvPManager:CanJoinTeam(1))
+	pvpcanjoinblue = tostring(PvPManager:CanJoinTeam(2))
+	
 	
 	-- map ready, map selection
 	

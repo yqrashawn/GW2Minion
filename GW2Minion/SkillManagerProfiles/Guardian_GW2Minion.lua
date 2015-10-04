@@ -130,7 +130,7 @@ local obj1 = {
 				["los"] = "0";
 				["maxRange"] = 600;
 				["minRange"] = 0;
-				["name"] = "Healing Breeze";
+				["name"] = "\"Receive the Light!\"";
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slowCast"] = "1";
@@ -193,6 +193,41 @@ local obj1 = {
 		};
 		[5] = {
 			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 75;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30025;
+				["maxRange"] = 180;
+				["minRange"] = 0;
+				["name"] = "Purification";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 0;
+			};
+			["target"] = {
+			};
+		};
+		[6] = {
+			["player"] = {
+				["minHP"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 21664;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Litany of Wrath";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 0;
+			};
+			["target"] = {
+			};
+		};
+		[7] = {
+			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
 				["boonCount"] = 0;
@@ -234,7 +269,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[6] = {
+		[8] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -277,7 +312,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[7] = {
+		[9] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -320,7 +355,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[8] = {
+		[10] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -363,7 +398,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[9] = {
+		[11] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -406,7 +441,94 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[10] = {
+		[12] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 30;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30039;
+				["maxRange"] = 180;
+				["minRange"] = 0;
+				["name"] = "Shield of Courage";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 14;
+			};
+			["target"] = {
+			};
+		};
+		[13] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 30;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30029;
+				["maxRange"] = 180;
+				["minRange"] = 0;
+				["name"] = "Shield of Courage";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 14;
+			};
+			["target"] = {
+			};
+		};
+		[14] = {
+			["player"] = {
+				["minHP"] = 40;
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 30783;
+				["maxRange"] = 800;
+				["minRange"] = 0;
+				["name"] = "Wings of Resolve";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 13;
+			};
+			["target"] = {
+			};
+		};
+		[15] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30083;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Wings of Resolve";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 13;
+			};
+			["target"] = {
+			};
+		};
+		[16] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 75;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29887;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Spear of Justice";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 12;
+			};
+			["target"] = {
+			};
+		};
+		[17] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -449,7 +571,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[11] = {
+		[18] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -492,7 +614,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[12] = {
+		[19] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -535,7 +657,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[13] = {
+		[20] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -578,7 +700,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[14] = {
+		[21] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -621,7 +743,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[15] = {
+		[22] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -664,7 +786,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[16] = {
+		[23] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -707,7 +829,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[17] = {
+		[24] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -750,7 +872,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[18] = {
+		[25] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -793,7 +915,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[19] = {
+		[26] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -836,7 +958,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[20] = {
+		[27] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -879,7 +1001,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[21] = {
+		[28] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -922,7 +1044,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[22] = {
+		[29] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -965,7 +1087,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[23] = {
+		[30] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1008,7 +1130,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[24] = {
+		[31] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1051,7 +1173,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[25] = {
+		[32] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1094,7 +1216,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[26] = {
+		[33] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1137,7 +1259,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[27] = {
+		[34] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1180,7 +1302,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[28] = {
+		[35] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1223,7 +1345,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[29] = {
+		[36] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1266,7 +1388,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[30] = {
+		[37] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1309,7 +1431,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[31] = {
+		[38] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1352,7 +1474,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[32] = {
+		[39] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1395,7 +1517,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[33] = {
+		[40] = {
 			["player"] = {
 				["allyNearCount"] = 1;
 				["allyRangeMax"] = 180;
@@ -1438,7 +1560,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[34] = {
+		[41] = {
 			["player"] = {
 				["allyNearCount"] = 1;
 				["allyRangeMax"] = 200;
@@ -1481,7 +1603,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[35] = {
+		[42] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1524,7 +1646,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[36] = {
+		[43] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1567,7 +1689,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[37] = {
+		[44] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1610,7 +1732,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[38] = {
+		[45] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1653,7 +1775,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[39] = {
+		[46] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1696,7 +1818,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[40] = {
+		[47] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1739,7 +1861,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[41] = {
+		[48] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1782,7 +1904,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[42] = {
+		[49] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1825,7 +1947,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[43] = {
+		[50] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1868,7 +1990,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[44] = {
+		[51] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1911,7 +2033,137 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[45] = {
+		[52] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 30628;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Hunter's Ward";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[53] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29786;
+				["maxRange"] = 180;
+				["minRange"] = 0;
+				["name"] = "Test of Faith";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+			};
+		};
+		[54] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30553;
+				["maxRange"] = 180;
+				["minRange"] = 0;
+				["name"] = "Fragments of Faith";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+			};
+		};
+		[55] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30364;
+				["maxRange"] = 180;
+				["minRange"] = 0;
+				["name"] = "Procession of Blades";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+			};
+		};
+		[56] = {
+			["player"] = {
+				["minHP"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30871;
+				["maxRange"] = 180;
+				["minRange"] = 0;
+				["name"] = "Light's Judgement";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+			};
+		};
+		[57] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29965;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "\"Feel My Wrath!\"";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 4;
+			};
+			["target"] = {
+			};
+		};
+		[58] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30273;
+				["maxRange"] = 180;
+				["minRange"] = 0;
+				["name"] = "Dragon's Maw";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 4;
+			};
+			["target"] = {
+			};
+		};
+		[59] = {
+			["player"] = {
+				["minHP"] = 80;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30461;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Signet of Courage";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 4;
+			};
+			["target"] = {
+			};
+		};
+		[60] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1954,7 +2206,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[46] = {
+		[61] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1997,7 +2249,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[47] = {
+		[62] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2040,7 +2292,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[48] = {
+		[63] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2083,7 +2335,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[49] = {
+		[64] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2126,7 +2378,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[50] = {
+		[65] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2169,7 +2421,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[51] = {
+		[66] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2212,7 +2464,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[52] = {
+		[67] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2255,7 +2507,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[53] = {
+		[68] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2298,7 +2550,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[54] = {
+		[69] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2341,7 +2593,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[55] = {
+		[70] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2384,7 +2636,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[56] = {
+		[71] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2427,7 +2679,55 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[57] = {
+		[72] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 29630;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Deflecting Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 7;
+			};
+			["target"] = {
+			};
+		};
+		[73] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30229;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "True Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+			};
+			["target"] = {
+			};
+		};
+		[74] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 29789;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Symbol of Energy";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[75] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2470,7 +2770,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[58] = {
+		[76] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2513,7 +2813,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[59] = {
+		[77] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2556,7 +2856,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[60] = {
+		[78] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2599,7 +2899,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[61] = {
+		[79] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2642,7 +2942,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[62] = {
+		[80] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2685,7 +2985,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[63] = {
+		[81] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2728,7 +3028,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[64] = {
+		[82] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2771,7 +3071,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[65] = {
+		[83] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2814,7 +3114,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[66] = {
+		[84] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2857,7 +3157,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[67] = {
+		[85] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2900,7 +3200,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[68] = {
+		[86] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2943,7 +3243,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[69] = {
+		[87] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2986,7 +3286,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[70] = {
+		[88] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3029,7 +3329,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[71] = {
+		[89] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3072,7 +3372,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[72] = {
+		[90] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3115,7 +3415,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[73] = {
+		[91] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3158,7 +3458,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[74] = {
+		[92] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3201,7 +3501,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[75] = {
+		[93] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3244,7 +3544,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[76] = {
+		[94] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3287,7 +3587,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[77] = {
+		[95] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3330,7 +3630,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[78] = {
+		[96] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3373,7 +3673,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[79] = {
+		[97] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3416,7 +3716,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[80] = {
+		[98] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3459,7 +3759,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[81] = {
+		[99] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3502,7 +3802,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[82] = {
+		[100] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3545,7 +3845,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[83] = {
+		[101] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3588,7 +3888,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[84] = {
+		[102] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3631,7 +3931,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[85] = {
+		[103] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3674,7 +3974,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[86] = {
+		[104] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3717,7 +4017,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[87] = {
+		[105] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3760,7 +4060,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[88] = {
+		[106] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3803,7 +4103,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[89] = {
+		[107] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3846,7 +4146,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[90] = {
+		[108] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3889,7 +4189,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[91] = {
+		[109] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3932,7 +4232,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[92] = {
+		[110] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3975,7 +4275,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[93] = {
+		[111] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4018,7 +4318,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[94] = {
+		[112] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4061,7 +4361,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[95] = {
+		[113] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4104,7 +4404,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[96] = {
+		[114] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4147,7 +4447,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[97] = {
+		[115] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4188,6 +4488,38 @@ local obj1 = {
 				["minHP"] = 0;
 				["moving"] = "Either";
 				["type"] = "Either";
+			};
+		};
+		[116] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30471;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Puncture Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[117] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 9234;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Purifying Blast";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+			};
+			["target"] = {
 			};
 		};
 	};

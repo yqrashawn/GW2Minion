@@ -150,6 +150,23 @@ local obj1 = {
 		};
 		[4] = {
 			["player"] = {
+				["minHP"] = 75;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30400;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Channeled Vigor";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 0;
+			};
+			["target"] = {
+			};
+		};
+		[5] = {
+			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
 				["boonCount"] = 0;
@@ -191,7 +208,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[5] = {
+		[6] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -234,7 +251,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[6] = {
+		[7] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -277,7 +294,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[7] = {
+		[8] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -320,7 +337,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[8] = {
+		[9] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -363,7 +380,23 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[9] = {
+		[10] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30077;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Uppercut";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 4;
+			};
+			["target"] = {
+			};
+		};
+		[11] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -406,7 +439,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[10] = {
+		[12] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -449,7 +482,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[11] = {
+		[13] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -492,7 +525,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[12] = {
+		[14] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -535,7 +568,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[13] = {
+		[15] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -578,7 +611,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[14] = {
+		[16] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -621,7 +654,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[15] = {
+		[17] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -664,7 +697,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[16] = {
+		[18] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -707,7 +740,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[17] = {
+		[19] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -750,7 +783,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[18] = {
+		[20] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -793,7 +826,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[19] = {
+		[21] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -836,7 +869,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[20] = {
+		[22] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -879,7 +912,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[21] = {
+		[23] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -922,7 +955,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[22] = {
+		[24] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -965,7 +998,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[23] = {
+		[25] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1008,7 +1041,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[24] = {
+		[26] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1051,7 +1084,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[25] = {
+		[27] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1094,7 +1127,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[26] = {
+		[28] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1137,7 +1170,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[27] = {
+		[29] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1180,7 +1213,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[28] = {
+		[30] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1223,7 +1256,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[29] = {
+		[31] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1266,7 +1299,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[30] = {
+		[32] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1309,7 +1342,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[31] = {
+		[33] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1352,7 +1385,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[32] = {
+		[34] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1395,7 +1428,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[33] = {
+		[35] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1438,7 +1471,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[34] = {
+		[36] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1481,7 +1514,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[35] = {
+		[37] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1524,7 +1557,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[36] = {
+		[38] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1567,7 +1600,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[37] = {
+		[39] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1610,7 +1643,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[38] = {
+		[40] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1653,7 +1686,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[39] = {
+		[41] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1696,7 +1729,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[40] = {
+		[42] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1739,7 +1772,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[41] = {
+		[43] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1782,7 +1815,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[42] = {
+		[44] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1825,7 +1858,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[43] = {
+		[45] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1868,7 +1901,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[44] = {
+		[46] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1911,7 +1944,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[45] = {
+		[47] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1954,7 +1987,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[46] = {
+		[48] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1997,7 +2030,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[47] = {
+		[49] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2040,7 +2073,41 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[48] = {
+		[50] = {
+			["player"] = {
+				["minHP"] = 65;
+			};
+			["skill"] = {
+				["delay"] = 10000;
+				["groundTargeted"] = "0";
+				["id"] = 30520;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Debilitating Arc";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 7;
+			};
+			["target"] = {
+			};
+		};
+		[51] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 30597;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Vault";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[52] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2083,7 +2150,23 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[49] = {
+		[53] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29639;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Finishing Blow";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 4;
+			};
+			["target"] = {
+			};
+		};
+		[54] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2126,7 +2209,130 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[50] = {
+		[55] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30661;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Bandit's Defense";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+			};
+		};
+		[56] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30369;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Impairing Daggers";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+			};
+		};
+		[57] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30568;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Distracting Daggers";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+			};
+		};
+		[58] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30868;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Fist Flurry";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+			};
+		};
+		[59] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29516;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Impact Strike";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 4;
+			};
+			["target"] = {
+			};
+		};
+		[60] = {
+			["player"] = {
+				["allyNearCount"] = 0;
+				["allyRangeMax"] = 0;
+				["boonCount"] = 0;
+				["combatState"] = "Either";
+				["conditionCount"] = 0;
+				["hasBuffs"] = "";
+				["hasNotBuffs"] = "10269";
+				["maxEndurance"] = 0;
+				["maxHP"] = 0;
+				["maxPower"] = 0;
+				["minEndurance"] = 0;
+				["minHP"] = 0;
+				["minPower"] = 0;
+			};
+			["skill"] = {
+				["castOnSelf"] = "0";
+				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 13003;
+				["lastSkillID"] = "";
+				["los"] = "1";
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Trail of Knives";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slowCast"] = "0";
+			};
+			["target"] = {
+				["boonCount"] = 0;
+				["conditionCount"] = 0;
+				["enemyNearCount"] = 0;
+				["enemyRangeMax"] = 0;
+				["hasBuffs"] = "";
+				["hasNotBuffs"] = "";
+				["maxHP"] = 0;
+				["minHP"] = 0;
+				["moving"] = "Either";
+				["type"] = "Either";
+			};
+		};
+		[61] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2169,7 +2375,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[51] = {
+		[62] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2212,7 +2418,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[52] = {
+		[63] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2255,7 +2461,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[53] = {
+		[64] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2298,7 +2504,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[54] = {
+		[65] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2341,7 +2547,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[55] = {
+		[66] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2384,7 +2590,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[56] = {
+		[67] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2427,7 +2633,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[57] = {
+		[68] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2470,7 +2676,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[58] = {
+		[69] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2513,7 +2719,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[59] = {
+		[70] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2556,7 +2762,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[60] = {
+		[71] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2599,7 +2805,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[61] = {
+		[72] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2642,7 +2848,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[62] = {
+		[73] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2685,7 +2891,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[63] = {
+		[74] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2728,7 +2934,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[64] = {
+		[75] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2771,7 +2977,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[65] = {
+		[76] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2814,7 +3020,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[66] = {
+		[77] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2857,7 +3063,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[67] = {
+		[78] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2900,7 +3106,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[68] = {
+		[79] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2943,7 +3149,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[69] = {
+		[80] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2986,7 +3192,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[70] = {
+		[81] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3029,7 +3235,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[71] = {
+		[82] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3072,7 +3278,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[72] = {
+		[83] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3115,7 +3321,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[73] = {
+		[84] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3158,7 +3364,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[74] = {
+		[85] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3201,7 +3407,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[75] = {
+		[86] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3244,7 +3450,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[76] = {
+		[87] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3287,7 +3493,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[77] = {
+		[88] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3330,7 +3536,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[78] = {
+		[89] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3373,7 +3579,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[79] = {
+		[90] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3416,7 +3622,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[80] = {
+		[91] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3459,7 +3665,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[81] = {
+		[92] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3502,7 +3708,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[82] = {
+		[93] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3545,7 +3751,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[83] = {
+		[94] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3588,7 +3794,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[84] = {
+		[95] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3631,7 +3837,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[85] = {
+		[96] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3674,7 +3880,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[86] = {
+		[97] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3717,7 +3923,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[87] = {
+		[98] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3760,7 +3966,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[88] = {
+		[99] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3803,7 +4009,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[89] = {
+		[100] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3846,7 +4052,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[90] = {
+		[101] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3889,7 +4095,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[91] = {
+		[102] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3932,7 +4138,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[92] = {
+		[103] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3975,7 +4181,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[93] = {
+		[104] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4018,7 +4224,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[94] = {
+		[105] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4061,7 +4267,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[95] = {
+		[106] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4104,7 +4310,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[96] = {
+		[107] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4147,7 +4353,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[97] = {
+		[108] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4190,7 +4396,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[98] = {
+		[109] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4233,7 +4439,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[99] = {
+		[110] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4276,7 +4482,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[100] = {
+		[111] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4319,7 +4525,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[101] = {
+		[112] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4362,7 +4568,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[102] = {
+		[113] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4405,7 +4611,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[103] = {
+		[114] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4448,7 +4654,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[104] = {
+		[115] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4491,7 +4697,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[105] = {
+		[116] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4534,7 +4740,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[106] = {
+		[117] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4577,47 +4783,102 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[107] = {
+		[118] = {
 			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "10269";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
 			};
 			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "0";
-				["id"] = 13003;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
+				["id"] = 30614;
+				["maxRange"] = 130;
 				["minRange"] = 0;
-				["name"] = "Trail of Knives";
+				["name"] = "Staff Strike";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
+				["slot"] = 5;
 			};
 			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
+			};
+		};
+		[119] = {
+			["player"] = {
 				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
+			};
+			["skill"] = {
+				["delay"] = 7500;
+				["groundTargeted"] = "0";
+				["id"] = 29911;
+				["maxRange"] = 450;
+				["minRange"] = 0;
+				["name"] = "Weakening Charge";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+			};
+			["target"] = {
+			};
+		};
+		[120] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30775;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Dust Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[121] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30135;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Staff Bash";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[122] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30434;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Punishing Strikes";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[123] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30210;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Hook Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
 			};
 		};
 	};

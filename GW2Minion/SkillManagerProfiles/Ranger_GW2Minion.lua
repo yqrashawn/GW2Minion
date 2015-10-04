@@ -107,6 +107,24 @@ local obj1 = {
 		};
 		[3] = {
 			["player"] = {
+				["minHP"] = 75;
+			};
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 31914;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "\"We heal as one!\"";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 0;
+			};
+			["target"] = {
+			};
+		};
+		[4] = {
+			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
 				["boonCount"] = 0;
@@ -148,7 +166,41 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[4] = {
+		[5] = {
+			["player"] = {
+				["minHP"] = 75;
+			};
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 31819;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Glyph of Rejuvenation";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 0;
+			};
+			["target"] = {
+			};
+		};
+		[6] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31867;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Glyph of Rejuvenation";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 0;
+			};
+			["target"] = {
+			};
+		};
+		[7] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -191,7 +243,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[5] = {
+		[8] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -216,7 +268,7 @@ local obj1 = {
 				["los"] = "1";
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Rampage As One";
+				["name"] = "\"Strength of the pack!\"";
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slowCast"] = "1";
@@ -234,7 +286,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[6] = {
+		[9] = {
 			["player"] = {
 				["allyNearCount"] = 2;
 				["allyRangeMax"] = 240;
@@ -277,7 +329,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[7] = {
+		[10] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -320,7 +372,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[8] = {
+		[11] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -363,7 +415,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[9] = {
+		[12] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -406,7 +458,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[10] = {
+		[13] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -449,7 +501,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[11] = {
+		[14] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -492,7 +544,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[12] = {
+		[15] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -535,7 +587,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[13] = {
+		[16] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -578,7 +630,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[14] = {
+		[17] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -621,7 +673,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[15] = {
+		[18] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -664,7 +716,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[16] = {
+		[19] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -707,7 +759,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[17] = {
+		[20] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -750,7 +802,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[18] = {
+		[21] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -793,7 +845,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[19] = {
+		[22] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -836,7 +888,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[20] = {
+		[23] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -879,7 +931,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[21] = {
+		[24] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -922,7 +974,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[22] = {
+		[25] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -965,7 +1017,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[23] = {
+		[26] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1008,7 +1060,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[24] = {
+		[27] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1051,7 +1103,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[25] = {
+		[28] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1094,7 +1146,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[26] = {
+		[29] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1137,7 +1189,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[27] = {
+		[30] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1180,7 +1232,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[28] = {
+		[31] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1223,7 +1275,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[29] = {
+		[32] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1266,7 +1318,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[30] = {
+		[33] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1309,7 +1361,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[31] = {
+		[34] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1352,7 +1404,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[32] = {
+		[35] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1395,7 +1447,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[33] = {
+		[36] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1438,7 +1490,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[34] = {
+		[37] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1481,7 +1533,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[35] = {
+		[38] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1524,7 +1576,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[36] = {
+		[39] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1567,7 +1619,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[37] = {
+		[40] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1610,7 +1662,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[38] = {
+		[41] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1653,7 +1705,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[39] = {
+		[42] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1696,7 +1748,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[40] = {
+		[43] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1739,7 +1791,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[41] = {
+		[44] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1782,7 +1834,23 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[42] = {
+		[45] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12578;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "\"Search and Rescue!\"";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 1;
+			};
+			["target"] = {
+			};
+		};
+		[46] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1825,7 +1893,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[43] = {
+		[47] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1868,7 +1936,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[44] = {
+		[48] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1911,7 +1979,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[45] = {
+		[49] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1954,7 +2022,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[46] = {
+		[50] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1979,7 +2047,7 @@ local obj1 = {
 				["los"] = "0";
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "\"Protect Me\"";
+				["name"] = "\"Protect Me!\"";
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slowCast"] = "0";
@@ -1997,7 +2065,151 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[47] = {
+		[51] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31804;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Glyph of Empowerment";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 1;
+			};
+			["target"] = {
+			};
+		};
+		[52] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31602;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Glyph of Empowerment";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 1;
+			};
+			["target"] = {
+			};
+		};
+		[53] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31607;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Glyph of Alignment";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 1;
+			};
+			["target"] = {
+			};
+		};
+		[54] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31348;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Glyph of Alignment";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 1;
+			};
+			["target"] = {
+			};
+		};
+		[55] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31658;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Glyph of Equality";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 1;
+			};
+			["target"] = {
+			};
+		};
+		[56] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30448;
+				["maxRange"] = 360;
+				["minRange"] = 0;
+				["name"] = "Glyph of the Tides";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 2;
+			};
+			["target"] = {
+			};
+		};
+		[57] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29558;
+				["maxRange"] = 360;
+				["minRange"] = 0;
+				["name"] = "Glyph of the Tides";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 2;
+			};
+			["target"] = {
+			};
+		};
+		[58] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31888;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Glyph of Unity";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 4;
+			};
+			["target"] = {
+			};
+		};
+		[59] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31740;
+				["maxRange"] = 300;
+				["minRange"] = 0;
+				["name"] = "Glyph of Unity";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 4;
+			};
+			["target"] = {
+			};
+		};
+		[60] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2022,7 +2234,7 @@ local obj1 = {
 				["los"] = "0";
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "\"Guard\"";
+				["name"] = "\"Guard!\"";
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slowCast"] = "0";
@@ -2040,7 +2252,73 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[48] = {
+		[61] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31889;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Astral Wisp";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+			};
+			["target"] = {
+			};
+		};
+		[62] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 31700;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Vine Surge";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[63] = {
+			["player"] = {
+				["minHP"] = 50;
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 31496;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Sublime Conversion";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[64] = {
+			["player"] = {
+				["minHP"] = 76;
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 31535;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Ancestral Grace";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 7;
+			};
+			["target"] = {
+			};
+		};
+		[65] = {
 			["player"] = {
 				["allyNearCount"] = 2;
 				["allyRangeMax"] = 1200;
@@ -2083,7 +2361,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[49] = {
+		[66] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2108,7 +2386,7 @@ local obj1 = {
 				["los"] = "1";
 				["maxRange"] = 2000;
 				["minRange"] = 0;
-				["name"] = "\"Sic 'Em\"";
+				["name"] = "\"Sic 'Em!\"";
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slowCast"] = "0";
@@ -2126,7 +2404,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[50] = {
+		[67] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2169,7 +2447,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[51] = {
+		[68] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2212,7 +2490,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[52] = {
+		[69] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2225,7 +2503,7 @@ local obj1 = {
 				["maxHP"] = 0;
 				["maxPower"] = 0;
 				["minEndurance"] = 0;
-				["minHP"] = 0;
+				["minHP"] = 90;
 				["minPower"] = 0;
 			};
 			["skill"] = {
@@ -2255,7 +2533,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[53] = {
+		[70] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2298,7 +2576,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[54] = {
+		[71] = {
 			["player"] = {
 				["allyNearCount"] = 2;
 				["allyRangeMax"] = 1000;
@@ -2341,7 +2619,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[55] = {
+		[72] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2384,7 +2662,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[56] = {
+		[73] = {
 			["player"] = {
 				["allyNearCount"] = 2;
 				["allyRangeMax"] = 1000;
@@ -2427,7 +2705,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[57] = {
+		[74] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2470,7 +2748,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[58] = {
+		[75] = {
 			["player"] = {
 				["allyNearCount"] = 2;
 				["allyRangeMax"] = 1000;
@@ -2513,7 +2791,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[59] = {
+		[76] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2556,7 +2834,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[60] = {
+		[77] = {
 			["player"] = {
 				["allyNearCount"] = 2;
 				["allyRangeMax"] = 1000;
@@ -2599,7 +2877,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[61] = {
+		[78] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2642,7 +2920,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[62] = {
+		[79] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2685,7 +2963,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[63] = {
+		[80] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2728,7 +3006,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[64] = {
+		[81] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2771,7 +3049,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[65] = {
+		[82] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2814,7 +3092,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[66] = {
+		[83] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2857,7 +3135,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[67] = {
+		[84] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2900,7 +3178,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[68] = {
+		[85] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2943,7 +3221,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[69] = {
+		[86] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2986,7 +3264,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[70] = {
+		[87] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3029,7 +3307,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[71] = {
+		[88] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3072,7 +3350,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[72] = {
+		[89] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3115,7 +3393,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[73] = {
+		[90] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3158,7 +3436,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[74] = {
+		[91] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3201,7 +3479,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[75] = {
+		[92] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3244,7 +3522,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[76] = {
+		[93] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3287,7 +3565,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[77] = {
+		[94] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3330,7 +3608,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[78] = {
+		[95] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3373,7 +3651,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[79] = {
+		[96] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3416,7 +3694,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[80] = {
+		[97] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3459,7 +3737,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[81] = {
+		[98] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3502,7 +3780,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[82] = {
+		[99] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3545,7 +3823,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[83] = {
+		[100] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3588,7 +3866,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[84] = {
+		[101] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3631,7 +3909,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[85] = {
+		[102] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3674,7 +3952,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[86] = {
+		[103] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3715,6 +3993,342 @@ local obj1 = {
 				["minHP"] = 0;
 				["moving"] = "Either";
 				["type"] = "Either";
+			};
+		};
+		[104] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 21773;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Water Spirit";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 0;
+			};
+			["target"] = {
+			};
+		};
+		[105] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31869;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Celestial Avatar";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 16;
+			};
+			["target"] = {
+			};
+		};
+		[106] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31710;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Solar Beam";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[107] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 31796;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Cosmic Ray";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[108] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 31406;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Seed of Life";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+			};
+			["target"] = {
+			};
+		};
+		[109] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 31318;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Lunar Impact";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 7;
+			};
+			["target"] = {
+			};
+		};
+		[110] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31894;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Rejuvenating Tides";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[111] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 31503;
+				["maxRange"] = 360;
+				["minRange"] = 0;
+				["name"] = "Natural Convergence";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[112] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12559;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Swirling Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+			};
+			["target"] = {
+			};
+		};
+		[113] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12557;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Dart";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 7;
+			};
+			["target"] = {
+			};
+		};
+		[114] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12561;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Counterstrike";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[115] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12552;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Man O' War";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[116] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12555;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Jab";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[117] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12556;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Evasive Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[118] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12553;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Stab";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[119] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12529;
+				["maxRange"] = 1500;
+				["minRange"] = 0;
+				["name"] = "Coral Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+			};
+			["target"] = {
+			};
+		};
+		[120] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12528;
+				["maxRange"] = 1500;
+				["minRange"] = 0;
+				["name"] = "Feeding Frenzy";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 7;
+			};
+			["target"] = {
+			};
+		};
+		[121] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12527;
+				["maxRange"] = 1500;
+				["minRange"] = 0;
+				["name"] = "Mercy Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[122] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12530;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Ink Blast";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[123] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12526;
+				["maxRange"] = 1500;
+				["minRange"] = 0;
+				["name"] = "Splinter Shot";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[124] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12566;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Throw Knife";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
 			};
 		};
 	};

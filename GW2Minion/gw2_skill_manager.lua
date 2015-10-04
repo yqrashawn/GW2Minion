@@ -328,6 +328,9 @@ function gw2_skill_manager:CreateSkillWindow()
 			skillWindow:NewButton(GetString("smMoveDown"),"gSMmoveDownSkill")
 			skillWindow:NewButton(GetString("smMoveUp"),"gSMmoveUpSkill")
 			skillWindow:Hide()
+			-- I cannot bear the pain to move 30 new skills manually 100 slots upwards each 
+			skillWindow:NewNumeric("NewPriority","SklMgr_NewSKPrio","Dev",1,500)
+			skillWindow:NewButton("Set Priority","gSMmoveSkill","Dev")
 			return true
 		end
 	end
@@ -576,6 +579,18 @@ function gw2_skill_manager:MoveSkillDownButton()
 	return false
 end
 
+-- Move skill to Priority
+function gw2_skill_manager:MoveSkillButton()
+	if (self:ProfileReady()) then
+		if (self.profile:MoveSkill(self.status.skillWindowCurrentPriority,"to")) then
+			self.status.skillWindowCurrentPriority = self.status.skillWindowCurrentPriority + 1
+			gw2_skill_manager:MainWindowDeleteSkills()
+			return true
+		end
+	end
+	return false
+end
+
 -- Copy skill.
 function gw2_skill_manager:CopySkillButton()
 	if (self:ProfileReady()) then
@@ -686,7 +701,7 @@ function gw2_skill_manager:UpdateProfiles()
 					}
 					for _,skill in pairs(profile.skills) do
 						if (skill.skill.delay > 0) then
-							skill.skill.delay = skill.skill.delay / 100
+							skill.skill.delay = skill.skill.delay / 1000
 						 end
 						skill.skill.castOnSelf = skill.skill.healing
 						skill.skill.healing = nil
@@ -750,7 +765,7 @@ function gw2_skill_manager:UpdateCurrentSkillbarSkills() -- TODO:check curentski
 			local sID = currentSkill.skillID
 			self.currentSkillbarSkills[currentSkill.skillID] = currentSkill
 			
-			--Auto-update Profile with changed skillnames and skillIDs .. any ideas if that is a bad idea?			
+			--Auto-update Profile with changed skillnames and skillIDs .. any ideas if that is a bad idea?..worked well so far			
 			if ( self.profile ~= nil and sID and sName and sName ~= "") then 
 				local profilechanged = false
 				local inList = false
@@ -778,6 +793,7 @@ function gw2_skill_manager:UpdateCurrentSkillbarSkills() -- TODO:check curentski
 								clone.skill.minRange		= currentSkill.minRange or 0
 								clone.skill.maxRange		= currentSkill.maxRange or 0
 								clone.skill.radius			= currentSkill.radius or 0
+								clone.player.maxPower		= currentSkill.power or 0
 								table.insert(self.profile.skills, priority+1, clone)
 								profilechanged = true
 							end
@@ -1027,9 +1043,11 @@ function profilePrototype:CreateSkill(skillSlot)
 							setRange		= (tonumber(skillSlot) >= 1 and tonumber(skillSlot) <= 5 and "1" or "0"),
 							minRange		= skillInfo.minRange or 0,
 							maxRange		= skillInfo.maxRange or 0,
-							radius			= skillInfo.radius or 0,
+							radius			= skillInfo.radius or 0,							
 							slot			= skillInfo.slot or ml_global_information.MAX_SKILLBAR_SLOTS,
 				},
+				player = {	maxPower		= skillInfo.power or 0,
+				},				
 				parent = setmetatable({},{__index = self, __newindex = self}),
 			}
 			newSkill = inheritTable(skillPrototype, newSkill)
@@ -1061,7 +1079,7 @@ end
 function profilePrototype:MoveSkill(skillPriority, direction)
 	local skill = self.skills[skillPriority]
 	if (ValidTable(skill) and direction) then
-		local newPriority = (direction == "up" and skillPriority > 1 and skillPriority - 1 or direction == "down" and skillPriority < #self.skills and skillPriority + 1)
+		local newPriority = (direction == "up" and skillPriority > 1 and skillPriority - 1 or direction == "down" and skillPriority < #self.skills and skillPriority + 1 or direction == "to" and tonumber(SklMgr_NewSKPrio) and tonumber(SklMgr_NewSKPrio) >= 1 and tonumber(SklMgr_NewSKPrio) <= #self.skills and tonumber(SklMgr_NewSKPrio))
 		if (newPriority) then
 			table.remove(self.skills,skillPriority)
 			table.insert(self.skills,newPriority,skill)
@@ -1339,11 +1357,13 @@ function skillPrototype:CanCast(targetID)
 		-- skillBar attributes.
 		if (skillOnBar.cooldown == 1) then return false end
 		self.tmp.slot = skillOnBar.slot
-
+		
+		if (skillOnBar.power > ml_global_information.Player_Power) then return false end
+		
 		-- skill attributes.
 		if (self.skill.id == Player.castinfo.skillID and self.tmp.slot ~= GW2.SKILLBARSLOT.Slot_1) then return false end
 		if (self.skill.lastSkillID ~= "" and StringContains(tostring(self.skill.lastSkillID),tostring(lastSkillID)) == false) then return false end
-		if (self.skill.delay > 0 and self.tmp.lastCastTime and TimeSince(self.tmp.lastCastTime) < (self.skill.delay*100)) then return false end -- IMPORT: devide all delay times by 100
+		if (self.skill.delay > 0 and self.tmp.lastCastTime and TimeSince(self.tmp.lastCastTime) < (self.skill.delay)) then return false end -- IMPORT: devide all delay times by 100
 		if (ValidTable(target)) then
 			if (self.skill.los == "1" and target.los == false) then return false end
 			if (self.skill.minRange > 0 and (target.distance+target.radius) < self.skill.minRange) then return false end
@@ -1431,6 +1451,7 @@ function skillPrototype:Cast(targetID)
 	-- Target self if needed.
 	target = (self.skill.castOnSelf == "1" and Player or ValidTable(target) and target or nil)
 	if (ValidTable(target)) then
+		d("Casting Spell : " ..self.skill.name)
 		local pos = target.pos--self:Predict(target) -- just too off target. crap target prediction.
 		if (self.skill.groundTargeted == "1") then
 			if (target.isCharacter) then
@@ -1633,8 +1654,8 @@ function gw2_skill_manager.HandleButton(event, button)
 		gw2_skill_manager:MoveSkillDownButton()
 	elseif (button == "gSMmoveUpSkill") then
 		gw2_skill_manager:MoveSkillUpButton()
-	elseif (button == "") then
-
+	elseif (button == "gSMmoveSkill") then
+		gw2_skill_manager:MoveSkillButton()
 	elseif (button == "") then
 
 	elseif (button == "") then
