@@ -211,6 +211,11 @@ strings =
 		smPriorityAttunement2			= "Priority Attunement 2",
 		smPriorityAttunement3			= "Priority Attunement 3",
 		smPriorityAttunement4			= "Priority Attunement 4",
+		smIsProjectile					= "Fires Projectile",
+		smTargetSelf					= "Target Self",
+		smRelativePosition				= "Relative position",
+		smAlliesDownedNearCount			= "Downed Allies(count)",
+		smAlliesDownedNearRange			= "Downed Allies(range)",
 		
 --vendorManager
 		enableSelling					= "AutoSellItems",
@@ -902,6 +907,11 @@ strings =
 		smPriorityAttunement2			= "Priority Attunement 2",
 		smPriorityAttunement3			= "Priority Attunement 3",
 		smPriorityAttunement4			= "Priority Attunement 4",
+		smIsProjectile					= "Fires Projectile",
+		smTargetSelf					= "Target Self",
+		smRelativePosition				= "Relative position",
+		smAlliesDownedNearCount			= "Downed Allies(count)",
+		smAlliesDownedNearRange			= "Downed Allies(range)",
 
 		--vendorManager
 		enableSelling					= "自动卖物品",
@@ -1579,6 +1589,11 @@ strings =
 		smPriorityAttunement2			= "Priority Attunement 2",
 		smPriorityAttunement3			= "Priority Attunement 3",
 		smPriorityAttunement4			= "Priority Attunement 4",
+		smIsProjectile					= "Fires Projectile",
+		smTargetSelf					= "Target Self",
+		smRelativePosition				= "Relative position",
+		smAlliesDownedNearCount			= "Downed Allies(count)",
+		smAlliesDownedNearRange			= "Downed Allies(range)",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -2256,6 +2271,11 @@ strings =
 		smPriorityAttunement2			= "Priority Attunement 2",
 		smPriorityAttunement3			= "Priority Attunement 3",
 		smPriorityAttunement4			= "Priority Attunement 4",
+		smIsProjectile					= "Fires Projectile",
+		smTargetSelf					= "Target Self",
+		smRelativePosition				= "Relative position",
+		smAlliesDownedNearCount			= "Downed Allies(count)",
+		smAlliesDownedNearRange			= "Downed Allies(range)",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -2934,6 +2954,11 @@ strings =
 		smPriorityAttunement2			= "Priority Attunement 2",
 		smPriorityAttunement3			= "Priority Attunement 3",
 		smPriorityAttunement4			= "Priority Attunement 4",
+		smIsProjectile					= "Fires Projectile",
+		smTargetSelf					= "Target Self",
+		smRelativePosition				= "Relative position",
+		smAlliesDownedNearCount			= "Downed Allies(count)",
+		smAlliesDownedNearRange			= "Downed Allies(range)",
     
 		--vendorManager
 		enableSelling					= "AutoSellItems",
@@ -3620,6 +3645,11 @@ strings =
 		smPriorityAttunement2			= "Priority Attunement 2",
 		smPriorityAttunement3			= "Priority Attunement 3",
 		smPriorityAttunement4			= "Priority Attunement 4",
+		smIsProjectile					= "Fires Projectile",
+		smTargetSelf					= "Target Self",
+		smRelativePosition				= "Relative position",
+		smAlliesDownedNearCount			= "Downed Allies(count)",
+		smAlliesDownedNearRange			= "Downed Allies(range)",
 
 		--vendorManager
 		enableSelling					= "AutoSellItems",
