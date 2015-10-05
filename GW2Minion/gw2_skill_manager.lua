@@ -1451,7 +1451,7 @@ function skillPrototype:Cast(targetID)
 	-- Target self if needed.
 	target = (self.skill.castOnSelf == "1" and Player or ValidTable(target) and target or nil)
 	if (ValidTable(target)) then
-		d("Casting Spell : " ..self.skill.name)
+		--d("Casting Spell : " ..self.skill.name)
 		local pos = target.pos--self:Predict(target) -- just too off target. crap target prediction.
 		if (self.skill.groundTargeted == "1") then
 			if (target.isCharacter) then
