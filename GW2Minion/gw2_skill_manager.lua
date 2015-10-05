@@ -1215,7 +1215,7 @@ end
 -- Swap weaponset.
 function profilePrototype:SwapWeaponSet()
 	if (ml_global_information.Player_Profession ~= GW2.CHARCLASS.Engineer and ml_global_information.Player_Profession ~= GW2.CHARCLASS.Elementalist) then
-		if (Player:CanCast() and Player:IsCasting() == false and Player:CanSwapWeaponSet()) then
+		if (Player.inCombat and Player:CanSwapWeaponSet()) then
 			Player:SwapWeaponSet()
 		end
 	end
@@ -1250,12 +1250,12 @@ function profilePrototype:Swap(targetID)
 		end
 	end
 	if (canSwap and TimeSince(timers.lastSwap) > 250) then
-		timers.lastSwap = ml_global_information.Now
-		self:SwapPet()
+		timers.lastSwap = ml_global_information.Now		
 		self:SwapAttunement()
 		self:SwapKit()
 		self:SwapWeaponSet()
 	end
+	self:SwapPet()
 end
 
 function profilePrototype:SortSkills()
