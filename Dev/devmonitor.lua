@@ -132,6 +132,27 @@ function Dev.LoadModule()
 	GUI_NewField("Dev","IsUnknown12","GTIsUnknown12","GadgetInfo")
 	GUI_NewField("Dev","IsUnknown13","GTIsUnknown13","GadgetInfo")
 	
+	-- EntityInfo	
+	GUI_NewField("Dev","Ptr","EPtr","EntityInfo")
+	GUI_NewField("Dev","ID","EID","EntityInfo")
+	GUI_NewField("Dev","Type","EType","EntityInfo")	
+	GUI_NewField("Dev","Category","ECat","EntityInfo")
+	GUI_NewField("Dev","IsEntity","EIsEntity","EntityInfo")
+	GUI_NewField("Dev","IsDynamic","EIsDynamic","EntityInfo")
+	GUI_NewField("Dev","Position","EPos","EntityInfo")
+	GUI_NewField("Dev","Heading","EHead","EntityInfo")
+	GUI_NewField("Dev","Height/Radius","EHRad","EntityInfo")
+	GUI_NewField("Dev","In LOS","ELOS","EntityInfo")
+	GUI_NewField("Dev","OnMesh","EOnMesh","EntityInfo")
+	GUI_NewField("Dev","OnMeshExact","EOnMeshEx","EntityInfo")
+	GUI_NewField("Dev","Distance","EDist","EntityInfo")
+	GUI_NewField("Dev","PathDistance","EPDist","EntityInfo")
+	GUI_NewField("Dev","Alive","EInWorld","EntityInfo")
+	GUI_NewField("Dev","IsInInteractRange","EIsInInteractR","EntityInfo")
+	GUI_NewField("Dev","Interactable","EInteractable","EntityInfo")
+	GUI_NewField("Dev","Selectable","ESele","EntityInfo")
+	GUI_NewField("Dev","Lootable","ELootable","EntityInfo")
+	
 	-- Buffinfo
 	GUI_NewComboBox("Dev","BuffSource","bufftarg","BuffInfo","Player,Target");
 	GUI_NewNumeric("Dev","ListEntry","buffSlot","BuffInfo","0","999");
@@ -161,6 +182,7 @@ function Dev.LoadModule()
 	GUI_NewField("Dev","Req.Soulbind","IRSoul","InventoryInfo")
 	GUI_NewField("Dev","Accountbound","IAccbou","InventoryInfo")
 	GUI_NewField("Dev","IsSalvagable","ISalv","InventoryInfo")
+	GUI_NewField("Dev","IsMailable","IMail","InventoryInfo")	
 	GUI_NewButton("Dev","UseItem","Dev.IUse","InventoryInfo")
 	RegisterEventHandler("Dev.IUse", Dev.Func)
 	GUI_NewNumeric("Dev","Equip to Slot","ieqslot","InventoryInfo","0","36");
@@ -1058,12 +1080,35 @@ function Dev.UpdateWindow()
 			GTIsUnknown12 = tostring(mytarget.isUnknown12)
 			GTIsUnknown13 = tostring(mytarget.isUnknown13)
 		end
-				
+		
+		if ( not mytarget.isGadget and not mytarget.isCharacter ) then 
+			EPtr = string.format( "%x",tonumber(mytarget.ptr ))
+			EID = mytarget.id
+			EType = mytarget.type
+			ECat = mytarget.category
+			EIsEntity = tostring(mytarget.isEntity)
+			EIsDynamic = tostring(mytarget.isDynamic)		
+			EPos = (math.floor(mytarget.pos.x * 10) / 10).." / "..(math.floor(mytarget.pos.y * 10) / 10).." / "..(math.floor(mytarget.pos.z * 10) / 10)
+			EHead = (math.floor(mytarget.pos.hx * 10) / 10).." / "..(math.floor(mytarget.pos.hy * 10) / 10).." / "..(math.floor(mytarget.pos.hz * 10) / 10)
+			EHRad = tostring(mytarget.height.." / "..mytarget.radius)		
+			ELOS = tostring(mytarget.los)
+			EOnMesh = tostring(mytarget.onmesh)
+			EOnMeshEx = tostring(mytarget.onmeshexact)
+			EDist = (math.floor(mytarget.distance * 10) / 10)
+			EPDist = (math.floor(mytarget.pathdistance * 10) / 10)
+			EInWorld = mytarget.alive
+			EIsInInteractR = tostring(mytarget.isInInteractRange)
+			EInteractable = tostring(mytarget.interactable)
+			ESele = tostring(mytarget.selectable)
+			ELootable = tostring(mytarget.lootable)
+		end
 		--emptyfields
 	else
 		TType = "NONE"
 		GTType = "NONE"
 	end	
+	
+
 	
 	-- Buffinfo	
 	local blist
@@ -1133,6 +1178,7 @@ function Dev.UpdateWindow()
 		IAccbou = tostring(myitem.accountbound)
 		IRSoul = tostring(myitem.reqsoulbind)
 		ISalv = tostring(myitem.salvagable)
+		IMail = tostring(myitem.isMailable)
 	else
 		ICount = Inventory.count
 		ISlots = Inventory.slotCount
@@ -1151,6 +1197,7 @@ function Dev.UpdateWindow()
 		IAccbou = 0
 		IRSoul = 0
 		ISalv = 0
+		IMail = 0
 	end
 	
 	--Vendorinfo
