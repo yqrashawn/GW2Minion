@@ -495,6 +495,7 @@ c_fleeToSafety = inheritsFrom( ml_cause )
 e_fleeToSafety = inheritsFrom( ml_effect )
 c_fleeToSafety.safespot = nil
 c_fleeToSafety.fleeing = false
+c_fleeToSafety.startWaitTime = 0
 function c_fleeToSafety:evaluate()
 	-- Check if were alive and if already fleeing.
 	if ( ml_global_information.Player_Alive and c_fleeToSafety.fleeing == true and c_fleeToSafety.safespot) then
@@ -517,6 +518,7 @@ function c_fleeToSafety:evaluate()
 		end
 	end
 	c_fleeToSafety.safespot = nil
+	c_fleeToSafety.startWaitTime = 0
 	return false
 end
 function e_fleeToSafety:execute()
@@ -528,8 +530,9 @@ function e_fleeToSafety:execute()
 	-- Find enemies.
 	local nmbrEnemies = CharacterList("aggro,alive")
 	-- Enemies found, keep fleeing.
-	if (ValidTable(nmbrEnemies)) then
+	if (ValidTable(nmbrEnemies) or (TimeSince(c_fleeToSafety.startWaitTime) > 15000 and ml_global_information.Player_Health.percent < 85)) then
 		ml_log(": Walking to Safe-spot.")
+		c_fleeToSafety.startWaitTime = 0
 		-- Find new safespot if were near current and still under attack.
 		local dist = Distance2D(Player.pos.x,Player.pos.y,c_fleeToSafety.safespot.x,c_fleeToSafety.safespot.y)
 		if (dist < 250) then
@@ -546,7 +549,14 @@ function e_fleeToSafety:execute()
 	-- No enemies found, safe-spot found stop moving and wait to heal.
 	else
 		ml_log(": Found Safe-spot, waiting to heal.")
-		if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
+		
+		if(c_fleeToSafety.startWaitTime == 0) then
+			c_fleeToSafety.startWaitTime = ml_global_information.Now
+		end
+		
+		if ( ml_global_information.Player_IsMoving ) then
+			Player:StopMovement()
+		end
 	end
 end
 
@@ -554,18 +564,33 @@ end
 c_waitToHeal = inheritsFrom( ml_cause )
 e_waitToHeal = inheritsFrom( ml_effect )
 c_waitToHeal.hpPercent = math.random(70,85)
+c_waitToHeal.startWaitTime = 0
 function c_waitToHeal:evaluate()
 	--d("c_waitToHeal")
 	-- Check players health, if below set value wait to heal.
 	local conditions = "736,720,737,722,861,721,791,727,738,742,723"
 	local buffs = Player.buffs
-	return ( not ml_global_information.Player_InCombat and (ml_global_information.Player_Health.percent < c_waitToHeal.hpPercent or gw2_common_functions.BufflistHasBuffs(buffs,conditions)) )
+	if(not ml_global_information.Player_InCombat and (c_waitToHeal.startWaitTime == 0 or TimeSince(c_waitToHeal.startWaitTime) < 20000)) then
+		if(ml_global_information.Player_Health.percent < c_waitToHeal.hpPercent or gw2_common_functions.BufflistHasBuffs(buffs,conditions)) then
+			return true
+		end
+	end
+	
+	if(ml_global_information.Player_Health.percent > c_waitToHeal.hpPercent) then
+		c_waitToHeal.startWaitTime = 0
+	end
+	
+	return false
 end
 function e_waitToHeal:execute()
 	ml_log("WaitToHeal")
 	-- Set new random HP trigger.
 	c_waitToHeal.hpPercent = math.random(70,85)
-
+	
+	if(c_waitToHeal.startWaitTime == 0) then
+		c_waitToHeal.startWaitTime = ml_global_information.Now
+	end
+	
 	-- If necro check for deathshroud.
 	gw2_common_functions.NecroLeaveDeathshroud()
 	-- Stop Player movement.
