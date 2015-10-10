@@ -5,7 +5,7 @@ gw2_skill_manager.mainWindow = {name = GetString("skillManager"), x = 350, y = 5
 gw2minion.MainWindow.ChildWindows[gw2_skill_manager.mainWindow.name] = gw2_skill_manager.mainWindow.name
 gw2_skill_manager.skillWindow = {name = GetString("skillEditor"), x = 600, y = 50, w = 250, h = 550, currentSkill = 0,}
 gw2minion.MainWindow.ChildWindows[gw2_skill_manager.skillWindow.name] = gw2_skill_manager.skillWindow.name
-gw2_skill_manager.path = GetAddonPath() .. [[GW2Minion\SkillManagerProfiles\]]
+gw2_skill_manager.paths = { [1] = GetAddonPath() .. [[GW2Minion\SkillManagerProfiles\]]}  -- allowing others to add profiles from their own folders
 gw2_skill_manager.currentSkillbarSkills = {}
 gw2_skill_manager.profile = nil
 gw2_skill_manager.status = {
@@ -53,6 +53,7 @@ local profilePrototype = {
 			health = {},
 		},
 		targetBlacklistBuffs = "762,785",
+		path = gw2_skill_manager.paths[1],
 	},
 }
 local skillPrototype = {
@@ -115,7 +116,6 @@ local skillPrototype = {
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function gw2_skill_manager.ModuleInit()
-	gw2_skill_manager:UpdateProfiles()
 	if (Settings.GW2Minion.gCurrentProfile == nil or ValidTable(Settings.GW2Minion.gCurrentProfile) == false) then
 		Settings.GW2Minion.gCurrentProfile = {
 			["Elementalist"] = "GW2Minion",
@@ -660,61 +660,20 @@ function gw2_skill_manager:GetProfile(profileName)
 	if (GetGameState() == 16 and ValidString(profileName) and profileName ~= "None") then
 		profileName = string.gsub(profileName,'%W','')
 		profileName = gw2_common_functions.GetProfessionName() .. "_" .. profileName
-		local profile = persistence.load(self.path .. profileName .. ".lua")
-		if (profile) then
-			profile = inheritTable(profilePrototype, profile)
-			for _,skill in ipairs(profile.skills) do
-				skill = inheritTable(skillPrototype, skill)
-				skill.parent = setmetatable({},{__index = profile, __newindex = profile})
+		for _,path in pairs (self.paths) do 
+			local profile = persistence.load(path .. profileName .. ".lua")
+			if (profile) then
+				profile = inheritTable(profilePrototype, profile)
+				for _,skill in ipairs(profile.skills) do
+					skill = inheritTable(skillPrototype, skill)
+					skill.parent = setmetatable({},{__index = profile, __newindex = profile})
+				end
+				profile.tmp.path = path
+				return profile
 			end
-			return profile
 		end
 	end
 	return nil
-end
-
--- Update Profiles.
-function gw2_skill_manager:UpdateProfiles()
-	local profileList = dirlist(self.path,".*lua")
-	if (ValidTable(profileList)) then
-		for _,profileName in pairs(profileList) do
-			local profile = persistence.load(self.path .. profileName)
-			if (ValidTable(profile)) then
-				local class = gw2_common_functions.GetProfessionName(profile.profession)
-				if (string.find(profile.name,class.."_")) then
-					profile.name = string.gsub(profile.name,class.."_","",1)
-					profile.professionSettings = {
-						elementalist = {
-							attunement_1 = profile.professionSettings.PriorityAtt1,
-							attunement_2 = profile.professionSettings.PriorityAtt2,
-							attunement_3 = profile.professionSettings.PriorityAtt3,
-							attunement_4 = profile.professionSettings.PriorityAtt4,
-						},
-						engineer = {
-							kit = profile.professionSettings.priorityKit,
-						},
-						PriorityAtt1 = nil,
-						PriorityAtt2 = nil,
-						PriorityAtt3 = nil,
-						PriorityAtt4 = nil,
-						priorityKit = nil,
-					}
-					for _,skill in pairs(profile.skills) do
-						if (skill.skill.delay > 0) then
-							skill.skill.delay = skill.skill.delay / 1000
-						 end
-						skill.skill.castOnSelf = skill.skill.healing
-						skill.skill.healing = nil
-						skill.cooldown = nil
-						skill.slot = nil
-						skill.priority = nil
-						skill.maxCooldown = nil
-					end
-					persistence.store(gw2_skill_manager.path .. class .. "_" .. profile.name .. ".lua", profile)
-				end
-			end
-		end
-	end
 end
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -735,13 +694,15 @@ function gw2_skill_manager:GetProfileList(newProfile)
 	local profession = ml_global_information.Player_Profession
 	local list = "None"
 	if (profession) then
-		local profileList = dirlist(self.path,".*lua")
-		if (ValidTable(profileList)) then
-			for _,profileName in pairs(profileList) do
-				local profile = persistence.load(self.path .. profileName)
-				if (ValidTable(profile)) then
-					if (profile.profession == ml_global_information.Player_Profession and ValidString(profile.name)) then
-						list = list .. "," .. profile.name
+		for i,p in pairs (self.paths) do 
+			local profileList = dirlist(p,".*lua")
+			if (ValidTable(profileList)) then
+				for _,profileName in pairs(profileList) do
+					local profile = persistence.load(p .. profileName)
+					if (ValidTable(profile)) then
+						if (profile.profession == ml_global_information.Player_Profession and ValidString(profile.name)) then
+							list = list .. "," .. profile.name
+						end
 					end
 				end
 			end
@@ -840,6 +801,12 @@ function gw2_skill_manager.GetMaxAttackRange()
 	return 154
 end
 
+function gw2_skill_manager.RegisterProfilePath(path)
+	if (ValidString(path) and TableContains(gw2_skill_manager.paths, path) == false) then
+		table.insert(gw2_skill_manager.paths,path)
+	end
+end
+
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 -- **profile prototype**
@@ -856,13 +823,14 @@ function profilePrototype:Save()
 			skill.parent = nil
 		end
 	end
-	persistence.store(gw2_skill_manager.path .. gw2_common_functions.GetProfessionName(saveFile.profession) .. "_" .. saveFile.name .. ".lua", saveFile)
+	
+	persistence.store(self.tmp.path .. gw2_common_functions.GetProfessionName(saveFile.profession) .. "_" .. saveFile.name .. ".lua", saveFile)	
 	return true
 end
 
 -- Delete.
 function profilePrototype:Delete()
-	os.remove(gw2_skill_manager.path .. gw2_common_functions.GetProfessionName(self.profession) .. "_" .. self.name .. ".lua")
+	os.remove(self.path .. gw2_common_functions.GetProfessionName(self.profession) .. "_" .. self.name .. ".lua")
 	return true
 end
 
