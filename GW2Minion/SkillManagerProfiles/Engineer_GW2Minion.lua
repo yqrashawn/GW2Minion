@@ -15,6 +15,46 @@ local obj1 = {
 	["skills"] = {
 		[1] = {
 			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 15;
+			};
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "1";
+				["id"] = 5972;
+				["los"] = "0";
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Toss Elixir S";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 15;
+			};
+			["target"] = {
+			};
+		};
+		[2] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["minHP"] = 15;
+			};
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 6090;
+				["los"] = "0";
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Toss Elixir S";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 15;
+			};
+			["target"] = {
+			};
+		};
+		[3] = {
+			["player"] = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
@@ -31,7 +71,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[2] = {
+		[4] = {
 			["player"] = {
 				["minHP"] = 75;
 			};
@@ -49,7 +89,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[3] = {
+		[5] = {
 			["player"] = {
 				["minHP"] = 75;
 			};
@@ -67,7 +107,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[4] = {
+		[6] = {
 			["player"] = {
 				["minHP"] = 75;
 			};
@@ -86,7 +126,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[5] = {
+		[7] = {
 			["player"] = {
 				["minHP"] = 75;
 			};
@@ -104,7 +144,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[6] = {
+		[8] = {
 			["player"] = {
 				["minHP"] = 75;
 			};
@@ -121,7 +161,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[7] = {
+		[9] = {
 			["player"] = {
 				["minHP"] = 75;
 			};
@@ -139,7 +179,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[8] = {
+		[10] = {
 			["player"] = {
 				["minHP"] = 20;
 			};
@@ -157,7 +197,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[9] = {
+		[11] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -175,7 +215,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[10] = {
+		[12] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -192,7 +232,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[11] = {
+		[13] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -209,7 +249,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[12] = {
+		[14] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -225,7 +265,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[13] = {
+		[15] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -241,7 +281,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[14] = {
+		[16] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -257,7 +297,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[15] = {
+		[17] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -273,7 +313,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[16] = {
+		[18] = {
 			["player"] = {
 				["minHP"] = 70;
 			};
@@ -291,7 +331,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[17] = {
+		[19] = {
 			["player"] = {
 				["minHP"] = 70;
 			};
@@ -309,7 +349,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[18] = {
+		[20] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -326,7 +366,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[19] = {
+		[21] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -343,7 +383,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[20] = {
+		[22] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -359,7 +399,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[21] = {
+		[23] = {
 			["player"] = {
 				["minHP"] = 60;
 			};
@@ -378,7 +418,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[22] = {
+		[24] = {
 			["player"] = {
 				["minHP"] = 60;
 			};
@@ -397,7 +437,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[23] = {
+		[25] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -414,7 +454,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[24] = {
+		[26] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -430,7 +470,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[25] = {
+		[27] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -447,7 +487,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[26] = {
+		[28] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -463,7 +503,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[27] = {
+		[29] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -480,7 +520,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[28] = {
+		[30] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -497,7 +537,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[29] = {
+		[31] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -514,7 +554,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[30] = {
+		[32] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -530,7 +570,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[31] = {
+		[33] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -547,7 +587,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[32] = {
+		[34] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -564,7 +604,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[33] = {
+		[35] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -576,42 +616,6 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slot"] = 14;
-			};
-			["target"] = {
-			};
-		};
-		[34] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "1";
-				["id"] = 5972;
-				["los"] = "0";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Toss Elixir S";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 15;
-			};
-			["target"] = {
-			};
-		};
-		[35] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
-				["id"] = 6090;
-				["los"] = "0";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Toss Elixir S";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 15;
 			};
 			["target"] = {
 			};
