@@ -622,6 +622,7 @@ local obj1 = {
 		};
 		[36] = {
 			["player"] = {
+				["combatState"] = "InCombat";
 			};
 			["skill"] = {
 				["castOnSelf"] = "1";
@@ -640,6 +641,7 @@ local obj1 = {
 		};
 		[37] = {
 			["player"] = {
+				["combatState"] = "InCombat";
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
