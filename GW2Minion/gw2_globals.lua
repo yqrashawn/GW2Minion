@@ -10,7 +10,7 @@ ml_global_information.idlePulseCount = 0
 ml_global_information.MarkerMinLevel = 1
 ml_global_information.MarkerMaxLevel = 50
 ml_global_information.MarkerTime = 0
-ml_global_information.MAX_SKILLBAR_SLOTS = 17
+ml_global_information.MAX_SKILLBAR_SLOTS = 18
 
 -- Global vars which are used very often and we can just reduce the hammering by getting them once per frame here
 function ml_global_information.OnUpdate()

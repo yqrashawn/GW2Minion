@@ -73,7 +73,7 @@ local skillPrototype = {
 				lastSkillID			= "",
 				delay				= 0,
 				stopsMovement		= "0",
-				slot				= ml_global_information.MAX_SKILLBAR_SLOTS,
+				slot				= ml_global_information.MAX_SKILLBAR_SLOTS-1,
 	},
 	player = {	combatState			= "Either",
 				minHP				= 0,
@@ -105,7 +105,7 @@ local skillPrototype = {
 	},
 	tmp = {
 		lastCastTime = 0,
-		slot = ml_global_information.MAX_SKILLBAR_SLOTS,
+		slot = ml_global_information.MAX_SKILLBAR_SLOTS-1,
 
 	},
 }
@@ -719,7 +719,7 @@ end
 -- Update current skills.
 function gw2_skill_manager:UpdateCurrentSkillbarSkills() -- TODO:check curentskill list garbage stuff
 	self.currentSkillbarSkills = {}
-	for i = 1, ml_global_information.MAX_SKILLBAR_SLOTS do
+	for i = 1, ml_global_information.MAX_SKILLBAR_SLOTS-1 do
 		local currentSkill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
 		if (currentSkill) then			
 			local sName = currentSkill.name
@@ -1012,7 +1012,7 @@ function profilePrototype:CreateSkill(skillSlot)
 							minRange		= skillInfo.minRange or 0,
 							maxRange		= skillInfo.maxRange or 0,
 							radius			= skillInfo.radius or 0,							
-							slot			= skillInfo.slot or ml_global_information.MAX_SKILLBAR_SLOTS,
+							slot			= skillInfo.slot or ml_global_information.MAX_SKILLBAR_SLOTS-1,
 				},
 				player = {	maxPower		= skillInfo.power or 0,
 				},				
