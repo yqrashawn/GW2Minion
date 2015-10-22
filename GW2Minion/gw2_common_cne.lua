@@ -312,7 +312,7 @@ function c_FightAggro:evaluate()
 	local target = gw2_common_functions.GetBestAggroTarget()
 	if ( target ) then
 		c_FightAggro.target = target
-		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightAggro.target ~= nil
+		return c_FightAggro.target ~= nil
 	end
 
 	c_FightAggro.target = nil
@@ -603,7 +603,7 @@ e_FinishEnemy = inheritsFrom( ml_effect )
 e_FinishEnemy.tmr = 0
 e_FinishEnemy.threshold = 2000
 function c_FinishEnemy:evaluate()
-    return ml_global_information.Player_SwimState == 0 and ml_global_information.Player_Health.percent > 15 and TableSize(CharacterList("nearest,downed,aggro,attackable,maxdistance=1200,onmesh")) > 0
+    return ml_global_information.Player_Health.percent > 15 and TableSize(CharacterList("nearest,downed,aggro,attackable,maxdistance=1200,onmesh")) > 0
 end
 function e_FinishEnemy:execute()
 	ml_log(" Finish Enemy ")

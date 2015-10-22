@@ -250,7 +250,7 @@ function c_HandleAggro:evaluate()
 		local target = gw2_common_functions.GetBestAggroTarget()
 		if ( target ) then
 			c_HandleAggro.target = target
-			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_HandleAggro.target ~= nil
+			return c_HandleAggro.target ~= nil
 		end
 	end
 	c_HandleAggro.target = nil
@@ -287,7 +287,7 @@ function c_FightToGatherMarker:evaluate()
 		local target = gw2_common_functions.GetBestCharacterTarget( 1250 ) -- maxrange 2000 where enemies should be searched for
 		if ( target ) then
 			c_FightToGatherMarker.target = target
-			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGatherMarker.target ~= nil			
+			return c_FightToGatherMarker.target ~= nil			
 		end
 	end
 	c_FightToGatherMarker.target = nil

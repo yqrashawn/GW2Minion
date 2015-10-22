@@ -174,7 +174,7 @@ function c_FightToGrindMarker:evaluate()
 		local target = gw2_common_functions.GetBestCharacterTarget( 1500 ) -- maxrange 2000 where enemies should be searched for
 		if ( target ) then
 			c_FightToGrindMarker.target = target
-			return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_FightToGrindMarker.target ~= nil			
+			return c_FightToGrindMarker.target ~= nil			
 		end
 	end
 	c_FightToGrindMarker.target = nil
@@ -320,7 +320,7 @@ function c_CombatTask:evaluate()
 	local target = gw2_common_functions.GetBestCharacterTarget( 9999 ) -- maxrange where enemies should be searched for
 	if ( target ) then
 		c_CombatTask.target = target
-		return ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater and c_CombatTask.target ~= nil
+		return  c_CombatTask.target ~= nil
 	end
 	c_CombatTask.target = nil
 	return false

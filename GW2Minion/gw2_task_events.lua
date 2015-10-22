@@ -437,7 +437,7 @@ function e_DoEventObjectives:execute()
 	-- Kill enemies around us
 	local target = Player:GetTarget()
 	if ( TableSize( target ) > 0 ) then
-		if (ml_global_information.Player_SwimState == 0 and target.alive and target.attackable and target.onmesh and target.pathdistance <= ml_task_hub:CurrentTask().eventRadius + 250) then
+		if ( target.alive and target.attackable and target.onmesh and target.pathdistance <= ml_task_hub:CurrentTask().eventRadius + 250) then
 
 			ml_task_hub:CurrentTask().lastEventActionTmr = 0
 			gw2_skill_manager:Use(target.id)

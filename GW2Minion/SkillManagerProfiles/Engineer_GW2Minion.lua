@@ -55,6 +55,7 @@ local obj1 = {
 		};
 		[3] = {
 			["player"] = {
+				["conditionCount"] = 0;
 				["minHP"] = 75;
 			};
 			["skill"] = {
@@ -67,6 +68,7 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slot"] = 0;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
@@ -181,6 +183,24 @@ local obj1 = {
 		};
 		[10] = {
 			["player"] = {
+			};
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 1175;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Bandage";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[11] = {
+			["player"] = {
 				["minHP"] = 20;
 			};
 			["skill"] = {
@@ -197,7 +217,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[11] = {
+		[12] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -215,7 +235,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[12] = {
+		[13] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -232,7 +252,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[13] = {
+		[14] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -249,7 +269,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[14] = {
+		[15] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -265,7 +285,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[15] = {
+		[16] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -281,7 +301,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[16] = {
+		[17] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -297,7 +317,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[17] = {
+		[18] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -313,7 +333,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[18] = {
+		[19] = {
 			["player"] = {
 				["minHP"] = 70;
 			};
@@ -331,7 +351,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[19] = {
+		[20] = {
 			["player"] = {
 				["minHP"] = 70;
 			};
@@ -349,29 +369,13 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[20] = {
+		[21] = {
 			["player"] = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "1";
 				["id"] = 5810;
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Grenade Barrage";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 13;
-			};
-			["target"] = {
-				["moving"] = "NotMoving";
-			};
-		};
-		[21] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6172;
+				["isProjectile"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Grenade Barrage";
@@ -388,6 +392,24 @@ local obj1 = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
+				["id"] = 6172;
+				["isProjectile"] = "1";
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Grenade Barrage";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 13;
+			};
+			["target"] = {
+				["moving"] = "NotMoving";
+			};
+		};
+		[23] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
 				["id"] = 5982;
 				["maxRange"] = 900;
 				["minRange"] = 0;
@@ -399,7 +421,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[23] = {
+		[24] = {
 			["player"] = {
 				["minHP"] = 60;
 			};
@@ -418,7 +440,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[24] = {
+		[25] = {
 			["player"] = {
 				["minHP"] = 60;
 			};
@@ -437,7 +459,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[25] = {
+		[26] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -454,7 +476,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[26] = {
+		[27] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -470,7 +492,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[27] = {
+		[28] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -487,7 +509,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[28] = {
+		[29] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -503,7 +525,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[29] = {
+		[30] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -520,7 +542,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[30] = {
+		[31] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -537,7 +559,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[31] = {
+		[32] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -554,7 +576,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[32] = {
+		[33] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -570,8 +592,9 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[33] = {
+		[34] = {
 			["player"] = {
+				["conditionCount"] = 2;
 			};
 			["skill"] = {
 				["castOnSelf"] = "1";
@@ -587,8 +610,9 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[34] = {
+		[35] = {
 			["player"] = {
+				["conditionCount"] = 2;
 			};
 			["skill"] = {
 				["castOnSelf"] = "1";
@@ -604,7 +628,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[35] = {
+		[36] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -620,7 +644,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[36] = {
+		[37] = {
 			["player"] = {
 				["combatState"] = "InCombat";
 			};
@@ -639,7 +663,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[37] = {
+		[38] = {
 			["player"] = {
 				["combatState"] = "InCombat";
 			};
@@ -656,7 +680,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[38] = {
+		[39] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -672,7 +696,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[39] = {
+		[40] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -688,7 +712,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[40] = {
+		[41] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -705,7 +729,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[41] = {
+		[42] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -721,7 +745,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[42] = {
+		[43] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -737,7 +761,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[43] = {
+		[44] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -753,7 +777,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[44] = {
+		[45] = {
 			["player"] = {
 				["combatState"] = "OutCombat";
 			};
@@ -770,7 +794,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[45] = {
+		[46] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -786,7 +810,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[46] = {
+		[47] = {
 			["player"] = {
 				["minHP"] = 50;
 			};
@@ -803,7 +827,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[47] = {
+		[48] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -819,7 +843,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[48] = {
+		[49] = {
 			["player"] = {
 				["combatState"] = "OutCombat";
 				["minHP"] = 0;
@@ -837,7 +861,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[49] = {
+		[50] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -853,9 +877,10 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[50] = {
+		[51] = {
 			["player"] = {
 				["maxPower"] = 0;
+				["minHP"] = 0;
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
@@ -866,11 +891,12 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slot"] = 7;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
 		};
-		[51] = {
+		[52] = {
 			["player"] = {
 				["combatState"] = "OutCombat";
 			};
@@ -887,7 +913,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[52] = {
+		[53] = {
 			["player"] = {
 				["combatState"] = "OutCombat";
 			};
@@ -904,7 +930,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[53] = {
+		[54] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -920,7 +946,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[54] = {
+		[55] = {
 			["player"] = {
 				["combatState"] = "OutCombat";
 			};
@@ -937,7 +963,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[55] = {
+		[56] = {
 			["player"] = {
 				["minHP"] = 95;
 			};
@@ -954,7 +980,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[56] = {
+		[57] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -970,7 +996,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[57] = {
+		[58] = {
 			["player"] = {
 				["combatState"] = "OutCombat";
 			};
@@ -987,7 +1013,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[58] = {
+		[59] = {
 			["player"] = {
 				["moving"] = "Moving";
 			};
@@ -1004,7 +1030,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[59] = {
+		[60] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1020,7 +1046,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[60] = {
+		[61] = {
 			["player"] = {
 				["minHP"] = 60;
 			};
@@ -1038,7 +1064,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[61] = {
+		[62] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1054,7 +1080,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[62] = {
+		[63] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -1071,7 +1097,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[63] = {
+		[64] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1087,7 +1113,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[64] = {
+		[65] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1103,7 +1129,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[65] = {
+		[66] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1119,7 +1145,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[66] = {
+		[67] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1135,7 +1161,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[67] = {
+		[68] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1151,7 +1177,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[68] = {
+		[69] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1167,7 +1193,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[69] = {
+		[70] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1183,7 +1209,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[70] = {
+		[71] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1199,7 +1225,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[71] = {
+		[72] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1215,7 +1241,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[72] = {
+		[73] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1231,7 +1257,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[73] = {
+		[74] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1247,8 +1273,9 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[74] = {
+		[75] = {
 			["player"] = {
+				["combatState"] = "InCombat";
 			};
 			["skill"] = {
 				["castOnSelf"] = "1";
@@ -1265,7 +1292,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[75] = {
+		[76] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -1282,7 +1309,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[76] = {
+		[77] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -1299,7 +1326,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[77] = {
+		[78] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1317,8 +1344,9 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[78] = {
+		[79] = {
 			["player"] = {
+				["conditionCount"] = 2;
 			};
 			["skill"] = {
 				["castOnSelf"] = "1";
@@ -1335,7 +1363,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[79] = {
+		[80] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1353,7 +1381,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[80] = {
+		[81] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1369,7 +1397,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[81] = {
+		[82] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1386,7 +1414,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[82] = {
+		[83] = {
 			["player"] = {
 				["maxPower"] = 0;
 				["minHP"] = 66;
@@ -1404,7 +1432,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[83] = {
+		[84] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1423,7 +1451,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[84] = {
+		[85] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1439,7 +1467,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[85] = {
+		[86] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1455,7 +1483,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[86] = {
+		[87] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1472,7 +1500,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[87] = {
+		[88] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1488,7 +1516,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[88] = {
+		[89] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1504,7 +1532,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[89] = {
+		[90] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1520,7 +1548,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[90] = {
+		[91] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1536,7 +1564,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[91] = {
+		[92] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1552,7 +1580,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[92] = {
+		[93] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1568,7 +1596,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[93] = {
+		[94] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1584,7 +1612,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[94] = {
+		[95] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1600,28 +1628,13 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[95] = {
+		[96] = {
 			["player"] = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "1";
 				["id"] = 5806;
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Poison Grenade";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 9;
-			};
-			["target"] = {
-			};
-		};
-		[96] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6167;
+				["isProjectile"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Poison Grenade";
@@ -1633,6 +1646,23 @@ local obj1 = {
 			};
 		};
 		[97] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 6167;
+				["isProjectile"] = "1";
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Poison Grenade";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[98] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1648,7 +1678,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[98] = {
+		[99] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1664,7 +1694,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[99] = {
+		[100] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1680,7 +1710,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[100] = {
+		[101] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1696,7 +1726,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[101] = {
+		[102] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1712,7 +1742,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[102] = {
+		[103] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1728,28 +1758,13 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[103] = {
+		[104] = {
 			["player"] = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "1";
 				["id"] = 5809;
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Freeze Grenade";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
-			};
-			["target"] = {
-			};
-		};
-		[104] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6168;
+				["isProjectile"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Freeze Grenade";
@@ -1765,6 +1780,23 @@ local obj1 = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
+				["id"] = 6168;
+				["isProjectile"] = "1";
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Freeze Grenade";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[106] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
 				["id"] = 14556;
 				["maxRange"] = 900;
 				["minRange"] = 0;
@@ -1776,7 +1808,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[106] = {
+		[107] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1793,7 +1825,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[107] = {
+		[108] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1809,7 +1841,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[108] = {
+		[109] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1825,7 +1857,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[109] = {
+		[110] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1841,7 +1873,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[110] = {
+		[111] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1857,7 +1889,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[111] = {
+		[112] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1873,7 +1905,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[112] = {
+		[113] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1889,7 +1921,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[113] = {
+		[114] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1905,28 +1937,13 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[114] = {
+		[115] = {
 			["player"] = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "1";
 				["id"] = 5808;
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Flash Grenade";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 7;
-			};
-			["target"] = {
-			};
-		};
-		[115] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6169;
+				["isProjectile"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Flash Grenade";
@@ -1938,6 +1955,23 @@ local obj1 = {
 			};
 		};
 		[116] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 6169;
+				["isProjectile"] = "1";
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Flash Grenade";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 7;
+			};
+			["target"] = {
+			};
+		};
+		[117] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1953,7 +1987,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[117] = {
+		[118] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1969,7 +2003,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[118] = {
+		[119] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1987,7 +2021,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[119] = {
+		[120] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2003,7 +2037,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[120] = {
+		[121] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2019,12 +2053,13 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[121] = {
+		[122] = {
 			["player"] = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "1";
 				["id"] = 5807;
+				["isProjectile"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Shrapnel Grenade";
@@ -2035,7 +2070,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[122] = {
+		[123] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2052,12 +2087,13 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[123] = {
+		[124] = {
 			["player"] = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
 				["id"] = 6170;
+				["isProjectile"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Shrapnel Grenade";
@@ -2068,7 +2104,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[124] = {
+		[125] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2084,7 +2120,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[125] = {
+		[126] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2101,7 +2137,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[126] = {
+		[127] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2119,7 +2155,7 @@ local obj1 = {
 				["moving"] = "Moving";
 			};
 		};
-		[127] = {
+		[128] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2137,7 +2173,25 @@ local obj1 = {
 				["moving"] = "Moving";
 			};
 		};
-		[128] = {
+		[129] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30800;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Elite Mortar Kit";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 6;
+			};
+			["target"] = {
+				["moving"] = "Moving";
+			};
+		};
+		[130] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2154,7 +2208,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[129] = {
+		[131] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2171,7 +2225,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[130] = {
+		[132] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2188,7 +2242,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[131] = {
+		[133] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2206,7 +2260,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[132] = {
+		[134] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2222,7 +2276,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[133] = {
+		[135] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2238,7 +2292,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[134] = {
+		[136] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2255,7 +2309,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[135] = {
+		[137] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2271,7 +2325,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[136] = {
+		[138] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2287,7 +2341,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[137] = {
+		[139] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2303,7 +2357,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[138] = {
+		[140] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2319,12 +2373,13 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[139] = {
+		[141] = {
 			["player"] = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "1";
 				["id"] = 5882;
+				["isProjectile"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Grenade";
@@ -2335,12 +2390,13 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[140] = {
+		[142] = {
 			["player"] = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
 				["id"] = 6171;
+				["isProjectile"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Grenade";
@@ -2351,7 +2407,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[141] = {
+		[143] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2367,7 +2423,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[142] = {
+		[144] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2383,7 +2439,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[143] = {
+		[145] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2399,7 +2455,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[144] = {
+		[146] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2415,7 +2471,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[145] = {
+		[147] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2431,7 +2487,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[146] = {
+		[148] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2447,7 +2503,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[147] = {
+		[149] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2463,7 +2519,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[148] = {
+		[150] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2479,7 +2535,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[149] = {
+		[151] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2495,7 +2551,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[150] = {
+		[152] = {
 			["player"] = {
 				["combatState"] = "OutCombat";
 				["minHP"] = 0;
@@ -2513,7 +2569,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[151] = {
+		[153] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2529,7 +2585,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[152] = {
+		[154] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2545,7 +2601,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[153] = {
+		[155] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2561,7 +2617,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[154] = {
+		[156] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2577,7 +2633,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[155] = {
+		[157] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2593,7 +2649,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[156] = {
+		[158] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2609,7 +2665,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[157] = {
+		[159] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2625,7 +2681,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[158] = {
+		[160] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2641,7 +2697,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[159] = {
+		[161] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2657,7 +2713,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[160] = {
+		[162] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2673,7 +2729,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[161] = {
+		[163] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2689,7 +2745,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[162] = {
+		[164] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2705,7 +2761,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[163] = {
+		[165] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2721,7 +2777,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[164] = {
+		[166] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2737,23 +2793,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[165] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 1175;
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Bandage";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
-			};
-			["target"] = {
-			};
-		};
-		[166] = {
+		[167] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2769,7 +2809,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[167] = {
+		[168] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2785,7 +2825,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[168] = {
+		[169] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2801,7 +2841,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[169] = {
+		[170] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2817,7 +2857,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[170] = {
+		[171] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2833,7 +2873,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[171] = {
+		[172] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2849,7 +2889,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[172] = {
+		[173] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2866,7 +2906,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[173] = {
+		[174] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2879,6 +2919,57 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[175] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 10661;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Withering Plague";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[176] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 10662;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Plague of Darkness";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+			};
+			["target"] = {
+			};
+		};
+		[177] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 10663;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Plague of Pestilence";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 7;
 			};
 			["target"] = {
 			};

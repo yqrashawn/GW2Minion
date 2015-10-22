@@ -1080,7 +1080,18 @@ function Dev.UpdateWindow()
 			GTIsUnknown12 = tostring(mytarget.isUnknown12)
 			GTIsUnknown13 = tostring(mytarget.isUnknown13)
 		end
-		
+		--emptyfields
+	else
+		TType = "NONE"
+		GTType = "NONE"
+	end	
+	
+	
+	mytarget = AgentList("nearest")
+	if ( mytarget) then
+		_,mytarget = next(mytarget)
+	end
+	if ( mytarget ) then						
 		if ( not mytarget.isGadget and not mytarget.isCharacter ) then 
 			EPtr = string.format( "%x",tonumber(mytarget.ptr ))
 			EID = mytarget.id
@@ -1102,13 +1113,7 @@ function Dev.UpdateWindow()
 			ESele = tostring(mytarget.selectable)
 			ELootable = tostring(mytarget.lootable)
 		end
-		--emptyfields
-	else
-		TType = "NONE"
-		GTType = "NONE"
-	end	
-	
-
+	end
 	
 	-- Buffinfo	
 	local blist
@@ -1315,7 +1320,7 @@ function Dev.UpdateWindow()
 		MIsUnknown14 = 0
 		MisCommander = 0
 	end 
-	
+	d("Devmodule 50% loaded")
 	-- EventInfo
 	local id,ev
 	if ( evselection == "Closest" ) then
@@ -1831,11 +1836,17 @@ function Dev.UpdateWindow()
 end
 
 function Dev.OnUpdateHandler( Event, ticks ) 	
-	if ( ticks - Dev.lastticks > 500 ) then
-		Dev.lastticks = ticks		
-		if ( Dev.running ) then
-			Dev.UpdateWindow()
+	if ( Dev.running ) then
+		if ( ticks - Dev.lastticks > 500 ) then
+			if ( Dev.lastticks == 0 ) then
+				-- first time starting it, tends to crash randomly
+				Dev.lastticks = ticks + 2000
+				return
+			end			
+			Dev.lastticks = ticks
 			
+			Dev.UpdateWindow()
+				
 			if (Dev.curTask) then
 				Dev.curTask()
 			end

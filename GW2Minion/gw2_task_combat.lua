@@ -16,7 +16,7 @@ function gw2_task_combat.Create()
 	newinst.targetType = "character" -- change this to "gadget" if needed
 	
 	newinst.terminateOnAggro = false -- if true, terminates task if curr target has no aggro but others have
-	newinst.terminateInWater = true -- in case we ever figure that stuff out
+	newinst.terminateInWater = false -- in case we ever figure that stuff out
 	
     return newinst
 end

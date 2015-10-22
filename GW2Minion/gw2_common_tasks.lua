@@ -8,7 +8,7 @@ function gw2_common_tasks.OnUpdate( tickcount )
 	gw2_common_tasks.DepositItems(tickcount)
 	gw2_common_tasks.AoELoot(tickcount)
 	gw2_common_tasks.SalvageItems(tickcount)
-	gw2_common_tasks.SwimUp(tickcount)
+	gw2_common_tasks.Swim(tickcount)
 	gw2_common_tasks.ClaimRewards(tickcount)
 	gw2_common_tasks.EquipGatheringTools(tickcount)
 end
@@ -44,16 +44,26 @@ end
 
 gw2_common_tasks.swimUpLastUsed = 0
 gw2_common_tasks.swimUp = false
-function gw2_common_tasks.SwimUp(tickcount)
-	if( TimeSince(gw2_common_tasks.swimUpLastUsed) > 1000 and ml_global_information.Player_Alive) then
+gw2_common_tasks.swimDown = false
+function gw2_common_tasks.Swim(tickcount)
+	if( TimeSince(gw2_common_tasks.swimUpLastUsed) > 1000 and ml_global_information.Player_Alive) then		
 		gw2_common_tasks.swimUpLastUsed = tickcount + math.random(50,500)
-		if ( gBotMode ~= GetString("assistMode") and ml_global_information.Player_SwimState == GW2.SWIMSTATE.Diving ) then
+		if ( gBotMode ~= GetString("assistMode") and ml_global_information.Player_SwimState == GW2.SWIMSTATE.Diving and ml_global_information.Player_OnMesh == false) then
 			gw2_common_tasks.swimUp = true
 			Player:SetMovement(GW2.MOVEMENTTYPE.SwimUp)
 		elseif( gw2_common_tasks.swimUp == true ) then
 			gw2_common_tasks.swimUp = false
 			Player:UnSetMovement(GW2.MOVEMENTTYPE.SwimUp)
 		end		
+		
+		--Dont swim on the surface where we cannot fight
+		if ( gBotMode ~= GetString("assistMode") and ml_global_information.Player_SwimState == GW2.SWIMSTATE.Swimming and ml_global_information.Player_OnMesh and ml_global_information.Player_InCombat) then --and has underwater weapon equipped ?
+			gw2_common_tasks.swimDown = true
+			Player:SetMovement(GW2.MOVEMENTTYPE.SwimDown)
+		elseif( gw2_common_tasks.swimDown == true ) then
+			gw2_common_tasks.swimDown = false
+			Player:UnSetMovement(GW2.MOVEMENTTYPE.SwimDown)
+		end	
 	end
 end
 
