@@ -34,7 +34,7 @@ function gw2_task_navtomap:Process()
 				Player:LeaveInstance()
 				return ml_log("Exiting instance.")
 			end
-			
+
 			-- Waypoint Usage
 			if (ml_task_hub:CurrentTask().useWaypoint == true and Player:GetWalletEntry(1) > 500) then
 				local waypoint = {}
@@ -46,6 +46,11 @@ function gw2_task_navtomap:Process()
 						waypoint = wpList[math.random(1,TableSize(wpList))]
 					end
 				end
+				
+				if(ValidTable(waypoint) == false) then
+					waypoint = gw2_common_functions.GetClosestWaypointToMap(ml_task_hub:CurrentTask().targetMapID)
+				end
+				
 				if (ValidTable(waypoint) and ml_global_information.Player_InCombat == false) then
 					Player:TeleportToWaypoint(waypoint.id)
 					ml_global_information.Wait(5000)
@@ -58,7 +63,6 @@ function gw2_task_navtomap:Process()
 			
 			local nodedata = ml_nav_manager.GetNextPathPos(	ml_global_information.Player_Position, ml_global_information.CurrentMapID, ml_task_hub:CurrentTask().targetMapID )
 			if (ValidTable(nodedata)) then
-				
 				-- Reset our .gateReached variable after each new map we walked into, which allows the movement through another portal
 				if ( ml_global_information.CurrentMapID ~= ml_task_hub:CurrentTask().lastMapID ) then
 					ml_task_hub:CurrentTask().lastMapID = ml_global_information.CurrentMapID
@@ -72,6 +76,7 @@ function gw2_task_navtomap:Process()
 					local newTask = gw2_task_moveto.Create()
 					newTask.targetPos = nodedata					
 					newTask.name = ml_task_hub:CurrentTask().name
+					newTask.useWaypoint = ml_task_hub:CurrentTask().useWaypoint
 					ml_task_hub:CurrentTask():AddSubTask(newTask)
 					
 				else
