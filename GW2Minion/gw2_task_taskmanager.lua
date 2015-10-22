@@ -97,12 +97,14 @@ function e_RunTask:execute()
 				newTask.targetMapID = ml_task_hub:CurrentTask().mytask.mapid
 				newTask.name = "MoveTo Task "..ml_task_hub:CurrentTask().mytask.name.." StartMap"
 				newTask.targetPos = ml_task_hub:CurrentTask().mytask.pos
+				if (ml_task_hub:CurrentTask().mytask.useWaypoint) then
+					newTask.useWaypoint = ml_task_hub:CurrentTask().mytask.useWaypoint == "1"
+				end
 				ml_task_hub:CurrentTask():AddSubTask(newTask)
 
 			else
 				ml_error("Cannot reach StartMap of Task, disabling Task : "..ml_task_hub:CurrentTask().mytask.name)
 				ml_task_mgr.SetTaskDisabled(ml_task_hub:CurrentTask().mytask)
-
 			end
 
 		else

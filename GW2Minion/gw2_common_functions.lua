@@ -181,21 +181,71 @@ end
 
 function gw2_common_functions.GetClosestWaypointToPos(mapID,pos)
 	local waypoint = nil
-	local mapData = gw2_datamanager.GetLocalWaypointList(mapID)
+	local mapData = gw2_datamanager.GetLocalWaypointListByDistance(mapID,pos)
 	if (ValidTable(mapData)) then
-		local closestDist = 999999
-		for _,wdata in pairs(mapData) do
+		local i,wdata = next(mapData)
+		while wdata and not waypoint do
 			if (wdata.contested == false and wdata.onmesh) then
-				local wPos = wdata.pos
-				local dist = Distance2D(wPos.x,wPos.y,pos.x,pos.y)
-				if (dist < closestDist) then
-					waypoint = wdata
-					closestDist = dist
+				waypoint = wdata
+			end
+			
+			i,wdata = next(mapData,i)
+		end
+	end
+	return waypoint
+end
+
+function gw2_common_functions.GetClosestWaypointToMap(targetMapID, currentMapID)
+
+	currentMapID = currentMapID ~= nil and currentMapID or ml_global_information.CurrentMapID
+	local pos = ml_global_information.Player_Pos
+
+	if(targetMapID ~= nil) then	
+		local currNode = ml_nav_manager.GetNode(currentMapID)
+		local destNode = ml_nav_manager.GetNode(targetMapID)
+		
+		if(currNode and destNode) then
+			-- Walk the path in reverse to see if any close maps have waypoints
+			local navPath = ml_nav_manager.GetPath(destNode, currNode)
+
+			if(ValidTable(navPath)) then
+				local prevNode = nil
+				local closestWaypoint = nil
+				
+				local i,node = next(navPath)
+				while i and node and not closestWaypoint do
+					if(prevNode == nil) then
+						-- Target map
+						local _,nextNode = next(navPath, i)
+						if(nextNode and nextNode.neighbors and ValidTable(nextNode.neighbors[node.id])) then
+							local entryPos = nextNode.neighbors[node.id][1]
+							local waypointlist = gw2_datamanager.GetLocalWaypointListByDistance(node.id, entryPos)
+							if (ValidTable(waypointlist)) then
+								closestWaypoint = select(2,next(waypointlist))
+							end
+						end
+					else
+						if(node.neighbors and ValidTable(node.neighbors[prevNode.id])) then
+							local exitPos = node.neighbors[prevNode.id][1]
+							local waypointlist = gw2_datamanager.GetLocalWaypointListByDistance(node.id,exitPos)
+							if (ValidTable(waypointlist)) then
+								closestWaypoint = select(2,next(waypointlist))
+							end
+						end
+					end
+					
+					prevNode = node
+					i,node = next(navPath, i)
+				end
+				
+				if(ValidTable(closestWaypoint)) then
+					return closestWaypoint
 				end
 			end
 		end
 	end
-	return waypoint
+	
+	return nil
 end
 
 -- Tries to get a "best target" to attack

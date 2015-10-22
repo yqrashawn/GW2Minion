@@ -67,6 +67,22 @@ function gw2_datamanager.GetLocalWaypointList( mapid )
 	return ValidTable(wdata) and wdata or nil
 end
 
+function gw2_datamanager.GetLocalWaypointListByDistance(mapID,pos)
+	pos = pos ~= nil and pos or ml_global_information.Player_Position
+	mapID = mapID ~= nil and mapID or ml_global_information.CurrentMapID
+	local mapData = gw2_datamanager.GetLocalWaypointList(mapID)
+	
+	if (ValidTable(mapData)) then
+		for _,waypoint in pairs(mapData) do
+			waypoint.distance2D = Distance2D(waypoint.pos.x,waypoint.pos.y,pos.x,pos.y)
+		end
+		
+		table.sort(mapData, function(a,b) return a.distance2D < b.distance2D end)
+	end
+	
+	return mapData
+end
+
 -- converts the coordinates from the data file to ingame coordinates
 function gw2_datamanager.recalc_coords(continent_rect, map_rect, coords)
 	local contrec = {}
