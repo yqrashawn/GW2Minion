@@ -1869,6 +1869,7 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slot"] = 8;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
@@ -1901,6 +1902,7 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slot"] = 7;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
@@ -2179,24 +2181,6 @@ local obj1 = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
-				["id"] = 30800;
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Elite Mortar Kit";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 6;
-			};
-			["target"] = {
-				["moving"] = "Moving";
-			};
-		};
-		[130] = {
-			["player"] = {
-				["maxPower"] = 0;
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
 				["id"] = 6153;
 				["maxRange"] = 300;
 				["minRange"] = 0;
@@ -2208,7 +2192,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[131] = {
+		[130] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2225,7 +2209,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[132] = {
+		[131] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2242,7 +2226,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[133] = {
+		[132] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2260,7 +2244,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[134] = {
+		[133] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2276,7 +2260,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[135] = {
+		[134] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2292,7 +2276,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[136] = {
+		[135] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2309,7 +2293,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[137] = {
+		[136] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2325,7 +2309,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[138] = {
+		[137] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2341,7 +2325,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[139] = {
+		[138] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2353,11 +2337,12 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slot"] = 6;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
 		};
-		[140] = {
+		[139] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2373,7 +2358,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[141] = {
+		[140] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2390,7 +2375,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[142] = {
+		[141] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2407,7 +2392,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[143] = {
+		[142] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2423,7 +2408,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[144] = {
+		[143] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2439,7 +2424,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[145] = {
+		[144] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2455,7 +2440,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[146] = {
+		[145] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2471,7 +2456,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[147] = {
+		[146] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2487,7 +2472,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[148] = {
+		[147] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2503,7 +2488,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[149] = {
+		[148] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2519,7 +2504,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[150] = {
+		[149] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2535,7 +2520,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[151] = {
+		[150] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2551,7 +2536,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[152] = {
+		[151] = {
 			["player"] = {
 				["combatState"] = "OutCombat";
 				["minHP"] = 0;
@@ -2569,7 +2554,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[153] = {
+		[152] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2585,7 +2570,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[154] = {
+		[153] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2601,7 +2586,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[155] = {
+		[154] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2617,7 +2602,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[156] = {
+		[155] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2633,7 +2618,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[157] = {
+		[156] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2649,7 +2634,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[158] = {
+		[157] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2665,7 +2650,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[159] = {
+		[158] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2681,7 +2666,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[160] = {
+		[159] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2697,7 +2682,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[161] = {
+		[160] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2713,7 +2698,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[162] = {
+		[161] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2729,7 +2714,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[163] = {
+		[162] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2745,7 +2730,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[164] = {
+		[163] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2761,7 +2746,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[165] = {
+		[164] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2777,7 +2762,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[166] = {
+		[165] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2793,7 +2778,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[167] = {
+		[166] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2809,7 +2794,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[168] = {
+		[167] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2825,7 +2810,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[169] = {
+		[168] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2841,7 +2826,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[170] = {
+		[169] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2857,7 +2842,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[171] = {
+		[170] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2873,7 +2858,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[172] = {
+		[171] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2889,7 +2874,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[173] = {
+		[172] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2906,7 +2891,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[174] = {
+		[173] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2923,7 +2908,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[175] = {
+		[174] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2940,7 +2925,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[176] = {
+		[175] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -2957,7 +2942,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[177] = {
+		[176] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};

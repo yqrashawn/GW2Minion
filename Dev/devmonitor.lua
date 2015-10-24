@@ -1320,7 +1320,7 @@ function Dev.UpdateWindow()
 		MIsUnknown14 = 0
 		MisCommander = 0
 	end 
-	d("Devmodule 50% loaded")
+	
 	-- EventInfo
 	local id,ev
 	if ( evselection == "Closest" ) then
