@@ -126,6 +126,7 @@ function gw2_skill_manager.ModuleInit()
 			["Ranger"] = "GW2Minion",
 			["Thief"] = "GW2Minion",
 			["Warrior"] = "GW2Minion",
+			["Revenant"] = "GW2Minion",
 		}
 	end
 
@@ -1209,7 +1210,7 @@ function profilePrototype:Swap(targetID)
 	if (canSwap == false and tonumber(settings.switchOnCooldown) > 0) then
 		local skillsOnCooldown = 0
 		for _,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
-			if (skill.slot > GW2.SKILLBARSLOT.Slot_1  and skill.slot <= GW2.SKILLBARSLOT.Slot_5 and skill.cooldown ~= 0) then
+			if (skill.slot > GW2.SKILLBARSLOT.Slot_1  and skill.slot <= GW2.SKILLBARSLOT.Slot_5 and skill.cooldown ~= 0 and (skill.power == 0 or skill.power <= ml_global_information.Player_Power)) then
 				skillsOnCooldown = skillsOnCooldown + 1
 			end
 		end
