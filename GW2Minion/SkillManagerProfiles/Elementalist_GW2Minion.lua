@@ -1651,6 +1651,23 @@ local obj1 = {
 		};
 		[83] = {
 			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 30795;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Lightning Orb";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[84] = {
+			["player"] = {
 			};
 			["priority"] = 83;
 			["skill"] = {
@@ -1670,9 +1687,10 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[84] = {
+		[85] = {
 			["player"] = {
 				["conditionCount"] = 0;
+				["minHP"] = 0;
 			};
 			["priority"] = 84;
 			["skill"] = {
@@ -1690,7 +1708,7 @@ local obj1 = {
 				["type"] = "Character";
 			};
 		};
-		[85] = {
+		[86] = {
 			["player"] = {
 			};
 			["priority"] = 85;
@@ -1708,7 +1726,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[86] = {
+		[87] = {
 			["player"] = {
 				["combatState"] = "InCombat";
 				["minHP"] = 95;
@@ -1731,7 +1749,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[87] = {
+		[88] = {
 			["player"] = {
 			};
 			["priority"] = 87;
@@ -1753,7 +1771,7 @@ local obj1 = {
 				["type"] = "Character";
 			};
 		};
-		[88] = {
+		[89] = {
 			["player"] = {
 			};
 			["priority"] = 88;
@@ -1772,7 +1790,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[89] = {
+		[90] = {
 			["player"] = {
 			};
 			["priority"] = 89;
@@ -1793,7 +1811,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[90] = {
+		[91] = {
 			["player"] = {
 			};
 			["priority"] = 90;
@@ -1813,7 +1831,7 @@ local obj1 = {
 				["type"] = "Character";
 			};
 		};
-		[91] = {
+		[92] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -1832,7 +1850,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[92] = {
+		[93] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -1850,7 +1868,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[93] = {
+		[94] = {
 			["player"] = {
 			};
 			["priority"] = 93;
@@ -1869,7 +1887,7 @@ local obj1 = {
 				["enemyRangeMax"] = 0;
 			};
 		};
-		[94] = {
+		[95] = {
 			["player"] = {
 			};
 			["priority"] = 94;
@@ -1889,7 +1907,7 @@ local obj1 = {
 				["type"] = "Character";
 			};
 		};
-		[95] = {
+		[96] = {
 			["player"] = {
 			};
 			["priority"] = 95;
@@ -1907,7 +1925,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[96] = {
+		[97] = {
 			["player"] = {
 			};
 			["priority"] = 96;
@@ -1924,7 +1942,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[97] = {
+		[98] = {
 			["player"] = {
 			};
 			["priority"] = 97;
@@ -1941,7 +1959,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[98] = {
+		[99] = {
 			["player"] = {
 				["allyDownedNearCount"] = 0;
 				["allyDownedRangeMax"] = 0;
@@ -1960,7 +1978,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[99] = {
+		[100] = {
 			["player"] = {
 			};
 			["priority"] = 99;
@@ -1979,36 +1997,23 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[100] = {
+		[101] = {
 			["player"] = {
 				["minHP"] = 85;
 			};
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["groundTargeted"] = "0";
 				["id"] = 29415;
+				["los"] = "0";
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Overload Water";
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slot"] = 13;
-			};
-			["target"] = {
-			};
-		};
-		[101] = {
-			["player"] = {
-				["minHP"] = 85;
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 29719;
-				["maxRange"] = 360;
-				["minRange"] = 0;
-				["name"] = "Overload Air";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 14;
+				["slowCast"] = "1";
+				["stopsMovement"] = "1";
 			};
 			["target"] = {
 			};
@@ -2019,18 +2024,40 @@ local obj1 = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
-				["id"] = 29618;
-				["maxRange"] = 0;
+				["id"] = 29719;
+				["maxRange"] = 360;
 				["minRange"] = 0;
-				["name"] = "Overload Earth";
+				["name"] = "Overload Air";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 15;
+				["setRange"] = "1";
+				["slot"] = 14;
+				["slowCast"] = "1";
+				["stopsMovement"] = "0";
 			};
 			["target"] = {
 			};
 		};
 		[103] = {
+			["player"] = {
+				["minHP"] = 85;
+			};
+			["skill"] = {
+				["castOnSelf"] = "0";
+				["groundTargeted"] = "0";
+				["id"] = 29618;
+				["los"] = "1";
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Overload Earth";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 15;
+				["slowCast"] = "1";
+			};
+			["target"] = {
+			};
+		};
+		[104] = {
 			["player"] = {
 				["minHP"] = 85;
 			};
@@ -2041,21 +2068,24 @@ local obj1 = {
 				["minRange"] = 0;
 				["name"] = "Overload Fire";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = "1";
 				["slot"] = 12;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
 		};
-		[104] = {
+		[105] = {
 			["player"] = {
+				["conditionCount"] = 0;
+				["minHP"] = 70;
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
 				["id"] = 29968;
 				["maxRange"] = 600;
 				["minRange"] = 0;
-				["name"] = "\"Rebound.\"";
+				["name"] = "\"Rebound!\"";
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slot"] = 4;
@@ -2063,7 +2093,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[105] = {
+		[106] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2079,10 +2109,12 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[106] = {
+		[107] = {
 			["player"] = {
+				["combatState"] = "InCombat";
 			};
 			["skill"] = {
+				["castOnSelf"] = "1";
 				["groundTargeted"] = "0";
 				["id"] = 30047;
 				["maxRange"] = 600;
@@ -2095,7 +2127,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[107] = {
+		[108] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2103,15 +2135,15 @@ local obj1 = {
 				["id"] = 30432;
 				["maxRange"] = 600;
 				["minRange"] = 0;
-				["name"] = "\"Shock and Aftershock!\"";
+				["name"] = "\"Aftershock!\"";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = "1";
 				["slot"] = 3;
 			};
 			["target"] = {
 			};
 		};
-		[108] = {
+		[109] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2121,13 +2153,13 @@ local obj1 = {
 				["minRange"] = 0;
 				["name"] = "\"Feel the Burn!\"";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = "1";
 				["slot"] = 3;
 			};
 			["target"] = {
 			};
 		};
-		[109] = {
+		[110] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2143,7 +2175,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[110] = {
+		[111] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2159,7 +2191,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[111] = {
+		[112] = {
 			["player"] = {
 			};
 			["priority"] = 100;
@@ -2176,7 +2208,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[112] = {
+		[113] = {
 			["player"] = {
 			};
 			["priority"] = 101;
@@ -2195,7 +2227,7 @@ local obj1 = {
 				["type"] = "Character";
 			};
 		};
-		[113] = {
+		[114] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -2213,7 +2245,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[114] = {
+		[115] = {
 			["player"] = {
 			};
 			["priority"] = 103;
@@ -2231,7 +2263,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[115] = {
+		[116] = {
 			["player"] = {
 			};
 			["priority"] = 104;
@@ -2251,7 +2283,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[116] = {
+		[117] = {
 			["player"] = {
 			};
 			["priority"] = 105;
@@ -2269,7 +2301,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[117] = {
+		[118] = {
 			["player"] = {
 			};
 			["priority"] = 106;
@@ -2286,7 +2318,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[118] = {
+		[119] = {
 			["player"] = {
 			};
 			["priority"] = 107;
@@ -2305,7 +2337,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[119] = {
+		[120] = {
 			["player"] = {
 			};
 			["priority"] = 108;
@@ -2322,7 +2354,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[120] = {
+		[121] = {
 			["player"] = {
 			};
 			["priority"] = 109;
@@ -2339,7 +2371,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[121] = {
+		[122] = {
 			["player"] = {
 			};
 			["priority"] = 110;
@@ -2358,7 +2390,7 @@ local obj1 = {
 				["moving"] = "Moving";
 			};
 		};
-		[122] = {
+		[123] = {
 			["player"] = {
 			};
 			["priority"] = 111;
@@ -2376,7 +2408,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[123] = {
+		[124] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -2395,7 +2427,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[124] = {
+		[125] = {
 			["player"] = {
 			};
 			["priority"] = 113;
@@ -2413,7 +2445,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[125] = {
+		[126] = {
 			["player"] = {
 				["combatState"] = "InCombat";
 			};
@@ -2432,7 +2464,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[126] = {
+		[127] = {
 			["player"] = {
 			};
 			["priority"] = 115;
@@ -2451,7 +2483,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[127] = {
+		[128] = {
 			["player"] = {
 			};
 			["priority"] = 116;
@@ -2469,7 +2501,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[128] = {
+		[129] = {
 			["player"] = {
 			};
 			["priority"] = 117;
@@ -2486,7 +2518,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[129] = {
+		[130] = {
 			["player"] = {
 			};
 			["priority"] = 118;
@@ -2503,7 +2535,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[130] = {
+		[131] = {
 			["player"] = {
 			};
 			["priority"] = 119;
@@ -2522,7 +2554,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[131] = {
+		[132] = {
 			["player"] = {
 			};
 			["priority"] = 120;
@@ -2539,7 +2571,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[132] = {
+		[133] = {
 			["player"] = {
 			};
 			["priority"] = 121;
@@ -2556,7 +2588,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[133] = {
+		[134] = {
 			["player"] = {
 			};
 			["priority"] = 122;
@@ -2574,7 +2606,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[134] = {
+		[135] = {
 			["player"] = {
 				["allyDownedNearCount"] = 0;
 				["allyDownedRangeMax"] = 0;
@@ -2593,7 +2625,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[135] = {
+		[136] = {
 			["player"] = {
 			};
 			["priority"] = 124;
@@ -2611,7 +2643,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[136] = {
+		[137] = {
 			["player"] = {
 			};
 			["priority"] = 125;
@@ -2628,7 +2660,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[137] = {
+		[138] = {
 			["player"] = {
 			};
 			["priority"] = 126;
@@ -2645,7 +2677,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[138] = {
+		[139] = {
 			["player"] = {
 			};
 			["priority"] = 127;
@@ -2662,7 +2694,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[139] = {
+		[140] = {
 			["player"] = {
 				["conditionCount"] = 0;
 			};
@@ -2681,7 +2713,7 @@ local obj1 = {
 				["moving"] = "Moving";
 			};
 		};
-		[140] = {
+		[141] = {
 			["player"] = {
 			};
 			["priority"] = 129;
@@ -2699,7 +2731,7 @@ local obj1 = {
 				["moving"] = "Moving";
 			};
 		};
-		[141] = {
+		[142] = {
 			["player"] = {
 			};
 			["priority"] = 130;
@@ -2717,7 +2749,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[142] = {
+		[143] = {
 			["player"] = {
 			};
 			["priority"] = 131;
@@ -2736,7 +2768,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[143] = {
+		[144] = {
 			["player"] = {
 			};
 			["priority"] = 132;
@@ -2754,7 +2786,7 @@ local obj1 = {
 				["moving"] = "Moving";
 			};
 		};
-		[144] = {
+		[145] = {
 			["player"] = {
 			};
 			["priority"] = 133;
@@ -2772,7 +2804,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[145] = {
+		[146] = {
 			["player"] = {
 			};
 			["priority"] = 134;
@@ -2790,7 +2822,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[146] = {
+		[147] = {
 			["player"] = {
 			};
 			["priority"] = 135;
@@ -2807,7 +2839,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[147] = {
+		[148] = {
 			["player"] = {
 			};
 			["priority"] = 136;
@@ -2825,7 +2857,7 @@ local obj1 = {
 				["moving"] = "Moving";
 			};
 		};
-		[148] = {
+		[149] = {
 			["player"] = {
 			};
 			["priority"] = 137;
@@ -2842,7 +2874,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[149] = {
+		[150] = {
 			["player"] = {
 			};
 			["priority"] = 138;
@@ -2859,7 +2891,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[150] = {
+		[151] = {
 			["player"] = {
 			};
 			["priority"] = 139;
@@ -2877,7 +2909,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[151] = {
+		[152] = {
 			["player"] = {
 			};
 			["priority"] = 140;
@@ -2894,7 +2926,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[152] = {
+		[153] = {
 			["player"] = {
 			};
 			["priority"] = 141;
@@ -2911,7 +2943,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[153] = {
+		[154] = {
 			["player"] = {
 			};
 			["priority"] = 142;
@@ -2928,7 +2960,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[154] = {
+		[155] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -2949,7 +2981,7 @@ local obj1 = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[155] = {
+		[156] = {
 			["player"] = {
 			};
 			["priority"] = 144;
@@ -2966,7 +2998,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[156] = {
+		[157] = {
 			["player"] = {
 			};
 			["priority"] = 145;
@@ -2984,7 +3016,7 @@ local obj1 = {
 				["hasNotBuffs"] = "1122,906,905";
 			};
 		};
-		[157] = {
+		[158] = {
 			["player"] = {
 			};
 			["priority"] = 146;
@@ -3001,7 +3033,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[158] = {
+		[159] = {
 			["player"] = {
 			};
 			["priority"] = 147;
@@ -3018,7 +3050,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[159] = {
+		[160] = {
 			["player"] = {
 			};
 			["priority"] = 148;
@@ -3035,7 +3067,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[160] = {
+		[161] = {
 			["player"] = {
 			};
 			["priority"] = 149;
@@ -3052,7 +3084,25 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[161] = {
+		[162] = {
+			["player"] = {
+				["maxPower"] = 0;
+				["minHP"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30008;
+				["maxRange"] = 750;
+				["minRange"] = 0;
+				["name"] = "Cyclone";
+				["radius"] = 240;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[163] = {
 			["player"] = {
 			};
 			["priority"] = 150;
@@ -3070,7 +3120,7 @@ local obj1 = {
 				["type"] = "Character";
 			};
 		};
-		[162] = {
+		[164] = {
 			["player"] = {
 			};
 			["priority"] = 151;
@@ -3088,7 +3138,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[163] = {
+		[165] = {
 			["player"] = {
 			};
 			["priority"] = 152;
@@ -3105,7 +3155,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[164] = {
+		[166] = {
 			["player"] = {
 			};
 			["priority"] = 153;
@@ -3122,7 +3172,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[165] = {
+		[167] = {
 			["player"] = {
 			};
 			["priority"] = 154;
@@ -3139,7 +3189,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[166] = {
+		[168] = {
 			["player"] = {
 			};
 			["priority"] = 155;
@@ -3156,7 +3206,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[167] = {
+		[169] = {
 			["player"] = {
 			};
 			["priority"] = 156;
@@ -3173,7 +3223,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[168] = {
+		[170] = {
 			["player"] = {
 			};
 			["priority"] = 157;
@@ -3190,7 +3240,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[169] = {
+		[171] = {
 			["player"] = {
 			};
 			["priority"] = 158;
@@ -3207,7 +3257,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[170] = {
+		[172] = {
 			["player"] = {
 			};
 			["priority"] = 159;
@@ -3224,7 +3274,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[171] = {
+		[173] = {
 			["player"] = {
 			};
 			["priority"] = 160;
@@ -3241,7 +3291,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[172] = {
+		[174] = {
 			["player"] = {
 			};
 			["priority"] = 161;
@@ -3258,7 +3308,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[173] = {
+		[175] = {
 			["player"] = {
 				["conditionCount"] = 0;
 			};
@@ -3278,7 +3328,7 @@ local obj1 = {
 				["conditionCount"] = 0;
 			};
 		};
-		[174] = {
+		[176] = {
 			["player"] = {
 			};
 			["priority"] = 163;
@@ -3296,7 +3346,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[175] = {
+		[177] = {
 			["player"] = {
 				["allyDownedNearCount"] = 0;
 				["allyDownedRangeMax"] = 0;
@@ -3315,7 +3365,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[176] = {
+		[178] = {
 			["player"] = {
 			};
 			["priority"] = 165;
@@ -3333,7 +3383,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[177] = {
+		[179] = {
 			["player"] = {
 			};
 			["priority"] = 166;
@@ -3351,7 +3401,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[178] = {
+		[180] = {
 			["player"] = {
 			};
 			["priority"] = 167;
@@ -3369,7 +3419,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[179] = {
+		[181] = {
 			["player"] = {
 			};
 			["priority"] = 168;
@@ -3387,7 +3437,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[180] = {
+		[182] = {
 			["player"] = {
 			};
 			["priority"] = 169;
@@ -3405,7 +3455,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[181] = {
+		[183] = {
 			["player"] = {
 				["minHP"] = 0;
 			};
@@ -3423,7 +3473,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[182] = {
+		[184] = {
 			["player"] = {
 			};
 			["priority"] = 171;
@@ -3440,7 +3490,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[183] = {
+		[185] = {
 			["player"] = {
 			};
 			["priority"] = 172;
@@ -3457,7 +3507,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[184] = {
+		[186] = {
 			["player"] = {
 			};
 			["priority"] = 173;
@@ -3474,7 +3524,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[185] = {
+		[187] = {
 			["player"] = {
 			};
 			["priority"] = 174;
@@ -3491,7 +3541,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[186] = {
+		[188] = {
 			["player"] = {
 			};
 			["priority"] = 175;
@@ -3508,7 +3558,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[187] = {
+		[189] = {
 			["player"] = {
 			};
 			["priority"] = 176;
@@ -3525,7 +3575,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[188] = {
+		[190] = {
 			["player"] = {
 			};
 			["priority"] = 177;
@@ -3542,7 +3592,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[189] = {
+		[191] = {
 			["player"] = {
 			};
 			["priority"] = 178;
@@ -3559,7 +3609,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[190] = {
+		[192] = {
 			["player"] = {
 			};
 			["priority"] = 179;
@@ -3576,7 +3626,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[191] = {
+		[193] = {
 			["player"] = {
 			};
 			["priority"] = 180;
@@ -3593,7 +3643,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[192] = {
+		[194] = {
 			["player"] = {
 			};
 			["priority"] = 181;
@@ -3610,7 +3660,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[193] = {
+		[195] = {
 			["player"] = {
 			};
 			["priority"] = 182;
@@ -3627,7 +3677,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[194] = {
+		[196] = {
 			["player"] = {
 			};
 			["priority"] = 183;
@@ -3644,7 +3694,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[195] = {
+		[197] = {
 			["player"] = {
 			};
 			["priority"] = 184;
@@ -3661,7 +3711,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[196] = {
+		[198] = {
 			["player"] = {
 			};
 			["priority"] = 185;
@@ -3675,6 +3725,108 @@ local obj1 = {
 				["setRange"] = "1";
 			};
 			["slot"] = 1;
+			["target"] = {
+			};
+		};
+		[199] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29548;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Heat Sync";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[200] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29533;
+				["maxRange"] = 750;
+				["minRange"] = 0;
+				["name"] = "Wildfire";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[201] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5495;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Earth Attunement";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 15;
+			};
+			["target"] = {
+			};
+		};
+		[202] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30864;
+				["maxRange"] = 360;
+				["minRange"] = 0;
+				["name"] = "Tidal Surge";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[203] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30446;
+				["maxRange"] = 750;
+				["minRange"] = 0;
+				["name"] = "Water Globe";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[204] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 5492;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Fire Attunement";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 12;
+			};
 			["target"] = {
 			};
 		};

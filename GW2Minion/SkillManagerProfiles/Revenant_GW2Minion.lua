@@ -177,6 +177,27 @@ local obj1 = {
 				["castOnSelf"] = "1";
 				["delay"] = 15000;
 				["groundTargeted"] = "0";
+				["id"] = 26650;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Legendary Dwarf Stance";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 16;
+			};
+			["target"] = {
+			};
+		};
+		[10] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["delay"] = 15000;
+				["groundTargeted"] = "0";
 				["id"] = 28134;
 				["los"] = "0";
 				["maxRange"] = 0;
@@ -189,7 +210,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[10] = {
+		[11] = {
 			["player"] = {
 				["combatState"] = "InCombat";
 				["maxPower"] = 0;
@@ -210,11 +231,12 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[11] = {
+		[12] = {
 			["player"] = {
 				["combatState"] = "InCombat";
 				["maxEndurance"] = 0;
 				["maxPower"] = 0;
+				["minHP"] = 0;
 			};
 			["skill"] = {
 				["castOnSelf"] = "1";
@@ -232,7 +254,29 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[12] = {
+		[13] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["maxEndurance"] = 0;
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["delay"] = 15000;
+				["groundTargeted"] = "0";
+				["id"] = 28376;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Legendary Demon Stance";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 16;
+			};
+			["target"] = {
+			};
+		};
+		[14] = {
 			["player"] = {
 				["maxEndurance"] = 0;
 				["maxPower"] = 50;
@@ -251,7 +295,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[13] = {
+		[15] = {
 			["player"] = {
 				["maxPower"] = 50;
 			};
@@ -268,7 +312,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[14] = {
+		[16] = {
 			["player"] = {
 				["maxPower"] = 50;
 			};
@@ -285,7 +329,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[15] = {
+		[17] = {
 			["player"] = {
 				["maxPower"] = 5;
 			};
@@ -302,7 +346,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[16] = {
+		[18] = {
 			["player"] = {
 				["maxPower"] = 50;
 			};
@@ -319,7 +363,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[17] = {
+		[19] = {
 			["player"] = {
 				["maxPower"] = 20;
 			};
@@ -336,7 +380,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[18] = {
+		[20] = {
 			["player"] = {
 				["maxPower"] = 35;
 			};
@@ -353,7 +397,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[19] = {
+		[21] = {
 			["player"] = {
 				["maxPower"] = 50;
 			};
@@ -370,7 +414,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[20] = {
+		[22] = {
 			["player"] = {
 				["maxPower"] = 30;
 			};
@@ -387,7 +431,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[21] = {
+		[23] = {
 			["player"] = {
 				["maxPower"] = 20;
 			};
@@ -404,7 +448,25 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[22] = {
+		[24] = {
+			["player"] = {
+				["maxPower"] = 10;
+				["minHP"] = 50;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 28571;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Duelist's Preparation";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[25] = {
 			["player"] = {
 				["maxPower"] = 35;
 			};
@@ -421,7 +483,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[23] = {
+		[26] = {
 			["player"] = {
 				["maxPower"] = 30;
 			};
@@ -438,7 +500,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[24] = {
+		[27] = {
 			["player"] = {
 				["maxPower"] = 5;
 			};
@@ -455,7 +517,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[25] = {
+		[28] = {
 			["player"] = {
 				["maxPower"] = 50;
 			};
@@ -472,7 +534,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[26] = {
+		[29] = {
 			["player"] = {
 				["maxPower"] = 10;
 			};
@@ -489,7 +551,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[27] = {
+		[30] = {
 			["player"] = {
 				["maxPower"] = 30;
 			};
@@ -506,7 +568,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[28] = {
+		[31] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -523,7 +585,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[29] = {
+		[32] = {
 			["player"] = {
 				["maxPower"] = 10;
 			};
@@ -540,7 +602,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[30] = {
+		[33] = {
 			["player"] = {
 				["maxPower"] = 15;
 			};
@@ -557,7 +619,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[31] = {
+		[34] = {
 			["player"] = {
 				["maxPower"] = 15;
 			};
@@ -574,7 +636,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[32] = {
+		[35] = {
 			["player"] = {
 				["maxPower"] = 10;
 			};
@@ -591,7 +653,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[33] = {
+		[36] = {
 			["player"] = {
 				["maxPower"] = 15;
 			};
@@ -608,24 +670,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[34] = {
-			["player"] = {
-				["maxPower"] = 10;
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 28571;
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Duelist's Preparation";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
-			};
-			["target"] = {
-			};
-		};
-		[35] = {
+		[37] = {
 			["player"] = {
 				["maxPower"] = 10;
 			};
@@ -642,7 +687,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[36] = {
+		[38] = {
 			["player"] = {
 				["maxPower"] = 15;
 			};
@@ -659,7 +704,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[37] = {
+		[39] = {
 			["player"] = {
 				["maxPower"] = 5;
 			};
@@ -676,7 +721,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[38] = {
+		[40] = {
 			["player"] = {
 				["maxPower"] = 5;
 			};
@@ -693,7 +738,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[39] = {
+		[41] = {
 			["player"] = {
 				["maxPower"] = 5;
 			};
@@ -710,7 +755,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[40] = {
+		[42] = {
 			["player"] = {
 				["maxPower"] = 5;
 			};
@@ -727,7 +772,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[41] = {
+		[43] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -744,7 +789,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[42] = {
+		[44] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -761,7 +806,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[43] = {
+		[45] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -778,7 +823,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[44] = {
+		[46] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -795,7 +840,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[45] = {
+		[47] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -812,7 +857,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[46] = {
+		[48] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -829,7 +874,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[47] = {
+		[49] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -846,7 +891,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[48] = {
+		[50] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -863,7 +908,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[49] = {
+		[51] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -880,7 +925,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[50] = {
+		[52] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -897,7 +942,25 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[51] = {
+		[53] = {
+			["player"] = {
+				["maxPower"] = 10;
+				["minHP"] = 35;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 27665;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Field of the Mists";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[54] = {
 			["player"] = {
 				["maxPower"] = 5;
 			};
@@ -914,7 +977,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[52] = {
+		[55] = {
 			["player"] = {
 				["maxPower"] = 10;
 			};
@@ -931,7 +994,24 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[53] = {
+		[56] = {
+			["player"] = {
+				["maxPower"] = 5;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 28253;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Coalescence of Ruin";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+			};
+			["target"] = {
+			};
+		};
+		[57] = {
 			["player"] = {
 				["maxPower"] = 20;
 			};
@@ -948,7 +1028,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[54] = {
+		[58] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -965,7 +1045,25 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[55] = {
+		[59] = {
+			["player"] = {
+				["maxPower"] = 5;
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 27976;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Phase Smash";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 7;
+				["slowCast"] = "1";
+			};
+			["target"] = {
+			};
+		};
+		[60] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -982,7 +1080,27 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[56] = {
+		[61] = {
+			["player"] = {
+				["maxPower"] = 15;
+				["minHP"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "1";
+				["id"] = 28110;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Drop the Hammer";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+				["slowCast"] = "1";
+			};
+			["target"] = {
+				["moving"] = "NotMoving";
+			};
+		};
+		[62] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -999,7 +1117,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[57] = {
+		[63] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -1016,7 +1134,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[58] = {
+		[64] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -1033,7 +1151,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[59] = {
+		[65] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -1050,7 +1168,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[60] = {
+		[66] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -1067,7 +1185,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[61] = {
+		[67] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -1077,6 +1195,24 @@ local obj1 = {
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Essence Sap";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[68] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 28549;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Hammer Bolt";
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slot"] = 5;

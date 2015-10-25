@@ -250,6 +250,8 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.SetDefaultMesh(350,"Heart of the Mists")
 		ml_mesh_mgr.SetDefaultMesh(968,"EdgeOfTheMist")
 		ml_mesh_mgr.SetDefaultMesh(988,"Dry Top")
+		--HoT
+		ml_mesh_mgr.SetDefaultMesh(1052,"Verdant Brink")
 		
 		-- Setup the marker types we wanna use
 		    local grindMarker = ml_marker:Create("grindMarker")

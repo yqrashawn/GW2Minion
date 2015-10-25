@@ -2746,49 +2746,6 @@ local obj1 = {
 			["skill"] = {
 				["castOnSelf"] = "0";
 				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 10634;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Deathly Claws";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[70] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
 				["groundTargeted"] = "1";
 				["id"] = 19114;
 				["lastSkillID"] = "";
@@ -2813,7 +2770,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[71] = {
+		[70] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2856,7 +2813,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[72] = {
+		[71] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2899,7 +2856,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[73] = {
+		[72] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2942,7 +2899,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[74] = {
+		[73] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2985,7 +2942,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[75] = {
+		[74] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3028,7 +2985,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[76] = {
+		[75] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3071,7 +3028,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[77] = {
+		[76] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3114,7 +3071,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[78] = {
+		[77] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3157,7 +3114,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[79] = {
+		[78] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3200,7 +3157,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[80] = {
+		[79] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3243,7 +3200,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[81] = {
+		[80] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3286,7 +3243,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[82] = {
+		[81] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3329,7 +3286,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[83] = {
+		[82] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3372,7 +3329,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[84] = {
+		[83] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3415,7 +3372,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[85] = {
+		[84] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3458,7 +3415,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[86] = {
+		[85] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3501,7 +3458,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[87] = {
+		[86] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3544,7 +3501,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[88] = {
+		[87] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3587,7 +3544,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[89] = {
+		[88] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3630,7 +3587,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[90] = {
+		[89] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3673,7 +3630,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[91] = {
+		[90] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3716,7 +3673,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[92] = {
+		[91] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3759,7 +3716,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[93] = {
+		[92] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3802,7 +3759,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[94] = {
+		[93] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3845,7 +3802,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[95] = {
+		[94] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -3862,7 +3819,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[96] = {
+		[95] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -3879,7 +3836,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[97] = {
+		[96] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -3896,7 +3853,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[98] = {
+		[97] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -3913,7 +3870,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[99] = {
+		[98] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -3930,7 +3887,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[100] = {
+		[99] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3973,7 +3930,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[101] = {
+		[100] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4016,7 +3973,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[102] = {
+		[101] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4059,7 +4016,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[103] = {
+		[102] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4102,7 +4059,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[104] = {
+		[103] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4145,7 +4102,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[105] = {
+		[104] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4188,7 +4145,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[106] = {
+		[105] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4231,7 +4188,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[107] = {
+		[106] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4274,7 +4231,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[108] = {
+		[107] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4317,7 +4274,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[109] = {
+		[108] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4360,7 +4317,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[110] = {
+		[109] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4403,7 +4360,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[111] = {
+		[110] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4446,7 +4403,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[112] = {
+		[111] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4489,7 +4446,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[113] = {
+		[112] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4532,7 +4489,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[114] = {
+		[113] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4575,7 +4532,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[115] = {
+		[114] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4618,7 +4575,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[116] = {
+		[115] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4661,7 +4618,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[117] = {
+		[116] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4704,7 +4661,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[118] = {
+		[117] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4731,6 +4688,49 @@ local obj1 = {
 				["minRange"] = 0;
 				["name"] = "Putrid Mark";
 				["radius"] = 180;
+				["setRange"] = "1";
+				["slowCast"] = "0";
+			};
+			["target"] = {
+				["boonCount"] = 0;
+				["conditionCount"] = 0;
+				["enemyNearCount"] = 0;
+				["enemyRangeMax"] = 0;
+				["hasBuffs"] = "";
+				["hasNotBuffs"] = "";
+				["maxHP"] = 0;
+				["minHP"] = 0;
+				["moving"] = "Either";
+				["type"] = "Either";
+			};
+		};
+		[118] = {
+			["player"] = {
+				["allyNearCount"] = 0;
+				["allyRangeMax"] = 0;
+				["boonCount"] = 0;
+				["combatState"] = "Either";
+				["conditionCount"] = 0;
+				["hasBuffs"] = "";
+				["hasNotBuffs"] = "";
+				["maxEndurance"] = 0;
+				["maxHP"] = 0;
+				["maxPower"] = 0;
+				["minEndurance"] = 0;
+				["minHP"] = 0;
+				["minPower"] = 0;
+			};
+			["skill"] = {
+				["castOnSelf"] = "0";
+				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 10634;
+				["lastSkillID"] = "";
+				["los"] = "1";
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Deathly Claws";
+				["radius"] = 0;
 				["setRange"] = "1";
 				["slowCast"] = "0";
 			};
@@ -5437,6 +5437,76 @@ local obj1 = {
 		};
 		[135] = {
 			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30163;
+				["maxRange"] = 170;
+				["minRange"] = 0;
+				["name"] = "Gravedigger";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+				["slowCast"] = "1";
+			};
+			["target"] = {
+			};
+		};
+		[136] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29740;
+				["maxRange"] = 750;
+				["minRange"] = 0;
+				["name"] = "Grasping Darkness";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[137] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29855;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Nightfall";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[138] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30860;
+				["maxRange"] = 220;
+				["minRange"] = 0;
+				["name"] = "Death Spiral";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 7;
+				["slowCast"] = "1";
+			};
+			["target"] = {
+			};
+		};
+		[139] = {
+			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
 				["boonCount"] = 0;
@@ -5478,7 +5548,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[136] = {
+		[140] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -5495,7 +5565,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[137] = {
+		[141] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -5512,7 +5582,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[138] = {
+		[142] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -5529,7 +5599,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[139] = {
+		[143] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -5539,6 +5609,57 @@ local obj1 = {
 				["maxRange"] = 170;
 				["minRange"] = 0;
 				["name"] = "Life Rend";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[144] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29705;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Dusk Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[145] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30799;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Fading Twilight";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[146] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29867;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Chilling Scythe";
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slot"] = 5;

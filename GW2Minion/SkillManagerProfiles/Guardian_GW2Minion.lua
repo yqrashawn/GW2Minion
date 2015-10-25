@@ -325,7 +325,7 @@ local obj1 = {
 				["maxHP"] = 0;
 				["maxPower"] = 0;
 				["minEndurance"] = 0;
-				["minHP"] = 0;
+				["minHP"] = 20;
 				["minPower"] = 0;
 			};
 			["skill"] = {

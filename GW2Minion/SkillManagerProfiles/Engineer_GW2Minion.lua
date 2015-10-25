@@ -2007,6 +2007,7 @@ local obj1 = {
 		};
 		[119] = {
 			["player"] = {
+				["minHP"] = 75;
 			};
 			["skill"] = {
 				["delay"] = 0;
