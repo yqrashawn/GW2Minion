@@ -551,7 +551,7 @@ function gw2_common_functions.Evade(direction)
 			local aggroTargets = CharacterList("aggro,alive")
 			if (ValidTable(aggroTargets)) then
 				for _,target in pairs(aggroTargets) do
-					if (target.castinfo.targetID == Player.id and Player.castinfo.duration == 0 and TimeSince(gw2_common_functions.lastEvade) > 1500) then
+					if (target.castinfo and target.castinfo.targetID == Player.id and Player.castinfo.duration == 0 and TimeSince(gw2_common_functions.lastEvade) > 1500) then
 						evadeTarget = true
 					end
 				end
