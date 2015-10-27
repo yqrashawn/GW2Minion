@@ -1,4 +1,58 @@
--- Handler for different OMC types
+-- Handler for different OMC types and record keys
+
+function ml_mesh_mgr.ProcessShortcuts()
+--Left Alt + Right Mouse
+	if ( MeshManager:IsKeyPressed(164) and MeshManager:IsKeyPressed(2)) then
+		local mousepos = MeshManager:GetMousePos()
+		if ( TableSize(mousepos) > 0 ) then	
+			if (MeshManager:DeleteRasterTriangle(mousepos)) then
+				d("Deletion was successful.")
+			end
+		end
+	end	
+	
+	if ( gMeshrec == "1" and gMeshChange == "0" and  MeshManager:IsKeyPressed(162) and MeshManager:IsKeyPressed(3)) then
+		ml_mesh_mgr.CreateSingleCell()
+	end	
+	
+	-- Record Mesh & Gamedata
+	if ( gMeshrec == "1" or gMeshChange == "1") then
+		-- Key-Input-Handler
+		
+		-- 160 = Left Shift
+		if ( MeshManager:IsKeyPressed(160) ) then
+			MeshManager:RecSize(2*tonumber(gRecAreaSize))
+		else
+			MeshManager:RecSize(tonumber(gRecAreaSize))
+		end
+				
+		-- 162 = Left CTRL + Left Mouse
+		if ( MeshManager:IsKeyPressed(162) and MeshManager:IsKeyPressed(1)) then --162 is the integervalue of the virtualkeycode (hex)
+			MeshManager:RecSize(1)
+			MeshManager:RecForce(true)
+		else
+			MeshManager:RecForce(false)
+			if ( not  MeshManager:IsKeyPressed(160) ) then
+				MeshManager:RecSize(tonumber(gRecAreaSize))					
+			end
+		end			
+				
+		-- 162 = Left CTRL 
+		if ( MeshManager:IsKeyPressed(162) ) then --162 is the integervalue of the virtualkeycode (hex)
+			-- show the mesh if it issnt shown
+			if ( gShowMesh == "0" ) then
+				MeshManager:ShowTriMesh(true)
+			end
+			MeshManager:RecSteeper(true)
+		else
+			if ( gShowMesh == "0" ) then
+				MeshManager:ShowTriMesh(false)
+			end
+			MeshManager:RecSteeper(false)
+		end	 
+	end	
+end
+
 function ml_mesh_mgr.HandleOMC( ... )
 	local args = {...}
 	local OMCType = args[2]	

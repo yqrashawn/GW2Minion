@@ -220,6 +220,7 @@ local obj1 = {
 		[12] = {
 			["player"] = {
 				["minHP"] = 0;
+				["moving"] = "NotMoving";
 			};
 			["skill"] = {
 				["groundTargeted"] = "1";
@@ -230,6 +231,7 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slot"] = 16;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 				["moving"] = "NotMoving";
@@ -373,26 +375,25 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 5810;
-				["isProjectile"] = "1";
-				["maxRange"] = 900;
+				["groundTargeted"] = "0";
+				["id"] = 17260;
+				["los"] = "0";
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Grenade Barrage";
+				["name"] = "Detonate Flame Blast";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 13;
+				["setRange"] = "1";
+				["slot"] = 6;
 			};
 			["target"] = {
-				["moving"] = "NotMoving";
 			};
 		};
 		[22] = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6172;
+				["groundTargeted"] = "1";
+				["id"] = 5810;
 				["isProjectile"] = "1";
 				["maxRange"] = 900;
 				["minRange"] = 0;
@@ -410,6 +411,24 @@ local obj1 = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
+				["id"] = 6172;
+				["isProjectile"] = "1";
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Grenade Barrage";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 13;
+			};
+			["target"] = {
+				["moving"] = "NotMoving";
+			};
+		};
+		[24] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
 				["id"] = 5982;
 				["maxRange"] = 900;
 				["minRange"] = 0;
@@ -421,7 +440,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[24] = {
+		[25] = {
 			["player"] = {
 				["minHP"] = 60;
 			};
@@ -440,7 +459,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[25] = {
+		[26] = {
 			["player"] = {
 				["minHP"] = 60;
 			};
@@ -459,7 +478,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[26] = {
+		[27] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -474,22 +493,6 @@ local obj1 = {
 			};
 			["target"] = {
 				["moving"] = "NotMoving";
-			};
-		};
-		[27] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 17260;
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Detonate Flame Blast";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
-			};
-			["target"] = {
 			};
 		};
 		[28] = {

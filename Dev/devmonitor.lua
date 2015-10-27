@@ -10,6 +10,9 @@ function Dev.ModuleInit()
 	GUI_WindowVisible("Dev",false)	
 	GUI_NewButton("Dev","TOGGLE DEVMONITOR ON_OFF","Dev.Test1")
 	RegisterEventHandler("Dev.Test1", Dev.LoadModule)
+	
+	GUI_NewButton("Dev","TP to Target","Dev.tptarget","Functions")
+	RegisterEventHandler("Dev.tptarget", Dev.Func)
 end
 
 function Dev.LoadModule()
@@ -455,7 +458,10 @@ function Dev.LoadModule()
 	GUI_NewButton("Dev","Set Values","Dev.SetVals","Hacks")
 	RegisterEventHandler("Dev.SetVals", Dev.Func)
 	
-	GUI_NewCheckbox("Dev","NoClip","HackNoCl","Hacks");
+	GUI_NewCheckbox("Dev","NoClip","HackNoCl","Hacks")
+	GUI_NewCheckbox("Dev","Hover","HackHover","Hacks")
+	GUI_NewCheckbox("Dev","InfiniteJump","HackJmp","Hacks")
+	GUI_NewCheckbox("Dev","ExtendGlider","HackGlide","Hacks")
 	
 	-- ConversationInfo		
 	GUI_NewField("Dev","IsConversationOpen","ConOpen","ConversationInfo")
@@ -609,11 +615,13 @@ function Dev.LoadModule()
 	GUI_NewButton("Dev","GetNameFromID","Dev.STringID","Functions")
 	RegisterEventHandler("Dev.STringID", Dev.Func)
 	nRenderDepth = 2
-	
-	GUI_SizeWindow("Dev",250,550)	
+		
+	GUI_SizeWindow("Dev",250,550)
+	d("Dev UI Init")
 	end		
 	
 	Dev.Test1()
+
 end
 
 function Dev.GUIVarUpdate(Event, NewVals, OldVals)
@@ -623,7 +631,25 @@ function Dev.GUIVarUpdate(Event, NewVals, OldVals)
                 d(Player:NoClip(true))
             else
                 d(Player:NoClip(false))
-            end        
+            end
+		elseif (k == "HackHover") then
+            if ( v == "1" ) then
+                HackManager.Hover = true
+            else
+                HackManager.Hover = false
+            end
+		elseif (k == "HackJmp") then
+            if ( v == "1" ) then
+                HackManager.Jump = true
+            else
+                HackManager.Jump = false
+            end
+		elseif (k == "HackGlide") then
+            if ( v == "1" ) then
+                HackManager.ExtendGlider = true
+            else
+                HackManager.ExtendGlider = false
+            end
         end	
 	end
 end
@@ -830,7 +856,12 @@ function Dev.Func ( arg )
 	elseif ( arg == "Dev.PvPJoinBlue" ) then
 		if ( PvPManager:CanJoinTeam(2) ) then
 			PvPManager:JoinTeam(2)
-		end		
+		end	
+	elseif ( arg == "Dev.tptarget" ) then
+		local t = Player:GetTarget()
+		if ( t ) then
+			Player:Teleport(tonumber(t.pos.x),tonumber(t.pos.y),tonumber(t.pos.z))
+		end
 	end	
 end
 
