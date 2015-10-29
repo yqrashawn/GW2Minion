@@ -22,7 +22,7 @@ function ml_global_information.OnUpdate()
 		ml_global_information.Player_Profession = Player.profession or 0
 		ml_global_information.Player_ProfessionName = table_invert(GW2.CHARCLASS)[ml_global_information.Player_Profession] or "NoClass"
 		ml_global_information.Player_Power = Player.power or 0
-		ml_global_information.Player_Endurance = Player.endurance or 0		
+		ml_global_information.Player_Endurance = Player.endurance or 0
 		ml_global_information.Player_InCombat = Player.inCombat or false		
 		ml_global_information.Player_Position = Player.pos
 		ml_global_information.Player_Level = Player.level
@@ -46,6 +46,8 @@ function ml_global_information.OnUpdate()
 		end
 		
 		ml_global_information.AttackRange = gw2_skill_manager.GetMaxAttackRange()
+		ml_global_information.Player_CurrentWeaponSet = Player:GetCurrentWeaponSet() or 0	-- 0 Aqua1, 1 Aqua2, 2 Engikit, 3 Necro Lich Form/ranger astralform,  4 Weapon1, 5 Weapon2
+		ml_global_information.Player_TransformID = Player:GetTransformID() or 0 -- 1-4 attunement, 5 deathshroud, 9 rangernormal, 10 rangerastralform
 		
 		-- Update Debug fields
 		if ( ml_global_information.ShowDebug ) then		

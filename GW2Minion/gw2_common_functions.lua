@@ -548,10 +548,11 @@ function gw2_common_functions.Evade(direction)
 	if (ml_global_information.Player_Endurance >= 50) then
 		local evadeTarget = false
 		if (type(direction) ~= "number") then
-			local aggroTargets = CharacterList("aggro,alive")
+			local aggroTargets = CharacterList("aggro,alive,maxdistance=3000")
 			if (ValidTable(aggroTargets)) then
 				for _,target in pairs(aggroTargets) do
-					if (target.castinfo and target.castinfo.targetID == Player.id and Player.castinfo.duration == 0 and TimeSince(gw2_common_functions.lastEvade) > 1500) then
+					local cinfo = target.castinfo
+					if (ValidTable(cinfo) and cinfo.targetID == Player.id and Player.castinfo.duration == 0 and TimeSince(gw2_common_functions.lastEvade) > 1500) then
 						evadeTarget = true
 					end
 				end

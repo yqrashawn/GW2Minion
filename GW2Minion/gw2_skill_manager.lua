@@ -190,17 +190,17 @@ function gw2_skill_manager:MainWindowCreateGroups()
 			gSMCurrentProfileName_listitems = self:GetProfileList(self.profile.name)
 			gSMCurrentProfileName = self.profile.name
 			-- create swap settings group.
-			mainWindow:NewCheckBox(GetString("SwapRange"),"gSMSwitchOnRange",GetString("smSwitchSettings"))
-			mainWindow:NewCheckBox(GetString("SwapR"),"gSMSwitchRandom",GetString("smSwitchSettings"))
-			mainWindow:NewNumeric(GetString("SwapCD"),"gSMSwitchOnCooldown",GetString("smSwitchSettings"),0,20)
-			gSMSwitchOnRange = self.profile.switchSettings.switchOnRange
-			gSMSwitchRandom = self.profile.switchSettings.switchRandom
-			gSMSwitchOnCooldown = self.profile.switchSettings.switchOnCooldown
+			--mainWindow:NewCheckBox(GetString("SwapRange"),"gSMSwitchOnRange",GetString("smSwitchSettings"))
+			--mainWindow:NewCheckBox(GetString("SwapR"),"gSMSwitchRandom",GetString("smSwitchSettings"))
+			--mainWindow:NewNumeric(GetString("SwapCD"),"gSMSwitchOnCooldown",GetString("smSwitchSettings"),0,20)
+			--gSMSwitchOnRange = self.profile.switchSettings.switchOnRange
+			--gSMSwitchRandom = self.profile.switchSettings.switchRandom
+			--gSMSwitchOnCooldown = self.profile.switchSettings.switchOnCooldown
 			-- create profession settings group.
 			local profession = ml_global_information.Player_Profession
 			if (profession) then
 				if (profession == GW2.CHARCLASS.Engineer) then
-					mainWindow:NewComboBox(GetString("smPriorityKit"),"gSMPrioKit",GetString("smProfessionSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun")
+					mainWindow:NewComboBox(GetString("smPriorityKit"),"gSMPrioKit",GetString("smProfessionSettings"),"None,BombKit,FlameThrower,GrenadeKit,ToolKit,ElixirGun,EliteMortarKit")
 					gSMPrioKit = self.profile.professionSettings.engineer.kit
 				elseif(profession == GW2.CHARCLASS.Elementalist) then
 					mainWindow:NewComboBox(GetString("smPriorityAttunement1"),"gSMPrioAtt1",GetString("smProfessionSettings"),"None,Fire,Water,Air,Earth")
@@ -769,6 +769,8 @@ function gw2_skill_manager:UpdateCurrentSkillbarSkills() -- TODO:check curentski
 			end
 		end
 	end
+	
+	gw2_skill_manager.UpdateSkillTrackerData()	
 end
 
 -- Detect skills.
@@ -1164,65 +1166,404 @@ function profilePrototype:SwapAttunement()
 	end
 end
 
--- Swap kit.
-function profilePrototype:SwapKit()
-	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
-		local EngineerKits = {[5812] = "BombKit", [5927] = "FlameThrower", [6020] = "GrenadeKit", [5805] = "GrenadeKit", [5904] = "ToolKit", [5933] = "ElixirGun", [30800] = "EliteMortarKit",}
-		local availableKits = {}
-		for _,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
-			if (ValidTable(skill) and EngineerKits[skill.skillID]) then
-				availableKits[EngineerKits[skill.skillID]] = {slot = skill.slot, skillID = skill.skillID}
+-- This little thingy tracks the cooldown and ranges of the different skillbars, so the bot can switch n swap weapons more intelligently
+gw2_skill_manager.SkillTracker = {
+	
+	-- enums, using ml_global_information.Player_CurrentWeaponSet as key
+	weaponsetname = {
+		[0] = "Aqua1",
+		[1] = "Aqua2",
+		[2] = "Kit/Astral",
+		[3] = "LichForm",
+		[4] = "Weapon1",
+		[5] = "Weapon2",
+	},
+	
+	-- enums, using ml_global_information.Player_TransformID as key
+	transformidname = {
+		[1] = "FireAttunement",
+		[2] = "WaterAttunement",
+		[3] = "AitAttunement",
+		[4] = "EartheAttunement",
+		[5] = "DeathShroud",
+		
+		[9] = "RangerNormalForm",
+		[10] = "RangerAstralForm",	
+	},
+	
+	-- Main weapon table
+	weapons = {
+		-- default weapons are needed
+		[0] = { name = "Aqua1",	range = {},  cooldowns = {} },
+		[1] = { name = "Aqua2",	range = {},  cooldowns = {} },
+		[4] = { name = "Weapon1",	range = {},  cooldowns = {} },
+		[5] = { name = "Weapon2",	range = {},  cooldowns = {} }
+	},
+	
+	-- Elementalist (using ml_global_information.Player_TransformID as key) 1 - 4 is attunment	
+	elelastswap = 0, -- 1,25 sec all attunements are on cd after a swap
+	attunements = {
+		[1] = { name = "Fire", 			range = {}, cooldowns = { }, lastswap = 0},
+		[2] = { name = "Water", 		range = {}, cooldowns = { }, lastswap = 0},
+		[3] = { name = "Air", 			range = {}, cooldowns = { }, lastswap = 0},
+		[4] = { name = "Earth", 		range = {}, cooldowns = { }, lastswap = 0},
+	},
+	
+	-- Engineer
+	engilastswap = 0, -- there is at least 1 second cd after swapping
+	kits = {			
+			[5812] = { name = "BombKit", 		range = { [GW2.SKILLBARSLOT.Slot_1] = 300, [GW2.SKILLBARSLOT.Slot_2] = 300, [GW2.SKILLBARSLOT.Slot_3]= 300, [GW2.SKILLBARSLOT.Slot_4] = 300, [GW2.SKILLBARSLOT.Slot_5] = 300		}, cooldowns = { }, inuse = false},
+			[5927] = { name = "FlameThrower",	range = { [GW2.SKILLBARSLOT.Slot_1] = 425, [GW2.SKILLBARSLOT.Slot_2] = 600, [GW2.SKILLBARSLOT.Slot_3]= 300, [GW2.SKILLBARSLOT.Slot_4] = 600, [GW2.SKILLBARSLOT.Slot_5] = 180		}, cooldowns = { }, inuse = false},
+			[6020] = { name = "GrenadeKit",		range = { [GW2.SKILLBARSLOT.Slot_1] = 900, [GW2.SKILLBARSLOT.Slot_2] = 900, [GW2.SKILLBARSLOT.Slot_3]= 900, [GW2.SKILLBARSLOT.Slot_4] = 900, [GW2.SKILLBARSLOT.Slot_5] = 900 		}, cooldowns = { }, inuse = false},
+			[5805] = { name = "GrenadeKit",		range = { [GW2.SKILLBARSLOT.Slot_1] = 900, [GW2.SKILLBARSLOT.Slot_2] = 900, [GW2.SKILLBARSLOT.Slot_3]= 900, [GW2.SKILLBARSLOT.Slot_4] = 900, [GW2.SKILLBARSLOT.Slot_5] = 900 		}, cooldowns = { }, inuse = false},
+			[5904] = { name = "ToolKit",		range = { [GW2.SKILLBARSLOT.Slot_1] = 155, [GW2.SKILLBARSLOT.Slot_2] = 240, [GW2.SKILLBARSLOT.Slot_3]= 155, [GW2.SKILLBARSLOT.Slot_4] = 0,   [GW2.SKILLBARSLOT.Slot_5] = 0  		}, cooldowns = { }, inuse = false},
+			[5933] = { name = "ElixirGun",		range = { [GW2.SKILLBARSLOT.Slot_1] = 900, [GW2.SKILLBARSLOT.Slot_2] = 900, [GW2.SKILLBARSLOT.Slot_3]= 450, [GW2.SKILLBARSLOT.Slot_4] = 180, [GW2.SKILLBARSLOT.Slot_5] = 0  		}, cooldowns = { }, inuse = false},
+			[30800] ={ name = "EliteMortarKit", range = { [GW2.SKILLBARSLOT.Slot_1] = 1500, [GW2.SKILLBARSLOT.Slot_2] = 1500, [GW2.SKILLBARSLOT.Slot_3]= 1500, [GW2.SKILLBARSLOT.Slot_4] = 1500, [GW2.SKILLBARSLOT.Slot_5] = 1500	}, cooldowns = { }, inuse = false},
+	},
+	stowkits = {
+		[6110] = 6020, -- Stow GrenadeKit
+		[6111] = 5812, -- Stow BombKit
+		[6114] = 5927, -- Stow FlameThrower
+		[6115] = 5933, -- Stow ElixirGun
+		[6113] = 5904, -- Stow ToolKit
+		[29905] = 30800, -- Stow EliteMortarKit
+	},
+}
+-- for the player:cast(), so it knows which entry to modify 
+function gw2_skill_manager.GetCurrentSkillTrackerEntry()	
+	-- Weapons
+	if (ml_global_information.Player_Profession ~= GW2.CHARCLASS.Elementalist and (ml_global_information.Player_Profession ~= GW2.CHARCLASS.Engineer or ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer and ml_global_information.Player_CurrentWeaponSet ~= 2 )) then			
+		return gw2_skill_manager.SkillTracker.weapons[ml_global_information.Player_CurrentWeaponSet]		
+	
+	--Elementalist
+	elseif (ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist and ml_global_information.Player_TransformID >= 1 and ml_global_information.Player_TransformID <=4) then
+		return gw2_skill_manager.SkillTracker.attunements[ml_global_information.Player_TransformID]
+	
+	-- Engineer
+	elseif (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then		
+		for stowID,kitID in pairs(gw2_skill_manager.SkillTracker.stowkits) do
+			if ( ValidTable(gw2_skill_manager.currentSkillbarSkills[stowID]) ) then
+				return gw2_skill_manager.SkillTracker.kits[kitID]
 			end
 		end
-		local newKit = (availableKits[self.professionSettings.engineer.kit] or GetRandomTableEntry(availableKits))
-		if (ValidTable(newKit)) then
-			Player:CastSpell(newKit.slot)
+	end
+end
+-- Gets called from UpdateCurrentSkillbarSkills()
+function gw2_skill_manager.UpdateSkillTrackerData( )
+
+-- Weapons
+	if (ml_global_information.Player_Profession ~= GW2.CHARCLASS.Elementalist) then
+		
+		-- Don't record the weaponset if it is an Engineer kit
+		if ( ml_global_information.Player_Profession ~= GW2.CHARCLASS.Engineer or ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer and ml_global_information.Player_CurrentWeaponSet ~= 2 ) then
+			-- Create a new Entry in the Skilltracker for our current weaponset
+			if ( not ValidTable(gw2_skill_manager.SkillTracker.weapons[ml_global_information.Player_CurrentWeaponSet]) ) then
+				gw2_skill_manager.SkillTracker.weapons[ml_global_information.Player_CurrentWeaponSet] = { name = gw2_skill_manager.SkillTracker.weaponsetname[ml_global_information.Player_CurrentWeaponSet] or "Unknown",	range = {},  cooldowns = {} }
+			end
+			
+			-- Update the data of the current weaponset
+			for _skillID,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
+				if ( skill.slot >= GW2.SKILLBARSLOT.Slot_1 and skill.slot <= GW2.SKILLBARSLOT.Slot_5) then 
+					gw2_skill_manager.RefreshSkillTrackerEntry(	gw2_skill_manager.SkillTracker.weapons[ml_global_information.Player_CurrentWeaponSet], skill.slot, skill )
+				end
+			end
+		end
+		
+		-- Update the cooldown data of the weapons not currently equipped				
+		for wpsetID,weaponset in pairs(gw2_skill_manager.SkillTracker.weapons) do						
+			for i=GW2.SKILLBARSLOT.Slot_1, GW2.SKILLBARSLOT.Slot_5 do
+				gw2_skill_manager.RefreshSkillTrackerEntry( weaponset, i , nil )
+			end
+		end
+	end
+
+-- Elementalist Kits
+	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist and ml_global_information.Player_TransformID >= 1 and ml_global_information.Player_TransformID <=4) then
+		-- Update currently equipped Attument weaponset
+		for _skillID,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
+			if ( skill.slot >= GW2.SKILLBARSLOT.Slot_1 and skill.slot <= GW2.SKILLBARSLOT.Slot_5) then 
+				gw2_skill_manager.RefreshSkillTrackerEntry(gw2_skill_manager.SkillTracker.attunements[ml_global_information.Player_TransformID], skill.slot, skill)
+			end
+		end
+		-- Update not equipped Attunement Cooldowns
+		for TransformID,attunement in pairs(gw2_skill_manager.SkillTracker.attunements) do
+			for i=GW2.SKILLBARSLOT.Slot_1, GW2.SKILLBARSLOT.Slot_5 do
+				gw2_skill_manager.RefreshSkillTrackerEntry( attunement, i , nil )
+			end
+		end	
+	end
+	
+-- Engineer Kits
+	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
+		for stowID,kitID in pairs(gw2_skill_manager.SkillTracker.stowkits) do
+			if ( ValidTable(gw2_skill_manager.currentSkillbarSkills[stowID]) ) then
+				gw2_skill_manager.SkillTracker.kits[kitID].inuse = true
+				-- We have this kit equipped currently, update the data
+				--d("USING : "..gw2_skill_manager.SkillTracker.kits[kitID].name)
+				if (ValidTable(gw2_skill_manager.SkillTracker.kits[kitID])) then 
+					
+					-- Find skill.slot 1 - 5 in gw2_skill_manager.currentSkillbarSkills and update our SkillTracker data
+					for _skillID,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
+						if ( skill.slot >= GW2.SKILLBARSLOT.Slot_1 and skill.slot <= GW2.SKILLBARSLOT.Slot_5) then 
+							gw2_skill_manager.RefreshSkillTrackerEntry(gw2_skill_manager.SkillTracker.kits[kitID], skill.slot, skill)
+						end
+					end
+				else
+					d("ERROR@gw2_skill_manager@UpdateEngineerKitData, Unknown KitID: "..tostring(kitID))
+				end
+				
+			else
+				if ( ValidTable(gw2_skill_manager.currentSkillbarSkills[kitID]) ) then
+					gw2_skill_manager.SkillTracker.kits[kitID].inuse = true
+				else
+					gw2_skill_manager.SkillTracker.kits[kitID].inuse = false
+				end
+			end
+		end
+		-- Update the cooldown data of the kits not currently equipped
+		for kitID,kit in pairs(gw2_skill_manager.SkillTracker.kits) do
+			for i=GW2.SKILLBARSLOT.Slot_1, GW2.SKILLBARSLOT.Slot_5 do
+				gw2_skill_manager.RefreshSkillTrackerEntry( kit, i , nil )
+			end
+		end		
+	end
+	-- Debug Testing output ;)
+	--[[
+	for ID,entry in pairs(gw2_skill_manager.SkillTracker.weapons) do
+		for i=5,9 do
+			trackerdata[entry.name.."_"..tostring(i)] = "Range:"..tostring(entry.range[i]).." CD:"..tostring(entry.cooldowns[i].current).."/"..tostring(entry.cooldowns[i].maxcd)
+		end
+	end
+	for ID,entry in pairs(gw2_skill_manager.SkillTracker.kits) do
+		for i=5,9 do
+			trackerdata[entry.name.."_"..tostring(i)] = "Range:"..tostring(entry.range[i]).." CD:"..tostring(entry.cooldowns[i].current).."/"..tostring(entry.cooldowns[i].maxcd)
+		end
+	end
+	for ID,entry in pairs(gw2_skill_manager.SkillTracker.attunements) do
+		for i=5,9 do
+			trackerdata[entry.name.."_"..tostring(i)] = "Range:"..tostring(entry.range[i]).." CD:"..tostring(entry.cooldowns[i].current).."/"..tostring(entry.cooldowns[i].maxcd)
+		end
+	end
+	, lastswap = 0
+	d(trackerdata)]]
+end
+function gw2_skill_manager.RefreshSkillTrackerEntry( trackerEntry, slot, skilldata, timestamp_cast )
+	-- Make sure the cooldown table is valid on this trackerEntry
+	if ( not ValidTable(trackerEntry.cooldowns[slot]) ) then
+		trackerEntry.cooldowns[slot] = {maxcd = 0, current = 0, timestamp = 0}
+	end
+	if ( not trackerEntry.range[slot] ) then
+		trackerEntry.range[slot] = 0
+	end
+	
+	local cdTable = trackerEntry.cooldowns[slot]
+			
+	if ( ValidTable(skilldata) ) then
+		-- Update range & maxcd in case they are not set
+		cdTable.maxcd = skilldata.cooldownmax or 0		
+		trackerEntry.range[slot] = skilldata.maxRange or 150
+		
+		-- Check for skills which went on cooldown		
+		if ( cdTable.maxcd > 0 ) then
+			if ( skilldata.cooldown ~= 0 or timestamp_cast ~= nil) then
+				-- skill is on cooldown or was just cast
+				if ( cdTable.timestamp == 0 ) then
+					-- set the time when the bot noticed that the skill went on cooldown
+					cdTable.timestamp = timestamp_cast or ml_global_information.Now -- ~1000 is the ~time that already passes until the data is being refreshed, so a 10s cd starts at 9sec to be visible
+				end
+			else
+				-- make sure we are not having a current cooldown (timing hickups)
+				if ( cdTable.timestamp ~= 0 and ml_global_information.Now - cdTable.timestamp > 1500) then
+					cdTable.timestamp = 0
+					cdTable.current = 0
+				end
+			end
+		end
+	else
+		-- Update the cooldown timer
+		if ( cdTable.timestamp ~= 0 ) then
+			cdTable.current = cdTable.maxcd - (ml_global_information.Now - cdTable.timestamp)
+			
+			-- skill is not on cd anymore
+			if ( cdTable.current <= 0 ) then
+				cdTable.timestamp = 0
+				cdTable.current = 0
+			end
 		end
 	end
 end
 
--- Swap weaponset.
-function profilePrototype:SwapWeaponSet()
-	if (ml_global_information.Player_Profession ~= GW2.CHARCLASS.Engineer and ml_global_information.Player_Profession ~= GW2.CHARCLASS.Elementalist) then
-		if (Player.inCombat and Player:CanSwapWeaponSet()) then
-			Player:SwapWeaponSet()
+-- Can Swap kit.
+function profilePrototype:SwapWeapon( targetdist )
+	local currentwpset = gw2_skill_manager.GetCurrentSkillTrackerEntry()
+	
+	-- Get a list of usable weaponsets
+	local wpsets = {}
+	if ( Player.inCombat and ( Player:CanSwapWeaponSet() or ml_global_information.Player_CurrentWeaponSet == 2) ) then 
+		if ( ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater ) then
+			if ( ml_global_information.Player_CurrentWeaponSet ~= 4 and ValidTable(gw2_skill_manager.SkillTracker.weapons[4])) then wpsets[4] = { set = gw2_skill_manager.SkillTracker.weapons[4], prio = 0 } end
+			if ( ml_global_information.Player_CurrentWeaponSet ~= 5 and ValidTable(gw2_skill_manager.SkillTracker.weapons[5])) then wpsets[5] = { set = gw2_skill_manager.SkillTracker.weapons[5], prio = 0 } end		
+		
+		elseif ( ml_global_information.Player_SwimState == GW2.SWIMSTATE.Diving ) then
+			if ( ml_global_information.Player_CurrentWeaponSet ~= 0 and ValidTable(gw2_skill_manager.SkillTracker.weapons[0])) then wpsets[0] = { set = gw2_skill_manager.SkillTracker.weapons[0], prio = 0 } end
+			if ( ml_global_information.Player_CurrentWeaponSet ~= 1 and ValidTable(gw2_skill_manager.SkillTracker.weapons[1])) then wpsets[1] = { set = gw2_skill_manager.SkillTracker.weapons[1], prio = 0 } end				
 		end
 	end
+	
+	-- Elementalist	
+	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist and ml_global_information.Now - gw2_skill_manager.SkillTracker.elelastswap > 1250) then		
+		if ( ml_global_information.Player_TransformID ~= 1 and ValidTable(gw2_skill_manager.SkillTracker.attunements[1]) and self:CanCastSlot(GW2.SKILLBARSLOT.Slot_13)) then wpsets[13] = { set = gw2_skill_manager.SkillTracker.attunements[1], prio = 0 } end
+		if ( ml_global_information.Player_TransformID ~= 2 and ValidTable(gw2_skill_manager.SkillTracker.attunements[2]) and self:CanCastSlot(GW2.SKILLBARSLOT.Slot_14)) then wpsets[14] = { set = gw2_skill_manager.SkillTracker.attunements[2], prio = 0 } end
+		if ( ml_global_information.Player_TransformID ~= 3 and ValidTable(gw2_skill_manager.SkillTracker.attunements[3]) and self:CanCastSlot(GW2.SKILLBARSLOT.Slot_15)) then wpsets[15] = { set = gw2_skill_manager.SkillTracker.attunements[3], prio = 0 } end
+		if ( ml_global_information.Player_TransformID ~= 4 and ValidTable(gw2_skill_manager.SkillTracker.attunements[4]) and self:CanCastSlot(GW2.SKILLBARSLOT.Slot_16)) then wpsets[16] = { set = gw2_skill_manager.SkillTracker.attunements[4], prio = 0 } end
+	end
+	
+	-- Engineer Kits
+	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer and ml_global_information.Now - gw2_skill_manager.SkillTracker.engilastswap > 1000) then		
+		if ( currentwpset ) then
+			for kitID,kit in pairs(gw2_skill_manager.SkillTracker.kits) do
+				--d(kit.name.." active "..tostring(kit.inuse))
+				if ( kit.inuse and kit ~= currentwpset ) then
+					--d(kit.name.." ~ = "..currentwpset.name)
+					wpsets[kitID] = { set = kit, prio = 0 }
+				end
+			end
+		end
+	end
+	--d("CanSwapWeapon TableSize :"..tostring(TableSize(wpsets)))
+	--d(wpsets)
+	
+	-- Add our current weaponset
+	if ( currentwpset ) then
+		wpsets[100] = {set = currentwpset, prio = 1 }
+	end
+	
+	-- Evaluate & Swap	
+	if ( TableSize(wpsets) > 0 ) then
+		local bestwpset
+		local bestID
+		for setID,entry in pairs(wpsets) do
+			local israngeweapon = false
+			-- We should switch to that skill asap so the data gets set/initialized			
+			if ( not ValidTable(entry.set.range) or not ValidTable(entry.set.cooldowns)) then
+				entry.prio = 6
+			
+			else				
+				for i=GW2.SKILLBARSLOT.Slot_1, GW2.SKILLBARSLOT.Slot_5 do
+					if ( i == GW2.SKILLBARSLOT.Slot_1 and entry.set.range[i] > 500) then
+						israngeweapon = true
+					end
+					
+					if ( entry.set.cooldowns[i].current == 0 ) then -- max gain +5
+						entry.prio = entry.prio + 1
+						
+						if ( not israngeweapon or (israngeweapon and targetdist > 300 )) then
+							if ( (entry.set.range[i] == 0 and targetdist < 155) or entry.set.range[i]+50 >= targetdist ) then -- max gain +5
+								entry.prio = entry.prio + 1
+							end							
+						end
+					end
+					--d(entry.set.name.."SK:"..tostring(i).." Prio:"..tostring(entry.prio) .. " InRange:"..tostring(entry.set.range[i]+150).." >= "..tostring(targetdist))
+				end				
+			end
+			
+			-- Bonus for Elementalist Prefered Priority
+			local settings = self.professionSettings.elementalist
+			if ( entry.set.name == settings.attunement_1 ) then
+				entry.prio = entry.prio + 3
+			elseif ( entry.set.name == settings.attunement_2 ) then
+				entry.prio = entry.prio + 2
+			elseif ( entry.set.name == settings.attunement_3 ) then
+				entry.prio = entry.prio + 1
+			elseif ( entry.set.name == settings.attunement_4 ) then
+				entry.prio = entry.prio + 0.5
+			end
+			
+			-- Bonus for Engineer Prefered Kit/Astral
+			if ( entry.set.name == self.professionSettings.engineer.kit ) then
+				entry.prio = entry.prio + 2
+			end
+			
+			if ( not bestwpset or bestwpset.prio < entry.prio ) then
+				bestwpset = entry
+				bestID = setID
+			end
+			
+		end	
+				
+		--for setID,entry in pairs(wpsets) do
+		--	d("Set : "..tostring(entry.prio).." "..entry.set.name)
+		--end
+				
+		if ( bestwpset.set.name ~= currentwpset.name ) then
+			--d("Switching from "..currentwpset.name.." to : "..tostring(bestwpset.prio).." "..bestwpset.set.name.. " bestID:"..tostring(bestID))
+			if ( bestID <= 5 ) then-- weaponswap
+				Player:SwapWeaponSet()
+			
+			elseif ( bestID >= 13 and bestID <=16) then -- attunement
+				local slot = GW2.SKILLBARSLOT["Slot_" .. bestID]
+				if ( Player:CastSpell(slot) ) then
+					gw2_skill_manager.SkillTracker.elelastswap = ml_global_information.Now
+				end
+				
+			elseif ( bestID > 100 ) then -- engi kitID								
+				for _skillID,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
+					for kitID,kit in pairs(gw2_skill_manager.SkillTracker.kits) do
+						if (_skillID == kitID ) then
+							if ( Player:CastSpell(skill.slot) ) then
+								gw2_skill_manager.SkillTracker.engilastswap = ml_global_information.Now
+							end
+						end
+					end	
+				end				
+			end
+		end
+	end	
 end
 
 -- Swap.
 function profilePrototype:Swap(targetID)
-	local settings = self.switchSettings
 	local timers = self.tmp.swapTimers
-	local canSwap = false
-	if (settings.switchOnRange == "1" and TimeSince(timers.lastRangeSwap) > 0) then
-		timers.lastRangeSwap = ml_global_information.Now
+	
+	if ( TimeSince(timers.lastSwap) > 1000) then
+		timers.lastSwap = ml_global_information.Now	
+		local settings = self.switchSettings
+		
+		local canSwap = false
 		local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
-		if (self.tmp.maxAttackRange < 300 and ValidTable(target) and target.distance > self.tmp.maxAttackRange) then
-			timers.lastRangeSwap = ml_global_information.Now + math.random(5000,10000)
-			canSwap = true
-		end
-	end
-	if (settings.switchRandom == "1" and (ml_global_information.Player_InCombat or ml_global_information.Player_IsMoving) and TimeSince(timers.lastRandomSwap) > 0) then
-		timers.lastRandomSwap = ml_global_information.Now + math.random(3000,15000)
-		canSwap = true
-	end
-	if (canSwap == false and tonumber(settings.switchOnCooldown) > 0) then
-		local skillsOnCooldown = 0
-		for _,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
-			if (skill.slot > GW2.SKILLBARSLOT.Slot_1  and skill.slot <= GW2.SKILLBARSLOT.Slot_5 and skill.cooldown ~= 0 and (skill.power == 0 or skill.power <= ml_global_information.Player_Power)) then
-				skillsOnCooldown = skillsOnCooldown + 1
+			
+		--[[if (canSwap == false and settings.switchOnRange == "1" and TimeSince(timers.lastRangeSwap) > 0) then
+			timers.lastRangeSwap = ml_global_information.Now		
+			if ( self.tmp.maxAttackRange < 300 and ValidTable(target) and target.distance > self.tmp.maxAttackRange) then
+				timers.lastRangeSwap = ml_global_information.Now + math.random(5000,10000)
+				canSwap = true
 			end
-		end
-		if (skillsOnCooldown >= tonumber(settings.switchOnCooldown)) then
+		end	
+		if (settings.switchRandom == "1" and (ml_global_information.Player_InCombat or ml_global_information.Player_IsMoving) and TimeSince(timers.lastRandomSwap) > 0) then
+			timers.lastRandomSwap = ml_global_information.Now + math.random(3000,15000)
 			canSwap = true
 		end
-	end
-	if (canSwap and TimeSince(timers.lastSwap) > 250) then
-		timers.lastSwap = ml_global_information.Now		
-		self:SwapAttunement()
-		self:SwapKit()
-		self:SwapWeaponSet()
+		if (canSwap == false and tonumber(settings.switchOnCooldown) > 0) then
+			local skillsOnCooldown = 0
+			for _,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
+				if (skill.slot > GW2.SKILLBARSLOT.Slot_1  and skill.slot <= GW2.SKILLBARSLOT.Slot_5 and skill.cooldown ~= 0 and (skill.power == 0 or skill.power <= ml_global_information.Player_Power)) then
+					skillsOnCooldown = skillsOnCooldown + 1
+				end
+			end
+			if (skillsOnCooldown >= tonumber(settings.switchOnCooldown)) then
+				canSwap = true
+			end
+		end		
+		if (canSwap ) then	
+			self:SwapAttunement()
+			self:SwapKit()
+			self:SwapWeaponSet()
+		end]]
+		
+		if ( ValidTable(target) ) then
+			self:SwapWeapon(target.distance)
+		end
+		
 	end
 	self:SwapPet()
 end
@@ -1422,19 +1763,28 @@ function skillPrototype:Cast(targetID)
 	if (ValidTable(target)) then
 		--d("Casting Spell : " ..self.skill.name)
 		local pos = target.pos--self:Predict(target) -- just too off target. crap target prediction.
+		local castresult = false
 		if (self.skill.groundTargeted == "1") then
 			if (target.isCharacter) then
-				Player:CastSpell(self.tmp.slot, pos.x, pos.y, pos.z)
+				castresult = Player:CastSpell(self.tmp.slot, pos.x, pos.y, pos.z)
 			elseif (target.isGadget) then
 				if (self.skill.isProjectile == "1") then
-					Player:CastSpell(self.tmp.slot, pos.x, pos.y, (pos.z))
+					castresult = Player:CastSpell(self.tmp.slot, pos.x, pos.y, (pos.z))
 				else
-					Player:CastSpell(self.tmp.slot, pos.x, pos.y, (pos.z - target.height))
+					castresult = Player:CastSpell(self.tmp.slot, pos.x, pos.y, (pos.z - target.height))
 				end
 			end
 		else
-			Player:CastSpell(self.tmp.slot, target.id)
+			castresult = Player:CastSpell(self.tmp.slot, target.id)
 		end
+		
+		if ( castresult and gw2_skill_manager.currentSkillbarSkills[self.skill.id]) then
+			local trackerEntry = gw2_skill_manager.GetCurrentSkillTrackerEntry()
+			if ( trackerEntry ) then
+				gw2_skill_manager.RefreshSkillTrackerEntry( trackerEntry, self.tmp.slot, gw2_skill_manager.currentSkillbarSkills[self.skill.id], ml_global_information.Now )
+			end
+		end
+		
 		self.tmp.lastCastTime = ml_global_information.Now
 		return true
 	end
