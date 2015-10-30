@@ -28,6 +28,7 @@ local profilePrototype = {
 		},
 	},
 	switchSettings = {
+		switchWeapons = "1",
 		switchOnRange = "0",
 		switchRandom = "0",
 		switchOnCooldown = 0,
@@ -196,6 +197,8 @@ function gw2_skill_manager:MainWindowCreateGroups()
 			--gSMSwitchOnRange = self.profile.switchSettings.switchOnRange
 			--gSMSwitchRandom = self.profile.switchSettings.switchRandom
 			--gSMSwitchOnCooldown = self.profile.switchSettings.switchOnCooldown
+			mainWindow:NewCheckBox(GetString("Swap"),"gSMSwitchWeapon",GetString("smSwitchSettings"))
+			gSMSwitchWeapon = self.profile.switchSettings.switchWeapons
 			-- create profession settings group.
 			local profession = ml_global_information.Player_Profession
 			if (profession) then
@@ -1522,48 +1525,50 @@ function profilePrototype:SwapWeapon( targetdist )
 end
 
 -- Swap.
-function profilePrototype:Swap(targetID)
+function profilePrototype:Swap(targetID)	
 	local timers = self.tmp.swapTimers
-	
-	if ( TimeSince(timers.lastSwap) > 1000) then
-		timers.lastSwap = ml_global_information.Now	
-		local settings = self.switchSettings
-		
-		local canSwap = false
-		local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
+	local settings = self.switchSettings
+	if (settings.switchWeapons == "1" ) then 
+		if ( TimeSince(timers.lastSwap) > 1000) then
+			timers.lastSwap = ml_global_information.Now	
 			
-		--[[if (canSwap == false and settings.switchOnRange == "1" and TimeSince(timers.lastRangeSwap) > 0) then
-			timers.lastRangeSwap = ml_global_information.Now		
-			if ( self.tmp.maxAttackRange < 300 and ValidTable(target) and target.distance > self.tmp.maxAttackRange) then
-				timers.lastRangeSwap = ml_global_information.Now + math.random(5000,10000)
-				canSwap = true
-			end
-		end	
-		if (settings.switchRandom == "1" and (ml_global_information.Player_InCombat or ml_global_information.Player_IsMoving) and TimeSince(timers.lastRandomSwap) > 0) then
-			timers.lastRandomSwap = ml_global_information.Now + math.random(3000,15000)
-			canSwap = true
-		end
-		if (canSwap == false and tonumber(settings.switchOnCooldown) > 0) then
-			local skillsOnCooldown = 0
-			for _,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
-				if (skill.slot > GW2.SKILLBARSLOT.Slot_1  and skill.slot <= GW2.SKILLBARSLOT.Slot_5 and skill.cooldown ~= 0 and (skill.power == 0 or skill.power <= ml_global_information.Player_Power)) then
-					skillsOnCooldown = skillsOnCooldown + 1
+			
+			local canSwap = false
+			local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
+				
+			--[[if (canSwap == false and settings.switchOnRange == "1" and TimeSince(timers.lastRangeSwap) > 0) then
+				timers.lastRangeSwap = ml_global_information.Now		
+				if ( self.tmp.maxAttackRange < 300 and ValidTable(target) and target.distance > self.tmp.maxAttackRange) then
+					timers.lastRangeSwap = ml_global_information.Now + math.random(5000,10000)
+					canSwap = true
 				end
-			end
-			if (skillsOnCooldown >= tonumber(settings.switchOnCooldown)) then
+			end	
+			if (settings.switchRandom == "1" and (ml_global_information.Player_InCombat or ml_global_information.Player_IsMoving) and TimeSince(timers.lastRandomSwap) > 0) then
+				timers.lastRandomSwap = ml_global_information.Now + math.random(3000,15000)
 				canSwap = true
 			end
-		end		
-		if (canSwap ) then	
-			self:SwapAttunement()
-			self:SwapKit()
-			self:SwapWeaponSet()
-		end]]
-		
-		if ( ValidTable(target) ) then
-			self:SwapWeapon(target.distance)
+			if (canSwap == false and tonumber(settings.switchOnCooldown) > 0) then
+				local skillsOnCooldown = 0
+				for _,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
+					if (skill.slot > GW2.SKILLBARSLOT.Slot_1  and skill.slot <= GW2.SKILLBARSLOT.Slot_5 and skill.cooldown ~= 0 and (skill.power == 0 or skill.power <= ml_global_information.Player_Power)) then
+						skillsOnCooldown = skillsOnCooldown + 1
+					end
+				end
+				if (skillsOnCooldown >= tonumber(settings.switchOnCooldown)) then
+					canSwap = true
+				end
+			end		
+			if (canSwap ) then	
+				self:SwapAttunement()
+				self:SwapKit()
+				self:SwapWeaponSet()
+			end]]
+			
+			if ( ValidTable(target) ) then
+				self:SwapWeapon(target.distance)
+			end
+			
 		end
-		
 	end
 	self:SwapPet()
 end
@@ -1911,7 +1916,9 @@ function gw2_skill_manager.GUIVarUpdate(Event, NewVals, OldVals) -- not done
 							SklMgr_TCondCount = {global = "conditionCount", gType = "tonumber",},
 							SklMgr_TBoonCount = {global = "boonCount", gType = "tonumber",},
 			}
-			gw2_skill_manager.profile.skills[gw2_skill_manager.status.skillWindowCurrentPriority].target[var[k].global] = _G[var[k].gType](v)
+			gw2_skill_manager.profile.skills[gw2_skill_manager.status.skillWindowCurrentPriority].target[var[k].global] = _G[var[k].gType](v)				
+		elseif (k == "gSMSwitchWeapon") then
+			gw2_skill_manager.profile.switchSettings.switchWeapons = v
 		elseif (k == "gSMSwitchOnRange") then
 			gw2_skill_manager.profile.switchSettings.switchOnRange = v
 		elseif (k == "gSMSwitchRandom") then
