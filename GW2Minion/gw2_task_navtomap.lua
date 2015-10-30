@@ -36,7 +36,7 @@ function gw2_task_navtomap:Process()
 			end
 
 			-- Waypoint Usage
-			if (ml_task_hub:CurrentTask().useWaypoint == true and Player:GetWalletEntry(1) > 500) then
+			if (ml_task_hub:CurrentTask().useWaypoint == true and Inventory:GetInventoryMoney() > 500) then
 				local waypoint = {}
 				if (ValidTable(ml_task_hub:CurrentTask().targetPos)) then
 					waypoint = gw2_common_functions.GetClosestWaypointToPos(ml_task_hub:CurrentTask().targetMapID,ml_task_hub:CurrentTask().targetPos)
