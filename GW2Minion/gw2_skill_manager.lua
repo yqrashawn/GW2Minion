@@ -1524,6 +1524,15 @@ function profilePrototype:SwapWeapon( targetdist )
 	end	
 end
 
+function profilePrototype:CanCastSlot(slot)
+	for _skillID,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
+		if ( skill.slot == slot and skill.cooldown == 0 ) then
+			return true
+		end
+	end	
+	return false
+end
+
 -- Swap.
 function profilePrototype:Swap(targetID)	
 	local timers = self.tmp.swapTimers
