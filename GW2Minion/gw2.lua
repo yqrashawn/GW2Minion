@@ -282,9 +282,14 @@ function gw2minion.ModuleInit()
 			local vendorMarker = ml_marker:Create("vendorTemplate")
 			vendorMarker:SetType(GetString("vendorMarker"))
 			vendorMarker:SetMinLevel(1)
-			vendorMarker:SetMaxLevel(80)
+			vendorMarker:SetMaxLevel(80)			
 			ml_marker_mgr.AddMarkerTemplate(vendorMarker)
 			
+			local pvpMarker = ml_marker:Create("PvPCaptureMarker")			
+			pvpMarker:SetFieldValue("green", 50)
+			pvpMarker:SetFieldValue("blue", 255)
+			pvpMarker:SetType("PvPCaptureMarker")
+			ml_marker_mgr.AddMarkerTemplate(pvpMarker)	
 			
 			-- refresh the manager with the new templates
 			ml_marker_mgr.RefreshMarkerTypes()

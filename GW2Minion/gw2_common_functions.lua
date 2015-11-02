@@ -353,8 +353,8 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring )
 	end
 
 	-- Only in AssistMode we want to allow these settings
-	if (gBotMode == GetString("assistMode")) then
 		if (sMmode == "Players Only") then filterstring = filterstring..",player" end
+	if (gBotMode == GetString("assistMode") or gBotMode == GetString("taskspvp")) then
 		if (sMtargetmode == "LowestHealth") then filterstring = filterstring..",lowesthealth" end
 		if (sMtargetmode == "Closest") then filterstring = filterstring..",nearest" end
 		if (sMtargetmode == "Biggest Crowd") then filterstring = filterstring..",clustered=600" end
