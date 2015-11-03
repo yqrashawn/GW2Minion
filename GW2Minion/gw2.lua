@@ -254,14 +254,14 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.SetDefaultMesh(1052,"Verdant Brink")
 		
 		--sPVP
-		 ml_mesh_mgr.SetDefaultMesh(549,"sPvP Schlacht im Kyhlo")
+		 ml_mesh_mgr.SetDefaultMesh(549,"sPvP Battle of Kyhlo")
 		 ml_mesh_mgr.SetDefaultMesh(554,"sPvP Forest of Niflhel")
 		 ml_mesh_mgr.SetDefaultMesh(795,"sPvP Legacy of the Foefire")
-		 ml_mesh_mgr.SetDefaultMesh(875,"Temple of the Silent Storm")
+		 ml_mesh_mgr.SetDefaultMesh(875,"sPvP Temple of the Silent Storm")
 		 ml_mesh_mgr.SetDefaultMesh(894,"sPvP Spirit Watch")
-		 ml_mesh_mgr.SetDefaultMesh(900,"Skyhammer")
-		 ml_mesh_mgr.SetDefaultMesh(984,"Courtyard")
-		 ml_mesh_mgr.SetDefaultMesh(1011,"SPvP Battle of Champions")
+		 ml_mesh_mgr.SetDefaultMesh(900,"sPvP Skyhammer")
+		 ml_mesh_mgr.SetDefaultMesh(984,"sPvP Courtyard")
+		 ml_mesh_mgr.SetDefaultMesh(1011,"sPvP Battle of Champions")
   
 		-- Setup the marker types we wanna use
 		    local grindMarker = ml_marker:Create("grindMarker")

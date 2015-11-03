@@ -866,6 +866,25 @@ local obj1 = {
 		};
 		[50] = {
 			["player"] = {
+				["minHP"] = 85;
+			};
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 30101;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Bulwark Gyro";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 1;
+			};
+			["target"] = {
+			};
+		};
+		[51] = {
+			["player"] = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
@@ -880,7 +899,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[51] = {
+		[52] = {
 			["player"] = {
 				["maxPower"] = 0;
 				["minHP"] = 0;
@@ -899,7 +918,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[52] = {
+		[53] = {
 			["player"] = {
 				["combatState"] = "OutCombat";
 			};
@@ -916,7 +935,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[53] = {
+		[54] = {
 			["player"] = {
 				["combatState"] = "OutCombat";
 			};
@@ -933,7 +952,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[54] = {
+		[55] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -949,7 +968,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[55] = {
+		[56] = {
 			["player"] = {
 				["combatState"] = "OutCombat";
 			};
@@ -966,7 +985,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[56] = {
+		[57] = {
 			["player"] = {
 				["minHP"] = 95;
 			};
@@ -983,7 +1002,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[57] = {
+		[58] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -999,7 +1018,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[58] = {
+		[59] = {
 			["player"] = {
 				["combatState"] = "OutCombat";
 			};
@@ -1016,7 +1035,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[59] = {
+		[60] = {
 			["player"] = {
 				["moving"] = "Moving";
 			};
@@ -1033,7 +1052,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[60] = {
+		[61] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1049,7 +1068,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[61] = {
+		[62] = {
 			["player"] = {
 				["minHP"] = 60;
 			};
@@ -1067,7 +1086,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[62] = {
+		[63] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1083,9 +1102,9 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[63] = {
+		[64] = {
 			["player"] = {
-				["minHP"] = 0;
+				["minHP"] = 85;
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
@@ -1100,7 +1119,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[64] = {
+		[65] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1116,7 +1135,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[65] = {
+		[66] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1132,7 +1151,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[66] = {
+		[67] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1148,7 +1167,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[67] = {
+		[68] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1164,7 +1183,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[68] = {
+		[69] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1180,7 +1199,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[69] = {
+		[70] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1196,7 +1215,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[70] = {
+		[71] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1212,7 +1231,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[71] = {
+		[72] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1228,7 +1247,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[72] = {
+		[73] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1244,7 +1263,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[73] = {
+		[74] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1260,7 +1279,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[74] = {
+		[75] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1276,7 +1295,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[75] = {
+		[76] = {
 			["player"] = {
 				["combatState"] = "InCombat";
 			};
@@ -1295,7 +1314,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[76] = {
+		[77] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -1312,7 +1331,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[77] = {
+		[78] = {
 			["player"] = {
 				["maxPower"] = 0;
 			};
@@ -1329,7 +1348,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[78] = {
+		[79] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1347,7 +1366,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[79] = {
+		[80] = {
 			["player"] = {
 				["conditionCount"] = 2;
 			};
@@ -1366,7 +1385,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[80] = {
+		[81] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1384,7 +1403,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[81] = {
+		[82] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1400,7 +1419,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[82] = {
+		[83] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1417,7 +1436,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[83] = {
+		[84] = {
 			["player"] = {
 				["maxPower"] = 0;
 				["minHP"] = 66;
@@ -1435,7 +1454,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[84] = {
+		[85] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1454,7 +1473,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[85] = {
+		[86] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1470,7 +1489,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[86] = {
+		[87] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1486,7 +1505,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[87] = {
+		[88] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1503,7 +1522,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[88] = {
+		[89] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1519,7 +1538,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[89] = {
+		[90] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1535,7 +1554,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[90] = {
+		[91] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1547,22 +1566,6 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slot"] = 2;
-			};
-			["target"] = {
-			};
-		};
-		[91] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 30101;
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Bulwark Gyro";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 1;
 			};
 			["target"] = {
 			};
