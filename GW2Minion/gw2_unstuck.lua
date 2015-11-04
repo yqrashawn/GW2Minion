@@ -322,15 +322,18 @@ function gw2_unstuck.HandleStuck_UseWaypoint()
 			end
 			d("Trying to teleport to nearest Waypoint for unstuck..")
 			-- safetycheck
-			local id,wp = next(WaypointList("nearest,onmesh,notcontested,samezone"))
-			if ( id and wp and wp.distance > 500 ) then
-				if ( Player:RespawnAtClosestWaypoint() ) then
-					gw2_unstuck.respawntimer = ml_global_information.Now
+			local WList = WaypointList("nearest,onmesh,notcontested,samezone")
+			if ( ValidTable(WList) ) then
+				local id,wp = next(WList)
+				if ( id and wp and wp.distance > 500 ) then
+					if ( Player:RespawnAtClosestWaypoint() ) then
+						gw2_unstuck.respawntimer = ml_global_information.Now
+					end
+				else
+					ml_error("We are at a waypoint but need to teleport again!? Something weird is going on, stopping bot")
+					d("Logging out...")
+					Player:Logout()
 				end
-			else
-				ml_error("We are at a waypoint but need to teleport again!? Something weird is going on, stopping bot")
-				d("Logging out...")
-				Player:Logout()
 			end
 			ml_global_information.Wait(3000)
 			gw2_unstuck.logoutTmr = 0

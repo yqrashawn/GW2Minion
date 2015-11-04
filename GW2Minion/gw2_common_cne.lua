@@ -504,9 +504,12 @@ function c_fleeToSafety:evaluate()
 	--elseif (ml_global_information.Player_Alive and ml_global_information.Player_InCombat and ml_global_information.Player_Health.percent < 15) then
 	elseif (ml_global_information.Player_Alive and ml_global_information.Player_Health.percent < 15) then
 		if (c_fleeToSafety.safespot == nil) then
-			local _,safespot = next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest"))
-			if (ValidTable(safespot)) then
-				c_fleeToSafety.safespot = safespot.pos
+			local WList = WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest")
+			if ( ValidTable(WList) ) then
+				local _,safespot = next(WList)
+				if (ValidTable(safespot)) then
+					c_fleeToSafety.safespot = safespot.pos
+				end
 			end
 		end
 		local nmbrEnemies = TableSize(CharacterList("aggro,alive"))
@@ -536,9 +539,12 @@ function e_fleeToSafety:execute()
 		-- Find new safespot if were near current and still under attack.
 		local dist = Distance2D(Player.pos.x,Player.pos.y,c_fleeToSafety.safespot.x,c_fleeToSafety.safespot.y)
 		if (dist < 250) then
-			local _,safespot = next(WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest"))
-			if (ValidTable(safespot)) then
-				c_fleeToSafety.safespot = safespot.pos
+			local WList = WaypointList("onmesh,notcontested,samezone,mindistance=250,nearest")
+			if ( ValidTable(WList) ) then
+				local _,safespot = next(WList)
+				if (ValidTable(safespot)) then
+					c_fleeToSafety.safespot = safespot.pos
+				end
 			end
 		end
 		if ( c_fleeToSafety.safespot and not gw2_unstuck.HandleStuck() ) then

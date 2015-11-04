@@ -114,26 +114,27 @@ function gw2_task_heartquest:task_complete_eval()
 				-- HQs are tricky, there are always 2 markers, 1 permanently available and 1 only available when beeing nearby, representing the connected NPC (where we get the "complete" info from)
 				-- Try to get the NPC-Marker first
 				local evList = MapMarkerList("onmesh,issubregion")
-				local id,marker = next (evList)
-				while ( id and marker ) do
-					if ( marker.subregionID == tonumber(ml_task_hub:CurrentTask().subRegion) ) then
+				if ( ValidTable (evList) ) then
+					local id,marker = next (evList)
+					while ( id and marker ) do
+						if ( marker.subregionID == tonumber(ml_task_hub:CurrentTask().subRegion) ) then
 
-						if ( marker.contentID == GW2.MAPMARKER.HeartQuest ) then
-							c_CheckHQCompleted.markerPos = nil
-							c_CheckHQCompleted.needCompletionCheck = false
-							return false-- we found our unfinished HQ NPC
+							if ( marker.contentID == GW2.MAPMARKER.HeartQuest ) then
+								c_CheckHQCompleted.markerPos = nil
+								c_CheckHQCompleted.needCompletionCheck = false
+								return false-- we found our unfinished HQ NPC
 
-						elseif ( marker.contentID == GW2.MAPMARKER.HeartQuestComplete ) then
-							d("Completed Heartquest with SubRegionID "..tostring(ml_task_hub:CurrentTask().subRegion).." found, exiting task")
-							c_CheckHQCompleted.markerPos = nil
-							c_CheckHQCompleted.needCompletionCheck = false
-							ml_task_hub:CurrentTask().completed = true
-							return true -- we found our finished HQ NPC
+							elseif ( marker.contentID == GW2.MAPMARKER.HeartQuestComplete ) then
+								d("Completed Heartquest with SubRegionID "..tostring(ml_task_hub:CurrentTask().subRegion).." found, exiting task")
+								c_CheckHQCompleted.markerPos = nil
+								c_CheckHQCompleted.needCompletionCheck = false
+								ml_task_hub:CurrentTask().completed = true
+								return true -- we found our finished HQ NPC
+							end
 						end
+						id,marker = next(evList,id)
 					end
-					id,marker = next(evList,id)
 				end
-
 				-- If we are here, it means we are not close enough to the HQ to see the NPC (and completion data)
 				-- 1st time this is the case, we walk back to where the HQ position actually is and check if we completed the HQ or not
 				if ( ml_task_hub:CurrentTask().checkHQNPCTimer == 0 ) then
@@ -324,15 +325,16 @@ function c_CheckHQCompleted:evaluate()
 		-- get our current HQ marker pos
 
 			local evList = MapMarkerList("issubregion")
-			local id,marker = next (evList)
-			while ( id and marker ) do
-				if ( marker.subregionID == tonumber(ml_task_hub:CurrentTask().subRegion) ) then
-					c_CheckHQCompleted.markerPos = marker.pos
-					return true
+			if ( ValidTable(evList) ) then
+				local id,marker = next (evList)
+				while ( id and marker ) do
+					if ( marker.subregionID == tonumber(ml_task_hub:CurrentTask().subRegion) ) then
+						c_CheckHQCompleted.markerPos = marker.pos
+						return true
+					end
+					id,marker = next(evList,id)
 				end
-				id,marker = next(evList,id)
 			end
-
 			-- no marker with our subregion ID found..we should never be here
 			ml_error("HeartQuest SubRegionID "..tostring(ml_task_hub:CurrentTask().subRegion).." could NOT be found, make sure it is correct!")
 			c_CheckHQCompleted.needCompletionCheck = true
