@@ -1405,7 +1405,9 @@ function profilePrototype:SwapWeapon( targetdist )
 	if ( Player.inCombat and ( Player:CanSwapWeaponSet() or ml_global_information.Player_CurrentWeaponSet == 2) ) then 
 		if ( ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater ) then
 			if ( ml_global_information.Player_CurrentWeaponSet ~= 4 and ValidTable(gw2_skill_manager.SkillTracker.weapons[4])) then wpsets[4] = { set = gw2_skill_manager.SkillTracker.weapons[4], prio = 0 } end
-			if ( ml_global_information.Player_CurrentWeaponSet ~= 5 and ValidTable(gw2_skill_manager.SkillTracker.weapons[5])) then wpsets[5] = { set = gw2_skill_manager.SkillTracker.weapons[5], prio = 0 } end		
+			if ( ml_global_information.Player_Profession ~= GW2.CHARCLASS.Engineer ) then -- this is needed, else the not existing weapon 2 is being added as "possible to swap to" set
+				if ( ml_global_information.Player_CurrentWeaponSet ~= 5 and ValidTable(gw2_skill_manager.SkillTracker.weapons[5])) then wpsets[5] = { set = gw2_skill_manager.SkillTracker.weapons[5], prio = 0 } end		
+			end
 		
 		elseif ( ml_global_information.Player_SwimState == GW2.SWIMSTATE.Diving ) then
 			if ( ml_global_information.Player_CurrentWeaponSet ~= 0 and ValidTable(gw2_skill_manager.SkillTracker.weapons[0])) then wpsets[0] = { set = gw2_skill_manager.SkillTracker.weapons[0], prio = 0 } end
@@ -1499,7 +1501,7 @@ function profilePrototype:SwapWeapon( targetdist )
 		--end
 				
 		if ( bestwpset.set.name ~= currentwpset.name ) then
-			--d("Switching from "..currentwpset.name.." to : "..tostring(bestwpset.prio).." "..bestwpset.set.name.. " bestID:"..tostring(bestID))
+			--d("Switching from "..currentwpset.name.." to "..bestwpset.set.name.. " (Prio "..tostring(bestwpset.prio)..") setID:"..tostring(bestID))
 			if ( bestID <= 5 ) then-- weaponswap
 				Player:SwapWeaponSet()
 			
@@ -1538,7 +1540,7 @@ function profilePrototype:Swap(targetID)
 	local timers = self.tmp.swapTimers
 	local settings = self.switchSettings
 	if (settings.switchWeapons == "1" ) then 
-		if ( TimeSince(timers.lastSwap) > 1000) then
+		if ( TimeSince(timers.lastSwap) > 1500) then
 			timers.lastSwap = ml_global_information.Now	
 			
 			
@@ -1574,7 +1576,18 @@ function profilePrototype:Swap(targetID)
 			end]]
 			
 			if ( ValidTable(target) ) then
-				self:SwapWeapon(target.distance)
+				-- Don't swap on slowcast spells, else they get interrupted
+				local canswap = true
+				local lastSkillID = (Player.castinfo.skillID == 0 and Player.castinfo.lastSkillID or Player.castinfo.skillID)
+				if ( lastSkillID ) then 
+					local lastSkill = self:GetSkillByID(lastSkillID)
+					if (lastSkill and lastSkill.skill.slowCast == "1" and Player.castinfo.slot == lastSkill.tmp.slot) then 
+						canswap = false
+					end
+				end
+				if ( canswap ) then
+					self:SwapWeapon(target.distance)
+				end
 			end
 			
 		end
