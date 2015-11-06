@@ -966,6 +966,7 @@ end
 			
 function Dev.UpdateWindow()
 	-- CharacterInfo --
+	local _ = nil
 	local mytarget
 	if ( chartarg == "Player" ) then
 		mytarget = Player
@@ -1062,64 +1063,73 @@ function Dev.UpdateWindow()
 			TIsUnknown13 = tostring(mytarget.isHeartQuestGiver)
 
 		end
-		-- gadget
-		
-		if ( mytarget.isGadget ) then
-			GTargetPtr = string.format( "%x",tonumber(mytarget.ptr ))
-			GTID = mytarget.id
-			GTCID = mytarget.contentID
-			GTCID2 = mytarget.contentID2
-			GTType = mytarget.type
-			GTType2 = mytarget.type2
-			GTName = tostring(mytarget.name)
-			GTAnimStatus = mytarget.status
-			if (mytarget.health) then
-				GTHP = tostring(mytarget.health.current.." / "..mytarget.health.max.." / "..mytarget.health.percent.."%")
-			else
-				GTHP = 0
-			end
-			GTPos = (math.floor(mytarget.pos.x * 10) / 10).." / "..(math.floor(mytarget.pos.y * 10) / 10).." / "..(math.floor(mytarget.pos.z * 10) / 10)
-			GTHead = (math.floor(mytarget.pos.hx * 10) / 10).." / "..(math.floor(mytarget.pos.hy * 10) / 10).." / "..(math.floor(mytarget.pos.hz * 10) / 10)
-			GTHRad = tostring(mytarget.height.." / "..mytarget.radius)			
-			GTLOS = tostring(mytarget.los)
-			GTOnMesh = tostring(mytarget.onmesh)
-			GTDist = (math.floor(mytarget.distance * 10) / 10)
-			GTPDist = (math.floor(mytarget.pathdistance * 10) / 10)
-			GTIsInInteractR = tostring(mytarget.isInInteractRange)
-			GTInteractable = tostring(mytarget.interactable)
-			GTSelec = tostring(mytarget.selectable)
-			GTLootable = tostring(mytarget.lootable)
-			GTAttit = tostring(mytarget.attitude)
-			GTRessType = mytarget.resourceType
-			GTSelectable = tostring(mytarget.isselectable)
-			GTAttack = tostring(mytarget.attackable)
-			GTAlive = tostring(mytarget.alive)
-			GTDead = tostring(mytarget.dead)
-			GTIsCombat = tostring(mytarget.iscombatant)
-			GTIsGather = tostring(mytarget.gatherable)
-			GTHasHP = tostring(mytarget.hashpbar)
-			GTIsOurs = tostring(mytarget.isours)
-			GTIsUnknown0 = tostring(mytarget.isUnknown0)
-			GTIsUnknown1 = tostring(mytarget.isUnknown1)
-			GTIsUnknown2 = tostring(mytarget.isUnknown2)
-			GTIsUnknown3 = tostring(mytarget.isUnknown3)
-			GTIsUnknown4 = tostring(mytarget.isUnknown4)
-			GTIsUnknown5 = tostring(mytarget.isUnknown5)
-			GTIsUnknown6 = tostring(mytarget.isUnknown6)	
-			GTIsUnknown7 = tostring(mytarget.isUnknown7)
-			GTIsUnknown8 = tostring(mytarget.isUnknown8)	
-			GTIsUnknown9 = tostring(mytarget.isTurret) 
-			GTIsUnknown10 = tostring(mytarget.isUnknown10)
-			GTIsUnknown11 = tostring(mytarget.isUnknown11)	
-			GTIsUnknown12 = tostring(mytarget.isUnknown12)
-			GTIsUnknown13 = tostring(mytarget.isUnknown13)
-		end
 		--emptyfields
 	else
 		TType = "NONE"
-		GTType = "NONE"
-	end	
+	end
 	
+	local mygadget = Player:GetTarget()
+	if (mygadget == nil or mygadget.isGadget == false) then
+		local gadgetList = GadgetList("nearest")
+		if (gadgetList) then
+			_,mygadget = next(gadgetList)
+		end
+	end
+	
+	if (mygadget ~= nil) then
+		if ( mygadget.isGadget ) then
+			GTargetPtr = string.format( "%x",tonumber(mygadget.ptr ))
+			GTID = mygadget.id
+			GTCID = mygadget.contentID
+			GTCID2 = mygadget.contentID2
+			GTType = mygadget.type
+			GTType2 = mygadget.type2
+			GTName = tostring(mygadget.name)
+			GTAnimStatus = mygadget.status
+			if (mygadget.health) then
+				GTHP = tostring(mygadget.health.current.." / "..mygadget.health.max.." / "..mygadget.health.percent.."%")
+			else
+				GTHP = 0
+			end
+			GTPos = (math.floor(mygadget.pos.x * 10) / 10).." / "..(math.floor(mygadget.pos.y * 10) / 10).." / "..(math.floor(mygadget.pos.z * 10) / 10)
+			GTHead = (math.floor(mygadget.pos.hx * 10) / 10).." / "..(math.floor(mygadget.pos.hy * 10) / 10).." / "..(math.floor(mygadget.pos.hz * 10) / 10)
+			GTHRad = tostring(mygadget.height.." / "..mygadget.radius)			
+			GTLOS = tostring(mygadget.los)
+			GTOnMesh = tostring(mygadget.onmesh)
+			GTDist = (math.floor(mygadget.distance * 10) / 10)
+			GTPDist = (math.floor(mygadget.pathdistance * 10) / 10)
+			GTIsInInteractR = tostring(mygadget.isInInteractRange)
+			GTInteractable = tostring(mygadget.interactable)
+			GTSelec = tostring(mygadget.selectable)
+			GTLootable = tostring(mygadget.lootable)
+			GTAttit = tostring(mygadget.attitude)
+			GTRessType = mygadget.resourceType
+			GTSelectable = tostring(mygadget.isselectable)
+			GTAttack = tostring(mygadget.attackable)
+			GTAlive = tostring(mygadget.alive)
+			GTDead = tostring(mygadget.dead)
+			GTIsCombat = tostring(mygadget.iscombatant)
+			GTIsGather = tostring(mygadget.gatherable)
+			GTHasHP = tostring(mygadget.hashpbar)
+			GTIsOurs = tostring(mygadget.isours)
+			GTIsUnknown0 = tostring(mygadget.isUnknown0)
+			GTIsUnknown1 = tostring(mygadget.isUnknown1)
+			GTIsUnknown2 = tostring(mygadget.isUnknown2)
+			GTIsUnknown3 = tostring(mygadget.isUnknown3)
+			GTIsUnknown4 = tostring(mygadget.isUnknown4)
+			GTIsUnknown5 = tostring(mygadget.isUnknown5)
+			GTIsUnknown6 = tostring(mygadget.isUnknown6)	
+			GTIsUnknown7 = tostring(mygadget.isUnknown7)
+			GTIsUnknown8 = tostring(mygadget.isUnknown8)	
+			GTIsUnknown9 = tostring(mygadget.isTurret) 
+			GTIsUnknown10 = tostring(mygadget.isUnknown10)
+			GTIsUnknown11 = tostring(mygadget.isUnknown11)	
+			GTIsUnknown12 = tostring(mygadget.isUnknown12)
+			GTIsUnknown13 = tostring(mygadget.isUnknown13)
+		end
+	else
+		GTType = "NONE"
+	end
 	
 	mytarget = AgentList("nearest")
 	if ( mytarget) then
