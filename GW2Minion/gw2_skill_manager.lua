@@ -1406,7 +1406,7 @@ function profilePrototype:SwapWeapon( targetdist )
 	if ( Player.inCombat and ( Player:CanSwapWeaponSet() or ml_global_information.Player_CurrentWeaponSet == 2) ) then 
 		if ( ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater ) then
 			if ( ml_global_information.Player_CurrentWeaponSet ~= 4 and ValidTable(gw2_skill_manager.SkillTracker.weapons[4])) then wpsets[4] = { set = gw2_skill_manager.SkillTracker.weapons[4], prio = 0 } end
-			if ( ml_global_information.Player_TransformID ~= 0 and ml_global_information.Player_Profession ~= GW2.CHARCLASS.Engineer and ml_global_information.Player_Profession ~= GW2.CHARCLASS.Elementalist ) then -- this is needed, else the not existing weapon 2 is being added as "possible to swap to" set
+			if ( ml_global_information.Player_Level > 9 and ml_global_information.Player_Profession ~= GW2.CHARCLASS.Engineer and ml_global_information.Player_Profession ~= GW2.CHARCLASS.Elementalist ) then -- this is needed, else the not existing weapon 2 is being added as "possible to swap to" set
 				if ( ml_global_information.Player_CurrentWeaponSet ~= 5 and ValidTable(gw2_skill_manager.SkillTracker.weapons[5])) then wpsets[5] = { set = gw2_skill_manager.SkillTracker.weapons[5], prio = 0 } end		
 			end
 		
