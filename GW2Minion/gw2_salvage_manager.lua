@@ -333,13 +333,15 @@ function gw2_salvage_manager.getBestTool(item)
 		local returnTool = nil
 		if (tList) then
 			for _,tool in pairs(tList) do
-				-- Search for preftool
-				if (gw2_salvage_manager.kitlist[tool.itemID].name == item.preferedKit) then
-					return tool
-				end
-				-- Search for besttool
-				if (returnTool == nil or math.abs(item.rarity - gw2_salvage_manager.kitlist[tool.itemID].rarity) < math.abs(item.rarity - returnTool.rarity)) then
-					returnTool = tool
+				if ( gw2_salvage_manager.kitlist[tool.itemID] ~= nil ) then
+					-- Search for preftool
+					if ( gw2_salvage_manager.kitlist[tool.itemID].name == item.preferedKit) then
+						return tool
+					end
+					-- Search for besttool
+					if (returnTool == nil or math.abs(item.rarity - gw2_salvage_manager.kitlist[tool.itemID].rarity) < math.abs(item.rarity - returnTool.rarity)) then
+						returnTool = tool
+					end
 				end
 			end
 			if (returnTool) then
