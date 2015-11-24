@@ -657,6 +657,7 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slot"] = 12;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
@@ -678,6 +679,7 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slot"] = 12;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 			};

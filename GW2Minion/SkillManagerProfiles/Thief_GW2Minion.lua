@@ -5,7 +5,7 @@ local multiRefObjects = {
 local obj1 = {
 	["combos"] = {
 	};
-	["name"] = "GW2Minion";
+	["name"] = "ThiefStaff";
 	["profession"] = 5;
 	["professionSettings"] = {
 		["elementalist"] = {
@@ -1645,6 +1645,22 @@ local obj1 = {
 		};
 		[40] = {
 			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 30210;
+				["maxRange"] = 130;
+				["minRange"] = 0;
+				["name"] = "Hook Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[41] = {
+			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
 				["boonCount"] = 0;
@@ -1686,7 +1702,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[41] = {
+		[42] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1729,7 +1745,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[42] = {
+		[43] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1772,7 +1788,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[43] = {
+		[44] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1815,7 +1831,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[44] = {
+		[45] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1858,7 +1874,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[45] = {
+		[46] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1901,7 +1917,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[46] = {
+		[47] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1944,7 +1960,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[47] = {
+		[48] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -1987,7 +2003,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[48] = {
+		[49] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2030,7 +2046,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[49] = {
+		[50] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2073,9 +2089,11 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[50] = {
+		[51] = {
 			["player"] = {
-				["minHP"] = 65;
+				["hasNotBuffs"] = "10269";
+				["maxPower"] = 0;
+				["minHP"] = 5;
 			};
 			["skill"] = {
 				["delay"] = 10000;
@@ -2091,10 +2109,14 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[51] = {
+		[52] = {
 			["player"] = {
+				["hasNotBuffs"] = "10269";
+				["maxPower"] = 50;
+				["minHP"] = 0;
 			};
 			["skill"] = {
+				["delay"] = 0;
 				["groundTargeted"] = "1";
 				["id"] = 30597;
 				["maxRange"] = 600;
@@ -2107,7 +2129,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[52] = {
+		[53] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2150,7 +2172,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[53] = {
+		[54] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2166,7 +2188,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[54] = {
+		[55] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2209,7 +2231,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[55] = {
+		[56] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2225,7 +2247,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[56] = {
+		[57] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2237,11 +2259,12 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "0";
 				["slot"] = 3;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
 		};
-		[57] = {
+		[58] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2257,7 +2280,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[58] = {
+		[59] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2273,7 +2296,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[59] = {
+		[60] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2289,7 +2312,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[60] = {
+		[61] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2332,7 +2355,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[61] = {
+		[62] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2375,7 +2398,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[62] = {
+		[63] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2418,7 +2441,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[63] = {
+		[64] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2461,7 +2484,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[64] = {
+		[65] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2504,7 +2527,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[65] = {
+		[66] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2547,7 +2570,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[66] = {
+		[67] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2590,7 +2613,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[67] = {
+		[68] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2633,7 +2656,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[68] = {
+		[69] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2676,7 +2699,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[69] = {
+		[70] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2719,7 +2742,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[70] = {
+		[71] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2762,7 +2785,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[71] = {
+		[72] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2805,7 +2828,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[72] = {
+		[73] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2848,7 +2871,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[73] = {
+		[74] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2891,7 +2914,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[74] = {
+		[75] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2934,7 +2957,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[75] = {
+		[76] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -2977,7 +3000,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[76] = {
+		[77] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3020,7 +3043,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[77] = {
+		[78] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3063,7 +3086,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[78] = {
+		[79] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3106,7 +3129,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[79] = {
+		[80] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3149,7 +3172,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[80] = {
+		[81] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3192,7 +3215,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[81] = {
+		[82] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3235,179 +3258,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[82] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 35;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 13046;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Assassin's Signet";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 50;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
 		[83] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "InCombat";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 35;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 13060;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Signet of Shadows";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 2;
-				["enemyRangeMax"] = 240;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 50;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[84] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 50;
-				["minHP"] = 50;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 13062;
-				["lastSkillID"] = "";
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Signet of Agility";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[85] = {
-			["player"] = {
-				["allyNearCount"] = 0;
-				["allyRangeMax"] = 0;
-				["boonCount"] = 0;
-				["combatState"] = "Either";
-				["conditionCount"] = 0;
-				["hasBuffs"] = "872";
-				["hasNotBuffs"] = "";
-				["maxEndurance"] = 0;
-				["maxHP"] = 0;
-				["maxPower"] = 0;
-				["minEndurance"] = 0;
-				["minHP"] = 0;
-				["minPower"] = 0;
-			};
-			["skill"] = {
-				["castOnSelf"] = "0";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 13064;
-				["lastSkillID"] = "";
-				["los"] = "1";
-				["maxRange"] = 900;
-				["minRange"] = 0;
-				["name"] = "Infiltrator's Signet";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slowCast"] = "0";
-			};
-			["target"] = {
-				["boonCount"] = 0;
-				["conditionCount"] = 0;
-				["enemyNearCount"] = 0;
-				["enemyRangeMax"] = 0;
-				["hasBuffs"] = "";
-				["hasNotBuffs"] = "";
-				["maxHP"] = 0;
-				["minHP"] = 0;
-				["moving"] = "Either";
-				["type"] = "Either";
-			};
-		};
-		[86] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3450,7 +3301,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[87] = {
+		[84] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3493,7 +3344,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[88] = {
+		[85] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3536,7 +3387,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[89] = {
+		[86] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3579,7 +3430,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[90] = {
+		[87] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3622,7 +3473,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[91] = {
+		[88] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3665,7 +3516,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[92] = {
+		[89] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3708,7 +3559,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[93] = {
+		[90] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3751,7 +3602,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[94] = {
+		[91] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3794,7 +3645,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[95] = {
+		[92] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3837,7 +3688,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[96] = {
+		[93] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3880,7 +3731,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[97] = {
+		[94] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3923,7 +3774,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[98] = {
+		[95] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -3966,7 +3817,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[99] = {
+		[96] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4009,7 +3860,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[100] = {
+		[97] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4052,7 +3903,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[101] = {
+		[98] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4095,7 +3946,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[102] = {
+		[99] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4138,7 +3989,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[103] = {
+		[100] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4181,7 +4032,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[104] = {
+		[101] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4224,7 +4075,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[105] = {
+		[102] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4267,7 +4118,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[106] = {
+		[103] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4310,7 +4161,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[107] = {
+		[104] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4353,7 +4204,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[108] = {
+		[105] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4396,7 +4247,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[109] = {
+		[106] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4439,7 +4290,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[110] = {
+		[107] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4482,7 +4333,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[111] = {
+		[108] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4525,7 +4376,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[112] = {
+		[109] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4568,7 +4419,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[113] = {
+		[110] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4611,7 +4462,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[114] = {
+		[111] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4654,7 +4505,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[115] = {
+		[112] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4697,7 +4548,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[116] = {
+		[113] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4740,7 +4591,7 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[117] = {
+		[114] = {
 			["player"] = {
 				["allyNearCount"] = 0;
 				["allyRangeMax"] = 0;
@@ -4783,10 +4634,13 @@ local obj1 = {
 				["type"] = "Either";
 			};
 		};
-		[118] = {
+		[115] = {
 			["player"] = {
+				["hasNotBuffs"] = "10269";
+				["maxPower"] = 0;
 			};
 			["skill"] = {
+				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 30614;
 				["maxRange"] = 130;
@@ -4799,44 +4653,12 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[119] = {
+		[116] = {
 			["player"] = {
-				["minHP"] = 0;
+				["hasNotBuffs"] = "10269";
 			};
 			["skill"] = {
-				["delay"] = 7500;
-				["groundTargeted"] = "0";
-				["id"] = 29911;
-				["maxRange"] = 450;
-				["minRange"] = 0;
-				["name"] = "Weakening Charge";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
-			};
-			["target"] = {
-			};
-		};
-		[120] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 30775;
-				["maxRange"] = 600;
-				["minRange"] = 0;
-				["name"] = "Dust Strike";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
-			};
-			["target"] = {
-			};
-		};
-		[121] = {
-			["player"] = {
-			};
-			["skill"] = {
+				["delay"] = 0;
 				["groundTargeted"] = "0";
 				["id"] = 30135;
 				["maxRange"] = 130;
@@ -4849,8 +4671,10 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[122] = {
+		[117] = {
 			["player"] = {
+				["hasNotBuffs"] = "10269";
+				["maxPower"] = 0;
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
@@ -4861,22 +4685,140 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slot"] = 5;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
 		};
-		[123] = {
+		[118] = {
 			["player"] = {
+				["hasNotBuffs"] = "10269";
+				["maxPower"] = 25;
+				["minHP"] = 0;
+			};
+			["skill"] = {
+				["delay"] = 7500;
+				["groundTargeted"] = "0";
+				["id"] = 29911;
+				["maxRange"] = 450;
+				["minRange"] = 0;
+				["name"] = "Weakening Charge";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+				["slowCast"] = "1";
+			};
+			["target"] = {
+			};
+		};
+		[119] = {
+			["player"] = {
+				["hasNotBuffs"] = "10269";
+				["maxPower"] = 0;
+				["minHP"] = 0;
+			};
+			["skill"] = {
+				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 30775;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Dust Strike";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[120] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["maxPower"] = 0;
+				["minHP"] = 50;
+			};
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["groundTargeted"] = "0";
+				["id"] = 13046;
+				["los"] = "1";
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Assassin's Signet";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 2;
+			};
+			["target"] = {
+				["enemyNearCount"] = 0;
+				["enemyRangeMax"] = 0;
+				["maxHP"] = 0;
+				["minHP"] = 25;
+				["type"] = "Either";
+			};
+		};
+		[121] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["maxPower"] = 0;
+				["minEndurance"] = 10;
+				["minHP"] = 0;
+			};
+			["skill"] = {
+				["castOnSelf"] = "1";
+				["delay"] = 0;
+				["groundTargeted"] = "0";
+				["id"] = 13062;
+				["los"] = "0";
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Signet of Agility";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 3;
+			};
+			["target"] = {
+				["minHP"] = 0;
+			};
+		};
+		[122] = {
+			["player"] = {
+				["combatState"] = "InCombat";
+				["maxPower"] = 0;
+				["minEndurance"] = 0;
+				["minHP"] = 0;
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
-				["id"] = 30210;
-				["maxRange"] = 130;
+				["id"] = 13060;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Hook Strike";
+				["name"] = "Signet of Shadows";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 5;
+				["setRange"] = "0";
+				["slot"] = 1;
+			};
+			["target"] = {
+				["enemyNearCount"] = 2;
+				["enemyRangeMax"] = 240;
+				["maxHP"] = 0;
+				["minHP"] = 35;
+			};
+		};
+		[123] = {
+			["player"] = {
+				["hasBuffs"] = "872";
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 13064;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Infiltrator's Signet";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 1;
 			};
 			["target"] = {
 			};
