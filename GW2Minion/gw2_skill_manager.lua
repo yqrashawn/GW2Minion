@@ -1502,7 +1502,7 @@ function profilePrototype:SwapWeapon( targetdist )
 		--end
 				
 		if ( bestwpset.set.name ~= currentwpset.name ) then
-			--d("Switching from "..currentwpset.name.." to "..bestwpset.set.name.. " (Prio "..tostring(bestwpset.prio)..") setID:"..tostring(bestID))
+			--d("Switching from "..currentwpset.name.." to "..bestwpset.set.name.. " (Prio "..tostring(bestwpset.prio)..") setID:"..tostring(bestID) .." ID .."..tostring(ml_global_information.Player_TransformID))
 			if ( bestID <= 5 ) then-- weaponswap
 				Player:SwapWeaponSet()
 			
@@ -1810,6 +1810,12 @@ function skillPrototype:Cast(targetID)
 			local trackerEntry = gw2_skill_manager.GetCurrentSkillTrackerEntry()
 			if ( trackerEntry ) then
 				gw2_skill_manager.RefreshSkillTrackerEntry( trackerEntry, self.tmp.slot, gw2_skill_manager.currentSkillbarSkills[self.skill.id], ml_global_information.Now )
+			end
+			
+			-- Necromancer transformation (death shroud / reaper shroud) fails when swapping weapons during the transformation, so we increase the swaptimer here a bit
+			if ( ml_global_information.Player_Profession == GW2.CHARCLASS.Necromancer and ( self.skill.id == 10574 or self.skill.id == 30792 ))then
+				timers = gw2_skill_manager.profile.tmp.swapTimers
+				timers.lastSwap = timers.lastSwap + 1500
 			end
 		end
 		

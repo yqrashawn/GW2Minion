@@ -572,7 +572,7 @@ local obj1 = {
 			};
 			["skill"] = {
 				["castOnSelf"] = "1";
-				["delay"] = 0;
+				["delay"] = 2000;
 				["groundTargeted"] = "0";
 				["id"] = 10574;
 				["lastSkillID"] = "";
@@ -615,7 +615,7 @@ local obj1 = {
 			};
 			["skill"] = {
 				["castOnSelf"] = "1";
-				["delay"] = 0;
+				["delay"] = 2000;
 				["groundTargeted"] = "0";
 				["id"] = 10574;
 				["lastSkillID"] = "";
@@ -648,6 +648,7 @@ local obj1 = {
 			};
 			["skill"] = {
 				["castOnSelf"] = "1";
+				["delay"] = 2000;
 				["groundTargeted"] = "0";
 				["id"] = 30792;
 				["los"] = "0";
@@ -670,6 +671,7 @@ local obj1 = {
 			};
 			["skill"] = {
 				["castOnSelf"] = "1";
+				["delay"] = 2000;
 				["groundTargeted"] = "0";
 				["id"] = 30792;
 				["los"] = "0";

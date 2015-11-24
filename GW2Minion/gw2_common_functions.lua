@@ -120,7 +120,7 @@ end
 function gw2_common_functions.NecroLeaveDeathshroud()
 	if (Player.profession == 8 ) then
 		local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
-		if ( deathshroud ~= nil and deathshroud.skillID == 10585 and Player:CanCast() and Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then
+		if ( deathshroud ~= nil and (deathshroud.skillID == 10585 or deathshroud.skillID == 30961 ) and Player:CanCast() and Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then
 			Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
 			return true
 		end
