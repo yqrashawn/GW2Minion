@@ -972,7 +972,7 @@ local obj1 = {
 				["name"] = "Life Transfer";
 				["radius"] = 0;
 				["setRange"] = "1";
-				["slowCast"] = "0";
+				["slowCast"] = "1";
 			};
 			["target"] = {
 				["boonCount"] = 0;
@@ -3853,6 +3853,7 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slot"] = 8;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
