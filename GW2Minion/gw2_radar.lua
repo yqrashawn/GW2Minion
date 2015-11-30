@@ -107,12 +107,12 @@ function gw2_radar.GUIVarUpdate(Event, NewVals, OldVals)
             end
         end
         if ( k == "gRadarX" and tonumber(v) ~= nil) then
-            Settings.GW2Minion[tostring(k)] = v*10
-            HackManager:SetRadarSettings(k,tonumber(v*10))
+            Settings.GW2Minion[tostring(k)] = v
+            HackManager:SetRadarSettings(k,tonumber(v))
         end
         if ( k == "gRadarY" and tonumber(v) ~= nil) then
-            Settings.GW2Minion[tostring(k)] = v*10
-            HackManager:SetRadarSettings(k,tonumber(v*10))
+            Settings.GW2Minion[tostring(k)] = v
+            HackManager:SetRadarSettings(k,tonumber(v))
         end
 		if ( k == "gRadarZoom" and tonumber(v) ~= nil) then
             Settings.GW2Minion[tostring(k)] = v
