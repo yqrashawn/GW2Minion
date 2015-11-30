@@ -275,7 +275,7 @@ function gw2_sell_manager.createItemList()
 	local items = Inventory("exclude_contentid="..ml_blacklist.GetExcludeString(GetString("sellItems")))
 	local filteredItems = {}
 	if (items) then
-		for _,item in pairs(items) do
+		for slot,item in pairs(items) do
 			local addItem = false
 			for _,filter in pairs(gw2_sell_manager.filterList) do
 				if (gw2_sell_manager.validFilter(filter)) then
@@ -298,6 +298,7 @@ function gw2_sell_manager.createItemList()
 			end
 			-- Add item if found in filters.
 			if (addItem) then
+				item.slot = slot
 				table.insert(filteredItems, item)
 			end
 		end
@@ -387,12 +388,13 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 						for _,item in pairs(iList) do
 							d("Selling: "..item.name)
 							item:Sell()
-							if ( not gw2_sell_manager.VendorSellHistroy[item.itemID] or gw2_sell_manager.VendorSellHistroy[item.itemID] < 5 ) then
+							local uniqueItemID = item.itemID .. item.slot
+							if ( not gw2_sell_manager.VendorSellHistroy[uniqueItemID] or gw2_sell_manager.VendorSellHistroy[uniqueItemID] < 5 ) then
 
-								if ( not gw2_sell_manager.VendorSellHistroy[item.itemID] ) then
-									gw2_sell_manager.VendorSellHistroy[item.itemID] = 1
+								if ( not gw2_sell_manager.VendorSellHistroy[uniqueItemID] ) then
+									gw2_sell_manager.VendorSellHistroy[uniqueItemID] = 1
 								else
-									gw2_sell_manager.VendorSellHistroy[item.itemID] = gw2_sell_manager.VendorSellHistroy[item.itemID] + 1
+									gw2_sell_manager.VendorSellHistroy[uniqueItemID] = gw2_sell_manager.VendorSellHistroy[uniqueItemID] + 1
 								end
 							else
 								d("Can't sell "..item.name..", blacklisting it")
