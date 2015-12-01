@@ -388,6 +388,8 @@ function Dev.LoadModule()
 		obsSize = 50
 		GUI_NewButton("Dev","AddObstacle","Dev.AddOB","NavigationSystem")
 		RegisterEventHandler("Dev.AddOB", Dev.Move)
+		GUI_NewButton("Dev","RemoveLastObstacle","Dev.RemOB","NavigationSystem")
+		RegisterEventHandler("Dev.RemOB", Dev.Move)
 		GUI_NewButton("Dev","ClearObstacles","Dev.ClearOB","NavigationSystem")
 		RegisterEventHandler("Dev.ClearOB", Dev.Move)
 		GUI_NewNumeric("Dev","AvoidanceAreaSize","avoidSize","NavigationSystem","32","9999")
@@ -936,10 +938,13 @@ function Dev.Move ( arg )
 	elseif ( arg == "Dev.AddOB" and Player.onmesh) then
 		local pPos = Player.pos
 		if ( pPos ) then
-			table.insert(Dev.Obstacles, { x=pPos.x, y=pPos.y, z=pPos.z, r=tonumber(obsSize) })
-			d("Adding new Obstacle with size "..tostring(obsSize))
-			NavigationManager:AddNavObstacles(Dev.Obstacles)
+			Dev.lastObstacleRef = NavigationManager:AddNavObstacle({ x=pPos.x, y=pPos.y, z=pPos.z, r=tonumber(obsSize) })
+			d("Added New Obstacle with size "..tostring(obsSize).." Returned RefID: "..tostring(Dev.lastObstacleRef))
 		end
+	elseif ( arg == "Dev.RemOB" and Player.onmesh) then		
+		if ( Dev.lastObstacleRef ~= nil ) then
+			d("Deleting Obstacle RefID: "..tostring(Dev.lastObstacleRef)..", Result : "..tostring(NavigationManager:RemoveNavObstacle(Dev.lastObstacleRef)))
+		end		
 	elseif ( arg == "Dev.ClearOB" ) then
 		local pPos = Player.pos
 		if ( pPos ) then
