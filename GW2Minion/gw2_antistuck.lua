@@ -255,6 +255,8 @@ function gw2_antistuck.AddObstacleAtTarget( target )
 			end
 			
 			local radius = target.radius 
+			if ( radius > 300 ) then radius = 300 end 
+			
 			if ( refID == nil ) then
 				d("AntiStuck: Adding NavObstacle infront of Player")
 				local newrefid = NavigationManager:AddNavObstacle({ x=tPos.x, y=tPos.y, z=tPos.z+50, r=radius })
