@@ -1532,7 +1532,7 @@ function profilePrototype:ShouldUseAttunement( name )
 	return self.professionSettings.elementalist.attunement_1 == name or 
 		   self.professionSettings.elementalist.attunement_2 == name or
 		   self.professionSettings.elementalist.attunement_3 == name or
-		   self.professionSettings.elementalist.attunement_4 == name or
+		   self.professionSettings.elementalist.attunement_4 == name
 end
 
 function profilePrototype:CanCastSlot(slot)
