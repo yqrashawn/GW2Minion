@@ -6,8 +6,7 @@ gw2_antistuck.stuckLevel1Data = { antistuckdistance = 0 , direction = 0, start =
 gw2_antistuck.stuckLevel2Data = { respawntimer = 0, logoutTmr = 0}
 
 function gw2_antistuck.Reset()
-	
-	Player:StopMovement()
+		
 	gw2_antistuck.stuckLevel = 0
 	gw2_antistuck_stuckLevel = gw2_antistuck.stuckLevel
 	if ( gw2_antistuck.stuckLevel0Data.botrunning ) then
@@ -18,8 +17,7 @@ function gw2_antistuck.Reset()
 	gw2_antistuck.stuckLevel0Data.notmovingtimer = 0
 	gw2_antistuck.stuckLevel0Data.notmovingcount = 0
 	gw2_antistuck.stuckLevel1Data = { antistuckdistance = 0 , direction = 0, start = 0, lastdirectionchange = 0}
-	gw2_antistuck.stuckLevel2Data = { respawntimer = 0, logoutTmr = 0}
-			
+	gw2_antistuck.stuckLevel2Data = { respawntimer = 0, logoutTmr = 0}			
 	
 end
 
@@ -127,6 +125,7 @@ function gw2_antistuck.OnUpdate(tick)
 					if ( gw2_antistuck.stuckLevel1Data.direction ~= 0 and Player.onmeshexact ) then
 						d("AntiStuck: Reset, we are back on the mesh.")
 						gw2_antistuck.Reset()
+						Player:StopMovement()
 						ml_global_information.Running = true
 						return
 					end
@@ -174,6 +173,7 @@ function gw2_antistuck.OnUpdate(tick)
 								if ( Player:RespawnAtClosestWaypoint() ) then
 									gw2_antistuck.stuckLevel2Data.respawntimer = ml_global_information.Now
 									gw2_antistuck.Reset()
+									Player:StopMovement()
 									ml_global_information.Running = true
 								end
 							else
