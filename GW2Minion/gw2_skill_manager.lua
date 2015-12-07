@@ -1418,10 +1418,10 @@ function profilePrototype:SwapWeapon( targetdist )
 	
 	-- Elementalist	
 	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist and ml_global_information.Now - gw2_skill_manager.SkillTracker.elelastswap > 1250) then		
-		if ( ml_global_information.Player_TransformID ~= 1 and ValidTable(gw2_skill_manager.SkillTracker.attunements[1]) and self:CanCastSlot(GW2.SKILLBARSLOT.Slot_13)) then wpsets[13] = { set = gw2_skill_manager.SkillTracker.attunements[1], prio = 0 } end
-		if ( ml_global_information.Player_TransformID ~= 2 and ValidTable(gw2_skill_manager.SkillTracker.attunements[2]) and self:CanCastSlot(GW2.SKILLBARSLOT.Slot_14)) then wpsets[14] = { set = gw2_skill_manager.SkillTracker.attunements[2], prio = 0 } end
-		if ( ml_global_information.Player_TransformID ~= 3 and ValidTable(gw2_skill_manager.SkillTracker.attunements[3]) and self:CanCastSlot(GW2.SKILLBARSLOT.Slot_15)) then wpsets[15] = { set = gw2_skill_manager.SkillTracker.attunements[3], prio = 0 } end
-		if ( ml_global_information.Player_TransformID ~= 4 and ValidTable(gw2_skill_manager.SkillTracker.attunements[4]) and self:CanCastSlot(GW2.SKILLBARSLOT.Slot_16)) then wpsets[16] = { set = gw2_skill_manager.SkillTracker.attunements[4], prio = 0 } end
+		if ( ml_global_information.Player_TransformID ~= 1 and ValidTable(gw2_skill_manager.SkillTracker.attunements[1]) and self:ShouldUseAttunement(gw2_skill_manager.SkillTracker.attunements[1].name) and self:CanCastSlot(GW2.SKILLBARSLOT.Slot_13)) then wpsets[13] = { set = gw2_skill_manager.SkillTracker.attunements[1], prio = 0 } end
+		if ( ml_global_information.Player_TransformID ~= 2 and ValidTable(gw2_skill_manager.SkillTracker.attunements[2]) and self:ShouldUseAttunement(gw2_skill_manager.SkillTracker.attunements[2].name) and self:CanCastSlot(GW2.SKILLBARSLOT.Slot_14)) then wpsets[14] = { set = gw2_skill_manager.SkillTracker.attunements[2], prio = 0 } end
+		if ( ml_global_information.Player_TransformID ~= 3 and ValidTable(gw2_skill_manager.SkillTracker.attunements[3]) and self:ShouldUseAttunement(gw2_skill_manager.SkillTracker.attunements[3].name) and self:CanCastSlot(GW2.SKILLBARSLOT.Slot_15)) then wpsets[15] = { set = gw2_skill_manager.SkillTracker.attunements[3], prio = 0 } end
+		if ( ml_global_information.Player_TransformID ~= 4 and ValidTable(gw2_skill_manager.SkillTracker.attunements[4]) and self:ShouldUseAttunement(gw2_skill_manager.SkillTracker.attunements[4].name) and self:CanCastSlot(GW2.SKILLBARSLOT.Slot_16)) then wpsets[16] = { set = gw2_skill_manager.SkillTracker.attunements[4], prio = 0 } end
 	end
 	
 	-- Engineer Kits
@@ -1525,6 +1525,14 @@ function profilePrototype:SwapWeapon( targetdist )
 			end
 		end
 	end	
+end
+
+--Elementalist check if the attunement should be swapped to at alliesDownedNearCount
+function profilePrototype:ShouldUseAttunement( name ) 
+	return self.professionSettings.elementalist.attunement_1 == name or 
+		   self.professionSettings.elementalist.attunement_2 == name or
+		   self.professionSettings.elementalist.attunement_3 == name or
+		   self.professionSettings.elementalist.attunement_4 == name or
 end
 
 function profilePrototype:CanCastSlot(slot)

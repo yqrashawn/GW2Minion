@@ -1885,23 +1885,6 @@ local obj1 = {
 			};
 			["skill"] = {
 				["groundTargeted"] = "0";
-				["id"] = 29840;
-				["maxRange"] = 170;
-				["minRange"] = 0;
-				["name"] = "Shock Shield";
-				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
-				["slowCast"] = "1";
-			};
-			["target"] = {
-			};
-		};
-		[112] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
 				["id"] = 14489;
 				["maxRange"] = 1000;
 				["minRange"] = 0;
@@ -1913,7 +1896,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[113] = {
+		[112] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1930,7 +1913,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[114] = {
+		[113] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1946,7 +1929,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[115] = {
+		[114] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1962,7 +1945,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[116] = {
+		[115] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1979,7 +1962,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[117] = {
+		[116] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -1996,7 +1979,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[118] = {
+		[117] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2012,7 +1995,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[119] = {
+		[118] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2028,7 +2011,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[120] = {
+		[119] = {
 			["player"] = {
 				["minHP"] = 75;
 			};
@@ -2047,7 +2030,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[121] = {
+		[120] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2063,7 +2046,7 @@ local obj1 = {
 			["target"] = {
 			};
 		};
-		[122] = {
+		[121] = {
 			["player"] = {
 			};
 			["skill"] = {
@@ -2075,6 +2058,24 @@ local obj1 = {
 				["radius"] = 0;
 				["setRange"] = "1";
 				["slot"] = 7;
+			};
+			["target"] = {
+			};
+		};
+		[122] = {
+			["player"] = {
+				["minHP"] = 90;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 29840;
+				["maxRange"] = 170;
+				["minRange"] = 0;
+				["name"] = "Shock Shield";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
