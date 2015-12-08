@@ -360,7 +360,7 @@ function gw2minion.OnUpdate(event, tickcount )
 		gw2_skill_manager.OnUpdate(tickcount)
 		-- MultiBotManager OnUpdate
 		gw2_multibot_manager.OnUpdate(tickcount)
-		gw2_antistuck.OnUpdate(tickcount)
+		--gw2_antistuck.OnUpdate(tickcount)
 		
 		if ( ml_global_information.Running ) then		
 			

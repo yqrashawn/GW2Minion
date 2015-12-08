@@ -16,9 +16,122 @@ gw2_unstuck.slowConditions = "721,722,727,791,872" --Cripple, Chill, Immobilize,
 
 
 function gw2_unstuck.HandleStuck(mode)
+-- MainThrottle
+	if ( TimeSince(gw2_unstuck.stuckTimer) < 250 ) then
+		return gw2_unstuck.lastResult
+	end
+	-- Update MainThrottle
+	gw2_unstuck.stuckTimer = ml_global_information.Now
 
-	
-	return false
+	-- Botmode Cannot be: Assist
+	if (gBotMode == GetString("assistMode")) then
+		gw2_unstuck.Reset()
+		gw2_unstuck.lastResult = false
+		return gw2_unstuck.lastResult
+	end
+
+	-- Player must be alive
+	if ( not ml_global_information.Player_Alive ) then
+		gw2_unstuck.Reset()
+		gw2_unstuck.lastResult = false
+		return gw2_unstuck.lastResult
+	end
+
+	-- Valid lastposition
+	if 	(gw2_unstuck.lastPos == nil) or (gw2_unstuck.lastPos and type(gw2_unstuck.lastPos) ~= "table") then
+		gw2_unstuck.lastPos = ml_global_information.Player_Position
+		gw2_unstuck.lastResult = false
+		return gw2_unstuck.lastResult
+	end
+
+	-- Dont handle stuck when we are jumping / falling
+	if ( not ml_global_information.Player_CanMove ) then
+		return gw2_unstuck.lastResult
+	end
+
+	-- Dont handle stuck when we cannot move because of some debuff
+	if ( gw2_common_functions.HasBuffs(Player, gw2_unstuck.slowConditions) ) then
+		gw2_unstuck.lastOnMeshTime = ml_global_information.Now
+		gw2_unstuck.useWaypointTmr = ml_global_information.Now
+		return gw2_unstuck.lastResult
+	end
+
+	-- PLAYER NOT ON MESH
+	if ( not ml_global_information.Player_OnMesh ) then
+
+		-- Check if a mesh is loaded
+		local meshstate = NavigationManager:GetNavMeshState()
+		if ( meshstate == GLOBAL.MESHSTATE.MESHEMPTY or meshstate == GLOBAL.MESHSTATE.MESHBUILDING ) then
+			gw2_unstuck.lastResult = false
+			return gw2_unstuck.lastResult
+		end
+
+		-- Throttle to compensate for situations where the player shortly leaves the mesh (jumping/getting kicked outside etc.)
+		if ( TimeSince(gw2_unstuck.lastOnMeshTime) > 2000) then
+			ml_log("Player not on Navmesh!")
+
+			if ( mode == nil or mode == "combat") then
+				-- if the bot is started not on the mesh try to walk back onto the mesh
+				local p = NavigationManager:GetClosestPointOnMesh({ x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z })
+				--d(tostring(gw2_unstuck.lastOnMeshTime).." "..tostring(TimeSince(gw2_unstuck.lastOnMeshTime)).." "..tostring(p.distance))
+				if ( (gw2_unstuck.lastOnMeshTime == 0 or TimeSince(gw2_unstuck.lastOnMeshTime) < 20000) and ValidTable(p) and p.distance > 0 and p.distance < 1000) then
+					ml_log("Move blindly to nearby mesh")
+					Player:SetFacingExact(p.x,p.y,p.z)
+					Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+					gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Forward] = true
+					gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
+					gw2_unstuck.HandleStuck_ControlManualMovement()
+					gw2_unstuck.useWaypointTmr = ml_global_information.Now
+
+				else
+					-- we are not on or nearby the mesh
+					-- Another timer to prevent hickups when the p above fails
+					if ( TimeSince(gw2_unstuck.useWaypointTmr) > 15000 ) then
+						gw2_unstuck.useWaypointTmr = ml_global_information.Now
+						gw2_unstuck.HandleStuck_UseWaypoint()
+					end
+
+				end
+				gw2_unstuck.lastResult = true
+				return gw2_unstuck.lastResult
+
+			elseif ( mode == "follow" ) then
+
+				gw2_unstuck.HandleStuck_MovedDistanceCheck()
+				gw2_unstuck.HandleStuck_ControlManualMovement()
+
+			end
+		end
+	else
+
+		-- PLAYER IS ON THE MESH
+		-- If an AntistuckPos was set, go there
+		if ( gw2_unstuck.antiStuckPos ~= nil and type(gw2_unstuck.antiStuckPos) == "table") then
+			if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,gw2_unstuck.antiStuckPos.x,gw2_unstuck.antiStuckPos.y,gw2_unstuck.antiStuckPos.z))) then
+				newnodecount = Player:MoveTo(gw2_unstuck.antiStuckPos.x,gw2_unstuck.antiStuckPos.y,gw2_unstuck.antiStuckPos.z,20,false,false,false)
+				if ( newnodecount <= 0 ) then
+					ml_error("Unstuck.lua: Cant move to antiStuckPos")
+					gw2_unstuck.antiStuckPos = nil
+				else
+					gw2_unstuck.lastResult = true
+				end
+			end
+		end
+
+
+		gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
+		gw2_unstuck.HandleStuck_ControlManualMovement()
+
+
+		-- Update time when the player was on the mesh the last time
+		gw2_unstuck.lastOnMeshTime = ml_global_information.Now
+		gw2_unstuck.useWaypointTmr = ml_global_information.Now
+	end
+
+
+	gw2_unstuck.lastPos = ml_global_information.Player_Position
+
+	return gw2_unstuck.lastResult
 end
 
 -- Checks the moved distance and performs different actions in order to handle stuck situations
