@@ -252,6 +252,7 @@ function gw2minion.ModuleInit()
 		ml_mesh_mgr.SetDefaultMesh(988,"Dry Top")
 		--HoT
 		ml_mesh_mgr.SetDefaultMesh(1052,"Verdant Brink")
+		ml_mesh_mgr.SetDefaultMesh(1043,"Auric Basin")
 		
 		--sPVP
 		 ml_mesh_mgr.SetDefaultMesh(549,"sPvP Battle of Kyhlo")
@@ -262,38 +263,41 @@ function gw2minion.ModuleInit()
 		 ml_mesh_mgr.SetDefaultMesh(900,"sPvP Skyhammer")
 		 ml_mesh_mgr.SetDefaultMesh(984,"sPvP Courtyard")
 		 ml_mesh_mgr.SetDefaultMesh(1011,"sPvP Battle of Champions")
-  
+		
+		--Instances
+		ml_mesh_mgr.SetDefaultMesh(896,"North Noland Hatchery") -- Diessa Plateau
+		
 		-- Setup the marker types we wanna use
-		    local grindMarker = ml_marker:Create("grindTemplate")
-			grindMarker:SetType(GetString("grindMarker"))
-			grindMarker:SetMinLevel(1)
-			grindMarker:SetMaxLevel(80)
-			grindMarker:SetTime(300)
-			grindMarker:AddField("int", GetUSString("maxRange"),GetString("maxRange"), 15000)
-			ml_marker_mgr.AddMarkerTemplate(grindMarker)			
-			
-			local gatherMarker = ml_marker:Create("gatherTemplate")
-			gatherMarker:SetType(GetString("gatherMarker"))
-			gatherMarker:SetMinLevel(1)
-			gatherMarker:SetMaxLevel(80)			
-			gatherMarker:AddField("int", GetUSString("maxRange"), GetUSString("maxRange"), 15000)
-			ml_marker_mgr.AddMarkerTemplate(gatherMarker)
-			
-			local vendorMarker = ml_marker:Create("vendorTemplate")
-			vendorMarker:SetType(GetString("vendorMarker"))
-			vendorMarker:SetMinLevel(1)
-			vendorMarker:SetMaxLevel(80)			
-			ml_marker_mgr.AddMarkerTemplate(vendorMarker)
-			
-			local pvpMarker = ml_marker:Create("PvPCaptureTemplate")			
-			pvpMarker:SetFieldValue("green", 50)
-			pvpMarker:SetFieldValue("blue", 255)
-			pvpMarker:SetType("PvPCaptureMarker")
-			ml_marker_mgr.AddMarkerTemplate(pvpMarker)	
-			
-			-- refresh the manager with the new templates
-			ml_marker_mgr.RefreshMarkerTypes()
-			ml_marker_mgr.RefreshMarkerNames()
+		local grindMarker = ml_marker:Create("grindTemplate")
+		grindMarker:SetType(GetString("grindMarker"))
+		grindMarker:SetMinLevel(1)
+		grindMarker:SetMaxLevel(80)
+		grindMarker:SetTime(300)
+		grindMarker:AddField("int", GetUSString("maxRange"),GetString("maxRange"), 15000)
+		ml_marker_mgr.AddMarkerTemplate(grindMarker)			
+		
+		local gatherMarker = ml_marker:Create("gatherTemplate")
+		gatherMarker:SetType(GetString("gatherMarker"))
+		gatherMarker:SetMinLevel(1)
+		gatherMarker:SetMaxLevel(80)			
+		gatherMarker:AddField("int", GetUSString("maxRange"), GetUSString("maxRange"), 15000)
+		ml_marker_mgr.AddMarkerTemplate(gatherMarker)
+		
+		local vendorMarker = ml_marker:Create("vendorTemplate")
+		vendorMarker:SetType(GetString("vendorMarker"))
+		vendorMarker:SetMinLevel(1)
+		vendorMarker:SetMaxLevel(80)			
+		ml_marker_mgr.AddMarkerTemplate(vendorMarker)
+		
+		local pvpMarker = ml_marker:Create("PvPCaptureTemplate")			
+		pvpMarker:SetFieldValue("green", 50)
+		pvpMarker:SetFieldValue("blue", 255)
+		pvpMarker:SetType("PvPCaptureMarker")
+		ml_marker_mgr.AddMarkerTemplate(pvpMarker)	
+		
+		-- refresh the manager with the new templates
+		ml_marker_mgr.RefreshMarkerTypes()
+		ml_marker_mgr.RefreshMarkerNames()
 				
 		ml_mesh_mgr.InitMarkers() -- Update the Markers-group in the mesher UI
 	end
