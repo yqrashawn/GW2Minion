@@ -185,7 +185,8 @@ function Dev.LoadModule()
 		GUI_NewField("Dev","Req.Soulbind","IRSoul","InventoryInfo")
 		GUI_NewField("Dev","Accountbound","IAccbou","InventoryInfo")
 		GUI_NewField("Dev","IsSalvagable","ISalv","InventoryInfo")
-		GUI_NewField("Dev","IsMailable","IMail","InventoryInfo")	
+		GUI_NewField("Dev","IsMailable","IMail","InventoryInfo")
+		GUI_NewField("Dev","CanSellOnTradingPost","ITP","InventoryInfo")
 		GUI_NewButton("Dev","UseItem","Dev.IUse","InventoryInfo")
 		RegisterEventHandler("Dev.IUse", Dev.Func)
 		GUI_NewNumeric("Dev","Equip to Slot","ieqslot","InventoryInfo","0","36");
@@ -1233,6 +1234,7 @@ function Dev.UpdateWindow()
 		IRSoul = tostring(myitem.reqsoulbind)
 		ISalv = tostring(myitem.salvagable)
 		IMail = tostring(myitem.isMailable)
+		ITP = tostring(myitem.canselltotp)
 	else
 		ICount = Inventory.count
 		ISlots = Inventory.slotCount
@@ -1252,6 +1254,7 @@ function Dev.UpdateWindow()
 		IRSoul = 0
 		ISalv = 0
 		IMail = 0
+		ITP = 0
 	end
 	
 	--Vendorinfo
