@@ -78,6 +78,7 @@ ml_mesh_mgr.OMCJumpStartedTimer = 0
 ml_mesh_mgr.OMCThrottle = 0
 function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount ) 
 	if ( ml_mesh_mgr.OMCIsHandled ) then
+		
 		ml_global_information.Lasttick = ml_global_information.Now -- Pauses the main bot-loop, no unstuck or continues path creation.
 		
 		if ( ml_mesh_mgr.OMCThrottle > tickcount ) then -- Throttles OMC actions
@@ -96,7 +97,11 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 		local ePos = {
 						x = tonumber(ml_mesh_mgr.OMCEndposition[1]), y = tonumber(ml_mesh_mgr.OMCEndposition[2]), z = tonumber(ml_mesh_mgr.OMCEndposition[3]),
 					}
-		
+
+		if(gw2_omc_unstuck.HandleStuck(ml_mesh_mgr.OMCType,sPos,ePos)) then
+			return
+		end
+
 		if ( ml_mesh_mgr.OMCStartPositionReached == false ) then
 			if ( ValidTable(sPos) ) then
 				local dist = Distance3D(sPos.x,sPos.y,sPos.z,pPos.x,pPos.y,pPos.z)
@@ -227,7 +232,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 				d("OMC Endposition reached..")
 				Player:Interact()
 				ml_mesh_mgr.ResetOMC()
-			
+				
 			elseif ( ml_mesh_mgr.OMCType == "OMC_PORTAL" ) then
 				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
 					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
