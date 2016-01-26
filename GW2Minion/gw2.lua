@@ -578,7 +578,8 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "gMultiBotEnabled" or
 			k == "gNoMeshLoad" or
 			k == "sMtargetmode" or
-			k == "sMmode"
+			k == "sMmode" or 
+			k == "gFinishEnemyAssist"
 			) then
 			Settings.GW2Minion[tostring(k)] = v
 					

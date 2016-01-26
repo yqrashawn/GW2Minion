@@ -64,7 +64,7 @@ function gw2_task_assist:UIInit()
 	end	
 	sMtargetmode = Settings.GW2Minion.sMtargetmode
 	sMmode = Settings.GW2Minion.sMmode
-	gFinishEnemyAssist = Settings.GW2Minion.FinishEnemyAssist
+	gFinishEnemyAssist = Settings.GW2Minion.gFinishEnemyAssist
 	return true
 end
 function gw2_task_assist:UIDestroy()
@@ -84,8 +84,8 @@ function gw2_task_assist.ModuleInit()
 	if (Settings.GW2Minion.sMmode == nil) then
 		Settings.GW2Minion.sMmode = "Everything"
 	end
-	if (Settings.GW2Minion.FinishEnemyAssist == nil) then
-		Settings.GW2Minion.FinishEnemyAssist = "1"
+	if (Settings.GW2Minion.gFinishEnemyAssist == nil) then
+		Settings.GW2Minion.gFinishEnemyAssist = "1"
 	end
 end
 
