@@ -25,8 +25,7 @@ function gw2_task_assist:Process()
 		
 	if ( ml_global_information.Player_Alive ) then
 		
-		
-		if ( gw2_common_functions.FinishEnemy() == true ) then return end
+		if ( gFinishEnemyAssist == "1" and gw2_common_functions.FinishEnemy() == true ) then return end
 		
 		
 		if ( TimeSince(gw2_task_assist.tmr) > 2000) then			
@@ -60,10 +59,12 @@ function gw2_task_assist:UIInit()
 		mw:NewComboBox(GetString("sMtargetmode"),"sMtargetmode",GetString("assistMode"),"None,LowestHealth,Closest,Biggest Crowd");
 		mw:NewComboBox(GetString("sMmode"),"sMmode",GetString("assistMode"),"Everything,Players Only")
 		mw:NewCheckBox(GetString("smMoveIntoCombatRange"),"gMoveIntoCombatRange",GetString("assistMode"))
+		mw:NewCheckBox(GetString("AutoStomp"),"gFinishEnemyAssist",GetString("assistMode"))
 		mw:UnFold( GetString("assistMode") );
 	end	
 	sMtargetmode = Settings.GW2Minion.sMtargetmode
 	sMmode = Settings.GW2Minion.sMmode
+	gFinishEnemyAssist = Settings.GW2Minion.FinishEnemyAssist
 	return true
 end
 function gw2_task_assist:UIDestroy()
@@ -82,6 +83,9 @@ function gw2_task_assist.ModuleInit()
 	end
 	if (Settings.GW2Minion.sMmode == nil) then
 		Settings.GW2Minion.sMmode = "Everything"
+	end
+	if (Settings.GW2Minion.FinishEnemyAssist == nil) then
+		Settings.GW2Minion.FinishEnemyAssist = "1"
 	end
 end
 
