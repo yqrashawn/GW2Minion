@@ -1691,12 +1691,7 @@ function skillPrototype:CanCast(targetID)
 	local skillOnBar = gw2_skill_manager.currentSkillbarSkills[self.skill.id] or {}
 	local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
 	if (ValidTable(skillOnBar) and (ValidTable(target) or self.skill.castOnSelf == "1") ) then
-		-- update profile range.
-		if (self.skill.setRange == "1") then
-			self.parent.tmp.maxAttackRange = (self.skill.maxRange > 0 and self.skill.maxRange > self.parent.tmp.maxAttackRange and self.skill.maxRange or self.parent.tmp.maxAttackRange)
-			self.parent.tmp.maxAttackRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.maxAttackRange and self.skill.radius or self.parent.tmp.maxAttackRange)
-		end
-
+		
 		-- get last skill.
 		local lastSkillID = (Player.castinfo.skillID == 0 and Player.castinfo.lastSkillID or Player.castinfo.skillID)
 
@@ -1778,13 +1773,19 @@ function skillPrototype:CanCast(targetID)
 		-- Check lastSkill attributes.
 		local lastSkill = self.parent:GetSkillByID(lastSkillID)
 		if (lastSkill and lastSkill.skill.slowCast == "1" and Player.castinfo.slot == lastSkill.tmp.slot) then return false end
-
+		
+		-- update profile range.
+		if (self.skill.setRange == "1") then
+			self.parent.tmp.maxAttackRange = (self.skill.maxRange > 0 and self.skill.maxRange > self.parent.tmp.maxAttackRange and self.skill.maxRange or self.parent.tmp.maxAttackRange)
+			self.parent.tmp.maxAttackRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.maxAttackRange and self.skill.radius or self.parent.tmp.maxAttackRange)
+		end
+		
 		-- skill can be cast now.
 		return true
 	-- update profile range.
-	elseif (ValidTable(target) == false and self.skill.setRange == "1" and ValidTable(skillOnBar) and skillOnBar.cooldown == 0) then
+	elseif (ValidTable(target) == false and self.skill.setRange == "1" and ValidTable(skillOnBar) and skillOnBar.cooldown == 0 and ( self.player.maxPower <= 0 or ml_global_information.Player_Power > self.player.maxPower)) then
 		self.parent.tmp.maxAttackRange = (self.skill.maxRange > 0 and self.skill.maxRange > self.parent.tmp.maxAttackRange and self.skill.maxRange or self.parent.tmp.maxAttackRange)
-		self.parent.tmp.maxAttackRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.maxAttackRange and self.skill.radius or self.parent.tmp.maxAttackRange)
+		self.parent.tmp.maxAttackRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.maxAttackRange and self.skill.radius or self.parent.tmp.maxAttackRange)		
 	end
 	return false
 end

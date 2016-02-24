@@ -364,7 +364,7 @@ function gw2minion.OnUpdate(event, tickcount )
 		gw2_skill_manager.OnUpdate(tickcount)
 		-- MultiBotManager OnUpdate
 		gw2_multibot_manager.OnUpdate(tickcount)
-		--gw2_antistuck.OnUpdate(tickcount)
+		gw2_antistuck.OnUpdate(tickcount)
 		
 		if ( ml_global_information.Running ) then		
 			
@@ -431,7 +431,7 @@ function gw2minion.OnUpdateCharSelect(event, tickcount )
 				end			
 			end	
 			if ( gAutostartbot == "1" ) then
-				GUI_ToggleConsole(false)
+				if (ml_gui) then ml_gui.showconsole = false end
 				d("Pressing PLAY")
 				PressKey("RETURN")
 			end
@@ -498,7 +498,7 @@ function gw2minion.SwitchUIForGameState(tickcount)
 	local currentGameState = GetGameState()
 	if ( currentGameState ~= ml_global_information.LastGameState ) then
 		ml_global_information.LastGameState = currentGameState
-		GUI_ToggleConsole(false)
+		if (ml_gui) then ml_gui.showconsole = false end
 		local wMain = WindowManager:GetWindow(gw2minion.MainWindow.Name)
 		local wCine = WindowManager:GetWindow(gw2minion.CinemaWindow.Name)
 		local wChar = WindowManager:GetWindow(gw2minion.CharacterWindow.Name)
@@ -578,8 +578,8 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "gMultiBotEnabled" or
 			k == "gNoMeshLoad" or
 			k == "sMtargetmode" or
-			k == "sMmode" or 
-			k == "gFinishEnemyAssist"
+			k == "gFinishEnemyAssist" or
+			k == "sMmode"
 			) then
 			Settings.GW2Minion[tostring(k)] = v
 					
