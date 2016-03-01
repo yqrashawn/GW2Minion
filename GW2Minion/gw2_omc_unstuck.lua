@@ -1,5 +1,5 @@
 gw2_omc_unstuck = {}
-
+gw2_omc_unstuck.ticks = 0
 gw2_omc_unstuck.stuckCount = 0
 gw2_omc_unstuck.targetOMC = {}
 gw2_omc_unstuck.lastPos = nil
@@ -7,6 +7,8 @@ gw2_omc_unstuck.stuckTimer = 0
 gw2_omc_unstuck.stuckDistance = 25
 gw2_omc_unstuck.lastResult = false
 gw2_omc_unstuck.lastStuckCount = 0
+
+gw2_omc_unstuck.trackedOMC = {}
 
 gw2_omc_unstuck.STUCKSTATES = {
 	MinStuckCount = 25,
@@ -19,20 +21,27 @@ gw2_omc_unstuck.STUCKSTATES = {
 }
 
 function gw2_omc_unstuck.HandleStuck(type,startPos,endPos)
-	if(not gw2_omc_unstuck.Match(type,startPos,endPos)) then
-		gw2_omc_unstuck.targetOMC = {
-			startPos = startPos,
-			endPos = endPos,
-			type = type,
-			stuckCount = 0,
-			startTime = ml_global_information.Now,
-			resetCount = 0,
-			avoidanceAreaAdded = false,
-			obstacleAdded = false,
-			inCombatTimer = 0,
-			waypointCount = 0
+	local targetOMC = gw2_omc_unstuck.GetTrackedOMC({startPos = startPos, endPos = endPos, type = type})
+
+	if(not targetOMC) then
+		targetOMC = {
+			startPos = startPos;
+			endPos = endPos;
+			type = type;
+			stuckCount = 0;
+			resetCount = 0;
+			avoidanceAreaAdded = false;
+			obstacleAdded = false;
+			inCombatTimer = 0;
+			waypointCount = 0;
+			jumpCount = 0;
+			startTime = ml_global_information.Now;
 		}
+
+		gw2_omc_unstuck.TrackOMC(targetOMC)
 	end
+
+	gw2_omc_unstuck.targetOMC = targetOMC
 	
 	if(TimeSince(gw2_omc_unstuck.stuckTimer) < 250) then
 		return gw2_omc_unstuck.lastResult
@@ -40,33 +49,41 @@ function gw2_omc_unstuck.HandleStuck(type,startPos,endPos)
 	
 	gw2_omc_unstuck.stuckTimer = ml_global_information.Now
 	
+	local distmoved = math.huge
+	if(ValidTable(gw2_omc_unstuck.lastPos)) then
+		distmoved = Distance3DT(ml_global_information.Player_Position,gw2_omc_unstuck.lastPos)
+	end
+	gw2_omc_unstuck.lastPos = Player.pos
+	
 	if (gw2_common_functions.HasBuffs(Player, gw2_unstuck.slowConditions) ) then
 		gw2_omc_unstuck.lastResult = false
 		return false
 	end
 
-	if(not ml_mesh_mgr.OMCStartPositionReached) then
+	if(distmoved > gw2_omc_unstuck.stuckDistance and not ml_mesh_mgr.OMCStartPositionReached and gw2_omc_unstuck.targetOMC.stuckCount < gw2_omc_unstuck.STUCKSTATES.MinStuckCount) then
 		gw2_omc_unstuck.lastResult = false
 		return false
 	end
 
-	if(ValidTable(gw2_omc_unstuck.lastPos)) then
-		local distmoved = Distance3D(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,gw2_omc_unstuck.lastPos.x,gw2_omc_unstuck.lastPos.y,gw2_omc_unstuck.lastPos.z)
-		if(gw2_omc_unstuck.targetOMC.type == "OMC_JUMP") then
-			gw2_omc_unstuck.stuckDistance = 55
-		end
-
-		if(distmoved < gw2_omc_unstuck.stuckDistance) then
-			gw2_omc_unstuck.targetOMC.stuckCount = gw2_omc_unstuck.targetOMC.stuckCount + 1
-		end
+	if(distmoved < gw2_omc_unstuck.stuckDistance or gw2_omc_unstuck.targetOMC.jumpCount > 0) then
+		gw2_omc_unstuck.targetOMC.stuckCount = gw2_omc_unstuck.targetOMC.stuckCount + 1
 	end
-	gw2_omc_unstuck.lastPos = ml_global_information.Player_Position
 
 	if(gw2_omc_unstuck.targetOMC.stuckCount > gw2_omc_unstuck.STUCKSTATES.MinStuckCount) then
 		gw2_omc_unstuck.Log("OMC stuckCount: " .. gw2_omc_unstuck.targetOMC.stuckCount)
+		
+		local startDistance = ml_mesh_mgr.OMCStartDistance - (gw2_omc_unstuck.targetOMC.stuckCount-10)
+		if(startDistance > 5) then
+			gw2_omc_unstuck.Log("Reducting OMC start distance")
+			ml_mesh_mgr.OMCStartDistance = startDistance
+		end
+
 		if(gw2_omc_unstuck.targetOMC.stuckCount < gw2_omc_unstuck.STUCKSTATES.Jump) then
 			gw2_omc_unstuck.Log("Trying to jump")
+			Player:SetFacingExact(gw2_omc_unstuck.targetOMC.endPos.x,gw2_omc_unstuck.targetOMC.endPos.y,gw2_omc_unstuck.targetOMC.endPos.z)
 			Player:Jump()
+			Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+			gw2_omc_unstuck.targetOMC.jumpCount = gw2_omc_unstuck.targetOMC.jumpCount + 1
 		elseif(gw2_omc_unstuck.targetOMC.avoidanceAreaAdded == false and (gw2_omc_unstuck.targetOMC.stuckCount == gw2_omc_unstuck.STUCKSTATES.AddAvoidance or gw2_omc_unstuck.targetOMC.resetCount == 2)) then
 			gw2_omc_unstuck.StopMovement()
 			table.insert(ml_mesh_mgr.currentMesh.AvoidanceAreas, { x=gw2_omc_unstuck.targetOMC.startPos.x, y=gw2_omc_unstuck.targetOMC.startPos.y, z=gw2_omc_unstuck.targetOMC.startPos.z, r=50 })
@@ -80,6 +97,7 @@ function gw2_omc_unstuck.HandleStuck(type,startPos,endPos)
 			NavigationManager:AddNavObstacles(ml_mesh_mgr.currentMesh.Obstacles)
 			gw2_omc_unstuck.targetOMC.obstacleAdded = true
 		elseif(gw2_omc_unstuck.targetOMC.stuckCount < gw2_omc_unstuck.STUCKSTATES.MoveToMesh) then
+			gw2_omc_unstuck.targetOMC.jumpCount = 0
 			gw2_omc_unstuck.StopMovement()
 			if(not Player.onmesh) then
 				gw2_omc_unstuck.Log("Trying to get back on the mesh")
@@ -126,7 +144,14 @@ function gw2_omc_unstuck.HandleStuck(type,startPos,endPos)
 				end
 			end
 		elseif(gw2_omc_unstuck.targetOMC.stuckCount >= gw2_omc_unstuck.STUCKSTATES.StopBot) then
-			gw2_omc_unstuck.Log("Something is wrong with the OMC. Stopping bot.")
+			gw2_omc_unstuck.Log({
+				"Something is wrong with the OMC. Stopping bot.",
+				"Current position:",
+				{x = Player.pos.x, y = Player.pos.y, z = Player.pos.z},
+				"OMC position:",
+				{x = gw2_omc_unstuck.targetOMC.startPos.x, y = gw2_omc_unstuck.targetOMC.startPos.y, z = gw2_omc_unstuck.targetOMC.startPos.z}
+			}, true)
+
 			gw2_omc_unstuck.StopMovement()
 			ml_mesh_mgr.ResetOMC()
 			gw2_omc_unstuck.Reset()
@@ -148,6 +173,7 @@ function gw2_omc_unstuck.Reset()
 	gw2_omc_unstuck.targetOMC.resetCount = 0
 	gw2_omc_unstuck.targetOMC.inCombatTimer = 0
 	gw2_omc_unstuck.targetOMC.waypointCount = 0
+	gw2_omc_unstuck.targetOMC.jumpCount = 0
 	gw2_omc_unstuck.stuckDistance = 25
 	gw2_omc_unstuck.lastResult = false
 end
@@ -159,25 +185,82 @@ function gw2_omc_unstuck.StopMovement()
 	Player:StopMovement()
 end
 
-function gw2_omc_unstuck.Match(type,startPos,endPos)
-	if(ValidTable(gw2_omc_unstuck.targetOMC)) then
+function gw2_omc_unstuck.Match(omc,type,startPos,endPos)
+	if(ValidTable(omc)) then
 		if(
+			ValidTable(omc.startPos) and ValidTable(omc.endPos) and
+			ValidTable(startPos) and ValidTable(endPos) and
 			(
-				gw2_omc_unstuck.targetOMC.type == type and
-				gw2_omc_unstuck.targetOMC.startPos.x == startPos.x and gw2_omc_unstuck.targetOMC.startPos.y == startPos.y and gw2_omc_unstuck.targetOMC.startPos.z == startPos.z and
-				gw2_omc_unstuck.targetOMC.endPos.x == endPos.x and gw2_omc_unstuck.targetOMC.endPos.y == endPos.y and gw2_omc_unstuck.targetOMC.endPos.z == endPos.z
-			) or
-			TimeSince(gw2_omc_unstuck.targetOMC.startTime) > 180000
+				omc.type == type and
+				omc.startPos.x == startPos.x and omc.startPos.y == startPos.y and omc.startPos.z == startPos.z and
+				omc.endPos.x == endPos.x and omc.endPos.y == endPos.y and omc.endPos.z == endPos.z
+			) and
+			TimeSince(omc.startTime) < 180000
 		) then
-			return true
+			return omc
 		end
 	end
 	
 	return false
 end
 
-function gw2_omc_unstuck.Log(msg)
-	if(gw2_omc_unstuck.targetOMC.stuckCount > gw2_omc_unstuck.lastStuckCount) then
-		d(msg)
+function gw2_omc_unstuck.TrackOMC(targetOMC)
+	local tracked = gw2_omc_unstuck.GetTrackedOMC(targetOMC)
+	if(not tracked and ValidTable(targetOMC)) then
+		table.insert(gw2_omc_unstuck.trackedOMC, targetOMC)
 	end
 end
+
+function gw2_omc_unstuck.GetTrackedOMC(omc)
+	if(ValidTable(omc)) then
+		for _,trackedOMC in pairs(gw2_omc_unstuck.trackedOMC) do
+			if(gw2_omc_unstuck.Match(trackedOMC,omc.type,omc.startPos,omc.endPos)) then
+				return trackedOMC
+			end
+		end
+	end
+	
+	return false
+end
+
+function gw2_omc_unstuck.Log(msg, err)
+	if(gw2_omc_unstuck.targetOMC.stuckCount > gw2_omc_unstuck.lastStuckCount) then
+		if(ValidTable(msg)) then
+			for _,m in ipairs(msg) do
+				local val = m
+				if(ValidTable(m)) then
+					val = "{ "
+					for k,v in pairs(m) do
+						val = val .. k .. "=" .. v .. "; "
+					end
+					val = val .. "}"
+				end
+		
+				if(err) then
+					ml_error(val)
+				else
+					d(val)
+				end
+			end
+		else
+			if(err) then
+				ml_error(msg)
+			else
+				d(msg)
+			end			
+		end
+	end
+end
+
+function gw2_omc_unstuck.OnUpdate(Event, ticks) 
+	if(TimeSince(gw2_omc_unstuck.ticks) > 5000) then
+		gw2_omc_unstuck.ticks = ticks
+		for i,omc in pairs(gw2_omc_unstuck.trackedOMC) do
+			if(TimeSince(omc.startTime) > 180000) then
+				table.remove(gw2_omc_unstuck.trackedOMC, i)
+			end
+		end
+	end
+end
+
+RegisterEventHandler("Gameloop.Update",gw2_omc_unstuck.OnUpdate)
