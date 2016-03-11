@@ -76,6 +76,7 @@ ml_mesh_mgr.OMCIsHandled = false
 ml_mesh_mgr.OMCStartPositionReached = false
 ml_mesh_mgr.OMCJumpStartedTimer = 0
 ml_mesh_mgr.OMCThrottle = 0
+ml_mesh_mgr.OMCStartDistance = 35
 function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount ) 
 	if ( ml_mesh_mgr.OMCIsHandled ) then
 		
@@ -108,9 +109,8 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 				if (dist > 150) then
 					ml_mesh_mgr.ResetOMC()
 				else
-					if ( dist < 35 ) then -- Close enough to start
+					if ( dist < ml_mesh_mgr.OMCStartDistance ) then -- Close enough to start
 						d("OMC StartPosition reached..Facing Target Direction..")
-						
 						Player:SetFacingH(sPos.hx,sPos.hy,sPos.hz) -- Set heading
 						ml_mesh_mgr.OMCThrottle = tickcount + 450 -- Pause omc update loop to allow camera to turn (timing untested)
 						Player:StopMovement()
@@ -118,8 +118,9 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 						return
 					end
 					
-					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end -- Move towards start location
 					Player:SetFacingExact(sPos.x,sPos.y,sPos.z,true) -- Face start location (4th arg: true, turns camera)
+					--if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end -- Move towards start location
+					
 					return
 				end
 			end
@@ -127,7 +128,9 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 		else
 			
 			if ( ml_mesh_mgr.OMCType == "OMC_JUMP" ) then
-				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then								
+					Player:SetFacingExact(ePos.x,ePos.y,ePos.z,true)
+
 					-- We are at our start OMC point and are facing the correct direction, now start moving forward and jump
 					if ( not ml_global_information.Player_IsMoving ) then
 						Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
@@ -142,26 +145,28 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 						end
 						
 					end
-					
-					Player:SetFacingExact(ePos.x,ePos.y,ePos.z,true)
-					
+
 					if (ml_mesh_mgr.OMCJumpStartedTimer == 0 ) then
 						Player:Jump()
 						ml_mesh_mgr.OMCJumpStartedTimer = ml_global_information.Now
 					end
 					
 					local dist = Distance3D(ePos.x,ePos.y,ePos.z,pPos.x,pPos.y,pPos.z)
+					local heightdiff = ePos.z - pPos.z
 					ml_global_information.Player_MovementState = Player:GetMovementState() or 1
-					
+
 					local dist2d = Distance2D(ePos.x,ePos.y,pPos.x,pPos.y)
-					
+
 					--d("DISTCHECK: "..tostring(dist).."  2d: "..tostring(dist2d))
-					
+
 					if ( dist < 25 or (dist < 35 and dist2d < 10)) then
 						d("OMC Endposition reached..")
 						ml_mesh_mgr.ResetOMC() -- turn off omc handler
 						ml_global_information.Lasttick = ml_global_information.Lasttick + 100 -- delay bot after doing omc
-					
+					elseif(ml_global_information.Player_MovementState == GW2.MOVEMENTSTATE.Falling and dist2d < 40 and heightdiff > 60) then
+						d("We are above the omc end position")
+						ml_mesh_mgr.ResetOMC()
+						ml_global_information.Lasttick = ml_global_information.Lasttick + 100
 					elseif(ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Jumping and ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Falling and ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 350) then
 						d("We landed already")
 						ml_mesh_mgr.ResetOMC()
@@ -171,7 +176,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 						d("We failed to land on the enposition..use teleport maybe?")
 						ml_mesh_mgr.ResetOMC()
 					
-					elseif(ePos.z < sPos.z and ePos.z < pPos.z and math.abs(ePos.z - pPos.z) > 30 and ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 500 ) then
+					elseif(ePos.z < sPos.z and ePos.z < pPos.z and math.abs(heightdiff) > 30 and ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 500 ) then
 						d("We felt below the OMCEndpoint height..means we missed the landingpoint..")
 						ml_mesh_mgr.ResetOMC()
 						ml_global_information.Lasttick = ml_global_information.Lasttick + 500
@@ -264,6 +269,7 @@ function ml_mesh_mgr.ResetOMC()
 	ml_mesh_mgr.OMCStartPositionReached = false
 	ml_mesh_mgr.OMCJumpStartedTimer = 0
 	ml_mesh_mgr.OMCThrottle = 0
+	ml_mesh_mgr.OMCStartDistance = 35
 end
 
 function ml_mesh_mgr.UnpackArgsForOMC( args )
