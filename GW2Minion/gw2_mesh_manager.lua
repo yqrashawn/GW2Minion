@@ -166,7 +166,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 					elseif(ml_global_information.Player_MovementState == GW2.MOVEMENTSTATE.Falling and dist2d < 40 and heightdiff > 60) then
 						d("We are above the omc end position")
 						ml_mesh_mgr.ResetOMC()
-						ml_global_information.Lasttick = ml_global_information.Lasttick + 100
+						ml_global_information.Lasttick = ml_global_information.Lasttick + math.max(100,2*heightdiff)
 					elseif(ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Jumping and ml_global_information.Player_MovementState ~= GW2.MOVEMENTSTATE.Falling and ml_mesh_mgr.OMCJumpStartedTimer ~= 0 and TimeSince(ml_mesh_mgr.OMCJumpStartedTimer) > 350) then
 						d("We landed already")
 						ml_mesh_mgr.ResetOMC()
