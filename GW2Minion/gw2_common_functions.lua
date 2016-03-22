@@ -299,12 +299,18 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 end
 -- Tries to get a "best target" to attack for assist mode (maxdistance limited)
 function gw2_common_functions.GetBestCharacterTargetForAssist()
+	-- Ignore yellow check.
+	local hostileCheck = gIgnoreYellowMob == "1" and ",hostile," or ""
 	-- Try to get Enemy with los in range first
-	local target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange)..",los")
+	local target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange).. hostileCheck .. ",los")
 	-- Try to get Enemy without los in range
-	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange)) end
+	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. hostileCheck) end
 	-- Try to get Enemy without los in range + 250
-	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange + 250)) end
+	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange + 250) .. hostileCheck) end
+	-- 
+	if (target == nil and gIgnoreYellowMob == "1") then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. "onmesh,nearest,los,maxlevel=15") end
+	-- 
+	if (target == nil and gIgnoreYellowMob == "1") then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. "onmesh,nearest,maxlevel=15") end
 
 	if ( target and target.id ) then
 		if ( target.distance < 1600 and target.los ) then
