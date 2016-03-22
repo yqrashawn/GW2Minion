@@ -300,7 +300,7 @@ end
 -- Tries to get a "best target" to attack for assist mode (maxdistance limited)
 function gw2_common_functions.GetBestCharacterTargetForAssist()
 	-- Ignore yellow check.
-	local hostileCheck = gIgnoreYellowMob == "1" and ",hostile," or ""
+	local hostileCheck = gIgnoreYellowMob == "1" and ",hostile" or ""
 	-- Try to get Enemy with los in range first
 	local target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange).. hostileCheck .. ",los")
 	-- Try to get Enemy without los in range
