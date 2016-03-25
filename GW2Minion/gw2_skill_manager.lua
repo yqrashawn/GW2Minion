@@ -938,11 +938,29 @@ function profilePrototype:DoCombatMovement(targetID)
 
 		-- We know where we can move, decide where to go.
 		if (movementDirection[forward] and movementDirection[backward]) then -- Can move forward and backward, choose.
-			if (currentMovement.forward) then -- We are moving forward already.
-				if (math.random(0,25) ~= 3) then -- Keep moving backwards gets higher chance.
-					movementDirection[forward] = false
-				else
+			
+			-- Range, try to stay back from target.
+			if (self.tmp.activeSkillRange > 300) then
+				movementDirection[forward] = false
+				if (tDistance >= self.tmp.activeSkillRange - 25) then
 					movementDirection[backward] = false
+				end
+			end
+			-- Melee, try to stay close to target.
+			if (self.tmp.activeSkillRange <= 300) then
+				movementDirection[backward] = false
+				if (tDistance <= self.tmp.activeSkillRange - 25) then
+					movementDirection[forward] = false
+				end
+			end
+			
+			--[[if (currentMovement.forward) then -- We are moving forward already.
+				if (math.random(0,25) ~= 3) then -- Keep moving backwards/forwards gets higher chance.
+					--movementDirection[forward] = false
+					movementDirection[backward] = false
+				else
+					--movementDirection[backward] = false
+					movementDirection[forward] = false
 				end
 			elseif (currentMovement.backward) then -- We are moving backward already.
 				if (math.random(0,25) ~= 3) then -- Keep moving backward gets higher chance.
@@ -950,17 +968,17 @@ function profilePrototype:DoCombatMovement(targetID)
 				else
 					movementDirection[backward] = false
 				end
-			end
+			end--]]
 		end
 		if (movementDirection[left] and movementDirection[right]) then -- Can move left and right, choose.
 			if (currentMovement.left) then -- We are moving left already.
-				if (math.random(0,35) ~= 3) then -- Keep moving left gets higher chance.
+				if (math.random(0,250) ~= 3) then -- Keep moving left gets higher chance.
 					movementDirection[right] = false
 				else
 					movementDirection[left] = false
 				end
 			elseif (currentMovement.right) then -- We are moving right already.
-				if (math.random(0,35) ~= 3) then -- Keep moving right gets higher chance.
+				if (math.random(0,250) ~= 3) then -- Keep moving right gets higher chance.
 					movementDirection[left] = false
 				else
 					movementDirection[right] = false

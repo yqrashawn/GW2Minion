@@ -148,7 +148,7 @@ function c_CombatOverWatchCheck:evaluate()
 	return false
 end
 function e_CombatOverWatchCheck:execute()
-	ml_task_hub:RootTask().completed = true
+	ml_task_hub:CurrentTask().completed = true
 	ml_log("e_CombatOverWatchCheck")
 end
 
