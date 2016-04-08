@@ -55,7 +55,7 @@ function gw2_omc_unstuck.HandleStuck(type,startPos,endPos)
 	end
 	gw2_omc_unstuck.lastPos = Player.pos
 	
-	if (gw2_common_functions.HasBuffs(Player, gw2_unstuck.slowConditions) ) then
+	if (gw2_common_functions.HasBuffs(Player, gw2_unstuck.immobilizeConditions) ) then
 		gw2_omc_unstuck.lastResult = false
 		return false
 	end
@@ -74,7 +74,7 @@ function gw2_omc_unstuck.HandleStuck(type,startPos,endPos)
 		
 		local startDistance = ml_mesh_mgr.OMCStartDistance - (gw2_omc_unstuck.targetOMC.stuckCount-10)
 		if(startDistance > 5) then
-			gw2_omc_unstuck.Log("Reducting OMC start distance")
+			gw2_omc_unstuck.Log("Reducing OMC start distance")
 			ml_mesh_mgr.OMCStartDistance = startDistance
 		end
 
@@ -155,6 +155,8 @@ function gw2_omc_unstuck.HandleStuck(type,startPos,endPos)
 			gw2_omc_unstuck.StopMovement()
 			ml_mesh_mgr.ResetOMC()
 			gw2_omc_unstuck.Reset()
+			gAutostartbot = "0"
+			Settings.GW2Minion.gAutostartbot = gAutostartbot		
 			gw2minion.ToggleBot("off")
 		end
 		gw2_omc_unstuck.lastStuckCount = gw2_omc_unstuck.targetOMC.stuckCount
