@@ -26,7 +26,7 @@ gw2_unstuck.tickTimer = 0
 gw2_unstuck.tickPosition = nil
 gw2_unstuck.tickStuckCount = 0
 gw2_unstuck.tickMoveDirection = nil
-gw2_unstuck.tickMinStuckCount = math.random(30000,42000)
+gw2_unstuck.tickMinStuckCount = math.random(300,420)
 
 function gw2_unstuck.HandleStuck(mode)
 -- MainThrottle
