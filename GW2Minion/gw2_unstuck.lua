@@ -553,7 +553,7 @@ function gw2_unstuck.OnUpdateHandler(Event, ticks)
 				end
 				gw2_unstuck.tickMoveDirection = nil
 				gw2_unstuck.tickStuckCount = 0
-				gw2_unstuck.tickMinStuckCount = math.random(30000,42000)
+				gw2_unstuck.tickMinStuckCount = math.random(300,420)
 			end
 		end
 		
