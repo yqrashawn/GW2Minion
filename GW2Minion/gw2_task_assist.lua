@@ -37,14 +37,14 @@ function gw2_task_assist:Process()
 		
 		if ( sMtargetmode == "None" ) then
 			local target = Player:GetTarget()
-			if ( target and target.alive and target.attackable ) then				
+			if ( target and (target.alive or target.downed) and target.attackable ) then				
 				gw2_skill_manager:Use(target.id)
 			end
 			
 		elseif ( sMtargetmode ~= "None" ) then 
 			
 			local target = gw2_common_functions.GetBestCharacterTargetForAssist()			
-			if ( target and target.alive and target.attackable ) then
+			if ( target and (target.alive or target.downed) and target.attackable ) then
 				gw2_skill_manager:Use(target.id)
 			end
 		end

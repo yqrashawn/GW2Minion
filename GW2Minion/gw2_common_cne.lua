@@ -78,7 +78,7 @@ function e_Downed:execute()
 
 	Player:StopMovement()
 
-	local target = gw2_common_functions.GetBestAggroTarget()
+	local target = gw2_common_functions.GetBestAggroTarget(true)
 
 	if ( ValidTable( target ) ) then
 		local currentTarget = Player:GetTarget()
