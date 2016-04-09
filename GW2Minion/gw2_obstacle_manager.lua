@@ -157,7 +157,7 @@ function gw2_obstacle_manager.AddAvoidanceArea(options)
 			
 			if(options.showAddMessage) then
 				if(type(options.duration) == "number") then
-					d("Avoidance area added with duration : "..math.ceil(obstacle.duration/1000).."s")
+					d("Avoidance area added with duration : "..math.ceil(options.duration/1000).."s")
 				else
 					d("Avoidance area added.")
 				end
@@ -243,7 +243,7 @@ function gw2_obstacle_manager.SetupAvoidanceAreas()
 	if(ValidTable(gw2_obstacle_manager.avoidanceareas)) then
 		local avoidance = {}
 		for _,obstacle in pairs(gw2_obstacle_manager.avoidanceareas) do
-			table.insert(avoidance, {x = obstacle.pos.x, y = obstacle.poz.y, z = obstacle.pos.z, r = obstacle.radius})
+			table.insert(avoidance, {x = obstacle.pos.x, y = obstacle.pos.y, z = obstacle.pos.z, r = obstacle.radius})
 		end
 		NavigationManager:SetAvoidanceAreas(avoidance)
 	end
