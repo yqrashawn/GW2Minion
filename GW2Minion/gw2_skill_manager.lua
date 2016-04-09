@@ -1771,7 +1771,7 @@ function skillPrototype:CanCast(targetID)
 			if (self.target.maxHP > 0 and target.health.percent < self.target.maxHP) then return false end
 			if (self.target.enemyNearCount > 0) then
 				local maxdistance = (self.target.enemyRangeMax == 0 and "" or "maxdistance=" .. self.target.enemyRangeMax .. ",")
-				if (TableSize(CharacterList("alive,attackable," .. maxdistance .. "distanceto=" .. target.id .. ",exclude=" .. target.id)) < self.target.enemyNearCount) then return false end
+				if (TableSize(CharacterList("attackable," .. maxdistance .. "distanceto=" .. target.id .. ",exclude=" .. target.id)) < self.target.enemyNearCount) then return false end
 			end
 			if (self.target.moving == "Moving" and target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving ) then return false end
 			if (self.target.moving == "NotMoving" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving ) then return false end

@@ -303,6 +303,9 @@ function gw2_common_functions.GetBestCharacterTargetForAssist()
 	local hostileCheck = gIgnoreYellowMob == "1" and ",hostile" or ""
 	-- Try to get Enemy with los in range first
 	local target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange).. hostileCheck .. ",los")
+	
+	-- Try to get downed enemy
+	if(target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange).. hostileCheck .. ",los", GW2.HEALTHSTATE.Downed) end	
 	-- Try to get Enemy without los in range
 	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. hostileCheck) end
 	-- Try to get Enemy without los in range + 250
@@ -327,13 +330,14 @@ function gw2_common_functions.GetBestCharacterTargetForAssist()
 	return nil
 end
 -- Tries to get a "best aggro target" to attack
-function gw2_common_functions.GetBestAggroTarget()
+function gw2_common_functions.GetBestAggroTarget(healthstate)
 	local range = ml_global_information.AttackRange
 	if ( range < 200 ) then range = 750 end -- extend search range a bit for melee chars
 	if ( range > 1000 ) then range = 1000 end -- limit search range a bit for ranged chars
-
+	
 	-- Try to get Aggro Enemy with los in range first
-	local target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,lowesthealth,los,maxdistance="..tostring(range))
+	local target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,lowesthealth,los,maxdistance="..tostring(range), healthstate)
+
 	-- Try to get Aggro Enemy
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
 
@@ -351,15 +355,21 @@ function gw2_common_functions.GetBestAggroTarget()
 	end
 	return nil
 end
-function gw2_common_functions.GetCharacterTargetExtended( filterstring )
+function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthstate )
     if ( filterstring ) then
-		filterstring = filterstring..",attackable,alive,noCritter,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters"))
+		filterstring = filterstring..",attackable,noCritter,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters"))
 	else
-		filterstring = "attackable,alive,noCritter,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters"))
+		filterstring = "attackable,noCritter,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters"))
+	end
+	
+	if(healthstate == nil or healthstate == GW2.HEALTHSTATE.Alive) then
+		filterstring = filterstring..",alive"
+	elseif(healthstate == GW2.HEALTHSTATE.Downed) then
+		filterstring = filterstring..",downed"
 	end
 
 	-- Only in AssistMode we want to allow these settings
-		if (sMmode == "Players Only") then filterstring = filterstring..",player" end
+	if (sMmode == "Players Only") then filterstring = filterstring..",player" end
 	if (gBotMode == GetString("assistMode") or gBotMode == GetString("taskspvp")) then
 		if (sMtargetmode == "LowestHealth") then filterstring = filterstring..",lowesthealth" end
 		if (sMtargetmode == "Closest") then filterstring = filterstring..",nearest" end
