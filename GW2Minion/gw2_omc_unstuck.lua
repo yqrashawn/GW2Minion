@@ -55,7 +55,7 @@ function gw2_omc_unstuck.HandleStuck(type,startPos,endPos)
 	end
 	gw2_omc_unstuck.lastPos = Player.pos
 	
-	if (gw2_common_functions.HasBuffs(Player, gw2_unstuck.immobilizeConditions) ) then
+	if (gw2_common_functions.HasBuffs(Player, gw2_unstuck.slowConditions) ) then
 		gw2_omc_unstuck.lastResult = false
 		return false
 	end
