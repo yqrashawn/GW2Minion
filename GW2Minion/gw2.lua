@@ -50,12 +50,6 @@ function gw2minion.ModuleInit()
 		sm:SetPos(120,0)
 		RegisterEventHandler("gw2minion.evToggleSkillManager", gw2_skill_manager.ToggleMenu)
 		
-		mw:NewButton(GetString("meshManager"),"ToggleMeshManager",GetString("advancedSettings"))
-		local mm = mw:NewButton("ME","ToggleMeshManager")
-		mm:Dock(0)
-		mm:SetSize(18,14)
-		mm:SetPos(140,0)		
-		
 		mw:NewButton(GetString("markerManager"),"ToggleMarkerMgr",GetString("advancedSettings"))
 		local mm = mw:NewButton("MA","ToggleMarkerMgr")
 		mm:Dock(0)
@@ -142,9 +136,7 @@ function gw2minion.ModuleInit()
 		gEnableLog = "0"
 		gPulseTime = Settings.GW2Minion.gPulseTime
 		
-	gw2minion.MainWindow.ChildWindows[ml_mesh_mgr.mainwindow.name] = ml_mesh_mgr.mainwindow.name
 	gw2minion.MainWindow.ChildWindows[gw2minion.DebugWindow.Name] = gw2minion.DebugWindow.Name
-	gw2minion.MainWindow.ChildWindows[ml_mesh_mgr.mainwindow] = ml_mesh_mgr.mainwindow
 	gw2minion.MainWindow.ChildWindows[ml_task_mgr.mainWindow.name] = ml_task_mgr.mainWindow.name
 	gw2minion.MainWindow.ChildWindows[ml_task_mgr.editWindow.name] = ml_task_mgr.editWindow.name
 	
@@ -166,19 +158,11 @@ function gw2minion.ModuleInit()
 	end
 	
 	-- setup meshmanager
-	if ( ml_mesh_mgr ) then
-
-
-		GUI_NewButton(ml_mesh_mgr.mainwindow.name,"CTRL+M:ChangeMeshRenderDepth","ChangeMeshDepth")
-		RegisterEventHandler("ChangeMeshDepth", function() RenderManager:ChangeMeshDepth() end)  
-		ml_mesh_mgr.parentWindow.Name = gw2minion.MainWindow.Name
+	if ( ml_mesh_mgr ) then 
 		ml_mesh_mgr.GetMapID = function () return ml_global_information.CurrentMapID end
 		ml_mesh_mgr.GetMapName = function () return ml_global_information.CurrentMapName end
 		ml_mesh_mgr.GetPlayerPos = function () return ml_global_information.Player_Position end
-		ml_mesh_mgr.averagegameunitsize = 50
 
-
-		ml_mesh_mgr.useQuaternion = true
 		-- Set worldnavigation data
 		ml_mesh_mgr.navData = persistence.load(GetAddonPath()..[[GW2Minion\]].."worldnav_data.lua")
 		if ( not ValidTable(ml_mesh_mgr.navData)) then 
@@ -299,7 +283,6 @@ function gw2minion.ModuleInit()
 		ml_marker_mgr.RefreshMarkerTypes()
 		ml_marker_mgr.RefreshMarkerNames()
 				
-		ml_mesh_mgr.InitMarkers() -- Update the Markers-group in the mesher UI
 	end
 	
 	-- Setup blacklists
@@ -354,9 +337,7 @@ function gw2minion.OnUpdate(event, tickcount )
 		gw2minion.SwitchUIForGameState()
 		
 		-- Call all OnUpdate()
-		ml_global_information.OnUpdate()			
-		-- Mesher OnUpdate
-		ml_mesh_mgr.OnUpdate( tickcount )
+		ml_global_information.OnUpdate()
 		-- BlackList OnUpdate		
 		ml_blacklist_mgr.UpdateEntryTime()
 		ml_blacklist_mgr.UpdateEntries(tickcount)

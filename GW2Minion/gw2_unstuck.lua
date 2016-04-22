@@ -13,7 +13,8 @@ gw2_unstuck.logoutTmr = 0
 gw2_unstuck.useWaypointTmr = 0
 gw2_unstuck.moveDirSet = {[GW2.MOVEMENTTYPE.Forward] = false, [GW2.MOVEMENTTYPE.Backward] = false, [GW2.MOVEMENTTYPE.Left] = false, [GW2.MOVEMENTTYPE.Right] = false,}
 gw2_unstuck.slowConditions = "721,722,727,791,872" --Cripple, Chill, Immobilize, Fear, Stun. -- Needs more! (all debufs that slow you down.)
-
+gw2_unstuck.AvoidanceAreas = {}
+gw2_unstuck.Obstacles = {}
 
 function gw2_unstuck.HandleStuck(mode)
 -- MainThrottle
@@ -191,10 +192,10 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 							if(gw2_unstuck.lastGadgetID == target.id) then
 								d("Seems like we cant destroy this gadget")
 								gw2_unstuck.stuckthreshold = 170
-								table.insert(ml_mesh_mgr.currentMesh.AvoidanceAreas, { x=target.pos.x, y=target.pos.y, z=target.pos.z, r=(target.radius or 50) })
+								table.insert(gw2_unstuck.AvoidanceAreas, { x=target.pos.x, y=target.pos.y, z=target.pos.z, r=(target.radius or 50) })
 
 								d("Adding AvoidanceArea ...")
-								NavigationManager:SetAvoidanceAreas(ml_mesh_mgr.currentMesh.AvoidanceAreas)
+								NavigationManager:SetAvoidanceAreas(gw2_unstuck.AvoidanceAreas)
 							else
 								if(target.interactable and target.isInInteractRange and gw2_unstuck.stuckCount == 5) then
 									d("Path-Blocking Object found, trying to interact with it...")
@@ -243,12 +244,12 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 				else
 					d("Jumping didnt help, setting avoidance area and walking somewhere else a bit")
 					gw2_unstuck.stuckthreshold = 170
-					table.insert(ml_mesh_mgr.currentMesh.AvoidanceAreas, { x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z, r=50 })
+					table.insert(gw2_unstuck.AvoidanceAreas, { x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z, r=50 })
 					if ( gw2_unstuck.stuckPosition ~= nil ) then
-						table.insert(ml_mesh_mgr.currentMesh.AvoidanceAreas, { x=gw2_unstuck.stuckPosition.x, y=gw2_unstuck.stuckPosition.y, z=gw2_unstuck.stuckPosition.z, r=50 })
+						table.insert(gw2_unstuck.AvoidanceAreas, { x=gw2_unstuck.stuckPosition.x, y=gw2_unstuck.stuckPosition.y, z=gw2_unstuck.stuckPosition.z, r=50 })
 					end
 					d("Adding AvoidanceArea ...")
-					NavigationManager:SetAvoidanceAreas(ml_mesh_mgr.currentMesh.AvoidanceAreas)
+					NavigationManager:SetAvoidanceAreas(gw2_unstuck.AvoidanceAreas)
 					Player:StopMovement()
 					Player:SetMovement(GW2.MOVEMENTTYPE.Backward)
 					gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] = true
@@ -268,16 +269,16 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 			elseif ( gw2_unstuck.stuckCount < 25 ) then
 			
 				-- Check if an obstacle at this pos exists already 
-				for _,o in pairs(ml_mesh_mgr.currentMesh.Obstacles) do 
+				for _,o in pairs(gw2_unstuck.Obstacles) do 
 					if ( Distance3D(o.x,o.y,o.z,ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z) < 50 ) then
 						d("Obstacle exists already at that position")
 						return
 					end
 				end
 				
-				table.insert(ml_mesh_mgr.currentMesh.Obstacles, { x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z, r=120, t=ml_global_information.Now })
+				table.insert(gw2_unstuck.Obstacles, { x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z, r=120, t=ml_global_information.Now })
 				d("Adding new Obstacle for navigating around the stuck")
-				NavigationManager:AddNavObstacle(ml_mesh_mgr.currentMesh.Obstacles)
+				NavigationManager:AddNavObstacle(gw2_unstuck.Obstacles)
 				Player:StopMovement()
 				Player:SetMovement(GW2.MOVEMENTTYPE.Backward)
 				gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] = true

@@ -86,15 +86,15 @@ function gw2_omc_unstuck.HandleStuck(type,startPos,endPos)
 			gw2_omc_unstuck.targetOMC.jumpCount = gw2_omc_unstuck.targetOMC.jumpCount + 1
 		elseif(gw2_omc_unstuck.targetOMC.avoidanceAreaAdded == false and (gw2_omc_unstuck.targetOMC.stuckCount == gw2_omc_unstuck.STUCKSTATES.AddAvoidance or gw2_omc_unstuck.targetOMC.resetCount == 2)) then
 			gw2_omc_unstuck.StopMovement()
-			table.insert(ml_mesh_mgr.currentMesh.AvoidanceAreas, { x=gw2_omc_unstuck.targetOMC.startPos.x, y=gw2_omc_unstuck.targetOMC.startPos.y, z=gw2_omc_unstuck.targetOMC.startPos.z, r=50 })
+			table.insert(gw2_unstuck.AvoidanceAreas, { x=gw2_omc_unstuck.targetOMC.startPos.x, y=gw2_omc_unstuck.targetOMC.startPos.y, z=gw2_omc_unstuck.targetOMC.startPos.z, r=50 })
 			gw2_omc_unstuck.Log("Setting avoidance area on OMC start position.")
-			NavigationManager:SetAvoidanceAreas(ml_mesh_mgr.currentMesh.AvoidanceAreas)
+			NavigationManager:SetAvoidanceAreas(gw2_unstuck.AvoidanceAreas)
 			gw2_omc_unstuck.targetOMC.avoidanceAreaAdded = true
 		elseif(gw2_omc_unstuck.targetOMC.obstacleAdded == false and gw2_omc_unstuck.targetOMC.stuckCount == gw2_omc_unstuck.STUCKSTATES.AddObstacle) then
 			gw2_omc_unstuck.StopMovement()
-			table.insert(ml_mesh_mgr.currentMesh.Obstacles, { x=gw2_omc_unstuck.targetOMC.startPos.x, y=gw2_omc_unstuck.targetOMC.startPos.y, z=gw2_omc_unstuck.targetOMC.startPos.z, r=150, t=ml_global_information.Now })
+			table.insert(gw2_unstuck.Obstacles, { x=gw2_omc_unstuck.targetOMC.startPos.x, y=gw2_omc_unstuck.targetOMC.startPos.y, z=gw2_omc_unstuck.targetOMC.startPos.z, r=150, t=ml_global_information.Now })
 			gw2_omc_unstuck.Log("Adding obstacle on OMC start position.")
-			NavigationManager:AddNavObstacles(ml_mesh_mgr.currentMesh.Obstacles)
+			NavigationManager:AddNavObstacles(gw2_unstuck.Obstacles)
 			gw2_omc_unstuck.targetOMC.obstacleAdded = true
 		elseif(gw2_omc_unstuck.targetOMC.stuckCount < gw2_omc_unstuck.STUCKSTATES.MoveToMesh) then
 			gw2_omc_unstuck.targetOMC.jumpCount = 0
