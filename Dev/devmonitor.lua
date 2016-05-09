@@ -527,7 +527,7 @@ function Dev.LoadModule()
 		RegisterEventHandler("Dev.DReset", Dev.Func)
 		GUI_NewField("Dev","CanClaimReward","DunClaim","DungeonInfo")
 		GUI_NewButton("Dev","ClaimReward","Dev.DClaim","DungeonInfo")
-		RegisterEventHandler("Dev.DReset", Dev.Func)
+		RegisterEventHandler("Dev.DClaim", Dev.Func)
 		
 		-- QuestManager
 		GUI_NewField("Dev","StoryName","qmstoryname","QuestManager")
