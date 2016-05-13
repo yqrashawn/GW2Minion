@@ -3495,6 +3495,210 @@ local obj1 = {
 			["target"] = {
 			};
 		};
+		[88] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 10315;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Stab";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[89] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 10318;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Feigned Surge";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+			};
+			["target"] = {
+			};
+		};
+		[90] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 10251;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Illusionary Mariner";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 7;
+			};
+			["target"] = {
+			};
+		};
+		[91] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 10325;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Slipstream";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[92] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 10255;
+				["maxRange"] = 600;
+				["minRange"] = 0;
+				["name"] = "Vortex";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[93] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12432;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Swipe";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
+		[94] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12434;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Heavy Swipe";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 6;
+			};
+			["target"] = {
+			};
+		};
+		[95] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12436;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Maul";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 7;
+			};
+			["target"] = {
+			};
+		};
+		[96] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12435;
+				["maxRange"] = 1200;
+				["minRange"] = 0;
+				["name"] = "Roar";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[97] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12380;
+				["maxRange"] = 1600;
+				["minRange"] = 0;
+				["name"] = "Charge";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 9;
+			};
+			["target"] = {
+			};
+		};
+		[98] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 10700;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Leave Transform";
+				["radius"] = 0;
+				["setRange"] = "0";
+				["slot"] = 4;
+			};
+			["target"] = {
+			};
+		};
+		[99] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = "0";
+				["id"] = 12433;
+				["maxRange"] = 150;
+				["minRange"] = 0;
+				["name"] = "Brutal Swipe";
+				["radius"] = 0;
+				["setRange"] = "1";
+				["slot"] = 5;
+			};
+			["target"] = {
+			};
+		};
 	};
 	["switchSettings"] = {
 		["switchOnCooldown"] = "10";
