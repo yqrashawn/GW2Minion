@@ -128,11 +128,8 @@ function gw2_radar.ToggleMenu()
         GUI_WindowVisible(gw2_radar.MainWindow.Name,false)	
         gw2_radar.visible = false
     else
-		local wnd = GUI_GetWindowInfo(ml_mesh_mgr.parentWindow.Name)
-        if (wnd) then
-			GUI_MoveWindow( gw2_radar.MainWindow.Name, wnd.x,wnd.y+wnd.height)
-			GUI_WindowVisible(gw2_radar.MainWindow.Name,true)	
-		end
+        GUI_MoveWindow( gw2_radar.MainWindow.Name, 50,50)
+		GUI_WindowVisible(gw2_radar.MainWindow.Name,true)		
 		gw2_radar.visible = true
     end
 end
