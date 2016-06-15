@@ -3211,7 +3211,7 @@ local obj1 = {
 		["switchOnCooldown"] = 0;
 		["switchOnRange"] = "0";
 		["switchRandom"] = "1";
-		["switchWeapons"] = "0";
+		["switchWeapons"] = "1";
 	};
 }
 return obj1
