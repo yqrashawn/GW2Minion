@@ -1,0 +1,318 @@
+local tbl = 
+{
+	class = "RootTree",
+	nodes = 
+	{
+		
+		{
+			class = "Sequence",
+			nodes = 
+			{
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "Character Screen Handling",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Guest Server ID: '..tostring(Settings.GW2Minion.guestserver))\nGUI:Text(\"Guest Server Name: \"..ml_global_information.GuestServerList[Settings.GW2Minion.guestserver])\nGUI:Text('Autologin Enabled: '..tostring(Settings.GW2Minion.autostartbot))\nGUI:Text('GameState: '..tostring(ml_global_information_GameState))\nif (self.lastrun) then\n\tGUI:Text('Lastrun: '..tostring(TimeSince(self.lastrun)))\nend\n\n",
+						runcode = "-- In CHaracter screen\nif ( ml_global_information_GameState == 4 ) then\n\n\tif ( not self.lastrun or TimeSince(self.lastrun) > 3000 ) then \n\t\td(\"B\")\n\t\tself.lastrun = ml_global_information.Now\n\n\t\tif ( Settings.GW2Minion.guestserver ~= 0 ) then\t\n\t\t\td(\"Selecting Guestserver: \"..ml_global_information.GuestServerList[Settings.GW2Minion.guestserver] ..\" ID: \".. tostring(Settings.GW2Minion.guestserver))\n\t\t\tSetServer(Settings.GW2Minion.guestserver)\n\t\tend\n\t\tif ( Settings.GW2Minion.autostartbot == true ) then\n\t\t\td(\"Pressing PLAY\")\n\t\t\tPressKey(\"RETURN\")\n\t\tend\n\tend\n\tself:running()\nelse\n\tself:success()\nend\n",
+						startcode = "",
+						xposoffset = 0,
+					},
+				},
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "Update Global (often used) Variables to reduce repetitive CPU eating function calls.",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+						runcode = "-- INGAME\nif ( ml_global_information_GameState == 16 ) then\n\n\tml_global_information.Player_Name = Player.name or \"\"\n\tml_global_information.Player_Health = Player.health or { current = 0, max = 0, percent = 0 }\n\tml_global_information.Player_Profession = Player.profession or 0\n\tml_global_information.Player_ProfessionName = table_invert(GW2.CHARCLASS)[ml_global_information.Player_Profession] or \"NoClass\"\n\tml_global_information.Player_Power = Player.power or 0\n\tml_global_information.Player_Endurance = Player.endurance or 0\n\tml_global_information.Player_InCombat = Player.inCombat or false\t\t\n\tml_global_information.Player_Position = Player.pos\n\tml_global_information.Player_Level = Player.level\n\tml_global_information.Player_OnMesh = Player.onmesh or false\n\tml_global_information.Player_Alive = Player.alive or false\n\tml_global_information.Player_IsMoving = Player:IsMoving() or false\n\tml_global_information.Player_CanMove = Player:CanMove() or false\n\tml_global_information.Player_MovementDirections = Player:GetMovement() or { forward=false, backward=false, left=false, right=false }\n\tml_global_information.Player_Inventory_SlotsFree = Inventory.freeSlotCount or 0\n\tml_global_information.Player_SwimState = Player.swimming or 0\n\tml_global_information.Player_MovementState = Player:GetMovementState() or 1\n\tml_global_information.Player_Target = Player:GetTarget() or {}\t\t\n\tml_global_information.Player_Party = Player:GetParty() or nil\n\t\n\tml_global_information.CurrentMapID = Player:GetLocalMapID() or 0\n\tif ( gw2_datamanager and ml_global_information.CurrentMapID ~= 0) then  \n\t\tml_global_information.CurrentMapName = gw2_datamanager.GetMapName( ml_global_information.CurrentMapID ) \n\telse\n\t\tml_global_information.CurrentMapName = \"\"\n\tend\n\t\n\tml_global_information.AttackRange = gw2_skill_manager.GetMaxAttackRange()\n\tml_global_information.Player_CurrentWeaponSet = Player:GetCurrentWeaponSet() or 0\t-- 0 Aqua1, 1 Aqua2, 2 Engikit, 3 Necro Lich Form/ranger astralform,  4 Weapon1, 5 Weapon2\n\tml_global_information.Player_TransformID = Player:GetTransformID() or 0 -- 1-4 attunement, 5 deathshroud, 9 rangernormal, 10 rangerastralform\n\n\tself:success()\nelse\n\tself:fail()\nend",
+						startcode = "",
+						xposoffset = 0,
+					},
+				},
+				
+				{
+					class = "ActiveSelector",
+					nodes = 
+					{
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "Player Downed",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "if ( Player.healthstate == GW2.HEALTHSTATE.Downed ) then\n\td(\"TODO: DOWNED HANDLING\")\n\tself:success()\nelse\n\tself:fail()\nend",
+								startcode = "",
+								xposoffset = -0.1,
+							},
+						},
+						
+						{
+							class = "AlwaysFail",
+							nodes = 
+							{
+								
+								{
+									class = "ActiveSelector",
+									nodes = 
+									{
+										
+										{
+											class = "Throttle",
+											nodes = 
+											{
+												
+												{
+													class = "Action",
+													nodes = 
+													{
+													},
+													variables = 
+													{
+														finishcode = "",
+														info = "Deposit Items",
+														monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+														runcode = "if ( Settings.GW2Minion.deposititems == true and ml_global_information.Player_Inventory_SlotsFree <= 20) then\n\tInventory:DepositCollectables()\n\tself:success()\nelse\n\tself:fail()\nend\n",
+														startcode = "",
+														xposoffset = 0,
+													},
+												},
+											},
+											variables = 
+											{
+												duration = 5000,
+												info = "DepositItems every 5 Seconds",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
+												xposoffset = 0,
+											},
+										},
+										
+										{
+											class = "Throttle",
+											nodes = 
+											{
+												
+												{
+													class = "Action",
+													nodes = 
+													{
+													},
+													variables = 
+													{
+														finishcode = "",
+														info = "AOE Loot",
+														monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+														runcode = "if ( ml_global_information.Player_Inventory_SlotsFree > 0 ) then\n\tPlayer:AoELoot()\n\tself:success()\nelse\n\tself:fail()\nend\n",
+														startcode = "",
+														xposoffset = 0,
+													},
+												},
+											},
+											variables = 
+											{
+												duration = 1050,
+												info = "AOE Loot every 1050 ms",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
+												xposoffset = 0,
+											},
+										},
+										
+										{
+											class = "Throttle",
+											nodes = 
+											{
+												
+												{
+													class = "Action",
+													nodes = 
+													{
+													},
+													variables = 
+													{
+														finishcode = "",
+														info = "Salvage every ~1500 ms",
+														monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+														runcode = "if ( context.Player_InCombat == false ) then\n\tgw2_salvage_manager.salvage()\n\tself:success()\nelse\n\tself:fail()\nend\n",
+														startcode = "",
+														xposoffset = 0,
+													},
+												},
+											},
+											variables = 
+											{
+												duration = 1500,
+												info = "Salvage every ~1500 ms",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
+												xposoffset = 0,
+											},
+										},
+										
+										{
+											class = "Throttle",
+											nodes = 
+											{
+												
+												{
+													class = "Action",
+													nodes = 
+													{
+													},
+													variables = 
+													{
+														finishcode = "",
+														info = "Swim to surface if we are not on mesh",
+														monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+														runcode = "if ( ml_global_information.Player_SwimState == GW2.SWIMSTATE.Diving and ml_global_information.Player_OnMesh == false) then\n\tml_global_information.swimUp = true\n\tPlayer:SetMovement(GW2.MOVEMENTTYPE.SwimUp)\nelseif( ml_global_information.swimUp == true ) then\n\tml_global_information.swimUp = false\n\tPlayer:UnSetMovement(GW2.MOVEMENTTYPE.SwimUp)\nend\t\t\n\t\t\n--Dont swim on the surface where we cannot fight\nif ( ml_global_information.Player_SwimState == GW2.SWIMSTATE.Swimming and ml_global_information.Player_OnMesh and ml_global_information.Player_InCombat) then\n\tml_global_information.swimDown = true\n\tPlayer:SetMovement(GW2.MOVEMENTTYPE.SwimDown)\nelseif( ml_global_information.swimDown == true ) then\n\tml_global_information.swimDown = false\n\tPlayer:UnSetMovement(GW2.MOVEMENTTYPE.SwimDown)\nend\nself:fail()",
+														startcode = "",
+														xposoffset = 0,
+													},
+												},
+											},
+											variables = 
+											{
+												duration = 1000,
+												info = "Swim to surface if we are not on mesh",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
+												xposoffset = 0,
+											},
+										},
+										
+										{
+											class = "Throttle",
+											nodes = 
+											{
+												
+												{
+													class = "Action",
+													nodes = 
+													{
+													},
+													variables = 
+													{
+														finishcode = "",
+														info = "Claim Rewards every 15 second",
+														monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+														runcode = "if ( ml_global_information.Player_Inventory_SlotsFree > 2 and Player:CanClaimReward()) then\n\tPlayer:ClaimReward()\n\tself:success()\nelse\n\tself:fail()\nend",
+														startcode = "",
+														xposoffset = 0,
+													},
+												},
+											},
+											variables = 
+											{
+												duration = 15000,
+												info = "Claim Rewards every 15 second",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
+												xposoffset = 0,
+											},
+										},
+										
+										{
+											class = "Throttle",
+											nodes = 
+											{
+												
+												{
+													class = "Action",
+													nodes = 
+													{
+													},
+													variables = 
+													{
+														finishcode = "",
+														info = "Equip Gathering Tools- Check every 10 seconds",
+														monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+														runcode = "if ( c_equipGatheringTools:evaluate() == true ) then\n\te_equipGatheringTools:execute()\n\tself:success()\nelse\n\tself:fail()\nend\n",
+														startcode = "",
+														xposoffset = 0,
+													},
+												},
+											},
+											variables = 
+											{
+												duration = 10000,
+												info = "Equip Gathering Tools- Check every 10 seconds",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
+												xposoffset = -0.2,
+											},
+										},
+									},
+									variables = 
+									{
+										info = "General (instant) Tasks",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+										xposoffset = 0,
+									},
+								},
+							},
+							variables = 
+							{
+								info = "General (instant) Tasks, which don't interfear with the bot.",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								xposoffset = 0,
+							},
+						},
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "d(\"DOSHTI\") \nself:success()",
+								startcode = "",
+								xposoffset = 0.7,
+							},
+						},
+					},
+					variables = 
+					{
+						expanded = true,
+						info = "",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+						xposoffset = 0.0444444444444,
+					},
+				},
+			},
+			variables = 
+			{
+				expanded = true,
+				failThreshold = 1,
+				info = "GameState Switch",
+				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.activeTask or 'None')) GUI:Text('Succeeded Tasks: '..tostring(self.succeededTasks)) GUI:Text('Failed Tasks: '..tostring(self.failedTasks)) GUI:Text('Running Tasks: '..tostring(self.ranTasks))",
+				successThreshold = 1,
+				xposoffset = 0,
+			},
+		},
+	},
+	variables = 
+	{
+		info = "",
+		menucode = "if ( not ml_global_information ) then ml_global_information = { } end\nml_global_information_GameState = GetGameState()\n\n-- Character Select\n\tif ( not Settings.GW2Minion.autostartbot) then Settings.GW2Minion.autostartbot = false end\n\tif ( not Settings.GW2Minion.guestserver) then Settings.GW2Minion.guestserver = 0 end\n\n\n-- Ingame \n\tif ( not Settings.GW2Minion.deposititems) then Settings.GW2Minion.deposititems = false end\n\n\n-- Cutscene \n\tif ( not Settings.GW2Minion.skipcutscene) then Settings.GW2Minion.skipcutscene = false end\n\n\nif (GUI:TreeNode(GetStringML(\"settings\"))) then\n\n\t-- Character Select\n\tif (ml_global_information_GameState == 4) then GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Always) else GUI:SetNextTreeNodeOpened(false,GUI.SetCond_Appearing) end\n\tif (GUI:TreeNode(GetStringML(\"CharacterSelect\"))) then\n\t\tSettings.GW2Minion.autostartbot = GUI:Checkbox(GetString(\"autoStartBot\"),Settings.GW2Minion.autostartbot)\n\t\tGUI:PushItemWidth(150)\n\t\tSettings.GW2Minion.guestserver = GUI:Combo(GetString(\"guestserver\"),Settings.GW2Minion.guestserver,ml_global_information.GuestServerList)\n\t\tGUI:PopItemWidth()\n\t\tGUI:TreePop()\n\tend\n\n\t-- Ingame\n\tif (ml_global_information_GameState == 16) then GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing) end\n\tif (GUI:TreeNode(GetStringML(\"Ingame\"))) then\n\t\tSettings.GW2Minion.deposititems = GUI:Checkbox(GetString(\"depositItems\"),Settings.GW2Minion.deposititems)\n\t\tGUI:TreePop()\n\tend\n\n\t-- Cutscene\n\tif (ml_global_information_GameState == 14 or ml_global_information_GameState == 10) then GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing) end\n\tif (GUI:TreeNode(GetStringML(\"Cutscene\"))) then\n\t\tSettings.GW2Minion.skipcutscene = GUI:Checkbox(GetString(\"skipcutscene\"),Settings.GW2Minion.skipcutscene)\n\t\tGUI:TreePop()\n\tend\n\tGUI:TreePop()\nend",
+		monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Game State: '..tostring(ml_global_information_GameState))",
+		xposoffset = 0,
+	},
+}
+
+
+
+return tbl

@@ -668,5 +668,109 @@ RegisterEventHandler("GUI.Update",gw2minion.GUIVarUpdate)
 RegisterEventHandler("Gameloop.Update",gw2minion.OnUpdate)
 RegisterEventHandler("Gameloop.CharSelectUpdate",gw2minion.OnUpdateCharSelect)
 RegisterEventHandler("Gameloop.CutsceneUpdate",gw2minion.OnUpdateCutscene)
-
 RegisterEventHandler( "GW2MINION.toggle", ml_task_hub.ToggleRun )
+
+
+
+
+
+
+
+
+
+-- NEW GW2MINION
+function gw2minion.Init()
+	-- Setup GuestServerList
+	gw2minion.RefreshGuestServers()
+
+end
+RegisterEventHandler("Module.Initalize",gw2minion.Init)
+
+
+function gw2minion.RefreshGuestServers()
+	ml_global_information.GuestServerList = { [0] = "None" }
+	local homeserverid = GetHomeServer()	
+	-- US Servers
+	if ( homeserverid > 1000 and homeserverid < 2000 ) then
+		ml_global_information.GuestServerList = {
+			[0]="None",
+			[1010]="Ehmry Bay",
+			[1018]="Northern Shiverpeaks",
+			[1002]="Borlis Pass",
+			[1008]="Jade Quarry",
+			[1005]="Maguuma",
+			[1015]="Isle of Janthir",
+			[1009]="Fort Aspenwood",
+			[1013]="Sanctum of Rall",
+			[1007]="Gate of Madness",
+			[1006]="Sorrow's Furnace",
+			[1019]="Blackgate",
+			[1021]="Dragonbrand",
+			[1012]="Darkhaven",
+			[1003]="Yak's Bend",
+			[1014]="Crystal Desert",
+			[1001]="Anvil Rock",
+			[1011]="Stormbluff Isle",
+			[1020]="Ferguson's Crossing",
+			[1016]="Sea of Sorrows",
+			[1022]="Kaineng",
+			[1023]="Devona's Rest",
+			[1017]="Tarnished Coast",
+			[1024]="Eredon Terrace",
+			[1004]="Henge of Denravi",
+		}	
+	elseif ( homeserverid > 2000 and homeserverid < 3000 ) then
+		-- EU Servers
+		ml_global_information.GuestServerList = {
+			[0]="None",
+			[2012]="Piken Square",
+			[2003]="Gandara",
+			[2007]="Far Shiverpeaks",
+			[2204]="Abaddon's Mouth [DE]",
+			[2201]="Kodash [DE]",
+			[2010]="Seafarer's Rest",
+			[2301]="Baruch Bay [SP]",
+			[2205]="Drakkar Lake [DE]",
+			[2002]="Desolation",
+			[2202]="Riverside [DE]",
+			[2008]="Whiteside Ridge",
+			[2203]="Elona Reach [DE]",
+			[2206]="Miller's Sound [DE]",
+			[2004]="Blacktide",
+			[2207]="Dzagonur [DE]",
+			[2105]="Arborstone [FR]",
+			[2101]="Jade Sea [FR]",
+			[2013]="Aurora Glade",
+			[2103]="Augury Rock [FR]",
+			[2102]="Fort Ranik [FR]",
+			[2104]="Vizunah Square [FR]",
+			[2009]="Ruins of Surmia",
+			[2014]="Gunnar's Hold",
+			[2005]="Ring of Fire",
+			[2006]="Underworld",
+			[2011]="Vabbi",
+			[2001]="Fissure of Woe",
+		}
+	end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
