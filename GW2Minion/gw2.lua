@@ -678,13 +678,51 @@ RegisterEventHandler( "GW2MINION.toggle", ml_task_hub.ToggleRun )
 
 
 
+
+
+
+
+
 -- NEW GW2MINION
 function gw2minion.Init()
 	-- Setup GuestServerList
 	gw2minion.RefreshGuestServers()
+	
+	
 
 end
 RegisterEventHandler("Module.Initalize",gw2minion.Init)
+
+function gw2minion.DrawCall(event, ticks )
+	
+	if ( not gw2minion.mainbtreeinstance ) then
+		if ( FolderExists(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior")) then
+			if ( FileExists(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior\\\GW2_Main.ct")) then 
+			
+				gw2minion.mainbtreeinstance = ml_bt_mgr.LoadBehaviorTree(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior", "GW2_Main.ct")
+				
+				-- REMOVE THIS FROM THE LIVE ADDONS OR ELSE EVERYONE CAN JUST DUMP YOUR BEHAVIOR TREE! THIS IS JUST SO YOU CAN EDIT YOUR OWN BTREE IN THE EDITOR "live"
+				local btentry = {
+					name = "GW2_Main",
+					filename = "GW2_Main.ct",
+					filepath = GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior",
+					liveinstance = gw2minion.mainbtreeinstance				
+				}
+				ml_bt_mgr.SetLiveInstance(btentry)
+			else
+				ml_error("Invalid File: "..GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior\\\GW2_Main.ct")
+			end
+		else
+			ml_error("Invalid Folder: "..GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior")
+		end
+		
+	else	
+		if ( not gw2minion.mainbtreeinstance.isloadedineditor ) then 
+			gw2minion.mainbtreeinstance.context = gw2minion.mainbtreeinstance:run(gw2minion.mainbtreeinstance.context or {} )
+		end
+	end
+end
+RegisterEventHandler("Gameloop.Draw", gw2minion.DrawCall)
 
 
 function gw2minion.RefreshGuestServers()
@@ -754,6 +792,20 @@ function gw2minion.RefreshGuestServers()
 	end
 end
 
+-- Stops the Bot
+function ml_global_information.Stop()
+    Player:StopMovement()
+	c_movetorandom.randompoint = nil
+	c_movetorandom.randompointreached = false
+	ml_mesh_mgr.ResetOMC()
+	ml_mesh_mgr.OMCStartPositionReached = false
+	gw2_unstuck.Reset()
+end
+
+-- Waits xxx seconds before running the next pulse
+function ml_global_information.Wait( mseconds )
+	ml_bt_mgr.lasttick = ml_bt_mgr.lasttick + mseconds
+end
 
 
 

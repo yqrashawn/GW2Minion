@@ -789,7 +789,7 @@ end
 
 -- Use skill profile.
 function gw2_skill_manager:Use(targetID)
-	if (gBotRunning == "1" and self:ProfileReady()) then
+	if (gBotRunning == "1" or (ml_bt_mgr and ml_bt_mgr.running) and self:ProfileReady()) then
 		targetID = tonumber(targetID)
 		if (self.status.attacking and targetID == nil) then self.status.attacking = false return end -- prevent calling task by on-update loop if already used by other task (combat for example).
 		-- use here
@@ -993,7 +993,7 @@ function profilePrototype:DoCombatMovement(targetID)
 			end
 		end
 		self.tmp.combatMovement.combat = true
-	elseif (ValidTable(target) and target.distance > self.tmp.activeSkillRange and noStopMovementBuffs and (gBotMode ~= GetString("assistMode") or gMoveIntoCombatRange == "1") and not gw2_unstuck.HandleStuck("combat") and ml_global_information.Player_OnMesh and ml_global_information.Player_Alive) then
+	elseif (ValidTable(target) and target.distance > self.tmp.activeSkillRange and noStopMovementBuffs and (gBotMode ~= GetString("assistMode") or Settings.GW2Minion.moveintoombatrange == true) and not gw2_unstuck.HandleStuck("combat") and ml_global_information.Player_OnMesh and ml_global_information.Player_Alive) then
 		local tPos = target.pos
 		if (self.tmp.combatMovement.combat) then Player:StopMovement() self.tmp.combatMovement.combat = false end
 		Player:MoveTo(tPos.x,tPos.y,tPos.z,self.tmp.activeSkillRange/2,false,false,true)
