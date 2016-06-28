@@ -55,6 +55,7 @@ local profilePrototype = {
 		},
 		targetBlacklistBuffs = "762,785",
 		path = gw2_skill_manager.paths[1],
+		target = {targetID = nil, timestamp = ml_global_information.Now,},
 	},
 }
 local skillPrototype = {
@@ -790,12 +791,7 @@ end
 -- Use skill profile.
 function gw2_skill_manager:Use(targetID)
 	if (gBotRunning == "1" or (ml_bt_mgr and ml_bt_mgr.running) and self:ProfileReady()) then
-		targetID = tonumber(targetID)
-		if (self.status.attacking and targetID == nil) then self.status.attacking = false return end -- prevent calling task by on-update loop if already used by other task (combat for example).
-		-- use here
 		self.profile:Use(targetID)
-		--^^^^^^^^^
-		self.status.attacking = targetID ~= nil
 	end
 end
 
@@ -853,17 +849,22 @@ end
 -- Use profile.
 function profilePrototype:Use(targetID)
 	self.tmp.activeSkillRange = 154
-	Player:SetTarget(targetID)
-	self:Swap(targetID)
-	self:CheckTargetBuffs(targetID)
+	if (tonumber(targetID) ~= nil) then -- refresh targetid and timestamp.
+		Player:SetTarget(targetID)
+		self.tmp.target = {targetID = targetID, timestamp = (ml_global_information.Now + 500),}
+	elseif (ml_global_information.Now - self.tmp.target.timestamp >= 0) then -- remove expired target.
+		self.tmp.target = {targetID = nil, timestamp = ml_global_information.Now,}
+	end
+	self:Swap(self.tmp.target.targetID)
+	self:CheckTargetBuffs(self.tmp.target.targetID)
 	for k,skill in ipairs(self.skills) do
-		if (skill:CanCast(targetID)) then
-			self:CheckTargetHealth(targetID)
-			skill:Cast(targetID)
+		if (skill:CanCast(self.tmp.target.targetID)) then
+			self:CheckTargetHealth(self.tmp.target.targetID)
+			skill:Cast(self.tmp.target.targetID)
 			break
 		end
 	end
-	self:DoCombatMovement(targetID)
+	self:DoCombatMovement(self.tmp.target.targetID)
 	return true
 end
 
