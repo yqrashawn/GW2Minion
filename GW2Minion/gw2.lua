@@ -700,6 +700,8 @@ function gw2minion.DrawCall(event, ticks )
 			if ( FileExists(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior\\\GW2_Main.ct")) then 
 			
 				gw2minion.mainbtreeinstance = ml_bt_mgr.LoadBehaviorTree(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior", "GW2_Main.ct")
+				 -- getting the context for the BTree
+				gw2minion.mainbtreeinstance.context = gw2minion.mainbtreeinstance:start() 
 				
 				-- REMOVE THIS FROM THE LIVE ADDONS OR ELSE EVERYONE CAN JUST DUMP YOUR BEHAVIOR TREE! THIS IS JUST SO YOU CAN EDIT YOUR OWN BTREE IN THE EDITOR "live"
 				local btentry = {
@@ -708,6 +710,7 @@ function gw2minion.DrawCall(event, ticks )
 					filepath = GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior",
 					liveinstance = gw2minion.mainbtreeinstance				
 				}
+				
 				ml_bt_mgr.SetLiveInstance(btentry)
 			else
 				ml_error("Invalid File: "..GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior\\\GW2_Main.ct")
@@ -718,7 +721,7 @@ function gw2minion.DrawCall(event, ticks )
 		
 	else	
 		if ( not gw2minion.mainbtreeinstance.isloadedineditor ) then 
-			gw2minion.mainbtreeinstance.context = gw2minion.mainbtreeinstance:run(gw2minion.mainbtreeinstance.context or {} )
+			gw2minion.mainbtreeinstance:run()
 		end
 	end
 end
