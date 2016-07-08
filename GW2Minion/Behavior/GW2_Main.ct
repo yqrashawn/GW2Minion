@@ -54,7 +54,7 @@ local tbl =
 							variables = 
 							{
 								finishcode = "",
-								info = "Player Downed",
+								info = "Player Alive",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Health State: '..tostring(ml_global_information.Player_HealthState))\nGUI:Text('Downed: '..tostring(ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Downed))\nlocal target = gw2_common_functions.GetBestAggroTarget(true)\nif ( ValidTable(target) ) then\n\tGUI:Text('Downed Target: '..target.name)\nelse\n\tGUI:Text('Downed Target: None')\nend\nGUI:Text('Castinfo-Duration: '..tostring(Player.castinfo.duration))\n",
 								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Alive ) then\t\n\tself:success()\nelse\n\tself:fail()\nend",
 								startcode = "",

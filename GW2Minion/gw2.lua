@@ -721,7 +721,7 @@ function gw2minion.DrawCall(event, ticks )
 		
 	else	
 		if ( not gw2minion.mainbtreeinstance.isloadedineditor ) then 
-			gw2minion.mainbtreeinstance:run()
+			--gw2minion.mainbtreeinstance:run()
 		end
 	end
 end
@@ -806,8 +806,9 @@ function ml_global_information.Stop()
 end
 
 -- Waits xxx seconds before running the next pulse
-function ml_global_information.Wait( mseconds )
-	ml_bt_mgr.lasttick = ml_bt_mgr.lasttick + mseconds
+function ml_global_information.Wait( mseconds )	
+	
+	ml_bt_mgr.lasttick = (ml_bt_mgr.lasttick or ml_global_information.Now) + mseconds
 end
 
 
