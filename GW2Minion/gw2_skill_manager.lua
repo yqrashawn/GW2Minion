@@ -1519,28 +1519,29 @@ function profilePrototype:SwapWeapon( targetdist )
 		--for setID,entry in pairs(wpsets) do
 		--	d("Set : "..tostring(entry.prio).." "..entry.set.name)
 		--end
+		if ( currentwpset ) then		
+			if ( bestwpset.set.name ~= currentwpset.name ) then
+				--d("Switching from "..currentwpset.name.." to "..bestwpset.set.name.. " (Prio "..tostring(bestwpset.prio)..") setID:"..tostring(bestID) .." ID .."..tostring(ml_global_information.Player_TransformID))
+				if ( bestID <= 5 ) then-- weaponswap
+					Player:SwapWeaponSet()
 				
-		if ( bestwpset.set.name ~= currentwpset.name ) then
-			--d("Switching from "..currentwpset.name.." to "..bestwpset.set.name.. " (Prio "..tostring(bestwpset.prio)..") setID:"..tostring(bestID) .." ID .."..tostring(ml_global_information.Player_TransformID))
-			if ( bestID <= 5 ) then-- weaponswap
-				Player:SwapWeaponSet()
-			
-			elseif ( bestID >= 13 and bestID <=16) then -- attunement
-				local slot = GW2.SKILLBARSLOT["Slot_" .. bestID]
-				if ( Player:CastSpell(slot) ) then
-					gw2_skill_manager.SkillTracker.elelastswap = ml_global_information.Now
-				end
-				
-			elseif ( bestID > 100 ) then -- engi kitID								
-				for _skillID,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
-					for kitID,kit in pairs(gw2_skill_manager.SkillTracker.kits) do
-						if (_skillID == kitID ) then
-							if ( Player:CastSpell(skill.slot) ) then
-								gw2_skill_manager.SkillTracker.engilastswap = ml_global_information.Now
+				elseif ( bestID >= 13 and bestID <=16) then -- attunement
+					local slot = GW2.SKILLBARSLOT["Slot_" .. bestID]
+					if ( Player:CastSpell(slot) ) then
+						gw2_skill_manager.SkillTracker.elelastswap = ml_global_information.Now
+					end
+					
+				elseif ( bestID > 100 ) then -- engi kitID								
+					for _skillID,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
+						for kitID,kit in pairs(gw2_skill_manager.SkillTracker.kits) do
+							if (_skillID == kitID ) then
+								if ( Player:CastSpell(skill.slot) ) then
+									gw2_skill_manager.SkillTracker.engilastswap = ml_global_information.Now
+								end
 							end
-						end
-					end	
-				end				
+						end	
+					end				
+				end
 			end
 		end
 	end	
