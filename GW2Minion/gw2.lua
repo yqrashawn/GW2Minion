@@ -685,6 +685,13 @@ RegisterEventHandler( "GW2MINION.toggle", ml_task_hub.ToggleRun )
 
 -- NEW GW2MINION
 function gw2minion.Init()
+	-- Register Button 
+	local gw2mainmenu = {
+		header = { id = "GW2MINION##MENU_HEADER", expanded = false, name = "GW2Minion", texture = GetStartupPath().."\\GUI\\UI_Textures\\gw2minion.png"},
+		members = {{ id = "GW2MINION##MENU_ADDONS", name = "Addons", tooltip = "Installed Lua Addons."}	}
+	} 
+	ml_gui.ui_mgr:AddComponent(gw2mainmenu)
+	
 	-- Setup GuestServerList
 	gw2minion.RefreshGuestServers()
 	
