@@ -540,8 +540,7 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "gDepositItems" or
 			k == "gDoEvents" or
 			k == "gDoCombatMovement" or
-			k == "gIgnoreYellowMob" or
-			k == "gMoveIntoCombatRange" or
+			k == "gIgnoreYellowMob" or			
 			k == "gGather" or
 			k == "gRevivePlayers" or
 			k == "gRevive" or
@@ -558,13 +557,34 @@ function gw2minion.GUIVarUpdate(Event, NewVals, OldVals)
 			k == "BuyManager_GarheringTool" or 
 			k == "SalvageManager_Active" or
 			k == "gMultiBotEnabled" or
-			k == "gNoMeshLoad" or
-			k == "sMtargetmode" or
-			k == "gFinishEnemyAssist" or
-			k == "sMmode"
+			k == "gNoMeshLoad"	
 			) then
 			Settings.GW2Minion[tostring(k)] = v
-					
+		elseif ( k == "sMtargetmode" ) then
+			Settings.GW2Minion[tostring(k)] = v
+			if ( v == "None" ) then Settings.GW2Minion.smtargetmode = 1
+			elseif ( v == "LowestHealth" ) then Settings.GW2Minion.smtargetmode = 2 
+			elseif ( v == "Closest" ) then Settings.GW2Minion.smtargetmode = 3
+			elseif ( v == "Biggest Crowd" ) then Settings.GW2Minion.smtargetmode = 4 
+			end
+			
+		elseif ( k == "sMmode") then
+			Settings.GW2Minion[tostring(k)] = v
+			if ( v == "Everything" ) then Settings.GW2Minion.smmode = 1
+			elseif ( v == "Players Only" ) then Settings.GW2Minion.smmode = 2 
+			end
+			
+		elseif ( k == "gMoveIntoCombatRange") then
+			Settings.GW2Minion[tostring(k)] = v
+			if ( v == "0" ) then Settings.GW2Minion.moveintoombatrange = false
+			elseif ( v == "1" ) then Settings.GW2Minion.moveintoombatrange = true
+			end
+			
+		elseif ( k == "gFinishEnemyAssist") then
+			Settings.GW2Minion[tostring(k)] = v
+			if ( v == "0" ) then Settings.GW2Minion.finishenemyassist = false
+			elseif ( v == "1" ) then Settings.GW2Minion.finishenemyassist = true
+			end			
 		end
 	end
 end

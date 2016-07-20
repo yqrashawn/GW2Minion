@@ -218,7 +218,7 @@ function gw2_task_follow:UIInit()
 	end
 	
 	sMtargetmode = Settings.GW2Minion.sMtargetmode
-	if ( sMtargetmode == 1 ) then
+	if ( sMtargetmode == "None" ) then
 		sMtargetmode = "Closest"
 	end
 	if ( Settings.GW2Minion.gFollowTargetName ) then
@@ -236,10 +236,10 @@ end
 function gw2_task_follow.ModuleInit()
 	-- Setup Debug fields
 	if (Settings.GW2Minion.sMtargetmode == nil) then
-		Settings.GW2Minion.sMtargetmode = 1
+		Settings.GW2Minion.sMtargetmode = "None"
 	end
 	if (Settings.GW2Minion.sMmode == nil) then
-		Settings.GW2Minion.sMmode = 1
+		Settings.GW2Minion.sMmode = "Everything"
 	end
 	local dw = WindowManager:GetWindow(gw2minion.DebugWindow.Name)
 	if ( dw ) then
