@@ -836,6 +836,8 @@ end
 function ml_global_information.Wait( mseconds )	
 	
 	ml_bt_mgr.lasttick = (ml_bt_mgr.lasttick or ml_global_information.Now) + mseconds
+	-- old gw2 bot...for compatiblblabla reasons
+	ml_global_information.Lasttick = ml_global_information.Lasttick + mseconds
 end
 
 

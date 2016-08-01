@@ -81,13 +81,6 @@ function ml_global_information.Stop()
 	gw2_unstuck.Reset()
 end
 
--- Waits xxx seconds before running the next pulse
-function ml_global_information.Wait( mseconds )
-	ml_global_information.Lasttick = ml_global_information.Lasttick + mseconds
-	
-end
-
-
 
 ml_global_information.ConditionsEnum = {
 		[736] = "Bleeding",
