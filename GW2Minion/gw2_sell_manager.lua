@@ -1,315 +1,522 @@
 gw2_sell_manager = {}
-gw2_sell_manager.mainWindow = { name = GetString("sellmanager"), x = 350, y = 50, w = 250, h = 350}
-gw2minion.MainWindow.ChildWindows[gw2_sell_manager.mainWindow.name] = gw2_sell_manager.mainWindow.name
-gw2_sell_manager.filterList = {}
-gw2_sell_manager.currentFilter = nil
+gw2_sell_manager.active = false
+gw2_sell_manager.salvageTick = 0
+gw2_sell_manager.toolTip = false
+gw2_sell_manager.filterList = {list = {}, nameList = {}, currID = 1,}
+gw2_sell_manager.singleItemList = {list = {}, nameList = {}, currID = 1,}
+gw2_sell_manager.inventoryList = {list = {}, nameList = {}, currID = 1,}
+gw2_sell_manager.soulbindOptions = {
+	nameList = {"false","true","either",},
+	idList = {["false"] = 1, ["true"] = 2, ["either"] = 3,},
+	currID = 1,
+}
+gw2_sell_manager.tempFilter = {
+	new = true,
+	name = "",
+	soulbound = "false",
+	rarity = {Common = false, Fine = false, Masterwork = false, Rare = false, Exotic = false},
+	itemType = {Armor = false, Back = false, Bag = false, Consumable = false, Container = false, CraftingMaterial = false, Gathering = false, Gizmo = false, MiniDeck = false, SalvageTool = false, Trinket = false, Trophy = false, UpgradeComponent = false, Weapon = false,},
+}
+gw2_sell_manager.tempSingleItem = {
+	new = true,
+	itemID = 0,
+	name = "",
+}
+gw2_sell_manager.customChecks = {}
+
+
+-- Gui stuff here.
+gw2_sell_manager.mainWindow = {
+	name = GetString("sellmanager"),
+	open = false,
+	visible = true,
+}
 
 function gw2_sell_manager.ModuleInit()
-	if (Settings.GW2Minion.SellManager_FilterList == nil) then
-		Settings.GW2Minion.SellManager_FilterList = {
-		{
-			itemtype = "Weapon",
-			name = "Weapons_Junk",
-			rarity = "Junk",
-			soulbound = "false",
-			weapontype = "None",
-		},
+	-- Init Module.
 
-		{
-			itemtype = "Weapon",
-			name = "Weapons_Common",
-			rarity = "Common",
-			soulbound = "false",
-			weapontype = "None",
-		},
-
-		{
-			itemtype = "Weapon",
-			name = "Weapons_Masterwork",
-			rarity = "Masterwork",
-			soulbound = "false",
-			weapontype = "None",
-		},
-
-		{
-			itemtype = "Weapon",
-			name = "Weapons_Fine",
-			rarity = "Fine",
-			soulbound = "false",
-			weapontype = "None",
-		},
-
-		{
-			itemtype = "Armor",
-			name = "Armor_Junk",
-			rarity = "Junk",
-			soulbound = "false",
-			weapontype = "None",
-		},
-
-		{
-			itemtype = "Armor",
-			name = "Armor_Common",
-			rarity = "Common",
-			soulbound = "false",
-			weapontype = "None",
-		},
-
-		{
-			itemtype = "Armor",
-			name = "Armor_Masterwork",
-			rarity = "Masterwork",
-			soulbound = "false",
-			weapontype = "None",
-		},
-
-		{
-			itemtype = "Armor",
-			name = "Armor_Fine",
-			rarity = "Fine",
-			soulbound = "false",
-			weapontype = "None",
-		},
-
-		}
+	-- init active stuff here.
+	if (Settings.gw2_sell_manager.active == nil) then
+		Settings.gw2_sell_manager.active = false
 	end
+	gw2_sell_manager.active = Settings.gw2_sell_manager.active
+	-- end active init.
 
-	if (Settings.GW2Minion.SellManager_Active == nil ) then
-		Settings.GW2Minion.SellManager_Active = "1"
+	-- init tooltip stuff here.
+	if (Settings.gw2_sell_manager.toolTip == nil) then
+		Settings.gw2_sell_manager.toolTip = true
 	end
+	gw2_sell_manager.toolTip = Settings.gw2_sell_manager.toolTip
+	-- end tooltip init.
 
-	if (Settings.GW2Minion.SellManager_ItemIDInfo == nil ) then
-		Settings.GW2Minion.SellManager_ItemIDInfo = {}
+	-- init filter stuff here.
+	if (Settings.gw2_sell_manager.filterList == nil) then
+		Settings.gw2_sell_manager.filterList = {list = {}, nameList = {}, currID = 1}
 	end
+	gw2_sell_manager.filterList = Settings.gw2_sell_manager.filterList
+	gw2_sell_manager.filterListUpdate()
+	-- end filter init.
 
-
-
-	gw2_sell_manager.filterList = Settings.GW2Minion.SellManager_FilterList
-	gw2_sell_manager.refreshFilterlist()
-
-	local mainWindow = WindowManager:NewWindow(gw2_sell_manager.mainWindow.name,gw2_sell_manager.mainWindow.x,gw2_sell_manager.mainWindow.y,gw2_sell_manager.mainWindow.w,gw2_sell_manager.mainWindow.h,false)
-	if (mainWindow) then
-		mainWindow:NewCheckBox(GetString("active"),"SellManager_Active",GetString("sellGroup"))
-		mainWindow:NewButton(GetString("newfilter"),"SellManager_NewFilter")
-		RegisterEventHandler("SellManager_NewFilter",gw2_sell_manager.CreateDialog)
-		mainWindow:UnFold(GetString("sellGroup"))
-
-		mainWindow:NewComboBox(GetString("sellByIDtems"),"SellManager_ItemToSell",GetString("sellByID"),"")
-		mainWindow:NewButton(GetString("sellByIDAddItem"),"SellManager_AdditemID",GetString("sellByID"))
-		RegisterEventHandler("SellManager_AdditemID",gw2_sell_manager.AddItemID)
-		mainWindow:NewComboBox(GetString("sellItemList"),"SellManager_ItemIDList",GetString("sellByID"),"")
-		SellManager_ItemIDList = "None"
-		mainWindow:NewButton(GetString("sellByIDRemoveItem"),"SellManager_RemoveitemID",GetString("sellByID"))
-		RegisterEventHandler("SellManager_RemoveitemID",gw2_sell_manager.RemoveItemID)
-
-		mainWindow:Hide()
+	-- init single-item stuff here.
+	if (Settings.gw2_sell_manager.singleItemList == nil) then
+		Settings.gw2_sell_manager.singleItemList = {list = {}, nameList = {}, currID = 1}
 	end
+	gw2_sell_manager.singleItemList = Settings.gw2_sell_manager.singleItemList
+	gw2_sell_manager.singleItemListUpdate()
+	-- end single-item init.
 
-	SellManager_Active = Settings.GW2Minion.SellManager_Active
-	SellManager_ItemIDInfo = Settings.GW2Minion.SellManager_ItemIDInfo
+	-- init inventorylist stuff here.
+	gw2_sell_manager.updateInventoryItems()
 
-	if (Player) then
-		gw2_sell_manager.UpdateComboBox(Inventory(""),"SellManager_ItemToSell",SellManager_ItemIDInfo)
-		gw2_sell_manager.UpdateComboBox(SellManager_ItemIDInfo,"SellManager_ItemIDList")
-		gw2_sell_manager.refreshFilterlist()
-	end
+	-- init button in minionmainbutton
+	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SELLMGR", name = "Sell MGR", onClick = function() gw2_sell_manager.mainWindow.open = gw2_sell_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Sell Manager\" window."},"GW2MINION##MENU_HEADER")
+
 end
 
--- SINGLE ITEM STUFF HERE
--- Update singe-item drop-down list.
-function gw2_sell_manager.UpdateComboBox(iTable,global,excludeTable,setToName)
-	if (iTable and global) then
-		local list = "None"
-		for _,item in pairs(iTable) do
-			if (ValidString(item.name) and StringContains(list, item.name) == false)then
-				local name = item.name
-				if (ValidTable(excludeTable)) then
-					for _,eItem in pairs(excludeTable) do
-						if (eItem.name == item.name) then
-							name = ""
+-- Gui draw function.
+function gw2_sell_manager.mainWindow.Draw(event,ticks)
+	if (gw2_sell_manager.mainWindow.open) then 
+		-- set size on first use only.
+		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver)
+		-- update visible and open variables.
+		gw2_sell_manager.mainWindow.visible, gw2_sell_manager.mainWindow.open = GUI:Begin(gw2_sell_manager.mainWindow.name, gw2_sell_manager.mainWindow.open, GUI.WindowFlags_AlwaysAutoResize+GUI.WindowFlags_NoCollapse)
+		if (gw2_sell_manager.mainWindow.visible) then
+			-- Status field.
+			-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			GUI:Spacing()
+			GUI:BeginGroup()
+			gw2_sell_manager.active = GUI:Checkbox(GetString("active"), gw2_sell_manager.active)
+			Settings.gw2_sell_manager.active = gw2_sell_manager.active
+			GUI:EndGroup()
+			if (GUI:IsItemHovered() and gw2_sell_manager.toolTip) then
+				GUI:SetTooltip("Turn Salvaging on or off.")
+			end
+			-----------------------------------------------------------------------------------------------------------------------------------
+			GUI:Separator()
+			-----------------------------------------------------------------------------------------------------------------------------------
+			-- Filter group here.
+			-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing) -- open the tree *BUG* conditions not working as expected.
+			if (GUI:TreeNode(GetString("filters"))) then -- create the tree, only pop inside if.
+				GUI:PushItemWidth(200)
+				gw2_sell_manager.filterList.currID = GUI:ListBox("##msellm-filterlist",gw2_sell_manager.filterList.currID,gw2_sell_manager.filterList.nameList, 5)
+				GUI:PopItemWidth()
+				GUI:SameLine()
+				GUI:BeginGroup()
+				GUI:Spacing()
+				-- NewFilter Button.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				if (GUI:Button(GetString("newfilter"), 100,25)) then
+					GUI:OpenPopup("##msellm-filterPopup")
+					gw2_sell_manager.tempFilter = {
+						new = true,
+						name = "",
+						soulbound = false,
+						rarity = {Common = false, Fine = false, Masterwork = false, Rare = false, Exotic = false},
+						itemType = {Armor = false, Back = false, Bag = false, Consumable = false, Container = false, CraftingMaterial = false, Gathering = false, Gizmo = false, MiniDeck = false, SalvageTool = false, Trinket = false, Trophy = false, UpgradeComponent = false, Weapon = false,},
+					}
+				end
+				if (GUI:IsItemHovered() and gw2_sell_manager.toolTip) then
+					GUI:SetTooltip("Create a new filter.")
+				end
+				-- Edit Button.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				if (GUI:Button(GetString("editfilter"), 100,25)) then
+					if (gw2_sell_manager.filterList.list[gw2_sell_manager.filterList.currID] ~= nil) then
+						GUI:OpenPopup("##msellm-filterPopup")
+						gw2_sell_manager.tempFilter = gw2_sell_manager.filterList.list[gw2_sell_manager.filterList.currID]
+						gw2_sell_manager.soulbindOptions.currID = gw2_sell_manager.soulbindOptions.idList[gw2_sell_manager.filterList.list[gw2_sell_manager.filterList.currID].soulbound]
+					end
+				end
+				if (GUI:IsItemHovered() and gw2_sell_manager.toolTip) then
+					GUI:SetTooltip("Edit the selected filter.")
+				end
+				-- Create New/Edit filter button response.
+				GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
+				GUI:SetNextWindowSize(400, 420, GUI.SetCond_Once)
+				if (GUI:BeginPopup("##msellm-filterPopup")) then
+					GUI:Spacing()
+					GUI:Text("Filter details:")
+					GUI:Spacing()
+					-----------------------------------------------------------------------------------------------------------------------------------
+					GUI:Separator()
+					-----------------------------------------------------------------------------------------------------------------------------------
+					--name
+					GUI:AlignFirstTextHeightToWidgets()
+					GUI:Text("Name:")
+					GUI:SameLine(180)
+					gw2_sell_manager.tempFilter.name = GUI:InputText("##msellm-filtername",gw2_sell_manager.tempFilter.name)
+					--prefkit
+					GUI:AlignFirstTextHeightToWidgets()
+					GUI:Text(GetString("soulbound"))
+					GUI:SameLine(180)
+					gw2_sell_manager.soulbindOptions.currID = GUI:Combo("##msellm-filtersoulbindoption",gw2_sell_manager.soulbindOptions.currID,gw2_sell_manager.soulbindOptions.nameList)
+					gw2_sell_manager.tempFilter.soulbound = gw2_sell_manager.soulbindOptions.nameList[gw2_sell_manager.soulbindOptions.currID]
+					--rarity
+					GUI:AlignFirstTextHeightToWidgets()
+					GUI:Text(GetString("rarity"))
+					GUI:SameLine(180)
+					GUI:BeginChild("##msellm-filterrarity", 209, 80, true)
+					gw2_sell_manager.tempFilter.rarity.Common = GUI:Checkbox(GetString("rarityCommon"),gw2_sell_manager.tempFilter.rarity.Common)
+					GUI:SameLine(110)
+					gw2_sell_manager.tempFilter.rarity.Fine = GUI:Checkbox(GetString("rarityFine"),gw2_sell_manager.tempFilter.rarity.Fine)
+					gw2_sell_manager.tempFilter.rarity.Masterwork = GUI:Checkbox(GetString("rarityMasterwork"),gw2_sell_manager.tempFilter.rarity.Masterwork)
+					GUI:SameLine(110)
+					gw2_sell_manager.tempFilter.rarity.Rare = GUI:Checkbox(GetString("rarityRare"),gw2_sell_manager.tempFilter.rarity.Rare)
+					gw2_sell_manager.tempFilter.rarity.Exotic = GUI:Checkbox(GetString("rarityExotic"),gw2_sell_manager.tempFilter.rarity.Exotic)
+					GUI:EndChild()
+					--itemtype
+					GUI:AlignFirstTextHeightToWidgets()
+					GUI:Text("Item-types:")
+					GUI:SameLine(110)
+					GUI:BeginChild("##msellm-filteritemtype", 279, 173, true)
+					gw2_sell_manager.tempFilter.itemType.Armor = GUI:Checkbox("Armor",gw2_sell_manager.tempFilter.itemType.Armor)
+					GUI:SameLine(155)
+					gw2_sell_manager.tempFilter.itemType.Back = GUI:Checkbox("Back",gw2_sell_manager.tempFilter.itemType.Back)
+					gw2_sell_manager.tempFilter.itemType.Bag = GUI:Checkbox("Bag",gw2_sell_manager.tempFilter.itemType.Bag)
+					GUI:SameLine(155)
+					gw2_sell_manager.tempFilter.itemType.Consumable = GUI:Checkbox("Consumable",gw2_sell_manager.tempFilter.itemType.Consumable)
+					gw2_sell_manager.tempFilter.itemType.CraftingMaterial = GUI:Checkbox("Crafting-Material",gw2_sell_manager.tempFilter.itemType.CraftingMaterial)
+					GUI:SameLine(155)
+					gw2_sell_manager.tempFilter.itemType.Gathering = GUI:Checkbox("Gathering",gw2_sell_manager.tempFilter.itemType.Gathering)
+					gw2_sell_manager.tempFilter.itemType.Gizmo = GUI:Checkbox("Gizmo",gw2_sell_manager.tempFilter.itemType.Gizmo)
+					GUI:SameLine(155)
+					gw2_sell_manager.tempFilter.itemType.MiniDeck = GUI:Checkbox("MiniDeck",gw2_sell_manager.tempFilter.itemType.MiniDeck)
+					gw2_sell_manager.tempFilter.itemType.SalvageTool = GUI:Checkbox("Salvage-Tool",gw2_sell_manager.tempFilter.itemType.SalvageTool)
+					GUI:SameLine(155)
+					gw2_sell_manager.tempFilter.itemType.Trinket = GUI:Checkbox("Trinket",gw2_sell_manager.tempFilter.itemType.Trinket)
+					gw2_sell_manager.tempFilter.itemType.UpgradeComponent = GUI:Checkbox("Upgrade-Component",gw2_sell_manager.tempFilter.itemType.UpgradeComponent)
+					GUI:SameLine(155)
+					gw2_sell_manager.tempFilter.itemType.Weapon = GUI:Checkbox("Weapon",gw2_sell_manager.tempFilter.itemType.Weapon)
+					gw2_sell_manager.tempFilter.itemType.Container = GUI:Checkbox("Container",gw2_sell_manager.tempFilter.itemType.Container)
+					GUI:SameLine(155)
+					gw2_sell_manager.tempFilter.itemType.Trophy = GUI:Checkbox("Trophy",gw2_sell_manager.tempFilter.itemType.Trophy)
+					GUI:EndChild()
+					-- Layout spacing.
+					GUI:Spacing()
+					-----------------------------------------------------------------------------------------------------------------------------------
+					GUI:Separator()
+					------------------------------------------------------------------------------------------------------------------------
+					-- Layout spacing.
+					GUI:Dummy(100,20)
+					GUI:Spacing()
+					-- CANCEL BUTTON.
+					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+					GUI:SameLine(80)
+					if (GUI:Button(GetStringML("cancel"),80,30)) then
+						GUI:CloseCurrentPopup()
+					end
+					-- OK BUTTON.
+					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+					GUI:SameLine(240)
+					if (GUI:Button(GetStringML("ok"),80,30)) then
+						if (gw2_sell_manager.validFilter(gw2_sell_manager.tempFilter)) then
+							-- save new filter here.
+							if (gw2_sell_manager.tempFilter.new) then
+								gw2_sell_manager.tempFilter.new = nil
+								table.insert(gw2_sell_manager.filterList.list, gw2_sell_manager.tempFilter)
+							-- save edited filter here.
+							else
+								gw2_sell_manager.filterList.list[gw2_sell_manager.filterList.currID] = gw2_sell_manager.tempFilter
+							end
+							-- update.
+							gw2_sell_manager.filterListUpdate()
+							GUI:CloseCurrentPopup()
+						else
+							GUI:OpenPopup("Invalid Filter.")
 						end
 					end
+					GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
+					GUI:SetNextWindowSize(400, 140, GUI.SetCond_Always)
+					if (GUI:BeginPopupModal("Invalid Filter.",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
+						GUI:Spacing()
+						GUI:SameLine(150)
+						GUI:Text("Invalid Filter.")
+						GUI:Spacing()
+						GUI:SameLine(135)
+						GUI:SetWindowFontScale(0.8)
+						GUI:Text("Please check the filter.")
+						GUI:SetWindowFontScale(1)
+						
+						GUI:Spacing()
+						GUI:Separator()
+						GUI:Dummy(100,20)
+						GUI:Spacing()
+						GUI:SameLine(160)
+						if (GUI:Button(GetStringML("ok"),80,30)) then
+							GUI:CloseCurrentPopup()
+						end
+						GUI:EndPopup()
+					end
+					GUI:EndPopup()
 				end
-				list = (ValidString(name) == true and list .. "," .. name or list)
-			end
-		end
-		_G[global] = (setToName == false and _G[global] or ValidString(setToName) and setToName or "None")
-		_G[global .. "_listitems"] = list
-	end
-end
-
--- Add Single-Item to itemIDlist.
-function gw2_sell_manager.AddItemID()
-	if (ValidString(SellManager_ItemToSell) and SellManager_ItemToSell ~= "None") then
-		-- Make sure this item is not already in our SellList
-		for _,item in pairs(SellManager_ItemIDInfo) do
-			if (SellManager_ItemToSell == item.name) then
-				return
-			end
-		end
-		-- Find Item by Name in Inventory
-		for _,item in pairs(Inventory("")) do
-			if (ValidString(item.name) and item.name == SellManager_ItemToSell)then
-				table.insert(SellManager_ItemIDInfo, {name = item.name, itemID = item.itemID})
-				gw2_sell_manager.UpdateComboBox(SellManager_ItemIDInfo,"SellManager_ItemIDList",nil,item.name)
-				break
-			end
-		end
-		Settings.GW2Minion.SellManager_ItemIDInfo = SellManager_ItemIDInfo
-		gw2_sell_manager.UpdateComboBox(Inventory(""),"SellManager_ItemToSell",SellManager_ItemIDInfo)
-	end
-	return false
-end
-
--- Remove Single-Item from itemIDlist.
-function gw2_sell_manager.RemoveItemID()
-	if ( ValidString(SellManager_ItemIDList) and SellManager_ItemIDList ~= "None") then
-		for id,item in pairs(SellManager_ItemIDInfo) do
-			if (item.name == SellManager_ItemIDList) then
-				table.remove(SellManager_ItemIDInfo, id)
-				break
-			end
-		end
-		Settings.GW2Minion.SellManager_ItemIDInfo = SellManager_ItemIDInfo
-		gw2_sell_manager.UpdateComboBox(SellManager_ItemIDInfo,"SellManager_ItemIDList")
-		gw2_sell_manager.UpdateComboBox(Inventory(""),"SellManager_ItemToSell",SellManager_ItemIDInfo)
-	end
-end
-
--- FILTER STUFF HERE
---Refresh filters.
-function gw2_sell_manager.refreshFilterlist()
-	local mainWindow = WindowManager:GetWindow(gw2_sell_manager.mainWindow.name)
-	if (mainWindow) then
-		mainWindow:DeleteGroup(GetString("sellfilters"))
-		for id,filter in pairs(gw2_sell_manager.filterList) do
-			mainWindow:NewButton(gw2_sell_manager.filterList[id].name, "SellManager_Filter" .. id,GetString("sellfilters"))
-			RegisterEventHandler("SellManager_Filter" .. id ,gw2_sell_manager.CreateDialog)
-		end
-		mainWindow:UnFold(GetString("sellfilters"))
-	end
-end
-
--- Create New Filter Dialog.
-function gw2_sell_manager.CreateDialog(filterID)
-	if (filterID:find("SellManager_Filter")) then
-		filterID = string.gsub(filterID, "SellManager_Filter", "")
-		filterID = tonumber(filterID)
-		gw2_sell_manager.currentFilter = filterID
-	else
-		gw2_sell_manager.currentFilter = nil
-	end
-	local dialog = gw2_dialog_manager:GetDialog(GetString("newsellfilter"))
-	if (dialog == nil) then
-		dialog = gw2_dialog_manager:NewDialog(GetString("newsellfilter"))
-		dialog:NewField(GetString("name"),"SellManager_Name")
-		dialog:NewComboBox(GetString("soulbound"),"SellManager_Soulbound","true,false,either")
-		local list = "None"
-		for name,_ in pairs(GW2.ITEMTYPE) do list = list .. "," .. name end
-		dialog:NewComboBox(GetString("itemtype"),"SellManager_Itemtype",list)
-		list = GetString("rarityNone")..","..GetString("rarityJunk")..","..GetString("rarityCommon")..","..GetString("rarityFine")..","..GetString("rarityMasterwork")..","..GetString("rarityRare")..","..GetString("rarityExotic")
-		dialog:NewComboBox(GetString("rarity"),"SellManager_Rarity",list)
-		list = "None"
-		for name,_ in pairs(GW2.WEAPONTYPE) do list = list .. "," .. name end
-		dialog:NewComboBox(GetString("weapontype"),"SellManager_Weapontype",list)
-		dialog:SetOkFunction(gw2_sell_manager.DialogOK)
-		dialog:SetDeleteFunction(gw2_sell_manager.DialogDelete)
-	end
-	if (dialog) then
-		local tType = (type(filterID) == "number")
-		dialog:Show(tType)
-		SellManager_Name = (tType and gw2_sell_manager.filterList[filterID].name or "")
-		SellManager_Itemtype = (tType and gw2_sell_manager.filterList[filterID].itemtype or "None")
-		SellManager_Rarity = (tType and gw2_sell_manager.filterList[filterID].rarity or GetString("rarityNone"))
-		SellManager_Weapontype = (tType and gw2_sell_manager.filterList[filterID].weapontype or "None")
-		SellManager_Soulbound = (tType and gw2_sell_manager.filterList[filterID].soulbound or "either")
-	end
-end
-
--- Dialog OK button function.
-function gw2_sell_manager.DialogOK()
-	local saveFilter = {name = SellManager_Name,itemtype = SellManager_Itemtype,rarity = SellManager_Rarity,weapontype = SellManager_Weapontype,soulbound = SellManager_Soulbound,}
-	if (ValidString(saveFilter.name) == false) then
-		ml_error("Please enter a filter name before saving.")
-	elseif (gw2_sell_manager.validFilter(saveFilter)) then -- check if filter is valid.
-		if (type(gw2_sell_manager.currentFilter) ~= "number") then -- new filter, making sure name is not in use.
-			for _,filter in pairs(gw2_sell_manager.filterList) do
-				if (saveFilter.name == filter.name) then
-					return "Filter with this name already exists, please change the name."
-				end
-			end
-			table.insert(gw2_sell_manager.filterList, saveFilter)
-		else
-			gw2_sell_manager.filterList[gw2_sell_manager.currentFilter] = saveFilter
-		end
-		Settings.GW2Minion.SellManager_FilterList = gw2_sell_manager.filterList
-		gw2_sell_manager.refreshFilterlist()
-		return true
-	else
-		return "Filter Not Valid. Filter needs to have both type and rarity set. Junk rarity can be set without any type."
-	end
-end
-
--- Dialog DELETE button function.
-function gw2_sell_manager.DialogDelete()
-	table.remove(gw2_sell_manager.filterList, gw2_sell_manager.currentFilter)
-	Settings.GW2Minion.SellManager_FilterList = gw2_sell_manager.filterList
-	gw2_sell_manager.refreshFilterlist()
-	return true
-end
-
--- Check if filter is valid:
-function gw2_sell_manager.validFilter(filter)
-	if (filter.itemtype ~= "None" and filter.itemtype ~= nil and
-	filter.rarity ~= "None" and filter.rarity ~= nil) then
-		return true
-	elseif (filter.rarity == "Junk") then
-		return true
-	end
-	return false
-end
-
--- Working stuff here.
---Create filtered sell item list.
-function gw2_sell_manager.createItemList()
-	local items = Inventory("exclude_contentid="..ml_blacklist.GetExcludeString(GetString("sellItems")))
-	local filteredItems = {}
-	if (items) then
-		for slot,item in pairs(items) do
-			local addItem = false
-			for _,filter in pairs(gw2_sell_manager.filterList) do
-				if (gw2_sell_manager.validFilter(filter)) then
-					if ((filter.rarity == "None" or filter.rarity == nil or GW2.ITEMRARITY[filter.rarity] == item.rarity) and
-					(filter.itemtype == "None" or filter.itemtype == nil or GW2.ITEMTYPE[filter.itemtype] == item.itemtype) and
-					(filter.weapontype == "None" or filter.weapontype == nil or GW2.WEAPONTYPE[filter.weapontype] == item.weapontype) and
-					(filter.soulbound == "either" or (filter.soulbound == nil and item.soulbound == false) or filter.soulbound == tostring(item.soulbound))) then
-						addItem = true
+				
+				-- Delete Button.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				if (GUI:Button(GetString("deletefilter"), 100,25)) then
+					if (gw2_sell_manager.filterList.list[gw2_sell_manager.filterList.currID] ~= nil) then
+						GUI:OpenPopup("##msellm-deletefilterPopup")
 					end
 				end
+				if (GUI:IsItemHovered() and gw2_sell_manager.toolTip) then
+					GUI:SetTooltip("Delete the selected filter.")
+				end
+				GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
+				GUI:SetNextWindowSize(400, 140, GUI.SetCond_Always)
+				if (GUI:BeginPopupModal("##msellm-deletefilterPopup",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
+					GUI:Spacing()
+					GUI:SameLine(50)
+					GUI:Text("Are you sure you want to delete this filter?")
+					GUI:Spacing()
+					GUI:SameLine(80)
+					GUI:SetWindowFontScale(0.8)
+					GUI:Text("Press \"Delete\" to delete, \"Cancel\" to cancel. ")
+					GUI:SetWindowFontScale(1)
+					
+					GUI:Spacing()
+					GUI:Separator()
+					GUI:Dummy(100,20)
+					GUI:Spacing()
+					GUI:SameLine(80)
+					if (GUI:Button(GetStringML("cancel"),80,30)) then
+						GUI:CloseCurrentPopup()
+					end
+					GUI:SameLine(240)
+					if (GUI:Button(GetStringML("delete"),80,30)) then
+						table.remove(gw2_sell_manager.filterList.list, gw2_sell_manager.filterList.currID)
+						gw2_sell_manager.filterListUpdate()
+						GUI:CloseCurrentPopup()
+					end
+					GUI:EndPopup()
+				end
+				
+				GUI:EndGroup()
+				GUI:TreePop()
 			end
-			-- Check for single itemlist
-			if (addItem == false) then
-				for iID,lItem in pairs(SellManager_ItemIDInfo) do
-					if (item.itemID == lItem.itemID) then
-						addItem = true
+			-----------------------------------------------------------------------------------------------------------------------------------
+			GUI:Separator()
+			-----------------------------------------------------------------------------------------------------------------------------------
+			
+			-- Single item group here.
+			-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			GUI:SetNextTreeNodeOpened(true, GUI.SetCond_FirstUseEver)
+			if (GUI:TreeNode(GetString("singleitems"))) then
+				GUI:PushItemWidth(200)
+				gw2_sell_manager.singleItemList.currID = GUI:ListBox("##msellm-singleitemlist",gw2_sell_manager.singleItemList.currID,gw2_sell_manager.singleItemList.nameList, 5)
+				GUI:PopItemWidth()
+				GUI:SameLine()
+				
+				GUI:BeginGroup()
+				GUI:Spacing()
+				-- New-Item Button.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				if (GUI:Button(GetString("newitem"), 100,25)) then
+					GUI:OpenPopup("##msellm-itemPopup")
+					gw2_sell_manager.updateInventoryItems()
+					gw2_sell_manager.tempSingleItem = {
+						new = true,
+						itemID = 0,
+						name = "",
+					}
+				end
+				if (GUI:IsItemHovered() and gw2_sell_manager.toolTip) then
+					GUI:SetTooltip("Add a new item.")
+				end
+				-- Create Button response.
+				GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
+				GUI:SetNextWindowSize(400, 160,GUI.SetCond_Once)
+				if (GUI:BeginPopup("##msellm-itemPopup")) then
+					GUI:Spacing()
+					GUI:Text("Choose an item:")
+					GUI:Spacing()
+					-----------------------------------------------------------------------------------------------------------------------------------
+					GUI:Separator()
+					-----------------------------------------------------------------------------------------------------------------------------------
+					--name
+					GUI:AlignFirstTextHeightToWidgets()
+					GUI:Text("Item:")
+					GUI:PushItemWidth(240)
+					GUI:SameLine(150)
+					if (gw2_sell_manager.tempSingleItem.new) then
+						gw2_sell_manager.inventoryList.currID = GUI:Combo("##msellm-inventorylist",gw2_sell_manager.inventoryList.currID,gw2_sell_manager.inventoryList.nameList)
+						gw2_sell_manager.tempSingleItem.itemID = gw2_sell_manager.inventoryList.list[gw2_sell_manager.inventoryList.currID].itemID
+						gw2_sell_manager.tempSingleItem.name = gw2_sell_manager.inventoryList.list[gw2_sell_manager.inventoryList.currID].name
+					else
+						GUI:InputText("##msellm-editItemName",gw2_sell_manager.tempSingleItem.name,GUI.InputTextFlags_ReadOnly)
+					end
+					-----------------------------------------------------------------------------------------------------------------------------------
+					GUI:Separator()
+					-----------------------------------------------------------------------------------------------------------------------------------
+					-- Layout spacing.
+					GUI:Dummy(100,20)
+					GUI:Spacing()
+					-- CANCEL BUTTON.
+					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+					GUI:SameLine(80)
+					if (GUI:Button(GetStringML("cancel"),80,30)) then
+						GUI:CloseCurrentPopup()
+					end
+					-- OK BUTTON.
+					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+					GUI:SameLine(240)
+					if (GUI:Button(GetStringML("ok"),80,30)) then
+						-- save new single item here.
+						if (gw2_sell_manager.tempSingleItem.new) then
+							gw2_sell_manager.tempSingleItem.new = nil
+							table.insert(gw2_sell_manager.singleItemList.list, gw2_sell_manager.tempSingleItem)
+						-- save edited single-item here.
+						else
+							gw2_sell_manager.singleItemList.list[gw2_sell_manager.singleItemList.currID] = gw2_sell_manager.tempSingleItem
+						end
+						-- update.
+						gw2_sell_manager.singleItemListUpdate()
+						GUI:CloseCurrentPopup()
+					end
+					GUI:EndPopup()
+				end
+				
+				-- Delete Button.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				if (GUI:Button("Delete Item", 100,25)) then
+					if (gw2_sell_manager.singleItemList.list[gw2_sell_manager.singleItemList.currID] ~= nil) then
+						GUI:OpenPopup("Delete Item?")
+					end
+				end
+				if (GUI:IsItemHovered() and gw2_sell_manager.toolTip) then
+					GUI:SetTooltip("Delete the selected item.")
+				end
+				GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
+				GUI:SetNextWindowSize(400, 140, GUI.SetCond_Always)
+				if (GUI:BeginPopupModal("Delete Item?",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
+					GUI:Spacing()
+					GUI:SameLine(50)
+					GUI:Text("Are you sure you want to delete this item?")
+					GUI:Spacing()
+					GUI:SameLine(80)
+					GUI:SetWindowFontScale(0.8)
+					GUI:Text("Press \"Delete\" to delete, \"Cancel\" to cancel. ")
+					GUI:SetWindowFontScale(1)
+					
+					GUI:Spacing()
+					GUI:Separator()
+					GUI:Dummy(100,20)
+					GUI:Spacing()
+					GUI:SameLine(80)
+					if (GUI:Button(GetStringML("cancel"),80,30)) then
+						GUI:CloseCurrentPopup()
+					end
+					GUI:SameLine(240)
+					if (GUI:Button(GetStringML("delete"),80,30)) then
+						table.remove(gw2_sell_manager.singleItemList.list, gw2_sell_manager.singleItemList.currID)
+						gw2_sell_manager.singleItemListUpdate()
+						GUI:CloseCurrentPopup()
+					end
+					GUI:EndPopup()
+				end
+				GUI:EndGroup()
+				GUI:TreePop()
+			end
+			-----------------------------------------------------------------------------------------------------------------------------------
+			GUI:Separator()
+			-----------------------------------------------------------------------------------------------------------------------------------
+		end
+		GUI:End()
+	end
+end
+
+-- Filter list functions.
+function gw2_sell_manager.filterListUpdate()
+	gw2_sell_manager.filterList.nameList = {}
+	for id,filter in ipairs(gw2_sell_manager.filterList.list) do
+		table.insert(gw2_sell_manager.filterList.nameList,filter.name)
+	end
+	Settings.gw2_sell_manager.filterList = gw2_sell_manager.filterList
+end
+
+function gw2_sell_manager.itemMatchesFilter(nItem)
+	if (table.valid(nItem)) then
+		for _,filter in pairs(gw2_sell_manager.filterList.list) do
+			if (filter.soulbound == "either" or filter.soulbound == tostring(nItem.soulbound)) then
+				local matchFilterRarity = false
+				local matchFilterItemType = false
+				for id,allowed in pairs(filter.rarity) do
+					if (allowed and GW2.ITEMRARITY[id] == nItem.rarity) then
+						matchFilterRarity = true
 						break
 					end
 				end
+				if (matchFilterRarity) then
+					for id,allowed in pairs(filter.itemType) do
+						if (allowed and GW2.ITEMTYPE[id] == nItem.itemtype) then
+							matchFilterItemType = true
+							break
+						end
+					end
+					if (matchFilterItemType) then
+						return true,nItem
+					end
+				end
 			end
-			-- Add item if found in filters.
-			if (addItem) then
-				item.slot = slot
-				table.insert(filteredItems, item)
-			end
-		end
-		if (ValidTable(filteredItems)) then
-			return filteredItems
 		end
 	end
 	return false
 end
 
---Have items to sell.
+function gw2_sell_manager.validFilter(filter)
+	return (table.valid(filter) and string.valid(filter.name) and table.contains(filter.rarity,true) and table.contains(filter.itemType,true))
+end
+
+-- Single-item list functions.
+function gw2_sell_manager.singleItemListUpdate()
+	gw2_sell_manager.singleItemList.nameList = {}
+	for id,item in ipairs(gw2_sell_manager.singleItemList.list) do
+		table.insert(gw2_sell_manager.singleItemList.nameList,item.name)
+	end
+	Settings.gw2_sell_manager.singleItemList = gw2_sell_manager.singleItemList
+end
+
+function gw2_sell_manager.singleItemListContains(nItem)
+	if (table.valid(nItem)) then
+		for _,eItem in pairs(gw2_sell_manager.singleItemList.list) do
+			if (eItem.itemID == nItem.itemID) then
+				return true,nItem
+			end
+		end
+	end
+	return false
+end
+
+-- Inventory functions.
+function gw2_sell_manager.updateInventoryItems()
+	local inventory = Inventory("")
+	gw2_sell_manager.inventoryList.list = {}
+	gw2_sell_manager.inventoryList.nameList = {}
+	gw2_sell_manager.inventoryList.currID = 1
+	for id,nItem in pairsByValueAttribute(inventory,"name") do
+		if (table.valid(nItem) and gw2_sell_manager.singleItemListContains(nItem) == false) then
+			table.insert(gw2_sell_manager.inventoryList.list,nItem)
+			table.insert(gw2_sell_manager.inventoryList.nameList,nItem.name)
+		end
+	end
+end
+
+-- Salvage List stuff here.
+function gw2_sell_manager.createItemList()
+	local inventoryItems = Inventory("exclude_contentid="..ml_blacklist.GetExcludeString(GetString("sellItems")))
+	local filteredItems = {}
+	if (table.valid(inventoryItems)) then
+		for slot,nItem in pairs(inventoryItems) do
+			nItem = nItem -- might need deepcopy?
+			if (gw2_sell_manager.itemMatchesFilter(nItem) or gw2_sell_manager.singleItemListContains(nItem)) then
+				table.insert(filteredItems,nItem)
+				--itemIDString = itemIDString .. nItem.itemID .. ","
+			end
+		end
+	end
+	return filteredItems--,itemIDString
+end
+
+-- working checks here.
 function gw2_sell_manager.haveItemToSell()
 	if (ValidTable(gw2_sell_manager.createItemList())) then
 		return true
@@ -342,7 +549,7 @@ function gw2_sell_manager.getClosestSellMarker(nearby)
 	return closestLocation
 end
 
--- Sell at vendor
+--sellhere.
 gw2_sell_manager.lastVendorID = nil
 gw2_sell_manager.VendorSellHistroy = {}
 function gw2_sell_manager.sellAtVendor(vendorMarker)
@@ -429,7 +636,7 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 	return false
 end
 
--- Need to sell
+--needtosell.
 function gw2_sell_manager.needToSell(nearby)
 	if (gw2_sell_manager.haveItemToSell()) then
 		if (nearby and ((ml_global_information.Player_Inventory_SlotsFree*100)/Inventory.slotCount) < 33) then
@@ -441,21 +648,11 @@ function gw2_sell_manager.needToSell(nearby)
 	return false
 end
 
--- Toggle menu.
+-- Toggle menu. TODO: replace with new gui stuff yeah.
 function gw2_sell_manager.ToggleMenu()
-	local mainWindow = WindowManager:GetWindow(gw2_sell_manager.mainWindow.name)
-	if (mainWindow) then
-		if ( mainWindow.visible ) then
-			mainWindow:Hide()
-		else
-			local wnd = WindowManager:GetWindow(gw2minion.MainWindow.Name)
-			if ( wnd ) then
-				mainWindow:SetPos(wnd.x+wnd.width,wnd.y)
-				mainWindow:Show()
-				gw2_sell_manager.UpdateComboBox(Inventory(""),"SellManager_ItemToSell",SellManager_ItemIDInfo)
-			end
-		end
-	end
+	gw2_sell_manager.mainWindow.open = gw2_sell_manager.mainWindow.open ~= true
 end
 
+-- Register Events here.
 RegisterEventHandler("Module.Initalize",gw2_sell_manager.ModuleInit)
+RegisterEventHandler("Gameloop.Draw", gw2_sell_manager.mainWindow.Draw)
