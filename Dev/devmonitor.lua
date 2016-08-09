@@ -424,7 +424,7 @@ function Dev.LoadModule()
 		GUI_NewField("Dev","CanSwapWeapons","SCCanSwap","Spell&CastingInfo")
 		GUI_NewButton("Dev","SwapWeapons","Dev.SwapWeapons","Spell&CastingInfo")
 		RegisterEventHandler("Dev.SwapWeapons", Dev.Func)	
-		GUI_NewNumeric("Dev","ListIndex","SCindex","Spell&CastingInfo","0","17");
+		GUI_NewNumeric("Dev","ListIndex","SCindex","Spell&CastingInfo","0","20");
 		GUI_NewField("Dev","Ptr","SCPtr","Spell&CastingInfo")
 		GUI_NewField("Dev","Slot","SCSlot","Spell&CastingInfo")
 		GUI_NewField("Dev","SkillID","SCID","Spell&CastingInfo")
