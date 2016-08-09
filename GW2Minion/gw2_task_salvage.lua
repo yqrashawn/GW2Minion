@@ -23,7 +23,7 @@ function gw2_task_salvage:Init()
 	self:AddTaskCheckCEs()
 end
 function gw2_task_salvage:task_complete_eval()
-	if (SalvageManager_Active == "1") then
+	if (gw2_salvage_manager.active) then
 		if ( Inventory.freeSlotCount >= 2 ) then
 			if (gw2_salvage_manager.haveSalvageTools() == false) then
 				if (gw2_salvage_manager.haveSalvagebleItems() == false) then
@@ -63,7 +63,7 @@ end
 c_salvage = inheritsFrom( ml_cause )
 e_salvage = inheritsFrom( ml_effect )
 function c_salvage:evaluate()
-	if (SalvageManager_Active == "1" and Inventory.freeSlotCount >= 2 and gw2_salvage_manager.haveSalvageTools() and gw2_salvage_manager.haveSalvagebleItems() and gw2_salvage_manager.checkCustomChecks()) then
+	if (gw2_salvage_manager.active and Inventory.freeSlotCount >= 2 and gw2_salvage_manager.haveSalvageTools() and gw2_salvage_manager.haveSalvagebleItems() and gw2_salvage_manager.checkCustomChecks()) then
 		return true
 	end
 	return false

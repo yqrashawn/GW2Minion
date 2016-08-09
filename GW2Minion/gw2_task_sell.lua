@@ -65,7 +65,7 @@ c_createVendorSellTask = inheritsFrom( ml_cause )
 e_createVendorSellTask = inheritsFrom( ml_effect )
 c_createVendorSellTask.throttle = 5000
 function c_createVendorSellTask:evaluate()
-	if ( SellManager_Active == "1" ) then
+	if ( gw2_sell_manager.active) then
 		if ((gw2_sell_manager.needToSell() or c_vendorsell.selling) and ( ValidTable(gw2_sell_manager.getClosestSellMarker()) or gw2_common_functions.GetNextVendorMarker())) then
 			return true
 		end
@@ -90,7 +90,7 @@ c_vendorsell = inheritsFrom( ml_cause )
 e_vendorsell = inheritsFrom( ml_effect )
 c_vendorsell.selling = false
 function c_vendorsell:evaluate()
-	if (SellManager_Active == "1" and ( c_vendorsell.selling or gw2_sell_manager.needToSell() ) and ValidTable(gw2_sell_manager.getClosestSellMarker())) then
+	if (gw2_sell_manager.active and ( c_vendorsell.selling or gw2_sell_manager.needToSell() ) and ValidTable(gw2_sell_manager.getClosestSellMarker())) then
 		return true
 	end
 	return false
@@ -112,7 +112,7 @@ c_quickvendorsell = inheritsFrom( ml_cause )
 e_quickvendorsell = inheritsFrom( ml_effect )
 c_quickvendorsell.selling = false
 function c_quickvendorsell:evaluate()
-	if (SellManager_Active == "1" and (c_quickvendorsell.selling or gw2_sell_manager.needToSell(true)) and ValidTable(gw2_sell_manager.getClosestSellMarker(true))) then
+	if (gw2_sell_manager.active and (c_quickvendorsell.selling or gw2_sell_manager.needToSell(true)) and ValidTable(gw2_sell_manager.getClosestSellMarker(true))) then
 		return true
 	end
 	return false
@@ -133,7 +133,7 @@ end
 c_moveToVendorMarkerSell = inheritsFrom( ml_cause )
 e_moveToVendorMarkerSell = inheritsFrom( ml_effect )
 function c_moveToVendorMarkerSell:evaluate()
-	if (SellManager_Active == "1" and gw2_sell_manager.needToSell() and c_MoveToVendorMarker:evaluate()) then
+	if (gw2_sell_manager.active and gw2_sell_manager.needToSell() and c_MoveToVendorMarker:evaluate()) then
 		return true
 	end
 	return false

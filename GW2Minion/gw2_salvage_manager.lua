@@ -1,9 +1,28 @@
--- SalvageManager
 gw2_salvage_manager = {}
-gw2_salvage_manager.mainWindow = { name = GetString("salvagemanager"), x = 350, y = 50, w = 250, h = 350}
-gw2minion.MainWindow.ChildWindows[gw2_salvage_manager.mainWindow.name] = gw2_salvage_manager.mainWindow.name
-gw2_salvage_manager.filterList = {}
-gw2_salvage_manager.currentFilter = nil
+gw2_salvage_manager.active = false
+gw2_salvage_manager.salvageTick = 0
+gw2_salvage_manager.toolTip = false
+gw2_salvage_manager.filterList = {list = {}, nameList = {}, currID = 1,}
+gw2_salvage_manager.singleItemList = {list = {}, nameList = {}, currID = 1,}
+gw2_salvage_manager.inventoryList = {list = {}, nameList = {}, currID = 1,}
+gw2_salvage_manager.salvageKitList = {
+	nameList = {GetString("rarityNone"),GetString("buyCrude"),GetString("buyBasic"),GetString("buyFine"),GetString("buyJourneyman"),GetString("buyMaster"),GetString("mysticKit"),GetString("copperFedKit"),GetString("silverFedKit"),GetString("blacklionKit"),},
+	idList = {[GetString("rarityNone")] = 1, [GetString("buyCrude")] = 2, [GetString("buyBasic")] = 3, [GetString("buyFine")] = 4, [GetString("buyJourneyman")] = 5, [GetString("buyMaster")] = 6, [GetString("mysticKit")] = 7, [GetString("copperFedKit")] = 8, [GetString("silverFedKit")] = 9, [GetString("blacklionKit")] = 10,},
+	currID = 1,
+}
+gw2_salvage_manager.tempFilter = {
+	new = true,
+	name = "",
+	preferedKit = "None",
+	rarity = {Common = false, Fine = false, Masterwork = false, Rare = false, Exotic = false},
+	itemType = {Armor = false, Back = false, Bag = false, Consumable = false, Container = false, CraftingMaterial = false, Gathering = false, Gizmo = false, MiniDeck = false, SalvageTool = false, Trinket = false, Trophy = false, UpgradeComponent = false, Weapon = false,},
+}
+gw2_salvage_manager.tempSingleItem = {
+	new = true,
+	itemID = 0,
+	name = "",
+	preferedKit = "None",
+}
 gw2_salvage_manager.kitlist = {
 	-- normal kits
 	[23038] = {name = GetString("buyCrude"),		rarity = 0,},	-- Crude Salvage Kit (rarity 1)
@@ -19,298 +38,538 @@ gw2_salvage_manager.kitlist = {
 }
 gw2_salvage_manager.customChecks = {}
 
+
+-- Gui stuff here.
+gw2_salvage_manager.mainWindow = {
+	name = GetString("salvagemanager"),
+	open = false,
+	visible = true,
+}
+
 function gw2_salvage_manager.ModuleInit()
-	if (Settings.GW2Minion.SalvageManager_Active == nil ) then
-		Settings.GW2Minion.SalvageManager_Active = "1"
+	-- Init Module.
+
+	-- init active stuff here.
+	if (Settings.gw2_salvage_manager.active == nil) then
+		Settings.gw2_salvage_manager.active = false
 	end
-	
-	if (Settings.GW2Minion.SalvageManager_ItemIDInfo == nil ) then
-		Settings.GW2Minion.SalvageManager_ItemIDInfo = {}
+	gw2_salvage_manager.active = Settings.gw2_salvage_manager.active
+	-- end active init.
+
+	-- init tooltip stuff here.
+	if (Settings.gw2_salvage_manager.toolTip == nil) then
+		Settings.gw2_salvage_manager.toolTip = true
 	end
-	
-	if (Settings.GW2Minion.SalvageManager_FilterList == nil) then
-		Settings.GW2Minion.SalvageManager_FilterList = {
-			{
-				itemtype = "Weapon",
-				name = "Weapons_Junk",
-				rarity = "Junk",
-				preferedKit = "None",
-			},
-			{
-				itemtype = "Weapon",
-				name = "Weapons_Common",
-				rarity = "Common",
-				preferedKit = "None",
-			},
-			{
-				itemtype = "Weapon",
-				name = "Weapons_Masterwork",
-				rarity = "Masterwork",
-				preferedKit = "None",
-			},
-			{
-				itemtype = "Weapon",
-				name = "Weapons_Fine",
-				rarity = "Fine",
-				preferedKit = "None",
-			},
-			{
-				itemtype = "Armor",
-				name = "Armor_Junk",
-				rarity = "Junk",
-				preferedKit = "None",
-			},
-			{
-				itemtype = "Armor",
-				name = "Armor_Common",
-				rarity = "Common",
-				preferedKit = "None",
-			},
-			{
-				itemtype = "Armor",
-				name = "Armor_Masterwork",
-				rarity = "Masterwork",
-				preferedKit = "None",
-			},
-			{
-				itemtype = "Armor",
-				name = "Armor_Fine",
-				rarity = "Fine",
-				preferedKit = "None",
-			},
-		}
+	gw2_salvage_manager.toolTip = Settings.gw2_salvage_manager.toolTip
+	-- end tooltip init.
+
+	-- init filter stuff here.
+	if (Settings.gw2_salvage_manager.filterList == nil) then
+		Settings.gw2_salvage_manager.filterList = {list = {}, nameList = {}, currID = 1}
 	end
-		
-	gw2_salvage_manager.filterList = Settings.GW2Minion.SalvageManager_FilterList
-	
-	-- Init Main Window
-	local mainWindow = WindowManager:NewWindow(gw2_salvage_manager.mainWindow.name,gw2_salvage_manager.mainWindow.x,gw2_salvage_manager.mainWindow.y,gw2_salvage_manager.mainWindow.w,gw2_salvage_manager.mainWindow.h,false)
-	if (mainWindow) then
-		mainWindow:NewButton(GetString("newfilter"),"SalvageManager_NewFilter")
-		RegisterEventHandler("SalvageManager_NewFilter",gw2_salvage_manager.CreateDialog)
-		mainWindow:NewCheckBox(GetString("active"),"SalvageManager_Active",GetString("salvage"))
-		mainWindow:UnFold(GetString("salvage"))
-		
-		mainWindow:NewComboBox(GetString("salvageByIDtems"),"SalvageManager_ItemToSalvage",GetString("salvageByID"),"None")
-		SalvageManager_ItemToSalvage = "None"
-		local list = GetString("rarityNone")..","..GetString("buyCrude")..","..GetString("buyBasic")..","..GetString("buyFine")..","..GetString("buyJourneyman")..","..GetString("buyMaster")..","..GetString("mysticKit")..","..GetString("unlimitedKit")
-		mainWindow:NewComboBox(GetString("preferedKit"),"SalvageManager_SingleKit",GetString("salvageByID"),list)
-		SalvageManager_SingleKit = GetString("rarityNone")
-		mainWindow:NewButton(GetString("salvageByIDAddItem"),"SalvageManager_AdditemID",GetString("salvageByID"))
-		RegisterEventHandler("SalvageManager_AdditemID",gw2_salvage_manager.AddItemID)
-		mainWindow:NewComboBox(GetString("salvageItemList"),"SalvageManager_ItemIDList",GetString("salvageByID"),"None")
-		SalvageManager_ItemIDList = "None"
-		mainWindow:NewButton(GetString("salvageByIDRemoveItem"),"SalvageManager_RemoveitemID",GetString("salvageByID"))
-		RegisterEventHandler("SalvageManager_RemoveitemID",gw2_salvage_manager.RemoveItemID)
-		
-		mainWindow:Hide()
+	gw2_salvage_manager.filterList = Settings.gw2_salvage_manager.filterList
+	gw2_salvage_manager.filterListUpdate()
+	-- end filter init.
+
+	-- init single-item stuff here.
+	if (Settings.gw2_salvage_manager.singleItemList == nil) then
+		Settings.gw2_salvage_manager.singleItemList = {list = {}, nameList = {}, currID = 1}
 	end
-	
-	SalvageManager_Active = Settings.GW2Minion.SalvageManager_Active
-	SalvageManager_ItemIDInfo = Settings.GW2Minion.SalvageManager_ItemIDInfo
-	
-	if (Player) then
-		gw2_salvage_manager.UpdateComboBox(Inventory("salvagable"),"SalvageManager_ItemToSalvage",SalvageManager_ItemIDInfo)
-		gw2_salvage_manager.UpdateComboBox(SalvageManager_ItemIDInfo,"SalvageManager_ItemIDList")
-		gw2_salvage_manager.refreshFilterlist()
-	end
-	
+	gw2_salvage_manager.singleItemList = Settings.gw2_salvage_manager.singleItemList
+	gw2_salvage_manager.singleItemListUpdate()
+	-- end single-item init.
+
+	-- init inventorylist stuff here.
+	gw2_salvage_manager.updateInventoryItems()
+
+	-- init button in minionmainbutton
+	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SALVMGR", name = "Salvage MGR", onClick = function() gw2_salvage_manager.mainWindow.open = gw2_salvage_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Salvage Manager\" window."},"GW2MINION##MENU_HEADER")
+
 end
 
--- SINGLE ITEM STUFF HERE
--- Update singe-item drop-down list.
-function gw2_salvage_manager.UpdateComboBox(iTable,global,excludeTable,setToName)
-	if (iTable and global) then
-		local list = "None"
-		for _,item in pairs(iTable) do
-			if (ValidString(item.name) and StringContains(list, item.name) == false)then
-				local name = item.name 
-				if (ValidTable(excludeTable)) then
-					for _,eItem in pairs(excludeTable) do
-						if (eItem.name == item.name) then
-							name = ""
-						end
+-- Gui draw function.
+function gw2_salvage_manager.mainWindow.Draw(event,ticks)
+	if (gw2_salvage_manager.mainWindow.open) then 
+		-- set size on first use only.
+		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver)
+		-- update visible and open variables.
+		gw2_salvage_manager.mainWindow.visible, gw2_salvage_manager.mainWindow.open = GUI:Begin(gw2_salvage_manager.mainWindow.name, gw2_salvage_manager.mainWindow.open, GUI.WindowFlags_AlwaysAutoResize+GUI.WindowFlags_NoCollapse)
+		if (gw2_salvage_manager.mainWindow.visible) then
+			-- Status field.
+			-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			GUI:Spacing()
+			GUI:BeginGroup()
+			gw2_salvage_manager.active = GUI:Checkbox(GetString("active"), gw2_salvage_manager.active)
+			Settings.gw2_salvage_manager.active = gw2_salvage_manager.active
+			GUI:EndGroup()
+			if (GUI:IsItemHovered() and gw2_salvage_manager.toolTip) then
+				GUI:SetTooltip("Turn Salvaging on or off.")
+			end
+			-----------------------------------------------------------------------------------------------------------------------------------
+			GUI:Separator()
+			-----------------------------------------------------------------------------------------------------------------------------------
+			-- Filter group here.
+			-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing) -- open the tree *BUG* conditions not working as expected.
+			if (GUI:TreeNode(GetString("filters"))) then -- create the tree, only pop inside if.
+				GUI:PushItemWidth(200)
+				gw2_salvage_manager.filterList.currID = GUI:ListBox("##msalvagem-filterlist",gw2_salvage_manager.filterList.currID,gw2_salvage_manager.filterList.nameList, 5)
+				GUI:PopItemWidth()
+				GUI:SameLine()
+				GUI:BeginGroup()
+				GUI:Spacing()
+				-- NewFilter Button.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				if (GUI:Button(GetString("newfilter"), 100,25)) then
+					GUI:OpenPopup("##msalvagem-filterPopup")
+					gw2_salvage_manager.tempFilter = {
+						new = true,
+						name = "",
+						preferedKit = "None",
+						rarity = {Common = false, Fine = false, Masterwork = false, Rare = false, Exotic = false},
+						itemType = {Armor = false, Back = false, Bag = false, Consumable = false, Container = false, CraftingMaterial = false, Gathering = false, Gizmo = false, MiniDeck = false, SalvageTool = false, Trinket = false, Trophy = false, UpgradeComponent = false, Weapon = false,},
+					}
+				end
+				if (GUI:IsItemHovered() and gw2_salvage_manager.toolTip) then
+					GUI:SetTooltip("Create a new filter.")
+				end
+				-- Edit Button.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				if (GUI:Button(GetString("editfilter"), 100,25)) then
+					if (gw2_salvage_manager.filterList.list[gw2_salvage_manager.filterList.currID] ~= nil) then
+						GUI:OpenPopup("##msalvagem-filterPopup")
+						gw2_salvage_manager.tempFilter = gw2_salvage_manager.filterList.list[gw2_salvage_manager.filterList.currID]
+						gw2_salvage_manager.salvageKitList.currID = gw2_salvage_manager.salvageKitList.idList[gw2_salvage_manager.filterList.list[gw2_salvage_manager.filterList.currID].preferedKit]
 					end
 				end
-				list = (ValidString(name) == true and list .. "," .. name or list)
+				if (GUI:IsItemHovered() and gw2_salvage_manager.toolTip) then
+					GUI:SetTooltip("Edit the selected filter.")
+				end
+				-- Create New/Edit filter button response.
+				GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
+				GUI:SetNextWindowSize(400, 420, GUI.SetCond_Once)
+				if (GUI:BeginPopup("##msalvagem-filterPopup")) then
+					GUI:Spacing()
+					GUI:Text("Filter details:")
+					GUI:Spacing()
+					-----------------------------------------------------------------------------------------------------------------------------------
+					GUI:Separator()
+					-----------------------------------------------------------------------------------------------------------------------------------
+					--name
+					GUI:AlignFirstTextHeightToWidgets()
+					GUI:Text("Name:")
+					GUI:SameLine(180)
+					gw2_salvage_manager.tempFilter.name = GUI:InputText("##msalvagem-filtername",gw2_salvage_manager.tempFilter.name)
+					--prefkit
+					GUI:AlignFirstTextHeightToWidgets()
+					GUI:Text(GetString("preferedKit"))
+					GUI:SameLine(180)
+					gw2_salvage_manager.salvageKitList.currID = GUI:Combo("##msalvagem-filterprefkit",gw2_salvage_manager.salvageKitList.currID,gw2_salvage_manager.salvageKitList.nameList)
+					gw2_salvage_manager.tempFilter.preferedKit = gw2_salvage_manager.salvageKitList.nameList[gw2_salvage_manager.salvageKitList.currID]
+					--rarity
+					GUI:AlignFirstTextHeightToWidgets()
+					GUI:Text(GetString("rarity"))
+					GUI:SameLine(180)
+					GUI:BeginChild("##msalvagem-filterrarity", 209, 80, true)
+					gw2_salvage_manager.tempFilter.rarity.Common = GUI:Checkbox(GetString("rarityCommon"),gw2_salvage_manager.tempFilter.rarity.Common)
+					GUI:SameLine(110)
+					gw2_salvage_manager.tempFilter.rarity.Fine = GUI:Checkbox(GetString("rarityFine"),gw2_salvage_manager.tempFilter.rarity.Fine)
+					gw2_salvage_manager.tempFilter.rarity.Masterwork = GUI:Checkbox(GetString("rarityMasterwork"),gw2_salvage_manager.tempFilter.rarity.Masterwork)
+					GUI:SameLine(110)
+					gw2_salvage_manager.tempFilter.rarity.Rare = GUI:Checkbox(GetString("rarityRare"),gw2_salvage_manager.tempFilter.rarity.Rare)
+					gw2_salvage_manager.tempFilter.rarity.Exotic = GUI:Checkbox(GetString("rarityExotic"),gw2_salvage_manager.tempFilter.rarity.Exotic)
+					GUI:EndChild()
+					--itemtype
+					GUI:AlignFirstTextHeightToWidgets()
+					GUI:Text("Item-types:")
+					GUI:SameLine(110)
+					GUI:BeginChild("##msalvagem-filteritemtype", 279, 173, true)
+					gw2_salvage_manager.tempFilter.itemType.Armor = GUI:Checkbox("Armor",gw2_salvage_manager.tempFilter.itemType.Armor)
+					GUI:SameLine(155)
+					gw2_salvage_manager.tempFilter.itemType.Back = GUI:Checkbox("Back",gw2_salvage_manager.tempFilter.itemType.Back)
+					gw2_salvage_manager.tempFilter.itemType.Bag = GUI:Checkbox("Bag",gw2_salvage_manager.tempFilter.itemType.Bag)
+					GUI:SameLine(155)
+					gw2_salvage_manager.tempFilter.itemType.Consumable = GUI:Checkbox("Consumable",gw2_salvage_manager.tempFilter.itemType.Consumable)
+					gw2_salvage_manager.tempFilter.itemType.CraftingMaterial = GUI:Checkbox("Crafting-Material",gw2_salvage_manager.tempFilter.itemType.CraftingMaterial)
+					GUI:SameLine(155)
+					gw2_salvage_manager.tempFilter.itemType.Gathering = GUI:Checkbox("Gathering",gw2_salvage_manager.tempFilter.itemType.Gathering)
+					gw2_salvage_manager.tempFilter.itemType.Gizmo = GUI:Checkbox("Gizmo",gw2_salvage_manager.tempFilter.itemType.Gizmo)
+					GUI:SameLine(155)
+					gw2_salvage_manager.tempFilter.itemType.MiniDeck = GUI:Checkbox("MiniDeck",gw2_salvage_manager.tempFilter.itemType.MiniDeck)
+					gw2_salvage_manager.tempFilter.itemType.SalvageTool = GUI:Checkbox("Salvage-Tool",gw2_salvage_manager.tempFilter.itemType.SalvageTool)
+					GUI:SameLine(155)
+					gw2_salvage_manager.tempFilter.itemType.Trinket = GUI:Checkbox("Trinket",gw2_salvage_manager.tempFilter.itemType.Trinket)
+					gw2_salvage_manager.tempFilter.itemType.UpgradeComponent = GUI:Checkbox("Upgrade-Component",gw2_salvage_manager.tempFilter.itemType.UpgradeComponent)
+					GUI:SameLine(155)
+					gw2_salvage_manager.tempFilter.itemType.Weapon = GUI:Checkbox("Weapon",gw2_salvage_manager.tempFilter.itemType.Weapon)
+					gw2_salvage_manager.tempFilter.itemType.Container = GUI:Checkbox("Container",gw2_salvage_manager.tempFilter.itemType.Container)
+					GUI:SameLine(155)
+					gw2_salvage_manager.tempFilter.itemType.Trophy = GUI:Checkbox("Trophy",gw2_salvage_manager.tempFilter.itemType.Trophy)
+					GUI:EndChild()
+					-- Layout spacing.
+					GUI:Spacing()
+					-----------------------------------------------------------------------------------------------------------------------------------
+					GUI:Separator()
+					------------------------------------------------------------------------------------------------------------------------
+					-- Layout spacing.
+					GUI:Dummy(100,20)
+					GUI:Spacing()
+					-- CANCEL BUTTON.
+					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+					GUI:SameLine(80)
+					if (GUI:Button(GetStringML("cancel"),80,30)) then
+						GUI:CloseCurrentPopup()
+					end
+					-- OK BUTTON.
+					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+					GUI:SameLine(240)
+					if (GUI:Button(GetStringML("ok"),80,30)) then
+						if (gw2_salvage_manager.validFilter(gw2_salvage_manager.tempFilter)) then
+							-- save new filter here.
+							if (gw2_salvage_manager.tempFilter.new) then
+								gw2_salvage_manager.tempFilter.new = nil
+								table.insert(gw2_salvage_manager.filterList.list, gw2_salvage_manager.tempFilter)
+							-- save edited filter here.
+							else
+								gw2_salvage_manager.filterList.list[gw2_salvage_manager.filterList.currID] = gw2_salvage_manager.tempFilter
+							end
+							-- update.
+							gw2_salvage_manager.filterListUpdate()
+							GUI:CloseCurrentPopup()
+						else
+							GUI:OpenPopup("Invalid Filter.")
+						end
+					end
+					GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
+					GUI:SetNextWindowSize(400, 140, GUI.SetCond_Always)
+					if (GUI:BeginPopupModal("Invalid Filter.",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
+						GUI:Spacing()
+						GUI:SameLine(150)
+						GUI:Text("Invalid Filter.")
+						GUI:Spacing()
+						GUI:SameLine(135)
+						GUI:SetWindowFontScale(0.8)
+						GUI:Text("Please check the filter.")
+						GUI:SetWindowFontScale(1)
+						
+						GUI:Spacing()
+						GUI:Separator()
+						GUI:Dummy(100,20)
+						GUI:Spacing()
+						GUI:SameLine(160)
+						if (GUI:Button(GetStringML("ok"),80,30)) then
+							GUI:CloseCurrentPopup()
+						end
+						GUI:EndPopup()
+					end
+					GUI:EndPopup()
+				end
+				
+				-- Delete Button.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				if (GUI:Button(GetString("deletefilter"), 100,25)) then
+					if (gw2_salvage_manager.filterList.list[gw2_salvage_manager.filterList.currID] ~= nil) then
+						GUI:OpenPopup("##msalvagem-deletefilterPopup")
+					end
+				end
+				if (GUI:IsItemHovered() and gw2_salvage_manager.toolTip) then
+					GUI:SetTooltip("Delete the selected filter.")
+				end
+				GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
+				GUI:SetNextWindowSize(400, 140, GUI.SetCond_Always)
+				if (GUI:BeginPopupModal("##msalvagem-deletefilterPopup",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
+					GUI:Spacing()
+					GUI:SameLine(50)
+					GUI:Text("Are you sure you want to delete this filter?")
+					GUI:Spacing()
+					GUI:SameLine(80)
+					GUI:SetWindowFontScale(0.8)
+					GUI:Text("Press \"Delete\" to delete, \"Cancel\" to cancel. ")
+					GUI:SetWindowFontScale(1)
+					
+					GUI:Spacing()
+					GUI:Separator()
+					GUI:Dummy(100,20)
+					GUI:Spacing()
+					GUI:SameLine(80)
+					if (GUI:Button(GetStringML("cancel"),80,30)) then
+						GUI:CloseCurrentPopup()
+					end
+					GUI:SameLine(240)
+					if (GUI:Button(GetStringML("delete"),80,30)) then
+						table.remove(gw2_salvage_manager.filterList.list, gw2_salvage_manager.filterList.currID)
+						gw2_salvage_manager.filterListUpdate()
+						GUI:CloseCurrentPopup()
+					end
+					GUI:EndPopup()
+				end
+				
+				GUI:EndGroup()
+				GUI:TreePop()
 			end
+			-----------------------------------------------------------------------------------------------------------------------------------
+			GUI:Separator()
+			-----------------------------------------------------------------------------------------------------------------------------------
+			
+			-- Single item group here.
+			-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			GUI:SetNextTreeNodeOpened(true, GUI.SetCond_FirstUseEver)
+			if (GUI:TreeNode(GetString("singleitems"))) then
+				GUI:PushItemWidth(200)
+				gw2_salvage_manager.singleItemList.currID = GUI:ListBox("##msalvagem-singleitemlist",gw2_salvage_manager.singleItemList.currID,gw2_salvage_manager.singleItemList.nameList, 5)
+				GUI:PopItemWidth()
+				GUI:SameLine()
+				
+				GUI:BeginGroup()
+				GUI:Spacing()
+				-- New-Item Button.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				if (GUI:Button(GetString("newitem"), 100,25)) then
+					GUI:OpenPopup("##msalvagem-itemPopup")
+					gw2_salvage_manager.updateInventoryItems()
+					gw2_salvage_manager.tempSingleItem = {
+						new = true,
+						itemID = 0,
+						name = "",
+						preferedKit = "None",
+					}
+				end
+				if (GUI:IsItemHovered() and gw2_salvage_manager.toolTip) then
+					GUI:SetTooltip("Add a new item.")
+				end
+				-- Edit item Button.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				if (GUI:Button(GetString("edititem"), 100,25)) then
+					if (gw2_salvage_manager.singleItemList.list[gw2_salvage_manager.singleItemList.currID] ~= nil) then
+						GUI:OpenPopup("##msalvagem-itemPopup")
+						gw2_salvage_manager.updateInventoryItems()
+						gw2_salvage_manager.tempSingleItem = gw2_salvage_manager.singleItemList.list[gw2_salvage_manager.singleItemList.currID]
+						gw2_salvage_manager.salvageKitList.currID = gw2_salvage_manager.salvageKitList.idList[gw2_salvage_manager.singleItemList.list[gw2_salvage_manager.singleItemList.currID].preferedKit]
+					end
+				end
+				if (GUI:IsItemHovered() and gw2_salvage_manager.toolTip) then
+					GUI:SetTooltip("Edit the selected item.")
+				end
+				-- Create Button response.
+				GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
+				GUI:SetNextWindowSize(400, 160,GUI.SetCond_Once)
+				if (GUI:BeginPopup("##msalvagem-itemPopup")) then
+					GUI:Spacing()
+					GUI:Text("Choose an item:")
+					GUI:Spacing()
+					-----------------------------------------------------------------------------------------------------------------------------------
+					GUI:Separator()
+					-----------------------------------------------------------------------------------------------------------------------------------
+					--name
+					GUI:AlignFirstTextHeightToWidgets()
+					GUI:Text("Item:")
+					GUI:PushItemWidth(240)
+					GUI:SameLine(150)
+					if (gw2_salvage_manager.tempSingleItem.new) then
+						gw2_salvage_manager.inventoryList.currID = GUI:Combo("##msalvagem-inventorylist",gw2_salvage_manager.inventoryList.currID,gw2_salvage_manager.inventoryList.nameList)
+						gw2_salvage_manager.tempSingleItem.itemID = gw2_salvage_manager.inventoryList.list[gw2_salvage_manager.inventoryList.currID].itemID
+						gw2_salvage_manager.tempSingleItem.name = gw2_salvage_manager.inventoryList.list[gw2_salvage_manager.inventoryList.currID].name
+					else
+						GUI:InputText("##msalvagem-editItemName",gw2_salvage_manager.tempSingleItem.name,GUI.InputTextFlags_ReadOnly)
+					end
+					--prefkit
+					GUI:AlignFirstTextHeightToWidgets()
+					GUI:Text(GetString("preferedKit"))
+					GUI:SameLine(150)
+					gw2_salvage_manager.salvageKitList.currID = GUI:Combo("##msalvagem-itemprefkit",gw2_salvage_manager.salvageKitList.currID,gw2_salvage_manager.salvageKitList.nameList)
+					gw2_salvage_manager.tempSingleItem.preferedKit = gw2_salvage_manager.salvageKitList.nameList[gw2_salvage_manager.salvageKitList.currID]
+					-----------------------------------------------------------------------------------------------------------------------------------
+					GUI:Separator()
+					-----------------------------------------------------------------------------------------------------------------------------------
+					-- Layout spacing.
+					GUI:Dummy(100,20)
+					GUI:Spacing()
+					-- CANCEL BUTTON.
+					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+					GUI:SameLine(80)
+					if (GUI:Button(GetStringML("cancel"),80,30)) then
+						GUI:CloseCurrentPopup()
+					end
+					-- OK BUTTON.
+					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+					GUI:SameLine(240)
+					if (GUI:Button(GetStringML("ok"),80,30)) then
+						-- save new single item here.
+						if (gw2_salvage_manager.tempSingleItem.new) then
+							gw2_salvage_manager.tempSingleItem.new = nil
+							table.insert(gw2_salvage_manager.singleItemList.list, gw2_salvage_manager.tempSingleItem)
+						-- save edited single-item here.
+						else
+							gw2_salvage_manager.singleItemList.list[gw2_salvage_manager.singleItemList.currID] = gw2_salvage_manager.tempSingleItem
+						end
+						-- update.
+						gw2_salvage_manager.singleItemListUpdate()
+						GUI:CloseCurrentPopup()
+					end
+					GUI:EndPopup()
+				end
+				
+				-- Delete Button.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				if (GUI:Button("Delete Item", 100,25)) then
+					if (gw2_salvage_manager.singleItemList.list[gw2_salvage_manager.singleItemList.currID] ~= nil) then
+						GUI:OpenPopup("Delete Item?")
+					end
+				end
+				if (GUI:IsItemHovered() and gw2_salvage_manager.toolTip) then
+					GUI:SetTooltip("Delete the selected item.")
+				end
+				GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
+				GUI:SetNextWindowSize(400, 140, GUI.SetCond_Always)
+				if (GUI:BeginPopupModal("Delete Item?",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
+					GUI:Spacing()
+					GUI:SameLine(50)
+					GUI:Text("Are you sure you want to delete this item?")
+					GUI:Spacing()
+					GUI:SameLine(80)
+					GUI:SetWindowFontScale(0.8)
+					GUI:Text("Press \"Delete\" to delete, \"Cancel\" to cancel. ")
+					GUI:SetWindowFontScale(1)
+					
+					GUI:Spacing()
+					GUI:Separator()
+					GUI:Dummy(100,20)
+					GUI:Spacing()
+					GUI:SameLine(80)
+					if (GUI:Button(GetStringML("cancel"),80,30)) then
+						GUI:CloseCurrentPopup()
+					end
+					GUI:SameLine(240)
+					if (GUI:Button(GetStringML("delete"),80,30)) then
+						table.remove(gw2_salvage_manager.singleItemList.list, gw2_salvage_manager.singleItemList.currID)
+						gw2_salvage_manager.singleItemListUpdate()
+						GUI:CloseCurrentPopup()
+					end
+					GUI:EndPopup()
+				end
+				GUI:EndGroup()
+				GUI:TreePop()
+			end
+			-----------------------------------------------------------------------------------------------------------------------------------
+			GUI:Separator()
+			-----------------------------------------------------------------------------------------------------------------------------------
 		end
-		_G[global] = (setToName == false and _G[global] or ValidString(setToName) and setToName or "None")
-		_G[global .. "_listitems"] = list
+		GUI:End()
 	end
 end
 
--- Add Single-Item to itemIDlist.
-function gw2_salvage_manager.AddItemID()
-	if (ValidString(SalvageManager_ItemToSalvage) and SalvageManager_ItemToSalvage ~= "None") then
-		-- Make sure this item is not already in our SellList
-		for _,item in pairs(SalvageManager_ItemIDInfo) do
-			if (SalvageManager_ItemToSalvage == item.name) then
-				return
+-- Filter list functions.
+function gw2_salvage_manager.filterListUpdate()
+	gw2_salvage_manager.filterList.nameList = {}
+	for id,filter in ipairs(gw2_salvage_manager.filterList.list) do
+		table.insert(gw2_salvage_manager.filterList.nameList,filter.name)
+	end
+	Settings.gw2_salvage_manager.filterList = gw2_salvage_manager.filterList
+end
+
+function gw2_salvage_manager.itemMatchesFilter(nItem)
+	if (table.valid(nItem)) then
+		for _,filter in pairs(gw2_salvage_manager.filterList.list) do
+			local matchFilterRarity = false
+			local matchFilterItemType = false
+			for id,allowed in pairs(filter.rarity) do
+				if (allowed and GW2.ITEMRARITY[id] == nItem.rarity) then
+					matchFilterRarity = true
+					break
+				end
+			end
+			if (matchFilterRarity) then
+				for id,allowed in pairs(filter.itemType) do
+					if (allowed and GW2.ITEMTYPE[id] == nItem.itemtype) then
+						matchFilterItemType = true
+						break
+					end
+				end
+				if (matchFilterItemType) then
+					nItem.preferedKit = filter.preferedKit
+					return true,nItem
+				end
 			end
 		end
-		-- Find Item by Name in Inventory
-		for _,item in pairs(Inventory("")) do
-			if (ValidString(item.name) and item.name == SalvageManager_ItemToSalvage)then
-				table.insert(SalvageManager_ItemIDInfo, {name = item.name, itemID = item.itemID, preferedKit = SalvageManager_SingleKit})
-				gw2_salvage_manager.UpdateComboBox(SalvageManager_ItemIDInfo,"SalvageManager_ItemIDList",nil,item.name)
-				break
-			end
-		end
-		Settings.GW2Minion.SalvageManager_ItemIDInfo = SalvageManager_ItemIDInfo
-		gw2_salvage_manager.UpdateComboBox(Inventory("salvagable"),"SalvageManager_ItemToSalvage",SalvageManager_ItemIDInfo)
 	end
 	return false
 end
 
--- Remove Single-Item from itemIDlist.
-function gw2_salvage_manager.RemoveItemID()
-	if ( ValidString(SalvageManager_ItemIDList) and SalvageManager_ItemIDList ~= "None") then
-		for id,item in pairs(SalvageManager_ItemIDInfo) do
-			if (item.name == SalvageManager_ItemIDList) then
-				table.remove(SalvageManager_ItemIDInfo, id)
-				break
+function gw2_salvage_manager.validFilter(filter)
+	return (table.valid(filter) and string.valid(filter.name) and table.contains(filter.rarity,true) and table.contains(filter.itemType,true))
+end
+
+-- Single-item list functions.
+function gw2_salvage_manager.singleItemListUpdate()
+	gw2_salvage_manager.singleItemList.nameList = {}
+	for id,item in ipairs(gw2_salvage_manager.singleItemList.list) do
+		table.insert(gw2_salvage_manager.singleItemList.nameList,item.name)
+	end
+	Settings.gw2_salvage_manager.singleItemList = gw2_salvage_manager.singleItemList
+end
+
+function gw2_salvage_manager.singleItemListContains(nItem)
+	if (table.valid(nItem)) then
+		for _,eItem in pairs(gw2_salvage_manager.singleItemList.list) do
+			if (eItem.itemID == nItem.itemID) then
+				nItem.preferedKit = eItem.preferedKit
+				return true,nItem
 			end
 		end
-		Settings.GW2Minion.SalvageManager_ItemIDInfo = SalvageManager_ItemIDInfo
-		gw2_salvage_manager.UpdateComboBox(SalvageManager_ItemIDInfo,"SalvageManager_ItemIDList")
-		gw2_salvage_manager.UpdateComboBox(Inventory("salvagable"),"SalvageManager_ItemToSalvage",SalvageManager_ItemIDInfo)
 	end
+	return false
 end
 
--- FILTER STUFF HERE
---Refresh filters.
-function gw2_salvage_manager.refreshFilterlist()
-	local mainWindow = WindowManager:GetWindow(gw2_salvage_manager.mainWindow.name)
-	if (mainWindow) then
-		mainWindow:DeleteGroup(GetString("salvagefilters"))
-		for id,filter in pairs(gw2_salvage_manager.filterList) do
-			mainWindow:NewButton(gw2_salvage_manager.filterList[id].name, "SalvageManager_Filter" .. id,GetString("salvagefilters"))
-			RegisterEventHandler("SalvageManager_Filter" .. id ,gw2_salvage_manager.CreateDialog)
+-- Inventory functions.
+function gw2_salvage_manager.updateInventoryItems()
+	local inventory = Inventory("salvagable")
+	gw2_salvage_manager.inventoryList.list = {}
+	gw2_salvage_manager.inventoryList.nameList = {}
+	gw2_salvage_manager.inventoryList.currID = 1
+	for id,nItem in pairsByValueAttribute(inventory,"name") do
+		if (table.valid(nItem) and gw2_salvage_manager.singleItemListContains(nItem) == false) then
+			table.insert(gw2_salvage_manager.inventoryList.list,nItem)
+			table.insert(gw2_salvage_manager.inventoryList.nameList,nItem.name)
 		end
-		mainWindow:UnFold(GetString("salvagefilters"))
 	end
 end
 
--- Create New Filter Dialog.
-function gw2_salvage_manager.CreateDialog(filterID)
-	if (filterID:find("SalvageManager_Filter")) then
-		filterID = string.gsub(filterID, "SalvageManager_Filter", "")
-		filterID = tonumber(filterID)
-		gw2_salvage_manager.currentFilter = filterID
-	else
-		gw2_salvage_manager.currentFilter = nil
-	end
-	local dialog = gw2_dialog_manager:GetDialog(GetString("newsalvagefilter"))
-	if (dialog == nil) then
-		dialog = gw2_dialog_manager:NewDialog(GetString("newsalvagefilter"))
-		dialog:NewField(GetString("name"),"SalvageManager_Name")
-		local list = "None"
-		for name,_ in pairs(GW2.ITEMTYPE) do list = list .. "," .. name end
-		dialog:NewComboBox(GetString("itemtype"),"SalvageManager_Itemtype",list)
-		list = GetString("rarityNone")..","..GetString("rarityJunk")..","..GetString("rarityCommon")..","..GetString("rarityFine")..","..GetString("rarityMasterwork")..","..GetString("rarityRare")..","..GetString("rarityExotic")
-		dialog:NewComboBox(GetString("rarity"),"SalvageManager_Rarity",list)
-		list = GetString("rarityNone")..","..GetString("buyCrude")..","..GetString("buyBasic")..","..GetString("buyFine")..","..GetString("buyJourneyman")..","..GetString("buyMaster")..","..GetString("mysticKit")..","..GetString("copperFedKit")..","..GetString("silverFedKit")
-		dialog:NewComboBox(GetString("preferedKit"),"SalvageManager_Kit",list)
-		dialog:SetOkFunction(gw2_salvage_manager.DialogOK)
-		dialog:SetDeleteFunction(gw2_salvage_manager.DialogDelete)
-	end
-	if (dialog) then
-		local tType = (type(filterID) == "number")
-		dialog:Show(tType)
-		SalvageManager_Name = (tType and gw2_salvage_manager.filterList[filterID].name or "")
-		SalvageManager_Itemtype = (tType and gw2_salvage_manager.filterList[filterID].itemtype or "None")
-		SalvageManager_Rarity = (tType and gw2_salvage_manager.filterList[filterID].rarity or GetString("rarityNone"))
-		SalvageManager_Kit = (tType and gw2_salvage_manager.filterList[filterID].preferedKit or GetString("rarityNone"))
+-- Add custom checks. Functions added HAVE to return true(can salvage) or false(cant salvage).
+function gw2_salvage_manager.addCustomChecks(newFunction)
+	if (type(newFunction) == "function") then
+		table.insert(gw2_salvage_manager.customChecks,newFunction)
 	end
 end
 
--- Dialog OK button function.
-function gw2_salvage_manager.DialogOK()
-	local saveFilter = {name = SalvageManager_Name,itemtype = SalvageManager_Itemtype,rarity = SalvageManager_Rarity,preferedKit = SalvageManager_Kit}
-	if (ValidString(saveFilter.name) == false) then
-		return "Please enter a filter name before saving."
-	elseif (gw2_salvage_manager.validFilter(saveFilter)) then -- check if filter is valid.
-		if (type(gw2_salvage_manager.currentFilter) ~= "number") then -- new filter, making sure name is not in use.
-			for _,filter in pairs(gw2_salvage_manager.filterList) do
-				if (saveFilter.name == filter.name) then
-					return "Filter with this name already exists, please change the name."
-				end
+-- Custom checks check.
+function gw2_salvage_manager.checkCustomChecks()
+	for _,customCheck in ipairs(gw2_salvage_manager.customChecks) do
+		if (type(customCheck) == "function") then
+			if (customCheck() == false) then
+				return false
 			end
-			table.insert(gw2_salvage_manager.filterList, saveFilter)
-		else
-			gw2_salvage_manager.filterList[gw2_salvage_manager.currentFilter] = saveFilter
 		end
-		Settings.GW2Minion.SalvageManager_FilterList = gw2_salvage_manager.filterList
-		gw2_salvage_manager.refreshFilterlist()
-		return true
-	else
-		return "Filter Not Valid. Filter needs to have both type and rarity set. Junk rarity can be set without any type."
 	end
-end
-
--- Dialog DELETE button function.
-function gw2_salvage_manager.DialogDelete()
-	table.remove(gw2_salvage_manager.filterList, gw2_salvage_manager.currentFilter)
-	Settings.GW2Minion.SalvageManager_FilterList = gw2_salvage_manager.filterList
-	gw2_salvage_manager.refreshFilterlist()
 	return true
 end
 
--- Check if filter is valid:
-function gw2_salvage_manager.validFilter(filter)
-	if (filter.itemtype ~= "None" and filter.itemtype ~= nil and
-	filter.rarity ~= "None" and filter.rarity ~= nil) then
-		return true
-	elseif (filter.rarity == "Junk") then
-		return true
-	end
-	return false
-end
-
--- Working stuff here.
---Create filtered salvage item list.
+-- Salvage List stuff here.
 function gw2_salvage_manager.createItemList()
-	local items = Inventory("salvagable,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("salvageItems")))
+	local inventoryItems = Inventory("salvagable")
 	local filteredItems = {}
-	if (items) then
-		for _,item in pairs(items) do
-			if (item.salvagable and item.soulbound == false) then
-				local addItem = false
-				for _,filter in pairs(gw2_salvage_manager.filterList) do
-					if (gw2_salvage_manager.validFilter(filter)) then
-						if ((filter.rarity == nil or filter.rarity == "None" or GW2.ITEMRARITY[filter.rarity] == item.rarity) and
-						(filter.itemtype == nil or filter.itemtype == "None" or GW2.ITEMTYPE[filter.itemtype] == item.itemtype)) then
-							addItem = true
-							item.preferedKit = filter.preferedKit
-							break
-						end
-					end
-				end
-				-- Check single itemlist
-				if (addItem == false) then
-					for iID,lItem in pairs(SalvageManager_ItemIDInfo) do
-						if (item.itemID == lItem.itemID) then
-							addItem = true
-							item.preferedKit = lItem.preferedKit
-							break
-						end
-					end
-				end
-				-- Add item if found in filters.
-				if (addItem) then
-					table.insert(filteredItems, item)
-				end
+	if (table.valid(inventoryItems)) then
+		for slot,nItem in pairs(inventoryItems) do
+			nItem = nItem -- might need deepcopy?
+			if (gw2_salvage_manager.itemMatchesFilter(nItem) or gw2_salvage_manager.singleItemListContains(nItem)) then
+				table.insert(filteredItems,nItem)
+				--itemIDString = itemIDString .. nItem.itemID .. ","
 			end
 		end
-		if (ValidTable(filteredItems)) then
-			return filteredItems
-		end
 	end
-	return false
+	return filteredItems--,itemIDString
 end
 
---Have Salvageable items.
+-- working checks here.
 function gw2_salvage_manager.haveSalvagebleItems()
 	if (ValidTable(gw2_salvage_manager.createItemList())) then
 		return true
@@ -318,7 +577,6 @@ function gw2_salvage_manager.haveSalvagebleItems()
 	return false
 end
 
---Have Salvage tools.
 function gw2_salvage_manager.haveSalvageTools()
 	if (TableSize(Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool))>0) then
 		return true
@@ -326,7 +584,6 @@ function gw2_salvage_manager.haveSalvageTools()
 	return false
 end
 
--- Get Best tool to salvage.
 function gw2_salvage_manager.getBestTool(item)
 	if (item) then
 		local tList = Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool)
@@ -351,29 +608,10 @@ function gw2_salvage_manager.getBestTool(item)
 	end
 end
 
--- Add custom checks. Functions added HAVE to return true(can salvage) or false(cant salvage).
-function gw2_salvage_manager.addCustomChecks(newFunction)
-	if (type(newFunction) == "function") then
-		table.insert(gw2_salvage_manager.customChecks,newFunction)
-	end
-end
-
--- Custom checks check.
-function gw2_salvage_manager.checkCustomChecks()
-	for _,customCheck in ipairs(gw2_salvage_manager.customChecks) do
-		if (type(customCheck) == "function") then
-			if (customCheck() == false) then
-				return false
-			end
-		end
-	end
-	return true
-end
-
--- Salvage function.
+--salvage fun here.
 function gw2_salvage_manager.salvage()
-	if ((SalvageManager_Active == "1" and math.random(0,3) == 0 and ml_global_information.Player_Inventory_SlotsFree >= 2) and
-	(gw2_salvage_manager.haveSalvageTools() and gw2_salvage_manager.haveSalvagebleItems() and gw2_salvage_manager.checkCustomChecks())) then
+	if ((gw2_salvage_manager.active and math.random(0,3) == 0 and ml_global_information.Player_Inventory_SlotsFree >= 2) and
+	(ml_global_information.Player_InCombat == false and ml_global_information.Player_Alive and gw2_salvage_manager.checkCustomChecks())) then
 		local salvageItems = gw2_salvage_manager.createItemList()
 		if (ValidTable(salvageItems)) then
 			for _,item in pairs(salvageItems) do
@@ -389,21 +627,11 @@ function gw2_salvage_manager.salvage()
 	return false
 end
 
--- Toggle menu.
+-- Toggle menu. TODO: replace with new gui stuff yeah.
 function gw2_salvage_manager.ToggleMenu()
-	local mainWindow = WindowManager:GetWindow(gw2_salvage_manager.mainWindow.name)
-	if (mainWindow) then
-		if ( mainWindow.visible ) then
-			mainWindow:Hide()
-		else
-			local wnd = WindowManager:GetWindow(gw2minion.MainWindow.Name)
-			if ( wnd ) then
-				mainWindow:SetPos(wnd.x+wnd.width,wnd.y)
-				mainWindow:Show()
-				gw2_salvage_manager.UpdateComboBox(Inventory("salvagable"),"SalvageManager_ItemToSalvage",SalvageManager_ItemIDInfo)
-			end
-		end
-	end
+	gw2_salvage_manager.mainWindow.open = gw2_salvage_manager.mainWindow.open ~= true
 end
 
+-- Register Events here.
 RegisterEventHandler("Module.Initalize",gw2_salvage_manager.ModuleInit)
+RegisterEventHandler("Gameloop.Draw", gw2_salvage_manager.mainWindow.Draw)
