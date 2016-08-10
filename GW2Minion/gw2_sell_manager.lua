@@ -506,14 +506,14 @@ function gw2_sell_manager.createItemList()
 	local filteredItems = {}
 	if (table.valid(inventoryItems)) then
 		for slot,nItem in pairs(inventoryItems) do
-			nItem = nItem -- might need deepcopy?
+			nItem = nItem
 			if (gw2_sell_manager.itemMatchesFilter(nItem) or gw2_sell_manager.singleItemListContains(nItem)) then
+				nItem.slot = slot
 				table.insert(filteredItems,nItem)
-				--itemIDString = itemIDString .. nItem.itemID .. ","
 			end
 		end
 	end
-	return filteredItems--,itemIDString
+	return filteredItems
 end
 
 -- working checks here.
