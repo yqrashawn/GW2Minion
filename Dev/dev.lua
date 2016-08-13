@@ -14,6 +14,8 @@ dev.rndpointradius = 500
 dev.avoidanceareasize = 50
 dev.avoidanceareas = { }
 dev.lastNavResult = 0
+dev.chatchannel = 0
+
 
 function dev.Init()
 	-- Register Button	
@@ -468,6 +470,21 @@ function dev.DrawCall(event, ticks )
 								end
 							end
 						end
+						GUI:PopItemWidth()
+						GUI:TreePop()					
+					end
+					
+					if ( GUI:TreeNode("Chat") ) then
+						GUI:PushItemWidth(250)
+						GUI:BulletText("Channel") GUI:SameLine(200) dev.chatchannel = GUI:InputInt("##devmm8",dev.chatchannel ,1,1)
+						local txt = GetChatMsg(dev.chatchannel,100)
+						if (table.valid(txt)) then 
+							local text = ""
+							for line,tx in pairs(txt) do
+								text = text.."\n "..tx								
+							end							
+							GUI:InputTextMultiline( "##getchatstuf", text, GUI:GetWindowContentRegionWidth()-50, 200 , GUI.InputTextFlags_ReadOnly)
+						end						
 						GUI:PopItemWidth()
 						GUI:TreePop()					
 					end
