@@ -63,7 +63,7 @@ c_createVendorBuyTask = inheritsFrom( ml_cause )
 e_createVendorBuyTask = inheritsFrom( ml_effect )
 c_createVendorBuyTask.throttle = 5000
 function c_createVendorBuyTask:evaluate()
-	if (BuyManager_Active == "1" ) then
+	if (gw2_buy_manager.active) then
 
 		if ((gw2_buy_manager.NeedToBuySalvageKits() or gw2_buy_manager.NeedToBuyGatheringTools()) or c_vendorbuy.buying) and ( ValidTable(gw2_buy_manager.getClosestBuyMarker()) or gw2_common_functions.GetNextVendorMarker()) then
 			return true
@@ -89,7 +89,7 @@ c_vendorbuy = inheritsFrom( ml_cause )
 e_vendorbuy = inheritsFrom( ml_effect )
 c_vendorbuy.buying = false
 function c_vendorbuy:evaluate()
-	if (BuyManager_Active == "1" and ((gw2_buy_manager.NeedToBuySalvageKits() or gw2_buy_manager.NeedToBuyGatheringTools()) or c_vendorbuy.buying) and ValidTable(gw2_buy_manager.getClosestBuyMarker())) then
+	if (gw2_buy_manager.active and ((gw2_buy_manager.NeedToBuySalvageKits() or gw2_buy_manager.NeedToBuyGatheringTools()) or c_vendorbuy.buying) and ValidTable(gw2_buy_manager.getClosestBuyMarker())) then
 		return true
 	end
 	return false
@@ -112,7 +112,7 @@ c_quickvendorbuy = inheritsFrom( ml_cause )
 e_quickvendorbuy = inheritsFrom( ml_effect )
 c_quickvendorbuy.buying = false
 function c_quickvendorbuy:evaluate()
-	if (BuyManager_Active == "1" and ((gw2_buy_manager.NeedToBuySalvageKits(true) or gw2_buy_manager.NeedToBuyGatheringTools(true)) or c_quickvendorbuy.buying) and ValidTable(gw2_buy_manager.getClosestBuyMarker(true))) then
+	if (gw2_buy_manager.active and ((gw2_buy_manager.NeedToBuySalvageKits(true) or gw2_buy_manager.NeedToBuyGatheringTools(true)) or c_quickvendorbuy.buying) and ValidTable(gw2_buy_manager.getClosestBuyMarker(true))) then
 		return true
 	end
 	return false
@@ -133,7 +133,7 @@ end
 c_moveToVendorMarkerBuy = inheritsFrom( ml_cause )
 e_moveToVendorMarkerBuy = inheritsFrom( ml_effect )
 function c_moveToVendorMarkerBuy:evaluate()
-	if (BuyManager_Active == "1" and ((gw2_buy_manager.NeedToBuySalvageKits() or gw2_buy_manager.NeedToBuyGatheringTools())) and c_MoveToVendorMarker:evaluate()) then
+	if (gw2_buy_manager.active and ((gw2_buy_manager.NeedToBuySalvageKits() or gw2_buy_manager.NeedToBuyGatheringTools())) and c_MoveToVendorMarker:evaluate()) then
 		return true
 	end
 	return false

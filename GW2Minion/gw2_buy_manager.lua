@@ -1,6 +1,4 @@
 gw2_buy_manager = {}
-gw2_buy_manager.mainWindow = { name = GetString("buymanager"), x = 350, y = 50, w = 250, h = 350}
-gw2minion.MainWindow.ChildWindows[gw2_buy_manager.mainWindow.name] = gw2_buy_manager.mainWindow.name
 gw2_buy_manager.availableOnMap = {
 	lastMap = 0,
 	salvage = {[1] = true, [2] = true, [3] = true, [4] = true, [5] = true,},
@@ -12,10 +10,10 @@ gw2_buy_manager.LevelRestrictions = {
 	[3] = 20, -- lvl20
 	[4] = 30, -- lvl30
 	[5] = 45, -- lvl45
-	[6] = 60, -- lvl60	
+	[6] = 60, -- lvl60
 }
 gw2_buy_manager.tools = {
-	["foraging"] = {
+	foraging = {
 		[1] = 23029,
 		[2] = 22992, -- lvl10
 		[3] = 23004, -- lvl20
@@ -23,7 +21,7 @@ gw2_buy_manager.tools = {
 		[5] = 23008, -- lvl45
 		[6] = 22997, -- lvl60
 	},
-	["logging"] = {
+	logging = {
 		[1] = 23030,
 		[2] = 22994,
 		[3] = 23002,
@@ -31,7 +29,7 @@ gw2_buy_manager.tools = {
 		[5] = 23009,
 		[6] = 23000,
 	},
-	["mining"] = {
+	mining = {
 		[1] = 23031,
 		[2] = 22995,
 		[3] = 23003,
@@ -39,7 +37,7 @@ gw2_buy_manager.tools = {
 		[5] = 23010,
 		[6] = 23001,
 	},
-	["salvage"] = {
+	salvage = {
 		[1] = 23038, -- Crude Salvage Kit (rarity 1)
 		[2] = 23040, -- Basic Salvage Kit (rarity 1)
 		[3] = 23041, -- Fine (rarity 2)
@@ -48,66 +46,162 @@ gw2_buy_manager.tools = {
 	},
 }
 
+-- Gui stuff here.
+gw2_buy_manager.mainWindow = {
+	name = GetString("buymanager"),
+	open = false,
+	visible = true,
+}
+
 function gw2_buy_manager.ModuleInit()
-	if (Settings.GW2Minion.BuyManager_Active == nil) then
-		Settings.GW2Minion.BuyManager_Active = "1"
+	if (Settings.gw2_buy_manager.active == nil) then
+		Settings.gw2_buy_manager.active = false
 	end
-	
-	if (Settings.GW2Minion.BuyManager_Crudekit == nil) then
-		Settings.GW2Minion.BuyManager_Crudekit = 0
+	gw2_buy_manager.active = Settings.gw2_buy_manager.active
+
+	if (Settings.gw2_buy_manager.crudeKit == nil) then
+		Settings.gw2_buy_manager.crudeKit = 0
 	end
-	
-	if (Settings.GW2Minion.BuyManager_Basickit == nil) then
-		Settings.GW2Minion.BuyManager_Basickit = 0
+	gw2_buy_manager.crudeKit = Settings.gw2_buy_manager.crudeKit
+
+	if (Settings.gw2_buy_manager.basicKit == nil) then
+		Settings.gw2_buy_manager.basicKit = 0
 	end
-	
-	if (Settings.GW2Minion.BuyManager_Finekit == nil) then
-		Settings.GW2Minion.BuyManager_Finekit = 0
+	gw2_buy_manager.basicKit = Settings.gw2_buy_manager.basicKit
+
+	if (Settings.gw2_buy_manager.fineKit == nil) then
+		Settings.gw2_buy_manager.fineKit = 0
 	end
-	
-	if (Settings.GW2Minion.BuyManager_Journeymankit == nil) then
-		Settings.GW2Minion.BuyManager_Journeymankit = 0
+	gw2_buy_manager.fineKit = Settings.gw2_buy_manager.fineKit
+
+	if (Settings.gw2_buy_manager.journeymanKit == nil) then
+		Settings.gw2_buy_manager.journeymanKit = 0
 	end
-	
-	if (Settings.GW2Minion.BuyManager_Masterkit == nil) then
-		Settings.GW2Minion.BuyManager_Masterkit = 0
+	gw2_buy_manager.journeymanKit = Settings.gw2_buy_manager.journeymanKit
+
+	if (Settings.gw2_buy_manager.masterKit == nil) then
+		Settings.gw2_buy_manager.masterKit = 0
 	end
-	
-	if (Settings.GW2Minion.BuyManager_toolStacks == nil) then
-		Settings.GW2Minion.BuyManager_toolStacks = 1
+	gw2_buy_manager.masterKit = Settings.gw2_buy_manager.masterKit
+
+	if (Settings.gw2_buy_manager.toolStack == nil) then
+		Settings.gw2_buy_manager.toolStack = 0
 	end
-	
-	if (Settings.GW2Minion.BuyManager_GarheringTool == nil) then
-		Settings.GW2Minion.BuyManager_GarheringTool = "None"
+	gw2_buy_manager.toolStack = Settings.gw2_buy_manager.toolStack
+
+	if (Settings.gw2_buy_manager.toolList == nil) then
+		Settings.gw2_buy_manager.toolList = {
+			nameList = {"None", "Copper", "Iron", "Steel", "Darksteel", "Mithrill", "Orichalcum",},
+			idList = {["None"] = 1, ["Copper"] = 2, ["Iron"] = 3, ["Steel"] = 4, ["Darksteel"] = 5, ["Mithrill"] = 6, ["Orichalcum"] = 7,},
+			currID = 1,
+		}
 	end
-	
-	local mainWindow = WindowManager:NewWindow(gw2_buy_manager.mainWindow.name,gw2_buy_manager.mainWindow.x,gw2_buy_manager.mainWindow.y,gw2_buy_manager.mainWindow.w,gw2_buy_manager.mainWindow.h,false)
-	if (mainWindow) then
-		mainWindow:NewCheckBox(GetString("active"),"BuyManager_Active",GetString("buyGroup"))
-		mainWindow:UnFold(GetString("buyGroup"))
-		
-		mainWindow:NewNumeric(GetString("buyCrude"),"BuyManager_Crudekit",GetString("salvageKits"),0,100)
-		mainWindow:NewNumeric(GetString("buyBasic"),"BuyManager_Basickit",GetString("salvageKits"),0,100)
-		mainWindow:NewNumeric(GetString("buyFine"),"BuyManager_Finekit",GetString("salvageKits"),0,100)
-		mainWindow:NewNumeric(GetString("buyJourneyman"),"BuyManager_Journeymankit",GetString("salvageKits"),0,100)
-		mainWindow:NewNumeric(GetString("buyMaster"),"BuyManager_Masterkit",GetString("salvageKits"),0,100)
-		
-		mainWindow:NewNumeric(GetString("toolStock"),"BuyManager_toolStacks",GetString("gatherTools"),0,100)
-		mainWindow:NewComboBox(GetString("gatherTools"),"BuyManager_GarheringTool",GetString("gatherTools"),"None,Copper,Iron,Steel,Darksteel,Mithrill,Orichalcum")
-		BuyManager_GarheringTool = BuyManager_GarheringTool
-		
-		mainWindow:Hide()
-		
-		BuyManager_Active = Settings.GW2Minion.BuyManager_Active
-	
-		BuyManager_Crudekit = Settings.GW2Minion.BuyManager_Crudekit
-		BuyManager_Basickit = Settings.GW2Minion.BuyManager_Basickit
-		BuyManager_Finekit = Settings.GW2Minion.BuyManager_Finekit
-		BuyManager_Journeymankit = Settings.GW2Minion.BuyManager_Journeymankit
-		BuyManager_Masterkit = Settings.GW2Minion.BuyManager_Masterkit
-		
-		BuyManager_toolStacks = Settings.GW2Minion.BuyManager_toolStacks
-		BuyManager_GarheringTool = Settings.GW2Minion.BuyManager_GarheringTool
+	gw2_buy_manager.toolList = Settings.gw2_buy_manager.toolList
+
+	-- init button in minionmainbutton
+	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##BUYMGR", name = "Buy MGR", onClick = function() gw2_buy_manager.mainWindow.open = gw2_buy_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Buy Manager\" window."},"GW2MINION##MENU_HEADER")
+
+end
+
+-- Gui draw function.
+function gw2_buy_manager.mainWindow.Draw(event,ticks)
+	if (gw2_buy_manager.mainWindow.open) then 
+		-- set size on first use only.
+		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver)
+		-- update visible and open variables.
+		gw2_buy_manager.mainWindow.visible, gw2_buy_manager.mainWindow.open = GUI:Begin(gw2_buy_manager.mainWindow.name, gw2_buy_manager.mainWindow.open, GUI.WindowFlags_AlwaysAutoResize+GUI.WindowFlags_NoCollapse)
+		if (gw2_buy_manager.mainWindow.visible) then
+			-- Status field.
+			-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			GUI:Spacing()
+			GUI:BeginGroup()
+			gw2_buy_manager.active = GUI:Checkbox(GetString("active"), gw2_buy_manager.active)
+			Settings.gw2_buy_manager.active = gw2_buy_manager.active
+			GUI:EndGroup()
+			if (GUI:IsItemHovered() and gw2_buy_manager.toolTip) then
+				GUI:SetTooltip("Turn Buying on or off.")
+			end
+			-----------------------------------------------------------------------------------------------------------------------------------
+			GUI:Separator()
+			-----------------------------------------------------------------------------------------------------------------------------------
+			-- Salvage Kit group here.
+			-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing) -- open the tree *BUG* conditions not working as expected.
+			if (GUI:TreeNode(GetString("salvagekits"))) then -- create the tree, only pop inside if.
+				-- Crude Kits.
+				GUI:AlignFirstTextHeightToWidgets()
+				GUI:Text(GetString("buyCrude")..":")
+				GUI:SameLine(140)
+				GUI:PushItemWidth(150)
+				gw2_buy_manager.crudeKit = GUI:SliderInt("##mbuym-crudekit", gw2_buy_manager.crudeKit, 0, 25)
+				Settings.gw2_buy_manager.crudeKit = gw2_buy_manager.crudeKit
+				GUI:PopItemWidth()
+				-- Basic Kits.
+				GUI:AlignFirstTextHeightToWidgets()
+				GUI:Text(GetString("buyBasic")..":")
+				GUI:SameLine(140)
+				GUI:PushItemWidth(150)
+				gw2_buy_manager.basicKit = GUI:SliderInt("##mbuym-basickit", gw2_buy_manager.basicKit, 0, 25)
+				Settings.gw2_buy_manager.basicKit = gw2_buy_manager.basicKit
+				GUI:PopItemWidth()
+				-- Fine Kits.
+				GUI:AlignFirstTextHeightToWidgets()
+				GUI:Text(GetString("buyFine")..":")
+				GUI:SameLine(140)
+				GUI:PushItemWidth(150)
+				gw2_buy_manager.fineKit = GUI:SliderInt("##mbuym-finekit", gw2_buy_manager.fineKit, 0, 25)
+				Settings.gw2_buy_manager.fineKit = gw2_buy_manager.fineKit
+				GUI:PopItemWidth()
+				-- Journeyman Kits.
+				GUI:AlignFirstTextHeightToWidgets()
+				GUI:Text(GetString("buyJourneyman")..":")
+				GUI:SameLine(140)
+				GUI:PushItemWidth(150)
+				gw2_buy_manager.journeymanKit = GUI:SliderInt("##mbuym-journeymankit", gw2_buy_manager.journeymanKit, 0, 25)
+				Settings.gw2_buy_manager.journeymanKit = gw2_buy_manager.journeymanKit
+				GUI:PopItemWidth()
+				-- Master Kits.
+				GUI:AlignFirstTextHeightToWidgets()
+				GUI:Text(GetString("buyMaster")..":")
+				GUI:SameLine(140)
+				GUI:PushItemWidth(150)
+				gw2_buy_manager.masterKit = GUI:SliderInt("##mbuym-masterkit", gw2_buy_manager.masterKit, 0, 25)
+				Settings.gw2_buy_manager.masterKit = gw2_buy_manager.masterKit
+				GUI:PopItemWidth()
+				
+				GUI:TreePop()
+			end
+			-----------------------------------------------------------------------------------------------------------------------------------
+			GUI:Separator()
+			-----------------------------------------------------------------------------------------------------------------------------------
+			-- Gathering Tool group here.
+			-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing) -- open the tree *BUG* conditions not working as expected.
+			if (GUI:TreeNode(GetString("gatheringtools"))) then -- create the tree, only pop inside if.
+				-- Tool Type
+				GUI:AlignFirstTextHeightToWidgets()
+				GUI:Text(GetString("toolType")..":")
+				GUI:SameLine(140)
+				GUI:PushItemWidth(150)
+				local changed = false
+				gw2_buy_manager.toolList.currID, changed = GUI:Combo("##mbuym-tooltobuy",gw2_buy_manager.toolList.currID,gw2_buy_manager.toolList.nameList)
+				if (changed) then
+					Settings.gw2_buy_manager.toolList = gw2_buy_manager.toolList
+				end
+				GUI:PopItemWidth()
+				-- Tool Type
+				GUI:AlignFirstTextHeightToWidgets()
+				GUI:Text(GetString("toolStack")..":")
+				GUI:SameLine(140)
+				GUI:PushItemWidth(150)
+				gw2_buy_manager.toolStack = GUI:SliderInt("##mbuym-toolstack", gw2_buy_manager.toolStack, 0, 25)
+				Settings.gw2_buy_manager.toolStack = gw2_buy_manager.toolStack
+				GUI:PopItemWidth()
+				
+				GUI:TreePop()
+			end
+		end
+		GUI:End()
 	end
 end
 
@@ -115,7 +209,7 @@ end
 function gw2_buy_manager.vendorSellsCheck()
 	local vendorSalvageItems = VendorItemList("itemtype="..GW2.ITEMTYPE.SalvageTool)
 	local vendorGatheringItems = VendorItemList("itemtype="..GW2.ITEMTYPE.Gathering)
-	if (ValidTable(vendorSalvageItems) and ValidTable(vendorGatheringItems)) then
+	if (table.valid(vendorSalvageItems) and table.valid(vendorGatheringItems)) then
 		if (gw2_buy_manager.availableOnMap.lastMap ~= ml_global_information.CurrentMapID) then
 			gw2_buy_manager.availableOnMap.lastMap = ml_global_information.CurrentMapID
 			gw2_buy_manager.setMapAvailablity(vendorSalvageItems,vendorGatheringItems)
@@ -131,7 +225,7 @@ function gw2_buy_manager.setMapAvailablity(salvageItems,gatheringItems)
 	end
 	for _,item in pairs(salvageItems) do
 		for key=1,5 do
-			if (item.itemID == gw2_buy_manager.tools["salvage"][key]) then gw2_buy_manager.availableOnMap.salvage[key] = true end
+			if (item.itemID == gw2_buy_manager.tools.salvage[key]) then gw2_buy_manager.availableOnMap.salvage[key] = true end
 		end
 	end
 	
@@ -140,7 +234,7 @@ function gw2_buy_manager.setMapAvailablity(salvageItems,gatheringItems)
 	end
 	for _,item in pairs(gatheringItems) do
 		for key=1,6 do
-			if (item.itemID == gw2_buy_manager.tools["foraging"][key]) then gw2_buy_manager.availableOnMap.gathering[key] = true end
+			if (item.itemID == gw2_buy_manager.tools.foraging[key]) then gw2_buy_manager.availableOnMap.gathering[key] = true end
 		end
 	end
 end
@@ -151,11 +245,11 @@ function gw2_buy_manager.NeedToBuySalvageKits(nearby)
 		if (nearby == true and count > 0) then
 			return true
 		elseif (nearby ~= true) then
-			if (itemID == gw2_buy_manager.tools["salvage"][1] and count == tonumber(BuyManager_Crudekit)) or
-			(itemID == gw2_buy_manager.tools["salvage"][2] and count == tonumber(BuyManager_Basickit)) or
-			(itemID == gw2_buy_manager.tools["salvage"][3] and count == tonumber(BuyManager_Finekit)) or
-			(itemID == gw2_buy_manager.tools["salvage"][4] and count == tonumber(BuyManager_Journeymankit)) or
-			(itemID == gw2_buy_manager.tools["salvage"][5] and count == tonumber(BuyManager_Masterkit)) then
+			if (itemID == gw2_buy_manager.tools.salvage[1] and count == tonumber(gw2_buy_manager.crudeKit)) or
+			(itemID == gw2_buy_manager.tools.salvage[2] and count == tonumber(gw2_buy_manager.basicKit)) or
+			(itemID == gw2_buy_manager.tools.salvage[3] and count == tonumber(gw2_buy_manager.fineKit)) or
+			(itemID == gw2_buy_manager.tools.salvage[4] and count == tonumber(gw2_buy_manager.journeymanKit)) or
+			(itemID == gw2_buy_manager.tools.salvage[5] and count == tonumber(gw2_buy_manager.masterKit)) then
 				return true
 			end
 		end
@@ -165,11 +259,11 @@ end
 
 function gw2_buy_manager.GetNeededSalvageKitList()
 	local neededKits = {}
-	if (tonumber(BuyManager_Crudekit) > 0 and gw2_buy_manager.availableOnMap.salvage[1]) then neededKits[gw2_buy_manager.tools["salvage"][1]] = tonumber(BuyManager_Crudekit) end
-	if (tonumber(BuyManager_Basickit) > 0 and gw2_buy_manager.availableOnMap.salvage[2]) then neededKits[gw2_buy_manager.tools["salvage"][2]] = tonumber(BuyManager_Basickit) end
-	if (tonumber(BuyManager_Finekit) > 0 and gw2_buy_manager.availableOnMap.salvage[3]) then neededKits[gw2_buy_manager.tools["salvage"][3]] = tonumber(BuyManager_Finekit) end
-	if (tonumber(BuyManager_Journeymankit) > 0 and gw2_buy_manager.availableOnMap.salvage[4]) then neededKits[gw2_buy_manager.tools["salvage"][4]] = tonumber(BuyManager_Journeymankit) end
-	if (tonumber(BuyManager_Masterkit) > 0 and gw2_buy_manager.availableOnMap.salvage[5]) then neededKits[gw2_buy_manager.tools["salvage"][5]] = tonumber(BuyManager_Masterkit) end
+	if (tonumber(gw2_buy_manager.crudeKit) > 0 and gw2_buy_manager.availableOnMap.salvage[1]) then neededKits[gw2_buy_manager.tools.salvage[1]] = tonumber(gw2_buy_manager.crudeKit) end
+	if (tonumber(gw2_buy_manager.basicKit) > 0 and gw2_buy_manager.availableOnMap.salvage[2]) then neededKits[gw2_buy_manager.tools.salvage[2]] = tonumber(gw2_buy_manager.basicKit) end
+	if (tonumber(gw2_buy_manager.fineKit) > 0 and gw2_buy_manager.availableOnMap.salvage[3]) then neededKits[gw2_buy_manager.tools.salvage[3]] = tonumber(gw2_buy_manager.fineKit) end
+	if (tonumber(gw2_buy_manager.journeymanKit) > 0 and gw2_buy_manager.availableOnMap.salvage[4]) then neededKits[gw2_buy_manager.tools.salvage[4]] = tonumber(gw2_buy_manager.journeymanKit) end
+	if (tonumber(gw2_buy_manager.masterKit) > 0 and gw2_buy_manager.availableOnMap.salvage[5]) then neededKits[gw2_buy_manager.tools.salvage[5]] = tonumber(gw2_buy_manager.masterKit) end
 	local ownedKits = Inventory("itemtype=" .. GW2.ITEMTYPE.SalvageTool)
 	for _,kit in pairs(ownedKits) do
 		if (neededKits[kit.itemID]) then
@@ -185,21 +279,22 @@ function gw2_buy_manager.NeedToBuyGatheringTools(nearby)
 	for itemID,count in pairs(neededTools) do
 		if (nearby == true and count > 0) then
 			return true
-		elseif (nearby ~= true and count == tonumber(BuyManager_toolStacks)) then
+		elseif (nearby ~= true and count == tonumber(gw2_buy_manager.toolStack)) then
 			return true
 		end
 	end
 	return false
 end
 
-function gw2_buy_manager.toolNameToKey(name)
+function gw2_buy_manager.toolListIDToKey(toolList)
+	local currID = toolList.currID
 	return (
-		name == "Copper" and 1 or
-		name == "Iron" and 2 or
-		name == "Steel" and 3 or
-		name == "Darksteel" and 4 or
-		name == "Mithrill" and 5 or
-		name == "Orichalcum" and 6 or nil
+		currID == 2 and 1 or
+		currID == 3 and 2 or
+		currID == 4 and 3 or
+		currID == 5 and 4 or
+		currID == 6 and 5 or
+		currID == 7 and 6 or nil
 	)
 end
 
@@ -208,21 +303,21 @@ function gw2_buy_manager.checkForInfTools(tool)
 end
 
 function gw2_buy_manager.GetNeededGatheringToolList()
-	local key = gw2_buy_manager.toolNameToKey(BuyManager_GarheringTool)
+	local key = gw2_buy_manager.toolListIDToKey(gw2_buy_manager.toolList)
 	local neededTools = {}
-	local wantedCount = tonumber(BuyManager_toolStacks)
-	if (wantedCount > 0 and gw2_buy_manager.availableOnMap.gathering[key] and gw2_buy_manager.LevelRestrictions[key] <= ml_global_information.Player_Level) then
+	local wantedCount = tonumber(gw2_buy_manager.toolStack)
+	if (key and wantedCount > 0 and gw2_buy_manager.availableOnMap.gathering[key] and gw2_buy_manager.LevelRestrictions[key] <= ml_global_information.Player_Level) then
 		local fTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool)
 		local lTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool)
 		local mTool = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool)
 		if (gw2_buy_manager.checkForInfTools(fTool) == false) then
-			neededTools[gw2_buy_manager.tools["foraging"][key]] = wantedCount
+			neededTools[gw2_buy_manager.tools.foraging[key]] = wantedCount
 		end
 		if (gw2_buy_manager.checkForInfTools(lTool) == false) then
-			neededTools[gw2_buy_manager.tools["logging"][key]] = wantedCount
+			neededTools[gw2_buy_manager.tools.logging[key]] = wantedCount
 		end
 		if (gw2_buy_manager.checkForInfTools(mTool) == false) then
-			neededTools[gw2_buy_manager.tools["mining"][key]] = wantedCount
+			neededTools[gw2_buy_manager.tools.mining[key]] = wantedCount
 		end
 		local ownedKits = Inventory("itemtype=" .. GW2.ITEMTYPE.Gathering)
 		for _,tool in pairs(ownedKits) do
@@ -282,7 +377,7 @@ function gw2_buy_manager.buyAtMerchant(vendorMarker)
 				end
 				local vendorItems = VendorItemList("")
 				local slowdown = math.random(0,3)
-				if (ValidTable(vendorItems) ) then
+				if (table.valid(vendorItems) ) then
 					if ( slowdown == 0) then
 						local neededKits = gw2_buy_manager.GetNeededSalvageKitList()
 						local neededTools = gw2_buy_manager.GetNeededGatheringToolList()				
@@ -325,20 +420,5 @@ function gw2_buy_manager.buyAtMerchant(vendorMarker)
 	return false
 end
 
--- Toggle menu.
-function gw2_buy_manager.ToggleMenu()
-	local mainWindow = WindowManager:GetWindow(gw2_buy_manager.mainWindow.name)
-	if (mainWindow) then
-		if ( mainWindow.visible ) then
-			mainWindow:Hide()
-		else
-			local wnd = WindowManager:GetWindow(gw2minion.MainWindow.Name)
-			if ( wnd ) then
-				mainWindow:SetPos(wnd.x+wnd.width,wnd.y)
-				mainWindow:Show()
-			end
-		end
-	end
-end
-
 RegisterEventHandler("Module.Initalize",gw2_buy_manager.ModuleInit)
+RegisterEventHandler("Gameloop.Draw", gw2_buy_manager.mainWindow.Draw)
