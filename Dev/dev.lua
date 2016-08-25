@@ -1,5 +1,4 @@
 dev = {}
-dev.throttle = 0
 dev.open = true
 dev.unfolded = true
 dev.equipitemidx = 1
@@ -35,7 +34,6 @@ function dev.DrawCall(event, ticks )
 			GUI:PushStyleVar(GUI.StyleVar_FramePadding, 4, 0)
 			GUI:PushStyleVar(GUI.StyleVar_ItemSpacing, 8, 2)
 			
-			if ( TimeSince(dev.throttle) > 500 ) then 
 				if ( gamestate == GW2.GAMESTATE.GAMEPLAY ) then 
 					if ( GUI:TreeNode("Character") ) then
 						
@@ -364,7 +362,7 @@ function dev.DrawCall(event, ticks )
 						GUI:BulletText("CanSwapWeaponSet") GUI:SameLine(200) GUI:InputText("##devs7",tostring(Player:CanSwapWeaponSet()))
 						if (GUI:Button("SwapWeaponSet",150,15) ) then d("SwapWeaponSet Result: "..tostring(Player:SwapWeaponSet())) end
 						GUI:PushItemWidth(250)
-						for i=0,18 do
+						for i=0,20 do
 							local b = Player:GetSpellInfo(i)
 							if (table.valid(b)) then 
 								if ( GUI:TreeNode(tostring(i).."-"..b.name)) then
@@ -380,6 +378,7 @@ function dev.DrawCall(event, ticks )
 									GUI:BulletText("Skilltype") GUI:SameLine(200) GUI:InputText("##devsk9",tostring(b.skilltype))
 									GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devsk10",tostring(b.power))	
 									GUI:BulletText("IsGroundTargeted") GUI:SameLine(200) GUI:InputText("##devsk11",tostring(b.isgroundtargeted))
+									if (GUI:Button("Cast",150,15) ) then Player:CastSpell(i) end
 									GUI:TreePop()
 								end
 							end
@@ -619,7 +618,6 @@ function dev.DrawCall(event, ticks )
 					
 					
 				end
-			end
 			GUI:PopStyleVar(2)
 		end
 		GUI:End()
