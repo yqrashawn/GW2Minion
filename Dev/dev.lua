@@ -1,5 +1,5 @@
 dev = {}
-dev.open = true
+dev.open = false
 dev.unfolded = true
 dev.equipitemidx = 1
 dev.equipitemlist = { [1] = "Back",[2] = "Chest",[3] = "Boots",[4] = "Gloves",[5] = "Headgear",[6] = "Leggings",[7] = "Shoulders", }
@@ -499,14 +499,14 @@ function dev.DrawCall(event, ticks )
 						GUI:BulletText("Speed") GUI:SameLine(150) local v, b = GUI:InputFloat("##devh2",HackManager:GetSpeed(),1,10,2)
 						if ( b ) then HackManager:SetSpeed(tonumber(v)) end
 						GUI:BulletText("Gravity") GUI:SameLine(150) v, b = GUI:InputFloat("##devh3",HackManager:GetGravity(),1,10,2)
-						if ( b ) then d(v) HackManager:SetGravity(tonumber(v)) end
+						if ( b ) then HackManager:SetGravity(tonumber(v)) end
 						GUI:BulletText("MaxClimb") GUI:SameLine(150) v, b = GUI:InputFloat("##devh4",HackManager:GetCrawlHeight(),1,10,2)
 						if ( b ) then HackManager:SetCrawlHeight(tonumber(v)) end
 
 						GUI:BulletText("Hover") GUI:SameLine(150) v, b = GUI:Checkbox("##devh5",HackManager.Hover)
-						if ( b ) then d(v) HackManager.Hover = v end						
+						if ( b ) then HackManager.Hover = v end						
 						GUI:BulletText("Infinite Jump") GUI:SameLine(150) v, b = GUI:Checkbox("##devh6",HackManager.Jump)
-						if ( b ) then HackManager.Jump = v d(v) end
+						if ( b ) then HackManager.Jump = v end
 						GUI:BulletText("ExtendGlider") GUI:SameLine(150) v, b = GUI:Checkbox("##devh7",HackManager.ExtendGlider)
 						if ( b ) then HackManager.ExtendGlider = v end
 						GUI:BulletText("NoClip") GUI:SameLine(150) dev.noclip, b = GUI:Checkbox("##devh8",dev.noclip)

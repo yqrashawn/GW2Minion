@@ -2,5 +2,5 @@
 Name=GW2Minion
 Dependencies=minionlib
 Version=1
-Files=gw2.lua
+Files=gw2.lua,gw2_languages.lua,gw2_radar.lua
 Enabled=1
