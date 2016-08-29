@@ -5,7 +5,7 @@ local tbl =
 	{
 		
 		{
-			class = "Sequence",
+			class = "Selector",
 			nodes = 
 			{
 				
@@ -17,9 +17,9 @@ local tbl =
 					variables = 
 					{
 						finishcode = "",
-						info = "Find Aggro Target and Set the aggro context.combat_targetid",
+						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "local target = gw2_common_functions.GetBestAggroTarget()\nif (table.valid(target) and not ml_blacklist.CheckBlacklistEntry(GetString(\"monsters\"),target.contentID)) then\n\tlocal pdist = target.pathdistance\n\tif ( pdist > 0 ) then\n\t\tcontext.combat_targetid = target.id\n\t\tself:success()\n\t\treturn\n\tend\nend\nself:fail()\n",
+						runcode = "if(ml_global_information.Player_Alive and ml_global_information.Player_OnMesh) then\n\t\tself:fail()\nelse\n\t\tself:success()\nend",
 						startcode = "",
 						xposoffset = 0,
 					},
@@ -31,17 +31,31 @@ local tbl =
 					{
 						
 						{
-							class = "Action",
+							class = "Throttle",
 							nodes = 
 							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Find random point",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "\nif (context.movetorandom_randompoint == nil) then\n\t-- Walk to Random Point in our levelrange\n\tif (table.valid(gw2_datamanager.levelmap)) then\n\t\tlocal pos = gw2_datamanager.GetRandomPositionInLevelRange( ml_global_information.Player_Level )\n\t\tif (table.valid(pos)) then\n\t\t\t-- make sure the position can be reached\n\t\t\tif ( table.valid(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then\n\t\t\t\td(\"[MoveToRandom] - Random point path found\")\n\t\t\t\tcontext.movetorandom_randompoint = pos\n\t\t\t\tcontext.movetorandom_randompointreached = false\n\t\t\t\tcontext.movetorandom_randompointdistance = math.random(750,5000)\n\t\t\telse\n\t\t\t\td(\"[MoveToRandom] - Random point not found\")\n\t\t\tend\n\t\tend\n\tend\nend\n\n-- 2nd attempt to find a random point\nif (context.movetorandom_randompoint == nil) then\n\t--[[local pos = Player:GetRandomPoint(5000) -- 5000 beeing mindistance to player\n\tif (table.valid(pos)) then\n\t\tif (table.valid(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then\n\t\t\tcontext.movetorandom_randompoint = pos\n\t\t\tcontext.movetorandom_randompointreached = false\n\t\t\tcontext.movetorandom_randompointdistance = math.random(750,5000)\n\t\tend\n\tend--]]\nend\n\nif(table.valid(context.movetorandom_randompoint)) then\n\tself:success()\nelse\n\tself:fail()\nend",
+										startcode = "",
+										xposoffset = 0,
+									},
+								},
 							},
 							variables = 
 							{
-								finishcode = "",
-								info = "Aggro CombatOverWatch - updates context.combat_target ",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if ( context.combat_targetid ) then\n\tlocal target = CharacterList:Get(context.combat_targetid) or GadgetList:Get(context.combat_targetid)\n\tif (table.valid(target) and not ml_blacklist.CheckBlacklistEntry(GetString(\"monsters\"),target.contentID) and target.isAggro and target.attackable and target.alive and target.onmesh) then\n\t\tcontext.combat_target = target\n\t\tcontext.combat_targetid = target.id\n\n\t\t-- switch aggro target if a better one was found\n\t\tlocal bettertarget = gw2_common_functions.GetBestAggroTarget()\n\t\tif (bettertarget.id ~= target.id and table.valid(bettertarget) and not ml_blacklist.CheckBlacklistEntry(GetString(\"monsters\"),bettertarget.contentID)) then\n\t\t\tlocal pdist = target.pathdistance\n\t\t\tif ( pdist > 0 ) then\n\t\t\t\tcontext.combat_target = bettertarget\n\t\t\t\tcontext.combat_targetid = bettertarget.id\n\t\t\tend\n\t\tend\n\t\t\n\telse\n\t\td(\"[HandleAggro] - Aggro Target is dead or gone\")\n\t\tcontext.combat_targetid = nil\n\t\tcontext.combat_target = nil\n\tend\nend\nself:fail()",
-								startcode = "",
+								duration = 2500,
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
 								xposoffset = 0,
 							},
 						},
@@ -59,9 +73,25 @@ local tbl =
 									variables = 
 									{
 										finishcode = "",
-										info = "Moving closer is needed ?",
+										info = "Random point not reached",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if ( context.combat_targetid and context.combat_target) then\n\tif (context.combat_target.distance > 2500 ) then \n\t\tcontext.moveto_position = context.combat_target.pos\n\t\tcontext.moveto_targetid = context.combat_target.id\n\t\tcontext.moveto_targettype = \"character\"\n\t\tself:success()\n\t\treturn\n\tend\nend\nself:fail()",
+										runcode = "if(table.valid(context.movetorandom_randompoint)) then\n\t\tif(Distance3DT(context.movetorandom_randompoint,ml_global_information.Player_Position) < context.movetorandom_randompointdistance) then\n\t\t\t\tcontext.movetorandom_randompoint = nil\n\t\t\t\tcontext.movetorandom_randompointreached = true\n\t\t\t\tself:fail()\n\t\telse\n\t\t\t\tself:success()\n\t\tend\nelse\n\t\tself:fail()\nend",
+										startcode = "",
+										xposoffset = 0,
+									},
+								},
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Setup moveto",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "if(table.valid(context.movetorandom_randompoint)) then\n\t\tcontext.moveto_position = context.movetorandom_randompoint\n\t\tcontext.moveto_randomMovement = true\n\t\tcontext.moveto_usewaypoints = false\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 										startcode = "",
 										xposoffset = 0,
 									},
@@ -74,6 +104,7 @@ local tbl =
 									},
 									variables = 
 									{
+										expanded = true,
 										filename = "MoveTo.st",
 										finishcode = "",
 										info = "Move to Position. \nRequired input argument: context.moveto_position\nOptional arguments:\ncontext.moveto_targetid - ID of the character / gadget we want to move to.\ncontext.moveto_targettype - \"character\" or \"gadget\" or \"event\"\n",
@@ -83,7 +114,7 @@ local tbl =
 										runcode = "-- Setting the custom subtree settings in the context, which gets passed down to childnodes\ncontext.moveto_stoppingdistance = self.variables.stoppingdistance\ncontext.moveto_randomMovement = self.variables.randomMovement\ncontext.moveto_smoothturns = self.variables.smoothturns\ncontext.moveto_usewaypoints = self.variables.usewaypoints\ncontext.moveto_follownavsystem = false",
 										smoothturns = true,
 										startcode = "",
-										stoppingdistance = 2000,
+										stoppingdistance = 25,
 										subtreeuicode = "if ( self.variables.stoppingdistance == nil ) then self.variables.stoppingdistance = 25 end\nself.variables.stoppingdistance = GUI:InputInt(\"Stopping Distance\", self.variables.stoppingdistance, 1, GUI.InputTextFlags_CharsDecimal)\n\nif ( self.variables.randomMovement == nil ) then self.variables.randomMovement = true end\nself.variables.randomMovement = GUI:Checkbox( \"RandomMovement\", self.variables.randomMovement )\n\nif ( self.variables.smoothturns == nil ) then self.variables.smoothturns = true end\nself.variables.smoothturns = GUI:Checkbox( \"Smooth Turns\", self.variables.smoothturns )\n\nif ( self.variables.usewaypoints == nil ) then self.variables.usewaypoints = false end\nself.variables.usewaypoints = GUI:Checkbox( \"Use Waypoints\", self.variables.usewaypoints )\nif ( GUI:IsItemHovered() ) then GUI:SetTooltip( \"When enabled, MoveTo will use waypoints if they are closer to the targetposition.\" ) end",
 										usewaypoints = false,
 										xposoffset = 0,
@@ -93,24 +124,8 @@ local tbl =
 							variables = 
 							{
 								expanded = true,
-								info = "Move into closer Range if needed",
+								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
-								xposoffset = 0,
-							},
-						},
-						
-						{
-							class = "Action",
-							nodes = 
-							{
-							},
-							variables = 
-							{
-								finishcode = "",
-								info = "Attack Aggro Target",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if ( context.combat_targetid ) then\n\tgw2_skill_manager:Use(context.combat_targetid)\n\tself:running()\n\treturn\nend\nself:fail()",
-								startcode = "",
 								xposoffset = 0,
 							},
 						},
@@ -127,7 +142,6 @@ local tbl =
 			variables = 
 			{
 				expanded = true,
-				filename = "HandleAggro",
 				info = "",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 				xposoffset = 0,
@@ -137,9 +151,9 @@ local tbl =
 	variables = 
 	{
 		expanded = true,
-		filename = "HandleAggro.st",
+		filename = "MoveToRandom.st",
 		finishcode = "",
-		info = "Handle Aggro",
+		info = "",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",
