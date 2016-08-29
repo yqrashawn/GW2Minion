@@ -559,7 +559,15 @@ function dev.DrawCall(event, ticks )
 					if ( GUI:TreeNode("Navigation") ) then
 						GUI:PushItemWidth(250)						
 						GUI:BulletText("TargetPosition") GUI:SameLine(200)  GUI:InputFloat3( "##devnav1", dev.teleportpos.x, dev.teleportpos.y, dev.teleportpos.z, 2, GUI.InputTextFlags_ReadOnly)
-						if (GUI:Button("UseCurrentPos",150,15) ) then dev.teleportpos = Player.pos end
+						if (GUI:Button("UseCurrentPos",150,15) ) then dev.teleportpos = Player.pos end 
+						GUI:SameLine() if (GUI:Button("GetRandomPoint",150,15) ) then 
+							local tpos = NavigationManager:GetRandomPoint()
+							if (table.size(tpos) > 0 ) then
+								dev.teleportpos.x = tpos.x
+								dev.teleportpos.y = tpos.y
+								dev.teleportpos.z = tpos.z
+							end
+						end 
 						
 						GUI:BulletText("NavigationType") GUI:SameLine(200) dev.navtype = GUI:Combo("##devnav2", dev.navtype, { [1] = "Normal", [2] = "Follow" })
 						GUI:BulletText("MovementType") GUI:SameLine(200) dev.movetype = GUI:Combo("##devnav3", dev.movetype, { [1] = "Straight", [2] = "Random" })
