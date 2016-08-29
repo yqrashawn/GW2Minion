@@ -378,7 +378,14 @@ function dev.DrawCall(event, ticks )
 									GUI:BulletText("Skilltype") GUI:SameLine(200) GUI:InputText("##devsk9",tostring(b.skilltype))
 									GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devsk10",tostring(b.power))	
 									GUI:BulletText("IsGroundTargeted") GUI:SameLine(200) GUI:InputText("##devsk11",tostring(b.isgroundtargeted))
-									if (GUI:Button("Cast",150,15) ) then Player:CastSpell(i) end
+									if (GUI:Button("Cast",150,15) ) then 
+										local t = Player:GetTarget()
+										if ( t ) then
+											Player:CastSpell(i,t.id)
+										else
+											Player:CastSpell(i)
+										end
+									end
 									GUI:TreePop()
 								end
 							end
@@ -510,7 +517,7 @@ function dev.DrawCall(event, ticks )
 						GUI:BulletText("ExtendGlider") GUI:SameLine(150) v, b = GUI:Checkbox("##devh7",HackManager.ExtendGlider)
 						if ( b ) then HackManager.ExtendGlider = v end
 						GUI:BulletText("NoClip") GUI:SameLine(150) dev.noclip, b = GUI:Checkbox("##devh8",dev.noclip)
-						if ( b ) then HackManager:NoClip(v) end
+						if ( b ) then HackManager:NoClip(dev.noclip) end
 
 						
 						GUI:PopItemWidth()

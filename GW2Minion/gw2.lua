@@ -1,6 +1,5 @@
 gw2minion = {}
 
--- NEW GW2MINION
 function gw2minion.Init()
 	-- Register Button 
 	local gw2mainmenu = {
@@ -102,7 +101,9 @@ function gw2minion.Init()
 		 ml_mesh_mgr.SetDefaultMesh(900,"sPvP Skyhammer")
 		 ml_mesh_mgr.SetDefaultMesh(984,"sPvP Courtyard")
 		 ml_mesh_mgr.SetDefaultMesh(1011,"sPvP Battle of Champions")
-		 ml_mesh_mgr.SetDefaultMesh(1015,"mmoalt_SilverWastes")
+		 ml_mesh_mgr.SetDefaultMesh(1015,"mmoalt_SilverWastes")		 
+		 ml_mesh_mgr.SetDefaultMesh(1041,"DragonStand")
+		 ml_mesh_mgr.SetDefaultMesh(1045,"TangledDepths")
 		 ml_mesh_mgr.SetDefaultMesh(1163,"sPvP Revenge of the Capricorn")
 		 
 		--Instances
@@ -144,7 +145,7 @@ function gw2minion.DrawCall(event, ticks )
 		
 	else	
 		if ( not gw2minion.mainbtreeinstance.isloadedineditor ) then 
-			--gw2minion.mainbtreeinstance:run()
+			gw2minion.mainbtreeinstance:run()
 		end
 	end
 end
@@ -221,16 +222,11 @@ end
 -- Stops the Bot
 function ml_global_information.Stop()
     Player:StopMovement()
-	c_movetorandom.randompoint = nil
-	c_movetorandom.randompointreached = false
-	ml_mesh_mgr.ResetOMC()
-	ml_mesh_mgr.OMCStartPositionReached = false
 	gw2_unstuck.Reset()
 end
 
 -- Waits xxx seconds before running the next pulse
-function ml_global_information.Wait( mseconds )	
-	
+function ml_global_information.Wait( mseconds )
 	ml_bt_mgr.lasttick = (ml_bt_mgr.lasttick or ml_global_information.Now) + mseconds
 end
 
