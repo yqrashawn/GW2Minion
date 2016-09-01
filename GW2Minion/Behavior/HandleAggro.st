@@ -136,6 +136,7 @@ local tbl =
 	},
 	variables = 
 	{
+		expanded = true,
 		filename = "HandleAggro.st",
 		finishcode = "",
 		info = "Handle Aggro",

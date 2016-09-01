@@ -19,7 +19,7 @@ local tbl =
 						finishcode = "",
 						info = "Ingame check",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Guest Server ID: '..tostring(Settings.GW2Minion.guestserver))\nGUI:Text(\"Guest Server Name: \"..ml_global_information.GuestServerList[Settings.GW2Minion.guestserver])\nGUI:Text('Autologin Enabled: '..tostring(Settings.GW2Minion.autostartbot))\nGUI:Text('GameState: '..tostring(ml_global_information.GameState))\nif (self.lastrun) then\n\tGUI:Text('Lastrun: '..tostring(TimeSince(self.lastrun)))\nend\n\n",
-						runcode = "-- In CHaracter screen\nif ( ml_global_information.GameState == 16 ) then\n\tself:success()\nelse\n\tself:fail()\nend\n",
+						runcode = "-- In CHaracter screen\nif ( ml_global_information.GameState ==  GW2.GAMESTATE.GAMEPLAY) then\n\tself:success()\nelse\n\tself:fail()\nend\n",
 						startcode = "",
 						xposoffset = 0,
 					},
