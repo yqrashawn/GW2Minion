@@ -19,7 +19,7 @@ local tbl =
 						finishcode = "",
 						info = "Finds a dead/downed Partymember and sets the id to the context.revive_partymemberid",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if (ValidTable(ml_global_information.Player_Party)) then\n\tfor _,pMember in pairs(ml_global_information.Player_Party) do\n\t\tlocal target = CharacterList:Get(pMember.id)\n\t\tif (ValidTable(target) and target.onmesh and (target.downed == true or target.dead == true) and ml_global_information.Player_Health.percent > 35 ) then\n\t\t\tlocal pdist = target.pathdistance\n\t\t\tif ( pdist > 0 and pdist < 4000) then\n\t\t\t\tcontext.moveto_position = target.pos\n\t\t\t\tcontext.moveto_targetid = target.id\n\t\t\t\tcontext.moveto_targettype = \"character\"\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\t\tend\n\t\tend\n\tend\nend\nself:fail()",
+						runcode = "if (table.valid(ml_global_information.Player_Party)) then\n\tfor _,pMember in pairs(ml_global_information.Player_Party) do\n\t\tif(pMember.id ~= Player.id) then\n\t\t\tlocal target = CharacterList:Get(pMember.id)\n\t\t\tif (table.valid(target) and target.onmesh and (target.downed == true or target.dead == true) and ml_global_information.Player_Health.percent > 35 ) then\n\t\t\t\tlocal pdist = target.pathdistance\n\t\t\t\tif ( pdist > 0 and pdist < 2500) then\n\t\t\t\t\tcontext.moveto_position = target.pos\n\t\t\t\t\tcontext.moveto_targetid = target.id\n\t\t\t\t\tcontext.moveto_targettype = \"character\"\n\t\t\t\t\tself:success()\n\t\t\t\t\treturn\n\t\t\t\tend\n\t\t\tend\n\t\tend\n\tend\nend\nself:fail()",
 						startcode = "",
 						xposoffset = 0,
 					},

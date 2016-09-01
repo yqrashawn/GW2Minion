@@ -40,7 +40,7 @@ local tbl =
 								finishcode = "",
 								info = "CombatOverWatch - updates context.combat_target ",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if ( context.combat_targetid ) then\n\tlocal target = CharacterList:Get(context.combat_targetid) or GadgetList:Get(context.combat_targetid)\n\tif (ValidTable(target) and not ml_blacklist.CheckBlacklistEntry(GetString(\"monsters\"),target.contentID) and target.attackable and target.alive and target.onmesh) then\n\t\t-- continue in the PrioritySelector parent\n\t\tcontext.combat_target = target\n\telse\n\t\td(\"[AttackTargets] - Target is dead, not attackable or not on mesh\")\n\t\tcontext.combat_targetid = nil\n\t\tcontext.combat_target = nil\n\tend\nend\nself:fail()",
+								runcode = "if ( context.combat_targetid ) then\n\tlocal target = CharacterList:Get(context.combat_targetid) or GadgetList:Get(context.combat_targetid)\n\tif (table.valid(target) and not ml_blacklist.CheckBlacklistEntry(GetString(\"monsters\"),target.contentID) and target.attackable and target.alive and target.onmesh) then\n\t\t-- continue in the PrioritySelector parent\n\t\tcontext.combat_target = target\n\t\tcontext.combat_targetid = target.id\n\telse\n\t\td(\"[AttackTargets] - Target is dead, not attackable or not on mesh\")\n\t\tcontext.combat_targetid = nil\n\t\tcontext.combat_target = nil\n\tend\nend\nself:fail()",
 								startcode = "",
 								xposoffset = 0,
 							},

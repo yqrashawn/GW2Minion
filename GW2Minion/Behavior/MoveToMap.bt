@@ -1,0 +1,93 @@
+local tbl = 
+{
+	class = "BehaviorTree",
+	nodes = 
+	{
+		
+		{
+			class = "Sequence",
+			nodes = 
+			{
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+						runcode = "if(ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+						startcode = "",
+						xposoffset = 0,
+					},
+				},
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+						runcode = "if(ml_global_information.CurrentMapID ~= context.movetomap_targetmapid) then\n\t\tself:success()\nelse\n\t\td(\"[MoveToMap]: Target map reached\")\n\t\tml_bt_mgr.running = false\n\t\tself:fail()\nend",
+						startcode = "",
+						xposoffset = 0,
+					},
+				},
+				
+				{
+					class = "BehaviorTree",
+					nodes = 
+					{
+					},
+					variables = 
+					{
+						expanded = true,
+						filename = "NavToMap.st",
+						finishcode = "",
+						info = "",
+						menucode = "",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+						runcode = "context.movetomap_targetmapid = context.movetomap_targetmapid or self.variables.targetmapid\ncontext.movetomap_usewaypoints = context.movetomap_usewaypoints or self.variables.usewaypoints",
+						startcode = "",
+						subtreeuicode = "if(table.valid(gw2_datamanager.mapData)) then\n\tlocal maplist = {}\n\tlocal mapnamelist = {}\n\t\n\tfor mapID,map in pairs(gw2_datamanager.mapData) do\n\t\t\tif(ml_nav_manager.GetNode(mapID)) then\n\t\t\t\t\tlocal name = map.map_name..\" (\"..mapID..\")\"\n\t\t\t\t\ttable.insert(mapnamelist, name)\n\t\t\t\t\ttable.insert(maplist, {id = mapID, name = name})\n\t\t\tend\n\tend\n\ttable.sort(mapnamelist)\n\ttable.sort(maplist, function(a,b) return a.name < b.name end)\n\t\n\tlocal selectedIndex,changed = GUI:Combo(\"Select map\", self.variables.selectedmapindex or 1, mapnamelist)\n\tif(changed) then\n\t\t\tself.variables.selectedmapindex = selectedIndex\n\t\t\tself.variables.targetmapid = maplist[selectedIndex].id\n\tend\n\t\n\tlocal checked,pressed = GUI:Checkbox(\"Use waypoints\", self.variables.usewaypoints or false)\n\tif(pressed) then\n\t\t\tself.variables.usewaypoints = checked\n\tend\nelse\n\tGUI:Text(\"No map data available\")\nend\n",
+						xposoffset = 0,
+					},
+				},
+			},
+			variables = 
+			{
+				expanded = true,
+				info = "",
+				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+				xposoffset = 0,
+			},
+		},
+	},
+	variables = 
+	{
+		expanded = true,
+		filename = "MoveToMap.bt",
+		finishcode = "d(\"MoveToMap Off\")\n\nml_global_information.Stop()",
+		info = "",
+		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif(GUI:TreeNode(\"Move to map\")) then\n\tif(table.valid(gw2_datamanager.mapData)) then\n\t\tlocal maplist = {}\n\t\tlocal mapnamelist = {}\n\t\t\n\t\tfor mapID,map in pairs(gw2_datamanager.mapData) do\n\t\t\t\tif(ml_nav_manager.GetNode(mapID)) then\n\t\t\t\t\t\tlocal name = map.map_name..\" (\"..mapID..\")\"\n\t\t\t\t\t\ttable.insert(mapnamelist, name)\n\t\t\t\t\t\ttable.insert(maplist, {id = mapID, name = name})\n\t\t\t\tend\n\t\tend\n\t\ttable.sort(mapnamelist)\n\t\ttable.sort(maplist, function(a,b) return a.name < b.name end)\n\t\t\n\t\tlocal selectedIndex,changed = GUI:Combo(\"Select map\", self.variables.selectedmapindex or 1, mapnamelist)\n\t\tif(changed) then\n\t\t\t\tself.variables.selectedmapindex = selectedIndex\n\t\t\t\tself.variables.targetmapid = maplist[selectedIndex].id\n\t\tend\n\t\t\n\t\tlocal checked,pressed = GUI:Checkbox(\"Use waypoints\", self.variables.usewaypoints or false)\n\t\tif(pressed) then\n\t\t\t\tself.variables.usewaypoints = checked\n\t\tend\n\telse\n\t\tGUI:Text(\"No map data available\")\n\tend\n\tGUI:TreePop()\nend",
+		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+		runcode = "context.movetomap_targetmapid = self.variables.targetmapid\ncontext.movetomap_usewaypoints = self.variables.usewaypoints",
+		selectedmapindex = 32,
+		startcode = "d(\"MoveToMap on\")",
+		subtreeuicode = "",
+		targetmapid = 30,
+		usewaypoints = false,
+		xposoffset = 0,
+	},
+}
+
+
+
+return tbl

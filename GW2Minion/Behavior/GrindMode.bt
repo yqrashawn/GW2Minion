@@ -19,7 +19,7 @@ local tbl =
 						finishcode = "",
 						info = "Ingame check",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Guest Server ID: '..tostring(Settings.GW2Minion.guestserver))\nGUI:Text(\"Guest Server Name: \"..ml_global_information.GuestServerList[Settings.GW2Minion.guestserver])\nGUI:Text('Autologin Enabled: '..tostring(Settings.GW2Minion.autostartbot))\nGUI:Text('GameState: '..tostring(ml_global_information.GameState))\nif (self.lastrun) then\n\tGUI:Text('Lastrun: '..tostring(TimeSince(self.lastrun)))\nend\n\n",
-						runcode = "-- In CHaracter screen\nif ( ml_global_information.GameState == 16 ) then\n\tself:success()\nelse\n\tself:fail()\nend\n",
+						runcode = "-- In CHaracter screen\nif ( ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY ) then\n\tself:success()\nelse\n\tself:fail()\nend\n",
 						startcode = "",
 						xposoffset = 0,
 					},
@@ -31,33 +31,41 @@ local tbl =
 					{
 						
 						{
-							class = "Action",
+							class = "BehaviorTree",
 							nodes = 
 							{
 							},
 							variables = 
 							{
+								expanded = true,
+								filename = "DeathHandler.st",
 								finishcode = "",
 								info = "Death Handler",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nif ( self.deadtime ) then\n\tGUI:Text('Time Since Death: '..tostring(TimeSince(self.deadtime)))\nelse\n\tGUI:Text('Time Since Death: 0')\nend",
-								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Defeated ) then\t\n\t\n\tif ( not self.deadtime or TimeSince(self.deadtime) > 5000 ) then \n\n\t-- Checking for nearby partymembers\n\t\tlocal party = ml_global_information.Player_Party\n\t\tlocal found = false\n\t\tif ( TableSize(party) > 1 ) then\n\t\t\tlocal idx,pmember = next(party)\n\t\t\twhile (idx and pmember) do\n\t\t\t\tif ( pmember.id ~= 0 ) then\n\t\t\t\t\tlocal char = CharacterList:Get(pmember.id)\n\t\t\t\t\tif ( char ) then\n\t\t\t\t\t\tlocal cPos = char.pos\n\t\t\t\t\t\tif ( cPos and Distance2D ( ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, cPos.x, cPos.y) < 4000 and char.dead == false) then\n\t\t\t\t\t\t\tfound = true\n\t\t\t\t\t\t\tbreak\n\t\t\t\t\t\tend\n\t\t\t\t\tend\n\t\t\t\tend\n\t\t\t\tidx,pmember=next(party,idx)\n\t\t\tend\n\t\tend\n\n\t-- Check for nearby Players who can rezz us\n\tif ( found == false ) then\n\t\tif ( TableSize(CharacterList(\"nearest,alive,friendly,player,maxdistance=1200\"))>0 ) then\n\t\t\tfound = true\n\t\tend\n\tend\n\t\n\t\n\tif ( not found or TimeSince(self.deadtime) > 30000 ) then\n\t\tif ( ml_global_information.Player_LastHealth == nil or ml_global_information.Player_LastHealth < ml_global_information.Player_Health.current ) then\n\t\t\tml_global_information.Player_LastHealth = ml_global_information.Player_Health.current\t\t\n\t\t\tself.deadtime = ml_global_information.Now + 10000\n\t\t\td( \"[Player]: We are beeing revived...waiting a bit longer\" )\n\n\t\telseif ( ml_global_information.Player_LastHealth ~= nil ) then\n\t\t\tself.deadtime = ml_global_information.Now\n\t\t\td( \"[Player]: Respawn at nearest waypoint.\" )\n\t\t\td( Player:RespawnAtClosestWaypoint() )\n\t\t\tml_global_information.Stop()\t\n\t\tend\n\tend\nend\n\tself:running()\t\nelse\n\tml_global_information.Player_LastHealth = ml_global_information.Player_Health.current\n\n\tself:fail()\nend",
+								menucode = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+								runcode = "",
 								startcode = "",
+								subtreeuicode = "",
 								xposoffset = 0,
 							},
 						},
 						
 						{
-							class = "Action",
+							class = "BehaviorTree",
 							nodes = 
 							{
 							},
 							variables = 
 							{
+								expanded = true,
+								filename = "DownedHandler.st",
 								finishcode = "",
 								info = "Downed Handler",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Health State: '..tostring(ml_global_information.Player_HealthState))\nGUI:Text('Downed: '..tostring(ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Downed))\nlocal target = gw2_common_functions.GetBestAggroTarget(true)\nif ( ValidTable(target) ) then\n\tGUI:Text('Downed Target: '..target.name)\nelse\n\tGUI:Text('Downed Target: None')\nend\nGUI:Text('Castinfo-Duration: '..tostring(Player.castinfo.duration))\n",
-								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Downed ) then\n\tif ( ml_global_information.Player_IsMoving == true ) then\n\t\tPlayer:StopMovement()\n\tend\n\t\n\t-- Attack nearby target\n\tlocal target = gw2_common_functions.GetBestAggroTarget(true)\n\tif ( ValidTable( target ) ) then\n\t\tlocal currentTarget = Player:GetTarget()\n\t\tif ( not currentTarget or currentTarget.id ~= target.id ) then\n\t\t\tPlayer:SetTarget(target.id)\n\t\tend\n\t\tgw2_skill_manager:Use( target.id )\n\tend\t\n\n\t-- Heal\n\tif ( Player.castinfo.duration == 0 ) then\n\t\tPlayer:CastSpell( GW2.SKILLBARSLOT.Slot_4 )\n\t\tml_global_information.Wait(500)\n\tend\n\tself:running()\nelse\n\tself:fail()\nend",
+								menucode = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+								runcode = "",
 								startcode = "",
+								subtreeuicode = "",
 								xposoffset = 0,
 							},
 						},
@@ -120,7 +128,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "HandleAggro.st",
 								finishcode = "",
 								info = "Handle Aggro",
@@ -129,6 +136,55 @@ local tbl =
 								runcode = "",
 								startcode = "",
 								subtreeuicode = "",
+								xposoffset = 0,
+							},
+						},
+						
+						{
+							class = "Sequence",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "if(Settings.GW2Minion.gather) then\n\t\tcontext.gather_maxdistance = 2000\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+										startcode = "",
+										xposoffset = 0,
+									},
+								},
+								
+								{
+									class = "BehaviorTree",
+									nodes = 
+									{
+									},
+									variables = 
+									{
+										expanded = true,
+										filename = "Gather.st",
+										finishcode = "",
+										info = "Gather",
+										menucode = "",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\nif(context and context.gather_targetid and context.gather_position) then\n\t\tGUI:Text(\"Distance to gatherable: \" .. math.ceil(Distance3DT(ml_global_information.Player_Position,context.gather_position)))\nend",
+										runcode = "",
+										startcode = "",
+										subtreeuicode = "",
+										xposoffset = 0,
+									},
+								},
+							},
+							variables = 
+							{
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
 							},
 						},
@@ -160,10 +216,9 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "MoveToRandom.st",
 								finishcode = "",
-								info = "",
+								info = "Move to random",
 								menucode = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 								runcode = "",
@@ -195,14 +250,17 @@ local tbl =
 	},
 	variables = 
 	{
+		doevents = true,
 		expanded = true,
 		filename = "GrindMode.bt",
 		finishcode = "d(\"GrindMode Off\")\n\nml_global_information.Stop()",
+		gather = true,
 		info = "",
-		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetStringML(\"grindMode\"))) then\n\n\t-- SM backwards compatibily fix \n\tgBotMode = GetString(\"grindMode\")\n\t\n\n\tif ( Settings.GW2Minion.doevents == nil) then Settings.GW2Minion.doevents = true end\n\n\tSettings.GW2Minion.doevents = GUI:Checkbox(GetString(\"doEvents\"),Settings.GW2Minion.doevents)\n\n\tGUI:TreePop()\nend",
+		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetStringML(\"grindMode\"))) then\n\n\t\t-- SM backwards compatibily fix \n\t\tgBotMode = GetString(\"grindMode\")\n\t\n\n\t\tif ( Settings.GW2Minion.doevents == nil) then Settings.GW2Minion.doevents = true end\n\t\tif ( Settings.GW2Minion.gather == nil) then Settings.GW2Minion.gahter = true end\n\n\t\tSettings.GW2Minion.doevents = GUI:Checkbox(GetString(\"doEvents\"),Settings.GW2Minion.doevents)\n\t\tSettings.GW2Minion.gather = GUI:Checkbox(GetString(\"gatherMode\"),Settings.GW2Minion.gather)\n\n\t\tGUI:TreePop()\nend",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Game State: '..tostring(ml_global_information.GameState))\n",
 		runcode = "",
 		startcode = "d(\"GrindMode On\")\ngw2_unstuck.Start()",
+		subtreeuicode = "if ( self.variables.doevents == nil) then self.variables.doevents = true end\nif ( self.variables.gather == nil) then self.variables.gather = true end\nself.variables.doevents = GUI:Checkbox(GetString(\"doEvents\"),self.variables.doevents)\nself.variables.gather = GUI:Checkbox(GetString(\"gatherMode\"),self.variables.gather)",
 		xposoffset = 0,
 	},
 }

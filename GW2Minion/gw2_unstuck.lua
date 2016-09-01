@@ -131,7 +131,7 @@ function gw2_unstuck.HandleStuck(mode)
 		-- If an AntistuckPos was set, go there
 		if ( gw2_unstuck.antiStuckPos ~= nil and type(gw2_unstuck.antiStuckPos) == "table") then
 			if ( ValidTable(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,gw2_unstuck.antiStuckPos.x,gw2_unstuck.antiStuckPos.y,gw2_unstuck.antiStuckPos.z))) then
-				newnodecount = Player:MoveTo(gw2_unstuck.antiStuckPos.x,gw2_unstuck.antiStuckPos.y,gw2_unstuck.antiStuckPos.z,20,false,false,false)
+				newnodecount = NavigationManager:MoveTo(gw2_unstuck.antiStuckPos.x,gw2_unstuck.antiStuckPos.y,gw2_unstuck.antiStuckPos.z,20,false,false,false)
 				if ( newnodecount <= 0 ) then
 					ml_error("Unstuck.lua: Cant move to antiStuckPos")
 					gw2_unstuck.antiStuckPos = nil
