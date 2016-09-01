@@ -183,7 +183,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
@@ -197,6 +196,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								filename = "AttackTargets.st",
 								finishcode = "",
 								info = "Find and Attack Enemies",
@@ -218,7 +218,7 @@ local tbl =
 							{
 								filename = "MoveToRandom.st",
 								finishcode = "",
-								info = "",
+								info = "Move to random",
 								menucode = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 								runcode = "",
