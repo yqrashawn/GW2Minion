@@ -83,7 +83,7 @@ local tbl =
 		startcode = "d(\"MoveToMap on\")",
 		subtreeuicode = "",
 		targetmapid = 30,
-		usewaypoints = true,
+		usewaypoints = false,
 		xposoffset = 0,
 	},
 }
