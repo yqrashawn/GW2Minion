@@ -152,7 +152,7 @@ local tbl =
 	{
 		filename = "MoveToRandom.st",
 		finishcode = "",
-		info = "Move to random",
+		info = "",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",

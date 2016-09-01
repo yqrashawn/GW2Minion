@@ -136,7 +136,6 @@ local tbl =
 	},
 	variables = 
 	{
-		expanded = true,
 		filename = "AttackTargets.st",
 		finishcode = "",
 		info = "Find and Attack Enemies",
