@@ -1,5 +1,5 @@
 gw2_radar = {}
-gw2_radar.open = true
+gw2_radar.open = false
 gw2_radar.unfolded = true
 if ( Settings.GW2Minion.Radar2D_Enabled == nil) then Settings.GW2Minion.Radar2D_Enabled = HackManager.g2dRadar end
 if ( Settings.GW2Minion.Radar3D_Enabled == nil) then Settings.GW2Minion.Radar3D_Enabled = HackManager.g3dRadar end
