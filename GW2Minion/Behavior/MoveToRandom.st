@@ -19,7 +19,7 @@ local tbl =
 						finishcode = "",
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(ml_global_information.Player_Alive and ml_global_information.Player_OnMesh) then\n\t\tself:fail()\nelse\n\t\tself:success()\nend",
+						runcode = "if(ml_global_information.Player_Alive) then\n\t\tself:fail()\nelse\n\t\tself:success()\nend",
 						startcode = "",
 						xposoffset = 0,
 					},
@@ -150,6 +150,7 @@ local tbl =
 	},
 	variables = 
 	{
+		expanded = true,
 		filename = "MoveToRandom.st",
 		finishcode = "",
 		info = "Move to random",

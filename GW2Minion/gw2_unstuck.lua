@@ -96,6 +96,7 @@ function gw2_unstuck.HandleStuck(mode)
 			if ( mode == nil or mode == "combat") then
 				-- if the bot is started not on the mesh try to walk back onto the mesh
 				local p = NavigationManager:GetClosestPointOnMesh({ x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z })
+
 				--d(tostring(gw2_unstuck.lastOnMeshTime).." "..tostring(TimeSince(gw2_unstuck.lastOnMeshTime)).." "..tostring(p.distance))
 				if ( (gw2_unstuck.lastOnMeshTime == 0 or TimeSince(gw2_unstuck.lastOnMeshTime) < 20000) and table.valid(p) and p.distance > 0 and p.distance < 1000) then
 					d("[Unstuck]: Move blindly to nearby mesh")
@@ -414,13 +415,14 @@ function gw2_unstuck.HandleStuck_UseWaypoint()
 			
 			if ( Inventory:GetInventoryMoney() > 200 ) then
 				local wp = gw2_common_functions.GetClosestWaypointToPos(ml_global_information.CurrentMapID,ml_global_information.Player_Position)
-				if(table.valid(wp) and wp.distance2D > 500) then		
+				if(table.valid(wp) and wp.distance > 500) then		
 					Player:StopMovement()
 					Player:TeleportToWaypoint(wp.id)
 					gw2_unstuck.respawntimer = ml_global_information.Now
-				elseif(table.valid(wp) and wp.distance2D <= 500) then
+				elseif(table.valid(wp) and wp.distance <= 500) then
 					ml_error("We are at a waypoint but need to teleport again!? Something weird is going on, stopping bot")
 					d("[Unstuck]: Logging out...")
+					gw2_unstuck.Reset()
 					Player:Logout()
 				end
 
