@@ -6,8 +6,8 @@ gw2_salvage_manager.filterList = {list = {}, nameList = {}, currID = 1,}
 gw2_salvage_manager.singleItemList = {list = {}, nameList = {}, currID = 1,}
 gw2_salvage_manager.inventoryList = {list = {}, nameList = {}, currID = 1,}
 gw2_salvage_manager.salvageKitList = {
-	nameList = {GetString("rarityNone"),GetString("buyCrude"),GetString("buyBasic"),GetString("buyFine"),GetString("buyJourneyman"),GetString("buyMaster"),GetString("mysticKit"),GetString("copperFedKit"),GetString("silverFedKit"),GetString("blacklionKit"),},
-	idList = {[GetString("rarityNone")] = 1, [GetString("buyCrude")] = 2, [GetString("buyBasic")] = 3, [GetString("buyFine")] = 4, [GetString("buyJourneyman")] = 5, [GetString("buyMaster")] = 6, [GetString("mysticKit")] = 7, [GetString("copperFedKit")] = 8, [GetString("silverFedKit")] = 9, [GetString("blacklionKit")] = 10,},
+	nameList = {GetString("rarityNone"),GetString("crudeKit"),GetString("basicKit"),GetString("fineKit"),GetString("journeymanKit"),GetString("masterKit"),GetString("mysticKit"),GetString("copperfedKit"),GetString("silverfedKit"),GetString("blacklionKit"),},
+	idList = {[GetString("rarityNone")] = 1, [GetString("crudeKit")] = 2, [GetString("basicKit")] = 3, [GetString("fineKit")] = 4, [GetString("journeymanKit")] = 5, [GetString("masterKit")] = 6, [GetString("mysticKit")] = 7, [GetString("copperfedKit")] = 8, [GetString("silverfedKit")] = 9, [GetString("blacklionKit")] = 10,},
 	currID = 1,
 }
 gw2_salvage_manager.tempFilter = {
@@ -25,16 +25,16 @@ gw2_salvage_manager.tempSingleItem = {
 }
 gw2_salvage_manager.kitlist = {
 	-- normal kits
-	[23038] = {name = GetString("buyCrude"),		rarity = 0,},	-- Crude Salvage Kit (rarity 1)
-	[23040] = {name = GetString("buyBasic"),		rarity = 1,},	-- Basic Salvage Kit (rarity 1)
-	[23041] = {name = GetString("buyFine"),			rarity = 2,},	-- Fine (rarity 2)
-	[23042] = {name = GetString("buyJourneyman"),	rarity = 3,},	-- Journeyman (rarity 3)
-	[23043] = {name = GetString("buyMaster"),		rarity = 4,},	-- Master (rarity 4)
+	[23038] = {name = GetString("crudeKit"),		rarity = 0,},	-- Crude Salvage Kit (rarity 1)
+	[23040] = {name = GetString("basicKit"),		rarity = 1,},	-- Basic Salvage Kit (rarity 1)
+	[23041] = {name = GetString("fineKit"),			rarity = 2,},	-- Fine (rarity 2)
+	[23042] = {name = GetString("journeymanKit"),	rarity = 3,},	-- Journeyman (rarity 3)
+	[23043] = {name = GetString("masterKit"),		rarity = 4,},	-- Master (rarity 4)
 	-- special kits
 	[23045] = {name = GetString("mysticKit"),		rarity = 4,},	-- Mystic Kit (rarity 4)
-	[44602] = {name = GetString("copperFedKit"),	rarity = 1,},	-- Copper-Fed Kit (rarity 1)
-	[67027] = {name = GetString("silverFedKit"),	rarity = 4,},	-- Silver-Fed Kit (rarity 4)
-	[19986] = {name = GetString("blackLionKit"), 	rarity = 5,},	--Black Lion Kit (Rarity 5)
+	[44602] = {name = GetString("copperfedKit"),	rarity = 1,},	-- Copper-Fed Kit (rarity 1)
+	[67027] = {name = GetString("silverfedKit"),	rarity = 4,},	-- Silver-Fed Kit (rarity 4)
+	[19986] = {name = GetString("blacklionKit"), 	rarity = 5,},	-- Black Lion Kit (Rarity 5)
 }
 gw2_salvage_manager.customChecks = {}
 

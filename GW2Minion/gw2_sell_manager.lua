@@ -518,7 +518,7 @@ end
 
 -- working checks here.
 function gw2_sell_manager.haveItemToSell()
-	if (ValidTable(gw2_sell_manager.createItemList())) then
+	if (table.valid(gw2_sell_manager.createItemList())) then
 		return true
 	end
 	return false
@@ -590,7 +590,7 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 				local iList = gw2_sell_manager.createItemList()
 				local slowdown = math.random(0,1)
 				local soldstuff = false
-				if ( iList ) then
+				if ( table.valid(iList) ) then
 					if ( slowdown == 0 ) then
 						for _,item in pairs(iList) do
 							d("Selling: "..item.name)
@@ -638,7 +638,7 @@ end
 
 --needtosell.
 function gw2_sell_manager.needToSell(nearby)
-	if (gw2_sell_manager.haveItemToSell()) then
+	if (table.valid(gw2_sell_manager.createItemList()) or table.valid(Inventory("rarity="..GW2.ITEMRARITY.Junk))) then
 		if (nearby and ((ml_global_information.Player_Inventory_SlotsFree*100)/Inventory.slotCount) < 33) then
 			return true
 		elseif (ml_global_information.Player_Inventory_SlotsFree <= 2) then
