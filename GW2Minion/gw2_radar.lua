@@ -1,6 +1,10 @@
 gw2_radar = {}
 gw2_radar.open = false
 gw2_radar.unfolded = true
+gw2_radar.overlayopen = true
+gw2_radar.overlaywindow = {}
+gw2_radar.ishovered = false
+
 if ( Settings.GW2Minion.Radar2D_Enabled == nil) then Settings.GW2Minion.Radar2D_Enabled = HackManager.g2dRadar end
 if ( Settings.GW2Minion.Radar3D_Enabled == nil) then Settings.GW2Minion.Radar3D_Enabled = HackManager.g3dRadar end
 if ( Settings.GW2Minion.Radar2DFullscreen_Enabled == nil) then Settings.GW2Minion.Radar2DFullscreen_Enabled = HackManager.g2dRadarFullScreen end
@@ -8,6 +12,9 @@ if ( Settings.GW2Minion.Radar_ShowPlayers == nil) then Settings.GW2Minion.Radar_
 if ( Settings.GW2Minion.Radar_ShowNPCs == nil) then Settings.GW2Minion.Radar_ShowNPCs = HackManager.gRadarShowNPCs end
 if ( Settings.GW2Minion.Radar_ShowEnemies == nil) then Settings.GW2Minion.Radar_ShowEnemies = HackManager.gRadarShowOnlyEnemies end
 if ( Settings.GW2Minion.Radar_ShowNodes == nil) then Settings.GW2Minion.Radar_ShowNodes = HackManager.gRadarShowNode end
+if ( Settings.GW2Minion.Radar_ShowOre == nil) then Settings.GW2Minion.Radar_ShowOre = HackManager.gRadarShowOre end
+if ( Settings.GW2Minion.Radar_ShowPlants == nil) then Settings.GW2Minion.Radar_ShowPlants = HackManager.gRadarShowPlants end
+if ( Settings.GW2Minion.Radar_ShowWood == nil) then Settings.GW2Minion.Radar_ShowWood = HackManager.gRadarShowWood end
 if ( Settings.GW2Minion.Radar_Zoom == nil) then Settings.GW2Minion.Radar_Zoom = HackManager.gRadarZoom end
 if ( Settings.GW2Minion.Radar_PosX == nil) then Settings.GW2Minion.Radar_PosX = HackManager.gRadarX end
 if ( Settings.GW2Minion.Radar_PosY == nil) then Settings.GW2Minion.Radar_PosY = HackManager.gRadarY end
@@ -20,6 +27,9 @@ function gw2_radar.Init()
 	HackManager.gRadarShowNPCs = Settings.GW2Minion.Radar_ShowNPCs
 	HackManager.gRadarShowOnlyEnemies = Settings.GW2Minion.Radar_ShowEnemies
 	HackManager.gRadarShowNode = Settings.GW2Minion.Radar_ShowNodes
+	HackManager.gRadarShowOre = Settings.GW2Minion.Radar_ShowOre
+	HackManager.gRadarShowPlants = Settings.GW2Minion.Radar_ShowPlants
+	HackManager.gRadarShowWood = Settings.GW2Minion.Radar_ShowWood
 	HackManager.gRadarZoom = Settings.GW2Minion.Radar_Zoom
 	HackManager.gRadarX = Settings.GW2Minion.Radar_PosX
 	HackManager.gRadarY = Settings.GW2Minion.Radar_PosY
@@ -39,7 +49,7 @@ function gw2_radar.DrawCall(event, ticks )
 			if ( c ) then HackManager.g2dRadar = Settings.GW2Minion.Radar2D_Enabled end
 			if ( Settings.GW2Minion.Radar2D_Enabled ) then
 				GUI:BulletText(GetString("fullscreenRadar")) GUI:SameLine(150)  Settings.GW2Minion.Radar2DFullscreen_Enabled,c = GUI:Checkbox("##radar2",Settings.GW2Minion.Radar2DFullscreen_Enabled)
-				if ( c ) then HackManager.g2dRadarFullScreen = Settings.GW2Minion.Radar2DFullscreen_Enabled end
+				if ( c ) then HackManager.g2dRadarFullScreen = Settings.GW2Minion.Radar2DFullscreen_Enabled end				
 			end
 			-- 3D Radar
 			GUI:BulletText(GetString("enable3DRadar")) GUI:SameLine(150) Settings.GW2Minion.Radar3D_Enabled,c = GUI:Checkbox("##radar3",Settings.GW2Minion.Radar3D_Enabled)
@@ -55,122 +65,97 @@ function gw2_radar.DrawCall(event, ticks )
 			if ( c ) then HackManager.gRadarShowOnlyEnemies = Settings.GW2Minion.Radar_ShowEnemies end	
 			GUI:BulletText(GetString("showNodes")) GUI:SameLine(150) Settings.GW2Minion.Radar_ShowNodes,c = GUI:Checkbox("##radar7",Settings.GW2Minion.Radar_ShowNodes)
 			if ( c ) then HackManager.gRadarShowNode = Settings.GW2Minion.Radar_ShowNodes end	
-			
-			GUI:BulletText(GetString("gRadarZoom")) GUI:SameLine(150) Settings.GW2Minion.Radar_Zoom,c = GUI:InputInt("##radar8", Settings.GW2Minion.Radar_Zoom, 1, 1, GUI.InputTextFlags_CharsDecimal+GUI.InputTextFlags_CharsNoBlank)
-			if ( c ) then HackManager.gRadarZoom = Settings.GW2Minion.Radar_Zoom end
-			GUI:BulletText(GetString("xPos")) GUI:SameLine(150) Settings.GW2Minion.Radar_PosX,c = GUI:InputInt("##radar9", Settings.GW2Minion.Radar_PosX, 10, 25, GUI.InputTextFlags_CharsDecimal+GUI.InputTextFlags_CharsNoBlank)
-			if ( c ) then HackManager.gRadarX = Settings.GW2Minion.Radar_PosX end
-			GUI:BulletText(GetString("yPos")) GUI:SameLine(150) Settings.GW2Minion.Radar_PosY,c = GUI:InputInt("##radar10", Settings.GW2Minion.Radar_PosY, 10, 25, GUI.InputTextFlags_CharsDecimal+GUI.InputTextFlags_CharsNoBlank)
-			if ( c ) then HackManager.gRadarY = Settings.GW2Minion.Radar_PosY end
-			
-		
+			if ( Settings.GW2Minion.Radar_ShowNodes ) then
+				if ( GUI:TreeNode(GetString("nodesettings")) ) then
+					local k = false
+					GUI:BulletText(GetString("all")) GUI:SameLine() k,c = GUI:Checkbox("##radar14", not Settings.GW2Minion.Radar_ShowOre and not Settings.GW2Minion.Radar_ShowPlants and not Settings.GW2Minion.Radar_ShowWood) GUI:SameLine()
+					if ( c and k ) then 
+						Settings.GW2Minion.Radar_ShowOre = false
+						Settings.GW2Minion.Radar_ShowPlants = false 
+						Settings.GW2Minion.Radar_ShowWood = false
+						HackManager.gRadarShowOre = Settings.GW2Minion.Radar_ShowOre
+						HackManager.gRadarShowPlants = Settings.GW2Minion.Radar_ShowPlants
+						HackManager.gRadarShowWood = Settings.GW2Minion.Radar_ShowWood
+					end
+					GUI:BulletText(GetString("ore")) GUI:SameLine() Settings.GW2Minion.Radar_ShowOre,c = GUI:Checkbox("##radar12",Settings.GW2Minion.Radar_ShowOre)
+					if ( c ) then HackManager.gRadarShowOre = Settings.GW2Minion.Radar_ShowOre end GUI:SameLine()
+					GUI:BulletText(GetString("plants")) GUI:SameLine() Settings.GW2Minion.Radar_ShowPlants,c = GUI:Checkbox("##radar13",Settings.GW2Minion.Radar_ShowPlants)
+					if ( c ) then HackManager.gRadarShowPlants = Settings.GW2Minion.Radar_ShowPlants end GUI:SameLine()
+					GUI:BulletText(GetString("wood")) GUI:SameLine() Settings.GW2Minion.Radar_ShowWood,c = GUI:Checkbox("##radar15",Settings.GW2Minion.Radar_ShowWood)
+					if ( c ) then HackManager.gRadarShowWood = Settings.GW2Minion.Radar_ShowWood end					
+					GUI:TreePop()
+				end
+			end
 		end
 		GUI:End()
+		
+		
+		-- Draw an invisible overlay window over the 2d radar, so we can move and zoom with the mouse
+		if ( Settings.GW2Minion.Radar2D_Enabled and Settings.GW2Minion.Radar2DFullscreen_Enabled == false and GetGameState() == GW2.GAMESTATE.GAMEPLAY) then
+								
+			GUI:SetNextWindowSize( 300, 300, GUI.SetCond_Always)
+			GUI:PushStyleVar(GUI.StyleVar_Alpha, 0.1)
+			if (GUI:Begin("##YouCantSeeMe", gw2_radar.overlayopen, GUI.WindowFlags_NoCollapse + GUI.WindowFlags_NoScrollbar+GUI.WindowFlags_NoTitleBar+GUI.WindowFlags_NoResize)) then				
+				--Handle dragging radar
+				local wx,wy = GUI:GetWindowPos()				
+				if ( table.size(gw2_radar.overlaywindow ) == 0 ) then 
+					gw2_radar.overlaywindow.wx = wx
+					gw2_radar.overlaywindow.wy = wy
+					gw2_radar.overlaywindow.shiftx = 0
+					gw2_radar.overlaywindow.shifty = 0
+				end			 				 
+				if ( GUI:IsMouseHoveringWindow() ) then
+					gw2_radar.ishovered = true
+					if (  GUI:IsMouseDragging(0) ) then -- Dragging the BTree with right mouse button
+						local q,w = GUI:GetMouseDragDelta(0)
+						gw2_radar.overlaywindow.shiftx = q
+						gw2_radar.overlaywindow.shifty = w
+					elseif (GUI:IsMouseReleased(0)) then
+						gw2_radar.overlaywindow.wx = gw2_radar.overlaywindow.wx + gw2_radar.overlaywindow.shiftx 
+						gw2_radar.overlaywindow.wy = gw2_radar.overlaywindow.wy + gw2_radar.overlaywindow.shifty
+						gw2_radar.overlaywindow.shiftx = 0
+						gw2_radar.overlaywindow.shifty = 0
+					else							
+						gw2_radar.overlaywindow.wx = wx
+						gw2_radar.overlaywindow.wy = wy
+					end
+				else
+					gw2_radar.ishovered = false
+				end
+				GUI:SetWindowPos(gw2_radar.overlaywindow.wx+gw2_radar.overlaywindow.shiftx, gw2_radar.overlaywindow.wy+gw2_radar.overlaywindow.shifty, GUI.SetCond_Always)				
+				Settings.GW2Minion.Radar_PosX = gw2_radar.overlaywindow.wx+gw2_radar.overlaywindow.shiftx
+				Settings.GW2Minion.Radar_PosY = gw2_radar.overlaywindow.wy+gw2_radar.overlaywindow.shifty
+				HackManager.gRadarX = Settings.GW2Minion.Radar_PosX
+				HackManager.gRadarY = Settings.GW2Minion.Radar_PosY
+				
+			end
+			GUI:End()
+			GUI:PopStyleVar()
+		end
 	end
 end
 RegisterEventHandler("Gameloop.Draw", gw2_radar.DrawCall)
 
--- Module Event Handler
-function gw2_radar.HandleInit()	
-            
-    if ( Settings.GW2Minion.gRadar == nil ) then
-        Settings.GW2Minion.gRadar = "0"
-    end		
-    if ( Settings.GW2Minion.g2dRadar == nil ) then
-        Settings.GW2Minion.g2dRadar = "0"
-    end	
-    if ( Settings.GW2Minion.g3dRadar == nil ) then
-        Settings.GW2Minion.g3dRadar = "0"
-    end	
-    if ( Settings.GW2Minion.g2dRadarFullScreen == nil ) then
-        Settings.GW2Minion.g2dRadarFullScreen = "0"
-    end	
-    if ( Settings.GW2Minion.gRadarShowNode == nil ) then
-        Settings.GW2Minion.gRadarShowNode = "0"
-    end		
-    if ( Settings.GW2Minion.gRadarShowPlayers == nil ) then
-        Settings.GW2Minion.gRadarShowPlayers = "0"
-    end	
-    if ( Settings.GW2Minion.gRadarShowBattleNPCs == nil ) then
-        Settings.GW2Minion.gRadarShowBattleNPCs = "0"
-    end	
-    if ( Settings.GW2Minion.gRadarShowOnlyEnemies == nil ) then
-        Settings.GW2Minion.gRadarShowOnlyEnemies = "0"
-    end		
-	if ( Settings.GW2Minion.gRadarZoom == nil ) then
-        Settings.GW2Minion.gRadarZoom = "10"
-    end	
-    if ( Settings.GW2Minion.gRadarX == nil ) then
-        Settings.GW2Minion.gRadarX = 5
-    end		
-    if ( Settings.GW2Minion.gRadarY == nil ) then
-        Settings.GW2Minion.gRadarY = 5
-    end	
-    
-    gRadar = Settings.GW2Minion.gRadar
-    g2dRadar = Settings.GW2Minion.g2dRadar
-    g3dRadar = Settings.GW2Minion.g3dRadar
-    g2dRadarFullScreen = Settings.GW2Minion.g2dRadarFullScreen
-	gRadarZoom = Settings.GW2Minion.gRadarZoom
-    gRadarShowNode = Settings.GW2Minion.gRadarShowNode
-    gRadarShowPlayers = Settings.GW2Minion.gRadarShowPlayers
-    gRadarShowBattleNPCs = Settings.GW2Minion.gRadarShowBattleNPCs
-	gRadarShowOnlyEnemies = Settings.GW2Minion.gRadarShowOnlyEnemies
-    gRadarX = Settings.GW2Minion.gRadarX
-    gRadarY = Settings.GW2Minion.gRadarY
-    
-	if ( HackManager ) then
-		if ( gRadar == "0") then HackManager:SetRadarSettings("gRadar",false) else HackManager:SetRadarSettings("gRadar",true) end
-		if ( g2dRadar == "0") then HackManager:SetRadarSettings("g2dRadar",false) else HackManager:SetRadarSettings("g2dRadar",true) end
-		if ( g3dRadar == "0") then HackManager:SetRadarSettings("g3dRadar",false) else HackManager:SetRadarSettings("g3dRadar",true) end
-		if ( g2dRadarFullScreen == "0") then HackManager:SetRadarSettings("g2dRadarFullScreen",false) else HackManager:SetRadarSettings("g2dRadarFullScreen",true) end
-		if ( gRadarZoom == "0") then HackManager:SetRadarSettings("gRadarZoom","5") end	
-		if ( gRadarShowNode == "0") then HackManager:SetRadarSettings("gRadarShowNode",false) else HackManager:SetRadarSettings("gRadarShowNode",true) end
-		if ( gRadarShowPlayers == "0") then HackManager:SetRadarSettings("gRadarShowPlayers",false) else HackManager:SetRadarSettings("gRadarShowPlayers",true) end
-		if ( gRadarShowBattleNPCs == "0") then HackManager:SetRadarSettings("gRadarShowBattleNPCs",false) else HackManager:SetRadarSettings("gRadarShowBattleNPCs",true) end
-		if ( gRadarShowOnlyEnemies == "0") then HackManager:SetRadarSettings("gRadarShowOnlyEnemies",false) else HackManager:SetRadarSettings("gRadarShowOnlyEnemies",true) end
-		
-		if ( tonumber(gRadarX) ~= nil) then HackManager:SetRadarSettings("gRadarX",tonumber(gRadarX)) end
-		if ( tonumber(gRadarY) ~= nil) then HackManager:SetRadarSettings("gRadarY",tonumber(gRadarY)) end
-    end
-	
-	GUI_NewButton(gw2_radar.MainWindow.Name,"Cant See Radar? Press Me","Dev.ChangeMDepth")
-	GUI_UnFoldGroup(gw2_radar.MainWindow.Name,"Radar");	
-    GUI_WindowVisible(gw2_radar.MainWindow.Name,false)
+function gw2_radar.ToggleWindow()
+	gw2_radar.open = not gw2_radar.open
 end
+RegisterEventHandler("Radar.toggle", gw2_radar.ToggleWindow)
 
-function gw2_radar.GUIVarUpdate(Event, NewVals, OldVals)
-    for k,v in pairs(NewVals) do
-        if (k == "gRadar" or
-            k == "g2dRadar" or 			
-            k == "g3dRadar" or
-            k == "g2dRadarFullScreen" or
-            k == "gRadarShowNode" or
-            k == "gRadarShowPlayers" or
-            k == "gRadarShowBattleNPCs" or	
-			k == "gRadarShowOnlyEnemies")
-        then
-            Settings.GW2Minion[tostring(k)] = v
-            if ( v == "0") then
-                HackManager:SetRadarSettings(k,false)
-            else
-                HackManager:SetRadarSettings(k,true)
-            end
-        end
-        if ( k == "gRadarX" and tonumber(v) ~= nil) then
-            Settings.GW2Minion[tostring(k)] = v
-            HackManager:SetRadarSettings(k,tonumber(v))
-        end
-        if ( k == "gRadarY" and tonumber(v) ~= nil) then
-            Settings.GW2Minion[tostring(k)] = v
-            HackManager:SetRadarSettings(k,tonumber(v))
-        end
-		if ( k == "gRadarZoom" and tonumber(v) ~= nil) then
-            Settings.GW2Minion[tostring(k)] = v
-            HackManager:SetRadarSettings(k,tonumber(v))
-        end
-		
-    end
-    GUI_RefreshWindow(gw2_radar.MainWindow.Name)
+function gw2_radar.InputHandler(event, message, wParam, lParam)
+	local message = tonumber(message)
+	local lParam = tonumber(lParam)
+	if ( message == ml_input_mgr.messagekeys["WM_MOUSEWHEEL"] ) then
+	-- zooming the Radar
+		if ( gw2_radar.ishovered and lParam and type(lParam) == "number" ) then
+			if ( lParam > 0 ) then
+				Settings.GW2Minion.Radar_Zoom = Settings.GW2Minion.Radar_Zoom + 1.0
+			else
+				Settings.GW2Minion.Radar_Zoom = Settings.GW2Minion.Radar_Zoom - 1.0
+			end
+			if ( Settings.GW2Minion.Radar_Zoom < 1.0 ) then Settings.GW2Minion.Radar_Zoom = 1.0 end
+			if ( Settings.GW2Minion.Radar_Zoom > 50.0 ) then Settings.GW2Minion.Radar_Zoom = 50.0 end
+			HackManager.gRadarZoom = Settings.GW2Minion.Radar_Zoom
+		end		
+	end
 end
-
+RegisterEventHandler("Gameloop.Input", gw2_radar.InputHandler)
