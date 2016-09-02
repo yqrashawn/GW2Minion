@@ -268,9 +268,6 @@ function gw2_skill_manager:UpdateCurrentSkillbarSkills() -- TODO:check curentski
 						end
 					end
 				end
-				if ( profilechanged == true ) then
-					self:MainWindowDeleteSkills() -- Refresh UI
-				end
 			end
 		end
 	end
@@ -367,6 +364,7 @@ function profilePrototype:Use(targetID)
 			break
 		end
 	end
+
 	self:DoCombatMovement(self.tmp.target.targetID)
 	return true
 end
@@ -1154,5 +1152,5 @@ end
 function gw2_skill_manager.OnUpdate(ticks)
 	gw2_skill_manager:UpdateCurrentSkillbarSkills()
 	gw2_skill_manager:DetectSkills()
-	--gw2_skill_manager:Use()
+	gw2_skill_manager:Use()
 end

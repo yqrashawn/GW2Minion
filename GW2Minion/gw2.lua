@@ -218,34 +218,3 @@ function gw2minion.RefreshGuestServers()
 		}
 	end
 end
-
--- Stops the Bot
-function ml_global_information.Stop()
-    Player:StopMovement()
-	gw2_unstuck.Reset()
-end
-
--- Waits xxx seconds before running the next pulse
-function ml_global_information.Wait( mseconds )
-	ml_bt_mgr.lasttick = (ml_bt_mgr.lasttick or ml_global_information.Now) + mseconds
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
