@@ -268,9 +268,6 @@ function gw2_skill_manager:UpdateCurrentSkillbarSkills() -- TODO:check curentski
 						end
 					end
 				end
-				if ( profilechanged == true ) then
-					self:MainWindowDeleteSkills() -- Refresh UI
-				end
 			end
 		end
 	end
@@ -367,6 +364,7 @@ function profilePrototype:Use(targetID)
 			break
 		end
 	end
+
 	self:DoCombatMovement(self.tmp.target.targetID)
 	return true
 end
@@ -500,7 +498,9 @@ function profilePrototype:DoCombatMovement(targetID)
 	elseif (table.valid(target) and target.distance > self.tmp.activeSkillRange and noStopMovementBuffs and (gBotMode ~= GetString("assistMode") or Settings.GW2Minion.moveintocombatrange == true) and not gw2_unstuck.HandleStuck("combat") and ml_global_information.Player_OnMesh and ml_global_information.Player_Alive) then
 		local tPos = target.pos
 		if (self.tmp.combatMovement.combat) then Player:StopMovement() self.tmp.combatMovement.combat = false end
-		NavigationManager:MoveTo(tPos.x,tPos.y,tPos.z,self.tmp.activeSkillRange/2,false,false,true)
+		if(not gw2_unstuck.HandleStuck("combat")) then
+			NavigationManager:MoveTo(tPos.x,tPos.y,tPos.z,self.tmp.activeSkillRange/2,false,false,true)
+		end
 		self.tmp.combatMovement.range = true
 	elseif (self.tmp.combatMovement.combat or self.tmp.combatMovement.range) then -- Stop active combat movement.
 		Player:StopMovement()
@@ -1154,5 +1154,5 @@ end
 function gw2_skill_manager.OnUpdate(ticks)
 	gw2_skill_manager:UpdateCurrentSkillbarSkills()
 	gw2_skill_manager:DetectSkills()
-	--gw2_skill_manager:Use()
+	gw2_skill_manager:Use()
 end

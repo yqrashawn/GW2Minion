@@ -56,6 +56,7 @@ function gw2_datamanager.GetLocalWaypointList( mapid )
 								discovered = table.valid(wInfo),
 								contested =  wInfo.contested == true,
 								onmesh = not (wInfo.onmesh == false),
+								distance = wInfo.distance or -1
 							}
 							table.insert(wdata,newWdata)
 						end

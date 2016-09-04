@@ -72,18 +72,15 @@ local tbl =
 	},
 	variables = 
 	{
-		expanded = true,
+		expanded = false,
 		filename = "MoveToMap.bt",
-		finishcode = "d(\"MoveToMap Off\")\n\nml_global_information.Stop()",
+		finishcode = "",
 		info = "",
-		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif(GUI:TreeNode(\"Move to map\")) then\n\tif(table.valid(gw2_datamanager.mapData)) then\n\t\tlocal maplist = {}\n\t\tlocal mapnamelist = {}\n\t\t\n\t\tfor mapID,map in pairs(gw2_datamanager.mapData) do\n\t\t\t\tif(ml_nav_manager.GetNode(mapID)) then\n\t\t\t\t\t\tlocal name = map.map_name..\" (\"..mapID..\")\"\n\t\t\t\t\t\ttable.insert(mapnamelist, name)\n\t\t\t\t\t\ttable.insert(maplist, {id = mapID, name = name})\n\t\t\t\tend\n\t\tend\n\t\ttable.sort(mapnamelist)\n\t\ttable.sort(maplist, function(a,b) return a.name < b.name end)\n\t\t\n\t\tlocal selectedIndex,changed = GUI:Combo(\"Select map\", self.variables.selectedmapindex or 1, mapnamelist)\n\t\tif(changed) then\n\t\t\t\tself.variables.selectedmapindex = selectedIndex\n\t\t\t\tself.variables.targetmapid = maplist[selectedIndex].id\n\t\tend\n\t\t\n\t\tlocal checked,pressed = GUI:Checkbox(\"Use waypoints\", self.variables.usewaypoints or false)\n\t\tif(pressed) then\n\t\t\t\tself.variables.usewaypoints = checked\n\t\tend\n\telse\n\t\tGUI:Text(\"No map data available\")\n\tend\n\tGUI:TreePop()\nend",
+		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-		runcode = "context.movetomap_targetmapid = self.variables.targetmapid\ncontext.movetomap_usewaypoints = self.variables.usewaypoints",
-		selectedmapindex = 32,
-		startcode = "d(\"MoveToMap on\")",
+		runcode = "",
+		startcode = "",
 		subtreeuicode = "",
-		targetmapid = 30,
-		usewaypoints = false,
 		xposoffset = 0,
 	},
 }
