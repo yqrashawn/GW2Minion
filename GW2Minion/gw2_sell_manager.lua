@@ -70,6 +70,10 @@ function gw2_sell_manager.ModuleInit()
 
 	-- init button in minionmainbutton
 	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SELLMGR", name = "Sell MGR", onClick = function() gw2_sell_manager.mainWindow.open = gw2_sell_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Sell Manager\" window."},"GW2MINION##MENU_HEADER")
+	
+	if(not ml_blacklist.BlacklistExists(GetString("vendorssell"))) then
+		ml_blacklist.CreateBlacklist(GetString("vendorssell"))
+	end
 
 end
 
@@ -529,11 +533,12 @@ function gw2_sell_manager.getClosestSellMarker(nearby)
 	local closestLocation = nil
 	local listArg = (nearby == true and ",maxdistance=5000" or "")
 	local markers = MapMarkerList("onmesh"..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorssell")))
-	if ( TableSize(markers) > 0 ) then
+	if ( table.valid(markers) ) then
 		local i,marker = next (markers)
 		while ( i and marker ) do
-			local mCID = marker.contentID
-			if (mCID == GW2.MAPMARKER.Merchant or mCID == GW2.MAPMARKER.Armorsmith or mCID == GW2.MAPMARKER.Weaponsmith or mCID == GW2.MAPMARKER.Repair) then
+			local validCID = {GW2.MAPMARKER.Merchant,GW2.MAPMARKER.Armorsmith,GW2.MAPMARKER.Weaponsmith,GW2.MAPMARKER.Repair,576323,633911,575697}
+
+			if (table.contains(validCID,marker.contentid)) then
 				if (closestLocation == nil or closestLocation.distance > marker.distance) then
 					if (nearby == true and marker.pathdistance < 4000) then
 						closestLocation = marker
@@ -595,7 +600,7 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 						for _,item in pairs(iList) do
 							d("Selling: "..item.name)
 							item:Sell()
-							local uniqueItemID = item.itemID .. item.slot
+							local uniqueItemID = item.itemid .. item.slot
 							if ( not gw2_sell_manager.VendorSellHistroy[uniqueItemID] or gw2_sell_manager.VendorSellHistroy[uniqueItemID] < 5 ) then
 
 								if ( not gw2_sell_manager.VendorSellHistroy[uniqueItemID] ) then
@@ -619,18 +624,6 @@ function gw2_sell_manager.sellAtVendor(vendorMarker)
 				Inventory:SellJunk()
 
 			end
-		else
-			local pos = vendorMarker.pos
-			if ( pos ) then
-				local newTask = gw2_task_moveto.Create()
-				newTask.targetPos = pos
-				newTask.targetID = vendorMarker.characterID
-				newTask.targetType = "characterID"
-				newTask.name = "MoveTo Vendor(SELL)"
-				newTask.useWaypoint = true
-				ml_task_hub:CurrentTask():AddSubTask(newTask)
-				return true
-			end
 		end
 	end
 	return false
@@ -639,7 +632,7 @@ end
 --needtosell.
 function gw2_sell_manager.needToSell(nearby)
 	if (table.valid(gw2_sell_manager.createItemList()) or table.valid(Inventory("rarity="..GW2.ITEMRARITY.Junk))) then
-		if (nearby and ((ml_global_information.Player_Inventory_SlotsFree*100)/Inventory.slotCount) < 33) then
+		if (nearby and ((ml_global_information.Player_Inventory_SlotsFree*100)/Inventory.slotcount) < 33) then
 			return true
 		elseif (ml_global_information.Player_Inventory_SlotsFree <= 2) then
 			return true

@@ -23,7 +23,6 @@ local tbl =
 	},
 	variables = 
 	{
-		expanded = true,
 		filename = "DownedHandler.st",
 		finishcode = "",
 		info = "Downed Handler",
