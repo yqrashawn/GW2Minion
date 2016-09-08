@@ -368,9 +368,9 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthst
 		filterstring = filterstring..",downed"
 	end
 
-	-- Only in AssistMode we want to allow these settings
-	if (Settings.GW2Minion.smmode == 2) then filterstring = filterstring..",player" end
 	if (gBotMode == GetString("assistMode") or gBotMode == GetString("taskspvp")) then
+		-- Only in AssistMode we want to allow these settings
+		if (Settings.GW2Minion.smmode == 2) then filterstring = filterstring..",player" end
 		if (Settings.GW2Minion.smtargetmode == 2) then filterstring = filterstring..",lowesthealth" end
 		if (Settings.GW2Minion.smtargetmode == 3) then filterstring = filterstring..",nearest" end
 		if (Settings.GW2Minion.smtargetmode == 4) then filterstring = filterstring..",clustered=600" end
