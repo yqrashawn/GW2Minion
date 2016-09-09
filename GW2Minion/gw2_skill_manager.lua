@@ -24,13 +24,13 @@ local profilePrototype = {
 	profession = 10,
 	professionSettings = {
 		elementalist = {
-			attunement_1 = "None",
-			attunement_2 = "None",
-			attunement_3 = "None",
-			attunement_4 = "None",
+			attunement_1 = 1,--"None",
+			attunement_2 = 1,--"None",
+			attunement_3 = 1,--"None",
+			attunement_4 = 1,--"None",
 		},
 		engineer = {
-			kit = "None",
+			kit = 1,--"None",
 		},
 	},
 	switchSettings = {
@@ -56,7 +56,7 @@ local profilePrototype = {
 		targetCheck = {
 			lastTicks = 0,
 			id = 0,
-			contentID = 0,
+			contentid = 0,
 			health = {},
 		},
 		targetBlacklistBuffs = "762,785",
@@ -127,22 +127,14 @@ local skillPrototype = {
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function gw2_skill_manager.ModuleInit()
-	if (Settings.GW2Minion.gCurrentProfile == nil or table.valid(Settings.GW2Minion.gCurrentProfile) == false) then
-		Settings.GW2Minion.gCurrentProfile = {
-			["Elementalist"] = "GW2Minion",
-			["Engineer"] = "GW2Minion",
-			["Guardian"] = "GW2Minion",
-			["Mesmer"] = "GW2Minion",
-			["Necromancer"] = "GW2Minion",
-			["Ranger"] = "GW2Minion",
-			["Thief"] = "GW2Minion",
-			["Warrior"] = "GW2Minion",
-			["Revenant"] = "GW2Minion",
-		}
+	if (Settings.GW2Minion.gCurrentProfile == nil) then
+		Settings.GW2Minion.gCurrentProfile = {}
 	end
-
+	if (Settings.GW2Minion.gCurrentProfile[Player.name] == nil) then
+		Settings.GW2Minion.gCurrentProfile[Player.name] = "GW2Minion"
+		Settings.GW2Minion.gCurrentProfile = Settings.GW2Minion.gCurrentProfile
+	end
 	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SKILLMGR", name = "Skill MGR", onClick = function() gw2_skill_manager.mainWindow.open = not gw2_skill_manager.mainWindow.open end, tooltip = "Click to open \"Skill Manager\" window."},"GW2MINION##MENU_HEADER")
-
 end
 RegisterEventHandler("Module.Initalize",gw2_skill_manager.ModuleInit)
 
@@ -159,7 +151,7 @@ function gw2_skill_manager.mainWindow.Draw(event,ticks)
 			local changed = false
 			gw2_skill_manager.profileList.currID, changed = GUI:Combo("##gw2sm-profilelist",gw2_skill_manager.profileList.currID,gw2_skill_manager.profileList.nameList)
 			if (changed) then
-				Settings.GW2Minion.gCurrentProfile[gw2_common_functions.GetProfessionName()] = gw2_skill_manager.profileList.nameList[gw2_skill_manager.profileList.currID]
+				Settings.GW2Minion.gCurrentProfile[ml_global_information.Player_Name] = gw2_skill_manager.profileList.nameList[gw2_skill_manager.profileList.currID]
 				Settings.GW2Minion.gCurrentProfile = Settings.GW2Minion.gCurrentProfile
 				gw2_skill_manager.profile = gw2_skill_manager:GetProfile(gw2_skill_manager.profileList.nameList[gw2_skill_manager.profileList.currID])
 				gw2_skill_manager.profileList = gw2_skill_manager:GetProfileList()
@@ -169,10 +161,8 @@ function gw2_skill_manager.mainWindow.Draw(event,ticks)
 			GUI:Separator()
 			-- New Profile Button.
 			if (GUI:Button("New Profile", 100,25)) then
-				gw2_skill_manager.profileWindow.open = false
-				gw2_skill_manager.profile = {name = "",}
-				gw2_skill_manager.skillWindow.open = false
 				GUI:OpenPopup("##gw2sm-newprofile")
+				GUI:SetKeyboardFocusHere(10)
 			end
 			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
 				GUI:SetTooltip("Create a new profile.")
@@ -185,7 +175,7 @@ function gw2_skill_manager.mainWindow.Draw(event,ticks)
 				GUI:AlignFirstTextHeightToWidgets()
 				GUI:Text(GetString("name"))
 				GUI:SameLine()
-				gw2_skill_manager.profile.name = GUI:InputText("##gw2sm-clonedprofilename",gw2_skill_manager.profile.name)
+				gw2_skill_manager.profileList.newProfileName = GUI:InputText("##gw2sm-clonedprofilename",gw2_skill_manager.profileList.newProfileName)
 				-----------------------------------------------------------------------------------------------------------------------------------
 				GUI:Separator()
 				------------------------------------------------------------------------------------------------------------------------
@@ -202,10 +192,10 @@ function gw2_skill_manager.mainWindow.Draw(event,ticks)
 				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
 				GUI:SameLine(0, 50)
 				if (GUI:Button(GetString("ok"),80,30)) then
-					if (string.valid(gw2_skill_manager.profile.name) and table.contains(gw2_skill_manager.profileList.nameList, gw2_skill_manager.profile.name) == false) then
-						gw2_skill_manager.profile = gw2_skill_manager:NewProfile(gw2_skill_manager.profile.name)
+					if (string.valid(gw2_skill_manager.profileList.newProfileName) and gw2_skill_manager.profileList.newProfileName ~= "None" and table.contains(gw2_skill_manager.profileList.nameList, gw2_skill_manager.profileList.newProfileName) == false) then
+						gw2_skill_manager.skillWindow.open = false
+						gw2_skill_manager.profile = gw2_skill_manager:NewProfile(gw2_skill_manager.profileList.newProfileName)
 						gw2_skill_manager.profile.tmp.detectingSkills = true
-						gw2_skill_manager.profile = gw2_skill_manager.profile
 						gw2_skill_manager.profileList = gw2_skill_manager:GetProfileList(gw2_skill_manager.profile.name)
 						gw2_skill_manager.profileWindow.open = true
 						GUI:CloseCurrentPopup()
@@ -242,7 +232,6 @@ function gw2_skill_manager.mainWindow.Draw(event,ticks)
 			-- Edit Profile Button.
 			if (GUI:Button("Edit Profile", 100,25)) then
 				if (gw2_skill_manager.profile and gw2_skill_manager.profileWindow.open == false) then
-					gw2_skill_manager.profile = gw2_skill_manager.profile
 					gw2_skill_manager.profileWindow.open = true
 				else
 					gw2_skill_manager.profileWindow.open = false
@@ -275,7 +264,8 @@ function gw2_skill_manager.profileWindow.Draw(event,ticks)
 				GUI:EndMenuBar()
 			end
 			
-			GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing)
+			-- TODO: fix this crappy swap settings layout stuff. too late now, so dont try.
+			--[[GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing)
 			if (GUI:TreeNode(GetString("swap"))) then
 				-- swap checkbox.
 				gw2_skill_manager.profile.switchSettings.switchWeapons = GUI:Checkbox("##gw2sm-swapcheckbox", gw2_skill_manager.profile.switchSettings.switchWeapons)
@@ -292,205 +282,203 @@ function gw2_skill_manager.profileWindow.Draw(event,ticks)
 					GUI:Separator()
 				end
 				GUI:TreePop()
-			end
+			end]]
 
-			GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing)
-			if (GUI:TreeNode(GetString("profile"))) then
-				-- Save profile button.
-				if (GUI:Button(GetString("save"), (GUI:GetContentRegionAvailWidth()/2)-4,25)) then
-					gw2_skill_manager.profile:Save()
-					gw2_skill_manager.profile = gw2_skill_manager.profile
+			-- Save profile button.
+			if (GUI:Button(GetString("save"), (GUI:GetContentRegionAvailWidth()/2)-(GUI:GetStyle().iteminnerspacing.x/2),25)) then
+				gw2_skill_manager.profile:Save()
+			end
+			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
+				GUI:SetTooltip("Save the current profile.")
+			end
+			GUI:SameLine(0)
+			-- Clone profile button.
+			if (GUI:Button(GetString("clone"), GUI:GetContentRegionAvailWidth(),25)) then
+				GUI:OpenPopup("##gw2sm-cloneprofile")
+			end
+			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
+				GUI:SetTooltip("Clone the current profile with a new name.")
+			end
+			-- Clone profile dialog.
+			GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
+			GUI:SetNextWindowSize(300, 100, GUI.SetCond_Always)
+			if (GUI:BeginPopup("##gw2sm-cloneprofile")) then
+				--name
+				GUI:AlignFirstTextHeightToWidgets()
+				GUI:Text(GetString("name"))
+				GUI:SameLine()
+				gw2_skill_manager.profile.tmp.cloneProfileName = GUI:InputText("##gw2sm-clonedprofilename",gw2_skill_manager.profile.tmp.cloneProfileName)
+				-----------------------------------------------------------------------------------------------------------------------------------
+				GUI:Separator()
+				------------------------------------------------------------------------------------------------------------------------
+				-- Layout spacing.
+				GUI:NewLine()
+				GUI:NewLine()
+				GUI:SameLine(0,40)
+				-- CANCEL BUTTON.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				if (GUI:Button(GetString("cancel"),80,30)) then
+					GUI:CloseCurrentPopup()
 				end
-				if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
-					GUI:SetTooltip("Save the current profile.")
-				end
-				GUI:SameLine(0)
-				-- Clone profile button.
-				if (GUI:Button(GetString("clone"), GUI:GetContentRegionAvailWidth(),25)) then
-					GUI:OpenPopup("##gw2sm-cloneprofile")
-				end
-				if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
-					GUI:SetTooltip("Clone the current profile with a new name.")
-				end
-				-- Clone profile dialog.
-				GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
-				GUI:SetNextWindowSize(300, 100, GUI.SetCond_Always)
-				if (GUI:BeginPopup("##gw2sm-cloneprofile")) then
-					--name
-					GUI:AlignFirstTextHeightToWidgets()
-					GUI:Text(GetString("name"))
-					GUI:SameLine()
-					gw2_skill_manager.profile.tmp.cloneProfileName = GUI:InputText("##gw2sm-clonedprofilename",gw2_skill_manager.profile.tmp.cloneProfileName)
-					-----------------------------------------------------------------------------------------------------------------------------------
-					GUI:Separator()
-					------------------------------------------------------------------------------------------------------------------------
-					-- Layout spacing.
-					GUI:NewLine()
-					GUI:NewLine()
-					GUI:SameLine(0,40)
-					-- CANCEL BUTTON.
-					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
-					if (GUI:Button(GetString("cancel"),80,30)) then
+				-- OK BUTTON.
+				-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
+				GUI:SameLine(0, 50)
+				if (GUI:Button(GetString("ok"),80,30)) then
+					if (string.valid(gw2_skill_manager.profile.tmp.cloneProfileName) and table.contains(gw2_skill_manager.profileList.nameList, gw2_skill_manager.profile.tmp.cloneProfileName) == false) then
+						gw2_skill_manager.profile:Clone(gw2_skill_manager.profile.tmp.cloneProfileName)
+						gw2_skill_manager.profileList = gw2_skill_manager:GetProfileList()
 						GUI:CloseCurrentPopup()
+					else
+						GUI:OpenPopup("Invalid Name.##gw2sm-clonenameconflict")
 					end
-					-- OK BUTTON.
-					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
-					GUI:SameLine(0, 50)
-					if (GUI:Button(GetString("ok"),80,30)) then
-						if (string.valid(gw2_skill_manager.profile.tmp.cloneProfileName) and table.contains(gw2_skill_manager.profileList.nameList, gw2_skill_manager.profile.tmp.cloneProfileName) == false) then
-							gw2_skill_manager.profile:Clone(gw2_skill_manager.profile.tmp.cloneProfileName)
-							gw2_skill_manager.profileList = gw2_skill_manager:GetProfileList()
-							GUI:CloseCurrentPopup()
-						else
-							GUI:OpenPopup("Invalid Name.##gw2sm-clonenameconflict")
-						end
-					end
-					GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
-					GUI:SetNextWindowSize(400, 140, GUI.SetCond_Always)
-					if (GUI:BeginPopupModal("Invalid Name.##gw2sm-clonenameconflict",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
-						GUI:Spacing()
-						GUI:SameLine(150)
-						GUI:Text("Name in use.")
-						GUI:Spacing()
-						GUI:SameLine(135)
-						GUI:SetWindowFontScale(0.8)
-						GUI:Text("Please a different one.")
-						GUI:SetWindowFontScale(1)
-						
-						GUI:Spacing()
-						GUI:Separator()
-						GUI:Dummy(100,20)
-						GUI:Spacing()
-						GUI:SameLine(160)
-						if (GUI:Button(GetString("ok"),80,30)) then
-							GUI:CloseCurrentPopup()
-						end
-						GUI:EndPopup()
-					end
-					GUI:EndPopup()
 				end
-				-- Delete profile button.
-				if (GUI:Button(GetString("delete"), GUI:GetContentRegionAvailWidth(),25)) then
-					GUI:OpenPopup("##gw2sm-deleteporfile")
-				end
-				if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
-					GUI:SetTooltip("Delete the current profile.")
-				end
-				
 				GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
 				GUI:SetNextWindowSize(400, 140, GUI.SetCond_Always)
-				if (GUI:BeginPopupModal("##gw2sm-deleteporfile",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
+				if (GUI:BeginPopupModal("Invalid Name.##gw2sm-clonenameconflict",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
 					GUI:Spacing()
-					GUI:SameLine(50)
-					GUI:Text("Are you sure you want to delete this profile?")
+					GUI:SameLine(150)
+					GUI:Text("Name in use.")
 					GUI:Spacing()
-					GUI:SameLine(80)
+					GUI:SameLine(135)
 					GUI:SetWindowFontScale(0.8)
-					GUI:Text("Press \"Delete\" to delete, \"Cancel\" to cancel. ")
+					GUI:Text("Please a different one.")
 					GUI:SetWindowFontScale(1)
 					
 					GUI:Spacing()
 					GUI:Separator()
 					GUI:Dummy(100,20)
 					GUI:Spacing()
-					GUI:SameLine(80)
-					if (GUI:Button(GetString("cancel"),80,30)) then
-						GUI:CloseCurrentPopup()
-					end
-					GUI:SameLine(240)
-					if (GUI:Button(GetString("delete"),80,30)) then
-						gw2_skill_manager.profileWindow.open = false
-						gw2_skill_manager.profile:Delete()
-						gw2_skill_manager.profileList = gw2_skill_manager:GetProfileList()
+					GUI:SameLine(160)
+					if (GUI:Button(GetString("ok"),80,30)) then
 						GUI:CloseCurrentPopup()
 					end
 					GUI:EndPopup()
 				end
-				GUI:TreePop()
+				GUI:EndPopup()
+			end
+			-- Delete profile button.
+			if (GUI:Button(GetString("delete"), (GUI:GetContentRegionAvailWidth()/2)-(GUI:GetStyle().iteminnerspacing.x/2),25)) then
+				GUI:OpenPopup("##gw2sm-deleteporfile")
+			end
+			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
+				GUI:SetTooltip("Delete the current profile.")
+			end
+			GUI:SameLine(0)
+			local color = gw2_skill_manager.profile.tmp.detectingSkills and GUI:GetStyle().colors[GUI.Col_ButtonActive] or GUI:GetStyle().colors[GUI.Col_Button]
+			GUI:PushStyleColor(GUI.Col_Button,color[1],color[2],color[3],color[4])
+			if (GUI:Button(GetString("detectskills"), GUI:GetContentRegionAvailWidth(),25)) then
+				gw2_skill_manager.profile.tmp.detectingSkills = not gw2_skill_manager.profile.tmp.detectingSkills
+			end
+			GUI:PopStyleColor(1)
+			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
+				GUI:SetTooltip("Enable to detect skills.")
+			end
+			
+			GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
+			GUI:SetNextWindowSize(400, 140, GUI.SetCond_Always)
+			if (GUI:BeginPopupModal("##gw2sm-deleteporfile",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
+				GUI:Spacing()
+				GUI:SameLine(50)
+				GUI:Text("Are you sure you want to delete this profile?")
+				GUI:Spacing()
+				GUI:SameLine(80)
+				GUI:SetWindowFontScale(0.8)
+				GUI:Text("Press \"Delete\" to delete, \"Cancel\" to cancel. ")
+				GUI:SetWindowFontScale(1)
+				
+				GUI:Spacing()
+				GUI:Separator()
+				GUI:Dummy(100,20)
+				GUI:Spacing()
+				GUI:SameLine(80)
+				if (GUI:Button(GetString("cancel"),80,30)) then
+					GUI:CloseCurrentPopup()
+				end
+				GUI:SameLine(240)
+				if (GUI:Button(GetString("delete"),80,30)) then
+					gw2_skill_manager.profileWindow.open = false
+					gw2_skill_manager.profile:Delete()
+					gw2_skill_manager.profileList = gw2_skill_manager:GetProfileList()
+					GUI:CloseCurrentPopup()
+				end
+				GUI:EndPopup()
 			end
 
-			GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing)
-			if (GUI:TreeNode(GetString("skills"))) then
-				if (GUI:Button(gw2_skill_manager.profile.tmp.detectingSkills and GetString("stopdetectskills") or GetString("detectskills"), GUI:GetContentRegionAvailWidth(),25)) then
-					gw2_skill_manager.profile.tmp.detectingSkills = not gw2_skill_manager.profile.tmp.detectingSkills
-				end
-				if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
-					GUI:SetTooltip("Enable to detect skills.")
-				end
-				--[[if (GUI:Button(GetString("sort"), GUI:GetContentRegionAvailWidth(),25)) then
-					gw2_skill_manager.profile:SortSkills()
-				end
-				if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
-					GUI:SetTooltip("Click to sort the skills.")
-				end]]
-
-				-- skill list child keeps scrolling in this erea.
-				if (GUI:BeginChild("##gw2sm-skillregion", GUI:GetContentRegionAvailWidth(), 0, true)) then
-					for priority,skill in ipairs(gw2_skill_manager.profile.skills) do
-						if (skill.tmp.moving) then
-							if (GUI:Button(GetString("ok"), GUI:CalcTextSize("0000"),20)) then
-								gw2_skill_manager.profile:MoveSkill(priority,skill.tmp.newPriority)
+			-- skill list child keeps scrolling in this erea.
+			if (GUI:BeginChild("##gw2sm-skillregion", GUI:GetContentRegionAvailWidth(), 0, true)) then
+				for priority,skill in ipairs(gw2_skill_manager.profile.skills) do
+					if (skill.tmp.moving) then
+						if (GUI:Button(GetString("ok"), GUI:CalcTextSize("0000"),20)) then
+							if (gw2_skill_manager.profile:MoveSkill(priority,skill.tmp.newPriority)) then
 								if (gw2_skill_manager.skillWindow.prio == priority) then
 									gw2_skill_manager.skillWindow.prio = skill.tmp.newPriority
 								end
 								skill.tmp.moving = false
 							end
-							GUI:SameLine(0)
-							GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
-							skill.tmp.newPriority = GUI:InputInt("##skillprioinputint"..priority,skill.tmp.newPriority,1,10)
-							skill.tmp.newPriority = skill.tmp.newPriority < 1 and 1 or skill.tmp.newPriority > #gw2_skill_manager.profile.skills and #gw2_skill_manager.profile.skills or skill.tmp.newPriority
-							GUI:PopItemWidth()
-						else
-							if (skill.tmp.dragging) then -- highlight these elements when dragging them
-								local color = GUI:GetStyle().colors[GUI.Col_Button]
-								GUI:PushStyleColor(GUI.Col_Button,color[1],color[2],color[3]*1.3,1)
-								GUI:PushStyleColor(GUI.Col_ButtonHovered,color[1],color[2],color[3]*1.3,1)
+						end
+						GUI:SameLine(0)
+						GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
+						skill.tmp.newPriority = GUI:InputInt("##skillprioinputint"..priority,skill.tmp.newPriority,1,10)
+						skill.tmp.newPriority = skill.tmp.newPriority < 1 and 1 or skill.tmp.newPriority > #gw2_skill_manager.profile.skills and #gw2_skill_manager.profile.skills or skill.tmp.newPriority
+						GUI:PopItemWidth()
+					else
+						if (skill.tmp.dragging) then -- highlight these elements when dragging them
+							local color = GUI:GetStyle().colors[GUI.Col_Button]
+							GUI:PushStyleColor(GUI.Col_Button,color[1],color[2],color[3]*1.3,1)
+							GUI:PushStyleColor(GUI.Col_ButtonHovered,color[1],color[2],color[3]*1.3,1)
+						end
+						if (GUI:Button(priority .. "##skillpriobutton", GUI:CalcTextSize("0000"),20)) then
+							skill.tmp.newPriority = priority
+							skill.tmp.moving = true
+						end
+						GUI:SameLine(0)
+						-- TODO: Make highlight better.
+						local curState = gw2_skill_manager.skillWindow.prio
+						if (curState == priority and not skill.tmp.dragging) then
+							local color = GUI:GetStyle().colors[GUI.Col_ButtonActive]
+							GUI:PushStyleColor(GUI.Col_Button,color[1],color[2],color[3], color[4])
+						end
+						if (GUI:Button(skill.skill.name .. "##" .. priority, GUI:GetContentRegionAvailWidth(),20)) then
+							if (gw2_skill_manager.skillWindow.open == false or gw2_skill_manager.skillWindow.prio ~= priority) then
+								gw2_skill_manager.skillWindow.open = true
+								gw2_skill_manager.skillWindow.prio = priority
+							else
+								gw2_skill_manager.skillWindow.open = false
 							end
-							if (GUI:Button(priority .. "##skillpriobutton", GUI:CalcTextSize("0000"),20)) then
-								skill.tmp.newPriority = priority
-								skill.tmp.moving = true
+						end
+						if (curState == priority and not skill.tmp.dragging) then
+							GUI:PopStyleColor(1)
+						end
+						if (skill.tmp.dragging) then -- pop highlight when done drawing.
+							GUI:PopStyleColor(2)
+						end
+						-- Move the skill up or down, use the right-mouse to drag it.
+						if ( GUI:IsItemClicked(1) or skill.tmp.dragging) then
+							skill.tmp.dragging = true
+							if (GUI:IsMouseReleased(1) or not GUI:IsMouseDown(1)) then
+								skill.tmp.dragging = false
 							end
-							GUI:SameLine(0)
-							if (GUI:Button(skill.skill.name .. "##" .. priority, GUI:GetContentRegionAvailWidth(),20)) then
-								if (gw2_skill_manager.skillWindow.open == false or gw2_skill_manager.skillWindow.prio ~= priority) then
-									gw2_skill_manager.skillWindow.open = true
-									gw2_skill_manager.skillWindow.prio = priority
-								else
-									gw2_skill_manager.skillWindow.open = false
-								end
-							end
-							if (skill.tmp.dragging) then -- pop highlight when done drawing.
-								GUI:PopStyleColor(2)
-							end
-							-- Move the skill up or down, use the right-mouse to drag it.
-							if ( GUI:IsItemClicked(1) or skill.tmp.dragging) then
-								skill.tmp.dragging = true
-								if (GUI:IsMouseReleased(1) or not GUI:IsMouseDown(1)) then
-									skill.tmp.dragging = false
-								end
-								local x,y = GUI:GetMouseDragDelta(1)
-								if (y >= 20 or y <= -20 ) then
-									local curPrio = priority
-									for i=1,round(math.abs(y/23)) do
-										gw2_skill_manager.profile:MoveSkill(curPrio,y<0 and "up" or "down")
+							local x,y = GUI:GetMouseDragDelta(1)
+							if (y >= 20 or y <= -20 ) then
+								local curPrio = priority
+								for i=1,round(math.abs(y/23)) do
+									if (gw2_skill_manager.profile:MoveSkill(curPrio,y<0 and "up" or "down")) then
 										curPrio = y<0 and curPrio-1 or curPrio+1
 									end
-									if (gw2_skill_manager.skillWindow.prio == priority) then
-										gw2_skill_manager.skillWindow.prio = curPrio
-									end
-									GUI:ResetMouseDragDelta(1)
 								end
+								if (gw2_skill_manager.skillWindow.prio == priority) then
+									gw2_skill_manager.skillWindow.prio = curPrio
+								end
+								GUI:ResetMouseDragDelta(1)
 							end
-							if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
-								GUI:SetTooltip("Open edit window for: " .. skill.skill.name)
-							end
+						end
+						if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
+							GUI:SetTooltip("Open edit window for: " .. skill.skill.name)
 						end
 					end
 				end
-				GUI:EndChild()
-				GUI:TreePop()
 			end
-			
+			GUI:EndChild()
 		end
 		GUI:End()
 	else
@@ -540,62 +528,55 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 				GUI:EndMenuBar()
 			end
 
-			-- button for skillwindow
-			GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing)
-			if (GUI:TreeNode(GetString("options"))) then
-				-- Move skill up button.
-				--d(GetStyle().ItemSpacing.x)
-				if (GUI:Button(GetString("moveup"), GUI:GetContentRegionAvailWidth()/2,25)) then
-					if (gw2_skill_manager.profile:MoveSkill(gw2_skill_manager.skillWindow.prio,"up")) then
-						gw2_skill_manager.skillWindow.prio = gw2_skill_manager.skillWindow.prio - 1
-					end
+			if (GUI:Button(GetString("moveup"), GUI:GetContentRegionAvailWidth()/2,25)) then
+				if (gw2_skill_manager.profile:MoveSkill(gw2_skill_manager.skillWindow.prio,"up")) then
+					gw2_skill_manager.skillWindow.prio = gw2_skill_manager.skillWindow.prio - 1
 				end
-				if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
-					GUI:SetTooltip("Move this skill up.")
+			end
+			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
+				GUI:SetTooltip("Move this skill up.")
+			end
+			GUI:SameLine()
+			-- Copy skill button.
+			if (GUI:Button(GetString("copy"), GUI:GetContentRegionAvailWidth(),25)) then
+				gw2_skill_manager.profile:CopySkill(gw2_skill_manager.skillWindow.prio)
+			end
+			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
+				GUI:SetTooltip("Copy this skills setting to clipboard.")
+			end
+			-- Move skill down button.
+			if (GUI:Button(GetString("movedown"), GUI:GetContentRegionAvailWidth()/2,25)) then
+				if (gw2_skill_manager.profile:MoveSkill(gw2_skill_manager.skillWindow.prio,"down")) then
+					gw2_skill_manager.skillWindow.prio = gw2_skill_manager.skillWindow.prio + 1
 				end
-				GUI:SameLine()
-				-- Copy skill button.
-				if (GUI:Button(GetString("copy"), GUI:GetContentRegionAvailWidth(),25)) then
-					gw2_skill_manager.profile:CopySkill(gw2_skill_manager.skillWindow.prio)
-				end
-				if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
-					GUI:SetTooltip("Copy this skills setting to clipboard.")
-				end
-				-- Move skill down button.
-				if (GUI:Button(GetString("movedown"), GUI:GetContentRegionAvailWidth()/2,25)) then
-					if (gw2_skill_manager.profile:MoveSkill(gw2_skill_manager.skillWindow.prio,"down")) then
-						gw2_skill_manager.skillWindow.prio = gw2_skill_manager.skillWindow.prio + 1
-					end
-				end
-				if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
-					GUI:SetTooltip("Move this skill down.")
-				end
-				GUI:SameLine()
-				-- paste skill button.
-				if (GUI:Button(GetString("paste"), GUI:GetContentRegionAvailWidth(),25)) then
-					gw2_skill_manager.profile:PasteSkill(gw2_skill_manager.skillWindow.prio)
-					curentSkill = gw2_skill_manager.profile.skills[gw2_skill_manager.skillWindow.prio]
-				end
-				if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
-					GUI:SetTooltip("Paste the copied settings to this skill.")
-				end
-				-- delete skill button.
-				if (GUI:Button(GetString("delete"), GUI:GetContentRegionAvailWidth()/2,25)) then
-					gw2_skill_manager.profile:DeleteSkill(gw2_skill_manager.skillWindow.prio)
-					gw2_skill_manager.skillWindow.open = false
-				end
-				if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
-					GUI:SetTooltip("Delete this skill.")
-				end
-				GUI:SameLine()
-				-- Clone skill button.
-				if (GUI:Button(GetString("clone"), GUI:GetContentRegionAvailWidth(),25)) then
-					gw2_skill_manager.profile:CloneSkill(gw2_skill_manager.skillWindow.prio)
-				end
-				if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
-					GUI:SetTooltip("Clone this skill.")
-				end
-				GUI:TreePop()
+			end
+			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
+				GUI:SetTooltip("Move this skill down.")
+			end
+			GUI:SameLine()
+			-- paste skill button.
+			if (GUI:Button(GetString("paste"), GUI:GetContentRegionAvailWidth(),25)) then
+				gw2_skill_manager.profile:PasteSkill(gw2_skill_manager.skillWindow.prio)
+				curentSkill = gw2_skill_manager.profile.skills[gw2_skill_manager.skillWindow.prio]
+			end
+			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
+				GUI:SetTooltip("Paste the copied settings to this skill.")
+			end
+			-- delete skill button.
+			if (GUI:Button(GetString("delete"), GUI:GetContentRegionAvailWidth()/2,25)) then
+				gw2_skill_manager.profile:DeleteSkill(gw2_skill_manager.skillWindow.prio)
+				gw2_skill_manager.skillWindow.open = false
+			end
+			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
+				GUI:SetTooltip("Delete this skill.")
+			end
+			GUI:SameLine()
+			-- Clone skill button.
+			if (GUI:Button(GetString("clone"), GUI:GetContentRegionAvailWidth(),25)) then
+				gw2_skill_manager.profile:CloneSkill(gw2_skill_manager.skillWindow.prio)
+			end
+			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
+				GUI:SetTooltip("Clone this skill.")
 			end
 
 			-- skill data.
@@ -769,6 +750,8 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 			GUI:EndChild()
 		end
 		GUI:End()
+	else
+		gw2_skill_manager.skillWindow.prio = 0
 	end
 end
 RegisterEventHandler("Gameloop.Draw", gw2_skill_manager.skillWindow.Draw)
@@ -781,10 +764,10 @@ RegisterEventHandler("Gameloop.Draw", gw2_skill_manager.skillWindow.Draw)
 function gw2_skill_manager:NewProfile(profileName)
 	if (GetGameState() == 16 and string.valid(profileName) and profileName ~= "None") then
 		profileName = string.gsub(profileName,'%W','')
-		local list = self:GetProfileList()
+		--[[local list = self:GetProfileList()
 		for _,name in pairs(list.nameList) do
 			if (name == profileName) then return self:GetProfile(profileName) end
-		end
+		end]]
 		local newProfile = {
 			name = profileName,
 			profession = ml_global_information.Player_Profession,
@@ -833,7 +816,7 @@ end
 function gw2_skill_manager:UpdateProfileList()
 	if (GetGameState() == 16 and Player.profession ~= gw2_skill_manager.PlayerProfession) then
 		gw2_skill_manager.PlayerProfession = Player.profession
-		gw2_skill_manager.profile = gw2_skill_manager:GetProfile(Settings.GW2Minion.gCurrentProfile[gw2_common_functions.GetProfessionName()])
+		gw2_skill_manager.profile = gw2_skill_manager:GetProfile(Settings.GW2Minion.gCurrentProfile[ml_global_information.Player_Name])
 		gw2_skill_manager.profileList = gw2_skill_manager:GetProfileList()
 	end
 end
@@ -850,7 +833,7 @@ end
 -- Get profile list.
 function gw2_skill_manager:GetProfileList(newProfile)
 	local profession = Player.Profession
-	local list = {nameList = {"None",}, currID = 1,}
+	local list = {nameList = {"None",}, currID = 1, newProfileName = ""}
 	if (profession) then
 		for _,p in pairs (self.paths) do 
 			local profileList = FolderList(p,[[(.*)lua$]])
@@ -883,44 +866,16 @@ function gw2_skill_manager:UpdateCurrentSkillbarSkills()
 	self.currentSkillbarSkills = {}
 	for i = 1, ml_global_information.MAX_SKILLBAR_SLOTS-1 do
 		local currentSkill = Player:GetSpellInfo(GW2.SKILLBARSLOT["Slot_" .. i])
-		if (currentSkill) then			
-			local sName = currentSkill.name
-			local sID = currentSkill.skillid
+		if (currentSkill) then
 			self.currentSkillbarSkills[currentSkill.skillid] = currentSkill
 			
-			--Auto-update Profile with changed skillnames and skillIDs .. any ideas if that is a bad idea?..worked well so far			
-			if ( self.profile ~= nil and sID and sName and sName ~= "") then 
-				local profilechanged = false
-				local inList = false
+			--Auto-update Profile with changed skillnames
+			if ( self.profile ~= nil and currentSkill.skillid and currentSkill.name and currentSkill.name ~= "") then 
 				for priority,skill in pairs(self.profile.skills) do
-					if (skill.skill.id == sID) then
-						if (skill.skill.name ~= sName) then
-							skill.skill.name = sName
-							d("CHANGED SKILLNAME FOUND: ".. skill.skill.name.. " != "..sName)
-							profilechanged = true
-						end
-						inList = true
-						break
-					end
-				end
-				if ( not inList ) then
-					for priority,skill in pairs(self.profile.skills) do
-						if (skill.skill.name == sName and skill.skill.id ~= sID) then
-							d("NEW SKILLID FOR EXISTING SKILL FOUND.."..tostring(sID).." "..sName)
-							-- We have a skill with the same name but a different skillID, add it automatically..bad idea ?
-							if (self.profile.skills[priority]) then
-								local clone = deepcopy(self.profile.skills[priority])
-								clone.skill.id = sID
-								clone.skill.groundTargeted	= (currentSkill.isGroundTargeted == true and "1" or "0")
-								clone.skill.setRange		= (tonumber(i) >= 1 and tonumber(i) <= 5 and "1" or "0")
-								clone.skill.minRange		= currentSkill.minRange or 0
-								clone.skill.maxRange		= currentSkill.maxRange or 0
-								clone.skill.radius			= currentSkill.radius or 0
-								clone.player.maxPower		= currentSkill.power or 0
-								table.insert(self.profile.skills, priority+1, clone)
-								profilechanged = true
-							end
-							break
+					if (skill.skill.id == currentSkill.skillid) then
+						skill.tmp.slot = currentSkill.slot
+						if (skill.skill.name ~= currentSkill.name) then
+							skill.skill.name = currentSkill.name
 						end
 					end
 				end
@@ -1006,12 +961,14 @@ function profilePrototype:Use(targetID)
 		self.tmp.target = {targetID = nil, timestamp = ml_global_information.Now,}
 	end
 	self:Swap(self.tmp.target.targetID)
-	self:CheckTargetBuffs(self.tmp.target.targetID)
-	for k,skill in ipairs(self.skills) do
-		if (skill:CanCast(self.tmp.target.targetID)) then
-			self:CheckTargetHealth(self.tmp.target.targetID)
-			skill:Cast(self.tmp.target.targetID)
-			break
+	if (self:CheckTargetBuffs(self.tmp.target.targetID)) then
+		for k,skill in ipairs(self.skills) do
+			if (skill:CanCast(self.tmp.target.targetID)) then
+				if (self:CheckTargetHealth(self.tmp.target.targetID)) then
+					skill:Cast(self.tmp.target.targetID)
+				end
+				break
+			end
 		end
 	end
 	self:DoCombatMovement(self.tmp.target.targetID)
@@ -1068,21 +1025,21 @@ function profilePrototype:DoCombatMovement(targetID)
 		-- Can we move in direction, while not walking towards potential enemy's.
 		local targets = CharacterList("alive,los,notaggro,attackable,hostile,maxdistance=1500,exclude="..target.id)
 
-		if (movementDirection[forward] and TableSize(gw2_common_functions.filterRelativePostion(targets,forward)) > 0) then movementDirection[forward] = false end
-		if (movementDirection[backward] and TableSize(gw2_common_functions.filterRelativePostion(targets,backward)) > 0) then movementDirection[backward] = false end
-		if (movementDirection[left] and TableSize(gw2_common_functions.filterRelativePostion(targets,left)) > 0) then movementDirection[left] = false end
-		if (movementDirection[right] and TableSize(gw2_common_functions.filterRelativePostion(targets,right)) > 0) then movementDirection[right] = false end
+		if (movementDirection[forward] and table.size(gw2_common_functions.filterRelativePostion(targets,forward)) > 0) then movementDirection[forward] = false end
+		if (movementDirection[backward] and table.size(gw2_common_functions.filterRelativePostion(targets,backward)) > 0) then movementDirection[backward] = false end
+		if (movementDirection[left] and table.size(gw2_common_functions.filterRelativePostion(targets,left)) > 0) then movementDirection[left] = false end
+		if (movementDirection[right] and table.size(gw2_common_functions.filterRelativePostion(targets,right)) > 0) then movementDirection[right] = false end
 		--
 		if (movementDirection[forward]) then
-			if (movementDirection[left] and TableSize(gw2_common_functions.filterRelativePostion(targets,forwardLeft)) > 0) then
+			if (movementDirection[left] and table.size(gw2_common_functions.filterRelativePostion(targets,forwardLeft)) > 0) then
 				movementDirection[left] = false
-			elseif (movementDirection[right] and TableSize(gw2_common_functions.filterRelativePostion(targets,forwardRight)) > 0) then
+			elseif (movementDirection[right] and table.size(gw2_common_functions.filterRelativePostion(targets,forwardRight)) > 0) then
 				movementDirection[right] = false
 			end
 		elseif (movementDirection[backward]) then
-			if (movementDirection[left] and TableSize(gw2_common_functions.filterRelativePostion(targets,backwardLeft)) > 0) then
+			if (movementDirection[left] and table.size(gw2_common_functions.filterRelativePostion(targets,backwardLeft)) > 0) then
 				movementDirection[left] = false
-			elseif (movementDirection[right] and TableSize(gw2_common_functions.filterRelativePostion(targets,backwardRight)) > 0) then
+			elseif (movementDirection[right] and table.size(gw2_common_functions.filterRelativePostion(targets,backwardRight)) > 0) then
 				movementDirection[right] = false
 			end
 		end
@@ -1172,18 +1129,14 @@ function profilePrototype:CreateSkill(skillSlot)
 		if (skillInfo and skillInfo.skillid ~= 10586 and string.valid(skillInfo.name)) then
 			for priority,skill in pairs(self.skills) do
 				if (skill.skill.id == skillInfo.skillid) then
-					if (skill.skill.name ~= skillInfo.name) then
-						skill.skill.name = skillInfo.name
-						return true
-					end
 					return false
 				end
 			end
 			newSkill = {
 				skill = {	id				= skillInfo.skillid,
 							name			= skillInfo.name,
-							groundTargeted	= (skillInfo.isGroundTargeted == true and "1" or "0"),
-							setRange		= (tonumber(skillSlot) >= 1 and tonumber(skillSlot) <= 5 and "1" or "0"),
+							groundTargeted	= skillInfo.isGroundTargeted,
+							setRange		= skillSlot >= 1 and skillSlot <= 5 or false,
 							minRange		= skillInfo.minRange or 0,
 							maxRange		= skillInfo.maxRange or 0,
 							radius			= skillInfo.radius or 0,							
@@ -1225,7 +1178,7 @@ function profilePrototype:MoveSkill(skillPriority, direction)
 		local newPriority = nil
 		if (string.valid(direction)) then
 			newPriority = (direction == "up" and skillPriority > 1 and skillPriority - 1 or direction == "down" and skillPriority < #self.skills and skillPriority + 1)
-		elseif (tonumber(direction) and direction > 0 and direction < #self.skills) then
+		elseif (tonumber(direction) and direction > 0 and direction <= #self.skills) then
 			newPriority = direction
 		end
 		if (newPriority) then
@@ -1284,26 +1237,28 @@ end
 function profilePrototype:CheckTargetHealth(targetID)
 	local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
 	if (table.valid(target) and target.id ~= Player.id) then
-		if (target.id ~= self.tmp.targetCheck.id or target.contentID ~= self.tmp.targetCheck.contentID) then
+		if (target.id ~= self.tmp.targetCheck.id or target.contentid ~= self.tmp.targetCheck.contentid) then
 			self.tmp.targetCheck = {
 				id = target.id,
-				contentID = target.conentID,
+				contentid = target.contentid,
 				health = target.health,
 				lastTicks = ml_global_information.Now,
 			}
 		elseif (ml_global_information.Now - self.tmp.lastTicks > 2500) then
+			if (target.health.percent > (self.tmp.targetCheck.health.percent + 25) or (ml_global_information.Now - self.tmp.lastTicks > 15000 and target.health.percent > 90)) then
+				d("!!!!!!!!!!!!!!! TARGET BLACKLISTED, NOT DYING !!!!!!!!!!!!!!!")
+				ml_blacklist.AddBlacklistEntry(GetString("monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
+				return false
+			end
 			self.tmp.targetCheck = {
 				id = target.id,
-				contentID = target.conentID,
+				contentid = target.contentid,
 				health = target.health,
 				lastTicks = ml_global_information.Now,
 			}
-			if (target.health.percent > (self.tmp.health.percent + 10) or (ml_global_information.Now - self.tmp.lastTicks > 15000 and target.health.percent == 100)) then
-				d("!!!!!!!!!!!!!!! TARGET BLACKLISTED, NOT DYING !!!!!!!!!!!!!!!")
-				ml_blacklist.AddBlacklistEntry(GetString("monsters"), target.contentID, target.name, ml_global_information.Now + 90000)
-			end
 		end
 	end
+	return true
 end
 
 -- Check Target Buffs.
@@ -1312,9 +1267,11 @@ function profilePrototype:CheckTargetBuffs(targetID)
 	if (table.valid(target) and target.id ~= Player.id) then
 		if (gw2_common_functions.BufflistHasBuffs(target.buffs,self.tmp.targetBlacklistBuffs)) then
 			d("!!!!!!!!!!!!!!! TARGET BLACKLISTED, INVUNRABLE BUFFS !!!!!!!!!!!!!!!")
-			ml_blacklist.AddBlacklistEntry(GetString("monsters"),target.contentID,target.name,ml_global_information.Now+30000)
+			ml_blacklist.AddBlacklistEntry(GetString("monsters"),target.contentid,target.name,ml_global_information.Now+30000)
+			return false
 		end
 	end
+	return true
 end
 
 -- Swap pet.
@@ -1611,7 +1568,7 @@ function profilePrototype:SwapWeapon( targetdist )
 			end
 		end
 	end
-	--d("CanSwapWeapon TableSize :"..tostring(TableSize(wpsets)))
+	--d("CanSwapWeapon table.size :"..tostring(table.size(wpsets)))
 	--d(wpsets)
 	
 	-- Add our current weaponset
@@ -1620,7 +1577,7 @@ function profilePrototype:SwapWeapon( targetdist )
 	end
 	
 	-- Evaluate & Swap	
-	if ( TableSize(wpsets) > 0 ) then
+	if ( table.size(wpsets) > 0 ) then
 		local bestwpset
 		local bestID
 		for setID,entry in pairs(wpsets) do
@@ -1724,7 +1681,7 @@ end
 function profilePrototype:Swap(targetID)	
 	local timers = self.tmp.swapTimers
 	local settings = self.switchSettings
-	if (settings.switchWeapons == "1" ) then 
+	if (settings.switchWeapons) then 
 		if ( TimeSince(timers.lastSwap) > 1500) then
 			timers.lastSwap = ml_global_information.Now	
 			
@@ -1732,14 +1689,14 @@ function profilePrototype:Swap(targetID)
 			local canSwap = false
 			local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
 				
-			--[[if (canSwap == false and settings.switchOnRange == "1" and TimeSince(timers.lastRangeSwap) > 0) then
+			--[[if (canSwap == false and settings.switchOnRange and TimeSince(timers.lastRangeSwap) > 0) then
 				timers.lastRangeSwap = ml_global_information.Now		
 				if ( self.tmp.maxAttackRange < 300 and table.valid(target) and target.distance > self.tmp.maxAttackRange) then
 					timers.lastRangeSwap = ml_global_information.Now + math.random(5000,10000)
 					canSwap = true
 				end
 			end	
-			if (settings.switchRandom == "1" and (ml_global_information.Player_InCombat or ml_global_information.Player_IsMoving) and TimeSince(timers.lastRandomSwap) > 0) then
+			if (settings.switchRandom and (ml_global_information.Player_InCombat or ml_global_information.Player_IsMoving) and TimeSince(timers.lastRandomSwap) > 0) then
 				timers.lastRandomSwap = ml_global_information.Now + math.random(3000,15000)
 				canSwap = true
 			end
@@ -1766,7 +1723,7 @@ function profilePrototype:Swap(targetID)
 				local lastSkillID = (Player.castinfo.skillID == 0 and Player.castinfo.lastSkillID or Player.castinfo.skillID)
 				if ( lastSkillID ) then 
 					local lastSkill = self:GetSkillByID(lastSkillID)
-					if (lastSkill and lastSkill.skill.slowCast == "1" and Player.castinfo.slot == lastSkill.tmp.slot) then 
+					if (lastSkill and lastSkill.skill.slowCast and Player.castinfo.slot == lastSkill.tmp.slot) then 
 						canswap = false
 					end
 				end
@@ -1784,13 +1741,13 @@ function profilePrototype:SortSkills()
 	-- Sort skills by type first.
 	local skillsByType = {{}, {}, {}, {}, {}} -- 1: Healing, 2: Previous skill id, 3: F skills, 4: Normal skills, 5: Autoattack
 	for priority,skill in ipairs(self.skills) do
-		local slot = skill.skill.slot
+		local slot = skill.tmp.slot
 		local skillType = 4
 		if(slot > 10) then
 			skillType = 3
-		elseif((skill.skill.castOnSelf ~= nil and skill.skill.castOnSelf == "1") or slot == 0) then
+		elseif(skill.skill.castOnSelf or slot == 0) then
 			skillType = 1
-			skill.skill.castOnSelf = "1"
+			skill.skill.castOnSelf = true
 		elseif(skill.skill.lastSkillID ~= nil and skill.skill.lastSkillID ~= "") then
 			skillType = 2
 		elseif(slot == 5) then
@@ -1820,25 +1777,25 @@ function profilePrototype:SortSkills()
 
 			if (table.valid(skill)) then
 				-- Healing -> Elites -> F skills -> Slot skills -> Weapon skills in reverse
-				if (skill.skill.slot == 0) then
+				if (skill.tmp.slot == 0) then
 					result = result + 400000
 					if ( skill.player.minHP and skill.player.minHP == 0 ) then
 						skill.player.minHP = 75
 					end
-				elseif (skill.skill.slot == 4) then
+				elseif (skill.tmp.slot == 4) then
 					result = result + 100000
-				elseif (skill.skill.slot > 10) then
+				elseif (skill.tmp.slot > 10) then
 					result = result + 60000
-				elseif (skill.skill.slot >= 1 and skill.skill.slot <= 3) then
+				elseif (skill.tmp.slot >= 1 and skill.tmp.slot <= 3) then
 					result = result + 40000
 				else
-					result = result + skill.skill.slot
+					result = result + skill.tmp.slot
 				end
 				-- Longer range higher.
 				result = skill.skill.maxRange / 1000 > 0 and result + skill.skill.maxRange / 1000 or result
 				result = skill.skill.minRange / 1000 > 0 and result + skill.skill.minRange / 1000 or result
 				-- skills with less checks first
-				result = result + TableSize(skill.skill) + TableSize(skill.player) + TableSize(skill.target)
+				result = result + table.size(skill.skill) + table.size(skill.player) + table.size(skill.target)
 			end
 
 			return result
@@ -1863,10 +1820,10 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- can cast.
-function skillPrototype:CanCast(targetID)
+function skillPrototype:CanCast(targetID) -- TODO: change to use booleans
 	local skillOnBar = gw2_skill_manager.currentSkillbarSkills[self.skill.id] or {}
 	local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
-	if (table.valid(skillOnBar) and (table.valid(target) or self.skill.castOnSelf == "1") ) then
+	if (table.valid(skillOnBar) and (table.valid(target) or self.skill.castOnSelf) ) then
 		
 		-- get last skill.
 		local lastSkillID = (Player.castinfo.skillID == 0 and Player.castinfo.lastSkillID or Player.castinfo.skillID)
@@ -1882,7 +1839,7 @@ function skillPrototype:CanCast(targetID)
 		if (self.skill.lastSkillID ~= "" and string.contains(tostring(self.skill.lastSkillID),tostring(lastSkillID)) == false) then return false end
 		if (self.skill.delay > 0 and self.tmp.lastCastTime and TimeSince(self.tmp.lastCastTime) < (self.skill.delay)) then return false end -- IMPORT: devide all delay times by 100
 		if (table.valid(target)) then
-			if (self.skill.los == "1" and target.los == false) then return false end
+			if (self.skill.los and target.los == false) then return false end
 			if (self.skill.minRange > 0 and (target.distance+target.radius) < self.skill.minRange) then return false end
 			if (self.skill.maxRange > 0 and (target.distance-target.radius) > (self.skill.maxRange < 154 and 154 or self.skill.maxRange)) then return false end
 			if (self.skill.radius > 0 and self.skill.maxRange == 0 and (target.distance > self.skill.radius)) then return false end
@@ -1909,11 +1866,11 @@ function skillPrototype:CanCast(targetID)
 		if (self.player.maxEndurance > 0 and ml_global_information.Player_Endurance < self.player.maxEndurance) then return false end
 		if (self.player.allyNearCount > 0) then
 			local maxdistance = (self.player.allyRangeMax == 0 and "" or "maxdistance=" .. self.player.allyRangeMax .. ",")
-			if (TableSize(CharacterList("friendly," .. maxdistance .. "distanceto=" .. Player.id .. ",exclude=" .. Player.id)) < self.player.allyNearCount) then return false end
+			if (table.size(CharacterList("friendly," .. maxdistance .. "distanceto=" .. Player.id .. ",exclude=" .. Player.id)) < self.player.allyNearCount) then return false end
 		end
 		if (self.player.allyDownedNearCount > 0) then
 			local maxdistance = (self.player.allyDownedRangeMax > 0 and self.player.allyDownedRangeMax or 2500)
-			if (TableSize(CharacterList("friendly,maxdistance=" .. maxdistance .. ",distanceto=" .. Player.id .. ",downed,exclude=" .. Player.id)) < self.player.allyDownedNearCount) then return false end
+			if (table.size(CharacterList("friendly,maxdistance=" .. maxdistance .. ",distanceto=" .. Player.id .. ",downed,exclude=" .. Player.id)) < self.player.allyDownedNearCount) then return false end
 		end
 		local playerBuffList = Player.buffs
 		if (self.player.hasBuffs ~= "" and table.valid(playerBuffList) and not gw2_common_functions.BufflistHasBuffs(playerBuffList, tostring(self.player.hasBuffs))) then return false end
@@ -1929,7 +1886,7 @@ function skillPrototype:CanCast(targetID)
 			if (self.target.maxHP > 0 and target.health.percent < self.target.maxHP) then return false end
 			if (self.target.enemyNearCount > 0) then
 				local maxdistance = (self.target.enemyRangeMax == 0 and "" or "maxdistance=" .. self.target.enemyRangeMax .. ",")
-				if (TableSize(CharacterList("attackable," .. maxdistance .. "distanceto=" .. target.id .. ",exclude=" .. target.id)) < self.target.enemyNearCount) then return false end
+				if (table.size(CharacterList("attackable," .. maxdistance .. "distanceto=" .. target.id .. ",exclude=" .. target.id)) < self.target.enemyNearCount) then return false end
 			end
 			if (self.target.moving == "Moving" and target.movementstate == GW2.MOVEMENTSTATE.GroundNotMoving ) then return false end
 			if (self.target.moving == "NotMoving" and target.movementstate == GW2.MOVEMENTSTATE.GroundMoving ) then return false end
@@ -1944,14 +1901,14 @@ function skillPrototype:CanCast(targetID)
 		self.parent.tmp.activeSkillRange = (self.skill.maxRange > 0 and self.skill.maxRange > self.parent.tmp.activeSkillRange and self.skill.maxRange or self.parent.tmp.activeSkillRange)
 		self.parent.tmp.activeSkillRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.activeSkillRange and self.skill.radius or self.parent.tmp.activeSkillRange)
 		-- update combatMovement status.
-		self.parent.tmp.combatMovement.allowed = (self.skill.stopsMovement == "0")
+		self.parent.tmp.combatMovement.allowed = not self.skill.stopsMovement
 
 		-- Check lastSkill attributes.
 		local lastSkill = self.parent:GetSkillByID(lastSkillID)
-		if (lastSkill and lastSkill.skill.slowCast == "1" and Player.castinfo.slot == lastSkill.tmp.slot) then return false end
+		if (lastSkill and lastSkill.skill.slowCast and Player.castinfo.slot == lastSkill.tmp.slot) then return false end
 		
 		-- update profile range.
-		if (self.skill.setRange == "1") then
+		if (self.skill.setRange) then
 			self.parent.tmp.maxAttackRange = (self.skill.maxRange > 0 and self.skill.maxRange > self.parent.tmp.maxAttackRange and self.skill.maxRange or self.parent.tmp.maxAttackRange)
 			self.parent.tmp.maxAttackRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.maxAttackRange and self.skill.radius or self.parent.tmp.maxAttackRange)
 		end
@@ -1959,7 +1916,7 @@ function skillPrototype:CanCast(targetID)
 		-- skill can be cast now.
 		return true
 	-- update profile range.
-	elseif (table.valid(target) == false and self.skill.setRange == "1" and table.valid(skillOnBar) and skillOnBar.cooldown == 0 and ( self.player.maxPower <= 0 or ml_global_information.Player_Power > self.player.maxPower)) then
+	elseif (table.valid(target) == false and self.skill.setRange and table.valid(skillOnBar) and skillOnBar.cooldown == 0 and ( self.player.maxPower <= 0 or ml_global_information.Player_Power > self.player.maxPower)) then
 		self.parent.tmp.maxAttackRange = (self.skill.maxRange > 0 and self.skill.maxRange > self.parent.tmp.maxAttackRange and self.skill.maxRange or self.parent.tmp.maxAttackRange)
 		self.parent.tmp.maxAttackRange = (self.skill.radius > 0 and self.skill.radius > self.parent.tmp.maxAttackRange and self.skill.radius or self.parent.tmp.maxAttackRange)		
 	end
@@ -1972,16 +1929,16 @@ function skillPrototype:Cast(targetID)
 	-- Face target.
 	--if (table.valid(target)) then Player:SetFacingExact(target.pos.x,target.pos.y,target.pos.z) end
 	-- Target self if needed.
-	target = (self.skill.castOnSelf == "1" and Player or table.valid(target) and target or nil)
+	target = (self.skill.castOnSelf and Player or table.valid(target) and target or nil)
 	if (table.valid(target)) then
 		--d("Casting Spell : " ..self.skill.name)
 		local pos = target.pos--self:Predict(target) -- just too off target. crap target prediction.
 		local castresult = false
-		if (self.skill.groundTargeted == "1") then
+		if (self.skill.groundTargeted) then
 			if (target.isCharacter) then
 				castresult = Player:CastSpell(self.tmp.slot, pos.x, pos.y, pos.z)
 			elseif (target.isGadget) then
-				if (self.skill.isProjectile == "1") then
+				if (self.skill.isProjectile) then
 					castresult = Player:CastSpell(self.tmp.slot, pos.x, pos.y, (pos.z))
 				else
 					castresult = Player:CastSpell(self.tmp.slot, pos.x, pos.y, (pos.z - target.height))
