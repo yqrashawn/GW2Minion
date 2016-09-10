@@ -15,9 +15,9 @@ gw2_skill_manager.combatState = {"Either", "InCombat", "OutCombat",}
 gw2_skill_manager.movementState = {"Either", "Moving", "NotMoving",}
 gw2_skill_manager.targetType = {"Either", "Character", "Gadget",}
 -- end of order sensitive tables.
-gw2_skill_manager.mainWindow = {name = "Skill Manager", open = false, visible = true,}
-gw2_skill_manager.profileWindow = {name = "Profile", open = false, visible = true,}
-gw2_skill_manager.skillWindow = {name = "Skill", open = false, visible = true, prio = 0}
+gw2_skill_manager.mainWindow = {name = "Skill Manager", open = false, visible = true, size = {x = 0, y = 0,}, pos = {x = 0, y = 0,},}
+gw2_skill_manager.profileWindow = {name = "Profile", open = false, visible = true, size = {x = 0, y = 0,}, pos = {x = 0, y = 0,},}
+gw2_skill_manager.skillWindow = {name = "Skill", open = false, visible = true, size = {x = 0, y = 0,}, pos = {x = 0, y = 0,}, prio = 0,}
 
 local profilePrototype = {
 	name = "defaultName",
@@ -83,7 +83,6 @@ local skillPrototype = {
 				lastSkillID			= "",
 				delay				= 0,
 				stopsMovement		= false,
-				slot				= ml_global_information.MAX_SKILLBAR_SLOTS-1,
 	},
 	player = {	combatState			= 1,--"Either",
 				minHP				= 0,
@@ -130,10 +129,6 @@ function gw2_skill_manager.ModuleInit()
 	if (Settings.GW2Minion.gCurrentProfile == nil) then
 		Settings.GW2Minion.gCurrentProfile = {}
 	end
-	if (Settings.GW2Minion.gCurrentProfile[Player.name] == nil) then
-		Settings.GW2Minion.gCurrentProfile[Player.name] = "GW2Minion"
-		Settings.GW2Minion.gCurrentProfile = Settings.GW2Minion.gCurrentProfile
-	end
 	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SKILLMGR", name = "Skill MGR", onClick = function() gw2_skill_manager.mainWindow.open = not gw2_skill_manager.mainWindow.open end, tooltip = "Click to open \"Skill Manager\" window."},"GW2MINION##MENU_HEADER")
 end
 RegisterEventHandler("Module.Initalize",gw2_skill_manager.ModuleInit)
@@ -141,7 +136,7 @@ RegisterEventHandler("Module.Initalize",gw2_skill_manager.ModuleInit)
 
 function gw2_skill_manager.mainWindow.Draw(event,ticks)
 	if (gw2_skill_manager.mainWindow.open) then
-		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver)
+		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver) -- TODO: remove auto resize and set "set" size.
 		gw2_skill_manager.mainWindow.visible, gw2_skill_manager.mainWindow.open = GUI:Begin(gw2_skill_manager.mainWindow.name, gw2_skill_manager.mainWindow.open, GUI.WindowFlags_NoCollapse+GUI.WindowFlags_AlwaysAutoResize)
 		if (gw2_skill_manager.mainWindow.visible) then
 			-- Profile Choice.
@@ -253,7 +248,7 @@ RegisterEventHandler("Gameloop.Draw", gw2_skill_manager.mainWindow.Draw)
 
 function gw2_skill_manager.profileWindow.Draw(event,ticks)
 	if (gw2_skill_manager.profileWindow.open) then
-		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver)
+		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver) -- TODO: better start size, remove title bar, auto move with main.
 		gw2_skill_manager.profileWindow.visible, gw2_skill_manager.profileWindow.open = GUI:Begin(gw2_skill_manager.profileWindow.name, gw2_skill_manager.profileWindow.open, GUI.WindowFlags_NoCollapse+GUI.WindowFlags_MenuBar)
 		if (gw2_skill_manager.profileWindow.visible) then
 			-- misuse menu to show a name XD
@@ -489,7 +484,7 @@ RegisterEventHandler("Gameloop.Draw", gw2_skill_manager.profileWindow.Draw)
 
 function gw2_skill_manager.skillWindow.Draw(event,ticks)
 	if (gw2_skill_manager.skillWindow.open) then
-		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver)
+		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver) -- TODO: better start size, remove title bar, auto move with main.
 		gw2_skill_manager.skillWindow.visible, gw2_skill_manager.skillWindow.open = GUI:Begin(gw2_skill_manager.skillWindow.name, gw2_skill_manager.skillWindow.open, GUI.WindowFlags_NoCollapse+GUI.WindowFlags_MenuBar)
 		if (gw2_skill_manager.skillWindow.visible) then
 			local curentSkill = gw2_skill_manager.profile.skills[gw2_skill_manager.skillWindow.prio]
@@ -815,6 +810,10 @@ end
 -- update profile
 function gw2_skill_manager:UpdateProfileList()
 	if (GetGameState() == 16 and Player.profession ~= gw2_skill_manager.PlayerProfession) then
+		if (Settings.GW2Minion.gCurrentProfile[Player.name] == nil) then
+			Settings.GW2Minion.gCurrentProfile[Player.name] = "GW2Minion"
+			Settings.GW2Minion.gCurrentProfile = Settings.GW2Minion.gCurrentProfile
+		end
 		gw2_skill_manager.PlayerProfession = Player.profession
 		gw2_skill_manager.profile = gw2_skill_manager:GetProfile(Settings.GW2Minion.gCurrentProfile[ml_global_information.Player_Name])
 		gw2_skill_manager.profileList = gw2_skill_manager:GetProfileList()
@@ -1244,8 +1243,8 @@ function profilePrototype:CheckTargetHealth(targetID)
 				health = target.health,
 				lastTicks = ml_global_information.Now,
 			}
-		elseif (ml_global_information.Now - self.tmp.lastTicks > 2500) then
-			if (target.health.percent > (self.tmp.targetCheck.health.percent + 25) or (ml_global_information.Now - self.tmp.lastTicks > 15000 and target.health.percent > 90)) then
+		elseif (ml_global_information.Now - self.tmp.targetCheck.lastTicks > 2500) then
+			if (target.health.percent > (self.tmp.targetCheck.health.percent + 25) or (ml_global_information.Now - self.tmp.targetCheck.lastTicks > 15000 and target.health.percent > 90)) then
 				d("!!!!!!!!!!!!!!! TARGET BLACKLISTED, NOT DYING !!!!!!!!!!!!!!!")
 				ml_blacklist.AddBlacklistEntry(GetString("monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
 				return false
