@@ -24,13 +24,13 @@ local profilePrototype = {
 	profession = 10,
 	professionSettings = {
 		elementalist = {
-			attunement_1 = 1,--"None",
-			attunement_2 = 1,--"None",
-			attunement_3 = 1,--"None",
-			attunement_4 = 1,--"None",
+			attunement_1 = "None",
+			attunement_2 = "None",
+			attunement_3 = "None",
+			attunement_4 = "None",
 		},
 		engineer = {
-			kit = 1,--"None",
+			kit = "None",
 		},
 	},
 	switchSettings = {
@@ -73,7 +73,7 @@ local skillPrototype = {
 				groundTargeted		= false,
 				isProjectile		= false,
 				castOnSelf			= false,
-				relativePosition	= 1,--"None",
+				relativePosition	= "None",
 				los					= true,
 				setRange			= false,
 				minRange			= 0,
@@ -84,7 +84,7 @@ local skillPrototype = {
 				delay				= 0,
 				stopsMovement		= false,
 	},
-	player = {	combatState			= 1,--"Either",
+	player = {	combatState			= "Either",
 				minHP				= 0,
 				maxHP				= 0,
 				minPower			= 0,
@@ -99,14 +99,14 @@ local skillPrototype = {
 				hasNotBuffs			= "",
 				conditionCount		= 0,
 				boonCount			= 0,
-				moving				= 1,--"Either",
+				moving				= "Either",
 	},
-	target = {	type				= 1,--"Either",
+	target = {	type				= "Either",
 				minHP				= 0,
 				maxHP				= 0,
 				enemyNearCount		= 0,
 				enemyRangeMax		= 0,
-				moving				= 1,--"Either",
+				moving				= "Either",
 				hasBuffs			= "",
 				hasNotBuffs			= "",
 				conditionCount		= 0,
@@ -349,21 +349,21 @@ function gw2_skill_manager.profileWindow.Draw(event,ticks)
 
 				-- Class specific options.
 				if (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
-					gw2_skill_manager.profile.professionSettings.engineer.kit = GUI:Combo("##gw2sm-engineerKit",gw2_skill_manager.profile.professionSettings.engineer.kit,gw2_skill_manager.engineerKits)
+					gw2_skill_manager.profile.professionSettings.engineer.kit = gw2_skill_manager:combo("##gw2sm-engineerKit",gw2_skill_manager.profile.professionSettings.engineer.kit,gw2_skill_manager.engineerKits)
 				elseif(ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist) then
 					GUI:PushItemWidth((GUI:GetContentRegionAvailWidth()/2)-(GUI:GetStyle().iteminnerspacing.x/2))
-					gw2_skill_manager.profile.professionSettings.elementalist.attunement_1 = GUI:Combo("##gw2sm-elementalistAttunement_1",gw2_skill_manager.profile.professionSettings.elementalist.attunement_1,gw2_skill_manager.elementalistAttunements)
+					gw2_skill_manager.profile.professionSettings.elementalist.attunement_1 = gw2_skill_manager:combo("##gw2sm-elementalistAttunement_1",gw2_skill_manager.profile.professionSettings.elementalist.attunement_1,gw2_skill_manager.elementalistAttunements)
 					GUI:PopItemWidth()
 					GUI:SameLine(0)
 					GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
-					gw2_skill_manager.profile.professionSettings.elementalist.attunement_2 = GUI:Combo("##gw2sm-elementalistAttunement_2",gw2_skill_manager.profile.professionSettings.elementalist.attunement_2,gw2_skill_manager.elementalistAttunements)
+					gw2_skill_manager.profile.professionSettings.elementalist.attunement_2 = gw2_skill_manager:combo("##gw2sm-elementalistAttunement_2",gw2_skill_manager.profile.professionSettings.elementalist.attunement_2,gw2_skill_manager.elementalistAttunements)
 					GUI:PopItemWidth()
 					GUI:PushItemWidth((GUI:GetContentRegionAvailWidth()/2)-(GUI:GetStyle().iteminnerspacing.x/2))
-					gw2_skill_manager.profile.professionSettings.elementalist.attunement_3 = GUI:Combo("##gw2sm-elementalistAttunement_3",gw2_skill_manager.profile.professionSettings.elementalist.attunement_3,gw2_skill_manager.elementalistAttunements)
+					gw2_skill_manager.profile.professionSettings.elementalist.attunement_3 = gw2_skill_manager:combo("##gw2sm-elementalistAttunement_3",gw2_skill_manager.profile.professionSettings.elementalist.attunement_3,gw2_skill_manager.elementalistAttunements)
 					GUI:PopItemWidth()
 					GUI:SameLine(0)
 					GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
-					gw2_skill_manager.profile.professionSettings.elementalist.attunement_4 = GUI:Combo("##gw2sm-elementalistAttunement_4",gw2_skill_manager.profile.professionSettings.elementalist.attunement_4,gw2_skill_manager.elementalistAttunements)
+					gw2_skill_manager.profile.professionSettings.elementalist.attunement_4 = gw2_skill_manager:combo("##gw2sm-elementalistAttunement_4",gw2_skill_manager.profile.professionSettings.elementalist.attunement_4,gw2_skill_manager.elementalistAttunements)
 					GUI:PopItemWidth()
 				end
 			end
@@ -606,7 +606,7 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 					currentSkill.skill.lastSkillID = GUI:InputText("##gw2sm-prevskillid",currentSkill.skill.lastSkillID)
 					currentSkill.skill.delay = GUI:InputInt("##gw2sm-delay", currentSkill.skill.delay, 100, 1000)
 					currentSkill.skill.delay = currentSkill.skill.delay > 0 and currentSkill.skill.delay or 0
-					currentSkill.skill.relativePosition = GUI:Combo("##gw2sm-engineerKit",currentSkill.skill.relativePosition,gw2_skill_manager.relativePosition)
+					currentSkill.skill.relativePosition = gw2_skill_manager:combo("##gw2sm-engineerKit",currentSkill.skill.relativePosition,gw2_skill_manager.relativePosition)
 					currentSkill.skill.stopsMovement = GUI:Checkbox("##gw2sm-slowcast", currentSkill.skill.stopsMovement)
 					GUI:PopItemWidth()
 					GUI:Columns(1)
@@ -650,7 +650,7 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 					GUI:AlignFirstTextHeightToWidgets()
 					GUI:NextColumn()
 					GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
-					currentSkill.player.combatState = GUI:Combo("##gw2sm-engineerKit",currentSkill.player.combatState,gw2_skill_manager.combatState)
+					currentSkill.player.combatState = gw2_skill_manager:combo("##gw2sm-engineerKit",currentSkill.player.combatState,gw2_skill_manager.combatState)
 					currentSkill.player.minHP = GUI:InputInt("##gw2sm-plminhp", currentSkill.player.minHP, 1, 10)
 					currentSkill.player.minHP = currentSkill.player.minHP > 0 and currentSkill.player.minHP or 0
 					currentSkill.player.maxHP = GUI:InputInt("##gw2sm-plmaxhp", currentSkill.player.maxHP, 1, 10)
@@ -672,7 +672,7 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 					currentSkill.player.hasNotBuffs = GUI:InputText("##gw2sm-plhasnotbuffs",currentSkill.player.hasNotBuffs)
 					currentSkill.player.conditionCount = GUI:InputInt("##gw2sm-plconditioncount", currentSkill.player.conditionCount, 1, 5)
 					currentSkill.player.boonCount = GUI:InputInt("##gw2sm-plbooncount", currentSkill.player.boonCount, 1, 5)
-					currentSkill.player.moving = GUI:Combo("##gw2sm-plmovementstate",currentSkill.player.moving,gw2_skill_manager.movementState)
+					currentSkill.player.moving = gw2_skill_manager:combo("##gw2sm-plmovementstate",currentSkill.player.moving,gw2_skill_manager.movementState)
 					GUI:PopItemWidth()
 					GUI:Columns(1)
 				end
@@ -702,12 +702,12 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 					GUI:Text(GetString("booncount"))
 					GUI:NextColumn()
 					GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
-					currentSkill.target.type = GUI:Combo("##gw2sm-targettype",currentSkill.target.type,gw2_skill_manager.targetType)
+					currentSkill.target.type = gw2_skill_manager:combo("##gw2sm-targettype",currentSkill.target.type,gw2_skill_manager.targetType)
 					currentSkill.target.minHP = GUI:InputInt("##gw2sm-tminhp", currentSkill.target.minHP, 1, 10)
 					currentSkill.target.maxHP = GUI:InputInt("##gw2sm-tmaxhp", currentSkill.target.maxHP, 1, 10)
 					currentSkill.target.enemyNearCount = GUI:InputInt("##gw2sm-tenemynearcount", currentSkill.target.enemyNearCount, 1, 10)
 					currentSkill.target.enemyRangeMax = GUI:InputInt("##gw2sm-plenemynearrange", currentSkill.target.enemyRangeMax, 100, 1000)
-					currentSkill.target.moving = GUI:Combo("##gw2sm-tmovementstate",currentSkill.target.moving,gw2_skill_manager.movementState)
+					currentSkill.target.moving = gw2_skill_manager:combo("##gw2sm-tmovementstate",currentSkill.target.moving,gw2_skill_manager.movementState)
 					currentSkill.target.hasBuffs = GUI:InputText("##gw2sm-thasbuffs",currentSkill.target.hasBuffs)
 					currentSkill.target.hasNotBuffs = GUI:InputText("##gw2sm-thasnotbuffs",currentSkill.target.hasNotBuffs)
 					currentSkill.target.conditionCount = GUI:InputInt("##gw2sm-tconditioncount", currentSkill.target.conditionCount, 1, 5)
@@ -764,7 +764,14 @@ function gw2_skill_manager:GetProfile(profileName)
 				
 				---end
 				
-				for _,skill in ipairs(profile.skills) do
+				for prio,skill in ipairs(profile.skills) do
+					for id,entry in pairs(skill) do
+						for k,v in pairs(entry) do
+							if (v == "1" or v == "0") then
+								profile.skills[prio][id][k] = v == "1"
+							end
+						end
+					end
 					skill = inheritTable(skillPrototype, skill)
 					skill.parent = setmetatable({},{__index = profile, __newindex = profile})
 				end
@@ -887,7 +894,15 @@ function gw2_skill_manager.RegisterProfilePath(path)
 	end
 end
 
-
+gw2_skill_manager.reverseComboList = {}
+function gw2_skill_manager:combo(name,current,list)
+	if (self.reverseComboList[list] == nil) then
+		self.reverseComboList[list] = table.invert(list) 
+	end
+	local currID = self.reverseComboList[list][current]
+	currID = GUI:Combo(name,currID,list)
+	return list[currID]
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 -- **profile prototype**
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
