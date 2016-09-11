@@ -136,7 +136,7 @@ RegisterEventHandler("Module.Initalize",gw2_skill_manager.ModuleInit)
 
 function gw2_skill_manager.mainWindow.Draw(event,ticks)
 	if (gw2_skill_manager.mainWindow.open) then
-		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver) -- TODO: remove auto resize and set "set" size.
+		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver) -- TODO: remove auto resize and set "set" size for auto move?
 		gw2_skill_manager.mainWindow.visible, gw2_skill_manager.mainWindow.open = GUI:Begin(gw2_skill_manager.mainWindow.name, gw2_skill_manager.mainWindow.open, GUI.WindowFlags_NoCollapse+GUI.WindowFlags_AlwaysAutoResize)
 		if (gw2_skill_manager.mainWindow.visible) then
 			-- Profile Choice.
@@ -157,7 +157,7 @@ function gw2_skill_manager.mainWindow.Draw(event,ticks)
 			-- New Profile Button.
 			if (GUI:Button("New Profile", 100,25)) then
 				GUI:OpenPopup("##gw2sm-newprofile")
-				GUI:SetKeyboardFocusHere(10)
+				--GUI:SetKeyboardFocusHere()
 			end
 			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
 				GUI:SetTooltip("Create a new profile.")
@@ -249,36 +249,8 @@ RegisterEventHandler("Gameloop.Draw", gw2_skill_manager.mainWindow.Draw)
 function gw2_skill_manager.profileWindow.Draw(event,ticks)
 	if (gw2_skill_manager.profileWindow.open) then
 		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver) -- TODO: better start size, remove title bar, auto move with main.
-		gw2_skill_manager.profileWindow.visible, gw2_skill_manager.profileWindow.open = GUI:Begin(gw2_skill_manager.profileWindow.name, gw2_skill_manager.profileWindow.open, GUI.WindowFlags_NoCollapse+GUI.WindowFlags_MenuBar)
+		gw2_skill_manager.profileWindow.visible, gw2_skill_manager.profileWindow.open = GUI:Begin(gw2_skill_manager.profile.name.."###"..gw2_skill_manager.profileWindow.name, gw2_skill_manager.profileWindow.open, GUI.WindowFlags_NoCollapse)
 		if (gw2_skill_manager.profileWindow.visible) then
-			-- misuse menu to show a name XD
-			if (GUI:BeginMenuBar()) then
-				if (GUI:BeginMenu(gw2_skill_manager.profile.name, false)) then
-					GUI:EndMenu()
-				end
-				GUI:EndMenuBar()
-			end
-			
-			-- TODO: fix this crappy swap settings layout stuff. too late now, so dont try.
-			--[[GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing)
-			if (GUI:TreeNode(GetString("swap"))) then
-				-- swap checkbox.
-				gw2_skill_manager.profile.switchSettings.switchWeapons = GUI:Checkbox("##gw2sm-swapcheckbox", gw2_skill_manager.profile.switchSettings.switchWeapons)
-
-				-- Class specific options.
-				if (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
-					gw2_skill_manager.profile.professionSettings.engineer.kit = GUI:Combo("##gw2sm-engineerKit",gw2_skill_manager.profile.professionSettings.engineer.kit,gw2_skill_manager.engineerKits)
-					GUI:Separator()
-				elseif(ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist) then
-					gw2_skill_manager.profile.professionSettings.elementalist.attunement_1 = GUI:Combo("##gw2sm-elementalistAttunement_1",gw2_skill_manager.profile.professionSettings.elementalist.attunement_1,gw2_skill_manager.elementalistAttunements)
-					gw2_skill_manager.profile.professionSettings.elementalist.attunement_2 = GUI:Combo("##gw2sm-elementalistAttunement_2",gw2_skill_manager.profile.professionSettings.elementalist.attunement_2,gw2_skill_manager.elementalistAttunements)
-					gw2_skill_manager.profile.professionSettings.elementalist.attunement_3 = GUI:Combo("##gw2sm-elementalistAttunement_3",gw2_skill_manager.profile.professionSettings.elementalist.attunement_3,gw2_skill_manager.elementalistAttunements)
-					gw2_skill_manager.profile.professionSettings.elementalist.attunement_4 = GUI:Combo("##gw2sm-elementalistAttunement_4",gw2_skill_manager.profile.professionSettings.elementalist.attunement_4,gw2_skill_manager.elementalistAttunements)
-					GUI:Separator()
-				end
-				GUI:TreePop()
-			end]]
-
 			-- Save profile button.
 			if (GUI:Button(GetString("save"), (GUI:GetContentRegionAvailWidth()/2)-(GUI:GetStyle().iteminnerspacing.x/2),25)) then
 				gw2_skill_manager.profile:Save()
@@ -369,6 +341,33 @@ function gw2_skill_manager.profileWindow.Draw(event,ticks)
 				GUI:SetTooltip("Enable to detect skills.")
 			end
 			
+			if (GUI:CollapsingHeader(GetString("swap"))) then
+				-- swap checkbox.
+				GUI:Text(GetString("swap"))
+				GUI:SameLine(0)
+				gw2_skill_manager.profile.switchSettings.switchWeapons = GUI:Checkbox("##gw2sm-swapcheckbox", gw2_skill_manager.profile.switchSettings.switchWeapons)
+
+				-- Class specific options.
+				if (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
+					gw2_skill_manager.profile.professionSettings.engineer.kit = GUI:Combo("##gw2sm-engineerKit",gw2_skill_manager.profile.professionSettings.engineer.kit,gw2_skill_manager.engineerKits)
+				elseif(ml_global_information.Player_Profession == GW2.CHARCLASS.Elementalist) then
+					GUI:PushItemWidth((GUI:GetContentRegionAvailWidth()/2)-(GUI:GetStyle().iteminnerspacing.x/2))
+					gw2_skill_manager.profile.professionSettings.elementalist.attunement_1 = GUI:Combo("##gw2sm-elementalistAttunement_1",gw2_skill_manager.profile.professionSettings.elementalist.attunement_1,gw2_skill_manager.elementalistAttunements)
+					GUI:PopItemWidth()
+					GUI:SameLine(0)
+					GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
+					gw2_skill_manager.profile.professionSettings.elementalist.attunement_2 = GUI:Combo("##gw2sm-elementalistAttunement_2",gw2_skill_manager.profile.professionSettings.elementalist.attunement_2,gw2_skill_manager.elementalistAttunements)
+					GUI:PopItemWidth()
+					GUI:PushItemWidth((GUI:GetContentRegionAvailWidth()/2)-(GUI:GetStyle().iteminnerspacing.x/2))
+					gw2_skill_manager.profile.professionSettings.elementalist.attunement_3 = GUI:Combo("##gw2sm-elementalistAttunement_3",gw2_skill_manager.profile.professionSettings.elementalist.attunement_3,gw2_skill_manager.elementalistAttunements)
+					GUI:PopItemWidth()
+					GUI:SameLine(0)
+					GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
+					gw2_skill_manager.profile.professionSettings.elementalist.attunement_4 = GUI:Combo("##gw2sm-elementalistAttunement_4",gw2_skill_manager.profile.professionSettings.elementalist.attunement_4,gw2_skill_manager.elementalistAttunements)
+					GUI:PopItemWidth()
+				end
+			end
+			
 			GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
 			GUI:SetNextWindowSize(400, 140, GUI.SetCond_Always)
 			if (GUI:BeginPopupModal("##gw2sm-deleteporfile",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
@@ -402,12 +401,13 @@ function gw2_skill_manager.profileWindow.Draw(event,ticks)
 			-- skill list child keeps scrolling in this erea.
 			if (GUI:BeginChild("##gw2sm-skillregion", GUI:GetContentRegionAvailWidth(), 0, true)) then
 				for priority,skill in ipairs(gw2_skill_manager.profile.skills) do
-					if (skill.tmp.moving) then
-						if (GUI:Button(GetString("ok"), GUI:CalcTextSize("0000"),20)) then
+					if (skill.tmp.moving) then --GUI.Col_FrameBg highlight this shit?
+						if (GUI:Button(GetString("ok##"..priority), GUI:CalcTextSize("0000"),20)) then
 							if (gw2_skill_manager.profile:MoveSkill(priority,skill.tmp.newPriority)) then
 								if (gw2_skill_manager.skillWindow.prio == priority) then
 									gw2_skill_manager.skillWindow.prio = skill.tmp.newPriority
 								end
+								skill.tmp.newPriority = 0
 								skill.tmp.moving = false
 							end
 						end
@@ -426,6 +426,7 @@ function gw2_skill_manager.profileWindow.Draw(event,ticks)
 							skill.tmp.newPriority = priority
 							skill.tmp.moving = true
 						end
+						GUI:SetCursorPosY()
 						GUI:SameLine(0)
 						-- TODO: Make highlight better.
 						local curState = gw2_skill_manager.skillWindow.prio
@@ -439,36 +440,49 @@ function gw2_skill_manager.profileWindow.Draw(event,ticks)
 								gw2_skill_manager.skillWindow.prio = priority
 							else
 								gw2_skill_manager.skillWindow.open = false
+								gw2_skill_manager.skillWindow.prio = 0
 							end
 						end
 						if (curState == priority and not skill.tmp.dragging) then
 							GUI:PopStyleColor(1)
 						end
-						if (skill.tmp.dragging) then -- pop highlight when done drawing.
+						if (skill.tmp.dragging) then
 							GUI:PopStyleColor(2)
 						end
-						-- Move the skill up or down, use the right-mouse to drag it.
-						if ( GUI:IsItemClicked(1) or skill.tmp.dragging) then
-							skill.tmp.dragging = true
-							if (GUI:IsMouseReleased(1) or not GUI:IsMouseDown(1)) then
-								skill.tmp.dragging = false
-							end
-							local x,y = GUI:GetMouseDragDelta(1)
-							if (y >= 20 or y <= -20 ) then
-								local curPrio = priority
-								for i=1,round(math.abs(y/23)) do
-									if (gw2_skill_manager.profile:MoveSkill(curPrio,y<0 and "up" or "down")) then
-										curPrio = y<0 and curPrio-1 or curPrio+1
-									end
-								end
-								if (gw2_skill_manager.skillWindow.prio == priority) then
-									gw2_skill_manager.skillWindow.prio = curPrio
-								end
-								GUI:ResetMouseDragDelta(1)
-							end
-						end
+						
 						if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
 							GUI:SetTooltip("Open edit window for: " .. skill.skill.name)
+						end
+					end
+					-- Drag(right mouse button) the skill up or down.
+					if (GUI:IsItemClicked(1) or skill.tmp.dragging) then
+						skill.tmp.dragging = true
+						if (GUI:IsMouseReleased(1) or not GUI:IsMouseDown(1) or not GUI:IsWindowHovered()) then
+							skill.tmp.dragging = false
+						end
+						local x,y = GUI:GetMouseDragDelta(1)
+						if (y >= 20 or y <= -20 ) then
+							local curPrio = priority
+							local movingIsOpen = priority == gw2_skill_manager.skillWindow.prio
+							for i=1,round(math.abs(y/23)) do
+								if (gw2_skill_manager.profile:MoveSkill(curPrio,y<0 and "up" or "down")) then
+									curPrio = y<0 and curPrio-1 or curPrio+1
+									-- move skill prio according to dragging.
+									if (movingIsOpen == false and curPrio == gw2_skill_manager.skillWindow.prio) then
+										gw2_skill_manager.skillWindow.prio = y<0 and gw2_skill_manager.skillWindow.prio+1 or gw2_skill_manager.skillWindow.prio-1
+									elseif (movingIsOpen) then
+										gw2_skill_manager.skillWindow.prio = curPrio
+									end
+									-- change prio change imput is open and skill moved and number still on original. prevent idiots from moving crap by mistake.
+									if (gw2_skill_manager.profile.skills[y<0 and curPrio+1 or curPrio-1].tmp.newPriority == curPrio) then
+										gw2_skill_manager.profile.skills[y<0 and curPrio+1 or curPrio-1].tmp.newPriority = y<0 and curPrio+1 or curPrio-1
+									elseif (skill.tmp.newPriority == (y<0 and curPrio+1 or curPrio-1)) then
+										skill.tmp.newPriority = curPrio
+										--skill.tmp.moving = false
+									end
+								end
+							end
+							GUI:ResetMouseDragDelta(1)
 						end
 					end
 				end
@@ -484,45 +498,10 @@ RegisterEventHandler("Gameloop.Draw", gw2_skill_manager.profileWindow.Draw)
 
 function gw2_skill_manager.skillWindow.Draw(event,ticks)
 	if (gw2_skill_manager.skillWindow.open) then
-		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver) -- TODO: better start size, remove title bar, auto move with main.
-		gw2_skill_manager.skillWindow.visible, gw2_skill_manager.skillWindow.open = GUI:Begin(gw2_skill_manager.skillWindow.name, gw2_skill_manager.skillWindow.open, GUI.WindowFlags_NoCollapse+GUI.WindowFlags_MenuBar)
+		local currentSkill = gw2_skill_manager.profile.skills[gw2_skill_manager.skillWindow.prio]
+		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver) -- TODO: better start size, remove title bar, auto move with main?
+		gw2_skill_manager.skillWindow.visible, gw2_skill_manager.skillWindow.open = GUI:Begin(currentSkill.skill.name.."###"..gw2_skill_manager.skillWindow.name, gw2_skill_manager.skillWindow.open, GUI.WindowFlags_NoCollapse)
 		if (gw2_skill_manager.skillWindow.visible) then
-			local curentSkill = gw2_skill_manager.profile.skills[gw2_skill_manager.skillWindow.prio]
-			-- misuse menu to show a name XD
-			if (GUI:BeginMenuBar()) then
-				if (GUI:BeginMenu(curentSkill.skill.name, false)) then
-					GUI:EndMenu()
-				end
-				if (GUI:BeginMenu(GetString("options"), true)) then
-					if (GUI:MenuItem(GetString("clone"))) then
-						gw2_skill_manager.profile:CloneSkill(gw2_skill_manager.skillWindow.prio)
-					end
-					if (GUI:MenuItem(GetString("moveup"))) then
-						if (gw2_skill_manager.profile:MoveSkill(gw2_skill_manager.skillWindow.prio,"up")) then
-							gw2_skill_manager.skillWindow.prio = gw2_skill_manager.skillWindow.prio - 1
-						end
-					end
-					if (GUI:MenuItem(GetString("movedown"))) then
-						if (gw2_skill_manager.profile:MoveSkill(gw2_skill_manager.skillWindow.prio,"down")) then
-							gw2_skill_manager.skillWindow.prio = gw2_skill_manager.skillWindow.prio + 1
-						end
-					end
-					if (GUI:MenuItem(GetString("copy"))) then
-						gw2_skill_manager.profile:CopySkill(gw2_skill_manager.skillWindow.prio)
-					end
-					if (GUI:MenuItem(GetString("paste"))) then
-						gw2_skill_manager.profile:PasteSkill(gw2_skill_manager.skillWindow.prio)
-						curentSkill = gw2_skill_manager.profile.skills[gw2_skill_manager.skillWindow.prio]
-					end
-					if (GUI:MenuItem(GetString("delete"))) then
-						gw2_skill_manager.profile:DeleteSkill(gw2_skill_manager.skillWindow.prio)
-						gw2_skill_manager.skillWindow.open = false
-					end
-					GUI:EndMenu()
-				end
-				GUI:EndMenuBar()
-			end
-
 			if (GUI:Button(GetString("moveup"), GUI:GetContentRegionAvailWidth()/2,25)) then
 				if (gw2_skill_manager.profile:MoveSkill(gw2_skill_manager.skillWindow.prio,"up")) then
 					gw2_skill_manager.skillWindow.prio = gw2_skill_manager.skillWindow.prio - 1
@@ -552,7 +531,7 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 			-- paste skill button.
 			if (GUI:Button(GetString("paste"), GUI:GetContentRegionAvailWidth(),25)) then
 				gw2_skill_manager.profile:PasteSkill(gw2_skill_manager.skillWindow.prio)
-				curentSkill = gw2_skill_manager.profile.skills[gw2_skill_manager.skillWindow.prio]
+				currentSkill = gw2_skill_manager.profile.skills[gw2_skill_manager.skillWindow.prio]
 			end
 			if (GUI:IsItemHovered() and gw2_skill_manager.toolTip) then
 				GUI:SetTooltip("Paste the copied settings to this skill.")
@@ -578,7 +557,7 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 			-- skill list child keeps scrolling in this erea.
 			if (GUI:BeginChild("##gw2sm-skillinfo", GUI:GetContentRegionAvailWidth(), 0, true)) then -- BUG: No border on child causes small layout glitch with scrollbars.
 				GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing)
-				if (GUI:TreeNode(GetString("skill"))) then
+				if (GUI:CollapsingHeader(GetString("skill"))) then
 					GUI:Columns(2, "skillinfocolumn", false)
 					GUI:SetColumnOffset(1,170)
 					GUI:AlignFirstTextHeightToWidgets()
@@ -611,30 +590,29 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 					GUI:Text(GetString("stopmovement"))
 					GUI:NextColumn()
 					GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
-					GUI:InputText("##gw2sm-skillIDsadasd",curentSkill.skill.id,GUI.InputTextFlags_ReadOnly)
-					GUI:InputText("##gw2sm-skillName",curentSkill.skill.name,GUI.InputTextFlags_ReadOnly)
-					curentSkill.skill.isProjectile = GUI:Checkbox("##gw2sm-isprojectile", curentSkill.skill.isProjectile)
-					curentSkill.skill.castOnSelf = GUI:Checkbox("##gw2sm-castonself", curentSkill.skill.castOnSelf)
-					curentSkill.skill.los = GUI:Checkbox("##gw2sm-los", curentSkill.skill.los)
-					curentSkill.skill.setRange = GUI:Checkbox("##gw2sm-setrange", curentSkill.skill.setRange)
-					curentSkill.skill.minRange = GUI:InputInt("##gw2sm-minrange", curentSkill.skill.minRange, 100, 1000)
-					curentSkill.skill.minRange = curentSkill.skill.minRange > 0 and curentSkill.skill.minRange or 0
-					curentSkill.skill.maxRange = GUI:InputInt("##gw2sm-maxrange", curentSkill.skill.maxRange, 100, 1000)
-					curentSkill.skill.maxRange = curentSkill.skill.maxRange > 0 and curentSkill.skill.maxRange or 0
-					curentSkill.skill.radius = GUI:InputInt("##gw2sm-radius", curentSkill.skill.radius, 100, 1000)
-					curentSkill.skill.radius = curentSkill.skill.radius > 0 and curentSkill.skill.radius or 0
-					curentSkill.skill.slowCast = GUI:Checkbox("##gw2sm-slowcast", curentSkill.skill.slowCast)
-					curentSkill.skill.lastSkillID = GUI:InputText("##gw2sm-prevskillid",curentSkill.skill.lastSkillID)
-					curentSkill.skill.delay = GUI:InputInt("##gw2sm-delay", curentSkill.skill.delay, 100, 1000)
-					curentSkill.skill.delay = curentSkill.skill.delay > 0 and curentSkill.skill.delay or 0
-					curentSkill.skill.relativePosition = GUI:Combo("##gw2sm-engineerKit",curentSkill.skill.relativePosition,gw2_skill_manager.relativePosition)
-					curentSkill.skill.stopsMovement = GUI:Checkbox("##gw2sm-slowcast", curentSkill.skill.stopsMovement)
+					GUI:InputText("##gw2sm-skillIDsadasd",currentSkill.skill.id,GUI.InputTextFlags_ReadOnly)
+					GUI:InputText("##gw2sm-skillName",currentSkill.skill.name,GUI.InputTextFlags_ReadOnly)
+					currentSkill.skill.isProjectile = GUI:Checkbox("##gw2sm-isprojectile", currentSkill.skill.isProjectile)
+					currentSkill.skill.castOnSelf = GUI:Checkbox("##gw2sm-castonself", currentSkill.skill.castOnSelf)
+					currentSkill.skill.los = GUI:Checkbox("##gw2sm-los", currentSkill.skill.los)
+					currentSkill.skill.setRange = GUI:Checkbox("##gw2sm-setrange", currentSkill.skill.setRange)
+					currentSkill.skill.minRange = GUI:InputInt("##gw2sm-minrange", currentSkill.skill.minRange, 100, 1000)
+					currentSkill.skill.minRange = currentSkill.skill.minRange > 0 and currentSkill.skill.minRange or 0
+					currentSkill.skill.maxRange = GUI:InputInt("##gw2sm-maxrange", currentSkill.skill.maxRange, 100, 1000)
+					currentSkill.skill.maxRange = currentSkill.skill.maxRange > 0 and currentSkill.skill.maxRange or 0
+					currentSkill.skill.radius = GUI:InputInt("##gw2sm-radius", currentSkill.skill.radius, 100, 1000)
+					currentSkill.skill.radius = currentSkill.skill.radius > 0 and currentSkill.skill.radius or 0
+					currentSkill.skill.slowCast = GUI:Checkbox("##gw2sm-slowcast", currentSkill.skill.slowCast)
+					currentSkill.skill.lastSkillID = GUI:InputText("##gw2sm-prevskillid",currentSkill.skill.lastSkillID)
+					currentSkill.skill.delay = GUI:InputInt("##gw2sm-delay", currentSkill.skill.delay, 100, 1000)
+					currentSkill.skill.delay = currentSkill.skill.delay > 0 and currentSkill.skill.delay or 0
+					currentSkill.skill.relativePosition = GUI:Combo("##gw2sm-engineerKit",currentSkill.skill.relativePosition,gw2_skill_manager.relativePosition)
+					currentSkill.skill.stopsMovement = GUI:Checkbox("##gw2sm-slowcast", currentSkill.skill.stopsMovement)
 					GUI:PopItemWidth()
 					GUI:Columns(1)
-					GUI:TreePop()
 				end
 				GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing)
-				if (GUI:TreeNode(GetString("player"))) then
+				if (GUI:CollapsingHeader(GetString("player"))) then
 					GUI:Columns(2, "playerinfocolumn", false)
 					GUI:SetColumnOffset(1,170)
 					GUI:AlignFirstTextHeightToWidgets()
@@ -672,36 +650,34 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 					GUI:AlignFirstTextHeightToWidgets()
 					GUI:NextColumn()
 					GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
-					curentSkill.player.combatState = GUI:Combo("##gw2sm-engineerKit",curentSkill.player.combatState,gw2_skill_manager.combatState)
-					curentSkill.player.minHP = GUI:InputInt("##gw2sm-plminhp", curentSkill.player.minHP, 1, 10)
-					curentSkill.player.minHP = curentSkill.player.minHP > 0 and curentSkill.player.minHP or 0
-					curentSkill.player.maxHP = GUI:InputInt("##gw2sm-plmaxhp", curentSkill.player.maxHP, 1, 10)
-					curentSkill.player.maxHP = curentSkill.player.maxHP > 0 and curentSkill.player.maxHP or 0
-					curentSkill.player.minPower = GUI:InputInt("##gw2sm-plminpower", curentSkill.player.minPower, 1, 10)
-					curentSkill.player.minPower = curentSkill.player.minPower > 0 and curentSkill.player.minPower or 0
-					curentSkill.player.maxPower = GUI:InputInt("##gw2sm-plmaxpower", curentSkill.player.maxPower, 1, 10)
-					curentSkill.player.maxPower = curentSkill.player.maxPower > 0 and curentSkill.player.maxPower or 0
-					curentSkill.player.minEndurance = GUI:InputInt("##gw2sm-plminendurance", curentSkill.player.minEndurance, 1, 10)
-					curentSkill.player.minEndurance = curentSkill.player.minEndurance > 0 and curentSkill.player.minEndurance or 0
-					curentSkill.player.maxEndurance = GUI:InputInt("##gw2sm-plmaxendurance", curentSkill.player.maxEndurance, 1, 10)
-					curentSkill.player.maxEndurance = curentSkill.player.maxEndurance > 0 and curentSkill.player.maxEndurance or 0
+					currentSkill.player.combatState = GUI:Combo("##gw2sm-engineerKit",currentSkill.player.combatState,gw2_skill_manager.combatState)
+					currentSkill.player.minHP = GUI:InputInt("##gw2sm-plminhp", currentSkill.player.minHP, 1, 10)
+					currentSkill.player.minHP = currentSkill.player.minHP > 0 and currentSkill.player.minHP or 0
+					currentSkill.player.maxHP = GUI:InputInt("##gw2sm-plmaxhp", currentSkill.player.maxHP, 1, 10)
+					currentSkill.player.maxHP = currentSkill.player.maxHP > 0 and currentSkill.player.maxHP or 0
+					currentSkill.player.minPower = GUI:InputInt("##gw2sm-plminpower", currentSkill.player.minPower, 1, 10)
+					currentSkill.player.minPower = currentSkill.player.minPower > 0 and currentSkill.player.minPower or 0
+					currentSkill.player.maxPower = GUI:InputInt("##gw2sm-plmaxpower", currentSkill.player.maxPower, 1, 10)
+					currentSkill.player.maxPower = currentSkill.player.maxPower > 0 and currentSkill.player.maxPower or 0
+					currentSkill.player.minEndurance = GUI:InputInt("##gw2sm-plminendurance", currentSkill.player.minEndurance, 1, 10)
+					currentSkill.player.minEndurance = currentSkill.player.minEndurance > 0 and currentSkill.player.minEndurance or 0
+					currentSkill.player.maxEndurance = GUI:InputInt("##gw2sm-plmaxendurance", currentSkill.player.maxEndurance, 1, 10)
+					currentSkill.player.maxEndurance = currentSkill.player.maxEndurance > 0 and currentSkill.player.maxEndurance or 0
 					--TODO: prevent negative number from here. finding better way now. and getting food.
-					curentSkill.player.allyNearCount = GUI:InputInt("##gw2sm-plalliescount", curentSkill.player.allyNearCount, 1, 10)
-					curentSkill.player.allyRangeMax = GUI:InputInt("##gw2sm-plalliesrange", curentSkill.player.allyRangeMax, 100, 1000)
-					curentSkill.player.allyDownedNearCount = GUI:InputInt("##gw2sm-plaliesdownedcount", curentSkill.player.allyDownedNearCount, 1, 10)
-					curentSkill.player.allyDownedRangeMax = GUI:InputInt("##gw2sm-plaliesdownedrange", curentSkill.player.allyDownedRangeMax, 100, 1000)
-					curentSkill.player.hasBuffs = GUI:InputText("##gw2sm-plhasbuffs",curentSkill.player.hasBuffs)
-					curentSkill.player.hasNotBuffs = GUI:InputText("##gw2sm-plhasnotbuffs",curentSkill.player.hasNotBuffs)
-					curentSkill.player.conditionCount = GUI:InputInt("##gw2sm-plconditioncount", curentSkill.player.conditionCount, 1, 5)
-					curentSkill.player.boonCount = GUI:InputInt("##gw2sm-plbooncount", curentSkill.player.boonCount, 1, 5)
-					curentSkill.player.moving = GUI:Combo("##gw2sm-plmovementstate",curentSkill.player.moving,gw2_skill_manager.movementState)
+					currentSkill.player.allyNearCount = GUI:InputInt("##gw2sm-plalliescount", currentSkill.player.allyNearCount, 1, 10)
+					currentSkill.player.allyRangeMax = GUI:InputInt("##gw2sm-plalliesrange", currentSkill.player.allyRangeMax, 100, 1000)
+					currentSkill.player.allyDownedNearCount = GUI:InputInt("##gw2sm-plaliesdownedcount", currentSkill.player.allyDownedNearCount, 1, 10)
+					currentSkill.player.allyDownedRangeMax = GUI:InputInt("##gw2sm-plaliesdownedrange", currentSkill.player.allyDownedRangeMax, 100, 1000)
+					currentSkill.player.hasBuffs = GUI:InputText("##gw2sm-plhasbuffs",currentSkill.player.hasBuffs)
+					currentSkill.player.hasNotBuffs = GUI:InputText("##gw2sm-plhasnotbuffs",currentSkill.player.hasNotBuffs)
+					currentSkill.player.conditionCount = GUI:InputInt("##gw2sm-plconditioncount", currentSkill.player.conditionCount, 1, 5)
+					currentSkill.player.boonCount = GUI:InputInt("##gw2sm-plbooncount", currentSkill.player.boonCount, 1, 5)
+					currentSkill.player.moving = GUI:Combo("##gw2sm-plmovementstate",currentSkill.player.moving,gw2_skill_manager.movementState)
 					GUI:PopItemWidth()
 					GUI:Columns(1)
-					-- pop tree if its open.
-					GUI:TreePop()
 				end
 				GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing)
-				if (GUI:TreeNode(GetString("target"))) then
+				if (GUI:CollapsingHeader(GetString("target"))) then
 					GUI:Columns(2, "targetinfocolumn", false)
 					GUI:SetColumnOffset(1,170)
 					GUI:AlignFirstTextHeightToWidgets()
@@ -726,20 +702,18 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 					GUI:Text(GetString("booncount"))
 					GUI:NextColumn()
 					GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
-					curentSkill.target.type = GUI:Combo("##gw2sm-targettype",curentSkill.target.type,gw2_skill_manager.targetType)
-					curentSkill.target.minHP = GUI:InputInt("##gw2sm-tminhp", curentSkill.target.minHP, 1, 10)
-					curentSkill.target.maxHP = GUI:InputInt("##gw2sm-tmaxhp", curentSkill.target.maxHP, 1, 10)
-					curentSkill.target.enemyNearCount = GUI:InputInt("##gw2sm-tenemynearcount", curentSkill.target.enemyNearCount, 1, 10)
-					curentSkill.target.enemyRangeMax = GUI:InputInt("##gw2sm-plenemynearrange", curentSkill.target.enemyRangeMax, 100, 1000)
-					curentSkill.target.moving = GUI:Combo("##gw2sm-tmovementstate",curentSkill.target.moving,gw2_skill_manager.movementState)
-					curentSkill.target.hasBuffs = GUI:InputText("##gw2sm-thasbuffs",curentSkill.target.hasBuffs)
-					curentSkill.target.hasNotBuffs = GUI:InputText("##gw2sm-thasnotbuffs",curentSkill.target.hasNotBuffs)
-					curentSkill.target.conditionCount = GUI:InputInt("##gw2sm-tconditioncount", curentSkill.target.conditionCount, 1, 5)
-					curentSkill.target.boonCount = GUI:InputInt("##gw2sm-tbooncount", curentSkill.target.boonCount, 1, 5)
+					currentSkill.target.type = GUI:Combo("##gw2sm-targettype",currentSkill.target.type,gw2_skill_manager.targetType)
+					currentSkill.target.minHP = GUI:InputInt("##gw2sm-tminhp", currentSkill.target.minHP, 1, 10)
+					currentSkill.target.maxHP = GUI:InputInt("##gw2sm-tmaxhp", currentSkill.target.maxHP, 1, 10)
+					currentSkill.target.enemyNearCount = GUI:InputInt("##gw2sm-tenemynearcount", currentSkill.target.enemyNearCount, 1, 10)
+					currentSkill.target.enemyRangeMax = GUI:InputInt("##gw2sm-plenemynearrange", currentSkill.target.enemyRangeMax, 100, 1000)
+					currentSkill.target.moving = GUI:Combo("##gw2sm-tmovementstate",currentSkill.target.moving,gw2_skill_manager.movementState)
+					currentSkill.target.hasBuffs = GUI:InputText("##gw2sm-thasbuffs",currentSkill.target.hasBuffs)
+					currentSkill.target.hasNotBuffs = GUI:InputText("##gw2sm-thasnotbuffs",currentSkill.target.hasNotBuffs)
+					currentSkill.target.conditionCount = GUI:InputInt("##gw2sm-tconditioncount", currentSkill.target.conditionCount, 1, 5)
+					currentSkill.target.boonCount = GUI:InputInt("##gw2sm-tbooncount", currentSkill.target.boonCount, 1, 5)
 					GUI:PopItemWidth()
 					GUI:Columns(1)
-					-- pop tree if its open.
-					GUI:TreePop()
 				end
 			end
 			GUI:EndChild()
