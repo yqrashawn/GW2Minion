@@ -401,7 +401,7 @@ function gw2_skill_manager.profileWindow.Draw(event,ticks)
 			-- skill list child keeps scrolling in this erea.
 			if (GUI:BeginChild("##gw2sm-skillregion", GUI:GetContentRegionAvailWidth(), 0, true)) then
 				for priority,skill in ipairs(gw2_skill_manager.profile.skills) do
-					if (skill.tmp.moving) then --GUI.Col_FrameBg highlight this shit?
+					if (skill.tmp.moving and not skill.tmp.dragging) then --GUI.Col_FrameBg highlight this shit?
 						if (GUI:Button(GetString("ok##"..priority), GUI:CalcTextSize("0000"),20)) then
 							if (gw2_skill_manager.profile:MoveSkill(priority,skill.tmp.newPriority)) then
 								if (gw2_skill_manager.skillWindow.prio == priority) then
@@ -426,7 +426,6 @@ function gw2_skill_manager.profileWindow.Draw(event,ticks)
 							skill.tmp.newPriority = priority
 							skill.tmp.moving = true
 						end
-						GUI:SetCursorPosY()
 						GUI:SameLine(0)
 						-- TODO: Make highlight better.
 						local curState = gw2_skill_manager.skillWindow.prio
@@ -474,9 +473,9 @@ function gw2_skill_manager.profileWindow.Draw(event,ticks)
 										gw2_skill_manager.skillWindow.prio = curPrio
 									end
 									-- change prio change imput is open and skill moved and number still on original. prevent idiots from moving crap by mistake.
-									if (gw2_skill_manager.profile.skills[y<0 and curPrio+1 or curPrio-1].tmp.newPriority == curPrio) then
+									if (gw2_skill_manager.profile.skills[y<0 and curPrio+1 or curPrio-1].tmp.newPriority ~= 0) then
 										gw2_skill_manager.profile.skills[y<0 and curPrio+1 or curPrio-1].tmp.newPriority = y<0 and curPrio+1 or curPrio-1
-									elseif (skill.tmp.newPriority == (y<0 and curPrio+1 or curPrio-1)) then
+									elseif (skill.tmp.newPriority ~= 0) then
 										skill.tmp.newPriority = curPrio
 										--skill.tmp.moving = false
 									end
@@ -596,16 +595,12 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 					currentSkill.skill.castOnSelf = GUI:Checkbox("##gw2sm-castonself", currentSkill.skill.castOnSelf)
 					currentSkill.skill.los = GUI:Checkbox("##gw2sm-los", currentSkill.skill.los)
 					currentSkill.skill.setRange = GUI:Checkbox("##gw2sm-setrange", currentSkill.skill.setRange)
-					currentSkill.skill.minRange = GUI:InputInt("##gw2sm-minrange", currentSkill.skill.minRange, 100, 1000)
-					currentSkill.skill.minRange = currentSkill.skill.minRange > 0 and currentSkill.skill.minRange or 0
-					currentSkill.skill.maxRange = GUI:InputInt("##gw2sm-maxrange", currentSkill.skill.maxRange, 100, 1000)
-					currentSkill.skill.maxRange = currentSkill.skill.maxRange > 0 and currentSkill.skill.maxRange or 0
-					currentSkill.skill.radius = GUI:InputInt("##gw2sm-radius", currentSkill.skill.radius, 100, 1000)
-					currentSkill.skill.radius = currentSkill.skill.radius > 0 and currentSkill.skill.radius or 0
+					currentSkill.skill.minRange = GUI:InputInt("##gw2sm-minrange", currentSkill.skill.minRange > 0 and currentSkill.skill.minRange or 0, 100, 1000)
+					currentSkill.skill.maxRange = GUI:InputInt("##gw2sm-maxrange", currentSkill.skill.maxRange > 0 and currentSkill.skill.maxRange or 0, 100, 1000)
+					currentSkill.skill.radius = GUI:InputInt("##gw2sm-radius", currentSkill.skill.radius > 0 and currentSkill.skill.radius or 0, 100, 1000)
 					currentSkill.skill.slowCast = GUI:Checkbox("##gw2sm-slowcast", currentSkill.skill.slowCast)
 					currentSkill.skill.lastSkillID = GUI:InputText("##gw2sm-prevskillid",currentSkill.skill.lastSkillID)
-					currentSkill.skill.delay = GUI:InputInt("##gw2sm-delay", currentSkill.skill.delay, 100, 1000)
-					currentSkill.skill.delay = currentSkill.skill.delay > 0 and currentSkill.skill.delay or 0
+					currentSkill.skill.delay = GUI:InputInt("##gw2sm-delay", currentSkill.skill.delay > 0 and currentSkill.skill.delay or 0, 100, 1000)
 					currentSkill.skill.relativePosition = gw2_skill_manager:combo("##gw2sm-engineerKit",currentSkill.skill.relativePosition,gw2_skill_manager.relativePosition)
 					currentSkill.skill.stopsMovement = GUI:Checkbox("##gw2sm-slowcast", currentSkill.skill.stopsMovement)
 					GUI:PopItemWidth()
@@ -651,27 +646,20 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 					GUI:NextColumn()
 					GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
 					currentSkill.player.combatState = gw2_skill_manager:combo("##gw2sm-engineerKit",currentSkill.player.combatState,gw2_skill_manager.combatState)
-					currentSkill.player.minHP = GUI:InputInt("##gw2sm-plminhp", currentSkill.player.minHP, 1, 10)
-					currentSkill.player.minHP = currentSkill.player.minHP > 0 and currentSkill.player.minHP or 0
-					currentSkill.player.maxHP = GUI:InputInt("##gw2sm-plmaxhp", currentSkill.player.maxHP, 1, 10)
-					currentSkill.player.maxHP = currentSkill.player.maxHP > 0 and currentSkill.player.maxHP or 0
-					currentSkill.player.minPower = GUI:InputInt("##gw2sm-plminpower", currentSkill.player.minPower, 1, 10)
-					currentSkill.player.minPower = currentSkill.player.minPower > 0 and currentSkill.player.minPower or 0
-					currentSkill.player.maxPower = GUI:InputInt("##gw2sm-plmaxpower", currentSkill.player.maxPower, 1, 10)
-					currentSkill.player.maxPower = currentSkill.player.maxPower > 0 and currentSkill.player.maxPower or 0
-					currentSkill.player.minEndurance = GUI:InputInt("##gw2sm-plminendurance", currentSkill.player.minEndurance, 1, 10)
-					currentSkill.player.minEndurance = currentSkill.player.minEndurance > 0 and currentSkill.player.minEndurance or 0
-					currentSkill.player.maxEndurance = GUI:InputInt("##gw2sm-plmaxendurance", currentSkill.player.maxEndurance, 1, 10)
-					currentSkill.player.maxEndurance = currentSkill.player.maxEndurance > 0 and currentSkill.player.maxEndurance or 0
-					--TODO: prevent negative number from here. finding better way now. and getting food.
-					currentSkill.player.allyNearCount = GUI:InputInt("##gw2sm-plalliescount", currentSkill.player.allyNearCount, 1, 10)
-					currentSkill.player.allyRangeMax = GUI:InputInt("##gw2sm-plalliesrange", currentSkill.player.allyRangeMax, 100, 1000)
-					currentSkill.player.allyDownedNearCount = GUI:InputInt("##gw2sm-plaliesdownedcount", currentSkill.player.allyDownedNearCount, 1, 10)
-					currentSkill.player.allyDownedRangeMax = GUI:InputInt("##gw2sm-plaliesdownedrange", currentSkill.player.allyDownedRangeMax, 100, 1000)
+					currentSkill.player.minHP = GUI:InputInt("##gw2sm-plminhp", currentSkill.player.minHP > 0 and currentSkill.player.minHP or 0, 1, 10)
+					currentSkill.player.maxHP = GUI:InputInt("##gw2sm-plmaxhp", currentSkill.player.maxHP > 0 and currentSkill.player.maxHP or 0, 1, 10)
+					currentSkill.player.minPower = GUI:InputInt("##gw2sm-plminpower", currentSkill.player.minPower > 0 and currentSkill.player.minPower or 0, 1, 10)
+					currentSkill.player.maxPower = GUI:InputInt("##gw2sm-plmaxpower", currentSkill.player.maxPower > 0 and currentSkill.player.maxPower or 0, 1, 10)
+					currentSkill.player.minEndurance = GUI:InputInt("##gw2sm-plminendurance", currentSkill.player.minEndurance > 0 and currentSkill.player.minEndurance or 0, 1, 10)
+					currentSkill.player.maxEndurance = GUI:InputInt("##gw2sm-plmaxendurance", currentSkill.player.maxEndurance > 0 and currentSkill.player.maxEndurance or 0, 1, 10)
+					currentSkill.player.allyNearCount = GUI:InputInt("##gw2sm-plalliescount", currentSkill.player.allyNearCount > 0 and currentSkill.player.allyNearCount or 0, 1, 10)
+					currentSkill.player.allyRangeMax = GUI:InputInt("##gw2sm-plalliesrange", currentSkill.player.allyRangeMax > 0 and currentSkill.player.allyRangeMax or 0, 100, 1000)
+					currentSkill.player.allyDownedNearCount = GUI:InputInt("##gw2sm-plaliesdownedcount", currentSkill.player.allyDownedNearCount > 0 and currentSkill.player.allyDownedRangeMax or 0, 1, 10)
+					currentSkill.player.allyDownedRangeMax = GUI:InputInt("##gw2sm-plaliesdownedrange", currentSkill.player.allyDownedRangeMax > 0 and currentSkill.player.allyDownedRangeMax or 0, 100, 1000)
 					currentSkill.player.hasBuffs = GUI:InputText("##gw2sm-plhasbuffs",currentSkill.player.hasBuffs)
 					currentSkill.player.hasNotBuffs = GUI:InputText("##gw2sm-plhasnotbuffs",currentSkill.player.hasNotBuffs)
-					currentSkill.player.conditionCount = GUI:InputInt("##gw2sm-plconditioncount", currentSkill.player.conditionCount, 1, 5)
-					currentSkill.player.boonCount = GUI:InputInt("##gw2sm-plbooncount", currentSkill.player.boonCount, 1, 5)
+					currentSkill.player.conditionCount = GUI:InputInt("##gw2sm-plconditioncount", currentSkill.player.conditionCount > 0 and currentSkill.player.conditionCount or 0, 1, 5)
+					currentSkill.player.boonCount = GUI:InputInt("##gw2sm-plbooncount", currentSkill.player.boonCount > 0 and currentSkill.player.boonCount or 0, 1, 5)
 					currentSkill.player.moving = gw2_skill_manager:combo("##gw2sm-plmovementstate",currentSkill.player.moving,gw2_skill_manager.movementState)
 					GUI:PopItemWidth()
 					GUI:Columns(1)
@@ -703,15 +691,15 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 					GUI:NextColumn()
 					GUI:PushItemWidth(GUI:GetContentRegionAvailWidth())
 					currentSkill.target.type = gw2_skill_manager:combo("##gw2sm-targettype",currentSkill.target.type,gw2_skill_manager.targetType)
-					currentSkill.target.minHP = GUI:InputInt("##gw2sm-tminhp", currentSkill.target.minHP, 1, 10)
-					currentSkill.target.maxHP = GUI:InputInt("##gw2sm-tmaxhp", currentSkill.target.maxHP, 1, 10)
-					currentSkill.target.enemyNearCount = GUI:InputInt("##gw2sm-tenemynearcount", currentSkill.target.enemyNearCount, 1, 10)
-					currentSkill.target.enemyRangeMax = GUI:InputInt("##gw2sm-plenemynearrange", currentSkill.target.enemyRangeMax, 100, 1000)
+					currentSkill.target.minHP = GUI:InputInt("##gw2sm-tminhp", currentSkill.target.minHP > 0 and currentSkill.target.minHP or 0, 1, 10)
+					currentSkill.target.maxHP = GUI:InputInt("##gw2sm-tmaxhp", currentSkill.target.maxHP > 0 and currentSkill.target.maxHP or 0, 1, 10)
+					currentSkill.target.enemyNearCount = GUI:InputInt("##gw2sm-tenemynearcount", currentSkill.target.enemyNearCount > 0 and currentSkill.target.enemyNearCount or 0, 1, 10)
+					currentSkill.target.enemyRangeMax = GUI:InputInt("##gw2sm-plenemynearrange", currentSkill.target.enemyRangeMax > 0 and currentSkill.target.enemyRangeMax or 0, 100, 1000)
 					currentSkill.target.moving = gw2_skill_manager:combo("##gw2sm-tmovementstate",currentSkill.target.moving,gw2_skill_manager.movementState)
 					currentSkill.target.hasBuffs = GUI:InputText("##gw2sm-thasbuffs",currentSkill.target.hasBuffs)
 					currentSkill.target.hasNotBuffs = GUI:InputText("##gw2sm-thasnotbuffs",currentSkill.target.hasNotBuffs)
-					currentSkill.target.conditionCount = GUI:InputInt("##gw2sm-tconditioncount", currentSkill.target.conditionCount, 1, 5)
-					currentSkill.target.boonCount = GUI:InputInt("##gw2sm-tbooncount", currentSkill.target.boonCount, 1, 5)
+					currentSkill.target.conditionCount = GUI:InputInt("##gw2sm-tconditioncount", currentSkill.target.conditionCount > 0 and currentSkill.target.conditionCount or 0, 1, 5)
+					currentSkill.target.boonCount = GUI:InputInt("##gw2sm-tbooncount", currentSkill.target.boonCount > 0 and currentSkill.target.boonCount or 0, 1, 5)
 					GUI:PopItemWidth()
 					GUI:Columns(1)
 				end
