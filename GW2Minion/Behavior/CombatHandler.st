@@ -19,7 +19,7 @@ local tbl =
 						finishcode = "",
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if ( context.combat_targetid and context.combat_target) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+						runcode = "if(context.combat_targetid) then\n\t\tself:success()\n\t\treturn\nend\n\nself:fail()",
 						startcode = "",
 						xposoffset = 0,
 					},
@@ -29,6 +29,22 @@ local tbl =
 					class = "PrioritySelector",
 					nodes = 
 					{
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "Check target state",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "if ( context.combat_targetid ) then\n\tlocal target = CharacterList:Get(context.combat_targetid) or GadgetList:Get(context.combat_targetid)\n\tif (table.valid(target) and not ml_blacklist.CheckBlacklistEntry(GetString(\"monsters\"),target.contentID) and target.attackable and (target.alive or target.downed) and target.onmesh) then\n\t\t-- continue in the PrioritySelector parent\n\t\tcontext.combat_target = target\n\t\tcontext.combat_targetid = target.id\n\telse\n\t\td(\"[CombatHandler] - Target is dead, not attackable or not on mesh\")\n\t\tcontext.combat_targetid = nil\n\t\tcontext.combat_target = nil\n\tend\nend\nself:fail()",
+								startcode = "",
+								xposoffset = 0,
+							},
+						},
 						
 						{
 							class = "Sequence",
@@ -77,6 +93,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
