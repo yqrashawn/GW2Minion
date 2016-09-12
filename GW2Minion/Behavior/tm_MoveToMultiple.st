@@ -56,7 +56,7 @@ local tbl =
 								finishcode = "",
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "local visited = context.movetomultiple_visited or {}\n\nlocal pos = context.movetomultiple_activepos\n\nif(table.valid(pos)) then\n\t\tif(Distance3DT(pos,ml_global_information.Player_Position) < 50) then\n\t\t\t\tcontext.movetomultiple_activepos = nil\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\nelse\n\n\t\tif(context.movetomultiple_randompos) then\n\t\t\t\t\t\tlocal i = math.random(1,table.size(context.movetomultiple_positions))\n\t\t\t\t\t\tif(context.movetomultiple_positions[i] and not visited[i]) then\n\t\t\t\t\t\t\t\tpos = context.movetomultiple_positions[i]\n\t\t\t\t\t\t\t\tvisited[i] = true\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\tself:running()\n\t\t\t\t\t\tend\n\t\telse\n\t\t\t\tlocal i,nextpos = next(context.movetomultiple_positions)\n\t\t\t\twhile i and nextpos and not pos do\n\t\t\t\t\t\tif(not visited[i]) then\n\t\t\t\t\t\t\t\tpos = nextpos\n\t\t\t\t\t\t\t\tvisited[i] = true\n\t\t\t\t\t\tend\n\t\t\t\t\t\ti,nextpos = next(context.movetomultiple_positions,i)\n\t\t\t\tend\n\t\tend\nend\n\ncontext.movetomultiple_visited = visited\n\nif(table.valid(pos)) then\n\t\tcontext.movetomultiple_activepos = pos\n\t\tcontext.moveto_position = pos\n\t\tcontext.moveto_randommovement = context.movetomultiple_randommovement\n\t\tself:success()\n\t\treturn\nend\n\nself:fail()",
+								runcode = "local visited = context.movetomultiple_visited or {}\n\nlocal pos = context.movetomultiple_activepos\n\nif(table.valid(pos)) then\n\t\tif(Distance3DT(pos,ml_global_information.Player_Position) < 50) then\n\t\t\t\tcontext.movetomultiple_activepos = nil\n\t\t\t\tml_global_information.Wait(math.random(500,1000))\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\nelse\n\n\t\tif(context.movetomultiple_randompos) then\n\t\t\t\t\t\tlocal i = math.random(1,table.size(context.movetomultiple_positions))\n\t\t\t\t\t\tif(context.movetomultiple_positions[i] and not visited[i]) then\n\t\t\t\t\t\t\t\tpos = context.movetomultiple_positions[i]\n\t\t\t\t\t\t\t\tvisited[i] = true\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\tself:running()\n\t\t\t\t\t\tend\n\t\telse\n\t\t\t\tlocal i,nextpos = next(context.movetomultiple_positions)\n\t\t\t\twhile i and nextpos and not pos do\n\t\t\t\t\t\tif(not visited[i]) then\n\t\t\t\t\t\t\t\tpos = nextpos\n\t\t\t\t\t\t\t\tvisited[i] = true\n\t\t\t\t\t\tend\n\t\t\t\t\t\ti,nextpos = next(context.movetomultiple_positions,i)\n\t\t\t\tend\n\t\tend\nend\n\ncontext.movetomultiple_visited = visited\n\nif(table.valid(pos)) then\n\t\tcontext.movetomultiple_activepos = pos\n\t\tcontext.moveto_position = pos\n\t\tcontext.moveto_randommovement = context.movetomultiple_randommovement\n\t\tself:success()\n\t\treturn\nend\n\nself:fail()",
 								startcode = "",
 								xposoffset = 0,
 							},
@@ -106,6 +106,7 @@ local tbl =
 	},
 	variables = 
 	{
+		expanded = true,
 		filename = "tm_MoveToMultiple.st",
 		finishcode = "",
 		info = "",

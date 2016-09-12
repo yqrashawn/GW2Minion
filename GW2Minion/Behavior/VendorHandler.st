@@ -132,7 +132,7 @@ local tbl =
 		runcode = "",
 		startcode = "",
 		subtreeuicode = "",
-		xposoffset = 0,
+		xposoffset = 6,
 	},
 }
 
