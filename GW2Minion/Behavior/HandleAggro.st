@@ -47,70 +47,21 @@ local tbl =
 						},
 						
 						{
-							class = "Sequence",
+							class = "BehaviorTree",
 							nodes = 
 							{
-								
-								{
-									class = "Action",
-									nodes = 
-									{
-									},
-									variables = 
-									{
-										finishcode = "",
-										info = "Moving closer is needed ?",
-										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if ( context.combat_targetid and context.combat_target) then\n\tif (context.combat_target.distance > 2500 ) then \n\t\tcontext.moveto_position = context.combat_target.pos\n\t\tcontext.moveto_targetid = context.combat_target.id\n\t\tcontext.moveto_targettype = \"character\"\n\t\tself:success()\n\t\treturn\n\tend\nend\nself:fail()",
-										startcode = "",
-										xposoffset = 0,
-									},
-								},
-								
-								{
-									class = "BehaviorTree",
-									nodes = 
-									{
-									},
-									variables = 
-									{
-										filename = "MoveTo.st",
-										finishcode = "",
-										info = "Move to Position. \nRequired input argument: context.moveto_position\nOptional arguments:\ncontext.moveto_targetid - ID of the character / gadget we want to move to.\ncontext.moveto_targettype - \"character\" or \"gadget\" or \"event\"\n",
-										menucode = "",
-										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\n",
-										randomMovement = true,
-										runcode = "-- Setting the custom subtree settings in the context, which gets passed down to childnodes\ncontext.moveto_stoppingdistance = self.variables.stoppingdistance\ncontext.moveto_randomMovement = self.variables.randomMovement\ncontext.moveto_smoothturns = self.variables.smoothturns\ncontext.moveto_usewaypoints = self.variables.usewaypoints\ncontext.moveto_follownavsystem = false",
-										smoothturns = true,
-										startcode = "",
-										stoppingdistance = 2000,
-										subtreeuicode = "if ( self.variables.stoppingdistance == nil ) then self.variables.stoppingdistance = 25 end\nself.variables.stoppingdistance = GUI:InputInt(\"Stopping Distance\", self.variables.stoppingdistance, 1, GUI.InputTextFlags_CharsDecimal)\n\nif ( self.variables.randomMovement == nil ) then self.variables.randomMovement = true end\nself.variables.randomMovement = GUI:Checkbox( \"RandomMovement\", self.variables.randomMovement )\n\nif ( self.variables.smoothturns == nil ) then self.variables.smoothturns = true end\nself.variables.smoothturns = GUI:Checkbox( \"Smooth Turns\", self.variables.smoothturns )\n\nif ( self.variables.usewaypoints == nil ) then self.variables.usewaypoints = false end\nself.variables.usewaypoints = GUI:Checkbox( \"Use Waypoints\", self.variables.usewaypoints )\nif ( GUI:IsItemHovered() ) then GUI:SetTooltip( \"When enabled, MoveTo will use waypoints if they are closer to the targetposition.\" ) end",
-										usewaypoints = false,
-										xposoffset = 0,
-									},
-								},
 							},
 							variables = 
 							{
 								expanded = true,
-								info = "Move into closer Range if needed",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
-								xposoffset = 0,
-							},
-						},
-						
-						{
-							class = "Action",
-							nodes = 
-							{
-							},
-							variables = 
-							{
+								filename = "CombatHandler.st",
 								finishcode = "",
-								info = "Attack Aggro Target",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if ( context.combat_targetid ) then\n\tgw2_skill_manager:Use(context.combat_targetid)\n\tself:running()\n\treturn\nend\nself:fail()",
+								info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
+								menucode = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+								runcode = "",
 								startcode = "",
+								subtreeuicode = "",
 								xposoffset = 0,
 							},
 						},

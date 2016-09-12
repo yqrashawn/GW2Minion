@@ -268,9 +268,9 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 	-- 
 	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh," .. hostileCheck .. "nearest") end
 	-- 
-	if (target == nil and Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,los,maxlevel=15") end
+	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,los,maxlevel=15") end
 	-- 
-	if (target == nil and Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,maxlevel=15") end
+	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,maxlevel=15") end
 
 	if ( target and target.id ) then
 		if ( target.distance < 1500 and target.los ) then
@@ -300,9 +300,9 @@ function gw2_common_functions.GetBestCharacterTargetForAssist()
 	-- Try to get Enemy without los in range + 250
 	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange + 250) .. hostileCheck) end
 	-- 
-	if (target == nil and Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. "onmesh,nearest,los,maxlevel=15") end
+	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. "onmesh,nearest,los,maxlevel=15") end
 	-- 
-	if (target == nil and Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. "onmesh,nearest,maxlevel=15") end
+	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. "onmesh,nearest,maxlevel=15") end
 
 	if ( target and target.id ) then
 		if ( target.distance < 1600 and target.los ) then
@@ -357,9 +357,9 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthst
 		filterstring = filterstring..",downed"
 	end
 
-	-- Only in AssistMode we want to allow these settings
-	if (Settings.GW2Minion.smmode == 2) then filterstring = filterstring..",player" end
+	-- Only in AssistMode we want to allow these settings	
 	if (gBotMode == GetString("assistMode") or gBotMode == GetString("taskspvp")) then
+		if (Settings.GW2Minion.smmode == 2) then filterstring = filterstring..",player" end
 		if (Settings.GW2Minion.smtargetmode == 2) then filterstring = filterstring..",lowesthealth" end
 		if (Settings.GW2Minion.smtargetmode == 3) then filterstring = filterstring..",nearest" end
 		if (Settings.GW2Minion.smtargetmode == 4) then filterstring = filterstring..",clustered=600" end

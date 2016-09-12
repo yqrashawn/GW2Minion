@@ -5,7 +5,7 @@ local tbl =
 	{
 		
 		{
-			class = "Selector",
+			class = "Sequence",
 			nodes = 
 			{
 				
@@ -19,32 +19,16 @@ local tbl =
 						finishcode = "",
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(ml_global_information.Player_Alive) then\n\t\tself:fail()\nelse\n\t\tself:success()\nend",
+						runcode = "if ( context.combat_targetid and context.combat_target) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 						startcode = "",
 						xposoffset = 0,
 					},
 				},
 				
 				{
-					class = "Sequence",
+					class = "PrioritySelector",
 					nodes = 
 					{
-						
-						{
-							class = "Action",
-							nodes = 
-							{
-							},
-							variables = 
-							{
-								finishcode = "",
-								info = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "\nif (context.movetorandom_randompoint == nil) then\n\t\t-- Walk to Random Point in our levelrange\n\t\tif (table.valid(gw2_datamanager.levelmap)) then\n\t\t\t\tlocal pos = gw2_datamanager.GetRandomPositionInLevelRange( ml_global_information.Player_Level )\n\n\t\t\t-- make sure the position can be reached\n\t\t\tif (table.valid(pos) and table.valid(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then\n\t\t\t\td(\"[MoveToRandom]: Random point found\")\n\t\t\t\tcontext.movetorandom_randompoint = pos\n\t\t\t\tcontext.movetorandom_randompointreached = false\n\t\t\t\tcontext.movetorandom_randompointdistance = math.random(750,5000)\n\t\t\telse\n\t\t\t\td(\"[MoveToRandom]: Random point not found\")\n\t\t\tend\n\tend\nend\n\n-- 2nd attempt to find a random point\nif (context.movetorandom_randompoint == nil) then\n\t\tlocal pos = NavigationManager:GetRandomPoint(5000) -- 5000 beeing mindistance to player\n\t\tif (table.valid(pos) and table.valid(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then\n\t\t\tcontext.movetorandom_randompoint = pos\n\t\t\tcontext.movetorandom_randompointreached = false\n\t\t\tcontext.movetorandom_randompointdistance = math.random(750,5000)\n\t\tend\nend\n\nif(table.valid(context.movetorandom_randompoint)) then\n\tself:success()\nelse\n\tself:fail()\nend",
-								startcode = "",
-								xposoffset = 0,
-							},
-						},
 						
 						{
 							class = "Sequence",
@@ -59,25 +43,9 @@ local tbl =
 									variables = 
 									{
 										finishcode = "",
-										info = "Random point not reached",
+										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if(table.valid(context.movetorandom_randompoint)) then\n\t\tif(Distance3DT(context.movetorandom_randompoint,ml_global_information.Player_Position) < context.movetorandom_randompointdistance) then\n\t\t\t\tcontext.movetorandom_randompoint = nil\n\t\t\t\tcontext.movetorandom_randompointreached = true\n\t\telse\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()",
-										startcode = "",
-										xposoffset = 0,
-									},
-								},
-								
-								{
-									class = "Action",
-									nodes = 
-									{
-									},
-									variables = 
-									{
-										finishcode = "",
-										info = "Setup moveto",
-										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if(table.valid(context.movetorandom_randompoint)) then\n\t\tcontext.moveto_position = context.movetorandom_randompoint\n\t\tcontext.moveto_randomMovement = true\n\t\tcontext.moveto_usewaypoints = false\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+										runcode = "if ( context.combat_targetid and context.combat_target) then\n\tif (context.combat_target.distance > 2500 ) then \n\t\tcontext.moveto_position = context.combat_target.pos\n\t\tcontext.moveto_targetid = context.combat_target.id\n\t\tcontext.moveto_targettype = \"character\"\n\t\tself:success()\n\t\treturn\n\tend\nend\nself:fail()",
 										startcode = "",
 										xposoffset = 0,
 									},
@@ -109,9 +77,24 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+								xposoffset = 0,
+							},
+						},
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "Handle combat",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "if ( context.combat_targetid ) then\n\tgw2_skill_manager:Use(context.combat_targetid)\n\tself:running()\n\treturn\nend\nself:fail()",
+								startcode = "",
 								xposoffset = 0,
 							},
 						},
@@ -120,7 +103,7 @@ local tbl =
 					{
 						expanded = true,
 						info = "",
-						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
 						xposoffset = 0,
 					},
 				},
@@ -136,9 +119,10 @@ local tbl =
 	},
 	variables = 
 	{
-		filename = "MoveToRandom.st",
+		expanded = true,
+		filename = "CombatHandler.st",
 		finishcode = "",
-		info = "Move to random",
+		info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",

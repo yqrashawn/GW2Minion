@@ -332,30 +332,43 @@ end
 function gw2_buy_manager.getClosestBuyMarker(nearby)
 	local closestLocation = nil
 	local listArg = (nearby == true and ",maxdistance=4000" or "")
-	local markers = MapMarkerList("onmesh,nearest,contentID="..GW2.MAPMARKER.Merchant..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorsbuy")))
-	for _,merchant in pairs(markers) do
-		if (closestLocation == nil or closestLocation.distance > merchant.distance) then
-			if (nearby == true and merchant.pathdistance < 4000) then
-				closestLocation = merchant
-			elseif (nearby ~= true) then
-				closestLocation = merchant
+	local markers = gw2_buy_manager.getMarkerList(listArg)
+	if(table.valid(markers)) then
+		for _,merchant in pairs(markers) do
+			if (closestLocation == nil or closestLocation.distance > merchant.distance) then
+				if (nearby == true and merchant.pathdistance < 4000) then
+					closestLocation = merchant
+				elseif (nearby ~= true) then
+					closestLocation = merchant
+				end
 			end
 		end
 	end
 	return closestLocation
 end
 
+function gw2_buy_manager.getMarkerList(filter)
+	filter = filter or ""	
+	local cid = GW2.MAPMARKER.Merchant..";"..GW2.MAPMARKER.ItzelVendor..";"..GW2.MAPMARKER.ExaltedVendor..";"..GW2.MAPMARKER.NuhochVendor
+	local markers = MapMarkerList("onmesh,contentID="..cid..filter..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorsbuy")))
+	if(table.valid(markers)) then
+		return markers
+	end
+	return nil
+end
+
 function gw2_buy_manager.buyAtMerchant(vendorMarker)
 	if (vendorMarker) then
 		vendor = CharacterList:Get(vendorMarker.characterID)
-		if (vendor and vendor.isInInteractRange and vendor.distance < 100) then
+		if (vendor and vendor.isininteractrange and vendor.distance < 130) then
 			Player:StopMovement()
 			local target = Player:GetTarget()
 			if (not target or target.id ~= vendor.id) then
 				Player:SetTarget(vendor.id)
+				return true
 			else
 				if (Inventory:IsVendorOpened() == false and Player:IsConversationOpen() == false) then
-					ml_log(" Opening Vendor.. ")
+					d(" Opening Vendor.. ")
 					Player:Interact(vendor.id)
 					ml_global_information.Wait(1500)
 					return true
@@ -365,31 +378,35 @@ function gw2_buy_manager.buyAtMerchant(vendorMarker)
 						d("Vendor blacklisted, cant handle opening conversation.")
 						ml_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)
 						return false
-					elseif (result == nil) then
-					
+					elseif (result == nil) then				
 						ml_global_information.Wait(math.random(520,1200))
 						return true
 					end
 				end
+
 				if (gw2_buy_manager.vendorSellsCheck() == false) then
 					d("Vendor blacklisted, does not have needed tools/kits.")
 					ml_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)
+					return false
 				end
+				
 				local vendorItems = VendorItemList("")
 				local slowdown = math.random(0,3)
 				if (table.valid(vendorItems) ) then
+
 					if ( slowdown == 0) then
 						local neededKits = gw2_buy_manager.GetNeededSalvageKitList()
 						local neededTools = gw2_buy_manager.GetNeededGatheringToolList()				
 						
 						for _,item in pairs(vendorItems) do
-							local itemID = item.itemID
-							for id,count in pairs(neededKits) do								
+							local itemID = item.itemid
+							for id,count in pairs(neededKits) do
 								if (id == itemID and count > 0) then
 									item:Buy()
 									return true
 								end
 							end
+							
 							for id,count in pairs(neededTools) do							
 								if (id == itemID and count > 0) then
 									item:Buy()
@@ -402,18 +419,6 @@ function gw2_buy_manager.buyAtMerchant(vendorMarker)
 					
 					return true
 				end
-			end
-		else
-			local pos = vendorMarker.pos
-			if ( pos ) then
-				local newTask = gw2_task_moveto.Create()
-				newTask.targetPos = pos
-				newTask.targetID = vendorMarker.characterID
-				newTask.targetType = "character"
-				newTask.name = "MoveTo Vendor(BUY)"
-				newTask.useWaypoint = true
-				ml_task_hub:CurrentTask():AddSubTask(newTask)
-				return true
 			end
 		end
 	end
