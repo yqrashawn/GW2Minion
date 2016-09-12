@@ -19,7 +19,7 @@ local tbl =
 						finishcode = "",
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(gw2_sell_manager.active and gw2_sell_manager.needToSell(context.sell_nearby)) then\n\tif(not context.sell_marker_characterid) then\n\t\tlocal marker = gw2_sell_manager.getClosestSellMarker(context.sell_nearby)\n\t\tif(table.valid(marker)) then\n\t\t\t\tcontext.sell_marker = marker\n\t\t\t\tcontext.sell_marker_characterid = marker.characterid\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\telseif(context.sell_marker_characterid) then\n\t\tlocal markers = gw2_sell_manager.getMarkerList()\n\t\tif(table.valid(markers)) then\n\t\t\tlocal i,marker = next(markers)\t\t\t\n\t\t\twhile i and marker and not context.sell_marker_characterid do\n\t\t\t\tif(marker.characterid == context.sell_marker_characterid) then\n\t\t\t\t\tcontext.sell_marker = marker\n\t\t\t\t\ti,marker = next(markers,i)\n\t\t\t\tend\n\t\t\tend\n\n\t\t\tif(table.valid(context.sell_marker)) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\t\tend\n\t\tend\n\tend\nend\ncontext.sell_marker_characterid = nil\ncontext.sell_marker = nil\nself:fail()",
+						runcode = "if(Settings.gw2_buy_manager.active) then\n\t\tif(gw2_buy_manager.NeedToBuySalvageKits(context.buy_nearby)) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\n\t\tif(gw2_buy_manager.NeedToBuyGatheringTools(context.buy_nearby)) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()",
 						startcode = "",
 						xposoffset = 0,
 					},
@@ -35,7 +35,7 @@ local tbl =
 						finishcode = "",
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(table.valid(context.sell_marker)) then\n\t\tlocal marker = context.sell_marker\n\t\tif(marker.distance > 150) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\t\t\n\t\tif(gw2_sell_manager.sellAtVendor(marker)) then\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\nend\ncontext.sell_marker = nil\nself:fail()",
+						runcode = "if(not context.buy_marker_characterid) then\n\t\tlocal marker = gw2_buy_manager.getClosestBuyMarker(context.buy_nearby)\n\t\tif(table.valid(marker)) then\n\t\t\t\tcontext.buy_marker = marker\n\t\t\t\tcontext.buy_marker_characterid = marker.characterid\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nelseif(context.buy_marker_characterid) then\n\t\tlocal markers = gw2_buy_manager.getMarkerList()\n\t\tif(table.valid(markers)) then\n\t\t\t\tlocal i,marker = next(markers)\t\t\t\n\t\t\t\twhile i and marker and not context.buy_marker_characterid do\n\t\t\t\t\t\tif(marker.characterid == context.buy_marker_characterid) then\n\t\t\t\t\t\t\t\tcontext.buy_marker = marker\n\t\t\t\t\t\t\t\ti,marker = next(markers,i)\n\t\t\t\t\t\tend\n\t\t\t\tend\n\n\t\t\t\tif(table.valid(context.buy_marker)) then\n\t\t\t\t\t\tself:success()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\tend\nend\ncontext.buy_marker = nil\ncontext.buy_marker_characterid = nil\nself:fail()",
 						startcode = "",
 						xposoffset = 0,
 					},
@@ -56,7 +56,7 @@ local tbl =
 								finishcode = "",
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if(table.valid(context.sell_marker)) then\n\t\tcontext.moveto_position = context.sell_marker.pos\n\t\tcontext.moveto_useWaypoints = context.moveto_useWaypoints == nil and true or context.moveto_useWaypoints\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+								runcode = "if(table.valid(context.buy_marker)) then\n\t\tlocal marker = context.buy_marker\n\t\tif(marker.distance > 130) then\n\t\t\t\tcontext.moveto_position = marker.pos\n\t\t\t\tcontext.moveto_useWaypoints = context.moveto_useWaypoints == nil and true or context.moveto_useWaypoints\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\n\t\tif(gw2_buy_manager.buyAtMerchant(context.buy_marker)) then\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\t\tml_global_information.Wait(math.random(2000,4000))\nend\ncontext.buy_marker = nil\ncontext.buy_marker_characterid = nil\nself:fail()",
 								startcode = "",
 								xposoffset = 0,
 							},
@@ -97,7 +97,6 @@ local tbl =
 			},
 			variables = 
 			{
-				expanded = true,
 				info = "",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 				xposoffset = 0,
@@ -106,9 +105,9 @@ local tbl =
 	},
 	variables = 
 	{
-		filename = "Sell.st",
+		filename = "Buy.st",
 		finishcode = "",
-		info = "Sell\nOptional parameter:\ncontext.sell_nearby = true/false",
+		info = "Buy\nOptional parameter:\ncontext.buy_nearby = true/false",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",

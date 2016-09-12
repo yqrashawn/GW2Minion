@@ -532,26 +532,43 @@ end
 function gw2_sell_manager.getClosestSellMarker(nearby)
 	local closestLocation = nil
 	local listArg = (nearby == true and ",maxdistance=5000" or "")
-	local markers = MapMarkerList("onmesh"..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorssell")))
+	local markers = gw2_sell_manager.getMarkerList(listArg)
 	if ( table.valid(markers) ) then
-		local i,marker = next (markers)
-		while ( i and marker ) do
-			local validCID = {GW2.MAPMARKER.Merchant,GW2.MAPMARKER.Armorsmith,GW2.MAPMARKER.Weaponsmith,GW2.MAPMARKER.Repair,576323,633911,575697}
-
-			if (table.contains(validCID,marker.contentid)) then
-				if (closestLocation == nil or closestLocation.distance > marker.distance) then
-					if (nearby == true and marker.pathdistance < 4000) then
-						closestLocation = marker
-					elseif (nearby ~= true) then
-						closestLocation = marker
-					end
+		for _,marker in pairs(markers) do
+			if (closestLocation == nil or closestLocation.distance > marker.distance) then
+				if (nearby == true and marker.pathdistance < 4000) then
+					closestLocation = marker
+				elseif (nearby ~= true) then
+					closestLocation = marker
 				end
-			end
-			i,marker = next (markers,i)
+			end	
 		end
 	end
 
 	return closestLocation
+end
+
+function gw2_sell_manager.getMarkerList(filter)
+	filter = filter or ""
+	local markers = {}
+	local MList = MapMarkerList("onmesh"..filter..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorssell")))
+	if(table.valid(MList)) then
+		for _,marker in pairs(MList) do
+			local validCID = {
+				GW2.MAPMARKER.Merchant,
+				GW2.MAPMARKER.Armorsmith,
+				GW2.MAPMARKER.Weaponsmith,
+				GW2.MAPMARKER.Repair,
+				GW2.MAPMARKER.ItzelVendor,
+				GW2.MAPMARKER.ExaltedVendor,
+				GW2.MAPMARKER.NuhochVendor,
+			}
+			if (table.contains(validCID,marker.contentid)) then
+				table.insert(markers, marker)
+			end
+		end
+	end
+	return markers
 end
 
 --sellhere.
