@@ -227,8 +227,8 @@ function dev.DrawCall(event, ticks )
 									GUI:BulletText("Listindex") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.index))
 									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.id))
 									GUI:BulletText("Type") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.type))									
-									if (GUI:Button("SelectConverrsationByType",150,15) ) then d("Result: "..tostring(Player:SelectConversationOptionByIndex(b.type))) end
-									if (GUI:Button("SelectConversationOption",150,15) ) then d("Result: "..tostring(Player:SelectConversationOption(b.index))) end
+									if (GUI:Button("Select conversation by index",250,18) ) then d("Result: "..tostring(Player:SelectConversationOptionByIndex(cid))) end
+									if (GUI:Button("Select conversation by type",250,18) ) then d("Result: "..tostring(Player:SelectConversationOption(b.type))) end
 									GUI:TreePop()
 								end
 							end
