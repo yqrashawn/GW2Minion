@@ -56,7 +56,7 @@ local tbl =
 								finishcode = "",
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "context.hqmarker_rnddist = context.hqmarker_rnddist or math.random(150,500)\nif(context.hqmarker) then\n\t\tif(context.hqmarker.distance > context.hqmarker_rnddist) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\t\tml_global_information.Wait(context.hqmarker_rnddist*5)\nend\n\ncontext.hqmarker_rnddist = nil\ncontext.hqmarker = nil\ncontext.lasthqmarkercheck = ml_global_information.Now\n\nself:fail()",
+								runcode = "context.hqmarker_rnddist = context.hqmarker_rnddist or math.random(150,500)\nif(context.hqmarker) then\n\t\tif(context.hqmarker.distance > context.hqmarker_rnddist) then\n\t\t\t\tcontext.moveto_position = context.hqmarker.pos\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\t\tml_global_information.Wait(context.hqmarker_rnddist*5)\nend\n\ncontext.hqmarker_rnddist = nil\ncontext.hqmarker = nil\ncontext.lasthqmarkercheck = ml_global_information.Now\n\nself:fail()",
 								startcode = "",
 								xposoffset = 0,
 							},
@@ -110,7 +110,7 @@ local tbl =
 		filename = "tm_CheckHQStatus.st",
 		finishcode = "",
 		hqchecktimer = 120,
-		hqid = 236,
+		hqid = 0,
 		hqpos = 
 		{
 			x = 7035.3701171875,
@@ -120,7 +120,7 @@ local tbl =
 		info = "Move closer to a heartquest marker to check status",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-		runcode = "context.hqid = self.variables.hqid\ncontext.hqpos = self.variables.hqpos\ncontext.hqchecktimer = self.variables.hqchecktimer",
+		runcode = "context.hqid = self.variables.hqid\ncontext.hqpos = self.variables.hqpos\ncontext.hqchecktimer = self.variables.hqchecktimer ",
 		startcode = "",
 		subtreeuicode = "self.variables.hqid = self.variables.hqid or 0\nself.variables.hqpos = self.variables.hqpos or {x=0;y=0;z=0}\nself.variables.hqchecktimer = self.variables.hqchecktimer or 120\n\nself.variables.hqchecktimer = GUI:InputInt(\"How often? (s)##tmhqstatus\", self.variables.hqchecktimer)\n \nself.variables.hqid = GUI:InputInt(\"Region id##tmhqstatus\", self.variables.hqid)\nif(GUI:Button(\"Update region id##tmhqstatus\")) then\n\t\tlocal MList = MapMarkerList(\"nearest,issubregion\")\n\t\tif(table.valid(MList)) then\n\t\t\t\tlocal _,marker = next(MList)\n\t\t\t\tif(table.valid(marker)) then\n\t\t\t\t\t\tself.variables.hqid = marker.subregionid\n\t\t\t\t\t\tself.variables.hqpos = marker.pos\n\t\t\t\tend\n\t\tend\nend",
 		xposoffset = 0,
