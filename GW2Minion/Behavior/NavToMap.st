@@ -21,7 +21,7 @@ local tbl =
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 						runcode = "if(not context.movetomap_targetmapid) then\n\td(\"[MoveToMap]: No target map set\")\nend\n\nif(context.movetomap_targetmapid == ml_global_information.CurrentMapID) then\n\td(\"[MoveToMap]: Target map reached\")\nend\n\nif(context.movetomap_targetmapid and context.movetomap_targetmapid ~= ml_global_information.CurrentMapID) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 						startcode = "",
-						xposoffset = -0.6,
+						xposoffset = 0,
 					},
 				},
 				
@@ -93,7 +93,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if(context.movetomap_gatedistance > 50 and not context.movetomap_gatereached) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend ",
+										runcode = "if(context.movetomap_gatedistance and context.movetomap_gatedistance > 50 and not context.movetomap_gatereached) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend ",
 										startcode = "",
 										xposoffset = 0,
 									},
