@@ -83,7 +83,7 @@ ml_mesh_mgr.OMCStartTime = 0
 function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount ) 
 	if ( ml_mesh_mgr.OMCIsHandled ) then
 		
-		ml_bt_mgr.lasttick = ml_global_information.Now -- Pauses the main bot-loop, no unstuck or continues path creation.
+		ml_bt_mgr.lasttick = tickcount -- Pauses the main bot-loop, no unstuck or continues path creation.
 		
 		if ( ml_mesh_mgr.OMCThrottle > tickcount ) then -- Throttles OMC actions
 			return

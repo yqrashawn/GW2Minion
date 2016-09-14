@@ -116,6 +116,7 @@ end
 RegisterEventHandler("Module.Initalize",gw2minion.Init)
 
 function gw2minion.DrawCall(event, ticks )
+	ml_mesh_mgr.OMC_Handler_OnUpdate( ticks )
 	
 	if ( not gw2minion.mainbtreeinstance ) then
 		if ( FolderExists(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior")) then

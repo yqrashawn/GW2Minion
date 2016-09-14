@@ -75,30 +75,15 @@ local tbl =
 							},
 							variables = 
 							{
-								filename = "RevivePartyMember.st",
+								expanded = true,
+								filename = "ReviveHandler.st",
 								finishcode = "",
-								info = "Revives a downed / dead Partymember.",
+								info = "Revive dead/downed players/partymembers/npcs",
 								menucode = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 								runcode = "",
 								startcode = "",
 								subtreeuicode = "",
-								xposoffset = 0,
-							},
-						},
-						
-						{
-							class = "Action",
-							nodes = 
-							{
-							},
-							variables = 
-							{
-								finishcode = "",
-								info = "c_reviveDownedPlayersInCombat",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "self:fail()",
-								startcode = "",
 								xposoffset = 0,
 							},
 						},
@@ -200,7 +185,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								info = "Gather",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
