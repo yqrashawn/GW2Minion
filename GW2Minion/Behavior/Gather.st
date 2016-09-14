@@ -122,7 +122,6 @@ local tbl =
 	},
 	variables = 
 	{
-		expanded = true,
 		filename = "Gather.st",
 		finishcode = "",
 		info = "Gather",

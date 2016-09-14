@@ -35,6 +35,10 @@ ml_global_information.BoonsEnum = {
 	[5891] = "Thumper Toggle",
 };
 
+function ml_global_information.Start()
+	gw2_unstuck.Start()
+end
+
 -- Stops the Bot
 function ml_global_information.Stop()
     Player:StopMovement()

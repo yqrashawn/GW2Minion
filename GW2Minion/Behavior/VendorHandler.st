@@ -126,7 +126,7 @@ local tbl =
 	{
 		filename = "VendorHandler.st",
 		finishcode = "",
-		info = "Vendor / Repair",
+		info = "Handle vendor / repair",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",

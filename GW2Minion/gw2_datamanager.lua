@@ -12,6 +12,18 @@ function gw2_datamanager.ModuleInit()
 	
 end
 
+function gw2_datamanager.GetLocalMapData( mapid )
+	local mdata = nil
+	mapid = tonumber(mapid)
+	
+	if(table.valid(gw2_datamanager.mapData) and mapid) then
+		if(table.valid(gw2_datamanager.mapData[mapid])) then
+			mdata = gw2_datamanager.mapData[mapid]
+		end
+	end
+	return mdata
+end
+
 function gw2_datamanager.GetMapName( mapid )
 	local mdata = gw2_datamanager.GetLocalMapData(mapid)
 	local name = "Unknown ID: "..tostring(mapid)
@@ -23,16 +35,29 @@ function gw2_datamanager.GetMapName( mapid )
 	return name
 end
 
-function gw2_datamanager.GetLocalMapData( mapid )
-	local mdata = nil
-	mapid = tonumber(mapid)
+function gw2_datamanager.GetMapNameList(nav,sort)
+	nav = nav == nil and true or false
+	sort = sort == nil and true or false
 	
-	if(table.valid(gw2_datamanager.mapData) and mapid) then
-		if(table.valid(gw2_datamanager.mapData[mapid])) then
-			mdata = gw2_datamanager.mapData[mapid]
+	local maplist = {}
+	local mapnamelist = {}
+
+	for mapID,map in pairs(gw2_datamanager.mapData) do
+		if(not nav or ml_nav_manager.GetNode(mapID)) then
+			local mname = string.valid(map.map_name) and string.gsub(map.map_name,"^%s","") or "Unknown"
+			
+			local name = mname.." ("..mapID..")"
+			table.insert(mapnamelist, name)
+			table.insert(maplist, {id = mapID, name = name})
 		end
 	end
-	return mdata
+	
+	if(sort) then
+		table.sort(mapnamelist)
+		table.sort(maplist, function(a,b) return a.name < b.name end)
+	end
+	
+	return maplist, mapnamelist
 end
 
 function gw2_datamanager.GetLocalWaypointList( mapid )
@@ -147,17 +172,17 @@ function gw2_datamanager.UpdateLevelMap()
 			
 			if(table.valid(sectors)) then
 				for _,sector in pairs(sectors) do
-					local realpos = gw2_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
+					local realpos = gw2_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], sector["coord"])
 					local position = { x=realpos[1], y=realpos[2], z=-2500}			
-					table.insert(gw2_datamanager.levelmap, { pos = position, level = entry["level"] } )					
+					table.insert(gw2_datamanager.levelmap, { pos = position, level = sector["level"] } )					
 				end
 			end
 			
 			if(table.valid(tasks)) then
 				for _,task in pairs(tasks) do
-					local realpos = gw2_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
+					local realpos = gw2_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], task["coord"])
 					local position = { x=realpos[1], y=realpos[2], z=-2500}
-					table.insert(gw2_datamanager.levelmap, { pos = position, level = entry["level"] } )						
+					table.insert(gw2_datamanager.levelmap, { pos = position, level = task["level"] } )						
 				end
 			end
 		end
