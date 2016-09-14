@@ -195,6 +195,7 @@ end
 function gw2_datamanager.GetRandomPositionInLevelRange(level)
 	if ( table.valid(gw2_datamanager.levelmap) and table.valid(ml_global_information.Player_Position)) then
 		local possiblelocations = {}
+		local pPos = ml_global_information.Player_Position
 		for _,entry in pairs(gw2_datamanager.levelmap) do
 			if (entry.level <= level + 2 and Distance2D(entry.pos.x, entry.pos.y, pPos.x, pPos.y) > 2500 ) then
 				local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( entry.pos )
