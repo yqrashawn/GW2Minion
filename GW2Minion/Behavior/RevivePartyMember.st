@@ -87,7 +87,6 @@ local tbl =
 	},
 	variables = 
 	{
-		expanded = true,
 		filename = "RevivePartyMember.st",
 		finishcode = "",
 		info = "Revives a downed / dead Partymember.",

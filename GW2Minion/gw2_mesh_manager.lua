@@ -4,7 +4,7 @@ function ml_mesh_mgr.ProcessShortcuts()
 --Left Alt + Right Mouse
 	if ( MeshManager:IsKeyPressed(164) and MeshManager:IsKeyPressed(2)) then
 		local mousepos = MeshManager:GetMousePos()
-		if ( TableSize(mousepos) > 0 ) then	
+		if ( table.size(mousepos) > 0 ) then	
 			if (MeshManager:DeleteRasterTriangle(mousepos)) then
 				d("Deletion was successful.")
 			end
@@ -59,7 +59,7 @@ function ml_mesh_mgr.HandleOMC( ... )
 	local OMCStartPosition,OMCEndposition,OMCFacingDirection = ml_mesh_mgr.UnpackArgsForOMC( args )
 	d("OMC REACHED : "..tostring(OMCType))
 	
-	if ( ValidTable(OMCStartPosition) and ValidTable(OMCEndposition) and ValidTable(OMCFacingDirection) ) then
+	if ( table.valid(OMCStartPosition) and table.valid(OMCEndposition) and table.valid(OMCFacingDirection) ) then
 		ml_mesh_mgr.OMCStartPosition = OMCStartPosition
 		ml_mesh_mgr.OMCEndposition = OMCEndposition
 		ml_mesh_mgr.OMCFacingDirection = OMCFacingDirection
@@ -82,13 +82,14 @@ ml_mesh_mgr.OMCDelayAtGroundLevel = false
 ml_mesh_mgr.OMCStartTime = 0
 function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount ) 
 	if ( ml_mesh_mgr.OMCIsHandled ) then
-		
+
 		ml_bt_mgr.lasttick = tickcount -- Pauses the main bot-loop, no unstuck or continues path creation.
+		ml_global_information.Now = tickcount
 		
 		if ( ml_mesh_mgr.OMCThrottle > tickcount ) then -- Throttles OMC actions
 			return
 		end
-		
+
 		-- Update IsMoving with exact data
 		ml_global_information.Player_IsMoving = Player:IsMoving() or false
 		ml_global_information.Player_Position = Player.pos
@@ -107,7 +108,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 		end
 
 		if ( ml_mesh_mgr.OMCStartPositionReached == false ) then
-			if ( ValidTable(sPos) ) then
+			if ( table.valid(sPos) ) then
 				local dist = Distance3D(sPos.x,sPos.y,sPos.z,pPos.x,pPos.y,pPos.z)
 
 				if (dist > 150) then
@@ -132,10 +133,11 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 		else
 			
 			if ( ml_mesh_mgr.OMCType == "OMC_JUMP" ) then
-				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+				if ( table.valid(ml_mesh_mgr.OMCEndposition) ) then
 					local behind = math.atan2(pPos.y-ePos.y,pPos.x-ePos.x) > 0
-
+d(behind)
 					if(not behind and not ml_mesh_mgr.OMCDelayAtGroundLevel) then
+						d("BLUB")
 						Player:SetFacingExact(ePos.x,ePos.y,ePos.z,true)
 					end
 					
@@ -205,7 +207,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 				end
 			
 			elseif ( ml_mesh_mgr.OMCType == "OMC_WALK" ) then
-				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+				if ( table.valid(ml_mesh_mgr.OMCEndposition) ) then
 					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
 					Player:SetFacingExact(ePos.x,ePos.y,ePos.z,true)
 					local dist = Distance3D(ePos.x,ePos.y,ePos.z,pPos.x,pPos.y,pPos.z)
@@ -218,7 +220,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 				end
 			
 			elseif ( ml_mesh_mgr.OMCType == "OMC_LIFT" ) then
-				if ( ValidTable(ml_mesh_mgr.OMCStartPosition) ) then
+				if ( table.valid(ml_mesh_mgr.OMCStartPosition) ) then
 					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
 					local dist = Distance3D(sPos.x,sPos.y,sPos.z,pPos.x,pPos.y,pPos.z)
 					if ( dist > 250 ) then
@@ -231,12 +233,12 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 				end
 			
 			elseif ( ml_mesh_mgr.OMCType == "OMC_TELEPORT" ) then
-				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+				if ( table.valid(ml_mesh_mgr.OMCEndposition) ) then
 					if ( ml_global_information.Player_IsMoving ) then Player:StopMovement() end
 					-- Add playerdetection when distance to OMCEndposition is > xxx
 					local enddist = Distance3D(ePos.x,ePos.y,ePos.z,pPos.x,pPos.y,pPos.z)
 					if ( enddist > 220 ) then
-						if ( TableSize(CharacterList("nearest,player,maxdistance=1500"))>0 ) then
+						if ( table.size(CharacterList("nearest,player,maxdistance=1500"))>0 ) then
 							ml_log("Need to teleport but players are nearby..waiting..")
 							ml_mesh_mgr.OMCThrottle = tickcount + 2000
 							ml_global_information.Lasttick = ml_global_information.Lasttick + 1500
@@ -256,7 +258,7 @@ function ml_mesh_mgr.OMC_Handler_OnUpdate( tickcount )
 				ml_mesh_mgr.ResetOMC()
 				
 			elseif ( ml_mesh_mgr.OMCType == "OMC_PORTAL" ) then
-				if ( ValidTable(ml_mesh_mgr.OMCEndposition) ) then
+				if ( table.valid(ml_mesh_mgr.OMCEndposition) ) then
 					if ( not ml_global_information.Player_IsMoving ) then Player:SetMovement(GW2.MOVEMENTTYPE.Forward) end
 					local dist = Distance3D(ePos.x,ePos.y,ePos.z,pPos.x,pPos.y,pPos.z)
 					if ( dist < 100 ) then

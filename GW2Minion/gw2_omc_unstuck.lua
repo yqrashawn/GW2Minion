@@ -160,9 +160,7 @@ function gw2_omc_unstuck.HandleStuck(type,startPos,endPos)
 			gw2_omc_unstuck.StopMovement()
 			ml_mesh_mgr.ResetOMC()
 			gw2_omc_unstuck.Reset()
-			gAutostartbot = "0"
-			Settings.GW2Minion.gAutostartbot = gAutostartbot		
-			gw2minion.ToggleBot("off")
+			ml_bt_mgr.running = false
 		end
 		gw2_omc_unstuck.lastStuckCount = gw2_omc_unstuck.targetOMC.stuckCount
 		gw2_omc_unstuck.lastResult = true

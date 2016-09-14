@@ -19,7 +19,7 @@ local tbl =
 						finishcode = "",
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "-- Reset targets when priority changes\nif(context.revivepartymember_id) then\n\t\tcontext.revivedownedplayer_id = nil\n\t\tcontext.revivedeadplayer_id = nil\n\t\tcontext.revivenpc_id = nil\nend\n\nif(context.revivedownedplayer_id) then\n\t\tcontext.revivedeadplayer_id = nil\n\t\tcontext.revivenpc_id = nil\nend\n\nif(context.revivedeadplayer_id) then\n\t\tcontext.revivenpc_id = nil\nend\n\nself:fail()",
+						runcode = "-- Reset targets when priority changes\nif(not context.revive_targetid) then\n\t\tcontext.revivepartymember_id = nil\n\t\tcontext.revivedownedplayer_id = nil\n\t\tcontext.revivedeadplayer_id = nil\n\t\tcontext.revivenpc_id = nil\nend\n\nif(context.revivepartymember_id) then\n\t\tcontext.revivedownedplayer_id = nil\n\t\tcontext.revivedeadplayer_id = nil\n\t\tcontext.revivenpc_id = nil\nend\n\nif(context.revivedownedplayer_id) then\n\t\tcontext.revivedeadplayer_id = nil\n\t\tcontext.revivenpc_id = nil\nend\n\nif(context.revivedeadplayer_id) then\n\t\tcontext.revivenpc_id = nil\nend\n\nself:fail()",
 						startcode = "",
 						xposoffset = 0,
 					},
@@ -32,7 +32,6 @@ local tbl =
 					},
 					variables = 
 					{
-						expanded = true,
 						filename = "RevivePartyMember.st",
 						finishcode = "",
 						info = "Revives a downed / dead Partymember.",
@@ -90,6 +89,7 @@ local tbl =
 					},
 					variables = 
 					{
+						expanded = true,
 						filename = "ReviveNPC.st",
 						finishcode = "",
 						info = "Revive dead NPCs",
@@ -113,7 +113,6 @@ local tbl =
 	},
 	variables = 
 	{
-		expanded = true,
 		filename = "ReviveHandler.st",
 		finishcode = "",
 		info = "Revive dead/downed players/partymembers/npcs",

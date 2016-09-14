@@ -56,7 +56,7 @@ function gw2_datamanager.GetLocalWaypointList( mapid )
 								discovered = table.valid(wInfo),
 								contested =  wInfo.contested == true,
 								onmesh = not (wInfo.onmesh == false),
-								distance = wInfo.distance or -1
+								distance = wInfo.distance or nil
 							}
 							table.insert(wdata,newWdata)
 						end
@@ -78,7 +78,13 @@ function gw2_datamanager.GetLocalWaypointListByDistance(mapID,pos)
 			waypoint.distance2D = Distance2D(waypoint.pos.x,waypoint.pos.y,pos.x,pos.y)
 		end
 		
-		table.sort(mapData, function(a,b) return a.distance2D < b.distance2D end)
+		table.sort(mapData, function(a,b)
+			if(a.distance and b.distance) then
+				return a.distance < b.distance
+			else
+				return a.distance2D < b.distance2D
+			end
+		end)
 	end
 	
 	return mapData
