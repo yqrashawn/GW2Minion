@@ -148,7 +148,6 @@ local tbl =
 	},
 	variables = 
 	{
-		expanded = true,
 		filename = "MoveToRandom.st",
 		finishcode = "",
 		info = "Move to random",
