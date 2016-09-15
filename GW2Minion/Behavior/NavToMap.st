@@ -177,10 +177,11 @@ local tbl =
 		finishcode = "",
 		info = "",
 		menucode = "",
-		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\n\nif(context) then\n\t\tGUI:Text('Target map: '..tostring(context.movetomap_targetmapid))\n\t\tGUI:Text('Current map: '..tostring(ml_global_information.CurrentMapID))\n\t\tGUI:Text('Next gate distance: '..tostring(context.movetomap_gatedistance))\n\t\tGUI:Text('Gate reached: '..tostring(context.movetomap_gatereached))\nend",
 		runcode = "context.movetomap_targetmapid = context.movetomap_targetmapid or self.variables.targetmapid\ncontext.movetomap_usewaypoints = context.movetomap_usewaypoints or self.variables.usewaypoints",
 		startcode = "",
-		subtreeuicode = "local maplist, mapnamelist = gw2_datamanager.GetMapNameList()\nif(table.valid(maplist) and table.valid(mapnamelist)) then\n\t\tlocal maplist, mapnamelist = gw2_datamanager.GetMapNameList()\n\t\tlocal selectedIndex,changed = GUI:Combo(\"Select map\", self.variables.selectedmapindex or 1, mapnamelist)\n\t\tif(changed) then\n\t\t\t\tself.variables.selectedmapindex = selectedIndex\n\t\t\t\tself.variables.targetmapid = maplist[selectedIndex].id\n\t\tend\n\t\t\n\t\tlocal checked,pressed = GUI:Checkbox(\"Use waypoints\", self.variables.usewaypoints or false)\n\t\tif(pressed) then\n\t\t\t\tself.variables.usewaypoints = checked\n\t\tend\nelse\n\t\tGUI:Text(\"No map data available\")\nend\n",
+		subtreeuicode = "if(table.valid(gw2_datamanager.mapData)) then\n\tlocal maplist = {}\n\tlocal mapnamelist = {}\n\t\n\tfor mapID,map in pairs(gw2_datamanager.mapData) do\n\t\t\tif(ml_nav_manager.GetNode(mapID)) then\n\t\t\t\t\tlocal name = map.map_name..\" (\"..mapID..\")\"\n\t\t\t\t\ttable.insert(mapnamelist, name)\n\t\t\t\t\ttable.insert(maplist, {id = mapID, name = name})\n\t\t\tend\n\tend\n\ttable.sort(mapnamelist)\n\ttable.sort(maplist, function(a,b) return a.name < b.name end)\n\t\n\tlocal selectedIndex,changed = GUI:Combo(\"Select map\", self.variables.selectedmapindex or 1, mapnamelist)\n\tif(changed) then\n\t\t\tself.variables.selectedmapindex = selectedIndex\n\t\t\tself.variables.targetmapid = maplist[selectedIndex].id\n\tend\n\t\n\tlocal checked,pressed = GUI:Checkbox(\"Use waypoints\", self.variables.usewaypoints or false)\n\tif(pressed) then\n\t\t\tself.variables.usewaypoints = checked\n\tend\nelse\n\tGUI:Text(\"No map data available\")\nend\n",
+		usewaypoints = true,
 		xposoffset = 0,
 	},
 }

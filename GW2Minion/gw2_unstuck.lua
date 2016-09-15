@@ -516,24 +516,24 @@ function gw2_unstuck.HandleStuck_AttackObject()
 end
 
 function gw2_unstuck.Start()
-	gw2_unstuck.lastPos = ml_global_information.Player_Position
-	gw2_unstuck.lastOnMeshTime = ml_global_information.Now
-	gw2_unstuck.stuckTimer = ml_global_information.Now
+	gw2_unstuck.Reset()
+	d("[Unstuck]: Started")
 end
 
 function gw2_unstuck.Reset()
 	gw2_unstuck.lastPos = ml_global_information.Player_Position
+	gw2_unstuck.stuckTimer = ml_global_information.Now
 	gw2_unstuck.stuckCount = 0
 	gw2_unstuck.antiStuckPos = nil
 	gw2_unstuck.stuckPosition = nil
 	gw2_unstuck.jumpCount = 0
 	gw2_unstuck.stuckthreshold = 45
-	gw2_unstuck.respawntimer = 0
+	gw2_unstuck.respawntimer = ml_global_information.Now
 	gw2_unstuck.pathBlockingObject = nil
 	gw2_unstuck.conversationTryCount = 0
 	gw2_unstuck.lastGadgetID = nil
-	gw2_unstuck.lastOnMeshTime = 0
-	gw2_unstuck.useWaypointTmr = 0
+	gw2_unstuck.lastOnMeshTime = ml_global_information.Now
+	gw2_unstuck.useWaypointTmr = ml_global_information.Now
 	
 	if ( ml_global_information.Player_IsMoving and ml_global_information.Player_CanMove) then
 		if ( ml_global_information.Player_MovementDirections.backward and gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] ) then gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] = false Player:UnSetMovement(GW2.MOVEMENTTYPE.Backward) end

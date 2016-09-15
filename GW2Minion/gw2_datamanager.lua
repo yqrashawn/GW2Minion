@@ -6,13 +6,14 @@ gw2_datamanager.levelmap = {} -- Create a "2D - Levelmap/Table" which provides u
 
 
 function gw2_datamanager.ModuleInit() 	
-
-	gw2_datamanager.mapData = persistence.load(gw2_datamanager.path)
-	d("Map data loaded: "..tostring(table.size(gw2_datamanager.mapData)).." entries found")
-	
+	local mdata = persistence.load(gw2_datamanager.path)
+	if(table.valid(mdata)) then
+		d("Map data loaded: "..tostring(table.size(mdata)).." entries found")
+		gw2_datamanager.mapData = mdata
+	end
 end
 
-function gw2_datamanager.GetLocalMapData( mapid )
+function gw2_datamanager.GetLocalMapData(mapid)
 	local mdata = nil
 	mapid = tonumber(mapid)
 	
@@ -24,7 +25,7 @@ function gw2_datamanager.GetLocalMapData( mapid )
 	return mdata
 end
 
-function gw2_datamanager.GetMapName( mapid )
+function gw2_datamanager.GetMapName(mapid)
 	local mdata = gw2_datamanager.GetLocalMapData(mapid)
 	local name = "Unknown ID: "..tostring(mapid)
 
@@ -35,7 +36,7 @@ function gw2_datamanager.GetMapName( mapid )
 	return name
 end
 
-function gw2_datamanager.GetMapNameList(nav,sort)
+function gw2_datamanager.GetMapNameList(nav, sort)
 	nav = nav == nil and true or false
 	sort = sort == nil and true or false
 	
@@ -45,26 +46,29 @@ function gw2_datamanager.GetMapNameList(nav,sort)
 	for mapID,map in pairs(gw2_datamanager.mapData) do
 		if(not nav or ml_nav_manager.GetNode(mapID)) then
 			local mname = string.valid(map.map_name) and string.gsub(map.map_name,"^%s","") or "Unknown"
-			
 			local name = mname.." ("..mapID..")"
-			table.insert(mapnamelist, name)
+
 			table.insert(maplist, {id = mapID, name = name})
 		end
 	end
+
+	if(table.valid(maplist)) then	
+		if(sort) then
+			table.sort(maplist, function(a,b) return a.name < b.name end)
+		end
 	
-	if(sort) then
-		table.sort(mapnamelist)
-		table.sort(maplist, function(a,b) return a.name < b.name end)
+		for i,map in ipairs(maplist) do
+			table.insert(mapnamelist, map.name)
+		end
 	end
-	
+		
 	return maplist, mapnamelist
 end
 
-function gw2_datamanager.GetLocalWaypointList( mapid )
+function gw2_datamanager.GetLocalWaypointList(mapid)
 	local wdata = {}
 	local mdata = gw2_datamanager.GetLocalMapData(mapid)
 	
-
 	if (table.valid(mdata) and table.valid(mdata["floors"]) and table.valid(mdata["floors"])) then
 		for _,floorData in pairs(mdata["floors"]) do
 			if (table.valid(floorData)) then
@@ -102,7 +106,7 @@ function gw2_datamanager.GetLocalWaypointList( mapid )
 	return table.valid(wdata) and wdata or nil
 end
 
-function gw2_datamanager.GetLocalWaypointListByDistance(mapID,pos)
+function gw2_datamanager.GetLocalWaypointListByDistance(mapID, pos)
 	pos = table.valid(pos) and pos or ml_global_information.Player_Position
 	mapID = mapID ~= nil and mapID or ml_global_information.CurrentMapID
 	local mapData = gw2_datamanager.GetLocalWaypointList(mapID)
@@ -193,7 +197,7 @@ end
 
 -- picks a random point of interest in the map within levelrange +/-2, tries to get the z axis by a mesh check 
 function gw2_datamanager.GetRandomPositionInLevelRange(level)
-	if ( table.valid(gw2_datamanager.levelmap) and table.valid(ml_global_information.Player_Position)) then
+	if (table.valid(gw2_datamanager.levelmap) and table.valid(ml_global_information.Player_Position)) then
 		local possiblelocations = {}
 		local pPos = ml_global_information.Player_Position
 		for _,entry in pairs(gw2_datamanager.levelmap) do
