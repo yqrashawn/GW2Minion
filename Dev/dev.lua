@@ -227,8 +227,8 @@ function dev.DrawCall(event, ticks )
 									GUI:BulletText("Listindex") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.index))
 									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.id))
 									GUI:BulletText("Type") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.type))									
-									if (GUI:Button("SelectConverrsationByType",150,15) ) then d("Result: "..tostring(Player:SelectConversationOptionByIndex(b.type))) end
-									if (GUI:Button("SelectConversationOption",150,15) ) then d("Result: "..tostring(Player:SelectConversationOption(b.index))) end
+									if (GUI:Button("Select conversation by index",250,18) ) then d("Result: "..tostring(Player:SelectConversationOptionByIndex(cid))) end
+									if (GUI:Button("Select conversation by type",250,18) ) then d("Result: "..tostring(Player:SelectConversationOption(b.type))) end
 									GUI:TreePop()
 								end
 							end
@@ -811,7 +811,8 @@ function dev.DrawAgentDetails(c)
 end
 
 function dev.DrawMapMarkerDetails(id,b)
-	if ( GUI:TreeNode(tostring(id).."-"..b.name)) then
+	local uniqid = (string.valid(b.name) and b.name or "unknown").."##"..tostring(b.characterid > 0 and b.characterid or id)..tostring(b.contentid)..tostring(b.markertype)..tostring(b.worldmarkertype)
+	if ( GUI:TreeNode(uniqid)) then
 		GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devm0",tostring(string.format( "%X",b.ptr)))
 		GUI:BulletText("Ptr2") GUI:SameLine(200) GUI:InputText("##devm1",tostring(string.format( "%X",b.ptr2)))
 		GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##devm2",b.name)
@@ -845,18 +846,18 @@ function dev.DrawMapMarkerDetails(id,b)
 				if ( table.valid(eo) ) then
 					if ( GUI:TreeNode("ObjectiveDetails") ) then
 						for eid,ee in pairs(eo) do
-														if ( GUI:TreeNode("ID: "..tostring(eid) )) then
-															GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##deveo0",tostring(string.format( "%X",ee.ptr)))
-															GUI:BulletText("Value1") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value1))
-															GUI:BulletText("Value2") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value2))
-															GUI:BulletText("Value3") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value3))
-															GUI:BulletText("Value4") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value4))
-															GUI:BulletText("Value5") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value5))															
-															GUI:TreePop()
-														end	
-													end
-													GUI:TreePop()
-												end												
+							if ( GUI:TreeNode("ID: "..tostring(eid) )) then
+								GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##deveo0",tostring(string.format( "%X",ee.ptr)))
+								GUI:BulletText("Value1") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value1))
+								GUI:BulletText("Value2") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value2))
+								GUI:BulletText("Value3") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value3))
+								GUI:BulletText("Value4") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value4))
+								GUI:BulletText("Value5") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value5))															
+								GUI:TreePop()
+							end	
+						end
+						GUI:TreePop()
+					end												
 				end
 				GUI:TreePop()
 			end

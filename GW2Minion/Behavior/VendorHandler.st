@@ -126,13 +126,13 @@ local tbl =
 	{
 		filename = "VendorHandler.st",
 		finishcode = "",
-		info = "",
+		info = "Vendor / Repair",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",
 		startcode = "",
 		subtreeuicode = "",
-		xposoffset = 6,
+		xposoffset = 0,
 	},
 }
 

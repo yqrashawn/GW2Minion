@@ -1,0 +1,384 @@
+local tbl = 
+{
+	class = "BehaviorTree",
+	nodes = 
+	{
+		
+		{
+			class = "PrioritySelector",
+			nodes = 
+			{
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "Ingame check",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+						runcode = "-- In CHaracter screen\nif ( ml_global_information.GameState ~= GW2.GAMESTATE.GAMEPLAY ) then\n\tself:success()\nelse\n\tself:fail()\nend",
+						startcode = "",
+						xposoffset = 0,
+					},
+				},
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "Check for valid profile",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+						runcode = "if(not context.taskmanager_activeprofile:IsValid()) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+						startcode = "",
+						xposoffset = 0,
+					},
+				},
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "Handle task failure",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+						runcode = "local failstatus = context.taskmanager_activeprofile:Failed()\nif(failstatus == \"stop\") then\n\t\tPlayer:StopMovement()\n\t\tself:success()\n\t\treturn\nend\n\nself:fail()",
+						startcode = "",
+						xposoffset = 0,
+					},
+				},
+				
+				{
+					class = "Sequence",
+					nodes = 
+					{
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Defeated ) then\n\t\tif(table.valid(context.taskmanager_activetask)) then\n\t\t\t\tcontext.taskmanager_activetask:ResetPreTask()\n\t\t\t\tcontext.taskmanager_activetask:ResetPostTask()\n\t\tend\n\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+								startcode = "",
+								xposoffset = 0,
+							},
+						},
+						
+						{
+							class = "BehaviorTree",
+							nodes = 
+							{
+							},
+							variables = 
+							{
+								expanded = true,
+								filename = "DeathHandler.st",
+								finishcode = "",
+								info = "Death Handler",
+								menucode = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+								runcode = "",
+								startcode = "",
+								subtreeuicode = "",
+								xposoffset = 0,
+							},
+						},
+					},
+					variables = 
+					{
+						expanded = true,
+						info = "",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+						xposoffset = 0,
+					},
+				},
+				
+				{
+					class = "BehaviorTree",
+					nodes = 
+					{
+					},
+					variables = 
+					{
+						filename = "DownedHandler.st",
+						finishcode = "",
+						info = "Downed Handler",
+						menucode = "",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+						runcode = "",
+						startcode = "",
+						subtreeuicode = "",
+						xposoffset = 0,
+					},
+				},
+				
+				{
+					class = "PrioritySelector",
+					nodes = 
+					{
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "Setup active task",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "local task = context.taskmanager_activeprofile:ActiveTask()\n\nif(table.valid(task)) then\n\t\tif(context.taskmanager_activeprofile.activeindex ~= context.taskmanager_activeindex) then\n\t\t\t\tcontext.taskmanager_activeindex = context.taskmanager_activeprofile.activeindex\n\t\t\t\td(\"[TaskManager]: Active task index changed. Waiting a bit.\")\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tml_global_information.Wait(500,1000)\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\n\t\tif(not task:IsValid() or task.completed or task.failed) then\n\t\t\ttask = context.taskmanager_activeprofile:GetNextTask()\n\t\tend\n\n\t\tif(task:IsValid()) then\n\t\t\t\tcontext.taskmanager_activetask = task\n\t\t\t\tself:fail()\n\t\telse\n\t\t\t\tcontext.taskmanager_activetask = nil\n\t\t\t\tself:success()\n\t\tend\nelse\n\t\tself:success()\nend\n",
+								startcode = "",
+								xposoffset = 0,
+							},
+						},
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "Check for task completion",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "local task = context.taskmanager_activetask\n\nif(task:CanRun()) then\n\t\tself:fail()\nelseif(table.valid(task:AvailablePostTasks())) then\n\t\tself:fail()\nelse\n\t\ttask.completed = true\n\t\tcontext.taskmanager_activetask = nil\n\t\tml_global_information.Wait(math.random(500,1000))\n\t\tPlayer:StopMovement()\n\t\tself:success()\nend",
+								startcode = "",
+								xposoffset = 0,
+							},
+						},
+						
+						{
+							class = "PrioritySelector",
+							nodes = 
+							{
+								
+								{
+									class = "Sequence",
+									nodes = 
+									{
+										
+										{
+											class = "Action",
+											nodes = 
+											{
+											},
+											variables = 
+											{
+												filename = "",
+												finishcode = "",
+												info = "",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+												runcode = "local task = context.taskmanager_activetask\nif(task.taskProperties.mapid ~= ml_global_information.CurrentMapID) then\n\t\tcontext.movetomap_position = task.taskProperties.pos\n\t\tcontext.movetomap_targetmapid = task.taskProperties.mapid\n\t\tcontext.movetomap_usewaypoints = task.customProperties.usewaypoints or false\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+												startcode = "",
+												xposoffset = 0,
+											},
+										},
+										
+										{
+											class = "BehaviorTree",
+											nodes = 
+											{
+											},
+											variables = 
+											{
+												expanded = true,
+												filename = "NavToMap.st",
+												finishcode = "",
+												info = "",
+												menucode = "",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\n\nif(context) then\n\t\tGUI:Text('Target map: '..tostring(context.movetomap_targetmapid))\n\t\tGUI:Text('Current map: '..tostring(ml_global_information.CurrentMapID))\n\t\tGUI:Text('Next gate distance: '..tostring(context.movetomap_gatedistance))\n\t\tGUI:Text('Gate reached: '..tostring(context.movetomap_gatereached))\nend",
+												runcode = "context.movetomap_targetmapid = context.movetomap_targetmapid or self.variables.targetmapid\ncontext.movetomap_usewaypoints = context.movetomap_usewaypoints or self.variables.usewaypoints",
+												startcode = "",
+												subtreeuicode = "if(table.valid(gw2_datamanager.mapData)) then\n\tlocal maplist = {}\n\tlocal mapnamelist = {}\n\t\n\tfor mapID,map in pairs(gw2_datamanager.mapData) do\n\t\t\tif(ml_nav_manager.GetNode(mapID)) then\n\t\t\t\t\tlocal name = map.map_name..\" (\"..mapID..\")\"\n\t\t\t\t\ttable.insert(mapnamelist, name)\n\t\t\t\t\ttable.insert(maplist, {id = mapID, name = name})\n\t\t\tend\n\tend\n\ttable.sort(mapnamelist)\n\ttable.sort(maplist, function(a,b) return a.name < b.name end)\n\t\n\tlocal selectedIndex,changed = GUI:Combo(\"Select map\", self.variables.selectedmapindex or 1, mapnamelist)\n\tif(changed) then\n\t\t\tself.variables.selectedmapindex = selectedIndex\n\t\t\tself.variables.targetmapid = maplist[selectedIndex].id\n\tend\n\t\n\tlocal checked,pressed = GUI:Checkbox(\"Use waypoints\", self.variables.usewaypoints or false)\n\tif(pressed) then\n\t\t\tself.variables.usewaypoints = checked\n\tend\nelse\n\tGUI:Text(\"No map data available\")\nend\n",
+												usewaypoints = true,
+												xposoffset = 0,
+											},
+										},
+									},
+									variables = 
+									{
+										info = "Move to start map",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+										xposoffset = 0,
+									},
+								},
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Run pre tasks",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "local task = context.taskmanager_activetask\nlocal pretask = task:GetNextPreTask()\n\nif(table.valid(pretask)) then\n\t\tif(pretask:Run()) then\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\t\tpretask.completed = true\n\t\tself:success()\n\t\treturn\nend\nself:fail()\n",
+										startcode = "",
+										xposoffset = 0,
+									},
+								},
+								
+								{
+									class = "Sequence",
+									nodes = 
+									{
+										
+										{
+											class = "Action",
+											nodes = 
+											{
+											},
+											variables = 
+											{
+												finishcode = "",
+												info = "",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+												runcode = "local task = context.taskmanager_activetask\nif(task.startpositionreached and task.taskProperties.radius and task.taskProperties.radius > 0) then\n\t\tlocal r = task.taskProperties.radius\n\t\tlocal dist = Distance3DT(task.taskProperties.pos,ml_global_information.Player_Position)\n\n\t\tif(dist > r) then\n\t\t\t\t\td(\"[CustomTask]: Outside task radius. Distance: \"..math.ceil(dist)..\". Radius: \"..math.ceil(r))\n\t\t\t\t\ttask.startpositionreached = false\n\t\t\t\t\ttask.tasktype:DestroyTaskInstance()\n\t\t\t\t\tPlayer:StopMovement()\n\t\t\t\t\tml_global_information.Wait(2000,5000)\n\t\t\t\t\tself:running()\n\t\t\t\t\treturn\n\t\tend\nend\nself:success()",
+												startcode = "",
+												xposoffset = 0,
+											},
+										},
+										
+										{
+											class = "Action",
+											nodes = 
+											{
+											},
+											variables = 
+											{
+												finishcode = "",
+												info = "",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+												runcode = "local task = context.taskmanager_activetask\n\nif(not task.startpositionreached) then\n\t\tif(Distance3DT(task.taskProperties.pos, ml_global_information.Player_Position) < 50) then\n\t\t\t\ttask.startpositionreached = true\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tml_global_information.Wait(500,2000)\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\n\t\tcontext.moveto_position = task.taskProperties.pos\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+												startcode = "",
+												xposoffset = 0,
+											},
+										},
+										
+										{
+											class = "BehaviorTree",
+											nodes = 
+											{
+											},
+											variables = 
+											{
+												expanded = true,
+												filename = "MoveTo.st",
+												finishcode = "",
+												info = "Move to Position. \nRequired input argument: context.moveto_position\nOptional arguments:\ncontext.moveto_targetid - ID of the character / gadget we want to move to.\ncontext.moveto_targettype - \"character\" or \"gadget\" or \"event\"\n",
+												menucode = "",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\n",
+												randomMovement = true,
+												runcode = "-- Setting the custom subtree settings in the context, which gets passed down to childnodes\ncontext.moveto_stoppingdistance = self.variables.stoppingdistance\ncontext.moveto_randomMovement = self.variables.randomMovement\ncontext.moveto_smoothturns = self.variables.smoothturns\ncontext.moveto_usewaypoints = self.variables.usewaypoints\ncontext.moveto_follownavsystem = false",
+												smoothturns = true,
+												startcode = "",
+												stoppingdistance = 25,
+												subtreeuicode = "if ( self.variables.stoppingdistance == nil ) then self.variables.stoppingdistance = 25 end\nself.variables.stoppingdistance = GUI:InputInt(\"Stopping Distance\", self.variables.stoppingdistance, 1, GUI.InputTextFlags_CharsDecimal)\n\nif ( self.variables.randomMovement == nil ) then self.variables.randomMovement = true end\nself.variables.randomMovement = GUI:Checkbox( \"RandomMovement\", self.variables.randomMovement )\n\nif ( self.variables.smoothturns == nil ) then self.variables.smoothturns = true end\nself.variables.smoothturns = GUI:Checkbox( \"Smooth Turns\", self.variables.smoothturns )\n\nif ( self.variables.usewaypoints == nil ) then self.variables.usewaypoints = false end\nself.variables.usewaypoints = GUI:Checkbox( \"Use Waypoints\", self.variables.usewaypoints )\nif ( GUI:IsItemHovered() ) then GUI:SetTooltip( \"When enabled, MoveTo will use waypoints if they are closer to the targetposition.\" ) end",
+												usewaypoints = true,
+												xposoffset = 0,
+											},
+										},
+									},
+									variables = 
+									{
+										expanded = true,
+										info = "Move to start position",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+										xposoffset = 0,
+									},
+								},
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Run custom task",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "local task = context.taskmanager_activetask\nif(task:Run()) then\n\t\tself:running()\nelse\n\t\tself:fail()\nend",
+										startcode = "",
+										xposoffset = 0,
+									},
+								},
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Run post tasks",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "local task = context.taskmanager_activetask\nlocal posttask = task:GetNextPostTask()\n\nif(table.valid(posttask)) then\n\t\tif(posttask:Run()) then\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\t\tposttask.completed = true\n\t\tself:success()\n\t\treturn\nend\nself:fail()\n",
+										startcode = "",
+										xposoffset = 0,
+									},
+								},
+							},
+							variables = 
+							{
+								expanded = true,
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+								xposoffset = 0,
+							},
+						},
+					},
+					variables = 
+					{
+						expanded = true,
+						info = "",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+						xposoffset = 0,
+					},
+				},
+			},
+			variables = 
+			{
+				expanded = true,
+				info = "",
+				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+				xposoffset = 0,
+			},
+		},
+	},
+	variables = 
+	{
+		expanded = true,
+		filename = "CustomTasks.bt",
+		finishcode = "d(\"Custom tasks off\")\nml_global_information.Stop()\nml_task_mgr.Stop()",
+		info = "",
+		menucode = "if(ml_task_mgr.DrawMenuCode) then\n\t\tml_task_mgr.DrawMenuCode()\nend",
+		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\n\nif(context and context.taskmanager_activeprofile) then\n\t\tGUI:NewLine()\n\t\tlocal profile = context.taskmanager_activeprofile\n\t\tGUI:Text(\"Active profile:\")\n\t\tGUI:Text('Name: '..tostring(profile.name))\n\t\tGUI:Text('Active task: '..tostring(profile.activeindex))\n\t\tGUI:Text('Number of tasks: '..tostring(table.size(profile.tasks)))\n\n\t\tlocal task = context.taskmanager_activeprofile:ActiveTask()\n\t\tif(task:IsValid()) then\n\t\t\t\tGUI:NewLine()\n\t\t\t\tGUI:Text(\"Active task:\")\n\t\t\t\tGUI:Text('Name: '..task:Name())\n\t\t\t\tGUI:Text('Distance to task center: '..tostring(math.ceil(Distance3DT(task.taskProperties.pos,ml_global_information.Player_Position))))\n\t\t\t\tif(type(task.randomizedduration) == \"number\" and task.randomizedduration > 0 and task.runTime) then\n\t\t\t\t\t\tGUI:Text('Duration: '..tostring(task.randomizedduration))\n\t\t\t\t\t\tGUI:Text('Time remaining: '..tostring(task.randomizedduration-math.ceil(task.runTime/1000)))\n\t\t\t\tend\n\t\t\t\tif(type(task.taskProperties.radius) == \"number\" and task.taskProperties.radius > 0) then\n\t\t\t\t\t\tGUI:Text('Radius: '..tostring(task.taskProperties.radius))\n\t\t\t\tend\n\t\tend\nend",
+		runcode = "context.taskmanager_activeprofile = ml_task_mgr.GetCurrentProfile()",
+		startcode = "d(\"Custom tasks on\")\nml_global_information.Start()\nml_task_mgr.Start()",
+		subtreeuicode = "",
+		xposoffset = 0,
+	},
+}
+
+
+
+return tbl

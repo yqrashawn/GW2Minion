@@ -130,13 +130,13 @@ end
 
 function gw2_common_functions.GetPartyMemberByName( name )
 	local partylist = ml_global_information.Player_Party
-	if ( table.size(partylist) > 0 ) then
-		local index, player  = next( partylist )
-		while ( index ~= nil and player ~= nil ) do
-			if (player.name == name) then
-				return player
+	if (table.valid(partylist)) then
+		local i, member  = next( partylist )
+		while i and member do
+			if (member.name == name) then
+				return member
 			end
-			index, player  = next( partylist,index )
+			i, member  = next(partylist, i)
 		end
 	end
 	return nil
@@ -162,7 +162,7 @@ function gw2_common_functions.FinishEnemy()
 		if ( EList ) then
 			local id,entity = next (EList)
 			if ( id and entity ) then
-				if ( entity.isInInteractRange ) then
+				if ( entity.isininteractrange ) then
 					local target = Player:GetTarget()
 					if ( not target or target.id ~= entity.id ) then
 						Player:SetTarget(entity.id)
@@ -495,7 +495,7 @@ function gw2_common_functions.GetProfessionName(profession)
 	profession = profession or Player.profession or 10
 	if (type(profession) == "number" and profession < 10) then
 		local name = table_invert(GW2.CHARCLASS)[profession]
-		if (ValidString(name)) then
+		if (string.valid(name)) then
 			return name
 		end
 	end
@@ -507,7 +507,7 @@ function gw2_common_functions.PlayerInInstance()
 	local partyInfo = ml_global_information.Player_Party
 	if (table.valid(partyInfo)) then
 		for _,member in pairs(partyInfo) do
-			if (member.id == Player.id and member.isUnknown1 ~= nil and member.isUnknown1 ~= 0) then
+			if (member.id == ml_global_information.Player_ID and member.isUnknown1 ~= nil and member.isUnknown1 ~= 0) then
 				return true
 			end
 		end

@@ -37,6 +37,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								filename = "DeathHandler.st",
 								finishcode = "",
 								info = "Death Handler",
@@ -75,30 +76,14 @@ local tbl =
 							},
 							variables = 
 							{
-								filename = "RevivePartyMember.st",
+								filename = "ReviveHandler.st",
 								finishcode = "",
-								info = "Revives a downed / dead Partymember.",
+								info = "Revive dead/downed players/partymembers/npcs",
 								menucode = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 								runcode = "",
 								startcode = "",
 								subtreeuicode = "",
-								xposoffset = 0,
-							},
-						},
-						
-						{
-							class = "Action",
-							nodes = 
-							{
-							},
-							variables = 
-							{
-								finishcode = "",
-								info = "c_reviveDownedPlayersInCombat",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "self:fail()",
-								startcode = "",
 								xposoffset = 0,
 							},
 						},
@@ -200,7 +185,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								info = "Gather",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
@@ -276,7 +260,7 @@ local tbl =
 		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetStringML(\"grindMode\"))) then\n\n\t\t-- SM backwards compatibily fix \n\t\tgBotMode = GetString(\"grindMode\")\n\t\n\n\t\tif ( Settings.GW2Minion.doevents == nil) then Settings.GW2Minion.doevents = true end\n\t\tif ( Settings.GW2Minion.gather == nil) then Settings.GW2Minion.gather = true end\n\n\t\tSettings.GW2Minion.doevents = GUI:Checkbox(GetString(\"doEvents\"),Settings.GW2Minion.doevents)\n\t\tSettings.GW2Minion.gather = GUI:Checkbox(GetString(\"gatherMode\"),Settings.GW2Minion.gather)\n\n\t\tGUI:TreePop()\nend",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Game State: '..tostring(ml_global_information.GameState))\n",
 		runcode = "",
-		startcode = "d(\"GrindMode On\")\ngw2_unstuck.Start()",
+		startcode = "d(\"GrindMode On\")\nml_global_information.Start()",
 		subtreeuicode = "if ( self.variables.doevents == nil) then self.variables.doevents = true end\nif ( self.variables.gather == nil) then self.variables.gather = true end\nself.variables.doevents = GUI:Checkbox(GetString(\"doEvents\"),self.variables.doevents)\nself.variables.gather = GUI:Checkbox(GetString(\"gatherMode\"),self.variables.gather)",
 		xposoffset = 0,
 	},

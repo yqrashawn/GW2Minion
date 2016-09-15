@@ -19,7 +19,7 @@ local tbl =
 						finishcode = "",
 						info = "Check for gather tools",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "self:success()",
+						runcode = "if(self.lasttoolcheck == nil or TimeSince(self.lasttoolcheck) > 2000) then\t\t\n\t\tself.lasttoolcheck = ml_global_information.Now\n\t\tlocal fTool = table.valid(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.ForagingTool))\n\t\tlocal lTool = table.valid(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.LoggingTool))\n\t\tlocal mTool = table.valid(Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MiningTool))\n\t\tif(not fTool or not lTool or not mTool) then\n\t\t\t\tself.lasttoolcheckfailed = true\n\t\t\t\td(\"[Gather]: One or more gather tools not equipped!\")\n\t\t\t\td(string.format(\"[Gather]: ftool=%s, ltool=%s, mtool=%s\", tostring(fTool), tostring(lTool), tostring(mTool)))\n\t\telse\n\t\t\t\tself.lasttoolcheckfailed = false\n\t\tend\nend\n\nif(self.lasttoolcheckfailed) then\n\t\tself:fail()\nelse\n\t\tself:success()\nend",
 						startcode = "",
 						xposoffset = 0,
 					},

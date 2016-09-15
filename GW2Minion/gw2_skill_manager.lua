@@ -958,7 +958,7 @@ end
 function profilePrototype:DoCombatMovement(targetID)
 	local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
 	local noStopMovementBuffs = gw2_common_functions.HasBuffs(Player,"791,727") == false
-	if (table.valid(target) and self.tmp.combatMovement.allowed and target.distance <= (self.tmp.activeSkillRange + 250) and noStopMovementBuffs and gDoCombatMovement ~= "0" and ml_global_information.Player_OnMesh and ml_global_information.Player_Alive and ml_global_information.Player_Health.percent < 99) then
+	if (table.valid(target) and self.tmp.combatMovement.allowed and target.distance <= (self.tmp.activeSkillRange + 250) and noStopMovementBuffs and Settings.GW2Minion.combatmovement and ml_global_information.Player_OnMesh and ml_global_information.Player_Alive and ml_global_information.Player_Health.percent < 99) then
 		gw2_common_functions.Evade()
 		local forward,backward,left,right,forwardLeft,forwardRight,backwardLeft,backwardRight = GW2.MOVEMENTTYPE.Forward,GW2.MOVEMENTTYPE.Backward,GW2.MOVEMENTTYPE.Left,GW2.MOVEMENTTYPE.Right,4,5,6,7
 		local currentMovement = ml_global_information.Player_MovementDirections

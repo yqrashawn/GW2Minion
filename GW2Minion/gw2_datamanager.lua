@@ -6,58 +6,95 @@ gw2_datamanager.levelmap = {} -- Create a "2D - Levelmap/Table" which provides u
 
 
 function gw2_datamanager.ModuleInit() 	
+	local mdata = persistence.load(gw2_datamanager.path)
+	if(table.valid(mdata)) then
+		d("Map data loaded: "..tostring(table.size(mdata)).." entries found")
+		gw2_datamanager.mapData = mdata
+	end
+end
 
-	gw2_datamanager.mapData = persistence.load(gw2_datamanager.path)
-	d("Mapdata loaded, "..tostring(table.size(gw2_datamanager.mapData)).." entries found")
+function gw2_datamanager.GetLocalMapData(mapid)
+	local mdata = nil
+	mapid = tonumber(mapid)
 	
-end
-
-function gw2_datamanager.GetMapName( mapid )
-	local name = "Unknown ID:"..tostring(mapid)
-	if ( table.size(gw2_datamanager.mapData) > 0 and tonumber(mapid)~=nil) then
-		if ( table.size(gw2_datamanager.mapData[mapid]) > 0 ) then
-			name = gw2_datamanager.mapData[mapid]["map_name"]	
-		end
-	end	
-	return name
-end
-
-function gw2_datamanager.GetLocalMapData( mapid )
-	mdata = nil
-	if ( table.size(gw2_datamanager.mapData) > 0 and tonumber(mapid)~=nil) then
-		if ( table.size(gw2_datamanager.mapData[mapid]) > 0 ) then
+	if(table.valid(gw2_datamanager.mapData) and mapid) then
+		if(table.valid(gw2_datamanager.mapData[mapid])) then
 			mdata = gw2_datamanager.mapData[mapid]
 		end
-	end	
+	end
 	return mdata
 end
 
-function gw2_datamanager.GetLocalWaypointList( mapid )
-	wdata = {}
-	if (table.valid(gw2_datamanager.mapData) and tonumber(mapid)) then
-		local mapData = gw2_datamanager.mapData[mapid]
-		if (table.valid(mapData) and table.valid(mapData["floors"]) and table.valid(mapData["floors"])) then
-			local _,floorData = next(mapData["floors"])
+function gw2_datamanager.GetMapName(mapid)
+	local mdata = gw2_datamanager.GetLocalMapData(mapid)
+	local name = "Unknown ID: "..tostring(mapid)
+
+	if (table.valid(mdata) and string.valid(mdata["map_name"])) then
+		name = mdata["map_name"]
+	end
+
+	return name
+end
+
+function gw2_datamanager.GetMapNameList(nav, sort)
+	nav = nav == nil and true or false
+	sort = sort == nil and true or false
+	
+	local maplist = {}
+	local mapnamelist = {}
+
+	for mapID,map in pairs(gw2_datamanager.mapData) do
+		if(not nav or ml_nav_manager.GetNode(mapID)) then
+			local mname = string.valid(map.map_name) and string.gsub(map.map_name,"^%s","") or "Unknown"
+			local name = mname.." ("..mapID..")"
+
+			table.insert(maplist, {id = mapID, name = name})
+		end
+	end
+
+	if(table.valid(maplist)) then	
+		if(sort) then
+			table.sort(maplist, function(a,b) return a.name < b.name end)
+		end
+	
+		for i,map in ipairs(maplist) do
+			table.insert(mapnamelist, map.name)
+		end
+	end
+		
+	return maplist, mapnamelist
+end
+
+function gw2_datamanager.GetLocalWaypointList(mapid)
+	local wdata = {}
+	local mdata = gw2_datamanager.GetLocalMapData(mapid)
+	
+	if (table.valid(mdata) and table.valid(mdata["floors"]) and table.valid(mdata["floors"])) then
+		for _,floorData in pairs(mdata["floors"]) do
 			if (table.valid(floorData)) then
 				local poiData = floorData["points_of_interest"]
 				if (table.valid(poiData)) then
 					for id,data in pairs(poiData) do
 						local wInfo = WaypointList:Get(id)
 						if (table.valid(data) and table.valid(wInfo) and data["type"] == "waypoint") then
-							local pos = {
-								x = gw2_datamanager.recalc_coords(mapData["continent_rect"],mapData["map_rect"],data["coord"])[1],
-								y = gw2_datamanager.recalc_coords(mapData["continent_rect"],mapData["map_rect"],data["coord"])[2],
+						
+							local pos = table.valid(wInfo.pos) and wInfo.pos or {
+								x = gw2_datamanager.recalc_coords(mdata["continent_rect"],mdata["map_rect"],data["coord"])[1],
+								y = gw2_datamanager.recalc_coords(mdata["continent_rect"],mdata["map_rect"],data["coord"])[2],
 								z = 0,
 							}
+							
 							local newWdata = {
 								id = id,
 								name = data["name"],
-								pos = (table.valid(wInfo.pos) and wInfo.pos or pos),
+								pos = pos,
 								discovered = table.valid(wInfo),
 								contested =  wInfo.contested == true,
 								onmesh = not (wInfo.onmesh == false),
-								distance = wInfo.distance or -1
+								distance = wInfo.distance or nil,
+								mapid = mapid
 							}
+							
 							table.insert(wdata,newWdata)
 						end
 					end
@@ -65,11 +102,12 @@ function gw2_datamanager.GetLocalWaypointList( mapid )
 			end
 		end
 	end
+
 	return table.valid(wdata) and wdata or nil
 end
 
-function gw2_datamanager.GetLocalWaypointListByDistance(mapID,pos)
-	pos = pos ~= nil and pos or ml_global_information.Player_Position
+function gw2_datamanager.GetLocalWaypointListByDistance(mapID, pos)
+	pos = table.valid(pos) and pos or ml_global_information.Player_Position
 	mapID = mapID ~= nil and mapID or ml_global_information.CurrentMapID
 	local mapData = gw2_datamanager.GetLocalWaypointList(mapID)
 	
@@ -78,7 +116,13 @@ function gw2_datamanager.GetLocalWaypointListByDistance(mapID,pos)
 			waypoint.distance2D = Distance2D(waypoint.pos.x,waypoint.pos.y,pos.x,pos.y)
 		end
 		
-		table.sort(mapData, function(a,b) return a.distance2D < b.distance2D end)
+		table.sort(mapData, function(a,b)
+			if(a.distance and b.distance) then
+				return a.distance < b.distance
+			else
+				return a.distance2D < b.distance2D
+			end
+		end)
 	end
 	
 	return mapData
@@ -121,59 +165,61 @@ end
 
 -- Needs to be called when a new zone is beeing entered!
 function gw2_datamanager.UpdateLevelMap()
-	local mdata = gw2_datamanager.GetLocalMapData( Player:GetLocalMapID() )
-	if ( table.size(mdata) > 0 and table.size(mdata["floors"]) > 0 and table.size(mdata["floors"][0]) > 0) then
-		local data = mdata["floors"][0]
-		-- tasks & sectors have 2D Map coords and level info
-		local sectors = mdata["floors"][0]["sectors"]
-		local tasks = mdata["floors"][0]["tasks"]		
-		
-		gw2_datamanager.levelmap = {} -- Create a "2D - Levelmap/Table" which provides us an avg. level for all other entries in the zone
-		local id,entry = next (sectors)
-		while id and entry do			
-			local realpos = gw2_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
-			local position = { x=realpos[1], y=realpos[2], z=-2500}			
-			table.insert(gw2_datamanager.levelmap, { pos=position, level = entry["level"] } )			
-			id,entry = next(sectors,id)
+	gw2_datamanager.levelmap = {}
+	
+	local mdata = gw2_datamanager.GetLocalMapData(Player:GetLocalMapID())
+	
+	if(table.valid(mdata) and table.valid(mdata["floors"])) then
+		for _,floor in pairs(mdata["floors"]) do
+			local sectors = floor["sectors"]
+			local tasks = floor["tasks"]
+			
+			if(table.valid(sectors)) then
+				for _,sector in pairs(sectors) do
+					local realpos = gw2_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], sector["coord"])
+					local position = { x=realpos[1], y=realpos[2], z=-2500}			
+					table.insert(gw2_datamanager.levelmap, { pos = position, level = sector["level"] } )					
+				end
+			end
+			
+			if(table.valid(tasks)) then
+				for _,task in pairs(tasks) do
+					local realpos = gw2_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], task["coord"])
+					local position = { x=realpos[1], y=realpos[2], z=-2500}
+					table.insert(gw2_datamanager.levelmap, { pos = position, level = task["level"] } )						
+				end
+			end
 		end
-		
-		-- HEARTQUESTS
-		local id,entry = next (tasks)
-		while id and entry do			
-			local realpos = gw2_datamanager.recalc_coords(mdata["continent_rect"], mdata["map_rect"], entry["coord"])
-			local position = { x=realpos[1], y=realpos[2], z=-2500}
-			table.insert(gw2_datamanager.levelmap, { pos=position , level = entry["level"] } )			
-			id,entry = next(tasks,id)
-		end
-		d("Generated LevelMap with "..table.size(gw2_datamanager.levelmap).. " Entries")
 	end
+	
+	d("Generated levelmap with "..table.size(gw2_datamanager.levelmap).. " entries")
 end
 
 -- picks a random point of interest in the map within levelrange +/-2, tries to get the z axis by a mesh check 
-function gw2_datamanager.GetRandomPositionInLevelRange( level )
-	local pPos = Player.pos
-	if ( table.size(gw2_datamanager.levelmap) > 0 and table.size(pPos) > 0) then
-		local possiblelocations = {}		
-		local id,entry = next (gw2_datamanager.levelmap)
-		while id and entry do
-			if ( entry.level <= level + 2 and Distance2D(entry.pos.x, entry.pos.y, pPos.x, pPos.y) > 2500 ) then
+function gw2_datamanager.GetRandomPositionInLevelRange(level)
+	if (table.valid(gw2_datamanager.levelmap) and table.valid(ml_global_information.Player_Position)) then
+		local possiblelocations = {}
+		local pPos = ml_global_information.Player_Position
+		for _,entry in pairs(gw2_datamanager.levelmap) do
+			if (entry.level <= level + 2 and Distance2D(entry.pos.x, entry.pos.y, pPos.x, pPos.y) > 2500 ) then
 				local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( entry.pos )
 				if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
-					table.insert(possiblelocations, pos3D )
+					table.insert(possiblelocations, pos3D)
 				end
-			end
-			id,entry = next(gw2_datamanager.levelmap,id)
+			end		
 		end
 		
-		if ( table.size(possiblelocations) > 0 ) then
-			local i = math.random(1,table.size(possiblelocations))
+		local n_possiblelocations = table.size(possiblelocations)
+		if(n_possiblelocations > 0) then
+			local i = math.random(1,n_possiblelocations)
 			return possiblelocations[i]
 		else
-			d("No possible random locations to goto found")
+			d("No possible random locations to go to found")
 		end
 	else
 		d("gw2_datamanager.levelmap is empty!")
 	end
+	
 	return nil
 end
 
