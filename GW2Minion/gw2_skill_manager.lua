@@ -2,19 +2,17 @@
 -- Creator: Jorith -- shamefully now, will get this mess cleaned once done :P
 gw2_skill_manager = {}
 gw2_skill_manager.toolTip = true
-gw2_skill_manager.PlayerProfession = 10
+gw2_skill_manager.PlayerName = "None"
 gw2_skill_manager.paths = { [1] = GetStartupPath() .. [[\LuaMods\GW2Minion\SkillManagerProfiles\]]}  -- allowing others to add profiles from their own folders
 gw2_skill_manager.currentSkillbarSkills = {}
 gw2_skill_manager.profile = nil
 gw2_skill_manager.profileList = {}
--- these list are order sensitive as "key" number is saved!!
 gw2_skill_manager.engineerKits = {"None", "BombKit", "FlameThrower", "GrenadeKit", "ToolKit", "ElixirGun", "EliteMortarKit",}
 gw2_skill_manager.elementalistAttunements = {"None", "Fire", "Water", "Air", "Earth",}
 gw2_skill_manager.relativePosition = {"None", "Behind", "In-front", "Flanking",}
 gw2_skill_manager.combatState = {"Either", "InCombat", "OutCombat",}
 gw2_skill_manager.movementState = {"Either", "Moving", "NotMoving",}
 gw2_skill_manager.targetType = {"Either", "Character", "Gadget",}
--- end of order sensitive tables.
 gw2_skill_manager.mainWindow = {name = "Skill Manager", open = false, visible = true, size = {x = 0, y = 0,}, pos = {x = 0, y = 0,},}
 gw2_skill_manager.profileWindow = {name = "Profile", open = false, visible = true, size = {x = 0, y = 0,}, pos = {x = 0, y = 0,},}
 gw2_skill_manager.skillWindow = {name = "Skill", open = false, visible = true, size = {x = 0, y = 0,}, pos = {x = 0, y = 0,}, prio = 0,}
@@ -129,6 +127,7 @@ function gw2_skill_manager.ModuleInit()
 	if (Settings.GW2Minion.gCurrentProfile == nil) then
 		Settings.GW2Minion.gCurrentProfile = {}
 	end
+	--gw2_skill_manager.profileList = gw2_skill_manager:GetProfileList()
 	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SKILLMGR", name = "Skill MGR", onClick = function() gw2_skill_manager.mainWindow.open = not gw2_skill_manager.mainWindow.open end, tooltip = "Click to open \"Skill Manager\" window."},"GW2MINION##MENU_HEADER")
 end
 RegisterEventHandler("Module.Initalize",gw2_skill_manager.ModuleInit)
@@ -422,6 +421,21 @@ function gw2_skill_manager.profileWindow.Draw(event,ticks)
 							GUI:PushStyleColor(GUI.Col_Button,color[1],color[2],color[3]*1.3,1)
 							GUI:PushStyleColor(GUI.Col_ButtonHovered,color[1],color[2],color[3]*1.3,1)
 						end
+						-- possible change to prio change?
+						--[[if (skill.tmp.moving and not skill.tmp.dragging) then
+							local textSize = GUI:CalcTextSize("0000")
+							GUI:PushItemWidth(textSize)
+							GUI:SetKeyboardFocusHere(1)
+							local newPrio,changed = GUI:InputInt("##skillprioinputint"..priority,skill.tmp.newPriority,0,0,GUI.InputTextFlags_EnterReturnsTrue)
+							GUI:PopItemWidth()
+							if (not GUI:IsItemActive() or (changed and gw2_skill_manager.profile:MoveSkill(priority,newPrio))) then
+								if (gw2_skill_manager.skillWindow.prio == priority) then
+									gw2_skill_manager.skillWindow.prio = newPrio
+								end
+								skill.tmp.newPriority = 0
+								skill.tmp.moving = false
+							end
+						else]]
 						if (GUI:Button(priority .. "##skillpriobutton", GUI:CalcTextSize("0000"),20)) then
 							skill.tmp.newPriority = priority
 							skill.tmp.moving = true
@@ -554,7 +568,7 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 
 			-- skill data.
 			-- skill list child keeps scrolling in this erea.
-			if (GUI:BeginChild("##gw2sm-skillinfo", GUI:GetContentRegionAvailWidth(), 0, true)) then -- BUG: No border on child causes small layout glitch with scrollbars.
+			if (GUI:BeginChild("##gw2sm-skillinfo", 0, 0, true)) then -- BUG: No border on child causes small layout glitch with scrollbars.
 				GUI:SetNextTreeNodeOpened(true, GUI.SetCond_Appearing)
 				if (GUI:CollapsingHeader(GetString("skill"))) then
 					GUI:Columns(2, "skillinfocolumn", false)
@@ -721,10 +735,6 @@ RegisterEventHandler("Gameloop.Draw", gw2_skill_manager.skillWindow.Draw)
 function gw2_skill_manager:NewProfile(profileName)
 	if (GetGameState() == 16 and string.valid(profileName) and profileName ~= "None") then
 		profileName = string.gsub(profileName,'%W','')
-		--[[local list = self:GetProfileList()
-		for _,name in pairs(list.nameList) do
-			if (name == profileName) then return self:GetProfile(profileName) end
-		end]]
 		local newProfile = {
 			name = profileName,
 			profession = ml_global_information.Player_Profession,
@@ -745,14 +755,7 @@ function gw2_skill_manager:GetProfile(profileName)
 			local profile = persistence.load(path .. profileName .. ".lua")
 			if (profile) then
 				profile = inheritTable(profilePrototype, profile)
-				
-				---temp update profile boolean crap
-				
-				
-				
-				---end
-				
-				for prio,skill in ipairs(profile.skills) do
+				for prio,skill in ipairs(profile.skills) do -- temp update all wrong settings. "1" vs true, "0" vs false
 					for id,entry in pairs(skill) do
 						for k,v in pairs(entry) do
 							if (v == "1" or v == "0") then
@@ -777,13 +780,13 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- update profile
-function gw2_skill_manager:UpdateProfileList()
-	if (GetGameState() == 16 and Player.profession ~= gw2_skill_manager.PlayerProfession) then
-		if (Settings.GW2Minion.gCurrentProfile[Player.name] == nil) then
-			Settings.GW2Minion.gCurrentProfile[Player.name] = "GW2Minion"
+function gw2_skill_manager:DetectCharacterChange()
+	if (GetGameState() == 16 and ml_global_information.Player_Name ~= gw2_skill_manager.PlayerName) then
+		if (Settings.GW2Minion.gCurrentProfile[ml_global_information.Player_Name] == nil) then
+			Settings.GW2Minion.gCurrentProfile[ml_global_information.Player_Name] = "GW2Minion"
 			Settings.GW2Minion.gCurrentProfile = Settings.GW2Minion.gCurrentProfile
 		end
-		gw2_skill_manager.PlayerProfession = Player.profession
+		gw2_skill_manager.PlayerName = ml_global_information.Player_Name
 		gw2_skill_manager.profile = gw2_skill_manager:GetProfile(Settings.GW2Minion.gCurrentProfile[ml_global_information.Player_Name])
 		gw2_skill_manager.profileList = gw2_skill_manager:GetProfileList()
 	end
@@ -1969,7 +1972,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function gw2_skill_manager.OnUpdate(ticks)
-	gw2_skill_manager:UpdateProfileList()
+	gw2_skill_manager:DetectCharacterChange()
 	gw2_skill_manager:UpdateCurrentSkillbarSkills()
 	gw2_skill_manager:DetectSkills()
 	gw2_skill_manager:Use()
