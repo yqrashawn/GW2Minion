@@ -111,7 +111,29 @@ function gw2minion.Init()
 			
 				
 	end
-
+	
+	if(ml_task_mgr) then
+		ml_task_mgr.min_level = 0
+		ml_task_mgr.max_level = 80 
+		ml_task_mgr.GetMapName = gw2_datamanager.GetMapName
+		ml_task_mgr.btreepath = GetStartupPath()..[[\LuaMods\GW2Minion\Behavior]]
+		ml_task_mgr.taskpath = GetStartupPath()..[[\LuaMods\GW2Minion\TaskManagerProfiles\]]
+		ml_task_mgr.Init()
+		
+		ml_task_mgr.AddTaskType("tm_grind", "GrindMode.bt", nil, {displayname = GetString("grindMode")})
+		ml_task_mgr.AddTaskType("tm_gather", "GatherMode.bt", nil, {displayname = GetString("gatherMode")})
+		ml_task_mgr.AddTaskType("tm_moveto", "blank.st", nil, {allowpretasks = true; displayname = GetString("movetolocation")})
+		ml_task_mgr.AddTaskType("tm_generic", "blank.st", nil, {allowpretasks = true; allowposttasks = true; allowsubtasks = true; displayname = GetString("blanktask")})
+		
+		ml_task_mgr.AddSubTaskType("tm_st_movetomultiple", "tm_MoveToMultiple.st", nil, {displayname = GetString("movetonmultiplelocations")})
+		ml_task_mgr.AddSubTaskType("tm_st_moveto", "tm_MoveTo.st", nil, {displayname = GetString("movetolocation")})
+		ml_task_mgr.AddSubTaskType("tm_st_interact", "tm_Interact.st", nil, {displayname = GetString("interact")})
+		ml_task_mgr.AddSubTaskType("tm_st_fightaggro", "HandleAggro.st", nil, {displayname = GetString("fightaggro")})
+		ml_task_mgr.AddSubTaskType("tm_st_killspecific", "tm_CombatHandler.st", nil, {displayname = GetString("killspecific")})
+		ml_task_mgr.AddSubTaskType("tm_st_hqstatus", "tm_CheckHQStatus.st", nil, {displayname = GetString("checkhqstatus")})
+		ml_task_mgr.AddSubTaskType("tm_st_talk", "tm_Talk.st", nil, {displayname = GetString("talk")})
+		ml_task_mgr.AddSubTaskType("tm_st_changemesh", "tm_ChangeMesh.st", nil, {displayname = GetString("changemesh")})		
+	end
 end
 RegisterEventHandler("Module.Initalize",gw2minion.Init)
 
