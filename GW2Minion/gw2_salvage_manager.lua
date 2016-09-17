@@ -7,19 +7,24 @@ gw2_salvage_manager.singleItemList = {list = {}, nameList = {}, currID = 1,}
 gw2_salvage_manager.inventoryItemList = {list = {}, nameList = {}, currID = 1,}
 gw2_salvage_manager.salvageKitList = {
 	list = {
-		{name = GetString("rarityNone"),		id = "none",},
+		-- none kit
+		{name = GetString("none"),				id = "none",			itemid = "none",	rarity = 0,},	-- No kit placeholder
+		-- normal kits
 		{name = GetString("crudeKit"),			id = "crudekit",		itemid = 23038,		rarity = 0,},	-- Crude Salvage Kit (rarity 1)
 		{name = GetString("basicKit"),			id = "basickit",		itemid = 23040,		rarity = 1,},	-- Basic Salvage Kit (rarity 1)
 		{name = GetString("fineKit"),			id = "finekit",			itemid = 23041,		rarity = 2,},	-- Fine (rarity 2)
 		{name = GetString("journeymanKit"),		id = "journeymankit",	itemid = 23042,		rarity = 3,},	-- Journeyman (rarity 3)
 		{name = GetString("masterKit"),			id = "masterkit",		itemid = 23043,		rarity = 4,},	-- Master (rarity 4)
+		-- special kits
 		{name = GetString("mysticKit"),			id = "mystickit",		itemid = 23045,		rarity = 4,},	-- Mystic Kit (rarity 4)
 		{name = GetString("copperfedKit"),		id = "copperfedkit",	itemid = 44602,		rarity = 1,},	-- Copper-Fed Kit (rarity 1)
 		{name = GetString("silverfedKit"),		id = "silverfedkit",	itemid = 67027,		rarity = 4,},	-- Silver-Fed Kit (rarity 4)
 		{name = GetString("blacklionKit"),		id = "blacklionkit",	itemid = 19986,		rarity = 5,},	-- Black Lion Kit (Rarity 5)
 	},
-	nameList = {},
-	idList = {},
+	kitlist = {}, -- [itemID] = {name = stringid, rarity = rarity}
+	nameList = {}, -- [key] = name
+	savenameList = {}, -- [key] = stringid --> could acces list.id instead. 1 extra table makes more readable and no overhead.
+	saveidList = {}, -- [stringid] = key
 	currID = 1,
 }
 gw2_salvage_manager.tempFilter = {
@@ -131,6 +136,7 @@ function gw2_salvage_manager.mainWindow.Draw(event,ticks)
 						rarity = {Common = false, Fine = false, Masterwork = false, Rare = false, Exotic = false},
 						itemType = {Armor = false, Back = false, Bag = false, Consumable = false, Container = false, CraftingMaterial = false, Gathering = false, Gizmo = false, MiniDeck = false, SalvageTool = false, Trinket = false, Trophy = false, UpgradeComponent = false, Weapon = false,},
 					}
+					gw2_salvage_manager.salvageKitList.currID = 1
 				end
 				if (GUI:IsItemHovered() and gw2_salvage_manager.toolTip) then
 					GUI:SetTooltip("Create a new filter.")
@@ -141,7 +147,7 @@ function gw2_salvage_manager.mainWindow.Draw(event,ticks)
 					if (gw2_salvage_manager.filterList.list[gw2_salvage_manager.filterList.currID] ~= nil) then
 						GUI:OpenPopup("##msalvagem-filterPopup")
 						gw2_salvage_manager.tempFilter = gw2_salvage_manager.filterList.list[gw2_salvage_manager.filterList.currID]
-						gw2_salvage_manager.salvageKitList.currID = gw2_salvage_manager.salvageKitList.idList[gw2_salvage_manager.tempFilter.preferedKit]
+						gw2_salvage_manager.salvageKitList.currID = gw2_salvage_manager.salvageKitList.saveidList[gw2_salvage_manager.tempFilter.preferedKit]
 					end
 				end
 				if (GUI:IsItemHovered() and gw2_salvage_manager.toolTip) then
@@ -167,7 +173,7 @@ function gw2_salvage_manager.mainWindow.Draw(event,ticks)
 					GUI:Text(GetString("preferedKit"))
 					GUI:SameLine(180)
 					gw2_salvage_manager.salvageKitList.currID = GUI:Combo("##msalvagem-filterprefkit",gw2_salvage_manager.salvageKitList.currID,gw2_salvage_manager.salvageKitList.nameList)
-					gw2_salvage_manager.tempFilter.preferedKit = gw2_salvage_manager.salvageKitList.list[gw2_salvage_manager.salvageKitList.currID].id
+					gw2_salvage_manager.tempFilter.preferedKit = gw2_salvage_manager.salvageKitList.savenameList[gw2_salvage_manager.salvageKitList.currID]
 					--rarity
 					GUI:AlignFirstTextHeightToWidgets()
 					GUI:Text(GetString("rarity"))
@@ -335,6 +341,7 @@ function gw2_salvage_manager.mainWindow.Draw(event,ticks)
 						name = "",
 						preferedKit = "None",
 					}
+					gw2_salvage_manager.salvageKitList.currID = 1
 				end
 				if (GUI:IsItemHovered() and gw2_salvage_manager.toolTip) then
 					GUI:SetTooltip("Add a new item.")
@@ -346,7 +353,7 @@ function gw2_salvage_manager.mainWindow.Draw(event,ticks)
 						GUI:OpenPopup("##msalvagem-itemPopup")
 						gw2_salvage_manager.inventoryItemListUpdate()
 						gw2_salvage_manager.tempSingleItem = gw2_salvage_manager.singleItemList.list[gw2_salvage_manager.singleItemList.currID]
-						gw2_salvage_manager.salvageKitList.currID = gw2_salvage_manager.salvageKitList.idList[gw2_salvage_manager.tempSingleItem.preferedKit]
+						gw2_salvage_manager.salvageKitList.currID = gw2_salvage_manager.salvageKitList.saveidList[gw2_salvage_manager.tempSingleItem.preferedKit]
 					end
 				end
 				if (GUI:IsItemHovered() and gw2_salvage_manager.toolTip) then
@@ -379,7 +386,7 @@ function gw2_salvage_manager.mainWindow.Draw(event,ticks)
 					GUI:Text(GetString("preferedKit"))
 					GUI:SameLine(150)
 					gw2_salvage_manager.salvageKitList.currID = GUI:Combo("##msalvagem-itemprefkit",gw2_salvage_manager.salvageKitList.currID,gw2_salvage_manager.salvageKitList.nameList)
-					gw2_salvage_manager.tempSingleItem.preferedKit = gw2_salvage_manager.salvageKitList.list[gw2_salvage_manager.salvageKitList.currID].id
+					gw2_salvage_manager.tempSingleItem.preferedKit = gw2_salvage_manager.salvageKitList.savenameList[gw2_salvage_manager.salvageKitList.currID]
 					-----------------------------------------------------------------------------------------------------------------------------------
 					GUI:Separator()
 					-----------------------------------------------------------------------------------------------------------------------------------
@@ -462,11 +469,11 @@ end
 
 -- Salvage list function here.
 function gw2_salvage_manager.salvageKitListUpdate()
-	gw2_salvage_manager.salvageKitList.nameList = {}
-	gw2_salvage_manager.salvageKitList.idList = {}
-	for id,kit in ipairs(gw2_salvage_manager.salvageKitList.list) do
+	for id,kit in pairs(gw2_salvage_manager.salvageKitList.list) do
+		gw2_salvage_manager.salvageKitList.kitlist[kit.itemid] = {name = kit.id; rarity = kit.rarity}
 		table.insert(gw2_salvage_manager.salvageKitList.nameList,kit.name)
-		gw2_salvage_manager.salvageKitList.idList[kit.id] = id
+		table.insert(gw2_salvage_manager.salvageKitList.savenameList,kit.id)
+		gw2_salvage_manager.salvageKitList.saveidList[kit.id] = id
 	end
 end
 
@@ -602,13 +609,13 @@ function gw2_salvage_manager.getBestTool(item)
 		local returnTool = nil
 		if (tList) then
 			for _,tool in pairs(tList) do
-				if ( gw2_salvage_manager.salvageKitList.list[tool.itemID] ~= nil ) then
+				if ( gw2_salvage_manager.salvageKitList.kitlist[tool.itemID] ~= nil ) then
 					-- Search for preftool
-					if ( gw2_salvage_manager.salvageKitList.list[tool.itemID].name == item.preferedKit) then
+					if ( gw2_salvage_manager.salvageKitList.kitlist[tool.itemID].name == item.preferedKit) then
 						return tool
 					end
 					-- Search for besttool
-					if (returnTool == nil or math.abs(item.rarity - gw2_salvage_manager.salvageKitList.list[tool.itemID].rarity) < math.abs(item.rarity - returnTool.rarity)) then
+					if (returnTool == nil or math.abs(item.rarity - gw2_salvage_manager.salvageKitList.kitlist[tool.itemID].rarity) < math.abs(item.rarity - returnTool.rarity)) then
 						returnTool = tool
 					end
 				end
