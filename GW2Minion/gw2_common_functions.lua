@@ -43,34 +43,24 @@ end
 function gw2_common_functions.HasBuffs(entity, buffIDs)
     if ( entity ) then
 		local buffs = entity.buffs
-		if (table.valid(buffs) == false) then return false end
-
-			for _orids in StringSplit(tostring(buffIDs),",") do
-				local found = false
-				for _andid in StringSplit(_orids,"+") do
-					found = false
-					for i, buff in pairs(buffs) do
-
-						if (buff.id == tonumber(_andid)) then
-							found = true
-						end
-					end
-					if (not found) then
-						break
-					end
-				end
-				if (found) then
-					return true
-				end
-			end
+		if(table.valid(buffs)) then
+			return gw2_common_functions.BufflistHasBuffs(buffs, buffIDs)
+		end
 	end
     return false
 end
 
 function gw2_common_functions.BufflistHasBuffs(bufflist, buffIDs)
 
-	if (table.valid(bufflist) == false) then return false end
-
+	if(table.valid(bufflist) == false) then return false end
+	if(table.valid(buffIDs)) then
+		local buffstr = ""
+		for buffID,_ in pairs(buffIDs) do
+			buffstr = buffID .. "," .. buffstr
+		end
+		buffIDs = string.gsub(buffstr, ",$", "")
+	end
+	
 	for _orids in StringSplit(tostring(buffIDs),",") do
 		local found = false
 		for _andid in StringSplit(_orids,"+") do
@@ -104,6 +94,7 @@ function gw2_common_functions.CountConditions(bufflist)
 	end
 	return count
 end
+
 function gw2_common_functions.CountBoons(bufflist)
 	local count = 0
 	if ( bufflist ) then
@@ -166,12 +157,11 @@ function gw2_common_functions.FinishEnemy()
 					local target = Player:GetTarget()
 					if ( not target or target.id ~= entity.id ) then
 						Player:SetTarget(entity.id)
-					else
-						Player:Interact( entity.id )
-						ml_log("Finishing Enemy..")
-						ml_global_information.Wait(1000)
-						return true
 					end
+					Player:Interact( entity.id )
+					ml_log("Finishing Enemy..")
+					ml_global_information.Wait(1000)
+					return true
 				end
 			end
 		end
@@ -344,6 +334,53 @@ function gw2_common_functions.GetBestAggroTarget(healthstate)
 	end
 	return nil
 end
+
+function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
+	local filters = {
+		"aggro,onmesh,lowesthealth,los",
+		"aggro,onmesh,nearest",
+		"hostile,onmesh,nearest"
+	}
+	
+	if(table.valid(marker) and type(radius) == "number") then
+	
+		if(table.valid(objectivedetails) and objectivedetails.value1) then
+			local target = CharacterList:Get(objectivedetails.value1) or GadgetList:Get(objectivedetails.value1)
+			if(table.valid(target) and target.alive and target.attackable) then
+				return target
+			end
+		end
+		
+		local i,filter = next(filters)
+		while i and filter do
+			local target = gw2_common_functions.GetCharacterTargetExtended(filter)
+
+			if(table.valid(target)) then
+				local dist = Distance3DT(target.pos,marker.pos)
+
+				if(dist < radius) then
+					return target
+				end
+			end
+			
+			i,filter = next(filters,i)		
+		end
+		
+		local GList = GadgetList("hostile,attackable,onmesh,nearest")
+		if(table.valid(GList)) then
+			local _,gagdet = next(GList)
+			if(table.valid(gadget)) then
+				local dist = Distance3DT(gagdet.pos,marker.pos)
+				if(dist < radius) then
+					return gagdet
+				end
+			end
+		end
+	end
+	
+	return nil
+end
+
 function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthstate )
     if ( filterstring ) then
 		filterstring = filterstring..",attackable,noCritter,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters"))
