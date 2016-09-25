@@ -87,7 +87,9 @@ function gw2_unstuck.HandleStuck(mode)
 		-- Throttle to compensate for situations where the player shortly leaves the mesh (jumping/getting kicked outside etc.)
 		if ( TimeSince(gw2_unstuck.lastOnMeshTime) > 2000) then
 			d("[Unstuck]: Player not on Navmesh!")
-
+			if(gw2_unstuck.useWaypointTmr) then
+				d("[Unstuck]: Time until wp, "..(math.ceil((15000-TimeSince(gw2_unstuck.useWaypointTmr))/1000)).."s")
+			end
 			if ( mode == nil or mode == "combat") then
 				-- if the bot is started not on the mesh try to walk back onto the mesh
 				local p = NavigationManager:GetClosestPointOnMesh({ x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z })
@@ -332,7 +334,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 					local dir = math.random(4,5)
 					gw2_unstuck.jumpCount = gw2_unstuck.jumpCount + 1
 					Player:Evade(dir)
-				else
+				elseif(ml_global_information.Player_OnMesh) then
 					d("[Unstuck]: Jumping didnt help, setting avoidance area and walking somewhere else a bit")
 					gw2_unstuck.stuckthreshold = 200
 					gw2_obstacle_manager.AddAvoidanceArea({pos = ml_global_information.Player_Position, radius = 75, duration = 1200000 })
@@ -356,6 +358,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 						gw2_unstuck.antiStuckPos = p
 					end
 				end
+				gw2_unstuck.stuckthreshold = 300
 			elseif ( gw2_unstuck.stuckCount < 25 ) then
 				gw2_obstacle_manager.AddAvoidanceArea({pos = ml_global_information.Player_Position, radius = 120, duration = 2400000})
 				gw2_unstuck.TrackStuckPosition(ml_global_information.Player_Position)
@@ -364,7 +367,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 				Player:SetMovement(GW2.MOVEMENTTYPE.Backward)
 				gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] = true
 				ml_global_information.Wait( 2000 )
-				gw2_unstuck.stuckthreshold = 200
+				gw2_unstuck.stuckthreshold = 300
 				Player:Jump()
 			else
 				d("[Unstuck]: We are really really stuck this time...")
@@ -555,7 +558,7 @@ end
 function gw2_unstuck.Reset()
 	gw2_unstuck.lastPos = ml_global_information.Player_Position
 	gw2_unstuck.stuckTimer = ml_global_information.Now
-	gw2_unstuck.stuckCount = 0
+	gw2_unstuck.stuckCount = 10
 	gw2_unstuck.antiStuckPos = nil
 	gw2_unstuck.stuckPosition = nil
 	gw2_unstuck.jumpCount = 0
