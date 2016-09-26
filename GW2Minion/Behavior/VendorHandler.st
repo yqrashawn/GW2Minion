@@ -124,7 +124,6 @@ local tbl =
 	},
 	variables = 
 	{
-		expanded = true,
 		filename = "VendorHandler.st",
 		finishcode = "",
 		info = "Vendor / Repair",

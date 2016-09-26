@@ -73,8 +73,7 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
-								info = "",
+								info = "Death",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
 							},
@@ -87,7 +86,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "DownedHandler.st",
 								finishcode = "",
 								info = "Downed Handler",
@@ -108,11 +106,108 @@ local tbl =
 							variables = 
 							{
 								finishcode = "",
-								info = "",
+								info = "Finish enemies",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Alive ) then\t\n\t\tif ( Settings.GW2Minion.finishenemyassist == true and gw2_common_functions.FinishEnemy() == true ) then return end\n\n\t\tif(Settings.GW2Minion.smtargetmode == 1 ) then\n\t\t\t\tlocal target = Player:GetTarget()\n\t\t\t\tif(target and (target.alive or target.downed) and target.attackable) then\n\t\t\t\t\t\tgw2_skill_manager:Use(target.id)\n\t\t\t\tend\t\t\n\t\telse\n\t\t\tlocal target = gw2_common_functions.GetBestCharacterTargetForAssist()\t\t\t\n\t\t\tif(target and (target.alive or target.downed) and target.attackable) then\n\t\t\t\t\tgw2_skill_manager:Use(target.id)\n\t\t\tend\n\t\tend\n\t\tself:success()\nelse\t\n\t\tself:fail()\nend",
+								runcode = "if ( Settings.GW2Minion.finishenemyassist == true) then\n\t\tif(gw2_common_functions.FinishEnemy() == true) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()\n",
 								startcode = "",
-								xposoffset = 12,
+								xposoffset = 0,
+							},
+						},
+						
+						{
+							class = "Sequence",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "if(Settings.GW2Minion.smtargetmode == 1 ) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+										startcode = "",
+										xposoffset = 0,
+									},
+								},
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "local target = Player:GetTarget()\nif(target and (target.alive or target.downed) and target.attackable) then\n\t\tgw2_skill_manager:Use(target.id)\nend\nself:success()",
+										startcode = "",
+										xposoffset = 0,
+									},
+								},
+							},
+							variables = 
+							{
+								expanded = true,
+								info = "Manual target mode",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+								xposoffset = 0,
+							},
+						},
+						
+						{
+							class = "PrioritySelector",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "local target = gw2_common_functions.GetBestCharacterTargetForAssist()\t\t\t\nif(target and (target.alive or target.downed) and target.attackable) then\n\t\tcontext.combat_targetid = target.id\n\t\tcontext.combat_target = target\n\t\tcontext.combat_moveintocombatrange = Settings.GW2Minion.moveintocombatrange\nend\nself:fail()",
+										startcode = "",
+										xposoffset = 0,
+									},
+								},
+								
+								{
+									class = "BehaviorTree",
+									nodes = 
+									{
+									},
+									variables = 
+									{
+										expanded = true,
+										filename = "CombatHandler.st",
+										finishcode = "",
+										info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
+										menucode = "",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+										moveintocombatrange = false,
+										runcode = "",
+										startcode = "",
+										subtreeuicode = "",
+										xposoffset = 0,
+									},
+								},
+							},
+							variables = 
+							{
+								expanded = true,
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+								xposoffset = 0,
 							},
 						},
 					},
@@ -142,7 +237,7 @@ local tbl =
 		filename = "AssistMode.bt",
 		finishcode = "d(\"AssistMode Off\")\n\nml_global_information.Stop()",
 		info = "",
-		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetStringML(\"assistMode\"))) then\n\n\n\n\tif ( Settings.GW2Minion.smtargetmode == nil) then Settings.GW2Minion.smtargetmode = 1 end\n\tif ( Settings.GW2Minion.smmode == nil) then Settings.GW2Minion.smmode = 1 end\n\tif ( Settings.GW2Minion.moveintocombatrange == nil) then Settings.GW2Minion.moveintocombatrange = true end\n\tif ( Settings.GW2Minion.finishenemyassist == nil) then Settings.GW2Minion.finishenemyassist = true end\n\tif ( Settings.GW2Minion.assistusewaypoints == nil) then Settings.GW2Minion.assistusewaypoints = false end\n\n\n\tGUI:PushItemWidth(150)\n\tSettings.GW2Minion.smtargetmode = GUI:Combo(GetString(\"sMtargetmode\"),Settings.GW2Minion.smtargetmode,{\"None\",\"LowestHealth\",\"Closest\",\"Biggest Crowd\",})\n\tSettings.GW2Minion.smmode = GUI:Combo(GetString(\"sMmode\"),Settings.GW2Minion.smmode,{\"Everything\",\"Players Only\",})\n\tGUI:PopItemWidth()\n\n\n\tSettings.GW2Minion.moveintocombatrange = GUI:Checkbox(GetString(\"smMoveIntoCombatRange\"),Settings.GW2Minion.moveintocombatrange)\n\tSettings.GW2Minion.finishenemyassist = GUI:Checkbox(GetString(\"AutoStomp\"),Settings.GW2Minion.finishenemyassist)\n\tSettings.GW2Minion.assistusewaypoints = GUI:Checkbox(GetString(\"useWaypoints\"),Settings.GW2Minion.assistusewaypoints)\n\tGUI:TreePop()\nend",
+		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetStringML(\"assistMode\"))) then\n\t\tif ( Settings.GW2Minion.smtargetmode == nil) then Settings.GW2Minion.smtargetmode = 1 end\n\t\tif ( Settings.GW2Minion.smmode == nil) then Settings.GW2Minion.smmode = 1 end\n\t\tif ( Settings.GW2Minion.moveintocombatrange == nil) then Settings.GW2Minion.moveintocombatrange = true end\n\t\tif ( Settings.GW2Minion.finishenemyassist == nil) then Settings.GW2Minion.finishenemyassist = true end\n\t\tif ( Settings.GW2Minion.assistusewaypoints == nil) then Settings.GW2Minion.assistusewaypoints = false end\n\n\n\t\tGUI:PushItemWidth(150)\n\t\tSettings.GW2Minion.smtargetmode = GUI:Combo(GetString(\"sMtargetmode\"),Settings.GW2Minion.smtargetmode,{\"None\",\"LowestHealth\",\"Closest\",\"Biggest Crowd\",})\n\t\tSettings.GW2Minion.smmode = GUI:Combo(GetString(\"sMmode\"),Settings.GW2Minion.smmode,{\"Everything\",\"Players Only\",})\n\t\tGUI:PopItemWidth()\n\n\n\t\tSettings.GW2Minion.moveintocombatrange = GUI:Checkbox(GetString(\"smMoveIntoCombatRange\"),Settings.GW2Minion.moveintocombatrange)\n\t\tSettings.GW2Minion.finishenemyassist = GUI:Checkbox(GetString(\"AutoStomp\"),Settings.GW2Minion.finishenemyassist)\n\t\tSettings.GW2Minion.assistusewaypoints = GUI:Checkbox(GetString(\"useWaypoints\"),Settings.GW2Minion.assistusewaypoints)\n\t\tif(GUI:IsItemHovered()) then\n\t\t\t\tGUI:SetTooltip(\"On death\")\n\t\tend\n\t\tGUI:TreePop()\nend",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Game State: '..tostring(ml_global_information.GameState))",
 		runcode = "-- SM backwards compatibily fix \ngBotMode = GetString(\"assistMode\")\n\t",
 		startcode = "d(\"AssistMode On\")\nml_global_information.Start()",

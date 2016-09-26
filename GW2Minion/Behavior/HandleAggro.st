@@ -19,7 +19,7 @@ local tbl =
 						finishcode = "",
 						info = "Find Aggro Target and Set the aggro context.combat_targetid",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "local target = gw2_common_functions.GetBestAggroTarget()\nif (table.valid(target) and not ml_blacklist.CheckBlacklistEntry(GetString(\"monsters\"),target.contentID)) then\n\tlocal pdist = target.pathdistance\n\tif ( pdist > 0 ) then\n\t\tif(context.combat_targetid ~= target.id) then\n\t\t\t\tPlayer:StopMovement()\n\t\tend\n\t\tcontext.combat_targetid = target.id\n\t\tself:success()\n\t\treturn\n\tend\nend\nself:fail()\n",
+						runcode = "local target = gw2_common_functions.GetBestAggroTarget()\nif (table.valid(target) and not ml_blacklist.CheckBlacklistEntry(GetString(\"monsters\"),target.contentID)) then\n\tlocal pdist = target.pathdistance\n\tif ( pdist > 0 ) then\n\t\tif(context.combat_targetid ~= target.id) then\n\t\t\t\tPlayer:StopMovement()\n\t\tend\n\t\tcontext.combat_targetid = target.id\n\t\tcontext.combat_moveintocombatrange = true\n\t\tself:success()\n\t\treturn\n\tend\nend\nself:fail()\n",
 						startcode = "",
 						xposoffset = 0,
 					},
@@ -87,6 +87,7 @@ local tbl =
 	},
 	variables = 
 	{
+		expanded = true,
 		filename = "HandleAggro.st",
 		finishcode = "",
 		info = "Handle Aggro",

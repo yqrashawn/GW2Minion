@@ -129,6 +129,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								filename = "HandleAggro.st",
 								finishcode = "",
 								info = "Handle Aggro",
@@ -197,7 +198,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "AttackTargets.st",
 								finishcode = "",
 								info = "Find and Attack Enemies",

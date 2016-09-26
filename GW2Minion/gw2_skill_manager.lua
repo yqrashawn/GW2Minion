@@ -940,16 +940,14 @@ function profilePrototype:Use(targetID)
 		self.tmp.target = {targetID = nil, timestamp = ml_global_information.Now,}
 	end
 	self:Swap(self.tmp.target.targetID)
-	if (self:CheckTargetBuffs(self.tmp.target.targetID)) then
-		for k,skill in ipairs(self.skills) do
-			if (skill:CanCast(self.tmp.target.targetID)) then
-				if (self:CheckTargetHealth(self.tmp.target.targetID)) then
-					skill:Cast(self.tmp.target.targetID)
-				end
-				break
-			end
+
+	for k,skill in ipairs(self.skills) do
+		if (skill:CanCast(self.tmp.target.targetID)) then
+			skill:Cast(self.tmp.target.targetID)
+			break
 		end
 	end
+
 	self:DoCombatMovement(self.tmp.target.targetID)
 	return true
 end
@@ -1209,47 +1207,6 @@ function profilePrototype:GetSkillByID(skillid)
 		end
 	end
 	return
-end
-
--- Check Target Health.
-function profilePrototype:CheckTargetHealth(targetID)
-	local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
-	if (table.valid(target) and target.id ~= Player.id) then
-		if (target.id ~= self.tmp.targetCheck.id or target.contentid ~= self.tmp.targetCheck.contentid) then
-			self.tmp.targetCheck = {
-				id = target.id,
-				contentid = target.contentid,
-				health = target.health,
-				lastTicks = ml_global_information.Now,
-			}
-		elseif (ml_global_information.Now - self.tmp.targetCheck.lastTicks > 2500) then
-			if (target.health.percent > (self.tmp.targetCheck.health.percent + 25) or (ml_global_information.Now - self.tmp.targetCheck.lastTicks > 15000 and target.health.percent > 90)) then
-				d("!!!!!!!!!!!!!!! TARGET BLACKLISTED, NOT DYING !!!!!!!!!!!!!!!")
-				ml_blacklist.AddBlacklistEntry(GetString("monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
-				return false
-			end
-			self.tmp.targetCheck = {
-				id = target.id,
-				contentid = target.contentid,
-				health = target.health,
-				lastTicks = ml_global_information.Now,
-			}
-		end
-	end
-	return true
-end
-
--- Check Target Buffs.
-function profilePrototype:CheckTargetBuffs(targetID)
-	local target = CharacterList:Get(targetID) or GadgetList:Get(targetID)
-	if (table.valid(target) and target.id ~= Player.id) then
-		if (gw2_common_functions.BufflistHasBuffs(target.buffs,self.tmp.targetBlacklistBuffs)) then
-			d("!!!!!!!!!!!!!!! TARGET BLACKLISTED, INVUNRABLE BUFFS !!!!!!!!!!!!!!!")
-			ml_blacklist.AddBlacklistEntry(GetString("monsters"),target.contentid,target.name,ml_global_information.Now+30000)
-			return false
-		end
-	end
-	return true
 end
 
 -- Swap pet.
