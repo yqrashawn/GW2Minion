@@ -335,6 +335,7 @@ function gw2_common_functions.GetBestAggroTarget(healthstate)
 	return nil
 end
 
+
 function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 	local filters = {
 		"aggro,onmesh,lowesthealth,los",
@@ -407,6 +408,18 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthst
 		local id,entry = next(TargetList)
 		if (id and entry ) then
 			return entry
+		end
+	end
+	return nil
+end
+
+-- Downed state target needs to be a bit different and ignore assist settings
+function gw2_common_functions.GetBestDownstateTarget()
+	local CList = CharacterList("aggro,nearest,lowesthealth,los,maxdistance=900,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+	if(table.valid(CList)) then
+		local _,target = next(CList)
+		if(table.valid(target)) then
+			return target
 		end
 	end
 	return nil

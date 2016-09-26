@@ -86,6 +86,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								filename = "DownedHandler.st",
 								finishcode = "",
 								info = "Downed Handler",
@@ -153,7 +154,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								info = "Manual target mode",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
@@ -204,7 +204,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
 								xposoffset = 0,
@@ -216,7 +215,7 @@ local tbl =
 						expanded = true,
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
-						xposoffset = 6.0444444444444,
+						xposoffset = 0,
 					},
 				},
 			},
