@@ -58,21 +58,22 @@ function gw2_common_functions.BufflistHasBuffs(bufflist, buffIDs)
 		for buffID,_ in pairs(buffIDs) do
 			buffstr = buffID .. "," .. buffstr
 		end
-		buffIDs = string.gsub(buffstr, ",$", "")
 	end
 	
 	for _orids in StringSplit(tostring(buffIDs),",") do
 		local found = false
-		for _andid in StringSplit(_orids,"+") do
-				found = false
-			for i, buff in pairs(bufflist) do
+		if(string.valid(_orids)) then
+			for _andid in StringSplit(_orids,"+") do
+					found = false
+				for i, buff in pairs(bufflist) do
 
-				if (buff.id == tonumber(_andid)) then
-					found = true
+					if (buff.id == tonumber(_andid)) then
+						found = true
+					end
 				end
-			end
-			if (not found) then
-				break
+				if (not found) then
+					break
+				end
 			end
 		end
 		if (found) then

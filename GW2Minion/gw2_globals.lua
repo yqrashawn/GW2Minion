@@ -46,6 +46,7 @@ ml_global_information.ImmobilizeConditions = {
 	[727] = "Immobilize",
 	[791] = "Fear",
 	[872] = "Stun",
+	[833] = "Daze",
 	[27705] = "Taunt",
 	[15090] = "Petrified 1",
 	[16963] = "Petrified 2"
