@@ -1291,12 +1291,13 @@ gw2_skill_manager.SkillTracker = {
 			[30800] ={ name = "EliteMortarKit", range = { [GW2.SKILLBARSLOT.Slot_1] = 1500, [GW2.SKILLBARSLOT.Slot_2] = 1500, [GW2.SKILLBARSLOT.Slot_3]= 1500, [GW2.SKILLBARSLOT.Slot_4] = 1500, [GW2.SKILLBARSLOT.Slot_5] = 1500	}, cooldowns = { }, inuse = false},
 	},
 	stowkits = {
-		[6110] = 6020, -- Stow GrenadeKit
-		[6111] = 5812, -- Stow BombKit
-		[6114] = 5927, -- Stow FlameThrower
-		[6115] = 5933, -- Stow ElixirGun
-		[6113] = 5904, -- Stow ToolKit
-		[29905] = 30800, -- Stow EliteMortarKit
+		{kitid = 6020, stowid = 6110}; -- Stow GrenadeKit
+		{kitid = 5805, stowid = 6110}; -- Stow GrenadeKit
+		{kitid = 5812, stowid = 6111}; -- Stow BombKit
+		{kitid = 5927, stowid = 6114}; -- Stow FlameThrower
+		{kitid = 5933, stowid = 6115}; -- Stow ElixirGun
+		{kitid = 5904, stowid = 6113}; -- Stow ToolKit
+		{kitid = 30800, stowid = 29905}; -- Stow EliteMortarKit
 	},
 }
 -- for the player:cast(), so it knows which entry to modify 
@@ -1311,9 +1312,9 @@ function gw2_skill_manager.GetCurrentSkillTrackerEntry()
 	
 	-- Engineer
 	elseif (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then		
-		for stowID,kitID in pairs(gw2_skill_manager.SkillTracker.stowkits) do
-			if ( table.valid(gw2_skill_manager.currentSkillbarSkills[stowID]) ) then
-				return gw2_skill_manager.SkillTracker.kits[kitID]
+		for _,stowskill in pairs(gw2_skill_manager.SkillTracker.stowkits) do
+			if ( table.valid(gw2_skill_manager.currentSkillbarSkills[stowskill.stowid]) ) then
+				return gw2_skill_manager.SkillTracker.kits[stowskill.kitid]
 			end
 		end
 	end
@@ -1365,17 +1366,17 @@ function gw2_skill_manager.UpdateSkillTrackerData( )
 	
 -- Engineer Kits
 	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
-		for stowID,kitID in pairs(gw2_skill_manager.SkillTracker.stowkits) do
-			if ( table.valid(gw2_skill_manager.currentSkillbarSkills[stowID]) ) then
+		for _,stowskill in pairs(gw2_skill_manager.SkillTracker.stowkits) do
+			if ( table.valid(gw2_skill_manager.currentSkillbarSkills[stowskill.stowid]) ) then
 				gw2_skill_manager.SkillTracker.kits[kitID].inuse = true
 				-- We have this kit equipped currently, update the data
 				--d("USING : "..gw2_skill_manager.SkillTracker.kits[kitID].name)
-				if (table.valid(gw2_skill_manager.SkillTracker.kits[kitID])) then 
+				if (table.valid(gw2_skill_manager.SkillTracker.kits[stowskill.kitid])) then 
 					
 					-- Find skill.slot 1 - 5 in gw2_skill_manager.currentSkillbarSkills and update our SkillTracker data
 					for _skillID,skill in pairs(gw2_skill_manager.currentSkillbarSkills) do
 						if ( skill.slot >= GW2.SKILLBARSLOT.Slot_1 and skill.slot <= GW2.SKILLBARSLOT.Slot_5) then 
-							gw2_skill_manager.RefreshSkillTrackerEntry(gw2_skill_manager.SkillTracker.kits[kitID], skill.slot, skill)
+							gw2_skill_manager.RefreshSkillTrackerEntry(gw2_skill_manager.SkillTracker.kits[stowskill.kitid], skill.slot, skill)
 						end
 					end
 				else
@@ -1383,10 +1384,10 @@ function gw2_skill_manager.UpdateSkillTrackerData( )
 				end
 				
 			else
-				if ( table.valid(gw2_skill_manager.currentSkillbarSkills[kitID]) ) then
-					gw2_skill_manager.SkillTracker.kits[kitID].inuse = true
+				if ( table.valid(gw2_skill_manager.currentSkillbarSkills[stowskill.kitid]) ) then
+					gw2_skill_manager.SkillTracker.kits[stowskill.kitid].inuse = true
 				else
-					gw2_skill_manager.SkillTracker.kits[kitID].inuse = false
+					gw2_skill_manager.SkillTracker.kits[stowskill.kitid].inuse = false
 				end
 			end
 		end
