@@ -18,6 +18,7 @@ ml_global_information.ConditionsEnum = {
 	[723] = "Poison",
 	[890] = "Revealed", --you cannot stealth
 	[872] = "Stun",
+	[27705] = "Taunt",
 };
 
 ml_global_information.BoonsEnum = {
@@ -35,6 +36,28 @@ ml_global_information.BoonsEnum = {
 	[5891] = "Thumper Toggle",
 };
 
+ml_global_information.SlowConditions = {
+	[721] = "Cripple",
+	[722] = "Chill",
+	[18621] = "Ichor"
+}
+
+ml_global_information.ImmobilizeConditions = {
+	[727] = "Immobilize",
+	[791] = "Fear",
+	[872] = "Stun",
+	[833] = "Daze",
+	[27705] = "Taunt",
+	[15090] = "Petrified 1",
+	[16963] = "Petrified 2"
+}
+
+ml_global_information.InvulnerabilityConditions = {
+	[762] = "Determined",
+	[903] = "Righteous Indignation",
+	[36143] = "Destruction Immunity",
+}
+
 function ml_global_information.Start()
 	gw2_unstuck.Start()
 end
@@ -42,7 +65,7 @@ end
 -- Stops the Bot
 function ml_global_information.Stop()
     Player:StopMovement()
-	gw2_unstuck.Reset()
+	gw2_unstuck.Stop()
 	ml_mesh_mgr.ResetOMC()
 	ml_mesh_mgr.OMCStartPositionReached = false
 end

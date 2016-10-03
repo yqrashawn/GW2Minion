@@ -70,6 +70,7 @@ local tbl =
 					},
 					variables = 
 					{
+						expanded = true,
 						filename = "ReviveDeadPlayers.st",
 						finishcode = "",
 						info = "Revive dead players",
@@ -89,7 +90,6 @@ local tbl =
 					},
 					variables = 
 					{
-						expanded = true,
 						filename = "ReviveNPC.st",
 						finishcode = "",
 						info = "Revive dead NPCs",

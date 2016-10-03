@@ -35,7 +35,7 @@ local tbl =
 						finishcode = "",
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(gw2_sell_manager.active) then\n\t\tif(gw2_sell_manager.needToSell(true) and table.valid(gw2_sell_manager.getClosestSellMarker(true))) then\n\t\t\t\tcontext.sell_nearby = true\n\t\telse\n\t\t\t\tcontext.sell_nearby = false\n\t\tend\nend\n\nif(gw2_repair_manager.NeedToRepair(true) and table.valid(gw2_repair_manager.getClosestRepairMarker(true))) then\n\t\tcontext.repair_nearby = true\nelse\n\t\tcontext.repair_nearby = false\nend\n\nif((gw2_buy_manager.NeedToBuySalvageKits(true) or gw2_buy_manager.NeedToBuyGatheringTools(true)) and table.valid(gw2_buy_manager.getClosestBuyMarker(true))) then\n\t\tcontext.buy_nearby = true\nelse\n\t\tcontext.buy_nearby = false\nend\n\nself:success()",
+						runcode = "if(Settings.gw2_sell_manager.active) then\n\t\tcontext.sell_nearby = gw2_sell_manager.needToSell(true) and table.valid(gw2_sell_manager.getClosestSellMarker(true))\nend\n\ncontext.repair_nearby = gw2_repair_manager.NeedToRepair(true) and table.valid(gw2_repair_manager.getClosestRepairMarker(true))\n\nif(Settings.gw2_buy_manager.active) then\n\t\tcontext.buy_nearby = (gw2_buy_manager.NeedToBuySalvageKits(true) or gw2_buy_manager.NeedToBuyGatheringTools(true)) and table.valid(gw2_buy_manager.getClosestBuyMarker(true))\nend\n\nself:success()",
 						startcode = "",
 						xposoffset = 0,
 					},
@@ -53,7 +53,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "Repair.st",
 								finishcode = "",
 								info = "Repair\nOptional parameter:\ncontext.repair_nearby = true/false",
@@ -92,6 +91,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								filename = "Buy.st",
 								finishcode = "",
 								info = "Buy\nOptional parameter:\ncontext.buy_nearby = true/false",

@@ -17,9 +17,6 @@ gw2_unstuck.pathBlockingObject = nil
 gw2_unstuck.lastRayCastDetails = nil
 gw2_unstuck.moveDirSet = {[GW2.MOVEMENTTYPE.Forward] = false, [GW2.MOVEMENTTYPE.Backward] = false, [GW2.MOVEMENTTYPE.Left] = false, [GW2.MOVEMENTTYPE.Right] = false,}
 
-gw2_unstuck.slowConditions = "721,722,18621" -- Cripple, Chill, Ichor
-gw2_unstuck.immobilizeConditions = "727,791,872,27705,15090,16963" -- Immobilize, Fear, Stun, Taunt, Petrified 1, Petrified 2
-
 gw2_unstuck.manualBotModes = { [GetString("assistMode")] = true; [GetString("salvage")] = true; }
 
 gw2_unstuck.tickTimer = 0
@@ -28,9 +25,7 @@ gw2_unstuck.tickStuckCount = 0
 gw2_unstuck.tickMoveDirection = nil
 gw2_unstuck.tickMinStuckCount = math.random(300,420)
 
-gw2_unstuck.AvoidanceAreas = {}
-gw2_unstuck.Obstacles = {}
-  
+gw2_unstuck.trackedStuck = {}
   
 function gw2_unstuck.HandleStuck(mode)
 	-- MainThrottle
@@ -56,7 +51,7 @@ function gw2_unstuck.HandleStuck(mode)
 	end
 
 	-- Valid lastposition
-	if 	(gw2_unstuck.lastPos == nil) or (gw2_unstuck.lastPos and type(gw2_unstuck.lastPos) ~= "table") then
+	if 	(not table.valid(gw2_unstuck.lastPos)) then
 		gw2_unstuck.lastPos = ml_global_information.Player_Position
 		gw2_unstuck.lastResult = false
 		return gw2_unstuck.lastResult
@@ -73,7 +68,7 @@ function gw2_unstuck.HandleStuck(mode)
 	end
 	
 	-- Dont handle stuck when we cannot move because of some debuff
-	if ( gw2_common_functions.HasBuffs(Player, gw2_unstuck.immobilizeConditions) ) then
+	if ( gw2_common_functions.HasBuffs(Player, ml_global_information.ImmobilizeConditions) ) then
 		gw2_unstuck.lastOnMeshTime = ml_global_information.Now
 		gw2_unstuck.useWaypointTmr = ml_global_information.Now
 		return gw2_unstuck.lastResult
@@ -92,7 +87,9 @@ function gw2_unstuck.HandleStuck(mode)
 		-- Throttle to compensate for situations where the player shortly leaves the mesh (jumping/getting kicked outside etc.)
 		if ( TimeSince(gw2_unstuck.lastOnMeshTime) > 2000) then
 			d("[Unstuck]: Player not on Navmesh!")
-
+			if(gw2_unstuck.useWaypointTmr) then
+				d("[Unstuck]: Time until wp, "..(math.ceil((15000-TimeSince(gw2_unstuck.useWaypointTmr))/1000)).."s")
+			end
 			if ( mode == nil or mode == "combat") then
 				-- if the bot is started not on the mesh try to walk back onto the mesh
 				local p = NavigationManager:GetClosestPointOnMesh({ x=ml_global_information.Player_Position.x, y=ml_global_information.Player_Position.y, z=ml_global_information.Player_Position.z })
@@ -130,11 +127,12 @@ function gw2_unstuck.HandleStuck(mode)
 
 		-- PLAYER IS ON THE MESH
 		-- If an AntistuckPos was set, go there
-		if ( gw2_unstuck.antiStuckPos ~= nil and type(gw2_unstuck.antiStuckPos) == "table") then
-			if ( table.valid(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,gw2_unstuck.antiStuckPos.x,gw2_unstuck.antiStuckPos.y,gw2_unstuck.antiStuckPos.z))) then
+		if ( gw2_unstuck.antiStuckPos ~= nil and table.valid(gw2_unstuck.antiStuckPos)) then
+			local path = NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,gw2_unstuck.antiStuckPos.x,gw2_unstuck.antiStuckPos.y,gw2_unstuck.antiStuckPos.z)
+			if (table.valid(path)) then
 				newnodecount = NavigationManager:MoveTo(gw2_unstuck.antiStuckPos.x,gw2_unstuck.antiStuckPos.y,gw2_unstuck.antiStuckPos.z,20,false,false,false)
 				if ( newnodecount <= 0 ) then
-					ml_error("Unstuck.lua: Cant move to antiStuckPos")
+					ml_error("[Unstuck]: Can't move to anti stuck position")
 					gw2_unstuck.antiStuckPos = nil
 				else
 					gw2_unstuck.lastResult = true
@@ -149,7 +147,6 @@ function gw2_unstuck.HandleStuck(mode)
 		gw2_unstuck.lastOnMeshTime = ml_global_information.Now
 		gw2_unstuck.useWaypointTmr = ml_global_information.Now
 	end
-
 
 	gw2_unstuck.lastPos = ml_global_information.Player_Position
 
@@ -186,7 +183,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 
 	local StuckThreshOld = gw2_unstuck.stuckthreshold
 	if ( mode == "combat" ) then StuckThreshOld = gw2_unstuck.stuckthreshold - 25 end
-	if ( gw2_common_functions.HasBuffs(Player, gw2_unstuck.slowConditions)) then
+	if ( gw2_common_functions.HasBuffs(Player, ml_global_information.SlowConditions)) then
 		-- We only move half (or less) the distance with conditions that slow movement
 		StuckThreshOld = gw2_unstuck.stuckthreshold / 2
 	end
@@ -204,21 +201,20 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 
 		-- 	Try Jumping
 		if ( gw2_unstuck.stuckCount > stuckCountTreshold ) then
-			d("[Unstuck]: We are stuck.."..tostring(distmoved).. " < "..tostring(StuckThreshOld) .. " " .. gw2_unstuck.stuckCount)
+			d("[Unstuck]: We are stuck... Distmoved: "..tostring(round(distmoved,2)).. " < "..tostring(StuckThreshOld) .. ", stuckcount: " .. gw2_unstuck.stuckCount)
 			if ( gw2_unstuck.stuckCount < 12) then
 
 				-- check for doors n stuff
 
 				if ( gw2_unstuck.stuckCount > 2 and gw2_unstuck.stuckCount < 5) then
-					local hit,hitx,hity,hitz,a,b,c = raycast(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z, ml_global_information.Player_Position.x+(Player.pos.hx*400), ml_global_information.Player_Position.y+(Player.pos.hy*400), ml_global_information.Player_Position.z-55, 0)
+					local hit,hitx,hity,hitz,a,b,c = RayCast(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z, ml_global_information.Player_Position.x+(Player.pos.hx*400), ml_global_information.Player_Position.y+(Player.pos.hy*400), ml_global_information.Player_Position.z-55, 0)
 					if(hit) then	
-
 						local GList = ( GadgetList("maxdistance=3000"))
 						if (table.valid(GList)) then
 							local id, gadget  = next( GList )
 							local target = nil
 							while id and gadget and target == nil do
-								if(gadget.isUnknown8 == a) then
+								if(gadget.isunknown8 == a) then
 									target = gadget
 								end
 								id,gadget  = next(GList, id)
@@ -235,10 +231,10 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 								end
 							end
 				
-							if ( table.valid(target) and target.isGadget) then
+							if ( table.valid(target) and target.isgadget) then
 								if(gw2_unstuck.stuckCount == 3 and table.valid(gw2_unstuck.lastRayCastDetails) and Distance3D(gw2_unstuck.lastRayCastDetails.pos.x,gw2_unstuck.lastRayCastDetails.pos.y,gw2_unstuck.lastRayCastDetails.pos.z,hitx,hity,ml_global_information.Player_Position.z) < 100) then
 									d("[Unstuck]: We are stuck at the same object as last check.")
-									gw2_obstacle_manager.AddObstacleAtTarget(target, {radius = 75, duration = 600000 })
+									gw2_obstacle_manager.AddAvoidanceAreaAtTarget(target, {duration = 600000})
 									Player:StopMovement()
 									Player:SetMovement(GW2.MOVEMENTTYPE.Backward)
 									gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] = true
@@ -279,7 +275,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 									return gw2_unstuck.lastResult
 								end
 
-								if(target.interactable and target.isInInteractRange and gw2_unstuck.stuckCount == 3) then
+								if(target.interactable and target.isininteractrange and gw2_unstuck.stuckCount == 3) then
 									d("[Unstuck]: Path-Blocking Object found, trying to interact with it...")
 									Player:SetFacingExact(hitx,hity,hitz)
 									Player:StopMovement()
@@ -338,7 +334,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 					local dir = math.random(4,5)
 					gw2_unstuck.jumpCount = gw2_unstuck.jumpCount + 1
 					Player:Evade(dir)
-				else
+				elseif(ml_global_information.Player_OnMesh) then
 					d("[Unstuck]: Jumping didnt help, setting avoidance area and walking somewhere else a bit")
 					gw2_unstuck.stuckthreshold = 200
 					gw2_obstacle_manager.AddAvoidanceArea({pos = ml_global_information.Player_Position, radius = 75, duration = 1200000 })
@@ -362,16 +358,20 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 						gw2_unstuck.antiStuckPos = p
 					end
 				end
+				gw2_unstuck.stuckthreshold = 300
 			elseif ( gw2_unstuck.stuckCount < 25 ) then
-				gw2_obstacle_manager.AddObstacle({pos = ml_global_information.Player_Position, radius = 120, duration = 2400000})
-
+				gw2_obstacle_manager.AddAvoidanceArea({pos = ml_global_information.Player_Position, radius = 120, duration = 2400000})
+				gw2_unstuck.TrackStuckPosition(ml_global_information.Player_Position)
+				
 				Player:StopMovement()
 				Player:SetMovement(GW2.MOVEMENTTYPE.Backward)
 				gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] = true
 				ml_global_information.Wait( 2000 )
+				gw2_unstuck.stuckthreshold = 300
 				Player:Jump()
 			else
 				d("[Unstuck]: We are really really stuck this time...")
+				gw2_unstuck.TrackStuckPosition(ml_global_information.Player_Position)
 				gw2_unstuck.HandleStuck_UseWaypoint()
 			end
 		end
@@ -402,20 +402,18 @@ end
 -- Using a waypoint to handle stuck situations
 function gw2_unstuck.HandleStuck_UseWaypoint()
 
-	-- closest WP to partymembers ?
-
-	if ( ml_global_information.Now - gw2_unstuck.respawntimer < 30000 ) then
+	if ( gw2_unstuck.respawntimer and TimeSince(gw2_unstuck.respawntimer) < 30000 ) then
 		ml_error("[Unstuck]: We already used a Waypoint for unstuck 30 seconds ago, but are stuck again?!")
 		ml_error("[Unstuck]: Stopping bot...")
-		ml_global_information.Stop()		
-		--gw2minion.ToggleBot()
+		ml_global_information.Stop()
+		ml_bt_mgr.running = false
 	else
 		if ( not ml_global_information.Player_InCombat ) then
 			d("[Unstuck]: Trying to teleport to nearest Waypoint for unstuck..")
 			
 			if ( Inventory:GetInventoryMoney() > 200 ) then
 				local wp = gw2_common_functions.GetClosestWaypointToPos(ml_global_information.CurrentMapID,ml_global_information.Player_Position)
-				if(table.valid(wp) and wp.distance > 500) then		
+				if(table.valid(wp) and wp.distance > 500) then	
 					Player:StopMovement()
 					Player:TeleportToWaypoint(wp.id)
 					gw2_unstuck.respawntimer = ml_global_information.Now
@@ -470,17 +468,17 @@ function gw2_unstuck.HandleStuck_AttackObject()
 	end
 	
 	if(TimeSince(pbTarget.t) > 10000 and TimeSince(pbTarget.lastHealthCheck) > 5000) then
-		gw2_unstuck.pathBlockingObject.lastHealthCheck = ml_global_information.Now
+		pbTarget.lastHealthCheck = ml_global_information.Now
 		if(pbTarget.health <= target.health.current) then
 			d("[Unstuck]: Target not losing health")
 			gw2_unstuck.pathBlockingObject = nil
 			gw2_unstuck.lastResult = true
 			return gw2_unstuck.lastResult
 		end
-		gw2_unstuck.pathBlockingObject.health = target.health.current
+		pbTarget.health = target.health.current
 	end
 	
-	local maxRange = skill.maxRange > 150 and skill.maxRange or 150
+	local maxRange = skill.maxrange > 150 and skill.maxrange or 150
 	
 	local dist = Distance2D(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,pbTarget.pos.x,pbTarget.pos.y)
 	
@@ -504,7 +502,7 @@ function gw2_unstuck.HandleStuck_AttackObject()
 		Player:SetTarget(target.id)
 	end
 
-	if(Player:CanCast()) then
+	if(Player.castinfo.slot == ml_global_information.MAX_SKILLBAR_SLOTS) then
 		if(skill.isgroundtargeted) then
 			Player:CastSpell(skill.slot,pbTarget.pos.x,pbTarget.pos.y,target.pos.z)
 		else
@@ -515,25 +513,59 @@ function gw2_unstuck.HandleStuck_AttackObject()
 	return gw2_unstuck.lastResult
 end
 
+function gw2_unstuck.TrackStuckPosition(stuckpos)
+	local found = nil
+	
+	for _,pos in pairs(gw2_unstuck.trackedStuck) do
+		local dist = Distance3DT(pos,stuckpos)
+		if(dist < 100) then
+			found = pos
+		end
+	end
+	
+	if(found) then
+		found.count = found.count and found.count + 1 or 1
+		if(found.count > 5) then
+			ml_error("Stuck at the same position more then 25 times!")
+			ml_error(string.format("{x=%s;y=%s;z=%s}", round(found.x,2), round(found.y,2), round(found.z,2)))
+			ml_error("Stopping bot.")
+			ml_bt_mgr.running = false
+			Player:StopMovement()
+			ml_global_information.Stop()
+		end
+	else
+		table.insert(gw2_unstuck.trackedStuck, stuckpos)
+	end
+end
+
 function gw2_unstuck.Start()
-	gw2_unstuck.Reset()
+	gw2_unstuck.Stop()
 	d("[Unstuck]: Started")
+end
+
+function gw2_unstuck.Stop()
+	gw2_unstuck.lastRayCastDetails = nil
+	gw2_unstuck.lastGadgetID = nil
+
+	gw2_unstuck.lastOnMeshTime = ml_global_information.Now
+	gw2_unstuck.useWaypointTmr = ml_global_information.Now
+	
+	gw2_unstuck.trackedStuck = {}
+	
+	gw2_unstuck.Reset()
 end
 
 function gw2_unstuck.Reset()
 	gw2_unstuck.lastPos = ml_global_information.Player_Position
 	gw2_unstuck.stuckTimer = ml_global_information.Now
-	gw2_unstuck.stuckCount = 0
+	gw2_unstuck.stuckCount = 10
 	gw2_unstuck.antiStuckPos = nil
 	gw2_unstuck.stuckPosition = nil
 	gw2_unstuck.jumpCount = 0
 	gw2_unstuck.stuckthreshold = 45
-	gw2_unstuck.respawntimer = ml_global_information.Now
+	gw2_unstuck.respawntimer = nil
 	gw2_unstuck.pathBlockingObject = nil
 	gw2_unstuck.conversationTryCount = 0
-	gw2_unstuck.lastGadgetID = nil
-	gw2_unstuck.lastOnMeshTime = ml_global_information.Now
-	gw2_unstuck.useWaypointTmr = ml_global_information.Now
 	
 	if ( ml_global_information.Player_IsMoving and ml_global_information.Player_CanMove) then
 		if ( ml_global_information.Player_MovementDirections.backward and gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] ) then gw2_unstuck.moveDirSet[GW2.MOVEMENTTYPE.Backward] = false Player:UnSetMovement(GW2.MOVEMENTTYPE.Backward) end
@@ -547,44 +579,4 @@ function gw2_unstuck.ModuleInit()
 	d("gw2_unstuck:ModuleInit")
 end
 
-function gw2_unstuck.OnUpdateHandler(Event, ticks)
-	if(gBotRunning == "1" and not gw2_unstuck.manualBotModes[gBotMode] and TimeSince(gw2_unstuck.tickTimer) > 1000) then
-		gw2_unstuck.tickTimer = ticks
-		
-		if(gw2_unstuck.tickPosition) then
-			local distMoved = Distance3DT(gw2_unstuck.tickPosition,ml_global_information.Player_Position)
-			if(distMoved < 50) then
-				gw2_unstuck.tickStuckCount = gw2_unstuck.tickStuckCount + 1
-			else
-				if(gw2_unstuck.tickMoveDirection) then
-					Player:UnSetMovement(gw2_unstuck.tickMoveDirection)
-				end
-				gw2_unstuck.tickMoveDirection = nil
-				gw2_unstuck.tickStuckCount = 0
-				gw2_unstuck.tickMinStuckCount = math.random(300,420)
-			end
-		end
-		
-		if(gw2_unstuck.tickStuckCount > gw2_unstuck.tickMinStuckCount) then
-			d("[Unstuck]: Bot is running. But we dont seem to be moving.")
-			Player:StopMovement()
-			if(gw2_unstuck.tickStuckCount < gw2_unstuck.tickMinStuckCount+2) then
-				d("[Unstuck]: Trying to jump")
-				Player:Jump()
-			elseif(gw2_unstuck.tickStuckCount < gw2_unstuck.tickMinStuckCount+5) then
-				d("[Unstuck]: Trying some movement")
-				if(not gw2_unstuck.tickMoveDirection) then
-					gw2_unstuck.tickMoveDirection = math.random(0,3)
-				end
-
-				Player:SetMovement(gw2_unstuck.tickMoveDirection)
-				ml_global_information.Wait(500)
-			end
-		end
-		
-		gw2_unstuck.tickPosition = ml_global_information.Player_Position
-	end
-end
-
 RegisterEventHandler("Module.Initalize",gw2_unstuck.ModuleInit)
-RegisterEventHandler("Gameloop.Update",gw2_unstuck.OnUpdateHandler)

@@ -111,8 +111,8 @@ local tbl =
 											},
 											variables = 
 											{
-												duration = 5000,
-												info = "DepositItems every 5 Seconds",
+												duration = 16000,
+												info = "DepositItems every 16 Seconds",
 												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
 												xposoffset = 0,
 											},
@@ -223,7 +223,7 @@ local tbl =
 														finishcode = "",
 														info = "Claim Rewards every 15 second",
 														monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-														runcode = "if ( ml_global_information.Player_Inventory_SlotsFree > 2 and Player:CanClaimReward()) then\n\tPlayer:ClaimReward()\n\tself:success()\nelse\n\tself:fail()\nend",
+														runcode = "if (ml_global_information.Player_InCombat == false and ml_global_information.Player_Inventory_SlotsFree > 5 and Player:CanClaimReward()) then\n\tPlayer:ClaimReward()\n\tself:success()\nelse\n\tself:fail()\nend",
 														startcode = "",
 														xposoffset = 0,
 													},
