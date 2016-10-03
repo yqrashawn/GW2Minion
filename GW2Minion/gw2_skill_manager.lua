@@ -1368,7 +1368,7 @@ function gw2_skill_manager.UpdateSkillTrackerData( )
 	if (ml_global_information.Player_Profession == GW2.CHARCLASS.Engineer) then
 		for _,stowskill in pairs(gw2_skill_manager.SkillTracker.stowkits) do
 			if ( table.valid(gw2_skill_manager.currentSkillbarSkills[stowskill.stowid]) ) then
-				gw2_skill_manager.SkillTracker.kits[kitID].inuse = true
+				gw2_skill_manager.SkillTracker.kits[stowskill.kitid].inuse = true
 				-- We have this kit equipped currently, update the data
 				--d("USING : "..gw2_skill_manager.SkillTracker.kits[kitID].name)
 				if (table.valid(gw2_skill_manager.SkillTracker.kits[stowskill.kitid])) then 
@@ -1380,7 +1380,7 @@ function gw2_skill_manager.UpdateSkillTrackerData( )
 						end
 					end
 				else
-					d("ERROR@gw2_skill_manager@UpdateEngineerKitData, Unknown KitID: "..tostring(kitID))
+					d("ERROR@gw2_skill_manager@UpdateEngineerKitData, Unknown KitID: "..tostring(stowskill.kitid))
 				end
 				
 			else
