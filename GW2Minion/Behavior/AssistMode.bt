@@ -45,7 +45,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Defeated ) then\n\t\tif(Settings.GW2Minion.assistusewaypoints) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()",
+										runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Defeated ) then\n\t\tif(Settings.GW2Minion.assistusewaypoints) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\t\tself:running()\n\t\treturn\nend\nself:fail()",
 										startcode = "",
 										xposoffset = 0,
 									},
@@ -73,6 +73,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								info = "Death",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
@@ -86,7 +87,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "DownedHandler.st",
 								finishcode = "",
 								info = "Downed Handler",
