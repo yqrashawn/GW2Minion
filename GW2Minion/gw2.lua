@@ -104,8 +104,9 @@ function gw2minion.Init()
 		 ml_mesh_mgr.SetDefaultMesh(1015,"mmoalt_SilverWastes")		 
 		 ml_mesh_mgr.SetDefaultMesh(1041,"DragonStand")
 		 ml_mesh_mgr.SetDefaultMesh(1045,"TangledDepths")
-		 ml_mesh_mgr.SetDefaultMesh(1163,"sPvP Revenge of the Capricorn")
-		 
+		 ml_mesh_mgr.SetDefaultMesh(1163,"sPvP Revenge of the Capricorn")		 
+		 ml_mesh_mgr.SetDefaultMesh(1165,"Bloodstone Fen")
+		 ml_mesh_mgr.SetDefaultMesh(1171,"SPvp Coloseum")
 		--Instances
 		ml_mesh_mgr.SetDefaultMesh(896,"North Noland Hatchery") -- Diessa Plateau
 			
