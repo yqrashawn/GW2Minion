@@ -4143,9 +4143,9 @@ for language,data in pairs(gw2_strings) do
 end
 
 function GetUSString(stringName)
-	if strings["us"][stringName] == nil then
+	if ml_strings["us"][stringName] == nil then
 		return stringName
 	else
-		return strings["us"][stringName]
+		return ml_strings["us"][stringName]
 	end
 end
