@@ -4128,90 +4128,16 @@ strings =
 	},    	
 
 }
-local missingStrings = {}
 
--- returns a string in the current language or an indicator that the string does not exist in the language file
-function GetString(stringName)
-	if strings[gCurrentLanguage][stringName] == nil then
-		return GetUSString(stringName)
-		--return "#" .. tostring(stringName) .. "#"
-	else
-		return strings[gCurrentLanguage][stringName]
-	end
-end
-
-function GetUSString(stringName)
-	if strings["us"][stringName] == nil then
-		missingStrings[stringName] = ""
-		return "#" .. tostring(stringName) .. "#"
-	else
-		return strings["us"][stringName]
-	end
-end
-
-function GetStringKey(translatedString)
-	local strings = strings
-	for language,data in pairs(strings) do
-		for skey,s in pairs(data) do
-			if (s == translatedString) then
-				return tostring(skey)
+-- merge  the minionlib strings with our gw2 specific ones
+for language,data in pairs(gw2_strings) do
+	if ( ml_strings[language] ) then
+		for skey,str in pairs(data) do
+			if ( ml_strings[language][skey] == nil ) then
+				ml_strings[language][skey] = str
+			else
+				d("Not adding dupliocate string :"..skey)
 			end
 		end
 	end
-	
-	return ""
-end
-
-function Retranslate(translatedString)
-	local stringTable = strings
-	for language,data in pairs(stringTable) do
-		for skey,s in pairs(data) do
-			if (s == translatedString) then
-				return GetString(skey)
-			end
-		end
-	end
-	
-	d("Could not find a translation for ["..translatedString.."].")
-	return translatedString
-end
-
-function GetStringList(stringList,delimiter)
-	local outputString = ""
-	for k in StringSplit(stringList,delimiter) do
-		local addstring = GetString(k)
-		if (outputString == "") then
-			outputString = addstring
-		else
-			outputString = outputString..delimiter..addstring
-		end
-	end
-	
-	return outputString
-end
-
--- iterates through every string in ["us"] and checks to make sure a corresponding entry
--- exists for every other language
-function TestString()
-	local missingTranslations = {}
-	for usKey, usVal in pairs(strings["us"]) do
-		for language, entries in pairs(strings) do
-			if not language == "us" then
-				if not entries[usKey] then
-					missingTranslations[language][usKey] = ""
-					d("Missing string "..usKey.." in language "..language)
-				end
-			end
-		end
-	end
-	return missingTranslations
-end
-
-function SaveMissingStrings()
-	FileSave(GetStartupPath() .. GetLuaModsPath() .. [[GW2Minion\MissingStrings.txt]],missingStrings)
-end
-
-function SaveMissingTranslations()
-	local missingTranslations = TestString()
-	FileSave(GetStartupPath() .. GetLuaModsPath() .. [[GW2Minion\MissingTranslations.txt]],missingTranslations)
 end
