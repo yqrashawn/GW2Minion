@@ -1,6 +1,6 @@
 ﻿gCurrentLanguage = "us"
 
-strings =
+gw2_strings =
 {
     ["us"] =
     {
