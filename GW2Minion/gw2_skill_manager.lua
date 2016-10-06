@@ -128,7 +128,7 @@ function gw2_skill_manager.ModuleInit()
 		Settings.GW2Minion.gCurrentProfile = {}
 	end
 	--gw2_skill_manager.profileList = gw2_skill_manager:GetProfileList()
-	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SKILLMGR", name = "Skill MGR", onClick = function() gw2_skill_manager.mainWindow.open = not gw2_skill_manager.mainWindow.open end, tooltip = "Click to open \"Skill Manager\" window."},"GW2MINION##MENU_HEADER")
+	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SKILLMGR", name = "Skills", onClick = function() gw2_skill_manager.mainWindow.open = not gw2_skill_manager.mainWindow.open end, tooltip = "Click to open \"Skill Manager\" window.", texture = GetStartupPath().."\\GUI\\UI_Textures\\sword.png"},"GW2MINION##MENU_HEADER")
 end
 RegisterEventHandler("Module.Initalize",gw2_skill_manager.ModuleInit)
 

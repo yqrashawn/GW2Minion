@@ -69,7 +69,7 @@ function gw2_sell_manager.ModuleInit()
 	gw2_sell_manager.updateInventoryItems()
 
 	-- init button in minionmainbutton
-	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SELLMGR", name = "Sell MGR", onClick = function() gw2_sell_manager.mainWindow.open = gw2_sell_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Sell Manager\" window."},"GW2MINION##MENU_HEADER")
+	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SELLMGR", name = "Sell", onClick = function() gw2_sell_manager.mainWindow.open = gw2_sell_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Sell Manager\" window.", texture = GetStartupPath().."\\GUI\\UI_Textures\\sell.png"},"GW2MINION##MENU_HEADER")
 	
 	if(not ml_blacklist.BlacklistExists(GetString("vendorssell"))) then
 		ml_blacklist.CreateBlacklist(GetString("vendorssell"))

@@ -102,7 +102,7 @@ function gw2_buy_manager.ModuleInit()
 	gw2_buy_manager.toolList = Settings.gw2_buy_manager.toolList
 
 	-- init button in minionmainbutton
-	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##BUYMGR", name = "Buy MGR", onClick = function() gw2_buy_manager.mainWindow.open = gw2_buy_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Buy Manager\" window."},"GW2MINION##MENU_HEADER")
+	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##BUYMGR", name = "Buy", onClick = function() gw2_buy_manager.mainWindow.open = gw2_buy_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Buy Manager\" window.", texture = GetStartupPath().."\\GUI\\UI_Textures\\buy.png"},"GW2MINION##MENU_HEADER")
 
 end
 

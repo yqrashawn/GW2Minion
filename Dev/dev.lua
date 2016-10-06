@@ -18,7 +18,7 @@ dev.chatchannel = 0
 
 function dev.Init()
 	-- Register Button	
-	ml_gui.ui_mgr:AddSubMember({ id = "GW2MINION##DEV_1", name = "Dev-Monitor", onClick = function() dev.open = not dev.open end, tooltip = "Open the Dev monitor."},"GW2MINION##MENU_HEADER","GW2MINION##MENU_ADDONS")	
+	ml_gui.ui_mgr:AddSubMember({ id = "GW2MINION##DEV_1", name = "Dev-Monitor", onClick = function() dev.open = not dev.open end, tooltip = "Open the Dev monitor.", texture = GetStartupPath().."\\GUI\\UI_Textures\\api.png"},"GW2MINION##MENU_HEADER","GW2MINION##MENU_ADDONS")	
 end
 RegisterEventHandler("Module.Initalize",dev.Init)
 

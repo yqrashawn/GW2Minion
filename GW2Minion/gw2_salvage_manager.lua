@@ -90,7 +90,7 @@ function gw2_salvage_manager.ModuleInit()
 	gw2_salvage_manager.inventoryItemListUpdate()
 
 	-- init button in minionmainbutton
-	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SALVMGR", name = "Salvage MGR", onClick = function() gw2_salvage_manager.mainWindow.open = gw2_salvage_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Salvage Manager\" window."},"GW2MINION##MENU_HEADER")
+	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SALVMGR", name = "Salvage", onClick = function() gw2_salvage_manager.mainWindow.open = gw2_salvage_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Salvage Manager\" window.", texture = GetStartupPath().."\\GUI\\UI_Textures\\recycle.png"},"GW2MINION##MENU_HEADER")
 
 end
 

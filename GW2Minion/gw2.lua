@@ -4,7 +4,7 @@ function gw2minion.Init()
 	-- Register Button 
 	local gw2mainmenu = {
 		header = { id = "GW2MINION##MENU_HEADER", expanded = false, name = "GW2Minion", texture = GetStartupPath().."\\GUI\\UI_Textures\\gw2minion.png"},
-		members = {{ id = "GW2MINION##MENU_ADDONS", name = "Addons", tooltip = "Installed Lua Addons."}	}
+		members = {{ id = "GW2MINION##MENU_ADDONS", name = "Addons", tooltip = "Installed Lua Addons.", texture = GetStartupPath().."\\GUI\\UI_Textures\\addon.png"}	}
 	} 
 	ml_gui.ui_mgr:AddComponent(gw2mainmenu)
 	
@@ -126,7 +126,7 @@ function gw2minion.Init()
 		ml_task_mgr.AddTaskType("tm_moveto", "blank.st", nil, {allowpretasks = true; displayname = GetString("movetolocation")})
 		ml_task_mgr.AddTaskType("tm_generic", "blank.st", nil, {allowpretasks = true; allowposttasks = true; allowsubtasks = true; displayname = GetString("blanktask")})
 		
-		ml_task_mgr.AddSubTaskType("tm_st_movetomultiple", "tm_MoveToMultiple.st", nil, {displayname = GetString("movetonmultiplelocations")})
+		ml_task_mgr.AddSubTaskType("tm_st_movetomultiple", "tm_MoveToMultiple.st", nil, {displayname = GetString("movetomultiplelocations")})
 		ml_task_mgr.AddSubTaskType("tm_st_moveto", "tm_MoveTo.st", nil, {displayname = GetString("movetolocation")})
 		ml_task_mgr.AddSubTaskType("tm_st_interact", "tm_Interact.st", nil, {displayname = GetString("interact")})
 		ml_task_mgr.AddSubTaskType("tm_st_fightaggro", "HandleAggro.st", nil, {displayname = GetString("fightaggro")})
