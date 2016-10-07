@@ -77,7 +77,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
@@ -133,6 +132,26 @@ local tbl =
 						},
 						
 						{
+							class = "BehaviorTree",
+							nodes = 
+							{
+							},
+							variables = 
+							{
+								expanded = true,
+								filename = "SwimHandler.st",
+								finishcode = "",
+								info = "Check swimstate",
+								menucode = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+								runcode = "",
+								startcode = "",
+								subtreeuicode = "",
+								xposoffset = 0,
+							},
+						},
+						
+						{
 							class = "Action",
 							nodes = 
 							{
@@ -174,8 +193,8 @@ local tbl =
 		info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-		moveintocombatrange = false,
-		runcode = "",
+		moveintocombatrange = true,
+		runcode = "context.combat_moveintocombatrange = context.combat_moveintocombatrange == nil and true or context.combat_moveintocombatrange",
 		startcode = "",
 		subtreeuicode = "",
 		xposoffset = 0,

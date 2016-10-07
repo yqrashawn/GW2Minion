@@ -203,6 +203,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								info = "Gather",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
@@ -216,7 +217,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "AttackTargets.st",
 								finishcode = "",
 								info = "Find and Attack Enemies",
