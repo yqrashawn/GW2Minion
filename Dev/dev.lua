@@ -122,27 +122,57 @@ function dev.DrawCall(event, ticks )
 					end
 					
 					if ( GUI:TreeNode("Buffs") ) then
-						local blist = Player.buffs
-						if ( table.valid(blist) )then
-							GUI:PushItemWidth(250)
-							for id, b in pairsByKeys(blist) do
-								if ( GUI:TreeNode(tostring(id).."-"..b.name.."###buff"..id)) then
-									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devb0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devb1",tostring(b.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ContentID") GUI:SameLine(200) GUI:InputText("##devb2",tostring(b.contentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Stacks") GUI:SameLine(200) GUI:InputText("##devb3",tostring(b.stacks),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##devb4",tostring(b.name),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Description") GUI:SameLine(200) GUI:InputText("##devb5",tostring(string.gsub(b.description, "%\n", ", ")),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Timeleft") GUI:SameLine(200) GUI:InputText("##devb6",tostring(b.timeleft),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("MaxDuration") GUI:SameLine(200) GUI:InputText("##devb7",tostring(b.maxduration),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Active") GUI:SameLine(200) GUI:InputText("##devb8",tostring(b.active),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:TreePop()
-								end
-							end							
-							GUI:PopItemWidth()
-						else
-							GUI:Text("No Buffs found.") 
+						if ( GUI:TreeNode("Player") ) then
+							local blist = Player.buffs	
+							if ( table.valid(blist) )then
+								GUI:PushItemWidth(250)
+								for id, b in pairsByKeys(blist) do
+									if ( GUI:TreeNode(tostring(id).."-"..b.name.."###buff"..id)) then
+										GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devb0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devb1",tostring(b.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("ContentID") GUI:SameLine(200) GUI:InputText("##devb2",tostring(b.contentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("Stacks") GUI:SameLine(200) GUI:InputText("##devb3",tostring(b.stacks),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##devb4",tostring(b.name),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("Description") GUI:SameLine(200) GUI:InputText("##devb5",tostring(string.gsub(b.description, "%\n", ", ")),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("Timeleft") GUI:SameLine(200) GUI:InputText("##devb6",tostring(b.timeleft),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("MaxDuration") GUI:SameLine(200) GUI:InputText("##devb7",tostring(b.maxduration),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("Active") GUI:SameLine(200) GUI:InputText("##devb8",tostring(b.active),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:TreePop()
+									end
+								end							
+								GUI:PopItemWidth()
+							else
+								GUI:Text("No Buffs found.") 
+							end
+							GUI:TreePop()						
 						end
+						if ( GUI:TreeNode("Target") ) then
+							local t = Player:GetTarget()
+							if (t) then
+								local blist = t.buffs
+								if ( table.valid(blist) )then
+									GUI:PushItemWidth(250)
+									for id, b in pairsByKeys(blist) do
+										if ( GUI:TreeNode(tostring(id).."-"..b.name.."###buff"..id)) then
+											GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devb0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devb1",tostring(b.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("ContentID") GUI:SameLine(200) GUI:InputText("##devb2",tostring(b.contentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("Stacks") GUI:SameLine(200) GUI:InputText("##devb3",tostring(b.stacks),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##devb4",tostring(b.name),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("Description") GUI:SameLine(200) GUI:InputText("##devb5",tostring(string.gsub(b.description, "%\n", ", ")),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("Timeleft") GUI:SameLine(200) GUI:InputText("##devb6",tostring(b.timeleft),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("MaxDuration") GUI:SameLine(200) GUI:InputText("##devb7",tostring(b.maxduration),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("Active") GUI:SameLine(200) GUI:InputText("##devb8",tostring(b.active),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:TreePop()
+										end
+									end							
+									GUI:PopItemWidth()
+								else
+									GUI:Text("No Buffs found.") 
+								end
+							end
+							GUI:TreePop()						
+						end						
 						GUI:TreePop()				
 					end
 					
