@@ -1818,8 +1818,8 @@ function skillPrototype:CanCast(targetID) -- TODO: change to use booleans
 		-- target attributes.
 		if (table.valid(target)) then
 			local targetBuffList = (target.buffs or false)
-			if (self.target.minHP > 0 and target.health.percent > self.target.minHP) then return false end
-			if (self.target.maxHP > 0 and target.health.percent < self.target.maxHP) then return false end
+			if (self.target.minHP > 0 and (target.health == nil or target.health.percent > self.target.minHP)) then return false end
+			if (self.target.maxHP > 0 and (target.health == nil or target.health.percent < self.target.maxHP)) then return false end
 			if (self.target.enemyNearCount > 0) then
 				local maxdistance = (self.target.enemyRangeMax == 0 and "" or "maxdistance=" .. self.target.enemyRangeMax .. ",")
 				if (table.size(CharacterList("attackable," .. maxdistance .. "distanceto=" .. target.id .. ",exclude=" .. target.id)) < self.target.enemyNearCount) then return false end
