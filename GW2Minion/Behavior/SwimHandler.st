@@ -19,7 +19,7 @@ local tbl =
 						finishcode = "",
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if ( ml_global_information.Player_SwimState == GW2.SWIMSTATE.Diving and ml_global_information.Player_OnMesh == false) then\n\t\tml_global_information.swimUp = true\n\t\tPlayer:SetMovement(GW2.MOVEMENTTYPE.SwimUp)\n\t\tself:success()\n\t\treturn\nelseif( ml_global_information.swimUp == true ) then\n\t\tml_global_information.swimUp = false\n\t\tPlayer:UnSetMovement(GW2.MOVEMENTTYPE.SwimUp)\n\t\tself:success()\n\t\treturn\nend\t\t\n\t\t\n--Dont swim on the surface where we cannot fight\nif ( ml_global_information.Player_SwimState == GW2.SWIMSTATE.Swimming and ml_global_information.Player_OnMesh and ml_global_information.Player_InCombat) then\n\t\tml_global_information.swimDown = true\n\t\tPlayer:SetMovement(GW2.MOVEMENTTYPE.SwimDown)\n\t\tself:success()\n\t\treturn\nelseif( ml_global_information.swimDown == true ) then\n\t\tml_global_information.swimDown = false\n\t\tPlayer:UnSetMovement(GW2.MOVEMENTTYPE.SwimDown)\n\t\tself:success()\n\t\treturn\nend\t\nself:fail()",
+						runcode = "if ( ml_global_information.Player_SwimState == GW2.SWIMSTATE.Diving and ml_global_information.Player_OnMesh == false) then\n\t\tml_global_information.swimUp = true\n\t\tPlayer:SetMovement(GW2.MOVEMENTTYPE.SwimUp)\n\t\tself:success()\n\t\treturn\nelseif( ml_global_information.swimUp == true ) then\n\t\tml_global_information.swimUp = false\n\t\tPlayer:UnSetMovement(GW2.MOVEMENTTYPE.SwimUp)\n\t\tself:success()\n\t\treturn\nend\n\nlocal skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)\n--Dont swim on the surface where we cannot fight\nif ( ml_global_information.Player_SwimState == GW2.SWIMSTATE.Swimming and ml_global_information.Player_OnMesh and (ml_global_information.Player_InCombat or not table.valid(skill))) then\n\t\tml_global_information.swimDown = true\n\t\tPlayer:SetMovement(GW2.MOVEMENTTYPE.SwimDown)\n\t\tself:success()\n\t\treturn\nelseif( ml_global_information.swimDown == true ) then\n\t\tml_global_information.swimDown = false\n\t\tPlayer:UnSetMovement(GW2.MOVEMENTTYPE.SwimDown)\n\t\tself:success()\n\t\treturn\nend\t\nself:fail()",
 						startcode = "",
 						xposoffset = 0,
 					},
@@ -36,9 +36,10 @@ local tbl =
 	},
 	variables = 
 	{
+		expanded = true,
 		filename = "SwimHandler.st",
 		finishcode = "",
-		info = "",
+		info = "Check swimstate",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",

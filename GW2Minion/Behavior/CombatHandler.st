@@ -193,7 +193,7 @@ local tbl =
 		info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-		moveintocombatrange = true,
+		moveintocombatrange = false,
 		runcode = "context.combat_moveintocombatrange = context.combat_moveintocombatrange == nil and true or context.combat_moveintocombatrange",
 		startcode = "",
 		subtreeuicode = "",

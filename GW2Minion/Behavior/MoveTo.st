@@ -16,6 +16,7 @@ local tbl =
 					},
 					variables = 
 					{
+						expanded = true,
 						filename = "SwimHandler.st",
 						finishcode = "",
 						info = "",
