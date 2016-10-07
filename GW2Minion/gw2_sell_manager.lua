@@ -506,7 +506,7 @@ end
 
 -- Salvage List stuff here.
 function gw2_sell_manager.createItemList()
-	local inventoryItems = Inventory("exclude_contentid="..ml_blacklist.GetExcludeString(GetString("sellItems")))
+	local inventoryItems = Inventory("exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("sellItems")))
 	local filteredItems = {}
 	if (table.valid(inventoryItems)) then
 		for slot,nItem in pairs(inventoryItems) do
@@ -551,7 +551,7 @@ end
 function gw2_sell_manager.getMarkerList(filter)
 	filter = filter or ""
 	local markers = {}
-	local MList = MapMarkerList("onmesh"..filter..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorssell")))
+	local MList = MapMarkerList("onmesh"..filter..",exclude_characterid="..gw2_blacklistmanager.GetExcludeString(GetString("vendorssell")))
 	if(table.valid(MList)) then
 		for _,marker in pairs(MList) do
 			local validCID = {
@@ -585,7 +585,7 @@ function gw2_sell_manager.sellAtVendor(vendor)
 		
 		if(gw2_sell_manager.VendorSellHistroy.interactcount > 15) then
 			d("Vendor blacklisted: Tried interacting multiple times.")
-			ml_blacklist.AddBlacklistEntry(GetString("vendorssell"), vendor.id, vendor.name, true)			
+			gw2_blacklistmanager.AddBlacklistEntry(GetString("vendorssell"), vendor.id, vendor.name, true)			
 		end
 		
 		if (Inventory:IsVendorOpened() == false and Player:IsConversationOpen() == false) then
@@ -598,7 +598,7 @@ function gw2_sell_manager.sellAtVendor(vendor)
 			local result = gw2_common_functions.handleConversation("sell")
 			if (result == false) then
 				d("Vendor blacklisted: Could not handle conversation.")
-				ml_blacklist.AddBlacklistEntry(GetString("vendorssell"), vendor.id, vendor.name, true)
+				gw2_blacklistmanager.AddBlacklistEntry(GetString("vendorssell"), vendor.id, vendor.name, true)
 				return false
 			elseif (result == nil) then
 				ml_global_information.Wait(math.random(520,1200))
@@ -623,7 +623,7 @@ function gw2_sell_manager.sellAtVendor(vendor)
 						end
 					else
 						d("Could not sell "..item.name..", blacklisting it")
-						ml_blacklist.AddBlacklistEntry(GetString("sellItems"), item.itemID, item.name, true)
+						gw2_blacklistmanager.AddBlacklistEntry(GetString("sellItems"), item.itemID, item.name, true)
 					end
 					return true
 				end

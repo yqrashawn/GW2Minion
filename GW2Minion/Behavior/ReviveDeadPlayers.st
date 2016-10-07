@@ -48,6 +48,7 @@ local tbl =
 					},
 					variables = 
 					{
+						expanded = true,
 						filename = "ReviveActionHandler.st",
 						finishcode = "",
 						info = "Revive action\ncontext.revive_position\ncontext.revive_targetid",
@@ -71,7 +72,6 @@ local tbl =
 	},
 	variables = 
 	{
-		expanded = true,
 		filename = "ReviveDeadPlayers.st",
 		finishcode = "",
 		info = "Revive dead players",

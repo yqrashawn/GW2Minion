@@ -26,7 +26,7 @@ end
 
 function gw2_repair_manager.getMarkerList(filter)
 	filter = filter or ""
-	local markers = MapMarkerList("onmesh,contentID="..GW2.MAPMARKER.Repair..filter..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorsrepair")))
+	local markers = MapMarkerList("onmesh,contentID="..GW2.MAPMARKER.Repair..filter..",exclude_characterid="..gw2_blacklistmanager.GetExcludeString(GetString("vendorsrepair")))
 	if(table.valid(markers)) then
 		return markers
 	end
@@ -62,7 +62,7 @@ function gw2_repair_manager.RepairAtVendor(repair)
 	
 	if(gw2_repair_manager.VendorBuyHistroy.interactcount > 15) then
 		d("Repair blacklisted: Tried interacting multiple times.")
-		ml_blacklist.AddBlacklistEntry(GetString("vendorsrepair"), repair.id, repair.name, true)			
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("vendorsrepair"), repair.id, repair.name, true)			
 	end
 	
 	if (Player:IsConversationOpen() == false) then
@@ -74,7 +74,7 @@ function gw2_repair_manager.RepairAtVendor(repair)
 		local result = gw2_common_functions.handleConversation("repair")
 		if (result == false) then
 			d("Repair blacklisted: Can not handle conversation.")
-			ml_blacklist.AddBlacklistEntry(GetString("vendorsrepair"), repair.id, repair.name, true)
+			gw2_blacklistmanager.AddBlacklistEntry(GetString("vendorsrepair"), repair.id, repair.name, true)
 			return false
 		end
 		gw2_repair_manager.VendorBuyHistroy.interactcount = 0

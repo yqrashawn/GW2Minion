@@ -353,7 +353,7 @@ end
 function gw2_buy_manager.getMarkerList(filter)
 	filter = filter or ""	
 	local cid = GW2.MAPMARKER.Merchant..";"..GW2.MAPMARKER.ItzelVendor..";"..GW2.MAPMARKER.ExaltedVendor..";"..GW2.MAPMARKER.NuhochVendor
-	local markers = MapMarkerList("onmesh,contentID="..cid..filter..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorsbuy")))
+	local markers = MapMarkerList("onmesh,contentID="..cid..filter..",exclude_characterid="..gw2_blacklistmanager.GetExcludeString(GetString("vendorsbuy")))
 	if(table.valid(markers)) then
 		return markers
 	end
@@ -369,7 +369,7 @@ function gw2_buy_manager.buyAtMerchant(vendor)
 	
 	if(gw2_buy_manager.VendorBuyHistroy.interactcount > 15) then
 		d("Vendor blacklisted: Tried interacting multiple times.")
-		ml_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)			
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)			
 	end
 		
 	if (Inventory:IsVendorOpened() == false and Player:IsConversationOpen() == false) then
@@ -382,7 +382,7 @@ function gw2_buy_manager.buyAtMerchant(vendor)
 		local result = gw2_common_functions.handleConversation("buy")
 		if (result == false) then
 			d("Vendor blacklisted: Can not handle conversation.")
-			ml_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)
+			gw2_blacklistmanager.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)
 			return false
 		elseif (result == nil) then				
 			ml_global_information.Wait(math.random(520,1200))
@@ -392,7 +392,7 @@ function gw2_buy_manager.buyAtMerchant(vendor)
 
 	if (gw2_buy_manager.vendorSellsCheck() == false) then
 		d("Vendor blacklisted: Does not have needed tools/kits.")
-		ml_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)
 		return false
 	end
 	

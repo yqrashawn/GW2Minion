@@ -36,6 +36,16 @@ ml_global_information.BoonsEnum = {
 	[5891] = "Thumper Toggle",
 };
 
+ml_global_information.SpeedBoons = {
+	[719] = "Swiftness",
+	[5974] = "Super Speed",
+	[5543] = "Mist form",
+	[12542] = "Signet of the Hunt",
+	[13060] = "Signet of Shadows",
+	[5572] = "Signet of Air",
+	[10612] = "Signet of the Locust"
+}
+
 ml_global_information.SlowConditions = {
 	[721] = "Cripple",
 	[722] = "Chill",
@@ -64,7 +74,7 @@ function ml_global_information.OnUpdate(Event,ticks)
 		ml_global_information.Lasttick = ticks
 		
 		ml_global_information.GameState = GetGameState()
-		
+
 		if(Player) then
 			ml_global_information.Player_ID = Player.id or 0
 			ml_global_information.Player_Name = Player.name or ""
