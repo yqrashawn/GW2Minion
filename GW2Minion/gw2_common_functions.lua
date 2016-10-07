@@ -58,6 +58,7 @@ function gw2_common_functions.BufflistHasBuffs(bufflist, buffIDs)
 		for buffID,_ in pairs(buffIDs) do
 			buffstr = buffID .. "," .. buffstr
 		end
+		buffIDs = buffstr
 	end
 	
 	for _orids in StringSplit(tostring(buffIDs),",") do
