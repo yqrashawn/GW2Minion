@@ -23,6 +23,7 @@ local tbl =
 	},
 	variables = 
 	{
+		expanded = true,
 		filename = "DeathHandler.st",
 		finishcode = "",
 		info = "Death Handler",
