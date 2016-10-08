@@ -119,6 +119,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 		local mincount = (mode == nil or mode == "combat") and 5 or 2
 
 		if(gw2_unstuck.distmoved < threshold) then
+			gw2_unstuck.lastaction = nil
 			if(gw2_unstuck.stuckcount >= mincount) then
 				d(string.format("[Unstuck]: Distance moved: %s. Threshold: %s. Stuckcount: %s.", math.floor(gw2_unstuck.distmoved), math.floor(threshold), gw2_unstuck.stuckcount))
 			end
@@ -268,7 +269,12 @@ function gw2_unstuck.HandleStuckEntry(entry)
 		elseif(entry.stuckcount > 20) then
 			d("[Unstuck]: We have been stuck at this location 20 times.")
 			gw2_obstacle_manager.AddAvoidanceArea({pos = Player.pos, radius = 50})
-			gw2_unstuck.stuckhandlers.waypoint()
+			entry.waypointcount = entry.waypointcount + 1
+			if(entry.waypointcount < 15) then
+				gw2_unstuck.stuckhandlers.waypoint()
+			else
+				d("[Unstuck]: We have waypointed away from this location more then 10 times.")
+			end
 			retval = true
 		elseif(entry.handled and gw2_unstuck.stuckhandlers[entry.handled] and not table.deepcompare(gw2_unstuck.laststuckentry,entry)) then
 			d("[Unstuck]: We managed to get unstuck here last time using: " .. entry.handled)
@@ -293,7 +299,8 @@ function gw2_unstuck.AddStuckEntry(pos)
 			added = now,
 			mapid = ml_global_information.CurrentMapID,
 			modified = now,
-			inwater = ml_global_information.Player_SwimState ~= GW2.SWIMSTATE.NotInWater
+			inwater = ml_global_information.Player_SwimState ~= GW2.SWIMSTATE.NotInWater,
+			waypointcount = 0
 		}
 		k,entry = now,gw2_unstuck.stuckhistory[now]
 	end
@@ -315,7 +322,7 @@ end
 function gw2_unstuck.ActiveThreshold()
 	local threshold = gw2_unstuck.threshold * (gw2_common_functions.HasBuffs(Player, ml_global_information.SpeedBoons) and 1.33 or 1) -- Increased threshold with swiftness
 
-	if (ml_global_information.Player_InCombat or gw2_common_functions.HasBuffs(Player, ml_global_information.SlowConditions)) then
+	if (ml_global_information.Player_InCombat or gw2_common_functions.HasBuffs(Player, ml_global_information.SlowConditions) or gw2_unstuck.movementtype.backward) then
 		-- We only move half (or less) the distance with conditions that slow movement
 		threshold = threshold / 2
 	end
