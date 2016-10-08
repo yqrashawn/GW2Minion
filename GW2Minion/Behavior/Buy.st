@@ -152,7 +152,6 @@ local tbl =
 	},
 	variables = 
 	{
-		expanded = true,
 		filename = "Buy.st",
 		finishcode = "",
 		info = "Buy\nOptional parameter:\ncontext.buy_nearby = true/false",

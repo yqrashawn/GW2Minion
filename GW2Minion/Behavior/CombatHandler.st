@@ -45,7 +45,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if(context.combat_moveintocombatrange == nil) then\n\t\tcontext.combat_moveintocombatrange = true\nend\n\nif (context.combat_moveintocombatrange and context.combat_targetid and context.combat_targetpos) then\n\t\tif (Distance3DT(ml_global_information.Player_Position,context.combat_targetpos) > 2500 ) then \n\t\t\t\tcontext.moveto_position = context.combat_targetpos\n\t\t\t\tcontext.moveto_targetid = context.combat_targetid\n\t\t\t\tcontext.moveto_targettype = \"character\"\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\n\t\tcontext.moveto_targetid = nil\n\t\tcontext.moveto_targettype = nil\nend\nself:fail()",
+										runcode = "if(context.combat_moveintocombatrange == nil) then\n\t\tcontext.combat_moveintocombatrange = true\nend\n\nif (context.combat_moveintocombatrange and context.combat_targetid and context.combat_targetpos) then\n\t\tif (Distance3DT(ml_global_information.Player_Position,context.combat_targetpos) > 2500 ) then \n\t\t\t\tcontext.moveto_position = context.combat_targetpos\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\n\t\tcontext.moveto_targetid = nil\n\t\tcontext.moveto_targettype = nil\nend\nself:fail()",
 										startcode = "",
 										xposoffset = 0,
 									},
@@ -77,6 +77,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
@@ -193,7 +194,7 @@ local tbl =
 		info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-		moveintocombatrange = false,
+		moveintocombatrange = true,
 		runcode = "context.combat_moveintocombatrange = context.combat_moveintocombatrange == nil and true or context.combat_moveintocombatrange",
 		startcode = "",
 		subtreeuicode = "",

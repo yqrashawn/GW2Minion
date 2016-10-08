@@ -91,7 +91,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "Buy.st",
 								finishcode = "",
 								info = "Buy\nOptional parameter:\ncontext.buy_nearby = true/false",
@@ -115,7 +114,6 @@ local tbl =
 			},
 			variables = 
 			{
-				expanded = true,
 				info = "",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 				xposoffset = 0,
@@ -126,7 +124,7 @@ local tbl =
 	{
 		filename = "VendorHandler.st",
 		finishcode = "",
-		info = "Vendor / Repair",
+		info = "Handle vendor / repair",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",
