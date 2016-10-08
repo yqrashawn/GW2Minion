@@ -58,6 +58,7 @@ function gw2_common_functions.BufflistHasBuffs(bufflist, buffIDs)
 		for buffID,_ in pairs(buffIDs) do
 			buffstr = buffID .. "," .. buffstr
 		end
+		buffIDs = buffstr
 	end
 	
 	for _orids in StringSplit(tostring(buffIDs),",") do
@@ -112,7 +113,7 @@ end
 function gw2_common_functions.NecroLeaveDeathshroud()
 	if (Player.profession == 8 ) then
 		local deathshroud = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13)
-		if ( deathshroud ~= nil and (deathshroud.skillID == 10585 or deathshroud.skillID == 30961 ) and Player:CanCast() and Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then
+		if ( deathshroud ~= nil and (deathshroud.skillid == 10585 or deathshroud.skillid == 30961 ) and Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS ) then
 			Player:CastSpell(GW2.SKILLBARSLOT.Slot_13)
 			return true
 		end
@@ -385,9 +386,9 @@ end
 
 function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthstate )
     if ( filterstring ) then
-		filterstring = filterstring..",attackable,noCritter,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters"))
+		filterstring = filterstring..",attackable,noCritter,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("monsters"))
 	else
-		filterstring = "attackable,noCritter,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters"))
+		filterstring = "attackable,noCritter,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("monsters"))
 	end
 	
 	if(healthstate == nil or healthstate == GW2.HEALTHSTATE.Alive) then
@@ -416,7 +417,7 @@ end
 
 -- Downed state target needs to be a bit different and ignore assist settings
 function gw2_common_functions.GetBestDownstateTarget()
-	local CList = CharacterList("aggro,nearest,lowesthealth,los,maxdistance=900,exclude_contentid="..ml_blacklist.GetExcludeString(GetString("monsters")))
+	local CList = CharacterList("aggro,lowesthealth,los,maxdistance=900,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("monsters")))
 	if(table.valid(CList)) then
 		local _,target = next(CList)
 		if(table.valid(target)) then

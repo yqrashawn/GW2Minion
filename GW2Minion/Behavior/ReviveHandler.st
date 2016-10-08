@@ -70,7 +70,6 @@ local tbl =
 					},
 					variables = 
 					{
-						expanded = true,
 						filename = "ReviveDeadPlayers.st",
 						finishcode = "",
 						info = "Revive dead players",

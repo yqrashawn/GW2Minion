@@ -75,9 +75,9 @@ local tbl =
 							},
 							variables = 
 							{
-								filename = "ReviveHandler.st",
+								filename = "ReviveDownedPlayers.st",
 								finishcode = "",
-								info = "Revive dead/downed players/partymembers/npcs",
+								info = "Revive downed players",
 								menucode = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 								runcode = "",
@@ -129,10 +129,28 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "HandleAggro.st",
 								finishcode = "",
 								info = "Handle Aggro",
+								menucode = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+								runcode = "",
+								startcode = "",
+								subtreeuicode = "",
+								xposoffset = 0,
+							},
+						},
+						
+						{
+							class = "BehaviorTree",
+							nodes = 
+							{
+							},
+							variables = 
+							{
+								filename = "ReviveHandler.st",
+								finishcode = "",
+								info = "Revive dead/downed players/partymembers/npcs",
 								menucode = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 								runcode = "",
@@ -185,6 +203,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								info = "Gather",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,

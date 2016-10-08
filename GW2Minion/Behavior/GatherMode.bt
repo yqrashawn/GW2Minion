@@ -123,9 +123,9 @@ local tbl =
 							},
 							variables = 
 							{
-								filename = "VendorHandler.st",
+								filename = "ReviveDownedPlayers.st",
 								finishcode = "",
-								info = "Handle vendor / repair",
+								info = "Revive downed players",
 								menucode = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 								runcode = "",
@@ -142,9 +142,9 @@ local tbl =
 							},
 							variables = 
 							{
-								filename = "ReviveHandler.st",
+								filename = "VendorHandler.st",
 								finishcode = "",
-								info = "Revive dead/downed players/partymembers/npcs",
+								info = "Handle vendor / repair",
 								menucode = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 								runcode = "",
@@ -180,6 +180,25 @@ local tbl =
 							},
 							variables = 
 							{
+								filename = "ReviveHandler.st",
+								finishcode = "",
+								info = "Revive dead/downed players/partymembers/npcs",
+								menucode = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+								runcode = "",
+								startcode = "",
+								subtreeuicode = "",
+								xposoffset = 0,
+							},
+						},
+						
+						{
+							class = "BehaviorTree",
+							nodes = 
+							{
+							},
+							variables = 
+							{
 								filename = "Gather.st",
 								finishcode = "",
 								info = "Gather",
@@ -199,6 +218,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								filename = "AttackTargets.st",
 								finishcode = "",
 								info = "Find and Attack Enemies",
@@ -218,7 +238,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "MoveToRandom.st",
 								finishcode = "",
 								info = "Move to random",

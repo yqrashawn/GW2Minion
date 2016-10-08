@@ -917,4 +917,3 @@ function dev.DrawMapMarkerDetails(id,b)
 	end
 end
 
-

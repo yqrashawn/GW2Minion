@@ -48,7 +48,6 @@ local tbl =
 					},
 					variables = 
 					{
-						expanded = true,
 						filename = "ReviveActionHandler.st",
 						finishcode = "",
 						info = "Revive action\ncontext.revive_position\ncontext.revive_targetid",
@@ -63,7 +62,6 @@ local tbl =
 			},
 			variables = 
 			{
-				expanded = true,
 				info = "",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 				xposoffset = 0,

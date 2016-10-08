@@ -1078,7 +1078,7 @@ function profilePrototype:DoCombatMovement(targetID)
 			end
 		end
 		self.tmp.combatMovement.combat = true
-	elseif (table.valid(target) and target.distance > self.tmp.activeSkillRange and noStopMovementBuffs and (gBotMode ~= GetString("assistMode") or Settings.GW2Minion.moveintocombatrange == true) and not gw2_unstuck.HandleStuck("combat") and ml_global_information.Player_OnMesh and ml_global_information.Player_Alive) then
+	elseif (table.valid(target) and target.distance > self.tmp.activeSkillRange and noStopMovementBuffs and (gBotMode ~= GetString("AssistMode") or Settings.GW2Minion.moveintocombatrange == true) and not gw2_unstuck.HandleStuck("combat") and ml_global_information.Player_OnMesh and ml_global_information.Player_Alive) then
 		local tPos = target.pos
 		if (self.tmp.combatMovement.combat) then Player:StopMovement() self.tmp.combatMovement.combat = false end
 		NavigationManager:MoveTo(tPos.x,tPos.y,tPos.z,self.tmp.activeSkillRange/2,false,false,true)
@@ -1818,8 +1818,8 @@ function skillPrototype:CanCast(targetID) -- TODO: change to use booleans
 		-- target attributes.
 		if (table.valid(target)) then
 			local targetBuffList = (target.buffs or false)
-			if (self.target.minHP > 0 and target.health.percent > self.target.minHP) then return false end
-			if (self.target.maxHP > 0 and target.health.percent < self.target.maxHP) then return false end
+			if (self.target.minHP > 0 and (target.health == nil or target.health.percent > self.target.minHP)) then return false end
+			if (self.target.maxHP > 0 and (target.health == nil or target.health.percent < self.target.maxHP)) then return false end
 			if (self.target.enemyNearCount > 0) then
 				local maxdistance = (self.target.enemyRangeMax == 0 and "" or "maxdistance=" .. self.target.enemyRangeMax .. ",")
 				if (table.size(CharacterList("attackable," .. maxdistance .. "distanceto=" .. target.id .. ",exclude=" .. target.id)) < self.target.enemyNearCount) then return false end
