@@ -17,6 +17,7 @@ function gw2_unstuck.Stop()
 	gw2_unstuck.lastposition = nil
 	gw2_unstuck.lastraycastdetails = nil
 	gw2_unstuck.distmoved = 0
+	gw2_unstuck.manualcontrolmode = false
 	gw2_unstuck.Reset()
 end
 
@@ -40,6 +41,12 @@ function gw2_unstuck.HandleStuck(mode)
 	end
 	
 	gw2_unstuck.stucktick = ml_global_information.Now
+	
+	if(gw2_unstuck.manualcontrolmode) then
+		gw2_unstuck.Reset()
+		gw2_unstuck.lastresult = false
+		return gw2_unstuck.lastresult		
+	end
 	
 	if(not ml_global_information.Player_Alive) then
 		gw2_unstuck.Reset()

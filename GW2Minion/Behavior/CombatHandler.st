@@ -77,7 +77,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
@@ -194,8 +193,8 @@ local tbl =
 		info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-		moveintocombatrange = true,
-		runcode = "context.combat_moveintocombatrange = context.combat_moveintocombatrange == nil and true or context.combat_moveintocombatrange",
+		moveintocombatrange = false,
+		runcode = "",
 		startcode = "",
 		subtreeuicode = "",
 		xposoffset = 0,
