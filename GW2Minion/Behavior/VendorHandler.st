@@ -114,6 +114,7 @@ local tbl =
 			},
 			variables = 
 			{
+				expanded = true,
 				info = "",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 				xposoffset = 0,

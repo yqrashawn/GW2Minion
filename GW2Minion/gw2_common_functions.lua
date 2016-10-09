@@ -417,10 +417,10 @@ end
 
 -- Downed state target needs to be a bit different and ignore assist settings
 function gw2_common_functions.GetBestDownstateTarget()
-	local CList = CharacterList("aggro,lowesthealth,los,maxdistance=900,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("monsters")))
+	local CList = CharacterList("aggro,attackable,lowesthealth,los,maxdistance=900,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("monsters")))
 	if(table.valid(CList)) then
 		local _,target = next(CList)
-		if(table.valid(target)) then
+		if(table.valid(target) and (target.alive or target.downed)) then
 			return target
 		end
 	end

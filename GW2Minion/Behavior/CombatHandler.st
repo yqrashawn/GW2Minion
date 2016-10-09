@@ -45,7 +45,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if(context.combat_moveintocombatrange == nil) then\n\t\tcontext.combat_moveintocombatrange = true\nend\n\nif (context.combat_moveintocombatrange and context.combat_targetid and context.combat_targetpos) then\n\t\tif (Distance3DT(ml_global_information.Player_Position,context.combat_targetpos) > 2500 ) then \n\t\t\t\tcontext.moveto_position = context.combat_targetpos\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\n\t\tcontext.moveto_targetid = nil\n\t\tcontext.moveto_targettype = nil\nend\nself:fail()",
+										runcode = "if(context.combat_moveintocombatrange == nil) then\n\t\tcontext.combat_moveintocombatrange = true\nend\n\nif (context.combat_moveintocombatrange and context.combat_targetid and context.combat_targetpos) then\n\t\tif (Distance3DT(ml_global_information.Player_Position,context.combat_targetpos) > 2500 ) then \n\t\t\t\tcontext.moveto_position = context.combat_targetpos\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\t\tcontext.moveto_position = nil\n\t\tcontext.moveto_targetid = nil\n\t\tcontext.moveto_targettype = nil\nend\nself:fail()",
 										startcode = "",
 										xposoffset = 0,
 									},
@@ -58,7 +58,6 @@ local tbl =
 									},
 									variables = 
 									{
-										expanded = true,
 										filename = "MoveTo.st",
 										finishcode = "",
 										info = "Move to Position. \nRequired input argument: context.moveto_position\nOptional arguments:\ncontext.moveto_targetid - ID of the character / gadget we want to move to.\ncontext.moveto_targettype - \"character\" or \"gadget\" or \"event\"\n",
@@ -77,6 +76,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
@@ -109,7 +109,7 @@ local tbl =
 								finishcode = "",
 								info = "Check target health",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "context.combat_targetcheck = context.combat_targetcheck or {}\n\nif(context.combat_target) then\n\t\tif(context.combat_targetid ~= context.combat_targetcheck.id or context.combat_target.contentid ~= context.combat_targetcheck.contentid) then\n\t\t\t\tcontext.combat_targetcheck = {\n\t\t\t\t\t\tid = context.combat_target.id,\n\t\t\t\t\t\tcontentid = context.combat_target.contentid,\n\t\t\t\t\t\thealth = context.combat_target.health,\n\t\t\t\t\t\tlastTicks = ml_global_information.Now,\n\t\t\t\t}\n\t\telseif(TimeSince(context.combat_targetcheck.lastTicks) > 15000) then\n\t\t\t\tif (context.combat_target.health.percent >= context.combat_targetcheck.health.percent) then\n\t\t\t\t\t\td(\"[CombatHandler]: Target not losing health. Blacklisting.\")\n\t\t\t\t\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"monsters\"), context.combat_target.contentid, context.combat_target.name, ml_global_information.Now + 90000)\n\t\t\t\t\t\tself:success()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\t\t\tcontext.combat_targetcheck = {\n\t\t\t\t\t\tid = context.combat_target.id,\n\t\t\t\t\t\tcontentid = context.combat_target.contentid,\n\t\t\t\t\t\thealth = context.combat_target.health,\n\t\t\t\t\t\tlastTicks = ml_global_information.Now\n\t\t\t\t}\n\t\tend\nend\nself:fail()",
+								runcode = "context.combat_targetcheck = context.combat_targetcheck or {}\n\nif(context.combat_target) then\n\t\tlocal checktime = 15000\n\t\tif(not context.combat_target.los) then\n\t\t\t\tchecktime = 35000\n\t\telseif(Distance3DT(context.combat_target.pos,ml_global_information.Player_Position) > 2500) then\n\t\t\t\tchecktime = 45000\n\t\tend\n\n\t\tif(context.combat_targetid ~= context.combat_targetcheck.id or context.combat_target.contentid ~= context.combat_targetcheck.contentid) then\n\t\t\t\tcontext.combat_targetcheck = {\n\t\t\t\t\t\tid = context.combat_target.id,\n\t\t\t\t\t\tcontentid = context.combat_target.contentid,\n\t\t\t\t\t\thealth = context.combat_target.health,\n\t\t\t\t\t\tlastTicks = ml_global_information.Now,\n\t\t\t\t}\n\t\telseif(TimeSince(context.combat_targetcheck.lastTicks) > checktime) then\n\t\t\t\tif (context.combat_target.health.percent >= context.combat_targetcheck.health.percent) then\n\t\t\t\t\t\td(\"[CombatHandler]: Target not losing health. Blacklisting.\")\n\t\t\t\t\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"monsters\"), context.combat_target.contentid, context.combat_target.name, ml_global_information.Now + 90000)\n\t\t\t\t\t\tself:success()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\t\t\tcontext.combat_targetcheck = {\n\t\t\t\t\t\tid = context.combat_target.id,\n\t\t\t\t\t\tcontentid = context.combat_target.contentid,\n\t\t\t\t\t\thealth = context.combat_target.health,\n\t\t\t\t\t\tlastTicks = ml_global_information.Now\n\t\t\t\t}\n\t\tend\nend\nself:fail()",
 								startcode = "",
 								xposoffset = 0,
 							},
@@ -138,7 +138,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "SwimHandler.st",
 								finishcode = "",
 								info = "Check swimstate",
@@ -193,8 +192,8 @@ local tbl =
 		info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-		moveintocombatrange = false,
-		runcode = "",
+		moveintocombatrange = true,
+		runcode = "context.combat_moveintocombatrange = context.combat_moveintocombatrange == nil and true or context.combat_moveintocombatrange",
 		startcode = "",
 		subtreeuicode = "",
 		xposoffset = 0,
