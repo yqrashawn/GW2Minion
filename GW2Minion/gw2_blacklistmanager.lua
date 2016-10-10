@@ -35,9 +35,13 @@ function gw2_blacklistmanager.CheckBlacklistEntry(listname, id)
 	return false
 end
 
-function gw2_blacklistmanager.AddBlacklistEntry(listname, id, name, time)
+function gw2_blacklistmanager.AddBlacklistEntry(listname, id, name, duration)
 	if(listname and id and table.valid(gw2_blacklistmanager.lists[listname])) then
-		gw2_blacklistmanager.lists[listname]:AddEntry({id = id, name = name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = time or 0})
+		duration = duration or 0
+		if(type(duration) == "number" and duration > 0 and duration < ml_global_information.Now) then
+			duration = ml_global_information.Now + duration
+		end
+		gw2_blacklistmanager.lists[listname]:AddEntry({id = id, name = name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = duration})
 	end
 end
 

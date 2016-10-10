@@ -5,6 +5,7 @@ function ml_mesh_mgr.HandleOMC( ... )
 	d("OMC REACHED : "..tostring(OMCType))
 	
 	if ( table.valid(OMCStartPosition) and table.valid(OMCEndposition) and table.valid(OMCFacingDirection) ) then
+		Player:StopMovement()
 		ml_mesh_mgr.OMCStartPosition = OMCStartPosition
 		ml_mesh_mgr.OMCEndposition = OMCEndposition
 		ml_mesh_mgr.OMCFacingDirection = OMCFacingDirection
