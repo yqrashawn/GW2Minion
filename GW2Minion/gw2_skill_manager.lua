@@ -755,11 +755,15 @@ function gw2_skill_manager:GetProfile(profileName)
 			local profile = persistence.load(path .. profileName .. ".lua")
 			if (profile) then
 				profile = inheritTable(profilePrototype, profile)
-				for prio,skill in ipairs(profile.skills) do -- temp update all wrong settings. "1" vs true, "0" vs false
+				for prio,skill in ipairs(profile.skills) do -- TODO: remove this ugly mess. temp update all wrong settings. "1" vs true, "0" vs false 
 					for id,entry in pairs(skill) do
-						for k,v in pairs(entry) do
-							if (v == "1" or v == "0") then
-								profile.skills[prio][id][k] = v == "1"
+						if (id ~= "skill" and id ~= "player" and id ~= "target") then -- remove obsolete, stupid, never should have been here, entries.
+							profile.skills[prio][id] = nil
+						else
+							for k,v in pairs(entry) do
+								if (v == "1" or v == "0") then
+									profile.skills[prio][id][k] = v == "1"
+								end
 							end
 						end
 					end
@@ -767,6 +771,7 @@ function gw2_skill_manager:GetProfile(profileName)
 					skill.parent = setmetatable({},{__index = profile, __newindex = profile})
 				end
 				profile.tmp.path = path
+				profile:Save() -- TODO: remove this when all profiles have updated, +/- 2 month after release. save profile with corrected/removed settings. 
 				return profile
 			end
 		end
