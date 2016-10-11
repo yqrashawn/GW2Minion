@@ -224,10 +224,15 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 						return true
 					end
 				end
-			elseif(gw2_unstuck.stuckcount > mincount) then
+			elseif(gw2_unstuck.stuckcount > mincount+1) then
 				gw2_unstuck.lastaction = "jump"
 				gw2_unstuck.stuckhandlers.jump()
-				return false
+				return true
+			elseif(gw2_unstuck.stuckcount > mincount) then
+				-- Start moving forward
+				gw2_unstuck.lastaction = "moveforward"
+				gw2_unstuck.stuckhandlers.moveforward()
+				return true
 			end
 			
 			gw2_unstuck.laststuckposition = ppos
@@ -236,7 +241,11 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 
 		if(gw2_unstuck.laststuckentry and gw2_unstuck.lastaction) then
 			gw2_unstuck.laststuckentry.handled = gw2_unstuck.lastaction
-			gw2_unstuck.laststuckentry.stuckcount = gw2_unstuck.laststuckentry.stuckcount > 0 and gw2_unstuck.laststuckentry.stuckcount - 1 or 0
+			if(gw2_unstuck.laststuckentry.stuckcount > 2) then
+				gw2_unstuck.laststuckentry.stuckcount = 2
+			elseif(gw2_unstuck.laststuckentry.stuckcount > 0) then
+				gw2_unstuck.laststuckentry.stuckcount = gw2_unstuck.laststuckentry.stuckcount - 1
+			end
 		end
 	end
 	
@@ -264,7 +273,7 @@ end
 function gw2_unstuck.HandleStuckEntry(entry)
 	local retval = false
 	if(table.valid(gw2_unstuck.laststuckentry)) then
-		if(Distance3DT(entry.pos,gw2_unstuck.laststuckentry.pos) < 40) then
+		if(Distance3DT(entry.pos,gw2_unstuck.laststuckentry.pos) < 40 and TimeSince(entry.modified) > 1000) then
 			entry.stuckcount = entry.stuckcount + 1
 			entry.modified = ml_global_information.Now
 		end
@@ -403,14 +412,19 @@ function gw2_unstuck.stuckhandlers.waypoint()
 	if(gw2_unstuck.lastwptimer > 0 and TimeSince(gw2_unstuck.lastwptimer) < 30000) then
 		d("[Unstuck]: Used a waypoint less then 30 seconds ago.")
 		gw2_unstuck.stuckhandlers.stop()
-	elseif (Inventory:GetInventoryMoney() > 200) then
-		local wp = gw2_common_functions.GetClosestWaypointToPos(ml_global_information.CurrentMapID,Player.pos)
-		if(table.valid(wp) and wp.distance > 500) then
-			Player:StopMovement()
-			gw2_unstuck.lastwptimer = ml_global_information.Now
-			ml_global_information.Wait(math.random(3000,5000))
-			Player:TeleportToWaypoint(wp.id)
-			return true
+	elseif (Inventory:GetInventoryMoney() > 200 and not ml_global_information.Player_InCombat) then
+		local WPList = WaypointList("onmesh,nearest,samezone,notcontested")
+		if(table.valid(WPList)) then
+			local _,wp = next(WPList)
+			if(table.valid(wp) and wp.distance > 500) then
+				Player:StopMovement()
+				gw2_unstuck.lastwptimer = ml_global_information.Now
+				ml_global_information.Wait(math.random(3000,5000))
+				Player:TeleportToWaypoint(wp.id)
+				return true
+			else
+				d("[Unstuck]: Failed to use waypoint or waypoint distance too close.")
+			end
 		else
 			d("[Unstuck]: No waypoint found.")
 		end
@@ -477,6 +491,9 @@ function gw2_unstuck.stuckhandlers.interact(id)
 		local target = GadgetList:Get(id)
 		if(table.valid(target)) then
 			if(target.interactable and target.isininteractrange) then
+				if(target.selectable) then
+					Player:SetTarget(target.id)
+				end
 				Player:SetFacingExact(target.x,target.y,target.z)
 				Player:Interact(target.id)
 				ml_global_information.Wait(math.random(750,1000))
@@ -551,7 +568,7 @@ function gw2_unstuck.Draw()
 			GUI:Text(GetString("With swiftness")..": "..tostring(round(Settings.GW2Minion.stuckthreshold*1.33,2)))
 			GUI:Text(GetString("In combat")..": "..tostring(round(Settings.GW2Minion.stuckthreshold/2,2)))
 
-			GUI:Text(GetString("Active threshold")..": "..tostring(gw2_unstuck.ActiveThreshold()))
+			GUI:Text(GetString("Active threshold")..": "..tostring(round(gw2_unstuck.ActiveThreshold(),2)))
 			GUI:Separator()
 			if(GUI:ListBoxHeader(GetString("Stuck history"), table.size(gw2_unstuck.stuckhistory), 5)) then
 				for k,entry in pairs(gw2_unstuck.stuckhistory) do
@@ -569,6 +586,10 @@ function gw2_unstuck.Draw()
 			if(gw2_unstuck.gui.selectedstuckentry) then
 				local entry = gw2_unstuck.stuckhistory[gw2_unstuck.gui.selectedstuckentry]
 				if(entry) then
+					if(entry.handled == false and entry.stuckcount == 0) then
+						GUI:Text(GetString("Entry will be removed in")) GUI:SameLine() GUI:Text(":") GUI:SameLine() GUI:Text(tostring(math.ceil((120000-TimeSince(entry.modified))/1000)).."s")
+					end
+					
 					for k,v in pairs(entry) do
 						GUI:Text(k) GUI:SameLine() GUI:Text(":") GUI:SameLine() GUI:Text(tostring(v))
 					end

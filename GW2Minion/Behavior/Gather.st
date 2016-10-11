@@ -35,7 +35,7 @@ local tbl =
 						finishcode = "",
 						info = "Find gatherable",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(context.gather_targetid) then\n\t\tself:success()\n\t\treturn\nelseif(context.gather_targetid == nil) then\n\t\tlocal filter = \"shortestpath,onmesh,gatherable,interactable,selectable\"\n\t\t\n\t\tif(context.gather_maxdistance) then\n\t\t\t\tfilter = filter .. \",maxdistance=\"..context.gather_maxdistance\n\t\tend\n\t\t\n\t\tlocal GList = GadgetList(filter)\n\n\t\tif(table.valid(GList)) then\n\t\t\t\tlocal _,gatherable = next(GList)\n\t\t\t\tif(table.valid(gatherable)) then\n\t\t\t\t\t\td(\"[Gather]: New gatherable found\")\n\t\t\t\t\t\tcontext.gather_targetid = gatherable.id\n\t\t\t\t\t\tcontext.gather_position = gatherable.pos\n\t\t\t\t\t\tself:success()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\tend\nend\nself:fail()\n\n",
+						runcode = "if(context.gather_targetid) then\n\t\tself:success()\n\t\treturn\nelseif(context.gather_targetid == nil) then\n\t\tlocal filter = \"shortestpath,onmesh,gatherable,interactable,selectable\"\n\t\t\n\t\tif(context.gather_maxdistance) then\n\t\t\t\tfilter = filter .. \",maxdistance=\"..context.gather_maxdistance\n\t\tend\n\t\t\n\t\tlocal GList = GadgetList(filter)\n\n\t\tif(table.valid(GList)) then\n\t\t\t\tlocal _,gatherable = next(GList)\n\t\t\t\tif(table.valid(gatherable) and gatherable.pathdistance < 999999) then\n\t\t\t\t\t\td(\"[Gather]: New gatherable found\")\n\t\t\t\t\t\tcontext.gather_targetid = gatherable.id\n\t\t\t\t\t\tcontext.gather_position = gatherable.pos\n\t\t\t\t\t\tself:success()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\tend\nend\nself:fail()\n\n",
 						startcode = "",
 						xposoffset = 0,
 					},
@@ -116,7 +116,7 @@ local tbl =
 										runcode = "-- Setting the custom subtree settings in the context, which gets passed down to childnodes\ncontext.moveto_stoppingdistance = self.variables.stoppingdistance\ncontext.moveto_randomMovement = self.variables.randomMovement\ncontext.moveto_smoothturns = self.variables.smoothturns\ncontext.moveto_usewaypoints = self.variables.usewaypoints\ncontext.moveto_follownavsystem = false",
 										smoothturns = true,
 										startcode = "",
-										stoppingdistance = 25,
+										stoppingdistance = 130,
 										subtreeuicode = "if ( self.variables.stoppingdistance == nil ) then self.variables.stoppingdistance = 25 end\nself.variables.stoppingdistance = GUI:InputInt(\"Stopping Distance\", self.variables.stoppingdistance, 1, GUI.InputTextFlags_CharsDecimal)\n\nif ( self.variables.randomMovement == nil ) then self.variables.randomMovement = true end\nself.variables.randomMovement = GUI:Checkbox( \"RandomMovement\", self.variables.randomMovement )\n\nif ( self.variables.smoothturns == nil ) then self.variables.smoothturns = true end\nself.variables.smoothturns = GUI:Checkbox( \"Smooth Turns\", self.variables.smoothturns )\n\nif ( self.variables.usewaypoints == nil ) then self.variables.usewaypoints = false end\nself.variables.usewaypoints = GUI:Checkbox( \"Use Waypoints\", self.variables.usewaypoints )\nif ( GUI:IsItemHovered() ) then GUI:SetTooltip( \"When enabled, MoveTo will use waypoints if they are closer to the targetposition.\" ) end",
 										usewaypoints = false,
 										xposoffset = 0,
@@ -152,6 +152,7 @@ local tbl =
 	},
 	variables = 
 	{
+		expanded = true,
 		filename = "Gather.st",
 		finishcode = "",
 		info = "Gather",
