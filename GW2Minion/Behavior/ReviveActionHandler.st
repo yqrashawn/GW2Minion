@@ -33,9 +33,25 @@ local tbl =
 					variables = 
 					{
 						finishcode = "",
+						info = "Check player health",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+						runcode = "if(context.revive_targetid) then\n\t\tlocal minhp = type(context.revive_minplayerhp) == \"number\" and context.revive_minplayerhp or 30\n\t\tif(ml_global_information.Player_Health.percent < minhp) then\n\t\t\t\tcontext.revive_targetid = nil\n\t\t\t\tcontext.revive_position = nil\n\t\tend\nend\n\nself:fail()",
+						startcode = "",
+						xposoffset = 0,
+					},
+				},
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(context.revive_targetid and context.revive_position) then\n\t\tlocal dist = Distance3DT(ml_global_information.Player_Position,context.revive_position)\n\t\tif(dist > 1500) then\n\t\t\t\tself:fail()\n\t\t\t\treturn\n\t\telse\n\t\t\t\tlocal target = CharacterList:Get(context.revive_targetid)\n\t\t\t\tif(table.valid(target) and not target.alive and target.onmesh and target.pathdistance > 0) then\n\t\t\t\t\t\tif(target.distance > 130 or not target.isininteractrange) then\n\t\t\t\t\t\t\t\tcontext.revive_position = target.pos\n\t\t\t\t\t\t\t\tself:fail()\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\n\t\t\t\t\t\n\t\t\t\t\t\tlocal pTarget = Player:GetTarget()\n\t\t\t\t\t\tif(pTarget == nil or pTarget.id ~= target.id) then\n\t\t\t\t\t\t\t\tPlayer:SetTarget(target.id)\n\t\t\t\t\t\tend\n\t\t\t\t\t\tPlayer:SetFacing(target.pos.x,target.pos.y,target.pos.z)\n\t\t\t\t\t\tPlayer:Interact(target.id)\n\t\t\t\t\t\tml_global_information.Wait(math.random(500,900))\n\t\t\t\t\t\tself:running()\n\t\t\t\t\t\treturn\n\t\t\t\telse\n\t\t\t\t\t\td(\"[Revive]: Target alive or missing\")\n\t\t\t\tend\n\t\tend\nend\ncontext.revive_targetid = nil\ncontext.revive_position = nil\nself:fail()",
+						runcode = "if(context.revive_targetid and context.revive_position) then\n\t\tlocal dist = Distance3DT(ml_global_information.Player_Position,context.revive_position)\n\t\tif(dist > 1500) then\n\t\t\t\tself:fail()\n\t\t\t\treturn\n\t\telse\n\t\t\t\tlocal target = CharacterList:Get(context.revive_targetid)\n\t\t\t\tif(table.valid(target) and not target.alive and target.onmesh and target.pathdistance < 9999999) then\n\t\t\t\t\t\tif(target.distance > 130 or not target.isininteractrange) then\n\t\t\t\t\t\t\t\tcontext.revive_position = target.pos\n\t\t\t\t\t\t\t\tself:fail()\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\n\t\t\t\t\t \n\t\t\t\t\t\tlocal pTarget = Player:GetTarget()\n\t\t\t\t\t\tif(pTarget == nil or pTarget.id ~= target.id) then\n\t\t\t\t\t\t\t\tPlayer:SetTarget(target.id)\n\t\t\t\t\t\tend\n\t\t\t\t\t\tPlayer:SetFacing(target.pos.x,target.pos.y,target.pos.z)\n\t\t\t\t\t\tPlayer:Interact(target.id)\n\t\t\t\t\t\tml_global_information.Wait(math.random(500,900))\n\t\t\t\t\t\tself:running()\n\t\t\t\t\t\treturn\n\t\t\t\telse\n\t\t\t\t\t\td(\"[Revive]: Target alive or missing\")\n\t\t\t\tend\n\t\tend\nend\ncontext.revive_targetid = nil\ncontext.revive_position = nil\nself:fail()",
 						startcode = "",
 						xposoffset = 0,
 					},
@@ -88,6 +104,7 @@ local tbl =
 					},
 					variables = 
 					{
+						expanded = true,
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 						xposoffset = 0,
@@ -96,6 +113,7 @@ local tbl =
 			},
 			variables = 
 			{
+				expanded = true,
 				info = "",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
 				xposoffset = 0,
@@ -104,6 +122,7 @@ local tbl =
 	},
 	variables = 
 	{
+		expanded = true,
 		filename = "ReviveActionHandler.st",
 		finishcode = "",
 		info = "Revive action\ncontext.revive_position\ncontext.revive_targetid",

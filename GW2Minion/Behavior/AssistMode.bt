@@ -106,6 +106,22 @@ local tbl =
 							variables = 
 							{
 								finishcode = "",
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "-- In case the setting changes right in the middle of movement\nif(context.combat_ismoving and Settings.GW2Minion.moveintocombatrange == false) then\n\t\tPlayer:StopMovement()\n\tcontext.combat_ismoving = false\nend\nself:fail()",
+								startcode = "",
+								xposoffset = 0,
+							},
+						},
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
 								info = "Finish enemies",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 								runcode = "if ( Settings.GW2Minion.finishenemyassist == true) then\n\t\tif(gw2_common_functions.FinishEnemy() == true) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()",
@@ -145,7 +161,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "local target = Player:GetTarget()\nif(target and (target.alive or target.downed) and target.attackable and not gw2_common_functions.HasBuffs(target,ml_global_information.InvulnerabilityConditions)) then\n\t\tgw2_skill_manager:Use(target.id)\nend\nself:success()",
+										runcode = "local target = Player:GetTarget()\nlocal combatmovement = gw2_skill_manager.CombatMovement()\nif(combatmovement and combatmovement.range) then\n\t\tPlayer:StopMovement()\n\t\tcombatmovement.range = false\nend\nif(target and (target.alive or target.downed) and target.attackable and not gw2_common_functions.HasBuffs(target,ml_global_information.InvulnerabilityConditions)) then\n\t\tgw2_skill_manager:Use(target.id)\n\t\tif(Settings.GW2Minion.moveintocombatrange and ml_global_information.Player_OnMesh) then\n\t\t\t\tif(combatmovement and target.distance > ml_global_information.ActiveSkillRange) then\n\t\t\t\t\t\t\t\tlocal tPos = target.pos\n\t\t\t\t\t\t\t\tNavigationManager:MoveTo(tPos.x,tPos.y,tPos.z,ml_global_information.ActiveSkillRange/2,false,false,true)\n\t\t\t\t\t\t\t\tcombatmovement.range = true\n\t\t\t\tend\n\t\tend\nend\n\nself:success()",
 										startcode = "",
 										xposoffset = 0,
 									},
@@ -153,6 +169,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								info = "Manual target mode",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 								xposoffset = 0,
@@ -174,7 +191,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "local ptarget = Player:GetTarget()\nif(ptarget and ptarget.downed and ptarget.friendly and ptarget.distance < 200) then\n\t\tself:success()\n\t\treturn\nend\n\nlocal target = gw2_common_functions.GetBestCharacterTargetForAssist()\t\t\t\nif(target and (target.alive or target.downed) and target.attackable) then\n\t\tcontext.combat_targetid = target.id\n\t\tcontext.combat_target = target\n\t\tcontext.combat_moveintocombatrange = false -- Only let the sm handle this\n\t\tcontext.combat_onmeshcheck = false\nend\nself:fail()",
+										runcode = "local ptarget = Player:GetTarget()\nlocal target = nil\nif(ptarget and ptarget.downed and ptarget.friendly and ptarget.distance < 200) then\n\t\tself:success()\n\t\treturn\nend\n\nif(ptarget and ptarget.attackable and not gw2_common_functions.HasBuffs(ptarget,ml_global_information.InvulnerabilityConditions)) then\n\t\ttarget = ptarget\nend\n\nlocal besttarget = gw2_common_functions.GetBestCharacterTargetForAssist()\nif(besttarget and (target == nil or besttarget.id ~= target.id)) then\n\t\ttarget = besttarget\nend\nif(target and (target.alive or target.downed) and target.attackable) then\n\t\tcontext.combat_targetid = target.id\n\t\tcontext.combat_target = target\n\t\tcontext.combat_moveintocombatrange = Settings.GW2Minion.moveintocombatrange and ml_global_information.Player_OnMesh\n\t\tcontext.combat_onmeshcheck = false\nend\nself:fail()",
 										startcode = "",
 										xposoffset = 0,
 									},
@@ -221,6 +238,7 @@ local tbl =
 			},
 			variables = 
 			{
+				expanded = true,
 				failThreshold = 1,
 				info = "GameState Switch",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.activeTask or 'None')) GUI:Text('Succeeded Tasks: '..tostring(self.succeededTasks)) GUI:Text('Failed Tasks: '..tostring(self.failedTasks)) GUI:Text('Running Tasks: '..tostring(self.ranTasks))",

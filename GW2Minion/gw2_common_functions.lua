@@ -264,6 +264,11 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 	-- 
 	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,maxlevel=15") end
 
+	if(table.valid(target) and (not target.attackable or target.pathdistance > 9999999)) then
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
+		target = nil
+	end
+	
 	if ( target and target.id ) then
 		if ( target.distance < 1500 and target.los ) then
 			Player:SetTarget(target.id)
@@ -321,7 +326,12 @@ function gw2_common_functions.GetBestAggroTarget(healthstate)
 
 	-- Try to get Aggro Enemy
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
-
+	
+	if(table.valid(target) and (not target.attackable or target.pathdistance > 9999999)) then
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
+		target = nil
+	end
+	
 	if ( target and target.id ) then
 		if ( target.distance < 1500 and target.los ) then
 			Player:SetTarget(target.id)

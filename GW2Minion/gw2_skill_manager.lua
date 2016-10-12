@@ -884,6 +884,28 @@ function gw2_skill_manager.GetMaxAttackRange()
 	return 154
 end
 
+-- Get the range of the current active skill
+function gw2_skill_manager.GetActiveSkillRange()
+	if (gw2_skill_manager:ProfileReady() and gw2_skill_manager.profile.tmp.activeSkillRange) then
+		return gw2_skill_manager.profile.tmp.activeSkillRange < 154 and 154 or gw2_skill_manager.profile.tmp.activeSkillRange
+	end
+	return 154
+end
+
+function gw2_skill_manager.CanMove()
+	if (gw2_skill_manager:ProfileReady() and gw2_skill_manager.profile.tmp.combatMovement) then
+		return gw2_skill_manager.profile.tmp.combatMovement.allowed and not gw2_skill_manager.profile.tmp.combatMovement.combat
+	end
+	return false
+end
+
+function gw2_skill_manager.CombatMovement()
+	if (gw2_skill_manager:ProfileReady()) then
+		return gw2_skill_manager.profile.tmp.combatMovement
+	end
+	return nil
+end
+
 function gw2_skill_manager.RegisterProfilePath(path)
 	if (string.valid(path) and TableContains(gw2_skill_manager.paths, path) == false) then
 		table.insert(gw2_skill_manager.paths,path)
@@ -1083,15 +1105,9 @@ function profilePrototype:DoCombatMovement(targetID)
 			end
 		end
 		self.tmp.combatMovement.combat = true
-	elseif (table.valid(target) and target.distance > self.tmp.activeSkillRange and noStopMovementBuffs and (gBotMode ~= GetString("AssistMode") or Settings.GW2Minion.moveintocombatrange == true) and not gw2_unstuck.HandleStuck("combat") and ml_global_information.Player_OnMesh and ml_global_information.Player_Alive) then
-		local tPos = target.pos
-		if (self.tmp.combatMovement.combat) then Player:StopMovement() self.tmp.combatMovement.combat = false end
-		NavigationManager:MoveTo(tPos.x,tPos.y,tPos.z,self.tmp.activeSkillRange/2,false,false,true)
-		self.tmp.combatMovement.range = true
-	elseif (self.tmp.combatMovement.combat or self.tmp.combatMovement.range) then -- Stop active combat movement.
+	elseif(self.tmp.combatMovement.combat) then -- Stop active combat movement.
 		Player:StopMovement()
 		self.tmp.combatMovement.combat = false
-		self.tmp.combatMovement.range = false
 	end
 end
 
