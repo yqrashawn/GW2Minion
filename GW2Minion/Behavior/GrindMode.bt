@@ -216,7 +216,6 @@ local tbl =
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "AttackTargets.st",
 								finishcode = "",
 								info = "Find and Attack Enemies",
@@ -236,6 +235,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								filename = "MoveToRandom.st",
 								finishcode = "",
 								info = "Move to random",

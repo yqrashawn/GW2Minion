@@ -56,6 +56,7 @@ local tbl =
 	},
 	variables = 
 	{
+		expanded = true,
 		filename = "MoveTo.st",
 		finishcode = "",
 		info = "Move to Position. \nRequired input argument: context.moveto_position\nOptional arguments:\ncontext.moveto_targetid - ID of the character / gadget we want to move to.\ncontext.moveto_targettype - \"character\" or \"gadget\" or \"event\"\n",

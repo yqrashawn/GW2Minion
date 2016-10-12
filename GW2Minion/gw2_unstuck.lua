@@ -28,7 +28,7 @@ function gw2_unstuck.Reset()
 	gw2_unstuck.lastresult = false
 	gw2_unstuck.pathblockingobject = nil
 	gw2_unstuck.lasttimeonmesh = ml_global_information.Now
-	
+	gw2_unstuck.offmeshwptrycount = 0
 	for k,movementtype in pairs(gw2_unstuck.movementtype) do
 		if(movementtype) then Player:UnSetMovement(movementtype) end
 		gw2_unstuck.movementtype[k] = false
@@ -64,7 +64,7 @@ function gw2_unstuck.HandleStuck(mode)
 		return gw2_unstuck.lastresult
 	end
 	
-	if(not ml_global_information.Player_OnMesh) then
+	if(not Player.onmesh) then
 		local meshstate = NavigationManager:GetNavMeshState()
 		if(meshstate == GLOBAL.MESHSTATE.MESHEMPTY or meshstate == GLOBAL.MESHSTATE.MESHBUILDING or not string.valid(ml_mesh_mgr.currentfilename)) then
 			d("[Unstuck]: No mesh loaded for this map.")
@@ -97,19 +97,31 @@ end
 function gw2_unstuck.HandleOffMesh()
 	d("[Unstuck]: Player not on mesh!")
 	if(TimeSince(gw2_unstuck.lasttimeonmesh) > 20000) then
-		if(not gw2_unstuck.stuckhandlers.waypoint()) then
-			gw2_unstuck.stuckhandlers.stop()
+		if(gw2_unstuck.stuckhandlers.waypoint()) then
+			gw2_unstuck.lasttimeonmesh = ml_global_information.Now+3000
+		else
+			Player:StopMovement()
+			gw2_unstuck.offmeshwptrycount = gw2_unstuck.offmeshwptrycount + 1
+			if(gw2_unstuck.offmeshwptrycount > 10) then
+				gw2_unstuck.stuckhandlers.stop()
+			else
+				d("[Unstuck]: In combat or no waypoint found. Try count: " .. gw2_unstuck.offmeshwptrycount .. " of 10")
+			end
+			
+			ml_global_information.Wait(10000)
 		end
-	elseif(TimeSince(gw2_unstuck.lasttimeonmesh) > 2000) then
+		return true
+	elseif(gw2_unstuck.lasttimeonmesh == 0 or TimeSince(gw2_unstuck.lasttimeonmesh) > 2000) then
 		local p = NavigationManager:GetClosestPointOnMesh(Player.pos)
 		if(table.valid(p) and p.distance > 0 and p.distance < 500) then
 			d("[Unstuck]: Moving blindly to nearby mesh.")
 			gw2_unstuck.HandleStuck_MovedDistanceCheck()
-			gw2_unstuck.stuckhandlers.moveto(p)			
+			gw2_unstuck.stuckhandlers.moveto(p)
 		end
+		return true
 	end
 	
-	return true
+	return false
 end
 
 function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
@@ -254,26 +266,39 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 	return false
 end
 
-function gw2_unstuck.HandleStuck_Swimming(mode,mincount) 
-	if(gw2_unstuck.stuckcount > mincount+5) then
-		gw2_unstuck.stuckhandlers.swimdown()
-		gw2_unstuck.stuckhandlers.moveforward()
-		ml_global_information.Wait(math.random(500,1000))
-		return true
-	elseif(gw2_unstuck.stuckcount > mincount) then
-		gw2_unstuck.stuckhandlers.swimup()
-		gw2_unstuck.stuckhandlers.moveforward()
-		ml_global_information.Wait(math.random(500,1000))
-		return true
+function gw2_unstuck.HandleStuck_Swimming(mode,mincount)
+	if(Player.movementstate == GW2.MOVEMENTSTATE.AboveWaterMoving or Player.movementstate == GW2.MOVEMENTSTATE.AboveWaterNotMoving) then
+		-- Swimming on surface
+		if(gw2_unstuck.stuckcount > mincount+5) then
+			gw2_unstuck.stuckhandlers.swimdown()
+			gw2_unstuck.stuckhandlers.moveforward()
+			ml_global_information.Wait(math.random(500,1000))
+			return true
+		elseif(gw2_unstuck.stuckcount > mincount) then
+			gw2_unstuck.stuckhandlers.jump()
+			return true
+		end
+	else
+		if(gw2_unstuck.stuckcount > mincount+5) then
+			gw2_unstuck.stuckhandlers.swimdown()
+			gw2_unstuck.stuckhandlers.moveforward()
+			ml_global_information.Wait(math.random(500,1000))
+			return true
+		elseif(gw2_unstuck.stuckcount > mincount) then
+			gw2_unstuck.stuckhandlers.swimup()
+			gw2_unstuck.stuckhandlers.moveforward()
+			ml_global_information.Wait(math.random(500,1000))
+			return true
+		end
 	end
-
+	
 	return false
 end
 
 function gw2_unstuck.HandleStuckEntry(entry)
 	local retval = false
 	if(table.valid(gw2_unstuck.laststuckentry)) then
-		if(Distance3DT(entry.pos,gw2_unstuck.laststuckentry.pos) < 40 and TimeSince(entry.modified) > 1000) then
+		if(Distance3DT(entry.pos,gw2_unstuck.laststuckentry.pos) < 40 and TimeSince(entry.modified) > 500) then
 			entry.stuckcount = entry.stuckcount + 1
 			entry.modified = ml_global_information.Now
 		end
@@ -423,7 +448,7 @@ function gw2_unstuck.stuckhandlers.waypoint()
 				Player:TeleportToWaypoint(wp.id)
 				return true
 			else
-				d("[Unstuck]: Failed to use waypoint or waypoint distance too close.")
+				d("[Unstuck]: Failed to use waypoint or waypoint too close.")
 			end
 		else
 			d("[Unstuck]: No waypoint found.")
