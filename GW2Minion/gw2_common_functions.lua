@@ -359,7 +359,7 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 	
 		if(table.valid(objectivedetails) and objectivedetails.value1) then
 			local target = CharacterList:Get(objectivedetails.value1) or GadgetList:Get(objectivedetails.value1)
-			if(table.valid(target) and target.alive and target.attackable) then
+			if(table.valid(target) and target.alive and target.attackable and target.pathdistance < 9999999) then
 				return target
 			end
 		end
@@ -369,23 +369,31 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 			local target = gw2_common_functions.GetCharacterTargetExtended(filter)
 
 			if(table.valid(target)) then
-				local dist = Distance3DT(target.pos,marker.pos)
+				if((target.alive or target.downed) and target.pathdistance < 9999999) then
+					local dist = Distance3DT(target.pos,marker.pos)
 
-				if(dist < radius) then
-					return target
+					if(dist < radius) then
+						return target
+					end
+				else
+					gw2_blacklistmanager.AddBlacklistEntry(GetString("monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
 				end
 			end
 			
-			i,filter = next(filters,i)		
+			i,filter = next(filters,i)
 		end
 		
-		local GList = GadgetList("hostile,attackable,onmesh,nearest")
+		local GList = GadgetList("hostile,attackable,alive,onmesh,nearest")
 		if(table.valid(GList)) then
 			local _,gagdet = next(GList)
 			if(table.valid(gadget)) then
-				local dist = Distance3DT(gagdet.pos,marker.pos)
-				if(dist < radius) then
-					return gagdet
+				if(gagdet.alive and gagdet.pathdistance < 9999999) then
+					local dist = Distance3DT(gagdet.pos,marker.pos)
+					if(dist < radius) then
+						return gagdet
+					end
+				else
+					gw2_blacklistmanager.AddBlacklistEntry(GetString("monsters"), gagdet.contentid, gagdet.name, ml_global_information.Now + 90000)
 				end
 			end
 		end
@@ -471,7 +479,13 @@ function gw2_common_functions.handleConversation(result)
 			for index=0, #options do
 				local conversation = options[index]
 				if (conversation.type == GW2.CONVERSATIONOPTIONS.Repair and result == "repair" and gw2_common_functions.vendorHistory["Repair"] < 5) then
-					Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Repair)
+					-- Repair is almost always the first option and repair is often the wrong type
+					if(gw2_common_functions.vendorHistory["Repair"] < 2) then
+						Player:SelectConversationOptionByIndex(0)
+					else
+						Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Repair)
+					end
+					
 					gw2_common_functions.vendorHistory["Repair"] = gw2_common_functions.vendorHistory["Repair"] + 1
 					return true
 				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Shop and (result == "sell" or result == "buy") and gw2_common_functions.vendorHistory["Shop"] < 5) then
