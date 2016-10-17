@@ -3,15 +3,15 @@ gw2_blacklistmanager = {}
 gw2_blacklistmanager.lists = {}
 
 function gw2_blacklistmanager.ModuleInit()
-	gw2_blacklistmanager.lists[GetString("vendorsbuy")] = ml_list_mgr.AddList(GetString("vendorsbuy"))
-	gw2_blacklistmanager.lists[GetString("vendorsrepair")] = ml_list_mgr.AddList(GetString("vendorsrepair"))
-	gw2_blacklistmanager.lists[GetString("vendorssell")] = ml_list_mgr.AddList(GetString("vendorssell"))
-	gw2_blacklistmanager.lists[GetString("monsters")] = ml_list_mgr.AddList(GetString("monsters"))	
-	gw2_blacklistmanager.lists[GetString("mapobjects")] = ml_list_mgr.AddList(GetString("mapobjects"))
+	gw2_blacklistmanager.lists[GetString("Vendor Buy")] = ml_list_mgr.AddList(GetString("Vendor Buy"))
+	gw2_blacklistmanager.lists[GetString("Vendor Repair")] = ml_list_mgr.AddList(GetString("Vendor Repair"))
+	gw2_blacklistmanager.lists[GetString("Vendor Sell")] = ml_list_mgr.AddList(GetString("Vendor Sell"))
+	gw2_blacklistmanager.lists[GetString("Monsters")] = ml_list_mgr.AddList(GetString("Monsters"))	
+	gw2_blacklistmanager.lists[GetString("Map Objects")] = ml_list_mgr.AddList(GetString("Map Objects"))
 
-	local eventlist = ml_list_mgr.AddList(GetString("event"), gw2_blacklistmanager.DrawEvent)
+	local eventlist = ml_list_mgr.AddList(GetString("Event"), gw2_blacklistmanager.DrawEvent)
 	eventlist.GUI.vars = { mapid = 0, name = "", pos = { x = 0, y = 0, z = 0}, id = 0, expiration_s = 0}
-	gw2_blacklistmanager.lists[GetString("event")] = eventlist
+	gw2_blacklistmanager.lists[GetString("Event")] = eventlist
 end
 
 function gw2_blacklistmanager.GetExcludeString(listname)
@@ -55,7 +55,7 @@ function gw2_blacklistmanager:DrawEvent()
 	
 	-- dbk: Add
 	if (self.GUI.main_tabs.tabs[1].isselected) then
-		if (GUI:Button("Pull nearest event details")) then
+		if (GUI:Button(GetString("Pull nearest event details"))) then
 			local MList = MapMarkerList("nearest,isevent")
 			if(table.valid(MList)) then
 				local _,marker = next(MList)
@@ -67,17 +67,17 @@ function gw2_blacklistmanager:DrawEvent()
 		end
 		
 		GUI:PushItemWidth(150)
-		GUI:Text("Map ID:"); GUI:SameLine(100); 
+		GUI:Text(GetString("Map ID:")); GUI:SameLine(100); 
 		vars.mapid = GUI:InputText("##listdetail-mapid",vars.mapid)
-		GUI:Text("Event ID:"); GUI:SameLine(100); 
+		GUI:Text(GetString("Event ID:")); GUI:SameLine(100); 
 		vars.id = GUI:InputText("##listdetail-id",vars.id)
-		GUI:Text("Name:"); GUI:SameLine(100);
+		GUI:Text(GetString("Name:")); GUI:SameLine(100);
 		vars.name = GUI:InputText("##listdetail-name",vars.name)
-		GUI:Text("Duration: (s)"); GUI:SameLine(100); 
+		GUI:Text(GetString("Duration: (s)")); GUI:SameLine(100); 
 		vars.expiration_s = GUI:InputInt("##listdetail-expiration",vars.expiration_s)
 		GUI:PopItemWidth()
 		
-		if (GUI:Button("Add Entry")) then
+		if (GUI:Button(GetString("Add Entry"))) then
 			local details = { id = vars.id, mapid = vars.mapid, name = vars.name, expiration = vars.expiration_s*1000, expiration_s = vars.expiration_s }
 			self:AddEntry(details)
 		end
@@ -89,9 +89,9 @@ function gw2_blacklistmanager:DrawEvent()
 		GUI:Separator();
 		GUI:Columns(4, "##listdetail-view", true)
 		GUI:SetColumnOffset(1,100); GUI:SetColumnOffset(2,160); GUI:SetColumnOffset(3,260); GUI:SetColumnOffset(4,360);
-		GUI:Text("Name"); GUI:NextColumn();
-		GUI:Text("Map ID"); GUI:NextColumn();
-		GUI:Text("Event ID"); GUI:NextColumn(); GUI:NextColumn();
+		GUI:Text(GetString("Name")); GUI:NextColumn();
+		GUI:Text(GetString("Map ID")); GUI:NextColumn();
+		GUI:Text(GetString("Event ID")); GUI:NextColumn(); GUI:NextColumn();
 		GUI:Separator();
 		
 		local entries = self.entries
@@ -100,7 +100,7 @@ function gw2_blacklistmanager:DrawEvent()
 				GUI:Text(entry.name); GUI:NextColumn();
 				GUI:Text(entry.mapid); GUI:NextColumn();
 				GUI:Text(entry.id); GUI:NextColumn();
-				if (GUI:Button("Delete")) then
+				if (GUI:Button(GetString("Delete"))) then
 					self:DeleteEntry(i); 
 				end
 				GUI:NextColumn();

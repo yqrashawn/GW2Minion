@@ -120,10 +120,8 @@ function ml_global_information.Start()
 end
 
 function ml_global_information.Stop()
-    Player:StopMovement()
+    Player:StopMovement() -- this function is overrwitten in gw2_navigation.lua (on the bottom). It stops the player, clearls the path and resets OMCs. 
 	gw2_unstuck.Stop()
-	ml_mesh_mgr.ResetOMC()
-	ml_mesh_mgr.OMCStartPositionReached = false
 end
 
 -- Waits xxx seconds before running the next pulse
