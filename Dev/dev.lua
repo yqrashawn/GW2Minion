@@ -7,12 +7,6 @@ dev.teleportpos = { x =0,y =0, z =0, }
 dev.noclip = false
 dev.movementtype = { [0] = "Forward", [1] ="Backward", [2] ="Left", [3] ="Right", [4] ="TurnLeft", [5] ="TurnRight",[6] ="Evade",[7] ="AutoRunToggle", [8] ="WalkToggle", [9] ="Jump", [10] ="SwimUp", [11] ="SwimDown", [12] ="About_Face", [13] ="ForwardLeft", [14] ="ForwardRight", [15] ="BackwardLeft", [16] ="BackwardRight",}
 dev.movementtypeidx = 0
-dev.navtype = 1
-dev.movetype = 1
-dev.rndpointradius = 500
-dev.avoidanceareasize = 50
-dev.avoidanceareas = { }
-dev.lastNavResult = 0
 dev.chatchannel = 0
 
 
@@ -585,65 +579,7 @@ function dev.DrawCall(event, ticks )
 						GUI:PopItemWidth()
 						GUI:TreePop()					
 					end
-					
-					if ( GUI:TreeNode("Navigation") ) then
-						GUI:PushItemWidth(250)						
-						GUI:BulletText("TargetPosition") GUI:SameLine(200)  GUI:InputFloat3( "##devnav1", dev.teleportpos.x, dev.teleportpos.y, dev.teleportpos.z, 2, GUI.InputTextFlags_ReadOnly)
-						if (GUI:Button("UseCurrentPos",150,15) ) then dev.teleportpos = Player.pos end 
-						GUI:SameLine() if (GUI:Button("GetRandomPoint",150,15) ) then 
-							local tpos = NavigationManager:GetRandomPoint()
-							if (table.size(tpos) > 0 ) then
-								dev.teleportpos.x = tpos.x
-								dev.teleportpos.y = tpos.y
-								dev.teleportpos.z = tpos.z
-							end
-						end 
-						
-						GUI:BulletText("NavigationType") GUI:SameLine(200) dev.navtype = GUI:Combo("##devnav2", dev.navtype, { [1] = "Normal", [2] = "Follow" })
-						GUI:BulletText("MovementType") GUI:SameLine(200) dev.movetype = GUI:Combo("##devnav3", dev.movetype, { [1] = "Straight", [2] = "Random" })
-						if (GUI:Button("NavigateTo",150,15) ) then
-							dev.lastNavResult = NavigationManager:MoveTo(dev.teleportpos.x, dev.teleportpos.y, dev.teleportpos.z,25,dev.navtype==2,dev.movetype==2,true)						
-						end						
-						GUI:SameLine(200) if (GUI:Button("Stop Navigation",150,15) ) then Player:StopMovement() end
-						GUI:Text("Path Result:") GUI:SameLine() GUI:InputText("##devmm66",tostring(dev.lastNavResult),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						if ( GUI:TreeNode("Path Details") ) then
-							if (GUI:Button("Get Path",150,15) ) then 
-								local ppos = Player.pos
-								dev.lastpath = NavigationManager:GetPath(ppos.x,ppos.y,ppos.z,dev.teleportpos.x, dev.teleportpos.y, dev.teleportpos.z)
-							end
-							if ( table.valid(dev.lastpath)) then
-								local psize = table.size(dev.lastpath)
-								GUI:BulletText("Path Nodes") GUI:SameLine(200) GUI:InputText("##devmm4",tostring(psize),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-								GUI:BulletText("Path Info") GUI:SameLine(200) GUI:InputText("##devmm5",tostring(dev.lastpath[psize-1].type),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-								for i,n in pairsByKeys(dev.lastpath) do
-									if ( GUI:TreeNode("Node- "..tostring(i)) ) then
-										GUI:BulletText("Type") GUI:SameLine(200) GUI:InputText("##devmm6"..tostring(i),tostring(n.type),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("Position") GUI:SameLine(200) GUI:InputFloat3( "##devmm7..tostring(i)", n.x, n.y, n.z, 2, GUI.InputTextFlags_ReadOnly)									
-										GUI:TreePop()
-									end
-								end								
-							end								
-							GUI:TreePop()					
-						end
-						
-						GUI:Separator()
-						GUI:BulletText("AvoidanceAreaSize") GUI:SameLine(200) dev.avoidanceareasize = GUI:InputInt("##devmm8",dev.avoidanceareasize,1,10)
-						if (GUI:Button("Add AvoidanceArea",150,15) ) then 
-							local pPos = Player.pos
-							if ( pPos ) then
-								table.insert(dev.avoidanceareas, { x=pPos.x, y=pPos.y, z=pPos.z, r=tonumber(dev.avoidanceareasize) })
-								NavigationManager:SetAvoidanceAreas(dev.avoidanceareas)
-							end
-						end
-						if (GUI:Button("Clear AvoidanceAreas",150,15) ) then 
-							dev.avoidanceareas = {}
-							NavigationManager:ClearAvoidanceAreas()
-						end
-						
-						GUI:PopItemWidth()
-						GUI:TreePop()					
-					end
-					
+										
 					if ( GUI:TreeNode("Functions & Other Infos") ) then
 						GUI:PushItemWidth(250)
 						GUI:BulletText("Local MapID") GUI:SameLine(200) GUI:InputText("##devff1",tostring(Player:GetLocalMapID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -916,4 +852,5 @@ function dev.DrawMapMarkerDetails(id,b)
 		GUI:TreePop()
 	end
 end
+
 
