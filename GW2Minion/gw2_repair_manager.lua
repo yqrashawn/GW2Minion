@@ -68,6 +68,7 @@ function gw2_repair_manager.RepairAtVendor(repair)
 	if (Player:IsConversationOpen() == false) then
 		ml_log("Opening Repair... ")
 		Player:Interact(repair.id)
+		gw2_repair_manager.VendorBuyHistroy.interactcount = gw2_repair_manager.VendorBuyHistroy.interactcount + 1
 		ml_global_information.Wait(math.random(1500,1700))
 		return true
 	else

@@ -62,12 +62,14 @@ ml_global_information.ImmobilizeConditions = {
 	[27705]		= "Taunt",
 	[15090]		= "Petrified 1",
 	[16963]		= "Petrified 2",
+	[25181]		= "Trapped"
 }
 
 ml_global_information.InvulnerabilityConditions = {
 	[762]		= "Determined",
 	[903]		= "Righteous Indignation",
 	[36143]		= "Destruction Immunity",
+	[29065]		= "Tough Hide"
 }
 
 -- Moved this here so it's easier to look at and easier to copy paste

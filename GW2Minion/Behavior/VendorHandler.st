@@ -53,6 +53,7 @@ local tbl =
 							},
 							variables = 
 							{
+								expanded = true,
 								filename = "Repair.st",
 								finishcode = "",
 								info = "Repair\nOptional parameter:\ncontext.repair_nearby = true/false",
