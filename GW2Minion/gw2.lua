@@ -253,6 +253,7 @@ function gw2minion.ModuleInit()
 		 ml_mesh_mgr.SetDefaultMesh(1165,"Bloodstone Fen")
 		--Instances
 		ml_mesh_mgr.SetDefaultMesh(896,"North Noland Hatchery") -- Diessa Plateau
+		ml_mesh_mgr.SetDefaultMesh(866,"Mad Kings Labyrinth")
 		
 		-- Setup the marker types we wanna use
 		local grindMarker = ml_marker:Create("grindTemplate")
