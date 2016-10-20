@@ -526,7 +526,8 @@ function dev.DrawCall(event, ticks )
 						if (GUI:Button("Teleport",150,15) ) then d(HackManager:Teleport(tonumber(dev.teleportpos.x),tonumber(dev.teleportpos.y),tonumber(dev.teleportpos.z))) end
 						
 						
-						
+						GUI:BulletText("Zoom") GUI:SameLine(150) local v, d = GUI:InputFloat("##devh9",HackManager:GetZoom(),10,100,2)
+						if ( d ) then HackManager:SetZoom(tonumber(v)) end
 						GUI:BulletText("Speed") GUI:SameLine(150) local v, b = GUI:InputFloat("##devh2",HackManager:GetSpeed(),1,10,2)
 						if ( b ) then HackManager:SetSpeed(tonumber(v)) end
 						GUI:BulletText("Gravity") GUI:SameLine(150) v, b = GUI:InputFloat("##devh3",HackManager:GetGravity(),1,10,2)
