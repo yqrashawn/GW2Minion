@@ -14,6 +14,10 @@ local tbl =
 					nodes = 
 					{
 					},
+					settings = 
+					{
+						xposoffset = 0,
+					},
 					variables = 
 					{
 						finishcode = "",
@@ -21,7 +25,6 @@ local tbl =
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 						runcode = "local target = gw2_common_functions.GetBestCharacterTarget( 9999 ) \nif (table.valid(target) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"monsters\"),target.contentid)) then\n\tlocal pdist = target.pathdistance\n\tif ( pdist < 9999999 ) then\n\t\tcontext.combat_targetid = target.id\n\t\tself:success()\n\t\treturn\n\telse\n\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"monsters\"), target.contentid, target.name, ml_global_information.Now + 90000)\n\tend\nend\nself:fail()",
 						startcode = "",
-						xposoffset = 0,
 					},
 				},
 				
@@ -30,31 +33,32 @@ local tbl =
 					nodes = 
 					{
 					},
-					variables = 
+					settings = 
 					{
 						expanded = true,
-						filename = "CombatHandler.st",
-						finishcode = "",
-						info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
-						menucode = "",
-						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-						moveintocombatrange = true,
-						runcode = "context.combat_moveintocombatrange = context.combat_moveintocombatrange == nil and true or context.combat_moveintocombatrange",
-						startcode = "",
-						subtreeuicode = "",
 						xposoffset = 0,
+					},
+					variables = 
+					{
+						filename = "CombatHandler.st",
 					},
 				},
 			},
-			variables = 
+			settings = 
 			{
 				expanded = true,
+				xposoffset = 0,
+			},
+			variables = 
+			{
 				filename = "HandleAggro",
 				info = "",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
-				xposoffset = 0,
 			},
 		},
+	},
+	settings = 
+	{
 	},
 	variables = 
 	{
@@ -66,7 +70,6 @@ local tbl =
 		runcode = "",
 		startcode = "",
 		subtreeuicode = "",
-		xposoffset = 0,
 	},
 }
 
