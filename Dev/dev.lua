@@ -8,7 +8,7 @@ dev.noclip = false
 dev.movementtype = { [0] = "Forward", [1] ="Backward", [2] ="Left", [3] ="Right", [4] ="TurnLeft", [5] ="TurnRight",[6] ="Evade",[7] ="AutoRunToggle", [8] ="WalkToggle", [9] ="Jump", [10] ="SwimUp", [11] ="SwimDown", [12] ="About_Face", [13] ="ForwardLeft", [14] ="ForwardRight", [15] ="BackwardLeft", [16] ="BackwardRight",}
 dev.movementtypeidx = 0
 dev.chatchannel = 0
-
+dev.renderobjdrawmode = { [0] = "POINTS", [1] = "LINES", [2] = "TRIANGLES", }
 
 function dev.Init()
 	-- Register Button	
@@ -169,6 +169,7 @@ function dev.DrawCall(event, ticks )
 						end						
 						GUI:TreePop()				
 					end
+-- END BUFFS
 					
 					if ( GUI:TreeNode("Inventory") ) then
 						local list = Inventory("")
@@ -212,7 +213,8 @@ function dev.DrawCall(event, ticks )
 						end
 						GUI:TreePop()				
 					end
-					
+-- END INVENTORY
+
 					if ( GUI:TreeNode("Vendor") ) then
 						GUI:BulletText("IsVendorOpened") GUI:SameLine(200) GUI:InputText("##devv0",tostring(Inventory:IsVendorOpened()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)	
 						local list = VendorItemList("")
@@ -239,7 +241,8 @@ function dev.DrawCall(event, ticks )
 						end
 						GUI:TreePop()				
 					end
-					
+-- END VENDOR 
+				
 					if ( GUI:TreeNode("Conversation") ) then
 						GUI:PushItemWidth(250)
 						GUI:BulletText("IsConversationOpen") GUI:SameLine(200) GUI:InputText("##devc1",tostring(Player:IsConversationOpen()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -260,6 +263,7 @@ function dev.DrawCall(event, ticks )
 						GUI:PopItemWidth()
 						GUI:TreePop()					
 					end
+-- END CONVERSATION
 					
 					if ( GUI:TreeNode("MapMarker") ) then						
 						if ( GUI:TreeNode("Nearest") ) then							
@@ -293,6 +297,7 @@ function dev.DrawCall(event, ticks )
 						end
 						GUI:TreePop()				
 					end
+-- END MAPMARKER
 					
 					if ( GUI:TreeNode("Waypoints") ) then
 						local list = WaypointList("")
@@ -322,6 +327,7 @@ function dev.DrawCall(event, ticks )
 						end
 						GUI:TreePop()				
 					end
+-- END WAYPOINTS
 					
 					if ( GUI:TreeNode("PvP") ) then
 						GUI:BulletText("IsInPvPLobby") GUI:SameLine(200) GUI:InputText("##devp1",tostring(PvPManager:IsInPvPLobby()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -346,7 +352,8 @@ function dev.DrawCall(event, ticks )
 						
 						GUI:TreePop()				
 					end
-					
+-- END PVP
+				
 					if ( GUI:TreeNode("Party") ) then
 						local list = Player:GetParty()
 						if ( table.valid(list) )then
@@ -375,7 +382,8 @@ function dev.DrawCall(event, ticks )
 						end
 						GUI:TreePop()					
 					end
-					
+-- END PARTY
+
 					if ( GUI:TreeNode("Skills") ) then
 						GUI:BulletText("IsCasting") GUI:SameLine(200) GUI:InputText("##devs1",tostring(Player:IsCasting()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devs2",tostring(Player:CanCast()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -417,6 +425,7 @@ function dev.DrawCall(event, ticks )
 						GUI:PopItemWidth()
 						GUI:TreePop()
 					end
+-- END SKILLS
 					
 					if ( GUI:TreeNode("Pet") ) then
 						GUI:PushItemWidth(250)
@@ -426,6 +435,7 @@ function dev.DrawCall(event, ticks )
 						GUI:PopItemWidth()
 						GUI:TreePop()
 					end
+--END PET
 
 					if ( GUI:TreeNode("Instances") ) then
 						GUI:PushItemWidth(250)
@@ -460,6 +470,7 @@ function dev.DrawCall(event, ticks )
 						GUI:PopItemWidth()
 						GUI:TreePop()					
 					end					
+-- END INSTANCES
 					
 					if ( GUI:TreeNode("Quests") ) then
 						GUI:PushItemWidth(250)
@@ -504,6 +515,7 @@ function dev.DrawCall(event, ticks )
 						GUI:TreePop()
 					end
 					
+-- END QUEST
 					if ( GUI:TreeNode("Chat") ) then
 						GUI:PushItemWidth(250)
 						GUI:BulletText("Channel") GUI:SameLine(200) dev.chatchannel = GUI:InputInt("##devmm8",dev.chatchannel ,1,1)
@@ -548,7 +560,8 @@ function dev.DrawCall(event, ticks )
 						GUI:PopItemWidth()
 						GUI:TreePop()					
 					end
-					
+--END CHAT				
+
 					if ( GUI:TreeNode("Movement") ) then
 						GUI:PushItemWidth(250)						
 						GUI:BulletText("CanMove") GUI:SameLine(200) GUI:InputText("##devmm1",tostring(Player:CanMove()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -580,8 +593,88 @@ function dev.DrawCall(event, ticks )
 						GUI:PopItemWidth()
 						GUI:TreePop()					
 					end
+-- END MOVEMENT		
+				
+	if ( GUI:TreeNode("Renderobject List")) then
+			
+				-- RenderManager:AddObject( tablewith vertices here ) , returns the renderobject which is a lua metatable. it has a .id which should be used everytime afterwards if the object is being accessed:
+				-- RenderManager:GetObject(id)  - use this always before you actually access a renderobject of yours, because the object could have been deleted at any time in c++ due to other code erasing it
+				if( gamestate == FFXIV.GAMESTATE.INGAME ) then
+					GUI:PushItemWidth(100)
+					if ( not dev.renderobjname ) then dev.renderobjname = "Test" end
+					
+					if (GUI:Button("Add New Object##newobject"..tostring(id),150,15) ) then
+						local ppos = Player.pos
+						RenderManager:AddObject({ [1] = { name=dev.renderobjname, x=ppos.x, y=ppos.y, z=ppos.z, r =0.5,g =0.5,b =0.5,a =0.8, }} ) --creating a new object with just 1 vertex, lazy utilizing that one table we already have
+					end
+					 GUI:SameLine()
+					dev.renderobjname = GUI:InputText("Object Name##robja1",dev.renderobjname)	
+					
+					if (GUI:Button("Delete All Objects##robject"..tostring(id),150,15) ) then RenderManager:RemoveAllObjects() end
+					
+					
+					local rlist = RenderManager:GetObjectList()
+					if (table.valid(rlist)) then
+						for id, e in pairs(rlist) do
+							local changed = false
+							local needupdate = false
+							if ( GUI:TreeNode("ID: "..tostring(e.id).." - "..e.name) ) then
+								e.enabled, changed = GUI:Checkbox("Enabled##robj2"..tostring(id),e.enabled)
+								if ( changed ) then if(e.enabled) then e:Enable() else e:Disable() end end
+								GUI:SameLine()
+								e.drawmode, changed = GUI:Combo("DrawMode", e.drawmode, dev.renderobjdrawmode)								
+								if ( changed ) then e:SetDrawMode(e.drawmode) end
+								GUI:SameLine()
+								if (GUI:Button("Delete Object##object"..tostring(id),150,15) ) then RenderManager:RemoveObject(e.id) end
+								
+								local vertices = e:GetVertices()								
+								local removeid
+								if ( GUI:TreeNode("Vertices".."##vtxlist") ) then
+									if (table.valid(vertices)) then
+										GUI:PushItemWidth(200)
+										for vi, vertex in pairs(vertices) do
+											if ( GUI:TreeNode(tostring(vi).."##vtx") ) then
+												GUI:BulletText("Position") GUI:SameLine(200)  vertex.x, vertex.y, vertex.z, changed = GUI:InputFloat3( "##robj4"..tostring(vi), vertex.x, vertex.y, vertex.z, 2, GUI.InputTextFlags_CharsDecimal)
+												if ( changed ) then needupdate = true end
+												GUI:BulletText("Color") GUI:SameLine(200)  vertex.r, vertex.g, vertex.b, vertex.a, changed = GUI:InputFloat4( "##robj5"..tostring(vi), vertex.r, vertex.g, vertex.b, vertex.a, 2, GUI.InputTextFlags_CharsDecimal)											
+												if ( changed ) then needupdate = true end
+												if (GUI:Button("Delete Vertex##object"..tostring(id),150,15) ) then removeid = vi end
+												GUI:TreePop()
+											end
+										end										
+										GUI:PopItemWidth()
 										
-					if ( GUI:TreeNode("Functions & Other Infos") ) then
+										-- Add a new vertext to our current object
+										if (GUI:Button("Add New Vertex##vertex"..tostring(id),150,15) ) then
+											local ppos = Player.pos
+											table.insert(vertices,{ x=ppos.x, y=ppos.y, z=ppos.z, r =0.5,g =0.5,b =0.5,a =0.8, })
+											needupdate = true
+										end										
+									else
+										GUI:Text("This Object has no Vertices.")
+									end
+									GUI:TreePop()
+								end
+								-- Remove vertex
+								if (removeid ~= nil ) then table.remove(vertices,removeid) needupdate = true end
+								if (needupdate) then
+									e:SetVertices(vertices)
+								end								
+								
+								GUI:Separator()
+								GUI:TreePop()
+							end
+						end					
+					else
+						GUI:Text("No RenderObjects Available...")
+					end				
+					GUI:PopItemWidth()
+				end
+				GUI:TreePop()
+			end
+-- END RENDEROBJECTS	
+				
+					if ( GUI:TreeNode("Utility Functions & Other Infos") ) then
 						GUI:PushItemWidth(250)
 						GUI:BulletText("Local MapID") GUI:SameLine(200) GUI:InputText("##devff1",tostring(Player:GetLocalMapID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						
