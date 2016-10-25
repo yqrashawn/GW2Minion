@@ -14,6 +14,10 @@ local tbl =
 					nodes = 
 					{
 					},
+					settings = 
+					{
+						xposoffset = 0,
+					},
 					variables = 
 					{
 						finishcode = "",
@@ -21,7 +25,6 @@ local tbl =
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 						runcode = "if(ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 						startcode = "",
-						xposoffset = 0,
 					},
 				},
 				
@@ -40,6 +43,10 @@ local tbl =
 									nodes = 
 									{
 									},
+									settings = 
+									{
+										xposoffset = 0,
+									},
 									variables = 
 									{
 										finishcode = "",
@@ -47,7 +54,6 @@ local tbl =
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 										runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Defeated ) then\t\n\t\tcontext.gather_targetid = nil\nend\nself:success()",
 										startcode = "",
-										xposoffset = 0,
 									},
 								},
 								
@@ -56,25 +62,23 @@ local tbl =
 									nodes = 
 									{
 									},
+									settings = 
+									{
+									},
 									variables = 
 									{
 										filename = "DeathHandler.st",
-										finishcode = "",
-										info = "Death Handler",
-										menucode = "",
-										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-										runcode = "",
-										startcode = "",
-										subtreeuicode = "",
-										xposoffset = 0,
 									},
 								},
+							},
+							settings = 
+							{
+								xposoffset = 0,
 							},
 							variables = 
 							{
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
-								xposoffset = 0,
 							},
 						},
 						
@@ -82,19 +86,14 @@ local tbl =
 							class = "BehaviorTree",
 							nodes = 
 							{
+							},
+							settings = 
+							{
+								xposoffset = 0,
 							},
 							variables = 
 							{
-								expanded = true,
 								filename = "DownedHandler.st",
-								finishcode = "",
-								info = "Downed Handler",
-								menucode = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-								runcode = "",
-								startcode = "",
-								subtreeuicode = "",
-								xposoffset = 0,
 							},
 						},
 						
@@ -102,18 +101,14 @@ local tbl =
 							class = "BehaviorTree",
 							nodes = 
 							{
+							},
+							settings = 
+							{
+								xposoffset = 0,
 							},
 							variables = 
 							{
 								filename = "ReviveDownedPlayers.st",
-								finishcode = "",
-								info = "Revive downed players",
-								menucode = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-								runcode = "",
-								startcode = "",
-								subtreeuicode = "",
-								xposoffset = 0,
 							},
 						},
 						
@@ -121,18 +116,14 @@ local tbl =
 							class = "BehaviorTree",
 							nodes = 
 							{
+							},
+							settings = 
+							{
+								xposoffset = 0,
 							},
 							variables = 
 							{
 								filename = "VendorHandler.st",
-								finishcode = "",
-								info = "Handle vendor / repair",
-								menucode = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-								runcode = "",
-								startcode = "",
-								subtreeuicode = "",
-								xposoffset = 0,
 							},
 						},
 						
@@ -140,18 +131,14 @@ local tbl =
 							class = "BehaviorTree",
 							nodes = 
 							{
+							},
+							settings = 
+							{
+								xposoffset = 0,
 							},
 							variables = 
 							{
 								filename = "HandleAggro.st",
-								finishcode = "",
-								info = "Handle Aggro",
-								menucode = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-								runcode = "",
-								startcode = "",
-								subtreeuicode = "",
-								xposoffset = 0,
 							},
 						},
 						
@@ -159,18 +146,14 @@ local tbl =
 							class = "BehaviorTree",
 							nodes = 
 							{
+							},
+							settings = 
+							{
+								xposoffset = 0,
 							},
 							variables = 
 							{
 								filename = "ReviveHandler.st",
-								finishcode = "",
-								info = "Revive dead/downed players/partymembers/npcs",
-								menucode = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-								runcode = "",
-								startcode = "",
-								subtreeuicode = "",
-								xposoffset = 0,
 							},
 						},
 						
@@ -178,18 +161,14 @@ local tbl =
 							class = "BehaviorTree",
 							nodes = 
 							{
+							},
+							settings = 
+							{
+								xposoffset = 0,
 							},
 							variables = 
 							{
 								filename = "Gather.st",
-								finishcode = "",
-								info = "Gather",
-								menucode = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\nif(context and context.gather_targetid and context.gather_position) then\n\t\tGUI:Text(\"Distance to gatherable: \" .. math.ceil(Distance3DT(ml_global_information.Player_Position,context.gather_position)))\nend",
-								runcode = "",
-								startcode = "",
-								subtreeuicode = "",
-								xposoffset = 0,
 							},
 						},
 						
@@ -197,18 +176,14 @@ local tbl =
 							class = "BehaviorTree",
 							nodes = 
 							{
+							},
+							settings = 
+							{
+								xposoffset = 0,
 							},
 							variables = 
 							{
 								filename = "AttackTargets.st",
-								finishcode = "",
-								info = "Find and Attack Enemies",
-								menucode = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-								runcode = "",
-								startcode = "",
-								subtreeuicode = "",
-								xposoffset = 0,
 							},
 						},
 						
@@ -217,42 +192,48 @@ local tbl =
 							nodes = 
 							{
 							},
+							settings = 
+							{
+								xposoffset = 0,
+							},
 							variables = 
 							{
 								filename = "MoveToRandom.st",
-								finishcode = "",
-								info = "Move to random",
-								menucode = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-								runcode = "",
-								startcode = "",
-								subtreeuicode = "",
-								xposoffset = 0,
 							},
 						},
 					},
-					variables = 
+					settings = 
 					{
 						expanded = true,
+						xposoffset = 0,
+					},
+					variables = 
+					{
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
-						xposoffset = 0,
 					},
 				},
 			},
-			variables = 
+			settings = 
 			{
 				expanded = true,
+				xposoffset = 0,
+			},
+			variables = 
+			{
 				info = "",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
-				xposoffset = 0,
 			},
 		},
 	},
-	variables = 
+	settings = 
 	{
 		doevents = true,
 		expanded = true,
+		xposoffset = 0,
+	},
+	variables = 
+	{
 		filename = "GatherMode.bt",
 		finishcode = "d(\"GatherMode Off\")\n\nml_global_information.Stop()",
 		info = "",
@@ -260,8 +241,7 @@ local tbl =
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",
 		startcode = "d(\"GatherMode On\")\nml_global_information.Start()\n\ngBotMode = GetString(\"gatherMode\")",
-		subtreeuicode = "if ( self.variables.doevents == nil) then self.variables.doevents = true end\n\nself.variables.doevents = GUI:Checkbox(GetString(\"doEvents\"),self.variables.doevents)",
-		xposoffset = 0,
+		subtreeuicode = "if ( self.settings.doevents == nil) then self.settings.doevents = true end\n\nself.settings.doevents = GUI:Checkbox(GetString(\"doEvents\"),self.settings.doevents)",
 	},
 }
 

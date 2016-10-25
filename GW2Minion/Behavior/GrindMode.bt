@@ -119,6 +119,22 @@ local tbl =
 							},
 							settings = 
 							{
+								expanded = true,
+								xposoffset = 0,
+							},
+							variables = 
+							{
+								filename = "EventHandler.st",
+							},
+						},
+						
+						{
+							class = "BehaviorTree",
+							nodes = 
+							{
+							},
+							settings = 
+							{
 								xposoffset = 0,
 							},
 							variables = 
@@ -265,7 +281,7 @@ local tbl =
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Game State: '..tostring(ml_global_information.GameState))\n",
 		runcode = "",
 		startcode = "d(\"GrindMode On\")\nml_global_information.Start()",
-		subtreeuicode = "if ( self.settings.doevents == nil) then self.settings.doevents = true end\nif ( self.settings.gather == nil) then self.settings.gather = true end\nself.settings.doevents = GUI:Checkbox(GetString(\"Do Events\"),self.settings.doevents)\nself.settings.gather = GUI:Checkbox(GetString(\"Gather\"),self.settings.gather)",
+		subtreeuicode = "if ( self.settings.doevents == nil) then self.settings.doevents = false end\nif ( self.settings.gather == nil) then self.settings.gather = false end\nself.settings.doevents = GUI:Checkbox(GetString(\"Do Events\"),self.settings.doevents)\nself.settings.gather = GUI:Checkbox(GetString(\"Gather\"),self.settings.gather)",
 	},
 }
 

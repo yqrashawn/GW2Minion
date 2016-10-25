@@ -109,7 +109,7 @@ local tbl =
 										finishcode = "",
 										info = "Move to sell marker",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if(table.valid(context.sell_marker)) then\n\t\tcontext.moveto_position = context.sell_marker.pos\n\t\tcontext.moveto_usewaypoints = context.moveto_usewaypoints == nil and true or context.moveto_usewaypoints\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+										runcode = "if(table.valid(context.sell_marker)) then\n\t\tcontext.moveto_position = context.sell_marker.pos\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 										startcode = "",
 									},
 								},

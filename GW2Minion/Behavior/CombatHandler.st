@@ -53,7 +53,7 @@ local tbl =
 						},
 						
 						{
-							class = "PrioritySelector",
+							class = "Sequence",
 							nodes = 
 							{
 								
@@ -71,64 +71,28 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if (context.combat_moveintocombatrange and context.combat_targetid and context.combat_targetpos) then\n\t\tif (Distance3DT(ml_global_information.Player_Position,context.combat_targetpos) > 2500 ) then \n\t\t\t\tcontext.combat_movetopos = context.combat_targetpos\n\t\t\t\tself:fail()\n\t\t\t\treturn\n\t\tend\n\t\tcontext.combat_movetopos = nil\n\t\tcontext.moveto_position = nil\n\t\tcontext.moveto_targetid = nil\n\t\tcontext.moveto_targettype = nil\nend\nself:fail()",
+										runcode = "if (context.combat_moveintocombatrange and context.combat_targetid and context.combat_targetpos) then\n\t\tif (Distance3DT(ml_global_information.Player_Position,context.combat_targetpos) > 2500 ) then \n\t\t\t\tcontext.moveto_position = context.combat_targetpos\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()",
 										startcode = "",
 									},
 								},
 								
 								{
-									class = "Sequence",
+									class = "BehaviorTree",
 									nodes = 
 									{
-										
-										{
-											class = "Action",
-											nodes = 
-											{
-											},
-											settings = 
-											{
-												xposoffset = 0,
-											},
-											variables = 
-											{
-												finishcode = "",
-												info = "",
-												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-												runcode = "if(table.valid(context.combat_movetopos)) then\n\t\tcontext.moveto_position = context.combat_movetopos\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
-												startcode = "",
-											},
-										},
-										
-										{
-											class = "BehaviorTree",
-											nodes = 
-											{
-											},
-											settings = 
-											{
-												expanded = true,
-												randomMovement = true,
-												smoothturns = true,
-												stoppingdistance = 150,
-												usewaypoints = false,
-												xposoffset = 0,
-											},
-											variables = 
-											{
-												filename = "MoveTo.st",
-											},
-										},
 									},
 									settings = 
 									{
 										expanded = true,
+										randomMovement = true,
+										smoothturns = true,
+										stoppingdistance = 2500,
+										usewaypoints = false,
 										xposoffset = 0,
 									},
 									variables = 
 									{
-										info = "",
-										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+										filename = "MoveTo.st",
 									},
 								},
 							},
@@ -139,8 +103,8 @@ local tbl =
 							},
 							variables = 
 							{
-								info = "Move closer to target",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 							},
 						},
 						
@@ -158,7 +122,7 @@ local tbl =
 								finishcode = "",
 								info = "Update target",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if ( context.combat_targetid ) then\n\t\tlocal combatmovement = gw2_skill_manager.CombatMovement()\n\t\tlocal target = CharacterList:Get(context.combat_targetid) or GadgetList:Get(context.combat_targetid)\n\t\tif (table.valid(target) and target.attackable and (target.alive or target.downed) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"monsters\"),target.contentid)) then\n\t\t\t\t-- continue in the PrioritySelector parent\n\t\t\t\tcontext.combat_target = target\n\t\t\t\tcontext.combat_targetid = target.id\n\t\t\t\tcontext.combat_targetpos = target.pos\n\t\telse\n\t\t\t\td(\"[CombatHandler]: Target is dead or not attackable.\")\n\t\t\t\tcontext.combat_targetid = nil\n\t\t\t\tcontext.combat_target = nil\n\t\t\t\tcontext.combat_targetpos = nil\n\t\t\t\tcontext.combat_moveintocombatrange = nil\n\t\t\t\tcontext.combat_onmeshcheck = nil\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tcombatmovement.range = false\n\t\tend\nend\nself:fail()",
+								runcode = "if ( context.combat_targetid ) then\n\t\tlocal combatmovement = gw2_skill_manager.CombatMovement() or {}\n\t\tlocal target = CharacterList:Get(context.combat_targetid) or GadgetList:Get(context.combat_targetid)\n\t\tif (table.valid(target) and target.attackable and (target.alive or target.downed) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"monsters\"),target.contentid)) then\n\t\t\t\t-- continue in the PrioritySelector parent\n\t\t\t\tcontext.combat_target = target\n\t\t\t\tcontext.combat_targetid = target.id\n\t\t\t\tcontext.combat_targetpos = target.pos\n\t\telse\n\t\t\t\td(\"[CombatHandler]: Target is dead or not attackable.\")\n\t\t\t\tcontext.combat_targetid = nil\n\t\t\t\tcontext.combat_target = nil\n\t\t\t\tcontext.combat_targetpos = nil\n\t\t\t\tcontext.combat_moveintocombatrange = nil\n\t\t\t\tcontext.combat_onmeshcheck = nil\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tcombatmovement.range = false\n\t\tend\nend\nself:fail()",
 								startcode = "",
 							},
 						},
@@ -227,7 +191,7 @@ local tbl =
 							},
 							variables = 
 							{
-								finishcode = "",
+								finishcode = "context.combat_moveintocombatrange = nil",
 								info = "Handle combat",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 								runcode = "if ( context.combat_targetid and context.combat_target) then\n\t\tgw2_skill_manager:Use(context.combat_targetid)\n\n\t\tlocal activeskillrange = gw2_skill_manager.GetActiveSkillRange()\n\t\tlocal combatmovement = gw2_skill_manager.CombatMovement()\n\n\t\tif(activeskillrange < 300) then\n\t\t\t\tactiveskillrange = activeskillrange + context.combat_target.radius\n\t\tend\n\t\t\n\t\tlocal rangedistance = activeskillrange\n\t\tif(activeskillrange > 300) then\n\t\t\t\trangedistance = activeskillrange / 2\n\t\tend\n\n\t\tif(combatmovement and combatmovement.range and context.combat_target.distance < rangedistance) then\n\t\t\t\t\tPlayer:StopMovement()\n\t\t\t\t\tcombatmovement.range = false\n\t\tend\n\n\t\tif(context.combat_moveintocombatrange and gw2_skill_manager.CanMove()) then\n\n\t\t\t\tif(combatmovement and context.combat_target.distance > activeskillrange) then\n\t\t\t\t\t\tcombatmovement.range = false\n\t\t\t\t\t\tif(not gw2_unstuck.HandleStuck(\"combat\")) then\n\t\t\t\t\t\t\t\tlocal tPos = context.combat_target.pos\n\t\t\t\t\t\t\t\tNavigationManager:MoveTo(tPos.x,tPos.y,tPos.z,rangedistance,false,false,true)\n\t\t\t\t\t\t\t\tcombatmovement.range = true\n\t\t\t\t\t\tend \n\t\t\t\tend\n\t\tend\n\t\tself:running()\n\t\treturn\nend\nself:fail()",
@@ -265,7 +229,7 @@ local tbl =
 	variables = 
 	{
 		filename = "CombatHandler.st",
-		finishcode = "context.combat_targetid = nil\ncontext.combat_target = nil",
+		finishcode = "context.combat_targetid = nil\ncontext.combat_target = nil\ncontext.combat_targetpos = nil",
 		info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",

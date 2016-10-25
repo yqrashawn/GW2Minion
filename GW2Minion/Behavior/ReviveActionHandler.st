@@ -140,7 +140,7 @@ local tbl =
 	variables = 
 	{
 		filename = "ReviveActionHandler.st",
-		finishcode = "",
+		finishcode = "context.revive_position = nil\ncontext.revive_targetid = nil",
 		info = "Revive action\ncontext.revive_position\ncontext.revive_targetid",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",

@@ -83,7 +83,7 @@ function gw2_datamanager.GetLocalWaypointList(mapid)
 								y = gw2_datamanager.recalc_coords(mdata["continent_rect"],mdata["map_rect"],data["coord"])[2],
 								z = 0,
 							}
-							
+
 							local newWdata = {
 								id = id,
 								name = data["name"],
@@ -114,6 +114,10 @@ function gw2_datamanager.GetLocalWaypointListByDistance(mapID, pos)
 	if (table.valid(mapData)) then
 		for _,waypoint in pairs(mapData) do
 			waypoint.distance2D = Distance2D(waypoint.pos.x,waypoint.pos.y,pos.x,pos.y)
+			-- Update distance to use input pos
+			if(waypoint.distance) then
+				waypoint.distance = Distance3DT(waypoint.pos,pos)
+			end
 		end
 		
 		table.sort(mapData, function(a,b)
