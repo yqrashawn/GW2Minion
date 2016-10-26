@@ -595,17 +595,17 @@ function dev.DrawCall(event, ticks )
 					end
 -- END MOVEMENT		
 				
-	if ( GUI:TreeNode("Renderobject List")) then
+			if ( GUI:TreeNode("Renderobject List")) then
 			
 				-- RenderManager:AddObject( tablewith vertices here ) , returns the renderobject which is a lua metatable. it has a .id which should be used everytime afterwards if the object is being accessed:
 				-- RenderManager:GetObject(id)  - use this always before you actually access a renderobject of yours, because the object could have been deleted at any time in c++ due to other code erasing it
-				if( gamestate == FFXIV.GAMESTATE.INGAME ) then
+				if( gamestate == GW2.GAMESTATE.GAMEPLAY ) then
 					GUI:PushItemWidth(100)
 					if ( not dev.renderobjname ) then dev.renderobjname = "Test" end
 					
 					if (GUI:Button("Add New Object##newobject"..tostring(id),150,15) ) then
 						local ppos = Player.pos
-						RenderManager:AddObject({ [1] = { name=dev.renderobjname, x=ppos.x, y=ppos.y, z=ppos.z, r =0.5,g =0.5,b =0.5,a =0.8, }} ) --creating a new object with just 1 vertex, lazy utilizing that one table we already have
+						RenderManager:AddObject(dev.renderobjname, { [1] = { x=ppos.x, y=ppos.y, z=ppos.z, r =0.5,g =0.5,b =0.5,a =0.8, }} )--creating a new object with just 1 vertex, lazy utilizing that one table we already have
 					end
 					 GUI:SameLine()
 					dev.renderobjname = GUI:InputText("Object Name##robja1",dev.renderobjname)	
@@ -643,16 +643,16 @@ function dev.DrawCall(event, ticks )
 											end
 										end										
 										GUI:PopItemWidth()
-										
-										-- Add a new vertext to our current object
-										if (GUI:Button("Add New Vertex##vertex"..tostring(id),150,15) ) then
-											local ppos = Player.pos
-											table.insert(vertices,{ x=ppos.x, y=ppos.y, z=ppos.z, r =0.5,g =0.5,b =0.5,a =0.8, })
-											needupdate = true
-										end										
+																												
 									else
-										GUI:Text("This Object has no Vertices.")
+										GUI:Text("This Object has no Vertices.")										
 									end
+									-- Add a new vertext to our current object
+									if (GUI:Button("Add New Vertex##vertex"..tostring(id),150,15) ) then
+										local ppos = Player.pos
+										table.insert(vertices,{ x=ppos.x, y=ppos.y, z=ppos.z, r =0.5,g =0.5,b =0.5,a =0.8, })
+										needupdate = true
+									end		
 									GUI:TreePop()
 								end
 								-- Remove vertex
