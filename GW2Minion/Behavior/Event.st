@@ -152,6 +152,7 @@ local tbl =
 							},
 							settings = 
 							{
+								expanded = true,
 								xposoffset = 0,
 							},
 							variables = 
