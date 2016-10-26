@@ -14,6 +14,10 @@ local tbl =
 					nodes = 
 					{
 					},
+					settings = 
+					{
+						xposoffset = 0,
+					},
 					variables = 
 					{
 						finishcode = "",
@@ -21,7 +25,6 @@ local tbl =
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Guest Server ID: '..tostring(Settings.GW2Minion.guestserver))\nGUI:Text(\"Guest Server Name: \"..ml_global_information.GuestServerList[Settings.GW2Minion.guestserver])\nGUI:Text('Autologin Enabled: '..tostring(Settings.GW2Minion.autostartbot))\nGUI:Text('GameState: '..tostring(ml_global_information.GameState))\nif (self.lastrun) then\n\tGUI:Text('Lastrun: '..tostring(TimeSince(self.lastrun)))\nend\n\n",
 						runcode = "-- In CHaracter screen\nif ( ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 						startcode = "",
-						xposoffset = 0,
 					},
 				},
 				
@@ -40,6 +43,10 @@ local tbl =
 									nodes = 
 									{
 									},
+									settings = 
+									{
+										xposoffset = 0,
+									},
 									variables = 
 									{
 										finishcode = "",
@@ -47,7 +54,6 @@ local tbl =
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 										runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Defeated ) then\n\t\tif(Settings.GW2Minion.assistautorespawn) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\t\tself:running()\n\t\treturn\nend\nself:fail()",
 										startcode = "",
-										xposoffset = 0,
 									},
 								},
 								
@@ -56,9 +62,12 @@ local tbl =
 									nodes = 
 									{
 									},
+									settings = 
+									{
+										xposoffset = 0,
+									},
 									variables = 
 									{
-										expanded = true,
 										filename = "DeathHandler.st",
 										finishcode = "",
 										info = "Death Handler",
@@ -67,15 +76,17 @@ local tbl =
 										runcode = "",
 										startcode = "",
 										subtreeuicode = "",
-										xposoffset = 0,
 									},
 								},
+							},
+							settings = 
+							{
+								xposoffset = 0,
 							},
 							variables = 
 							{
 								info = "Death",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
-								xposoffset = 0,
 							},
 						},
 						
@@ -83,6 +94,11 @@ local tbl =
 							class = "BehaviorTree",
 							nodes = 
 							{
+							},
+							settings = 
+							{
+								expanded = true,
+								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -94,7 +110,6 @@ local tbl =
 								runcode = "",
 								startcode = "",
 								subtreeuicode = "",
-								xposoffset = 0,
 							},
 						},
 						
@@ -102,6 +117,10 @@ local tbl =
 							class = "Action",
 							nodes = 
 							{
+							},
+							settings = 
+							{
+								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -110,7 +129,6 @@ local tbl =
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 								runcode = "-- In case the setting changes right in the middle of movement\nif(context.combat_ismoving and Settings.GW2Minion.moveintocombatrange == false) then\n\t\tPlayer:StopMovement()\n\tcontext.combat_ismoving = false\nend\nself:fail()",
 								startcode = "",
-								xposoffset = 0,
 							},
 						},
 						
@@ -119,6 +137,10 @@ local tbl =
 							nodes = 
 							{
 							},
+							settings = 
+							{
+								xposoffset = 0,
+							},
 							variables = 
 							{
 								finishcode = "",
@@ -126,7 +148,6 @@ local tbl =
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 								runcode = "if ( Settings.GW2Minion.finishenemyassist == true) then\n\t\tif(gw2_common_functions.FinishEnemy() == true) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()",
 								startcode = "",
-								xposoffset = 0,
 							},
 						},
 						
@@ -140,6 +161,10 @@ local tbl =
 									nodes = 
 									{
 									},
+									settings = 
+									{
+										xposoffset = 0,
+									},
 									variables = 
 									{
 										finishcode = "",
@@ -147,7 +172,6 @@ local tbl =
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 										runcode = "if(Settings.GW2Minion.smtargetmode == 1 ) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 										startcode = "",
-										xposoffset = 0,
 									},
 								},
 								
@@ -156,6 +180,10 @@ local tbl =
 									nodes = 
 									{
 									},
+									settings = 
+									{
+										xposoffset = 0,
+									},
 									variables = 
 									{
 										finishcode = "",
@@ -163,16 +191,17 @@ local tbl =
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 										runcode = "local target = Player:GetTarget()\nlocal combatmovement = gw2_skill_manager.CombatMovement()\nlocal activerange = gw2_skill_manager.GetActiveSkillRange()\nif(combatmovement and combatmovement.range and (target == nil or target.distance < activerange/2)) then\n\t\tPlayer:StopMovement()\n\t\tcombatmovement.range = false\nend\n\nif(target and (target.alive or target.downed) and target.attackable and not gw2_common_functions.HasBuffs(target,ml_global_information.InvulnerabilityConditions)) then\n\t\tgw2_skill_manager:Use(target.id)\n\t\tif(Settings.GW2Minion.moveintocombatrange and ml_global_information.Player_OnMesh) then\n\t\t\t\t\n\t\t\t\tif(combatmovement and gw2_skill_manager.CanMove() and target.distance > activerange+target.radius) then\n\t\t\t\t\t\t\t\tlocal tPos = target.pos\n\t\t\t\t\t\t\t\tNavigationManager:MoveTo(tPos.x,tPos.y,tPos.z,activerange/2,false,false,true)\n\t\t\t\t\t\t\t\tcombatmovement.range = true\n\t\t\t\tend\n\t\tend\nend\n\nself:success()",
 										startcode = "",
-										xposoffset = 0,
 									},
 								},
 							},
+							settings = 
+							{
+								xposoffset = 0,
+							},
 							variables = 
 							{
-								expanded = true,
 								info = "Manual target mode",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
-								xposoffset = 0,
 							},
 						},
 						
@@ -186,6 +215,10 @@ local tbl =
 									nodes = 
 									{
 									},
+									settings = 
+									{
+										xposoffset = 0,
+									},
 									variables = 
 									{
 										finishcode = "",
@@ -193,7 +226,6 @@ local tbl =
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 										runcode = "local ptarget = Player:GetTarget()\nlocal target = nil\nif(ptarget and ptarget.downed and ptarget.friendly and ptarget.distance < 200) then\n\t\tself:success()\n\t\treturn\nend\n\nif(ptarget and ptarget.attackable and not gw2_common_functions.HasBuffs(ptarget,ml_global_information.InvulnerabilityConditions)) then\n\t\ttarget = ptarget\nend\n\nlocal besttarget = gw2_common_functions.GetBestCharacterTargetForAssist()\nif(besttarget and (target == nil or besttarget.id ~= target.id)) then\n\t\ttarget = besttarget\nend\nif(target and (target.alive or target.downed) and target.attackable) then\n\t\tcontext.combat_targetid = target.id\n\t\tcontext.combat_target = target\n\t\tcontext.combat_moveintocombatrange = Settings.GW2Minion.moveintocombatrange and ml_global_information.Player_OnMesh\n\t\tcontext.combat_onmeshcheck = false\nend\nself:fail()",
 										startcode = "",
-										xposoffset = 0,
 									},
 								},
 								
@@ -202,54 +234,68 @@ local tbl =
 									nodes = 
 									{
 									},
-									variables = 
+									settings = 
 									{
 										expanded = true,
+										xposoffset = 0,
+									},
+									variables = 
+									{
 										filename = "CombatHandler.st",
 										finishcode = "",
 										info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
 										menucode = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-										moveintocombatrange = false,
 										runcode = "",
 										startcode = "",
 										subtreeuicode = "",
-										xposoffset = 0,
 									},
 								},
 							},
+							settings = 
+							{
+								xposoffset = 0,
+							},
 							variables = 
 							{
-								expanded = true,
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
-								xposoffset = 0,
 							},
 						},
 					},
-					variables = 
+					settings = 
 					{
 						expanded = true,
+						xposoffset = 0,
+					},
+					variables = 
+					{
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
-						xposoffset = 0,
 					},
 				},
 			},
-			variables = 
+			settings = 
 			{
 				expanded = true,
 				failThreshold = 1,
-				info = "GameState Switch",
-				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.activeTask or 'None')) GUI:Text('Succeeded Tasks: '..tostring(self.succeededTasks)) GUI:Text('Failed Tasks: '..tostring(self.failedTasks)) GUI:Text('Running Tasks: '..tostring(self.ranTasks))",
 				successThreshold = 1,
 				xposoffset = 0,
 			},
+			variables = 
+			{
+				info = "GameState Switch",
+				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.activeTask or 'None')) GUI:Text('Succeeded Tasks: '..tostring(self.succeededTasks)) GUI:Text('Failed Tasks: '..tostring(self.failedTasks)) GUI:Text('Running Tasks: '..tostring(self.ranTasks))",
+			},
 		},
+	},
+	settings = 
+	{
+		expanded = true,
+		xposoffset = 0,
 	},
 	variables = 
 	{
-		expanded = true,
 		filename = "AssistMode.bt",
 		finishcode = "d(\"AssistMode Off\")\n\nml_global_information.Stop()",
 		info = "",
@@ -257,7 +303,6 @@ local tbl =
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Game State: '..tostring(ml_global_information.GameState))",
 		runcode = "-- SM backwards compatibily fix \ngBotMode = GetString(\"AssistMode\")\n\t",
 		startcode = "d(\"AssistMode On\")\nml_global_information.Start()\ngw2_unstuck.manualcontrolmode = true",
-		xposoffset = 0,
 	},
 }
 
