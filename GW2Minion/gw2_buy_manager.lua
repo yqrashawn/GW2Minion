@@ -92,12 +92,11 @@ function gw2_buy_manager.ModuleInit()
 	end
 	gw2_buy_manager.toolStack = Settings.gw2_buy_manager.toolStack
 
-	ml_global_information.Player_Level = Player.level or 1
 	if (Settings.gw2_buy_manager.toolList == nil) then
-		Settings.gw2_buy_manager.toolList = {			
+		Settings.gw2_buy_manager.toolList = {
 			nameList = {"None", "Copper", "Iron", "Steel", "Darksteel", "Mithrill", "Orichalcum",},
 			idList = {["None"] = 1, ["Copper"] = 2, ["Iron"] = 3, ["Steel"] = 4, ["Darksteel"] = 5, ["Mithrill"] = 6, ["Orichalcum"] = 7,},
-			currID = ml_global_information.Player_Level < 10 and 2 or ml_global_information.Player_Level < 20 and 3 or ml_global_information.Player_Level < 30 and 4 or ml_global_information.Player_Level < 45 and 5 or 6, -- stupid fix for equip misusing buy options..... :(
+			currID = Player.level < 10 and 2 or Player.level < 20 and 3 or Player.level < 30 and 4 or Player.level < 45 and 5 or Player.level < 80 and 6 or 7, -- stupid fix for equip misusing buy options..... :(
 		}
 	end
 	gw2_buy_manager.toolList = Settings.gw2_buy_manager.toolList
