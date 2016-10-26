@@ -14,6 +14,10 @@ local tbl =
 					nodes = 
 					{
 					},
+					settings = 
+					{
+						xposoffset = 0,
+					},
 					variables = 
 					{
 						finishcode = "",
@@ -21,7 +25,6 @@ local tbl =
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nlocal vendorcheck = 0\nif(self.vendorcheck) then\n\t\tlocal remaining = 5000-TimeSince(self.vendorcheck)\n\t\tif(remaining > 0) then\n\t\t\t\tvendorcheck = math.ceil(remaining/1000)\n\t\tend\nend\nGUI:Text(\"Next vendor check: \"..vendorcheck..\"s\")\n",
 						runcode = "if(context.buy_marker or context.sell_marker or context.repair_marker) then\n\t\tself:success()\n\t\treturn\nend\n\nif(self.vendorcheck == nil or TimeSince(self.vendorcheck) > 5000) then\n\t\tself.vendorcheck = ml_global_information.Now\n\t\tself:success()\n\t\treturn\nend\n\nself:fail()",
 						startcode = "",
-						xposoffset = 0,
 					},
 				},
 				
@@ -30,6 +33,10 @@ local tbl =
 					nodes = 
 					{
 					},
+					settings = 
+					{
+						xposoffset = 0,
+					},
 					variables = 
 					{
 						finishcode = "",
@@ -37,7 +44,6 @@ local tbl =
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 						runcode = "if(Settings.gw2_sell_manager.active) then\n\t\tcontext.sell_nearby = gw2_sell_manager.needToSell(true) and table.valid(gw2_sell_manager.getClosestSellMarker(true))\nend\n\ncontext.repair_nearby = gw2_repair_manager.NeedToRepair(true) and table.valid(gw2_repair_manager.getClosestRepairMarker(true))\n\nif(Settings.gw2_buy_manager.active) then\n\t\tcontext.buy_nearby = (gw2_buy_manager.NeedToBuySalvageKits(true) or gw2_buy_manager.NeedToBuyGatheringTools(true)) and table.valid(gw2_buy_manager.getClosestBuyMarker(true))\nend\n\nself:success()",
 						startcode = "",
-						xposoffset = 0,
 					},
 				},
 				
@@ -51,18 +57,13 @@ local tbl =
 							nodes = 
 							{
 							},
+							settings = 
+							{
+								xposoffset = 0,
+							},
 							variables = 
 							{
-								expanded = true,
 								filename = "Repair.st",
-								finishcode = "",
-								info = "Repair\nOptional parameter:\ncontext.repair_nearby = true/false",
-								menucode = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-								runcode = "",
-								startcode = "",
-								subtreeuicode = "",
-								xposoffset = 0,
 							},
 						},
 						
@@ -70,18 +71,14 @@ local tbl =
 							class = "BehaviorTree",
 							nodes = 
 							{
+							},
+							settings = 
+							{
+								xposoffset = 0,
 							},
 							variables = 
 							{
 								filename = "Sell.st",
-								finishcode = "",
-								info = "Sell\nOptional parameter:\ncontext.sell_nearby = true/false",
-								menucode = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-								runcode = "",
-								startcode = "",
-								subtreeuicode = "",
-								xposoffset = 0,
 							},
 						},
 						
@@ -90,37 +87,43 @@ local tbl =
 							nodes = 
 							{
 							},
+							settings = 
+							{
+								expanded = true,
+								xposoffset = 0,
+							},
 							variables = 
 							{
 								filename = "Buy.st",
-								finishcode = "",
-								info = "Buy\nOptional parameter:\ncontext.buy_nearby = true/false",
-								menucode = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-								runcode = "",
-								startcode = "",
-								subtreeuicode = "",
-								xposoffset = 0,
 							},
 						},
 					},
-					variables = 
+					settings = 
 					{
 						expanded = true,
+						xposoffset = 0,
+					},
+					variables = 
+					{
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
-						xposoffset = 0,
 					},
 				},
 			},
-			variables = 
+			settings = 
 			{
 				expanded = true,
-				info = "",
-				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 				xposoffset = 0,
 			},
+			variables = 
+			{
+				info = "",
+				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+			},
 		},
+	},
+	settings = 
+	{
 	},
 	variables = 
 	{
@@ -132,7 +135,6 @@ local tbl =
 		runcode = "",
 		startcode = "",
 		subtreeuicode = "",
-		xposoffset = 0,
 	},
 }
 
