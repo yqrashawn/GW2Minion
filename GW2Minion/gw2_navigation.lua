@@ -65,7 +65,7 @@ function ml_navigation.Navigate(event, ticks )
 								if ( nodedist < ml_navigation.OMCREACHEDDISTANCE) then
 									d("[Navigation] - We are above the OMC_END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.OMCREACHEDDISTANCE)..")")
 									Player:Stop()
-									if ( omc.precise ) then
+									if ( omc.precise == nil or omc.precise == true  ) then
 										ml_navigation:SetEnsurePosition(nextnode)
 									end									
 								else									
@@ -88,7 +88,7 @@ function ml_navigation.Navigate(event, ticks )
 									if ( nodedist < ml_navigation.OMCREACHEDDISTANCE) then
 										d("[Navigation] - We are above the OMC END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.OMCREACHEDDISTANCE)..")")
 										Player:Stop()
-										if ( omc.precise ) then
+										if ( omc.precise == nil or omc.precise == true  ) then
 											ml_navigation:SetEnsurePosition(nextnode)											
 										end									
 									else									
@@ -113,7 +113,7 @@ function ml_navigation.Navigate(event, ticks )
 									local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
 									if ( nodedist < ml_navigation.OMCREACHEDDISTANCE) then
 										d("[Navigation] - We reached the OMC END Node. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.OMCREACHEDDISTANCE)..")")
-										if ( omc.precise ) then
+										if ( omc.precise == nil or omc.precise == true ) then
 											ml_navigation:SetEnsurePosition(nextnode)
 										end
 										ml_navigation.pathindex = ml_navigation.pathindex + 1
@@ -233,7 +233,7 @@ function ml_navigation:NavigateToNode(ppos, nextnode, stillonpaththreshold)
 			if ( nextnode.id == nil ) then ml_error("[Navigation] - No OffMeshConnection ID received!") return end
 			local omc = ml_mesh_mgr.offmeshconnections[nextnode.id]
 			if( not omc ) then ml_error("[Navigation] - No OffMeshConnection Data found for ID: "..tostring(nextnode.id)) return end
-			if ( omc.precise ) then				
+			if ( omc.precise == nil or omc.precise == true ) then	
 				ml_navigation:SetEnsurePosition(nextnode) 
 			end			
 		end

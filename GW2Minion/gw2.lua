@@ -18,7 +18,7 @@ function gw2minion.Init()
 		ml_mesh_mgr.GetPlayerPos = function () return Player.pos end
 
 		-- Set worldnavigation data
-		ml_mesh_mgr.navData = persistence.load(GetStartupPath()..GetLuaModsPath()..[[GW2Minion\]].."worldnav_data.lua")
+		ml_mesh_mgr.navData = persistence.load(GetLuaModsPath()..[[GW2Minion\]].."worldnav_data.lua")
 		if ( not ValidTable(ml_mesh_mgr.navData)) then 
 			ml_mesh_mgr.navData = {} 
 		else
