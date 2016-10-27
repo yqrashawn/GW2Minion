@@ -1,4 +1,5 @@
 -- Extends minionlib's ml_navigation.lua by adding the game specific navigation handler
+ml_navigation.NAVPOINTREACHEDDISTANCE = 32
 
 -- Handles the Navigation along the current Path. Is not supposed to be called manually.
 function ml_navigation.Navigate(event, ticks )	
