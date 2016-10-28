@@ -235,6 +235,7 @@ local tbl =
 											},
 											settings = 
 											{
+												expanded = true,
 												xposoffset = 0,
 											},
 											variables = 
@@ -372,7 +373,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "context.event_inradius = true\nif(context.event_marker) then\n\t\tif(context.event_marker.distance > context.event_radius) then\n\t\t\t\tcontext.event_inradius = false\n\t\tend\n\n\t\tcontext.event_waitcheck = context.event_waitcheck or math.random(13,25)\n\t\tif(context.event_waittime == nil or TimeSince(context.event_waittime) > context.event_waitcheck*1000) then\n\t\t\t\tcontext.event_waittime = ml_global_information.Now\n\t\t\t\tcontext.event_waitcheck = nil\n\t\t\t\tcontext.event_inradius = false\n\t\tend\n\n\t\tcontext.event_stoppingdistance = context.event_stoppingdistance or math.random(250,400)\n\n\t\tif(not context.event_inradius and context.event_stoppingdistance < context.event_marker.distance) then\n\t\t\t\tcontext.event_inradius = false\n\t\t\t\tself:fail()\n\t\t\t\treturn\n\t\telse\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tcontext.event_stoppingdistance = nil\n\t\t\t\tcontext.event_reached = true\n\t\tend\nend\nself:fail()",
+										runcode = "context.event_inradius = true\ncontext.event_marker = nil\n\n-- update the event marker, since the \"moveto\" task before can yield in a \"self:running()\" which causes this node to be pulsed in a later tick\nif(context.event_id) then\n\t\tlocal EList = MapMarkerList(\"nearest,onmesh,eventID=\"..context.event_id)\n\t\tif(table.valid(EList)) then\n\t\t\t\tlocal _,event = next(EList)\n\t\t\t\tif(table.valid(event) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"event\"),event.eventid)) then\n\t\t\t\t\t\tcontext.event_marker = event\n\t\t\t\t\t\tcontext.event_name = event.name\n\t\t\t\t\t\tcontext.event_position = event.pos\n\t\t\t\tend\n\t\tend\nend\n\nif(context.event_marker) then\n\t\tif(context.event_marker.distance > context.event_radius) then\n\t\t\t\tcontext.event_inradius = false\n\t\tend\n\n\t\tcontext.event_waitcheck = context.event_waitcheck or math.random(13,25)\n\t\tif(context.event_waittime == nil or TimeSince(context.event_waittime) > context.event_waitcheck*1000) then\n\t\t\t\tcontext.event_waittime = ml_global_information.Now\n\t\t\t\tcontext.event_waitcheck = nil\n\t\t\t\tcontext.event_inradius = false\n\t\tend\n\n\t\tcontext.event_stoppingdistance = context.event_stoppingdistance or math.random(250,400)\n\n\t\tif(not context.event_inradius and context.event_stoppingdistance < context.event_marker.distance) then\n\t\t\t\tcontext.event_inradius = false\n\t\t\t\tself:fail()\n\t\t\t\treturn\n\t\telse\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tcontext.event_stoppingdistance = nil\n\t\t\t\tcontext.event_reached = true\n\t\tend\nend\nself:fail()",
 										startcode = "",
 									},
 								},
@@ -440,7 +441,7 @@ local tbl =
 							variables = 
 							{
 								info = "Move back to event",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))\nif (context.event_waittime) then GUI:Text(\"event_waittime: \"..tostring(context.event_waittime)) end\nif (context.event_inradius) then GUI:Text(\"event_inradius: \"..tostring(context.event_inradius)) end\nif (context.event_stoppingdistance) then GUI:Text(\"event_stoppingdistance: \"..tostring(context.event_stoppingdistance)) end\nif (context.event_marker.distance) then GUI:Text(\"event_marker.distance: \"..tostring(context.event_marker.distance)) end\nif (context.event_reached) then GUI:Text(\"event_reached: \"..tostring(context.event_reached)) end",
+								monitorcode = "if(context) then\n\t\tif (context.event_waittime) then GUI:Text(\"event_waittime: \"..tostring(context.event_waittime or 0)) end\n\t\tif (context.event_inradius) then GUI:Text(\"event_inradius: \"..tostring(context.event_inradius or 0)) end\n\t\tif (context.event_stoppingdistance) then GUI:Text(\"event_stoppingdistance: \"..tostring(context.event_stoppingdistance or 0)) end\n\t\tif (context.event_reached) then GUI:Text(\"event_reached: \"..tostring(context.event_reached or false)) end\nend",
 							},
 						},
 						
