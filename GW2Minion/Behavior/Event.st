@@ -152,7 +152,6 @@ local tbl =
 							},
 							settings = 
 							{
-								expanded = true,
 								xposoffset = 0,
 							},
 							variables = 
@@ -435,12 +434,13 @@ local tbl =
 							},
 							settings = 
 							{
+								expanded = true,
 								xposoffset = 0,
 							},
 							variables = 
 							{
 								info = "Move back to event",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))\nif (context.event_waittime) then GUI:Text(\"event_waittime: \"..tostring(context.event_waittime)) end\nif (context.event_inradius) then GUI:Text(\"event_inradius: \"..tostring(context.event_inradius)) end\nif (context.event_stoppingdistance) then GUI:Text(\"event_stoppingdistance: \"..tostring(context.event_stoppingdistance)) end\nif (context.event_marker.distance) then GUI:Text(\"event_marker.distance: \"..tostring(context.event_marker.distance)) end\nif (context.event_reached) then GUI:Text(\"event_reached: \"..tostring(context.event_reached)) end",
 							},
 						},
 						

@@ -268,8 +268,8 @@ end
 -- Tries to use RayCast to determine the exact floor height from Player and Node, and uses that to calculate the correct distance.
 function ml_navigation:GetRaycast_Player_Node_Distance(ppos,node)
 	-- Raycast from "top to bottom" @PlayerPos and @NodePos
-	local P_hit, P_hitx, P_hity, P_hitz   = RayCast(ppos.x,ppos.y,ppos.z-100,ppos.x,ppos.y,ppos.z+100,0) 
-	local N_hit, N_hitx, N_hity, N_hitz = RayCast(node.x,node.y,node.z-100,node.x,node.y,node.z+100,0) 
+	local P_hit, P_hitx, P_hity, P_hitz   = RayCast(ppos.x,ppos.y,ppos.z-120,ppos.x,ppos.y,ppos.z+120) 
+	local N_hit, N_hitx, N_hity, N_hitz = RayCast(node.x,node.y,node.z-120,node.x,node.y,node.z+120) 
 	local dist = math.distance3d(ppos,node)
 	if (P_hit and N_hit ) then 
 		local raydist = math.distance3d(P_hitx, P_hity, P_hitz , N_hitx, N_hity, N_hitz)
