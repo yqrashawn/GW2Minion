@@ -132,7 +132,7 @@ local tbl =
 											variables = 
 											{
 												info = "DepositItems every 16 Seconds",
-												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
+												monitorcode = "",
 											},
 										},
 										
@@ -168,7 +168,7 @@ local tbl =
 											variables = 
 											{
 												info = "AOE Loot every 1050 ms",
-												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
+												monitorcode = "",
 											},
 										},
 										
@@ -204,7 +204,7 @@ local tbl =
 											variables = 
 											{
 												info = "Salvage every ~1500 ms",
-												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
+												monitorcode = "",
 											},
 										},
 										
@@ -240,7 +240,7 @@ local tbl =
 											variables = 
 											{
 												info = "Claim Rewards every 15 second",
-												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
+												monitorcode = "",
 											},
 										},
 										
@@ -276,7 +276,7 @@ local tbl =
 											variables = 
 											{
 												info = "Equip Gathering Tools- Check every 10 seconds",
-												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.variables.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.variables.duration/1000))..' s') end",
+												monitorcode = "",
 											},
 										},
 									},

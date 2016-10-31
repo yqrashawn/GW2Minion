@@ -96,7 +96,8 @@ function gw2_buy_manager.ModuleInit()
 		Settings.gw2_buy_manager.toolList = {
 			nameList = {"None", "Copper", "Iron", "Steel", "Darksteel", "Mithrill", "Orichalcum",},
 			idList = {["None"] = 1, ["Copper"] = 2, ["Iron"] = 3, ["Steel"] = 4, ["Darksteel"] = 5, ["Mithrill"] = 6, ["Orichalcum"] = 7,},
-			currID = 1,
+			currID = 7, -- because player level is invalid at init, checking level is pointless, just setting ori tools and hope for best. (maybe init should be fixed? delayed a bit... so much crap like this because of "premature initialisation")
+			--currID = Player.level < 10 and 2 or Player.level < 20 and 3 or Player.level < 30 and 4 or Player.level < 45 and 5 or Player.level < 60 and 6 or 7, -- set "correct" tool for level, can be used if init ever fixed.
 		}
 	end
 	gw2_buy_manager.toolList = Settings.gw2_buy_manager.toolList

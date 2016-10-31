@@ -86,10 +86,10 @@ local tbl =
 	variables = 
 	{
 		filename = "EventHandler.st",
-		finishcode = "context.event_id = nil",
+		finishcode = "context.event_id = nil\ncontext.event_reached = false\ncontext.event_marker = nil",
 		info = "EventHandler",
 		menucode = "",
-		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\nif (context) then\n GUI:Text(\"Event ID: \"..tostring(context.event_id or 0))\n GUI:Text(\"Event Reaced: \"..tostring(context.event_reached or false))\n GUI:Text(\"Event MaxDuration: \"..tostring(event_maxduration or 0))\nend",
 		runcode = "context.doevents = self.settings.doevents == nil and Settings.GW2Minion.doevents or self.settings.doevents",
 		startcode = "",
 		subtreeuicode = "",

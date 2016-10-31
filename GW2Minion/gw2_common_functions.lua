@@ -633,7 +633,7 @@ function gw2_common_functions.Evade(direction)
 			if (table.valid(aggroTargets)) then
 				for _,target in pairs(aggroTargets) do
 					local cinfo = target.castinfo
-					if (table.valid(cinfo) and cinfo.targetID == Player.id and Player.castinfo.duration == 0 and TimeSince(gw2_common_functions.lastEvade) > 1500) then
+					if (table.valid(cinfo) and cinfo.targetid == Player.id and Player.castinfo.duration == 0 and TimeSince(gw2_common_functions.lastEvade) > 1500) then
 						evadeTarget = true
 					end
 				end
