@@ -254,7 +254,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 		if(gw2_unstuck.laststuckentry and gw2_unstuck.lastaction) then
 			gw2_unstuck.laststuckentry.handled = gw2_unstuck.lastaction
 			if(gw2_unstuck.laststuckentry.stuckcount > 2) then
-				gw2_unstuck.laststuckentry.stuckcount = 2
+				gw2_unstuck.laststuckentry.stuckcount = gw2_unstuck.laststuckentry.stuckcount - 2
 			elseif(gw2_unstuck.laststuckentry.stuckcount > 0) then
 				gw2_unstuck.laststuckentry.stuckcount = gw2_unstuck.laststuckentry.stuckcount - 1
 			end
