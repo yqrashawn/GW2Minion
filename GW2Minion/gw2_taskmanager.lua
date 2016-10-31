@@ -41,8 +41,8 @@ function gw2_taskmanager.Init()
 		ml_task_mgr.min_level = 0
 		ml_task_mgr.max_level = 80 
 		ml_task_mgr.GetMapName = gw2_datamanager.GetMapName
-		ml_task_mgr.btreepath = GetLuaModsPath()..[[\GW2Minion\Behavior]]
-		ml_task_mgr.taskpath = GetLuaModsPath()..[[\GW2Minion\TaskManagerProfiles\]]
+		ml_task_mgr.btreepath = GetLuaModsPath()..[[GW2Minion\Behavior]]
+		ml_task_mgr.taskpath = GetLuaModsPath()..[[GW2Minion\TaskManagerProfiles\]]
 		ml_task_mgr.Init()
 		
 		ml_task_mgr.AddTaskType("tm_grind", "GrindMode.bt", nil, {displayname = GetString("Grind mode")})
