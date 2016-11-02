@@ -3,15 +3,16 @@ gw2_blacklistmanager = {}
 gw2_blacklistmanager.lists = {}
 
 function gw2_blacklistmanager.ModuleInit()
-	gw2_blacklistmanager.lists[GetString("vendorsbuy")] = ml_list_mgr.AddList(GetString("vendorsbuy"))
-	gw2_blacklistmanager.lists[GetString("vendorsrepair")] = ml_list_mgr.AddList(GetString("vendorsrepair"))
-	gw2_blacklistmanager.lists[GetString("vendorssell")] = ml_list_mgr.AddList(GetString("vendorssell"))
-	gw2_blacklistmanager.lists[GetString("monsters")] = ml_list_mgr.AddList(GetString("monsters"))	
-	gw2_blacklistmanager.lists[GetString("mapobjects")] = ml_list_mgr.AddList(GetString("mapobjects"))
-
-	local eventlist = ml_list_mgr.AddList(GetString("event"), gw2_blacklistmanager.DrawEvent)
+	gw2_blacklistmanager.lists[GetString("Vendor buy")] = ml_list_mgr.AddList(GetString("Vendor buy"))
+	gw2_blacklistmanager.lists[GetString("Vendor repair")] = ml_list_mgr.AddList(GetString("Vendor repair"))
+	gw2_blacklistmanager.lists[GetString("Vendor sell")] = ml_list_mgr.AddList(GetString("Vendor sell"))
+	gw2_blacklistmanager.lists[GetString("Sell items")] = ml_list_mgr.AddList(GetString("Sell items"))	
+	gw2_blacklistmanager.lists[GetString("Monsters")] = ml_list_mgr.AddList(GetString("Monsters"))	
+	gw2_blacklistmanager.lists[GetString("Map objects")] = ml_list_mgr.AddList(GetString("Map objects"))
+	
+	local eventlist = ml_list_mgr.AddList(GetString("Event"), gw2_blacklistmanager.DrawEvent)
 	eventlist.GUI.vars = { mapid = 0, name = "", pos = { x = 0, y = 0, z = 0}, id = 0, expiration_s = 0}
-	gw2_blacklistmanager.lists[GetString("event")] = eventlist
+	gw2_blacklistmanager.lists[GetString("Event")] = eventlist
 end
 
 function gw2_blacklistmanager.GetExcludeString(listname)
