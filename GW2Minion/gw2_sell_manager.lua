@@ -71,8 +71,8 @@ function gw2_sell_manager.ModuleInit()
 	-- init button in minionmainbutton
 	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SELLMGR", name = "Sell", onClick = function() gw2_sell_manager.mainWindow.open = gw2_sell_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Sell Manager\" window.", texture = GetStartupPath().."\\GUI\\UI_Textures\\sell.png"},"GW2MINION##MENU_HEADER")
 	
-	if(not ml_blacklist.BlacklistExists(GetString("vendorssell"))) then
-		ml_blacklist.CreateBlacklist(GetString("vendorssell"))
+	if(not ml_blacklist.BlacklistExists(GetString("Vendor sell"))) then
+		ml_blacklist.CreateBlacklist(GetString("Vendor sell"))
 	end
 
 end
@@ -506,7 +506,7 @@ end
 
 -- Salvage List stuff here.
 function gw2_sell_manager.createItemList()
-	local inventoryItems = Inventory("exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("sellItems")))
+	local inventoryItems = Inventory("exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Sell Items")))
 	local filteredItems = {}
 	if (table.valid(inventoryItems)) then
 		for slot,nItem in pairs(inventoryItems) do
@@ -551,7 +551,7 @@ end
 function gw2_sell_manager.getMarkerList(filter)
 	filter = filter or ""
 	local markers = {}
-	local MList = MapMarkerList("onmesh"..filter..",exclude_characterid="..gw2_blacklistmanager.GetExcludeString(GetString("vendorssell")))
+	local MList = MapMarkerList("onmesh"..filter..",exclude_characterid="..gw2_blacklistmanager.GetExcludeString(GetString("Vendor sell")))
 	if(table.valid(MList)) then
 		for _,marker in pairs(MList) do
 			local validCID = {
@@ -585,7 +585,7 @@ function gw2_sell_manager.sellAtVendor(vendor)
 		
 		if(gw2_sell_manager.VendorSellHistroy.interactcount > 15) then
 			d("Vendor blacklisted: Tried interacting multiple times.")
-			gw2_blacklistmanager.AddBlacklistEntry(GetString("vendorssell"), vendor.id, vendor.name, true)			
+			gw2_blacklistmanager.AddBlacklistEntry(GetString("Vendor sell"), vendor.id, vendor.name, true)			
 		end
 		
 		if (Inventory:IsVendorOpened() == false and Player:IsConversationOpen() == false) then
@@ -598,7 +598,7 @@ function gw2_sell_manager.sellAtVendor(vendor)
 			local result = gw2_common_functions.handleConversation("sell")
 			if (result == false) then
 				d("Vendor blacklisted: Could not handle conversation.")
-				gw2_blacklistmanager.AddBlacklistEntry(GetString("vendorssell"), vendor.id, vendor.name, true)
+				gw2_blacklistmanager.AddBlacklistEntry(GetString("Vendor sell"), vendor.id, vendor.name, true)
 				return false
 			elseif (result == nil) then
 				ml_global_information.Wait(math.random(520,1200))
@@ -623,7 +623,7 @@ function gw2_sell_manager.sellAtVendor(vendor)
 						end
 					else
 						d("Could not sell "..item.name..", blacklisting it")
-						gw2_blacklistmanager.AddBlacklistEntry(GetString("sellItems"), item.itemID, item.name, true)
+						gw2_blacklistmanager.AddBlacklistEntry(GetString("Sell Items"), item.itemID, item.name, true)
 					end
 					return true
 				end

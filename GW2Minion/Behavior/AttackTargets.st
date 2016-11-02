@@ -23,7 +23,7 @@ local tbl =
 						finishcode = "",
 						info = "Find Target and Set the aggro context.combat_targetid",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "local target = gw2_common_functions.GetBestCharacterTarget( 9999 ) \nif (table.valid(target) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"monsters\"),target.contentid)) then\n\tlocal pdist = target.pathdistance\n\tif ( pdist < 9999999 ) then\n\t\tcontext.combat_targetid = target.id\n\t\tself:success()\n\t\treturn\n\telse\n\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"monsters\"), target.contentid, target.name, ml_global_information.Now + 90000)\n\tend\nend\nself:fail()",
+						runcode = "local target = gw2_common_functions.GetBestCharacterTarget( 9999 ) \nif (table.valid(target) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Monsters\"),target.contentid)) then\n\tlocal pdist = target.pathdistance\n\tif ( pdist < 9999999 ) then\n\t\tcontext.combat_targetid = target.id\n\t\tself:success()\n\t\treturn\n\telse\n\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Monsters\"), target.contentid, target.name, ml_global_information.Now + 90000)\n\tend\nend\nself:fail()",
 						startcode = "",
 					},
 				},
