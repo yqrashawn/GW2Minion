@@ -506,7 +506,7 @@ end
 
 -- Salvage List stuff here.
 function gw2_sell_manager.createItemList()
-	local inventoryItems = Inventory("exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Sell Items")))
+	local inventoryItems = Inventory("exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Sell items")))
 	local filteredItems = {}
 	if (table.valid(inventoryItems)) then
 		for slot,nItem in pairs(inventoryItems) do
@@ -623,7 +623,7 @@ function gw2_sell_manager.sellAtVendor(vendor)
 						end
 					else
 						d("Could not sell "..item.name..", blacklisting it")
-						gw2_blacklistmanager.AddBlacklistEntry(GetString("Sell Items"), item.itemID, item.name, true)
+						gw2_blacklistmanager.AddBlacklistEntry(GetString("Sell items"), item.itemID, item.name, true)
 					end
 					return true
 				end
@@ -644,6 +644,7 @@ end
 
 --needtosell.
 function gw2_sell_manager.needToSell(nearby)
+if(1==1) then return true end
 	if (table.valid(gw2_sell_manager.createItemList()) or table.valid(Inventory("rarity="..GW2.ITEMRARITY.Junk))) then
 		if (nearby and ((ml_global_information.Player_Inventory_SlotsFree*100)/Inventory.slotcount) < 33) then
 			return true
