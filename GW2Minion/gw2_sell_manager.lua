@@ -644,7 +644,6 @@ end
 
 --needtosell.
 function gw2_sell_manager.needToSell(nearby)
-if(1==1) then return true end
 	if (table.valid(gw2_sell_manager.createItemList()) or table.valid(Inventory("rarity="..GW2.ITEMRARITY.Junk))) then
 		if (nearby and ((ml_global_information.Player_Inventory_SlotsFree*100)/Inventory.slotcount) < 33) then
 			return true
