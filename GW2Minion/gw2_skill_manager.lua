@@ -770,8 +770,7 @@ function gw2_skill_manager:GetProfile(profileName)
 					skill = inheritTable(skillPrototype, skill)
 					skill.parent = setmetatable({},{__index = profile, __newindex = profile})
 				end
-				profile.tmp.path = path
-				profile:Save() -- TODO: remove this when all profiles have updated, +/- 2 month after release. save profile with corrected/removed settings. 
+				profile.tmp.path = path				
 				return profile
 			end
 		end
