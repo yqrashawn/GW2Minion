@@ -18,14 +18,14 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 26937;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Enchanted Daggers";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 0;
 			};
 			["target"] = {
@@ -37,14 +37,14 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 29148;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Project Tranquility";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 0;
 			};
 			["target"] = {
@@ -56,14 +56,14 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 28219;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Empowering Misery";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 0;
 			};
 			["target"] = {
@@ -75,14 +75,14 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 27220;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Facet of Light";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 0;
 			};
 			["target"] = {
@@ -94,14 +94,14 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 27372;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Soothing Stone";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 0;
 			};
 			["target"] = {
@@ -113,15 +113,15 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 28262;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Crystal Hibernation";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -133,15 +133,15 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "1";
+				["castOnSelf"] = true;
+				["groundTargeted"] = true;
 				["id"] = 29386;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Envoy of Exuberance";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 8;
 			};
 			["target"] = {
@@ -153,16 +153,16 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
+				["castOnSelf"] = true;
 				["delay"] = 15000;
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28419;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Legendary Dwarf Stance";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 16;
 			};
 			["target"] = {
@@ -174,16 +174,16 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
+				["castOnSelf"] = true;
 				["delay"] = 15000;
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 26650;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Legendary Dwarf Stance";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 16;
 			};
 			["target"] = {
@@ -195,16 +195,16 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
+				["castOnSelf"] = true;
 				["delay"] = 15000;
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28134;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Legendary Assassin Stance";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 12;
 			};
 			["target"] = {
@@ -216,16 +216,16 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
+				["castOnSelf"] = true;
 				["delay"] = 15000;
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27659;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Legendary Assassin Stance";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 12;
 			};
 			["target"] = {
@@ -237,16 +237,16 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
+				["castOnSelf"] = true;
 				["delay"] = 15000;
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28085;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Legendary Dragon Stance";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 16;
 			};
 			["target"] = {
@@ -258,16 +258,16 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
+				["castOnSelf"] = true;
 				["delay"] = 15000;
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28229;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Legendary Dragon Stance";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 16;
 			};
 			["target"] = {
@@ -281,16 +281,16 @@ local obj1 = {
 				["minHP"] = 0;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
+				["castOnSelf"] = true;
 				["delay"] = 15000;
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28494;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Legendary Demon Stance";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 16;
 			};
 			["target"] = {
@@ -303,16 +303,16 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
+				["castOnSelf"] = true;
 				["delay"] = 15000;
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28376;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Legendary Demon Stance";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 16;
 			};
 			["target"] = {
@@ -326,13 +326,13 @@ local obj1 = {
 			};
 			["skill"] = {
 				["delay"] = 0;
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 29371;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Facet of Nature";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 13;
 			};
 			["target"] = {
@@ -343,13 +343,13 @@ local obj1 = {
 				["maxPower"] = 50;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27975;
 				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Rite of the Great Dwarf";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 4;
 			};
 			["target"] = {
@@ -361,13 +361,13 @@ local obj1 = {
 				["minHP"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28406;
 				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Jade Winds";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 4;
 			};
 			["target"] = {
@@ -378,13 +378,13 @@ local obj1 = {
 				["maxPower"] = 5;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28287;
 				["maxRange"] = 240;
 				["minRange"] = 0;
 				["name"] = "Embrace the Darkness";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 4;
 			};
 			["target"] = {
@@ -395,13 +395,13 @@ local obj1 = {
 				["maxPower"] = 50;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27760;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Facet of Chaos";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 4;
 			};
 			["target"] = {
@@ -412,13 +412,13 @@ local obj1 = {
 				["maxPower"] = 20;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28231;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Phase Traversal";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 2;
 			};
 			["target"] = {
@@ -429,13 +429,13 @@ local obj1 = {
 				["maxPower"] = 35;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 26679;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Forced Engagement";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 2;
 			};
 			["target"] = {
@@ -446,13 +446,13 @@ local obj1 = {
 				["maxPower"] = 50;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28379;
 				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Facet of Darkness";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 3;
 			};
 			["target"] = {
@@ -463,13 +463,13 @@ local obj1 = {
 				["maxPower"] = 30;
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
+				["groundTargeted"] = true;
 				["id"] = 28516;
 				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Inspiring Reinforcement";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 1;
 			};
 			["target"] = {
@@ -480,13 +480,13 @@ local obj1 = {
 				["maxPower"] = 20;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27505;
 				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Banish Enchantment";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 2;
 			};
 			["target"] = {
@@ -498,13 +498,13 @@ local obj1 = {
 				["minHP"] = 50;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28571;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Duelist's Preparation";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 8;
 			};
 			["target"] = {
@@ -515,13 +515,13 @@ local obj1 = {
 				["maxPower"] = 35;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27322;
 				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Pain Absorption";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 1;
 			};
 			["target"] = {
@@ -532,13 +532,13 @@ local obj1 = {
 				["maxPower"] = 30;
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
+				["groundTargeted"] = true;
 				["id"] = 27917;
 				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Unyielding Anguish";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 3;
 			};
 			["target"] = {
@@ -549,13 +549,13 @@ local obj1 = {
 				["maxPower"] = 5;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 26557;
 				["maxRange"] = 90;
 				["minRange"] = 0;
 				["name"] = "Vengeful Hammers";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 3;
 			};
 			["target"] = {
@@ -566,13 +566,13 @@ local obj1 = {
 				["maxPower"] = 50;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27014;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Facet of Elements";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 1;
 			};
 			["target"] = {
@@ -583,13 +583,13 @@ local obj1 = {
 				["maxPower"] = 40;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27107;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Impossible Odds";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 3;
 			};
 			["target"] = {
@@ -600,13 +600,13 @@ local obj1 = {
 				["maxPower"] = 30;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 29209;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Riposting Shadows";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 1;
 			};
 			["target"] = {
@@ -618,13 +618,13 @@ local obj1 = {
 			};
 			["skill"] = {
 				["delay"] = 15000;
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 26644;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Facet of Strength";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 2;
 			};
 			["target"] = {
@@ -635,13 +635,13 @@ local obj1 = {
 				["maxPower"] = 10;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28409;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Temporal Rift";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -652,13 +652,13 @@ local obj1 = {
 				["maxPower"] = 15;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27074;
 				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Grasping Shadow";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -669,13 +669,13 @@ local obj1 = {
 				["maxPower"] = 15;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28978;
 				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Surge of the Mists";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -686,13 +686,13 @@ local obj1 = {
 				["maxPower"] = 10;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28029;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Frigid Blitz";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 8;
 			};
 			["target"] = {
@@ -703,13 +703,13 @@ local obj1 = {
 				["maxPower"] = 15;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 29321;
 				["maxRange"] = 300;
 				["minRange"] = 0;
 				["name"] = "Renewing Wave";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 8;
 			};
 			["target"] = {
@@ -720,13 +720,13 @@ local obj1 = {
 				["maxPower"] = 10;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 29288;
 				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Warding Rift";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 7;
 			};
 			["target"] = {
@@ -737,13 +737,13 @@ local obj1 = {
 				["maxPower"] = 15;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 26699;
 				["maxRange"] = 450;
 				["minRange"] = 0;
 				["name"] = "Unrelenting Assault";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 7;
 			};
 			["target"] = {
@@ -754,13 +754,13 @@ local obj1 = {
 				["maxPower"] = 5;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27964;
 				["maxRange"] = 410;
 				["minRange"] = 0;
 				["name"] = "Echoing Eruption";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 7;
 			};
 			["target"] = {
@@ -771,13 +771,13 @@ local obj1 = {
 				["maxPower"] = 5;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28357;
 				["maxRange"] = 480;
 				["minRange"] = 0;
 				["name"] = "Searing Fissure";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
 			};
 			["target"] = {
@@ -788,13 +788,13 @@ local obj1 = {
 				["maxPower"] = 5;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 29233;
 				["maxRange"] = 450;
 				["minRange"] = 0;
 				["name"] = "Precision Strike";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
 			};
 			["target"] = {
@@ -805,13 +805,13 @@ local obj1 = {
 				["maxPower"] = 5;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 29145;
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Punishing Sweep";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
 			};
 			["target"] = {
@@ -822,13 +822,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 29256;
 				["maxRange"] = 450;
 				["minRange"] = 0;
 				["name"] = "Brutal Blade";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -839,13 +839,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 26666;
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Manifest Toxin";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -856,13 +856,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 29331;
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Forceful Bash";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -873,13 +873,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28964;
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Rift Slash";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -890,13 +890,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27066;
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Misery Swipe";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -907,13 +907,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 29180;
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Rapid Swipe";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -924,13 +924,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 29057;
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Preparation Thrust";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -941,13 +941,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 29002;
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Rejuvenating Assault";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -958,13 +958,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 26730;
 				["maxRange"] = 130;
 				["minRange"] = 0;
 				["name"] = "Anguish Swipe";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -975,13 +975,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28915;
 				["maxRange"] = 270;
 				["minRange"] = 0;
 				["name"] = "Rapid Assault";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
 			};
 			["target"] = {
@@ -993,13 +993,13 @@ local obj1 = {
 				["minHP"] = 35;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27665;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Field of the Mists";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 8;
 			};
 			["target"] = {
@@ -1010,13 +1010,13 @@ local obj1 = {
 				["maxPower"] = 5;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28827;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Venomous Sphere";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 7;
 			};
 			["target"] = {
@@ -1027,13 +1027,13 @@ local obj1 = {
 				["maxPower"] = 10;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28692;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Igniting Brand";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 8;
 			};
 			["target"] = {
@@ -1044,13 +1044,13 @@ local obj1 = {
 				["maxPower"] = 5;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28253;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Coalescence of Ruin";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
 			};
 			["target"] = {
@@ -1061,13 +1061,13 @@ local obj1 = {
 				["maxPower"] = 20;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28930;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Rift Containment";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -1078,13 +1078,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28195;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Legendary Centaur Stance";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 16;
 			};
 			["target"] = {
@@ -1095,15 +1095,15 @@ local obj1 = {
 				["maxPower"] = 5;
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
+				["groundTargeted"] = true;
 				["id"] = 27976;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Phase Smash";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 7;
-				["slowCast"] = "1";
+				["slowCast"] = true;
 			};
 			["target"] = {
 			};
@@ -1113,13 +1113,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 1175;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Bandage";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 8;
 			};
 			["target"] = {
@@ -1131,15 +1131,15 @@ local obj1 = {
 				["minHP"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
+				["groundTargeted"] = true;
 				["id"] = 28110;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Drop the Hammer";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
-				["slowCast"] = "1";
+				["slowCast"] = true;
 			};
 			["target"] = {
 				["moving"] = "NotMoving";
@@ -1150,13 +1150,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28714;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Spear of Anguish";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -1167,13 +1167,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 31727;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Forceful Displacement";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
 			};
 			["target"] = {
@@ -1184,13 +1184,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27063;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Forceful Displacement";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
 			};
 			["target"] = {
@@ -1201,13 +1201,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 27792;
 				["maxRange"] = 360;
 				["minRange"] = 0;
 				["name"] = "Vengeful Blast";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 7;
 			};
 			["target"] = {
@@ -1218,13 +1218,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 31723;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Essence Sap";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -1235,13 +1235,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28180;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Essence Sap";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -1253,13 +1253,13 @@ local obj1 = {
 			};
 			["skill"] = {
 				["delay"] = 0;
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 28549;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Hammer Bolt";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {

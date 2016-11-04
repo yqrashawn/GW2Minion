@@ -46,7 +46,7 @@ local tbl =
 						finishcode = "",
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "local EList = MapMarkerList(\"nearest,isevent,onmesh,exclude_eventid=\"..gw2_blacklistmanager.GetExcludeString(GetString(\"Event\")))\nif(table.valid(EList)) then\n\t\tlocal _,event = next(EList)\n\t\tif(table.valid(event)) then\n\t\t\t\tif(table.valid(event.eventinfo)) then\n\t\t\t\t\t\tif(event.eventinfo.level < ml_global_information.Player_Level+2) then\n\t\t\t\t\t\t\t\tcontext.event_id = event.eventid\n\t\t\t\t\t\t\t\tcontext.event_reached = false\n\t\t\t\t\t\t\t\tself:success()\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\n\t\t\t\t\t\td(\"[Event]: Current event is above level range.\")\n\t\t\t\t\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Event\"), event.eventid, event.name or \"Unknown event\", ml_global_information.Now + 1500000)\n\t\t\t\telse\n\t\t\t\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Event\"), event.eventid, event.name or \"Unknown event\", ml_global_information.Now + 1500000)\n\t\t\t\tend\n\t\tend\nend\nself:fail()",
+						runcode = "local EList = MapMarkerList(\"nearest,isevent,onmesh,maxpathdistance=999999,exclude_eventid=\"..gw2_blacklistmanager.GetExcludeString(GetString(\"Event\")))\nif(table.valid(EList)) then\n\t\tlocal _,event = next(EList)\n\t\tif(table.valid(event)) then\n\t\t\t\tif(table.valid(event.eventinfo)) then\n\t\t\t\t\t\tif(event.eventinfo.level < ml_global_information.Player_Level+2) then\n\t\t\t\t\t\t\t\tcontext.event_id = event.eventid\n\t\t\t\t\t\t\t\tcontext.event_reached = false\n\t\t\t\t\t\t\t\tself:success()\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\n\t\t\t\t\t\td(\"[Event]: Current event is above level range.\")\n\t\t\t\t\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Event\"), event.eventid, event.name or \"Unknown event\", ml_global_information.Now + 1500000)\n\t\t\t\telse\n\t\t\t\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Event\"), event.eventid, event.name or \"Unknown event\", ml_global_information.Now + 1500000)\n\t\t\t\tend\n\t\tend\nend\nself:fail()",
 						startcode = "",
 					},
 				},
@@ -86,7 +86,7 @@ local tbl =
 	variables = 
 	{
 		filename = "EventHandler.st",
-		finishcode = "context.event_id = nil\ncontext.event_reached = false\ncontext.event_marker = nil",
+		finishcode = "context.event_id = nil\ncontext.event_reached = false\ncontext.event_marker = nil\n",
 		info = "EventHandler",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\nif (context) then\n GUI:Text(\"Event ID: \"..tostring(context.event_id or 0))\n GUI:Text(\"Event Reaced: \"..tostring(context.event_reached or false))\n GUI:Text(\"Event MaxDuration: \"..tostring(event_maxduration or 0))\nend",
