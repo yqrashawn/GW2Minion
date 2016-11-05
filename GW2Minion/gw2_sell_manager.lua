@@ -70,11 +70,6 @@ function gw2_sell_manager.ModuleInit()
 
 	-- init button in minionmainbutton
 	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SELLMGR", name = "Sell", onClick = function() gw2_sell_manager.mainWindow.open = gw2_sell_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Sell Manager\" window.", texture = GetStartupPath().."\\GUI\\UI_Textures\\sell.png"},"GW2MINION##MENU_HEADER")
-	
-	if(not ml_blacklist.BlacklistExists(GetString("Vendor sell"))) then
-		ml_blacklist.CreateBlacklist(GetString("Vendor sell"))
-	end
-
 end
 
 -- Gui draw function.
@@ -627,7 +622,6 @@ function gw2_sell_manager.sellAtVendor(vendor)
 					end
 					return true
 				end
-				return false
 			end
 			return true
 		end
@@ -638,13 +632,17 @@ function gw2_sell_manager.sellAtVendor(vendor)
 		-- No more items to sell
 		d("Selling finished...")
 		gw2_sell_manager.VendorSellHistroy.interactcount = 0
+		ml_global_information.Wait(math.random(520,750))
 	end
 	return false
 end
 
 --needtosell.
 function gw2_sell_manager.needToSell(nearby)
-	if (table.valid(gw2_sell_manager.createItemList()) or table.valid(Inventory("rarity="..GW2.ITEMRARITY.Junk))) then
+	local junkitems = Inventory("rarity="..GW2.ITEMRARITY.Junk)
+	local selljunk = table.size(junkitems) > 3 or (table.valid(junkitems) and ((ml_global_information.Player_Inventory_SlotsFree*100)/Inventory.slotcount) < 15)
+	
+	if (table.valid(gw2_sell_manager.createItemList()) or selljunk) then
 		if (nearby and ((ml_global_information.Player_Inventory_SlotsFree*100)/Inventory.slotcount) < 33) then
 			return true
 		elseif (ml_global_information.Player_Inventory_SlotsFree <= 2) then
