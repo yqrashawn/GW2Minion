@@ -21,10 +21,10 @@ function gw2_blacklistmanager.GetExcludeString(listname)
 
 	if(table.valid(entries)) then
 		for _,entry in pairs(entries) do
-			retval = string.add(retval, entry.id, ";")
+			retval = string.add(retval, tostring(entry.id), ";")
 		end
 	end
-	
+
 	return retval
 end
 
