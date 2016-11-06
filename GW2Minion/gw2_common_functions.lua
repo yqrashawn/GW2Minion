@@ -708,3 +708,64 @@ function gw2_common_functions.filterRelativePostion(entityList,dir)
 	end
 	return returnList
 end
+
+gw2_common_functions.randompointsused = {}
+function gw2_common_functions.GetRandomPoint()
+	if(not gw2_common_functions.randompointsused[ml_global_information.CurrentMapID]) then
+		gw2_common_functions.randompointsused = {}
+		gw2_common_functions.randompointsused[ml_global_information.CurrentMapID] = {}
+	end
+	
+	local function _validpos(pos)
+		for i,existing in pairs(gw2_common_functions.randompointsused[ml_global_information.CurrentMapID]) do
+			if(TimeSince(existing.time) > 900000) then gw2_common_functions.randompointsused[ml_global_information.CurrentMapID][i] = nil end
+			
+			if(Distance3DT(existing.pos,pos) < 500) then
+				return false
+			end
+		end
+		return true
+	end
+	
+	local function _validpath(pos)
+		return table.valid(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))
+	end
+	
+	local randompos = nil
+	
+	-- 1st try
+	if (table.valid(gw2_datamanager.levelmap)) then
+		local pos = gw2_datamanager.GetRandomPositionInLevelRange(ml_global_information.Player_Level)
+		if(_validpos(pos) and _validpath(pos)) then
+			randompos = pos
+		end
+	end
+	
+	-- 2nd try
+	if(randompos == nil) then
+		local MList = MapMarkerList("onmesh,mindistance=5000")
+		if(table.valid(MList)) then
+			local i,marker = next(MList)
+			while not randompos and marker do
+				if(_validpos(marker.pos) and marker.pathdistance < 9999999) then
+					randompos = marker.pos
+				end
+				i,marker = next(MList,i)
+			end
+		end
+	end
+	
+	if (randompos == nil) then
+		local pos = NavigationManager:GetRandomPoint(5000) -- 5000 beeing mindistance to player
+		if (table.valid(pos) and _validpos(pos) and _validpath(pos)) then
+			randompos = pos
+		end
+	end
+	
+	if (table.valid(randompos)) then
+		table.insert(gw2_common_functions.randompointsused[ml_global_information.CurrentMapID], {pos = randompos, time = ml_global_information.Now})
+		return randompos
+	end
+	
+	return nil
+end
