@@ -5,7 +5,7 @@ local tbl =
 	{
 		
 		{
-			class = "Sequence",
+			class = "PrioritySelector",
 			nodes = 
 			{
 				
@@ -23,7 +23,7 @@ local tbl =
 						finishcode = "",
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+						runcode = "if(ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then\n\t\tself:fail()\nelse\n\t\tself:success()\nend",
 						startcode = "",
 					},
 				},
@@ -222,7 +222,7 @@ local tbl =
 			variables = 
 			{
 				info = "",
-				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
 			},
 		},
 	},
