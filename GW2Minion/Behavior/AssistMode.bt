@@ -69,13 +69,6 @@ local tbl =
 									variables = 
 									{
 										filename = "DeathHandler.st",
-										finishcode = "",
-										info = "Death Handler",
-										menucode = "",
-										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-										runcode = "",
-										startcode = "",
-										subtreeuicode = "",
 									},
 								},
 							},
@@ -103,13 +96,6 @@ local tbl =
 							variables = 
 							{
 								filename = "DownedHandler.st",
-								finishcode = "",
-								info = "Downed Handler",
-								menucode = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-								runcode = "",
-								startcode = "",
-								subtreeuicode = "",
 							},
 						},
 						
@@ -242,13 +228,6 @@ local tbl =
 									variables = 
 									{
 										filename = "CombatHandler.st",
-										finishcode = "",
-										info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
-										menucode = "",
-										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-										runcode = "",
-										startcode = "",
-										subtreeuicode = "",
 									},
 								},
 							},
@@ -301,7 +280,7 @@ local tbl =
 		info = "",
 		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetStringML(\"assistMode\"))) then\n\t\tif ( Settings.GW2Minion.smtargetmode == nil) then Settings.GW2Minion.smtargetmode = 1 end\n\t\tif ( Settings.GW2Minion.smmode == nil) then Settings.GW2Minion.smmode = 1 end\n\t\tif ( Settings.GW2Minion.moveintocombatrange == nil) then Settings.GW2Minion.moveintocombatrange = true end\n\t\tif ( Settings.GW2Minion.finishenemyassist == nil) then Settings.GW2Minion.finishenemyassist = true end\n\t\tif ( Settings.GW2Minion.assistautorespawn == nil) then Settings.GW2Minion.assistautorespawn = false end\n\n\n\t\tGUI:PushItemWidth(150)\n\t\tSettings.GW2Minion.smtargetmode = GUI:Combo(GetString(\"sMtargetmode\"),Settings.GW2Minion.smtargetmode,{GetString(\"None\"),GetString(\"LowestHealth\"),GetString(\"Closest\"),GetString(\"Biggest Crowd\"),})\n\t\tSettings.GW2Minion.smmode = GUI:Combo(GetString(\"Attack Mode\"),Settings.GW2Minion.smmode,{GetString(\"Everything\"),GetString(\"Players Only\"),})\n\t\tGUI:PopItemWidth()\n\n\n\t\tSettings.GW2Minion.moveintocombatrange = GUI:Checkbox(GetString(\"Move Into Combat Range\"),Settings.GW2Minion.moveintocombatrange)\n\t\tSettings.GW2Minion.finishenemyassist = GUI:Checkbox(GetString(\"AutoStomp\"),Settings.GW2Minion.finishenemyassist)\n\t\tSettings.GW2Minion.assistautorespawn = GUI:Checkbox(GetString(\"Auto Respawn\"),Settings.GW2Minion.assistautorespawn)\n\t\tGUI:TreePop()\nend",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Game State: '..tostring(ml_global_information.GameState))",
-		runcode = "-- SM backwards compatibily fix \ngBotMode = GetString(\"AssistMode\")\n\t",
+		runcode = "\n\t",
 		startcode = "d(\"AssistMode On\")\nml_global_information.Start()\ngw2_unstuck.manualcontrolmode = true",
 	},
 }

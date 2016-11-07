@@ -241,8 +241,10 @@ function gw2_common_functions.GetClosestWaypointToMap(targetMapID, currentMapID)
 end
 
 -- Tries to get a "best target" to attack
-function gw2_common_functions.GetBestCharacterTarget( maxrange )
-
+function gw2_common_functions.GetBestCharacterTarget( maxrange, useCustomSMFilterSettings )
+	
+	if ( useCustomSMFilterSettings ) then gw2_common_functions.useCustomSMFilterSettings = true end
+	
 	local range = maxrange
 	if ( range == nil ) then
 		range = ml_global_information.AttackRange
@@ -269,6 +271,8 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 		target = nil
 	end
 	
+	gw2_common_functions.useCustomSMFilterSettings = nil
+	
 	if ( target and target.id ) then
 		if ( target.distance < 1500 and target.los ) then
 			Player:SetTarget(target.id)
@@ -284,7 +288,10 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 	return nil
 end
 -- Tries to get a "best target" to attack for assist mode (maxdistance limited)
-function gw2_common_functions.GetBestCharacterTargetForAssist()
+function gw2_common_functions.GetBestCharacterTargetForAssist( useCustomSMFilterSettings )
+	
+	if ( useCustomSMFilterSettings ) then gw2_common_functions.useCustomSMFilterSettings = true end
+	
 	-- Ignore yellow check.
 	local hostileCheck = Settings.GW2Minion.ignoreyellowmobs and ",hostile" or ""
 	-- Try to get Enemy with los in range first
@@ -301,6 +308,8 @@ function gw2_common_functions.GetBestCharacterTargetForAssist()
 	-- 
 	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. "onmesh,nearest,maxlevel=15") end
 
+	gw2_common_functions.useCustomSMFilterSettings = nil
+	
 	if ( target and target.id ) then
 		if ( target.distance < 1600 and target.los ) then
 			Player:SetTarget(target.id)
@@ -321,14 +330,19 @@ function gw2_common_functions.GetBestAggroTarget(healthstate)
 	if ( range < 200 ) then range = 750 end -- extend search range a bit for melee chars
 	if ( range > 1000 ) then range = 1000 end -- limit search range a bit for ranged chars
 	
+	-- Try to get Aggro Enemy Players with los in range first
+	local target = gw2_common_functions.GetCharacterTargetExtended("player,onmesh,lowesthealth,los,maxdistance="..tostring(range), healthstate)
+	
+
 	-- Try to get Aggro Enemy with los in range first
-	local target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,lowesthealth,los,maxdistance="..tostring(range), healthstate)
+	--if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,lowesthealth,los,maxdistance="..tostring(range), healthstate) end
 
 	-- Try to get Aggro Enemy
-	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
+	--if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
 	
 	if(table.valid(target) and (not target.attackable or target.pathdistance > 9999999)) then
 		gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
+		d("[GetBestAggroTarget] - Blacklisting "..target.name.." ID: "..tostring(target.contentid))
 		target = nil
 	end
 	
@@ -375,8 +389,11 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 					if(dist < radius) then
 						return target
 					end
-				else
-					gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
+				else					
+					if ( not target.isplayer ) then -- don't blacklist players which are dead for 90sec..stupid in spvp
+						gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
+						d("[GetBestEventTarget] - Blacklisting "..target.name.." ID: "..tostring(target.contentid))
+					end
 				end
 			end
 			
@@ -394,6 +411,7 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 					end
 				else
 					gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), gagdet.contentid, gagdet.name, ml_global_information.Now + 90000)
+					d("[GetBestEventTarget] - Blacklisting "..gagdet.name.." ID: "..tostring(gagdet.contentid))
 				end
 			end
 		end
@@ -416,7 +434,7 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthst
 	end
 
 	-- Only in AssistMode we want to allow these settings	
-	if (gBotMode == GetString("AssistMode") or gBotMode == GetString("taskspvp")) then
+	if ( gw2_common_functions.useCustomSMFilterSettings ) then
 		if (Settings.GW2Minion.smmode == 2) then filterstring = filterstring..",player" end
 		if (Settings.GW2Minion.smtargetmode == 2) then filterstring = filterstring..",lowesthealth" end
 		if (Settings.GW2Minion.smtargetmode == 3) then filterstring = filterstring..",nearest" end

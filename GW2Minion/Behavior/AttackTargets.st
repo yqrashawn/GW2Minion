@@ -69,7 +69,7 @@ local tbl =
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",
 		startcode = "",
-		subtreeuicode = "",
+		subtreeuicode = "if ( self.settings.priorizeplayers == nil ) then self.settings.priorizeplayers = false end\nself.settings.priorizeplayers = GUI:Checkbox( \"Attack Players\", self.settings.priorizeplayers )",
 	},
 }
 

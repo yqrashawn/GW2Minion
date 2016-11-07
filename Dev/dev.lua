@@ -330,13 +330,15 @@ function dev.DrawCall(event, ticks )
 -- END WAYPOINTS
 					
 					if ( GUI:TreeNode("PvP") ) then
-						GUI:BulletText("IsInPvPLobby") GUI:SameLine(200) GUI:InputText("##devp1",tostring(PvPManager:IsInPvPLobby()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("IsInMatch") GUI:SameLine(200) GUI:InputText("##devp2",tostring(PvPManager:IsInMatch()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("IsArenaQueued") GUI:SameLine(200) GUI:InputText("##devp3",tostring(PvPManager:IsArenaQueued()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("IsMatchAvailable") GUI:SameLine(200) GUI:InputText("##devp4",tostring(PvPManager:IsMatchAvailable()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("IsMatchStarted") GUI:SameLine(200) GUI:InputText("##devp5",tostring(PvPManager:IsMatchStarted()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("IsMatchFinished") GUI:SameLine(200) GUI:InputText("##devp6",tostring(PvPManager:IsMatchFinished()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("MatchDuration") GUI:SameLine(200) GUI:InputText("##devp7",tostring(PvPManager:GetMatchDuration()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("IsInPvPLobby") GUI:SameLine(200) GUI:InputText("##devpp1",tostring(PvPManager:IsInPvPLobby()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("IsInMatch") GUI:SameLine(200) GUI:InputText("##devpp2",tostring(PvPManager:IsInMatch()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("IsArenaQueued") GUI:SameLine(200) GUI:InputText("##devpp3",tostring(PvPManager:IsArenaQueued()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("IsMatchAvailable") GUI:SameLine(200) GUI:InputText("##devpp4",tostring(PvPManager:IsMatchAvailable()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("IsMatchStarted") GUI:SameLine(200) GUI:InputText("##devpp5",tostring(PvPManager:IsMatchStarted()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("IsMatchFinished") GUI:SameLine(200) GUI:InputText("##devpp6",tostring(PvPManager:IsMatchFinished()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("MatchDuration") GUI:SameLine(200) GUI:InputText("##devpp7",tostring(PvPManager:GetMatchDuration()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("MatchScore") GUI:SameLine(200) GUI:InputText("##devpp8",tostring(PvPManager:GetScore()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						
 						
 						if (GUI:Button("Join PvP Lobby",150,15) ) then d("Join PvP Lobby: "..tostring(PvPManager:JoinPvPLobby())) end GUI:SameLine()
 						if (GUI:Button("Leave PvP Lobby",150,15) ) then d("Leave PvP Lobby: "..tostring(PvPManager:LeavePvPLobby())) end
@@ -344,12 +346,31 @@ function dev.DrawCall(event, ticks )
 						if (GUI:Button("Leave Unranked Queue",150,15) ) then d("Leave Unranked Queue: "..tostring(PvPManager:LeaveArenaQueue())) end
 						if (GUI:Button("Set Ready",150,15) ) then d("Set Ready: "..tostring(PvPManager:SetReady())) end
 						
-						GUI:BulletText("CanJoinTeamRED") GUI:SameLine(200) GUI:InputText("##devp7",tostring(PvPManager:CanJoinTeam(1)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("CanJoinTeamBLUE") GUI:SameLine(200) GUI:InputText("##devp7",tostring(PvPManager:CanJoinTeam(2)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("CanJoinTeamRED") GUI:SameLine(200) GUI:InputText("##devpp9",tostring(PvPManager:CanJoinTeam(1)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("CanJoinTeamBLUE") GUI:SameLine(200) GUI:InputText("##devpp10",tostring(PvPManager:CanJoinTeam(2)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 					
 						if (GUI:Button("Join Red",150,15) ) then d("JoinRed Result: "..tostring(PvPManager:JoinTeam(1))) end GUI:SameLine()
 						if (GUI:Button("Join Blue",150,15) ) then d("JoinRed Result: "..tostring(PvPManager:JoinTeam(2))) end
 						
+						
+						if ( GUI:TreeNode("Team 1") ) then
+							local team = PvPManager:GetTeam(1)
+							if ( table.valid(team) )then
+								for id, b in pairsByKeys(team) do
+									GUI:Text(tostring(id).."-"..b.name)
+								end
+							end
+							GUI:TreePop()				
+						end
+						if ( GUI:TreeNode("Team 2") ) then
+							local team = PvPManager:GetTeam(2)
+							if ( table.valid(team) )then
+								for id, b in pairsByKeys(team) do
+									GUI:Text(tostring(id).."-"..b.name)
+								end
+							end
+							GUI:TreePop()				
+						end
 						GUI:TreePop()				
 					end
 -- END PVP
@@ -752,9 +773,9 @@ function dev.DrawCharacterDetails(c)
 	local castinfo = c.castinfo
 	if ( TableSize(castinfo) > 0 ) then
 		GUI:BulletText("AttackedTargetPtr") GUI:SameLine(200) GUI:InputText("##dev24",tostring(string.format( "%X",castinfo.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-		GUI:BulletText("AttackedTargetID") GUI:SameLine(200) GUI:InputText("##dev25", tostring(castinfo.targetID),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-		GUI:BulletText("Current SpellID") GUI:SameLine(200) GUI:InputText("##dev26", tostring(castinfo.skillID),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-		GUI:BulletText("Last SpellID") GUI:SameLine(200) GUI:InputText("##dev27", tostring(castinfo.lastSkillID),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+		GUI:BulletText("AttackedTargetID") GUI:SameLine(200) GUI:InputText("##dev25", tostring(castinfo.targetid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+		GUI:BulletText("Current Skill ID") GUI:SameLine(200) GUI:InputText("##dev26", tostring(castinfo.skillid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+		GUI:BulletText("Last Skill ID") GUI:SameLine(200) GUI:InputText("##dev27", tostring(castinfo.lastskillid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 		GUI:BulletText("Skill Slot") GUI:SameLine(200) GUI:InputText("##dev28", tostring(castinfo.slot),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 		GUI:BulletText("Skill Duration") GUI:SameLine(200) GUI:InputText("##dev29", tostring(castinfo.duration),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	else
