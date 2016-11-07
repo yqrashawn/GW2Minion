@@ -5,7 +5,7 @@ local tbl =
 	{
 		
 		{
-			class = "Sequence",
+			class = "PrioritySelector",
 			nodes = 
 			{
 				
@@ -23,7 +23,7 @@ local tbl =
 						finishcode = "",
 						info = "Ingame check",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Guest Server ID: '..tostring(Settings.GW2Minion.guestserver))\nGUI:Text(\"Guest Server Name: \"..ml_global_information.GuestServerList[Settings.GW2Minion.guestserver])\nGUI:Text('Autologin Enabled: '..tostring(Settings.GW2Minion.autostartbot))\nGUI:Text('GameState: '..tostring(ml_global_information.GameState))\nif (self.lastrun) then\n\tGUI:Text('Lastrun: '..tostring(TimeSince(self.lastrun)))\nend\n\n",
-						runcode = "-- In CHaracter screen\nif ( ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY ) then\n\tself:success()\nelse\n\tself:fail()\nend",
+						runcode = "-- In CHaracter screen\nif ( ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY ) then\n\tself:fail()\nelse\n\tself:success()\nend",
 						startcode = "",
 					},
 				},
@@ -119,7 +119,6 @@ local tbl =
 							},
 							settings = 
 							{
-								expanded = true,
 								xposoffset = 0,
 							},
 							variables = 
@@ -254,14 +253,12 @@ local tbl =
 			settings = 
 			{
 				expanded = true,
-				failThreshold = 1,
-				successThreshold = 1,
 				xposoffset = 0,
 			},
 			variables = 
 			{
-				info = "GameState Switch",
-				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.activeTask or 'None')) GUI:Text('Succeeded Tasks: '..tostring(self.succeededTasks)) GUI:Text('Failed Tasks: '..tostring(self.failedTasks)) GUI:Text('Running Tasks: '..tostring(self.ranTasks))\n",
+				info = "",
+				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
 			},
 		},
 	},
