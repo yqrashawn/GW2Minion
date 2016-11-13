@@ -64,6 +64,7 @@ local tbl =
 									},
 									settings = 
 									{
+										expanded = false,
 										xposoffset = 0,
 									},
 									variables = 
@@ -74,6 +75,7 @@ local tbl =
 							},
 							settings = 
 							{
+								expanded = true,
 								xposoffset = 0,
 							},
 							variables = 
@@ -90,7 +92,7 @@ local tbl =
 							},
 							settings = 
 							{
-								expanded = true,
+								expanded = false,
 								xposoffset = 0,
 							},
 							variables = 
@@ -182,6 +184,7 @@ local tbl =
 							},
 							settings = 
 							{
+								expanded = true,
 								xposoffset = 0,
 							},
 							variables = 
@@ -210,7 +213,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "local ptarget = Player:GetTarget()\nlocal target = nil\nif(ptarget and ptarget.downed and ptarget.friendly and ptarget.distance < 200) then\n\t\tself:success()\n\t\treturn\nend\n\nif(ptarget and ptarget.attackable and not gw2_common_functions.HasBuffs(ptarget,ml_global_information.InvulnerabilityConditions)) then\n\t\ttarget = ptarget\nend\n\nlocal besttarget = gw2_common_functions.GetBestCharacterTargetForAssist()\nif(besttarget and (target == nil or besttarget.id ~= target.id)) then\n\t\ttarget = besttarget\nend\nif(target and (target.alive or target.downed) and target.attackable) then\n\t\tcontext.combat_targetid = target.id\n\t\tcontext.combat_target = target\n\t\tcontext.combat_moveintocombatrange = Settings.GW2Minion.moveintocombatrange and ml_global_information.Player_OnMesh\n\t\tcontext.combat_onmeshcheck = false\nend\nself:fail()",
+										runcode = "local ptarget = Player:GetTarget()\nlocal target = nil\nif(ptarget and ptarget.downed and ptarget.friendly and ptarget.distance < 200) then\n\t\tself:success()\n\t\treturn\nend\n\nif(ptarget and ptarget.attackable and not gw2_common_functions.HasBuffs(ptarget,ml_global_information.InvulnerabilityConditions)) then\n\t\ttarget = ptarget\nend\n\nlocal besttarget = gw2_common_functions.GetBestCharacterTargetForAssist(true)\nif(besttarget and (target == nil or besttarget.id ~= target.id)) then\n\t\ttarget = besttarget\nend\nif(target and (target.alive or target.downed) and target.attackable) then\n\t\tcontext.combat_targetid = target.id\n\t\tcontext.combat_target = target\n\t\tcontext.combat_moveintocombatrange = Settings.GW2Minion.moveintocombatrange and ml_global_information.Player_OnMesh\n\t\tcontext.combat_onmeshcheck = false\nend\nself:fail()",
 										startcode = "",
 									},
 								},
@@ -233,6 +236,7 @@ local tbl =
 							},
 							settings = 
 							{
+								expanded = true,
 								xposoffset = 0,
 							},
 							variables = 
