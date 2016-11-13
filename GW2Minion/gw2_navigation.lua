@@ -246,7 +246,14 @@ function ml_navigation:NavigateToNode(ppos, nextnode, stillonpaththreshold)
 			Player:SetFacing(nextnode.x,nextnode.y,nextnode.z)
 		else
 			Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
-		end							
+		end
+		
+		-- Make sure we are not strafing away (happens sometimes after being dead + movement was set)
+		local movdirs = Player:GetMovement()						
+		if (movdirs.backward) then Player:UnSetMovement(1) end
+		if (movdirs.left) then Player:UnSetMovement(2) end
+		if (movdirs.right) then Player:UnSetMovement(3) end	
+		
 		Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
 	end
 end
