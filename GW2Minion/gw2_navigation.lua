@@ -1,6 +1,8 @@
 -- Extends minionlib's ml_navigation.lua by adding the game specific navigation handler
 ml_navigation.NAVPOINTREACHEDDISTANCE = 32
 
+ml_navigation.CanRun = function() return GetGameState() == GW2.GAMESTATE.GAMEPLAY end 
+
 -- Handles the Navigation along the current Path. Is not supposed to be called manually.
 function ml_navigation.Navigate(event, ticks )	
 	

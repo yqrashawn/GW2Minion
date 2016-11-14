@@ -1,4 +1,5 @@
 gw2minion = {}
+gw2minion.btreecontext = {}
 
 function gw2minion.Init()
 	-- Register Button 
@@ -118,37 +119,58 @@ function gw2minion.Init()
 end
 RegisterEventHandler("Module.Initalize",gw2minion.Init)
 
+-- Get's called internally in ml_bt_mgr.lua by the :run() of the gw2minion.mainbtreeinstance. This draws UI code for ther internal GW2_Main btree here.
+-- This is to add always the same "core" functions and UI elements to the Main Menu
+function gw2minion.DrawMenuCode()
+	gw2minion.mainbtreeinstance:drawMenuElements()
+end
+
+-- Is called when the BTree is started. Allows us to supply a custom context table to the BTree
+function gw2minion.LoadContext()
+	return gw2minion.btreecontext
+end
+
+-- Gets called by the BT-Manager, after changes on the BT were saved. I'm just reloading the tree from the file here.
+function gw2minion.ReloadBTree()
+	if ( FileExists(GetLuaModsPath()  .. "\\\GW2Minion\\\GW2_Main.bt")) then 
+		
+		local btreeinfo = {
+			filename = "GW2_Main.bt",
+			filepath = GetLuaModsPath()  .. "\\\GW2Minion",
+			
+			LoadContext = function() gw2minion.LoadContext() end,	-- Is called when the BTree is started. Allows us to supply a custom context table.
+			Reload = function() gw2minion.ReloadBTree() end,			-- Called when the BTree was changed and saved in the BT-Editor
+			
+			internal = true,	-- if set, it will not be listed in the BotMode dropdown box
+			DrawMenuCode = function() gw2minion.DrawMenuCode() end,	-- Draws UI Elements into the Main Menu from our internal BTree which is running inside this file.
+			
+			--private = false, -- if set, it will be treated as a private addon, loadble from a .paf file.
+			--LoadSubTree = function(filename) d("IMPLEMENT ME to load "..filename) end,	-- Required for private addons with additional private sub-behavior trees
+		}				
+		d("Loading GW2 Main.bt")
+		gw2minion.mainbtreeinstance = ml_bt_mgr:LoadBehavior( btreeinfo )
+		if ( not table.valid(gw2minion.mainbtreeinstance)) then
+			ml_error("[GW2Minion] - Failed to load core behaviortree")
+		end
+	end
+end
+
+function gw2minion.LoadBehaviorFiles()
+	-- Load all our local "bot/addon" BTree files 
+	ml_bt_mgr:LoadBehaviorFromFolder(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior")
+	
+	--Load the "GW2 Main/Core tree" which is a local one and gets called from in here	
+	gw2minion.ReloadBTree()
+ end
+RegisterEventHandler("RefreshBehaviorFiles", gw2minion.LoadBehaviorFiles)
+
+
 function gw2minion.DrawCall(event, ticks )
 	
-	if ( not gw2minion.mainbtreeinstance ) then
-		if ( FolderExists(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior")) then
-			if ( FileExists(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior\\\GW2_Main.ct")) then 
-			
-				gw2minion.mainbtreeinstance = ml_bt_mgr.LoadBehaviorTree(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior", "GW2_Main.ct")
-				 -- getting the context for the BTree
-				gw2minion.mainbtreeinstance.context = gw2minion.mainbtreeinstance:start() 
-				
-				-- REMOVE THIS FROM THE LIVE ADDONS OR ELSE EVERYONE CAN JUST DUMP YOUR BEHAVIOR TREE! THIS IS JUST SO YOU CAN EDIT YOUR OWN BTREE IN THE EDITOR "live"
-				local btentry = {
-					name = "GW2_Main",
-					filename = "GW2_Main.ct",
-					filepath = GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior",
-					liveinstance = gw2minion.mainbtreeinstance				
-				}
-				
-				ml_bt_mgr.SetLiveInstance(btentry)
-			else
-				ml_error("[gw2minion.DrawCall] - Invalid File: "..GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior\\\GW2_Main.ct")
-			end
-		else
-			if ( not FolderCreate (GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior") ) then 
-				ml_error("[gw2minion.DrawCall] - Invalid Folder: "..GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior")
-			end
-		end
-		
-	else	
-		if ( not gw2minion.mainbtreeinstance.isloadedineditor ) then 
-			gw2minion.mainbtreeinstance:run()
+	if ( ml_bt_mgr.ready == true ) then
+		if ( gw2minion.mainbtreeinstance ) then
+			-- Run the local behaviortree
+			gw2minion.mainbtreeinstance:run(gw2minion.btreecontext)
 		end
 	end
 end

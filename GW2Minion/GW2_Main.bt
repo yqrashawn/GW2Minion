@@ -16,7 +16,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -35,7 +34,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -54,7 +52,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -78,7 +75,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -112,7 +108,6 @@ local tbl =
 													},
 													settings = 
 													{
-														xposoffset = 0,
 													},
 													variables = 
 													{
@@ -127,7 +122,6 @@ local tbl =
 											settings = 
 											{
 												duration = 16000,
-												xposoffset = 0,
 											},
 											variables = 
 											{
@@ -148,7 +142,6 @@ local tbl =
 													},
 													settings = 
 													{
-														xposoffset = 0,
 													},
 													variables = 
 													{
@@ -163,7 +156,6 @@ local tbl =
 											settings = 
 											{
 												duration = 1050,
-												xposoffset = 0,
 											},
 											variables = 
 											{
@@ -184,7 +176,6 @@ local tbl =
 													},
 													settings = 
 													{
-														xposoffset = 0,
 													},
 													variables = 
 													{
@@ -199,7 +190,6 @@ local tbl =
 											settings = 
 											{
 												duration = 1500,
-												xposoffset = 0,
 											},
 											variables = 
 											{
@@ -220,7 +210,6 @@ local tbl =
 													},
 													settings = 
 													{
-														xposoffset = 0,
 													},
 													variables = 
 													{
@@ -235,7 +224,6 @@ local tbl =
 											settings = 
 											{
 												duration = 15000,
-												xposoffset = 0,
 											},
 											variables = 
 											{
@@ -256,7 +244,6 @@ local tbl =
 													},
 													settings = 
 													{
-														xposoffset = 0,
 													},
 													variables = 
 													{
@@ -271,7 +258,6 @@ local tbl =
 											settings = 
 											{
 												duration = 10000,
-												xposoffset = 0,
 											},
 											variables = 
 											{
@@ -282,8 +268,6 @@ local tbl =
 									},
 									settings = 
 									{
-										expanded = true,
-										xposoffset = 0,
 									},
 									variables = 
 									{
@@ -294,7 +278,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -305,8 +288,6 @@ local tbl =
 					},
 					settings = 
 					{
-						expanded = true,
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -317,10 +298,8 @@ local tbl =
 			},
 			settings = 
 			{
-				expanded = true,
 				failThreshold = 1,
 				successThreshold = 1,
-				xposoffset = 0,
 			},
 			variables = 
 			{
@@ -331,12 +310,10 @@ local tbl =
 	},
 	settings = 
 	{
-		expanded = true,
-		xposoffset = 0,
 	},
 	variables = 
 	{
-		filename = "GW2_Main.ct",
+		filename = "GW2_Main.bt",
 		finishcode = "",
 		info = "GW2Minion core code, gets called from gw2.lua every Tick.\nUpdates Managers and sets Global Variables. Handles GameStates.\nUpdates Managers and global variables. Handles Main Window and GameStates.",
 		menucode = "-- Character Select\nif ( Settings.GW2Minion.autostartbot == nil) then Settings.GW2Minion.autostartbot = false end\nif ( Settings.GW2Minion.guestserver == nil) then Settings.GW2Minion.guestserver = 0 end\n\n\n-- Ingame\nif(Settings.GW2Minion.deposititems == nil) then Settings.GW2Minion.deposititems = true end\nif(Settings.GW2Minion.combatmovement == nil) then Settings.GW2Minion.combatmovement = true end\nif(Settings.GW2Minion.ignoreyellowmobs == nil) then Settings.GW2Minion.ignoreyellowmobs = false end\nif(Settings.GW2Minion.revivedownedplayers == nil) then Settings.GW2Minion.revivedownedplayers = true end\nif(Settings.GW2Minion.revivedeadplayers == nil) then Settings.GW2Minion.revivedeadplayers = false end\nif(Settings.GW2Minion.revivenpcs == nil) then Settings.GW2Minion.revivenpcs = false end\nif(Settings.GW2Minion.revivepartymember == nil) then Settings.GW2Minion.revivepartymember = true end\nif(Settings.GW2Minion.skipcutscene == nil) then Settings.GW2Minion.skipcutscene = false end\n\nif (GUI:TreeNode(GetStringML(\"settings\"))) then\n\n\t\t-- Character Select\n\t\tif (GUI:TreeNode(GetStringML(\"CharacterSelect\"))) then\n\t\t\t\tSettings.GW2Minion.autostartbot = GUI:Checkbox(GetString(\"autoStartBot\"),Settings.GW2Minion.autostartbot)\n\t\t\t\tGUI:PushItemWidth(150)\n\t\t\t\tSettings.GW2Minion.guestserver = GUI:Combo(GetString(\"guestserver\"),Settings.GW2Minion.guestserver,ml_global_information.GuestServerList)\n\t\t\t\tGUI:PopItemWidth()\n\t\t\t\tGUI:TreePop()\n\t\tend\n\n\t\t-- Ingame\n\t\tif (GUI:TreeNode(GetStringML(\"Ingame\"))) then\n\t\t\t\t-- TODO: Settings.GW2Minion.skipcutscene = GUI:Checkbox(GetString(\"skipcutscene\"),Settings.GW2Minion.skipcutscene)  inactive since there is no function to skip ..yet...\n\t\t\t\tSettings.GW2Minion.deposititems = GUI:Checkbox(GetString(\"Deposit Items\"),Settings.GW2Minion.deposititems)\n\t\t\t\tSettings.GW2Minion.combatmovement = GUI:Checkbox(GetString(\"Combat Movement\"),Settings.GW2Minion.combatmovement)\n\t\t\t\tSettings.GW2Minion.ignoreyellowmobs = GUI:Checkbox(GetString(\"Ignore Yellow Enemies\"),Settings.GW2Minion.ignoreyellowmobs)\n\t\t\t\tGUI:SetNextTreeNodeOpened(true,GUI.SetCond_Once)\n\t\t\t\tGUI:SetNextTreeNodeOpened(false,GUI.SetCond_Appearing)\n\t\t\t\tif(GUI:TreeNode(GetStringML(\"Revive\"))) then\n\t\t\t\t\t\tSettings.GW2Minion.revivedeadplayers = GUI:Checkbox(GetString(\"Revive Dead Players\"),Settings.GW2Minion.revivedeadplayers)\n\t\t\t\t\t\tSettings.GW2Minion.revivedownedplayers = GUI:Checkbox(GetString(\"Revive Downed Players\"),Settings.GW2Minion.revivedownedplayers)\n\t\t\t\t\t\tSettings.GW2Minion.revivenpcs = GUI:Checkbox(GetString(\"Revive NPCs\"),Settings.GW2Minion.revivenpcs)\n\t\t\t\t\t\tSettings.GW2Minion.revivepartymember = GUI:Checkbox(GetString(\"Revive Party Members\"),Settings.GW2Minion.revivepartymember)\n\t\t\t\t\t\tGUI:TreePop()\n\t\t\t\tend\t\t\t\t\n\t\t\t\tGUI:TreePop()\n\t\tend\n\n\t\tGUI:TreePop()\nend",

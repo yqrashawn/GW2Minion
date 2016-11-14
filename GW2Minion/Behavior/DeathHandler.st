@@ -14,7 +14,6 @@ local tbl =
 			},
 			variables = 
 			{
-				filename = "DeathHandler",
 				finishcode = "",
 				info = "Death Handler",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nif (self.deadtime and self.totaldeadtime) then\n\tlocal total = math.ceil(TimeSince(self.totaldeadtime)/1000)\n\tlocal lastcheck = math.ceil(TimeSince(self.deadtime)/1000)\n\tlocal maxtime = math.ceil(self.respawncheck*0.75)\n\tGUI:Text('Time since death: '..tostring(total)..'s')\n\tGUI:Text('Time since last check: '..tostring(lastcheck)..'s')\n\tGUI:Text('Max respawn time: '..tostring(maxtime)..'s')\nelse\n\tGUI:Text('Time Since Death: 0')\nend",
@@ -32,7 +31,7 @@ local tbl =
 		finishcode = "",
 		info = "Death Handler",
 		menucode = "",
-		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\n",
 		runcode = "",
 		startcode = "",
 		subtreeuicode = "",
