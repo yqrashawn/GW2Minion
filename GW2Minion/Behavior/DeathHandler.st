@@ -11,8 +11,6 @@ local tbl =
 			},
 			settings = 
 			{
-				expanded = false,
-				xposoffset = 0,
 			},
 			variables = 
 			{

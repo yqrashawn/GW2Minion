@@ -16,7 +16,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -40,7 +39,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -59,7 +57,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -78,7 +75,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -102,7 +98,6 @@ local tbl =
 									},
 									settings = 
 									{
-										xposoffset = 0,
 									},
 									variables = 
 									{
@@ -125,7 +120,6 @@ local tbl =
 										smoothturns = true,
 										stoppingdistance = 120,
 										usewaypoints = true,
-										xposoffset = 0,
 									},
 									variables = 
 									{
@@ -135,8 +129,6 @@ local tbl =
 							},
 							settings = 
 							{
-								expanded = true,
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -147,8 +139,6 @@ local tbl =
 					},
 					settings = 
 					{
-						expanded = true,
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -159,8 +149,6 @@ local tbl =
 			},
 			settings = 
 			{
-				expanded = true,
-				xposoffset = 0,
 			},
 			variables = 
 			{

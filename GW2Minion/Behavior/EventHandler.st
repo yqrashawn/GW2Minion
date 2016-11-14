@@ -16,8 +16,6 @@ local tbl =
 					},
 					settings = 
 					{
-						expanded = false,
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -39,7 +37,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -58,9 +55,7 @@ local tbl =
 					},
 					settings = 
 					{
-						expanded = true,
 						maxduration = 900,
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -70,8 +65,6 @@ local tbl =
 			},
 			settings = 
 			{
-				expanded = true,
-				xposoffset = 0,
 			},
 			variables = 
 			{

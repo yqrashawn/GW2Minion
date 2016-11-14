@@ -16,7 +16,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -40,7 +39,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -64,7 +62,6 @@ local tbl =
 									},
 									settings = 
 									{
-										xposoffset = 0,
 									},
 									variables = 
 									{
@@ -83,12 +80,10 @@ local tbl =
 									},
 									settings = 
 									{
-										expanded = true,
 										randomMovement = true,
 										smoothturns = true,
 										stoppingdistance = 2500,
 										usewaypoints = false,
-										xposoffset = 0,
 									},
 									variables = 
 									{
@@ -98,8 +93,6 @@ local tbl =
 							},
 							settings = 
 							{
-								expanded = true,
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -115,7 +108,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -134,7 +126,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -153,14 +144,13 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
 								finishcode = "",
 								info = "Check target boons",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if(context.combat_target) then\n\t\tif (gw2_common_functions.HasBuffs(context.combat_target,ml_global_information.InvulnerabilityConditions)) then\n\t\t\t\td(\"[CombatHandler]: Target is invulnerable. Blacklisting.\")\n\t\t\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Monsters\"),context.combat_target.contentid,context.combat_target.name,ml_global_information.Now+15000)\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()",
+								runcode = "if( context.combat_target ) then\n\t\tif (gw2_common_functions.HasBuffs(context.combat_target,ml_global_information.InvulnerabilityConditions)) then\n\t\t\t\td(\"[CombatHandler]: Target is invulnerable. Blacklisting.\")\n\t\t\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Monsters\"),context.combat_target.contentid,context.combat_target.name,ml_global_information.Now+15000)\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()",
 								startcode = "",
 							},
 						},
@@ -172,7 +162,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -187,7 +176,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -201,8 +189,6 @@ local tbl =
 					},
 					settings = 
 					{
-						expanded = true,
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -213,8 +199,6 @@ local tbl =
 			},
 			settings = 
 			{
-				expanded = true,
-				xposoffset = 0,
 			},
 			variables = 
 			{

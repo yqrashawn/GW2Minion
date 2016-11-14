@@ -16,7 +16,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -35,7 +34,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -59,7 +57,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -78,7 +75,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -102,7 +98,6 @@ local tbl =
 									},
 									settings = 
 									{
-										xposoffset = 0,
 									},
 									variables = 
 									{
@@ -121,14 +116,12 @@ local tbl =
 									},
 									settings = 
 									{
-										expanded = true,
 										randomMovement = true,
 										randomizestoppingdistance = false,
 										smoothturns = true,
 										stoppingdistance = 50,
 										stoppingidstancemaxrange = 100,
 										usewaypoints = true,
-										xposoffset = 0,
 									},
 									variables = 
 									{
@@ -138,8 +131,6 @@ local tbl =
 							},
 							settings = 
 							{
-								expanded = true,
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -155,7 +146,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -169,8 +159,6 @@ local tbl =
 					},
 					settings = 
 					{
-						expanded = true,
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -181,8 +169,6 @@ local tbl =
 			},
 			settings = 
 			{
-				expanded = true,
-				xposoffset = 0,
 			},
 			variables = 
 			{

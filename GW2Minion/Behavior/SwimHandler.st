@@ -16,7 +16,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -31,8 +30,6 @@ local tbl =
 			settings = 
 			{
 				duration = 1100,
-				expanded = false,
-				xposoffset = 0,
 			},
 			variables = 
 			{
