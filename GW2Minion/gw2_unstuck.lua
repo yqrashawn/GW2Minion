@@ -532,7 +532,7 @@ end
 function gw2_unstuck.stuckhandlers.stop()
 	d("[Unstuck]: Stopping the bot.")
 	Player:StopMovement()
-	ml_bt_mgr.running = false
+	BehaviorManager:Stop()
 end
 
 function gw2_unstuck.rotateposition(deg,pos,center)

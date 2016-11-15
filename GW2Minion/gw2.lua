@@ -148,7 +148,7 @@ function gw2minion.ReloadBTree()
 			--LoadSubTree = function(filename) d("IMPLEMENT ME to load "..filename) end,	-- Required for private addons with additional private sub-behavior trees
 		}				
 		d("Loading GW2 Main.bt")
-		gw2minion.mainbtreeinstance = ml_bt_mgr:LoadBehavior( btreeinfo )
+		gw2minion.mainbtreeinstance = BehaviorManager:LoadBehavior( btreeinfo )
 		if ( not table.valid(gw2minion.mainbtreeinstance)) then
 			ml_error("[GW2Minion] - Failed to load core behaviortree")
 		end
@@ -157,7 +157,7 @@ end
 
 function gw2minion.LoadBehaviorFiles()
 	-- Load all our local "bot/addon" BTree files 
-	ml_bt_mgr:LoadBehaviorFromFolder(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior")
+	BehaviorManager:LoadBehaviorFromFolder(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior")
 	
 	--Load the "GW2 Main/Core tree" which is a local one and gets called from in here	
 	gw2minion.ReloadBTree()
@@ -167,7 +167,7 @@ RegisterEventHandler("RefreshBehaviorFiles", gw2minion.LoadBehaviorFiles)
 
 function gw2minion.DrawCall(event, ticks )
 	
-	if ( ml_bt_mgr.ready == true ) then
+	if ( BehaviorManager:Ready() == true ) then
 		if ( gw2minion.mainbtreeinstance ) then
 			-- Run the local behaviortree
 			gw2minion.mainbtreeinstance:run(gw2minion.btreecontext)

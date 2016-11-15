@@ -74,7 +74,7 @@ ml_global_information.InvulnerabilityConditions = {
 
 -- Moved this here so it's easier to look at and easier to copy paste
 function ml_global_information.OnUpdate(Event,ticks)
-	if(TimeSince(ml_global_information.Lasttick) > ml_bt_mgr.throttletmr) then
+	if(TimeSince(ml_global_information.Lasttick) > BehaviorManager:GetTicksThreshold()) then
 		ml_global_information.Lasttick = ticks
 		
 		ml_global_information.GameState = GetGameState()
@@ -128,5 +128,5 @@ end
 
 -- Waits xxx seconds before running the next pulse
 function ml_global_information.Wait( mseconds )
-	ml_bt_mgr.lasttick = (ml_bt_mgr.lasttick or ml_global_information.Now) + mseconds
+	BehaviorManager:SetLastTick( (BehaviorManager:GetLastTick()  or ml_global_information.Now) + mseconds )
 end

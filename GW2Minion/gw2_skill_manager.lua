@@ -870,7 +870,7 @@ end
 
 -- Use skill profile.
 function gw2_skill_manager:Use(targetID)
-	if ((gBotRunning == "1" or (ml_bt_mgr and ml_bt_mgr.running)) and self:ProfileReady()) then
+	if ((gBotRunning == "1" or BehaviorManager:Running()) and self:ProfileReady()) then
 		self.profile:Use(targetID)
 	end
 end

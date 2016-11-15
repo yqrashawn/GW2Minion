@@ -92,7 +92,7 @@ function gw2_obstacle_manager.SetupAvoidanceAreas()
 end
 
 function gw2_obstacle_manager.OnUpdateHandler(_,tick)
-	if(TimeSince(gw2_obstacle_manager.ticks) > ml_bt_mgr.throttletmr) then
+	if(TimeSince(gw2_obstacle_manager.ticks) > BehaviorManager:GetTicksThreshold()) then
 		gw2_obstacle_manager.ticks = tick
 		local avoidanceRemoved = false
 		for i,obstacle in pairs(gw2_obstacle_manager.avoidanceareas) do
