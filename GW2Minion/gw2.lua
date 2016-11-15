@@ -138,7 +138,7 @@ function gw2minion.ReloadBTree()
 			filename = "GW2_Main.bt",
 			filepath = GetLuaModsPath()  .. "\\\GW2Minion",
 			
-			LoadContext = function() gw2minion.LoadContext() end,	-- Is called when the BTree is started. Allows us to supply a custom context table.
+			LoadContext = function() return gw2minion.LoadContext() end,	-- Is called when the BTree is started. Allows us to supply a custom context table.
 			Reload = function() gw2minion.ReloadBTree() end,			-- Called when the BTree was changed and saved in the BT-Editor
 			
 			internal = true,	-- if set, it will not be listed in the BotMode dropdown box
