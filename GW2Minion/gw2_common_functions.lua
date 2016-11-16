@@ -326,19 +326,20 @@ function gw2_common_functions.GetBestCharacterTargetForAssist( useCustomSMFilter
 end
 -- Tries to get a "best aggro target" to attack
 function gw2_common_functions.GetBestAggroTarget(healthstate)
-	local range = ml_global_information.AttackRange
+	local range = ml_global_information.AttackRange or 750
+	
 	if ( range < 200 ) then range = 750 end -- extend search range a bit for melee chars
 	if ( range > 1000 ) then range = 1000 end -- limit search range a bit for ranged chars
 	
 	-- Try to get Aggro Enemy Players with los in range first
 	local target = gw2_common_functions.GetCharacterTargetExtended("player,onmesh,lowesthealth,los,maxdistance="..tostring(range), healthstate)
-	
+
 
 	-- Try to get Aggro Enemy with los in range first
-	--if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,lowesthealth,los,maxdistance="..tostring(range), healthstate) end
+	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,lowesthealth,los,maxdistance="..tostring(range), healthstate) end
 
 	-- Try to get Aggro Enemy
-	--if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
+	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
 	
 	if(table.valid(target) and (not target.attackable or target.pathdistance > 9999999)) then
 		gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
@@ -421,10 +422,16 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 end
 
 function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthstate )
-    if ( filterstring ) then
-		filterstring = filterstring..",attackable,noCritter,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Monsters"))
+    
+	if ( filterstring ) then
+		filterstring = filterstring..",attackable,noCritter"
 	else
-		filterstring = "attackable,noCritter,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Monsters"))
+		filterstring = "attackable,noCritter"
+	end
+	
+	local excludestring = gw2_blacklistmanager.GetExcludeString(GetString("Monsters"))
+	if ( string.valid(excludestring) and string.len(excludestring) > 0 ) then
+		filterstring = filterstring..",exclude_contentid="..excludestring
 	end
 	
 	if(healthstate == nil or healthstate == GW2.HEALTHSTATE.Alive) then
@@ -644,6 +651,7 @@ end
 -- Evade(dir=0->7).
 gw2_common_functions.lastEvade = 0
 function gw2_common_functions.Evade(direction)
+	d("EVAAAAAAAAAAAAAADE")
 	if (ml_global_information.Player_Endurance >= 50) then
 		local evadeTarget = false
 		if (type(direction) ~= "number") then
