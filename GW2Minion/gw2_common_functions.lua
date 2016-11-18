@@ -268,6 +268,7 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange, useCustomSMFilte
 
 	if(table.valid(target) and (not target.attackable or target.pathdistance > 9999999)) then
 		gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
+		d("[GetBestCharacterTarget] - Blacklisting "..target.name.." ID: "..tostring(target.contentid))
 		target = nil
 	end
 	
@@ -385,7 +386,7 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 
 			if(table.valid(target)) then
 				if((target.alive or target.downed) and target.pathdistance < 9999999) then
-					local dist = Distance3DT(target.pos,marker.pos)
+					local dist = math.distance3d(target.pos,marker.pos)
 
 					if(dist < radius) then
 						return target
@@ -406,7 +407,7 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 			local _,gagdet = next(GList)
 			if(table.valid(gadget)) then
 				if(gagdet.alive and gagdet.pathdistance < 9999999) then
-					local dist = Distance3DT(gagdet.pos,marker.pos)
+					local dist = math.distance3d(gagdet.pos,marker.pos)
 					if(dist < radius) then
 						return gagdet
 					end
@@ -651,11 +652,15 @@ end
 -- Evade(dir=0->7).
 gw2_common_functions.lastEvade = 0
 function gw2_common_functions.Evade(direction)
-	d("EVAAAAAAAAAAAAAADE")
 	if (ml_global_information.Player_Endurance >= 50) then
 		local evadeTarget = false
 		if (type(direction) ~= "number") then
 			local aggroTargets = CharacterList("aggro,alive,maxdistance=3000")
+			
+			if ( not table.valid(aggroTargets)) then 
+				aggroTargets = CharacterList("player,attackable,alive,los,maxdistance=1200")
+			end
+			
 			if (table.valid(aggroTargets)) then
 				for _,target in pairs(aggroTargets) do
 					local cinfo = target.castinfo
@@ -743,10 +748,12 @@ function gw2_common_functions.GetRandomPoint()
 	end
 	
 	local function _validpos(pos)
+		if (not table.valid(pos)) then return false end
+	
 		for i,existing in pairs(gw2_common_functions.randompointsused[ml_global_information.CurrentMapID]) do
 			if(TimeSince(existing.time) > 900000) then gw2_common_functions.randompointsused[ml_global_information.CurrentMapID][i] = nil end
 			
-			if(Distance3DT(existing.pos,pos) < 500) then
+			if(math.distance3d(existing.pos,pos) < 500) then
 				return false
 			end
 		end

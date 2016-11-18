@@ -37,6 +37,15 @@ end
 
 function gw2_blacklistmanager.AddBlacklistEntry(listname, id, name, duration)
 	if(listname and id and table.valid(gw2_blacklistmanager.lists[listname])) then
+		
+		-- Don't blacklist players for too long, else spvp and wvwvw are not working well
+		if ( listname == GetString("Monsters") and id ) then
+			local ch = CharacterList:Get(id)
+			if ( table.valid(ch) and ch.isplayer) then
+				duration = 5000				
+			end
+		end
+		
 		duration = duration or 0
 		if(type(duration) == "number" and duration > 0 and duration < ml_global_information.Now) then
 			duration = ml_global_information.Now + duration
