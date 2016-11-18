@@ -5,35 +5,35 @@ local tbl =
 	{
 		
 		{
-			class = "Selector",
+			class = "AlwaysSucceed",
 			nodes = 
 			{
 				
 				{
-					class = "Action",
-					nodes = 
-					{
-					},
-					settings = 
-					{
-					},
-					variables = 
-					{
-						finishcode = "",
-						info = "",
-						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(ml_global_information.Player_Alive) then\n\t\tself:fail()\nelse\n\t\tself:success()\nend",
-						startcode = "",
-					},
-				},
-				
-				{
-					class = "AlwaysSucceed",
+					class = "Sequence",
 					nodes = 
 					{
 						
 						{
-							class = "Sequence",
+							class = "Action",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "if(ml_global_information.Player_OnMesh) then\n\t\tif (context.movetorandom_randompoint == nil) then\n\t\t\t\tcontext.movetorandom_randompoint = gw2_common_functions.GetRandomPoint()\n\t\tend\nend\n\nif(table.valid(context.movetorandom_randompoint)) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+								startcode = "",
+							},
+						},
+						
+						{
+							class = "PrioritySelector",
 							nodes = 
 							{
 								
@@ -50,13 +50,13 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if(ml_global_information.Player_OnMesh) then\n\t\tif (context.movetorandom_randompoint == nil) then\n\t\t\t\t-- Walk to Random Point in our levelrange\n\t\t\t\tif (table.valid(gw2_datamanager.levelmap)) then\n\t\t\t\t\t\tlocal pos = gw2_datamanager.GetRandomPositionInLevelRange( ml_global_information.Player_Level )\n\n\t\t\t\t\t-- make sure the position can be reached\n\t\t\t\t\tif (table.valid(pos) and table.valid(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then\n\t\t\t\t\t\td(\"[MoveToRandom]: Random point found\")\n\t\t\t\t\t\tcontext.movetorandom_randompoint = pos\n\t\t\t\t\t\tcontext.movetorandom_randompointreached = false\n\t\t\t\t\t\tcontext.movetorandom_randompointdistance = math.random(750,3000)\n\t\t\t\t\telse\n\t\t\t\t\t\td(\"[MoveToRandom]: Random point not found\")\n\t\t\t\t\tend\n\t\t\tend\n\t\tend\n\n\t\t-- 2nd attempt to find a random point\n\t\tif (context.movetorandom_randompoint == nil) then\n\t\t\t\tlocal pos = NavigationManager:GetRandomPoint(5000) -- 5000 beeing mindistance to player\n\t\t\t\tif (table.valid(pos) and table.valid(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))) then\n\t\t\t\t\td(\"[MoveToRandom]: Random point found (2nd try)\")\n\t\t\t\t\tcontext.movetorandom_randompoint = pos\n\t\t\t\t\tcontext.movetorandom_randompointreached = false\n\t\t\t\t\tcontext.movetorandom_randompointdistance = math.random(750,2000)\n\t\t\t\tend\n\t\tend\nend\n\nif(table.valid(context.movetorandom_randompoint)) then\n\t\tself:success()\nelse\n\t\tself:running()\nend",
+										runcode = "if(table.valid(context.movetorandom_randompoint) and context.moveto_stoppingdistance) then\n\t\tif(Distance3DT(context.movetorandom_randompoint,ml_global_information.Player_Position) <= context.moveto_stoppingdistance) then\n\t\t\t\tcontext.movetorandom_randompoint = nil\n\t\tend\nend\nself:fail()",
 										startcode = "",
 									},
 								},
 								
 								{
-									class = "PrioritySelector",
+									class = "Sequence",
 									nodes = 
 									{
 										
@@ -73,77 +73,28 @@ local tbl =
 												finishcode = "",
 												info = "",
 												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-												runcode = "if(table.valid(context.movetorandom_randompoint)) then\n\t\tif(Distance3DT(context.movetorandom_randompoint,ml_global_information.Player_Position) < context.movetorandom_randompointdistance) then\n\t\t\t\tcontext.movetorandom_randompoint = nil\n\t\t\t\tcontext.movetorandom_randompointreached = true\n\t\tend\nend\nself:fail()",
+												runcode = "if(table.valid(context.movetorandom_randompoint)) then\n\t\tcontext.moveto_position = context.movetorandom_randompoint\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 												startcode = "",
 											},
 										},
 										
 										{
-											class = "Action",
+											class = "BehaviorTree",
 											nodes = 
 											{
 											},
 											settings = 
 											{
+												randomMovement = true,
+												randomizestoppingdistance = true,
+												smoothturns = true,
+												stoppingdistance = 750,
+												stoppingidstancemaxrange = 2000,
+												usewaypoints = false,
 											},
 											variables = 
 											{
-												finishcode = "",
-												info = "",
-												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-												runcode = "if(table.valid(context.movetorandom_randompoint)) then\n\t\tcontext.moveto_position = context.movetorandom_randompoint\nend\nself:fail()",
-												startcode = "",
-											},
-										},
-										
-										{
-											class = "Sequence",
-											nodes = 
-											{
-												
-												{
-													class = "Action",
-													nodes = 
-													{
-													},
-													settings = 
-													{
-													},
-													variables = 
-													{
-														finishcode = "",
-														info = "",
-														monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-														runcode = "if(table.valid(context.movetorandom_randompoint)) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
-														startcode = "",
-													},
-												},
-												
-												{
-													class = "BehaviorTree",
-													nodes = 
-													{
-													},
-													settings = 
-													{
-														randomMovement = true,
-														smoothturns = true,
-														stoppingdistance = 50,
-														usewaypoints = false,
-													},
-													variables = 
-													{
-														filename = "MoveTo.st",
-													},
-												},
-											},
-											settings = 
-											{
-											},
-											variables = 
-											{
-												info = "",
-												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+												filename = "MoveTo.st",
 											},
 										},
 									},
@@ -153,7 +104,7 @@ local tbl =
 									variables = 
 									{
 										info = "",
-										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 									},
 								},
 							},
@@ -163,7 +114,7 @@ local tbl =
 							variables = 
 							{
 								info = "",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
 							},
 						},
 					},
@@ -173,7 +124,7 @@ local tbl =
 					variables = 
 					{
 						info = "",
-						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 					},
 				},
 			},
@@ -183,7 +134,7 @@ local tbl =
 			variables = 
 			{
 				info = "",
-				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+				monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 			},
 		},
 	},
@@ -196,7 +147,7 @@ local tbl =
 		finishcode = "",
 		info = "Move to random",
 		menucode = "",
-		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\n\nif(context) then\n\t\tif(context.movetorandom_randompoint) then\n\t\t\t\tlocal dist = Distance3DT(ml_global_information.Player_Position,context.movetorandom_randompoint)\n\t\t\t\tGUI:Text(\"Distance: \" .. tostring(round(dist,2)))\n\t\t\t\tGUI:Text(\"Stopping distance: \" .. tostring(context.moveto_stoppingdistance))\n\t\t\t\tGUI:Text(\"Distance to end pos: \" .. tostring(round(dist-context.moveto_stoppingdistance,2)))\n\t\tend\nend",
 		runcode = "",
 		startcode = "",
 		subtreeuicode = "",

@@ -16,7 +16,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -35,7 +34,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -54,7 +52,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -78,7 +75,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -97,7 +93,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -107,7 +102,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -123,7 +117,6 @@ local tbl =
 					},
 					settings = 
 					{
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -143,14 +136,13 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
 								finishcode = "",
 								info = "Setup active task",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "local task = context.taskmanager_activeprofile:ActiveTask()\n\nif(table.valid(task)) then\n\t\tif(context.taskmanager_activeprofile.activeindex ~= context.taskmanager_activeindex) then\n\t\t\t\tcontext.taskmanager_activeindex = context.taskmanager_activeprofile.activeindex\n\t\t\t\td(\"[TaskManager]: Active task index changed. Waiting a bit.\")\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tml_global_information.Wait(500,1000)\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\n\t\tif(not task:IsValid() or task.completed or task.failed) then\n\t\t\t\ttask = context.taskmanager_activeprofile:GetNextTask()\n\t\tend\n\n\t\tif(task:IsValid()) then\n\t\t\t\tcontext.taskmanager_activetask = task\n\t\t\t\tself:fail()\n\t\telse\n\t\t\t\td(\"[TaskManager]: Next task is not valid\")\n\t\t\t\tcontext.taskmanager_activetask = nil\n\t\t\t\tself:success()\n\t\tend\nelse\n\t\tself:success()\nend\n",
+								runcode = "local task = context.taskmanager_activeprofile:ActiveTask()\n\nif(table.valid(task)) then\n\t\tif(context.taskmanager_activeprofile.activeindex ~= context.taskmanager_activeindex) then\n\t\t\t\tcontext.taskmanager_activeindex = context.taskmanager_activeprofile.activeindex\n\t\t\t\td(\"[TaskManager]: Active task index changed. Waiting a bit.\")\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tml_global_information.Wait(500,1000)\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\n\t\tif(not task:IsValid() or task.completed or task.failed or (not task.started and not task:CanStart())) then\n\t\t\t\ttask = context.taskmanager_activeprofile:GetNextTask()\n\t\tend\n\n\t\tif(task:IsValid()) then\n\t\t\t\tcontext.taskmanager_activetask = task\n\t\t\t\tself:fail()\n\t\telse\n\t\t\t\td(\"[TaskManager]: No available tasks left.\")\n\t\t\t\tcontext.taskmanager_activetask = nil\n\t\t\t\tself:success()\n\t\tend\nelse\n\t\tself:success()\nend\n",
 								startcode = "",
 							},
 						},
@@ -162,7 +154,6 @@ local tbl =
 							},
 							settings = 
 							{
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -191,7 +182,6 @@ local tbl =
 											},
 											settings = 
 											{
-												xposoffset = 0,
 											},
 											variables = 
 											{
@@ -211,9 +201,7 @@ local tbl =
 											},
 											settings = 
 											{
-												expanded = true,
 												usewaypoints = true,
-												xposoffset = 0,
 											},
 											variables = 
 											{
@@ -223,7 +211,6 @@ local tbl =
 									},
 									settings = 
 									{
-										xposoffset = 0,
 									},
 									variables = 
 									{
@@ -239,7 +226,6 @@ local tbl =
 									},
 									settings = 
 									{
-										xposoffset = 0,
 									},
 									variables = 
 									{
@@ -263,7 +249,6 @@ local tbl =
 											},
 											settings = 
 											{
-												xposoffset = 0,
 											},
 											variables = 
 											{
@@ -282,7 +267,6 @@ local tbl =
 											},
 											settings = 
 											{
-												xposoffset = 0,
 											},
 											variables = 
 											{
@@ -301,12 +285,12 @@ local tbl =
 											},
 											settings = 
 											{
-												expanded = true,
 												randomMovement = true,
+												randomizestoppingdistance = false,
 												smoothturns = true,
 												stoppingdistance = 50,
+												stoppingidstancemaxrange = 100,
 												usewaypoints = true,
-												xposoffset = 0,
 											},
 											variables = 
 											{
@@ -316,8 +300,6 @@ local tbl =
 									},
 									settings = 
 									{
-										expanded = true,
-										xposoffset = 0,
 									},
 									variables = 
 									{
@@ -333,7 +315,6 @@ local tbl =
 									},
 									settings = 
 									{
-										xposoffset = 0,
 									},
 									variables = 
 									{
@@ -352,7 +333,6 @@ local tbl =
 									},
 									settings = 
 									{
-										xposoffset = 0,
 									},
 									variables = 
 									{
@@ -366,8 +346,6 @@ local tbl =
 							},
 							settings = 
 							{
-								expanded = true,
-								xposoffset = 0,
 							},
 							variables = 
 							{
@@ -378,8 +356,6 @@ local tbl =
 					},
 					settings = 
 					{
-						expanded = true,
-						xposoffset = 0,
 					},
 					variables = 
 					{
@@ -390,8 +366,6 @@ local tbl =
 			},
 			settings = 
 			{
-				expanded = true,
-				xposoffset = 0,
 			},
 			variables = 
 			{
@@ -402,8 +376,6 @@ local tbl =
 	},
 	settings = 
 	{
-		expanded = true,
-		xposoffset = 0,
 	},
 	variables = 
 	{
