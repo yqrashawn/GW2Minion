@@ -19,9 +19,9 @@ end
 
 gw2_tm_heropoint = {}
 gw2_tm_heropoint.lastcheck = 0
-function gw2_tm_heartquest:CanTaskRun_TM(taskProperties,customProperties)
+function gw2_tm_heropoint:CanTaskRun_TM(taskProperties,customProperties)
 	if(TimeSince(gw2_tm_heropoint.lastcheck) > 1000) then
-		gw2_tm_heartquest.lastcheck = ml_global_information.Now
+		gw2_tm_heropoint.lastcheck = ml_global_information.Now
 		if(Distance3DT(taskProperties.pos,ml_global_information.Player_Position) < 2000) then
 			local MList = MapMarkerList("nearest,onmesh,contentid="..GW2.MAPMARKER.SkillpointComplete)
 			if(table.valid(MList)) then
@@ -63,7 +63,7 @@ function gw2_taskmanager.Init()
 		ml_task_mgr.AddSubTaskType("tm_st_talk", "tm_Talk.st", nil, {displayname = GetString("Talk")})
 		ml_task_mgr.AddSubTaskType("tm_st_changemesh", "tm_ChangeMesh.st", nil, {displayname = GetString("Change mesh")})
 		ml_task_mgr.AddSubTaskType("tm_st_useitem", "tm_UseItem.st", nil, {displayname = GetString("Use inventory item")})
-		ml_task_mgr.AddSubTaskType("tm_st_deliver", "tm_DeliverItem.st", nil, {displayname = GetString("Deliver item")})					
+		ml_task_mgr.AddSubTaskType("tm_st_deliver", "tm_Deliver.st", nil, {displayname = GetString("Deliver item")})					
 	end
 end
 RegisterEventHandler("Module.Initalize",gw2_taskmanager.Init)

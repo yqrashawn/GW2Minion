@@ -11,8 +11,6 @@ local tbl =
 			},
 			settings = 
 			{
-				expanded = false,
-				xposoffset = 0,
 			},
 			variables = 
 			{
@@ -21,7 +19,7 @@ local tbl =
 				info = "",
 				menucode = "",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-				runcode = "if(table.valid(context.useitems_itemlist)) then\n\t\tlocal itemids = {}\n\t\tfor _,item in pairs(context.useitems_itemlist) do\n\t\t\t\titemids[item.id] = true\n\t\tend\n\n\t\tlocal inventorylist = Inventory(\"\")\n\t\tfor slot,item in pairs(inventorylist) do\n\t\t\t\tif(itemids[item.id]) then\n\t\t\t\t\t\td(\"[UseItem]: Using \"..item.name)\n\t\t\t\t\t\titem:Use()\n\t\t\t\t\t\tml_global_information.Wait(500)\n\t\t\t\t\t\tself:running()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\tend\nend\n\nself:fail()",
+				runcode = "if(table.valid(context.useitems_itemlist)) then\n\t\tlocal itemids = {}\n\t\tfor _,item in pairs(context.useitems_itemlist) do\n\t\t\t\titemids[item.id] = true\n\t\tend\n\n\t\tlocal inventorylist = Inventory(\"\")\n\t\tfor slot,item in pairs(inventorylist) do\n\t\t\t\tif(itemids[item.itemid]) then\n\t\t\t\t\t\td(\"[UseItem]: Using \"..item.name)\n\t\t\t\t\t\titem:Use()\n\t\t\t\t\t\tml_global_information.Wait(500)\n\t\t\t\t\t\tself:running()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\tend\nend\n\nself:fail()",
 				startcode = "",
 				subtreeuicode = "",
 			},
