@@ -166,7 +166,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if(Settings.GW2Minion.gather) then\n\t\tcontext.gather_maxdistance = 2500\n\t\tself:success()\nelse\n\t\tself:fail()\nend ",
+										runcode = "if(Settings.GW2Minion.gather and ml_global_information.Player_Inventory_SlotsFree > 0) then\n\t\tcontext.gather_maxdistance = 2500\n\t\tself:success()\nelse\n\t\tself:fail()\nend ",
 										startcode = "",
 									},
 								},

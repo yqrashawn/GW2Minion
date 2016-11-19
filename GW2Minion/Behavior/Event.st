@@ -371,7 +371,7 @@ local tbl =
 												finishcode = "",
 												info = "",
 												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-												runcode = "if(not context.event_inradius) then\n\t\tcontext.moveto_position = context.event_position\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+												runcode = "if(not context.event_inradius and table.valid(context.event_position)) then\n\t\tcontext.moveto_position = context.event_position\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 												startcode = "",
 											},
 										},
@@ -384,8 +384,10 @@ local tbl =
 											settings = 
 											{
 												randomMovement = true,
+												randomizestoppingdistance = false,
 												smoothturns = true,
 												stoppingdistance = 200,
+												stoppingidstancemaxrange = 400,
 												usewaypoints = true,
 											},
 											variables = 
@@ -399,7 +401,7 @@ local tbl =
 									},
 									variables = 
 									{
-										info = "",
+										info = "Ha",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 									},
 								},
@@ -410,7 +412,7 @@ local tbl =
 							variables = 
 							{
 								info = "Move back to event",
-								monitorcode = "if(context) then\n\t\tif (context.event_waittime) then GUI:Text(\"event_waittime: \"..tostring(context.event_waittime or 0)) end\n\t\tif (context.event_inradius) then GUI:Text(\"event_inradius: \"..tostring(context.event_inradius or 0)) end\n\t\tif (context.event_stoppingdistance) then GUI:Text(\"event_stoppingdistance: \"..tostring(context.event_stoppingdistance or 0)) end\n\t\tif (context.event_reached) then GUI:Text(\"event_reached: \"..tostring(context.event_reached or false)) end\nend",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))\nif(context) then\n\t\tif (context.event_waittime) then GUI:Text(\"event_waittime: \"..tostring(context.event_waittime or 0)) end\n\t\tif (context.event_inradius) then GUI:Text(\"event_inradius: \"..tostring(context.event_inradius or 0)) end\n\t\tif (context.event_stoppingdistance) then GUI:Text(\"event_stoppingdistance: \"..tostring(context.event_stoppingdistance or 0)) end\n\t\tif (context.event_reached) then GUI:Text(\"event_reached: \"..tostring(context.event_reached or false)) end\nend",
 							},
 						},
 						
@@ -438,7 +440,7 @@ local tbl =
 					variables = 
 					{
 						info = "",
-						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 					},
 				},
 			},
