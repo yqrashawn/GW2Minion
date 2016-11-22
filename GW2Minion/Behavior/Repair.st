@@ -110,7 +110,7 @@ local tbl =
 								},
 								
 								{
-									class = "BehaviorTree",
+									class = "SubTree",
 									nodes = 
 									{
 									},
