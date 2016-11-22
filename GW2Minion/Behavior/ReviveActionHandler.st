@@ -1,6 +1,6 @@
 local tbl = 
 {
-	class = "BehaviorTree",
+	class = "SubTree",
 	nodes = 
 	{
 		
@@ -93,10 +93,6 @@ local tbl =
 							},
 							settings = 
 							{
-								randomMovement = true,
-								smoothturns = true,
-								stoppingdistance = 120,
-								usewaypoints = false,
 							},
 							variables = 
 							{
