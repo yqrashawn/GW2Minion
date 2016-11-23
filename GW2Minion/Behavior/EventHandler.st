@@ -56,7 +56,7 @@ local tbl =
 					settings = 
 					{
 						maxduration = 900,
-					},
+},
 					variables = 
 					{
 						filename = "Event.st",

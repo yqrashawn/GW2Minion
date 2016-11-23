@@ -125,7 +125,7 @@ local tbl =
 												smoothturns = true,
 												stoppingdistance = 300,
 												usewaypoints = false,
-											},
+},
 											variables = 
 											{
 												filename = "MoveTo.st",
@@ -389,7 +389,7 @@ local tbl =
 												stoppingdistance = 200,
 												stoppingidstancemaxrange = 400,
 												usewaypoints = true,
-											},
+},
 											variables = 
 											{
 												filename = "MoveTo.st",

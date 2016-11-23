@@ -85,7 +85,13 @@ local tbl =
 											},
 											settings = 
 											{
-											},
+												randomMovement = true,
+												randomizestoppingdistance = true,
+												smoothturns = true,
+												stoppingdistance = 750,
+												stoppingidstancemaxrange = 2000,
+												usewaypoints = false,
+},
 											variables = 
 											{
 												filename = "MoveTo.st",
