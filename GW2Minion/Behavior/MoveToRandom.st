@@ -91,7 +91,7 @@ local tbl =
 												stoppingdistance = 750,
 												stoppingidstancemaxrange = 2000,
 												usewaypoints = false,
-},
+											},
 											variables = 
 											{
 												filename = "MoveTo.st",

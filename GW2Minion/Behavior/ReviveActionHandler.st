@@ -91,13 +91,13 @@ local tbl =
 							nodes = 
 							{
 							},
-						settings = 
+							settings = 
 							{
 								randomMovement = true,
 								smoothturns = true,
 								stoppingdistance = 120,
 								usewaypoints = false,
-},
+							},
 							variables = 
 							{
 								filename = "MoveTo.st",
