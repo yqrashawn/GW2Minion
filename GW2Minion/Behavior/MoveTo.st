@@ -57,7 +57,7 @@ local tbl =
 	variables = 
 	{
 		filename = "MoveTo.st",
-		finishcode = "context.moveto_position = nil\ncontext.moveto_targettype = nil\ncontext.moveto_targetid = nil",
+		finishcode = "",
 		info = "Move to Position. \nRequired input argument: context.moveto_position\nOptional arguments:\ncontext.moveto_targetid - ID of the character / gadget we want to move to.\ncontext.moveto_targettype - \"character\" or \"gadget\" or \"event\" ",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\n\nif(context) then\n\t\tif(context.moveto_position) then\n\t\t\t\tlocal dist = Distance3DT(ml_global_information.Player_Position,context.moveto_position)\n\t\t\t\tGUI:Text(\"Distance to target position: \" .. tostring(round(dist,2)))\n\t\tend\nend",

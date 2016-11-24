@@ -81,8 +81,10 @@ local tbl =
 									settings = 
 									{
 										randomMovement = true,
+										randomizestoppingdistance = false,
 										smoothturns = true,
 										stoppingdistance = 2500,
+										stoppingidstancemaxrange = 5000,
 										usewaypoints = false,
 									},
 									variables = 
@@ -213,7 +215,7 @@ local tbl =
 	variables = 
 	{
 		filename = "CombatHandler.st",
-		finishcode = "context.combat_targetid = nil\ncontext.combat_target = nil\ncontext.combat_targetpos = nil",
+		finishcode = "",
 		info = "Handle combat\ncontext.combat_targetid\ncontext.combat_target",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",

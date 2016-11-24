@@ -135,7 +135,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 		end
 		
 		local threshold = gw2_unstuck.ActiveThreshold()
-		local mincount = (mode == nil or mode == "combat") and 5 or 2
+		local mincount = (mode == nil or mode == "combat") and 3 or 2
 
 		if(gw2_unstuck.distmoved < threshold) then
 			gw2_unstuck.lastaction = nil
