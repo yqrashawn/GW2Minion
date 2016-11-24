@@ -110,6 +110,7 @@ function gw2minion.Init()
 		 ml_mesh_mgr.SetDefaultMesh(1165,"Bloodstone Fen")
 		 ml_mesh_mgr.SetDefaultMesh(1171,"sPvp Coloseum")
 		 ml_mesh_mgr.SetDefaultMesh(1175,"Infernal Cape")
+		 ml_mesh_mgr.SetDefaultMesh(1178,"BitterfrostFrontier")
 		 
 		--Instances
 		ml_mesh_mgr.SetDefaultMesh(896,"North Noland Hatchery") -- Diessa Plateau
