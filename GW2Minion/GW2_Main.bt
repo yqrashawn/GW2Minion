@@ -40,7 +40,7 @@ local tbl =
 						finishcode = "",
 						info = "Cutscene",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(Settings.GW2Minion.skipcutscene and ml_global_information.GameState == 14 or ml_global_information.GameState == GW2.GAMESTATE.CINEMATIC) then\n\t\tif(not self.lastrun or TimeSince(self.lastrun) > 3000) then \n\t\t\t\tself.lastrun = ml_global_information.Now\n\t\t\t\td(\"Skipping cutscene...\")\n\t\t\t\tPressKey(\"ESC\")\n\t\tend\n\t\tself:running()\nelse\n\t\tself:success()\nend",
+						runcode = "if(Settings.GW2Minion.skipcutscene and (ml_global_information.GameState == 14 or ml_global_information.GameState == GW2.GAMESTATE.CINEMATIC)) then\n\t\tif(not self.lastrun or TimeSince(self.lastrun) > 3000) then \n\t\t\t\tself.lastrun = ml_global_information.Now\n\t\t\t\td(\"Skipping cutscene...\")\n\t\t\t\tPressKey(\"ESC\")\n\t\tend\n\t\tself:running()\nelse\n\t\tself:success()\nend",
 						startcode = "",
 					},
 				},
