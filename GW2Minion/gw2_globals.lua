@@ -62,7 +62,8 @@ ml_global_information.ImmobilizeConditions = {
 	[27705]		= "Taunt",
 	[15090]		= "Petrified 1",
 	[16963]		= "Petrified 2",
-	[25181]		= "Trapped"
+	[25181]		= "Trapped",
+	[37211]		= "Frostbite"
 }
 
 ml_global_information.InvulnerabilityConditions = {

@@ -59,6 +59,16 @@ function gw2_unstuck.HandleStuck(mode)
 		return gw2_unstuck.lastresult
 	end
 	
+	-- Frostbite (Locked in ice)
+	if(gw2_common_functions.HasBuffs(Player, "37211")) then		
+		local skill = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
+		if(skill) then
+			Player:CastSpell(GW2.SKILLBARSLOT.Slot_1)
+		end
+		gw2_unstuck.lastresult = true
+		return gw2_unstuck.lastresult
+	end
+	
 	if(gw2_common_functions.HasBuffs(Player, ml_global_information.ImmobilizeConditions)) then
 		gw2_unstuck.lastresult = true
 		return gw2_unstuck.lastresult
@@ -115,8 +125,9 @@ function gw2_unstuck.HandleOffMesh()
 		local p = NavigationManager:GetClosestPointOnMesh(Player.pos)
 		if(table.valid(p) and p.distance > 0 and p.distance < 500) then
 			d("[Unstuck]: Moving blindly to nearby mesh.")
-			gw2_unstuck.HandleStuck_MovedDistanceCheck()
-			gw2_unstuck.stuckhandlers.moveto(p)
+			if(not gw2_unstuck.HandleStuck_MovedDistanceCheck()) then
+				gw2_unstuck.stuckhandlers.moveto(p)
+			end
 		end
 		return true
 	end
@@ -275,6 +286,7 @@ function gw2_unstuck.HandleStuck_Swimming(mode,mincount)
 			ml_global_information.Wait(math.random(500,1000))
 			return true
 		elseif(gw2_unstuck.stuckcount > mincount) then
+			gw2_unstuck.stuckhandlers.moveforward()
 			gw2_unstuck.stuckhandlers.jump()
 			return true
 		end

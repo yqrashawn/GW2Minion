@@ -80,6 +80,14 @@ function gw2_repair_manager.RepairAtVendor(repair)
 		end
 		gw2_repair_manager.VendorBuyHistroy.interactcount = 0
 		ml_global_information.Wait(math.random(520,1200))
+		if(Player:IsConversationOpen()) then
+			local options = Player:GetConversationOptions()
+			local n_options = table.size(options)
+			if(options and n_options > 0) then
+				Player:SelectConversationOptionByIndex(n_options-1)
+			end
+		end
+		
 		return true
 	end	
 	return false

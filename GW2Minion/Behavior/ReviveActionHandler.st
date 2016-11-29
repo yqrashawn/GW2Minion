@@ -40,7 +40,7 @@ local tbl =
 						finishcode = "",
 						info = "Check player health",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(context.revive_targetid) then\n\t\tlocal minhp = type(context.revive_minplayerhp) == \"number\" and context.revive_minplayerhp or 30\n\t\tif(ml_global_information.Player_Health.percent < minhp) then\n\t\t\t\tcontext.revive_targetid = nil\n\t\t\t\tcontext.revive_position = nil\n\t\tend\nend\n\nself:fail()",
+						runcode = "if(context.revive_targetid) then\n\t\tlocal minhp = type(context.revive_minplayerhp) == \"number\" and context.revive_minplayerhp or 30\n\t\tif(ml_global_information.Player_Health.percent < minhp) then\n\t\t\t\tcontext.revive_targetid = nil\n\t\t\t\tcontext.revive_position = nil\n\t\t\t\tPlayer:Jump()\n\t\tend\nend\n\nself:fail()",
 						startcode = "",
 					},
 				},

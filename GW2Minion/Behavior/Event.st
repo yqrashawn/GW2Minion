@@ -22,7 +22,7 @@ local tbl =
 						finishcode = "",
 						info = "Find marker",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "context.event_marker = nil\nif(context.event_id) then\n\t\tlocal EList = MapMarkerList(\"nearest,onmesh,eventID=\"..context.event_id)\n\t\tif(table.valid(EList)) then\n\t\t\t\tlocal _,event = next(EList)\n\t\t\t\tif(table.valid(event) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Event\"),event.eventid)) then\n\t\t\t\t\t\tcontext.event_marker = event\n\t\t\t\t\t\tcontext.event_name = event.name\n\t\t\t\t\t\tcontext.event_position = event.pos\n\t\t\t\t\t\tself:success()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\tend\n\n\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Event\"), context.event_id, \"Event\", ml_global_information.Now + 1600000)\n\t\tcontext.event_id = nil\nend\nself:fail()\n",
+						runcode = "context.event_marker = nil\nif(context.event_id) then\n\t\tlocal EList = MapMarkerList(\"nearest,onmesh,eventID=\"..context.event_id)\n\t\tif(table.valid(EList)) then\n\t\t\t\tlocal _,event = next(EList)\n\t\t\t\tif(table.valid(event) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Event\"),event.eventid)) then\n\t\t\t\t\t\tcontext.event_marker = event\n\t\t\t\t\t\tcontext.event_name = event.name\n\t\t\t\t\t\tcontext.event_position = event.pos\n\t\t\t\t\t\tcontext.event_start = ml_global_information.Now\n\t\t\t\t\t\tself:success()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\tend\n\n\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Event\"), context.event_id, \"Event\", ml_global_information.Now + 1600000)\n\t\tcontext.event_id = nil\nend\nself:fail()\n",
 						startcode = "",
 					},
 				},
@@ -40,7 +40,7 @@ local tbl =
 						finishcode = "",
 						info = "Check event details",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(context.event_marker) then\n\t\tif(not table.valid(context.event_marker.eventinfo)) then\n\t\t\t\td(\"[Event]: No valid event info.\")\n\t\t\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Event\"), context.event_id, \"Unknown event\", ml_global_information.Now + 1600000)\n\t\t\t\tcontext.event_marker = nil\n\t\tend\n\n\t\tif(not table.valid(context.event_marker.eventobjectivelist)) then\n\t\t\t\td(\"[Event]: No valid event objectives.\")\n\t\t\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Event\"), context.event_id, \"Unknown event\", ml_global_information.Now + 1600000)\n\t\t\t\tcontext.event_marker = nil\n\t\tend\nelse\n\t\td(\"[Event]: No event marker set.\")\nend\n\nif(context.event_marker) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+						runcode = "if(context.event_marker) then\n\t\tif(not table.valid(context.event_marker.eventinfo)) then\n\t\t\t\td(\"[Event]: No valid event info.\")\n\t\t\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Event\"), context.event_id, \"Unknown event\", ml_global_information.Now + 1600000)\n\t\t\t\tcontext.event_marker = nil\n\t\tend\n\n\t\tif(context.event_marker and not table.valid(context.event_marker.eventobjectivelist)) then\n\t\t\t\td(\"[Event]: No valid event objectives.\")\n\t\t\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Event\"), context.event_id, \"Unknown event\", ml_global_information.Now + 1600000)\n\t\t\t\tcontext.event_marker = nil\n\t\tend\nelse\n\t\td(\"[Event]: No event marker set.\")\nend\n\nif(context.event_marker) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 						startcode = "",
 					},
 				},
@@ -69,7 +69,7 @@ local tbl =
 					{
 						
 						{
-							class = "PrioritySelector",
+							class = "Sequence",
 							nodes = 
 							{
 								
@@ -86,59 +86,28 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "context.event_moveto = nil\nif(context.event_id and table.valid(context.event_position) and not context.event_reached) then\n\t\tlocal dist = Distance3DT(ml_global_information.Player_Position,context.event_position)\n\t\tif(dist > 1000) then\n\t\t\t\tcontext.event_moveto = context.event_position\n\t\t\t\tself:fail()\n\t\t\t\treturn\n\t\tend\n\t\tcontext.event_reached = true\nend\ncontext.event_moveto = nil\nself:fail()",
+										runcode = "if(context.event_id and table.valid(context.event_position) and not context.event_reached) then\n\t\tlocal dist = Distance3DT(ml_global_information.Player_Position,context.event_position)\n\t\tif(dist > 500) then\n\t\t\t\tcontext.moveto_position = context.event_position\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\t\tcontext.event_reached = true\nend\nself:fail()",
 										startcode = "",
 									},
 								},
 								
 								{
-									class = "Sequence",
+									class = "SubTree",
 									nodes = 
 									{
-										
-										{
-											class = "Action",
-											nodes = 
-											{
-											},
-											settings = 
-											{
-											},
-											variables = 
-											{
-												finishcode = "",
-												info = "",
-												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-												runcode = "if(table.valid(context.event_moveto)) then\n\t\tcontext.moveto_position = context.event_moveto\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
-												startcode = "",
-											},
-										},
-										
-										{
-											class = "SubTree",
-											nodes = 
-											{
-											},
-											settings = 
-											{
-												randomMovement = true,
-												smoothturns = true,
-												stoppingdistance = 300,
-												usewaypoints = false,
-											},
-											variables = 
-											{
-												filename = "MoveTo.st",
-											},
-										},
 									},
 									settings = 
 									{
+										randomMovement = true,
+										randomizestoppingdistance = true,
+										smoothturns = true,
+										stoppingdistance = 300,
+										stoppingidstancemaxrange = 450,
+										usewaypoints = false,
 									},
 									variables = 
 									{
-										info = "",
-										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+										filename = "MoveTo.st",
 									},
 								},
 							},
@@ -147,8 +116,8 @@ local tbl =
 							},
 							variables = 
 							{
-								info = "Move closer to the event",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 							},
 						},
 						
@@ -165,7 +134,7 @@ local tbl =
 								finishcode = "",
 								info = "Check marker status",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if(context.event_id and context.event_reached) then\n\t\tlocal EList = MapMarkerList(\"nearest,eventID=\"..context.event_id)\n\t\tif(table.valid(EList)) then\n\t\t\t\tlocal _,event = next(EList)\n\t\t\t\tif(table.valid(event) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Event\"),event.eventid)) then\n\t\t\t\t\t\tcontext.event_marker = event\n\t\t\t\t\t\tcontext.event_name = event.name\n\t\t\t\t\t\tif(event.onmesh) then\n\t\t\t\t\t\t\t\tcontext.event_position = event.pos\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tcontext.event_lasttimeonmesh = ml_global_information.Now\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\tif(context.event_lasttimeonmesh == nil) then\n\t\t\t\t\t\t\t\t\t\t\tcontext.event_lasttimeonmesh = ml_global_information.Now\n\t\t\t\t\t\t\t\tend\n\n\t\t\t\t\t\t\t\tif(TimeSince(context.event_lasttimeonmesh) > 65000) then\n\t\t\t\t\t\t\t\t\t\td(\"[Event]: Event not on mesh for 65 seconds.\")\n\t\t\t\t\t\t\t\t\t\tcontext.event_marker = nil\n\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\tend\n\n\t\t\t\t\t\tif(context.event_marker) then\n\t\t\t\t\t\t\t\tself:fail()\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\n\n\t\t\t\tend\n\t\tend\n\t\td(\"[Event]: Event gone, not on mesh or ended.\")\n\t\tPlayer:StopMovement()\n\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Event\"), context.event_id, context.event_name or \"Event cooldown\", ml_global_information.Now + 300000)\n\t\tcontext.event_marker = nil\n\t\tcontext.event_combat_target = nil\n\t\tcontext.event_stoppingdistance = nil\n\t\tcontext.event_reached = false\n\t\tself:success()\n\t\treturn\nend\nself:fail()",
+								runcode = "if(context.event_id and context.event_reached) then\n\t\tlocal EList = MapMarkerList(\"nearest,eventID=\"..context.event_id)\n\t\tif(table.valid(EList)) then\n\t\t\t\tlocal _,event = next(EList)\n\t\t\t\tif(table.valid(event) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Event\"),event.eventid)) then\n\t\t\t\t\t\tcontext.event_marker = event\n\t\t\t\t\t\tcontext.event_name = event.name\n\t\t\t\t\t\tif(event.onmesh) then\n\t\t\t\t\t\t\t\tcontext.event_position = event.pos\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tcontext.event_lasttimeonmesh = ml_global_information.Now\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\tif(context.event_lasttimeonmesh == nil) then\n\t\t\t\t\t\t\t\t\t\t\tcontext.event_lasttimeonmesh = ml_global_information.Now\n\t\t\t\t\t\t\t\tend\n\n\t\t\t\t\t\t\t\tif(TimeSince(context.event_lasttimeonmesh) > 65000) then\n\t\t\t\t\t\t\t\t\t\td(\"[Event]: Event not on mesh for 65 seconds.\")\n\t\t\t\t\t\t\t\t\t\tcontext.event_marker = nil\n\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\tend\n\n\t\t\t\t\t\tif(context.event_marker) then\n\t\t\t\t\t\t\t\tself:fail()\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\n\n\t\t\t\tend\n\t\tend\n\t\td(\"[Event]: Event gone, not on mesh or ended.\")\n\t\tPlayer:StopMovement()\n\t\tgw2_blacklistmanager.AddBlacklistEntry(GetString(\"Event\"), context.event_id, context.event_name or \"Event cooldown\", ml_global_information.Now + 300000)\n\t\tcontext.event_marker = nil\n\t\tcontext.event_combat_target = nil\n\t\tcontext.event_stoppingdistance = nil\n\t\tcontext.event_reached = false\n\t\tcontext.event_id = nil\n\n\t\t-- Force this node to take priority without ending until the next pulse\n\t\tself:success()\n\t\treturn\nend\nself:fail()",
 								startcode = "",
 							},
 						},
@@ -188,7 +157,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "context.event_combat_target = nil\nif(context.event_marker) then\n\t\tlocal target = gw2_common_functions.GetBestEventTarget(context.event_marker,context.event_objective,context.event_radius)\n\n\t\tif(table.valid(target)) then\n\t\t\t\tcontext.event_combat_target = target.id\n\t\t\t\tself:fail()\n\t\t\t\treturn\n\t\tend\nend\ncontext.event_combat_target = nil\nself:fail()",
+										runcode = "if(context.event_marker) then\n\t\tlocal target = gw2_common_functions.GetBestEventTarget(context.event_marker,context.event_objective,context.event_radius)\n\t\t\n\t\tif(table.valid(target)) then\n\t\t\t\tif(context.event_combat_target and context.event_combat_target.id ~= target.id) then\n\t\t\t\t\t-- Swap target\n\t\t\t\t\t\tcontext.event_combat_target = nil\n\t\t\t\t\t\tself:running()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\n\t\t\t\tcontext.event_combat_target = {id = target.id, pos = target.pos }\n\t\t\t\tself:fail()\n\t\t\t\treturn\n\t\tend\nend\ncontext.event_combat_target = nil\nself:fail()",
 										startcode = "",
 									},
 								},
@@ -211,7 +180,7 @@ local tbl =
 												finishcode = "",
 												info = "",
 												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-												runcode = "if(context.event_combat_target) then\n\t\tcontext.combat_targetid = context.event_combat_target\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+												runcode = "if(context.event_combat_target) then\n\t\tcontext.combat_targetid = context.event_combat_target.id\n\t\tcontext.combat_targetpos = context.event_combat_target.pos\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 												startcode = "",
 											},
 										},
@@ -268,7 +237,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "if(context.event_marker) then\n\t\tif(context.event_revivenpc) then\n\t\t\t\tlocal target = CharacterList:Get(context.event_revivenpc.id)\n\t\t\t\tif(target and not target.alive and target.pathdistance < 99999) then\n\t\t\t\t\t\tcontext.event_revivenpc =  {id = target.id, pos = target.pos}\n\t\t\t\t\t\tself:fail()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\t\t\tcontext.event_revivenpc = nil\n\t\telse\n\t\t\t\tlocal CList = CharacterList(\"nearest,npc,dead,friendly,onmesh,maxdistance=3000\")\n\t\t\t\tif(table.valid(CList)) then\n\t\t\t\t\t\tlocal _,target = next(CList)\n\t\t\t\t\t\tif(table.valid(target) and target.pathdistance < 99999) then\n\t\t\t\t\t\t\t\tlocal dist = Distance3DT(target.pos,context.event_marker.pos)\n\t\t\t\t\t\t\t\tif(dist < context.event_radius/2) then\n\t\t\t\t\t\t\t\t\t\tcontext.event_revivenpc =  {id = target.id, pos = target.pos}\n\t\t\t\t\t\t\t\t\t\tself:fail()\n\t\t\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\tend\n\t\t\t\tend\n\t\tend\nend\ncontext.event_revivenpc = nil\nself:fail()",
+										runcode = "if(context.event_marker) then\n\t\tif(context.event_revivenpc) then\n\t\t\t\tlocal target = CharacterList:Get(context.event_revivenpc.id)\n\t\t\t\tif(target and not target.alive and target.pathdistance < 99999) then\n\t\t\t\t\t\tcontext.event_revivenpc =  {id = target.id, pos = target.pos}\n\t\t\t\t\t\tself:fail()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\t\t\tcontext.event_revivenpc = nil\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\telse\n\t\t\t\tlocal CList = CharacterList(\"nearest,npc,dead,friendly,onmesh,maxdistance=3000\")\n\t\t\t\tif(table.valid(CList)) then\n\t\t\t\t\t\tlocal _,target = next(CList)\n\t\t\t\t\t\tif(table.valid(target) and target.pathdistance < 99999) then\n\t\t\t\t\t\t\t\tlocal dist = Distance3DT(target.pos,context.event_marker.pos)\n\t\t\t\t\t\t\t\tif(dist < context.event_radius/2) then\n\t\t\t\t\t\t\t\t\t\tcontext.event_revivenpc =  {id = target.id, pos = target.pos}\n\t\t\t\t\t\t\t\t\t\tself:fail()\n\t\t\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\tend\n\t\t\t\tend\n\t\tend\nend\ncontext.event_revivenpc = nil\nself:fail()",
 										startcode = "",
 									},
 								},
@@ -429,7 +398,7 @@ local tbl =
 								finishcode = "",
 								info = "Wait",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "self:success()",
+								runcode = "if(context.event_marker) then\n\t\tself:running()\nelse\n\t\tself:fail()\nend",
 								startcode = "",
 							},
 						},
@@ -461,7 +430,7 @@ local tbl =
 	{
 		filename = "Event.st",
 		finishcode = "context.event_id = nil\ncontext.event_reached = false\ncontext.event_radius = nil\ncontext.event_maxduration = nil\ncontext.event_type = nil\ncontext.event_marker = nil\ncontext.event_combat_target = nil\ncontext.event_stoppingdistance = nil\ncontext.event_starttime = nil\ncontext.event_revivenpc = nil\ncontext.event_lasttimeonmesh = nil",
-		info = "Event\ncontext.event_id\n\nOptional:\ncontext.event_radius\n\nOptional:\ncontext.event_maxduration\ncontext.event_type",
+		info = "Event\ncontext.event_id\n\nOptional:\ncontext.event_radius\n\nOptional:\ncontext.event_maxduration\ncontext.event_type\ncontext.event_start",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "context.event_maxduration = context.event_maxduration or self.settings.maxduration",
