@@ -343,7 +343,7 @@ function gw2_common_functions.GetBestAggroTarget(healthstate)
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
 	
 	if(table.valid(target) and (not target.attackable or target.pathdistance > 9999999)) then
-		gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, ml_global_information.Now + 5000)
 		d("[GetBestAggroTarget] - Blacklisting "..target.name.." ID: "..tostring(target.contentid))
 		target = nil
 	end
@@ -393,7 +393,7 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 					end
 				else					
 					if ( not target.isplayer ) then -- don't blacklist players which are dead for 90sec..stupid in spvp
-						gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
+						gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, ml_global_information.Now + 5000)
 						d("[GetBestEventTarget] - Blacklisting "..target.name.." ID: "..tostring(target.contentid))
 					end
 				end
@@ -402,7 +402,7 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 			i,filter = next(filters,i)
 		end
 		
-		local GList = GadgetList("hostile,attackable,alive,onmesh,nearest")
+		local GList = GadgetList("hostile,attackable,alive,onmesh,nearest,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Monsters")))
 		if(table.valid(GList)) then
 			local _,gagdet = next(GList)
 			if(table.valid(gadget)) then
@@ -412,7 +412,7 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 						return gagdet
 					end
 				else
-					gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), gagdet.contentid, gagdet.name, ml_global_information.Now + 90000)
+					gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), gagdet.contentid, gagdet.name, ml_global_information.Now + 5000)
 					d("[GetBestEventTarget] - Blacklisting "..gagdet.name.." ID: "..tostring(gagdet.contentid))
 				end
 			end
