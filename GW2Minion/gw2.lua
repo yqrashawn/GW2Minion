@@ -159,7 +159,7 @@ end
 function gw2minion.LoadBehaviorFiles()
 	-- Load all our local "bot/addon" BTree files 
 	BehaviorManager:LoadBehaviorFromFolder(GetStartupPath()  .. "\\\LuaMods\\\GW2Minion\\\Behavior")
-	
+
 	--Load the "GW2 Main/Core tree" which is a local one and gets called from in here	
 	gw2minion.ReloadBTree()
  end
