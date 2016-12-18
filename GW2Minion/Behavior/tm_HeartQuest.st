@@ -11,7 +11,6 @@ local tbl =
 			},
 			settings = 
 			{
-				xposoffset = 0,
 			},
 			variables = 
 			{

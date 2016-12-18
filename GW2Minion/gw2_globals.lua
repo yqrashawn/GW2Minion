@@ -68,6 +68,9 @@ ml_global_information.ImmobilizeConditions = {
 
 ml_global_information.InvulnerabilityConditions = {
 	[762]		= "Determined",
+	[895]		= "Determined (no icon)",
+	[11641]		= "Determined (no icon)",
+	[757]		= "Invulnerable",
 	[903]		= "Righteous Indignation",
 	[36143]		= "Destruction Immunity",
 	[29065]		= "Tough Hide"

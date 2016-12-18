@@ -62,7 +62,7 @@ function gw2_repair_manager.RepairAtVendor(repair)
 	
 	if(gw2_repair_manager.VendorBuyHistroy.interactcount > 15) then
 		d("Repair blacklisted: Tried interacting multiple times.")
-		gw2_blacklistmanager.AddBlacklistEntry(GetString("vendorsrepair"), repair.id, repair.name, true)			
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("Vendor repair"), repair.id, repair.name, true)			
 	end
 	
 	if (Player:IsConversationOpen() == false) then
@@ -75,7 +75,7 @@ function gw2_repair_manager.RepairAtVendor(repair)
 		local result = gw2_common_functions.handleConversation("repair")
 		if (result == false) then
 			d("Repair blacklisted: Can not handle conversation.")
-			gw2_blacklistmanager.AddBlacklistEntry(GetString("vendorsrepair"), repair.id, repair.name, true)
+			gw2_blacklistmanager.AddBlacklistEntry(GetString("Vendor repair"), repair.id, repair.name, true)
 			return false
 		end
 		gw2_repair_manager.VendorBuyHistroy.interactcount = 0

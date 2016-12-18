@@ -60,7 +60,7 @@ local tbl =
 								randomMovement = true,
 								randomizestoppingdistance = false,
 								smoothturns = true,
-								stoppingdistance = 120,
+								stoppingdistance = 110,
 								stoppingidstancemaxrange = 50,
 								usewaypoints = false,
 							},
