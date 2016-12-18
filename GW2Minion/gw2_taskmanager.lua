@@ -1,7 +1,7 @@
 gw2_tm_heartquest = {}
 gw2_tm_heartquest.lastcheck = 0
 function gw2_tm_heartquest:CanTaskRun_TM(taskProperties,customProperties)
-	if(TimeSince(gw2_tm_heartquest.lastcheck) > 15000) then
+	if(TimeSince(gw2_tm_heartquest.lastcheck) > 1000) then
 		gw2_tm_heartquest.lastcheck = ml_global_information.Now
 		if(table.valid(customProperties)) then
 			local MList = MapMarkerList("issubregion")
@@ -35,6 +35,17 @@ function gw2_tm_heropoint:CanTaskRun_TM(taskProperties,customProperties)
 	return true
 end
 
+gw2_tm_test = {}
+gw2_tm_test.lastcheck = 0
+function gw2_tm_test:CanTaskRun_TM(taskProperties,customProperties)
+	if(gw2_tm_test.lastcheck == 0) then gw2_tm_test.lastcheck = ml_global_information.Now end
+	if(TimeSince(gw2_tm_test.lastcheck) > 15000) then
+		gw2_tm_test.lastcheck = ml_global_information.Now
+		return false
+	end
+	return true
+end
+
 gw2_taskmanager = {}
 function gw2_taskmanager.Init()
 	if(ml_task_mgr) then
@@ -43,6 +54,8 @@ function gw2_taskmanager.Init()
 		ml_task_mgr.GetMapName = gw2_datamanager.GetMapName
 		ml_task_mgr.btreepath = GetLuaModsPath()..[[GW2Minion\Behavior]]
 		ml_task_mgr.taskpath = GetLuaModsPath()..[[GW2Minion\TaskManagerProfiles\]]
+		ml_task_mgr.GetMapID = function() return ml_global_information.CurrentMapID end
+		ml_task_mgr.GetPlayerPos = function() return ml_global_information.Player_Position end
 		ml_task_mgr.Init()
 		
 		ml_task_mgr.AddTaskType("tm_grind", "GrindMode.bt", nil, {displayname = GetString("Grind mode")})
@@ -53,7 +66,7 @@ function gw2_taskmanager.Init()
 		ml_task_mgr.AddTaskType("tm_vista", "tm_Vista.st", nil, {allowpretasks = true; allowposttasks = true; displayname = GetString("View vista")})
 		ml_task_mgr.AddTaskType("tm_heropoint", "blank.st", gw2_tm_heropoint, {allowpretasks = true; allowposttasks = true; allowsubtasks = true; displayname = GetString("Heropoint")})
 		ml_task_mgr.AddTaskType("tm_hq", "tm_HeartQuest.st", gw2_tm_heartquest, {allowpretasks = true; allowposttasks = true; allowsubtasks = true; displayname = GetString("Heartquest")})
-		
+
 		ml_task_mgr.AddSubTaskType("tm_st_movetomultiple", "tm_MoveToMultiple.st", nil, {displayname = GetString("Move to multiple locations")})
 		ml_task_mgr.AddSubTaskType("tm_st_moveto", "tm_MoveTo.st", nil, {displayname = GetString("Move to location")})
 		ml_task_mgr.AddSubTaskType("tm_st_interact", "tm_Interact.st", nil, {displayname = GetString("Interact")})
@@ -63,7 +76,11 @@ function gw2_taskmanager.Init()
 		ml_task_mgr.AddSubTaskType("tm_st_talk", "tm_Talk.st", nil, {displayname = GetString("Talk")})
 		ml_task_mgr.AddSubTaskType("tm_st_changemesh", "tm_ChangeMesh.st", nil, {displayname = GetString("Change mesh")})
 		ml_task_mgr.AddSubTaskType("tm_st_useitem", "tm_UseItem.st", nil, {displayname = GetString("Use inventory item")})
-		ml_task_mgr.AddSubTaskType("tm_st_deliver", "tm_Deliver.st", nil, {displayname = GetString("Deliver item")})					
+		ml_task_mgr.AddSubTaskType("tm_st_deliver", "tm_Deliver.st", nil, {displayname = GetString("Deliver item")})	
+
+		-- For testing				
+		--ml_task_mgr.AddTaskType("tm_subtask_test", "blank.st", gw2_tm_test, {allowpretasks = true; allowposttasks = true; allowsubtasks = true; displayname = GetString("Subtask Test")})
+		--ml_task_mgr.AddSubTaskType("tm_st_test", "blank.st", nil, {displayname = GetString("Do nothing")})	
 	end
 end
 RegisterEventHandler("Module.Initalize",gw2_taskmanager.Init)
