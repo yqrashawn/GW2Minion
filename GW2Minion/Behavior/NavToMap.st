@@ -172,7 +172,7 @@ local tbl =
 			},
 			variables = 
 			{
-				info = "",
+				info = "Requires: context.movetomap_targetmapid",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
 			},
 		},
