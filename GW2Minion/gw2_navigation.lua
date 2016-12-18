@@ -65,7 +65,7 @@ function ml_navigation.Navigate(event, ticks )
 								if ( not ml_navigation.omc_startheight ) then ml_navigation.omc_startheight = ppos.z end
 								-- Additionally check if we are "above" the target point already, in that case, stop moving forward
 								local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
-								if ( nodedist < ml_navigation.OMCREACHEDDISTANCE) then
+								if ( nodedist < ml_navigation.OMCREACHEDDISTANCE or (ppos.z < nextnode.z and math.distance2d(ppos,nextnode) < ml_navigation.OMCREACHEDDISTANCE) ) then
 									d("[Navigation] - We are above the OMC_END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.OMCREACHEDDISTANCE)..")")
 									Player:Stop()
 									if ( omc.precise == nil or omc.precise == true  ) then
@@ -88,7 +88,7 @@ function ml_navigation.Navigate(event, ticks )
 								else
 									-- Additionally check if we are "above" the target point already, in that case, stop moving forward
 									local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
-									if ( nodedist < ml_navigation.OMCREACHEDDISTANCE) then
+									if ( nodedist < ml_navigation.OMCREACHEDDISTANCE or (ppos.z < nextnode.z and math.distance2d(ppos,nextnode) < ml_navigation.OMCREACHEDDISTANCE)) then
 										d("[Navigation] - We are above the OMC END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.OMCREACHEDDISTANCE)..")")
 										Player:Stop()
 										if ( omc.precise == nil or omc.precise == true  ) then
