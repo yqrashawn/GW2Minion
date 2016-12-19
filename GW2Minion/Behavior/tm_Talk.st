@@ -22,7 +22,7 @@ local tbl =
 						finishcode = "",
 						info = "",
 						monitorcode = "",
-						runcode = "context.talksteps_blacklist = context.talksteps_blacklist or {}\n\nif(not table.valid(context.talksteps) or not table.valid(context.talkagent)) then\n\t\t\t\tcontext.talktarget = nil\n\t\t\t\tcontext.talkagent = nil\nend\n\nif(table.size(context.talksteps_blacklist) >= table.size(context.talksteps)) then\n\t\t\t\tcontext.talktarget = nil\n\t\t\t\tcontext.talkagent = nil\nend\n\nself:fail()",
+						runcode = "context.talksteps_blacklist = context.talksteps_blacklist or {}\n\nif(not table.valid(context.talksteps) or not table.valid(context.talkagent)) then\n\t\t\t\tcontext.talktarget = nil\n\t\t\t\tcontext.talkagent = nil\nend\n\nif(Player.castinfo.skillid ~= 0) then\n\t\td(\"[Talk]: Channeling?\")\n\t\tself:running()\n\t\treturn\nend\n\nif(table.size(context.talksteps_blacklist) >= table.size(context.talksteps)) then\n\t\t\t\tcontext.talktarget = nil\n\t\t\t\tcontext.talkagent = nil\nend\n\nself:fail()",
 						startcode = "",
 					},
 				},
