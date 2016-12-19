@@ -1,0 +1,405 @@
+local tbl = 
+{
+	class = "BehaviorTree",
+	nodes = 
+	{
+		
+		{
+			class = "PrioritySelector",
+			nodes = 
+			{
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "IsIngame",
+						monitorcode = "",
+						runcode = "if(ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then\n\t\tself:fail()\nelse\n\t\tself:success()\nend",
+						startcode = "",
+					},
+				},
+				
+				{
+					class = "PrioritySelector",
+					nodes = 
+					{
+						
+						{
+							class = "Sequence",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Move to Divinitys Reach",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "if ( Player.localmapid == 18 ) then\t\t\n\t\tcontext.movetomap_targetmapid = nil\n\t\tself:fail()\n\t\treturn\nelse\n\t\tcontext.movetomap_targetmapid = 18\n\t\tself:success()\nend",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "SubTree",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										filename = "NavToMap.st",
+									},
+								},
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+							},
+						},
+						
+						{
+							class = "Sequence",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Pickup Presents",
+										monitorcode = "",
+										runcode = "local glist = GadgetList(\"nearest,interactable,contentid=22957\")\nif ( table.valid(glist) ) then\n\t\tlocal present = select(2,next(glist))\n\t\tif ( present ) then\n\t\t\t\tif ( not present.isininteractrange ) then\n\t\t\t\t\t\tcontext.moveto_position = present.pos\n\t\t\t\t\t\tself:success()\n\t\t\t\t\t\treturn\n\t\t\t\telse\n\t\t\t\t\t\td(\"[Dolyak] - Picking up present.\")\n\t\t\t\t\t\tPlayer:Interact(present.id)\t\t\t\t\t\t\n\t\t\t\t\t\tBehaviorManager:SetLastTick(BehaviorManager:GetLastTick() + 1000)\n\t\t\t\t\t\tif ( not context.presentscollected ) \n\t\t\t\t\t\t\t\tthen context.presentscollected = 1\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\tcontext.presentscollected = context.presentscollected + 1\n\t\t\t\t\t\tend\n\t\t\t\t\t\tSettings.GW2Minion.presentstotal = Settings.GW2Minion.presentstotal + 1\n\t\t\t\tend\n\t\tend\t\t\nend\nself:fail()",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "SubTree",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+										randomMovement = true,
+										randomizestoppingdistance = false,
+										smoothturns = true,
+										stoppingdistance = 65,
+										stoppingidstancemaxrange = 50,
+										usewaypoints = false,
+									},
+									variables = 
+									{
+										filename = "MoveTo.st",
+									},
+								},
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+							},
+						},
+						
+						{
+							class = "Sequence",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Kick Enemies",
+										monitorcode = "",
+										runcode = "local elist = CharacterList(\"nearest,selectable,contentid=283703,alive\")\nif ( table.valid(elist) ) then\n\t\tlocal enemy = select(2,next(elist))\n\t\tif ( enemy ) then\n\t\t\t\tif ( not enemy.isininteractrange ) then\n\t\t\t\t\t\tcontext.moveto_position = enemy.pos\n\t\t\t\t\t\tself:success()\n\t\t\t\t\t\tcontext.donated = nil\n\t\t\t\t\t\treturn\n\t\t\t\telse\n\t\t\t\t\t\td(\"[Dolyak] - Kicking Enemy.\")\n\t\t\t\t\t\tPlayer:SetTarget(enemy.id)\n\t\t\t\t\t\tPlayer:Interact(enemy.id)\n\t\t\t\tend\n\t\tend\t\t\nend\nself:fail()",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "SubTree",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+										randomMovement = true,
+										randomizestoppingdistance = false,
+										smoothturns = true,
+										stoppingdistance = 75,
+										stoppingidstancemaxrange = 50,
+										usewaypoints = false,
+									},
+									variables = 
+									{
+										filename = "MoveTo.st",
+									},
+								},
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+							},
+						},
+						
+						{
+							class = "Sequence",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Stay near dolyak",
+										monitorcode = "",
+										runcode = "local EList = MapMarkerList(\"nearest,isevent,onmesh,eventid=9141\")\nif(table.valid(EList)) then\n\t\tlocal _,event = next(EList)\n\t\tif(table.valid(event)) then\t\t\t\t\t\t\t\t\n\t\t\t\tif(table.valid(event.eventinfo)) then\n\t\t\t\t\t\tif ( event.distance > 350 ) then\n\t\t\t\t\t\t\t\tcontext.moveto_position = event.pos\n\t\t\t\t\t\t\t\tself:success()\t\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\t\t\t\t\n\t\t\t\tend\n\t\tend\nend\nself:fail()",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "PrioritySelector",
+									nodes = 
+									{
+										
+										{
+											class = "Action",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+											},
+											variables = 
+											{
+												finishcode = "",
+												info = "Update Event data",
+												monitorcode = "",
+												runcode = "local EList = MapMarkerList(\"nearest,isevent,onmesh,eventid=9141\")\nif(table.valid(EList)) then\n\t\tlocal _,event = next(EList)\n\t\tif(table.valid(event)) then\t\t\t\t\t\t\t\t\n\t\t\t\tif(table.valid(event.eventinfo)) then\n\t\t\t\t\t\tif ( event.distance > 350 ) then\n\t\t\t\t\t\t\t\tcontext.moveto_position = event.pos\n\t\t\t\t\t\t\t\tself:fail()\t\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\t\t\t\t\n\t\t\t\tend\n\t\tend\nend\nself:success()",
+												startcode = "",
+											},
+										},
+										
+										{
+											class = "SubTree",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+												randomMovement = true,
+												randomizestoppingdistance = false,
+												smoothturns = true,
+												stoppingdistance = 25,
+												stoppingidstancemaxrange = 50,
+												usewaypoints = false,
+											},
+											variables = 
+											{
+												filename = "MoveTo.st",
+											},
+										},
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										monitorcode = "",
+									},
+								},
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+							},
+						},
+						
+						{
+							class = "Throttle",
+							nodes = 
+							{
+								
+								{
+									class = "Sequence",
+									nodes = 
+									{
+										
+										{
+											class = "Action",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+											},
+											variables = 
+											{
+												finishcode = "",
+												info = "",
+												monitorcode = "",
+												runcode = "local EList = MapMarkerList(\"nearest,isevent,onmesh,eventid=9142\")\nif(table.valid(EList)) then\n\t\tlocal _,event = next(EList)\n\t\tif(table.valid(event)) then\t\t\t\t\t\t\t\t\n\t\t\t\tif(table.valid(event.eventinfo)) then\n\t\t\t\t\t\tif ( not context.donated ) then\n\t\t\t\t\t\t\t\tlocal hoho = CharacterList:Get(event.characterid)\n\t\t\t\t\t\t\t\tif( not hoho) then\n\t\t\t\t\t\t\t\t\t\tlocal epos = event.pos\n\t\t\t\t\t\t\t\t\t\tif ( epos ) then\n\t\t\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Moving to HoHo..\")\n\t\t\t\t\t\t\t\t\t\t\t\tcontext.moveto_position = epos\n\t\t\t\t\t\t\t\t\t\t\t\tself:success()\t\n\t\t\t\t\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\t\t\t\t\tend\n\n\t\t\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\t\t\tif ( not hoho.isininteractrange ) then\n\t\t\t\t\t\t\t\t\t\t\t\tcontext.moveto_position = hoho.pos\n\t\t\t\t\t\t\t\t\t\t\t\tself:success()\n\t\t\t\t\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\t\t\t\t\tif ( not Player:IsConversationOpen() ) then\n\t\t\t\t\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Talking to Hoho\")\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tPlayer:SetTarget(hoho.id)\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tPlayer:Interact(hoho.id)\n\n\t\t\t\t\t\t\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\tlocal clist = Player:GetConversationOptions()\n\t\t\t\t\t\t\t\t\t\t\t\t\tif (table.valid(clist)) then \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tif( table.size(clist) == 3 ) then \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Selecting donate chat option\")\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPlayer:SelectConversationOptionByIndex(0)\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\telseif ( table.size(clist) == 4 ) then\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Donating a silver\")\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPlayer:SelectConversationOptionByIndex(1)\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tcontext.donated = true\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings.GW2Minion.hohodonation = Settings.GW2Minion.hohodonation + 1\n\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tlocal epos = event.pos\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tlocal rpos = NavigationManager:GetRandomPointOnCircle(epos.x,epos.y,epos.z,150,800)\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tif ( rpos ) then\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Moving to random startpos..\")\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tcontext.moveto_position = rpos\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself:success()\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\t\t\tend\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tend\n\n\t\t\t\t\t\telse\n\n\t\t\t\t\t\t\n\n\n\t\t\t\t\t\t\t\tif ( event.distance > 1000 ) then\n\t\t\t\t\t\t\t\t\t\tlocal epos = event.pos\n\t\t\t\t\t\t\t\t\t\tlocal rpos = NavigationManager:GetRandomPointOnCircle(epos.x,epos.y,epos.z,150,800)\n\t\t\t\t\t\t\t\t\t\tif ( rpos ) then\n\t\t\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Moving to random startpos..\")\n\t\t\t\t\t\t\t\t\t\t\t\tcontext.moveto_position = rpos\n\t\t\t\t\t\t\t\t\t\t\t\tself:success()\t\n\t\t\t\t\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\tend\t\t\t\t\n\t\t\t\tend\n\t\tend\nend\nself:fail()",
+												startcode = "",
+											},
+										},
+										
+										{
+											class = "SubTree",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+												randomMovement = true,
+												randomizestoppingdistance = false,
+												smoothturns = true,
+												stoppingdistance = 25,
+												stoppingidstancemaxrange = 50,
+												usewaypoints = false,
+											},
+											variables = 
+											{
+												filename = "MoveTo.st",
+											},
+										},
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+									},
+								},
+							},
+							settings = 
+							{
+								duration = 500,
+							},
+							variables = 
+							{
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.settings.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.settings.duration/1000))..' s') end",
+							},
+						},
+						
+						{
+							class = "Throttle",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Dont log out lol",
+										monitorcode = "",
+										runcode = "local boink = math.random(1,4)\nif (boink == 1 ) then\n\t\tPlayer:Jump()\nend\n\nif (boink == 2 ) then\n\t\tPlayer:CastSpell(math.random(6,9))\nend\n\nself:success()",
+										startcode = "",
+									},
+								},
+							},
+							settings = 
+							{
+								duration = 30100,
+							},
+							variables = 
+							{
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.settings.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.settings.duration/1000))..' s') end",
+							},
+						},
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						monitorcode = "",
+					},
+				},
+			},
+			settings = 
+			{
+			},
+			variables = 
+			{
+				monitorcode = "",
+			},
+		},
+	},
+	settings = 
+	{
+	},
+	variables = 
+	{
+		filename = "Wintersday-Defend Dolyak.bt",
+		finishcode = "",
+		info = "",
+		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetStringML(\"Dolyak Stats\"))) then\n\n\t\tif ( Settings.GW2Minion.presentstotal == nil) then Settings.GW2Minion.presentstotal = 0 end\n\t\tif ( Settings.GW2Minion.hohodonation == nil) then Settings.GW2Minion.hohodonation = 0 end\n\t\t\n\n\n\t\tif ( context and context.presentscollected ) then\n\t\t\t\tGUI:Text(\"Presents Collected Session: \"..tostring(context.presentscollected))\n\t\telse\n\t\t\t\tGUI:Text(\"Presents Collected Session: 0\")\n\t\tend\n\n\t\tGUI:Text(\"Presents Collected Total: \"..tostring(Settings.GW2Minion.presentstotal))\n\t\tGUI:Text(\"Silver Donated to HoHo: \"..tostring(Settings.GW2Minion.hohodonation))\n\n\t\tGUI:TreePop()\nend",
+		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+		runcode = "",
+		startcode = "",
+		subtreeuicode = "",
+	},
+}
+
+
+
+return tbl
