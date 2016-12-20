@@ -255,7 +255,7 @@ local tbl =
 												finishcode = "",
 												info = "",
 												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-												runcode = "local task = context.taskmanager_activetask\nif(task.startpositionreached and task.taskProperties.radius and task.taskProperties.radius > 0) then\n\t\tlocal r = task.taskProperties.radius\n\t\tlocal dist = Distance3DT(task.taskProperties.pos,ml_global_information.Player_Position)\n\n\t\tif(dist > r) then\n\t\t\t\t\td(\"[CustomTask]: Outside task radius. Distance: \"..math.ceil(dist)..\". Radius: \"..math.ceil(r))\n\t\t\t\t\ttask.startpositionreached = false\n\t\t\t\t\ttask.tasktype:DestroyTaskInstance()\n\t\t\t\t\tPlayer:StopMovement()\n\t\t\t\t\tml_global_information.Wait(2000,5000)\n\t\t\t\t\tself:running()\n\t\t\t\t\treturn\n\t\tend\nend\nself:success()",
+												runcode = "local task = context.taskmanager_activetask\nif(task.startpositionreached and task.taskProperties.radius and task.taskProperties.radius > 0) then\n\t\tlocal r = task.taskProperties.radius\n\t\tlocal dist = Distance3DT(task.taskProperties.pos,ml_global_information.Player_Position)\n\n\t\tif(dist > r) then\n\t\t\t\t\td(\"[CustomTask]: Outside task radius. Distance: \"..math.ceil(dist)..\". Radius: \"..math.ceil(r))\n\t\t\t\t\ttask.startpositionreached = false\n\t\t\t\t\ttask.tasktype:Stop()\n\t\t\t\t\tPlayer:StopMovement()\n\t\t\t\t\tml_global_information.Wait(2000,5000)\n\t\t\t\t\tself:running()\n\t\t\t\t\treturn\n\t\tend\nend\nself:success()",
 												startcode = "",
 											},
 										},
