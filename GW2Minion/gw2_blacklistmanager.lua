@@ -35,14 +35,19 @@ function gw2_blacklistmanager.CheckBlacklistEntry(listname, id)
 	return false
 end
 
-function gw2_blacklistmanager.AddBlacklistEntry(listname, id, name, duration)
-	if(listname and id and table.valid(gw2_blacklistmanager.lists[listname])) then
+function gw2_blacklistmanager.AddBlacklistEntry(listname, contentid, name, duration)
+	if(listname and contentid and table.valid(gw2_blacklistmanager.lists[listname])) then
 		
 		-- Don't blacklist players for too long, else spvp and wvwvw are not working well
-		if ( listname == GetString("Monsters") and id ) then
-			local ch = CharacterList:Get(id)
-			if ( table.valid(ch) and ch.isplayer) then
-				duration = 5000				
+		if ( listname == GetString("Monsters") and contentid ) then
+			-- check if the target is a player (by name ?! fuck me silly...) to reduce the blacklist time in pvp
+			local Clist = CharacterList("player,attackable")
+			if ( table.valid(Clist) ) then
+				local id,ppl = next(Clist)
+				while ( id and ppl ) do
+					if ( ppl.name == name ) then duration = 5000 break end					
+					id,ppl = next(Clist,id)
+				end
 			end
 		end
 		
@@ -50,7 +55,7 @@ function gw2_blacklistmanager.AddBlacklistEntry(listname, id, name, duration)
 		if(type(duration) == "number" and duration > 0 and duration < ml_global_information.Now) then
 			duration = ml_global_information.Now + duration
 		end
-		gw2_blacklistmanager.lists[listname]:AddEntry({id = id, name = name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = duration})
+		gw2_blacklistmanager.lists[listname]:AddEntry({id = contentid, name = name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = duration})
 	end
 end
 

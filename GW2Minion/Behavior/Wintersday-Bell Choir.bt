@@ -269,7 +269,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "",
-										runcode = "local boink = math.random(0,8)\n\nif (boink == 4 ) then boink = 5 end\nPlayer:CastSpell(boink)\n\nself:success()",
+										runcode = "local boink = math.random(0,8)\n\nif (boink == 4 ) then boink = 5 end\nPlayer:CastSpell(boink)\n\n\nself:success()",
 										startcode = "",
 									},
 								},

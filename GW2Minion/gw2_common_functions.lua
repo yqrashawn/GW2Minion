@@ -335,15 +335,16 @@ function gw2_common_functions.GetBestAggroTarget(healthstate)
 	-- Try to get Aggro Enemy Players with los in range first
 	local target = gw2_common_functions.GetCharacterTargetExtended("player,onmesh,lowesthealth,los,maxdistance="..tostring(range), healthstate)
 
-
+	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("player,onmesh,nearest,maxdistance="..tostring(range*2), healthstate) end
+	
 	-- Try to get Aggro Enemy with los in range first
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,lowesthealth,los,maxdistance="..tostring(range), healthstate) end
 
 	-- Try to get Aggro Enemy
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
 	
-	if(table.valid(target) and (not target.attackable or target.pathdistance > 9999999)) then
-		gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, ml_global_information.Now + 5000)
+	if(table.valid(target) and (not target.attackable or target.pathdistance >= 9999999)) then
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, 5000)
 		d("[GetBestAggroTarget] - Blacklisting "..target.name.." ID: "..tostring(target.contentid))
 		target = nil
 	end
@@ -425,9 +426,9 @@ end
 function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthstate )
     
 	if ( filterstring ) then
-		filterstring = filterstring..",attackable,noCritter"
+		filterstring = filterstring..",attackable,nocritter"
 	else
-		filterstring = "attackable,noCritter"
+		filterstring = "attackable,nocritter"
 	end
 	
 	local excludestring = gw2_blacklistmanager.GetExcludeString(GetString("Monsters"))
