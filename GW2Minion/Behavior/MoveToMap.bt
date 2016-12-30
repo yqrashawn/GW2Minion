@@ -48,7 +48,7 @@ local tbl =
 								finishcode = "",
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if(context.movetomap_targetmapid > 0 and ml_global_information.CurrentMapID ~= context.movetomap_targetmapid) then\n\t\tself:success()\n\t\treturn\nelseif(ml_global_information.CurrentMapID == context.movetomap_targetmapid) then\n\t\td(\"[MoveToMap]: Target map reached\")\n\t\tml_bt_mgr.running = false\nend\nself:fail()",
+								runcode = "if(context.movetomap_targetmapid > 0 and ml_global_information.CurrentMapID ~= context.movetomap_targetmapid) then\n\t\tself:success()\n\t\treturn\nelseif(ml_global_information.CurrentMapID == context.movetomap_targetmapid) then\n\t\td(\"[MoveToMap]: Target map reached\")\n\t\tBehaviorManager:Stop()\nend\nself:fail()",
 								startcode = "",
 							},
 						},

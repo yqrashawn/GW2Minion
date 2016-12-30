@@ -38,9 +38,27 @@ local tbl =
 					variables = 
 					{
 						finishcode = "",
+						info = "Wait for mesh to load",
+						monitorcode = "",
+						runcode = "local meshstate = NavigationManager:GetNavMeshState()\n\nif(meshstate ~= GLOBAL.MESHSTATE.MESHREADY) then\n\t\td(\"[NavToMap]: Waiting for the mesh to load.\")\n\t\tself:running()\n\t\treturn\nend\n\nself:fail()",
+						startcode = "",
+					},
+				},
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
 						info = "Update node data",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "-- Waypoint Usage\nif(context.movetomap_targetmapid) then\n\t\tif (ml_global_information.CurrentMapID ~= context.movetomap_lastmapid ) then\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tif(context.movetomap_lastmapid) then\n\t\t\t\t\t\tml_global_information.Wait(2000,5000)\n\t\t\t\tend\n\t\t\t\tcontext.movetomap_lastmapid = ml_global_information.CurrentMapID\n\t\t\t\tcontext.movetomap_gatereached = false\n\t\t\t\tcontext.movetomap_usedwaypoint = false\n\t\t\t\t\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\n\t\tif(context.movetomap_gatedistance and not context.movetomap_gatereached and context.movetomap_gatedistance < 60) then\n\t\t\t\tcontext.movetomap_gatereached = true\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\n\t\tlocal nodedata = ml_nav_manager.GetNextPathPos(ml_global_information.Player_Position, ml_global_information.CurrentMapID, context.movetomap_targetmapid )\n\t\tif(table.valid(nodedata)) then\n\t\t\t\tcontext.movetomap_nextpathpos = nodedata\n\t\t\t\tcontext.movetomap_gatedistance = Distance3DT(nodedata,ml_global_information.Player_Position)\n\t\tend\n\nend\nself:fail()",
+						runcode = "if(context.movetomap_targetmapid) then\n\t\tif (ml_global_information.CurrentMapID ~= context.movetomap_lastmapid ) then\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tif(context.movetomap_lastmapid) then\n\t\t\t\t\t\tml_global_information.Wait(2000,5000)\n\t\t\t\tend\n\t\t\t\tcontext.movetomap_lastmapid = ml_global_information.CurrentMapID\n\t\t\t\tcontext.movetomap_gatereached = false\n\t\t\t\tcontext.movetomap_usedwaypoint = false\n\t\t\t\t\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\n\t\tif(context.movetomap_gatedistance and not context.movetomap_gatereached and context.movetomap_gatedistance < 60) then\n\t\t\t\tcontext.movetomap_gatereached = true\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\n\t\tlocal nodedata = ml_nav_manager.GetNextPathPos(ml_global_information.Player_Position, ml_global_information.CurrentMapID, context.movetomap_targetmapid )\n\t\tif(table.valid(nodedata)) then\n\t\t\t\tcontext.movetomap_nextpathpos = nodedata\n\t\t\t\tcontext.movetomap_gatedistance = Distance3DT(nodedata,ml_global_information.Player_Position)\n\t\tend\n\nend\nself:fail()",
 						startcode = "",
 					},
 				},
@@ -184,7 +202,7 @@ local tbl =
 	{
 		filename = "NavToMap.st",
 		finishcode = "context.movetomap_targetmapid = nil\ncontext.movetomap_usewaypoints = nil\ncontext.movetomap_usedwaypoint = nil\ncontext.movetomap_nextpathpos = nil\ncontext.movetomap_gatedistance = nil",
-		info = "Move to map",
+		info = "Move to map\ncontext.movetomap_targetmapid\n\nOptional:\ncontext.movetomap_position",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\n\nif(context) then\n\t\tGUI:Text('Target map: '..tostring(context.movetomap_targetmapid))\n\t\tGUI:Text('Current map: '..tostring(ml_global_information.CurrentMapID))\n\t\tGUI:Text('Next gate distance: '..tostring(context.movetomap_gatedistance))\n\t\tGUI:Text('Gate reached: '..tostring(context.movetomap_gatereached))\nend",
 		runcode = "",
