@@ -357,7 +357,7 @@ function gw2_common_functions.GetBestAggroTarget(healthstate)
 	else
 
 		local currTarget = Player:GetTarget()
-		if ( currTarget ~= nil and currTarget.attackable ) then
+		if ( currTarget ~= nil and currTarget.attackable and target.pathdistance < 9999999) then
 			return target
 		end
 	end
@@ -462,7 +462,10 @@ end
 
 -- Downed state target needs to be a bit different and ignore assist settings
 function gw2_common_functions.GetBestDownstateTarget()
-	local CList = CharacterList("aggro,attackable,lowesthealth,los,maxdistance=900,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Monsters")))
+	local CList = CharacterList("player,attackable,lowesthealth,los,maxdistance=900,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Monsters")))
+	if ( table.size(CList) == 0 ) then
+		CList = CharacterList("aggro,attackable,lowesthealth,los,maxdistance=900,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Monsters")))
+	end
 	if(table.valid(CList)) then
 		local _,target = next(CList)
 		if(table.valid(target) and (target.alive or target.downed)) then
