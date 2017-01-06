@@ -1,0 +1,1743 @@
+local tbl = 
+{
+	name = "Mapcompletion Divinitys Reach",
+	properties = 
+	{
+		failure = 1,
+		order = 1,
+		repeattasks = 2,
+	},
+	tasks = 
+	{
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 0,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Dwayna",
+				pos = 
+				{
+					hx = -0.1328341960907,
+					hy = 0.85252618789673,
+					hz = 0.50552368164063,
+					x = 2198.8291015625,
+					y = -19622.701171875,
+					z = -3947.271484375,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 1,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Busted Flagon",
+				pos = 
+				{
+					hx = -0.89651238918304,
+					hy = -0.28961706161499,
+					hz = 0.33524239063263,
+					x = -867.93768310547,
+					y = -15410.924804688,
+					z = -2095.978515625,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 2,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Minas Target Shooting",
+				pos = 
+				{
+					hx = 0.10612632334232,
+					hy = 0.92041504383087,
+					hz = 0.37626233696938,
+					x = -312.41857910156,
+					y = -12176.546875,
+					z = -2767.0844726563,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 3,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Commons",
+				pos = 
+				{
+					hx = 0.97791928052902,
+					hy = -0.16810937225819,
+					hz = 0.12414944171906,
+					x = 302.9538269043,
+					y = -10760.124023438,
+					z = -3135.4919433594,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 4,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Vigil Hall",
+				pos = 
+				{
+					hx = 0.79709708690643,
+					hy = 0.54905545711517,
+					hz = 0.25134494900703,
+					x = -3739.8469238281,
+					y = -5934.9819335938,
+					z = -3141.5402832031,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 5,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Melandru",
+				pos = 
+				{
+					hx = -0.90823090076447,
+					hy = -0.30957689881325,
+					hz = 0.28156486153603,
+					x = -12648.885742188,
+					y = -10427.827148438,
+					z = -3951.7951660156,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 6,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							hx = -0.52377068996429,
+							hy = -0.75445967912674,
+							hz = 0.39554369449615,
+							x = -8512.21875,
+							y = -11386.817382813,
+							z = -2739.48828125,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "",
+						type = "tm_st_moveto",
+					},
+				},
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista",
+				pos = 
+				{
+					hx = -0.52377068996429,
+					hy = -0.75445967912674,
+					hz = 0.39554369449615,
+					x = -8512.21875,
+					y = -11386.817382813,
+					z = -2739.48828125,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 7,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Heidryns Menagerie",
+				pos = 
+				{
+					hx = -0.60209786891937,
+					hy = -0.6868804693222,
+					hz = 0.40703001618385,
+					x = -10270.0859375,
+					y = -12834.6640625,
+					z = -2346.7133789063,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 8,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							hx = -0.85768872499466,
+							hy = 0.5141693353653,
+							hz = 0,
+							x = -11181.188476563,
+							y = -6510.4619140625,
+							z = -2951.2260742188,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "",
+						type = "tm_st_moveto",
+					},
+				},
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = false,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista",
+				pos = 
+				{
+					hx = 0.38762676715851,
+					hy = -0.42667722702026,
+					hz = 0.81712424755096,
+					x = -11172.272460938,
+					y = -6508.5366210938,
+					z = -2950.9482421875,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 9,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Crown Pavillion",
+				pos = 
+				{
+					hx = 0.8535447716713,
+					hy = 0.27123987674713,
+					hz = 0.44484859704971,
+					x = -6608.8046875,
+					y = -2259.0881347656,
+					z = -2837.7575683594,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 10,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Balthasar",
+				pos = 
+				{
+					hx = -0.54807394742966,
+					hy = 0.74506163597107,
+					hz = 0.38012906908989,
+					x = -12326.75390625,
+					y = 6858.6040039063,
+					z = -3904.0705566406,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 39,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							hx = -0.3707078397274,
+							hy = 0.59373623132706,
+							hz = 0.71417993307114,
+							x = -2510.2756347656,
+							y = 5824.6958007813,
+							z = -4278.3203125,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "",
+						type = "tm_st_moveto",
+					},
+				},
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista",
+				pos = 
+				{
+					hx = -0.3707078397274,
+					hy = 0.59373623132706,
+					hz = 0.71417993307114,
+					x = -2510.2756347656,
+					y = 5824.6958007813,
+					z = -4278.3203125,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 11,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Shrine of the Six",
+				pos = 
+				{
+					hx = -0.38166895508766,
+					hy = 0.81729227304459,
+					hz = 0.4316968023777,
+					x = 759.49371337891,
+					y = 666.54284667969,
+					z = -5269.3374023438,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 14,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Palace",
+				pos = 
+				{
+					hx = -0.48559764027596,
+					hy = -0.83727067708969,
+					hz = 0.25134184956551,
+					x = 3188.4694824219,
+					y = -1358.447265625,
+					z = -5390.8876953125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 12,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 378,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Queen's Throne Room",
+				pos = 
+				{
+					hx = -0.029822401702404,
+					hy = 0.96796220541,
+					hz = 0.24931858479977,
+					x = 2664.4814453125,
+					y = 1867.1235351563,
+					z = -5405.8564453125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 13,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 330,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Seraph Headquaters",
+				pos = 
+				{
+					hx = 0.65121698379517,
+					hy = 0.66233551502228,
+					hz = 0.37044307589531,
+					x = 4712.091796875,
+					y = 542.90612792969,
+					z = -5311.2612304688,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 15,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Central Plaza",
+				pos = 
+				{
+					hx = -0.75953835248947,
+					hy = -0.62140464782715,
+					hz = 0.19224402308464,
+					x = 2655.8264160156,
+					y = -4525.2416992188,
+					z = -5458.4526367188,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 16,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							hx = -0.75336986780167,
+							hy = 0.65759700536728,
+							hz = 0,
+							x = 5705.0185546875,
+							y = -4459.193359375,
+							z = -6238.4912109375,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "",
+						type = "tm_st_moveto",
+					},
+				},
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista",
+				pos = 
+				{
+					hx = -0.4556972682476,
+					hy = 0.84128004312515,
+					hz = 0.29083999991417,
+					x = 5675.9409179688,
+					y = -4394.494140625,
+					z = -6290.4970703125,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 17,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Chamber of Ministers",
+				pos = 
+				{
+					hx = -0.00087025173706934,
+					hy = -0.98214203119278,
+					hz = 0.18813890218735,
+					x = 2635.25390625,
+					y = -8784.7060546875,
+					z = -5468.4990234375,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 18,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Ministers",
+				pos = 
+				{
+					hx = 0.4648086130619,
+					hy = 0.84593135118484,
+					hz = 0.26144436001778,
+					x = 3448.1401367188,
+					y = -10435.125976563,
+					z = -5465.392578125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 19,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Durmand Hall",
+				pos = 
+				{
+					hx = -0.86148774623871,
+					hy = 0.46509629487991,
+					hz = 0.20377518236637,
+					x = 9099.9384765625,
+					y = -6075.8774414063,
+					z = -3192.9975585938,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 20,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Uzolans Mechanical Ochestra",
+				pos = 
+				{
+					hx = 0.072687610983849,
+					hy = -0.92076885700226,
+					hz = 0.38327702879906,
+					x = 13407.28515625,
+					y = -11823.908203125,
+					z = -2230.6872558594,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 21,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 914,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Dead End",
+				pos = 
+				{
+					hx = 0.66145712137222,
+					hy = -0.64422333240509,
+					hz = 0.38399323821068,
+					x = 11201.385742188,
+					y = -16803.044921875,
+					z = -2302.3862304688,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 22,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Kormir",
+				pos = 
+				{
+					hx = 0.96577036380768,
+					hy = 0.1655700802803,
+					hz = 0.19968508183956,
+					x = 17610.767578125,
+					y = -11733.705078125,
+					z = -3962.0681152344,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 23,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Minister Wi's Mansion",
+				pos = 
+				{
+					hx = 0.77106267213821,
+					hy = 0.63675451278687,
+					hz = 0.0024609658867121,
+					x = 14948.836914063,
+					y = -4840.4990234375,
+					z = -2213.177734375,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 24,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Maiden's Whisper",
+				pos = 
+				{
+					hx = 0.9625449180603,
+					hy = 0.066979832947254,
+					hz = 0.2627184689045,
+					x = 17092.232421875,
+					y = -1444.2730712891,
+					z = -2223.5329589844,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 25,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Rurikton",
+				pos = 
+				{
+					hx = 0.39388969540596,
+					hy = -0.84489417076111,
+					hz = 0.36194577813148,
+					x = 12153.514648438,
+					y = -2474.2807617188,
+					z = -3135.3249511719,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 26,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Lyssa",
+				pos = 
+				{
+					hx = 0.61668634414673,
+					hy = 0.71534657478333,
+					hz = 0.32859882712364,
+					x = 18157.23828125,
+					y = 6020.10546875,
+					z = -3936.234375,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 27,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							hx = -0.091956876218319,
+							hy = -0.70193576812744,
+							hz = 0.70627903938293,
+							x = 13872.309570313,
+							y = 7298.0415039063,
+							z = -3001.5036621094,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "",
+						type = "tm_st_moveto",
+					},
+				},
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista",
+				pos = 
+				{
+					hx = -0.091956876218319,
+					hy = -0.70193576812744,
+					hz = 0.70627903938293,
+					x = 13872.309570313,
+					y = 7298.0415039063,
+					z = -3001.5036621094,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 28,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Salma",
+				pos = 
+				{
+					hx = -0.66291213035583,
+					hy = 0.71806818246841,
+					hz = 0.21195654571056,
+					x = 8712.7509765625,
+					y = 4975.7856445313,
+					z = -3141.9748535156,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 29,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 248,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Queen's Heart Orphanage",
+				pos = 
+				{
+					hx = 0.98598378896713,
+					hy = 0.16684120893478,
+					hz = 0,
+					x = 9010.6025390625,
+					y = 6601.3369140625,
+					z = -2970.2353515625,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 30,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 248,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Cottage Bend",
+				pos = 
+				{
+					hx = 0.66934514045715,
+					hy = 0.51092368364334,
+					hz = 0.5393830537796,
+					x = 10677.729492188,
+					y = 5533.5444335938,
+					z = -2447.009765625,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 31,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 248,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Rook's Row",
+				pos = 
+				{
+					hx = -0.23524850606918,
+					hy = 0.92266058921814,
+					hz = 0.30554139614105,
+					x = 11695.017578125,
+					y = 8959.0361328125,
+					z = -2387.9309082031,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 32,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 248,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Vanguard Hospital",
+				pos = 
+				{
+					hx = 0.32126089930534,
+					hy = 0.9398780465126,
+					hz = 0.11584787070751,
+					x = 10798.5859375,
+					y = 13341.247070313,
+					z = -2824.9077148438,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 33,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 248,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Manor Hill",
+				pos = 
+				{
+					hx = 0.84941267967224,
+					hy = 0.33356440067291,
+					hz = 0.40894120931625,
+					x = 5688.2060546875,
+					y = 9401.8828125,
+					z = -3258.4494628906,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 34,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							hx = 0.83210772275925,
+							hy = -0.55461400747299,
+							hz = 0,
+							x = 5656.0341796875,
+							y = 14616.650390625,
+							z = -2869.5866699219,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "",
+						type = "tm_st_moveto",
+					},
+				},
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista",
+				pos = 
+				{
+					hx = 0.83210772275925,
+					hy = -0.55461400747299,
+					hz = 0,
+					x = 5656.0341796875,
+					y = 14616.650390625,
+					z = -2869.5866699219,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 35,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Grenth",
+				pos = 
+				{
+					hx = -0.33732023835182,
+					hy = 0.89312517642975,
+					hz = 0.29756084084511,
+					x = 3360.1196289063,
+					y = 15272.220703125,
+					z = -3985.4836425781,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 36,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Minister Zamon's Mansion",
+				pos = 
+				{
+					hx = 0.91619211435318,
+					hy = -0.19346483051777,
+					hz = 0.35094645619392,
+					x = 140.54295349121,
+					y = 9223.91015625,
+					z = -2864.3391113281,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 37,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Skull Plaza",
+				pos = 
+				{
+					hx = -0.10932829976082,
+					hy = -0.94523710012436,
+					hz = 0.30752909183502,
+					x = 2638.2736816406,
+					y = 6171.1840820313,
+					z = -3135.4016113281,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 38,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Ossa",
+				pos = 
+				{
+					hx = -0.93138784170151,
+					hy = 0.36009466648102,
+					hz = 0.053371623158455,
+					x = -2029.9052734375,
+					y = 6467.298828125,
+					z = -3144.7824707031,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 40,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 18,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI The Dead End",
+				pos = 
+				{
+					hx = 0.72100532054901,
+					hy = -0.67579835653305,
+					hz = 0.15312714874744,
+					x = 10726.870117188,
+					y = -16343.391601563,
+					z = -2288.5769042969,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+	},
+	version = 0,
+}
+
+
+
+return tbl
