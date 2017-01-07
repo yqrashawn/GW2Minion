@@ -10,6 +10,7 @@ function gw2_unstuck.Start()
 	gw2_unstuck.Stop()
 end
 
+-- Reset all unstuck variables
 function gw2_unstuck.Stop()
 	gw2_unstuck.laststuckentry = nil
 	gw2_unstuck.laststuckposition = nil
@@ -17,10 +18,14 @@ function gw2_unstuck.Stop()
 	gw2_unstuck.lastposition = nil
 	gw2_unstuck.lastraycastdetails = nil
 	gw2_unstuck.distmoved = 0
+	
+	-- Set to true if the player is expected to handle jumping and stuff themselves
 	gw2_unstuck.manualcontrolmode = false
+	
 	gw2_unstuck.Reset()
 end
 
+-- Reset unstuck variables
 function gw2_unstuck.Reset()
 	gw2_unstuck.lastaction = nil
 	gw2_unstuck.stuckcount = 0
@@ -29,19 +34,25 @@ function gw2_unstuck.Reset()
 	gw2_unstuck.pathblockingobject = nil
 	gw2_unstuck.lasttimeonmesh = ml_global_information.Now
 	gw2_unstuck.offmeshwptrycount = 0
+	
 	for k,movementtype in pairs(gw2_unstuck.movementtype) do
 		if(movementtype) then Player:UnSetMovement(movementtype) end
 		gw2_unstuck.movementtype[k] = false
 	end
+	
+	-- Specify a unstuck_mode before the navigation call to handle unstuck diffrently. Currently not used
+	gw2_unstuck.unstuck_mode = nil
 end
 
-function gw2_unstuck.HandleStuck(mode)
-	if(gw2_unstuck.stucktick > 0 and TimeSince(gw2_unstuck.stucktick) < 250 ) then
+function gw2_unstuck.HandleStuck()
+	-- Throttle
+	if(gw2_unstuck.stucktick > 0 and TimeSince(gw2_unstuck.stucktick) < 200 ) then
 		return gw2_unstuck.lastresult
 	end
 	
 	gw2_unstuck.stucktick = ml_global_information.Now
 	
+	-- Don't handle unstuck
 	if(gw2_unstuck.manualcontrolmode) then
 		gw2_unstuck.Reset()
 		gw2_unstuck.lastresult = false
@@ -69,12 +80,34 @@ function gw2_unstuck.HandleStuck(mode)
 		return gw2_unstuck.lastresult
 	end
 	
+	-- Check conditions
 	if(gw2_common_functions.HasBuffs(Player, ml_global_information.ImmobilizeConditions)) then
 		gw2_unstuck.lastresult = true
 		return gw2_unstuck.lastresult
 	end
 	
-	if(not Player.onmesh) then
+	if(gw2_unstuck.OnMesh()) then
+		gw2_unstuck.lasttimeonmesh = ml_global_information.Now
+		
+		if(table.valid(gw2_unstuck.lastposition)) then
+			-- Attack the object detected in the last unstuck tick
+			if(table.valid(gw2_unstuck.pathblockingobject)) then
+				gw2_unstuck.lastresult = gw2_unstuck.stuckhandlers.attack(gw2_unstuck.pathblockingobject)
+				if(not gw2_unstuck.lastresult) then
+					gw2_unstuck.pathblockingobject = nil
+				end
+			else
+				gw2_unstuck.lastresult = gw2_unstuck.HandleStuck_MovedDistanceCheck()
+			end
+		end
+		gw2_unstuck.lastposition = Player.pos
+	end
+
+	return gw2_unstuck.lastresult
+end
+
+function gw2_unstuck.OnMesh()
+	if(not Player.onmesh and not gw2_unstuck.manualcontrolmode) then
 		local meshstate = NavigationManager:GetNavMeshState()
 		if(meshstate == GLOBAL.MESHSTATE.MESHEMPTY or meshstate == GLOBAL.MESHSTATE.MESHBUILDING or not string.valid(ml_mesh_mgr.currentfilename)) then
 			d("[Unstuck]: No mesh loaded for this map.")
@@ -84,24 +117,9 @@ function gw2_unstuck.HandleStuck(mode)
 		
 		gw2_unstuck.lastresult = gw2_unstuck.HandleOffMesh()
 		gw2_unstuck.lastposition = Player.pos
-		return gw2_unstuck.lastresult
-	else
-		gw2_unstuck.lasttimeonmesh = ml_global_information.Now
-		
-		if(table.valid(gw2_unstuck.lastposition)) then
-			if(table.valid(gw2_unstuck.pathblockingobject)) then
-				gw2_unstuck.lastresult = gw2_unstuck.stuckhandlers.attack(gw2_unstuck.pathblockingobject)
-				if(not gw2_unstuck.lastresult) then
-					gw2_unstuck.pathblockingobject = nil
-				end
-			else
-				gw2_unstuck.lastresult = gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
-			end
-		end
-		gw2_unstuck.lastposition = Player.pos
+		return false
 	end
-
-	return gw2_unstuck.lastresult
+	return true
 end
 
 function gw2_unstuck.HandleOffMesh()
@@ -118,7 +136,7 @@ function gw2_unstuck.HandleOffMesh()
 				d("[Unstuck]: In combat or no waypoint found. Try count: " .. gw2_unstuck.offmeshwptrycount .. " of 10")
 			end
 			
-			ml_global_information.Wait(10000)
+			gw2_unstuck.stucktick = ml_global_information.Now + 10000
 		end
 		return true
 	elseif(gw2_unstuck.lasttimeonmesh == 0 or TimeSince(gw2_unstuck.lasttimeonmesh) > 2000) then
@@ -135,18 +153,18 @@ function gw2_unstuck.HandleOffMesh()
 	return false
 end
 
-function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
+function gw2_unstuck.HandleStuck_MovedDistanceCheck()
 	if(table.valid(gw2_unstuck.lastposition)) then
 		local ppos = Player.pos
 		if(ml_global_information.Player_SwimState ~= GW2.SWIMSTATE.NotInWater) then
 			-- Swimming straight up or down is a valid thing
-			gw2_unstuck.distmoved = Distance3DT(ppos,gw2_unstuck.lastposition)
+			gw2_unstuck.distmoved = math.distance3d(ppos,gw2_unstuck.lastposition)
 		else
-			gw2_unstuck.distmoved = Distance2D(ppos.x,ppos.y,gw2_unstuck.lastposition.x,gw2_unstuck.lastposition.y)
+			gw2_unstuck.distmoved = math.distance2d(ppos,gw2_unstuck.lastposition)
 		end
 		
 		local threshold = gw2_unstuck.ActiveThreshold()
-		local mincount = (mode == nil or mode == "combat") and 3 or 2
+		local mincount = (gw2_unstuck.unstuck_mode == nil or gw2_unstuck.unstuck_mode == "combat") and 3 or 2
 
 		if(gw2_unstuck.distmoved < threshold) then
 			gw2_unstuck.lastaction = nil
@@ -162,14 +180,14 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 			end
 			
 			if(ml_global_information.Player_SwimState ~= GW2.SWIMSTATE.NotInWater) then
-				if(gw2_unstuck.HandleStuck_Swimming(mode,mincount)) then
+				if(gw2_unstuck.HandleStuck_Swimming(mincount)) then
 					return true
 				end
 			elseif(gw2_unstuck.stuckcount > mincount+10) then
 				gw2_obstacle_manager.AddAvoidanceArea({pos = Player.pos, radius = 25})
 				gw2_unstuck.stuckhandlers.movebackward()
 				gw2_unstuck.threshold = 200
-				ml_global_information.Wait(2000)
+				gw2_unstuck.stucktick = ml_global_information.Now + 2000
 				return true
 			elseif(gw2_unstuck.stuckcount > mincount+8) then
 				local dir = math.random(4,5)
@@ -207,14 +225,17 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 						if(table.valid(target) and target.isgadget) then
 							if(gw2_unstuck.lastraycastdetails == nil or target.id ~= gw2_unstuck.lastraycastdetails.id) then
 								gw2_unstuck.lastraycastdetails = { id = target.id, pos = {x = hitx, y = hity, z = Player.pos.z}, a = a, b = b, c = c }
-
+								
+								-- First try interacting
 								if(gw2_unstuck.stuckhandlers.interact(target.id)) then
 									gw2_unstuck.lastaction = "interact"
 									return true
 								end
 								
+								-- Store the object to continue attacking in the nest tick
 								gw2_unstuck.pathblockingobject = { id = target.id, health = (target.health and target.health.current or 100), pos = {x = hitx, y = hity, z = hitz}, start = ml_global_information.Now, lasthealthcheck = ml_global_information.Now}
 								
+								-- Try attacking
 								if(gw2_unstuck.stuckhandlers.attack(gw2_unstuck.pathblockingobject)) then
 									gw2_unstuck.lastaction = "attack"
 									return true	
@@ -224,6 +245,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 					end
 				end
 				
+				-- Try to find a free spot 60 degrees to left side of the player
 				local posleft = gw2_unstuck.rotateposition(60, {x = ppos.x+(ppos.hx*100), y = ppos.y+(ppos.hx*100), z = ppos.z-55})
 				hit,hitx,hity,hitz,a,b,c = RayCast(ppos.x, ppos.y, ppos.z, posleft.x, posleft.y, posleft.z-55, 0)
 				if(not hit and gw2_unstuck.stuckhandlers.moveto(posleft)) then
@@ -236,6 +258,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 					end
 				end
 				
+				-- Try to find a free spot 60 degrees to the right side of the player
 				local posright = gw2_unstuck.rotateposition(-60, {x = ppos.x+(ppos.hx*100), y = ppos.y+(ppos.hx*100), z = ppos.z-55})
 				hit,hitx,hity,hitz,a,b,c = RayCast(ppos.x, ppos.y, ppos.z, posright.x, posright.y, posright.z-55, 0)
 				if(not hit and gw2_unstuck.stuckhandlers.moveto(posright)) then
@@ -261,7 +284,8 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 			gw2_unstuck.laststuckposition = ppos
 			return false
 		end
-
+		
+		-- If an action was performed at the last tick that got us freed, decrease the stuckcount on the stored stuck entry
 		if(gw2_unstuck.laststuckentry and gw2_unstuck.lastaction) then
 			gw2_unstuck.laststuckentry.handled = gw2_unstuck.lastaction
 			if(gw2_unstuck.laststuckentry.stuckcount > 2) then
@@ -277,13 +301,14 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck(mode)
 	return false
 end
 
-function gw2_unstuck.HandleStuck_Swimming(mode,mincount)
+-- Swimming unstuck
+function gw2_unstuck.HandleStuck_Swimming(mincount)
 	if(Player.movementstate == GW2.MOVEMENTSTATE.AboveWaterMoving or Player.movementstate == GW2.MOVEMENTSTATE.AboveWaterNotMoving) then
 		-- Swimming on surface
 		if(gw2_unstuck.stuckcount > mincount+5) then
 			gw2_unstuck.stuckhandlers.swimdown()
 			gw2_unstuck.stuckhandlers.moveforward()
-			ml_global_information.Wait(math.random(500,1000))
+			gw2_unstuck.stucktick = ml_global_information.Now + math.random(500,1000)
 			return true
 		elseif(gw2_unstuck.stuckcount > mincount) then
 			gw2_unstuck.stuckhandlers.moveforward()
@@ -294,12 +319,12 @@ function gw2_unstuck.HandleStuck_Swimming(mode,mincount)
 		if(gw2_unstuck.stuckcount > mincount+5) then
 			gw2_unstuck.stuckhandlers.swimdown()
 			gw2_unstuck.stuckhandlers.moveforward()
-			ml_global_information.Wait(math.random(500,1000))
+			gw2_unstuck.stucktick = ml_global_information.Now + math.random(500,1000)
 			return true
 		elseif(gw2_unstuck.stuckcount > mincount) then
 			gw2_unstuck.stuckhandlers.swimup()
 			gw2_unstuck.stuckhandlers.moveforward()
-			ml_global_information.Wait(math.random(500,1000))
+			gw2_unstuck.stucktick = ml_global_information.Now + math.random(500,1000)
 			return true
 		end
 	end
@@ -307,10 +332,13 @@ function gw2_unstuck.HandleStuck_Swimming(mode,mincount)
 	return false
 end
 
+-- Handle the stored stuck entry.
+-- Perform the last stored action if we succeded to get unstuck here the last time we visited this pos. (If possible)
 function gw2_unstuck.HandleStuckEntry(entry)
 	local retval = false
 	if(table.valid(gw2_unstuck.laststuckentry)) then
-		if(Distance3DT(entry.pos,gw2_unstuck.laststuckentry.pos) < 40 and TimeSince(entry.modified) > 500) then
+		-- Increment the stuck count for this entry if it is the same as the last one
+		if(math.distance3d(entry.pos,gw2_unstuck.laststuckentry.pos) < 40 and TimeSince(entry.modified) > 500) then
 			entry.stuckcount = entry.stuckcount + 1
 			entry.modified = ml_global_information.Now
 		end
@@ -353,7 +381,8 @@ function gw2_unstuck.AddStuckEntry(pos)
 			mapid = ml_global_information.CurrentMapID,
 			modified = now,
 			inwater = ml_global_information.Player_SwimState ~= GW2.SWIMSTATE.NotInWater,
-			waypointcount = 0
+			waypointcount = 0,
+			mode = gw2_unstuck.unstuck_mode
 		}
 		k,entry = now,gw2_unstuck.stuckhistory[now]
 	end
@@ -364,7 +393,7 @@ end
 function gw2_unstuck.GetStuckEntry(pos)
 	if(table.valid(gw2_unstuck.stuckhistory)) then
 		for k,stuckentry in pairs(gw2_unstuck.stuckhistory) do
-			if(Distance3DT(pos,stuckentry.pos) < 40) then
+			if(math.distance3d(pos,stuckentry.pos) < 40) then
 				return k,stuckentry
 			end
 		end
@@ -383,6 +412,7 @@ function gw2_unstuck.ActiveThreshold()
 	return threshold
 end
 
+-- Stuck handlers for reuse
 gw2_unstuck.stuckhandlers = {}
 function gw2_unstuck.stuckhandlers.jump()
 	d("[Unstuck]: Trying to jump.")
@@ -408,7 +438,7 @@ function gw2_unstuck.stuckhandlers.moveto(pos)
 	if(table.valid(pos)) then
 		Player:SetFacing(pos.x,pos.y,pos.z)
 		gw2_unstuck.stuckhandlers.moveforward()
-		ml_global_information.Wait(math.random(1500,2000))
+		gw2_unstuck.stucktick = ml_global_information.Now + math.random(1500,2000)
 		return true
 	end
 	return false
@@ -456,7 +486,7 @@ function gw2_unstuck.stuckhandlers.waypoint()
 			if(table.valid(wp) and wp.distance > 500) then
 				Player:StopMovement()
 				gw2_unstuck.lastwptimer = ml_global_information.Now
-				ml_global_information.Wait(math.random(3000,5000))
+				gw2_unstuck.stucktick = ml_global_information.Now + math.random(3000,5000)
 				Player:TeleportToWaypoint(wp.id)
 				return true
 			else
@@ -492,7 +522,7 @@ function gw2_unstuck.stuckhandlers.attack(object)
 		Player:StopMovement()
 		
 		local maxrange = skill.maxrange > 150 and skill.maxrange or 150
-		local dist = Distance2D(Player.pos.x,Player.pos.y,object.pos.x,object.pos.y)
+		local dist = math.distance2d(Player.pos,object.pos)
 		
 		Player:SetFacingExact(object.pos.x,object.pos.y,target.pos.z)
 		if(dist > maxrange) then
@@ -510,7 +540,7 @@ function gw2_unstuck.stuckhandlers.attack(object)
 			Player:SetTarget(target.id)
 		end
 		
-		if(Player.castinfo.slot == ml_global_information.MAX_SKILLBAR_SLOTS) then
+		if(Player.castinfo.duration == 0) then
 			if(skill.isgroundtargeted) then
 				Player:CastSpell(skill.slot,object.pos.x,object.pos.y,target.pos.z)
 			else
@@ -533,12 +563,12 @@ function gw2_unstuck.stuckhandlers.interact(id)
 				end
 				Player:SetFacingExact(target.x,target.y,target.z)
 				Player:Interact(target.id)
-				ml_global_information.Wait(math.random(750,1000))
+				gw2_unstuck.stucktick = ml_global_information.Now + math.random(750,1000)
 				return true
 			end
 		end
 	end
-	return false	
+	return false
 end
 
 function gw2_unstuck.stuckhandlers.stop()
@@ -547,6 +577,7 @@ function gw2_unstuck.stuckhandlers.stop()
 	BehaviorManager:Stop()
 end
 
+-- Rotate pos around center.
 function gw2_unstuck.rotateposition(deg,pos,center)
 	deg = deg*(math.pi/180)
 	center = center or ml_global_information.Player_Position
@@ -574,8 +605,9 @@ end
 RegisterEventHandler("Module.Initalize",gw2_unstuck.Init)
 
 function gw2_unstuck.Update(_, tick)
-	if(TimeSince(gw2_unstuck.updatetick) > 250) then
+	if(TimeSince(gw2_unstuck.updatetick) > 1000) then
 		gw2_unstuck.updatetick = tick
+		
 		for k,entry in pairs(gw2_unstuck.stuckhistory) do			
 			if(TimeSince(entry.modified) > 120000) then
 				-- Decrease the stuck count over time
@@ -586,6 +618,7 @@ function gw2_unstuck.Update(_, tick)
 					gw2_unstuck.stuckhistory[k] = nil
 				end
 			elseif(entry.mapid ~= ml_global_information.CurrentMapID and entry.handled == false) then
+				-- No need to store unhandled entries if we change map
 				gw2_unstuck.stuckhistory[k] = nil
 			end
 		end
