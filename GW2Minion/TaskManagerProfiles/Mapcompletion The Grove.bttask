@@ -1,0 +1,1248 @@
+local tbl = 
+{
+	name = "Mapcompletion The Grove",
+	properties = 
+	{
+		failure = 1,
+		order = 1,
+		repeattasks = 2,
+	},
+	tasks = 
+	{
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 0,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "caledon wp",
+				pos = 
+				{
+					hx = 0.89310783147812,
+					hy = -0.07884768396616,
+					hz = 0.44287857413292,
+					x = -2074.0947265625,
+					y = 10588.794921875,
+					z = -2769.2270507813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 1,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								contentid = 17513,
+								gadget = true,
+								name = "",
+							},
+						},
+					},
+					order = 0,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "",
+						type = "tm_st_interact",
+					},
+				},
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "vista",
+				pos = 
+				{
+					hx = -0.76354444026947,
+					hy = -0.64575523138046,
+					hz = 0,
+					x = 27.480285644531,
+					y = 10433.451171875,
+					z = -3835.9702148438,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 2,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = 0.14232003688812,
+					hy = -0.92734682559967,
+					hz = 0.34608218073845,
+					x = -1444.0229492188,
+					y = 6008.8432617188,
+					z = -3087.7390136719,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 3,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								contentid = 17513,
+								gadget = true,
+								name = "",
+							},
+						},
+					},
+					order = 0,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "",
+						type = "tm_st_interact",
+					},
+				},
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "vista",
+				pos = 
+				{
+					hx = 0.48461857438087,
+					hy = -0.6484283208847,
+					hz = 0.58709919452667,
+					x = 5689.216796875,
+					y = 3894.6098632813,
+					z = -3252.1071777344,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 4,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.87892615795135,
+					hy = -0.39138430356979,
+					hz = 0.27259340882301,
+					x = 4690.8330078125,
+					y = 960.55688476563,
+					z = -2914.9956054688,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 5,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								contentid = 17513,
+								gadget = true,
+								name = "",
+							},
+						},
+					},
+					order = 0,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "",
+						type = "tm_st_interact",
+					},
+				},
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "vista",
+				pos = 
+				{
+					hx = -0.76176184415817,
+					hy = -0.22688108682632,
+					hz = 0.60683101415634,
+					x = 3619.3522949219,
+					y = 772.53967285156,
+					z = -3499.05859375,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 6,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 648,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.67479264736176,
+					hy = 0.73800736665726,
+					hz = 0,
+					x = 1298.6282958984,
+					y = 2168.1149902344,
+					z = -4050.244140625,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 7,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 648,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.071377582848072,
+					hy = -0.9213695526123,
+					hz = 0.38207772374153,
+					x = 1266.5718994141,
+					y = 706.56591796875,
+					z = -3980.7927246094,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 8,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.92898088693619,
+					hy = -0.3701277077198,
+					hz = 0,
+					x = 1481.1458740234,
+					y = 1056.42578125,
+					z = -2685.9416503906,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 9,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.19600863754749,
+					hy = 0.89319980144501,
+					hz = 0.40469092130661,
+					x = 2377.7731933594,
+					y = -3238.7541503906,
+					z = -2064.5454101563,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 10,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.22550827264786,
+					hy = 0.97424125671387,
+					hz = 0,
+					x = -78.052909851074,
+					y = -2018.8796386719,
+					z = -1193.0505371094,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 11,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.85982775688171,
+					hy = 0.4439218044281,
+					hz = 0.25224930047989,
+					x = -2410.9287109375,
+					y = -1138.1837158203,
+					z = -1727.6225585938,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 12,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.28331890702248,
+					hy = 0.87534248828888,
+					hz = 0.39179840683937,
+					x = -3441.5017089844,
+					y = 1277.0726318359,
+					z = -1868.6380615234,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 13,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = 0.018207663670182,
+					hy = 0.92260229587555,
+					hz = 0.38532263040543,
+					x = -3758.4721679688,
+					y = 3522.9497070313,
+					z = -1990.6256103516,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 14,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "reckoners wp",
+				pos = 
+				{
+					hx = 0.49978676438332,
+					hy = -0.86614847183228,
+					hz = 0,
+					x = 965.08288574219,
+					y = 2105.3737792969,
+					z = -1789.7974853516,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 15,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.053771324455738,
+					hy = 0.99593812227249,
+					hz = 0.072221368551254,
+					x = 4270.5341796875,
+					y = 2089.009765625,
+					z = -2311.2761230469,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 16,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								contentid = 17513,
+								gadget = true,
+								name = "",
+							},
+						},
+					},
+					order = 0,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "",
+						type = "tm_st_interact",
+					},
+				},
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "vista",
+				pos = 
+				{
+					hx = -0.57475513219833,
+					hy = 0.3849573135376,
+					hz = 0.72212493419647,
+					x = 3198.423828125,
+					y = -906.35955810547,
+					z = -1113.6983642578,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 17,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = 0.91587299108505,
+					hy = 0.40146812796593,
+					hz = 0,
+					x = 5206.609375,
+					y = -3277.80078125,
+					z = -1131.0570068359,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 18,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.36426886916161,
+					hy = 0.87345486879349,
+					hz = 0.32308641076088,
+					x = 1374.0242919922,
+					y = -2731.5268554688,
+					z = -379.30731201172,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 19,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "ronans wp",
+				pos = 
+				{
+					hx = 0.20873863995075,
+					hy = 0.92306196689606,
+					hz = 0.32308638095856,
+					x = 1919.8659667969,
+					y = 789.85821533203,
+					z = -29.983568191528,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 20,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 507,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = 0.94320696592331,
+					hy = 0.20368680357933,
+					hz = 0.26243522763252,
+					x = 3699.0029296875,
+					y = 3313.8757324219,
+					z = -52.811534881592,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 21,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								contentid = 17513,
+								gadget = true,
+								name = "Unknown",
+							},
+						},
+					},
+					order = 0,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "",
+						type = "tm_st_interact",
+					},
+				},
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "vista",
+				pos = 
+				{
+					hx = 0.6068931221962,
+					hy = 0.70560711622238,
+					hz = 0.36578589677811,
+					x = 448.86267089844,
+					y = 100.7787322998,
+					z = -953.38525390625,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 22,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.92682337760925,
+					hy = -0.19715158641338,
+					hz = 0.31957730650902,
+					x = -2612.439453125,
+					y = -1424.4819335938,
+					z = -17.07145690918,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 23,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.9279208779335,
+					hy = 0.37277716398239,
+					hz = 0,
+					x = -3580.3957519531,
+					y = 802.90930175781,
+					z = -378.10238647461,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 24,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = -0.91598707437515,
+					hy = -0.40007582306862,
+					hz = 0.030116099864244,
+					x = -3988.8874511719,
+					y = 6573.7563476563,
+					z = -1073.4755859375,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 25,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								contentid = 17513,
+								gadget = true,
+								name = "",
+							},
+						},
+					},
+					order = 0,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "",
+						type = "tm_st_interact",
+					},
+				},
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "vista",
+				pos = 
+				{
+					hx = -0.65115767717361,
+					hy = 0.75894248485565,
+					hz = 0,
+					x = -2039.0819091797,
+					y = 5764.5327148438,
+					z = -993.19232177734,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 26,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = 0.62869757413864,
+					hy = 0.66984301805496,
+					hz = 0.39503118395805,
+					x = 736.02905273438,
+					y = 5986.5561523438,
+					z = -434.05004882813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 27,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 91,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = 0.81997013092041,
+					hy = 0.48360455036163,
+					hz = 0.30622798204422,
+					x = 5592.7944335938,
+					y = 1661.5899658203,
+					z = -389.61575317383,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+	},
+	version = 0,
+}
+
+
+
+return tbl
