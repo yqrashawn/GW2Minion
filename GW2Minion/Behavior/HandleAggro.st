@@ -22,7 +22,7 @@ local tbl =
 						finishcode = "",
 						info = "Find Aggro Target and Set the aggro context.combat_targetid",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "local target = gw2_common_functions.GetBestAggroTarget()\nif (table.valid(target) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Monsters\"),target.contentid)) then\n\t\tif(context.combat_targetid ~= target.id) then\n\t\t\t\tPlayer:StopMovement()\n\t\tend\n\t\tcontext.combat_targetid = target.id\n\t\tcontext.combat_targetpos = target.pos\n\t\tcontext.status = \"Attacking Target \"..target.name\n\t\tself:success()\n\t\treturn\nend\ncontext.combat_targetid = nil\nself:fail()\n",
+						runcode = "local target = gw2_common_functions.GetBestAggroTarget()\nif (table.valid(target) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Monsters\"),target.contentid)) then\n\t\tif(context.combat_targetid ~= target.id) then\n\t\t\t\tPlayer:StopMovement()\n\t\tend\n\t\tcontext.combat_targetid = target.id\n\t\tcontext.combat_targetpos = target.pos\n\t\tcontext.status = \"Attacking Target \"..target.name\n\t\tself:success()\n\t\treturn\nelseif(table.valid(target)) then\n\t\tcontext.combat_targetid = nil\nend\n\nself:fail()\n",
 						startcode = "",
 					},
 				},
