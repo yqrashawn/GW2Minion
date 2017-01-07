@@ -153,58 +153,66 @@ function ml_navigation.Navigate(event, ticks )
 						
 					elseif (string.contains(nextnode.type,"CUBE")) then
 -- Cube Navigation	
+						if(not gw2_unstuck.HandleStuck()) then
+							-- Check if we left our path
+							if ( not ml_navigation:IsStillOnPath(ppos,ml_navigation.pathsettings.pathdeviationdistance) ) then return end
 					
-						-- Check if we left our path
-						if ( not ml_navigation:IsStillOnPath(ppos,ml_navigation.pathsettings.pathdeviationdistance) ) then return end
-				
-						-- Check if the next node is reached:
-						local dist3D = math.distance3d(nextnode,ppos)
-						if ( dist3D < ml_navigation.pathsettings.navpointreacheddistance*1.5) then
-							-- We reached the node
-							d("[Navigation] - Cube Node reached. ("..tostring(math.round(dist3D,2)).." < "..tostring(ml_navigation.pathsettings.navpointreacheddistance*1.5)..")")
-							ml_navigation.pathindex = ml_navigation.pathindex + 1							
-						else						
-							-- We have not yet reached our node
-							local dist2D = math.distance2d(nextnode,ppos)
-							if ( dist2D < ml_navigation.pathsettings.navpointreacheddistance*1.5 ) then
-								-- We are on the correct horizontal position, but our goal is now either above or below us
-								-- compensate for the fact that the char is always swimming on the surface between 0 - 50 @height
-								local pHeight = ppos.z
-								if ( nextnode.z < 50 ) then pHeight = nextnode.z end -- if the node is in shallow water (<50) , fix the playerheight at this pos. Else it gets super wonky at this point.
-								local distH = math.abs(math.abs(pHeight) - math.abs(nextnode.z))
-								
-								if ( distH > ml_navigation.pathsettings.navpointreacheddistance ) then							
-									-- Move Up / Down only until we reached the node
-									Player:StopHorizontalMovement()
-									if ( pHeight > nextnode.z ) then	-- minus is "up" in gw2
-										Player:SetMovement(GW2.MOVEMENTTYPE.SwimUp)
-									else							
-										Player:SetMovement(GW2.MOVEMENTTYPE.SwimDown)
-									end
+							-- Check if the next node is reached:
+							local dist3D = math.distance3d(nextnode,ppos)
+							if ( dist3D < ml_navigation.pathsettings.navpointreacheddistance*1.5) then
+								-- We reached the node
+								d("[Navigation] - Cube Node reached. ("..tostring(math.round(dist3D,2)).." < "..tostring(ml_navigation.pathsettings.navpointreacheddistance*1.5)..")")
+								ml_navigation.pathindex = ml_navigation.pathindex + 1							
+							else						
+								-- We have not yet reached our node
+								local dist2D = math.distance2d(nextnode,ppos)
+								if ( dist2D < ml_navigation.pathsettings.navpointreacheddistance*1.5 ) then
+									-- We are on the correct horizontal position, but our goal is now either above or below us
+									-- compensate for the fact that the char is always swimming on the surface between 0 - 50 @height
+									local pHeight = ppos.z
+									if ( nextnode.z < 50 ) then pHeight = nextnode.z end -- if the node is in shallow water (<50) , fix the playerheight at this pos. Else it gets super wonky at this point.
+									local distH = math.abs(math.abs(pHeight) - math.abs(nextnode.z))
+									
+									if ( distH > ml_navigation.pathsettings.navpointreacheddistance ) then							
+										-- Move Up / Down only until we reached the node
+										Player:StopHorizontalMovement()
+										if ( pHeight > nextnode.z ) then	-- minus is "up" in gw2
+											Player:SetMovement(GW2.MOVEMENTTYPE.SwimUp)
+										else							
+											Player:SetMovement(GW2.MOVEMENTTYPE.SwimDown)
+										end
+										
+									else
+										-- We have a good "height" position already, let's move a bit more towards the node on the horizontal plane
+										Player:StopVerticalMovement()
+										Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)						
+										Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+									end	
 									
 								else
-									-- We have a good "height" position already, let's move a bit more towards the node on the horizontal plane
 									Player:StopVerticalMovement()
 									Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)						
 									Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
-								end	
-								
-							else
-								Player:StopVerticalMovement()
-								Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)						
-								Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+								end
 							end
+						else
+							ml_navigation:ResetCurrentPath()
 						end
 -- CUBE Navigation END					
 					else
--- Normal Ground Navigation							
+-- Normal Ground Navigation
+					if(not gw2_unstuck.HandleStuck()) then
 						ml_navigation:NavigateToNode(ppos,nextnode)
+					else
+						ml_navigation:ResetCurrentPath()
+					end
 -- Normal Ground Navigation END
 
 					end
 				else
 					d("[Navigation] - Path end reached.")
 					ml_navigation.StopMovement()
+					gw2_unstuck.Reset()
 				end
 				
 			elseif (ml_navigation.pathsettings.navigationmode == 2 ) then
@@ -340,10 +348,15 @@ end
 	
 -- for replacing the original c++ navi with our lua version
 function NavigationManager:MoveTo(x, y, z, crap, navigationmode, randomnodes, smoothturns)
+	-- Return a valid value so that the moveto task does not fail while we move back to the mesh.
+	if(not ml_navigation.omc_id and not gw2_unstuck.OnMesh()) then return 0 end
+	
 	return ml_navigation:MoveTo(x, y, z, navigationmode, randomnodes, smoothturns)
 end
+
 function Player:StopMovement()
 	ml_navigation:ResetCurrentPath()
 	ml_navigation:ResetOMCHandler()
+	gw2_unstuck.Reset()
 	Player:Stop()
 end

@@ -24,7 +24,7 @@ function gw2_obstacle_manager.AddAvoidanceArea(options)
 		local i,existing = next(gw2_obstacle_manager.avoidanceareas)
 		
 		while i and existing and add do
-			if(Distance2D(existing.pos.x,existing.pos.y,options.pos.x,options.pos.y) < existing.radius) then
+			if(math.distance2d(existing.pos,options.pos) < existing.radius) then
 				add = false
 			end
 			i,existing = next(gw2_obstacle_manager.avoidanceareas,i)
@@ -83,11 +83,10 @@ end
 
 function gw2_obstacle_manager.SetupAvoidanceAreas()
 	if(table.valid(gw2_obstacle_manager.avoidanceareas)) then
-		local avoidance = {}
 		for _,obstacle in pairs(gw2_obstacle_manager.avoidanceareas) do
-			table.insert(avoidance, {x = obstacle.pos.x, y = obstacle.pos.y, z = obstacle.pos.z, r = obstacle.radius})
+			ml_navigation:AddAvoidanceArea(obstacle.pos, obstacle.radius)
 		end
-		NavigationManager:SetAvoidanceAreas(avoidance)
+		NavigationManager:SetAvoidanceAreas(ml_navigation.avoidanceareas)
 	end
 end
 
