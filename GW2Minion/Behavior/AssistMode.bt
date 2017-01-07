@@ -106,7 +106,7 @@ local tbl =
 								finishcode = "",
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "-- In case the setting changes right in the middle of movement\nif(context.combat_ismoving and Settings.GW2Minion.moveintocombatrange == false) then\n\t\tPlayer:StopMovement()\n\tcontext.combat_ismoving = false\nend\nself:fail()",
+								runcode = "-- In case the setting changes right in the middle of movement\nif(context.combat_ismoving and Settings.GW2Minion.moveintocombatrange == false) then\n\t\tPlayer:StopMovement()\n\t\tcontext.combat_moveintocombatrange = false\n\t\tcontext.combat_ismoving = false\nend\nself:fail()",
 								startcode = "",
 							},
 						},

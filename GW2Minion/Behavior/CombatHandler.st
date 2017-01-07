@@ -216,7 +216,7 @@ local tbl =
 	{
 		filename = "CombatHandler.st",
 		finishcode = "",
-		info = "Handle combat\ncontext.combat_targetid\ncontext.combat_targetpos",
+		info = "Handle combat\ncontext.combat_targetid\ncontext.combat_targetpos\n\nOptional (But recommended)\ncontext.combat_moveintocombatrange = true/false -- enable or disable moving into combat range",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",
