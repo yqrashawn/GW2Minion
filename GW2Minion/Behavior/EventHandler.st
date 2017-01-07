@@ -55,7 +55,7 @@ local tbl =
 					},
 					settings = 
 					{
-						maxduration = 900,
+						maxduration = 600,
 					},
 					variables = 
 					{
@@ -82,8 +82,8 @@ local tbl =
 		finishcode = "context.event_id = nil\ncontext.event_reached = false\ncontext.event_marker = nil\n",
 		info = "EventHandler",
 		menucode = "",
-		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\nif (context) then\n\tGUI:Text(\"Event ID: \"..tostring(context.event_id or 0))\n\tGUI:Text(\"Event Reaced: \"..tostring(context.event_reached or false))\n\tGUI:Text(\"Event MaxDuration: \"..tostring(context.event_maxduration or 0))\n\n\tif(context.event_start) then\n\t\t\tGUI:Text(\"Time remaining: \" .. tostring(math.ceil(900-(TimeSince(context.event_start)/1000))))\n\telse\n\t\tGUI:Text(\"No event start time set\")\n\tend\nend",
-		runcode = "context.doevents = self.settings.doevents == nil and Settings.GW2Minion.doevents or self.settings.doevents\n\ncontext.event_lastevent = context.event_lastevent or {}\nif(context.event_id and context.event_id ~= context.event_lastevent.id) then\n\tcontext.event_lastevent = {id = context.event_id, start = context.event_start}\nend",
+		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\nif (context) then\n\tGUI:Text(\"Event ID: \"..tostring(context.event_id or 0))\n\tGUI:Text(\"Event Reaced: \"..tostring(context.event_reached or false))\n\tGUI:Text(\"Event MaxDuration: \"..tostring(context.event_maxduration or 0))\n\tlocal maxduration = context.event_maxduration or 0\n\tif(maxduration and context.event_start) then\n\t\t\tGUI:Text(\"Time remaining: \" .. tostring(math.ceil(maxduration-(TimeSince(context.event_start)/1000))))\n\telse\n\t\tGUI:Text(\"No event start time or max duration set\")\n\tend\nend",
+		runcode = "context.doevents = self.settings.doevents == nil and Settings.GW2Minion.doevents or self.settings.doevents\n\ncontext.event_lastevent = context.event_lastevent or {}",
 		startcode = "",
 		subtreeuicode = "",
 	},
