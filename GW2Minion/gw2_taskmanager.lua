@@ -1,3 +1,4 @@
+-- Heartquest controller
 gw2_tm_heartquest = {}
 gw2_tm_heartquest.lastcheck = 0
 function gw2_tm_heartquest:CanTaskRun_TM(taskProperties,customProperties)
@@ -17,6 +18,7 @@ function gw2_tm_heartquest:CanTaskRun_TM(taskProperties,customProperties)
 	return true
 end
 
+-- Heropoint controller
 gw2_tm_heropoint = {}
 gw2_tm_heropoint.lastcheck = 0
 function gw2_tm_heropoint:CanTaskRun_TM(taskProperties,customProperties)
@@ -35,6 +37,7 @@ function gw2_tm_heropoint:CanTaskRun_TM(taskProperties,customProperties)
 	return true
 end
 
+-- Test controller
 gw2_tm_test = {}
 gw2_tm_test.lastcheck = 0
 function gw2_tm_test:CanTaskRun_TM(taskProperties,customProperties)
@@ -56,6 +59,7 @@ function gw2_taskmanager.Init()
 		ml_task_mgr.taskpath = GetLuaModsPath()..[[GW2Minion\TaskManagerProfiles\]]
 		ml_task_mgr.GetMapID = function() return ml_global_information.CurrentMapID end
 		ml_task_mgr.GetPlayerPos = function() return ml_global_information.Player_Position end
+		ml_task_mgr.DrawBotProperties = gw2_taskmanager.DrawBotProperties
 		ml_task_mgr.Init()
 		
 		ml_task_mgr.AddTaskType("tm_grind", "GrindMode.bt", nil, {displayname = GetString("Grind mode")})
@@ -83,4 +87,26 @@ function gw2_taskmanager.Init()
 		--ml_task_mgr.AddSubTaskType("tm_st_test", "blank.st", nil, {displayname = GetString("Do nothing")})	
 	end
 end
+
+-- Draw bot specific properties in the task dialog
+function gw2_taskmanager.DrawBotProperties(taskProperties)
+	if(table.valid(taskProperties)) then
+		if(taskProperties.gw2_trytosurvive == nil) then taskProperties.gw2_trytosurvive = false end
+		if(taskProperties.gw2_failondeath == nil) then taskProperties.gw2_failondeath = false end
+		if(taskProperties.gw2_failondeathcount == nil) then taskProperties.gw2_failondeathcount = 4 end
+		
+		taskProperties.gw2_trytosurvive = GUI:Checkbox(GetString("Fight aggro before reaching the start position"), taskProperties.gw2_trytosurvive)
+		if (GUI:IsItemHovered()) then GUI:SetTooltip(GetString("If the health starts getting low before reaching the start position, start fighting aggro enemies.")) end
+		
+		taskProperties.gw2_failondeath = GUI:Checkbox(GetString("Fail the task if dying before the start position"), taskProperties.gw2_failondeath)
+		if (GUI:IsItemHovered()) then GUI:SetTooltip(GetString("Stop running this task if we die too much.")) end
+		
+		if(taskProperties.gw2_failondeath) then
+			taskProperties.gw2_failondeathcount = GUI:InputInt(GetString("Max death count"),taskProperties.gw2_failondeathcount)
+			if (GUI:IsItemHovered()) then GUI:SetTooltip(GetString("How many times we have to die before failing the task.")) end
+			if(taskProperties.gw2_failondeathcount < 0) then taskProperties.gw2_failondeathcount = 0 end
+		end
+	end
+end
+
 RegisterEventHandler("Module.Initalize",gw2_taskmanager.Init)
