@@ -81,7 +81,7 @@ local tbl =
 								finishcode = "",
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Defeated ) then\n\t\tif(table.valid(context.taskmanager_activetask)) then\n\t\t\t\tcontext.taskmanager_activetask:ResetPreTask()\n\t\t\t\tcontext.taskmanager_activetask:ResetPostTask()\n\t\tend\n\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Defeated ) then\n\t\tcontext.deathcount = context.deathcount and context.deathcount + 1 or 0\n\n\t\tlocal task = context.taskmanager_activetask\n\t\tif(table.valid(task)) then\n\t\t\t\ttask:ResetPreTask()\n\t\t\t\ttask:ResetPostTask()\n\t\t\t\ttask:CallEvent(\"Death\")\n\n\t\t\t\tif(task.taskProperties.gw2_failondeath and task.taskProperties.gw2_failondeathcount) then\n\t\t\t\t\t\tif(context.deathcount > task.taskProperties.gw2_failondeathcount) then\n\t\t\t\t\t\t\t\ttask:Fail()\n\t\t\t\t\t\tend\n\t\t\t\tend\n\t\tend\n\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 								startcode = "",
 							},
 						},
@@ -105,22 +105,54 @@ local tbl =
 					},
 					variables = 
 					{
-						info = "",
+						info = "Death",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 					},
 				},
 				
 				{
-					class = "SubTree",
+					class = "Sequence",
 					nodes = 
 					{
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "",
+								monitorcode = "",
+								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Downed ) then\n\t\tif(table.valid(context.taskmanager_activetask)) then\n\t\t\t\tcontext.taskmanager_activetask:CallEvent(\"Downed\")\n\t\tend\n\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+								startcode = "",
+							},
+						},
+						
+						{
+							class = "SubTree",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								filename = "DownedHandler.st",
+							},
+						},
 					},
 					settings = 
 					{
 					},
 					variables = 
 					{
-						filename = "DownedHandler.st",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 					},
 				},
 				
@@ -142,7 +174,7 @@ local tbl =
 								finishcode = "",
 								info = "Setup active task",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "local task = context.taskmanager_activeprofile:ActiveTask()\n\nif(table.valid(task)) then\n\t\tif(context.taskmanager_activeprofile.activeindex ~= context.taskmanager_activeindex) then\n\t\t\t\tcontext.taskmanager_activeindex = context.taskmanager_activeprofile.activeindex\n\t\t\t\td(\"[TaskManager]: Active task index changed. Waiting a bit.\")\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tml_global_information.Wait(500,1000)\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\n\t\tif(not task:IsValid() or task.completed or task.failed or (not task.started and not task:CanStart())) then\n\t\t\t\ttask = context.taskmanager_activeprofile:GetNextTask()\n\t\tend\n\n\t\tif(task:IsValid()) then\n\t\t\t\tcontext.taskmanager_activetask = task\n\t\t\t\tself:fail()\n\t\telse\n\t\t\t\td(\"[TaskManager]: No available tasks left.\")\n\t\t\t\tcontext.taskmanager_activetask = nil\n\t\t\t\tself:success()\n\t\tend\nelse\n\t\tself:success()\nend\n",
+								runcode = "local task = context.taskmanager_activeprofile:ActiveTask()\n\nif(table.valid(task)) then\n\n\t\tif(not task:IsValid() or task.completed or task.failed or (not task.started and not task:CanStart())) then\n\t\t\t\ttask = context.taskmanager_activeprofile:GetNextTask()\t\t\t\t\n\t\tend\n\n\t\tif(context.taskmanager_activeprofile.activeindex ~= context.taskmanager_activeindex) then\n\t\t\t\tcontext.taskmanager_activeindex = context.taskmanager_activeprofile.activeindex\n\t\t\t\td(\"[TaskManager]: Active task index changed. Waiting a bit.\")\n\t\t\t\tcontext.deathcount = 0\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tml_global_information.Wait(500,1000)\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\n\t\tif(task:IsValid()) then\n\t\t\t\tcontext.taskmanager_activetask = task\n\t\t\t\tself:fail()\n\t\telse\n\t\t\t\td(\"[TaskManager]: No available tasks left.\")\n\t\t\t\tcontext.taskmanager_activetask = nil\n\t\t\t\tself:success()\n\t\tend\nelse\n\t\tself:success()\nend\n",
 								startcode = "",
 							},
 						},
@@ -215,6 +247,52 @@ local tbl =
 									variables = 
 									{
 										info = "Move to start map",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+									},
+								},
+								
+								{
+									class = "Sequence",
+									nodes = 
+									{
+										
+										{
+											class = "Action",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+											},
+											variables = 
+											{
+												finishcode = "",
+												info = "",
+												monitorcode = "",
+												runcode = "local task = context.taskmanager_activetask\n\nif(self.aggro_minhp and TimeSince(self.aggro_lastset) > 300000) then\n\t\tself.aggro_minhp = nil\nend\n\nif(not self.aggro_minhp) then\n\t\tself.aggro_minhp = math.random(40,60)\n\t\tself.aggro_lastset = ml_global_information.Now\nend\n\nif(self.aggro_minhp and not task.startpositionreached and task.taskProperties.gw2_trytosurvive) then\n\t\tif(ml_global_information.Player_Health.percent < self.aggro_minhp) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\n\nself:fail()",
+												startcode = "",
+											},
+										},
+										
+										{
+											class = "SubTree",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+											},
+											variables = 
+											{
+												filename = "HandleAggro.st",
+											},
+										},
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
 									},
 								},
@@ -321,7 +399,7 @@ local tbl =
 										finishcode = "",
 										info = "Run custom task",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "local task = context.taskmanager_activetask\nif(task:Run()) then\n\t\tself:running()\nelse\n\t\tself:fail()\nend",
+										runcode = "local task = context.taskmanager_activetask\n\nif(task:Run()) then\n\t\tself:running()\nelse\n\t\tself:fail()\nend",
 										startcode = "",
 									},
 								},
