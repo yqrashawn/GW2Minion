@@ -1,0 +1,1344 @@
+local tbl = 
+{
+	name = "Mapcompletion Rata Sum",
+	properties = 
+	{
+		failure = 1,
+		order = 1,
+		repeattasks = 1,
+	},
+	tasks = 
+	{
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 0,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[WP] Metrical Court",
+				pos = 
+				{
+					hx = 0.22402356564999,
+					hy = 0.71895533800125,
+					hz = 0.65796405076981,
+					x = 4692.7294921875,
+					y = 4715.4462890625,
+					z = -15190.182617188,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 1,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Forge Hall",
+				pos = 
+				{
+					hx = -0.30979695916176,
+					hy = 0.75400561094284,
+					hz = 0.57922476530075,
+					x = 5258.4555664063,
+					y = 7567.2895507813,
+					z = -15190.141601563,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 2,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[WP] Magustan Court",
+				pos = 
+				{
+					hx = -0.25084033608437,
+					hy = 0.75475251674652,
+					hz = 0.60615819692612,
+					x = 2871.2346191406,
+					y = 9696.048828125,
+					z = -15190.1484375,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 3,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[Vista] Forge Hall",
+				pos = 
+				{
+					hx = -0.01691353879869,
+					hy = -0.59653609991074,
+					hz = 0.80240797996521,
+					x = 4391.1455078125,
+					y = 7174.69921875,
+					z = -15865.482421875,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 4,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] College of Dynamics",
+				pos = 
+				{
+					hx = -0.72120028734207,
+					hy = -0.2322184741497,
+					hz = 0.65264439582825,
+					x = -1205.2189941406,
+					y = 9011.2177734375,
+					z = -15193.360351563,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 5,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[WP] Magicat Court",
+				pos = 
+				{
+					hx = -0.49236384034157,
+					hy = -0.70252031087875,
+					hz = 0.51385122537613,
+					x = -1772.0974121094,
+					y = 5863.8310546875,
+					z = -15190.336914063,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 7,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] College of Synergy",
+				pos = 
+				{
+					hx = -0.3196739256382,
+					hy = -0.45677208900452,
+					hz = 0.83016133308411,
+					x = 836.59802246094,
+					y = 2672.0173339844,
+					z = -15191.776367188,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 6,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 651,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Arcane Council",
+				pos = 
+				{
+					hx = -0.54686498641968,
+					hy = -0.6984601020813,
+					hz = 0.46161910891533,
+					x = 1440.9666748047,
+					y = 6764.4814453125,
+					z = -19218.36328125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 8,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[WP] Accountancy",
+				pos = 
+				{
+					hx = -0.54909300804138,
+					hy = 0.57363206148148,
+					hz = 0.60781836509705,
+					x = 2093.154296875,
+					y = 6630.0615234375,
+					z = -14325.954101563,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 9,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Arcane Council",
+				pos = 
+				{
+					hx = -0.79655140638351,
+					hy = 0.40113934874535,
+					hz = 0.45231962203979,
+					x = 1356.7965087891,
+					y = 6784.2685546875,
+					z = -14325.954101563,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 10,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] ???",
+				pos = 
+				{
+					hx = 0.83423960208893,
+					hy = 0.24729219079018,
+					hz = 0.49283954501152,
+					x = 5402.806640625,
+					y = 7799.6337890625,
+					z = -14253.631835938,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 11,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Polymock Atrium",
+				pos = 
+				{
+					hx = 0.70748114585876,
+					hy = -0.5476433634758,
+					hz = 0.44671821594238,
+					x = 6692.0478515625,
+					y = 6720.42578125,
+					z = -14350.165039063,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 12,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Vigil Recruiting Station",
+				pos = 
+				{
+					hx = 0.16283120214939,
+					hy = 0.82154327630997,
+					hz = 0.54639971256256,
+					x = 5693.3876953125,
+					y = 9550.3232421875,
+					z = -14313.631835938,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 13,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Artisan Hall",
+				pos = 
+				{
+					hx = -0.73611223697662,
+					hy = 0.64120215177536,
+					hz = 0.21679154038429,
+					x = -1282.0141601563,
+					y = 8859.6875,
+					z = -14253.923828125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 14,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Skinner Hall",
+				pos = 
+				{
+					hx = -0.18302983045578,
+					hy = -0.93507277965546,
+					hz = 0.30354398488998,
+					x = 847.59588623047,
+					y = 2339.7414550781,
+					z = -14253.90234375,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 15,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Depot. Of Arcane Eye",
+				pos = 
+				{
+					hx = -0.94564843177795,
+					hy = -0.2592291533947,
+					hz = 0.19633981585503,
+					x = -681.72760009766,
+					y = 1920.5250244141,
+					z = -14313.631835938,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 16,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Priory Recruiting Station",
+				pos = 
+				{
+					hx = 0.68115526437759,
+					hy = -0.5913262963295,
+					hz = 0.43169513344765,
+					x = 2203.8918457031,
+					y = 1401.1140136719,
+					z = -14313.631835938,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 17,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[Vista] Synergetic Union",
+				pos = 
+				{
+					hx = 0.96909594535828,
+					hy = 0.24668420851231,
+					hz = 0,
+					x = 1504.0141601563,
+					y = 2680.4250488281,
+					z = -14515.436523438,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 18,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[WP] Auxiliary",
+				pos = 
+				{
+					hx = -0.68312209844589,
+					hy = 0.61759299039841,
+					hz = 0.38977310061455,
+					x = 2158.2060546875,
+					y = 3306.23828125,
+					z = -13362.60546875,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 19,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Inquest Recruiting Station",
+				pos = 
+				{
+					hx = -0.16452834010124,
+					hy = -0.81651562452316,
+					hz = 0.55338299274445,
+					x = 692.70611572266,
+					y = 1112.2497558594,
+					z = -13294.799804688,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 20,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[WP] Research",
+				pos = 
+				{
+					hx = 0.15787354111671,
+					hy = 0.87291884422302,
+					hz = 0.46161523461342,
+					x = -1372.5771484375,
+					y = 7426.4135742188,
+					z = -13362.788085938,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 21,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Lower Research",
+				pos = 
+				{
+					hx = -0.64159244298935,
+					hy = 0.57689648866653,
+					hz = 0.50551909208298,
+					x = -2387.3178710938,
+					y = 9865.3134765625,
+					z = -13294.473632813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 22,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[WP] Apprentice",
+				pos = 
+				{
+					hx = 0.52188491821289,
+					hy = -0.7137159705162,
+					hz = 0.46716773509979,
+					x = 4765.0224609375,
+					y = 6346.1826171875,
+					z = -13362.770507813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 23,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] ???",
+				pos = 
+				{
+					hx = -0.21309614181519,
+					hy = 0.85302340984344,
+					hz = 0.47638338804245,
+					x = 6184.9135742188,
+					y = 7608.5815429688,
+					z = -13366.319335938,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 25,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[Vista] Apprentice Station",
+				pos = 
+				{
+					hx = 0.013839421793818,
+					hy = -0.58373868465424,
+					hz = 0.81182366609573,
+					x = 5693.76171875,
+					y = 7899.4365234375,
+					z = -13680.689453125,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 26,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 649,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Zojjas Workstation",
+				pos = 
+				{
+					hx = 0.50292158126831,
+					hy = -0.57325553894043,
+					hz = 0.64687556028366,
+					x = -11512.029296875,
+					y = 1134.8037109375,
+					z = -3121.689453125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 27,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 650,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Engage Demo Station",
+				pos = 
+				{
+					hx = 0.51652902364731,
+					hy = 0.85626965761185,
+					hz = 0,
+					x = -24326.759765625,
+					y = 24219.1484375,
+					z = -12888.95703125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 28,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[WP] Incubation",
+				pos = 
+				{
+					hx = 0.23262710869312,
+					hy = -0.77103996276855,
+					hz = 0.59277480840683,
+					x = 1113.1949462891,
+					y = -14078.818359375,
+					z = -4244.8051757813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 29,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Usability Station ",
+				pos = 
+				{
+					hx = -0.32885748147964,
+					hy = -0.89290475845337,
+					hz = 0.30752867460251,
+					x = -320.49279785156,
+					y = -16764.296875,
+					z = -4289.7895507813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 30,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Dawnside Quay",
+				pos = 
+				{
+					hx = 0.71504330635071,
+					hy = -0.59646648168564,
+					hz = 0.36461055278778,
+					x = -8128.0092773438,
+					y = -19701.185546875,
+					z = -122.03588104248,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 31,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[WP] Port",
+				pos = 
+				{
+					hx = -0.8258952498436,
+					hy = -0.49524101614952,
+					hz = 0.26950579881668,
+					x = -11860.754882813,
+					y = -19966,
+					z = -1413.9989013672,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 32,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[PoI] Antidawn Anchorage",
+				pos = 
+				{
+					hx = 0.40249755978584,
+					hy = -0.88138604164124,
+					hz = 0.24729412794113,
+					x = -14091.618164063,
+					y = -22487.546875,
+					z = -120.5358505249,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 33,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[Vista] Port",
+				pos = 
+				{
+					hx = -0.38715732097626,
+					hy = -0.13962072134018,
+					hz = 0.9113809466362,
+					x = -11470.62109375,
+					y = -26082.708984375,
+					z = -677.77313232422,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+	},
+	version = 0,
+}
+
+
+
+return tbl
