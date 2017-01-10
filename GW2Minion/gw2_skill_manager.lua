@@ -616,7 +616,7 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 					currentSkill.skill.lastSkillID = GUI:InputText("##gw2sm-prevskillid",currentSkill.skill.lastSkillID)
 					currentSkill.skill.delay = GUI:InputInt("##gw2sm-delay", currentSkill.skill.delay > 0 and currentSkill.skill.delay or 0, 100, 1000)
 					currentSkill.skill.relativePosition = gw2_skill_manager:combo("##gw2sm-relativePosition",currentSkill.skill.relativePosition,gw2_skill_manager.relativePosition)
-					currentSkill.skill.stopsMovement = GUI:Checkbox("##gw2sm-slowcast", currentSkill.skill.stopsMovement)
+					currentSkill.skill.stopsMovement = GUI:Checkbox("##gw2sm-stopsmovement", currentSkill.skill.stopsMovement)
 					GUI:PopItemWidth()
 					GUI:Columns(1)
 				end
