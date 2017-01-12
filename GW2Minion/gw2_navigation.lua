@@ -1,6 +1,4 @@
 -- Extends minionlib's ml_navigation.lua by adding the game specific navigation handler
-ml_navigation.NAVPOINTREACHEDDISTANCE = 32
-
 ml_navigation.CanRun = function() return GetGameState() == GW2.GAMESTATE.GAMEPLAY end 
 
 -- Handles the Navigation along the current Path. Is not supposed to be called manually.
@@ -65,8 +63,8 @@ function ml_navigation.Navigate(event, ticks )
 								if ( not ml_navigation.omc_startheight ) then ml_navigation.omc_startheight = ppos.z end
 								-- Additionally check if we are "above" the target point already, in that case, stop moving forward
 								local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
-								if ( nodedist < ml_navigation.OMCREACHEDDISTANCE or (ppos.z < nextnode.z and math.distance2d(ppos,nextnode) < ml_navigation.OMCREACHEDDISTANCE) ) then
-									d("[Navigation] - We are above the OMC_END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.OMCREACHEDDISTANCE)..")")
+								if ( nodedist < ml_navigation.NavPointReachedDistances["Walk"] or (ppos.z < nextnode.z and math.distance2d(ppos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"]) ) then
+									d("[Navigation] - We are above the OMC_END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
 									Player:Stop()
 									if ( omc.precise == nil or omc.precise == true  ) then
 										ml_navigation:SetEnsurePosition(nextnode)
@@ -78,8 +76,8 @@ function ml_navigation.Navigate(event, ticks )
 								
 							elseif ( movementstate == GW2.MOVEMENTSTATE.Falling and ml_navigation.omc_startheight) then
 								-- If Playerheight is lower than 4*omcreached dist AND Playerheight is lower than 4* our Startposition -> we fell below the OMC START & END Point
-								if (( ppos.z > (nextnode.z + 4*ml_navigation.OMCREACHEDDISTANCE)) and ( ppos.z > ( ml_navigation.omc_startheight + 4*ml_navigation.OMCREACHEDDISTANCE))) then
-									if ( ml_navigation.omcteleportallowed and math.distance3d(ppos,nextnode) < ml_navigation.OMCREACHEDDISTANCE*10) then
+								if (( ppos.z > (nextnode.z + 4*ml_navigation.NavPointReachedDistances["Walk"])) and ( ppos.z > ( ml_navigation.omc_startheight + 4*ml_navigation.NavPointReachedDistances["Walk"]))) then
+									if ( ml_navigation.omcteleportallowed and math.distance3d(ppos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"]*10) then
 										ml_navigation:SetEnsurePosition(nextnode) 
 									else
 										d("[Navigation] - We felt below the OMC start & END height, missed our goal...")
@@ -88,8 +86,8 @@ function ml_navigation.Navigate(event, ticks )
 								else
 									-- Additionally check if we are "above" the target point already, in that case, stop moving forward
 									local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
-									if ( nodedist < ml_navigation.OMCREACHEDDISTANCE or (ppos.z < nextnode.z and math.distance2d(ppos,nextnode) < ml_navigation.OMCREACHEDDISTANCE)) then
-										d("[Navigation] - We are above the OMC END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.OMCREACHEDDISTANCE)..")")
+									if ( nodedist < ml_navigation.NavPointReachedDistances["Walk"] or (ppos.z < nextnode.z and math.distance2d(ppos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"])) then
+										d("[Navigation] - We are above the OMC END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
 										Player:Stop()
 										if ( omc.precise == nil or omc.precise == true  ) then
 											ml_navigation:SetEnsurePosition(nextnode)											
@@ -114,8 +112,8 @@ function ml_navigation.Navigate(event, ticks )
 								else
 									-- We are after the Jump and landed already
 									local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
-									if ( nodedist < ml_navigation.OMCREACHEDDISTANCE) then
-										d("[Navigation] - We reached the OMC END Node. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.OMCREACHEDDISTANCE)..")")
+									if ( nodedist < ml_navigation.NavPointReachedDistances["Walk"]) then
+										d("[Navigation] - We reached the OMC END Node. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
 										if ( omc.precise == nil or omc.precise == true ) then
 											ml_navigation:SetEnsurePosition(nextnode)
 										end
@@ -128,6 +126,7 @@ function ml_navigation.Navigate(event, ticks )
 							end								
 									
 						elseif ( omc.type == 2 ) then
+						-- OMC Walk
 							ml_navigation:NavigateToNode(ppos,nextnode,1000)
 										
 						elseif ( omc.type == 3 ) then
@@ -159,21 +158,21 @@ function ml_navigation.Navigate(event, ticks )
 					
 							-- Check if the next node is reached:
 							local dist3D = math.distance3d(nextnode,ppos)
-							if ( dist3D < ml_navigation.pathsettings.navpointreacheddistance*1.5) then
+							if ( dist3D < ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()]) then
 								-- We reached the node
-								d("[Navigation] - Cube Node reached. ("..tostring(math.round(dist3D,2)).." < "..tostring(ml_navigation.pathsettings.navpointreacheddistance*1.5)..")")
+								d("[Navigation] - Cube Node reached. ("..tostring(math.round(dist3D,2)).." < "..tostring(ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()])..")")
 								ml_navigation.pathindex = ml_navigation.pathindex + 1							
 							else						
 								-- We have not yet reached our node
 								local dist2D = math.distance2d(nextnode,ppos)
-								if ( dist2D < ml_navigation.pathsettings.navpointreacheddistance*1.5 ) then
+								if ( dist2D < ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()] ) then
 									-- We are on the correct horizontal position, but our goal is now either above or below us
 									-- compensate for the fact that the char is always swimming on the surface between 0 - 50 @height
 									local pHeight = ppos.z
 									if ( nextnode.z < 50 ) then pHeight = nextnode.z end -- if the node is in shallow water (<50) , fix the playerheight at this pos. Else it gets super wonky at this point.
 									local distH = math.abs(math.abs(pHeight) - math.abs(nextnode.z))
 									
-									if ( distH > ml_navigation.pathsettings.navpointreacheddistance ) then							
+									if ( distH > ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()]) then							
 										-- Move Up / Down only until we reached the node
 										Player:StopHorizontalMovement()
 										if ( pHeight > nextnode.z ) then	-- minus is "up" in gw2
@@ -235,8 +234,8 @@ function ml_navigation:NavigateToNode(ppos, nextnode, stillonpaththreshold)
 					
 	-- Check if the next node is reached
 	local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
-	if ( nodedist < ml_navigation.pathsettings.navpointreacheddistance ) then
-		d("[Navigation] - Node reached. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.pathsettings.navpointreacheddistance)..")")
+	if ( nodedist < ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()] ) then
+		d("[Navigation] - Node reached. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()])..")")
 							
 		-- We arrived at an OMC Node
 		if ( string.contains(nextnode.type,"OMC")) then
@@ -252,7 +251,7 @@ function ml_navigation:NavigateToNode(ppos, nextnode, stillonpaththreshold)
 	else						
 		-- We have not yet reached our node
 		local anglediff = math.angle({x = ppos.hx, y = ppos.hy,  z = 0}, {x = nextnode.x-ppos.x, y = nextnode.y-ppos.y, z = 0})															
-		if ( ml_navigation.pathsettings.smoothturns and anglediff < 75 and nodedist > 2*ml_navigation.pathsettings.navpointreacheddistance ) then
+		if ( ml_navigation.pathsettings.smoothturns and anglediff < 75 and nodedist > 2*ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()] ) then
 			Player:SetFacing(nextnode.x,nextnode.y,nextnode.z)
 		else
 			Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
@@ -275,7 +274,7 @@ function ml_navigation:IsStillOnPath(ppos,deviationthreshold)
 		local movstate = Player:GetMovementState() 
 		if ( not (movstate == GW2.MOVEMENTSTATE.Jumping or movestate == GW2.MOVEMENTSTATE.Falling) and math.distancepointline(ml_navigation.path[ml_navigation.pathindex-1],ml_navigation.path[ml_navigation.pathindex],ppos) > deviationthreshold) then			
 			d("[Navigation] - Player not on Path anymore. - Distance to Path: "..tostring(math.distancepointline(ml_navigation.path[ml_navigation.pathindex-1],ml_navigation.path[ml_navigation.pathindex],ppos)).." > "..tostring(deviationthreshold))
-			ml_navigation.StopMovement()
+			Player:StopMovement()
 			return false
 		end
 	end

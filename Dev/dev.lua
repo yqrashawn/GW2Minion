@@ -657,7 +657,7 @@ function dev.DrawCall(event, ticks )
 											if ( GUI:TreeNode(tostring(vi).."##vtx") ) then
 												GUI:BulletText("Position") GUI:SameLine(200)  vertex.x, vertex.y, vertex.z, changed = GUI:InputFloat3( "##robj4"..tostring(vi), vertex.x, vertex.y, vertex.z, 2, GUI.InputTextFlags_CharsDecimal)
 												if ( changed ) then needupdate = true end
-												GUI:BulletText("Color") GUI:SameLine(200)  vertex.r, vertex.g, vertex.b, vertex.a, changed = GUI:InputFloat4( "##robj5"..tostring(vi), vertex.r, vertex.g, vertex.b, vertex.a, 2, GUI.InputTextFlags_CharsDecimal)											
+												GUI:BulletText("Color (RGBA)") GUI:SameLine(200)  vertex.r, vertex.g, vertex.b, vertex.a, changed = GUI:InputFloat4( "##robj5"..tostring(vi), vertex.r, vertex.g, vertex.b, vertex.a, 2, GUI.InputTextFlags_CharsDecimal)											
 												if ( changed ) then needupdate = true end
 												if (GUI:Button("Delete Vertex##object"..tostring(id),150,15) ) then removeid = vi end
 												GUI:TreePop()
@@ -678,7 +678,7 @@ function dev.DrawCall(event, ticks )
 								end
 								-- Remove vertex
 								if (removeid ~= nil ) then table.remove(vertices,removeid) needupdate = true end
-								if (needupdate) then
+								if (needupdate) then								 
 									e:SetVertices(vertices)
 								end								
 								
