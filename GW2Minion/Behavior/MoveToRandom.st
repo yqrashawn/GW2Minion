@@ -27,7 +27,7 @@ local tbl =
 								finishcode = "",
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if(ml_global_information.Player_OnMesh) then\n\t\tif (context.movetorandom_randompoint == nil) then\n\t\t\t\tcontext.movetorandom_randompoint = gw2_common_functions.GetRandomPoint()\n\t\tend\nend\n\nif(table.valid(context.movetorandom_randompoint)) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+								runcode = "if (context.movetorandom_randompoint == nil) then\n\t\tif(ml_global_information.Player_OnMesh) then\n\t\t\t\t\t\tcontext.movetorandom_randompoint = gw2_common_functions.GetRandomPoint()\n\t\telse\n\t\t\t\t-- Select the nearest waypoint so we at least have somewhere to go if we start offmesh\n\t\t\t\tlocal WPList = WaypointList(\"nearest,onmesh\")\n\t\t\t\tif(table.valid(WPList)) then\n\t\t\t\t\t\tlocal _,wp = next(WPList)\n\t\t\t\t\t\tif(wp and wp.pos) then\n\t\t\t\t\t\t\t\tcontext.movetorandom_randompoint = wp.pos\n\t\t\t\t\t\tend\n\t\t\t\tend\n\t\tend\nend\n\nif(table.valid(context.movetorandom_randompoint)) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 								startcode = "",
 							},
 						},
