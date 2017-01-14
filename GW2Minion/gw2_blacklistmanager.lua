@@ -84,6 +84,23 @@ function gw2_blacklistmanager.GetExcludeString(listname)
 	return retval
 end
 
+-- Get the full monster blacklist string. (",exclude_contentid=monsters,exclude=temporary combat")
+function gw2_blacklistmanager.GetMonsterExcludeString()
+	local filterstring = ""
+	local contentid_blacklist = gw2_blacklistmanager.GetExcludeString(GetString("Monsters"))
+	local id_blacklist = gw2_blacklistmanager.GetExcludeString(GetString("Temporary Combat"))
+
+	if (string.valid(contentid_blacklist)) then
+		filterstring = filterstring..",exclude_contentid="..contentid_blacklist
+	end
+	
+	if (string.valid(id_blacklist)) then
+		filterstring = filterstring..",exclude="..id_blacklist
+	end
+	
+	return filterstring
+end
+
 -- Check if an item exists in listname
 function gw2_blacklistmanager.CheckBlacklistEntry(listname, id)
 	if(listname and id) then
@@ -101,20 +118,26 @@ function gw2_blacklistmanager:DrawMonster()
 	
 	GUI:Text(GetString("Blacklist") .. " " .. self.name)
 	GUI:Text(GetString("Select a target then click the blacklist button"))
+	GUI:Text(GetString("This will blacklist every " .. string.lower(self.name) .. " of the same type"))
 	GUI:Text(GetString("A duration of 0 is permanent"))
 	
 	GUI:Separator();
 	
-	gw2_blacklistmanager.temporaryVendorEntryDuration = GUI:InputInt(GetString("Duration").." (s):", gw2_blacklistmanager.temporaryMonsterEntryDuration)
+	gw2_blacklistmanager.temporaryMonsterEntryDuration = GUI:InputInt(GetString("Duration").." (s)", gw2_blacklistmanager.temporaryMonsterEntryDuration)
 
 	if(GUI:Button(GetString("Blacklist current target type"))) then
-		if(type(gw2_blacklistmanager.temporaryVendorEntryDuration) ~= "number" or gw2_blacklistmanager.temporaryVendorEntryDuration < 0) then
+		if(type(gw2_blacklistmanager.temporaryMonsterEntryDuration) ~= "number" or gw2_blacklistmanager.temporaryMonsterEntryDuration < 0) then
 			gw2_blacklistmanager.temporaryMonsterEntryDuration = 0
+		end
+		
+		local expiration = 0
+		if(gw2_blacklistmanager.temporaryMonsterEntryDuration > 0) then
+			expiration = ml_global_information.Now + gw2_blacklistmanager.temporaryMonsterEntryDuration*1000
 		end
 		
 		local target = Player:GetTarget()
 		if(table.valid(target)) then
-			self:AddEntry({id = target.contentid, name = target.name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = 0})
+			self:AddEntry({id = target.contentid, name = target.name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = expiration})
 		else
 			d("No target selected")
 		end
@@ -165,16 +188,21 @@ function gw2_blacklistmanager:DrawVendor()
 	GUI:Text(GetString("These are temporary items. They will be removed when you change maps."))
 	GUI:Separator();
 	
-	gw2_blacklistmanager.temporaryVendorEntryDuration = GUI:InputInt(GetString("Duration").." (s):", gw2_blacklistmanager.temporaryCombatEntryDuration)
+	gw2_blacklistmanager.temporaryVendorEntryDuration = GUI:InputInt(GetString("Duration").." (s)", gw2_blacklistmanager.temporaryCombatEntryDuration)
 
 	if(GUI:Button(GetString("Blacklist current target"))) then
 		if(type(gw2_blacklistmanager.temporaryVendorEntryDuration) ~= "number" or gw2_blacklistmanager.temporaryVendorEntryDuration < 0) then
 			gw2_blacklistmanager.temporaryVendorEntryDuration = 3600
 		end
 		
+		local expiration = 0
+		if(gw2_blacklistmanager.temporaryVendorEntryDuration > 0) then
+			expiration = ml_global_information.Now + gw2_blacklistmanager.temporaryVendorEntryDuration*1000
+		end
+		
 		local target = Player:GetTarget()
 		if(table.valid(target)) then
-			self:AddEntry({id = target.id, name = target.name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = ml_global_information.Now + gw2_blacklistmanager.temporaryVendorEntryDuration*1000})
+			self:AddEntry({id = target.id, name = target.name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = expiration})
 		else
 			d("No target selected")
 		end
@@ -222,10 +250,11 @@ gw2_blacklistmanager.temporaryCombatEntryDuration = 3600
 function gw2_blacklistmanager:DrawTemporaryCombat()
 	GUI:Separator();
 	GUI:Text(GetString("Blacklist") .. " " .. self.name)
-	GUI:Text(GetString("These are temporary items. They will be removed in a few seconds or when you change maps."))
+	GUI:Text(GetString("These are temporary items. Unique to a single monster."))
+	GUI:Text(GetString("They will be removed in a few seconds or when you change maps."))
 	GUI:Separator();
 	
-	gw2_blacklistmanager.temporaryCombatEntryDuration = GUI:InputInt(GetString("Duration").." (s):", gw2_blacklistmanager.temporaryCombatEntryDuration)
+	gw2_blacklistmanager.temporaryCombatEntryDuration = GUI:InputInt(GetString("Duration").." (s)", gw2_blacklistmanager.temporaryCombatEntryDuration)
 
 	if(GUI:Button(GetString("Blacklist current target"))) then
 		if(type(gw2_blacklistmanager.temporaryCombatEntryDuration) ~= "number" or gw2_blacklistmanager.temporaryCombatEntryDuration < 0) then
@@ -305,7 +334,7 @@ function gw2_blacklistmanager:DrawInventory()
 
 		if(table.valid(IList)) then
 			local i = 1
-			for _,item in pairs(IList) do		
+			for _,item in pairs(IList) do	
 				gw2_blacklistmanager.inventoryList[i] = {name = item.name; itemid = item.itemid}
 				i = i + 1
 			end
