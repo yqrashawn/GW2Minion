@@ -267,8 +267,8 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange, useCustomSMFilte
 	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,maxlevel=15") end
 
 	if(table.valid(target) and (not target.attackable or target.pathdistance > 9999999)) then
-		gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, ml_global_information.Now + 90000)
-		d("[GetBestCharacterTarget] - Blacklisting "..target.name.." ID: "..tostring(target.contentid))
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), target.id, target.name, 5000)
+		d("[GetBestCharacterTarget] - Blacklisting "..target.name.." ID: "..tostring(target.id))
 		target = nil
 	end
 	
@@ -344,8 +344,8 @@ function gw2_common_functions.GetBestAggroTarget(healthstate)
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
 	
 	if(table.valid(target) and (not target.attackable or target.pathdistance >= 9999999)) then
-		gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, 5000)
-		d("[GetBestAggroTarget] - Blacklisting "..target.name.." ID: "..tostring(target.contentid))
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), target.id, target.name, 5000)
+		d("[GetBestAggroTarget] - Blacklisting "..target.name.." ID: "..tostring(target.id))
 		target = nil
 	end
 	
@@ -393,9 +393,9 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 						return target
 					end
 				else					
-					if ( not target.isplayer ) then -- don't blacklist players which are dead for 90sec..stupid in spvp
-						gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), target.contentid, target.name, ml_global_information.Now + 5000)
-						d("[GetBestEventTarget] - Blacklisting "..target.name.." ID: "..tostring(target.contentid))
+					if ( not target.isplayer ) then -- don't blacklist players which are dead for 90sec..stupid in spvp WHY THE FUCK IS PVP USING THE PVE EVENT TARGET FUNCTION
+						gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), target.id, target.name, 5000)
+						d("[GetBestEventTarget] - Blacklisting "..target.name.." ID: "..tostring(target.id))
 					end
 				end
 			end
@@ -403,7 +403,20 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 			i,filter = next(filters,i)
 		end
 		
-		local GList = GadgetList("hostile,attackable,alive,onmesh,nearest,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Monsters")))
+		local contentid_blacklist = gw2_blacklistmanager.GetExcludeString(GetString("Monsters"))
+		local id_blacklist = gw2_blacklistmanager.GetExcludeString(GetString("Temporary Combat"))
+		
+		local gadgetfilter = "hostile,attackable,alive,onmesh,nearest"
+		
+		if(string.valid(contentid_blacklist)) then
+			gadgetfilter = gadgetfilter .. ",exclude_contentid=" ..  contentid_blacklist
+		end
+		
+		if(string.valid(id_blacklist)) then
+			gadgetfilter = gadgetfilter .. ",exclude=" ..  id_blacklist
+		end
+		
+		local GList = GadgetList(gadgetfilter)
 		if(table.valid(GList)) then
 			local _,gagdet = next(GList)
 			if(table.valid(gadget)) then
@@ -413,8 +426,8 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 						return gagdet
 					end
 				else
-					gw2_blacklistmanager.AddBlacklistEntry(GetString("Monsters"), gagdet.contentid, gagdet.name, ml_global_information.Now + 5000)
-					d("[GetBestEventTarget] - Blacklisting "..gagdet.name.." ID: "..tostring(gagdet.contentid))
+					gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), gagdet.id, gagdet.name, 5000)
+					d("[GetBestEventTarget] - Blacklisting "..gagdet.name.." ID: "..tostring(gagdet.id))
 				end
 			end
 		end
@@ -431,10 +444,16 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthst
 		filterstring = "attackable,nocritter"
 	end
 	
-	local excludestring = gw2_blacklistmanager.GetExcludeString(GetString("Monsters"))
-	if ( string.valid(excludestring) and string.len(excludestring) > 0 ) then
-		filterstring = filterstring..",exclude_contentid="..excludestring
+	local contentid_blacklist = gw2_blacklistmanager.GetExcludeString(GetString("Monsters"))
+	local id_blacklist = gw2_blacklistmanager.GetExcludeString(GetString("Temporary Combat"))
+
+	if (string.valid(contentid_blacklist)) then
+		filterstring = filterstring..",exclude_contentid="..contentid_blacklist
 	end
+	
+	if (string.valid(id_blacklist)) then
+		filterstring = filterstring..",exclude="..id_blacklist
+	end	
 	
 	if(healthstate == nil or healthstate == GW2.HEALTHSTATE.Alive) then
 		filterstring = filterstring..",alive"
@@ -454,7 +473,13 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthst
 	if ( TargetList ) then
 		local id,entry = next(TargetList)
 		if (id and entry ) then
-			return entry
+		
+			if(not gw2_common_functions.HasBuffs(entry,ml_global_information.InvulnerabilityConditions)) then
+				return entry
+			else
+				d("[GetCharacterTargetExtended] - Target has invulnerability conditions. Blacklisting "..entry.name.." ID: "..tostring(entry.id))
+				gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), entry.id, entry.name, 5000)
+			end
 		end
 	end
 	return nil

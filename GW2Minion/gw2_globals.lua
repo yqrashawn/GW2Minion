@@ -46,6 +46,9 @@ ml_global_information.SpeedBoons = {
 	[13060]		= "Signet of Shadows",
 	[5572]		= "Signet of Air",
 	[10612]		= "Signet of the Locust",
+	[33843]		= "Leader of the Pact I",
+	[32675]		= "Leader of the Pact II",
+	[33611]		= "Leader of the Pact III",
 }
 
 ml_global_information.SlowConditions = {
@@ -75,6 +78,7 @@ ml_global_information.InvulnerabilityConditions = {
 	[36143]		= "Destruction Immunity",
 	[29065]		= "Tough Hide"
 }
+
 
 -- Moved this here so it's easier to look at and easier to copy paste
 function ml_global_information.OnUpdate(Event,ticks)
