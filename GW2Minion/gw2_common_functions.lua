@@ -443,18 +443,7 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthst
 	else
 		filterstring = "attackable,nocritter"
 	end
-	
-	local contentid_blacklist = gw2_blacklistmanager.GetExcludeString(GetString("Monsters"))
-	local id_blacklist = gw2_blacklistmanager.GetExcludeString(GetString("Temporary Combat"))
 
-	if (string.valid(contentid_blacklist)) then
-		filterstring = filterstring..",exclude_contentid="..contentid_blacklist
-	end
-	
-	if (string.valid(id_blacklist)) then
-		filterstring = filterstring..",exclude="..id_blacklist
-	end	
-	
 	if(healthstate == nil or healthstate == GW2.HEALTHSTATE.Alive) then
 		filterstring = filterstring..",alive"
 	elseif(healthstate == GW2.HEALTHSTATE.Downed) then
@@ -468,6 +457,8 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthst
 		if (Settings.GW2Minion.smtargetmode == 3) then filterstring = filterstring..",nearest" end
 		if (Settings.GW2Minion.smtargetmode == 4) then filterstring = filterstring..",clustered=600" end
 	end
+	
+	filterstring = filterstring..gw2_blacklistmanager.GetMonsterExcludeString()
 
 	local TargetList = CharacterList(filterstring)
 	if ( TargetList ) then
@@ -487,9 +478,11 @@ end
 
 -- Downed state target needs to be a bit different and ignore assist settings
 function gw2_common_functions.GetBestDownstateTarget()
-	local CList = CharacterList("player,attackable,lowesthealth,los,maxdistance=900,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Monsters")))
+	local filterstring = gw2_blacklistmanager.GetMonsterExcludeString()
+	
+	local CList = CharacterList("player,attackable,lowesthealth,los,maxdistance=900"..filterstring)
 	if ( table.size(CList) == 0 ) then
-		CList = CharacterList("aggro,attackable,lowesthealth,los,maxdistance=900,exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Monsters")))
+		CList = CharacterList("aggro,attackable,lowesthealth,los,maxdistance=900"..filterstring)
 	end
 	if(table.valid(CList)) then
 		local _,target = next(CList)
