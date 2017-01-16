@@ -618,7 +618,7 @@ function dev.DrawCall(event, ticks )
 				
 			if ( GUI:TreeNode("Renderobject List")) then
 			
-				-- RenderManager:AddObject( tablewith vertices here ) , returns the renderobject which is a lua metatable. it has a .id which should be used everytime afterwards if the object is being accessed:
+				-- RenderManager:AddObject( tablewith vertices here ) , returns the renderobject which is a lua metatable. it has a .id which should be used everytime afterwards if the object is being accessed: Also a .name, .drawmode, .enabled 
 				-- RenderManager:GetObject(id)  - use this always before you actually access a renderobject of yours, because the object could have been deleted at any time in c++ due to other code erasing it
 				if( gamestate == GW2.GAMESTATE.GAMEPLAY ) then
 					GUI:PushItemWidth(100)
@@ -740,6 +740,10 @@ function dev.DrawCharacterDetails(c)
 	GUI:BulletText("LoS") GUI:SameLine(200) GUI:InputText("##dev14", tostring(c.los),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("OnMesh") GUI:SameLine(200) GUI:InputText("##dev15", tostring(c.onmesh),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("OnMeshExact") GUI:SameLine(200) GUI:InputText("##dev16", tostring(c.onmeshexact),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	local meshpos = c.meshpos
+	GUI:BulletText("MeshPosition") GUI:SameLine(200)  GUI:InputFloat3( "##dev9m", meshpos.x, meshpos.y, meshpos.z, 2, GUI.InputTextFlags_ReadOnly)
+	GUI:BulletText("Dist MeshPos-Player") GUI:SameLine(200)  GUI:InputFloat("##dev12m", meshpos.distance,0,0,2)
+	GUI:BulletText("Dist to MeshPos") GUI:SameLine(200)  GUI:InputFloat("##dev12m", meshpos.meshdistance,0,0,2)	
 	GUI:BulletText("Attitude") GUI:SameLine(200) GUI:InputText("##dev23", tostring(c.attitude),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("MovementState") GUI:SameLine(200) GUI:InputText("##dev17", tostring(c.movementstate),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("SwimmingState") GUI:SameLine(200) GUI:InputText("##dev17-b", tostring(c.swimming),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -833,6 +837,10 @@ function dev.DrawGadgetDetails(c)
 	GUI:BulletText("LoS") GUI:SameLine(200) GUI:InputText("##devg14", tostring(c.los),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("OnMesh") GUI:SameLine(200) GUI:InputText("##devg15", tostring(c.onmesh),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("OnMeshExact") GUI:SameLine(200) GUI:InputText("##devg16", tostring(c.onmeshexact),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	local meshpos = c.meshpos
+	GUI:BulletText("MeshPosition") GUI:SameLine(200)  GUI:InputFloat3( "##devg9m", meshpos.x, meshpos.y, meshpos.z, 2, GUI.InputTextFlags_ReadOnly)
+	GUI:BulletText("Dist MeshPos-Player") GUI:SameLine(200)  GUI:InputFloat("##devg12m", meshpos.distance,0,0,2)
+	GUI:BulletText("Dist to MeshPos") GUI:SameLine(200)  GUI:InputFloat("##devg13m", meshpos.meshdistance,0,0,2)
 	GUI:BulletText("Attitude") GUI:SameLine(200) GUI:InputText("##devg17", tostring(c.attitude),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("IsInInteractRange") GUI:SameLine(200) GUI:InputText("##devg18", tostring(c.isininteractrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("Interactable") GUI:SameLine(200) GUI:InputText("##devg21", tostring(c.interactable),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -883,6 +891,10 @@ function dev.DrawAgentDetails(c)
 	GUI:BulletText("LoS") GUI:SameLine(200) GUI:InputText("##deva14", tostring(c.los),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("OnMesh") GUI:SameLine(200) GUI:InputText("##deva15", tostring(c.onmesh),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("OnMeshExact") GUI:SameLine(200) GUI:InputText("##deva16", tostring(c.onmeshexact),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	local meshpos = c.meshpos
+	GUI:BulletText("MeshPosition") GUI:SameLine(200)  GUI:InputFloat3( "##deva9m", meshpos.x, meshpos.y, meshpos.z, 2, GUI.InputTextFlags_ReadOnly)
+	GUI:BulletText("Dist MeshPos-Player") GUI:SameLine(200)  GUI:InputFloat("##deva12m", meshpos.distance,0,0,2)
+	GUI:BulletText("Dist to MeshPos") GUI:SameLine(200)  GUI:InputFloat("##deva13m", meshpos.meshdistance,0,0,2)	
 	GUI:BulletText("Alive") GUI:SameLine(200) GUI:InputText("##deva23", tostring(c.alive),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("IsInInteractRange") GUI:SameLine(200) GUI:InputText("##deva20", tostring(c.isininteractrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("Interactable") GUI:SameLine(200) GUI:InputText("##deva21", tostring(c.interactable),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -908,6 +920,10 @@ function dev.DrawMapMarkerDetails(id,b)
 		GUI:BulletText("OnMesh") GUI:SameLine(200) GUI:InputText("##devm11", tostring(b.onmesh),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 		GUI:BulletText("Distance") GUI:SameLine(200) GUI:InputFloat("##devm12", b.distance,0,0,2)
 		GUI:BulletText("PathDistance") GUI:SameLine(200) GUI:InputFloat("##devm13", b.pathdistance,0,0,2)
+		local meshpos = c.meshpos
+		GUI:BulletText("MeshPosition") GUI:SameLine(200)  GUI:InputFloat3( "##devm9m", meshpos.x, meshpos.y, meshpos.z, 2, GUI.InputTextFlags_ReadOnly)
+		GUI:BulletText("Dist MeshPos-Player") GUI:SameLine(200)  GUI:InputFloat("##devm12m", meshpos.distance,0,0,2)
+		GUI:BulletText("Dist to MeshPos") GUI:SameLine(200)  GUI:InputFloat("##devm13m", meshpos.meshdistance,0,0,2)
 		local einfo = b.eventinfo
 		if ( table.valid(einfo) ) then
 			if ( GUI:TreeNode("EventDetais") ) then
