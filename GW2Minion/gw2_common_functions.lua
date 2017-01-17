@@ -241,10 +241,8 @@ function gw2_common_functions.GetClosestWaypointToMap(targetMapID, currentMapID)
 end
 
 -- Tries to get a "best target" to attack
-function gw2_common_functions.GetBestCharacterTarget( maxrange, useCustomSMFilterSettings )
-	
-	if ( useCustomSMFilterSettings ) then gw2_common_functions.useCustomSMFilterSettings = true end
-	
+function gw2_common_functions.GetBestCharacterTarget( maxrange )
+		
 	local range = maxrange
 	if ( range == nil ) then
 		range = ml_global_information.AttackRange
@@ -271,9 +269,7 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange, useCustomSMFilte
 		d("[GetBestCharacterTarget] - Blacklisting "..target.name.." ID: "..tostring(target.id))
 		target = nil
 	end
-	
-	gw2_common_functions.useCustomSMFilterSettings = nil
-	
+		
 	if ( target and target.id ) then
 		if ( target.distance < 1500 and target.los ) then
 			Player:SetTarget(target.id)
@@ -289,9 +285,9 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange, useCustomSMFilte
 	return nil
 end
 -- Tries to get a "best target" to attack for assist mode (maxdistance limited)
-function gw2_common_functions.GetBestCharacterTargetForAssist( useCustomSMFilterSettings )
+function gw2_common_functions.GetBestCharacterTargetForAssist( )
 	
-	if ( useCustomSMFilterSettings ) then gw2_common_functions.useCustomSMFilterSettings = true end
+	gw2_common_functions.useCustomSMFilterSettings = true
 	
 	-- Ignore yellow check.
 	local hostileCheck = Settings.GW2Minion.ignoreyellowmobs and ",hostile" or ""
@@ -452,7 +448,7 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthst
 
 	-- Only in AssistMode we want to allow these settings	
 	if ( gw2_common_functions.useCustomSMFilterSettings ) then
-		if (Settings.GW2Minion.smmode == 2) then filterstring = filterstring..",player" end
+		if (Settings.GW2Minion.smmode == 2) then filterstring = filterstring..",player" end		-- Attackmode for Assist : 1 = Everything, 2 = Players
 		if (Settings.GW2Minion.smtargetmode == 2) then filterstring = filterstring..",lowesthealth" end
 		if (Settings.GW2Minion.smtargetmode == 3) then filterstring = filterstring..",nearest" end
 		if (Settings.GW2Minion.smtargetmode == 4) then filterstring = filterstring..",clustered=600" end

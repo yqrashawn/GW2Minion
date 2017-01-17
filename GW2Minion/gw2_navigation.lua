@@ -142,7 +142,30 @@ function ml_navigation.Navigate(event, ticks )
 						
 						elseif ( omc.type == 5 ) then
 						-- OMC Portal
-							ml_navigation:NavigateToNode(ppos,nextnode,2000)
+							-- we should be facing already the correct direction, just walk straight for a few sec
+							if ( Player:CanMove() and ml_navigation.omc_starttimer <= 1500 ) then
+								ml_navigation.omc_starttimer = ticks
+								-- find out from which side we are coming:
+								local dA = math.distance3d(omc.from,ppos)
+								local dB = math.distance3d(omc.to,ppos)
+								local closest = omc.from
+								if ( dB < dA ) then closest = omc.to end
+								Player:SetFacingH(closest.hx,closest.hy,closest.hz)
+								if ( ml_navigation.omc_starttimer > 1000 ) then
+									Player:SetMovement(GW2.MOVEMENTTYPE.Forward)								
+								end
+								
+							elseif ( Player:IsMoving() and ticks - ml_navigation.omc_starttimer > 3500 ) then
+								-- we should be on the other side of the portal now
+								ml_navigation:NavigateToNode(ppos,nextnode,2500)
+								-- Max Timer Check in case something unexpected happened
+								if ( ml_navigation.omc_starttimer ~= 0 and ticks - ml_navigation.omc_starttimer > 5000 ) then
+									d("[Navigation] - Could not read OMC END in ~10 seconds, something went wrong..")
+									ml_navigation.StopMovement()
+									return
+								end
+							end
+																				
 						
 						elseif ( omc.type == 6 ) then
 						-- OMC Lift
@@ -275,6 +298,7 @@ function ml_navigation:IsStillOnPath(ppos,deviationthreshold)
 		if ( not (movstate == GW2.MOVEMENTSTATE.Jumping or movestate == GW2.MOVEMENTSTATE.Falling) and math.distancepointline(ml_navigation.path[ml_navigation.pathindex-1],ml_navigation.path[ml_navigation.pathindex],ppos) > deviationthreshold) then			
 			d("[Navigation] - Player not on Path anymore. - Distance to Path: "..tostring(math.distancepointline(ml_navigation.path[ml_navigation.pathindex-1],ml_navigation.path[ml_navigation.pathindex],ppos)).." > "..tostring(deviationthreshold))
 			Player:StopMovement()
+			ml_navigation.renderpathendX = nil
 			return false
 		end
 	end
