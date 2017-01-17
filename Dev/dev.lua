@@ -920,7 +920,7 @@ function dev.DrawMapMarkerDetails(id,b)
 		GUI:BulletText("OnMesh") GUI:SameLine(200) GUI:InputText("##devm11", tostring(b.onmesh),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 		GUI:BulletText("Distance") GUI:SameLine(200) GUI:InputFloat("##devm12", b.distance,0,0,2)
 		GUI:BulletText("PathDistance") GUI:SameLine(200) GUI:InputFloat("##devm13", b.pathdistance,0,0,2)
-		local meshpos = c.meshpos
+		local meshpos = b.meshpos
 		GUI:BulletText("MeshPosition") GUI:SameLine(200)  GUI:InputFloat3( "##devm9m", meshpos.x, meshpos.y, meshpos.z, 2, GUI.InputTextFlags_ReadOnly)
 		GUI:BulletText("Dist MeshPos-Player") GUI:SameLine(200)  GUI:InputFloat("##devm12m", meshpos.distance,0,0,2)
 		GUI:BulletText("Dist to MeshPos") GUI:SameLine(200)  GUI:InputFloat("##devm13m", meshpos.meshdistance,0,0,2)
@@ -946,10 +946,10 @@ function dev.DrawMapMarkerDetails(id,b)
 							if ( GUI:TreeNode("ID: "..tostring(eid) )) then
 								GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##deveo0",tostring(string.format( "%X",ee.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 								GUI:BulletText("Value1") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value1),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-								GUI:BulletText("Value2") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value2),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-								GUI:BulletText("Value3") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value3),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-								GUI:BulletText("Value4") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value4),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-								GUI:BulletText("Value5") GUI:SameLine(200) GUI:InputText("##deveo1",tostring(ee.value5),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+								GUI:BulletText("Value2") GUI:SameLine(200) GUI:InputText("##deveo2",tostring(ee.value2),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+								GUI:BulletText("Value3") GUI:SameLine(200) GUI:InputText("##deveo3",tostring(ee.value3),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+								GUI:BulletText("Value4") GUI:SameLine(200) GUI:InputText("##deveo4",tostring(ee.value4),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+								GUI:BulletText("Value5") GUI:SameLine(200) GUI:InputText("##deveo5",tostring(ee.value5),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 								GUI:TreePop()
 							end	
 						end
