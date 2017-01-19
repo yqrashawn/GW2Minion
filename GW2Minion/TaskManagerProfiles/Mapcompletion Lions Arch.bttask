@@ -29,6 +29,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -68,6 +71,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -107,6 +113,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -146,6 +155,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -185,6 +197,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -208,6 +223,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 5,
@@ -224,6 +240,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 0,
@@ -263,6 +282,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -302,6 +324,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -325,6 +350,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 8,
@@ -341,6 +367,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -380,6 +409,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -419,6 +451,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -458,6 +493,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -481,6 +519,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 12,
@@ -497,6 +536,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -536,6 +578,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -559,14 +604,105 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 14,
+			order = 46,
 			posttasks = 
 			{
 			},
 			pretasks = 
 			{
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							hx = -0.74404352903366,
+							hy = 0.47325658798218,
+							hz = 0.47162213921547,
+							x = 10408.766601563,
+							y = 5266.1801757813,
+							z = -1286.6789550781,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Walk to Klagg",
+						type = "tm_st_moveto",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = true,
+							contentid = 44486,
+							gadget = false,
+							name = "Klagg",
+						},
+						talksteps = 
+						{
+							0,
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Talk with Klagg",
+						type = "tm_st_talk",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						useskills = 
+						{
+							[7526] = 
+							{
+								pos = 
+								{
+									hx = 0.21302777528763,
+									hy = -0.63724780082703,
+									hz = 0.74063110351563,
+									x = 10735.041015625,
+									y = 4147.0849609375,
+									z = -524.62530517578,
+								},
+								skillid = 7526,
+								skillname = "Jump Shot",
+								target = 0,
+								useat = "Position",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Use jump shot",
+						type = "tm_st_useskill",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						duration = 10,
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Wait",
+						type = "tm_st_wait",
+					},
+				},
 			},
 			subtasks = 
 			{
@@ -575,19 +711,22 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
-				maxlevel = 80,
+				maxlevel = 0,
 				minlevel = 0,
-				name = "View Vista",
+				name = "Vista - Inner Harbor Rock",
 				pos = 
 				{
-					hx = -0.53966069221497,
-					hy = 0.84188258647919,
-					hz = 0,
-					x = 10769.134765625,
-					y = 4074.44140625,
-					z = -530.24792480469,
+					hx = 0.21302777528763,
+					hy = -0.63724780082703,
+					hz = 0.74063110351563,
+					x = 10735.041015625,
+					y = 4147.0849609375,
+					z = -524.62530517578,
 				},
 				radius = 0,
 				type = "tm_vista",
@@ -614,6 +753,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -621,12 +763,12 @@ local tbl =
 				name = "poi",
 				pos = 
 				{
-					hx = 0.65154820680618,
-					hy = 0.75860720872879,
-					hz = 0,
-					x = 5728.830078125,
-					y = 8400.2158203125,
-					z = -1547.5456542969,
+					hx = 0.67078918218613,
+					hy = 0.57914936542511,
+					hz = 0.46327954530716,
+					x = 6032.6713867188,
+					y = 8186.6865234375,
+					z = -1546.2370605469,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -653,6 +795,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -676,6 +821,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 17,
@@ -692,6 +838,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -731,6 +880,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -754,6 +906,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 19,
@@ -770,6 +923,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -809,6 +965,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -848,6 +1007,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -887,6 +1049,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -926,6 +1091,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -965,6 +1133,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1004,6 +1175,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1027,6 +1201,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 26,
@@ -1043,6 +1218,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1082,6 +1260,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1121,6 +1302,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1144,6 +1328,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 29,
@@ -1160,6 +1345,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1199,6 +1387,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1238,6 +1429,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1277,6 +1471,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1316,6 +1513,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1355,6 +1555,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1394,6 +1597,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1433,6 +1639,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1472,6 +1681,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1495,6 +1707,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 38,
@@ -1511,6 +1724,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1550,6 +1766,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1589,6 +1808,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1628,6 +1850,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1667,6 +1892,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1690,6 +1918,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 41,
@@ -1706,6 +1935,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1729,6 +1961,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 42,
@@ -1745,6 +1978,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1784,6 +2020,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 50,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1797,71 +2036,6 @@ local tbl =
 					x = -23839.404296875,
 					y = 16052.380859375,
 					z = -818.77728271484,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 46,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-				
-				{
-					customProperties = 
-					{
-						talkagent = 
-						{
-							character = true,
-							contentid = 44486,
-							gadget = false,
-							name = "Klagg",
-						},
-						talksteps = 
-						{
-							0,
-							0,
-						},
-						talktype = "Index",
-					},
-					order = 0,
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Talk with Klagg",
-						type = "tm_st_talk",
-					},
-				},
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				mapid = 50,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "Vista - unreachable",
-				pos = 
-				{
-					hx = -0.35000842809677,
-					hy = -0.93674653768539,
-					hz = 0,
-					x = 10417.348632813,
-					y = 5345.9467773438,
-					z = -1278.9442138672,
 				},
 				radius = 0,
 				type = "tm_moveto",

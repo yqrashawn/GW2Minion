@@ -29,6 +29,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -52,6 +55,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 1,
@@ -60,29 +64,6 @@ local tbl =
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = false,
-								contentid = 17513,
-								gadget = true,
-								name = "",
-							},
-						},
-					},
-					order = 0,
-					taskProperties = 
-					{
-						enabled = true,
-						name = "",
-						type = "tm_st_interact",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -91,6 +72,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -130,6 +114,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -153,6 +140,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 3,
@@ -161,29 +149,6 @@ local tbl =
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = false,
-								contentid = 17513,
-								gadget = true,
-								name = "",
-							},
-						},
-					},
-					order = 0,
-					taskProperties = 
-					{
-						enabled = true,
-						name = "",
-						type = "tm_st_interact",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -192,6 +157,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -231,6 +199,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -238,12 +209,12 @@ local tbl =
 				name = "poi",
 				pos = 
 				{
-					hx = -0.87892615795135,
-					hy = -0.39138430356979,
-					hz = 0.27259340882301,
-					x = 4690.8330078125,
-					y = 960.55688476563,
-					z = -2914.9956054688,
+					hx = -0.82915014028549,
+					hy = 0.3287949860096,
+					hz = 0.4521104991436,
+					x = 4705.8051757813,
+					y = 1005.4914550781,
+					z = -2915.791015625,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -254,6 +225,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 5,
@@ -262,29 +234,6 @@ local tbl =
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = false,
-								contentid = 17513,
-								gadget = true,
-								name = "",
-							},
-						},
-					},
-					order = 0,
-					taskProperties = 
-					{
-						enabled = true,
-						name = "",
-						type = "tm_st_interact",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -293,6 +242,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -300,12 +252,12 @@ local tbl =
 				name = "vista",
 				pos = 
 				{
-					hx = -0.76176184415817,
-					hy = -0.22688108682632,
-					hz = 0.60683101415634,
-					x = 3619.3522949219,
-					y = 772.53967285156,
-					z = -3499.05859375,
+					hx = -0.65001159906387,
+					hy = -0.24336712062359,
+					hz = 0.71990096569061,
+					x = 3674.0437011719,
+					y = 844.67846679688,
+					z = -3513.5222167969,
 				},
 				radius = 0,
 				type = "tm_vista",
@@ -332,6 +284,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 648,
 				maxduration = 0,
 				maxlevel = 80,
@@ -371,6 +326,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 648,
 				maxduration = 0,
 				maxlevel = 80,
@@ -410,6 +368,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -449,6 +410,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -488,6 +452,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -527,6 +494,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -566,6 +536,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -605,6 +578,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -644,6 +620,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -683,6 +662,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -706,6 +688,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 16,
@@ -714,29 +697,6 @@ local tbl =
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = false,
-								contentid = 17513,
-								gadget = true,
-								name = "",
-							},
-						},
-					},
-					order = 0,
-					taskProperties = 
-					{
-						enabled = true,
-						name = "",
-						type = "tm_st_interact",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -745,6 +705,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -784,6 +747,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -823,6 +789,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -862,6 +831,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -901,6 +873,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 507,
 				maxduration = 0,
 				maxlevel = 80,
@@ -924,6 +899,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 21,
@@ -932,29 +908,6 @@ local tbl =
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = false,
-								contentid = 17513,
-								gadget = true,
-								name = "Unknown",
-							},
-						},
-					},
-					order = 0,
-					taskProperties = 
-					{
-						enabled = true,
-						name = "",
-						type = "tm_st_interact",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -963,6 +916,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1002,6 +958,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1025,6 +984,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 23,
@@ -1041,6 +1001,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1080,6 +1043,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1087,12 +1053,12 @@ local tbl =
 				name = "poi",
 				pos = 
 				{
-					hx = -0.91598707437515,
-					hy = -0.40007582306862,
-					hz = 0.030116099864244,
-					x = -3988.8874511719,
-					y = 6573.7563476563,
-					z = -1073.4755859375,
+					hx = -0.81220853328705,
+					hy = -0.54399561882019,
+					hz = 0.21068006753922,
+					x = -4379.0971679688,
+					y = 6213.4638671875,
+					z = -1248.8767089844,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -1103,6 +1069,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 25,
@@ -1111,29 +1078,6 @@ local tbl =
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = false,
-								contentid = 17513,
-								gadget = true,
-								name = "",
-							},
-						},
-					},
-					order = 0,
-					taskProperties = 
-					{
-						enabled = true,
-						name = "",
-						type = "tm_st_interact",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -1142,6 +1086,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1181,6 +1128,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1220,6 +1170,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 91,
 				maxduration = 0,
 				maxlevel = 80,
@@ -1233,6 +1186,48 @@ local tbl =
 					x = 5592.7944335938,
 					y = 1661.5899658203,
 					z = -389.61575317383,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 28,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 647,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Dreamer's Terrace - The house of Riannoc",
+				pos = 
+				{
+					hx = 0.78796362876892,
+					hy = 0.53211224079132,
+					hz = 0.30978998541832,
+					x = 3624.1809082031,
+					y = 3583.4567871094,
+					z = -46.769115447998,
 				},
 				radius = 0,
 				type = "tm_moveto",

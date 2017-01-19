@@ -108,6 +108,52 @@ local tbl =
 				},
 				
 				{
+					class = "Sequence",
+					nodes = 
+					{
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "",
+								monitorcode = "",
+								runcode = "if(context.vista_fightaggro and ml_global_information.Player_InCombat) then\n\t\tlocal CList = CharacterList(\"aggro,maxpathdistance=99999,maxdistance=2000,attackable\"..gw2_blacklistmanager.GetMonsterExcludeString())\n\t\tif(table.valid(CList)) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\n\nself:fail()",
+								startcode = "",
+							},
+						},
+						
+						{
+							class = "SubTree",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								filename = "HandleAggro.st",
+							},
+						},
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+					},
+				},
+				
+				{
 					class = "Action",
 					nodes = 
 					{
@@ -148,9 +194,9 @@ local tbl =
 		info = "",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
-		runcode = "",
+		runcode = "context.vista_fightaggro = self.settings.fightaggro or false",
 		startcode = "",
-		subtreeuicode = "",
+		subtreeuicode = "if(self.settings.fightaggro == nil) then self.settings.fightaggro = true end\n\nself.settings.fightaggro = GUI:Checkbox(GetString(\"Fight aggro before interacting\"), self.settings.fightaggro)\n\nlocal MList = MapMarkerList(\"nearest,isvista,maxdistance=2000\")\nif(table.valid(MList)) then\n\t\t\tlocal _,vista = next(MList)\n\t\t\tif(vista) then\n\t\t\t\t\t\tif(vista.distance > 500) then\n\t\t\t\t\t\t\t\tGUI:Text(\"Nearest vista is too far away (500)\")\n\t\t\t\t\t\telseif(not vista.onmesh or vista.pathdistance < 99999) then\n\t\t\t\t\t\t\t\tGUI:Text(\"Vista not on mesh or no valid path found\")\n\t\t\t\t\t\tend\n\t\t\tend\nelse\n\t\tGUI:Text(\"No undiscovered vista nearby\")\nend",
 	},
 }
 

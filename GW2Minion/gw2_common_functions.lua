@@ -1,45 +1,5 @@
 gw2_common_functions = {}
 
--- Draw Marker function
-function gw2_common_functions.DrawMarker( marker )
-	local markertype = marker:GetType()
-	local pos = marker:GetPosition()
-
-    local color = 0
-    local s = 25
-    local h = 150
-	
-    if ( markertype == GetString("grindMarker") ) then
-        color = 1 -- red
-    elseif ( markertype == GetString("miningMarker") ) then 
-        color = 4 --blue
-    elseif ( markertype == GetString("fishingMarker") ) then
-        color = 7 -- yellow	
-    elseif ( markertype == GetString("vendorMarker") ) then
-        color = 8 -- orange
-    end
-    --Building the vertices for the object
-    local t = { 
-        [1] = { pos.x-s, pos.y+s, pos.z-s-h, color },
-        [2] = { pos.x+s, pos.y+s, pos.z-s-h, color  },	
-        [3] = { pos.x,   pos.y-s,   pos.z-h, color  },
-        
-        [4] = { pos.x+s, pos.y+s, pos.z-s-h, color },
-        [5] = { pos.x+s, pos.y+s, pos.z+s-h, color  },	
-        [6] = { pos.x,   pos.y-s,   pos.z-h, color  },
-        
-        [7] = { pos.x+s, pos.y+s, pos.z+s-h, color },
-        [8] = { pos.x-s, pos.y+s, pos.z+s-h, color  },	
-        [9] = { pos.x,   pos.y-s,   pos.z-h, color  },
-        
-        [10] = { pos.x-s, pos.y+s, pos.z+s-h, color },
-        [11] = { pos.x-s, pos.y+s, pos.z-s-h, color  },	
-        [12] = { pos.x,   pos.y-s,   pos.z-h, color  },
-    }
-    local id = RenderManager:AddObject(t)
-    return id
-end
-
 function gw2_common_functions.HasBuffs(entity, buffIDs)
     if ( entity ) then
 		local buffs = entity.buffs
@@ -240,6 +200,30 @@ function gw2_common_functions.GetClosestWaypointToMap(targetMapID, currentMapID)
 	return nil
 end
 
+-- Gets all targets (Characters and Gadgets) from filterstring
+function gw2_common_functions.GetAllTargets(filterstring)
+	filterstring = string.valid(filterstring) and filterstring or ""
+	
+	local mergedList = {}
+	
+	local CList = CharacterList(filterstring)
+	local GList = GadgetList(filterstring)
+	
+	if(table.valid(CList)) then
+		for _,character in pairs(CList) do
+			table.insert(mergedList, character)
+		end
+	end
+	
+	if(table.valid(GList)) then
+		for _,gadget in pairs(GList) do
+			table.insert(mergedList, gadget)
+		end
+	end
+	
+	return mergedList
+end
+
 -- Tries to get a "best target" to attack
 function gw2_common_functions.GetBestCharacterTarget( maxrange )
 		
@@ -398,21 +382,8 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 			
 			i,filter = next(filters,i)
 		end
-		
-		local contentid_blacklist = gw2_blacklistmanager.GetExcludeString(GetString("Monsters"))
-		local id_blacklist = gw2_blacklistmanager.GetExcludeString(GetString("Temporary Combat"))
-		
-		local gadgetfilter = "hostile,attackable,alive,onmesh,nearest"
-		
-		if(string.valid(contentid_blacklist)) then
-			gadgetfilter = gadgetfilter .. ",exclude_contentid=" ..  contentid_blacklist
-		end
-		
-		if(string.valid(id_blacklist)) then
-			gadgetfilter = gadgetfilter .. ",exclude=" ..  id_blacklist
-		end
-		
-		local GList = GadgetList(gadgetfilter)
+
+		local GList = GadgetList("hostile,attackable,alive,onmesh,nearest"..gw2_blacklistmanager.GetMonsterExcludeString())
 		if(table.valid(GList)) then
 			local _,gagdet = next(GList)
 			if(table.valid(gadget)) then
@@ -591,22 +562,6 @@ function gw2_common_functions.handleConversation(result)
 	end
 end
 
-
-
--- Try to get the next custom VendorMarker in our map where a vendor should be nearby, used by buy and sell task
-function gw2_common_functions.GetNextVendorMarker(oldmarker)
-			
-	local filterLevel = false
-	local vendormarker = ml_marker_mgr.GetNextMarker(GetString("vendorMarker"), filterLevel)
-	
-	-- get a different marker
-	if (vendormarker and oldmarker ~= nil and oldmarker:GetName() == vendormarker:GetName()) then	
-		vendormarker = ml_marker_mgr.GetNextMarker(GetString("vendorMarker"), filterLevel)
-	end
-		
-	return vendormarker
-end
-
 function gw2_common_functions.GetTargetByID(targetID)
 	return CharacterList:Get(targetID) or GadgetList:Get(targetID)
 end
@@ -769,7 +724,7 @@ function gw2_common_functions.GetRandomPoint()
 		if (not table.valid(pos)) then return false end
 	
 		for i,existing in pairs(gw2_common_functions.randompointsused[ml_global_information.CurrentMapID]) do
-			if(TimeSince(existing.time) > 900000) then gw2_common_functions.randompointsused[ml_global_information.CurrentMapID][i] = nil end
+			if(TimeSince(existing.time) > 1800000) then gw2_common_functions.randompointsused[ml_global_information.CurrentMapID][i] = nil end
 			
 			if(math.distance3d(existing.pos,pos) < 500) then
 				return false

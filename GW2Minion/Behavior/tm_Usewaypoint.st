@@ -35,7 +35,7 @@ local tbl =
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "context.usewaypoint_id = self.settings.waypointid",
 		startcode = "",
-		subtreeuicode = "self.settings.waypointid = GUI:InputInt(\"Waypoint ID\", self.settings.waypointid or 0)\n\nif(GUI:Button(\"Select nearest\")) then\n\t\tlocal WPList = WaypointList(\"onmesh,nearest\")\n\t\tif(table.valid(WPList)) then\n\t\t\t\tlocal _,wp = next(WPList)\n\t\t\t\tif(table.valid(wp)) then\n\t\t\t\t\t\tself.settings.waypointid = wp.id\n\t\t\t\tend\n\t\telse\n\t\t\t\td(\"No waypoints found\")\n\t\tend\nend",
+		subtreeuicode = "self.settings.waypointid = GUI:InputInt(\"Waypoint ID\", self.settings.waypointid or 0, 0)\n\nlocal WPList = WaypointList(\"onmesh,nearest\")\nlocal waypoint = {}\nif(table.valid(WPList)) then\n\t\tlocal _,wp = next(WPList)\n\t\tif(table.valid(wp)) then\n\t\t\t\twaypoint = wp\n\t\tend\nend\n\nif(not table.valid(waypoint)) then\n\t\tGUI:Text(\"No waypoint found\")\nelse\n\t\tif(GUI:Button(\"Select nearest\")) then\n\t\t\t\tself.settings.waypointid = waypoint.id\n\t\tend\nend",
 	},
 }
 
