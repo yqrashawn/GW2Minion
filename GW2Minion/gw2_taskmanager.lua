@@ -81,7 +81,9 @@ function gw2_taskmanager.Init()
 		ml_task_mgr.AddSubTaskType("tm_st_changemesh", "tm_ChangeMesh.st", nil, {displayname = GetString("Change mesh")})
 		ml_task_mgr.AddSubTaskType("tm_st_useitem", "tm_UseItem.st", nil, {displayname = GetString("Use inventory item")})
 		ml_task_mgr.AddSubTaskType("tm_st_deliver", "tm_Deliver.st", nil, {displayname = GetString("Deliver item")})	
-
+		ml_task_mgr.AddSubTaskType("tm_st_useskill", "tm_UseSkill.st", nil, {displayname = GetString("Use skill")})	
+		ml_task_mgr.AddSubTaskType("tm_st_wait", "Wait.st", nil, {displayname = GetString("Wait")})	
+		
 		-- For testing				
 		--ml_task_mgr.AddTaskType("tm_subtask_test", "blank.st", gw2_tm_test, {allowpretasks = true; allowposttasks = true; allowsubtasks = true; displayname = GetString("Subtask Test")})
 		--ml_task_mgr.AddSubTaskType("tm_st_test", "blank.st", nil, {displayname = GetString("Do nothing")})	

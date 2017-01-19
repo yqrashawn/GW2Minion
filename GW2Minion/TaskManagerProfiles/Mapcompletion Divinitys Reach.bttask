@@ -29,6 +29,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -68,6 +71,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -107,6 +113,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -146,6 +155,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -185,6 +197,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -224,6 +239,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -247,6 +265,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 6,
@@ -255,27 +274,6 @@ local tbl =
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						targetpos = 
-						{
-							hx = -0.52377068996429,
-							hy = -0.75445967912674,
-							hz = 0.39554369449615,
-							x = -8512.21875,
-							y = -11386.817382813,
-							z = -2739.48828125,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "",
-						type = "tm_st_moveto",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -284,6 +282,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -323,6 +324,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -346,6 +350,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 8,
@@ -354,27 +359,6 @@ local tbl =
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						targetpos = 
-						{
-							hx = -0.85768872499466,
-							hy = 0.5141693353653,
-							hz = 0,
-							x = -11181.188476563,
-							y = -6510.4619140625,
-							z = -2951.2260742188,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "",
-						type = "tm_st_moveto",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -383,6 +367,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = false,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -422,6 +409,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -461,6 +451,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -484,6 +477,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 39,
@@ -492,27 +486,6 @@ local tbl =
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						targetpos = 
-						{
-							hx = -0.3707078397274,
-							hy = 0.59373623132706,
-							hz = 0.71417993307114,
-							x = -2510.2756347656,
-							y = 5824.6958007813,
-							z = -4278.3203125,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "",
-						type = "tm_st_moveto",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -521,6 +494,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -560,6 +536,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -599,6 +578,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -638,6 +620,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 378,
 				maxduration = 0,
 				maxlevel = 0,
@@ -677,6 +662,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 330,
 				maxduration = 0,
 				maxlevel = 0,
@@ -716,6 +704,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -739,6 +730,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 16,
@@ -747,27 +739,6 @@ local tbl =
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						targetpos = 
-						{
-							hx = -0.75336986780167,
-							hy = 0.65759700536728,
-							hz = 0,
-							x = 5705.0185546875,
-							y = -4459.193359375,
-							z = -6238.4912109375,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "",
-						type = "tm_st_moveto",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -776,6 +747,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -815,6 +789,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -854,6 +831,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -893,6 +873,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -932,6 +915,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -971,6 +957,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 914,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1010,6 +999,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1049,6 +1041,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1088,6 +1083,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1127,6 +1125,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1166,6 +1167,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1189,6 +1193,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 27,
@@ -1197,27 +1202,6 @@ local tbl =
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						targetpos = 
-						{
-							hx = -0.091956876218319,
-							hy = -0.70193576812744,
-							hz = 0.70627903938293,
-							x = 13872.309570313,
-							y = 7298.0415039063,
-							z = -3001.5036621094,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "",
-						type = "tm_st_moveto",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -1226,6 +1210,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1265,6 +1252,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1304,6 +1294,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 248,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1343,6 +1336,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 248,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1382,6 +1378,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 248,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1421,6 +1420,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 248,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1460,6 +1462,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 248,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1483,6 +1488,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 34,
@@ -1491,27 +1497,6 @@ local tbl =
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						targetpos = 
-						{
-							hx = 0.83210772275925,
-							hy = -0.55461400747299,
-							hz = 0,
-							x = 5656.0341796875,
-							y = 14616.650390625,
-							z = -2869.5866699219,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "",
-						type = "tm_st_moveto",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -1520,6 +1505,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1559,6 +1547,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1598,6 +1589,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1637,6 +1631,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1676,6 +1673,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1715,6 +1715,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 18,
 				maxduration = 0,
 				maxlevel = 0,
