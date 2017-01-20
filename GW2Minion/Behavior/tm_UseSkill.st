@@ -45,7 +45,7 @@ local tbl =
 								finishcode = "",
 								info = "",
 								monitorcode = "",
-								runcode = "if(Player.castinfo.slot ~= ml_global_information.MAX_SKILLBAR_SLOTS) then\n\t\td(\"[tm_UseSkill]: A skill is currently being cast. Waiting.\")\n\t\tself:success()\n\t\treturn\nend\n\nif(table.valid(context.spellinfo) and context.spellinfo.cooldown == 1) then\n\t\td(\"[tm_UseSkill]: Skill is on cooldown. Waiting.\")\n\t\tself:success()\n\t\treturn\nend\n\nself:fail()",
+								runcode = "if(Player.castinfo.slot ~= ml_global_information.MAX_SKILLBAR_SLOTS) then\n\t\td(\"[tm_UseSkill]: A skill is currently being cast. Waiting.\")\n\t\tself:success()\n\t\treturn\nend\n\nif(table.valid(context.spellinfo) and context.spellinfo.cooldown ~= 0) then\n\t\td(\"[tm_UseSkill]: Skill is on cooldown. Waiting.\")\n\t\tself:success()\n\t\treturn\nend\n\nself:fail()",
 								startcode = "",
 							},
 						},
