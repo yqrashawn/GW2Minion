@@ -1,5 +1,5 @@
 gw2_sell_manager = {}
-gw2_sell_manager.active = false
+gw2_sell_manager.active = true
 gw2_sell_manager.salvageTick = 0
 gw2_sell_manager.toolTip = false
 gw2_sell_manager.filterList = {list = {}, nameList = {}, currID = 1,}
@@ -37,7 +37,7 @@ function gw2_sell_manager.ModuleInit()
 
 	-- init active stuff here.
 	if (Settings.gw2_sell_manager.active == nil) then
-		Settings.gw2_sell_manager.active = false
+		Settings.gw2_sell_manager.active = true
 	end
 	gw2_sell_manager.active = Settings.gw2_sell_manager.active
 	-- end active init.
