@@ -443,6 +443,20 @@ function dev.DrawCall(event, ticks )
 								end
 							end
 						end
+						GUI:Separator()
+						if ( GUI:TreeNode("CoolDown List") ) then
+							local cdlist = Player:GetCoolDownList()
+							if ( table.size(cdlist) > 0 ) then
+								for id,e in pairs(cdlist) do
+									GUI:BulletText("ID:"..tostring(id)) GUI:SameLine(140) GUI:Text("CD:"..tostring(e.cooldown)) GUI:SameLine(210) GUI:Text(tostring(e.name))
+								end							
+							else
+								GUI:Text("No Skills on cooldown")
+							end
+						
+							GUI:PopItemWidth()
+							GUI:TreePop()
+						end
 						GUI:PopItemWidth()
 						GUI:TreePop()
 					end
@@ -697,6 +711,7 @@ function dev.DrawCall(event, ticks )
 				
 					if ( GUI:TreeNode("Utility Functions & Other Infos") ) then
 						GUI:PushItemWidth(250)
+						GUI:BulletText("Game Time") GUI:SameLine(200) GUI:InputText("##devuf2",tostring(GetGameTime()))
 						GUI:BulletText("Local MapID") GUI:SameLine(200) GUI:InputText("##devff1",tostring(Player:GetLocalMapID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						
 						if (GUI:Button("AoE Loot",150,15) ) then Player:AoELoot() end

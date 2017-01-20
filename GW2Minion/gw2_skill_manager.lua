@@ -1791,7 +1791,7 @@ function skillPrototype:CanCast(targetID) -- TODO: change to use booleans
 		local lastSkillID = (Player.castinfo.skillID == 0 and Player.castinfo.lastSkillID or Player.castinfo.skillID)
 
 		-- skillBar attributes.
-		if (skillOnBar.cooldown == 1) then return false end
+		if (skillOnBar.cooldown ~= 0) then return false end
 		self.tmp.slot = skillOnBar.slot
 		
 		if (skillOnBar.power > ml_global_information.Player_Power) then return false end
