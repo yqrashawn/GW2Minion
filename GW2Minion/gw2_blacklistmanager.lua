@@ -16,6 +16,16 @@ function gw2_blacklistmanager.ModuleInit()
 	local eventlist = ml_list_mgr.AddList(GetString("Event"), gw2_blacklistmanager.DrawEvent)
 	eventlist.GUI.vars = { mapid = 0, name = "", pos = { x = 0, y = 0, z = 0}, id = 0, expiration_s = 0}
 	gw2_blacklistmanager.lists[GetString("Event")] = eventlist
+	
+		-- Forcefully remove players
+	if(gw2_blacklistmanager.lists[GetString("Monsters")]) then
+		local tmpentries = ml_list_mgr.FindEntries(GetString("Monsters"),"id=42646")
+		if(table.valid(tmpentries)) then
+			for k,_ in pairs(tmpentries) do
+				gw2_blacklistmanager.lists[GetString("Monsters")]:DeleteEntry(k)
+			end
+		end
+	end
 end
 RegisterEventHandler("Module.Initalize",gw2_blacklistmanager.ModuleInit)
 
@@ -51,16 +61,24 @@ RegisterEventHandler("Gameloop.Update", gw2_blacklistmanager.OnUpdate)
 function gw2_blacklistmanager.AddBlacklistEntry(listname, id, name, duration)
 	if(listname and id and table.valid(gw2_blacklistmanager.lists[listname])) then
 		
-		-- Don't blacklist players for too long, else spvp and wvwvw are not working well
-		if ( listname == GetString("Temporary Combat")) then
-			if(type(duration) ~= "number") then duration = 5000 end
-			
-			local target = CharacterList:Get(id)
-			if ( table.valid(target) and target.isplayer) then
-				duration = 5000
-			end
+		-- Force no permanent player blacklisting
+		if (listname == GetString("Monsters") and id == 42646) then
+			d("BLACKLISTING PLAYERS BY CONTENTID IS NOT ALLOWED.")
+			return
 		end
 		
+		-- Don't blacklist players for too long, else spvp and wvwvw are not working well
+		if ( listname == GetString("Temporary Combat")) then
+			if(type(duration) ~= "number" or duration < 1000) then duration = 5000 end
+			
+			if(duration > 5000) then
+				local target = CharacterList:Get(id)
+				if ( table.valid(target) and target.isplayer) then
+					duration = 5000
+				end
+			end
+		end
+				
 		duration = duration or 0
 		if(type(duration) == "number" and duration > 0 and duration < ml_global_information.Now) then
 			duration = ml_global_information.Now + duration
@@ -118,18 +136,20 @@ function gw2_blacklistmanager:DrawMonster()
 	
 	GUI:Text(GetString("Blacklist") .. " " .. self.name)
 	GUI:Text(GetString("Select a target then click the blacklist button"))
-	GUI:Text(GetString("This will blacklist every " .. string.lower(self.name) .. " of the same type"))
+	GUI:Text(GetString("This will blacklist " .. string.lower(self.name) .. " of the same type"))
 	GUI:Text(GetString("A duration of 0 is permanent"))
 	
 	GUI:Separator();
 	
 	gw2_blacklistmanager.temporaryMonsterEntryDuration = GUI:InputInt(GetString("Duration").." (s)", gw2_blacklistmanager.temporaryMonsterEntryDuration)
 
+	gw2_blacklistmanager.temporaryMonsterEntryDuration = GUI:InputInt(GetString("Duration").." (s)", gw2_blacklistmanager.temporaryMonsterEntryDuration)
+	if(type(gw2_blacklistmanager.temporaryMonsterEntryDuration) ~= "number" or gw2_blacklistmanager.temporaryMonsterEntryDuration < 0) then
+		gw2_blacklistmanager.temporaryMonsterEntryDuration = 0
+	end
+	
 	if(GUI:Button(GetString("Blacklist current target type"))) then
-		if(type(gw2_blacklistmanager.temporaryMonsterEntryDuration) ~= "number" or gw2_blacklistmanager.temporaryMonsterEntryDuration < 0) then
-			gw2_blacklistmanager.temporaryMonsterEntryDuration = 0
-		end
-		
+
 		local expiration = 0
 		if(gw2_blacklistmanager.temporaryMonsterEntryDuration > 0) then
 			expiration = ml_global_information.Now + gw2_blacklistmanager.temporaryMonsterEntryDuration*1000
@@ -137,7 +157,11 @@ function gw2_blacklistmanager:DrawMonster()
 		
 		local target = Player:GetTarget()
 		if(table.valid(target)) then
-			self:AddEntry({id = target.contentid, name = target.name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = expiration})
+			if(not target.isplayer) then
+				self:AddEntry({id = target.contentid, name = target.name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = expiration})
+			else
+				d("You cannot permanently blacklist players.")
+			end
 		else
 			d("No target selected")
 		end
@@ -189,12 +213,11 @@ function gw2_blacklistmanager:DrawVendor()
 	GUI:Separator();
 	
 	gw2_blacklistmanager.temporaryVendorEntryDuration = GUI:InputInt(GetString("Duration").." (s)", gw2_blacklistmanager.temporaryCombatEntryDuration)
-
-	if(GUI:Button(GetString("Blacklist current target"))) then
-		if(type(gw2_blacklistmanager.temporaryVendorEntryDuration) ~= "number" or gw2_blacklistmanager.temporaryVendorEntryDuration < 0) then
-			gw2_blacklistmanager.temporaryVendorEntryDuration = 3600
-		end
+	if(type(gw2_blacklistmanager.temporaryVendorEntryDuration) ~= "number" or gw2_blacklistmanager.temporaryVendorEntryDuration < 0) then
+		gw2_blacklistmanager.temporaryVendorEntryDuration = 3600
+	end
 		
+	if(GUI:Button(GetString("Blacklist current target"))) then
 		local expiration = 0
 		if(gw2_blacklistmanager.temporaryVendorEntryDuration > 0) then
 			expiration = ml_global_information.Now + gw2_blacklistmanager.temporaryVendorEntryDuration*1000
@@ -246,7 +269,7 @@ function gw2_blacklistmanager:DrawVendor()
 end
 
 -- Draw temporary combat list
-gw2_blacklistmanager.temporaryCombatEntryDuration = 3600
+gw2_blacklistmanager.temporaryCombatEntryDuration = 10
 function gw2_blacklistmanager:DrawTemporaryCombat()
 	GUI:Separator();
 	GUI:Text(GetString("Blacklist") .. " " .. self.name)
@@ -255,12 +278,12 @@ function gw2_blacklistmanager:DrawTemporaryCombat()
 	GUI:Separator();
 	
 	gw2_blacklistmanager.temporaryCombatEntryDuration = GUI:InputInt(GetString("Duration").." (s)", gw2_blacklistmanager.temporaryCombatEntryDuration)
-
+	if(type(gw2_blacklistmanager.temporaryCombatEntryDuration) ~= "number" or gw2_blacklistmanager.temporaryCombatEntryDuration < 1) then
+		gw2_blacklistmanager.temporaryCombatEntryDuration = 10
+	end
+	
 	if(GUI:Button(GetString("Blacklist current target"))) then
-		if(type(gw2_blacklistmanager.temporaryCombatEntryDuration) ~= "number" or gw2_blacklistmanager.temporaryCombatEntryDuration < 0) then
-			gw2_blacklistmanager.temporaryCombatEntryDuration = 3600
-		end
-		
+
 		local target = Player:GetTarget()
 		if(table.valid(target)) then
 			self:AddEntry({id = target.id, name = target.name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = ml_global_information.Now + gw2_blacklistmanager.temporaryCombatEntryDuration*1000})
