@@ -142,8 +142,6 @@ function gw2_blacklistmanager:DrawMonster()
 	GUI:Separator();
 	
 	gw2_blacklistmanager.temporaryMonsterEntryDuration = GUI:InputInt(GetString("Duration").." (s)", gw2_blacklistmanager.temporaryMonsterEntryDuration)
-
-	gw2_blacklistmanager.temporaryMonsterEntryDuration = GUI:InputInt(GetString("Duration").." (s)", gw2_blacklistmanager.temporaryMonsterEntryDuration)
 	if(type(gw2_blacklistmanager.temporaryMonsterEntryDuration) ~= "number" or gw2_blacklistmanager.temporaryMonsterEntryDuration < 0) then
 		gw2_blacklistmanager.temporaryMonsterEntryDuration = 0
 	end
