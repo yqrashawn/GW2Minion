@@ -19,7 +19,7 @@ function gw2_unstuck.Stop()
 	gw2_unstuck.lastraycastdetails = nil
 	gw2_unstuck.distmoved = 0
 	
-	-- Set to true if the player is expected to handle jumping and stuff themselves
+	-- Set to true if the player is expected to handle jumping and stuff themselves (like in assist start)
 	gw2_unstuck.manualcontrolmode = false
 	
 	gw2_unstuck.Reset()
@@ -34,7 +34,7 @@ function gw2_unstuck.Reset()
 	gw2_unstuck.pathblockingobject = nil
 	gw2_unstuck.lasttimeonmesh = ml_global_information.Now
 	gw2_unstuck.offmeshwptrycount = 0
-	
+
 	for k,movementtype in pairs(gw2_unstuck.movementtype) do
 		if(movementtype) then Player:UnSetMovement(movementtype) end
 		gw2_unstuck.movementtype[k] = false
@@ -44,9 +44,14 @@ function gw2_unstuck.Reset()
 	gw2_unstuck.unstuck_mode = nil
 end
 
+-- Only reset position for now
+function gw2_unstuck.SoftReset()
+	gw2_unstuck.lastposition = ml_global_information.Player_Position
+end
+
 function gw2_unstuck.HandleStuck()
 	-- Throttle
-	if(gw2_unstuck.stucktick > 0 and TimeSince(gw2_unstuck.stucktick) < 200 ) then
+	if(gw2_unstuck.stucktick > 0 and TimeSince(gw2_unstuck.stucktick) < 150 ) then
 		return gw2_unstuck.lastresult
 	end
 	
@@ -100,7 +105,7 @@ function gw2_unstuck.HandleStuck()
 				gw2_unstuck.lastresult = gw2_unstuck.HandleStuck_MovedDistanceCheck()
 			end
 		end
-		gw2_unstuck.lastposition = Player.pos
+		gw2_unstuck.lastposition = ml_global_information.Player_Position
 	end
 
 	return gw2_unstuck.lastresult
@@ -116,7 +121,7 @@ function gw2_unstuck.OnMesh()
 		end
 		
 		gw2_unstuck.lastresult = gw2_unstuck.HandleOffMesh()
-		gw2_unstuck.lastposition = Player.pos
+		gw2_unstuck.lastposition = ml_global_information.Player_Position
 		return false
 	end
 	return true
@@ -124,11 +129,22 @@ end
 
 function gw2_unstuck.HandleOffMesh()
 	d("[Unstuck]: Player not on mesh!")
-	if(TimeSince(gw2_unstuck.lasttimeonmesh) > 20000) then
+	local offmeshtime = TimeSince(gw2_unstuck.lasttimeonmesh)
+	if(gw2_unstuck.lasttimeonmesh == 0 or offmeshtime > 2000 and offmeshtime < 20000) then
+		local p = NavigationManager:GetClosestPointOnMesh(Player.pos)
+		if(table.valid(p) and p.distance > 0 and p.distance < 500) then
+			d("[Unstuck]: Moving blindly to nearby mesh.")
+			if(not gw2_unstuck.HandleStuck_MovedDistanceCheck()) then
+				gw2_unstuck.stuckhandlers.moveto(p)
+			end
+		end
+		return true
+	elseif(offmeshtime > 20000) then
 		if(gw2_unstuck.stuckhandlers.waypoint()) then
 			gw2_unstuck.lasttimeonmesh = ml_global_information.Now+3000
 		else
 			Player:StopMovement()
+
 			gw2_unstuck.offmeshwptrycount = gw2_unstuck.offmeshwptrycount + 1
 			if(gw2_unstuck.offmeshwptrycount > 10) then
 				gw2_unstuck.stuckhandlers.stop()
@@ -137,15 +153,6 @@ function gw2_unstuck.HandleOffMesh()
 			end
 			
 			gw2_unstuck.stucktick = ml_global_information.Now + 10000
-		end
-		return true
-	elseif(gw2_unstuck.lasttimeonmesh == 0 or TimeSince(gw2_unstuck.lasttimeonmesh) > 2000) then
-		local p = NavigationManager:GetClosestPointOnMesh(Player.pos)
-		if(table.valid(p) and p.distance > 0 and p.distance < 500) then
-			d("[Unstuck]: Moving blindly to nearby mesh.")
-			if(not gw2_unstuck.HandleStuck_MovedDistanceCheck()) then
-				gw2_unstuck.stuckhandlers.moveto(p)
-			end
 		end
 		return true
 	end
@@ -275,6 +282,7 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck()
 				gw2_unstuck.stuckhandlers.jump()
 				return true
 			elseif(gw2_unstuck.stuckcount > mincount) then
+				ml_navigation:ResetCurrentPath()
 				-- Start moving forward
 				gw2_unstuck.lastaction = "moveforward"
 				gw2_unstuck.stuckhandlers.moveforward()
@@ -338,7 +346,7 @@ function gw2_unstuck.HandleStuckEntry(entry)
 	local retval = false
 	if(table.valid(gw2_unstuck.laststuckentry)) then
 		-- Increment the stuck count for this entry if it is the same as the last one
-		if(math.distance3d(entry.pos,gw2_unstuck.laststuckentry.pos) < 40 and TimeSince(entry.modified) > 500) then
+		if(math.distance3d(entry.pos,gw2_unstuck.laststuckentry.pos) < 40 and TimeSince(entry.modified) > 200) then
 			entry.stuckcount = entry.stuckcount + 1
 			entry.modified = ml_global_information.Now
 		end

@@ -380,6 +380,6 @@ end
 function Player:StopMovement()
 	ml_navigation:ResetCurrentPath()
 	ml_navigation:ResetOMCHandler()
-	gw2_unstuck.Reset()
+	gw2_unstuck.SoftReset()
 	Player:Stop()
 end
