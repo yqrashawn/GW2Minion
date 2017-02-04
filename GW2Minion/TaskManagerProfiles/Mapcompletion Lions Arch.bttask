@@ -36,7 +36,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "fort mariner wp",
+				name = "WP - Fort Marriner ",
 				pos = 
 				{
 					hx = -0.72895818948746,
@@ -78,7 +78,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "captain theo po",
+				name = "POI - Captain Theo",
 				pos = 
 				{
 					hx = 0.48154330253601,
@@ -120,7 +120,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "mist portals",
+				name = "POI - Mist Portals",
 				pos = 
 				{
 					hx = -0.98308408260345,
@@ -162,7 +162,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "VIGIL COURT HOUSE",
+				name = "POI - Vigil Centerhouse",
 				pos = 
 				{
 					hx = 0.72844797372818,
@@ -204,7 +204,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "BLOODCOAST Ward wp",
+				name = "WP - Bloodcoast Ward ",
 				pos = 
 				{
 					hx = 0.97115111351013,
@@ -247,7 +247,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "vista",
+				name = "Vista - Bloodcoast Ward",
 				pos = 
 				{
 					hx = -0.15914767980576,
@@ -289,7 +289,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "farshore wp",
+				name = "WP - Farshore",
 				pos = 
 				{
 					hx = -0.018568327650428,
@@ -331,7 +331,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "tokks mill",
+				name = "POI - Tokk's Mill",
 				pos = 
 				{
 					hx = -0.96214497089386,
@@ -374,7 +374,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista",
+				name = "Vista - Sharkmaw Caverns",
 				pos = 
 				{
 					hx = -0.8466089963913,
@@ -416,7 +416,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "deverols gardens poi",
+				name = "POI - Deverols Gardens",
 				pos = 
 				{
 					hx = -0.32574832439423,
@@ -458,7 +458,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "cavern wp",
+				name = "WP - Cavern",
 				pos = 
 				{
 					hx = 0.97529649734497,
@@ -467,6 +467,48 @@ local tbl =
 					x = 23995.142578125,
 					y = 1429.4810791016,
 					z = -1221.6008300781,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 46,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 50,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI - Guild Initiative Headquarters",
+				pos = 
+				{
+					hx = 0.80995434522629,
+					hy = 0.01763678714633,
+					hz = 0.58622765541077,
+					x = 19465.97265625,
+					y = 6712.3310546875,
+					z = -1205.9466552734,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -500,7 +542,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "guild buff wp",
+				name = "WP - Guild Bluff",
 				pos = 
 				{
 					hx = 0.25895792245865,
@@ -543,7 +585,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista",
+				name = "Vista - Postern Ward",
 				pos = 
 				{
 					hx = -0.58813375234604,
@@ -585,7 +627,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "eastern ward wp",
+				name = "WP - Eastern Ward",
 				pos = 
 				{
 					hx = -0.99581557512283,
@@ -718,7 +760,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "Vista - Inner Harbor Rock",
+				name = "Vista - Inner Harbor (Rock)",
 				pos = 
 				{
 					hx = 0.21302777528763,
@@ -760,7 +802,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "poi",
+				name = "POI - Coriolis Plaza",
 				pos = 
 				{
 					hx = 0.67078918218613,
@@ -802,7 +844,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "gate hub plaza wp",
+				name = "WP - Gate Hub Plaza",
 				pos = 
 				{
 					hx = -0.72496062517166,
@@ -845,7 +887,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista",
+				name = "Vista - Eastern Ward",
 				pos = 
 				{
 					hx = 0.99880009889603,
@@ -887,7 +929,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "lions court poi",
+				name = "POI - Lion's Court",
 				pos = 
 				{
 					hx = -0.9995910525322,
@@ -930,7 +972,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista",
+				name = "Vista - Grand Piazza",
 				pos = 
 				{
 					hx = 0.09247312694788,
@@ -972,7 +1014,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "the vauls",
+				name = "POI - The Vauls",
 				pos = 
 				{
 					hx = 0.39543852210045,
@@ -981,48 +1023,6 @@ local tbl =
 					x = 3205.6083984375,
 					y = 12706.427734375,
 					z = -935.6123046875,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 21,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 50,
-				maxduration = 0,
-				maxlevel = 80,
-				minlevel = 0,
-				name = "mysic plaza",
-				pos = 
-				{
-					hx = -0.2870132625103,
-					hy = 0.95792663097382,
-					hz = 0,
-					x = -3775.9365234375,
-					y = 12004.65234375,
-					z = -912.40942382813,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -1056,7 +1056,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "traders forum wp",
+				name = "WP - Trader's Forum",
 				pos = 
 				{
 					hx = 0.62885624170303,
@@ -1065,6 +1065,132 @@ local tbl =
 					x = -2155.6674804688,
 					y = 13776.443359375,
 					z = -826.32287597656,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 21,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 50,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "POI - Mysic Plaza",
+				pos = 
+				{
+					hx = -0.2870132625103,
+					hy = 0.95792663097382,
+					hz = 0,
+					x = -3775.9365234375,
+					y = 12004.65234375,
+					z = -912.40942382813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 46,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 50,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI - Frog Pond",
+				pos = 
+				{
+					hx = -0.95067006349564,
+					hy = -0.062695495784283,
+					hz = 0.30380213260651,
+					x = -6001.8901367188,
+					y = 10557.549804688,
+					z = -895.81335449219,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 47,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 50,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI - Black Lion Trading Post",
+				pos = 
+				{
+					hx = 0.48522084951401,
+					hy = -0.85325175523758,
+					hz = 0.19110761582851,
+					x = -6905.1040039063,
+					y = 7674.1323242188,
+					z = -821.89611816406,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -1098,7 +1224,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "commodors wp",
+				name = "WP - Commodore's Quarter",
 				pos = 
 				{
 					hx = -0.94931352138519,
@@ -1140,7 +1266,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "order of whisperers",
+				name = "POI - Order of Whisperers Headquarters",
 				pos = 
 				{
 					hx = -0.13160425424576,
@@ -1182,7 +1308,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "the free market",
+				name = "POI - The Free Market",
 				pos = 
 				{
 					hx = 0.28008404374123,
@@ -1225,7 +1351,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista",
+				name = "Vista - Western Ward",
 				pos = 
 				{
 					hx = -0.13590729236603,
@@ -1267,7 +1393,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "western ward wp",
+				name = "WP - Western Ward",
 				pos = 
 				{
 					hx = -0.99881076812744,
@@ -1276,6 +1402,91 @@ local tbl =
 					x = -17966.92578125,
 					y = 7959.154296875,
 					z = -579.42980957031,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 42,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 50,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "Vista - Hooligan's Route",
+				pos = 
+				{
+					hx = 0.1080833747983,
+					hy = -0.99414187669754,
+					hz = 0,
+					x = -22992.681640625,
+					y = 12377.88671875,
+					z = -462.45922851563,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 43,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 50,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "POI - The Undermarket",
+				pos = 
+				{
+					hx = 0.25903028249741,
+					hy = 0.88847774267197,
+					hz = 0.37882801890373,
+					x = -23839.404296875,
+					y = 16052.380859375,
+					z = -818.77728271484,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -1309,7 +1520,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "crows nest",
+				name = "POI - Crows Nest",
 				pos = 
 				{
 					hx = -0.999871134758,
@@ -1352,15 +1563,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista crows nest",
+				name = "Vista - Crows Nest",
 				pos = 
 				{
-					hx = -0.67122066020966,
-					hy = -0.37142717838287,
-					hz = 0.641486287117,
-					x = -12175.095703125,
-					y = 8542.818359375,
-					z = -2046.2624511719,
+					hx = -0.99997574090958,
+					hy = 0.0069643072783947,
+					hz = 0,
+					x = -12187.744140625,
+					y = 8493.421875,
+					z = -2043.4946289063,
 				},
 				radius = 0,
 				type = "tm_vista",
@@ -1394,7 +1605,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "sanctum harbor wp",
+				name = "WP - Sanctum Harbor",
 				pos = 
 				{
 					hx = -0.15841455757618,
@@ -1436,7 +1647,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "moran memorial",
+				name = "POI - Moran Memorial",
 				pos = 
 				{
 					hx = 0.60086917877197,
@@ -1478,7 +1689,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "machas landing",
+				name = "POI - Macha's Landing",
 				pos = 
 				{
 					hx = -0.25792482495308,
@@ -1520,7 +1731,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "poi",
+				name = "POI - Field of the Fallen",
 				pos = 
 				{
 					hx = -0.31179681420326,
@@ -1562,7 +1773,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "diverse ledges wp",
+				name = "WP - Diverse Ledges",
 				pos = 
 				{
 					hx = 0.84641224145889,
@@ -1604,7 +1815,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "durman priory poi",
+				name = "POI - Durman Priory Research Site",
 				pos = 
 				{
 					hx = 0.47551113367081,
@@ -1646,7 +1857,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "old lions arch poi",
+				name = "POI - Old Lions Arch ",
 				pos = 
 				{
 					hx = 0.28917980194092,
@@ -1688,7 +1899,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "wreckage of beachmaker",
+				name = "POI - Wreckage of the Breachmaker",
 				pos = 
 				{
 					hx = 0.99893283843994,
@@ -1731,7 +1942,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista",
+				name = "Vista - Sanctum Harbor",
 				pos = 
 				{
 					hx = 0.70667964220047,
@@ -1773,7 +1984,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "moorookoo village",
+				name = "POI - Moorookoo Village",
 				pos = 
 				{
 					hx = 0.99650359153748,
@@ -1782,90 +1993,6 @@ local tbl =
 					x = -313.11370849609,
 					y = -4129.5483398438,
 					z = 2366.7963867188,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 44,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 50,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "POI - Wreckage",
-				pos = 
-				{
-					hx = -0.99847728013992,
-					hy = 0.055164128541946,
-					hz = 0,
-					x = -10187.7890625,
-					y = -6534.6938476563,
-					z = 2369.7492675781,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 45,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 50,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "POI - Old Lions Arch",
-				pos = 
-				{
-					hx = -0.93778413534164,
-					hy = 0.34721887111664,
-					hz = 0,
-					x = -16931.234375,
-					y = -3452.6101074219,
-					z = 1016.6538696289,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -1899,7 +2026,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "claw island wp",
+				name = "WP - Claw Island",
 				pos = 
 				{
 					hx = -0.51647359132767,
@@ -1942,103 +2069,18 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista",
+				name = "Vista - Lighthouse",
 				pos = 
 				{
-					hx = 0.77962756156921,
-					hy = -0.62624341249466,
-					hz = 0,
-					x = -12429.987304688,
-					y = -14549.540039063,
-					z = -6299.3266601563,
+					hx = 0.47141194343567,
+					hy = 0.67224955558777,
+					hz = 0.57083386182785,
+					x = -12438.70703125,
+					y = -14607.853515625,
+					z = -6299.3256835938,
 				},
 				radius = 0,
 				type = "tm_vista",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-				fightaggro = true,
-			},
-			lastrun = 0,
-			order = 42,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 50,
-				maxduration = 0,
-				maxlevel = 80,
-				minlevel = 0,
-				name = "vista",
-				pos = 
-				{
-					hx = 0.1080833747983,
-					hy = -0.99414187669754,
-					hz = 0,
-					x = -22992.681640625,
-					y = 12377.88671875,
-					z = -462.45922851563,
-				},
-				radius = 0,
-				type = "tm_vista",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 43,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 50,
-				maxduration = 0,
-				maxlevel = 80,
-				minlevel = 0,
-				name = "the undermaerket",
-				pos = 
-				{
-					hx = 0.25903028249741,
-					hy = 0.88847774267197,
-					hz = 0.37882801890373,
-					x = -23839.404296875,
-					y = 16052.380859375,
-					z = -818.77728271484,
-				},
-				radius = 0,
-				type = "tm_moveto",
 			},
 			version = 0,
 		},
