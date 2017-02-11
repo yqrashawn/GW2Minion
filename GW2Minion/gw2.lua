@@ -177,6 +177,13 @@ function gw2minion.DrawCall(event, ticks )
 			gw2minion.mainbtreeinstance:run(gw2minion.btreecontext)
 		end
 	end
+	
+	-- Autostart once on loading ingame
+	if ( not gw2minion.startedonce and Settings.GW2Minion.autostartbot == true and not BehaviorManager:Running() and GetGameState() == GW2.GAMESTATE.GAMEPLAY and NavigationManager:GetNavMeshState() == GLOBAL.MESHSTATE.MESHREADY) then
+		gw2minion.startedonce = true
+		BehaviorManager:Start()
+		d("[GW2Minion] - Automatically starting bot")
+	end
 end
 RegisterEventHandler("Gameloop.Draw", gw2minion.DrawCall)
 
