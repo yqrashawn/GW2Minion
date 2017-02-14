@@ -88,7 +88,7 @@ function gw2_sell_manager.mainWindow.Draw(event,ticks)
 			Settings.gw2_sell_manager.active = gw2_sell_manager.active
 			GUI:EndGroup()
 			if (GUI:IsItemHovered() and gw2_sell_manager.toolTip) then
-				GUI:SetTooltip("Turn Salvaging on or off.")
+				GUI:SetTooltip("Turn Sell Manager on or off.")
 			end
 			-----------------------------------------------------------------------------------------------------------------------------------
 			GUI:Separator()
