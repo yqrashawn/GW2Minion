@@ -34,7 +34,9 @@ function gw2_unstuck.Reset()
 	gw2_unstuck.pathblockingobject = nil
 	gw2_unstuck.lasttimeonmesh = ml_global_information.Now
 	gw2_unstuck.offmeshwptrycount = 0
-
+	gw2_unstuck.offmeshwptrytime = ml_global_information.Now
+	gw2_unstuck.STUCKTYPE = "onmesh"
+	
 	for k,movementtype in pairs(gw2_unstuck.movementtype) do
 		if(movementtype) then Player:UnSetMovement(movementtype) end
 		gw2_unstuck.movementtype[k] = false
@@ -90,8 +92,9 @@ function gw2_unstuck.HandleStuck()
 		gw2_unstuck.lastresult = true
 		return gw2_unstuck.lastresult
 	end
-	
+
 	if(gw2_unstuck.OnMesh()) then
+		gw2_unstuck.STUCKTYPE = "onmesh"
 		gw2_unstuck.lasttimeonmesh = ml_global_information.Now
 		
 		if(table.valid(gw2_unstuck.lastposition)) then
@@ -120,17 +123,20 @@ function gw2_unstuck.OnMesh()
 			return gw2_unstuck.lastresult
 		end
 		
+		gw2_unstuck.STUCKTYPE = "offmesh"
 		gw2_unstuck.lastresult = gw2_unstuck.HandleOffMesh()
 		gw2_unstuck.lastposition = ml_global_information.Player_Position
+		
 		return false
 	end
 	return true
 end
 
 function gw2_unstuck.HandleOffMesh()
-	d("[Unstuck]: Player not on mesh!")
 	local offmeshtime = TimeSince(gw2_unstuck.lasttimeonmesh)
-	if(gw2_unstuck.lasttimeonmesh == 0 or offmeshtime > 2000 and offmeshtime < 20000) then
+	d("[Unstuck]: Player not on mesh! ("..tostring(math.round(offmeshtime / 1000)).."s)")
+
+	if(offmeshtime > 2000) then
 		local p = NavigationManager:GetClosestPointOnMesh(Player.pos)
 		if(table.valid(p) and p.distance > 0 and p.distance < 500) then
 			d("[Unstuck]: Moving blindly to nearby mesh.")
@@ -138,14 +144,15 @@ function gw2_unstuck.HandleOffMesh()
 				gw2_unstuck.stuckhandlers.moveto(p)
 			end
 		end
-		return true
-	elseif(offmeshtime > 20000) then
-		if(gw2_unstuck.stuckhandlers.waypoint()) then
-			gw2_unstuck.lasttimeonmesh = ml_global_information.Now+3000
-		else
+	end
+	
+	if(gw2_unstuck.lasttimeonmesh > 0 and offmeshtime > 20000 and TimeSince(gw2_unstuck.offmeshwptrytime) > 5000) then
+		if(not gw2_unstuck.stuckhandlers.waypoint()) then
+		--if(1==1) then
 			Player:StopMovement()
 
 			gw2_unstuck.offmeshwptrycount = gw2_unstuck.offmeshwptrycount + 1
+			gw2_unstuck.offmeshwptrytime = ml_global_information.Now
 			if(gw2_unstuck.offmeshwptrycount > 10) then
 				gw2_unstuck.stuckhandlers.stop()
 			else
@@ -153,8 +160,9 @@ function gw2_unstuck.HandleOffMesh()
 			end
 			
 			gw2_unstuck.stucktick = ml_global_information.Now + 10000
-		end
-		return true
+		else
+			return true
+		end	
 	end
 	
 	return false
@@ -181,9 +189,11 @@ function gw2_unstuck.HandleStuck_MovedDistanceCheck()
 			gw2_unstuck.stuckcount = gw2_unstuck.stuckcount + 1
 
 			local _,stuckentry = gw2_unstuck.AddStuckEntry(ppos)
-
-			if(gw2_unstuck.HandleStuckEntry(stuckentry)) then
-				return false
+			
+			if(gw2_unstuck.STUCKTYPE == "onmesh") then
+				if(gw2_unstuck.HandleStuckEntry(stuckentry)) then
+					return false
+				end
 			end
 			
 			if(ml_global_information.Player_SwimState ~= GW2.SWIMSTATE.NotInWater) then
@@ -346,7 +356,7 @@ function gw2_unstuck.HandleStuckEntry(entry)
 	local retval = false
 	if(table.valid(gw2_unstuck.laststuckentry)) then
 		-- Increment the stuck count for this entry if it is the same as the last one
-		if(math.distance3d(entry.pos,gw2_unstuck.laststuckentry.pos) < 40 and TimeSince(entry.modified) > 200) then
+		if(math.distance3d(entry.pos,gw2_unstuck.laststuckentry.pos) < 40 and TimeSince(entry.modified) > 500) then
 			entry.stuckcount = entry.stuckcount + 1
 			entry.modified = ml_global_information.Now
 		end
@@ -493,10 +503,13 @@ function gw2_unstuck.stuckhandlers.waypoint()
 			local _,wp = next(WPList)
 			if(table.valid(wp) and wp.distance > 500) then
 				Player:StopMovement()
-				gw2_unstuck.lastwptimer = ml_global_information.Now
-				gw2_unstuck.stucktick = ml_global_information.Now + math.random(3000,5000)
-				Player:TeleportToWaypoint(wp.id)
-				return true
+				if(Player:TeleportToWaypoint(wp.id)) then
+					gw2_unstuck.Reset()
+					gw2_unstuck.lastwptimer = ml_global_information.Now
+					gw2_unstuck.stucktick = ml_global_information.Now + math.random(3000,5000)				
+					return true
+				end
+				d("[Unstuck]: Failed to use waypoint.")
 			else
 				d("[Unstuck]: Failed to use waypoint or waypoint too close.")
 			end
@@ -643,35 +656,71 @@ function gw2_unstuck.Draw()
 		if(gw2_unstuck.gui.visible) then
 			Settings.GW2Minion.stuckthreshold = GUI:SliderInt(GetString("Threshold"), Settings.GW2Minion.stuckthreshold, 25, 80)
 			GUI:Separator()
+
 			GUI:Text(GetString("With swiftness")..": "..tostring(round(Settings.GW2Minion.stuckthreshold*1.33,2)))
 			GUI:Text(GetString("In combat")..": "..tostring(round(Settings.GW2Minion.stuckthreshold/2,2)))
-
 			GUI:Text(GetString("Active threshold")..": "..tostring(round(gw2_unstuck.ActiveThreshold(),2)))
-			GUI:Separator()
-			if(GUI:ListBoxHeader(GetString("Stuck history"), table.size(gw2_unstuck.stuckhistory), 5)) then
-				for k,entry in pairs(gw2_unstuck.stuckhistory) do
-					if(GUI:Selectable(entry.mapid.." / "..math.ceil(entry.pos.x)..","..math.ceil(entry.pos.y)..","..math.ceil(entry.pos.z).." / "..GetString("Handled")..": " .. tostring(entry.handled), gw2_unstuck.gui.selectedstuckentry == k)) then
-						gw2_unstuck.gui.selectedstuckentry = k
-					end
-				end
-				GUI:ListBoxFooter()
-			end
-			GUI:Separator()
+			
 			GUI:Text(GetString("Current stuck count")..": "..tostring(gw2_unstuck.stuckcount))
 			GUI:Text(GetString("Distance moved")..": "..tostring(round(gw2_unstuck.distmoved,2)))
 			
 			GUI:Separator()
-			if(gw2_unstuck.gui.selectedstuckentry) then
-				local entry = gw2_unstuck.stuckhistory[gw2_unstuck.gui.selectedstuckentry]
-				if(entry) then
-					if(entry.handled == false and entry.stuckcount == 0) then
-						GUI:Text(GetString("Entry will be removed in")) GUI:SameLine() GUI:Text(":") GUI:SameLine() GUI:Text(tostring(math.ceil((120000-TimeSince(entry.modified))/1000)).."s")
-					end
-					
-					for k,v in pairs(entry) do
-						GUI:Text(k) GUI:SameLine() GUI:Text(":") GUI:SameLine() GUI:Text(tostring(v))
+
+			local history = {}
+			if(table.valid(gw2_unstuck.stuckhistory)) then
+				for _,entry in pairs(gw2_unstuck.stuckhistory) do
+					table.insert(history, entry)
+				end
+				table.sort(history, function(a,b) return a.added > b.added end)
+			end
+			
+			if(GUI:ListBoxHeader(GetString("Stuck history"), table.size(history), 5)) then
+				for _,entry in ipairs(history) do
+					if(GUI:Selectable(entry.mapid.." / "..math.ceil(entry.pos.x)..","..math.ceil(entry.pos.y)..","..math.ceil(entry.pos.z).." / "..GetString("Handled")..": " .. tostring(entry.handled), gw2_unstuck.gui.selectedstuckentry == entry.added)) then
+						gw2_unstuck.gui.selectedstuckentry = entry.added
 					end
 				end
+				GUI:ListBoxFooter()
+			end
+			GUI:Text(GetString("Latest entry first"))
+
+			GUI:Separator()
+			if(gw2_unstuck.gui.selectedstuckentry) then
+				local entry = gw2_unstuck.stuckhistory[gw2_unstuck.gui.selectedstuckentry]
+				if(entry and entry.handled == false and entry.stuckcount == 0) then
+					GUI:Text(GetString("Entry will be removed in")..": "..tostring(math.ceil((120000-TimeSince(entry.modified))/1000)).."s")
+					GUI:Separator()
+				end
+				GUI:Columns(2, "##unstuck-details", true)
+				GUI:SetColumnOffset(1,200) GUI:SetColumnOffset(2,600)
+				
+				GUI:Text(GetString("Key")); GUI:NextColumn();
+				GUI:Text(GetString("Value")); GUI:NextColumn();
+				GUI:Separator()
+
+				if(entry) then
+					local entrysorted = {}
+					for k,v in pairs(entry) do
+						table.insert(entrysorted, {key = k, value = v})
+					end
+					table.sort(entrysorted, function(a,b) return a.key < b.key end)
+					
+					for _,e in ipairs(entrysorted) do
+						local detail = tostring(e.value)
+
+						GUI:Text(e.key) GUI:NextColumn()
+						
+						if(e.key == "pos" and table.valid(e.value)) then
+							detail = string.format("{x=%s;y=%s;z=%s}",math.round(e.value.x,2),math.round(e.value.y,2),math.round(e.value.z,2))
+							GUI:InputText("##"..entry.added,detail,GUI.InputTextFlags_ReadOnly)
+						else
+							GUI:Text(detail) 
+						end
+						
+						GUI:NextColumn()
+					end
+				end
+				GUI:Columns(1)
 			end
 		end
 		GUI:End()

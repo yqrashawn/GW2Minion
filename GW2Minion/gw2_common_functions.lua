@@ -121,8 +121,6 @@ function gw2_common_functions.FinishEnemy()
 						Player:SetTarget(entity.id)
 					end
 					Player:Interact( entity.id )
-					ml_log("Finishing Enemy..")
-					ml_global_information.Wait(1000)
 					return true
 				end
 			end
@@ -235,17 +233,17 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 	if ( range < 200 ) then range = 750 end -- extend search range a bit for melee chars
 
 	local hostileCheck = Settings.GW2Minion.ignoreyellowmobs and "hostile," or ""
-	-- 
+
 	local target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest,los,maxdistance="..tostring(range))
-	-- 
+
 	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh," .. hostileCheck .. "nearest,los,maxdistance="..tostring(range)) end
-	-- 
+
 	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
-	-- 
+
 	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh," .. hostileCheck .. "nearest") end
-	-- 
+
 	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,los,maxlevel=15") end
-	-- 
+
 	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,maxlevel=15") end
 
 	if(table.valid(target) and (not target.attackable or target.pathdistance > 9999999)) then
@@ -290,7 +288,7 @@ function gw2_common_functions.GetBestCharacterTargetForAssist( )
 	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. "onmesh,nearest,maxlevel=15") end
 
 	gw2_common_functions.useCustomSMFilterSettings = nil
-	
+
 	if ( target and target.id ) then
 		if ( target.distance < 1600 and target.los ) then
 			Player:SetTarget(target.id)
@@ -741,6 +739,7 @@ function gw2_common_functions.GetRandomPoint()
 	
 	-- 1st try
 	if (table.valid(gw2_datamanager.levelmap)) then
+		d("Trying to find a random point from the level map")
 		local pos = gw2_datamanager.GetRandomPositionInLevelRange(ml_global_information.Player_Level)
 		if(_validpos(pos) and _validpath(pos)) then
 			randompos = pos
@@ -749,22 +748,29 @@ function gw2_common_functions.GetRandomPoint()
 	
 	-- 2nd try
 	if(randompos == nil) then
+		d("Trying to find a random point from markers")
 		local MList = MapMarkerList("onmesh,mindistance=5000")
 		if(table.valid(MList)) then
-			local i,marker = next(MList)
-			while not randompos and marker do
-				if(_validpos(marker.pos) and marker.pathdistance < 9999999) then
+			local i, MList_n = 0, table.size(MList)
+			while not randompos and i < (MList_n > 10 and 10 or MList_n) do
+				local marker = table.randomvalue(MList)
+				if(table.valid(marker) and _validpos(marker.pos) and marker.pathdistance < 9999999) then
 					randompos = marker.pos
 				end
-				i,marker = next(MList,i)
+				i = i + 1
 			end
 		end
 	end
 	
 	if (randompos == nil) then
-		local pos = NavigationManager:GetRandomPoint(5000) -- 5000 beeing mindistance to player
-		if (table.valid(pos) and _validpos(pos) and _validpath(pos)) then
-			randompos = pos
+		d("Trying to find a random point anywhere on the mesh")
+		local i = 0
+		while not randompos and i < 10 do
+			local pos = NavigationManager:GetRandomPoint(5000) -- 5000 beeing mindistance to player
+			if (table.valid(pos) and _validpos(pos) and _validpath(pos)) then
+				randompos = pos
+			end
+			i = i + 1
 		end
 	end
 	
@@ -772,6 +778,8 @@ function gw2_common_functions.GetRandomPoint()
 		table.insert(gw2_common_functions.randompointsused[ml_global_information.CurrentMapID], {pos = randompos, time = ml_global_information.Now})
 		return randompos
 	end
+	
+	d("No random point found")
 	
 	return nil
 end

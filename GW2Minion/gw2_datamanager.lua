@@ -205,23 +205,17 @@ function gw2_datamanager.GetRandomPositionInLevelRange(level)
 		local possiblelocations = {}
 		local pPos = ml_global_information.Player_Position
 		for _,entry in pairs(gw2_datamanager.levelmap) do
-			if (entry.level <= level + 2 and Distance2D(entry.pos.x, entry.pos.y, pPos.x, pPos.y) > 2500 ) then
+			if (entry.level <= level + 2 and math.distance2d(entry.pos,pPos) > 2500 ) then
 				local pos3D = NavigationManager:GetClosestPointOnMeshFrom2D( entry.pos )
 				if ( pos3D and pos3D.x ~= 0 and pos3D.y ~= 0 ) then
 					table.insert(possiblelocations, pos3D)
 				end
-			end		
+			end
 		end
 		
-		local n_possiblelocations = table.size(possiblelocations)
-		if(n_possiblelocations > 0) then
-			local i = math.random(1,n_possiblelocations)
-			return possiblelocations[i]
-		else
-			d("No possible random locations to go to found")
+		if(table.valid(possiblelocations)) then
+			return table.randomvalue(possiblelocations)
 		end
-	else
-		d("gw2_datamanager.levelmap is empty!")
 	end
 	
 	return nil
