@@ -8,7 +8,7 @@ local AvoidanceAreaOptions = {
 	pos = {};
 	time = nil;
 	duration = true; -- ms, true until reload
-	radius = 25;
+	radius = 50;
 	showAddMessage = true;
 }
 
