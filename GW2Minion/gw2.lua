@@ -89,33 +89,35 @@ function gw2minion.Init()
 		ml_mesh_mgr.SetDefaultMesh(350,"Heart of the Mists")
 		ml_mesh_mgr.SetDefaultMesh(968,"EdgeOfTheMist")
 		ml_mesh_mgr.SetDefaultMesh(988,"Dry Top")
+		ml_mesh_mgr.SetDefaultMesh(1015,"SilverWastes")
+		
 		--HoT
 		ml_mesh_mgr.SetDefaultMesh(1052,"Verdant Brink")
 		ml_mesh_mgr.SetDefaultMesh(1043,"Auric Basin")
+		ml_mesh_mgr.SetDefaultMesh(1041,"DragonStand")
+		ml_mesh_mgr.SetDefaultMesh(1045,"TangledDepths")
+		
+		ml_mesh_mgr.SetDefaultMesh(1165,"Bloodstone Fen")
+		ml_mesh_mgr.SetDefaultMesh(1175,"Infernal Cape")
+		ml_mesh_mgr.SetDefaultMesh(1178,"BitterfrostFrontier")
+		ml_mesh_mgr.SetDefaultMesh(1185,"Lake Doric")
 		
 		--sPVP
-		 ml_mesh_mgr.SetDefaultMesh(549,"sPvP Battle of Kyhlo")
-		 ml_mesh_mgr.SetDefaultMesh(554,"sPvP Forest of Niflhel")
-		 ml_mesh_mgr.SetDefaultMesh(795,"sPvP Legacy of the Foefire")
-		 ml_mesh_mgr.SetDefaultMesh(866,"Mad Kings Labyrinth")
-		 ml_mesh_mgr.SetDefaultMesh(875,"sPvP Temple of the Silent Storm")
-		 ml_mesh_mgr.SetDefaultMesh(881,"BellChoir")
-		 ml_mesh_mgr.SetDefaultMesh(894,"sPvP Spirit Watch")
-		 ml_mesh_mgr.SetDefaultMesh(900,"sPvP Skyhammer")
-		 ml_mesh_mgr.SetDefaultMesh(984,"sPvP Courtyard")
-		 ml_mesh_mgr.SetDefaultMesh(1011,"sPvP Battle of Champions")
-		 ml_mesh_mgr.SetDefaultMesh(1015,"SilverWastes")		 
-		 ml_mesh_mgr.SetDefaultMesh(1041,"DragonStand")
-		 ml_mesh_mgr.SetDefaultMesh(1045,"TangledDepths")
-		 ml_mesh_mgr.SetDefaultMesh(1163,"sPvP Revenge of the Capricorn")		 
-		 ml_mesh_mgr.SetDefaultMesh(1165,"Bloodstone Fen")
-		 ml_mesh_mgr.SetDefaultMesh(1171,"sPvp Coloseum")
-		 ml_mesh_mgr.SetDefaultMesh(1175,"Infernal Cape")
-		 ml_mesh_mgr.SetDefaultMesh(1178,"BitterfrostFrontier")
-		 
+		ml_mesh_mgr.SetDefaultMesh(549,"sPvP Battle of Kyhlo")
+		ml_mesh_mgr.SetDefaultMesh(554,"sPvP Forest of Niflhel")
+		ml_mesh_mgr.SetDefaultMesh(795,"sPvP Legacy of the Foefire")	
+		ml_mesh_mgr.SetDefaultMesh(875,"sPvP Temple of the Silent Storm")		
+		ml_mesh_mgr.SetDefaultMesh(894,"sPvP Spirit Watch")
+		ml_mesh_mgr.SetDefaultMesh(900,"sPvP Skyhammer")
+		ml_mesh_mgr.SetDefaultMesh(984,"sPvP Courtyard")
+		ml_mesh_mgr.SetDefaultMesh(1011,"sPvP Battle of Champions")
+		ml_mesh_mgr.SetDefaultMesh(1163,"sPvP Revenge of the Capricorn")		
+		ml_mesh_mgr.SetDefaultMesh(1171,"sPvp Coloseum")
+
 		--Instances
 		ml_mesh_mgr.SetDefaultMesh(896,"North Noland Hatchery") -- Diessa Plateau
-			
+		ml_mesh_mgr.SetDefaultMesh(866,"Mad Kings Labyrinth")
+		ml_mesh_mgr.SetDefaultMesh(881,"BellChoir")
 				
 	end
 end
@@ -174,6 +176,13 @@ function gw2minion.DrawCall(event, ticks )
 			-- Run the local behaviortree
 			gw2minion.mainbtreeinstance:run(gw2minion.btreecontext)
 		end
+	end
+	
+	-- Autostart once on loading ingame
+	if ( not gw2minion.startedonce and Settings.GW2Minion.autostartbot == true and not BehaviorManager:Running() and GetGameState() == GW2.GAMESTATE.GAMEPLAY and NavigationManager:GetNavMeshState() == GLOBAL.MESHSTATE.MESHREADY) then
+		gw2minion.startedonce = true
+		BehaviorManager:Start()
+		d("[GW2Minion] - Automatically starting bot")
 	end
 end
 RegisterEventHandler("Gameloop.Draw", gw2minion.DrawCall)

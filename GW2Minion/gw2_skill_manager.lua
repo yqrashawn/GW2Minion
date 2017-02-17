@@ -668,7 +668,7 @@ function gw2_skill_manager.skillWindow.Draw(event,ticks)
 					currentSkill.player.maxEndurance = GUI:InputInt("##gw2sm-plmaxendurance", currentSkill.player.maxEndurance > 0 and currentSkill.player.maxEndurance or 0, 1, 10)
 					currentSkill.player.allyNearCount = GUI:InputInt("##gw2sm-plalliescount", currentSkill.player.allyNearCount > 0 and currentSkill.player.allyNearCount or 0, 1, 10)
 					currentSkill.player.allyRangeMax = GUI:InputInt("##gw2sm-plalliesrange", currentSkill.player.allyRangeMax > 0 and currentSkill.player.allyRangeMax or 0, 100, 1000)
-					currentSkill.player.allyDownedNearCount = GUI:InputInt("##gw2sm-plaliesdownedcount", currentSkill.player.allyDownedNearCount > 0 and currentSkill.player.allyDownedRangeMax or 0, 1, 10)
+					currentSkill.player.allyDownedNearCount = GUI:InputInt("##gw2sm-plaliesdownedcount", currentSkill.player.allyDownedNearCount > 0 and currentSkill.player.allyDownedNearCount or 0, 1, 10)
 					currentSkill.player.allyDownedRangeMax = GUI:InputInt("##gw2sm-plaliesdownedrange", currentSkill.player.allyDownedRangeMax > 0 and currentSkill.player.allyDownedRangeMax or 0, 100, 1000)
 					currentSkill.player.hasBuffs = GUI:InputText("##gw2sm-plhasbuffs",currentSkill.player.hasBuffs)
 					currentSkill.player.hasNotBuffs = GUI:InputText("##gw2sm-plhasnotbuffs",currentSkill.player.hasNotBuffs)
@@ -1682,7 +1682,7 @@ function profilePrototype:Swap(targetID)
 			if ( table.valid(target) ) then
 				-- Don't swap on slowcast spells, else they get interrupted
 				local canswap = true
-				local lastSkillID = (Player.castinfo.skillID == 0 and Player.castinfo.lastSkillID or Player.castinfo.skillID)
+				local lastSkillID = (Player.castinfo.skillid == 0 and Player.castinfo.lastskillid or Player.castinfo.skillid)
 				if ( lastSkillID ) then 
 					local lastSkill = self:GetSkillByID(lastSkillID)
 					if (lastSkill and lastSkill.skill.slowCast and Player.castinfo.slot == lastSkill.tmp.slot) then 
@@ -1788,7 +1788,7 @@ function skillPrototype:CanCast(targetID) -- TODO: change to use booleans
 	if (table.valid(skillOnBar) and (table.valid(target) or self.skill.castOnSelf) ) then
 		
 		-- get last skill.
-		local lastSkillID = (Player.castinfo.skillID == 0 and Player.castinfo.lastSkillID or Player.castinfo.skillID)
+		local lastSkillID = (Player.castinfo.skillid == 0 and Player.castinfo.lastskillid or Player.castinfo.skillid)
 
 		-- skillBar attributes.
 		if (skillOnBar.cooldown ~= 0) then return false end
@@ -1797,7 +1797,7 @@ function skillPrototype:CanCast(targetID) -- TODO: change to use booleans
 		if (skillOnBar.power > ml_global_information.Player_Power) then return false end
 		
 		-- skill attributes.
-		if (self.skill.id == Player.castinfo.skillID and self.tmp.slot ~= GW2.SKILLBARSLOT.Slot_1) then return false end
+		if (self.skill.id == Player.castinfo.skillid and self.tmp.slot ~= GW2.SKILLBARSLOT.Slot_1) then return false end
 		if (self.skill.lastSkillID ~= "" and string.contains(tostring(self.skill.lastSkillID),tostring(lastSkillID)) == false) then return false end
 		if (self.skill.delay > 0 and self.tmp.lastCastTime and TimeSince(self.tmp.lastCastTime) < (self.skill.delay)) then return false end -- IMPORT: devide all delay times by 100
 		if (table.valid(target)) then
