@@ -3,6 +3,7 @@ dev.open = false
 dev.unfolded = true
 dev.equipitemidx = 1
 dev.equipitemlist = { [1] = "Back",[2] = "Chest",[3] = "Boots",[4] = "Gloves",[5] = "Headgear",[6] = "Leggings",[7] = "Shoulders", }
+dev.equipmentslot = { [1] = "Back",[2] = "Chest",[3] = "Boots",[4] = "Gloves",[5] = "Headgear",[6] = "Leggings", [7] = "Shoulders", [24] = "AquaticWeapon", [25] = "AlternateAquaticWeapon", [29] = "MainHandWeapon", [30] = "OffHandWeapon", [31] = "AlternateMainHandWeapon", [32] = "AlternateOffHandWeapon",}
 dev.teleportpos = { x =0,y =0, z =0, }
 dev.noclip = false
 dev.movementtype = { [0] = "Forward", [1] ="Backward", [2] ="Left", [3] ="Right", [4] ="TurnLeft", [5] ="TurnRight",[6] ="Evade",[7] ="AutoRunToggle", [8] ="WalkToggle", [9] ="Jump", [10] ="SwimUp", [11] ="SwimDown", [12] ="About_Face", [13] ="ForwardLeft", [14] ="ForwardRight", [15] ="BackwardLeft", [16] ="BackwardRight",}
@@ -211,9 +212,37 @@ function dev.DrawCall(event, ticks )
 						else
 							GUI:Text("No Inventory found.") 
 						end
-						GUI:TreePop()				
+						GUI:TreePop()
 					end
 -- END INVENTORY
+					
+-- EQUIPMENT
+					if ( GUI:TreeNode("Equipment") ) then
+						dev.equipitemslotidx = GUI:Combo("EquipSlot", dev.equipitemslotidx or 1, dev.equipmentslot)
+						local b = Inventory:GetEquippedItemBySlot(dev.equipitemslotidx)
+						if ( b )then
+							GUI:PushItemWidth(250)
+									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devi",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##devi0",b.name,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devi1",tostring(b.itemid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Stackcount") GUI:SameLine(200) GUI:InputText("##devi2",tostring(b.stackcount),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Rarity") GUI:SameLine(200) GUI:InputText("##devi3",tostring(b.rarity),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Itemtype") GUI:SameLine(200) GUI:InputText("##devi4",tostring(b.itemtype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Weapontype") GUI:SameLine(200) GUI:InputText("##devi5",tostring(b.weapontype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Durability") GUI:SameLine(200) GUI:InputText("##devi6",tostring(b.durability),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Soulbound") GUI:SameLine(200) GUI:InputText("##devi7",tostring(b.soulbound),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Salvagable") GUI:SameLine(200) GUI:InputText("##devi8",tostring(b.salvagable),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("IsMailable") GUI:SameLine(200) GUI:InputText("##devi9",tostring(b.ismailable),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("CanSellToTP") GUI:SameLine(200) GUI:InputText("##devi10",tostring(b.canselltotp),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)									
+									GUI:TreePop()
+							GUI:PopItemWidth()
+						else
+							GUI:Text("No Inventory found.") 
+						end
+						GUI:TreePop()
+					end
+-- END EQUIPMENT
+
 
 					if ( GUI:TreeNode("Vendor") ) then
 						GUI:BulletText("IsVendorOpened") GUI:SameLine(200) GUI:InputText("##devv0",tostring(Inventory:IsVendorOpened()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)	
@@ -431,6 +460,7 @@ function dev.DrawCall(event, ticks )
 									GUI:BulletText("Skilltype") GUI:SameLine(200) GUI:InputText("##devsk9",tostring(b.skilltype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devsk10",tostring(b.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									GUI:BulletText("IsGroundTargeted") GUI:SameLine(200) GUI:InputText("##devsk11",tostring(b.isgroundtargeted),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devsk12",tostring(b.cancast),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									if (GUI:Button("Cast",150,15) ) then 
 										local t = Player:GetTarget()
 										if ( t ) then
@@ -709,6 +739,33 @@ function dev.DrawCall(event, ticks )
 			end
 -- END RENDEROBJECTS	
 				
+				
+				
+-- COMPASS
+			if ( GUI:TreeNode("Compass") ) then
+				GUI:PushItemWidth(250)
+				local t = HackManager:GetCompassData()
+				if (t) then
+					GUI:BulletText("ptr") GUI:SameLine(200) GUI:InputText("##devcmp1",tostring(string.format( "%X",t.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("ZoomLevel") GUI:SameLine(200) GUI:InputText("##devcmp2",tostring(t.zoomlevel),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("Pos X") GUI:SameLine(200) GUI:InputText("##devcmp3",tostring(t.x),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("Pos Y") GUI:SameLine(200) GUI:InputText("##devcmp4",tostring(t.y),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("Width") GUI:SameLine(200) GUI:InputText("##devcmp5",tostring(t.width),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("Height") GUI:SameLine(200) GUI:InputText("##devcmp6",tostring(t.height),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("MaxWidth") GUI:SameLine(200) GUI:InputText("##devcmp7",tostring(t.maxwidth),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("MaxHeight") GUI:SameLine(200) GUI:InputText("##devcmp8",tostring(t.maxheight),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)					
+					GUI:BulletText("MouseOver") GUI:SameLine(200) GUI:InputText("##devcmp9",tostring(t.mouseover),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("Rotate with Player") GUI:SameLine(200) GUI:InputText("##devcmp10",tostring(t.rotation),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("TopRightScreen") GUI:SameLine(200) GUI:InputText("##devcmp11",tostring(t.topposition),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					
+				end
+				GUI:PopItemWidth()
+				GUI:TreePop()
+			end
+-- END COMPASS
+
+
+				
 					if ( GUI:TreeNode("Utility Functions & Other Infos") ) then
 						GUI:PushItemWidth(250)
 						GUI:BulletText("Game Time") GUI:SameLine(200) GUI:InputText("##devuf2",tostring(GetGameTime()))
@@ -789,6 +846,9 @@ function dev.DrawCharacterDetails(c)
 	GUI:BulletText("Aggro") GUI:SameLine(200) GUI:InputText("##dev23", tostring(c.isaggro),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("AggroPercent") GUI:SameLine(200) GUI:InputText("##dev23", tostring(c.aggropercent),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("InCombat") GUI:SameLine(200) GUI:InputText("##dev23", tostring(c.incombat),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("BreakbarState") GUI:SameLine(200) GUI:InputText("##dev53", tostring(c.breakbarstate),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("BreakbarPercent") GUI:SameLine(200) GUI:InputText("##dev54", tostring(c.breakbarpercent),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	
 	local castinfo = c.castinfo
 	if ( TableSize(castinfo) > 0 ) then
 		GUI:BulletText("AttackedTargetPtr") GUI:SameLine(200) GUI:InputText("##dev24",tostring(string.format( "%X",castinfo.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -867,6 +927,8 @@ function dev.DrawGadgetDetails(c)
 	GUI:BulletText("Alive") GUI:SameLine(200) GUI:InputText("##devg27", tostring(c.alive),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("Dead") GUI:SameLine(200) GUI:InputText("##devg28", tostring(c.dead),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("IsCombatant") GUI:SameLine(200) GUI:InputText("##devg29", tostring(c.iscombatant),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("BreakbarState") GUI:SameLine(200) GUI:InputText("##dev53", tostring(c.breakbarstate),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("BreakbarPercent") GUI:SameLine(200) GUI:InputText("##dev54", tostring(c.breakbarpercent),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("IsOurs") GUI:SameLine(200) GUI:InputText("##devg30", tostring(c.isours),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("IsTurret") GUI:SameLine(200) GUI:InputText("##devg45", tostring(c.isturret),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("Unknown0") GUI:SameLine(200) GUI:InputText("##devg31", tostring(c.isunknown0),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
