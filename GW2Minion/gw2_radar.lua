@@ -2,7 +2,7 @@
 gw2_radar = {}
 
 -- gw2_radar variables.
-gw2_radar.mainWindow		= {name = "Radar", open = true, visible = true}
+gw2_radar.mainWindow		= {name = "Radar", open = false, visible = false}
 gw2_radar.ticks				= 0
 gw2_radar.tickDelay			= 0
 gw2_radar.compassData		= {}
