@@ -194,16 +194,15 @@ function gw2_radar.Draw(_, ticks )
 						GUI:Unindent()
 					end
 				GUI:EndGroup()
-				
-				if (ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then
-					-- -- 3D radar
-					gw2_radar.draw3DRadar(ticks)
-					-- -- 2D radar
-					gw2_radar.draw2DRadar(ticks)
-				end
 			end
 			GUI:End()
 		end
+		-- if (ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then -- waiting on map open.closed check.
+			-- -- 3D radar
+			gw2_radar.draw3DRadar(ticks)
+			-- -- 2D radar
+			gw2_radar.draw2DRadar(ticks)
+		-- end
 	end
 end
 
@@ -256,31 +255,28 @@ end
 function gw2_radar.draw3DRadar(ticks)
 	if (gw2_radar.radar3DActive) then
 		-- 3D Radar
-		GUI:BeginGroup()
-			-- GUI:SetNextWindowPos(0, 0, GUI.SetCond_Always)
-			GUI:SetNextWindowSize(GUI:GetScreenSize())
-			GUI:PushStyleColor(GUI.Col_WindowBg, 0, 0, 0, 0)
-			GUI:Begin("Vision DrawSpace", true, GUI.WindowFlags_NoInputs + GUI.WindowFlags_NoBringToFrontOnFocus + GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoResize + GUI.WindowFlags_NoScrollbar + GUI.WindowFlags_NoCollapse)
-			GUI:PopStyleColor(1)
-			
-			-- Draw Player-Friend.
-			gw2_radar.drawGroup3D(gw2_radar.playerFriend)
-			
-			-- Draw Player-Foe.
-			gw2_radar.drawGroup3D(gw2_radar.playerFoe)
-			
-			-- Draw Npc-Friend.
-			gw2_radar.drawGroup3D(gw2_radar.npcFriend)
-			
-			-- Draw Npc-Neutral.
-			gw2_radar.drawGroup3D(gw2_radar.npcNeutral)
-			
-			-- Draw Npc-Foe.
-			gw2_radar.drawGroup3D(gw2_radar.npcFoe)
-			
-			GUI:End()
-			
-		GUI:EndGroup()
+		GUI:SetNextWindowSize(GUI:GetScreenSize())
+		GUI:PushStyleColor(GUI.Col_WindowBg, 0, 0, 0, 0)
+		GUI:Begin("Vision DrawSpace", true, GUI.WindowFlags_NoInputs + GUI.WindowFlags_NoBringToFrontOnFocus + GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoResize + GUI.WindowFlags_NoScrollbar + GUI.WindowFlags_NoCollapse)
+		GUI:PopStyleColor(1)
+		
+		-- Draw Player-Friend.
+		gw2_radar.drawGroup3D(gw2_radar.playerFriend)
+		
+		-- Draw Player-Foe.
+		gw2_radar.drawGroup3D(gw2_radar.playerFoe)
+		
+		-- Draw Npc-Friend.
+		gw2_radar.drawGroup3D(gw2_radar.npcFriend)
+		
+		-- Draw Npc-Neutral.
+		gw2_radar.drawGroup3D(gw2_radar.npcNeutral)
+		
+		-- Draw Npc-Foe.
+		gw2_radar.drawGroup3D(gw2_radar.npcFoe)
+		
+		GUI:End()
+		
 	end
 end
 
@@ -308,45 +304,43 @@ end
 function gw2_radar.draw2DRadar(ticks)
 	if (gw2_radar.radar2DActive) then
 		-- 2D Radar / MiniMap overlay.
-		GUI:BeginGroup()
-			GUI:SetNextWindowPos(gw2_radar.miniMapData.pos.x, gw2_radar.miniMapData.pos.y, GUI.SetCond_Always)
-			GUI:SetNextWindowSize(gw2_radar.compassData.width, gw2_radar.compassData.height)
-			GUI:PushStyleVar(GUI.StyleVar_WindowRounding, 0)
-			GUI:PushStyleColor(GUI.Col_WindowBg, 0, 0, 0, 0)
-			GUI:Begin("Vision Compass Space1", true, GUI.WindowFlags_NoInputs + GUI.WindowFlags_NoBringToFrontOnFocus + GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoResize + GUI.WindowFlags_NoScrollbar + GUI.WindowFlags_NoCollapse)
-			GUI:PopStyleVar(1)
-			GUI:PopStyleColor(1)
+		GUI:SetNextWindowPos(gw2_radar.miniMapData.pos.x, gw2_radar.miniMapData.pos.y, GUI.SetCond_Always)
+		GUI:SetNextWindowSize(gw2_radar.compassData.width, gw2_radar.compassData.height)
+		GUI:PushStyleVar(GUI.StyleVar_WindowRounding, 0)
+		GUI:PushStyleColor(GUI.Col_WindowBg, 0, 0, 0, 0)
+		GUI:Begin("Vision Compass Space1", true, GUI.WindowFlags_NoInputs + GUI.WindowFlags_NoBringToFrontOnFocus + GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoResize + GUI.WindowFlags_NoScrollbar + GUI.WindowFlags_NoCollapse)
+		GUI:PopStyleVar(1)
+		GUI:PopStyleColor(1)
+		
+		-- Draw Self/Center.
+		GUI:AddRectFilled(gw2_radar.miniMapData.centerPos.x - 5, gw2_radar.miniMapData.centerPos.y - 5, gw2_radar.miniMapData.centerPos.x + 5, gw2_radar.miniMapData.centerPos.y + 5, GUI:ColorConvertFloat4ToU32(math.abs((-100+Player.health.percent)/100), Player.health.percent/100, 0, 1))
+		GUI:AddRect(gw2_radar.miniMapData.centerPos.x - 5, gw2_radar.miniMapData.centerPos.y - 5, gw2_radar.miniMapData.centerPos.x + 5, gw2_radar.miniMapData.centerPos.y + 5, GUI:ColorConvertFloat4ToU32(1,1,1,1))
+		-- Draw Player-Friend.
+		gw2_radar.drawGroup2D(gw2_radar.playerFriend)
+		
+		-- Draw Player-Foe.
+		gw2_radar.drawGroup2D(gw2_radar.playerFoe)
+		
+		-- Draw Npc-Friend.
+		gw2_radar.drawGroup2D(gw2_radar.npcFriend)
+		
+		-- Draw Npc-Neutral.
+		gw2_radar.drawGroup2D(gw2_radar.npcNeutral)
+		
+		-- Draw Npc-Foe.
+		gw2_radar.drawGroup2D(gw2_radar.npcFoe)
+		
+		-- Draw Gatherable-Ore.
+		gw2_radar.drawGroup2D(gw2_radar.ore)
+		
+		-- Draw Gatherable-Plant.
+		gw2_radar.drawGroup2D(gw2_radar.plant)
+		
+		-- Draw Gatherable-Wood.
+		gw2_radar.drawGroup2D(gw2_radar.wood)
 			
-			-- Draw Self/Center.
-			GUI:AddRectFilled(gw2_radar.miniMapData.centerPos.x - 5, gw2_radar.miniMapData.centerPos.y - 5, gw2_radar.miniMapData.centerPos.x + 5, gw2_radar.miniMapData.centerPos.y + 5, GUI:ColorConvertFloat4ToU32(math.abs((-100+Player.health.percent)/100), Player.health.percent/100, 0, 1))
-			GUI:AddRect(gw2_radar.miniMapData.centerPos.x - 5, gw2_radar.miniMapData.centerPos.y - 5, gw2_radar.miniMapData.centerPos.x + 5, gw2_radar.miniMapData.centerPos.y + 5, GUI:ColorConvertFloat4ToU32(1,1,1,1))
-			-- Draw Player-Friend.
-			gw2_radar.drawGroup2D(gw2_radar.playerFriend)
-			
-			-- Draw Player-Foe.
-			gw2_radar.drawGroup2D(gw2_radar.playerFoe)
-			
-			-- Draw Npc-Friend.
-			gw2_radar.drawGroup2D(gw2_radar.npcFriend)
-			
-			-- Draw Npc-Neutral.
-			gw2_radar.drawGroup2D(gw2_radar.npcNeutral)
-			
-			-- Draw Npc-Foe.
-			gw2_radar.drawGroup2D(gw2_radar.npcFoe)
-			
-			-- Draw Gatherable-Ore.
-			gw2_radar.drawGroup2D(gw2_radar.ore)
-			
-			-- Draw Gatherable-Plant.
-			gw2_radar.drawGroup2D(gw2_radar.plant)
-			
-			-- Draw Gatherable-Wood.
-			gw2_radar.drawGroup2D(gw2_radar.wood)
-				
-			GUI:End()
-			
-		GUI:EndGroup()
+		GUI:End()
+		
 	end
 end
 
