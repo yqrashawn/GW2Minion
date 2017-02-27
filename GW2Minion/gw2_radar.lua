@@ -293,9 +293,9 @@ function gw2_radar.drawGroup3D(group)
 			
 			if (table.valid(entity.health)) then
 				-- GUI:AddRect(sPos.x - 70, sPos.y - 120, sPos.x + 70, sPos.y + 50, GUI:ColorConvertFloat4ToU32(1, 0, 0, 1)) -- TODO: this a good idea? rezise on distance and charsize?
-				GUI:AddRect(sPos.x-50, sPos.y + 30, sPos.x + 50, sPos.y + 40, GUI:ColorConvertFloat4ToU32(1,1,1,1))
+				GUI:AddRect(sPos.x-50, sPos.y + 30, sPos.x + 50, sPos.y + 40, 4294967295)
 				GUI:AddRectFilled(sPos.x - 48, sPos.y + 32, (sPos.x + (50 * (entity.health.percent/100)) - 2), sPos.y + 38, GUI:ColorConvertFloat4ToU32(math.abs((-100+entity.health.percent)/100), entity.health.percent/100, 0, 1))
-				GUI:AddText(sPos.x + 52, sPos.y + 28, GUI:ColorConvertFloat4ToU32(1,1,1,1), tostring(entity.health.percent).."%")
+				GUI:AddText(sPos.x + 52, sPos.y + 28, 4294967295, tostring(entity.health.percent).."%")
 			end
 		end
 	end
@@ -314,7 +314,7 @@ function gw2_radar.draw2DRadar(ticks)
 		
 		-- Draw Self/Center.
 		GUI:AddRectFilled(gw2_radar.miniMapData.centerPos.x - 5, gw2_radar.miniMapData.centerPos.y - 5, gw2_radar.miniMapData.centerPos.x + 5, gw2_radar.miniMapData.centerPos.y + 5, GUI:ColorConvertFloat4ToU32(math.abs((-100+Player.health.percent)/100), Player.health.percent/100, 0, 1))
-		GUI:AddRect(gw2_radar.miniMapData.centerPos.x - 5, gw2_radar.miniMapData.centerPos.y - 5, gw2_radar.miniMapData.centerPos.x + 5, gw2_radar.miniMapData.centerPos.y + 5, GUI:ColorConvertFloat4ToU32(1,1,1,1))
+		GUI:AddRect(gw2_radar.miniMapData.centerPos.x - 5, gw2_radar.miniMapData.centerPos.y - 5, gw2_radar.miniMapData.centerPos.x + 5, gw2_radar.miniMapData.centerPos.y + 5, 4294967295)
 		-- Draw Player-Friend.
 		gw2_radar.drawGroup2D(gw2_radar.playerFriend)
 		
@@ -350,7 +350,7 @@ function gw2_radar.drawGroup2D(group)
 			local rPos = entity.rPos
 			if (table.valid(rPos)) then
 				GUI:AddRectFilled(rPos.x - 5, rPos.y - 5, rPos.x + 5, rPos.y + 5, group.color)
-				GUI:AddRect(rPos.x - 5, rPos.y - 5, rPos.x + 5, rPos.y + 5, GUI:ColorConvertFloat4ToU32(1,1,1,1))
+				GUI:AddRect(rPos.x - 5, rPos.y - 5, rPos.x + 5, rPos.y + 5, 4294967295)
 			end
 		end
 	end
