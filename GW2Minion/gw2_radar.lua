@@ -169,14 +169,15 @@ function gw2_radar.draw3DRadar(ticks)
 							-- TODO: add race, profession, speciliztion image.
 							-- GUI:AddImage(gw2_radar.parent.path .. gw2_radar.parent.files.path .. [[\Asura_tango_icon_200px.png]], sPos.x + 15, sPos.y + 15, sPos.x - 15, sPos.y - 15)
 							
-							local text = "["..entity.name.."]["..tostring(round(entity.distance,1)).."]"
+							GUI:AddCircleFilled( sPos.x, sPos.y, 5, entity.variables.color.value)
+							local text = "["..entity.name.."]["..tostring(round(entity.distance)).."]"
 							local textSizeX, textSizeY = GUI:CalcTextSize(text)
-							GUI:AddText(sPos.x - (textSizeX/2), sPos.y+textSizeY, entity.variables.color.value, text)
+							GUI:AddText(sPos.x - (textSizeX/2), sPos.y+textSizeY, 4294967295, text)
 							
 							if (table.valid(entity.health)) then
 								-- GUI:AddRect(sPos.x - 70, sPos.y - 120, sPos.x + 70, sPos.y + 50, GUI:ColorConvertFloat4ToU32(1, 0, 0, 1)) -- TODO: this a good idea? rezise on distance and charsize?
-								GUI:AddRect(sPos.x-50, sPos.y + 30, sPos.x + 50, sPos.y + 40, 4294967295)
-								GUI:AddRectFilled(sPos.x - 48, sPos.y + 32, ((sPos.x - 48) + (96 * (entity.health.percent/100))), sPos.y + 38, GUI:ColorConvertFloat4ToU32(math.abs((-100+entity.health.percent)/100), entity.health.percent/100, 0, 1))
+								GUI:AddRect(sPos.x-37, sPos.y + 30, sPos.x + 37, sPos.y + 38, 4294967295)
+								GUI:AddRectFilled(sPos.x - 35, sPos.y + 32, ((sPos.x - 48) + (72 * (entity.health.percent/100))), sPos.y + 36, GUI:ColorConvertFloat4ToU32(math.abs((-100+entity.health.percent)/100), entity.health.percent/100, 0, 1))
 								GUI:AddText(sPos.x + 52, sPos.y + 28, 4294967295, tostring(entity.health.percent).."%")
 							end
 						end
@@ -294,7 +295,7 @@ function gw2_radar.updateEntities()
 					gw2_radar.trackEntities[listName][id].rPos		= trackEntity.variables.radar2D.value and gw2_radar.miniMapData.convertPos(entity.pos) or nil
 					gw2_radar.trackEntities[listName][id].sPos		= trackEntity.variables.radar3D.value and RenderManager:WorldToScreen(entity.pos) or nil
 					gw2_radar.trackEntities[listName][id].health	= entity.health
-					gw2_radar.trackEntities[listName][id].distance	= entity.distance
+					gw2_radar.trackEntities[listName][id].distance	= math.distance2d(gw2_radar.miniMapData.pPos,entity.pos)
 				else
 					gw2_radar.trackEntities[listName][id] = nil
 				end
@@ -331,7 +332,7 @@ function gw2_radar.parseEntities()
 									rPos		= radarType.variables.radar2D.value and gw2_radar.miniMapData.convertPos(entity.pos) or nil, -- only calculate this position if needed.
 									sPos		= radarType.variables.radar3D.value and RenderManager:WorldToScreen(entity.pos) or nil, -- only calculate this position if needed.
 									health		= entity.health,
-									distance	= entity.distance,
+									distance	= math.distance2d(gw2_radar.miniMapData.pPos,entity.pos),
 								}
 								gw2_radar.trackEntities[listName] = gw2_radar.trackEntities[listName] or {}
 								gw2_radar.trackEntities[listName][newEntity.id] = newEntity
