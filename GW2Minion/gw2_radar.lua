@@ -29,8 +29,6 @@ gw2_radar = {}
 gw2_radar.mainWindow		= {name = "Radar", open = false, visible = false}
 gw2_radar.ticks				= 0
 gw2_radar.tickDelay			= 0
-gw2_radar.parseTicks		= 0
-gw2_radar.parseTickDelay	= 0 -- can be ajusted to better performance. (will make radar more "choppy") (20 == 50fps, abouts.)
 gw2_radar.compassData		= {}
 gw2_radar.miniMapData		= {}
 gw2_radar.radar2DActive		= false
@@ -157,7 +155,11 @@ function gw2_radar.drawGUI(group,guiItem)
 		if (guiItem.guiType == "Checkbox") then
 			return GUI:Checkbox("###" .. group.name .. "_" .. guiItem.name,guiItem.value)
 		elseif (guiItem.guiType == "ColorEdit4") then
+			local width = GUI:GetContentRegionAvailWidth()
+			width = width > 200 and width or 200
+			GUI:PushItemWidth(width)
 			local r,g,b,a,changed = GUI:ColorEdit4("###" .. group.name .. "_" .. guiItem.name,GUI:ColorConvertU32ToFloat4(guiItem.value))
+			GUI:PopItemWidth()
 			return GUI:ColorConvertFloat4ToU32(r,g,b,a),changed
 		end
 	end
@@ -303,12 +305,11 @@ function gw2_radar.parseEntities()
 		local list = _G[listName]("") -- equal to CharacterList("") OR GadgetList("") or any entity list. ITERATE ONLY ONCE!! UNO!!
 		-- iterate entity list.
 		for _,entity in pairs(list) do
-			-- validate entity, check if entity not on watchlist.
+			-- validate entity
 			if (table.valid(entity)) then
 				for _,radarType in pairs(radarTypes) do
 					if (table.valid(radarType)) then
-						local filter = radarType.filter
-						if (gw2_radar.matchFilterEntity(filter,entity)) then
+						if (gw2_radar.matchFilterEntity(radarType.filter,entity)) then
 							local currEntity = gw2_radar.trackEntities[listName] and gw2_radar.trackEntities[listName][entity.id]
 							local newEntity = {
 								id			= currEntity and currEntity.id or entity.id,
@@ -448,7 +449,7 @@ local ore_mine = {
 		color	= {guiType = "ColorEdit4",	name = "Color",		value = 2519411499,},
 	},
 	filter = {
-		{["gatherable"] = true, ["resourceType"] = GW2.RESOURCETYPE.Mine,},
+		{["usable"] = true, ["resourceType"] = GW2.RESOURCETYPE.Mine,},
 	},
 }
 gw2_radar.addType(ore_mine)
@@ -463,7 +464,7 @@ local ore_herb = {
 		color	= {guiType = "ColorEdit4",	name = "Color",		value = 2523070252,},
 	},
 	filter = {
-		{["gatherable"] = true, ["resourceType"] = GW2.RESOURCETYPE.Herb,},
+		{["usable"] = true, ["resourceType"] = GW2.RESOURCETYPE.Herb,},
 	},
 }
 gw2_radar.addType(ore_herb)
@@ -478,7 +479,8 @@ local ore_wood = {
 		color	= {guiType = "ColorEdit4",	name = "Color",		value = 2518495047,},
 	},
 	filter = {
-		{["gatherable"] = true, ["resourceType"] = GW2.RESOURCETYPE.Wood,},
+		{["usable"] = true, ["resourceType"] = GW2.RESOURCETYPE.Wood,},
+		{["usable"] = true, ["resourceType"] = GW2.RESOURCETYPE.Wood,},
 	},
 }
 gw2_radar.addType(ore_wood)
