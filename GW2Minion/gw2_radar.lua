@@ -28,7 +28,9 @@ gw2_radar = {}
 -- gw2_radar variables.
 gw2_radar.mainWindow		= {name = "Radar", open = false, visible = false}
 gw2_radar.ticks				= 0
-gw2_radar.tickDelay			= 0 -- can be ajusted to better performance. (will make radar more "choppy") (20 == 50fps, abouts.)
+gw2_radar.tickDelay			= 0
+gw2_radar.parseTicks		= 0
+gw2_radar.parseTickDelay	= 0 -- can be ajusted to better performance. (will make radar more "choppy") (20 == 50fps, abouts.)
 gw2_radar.compassData		= {}
 gw2_radar.miniMapData		= {}
 gw2_radar.radar2DActive		= false
@@ -155,7 +157,7 @@ end
 function gw2_radar.draw3DRadar(ticks)
 	if (gw2_radar.radar3DActive) then
 		-- 3D Radar
-		GUI:SetNextWindowSize(GUI:GetScreenSize())
+		GUI:SetNextWindowSize(gw2_radar.miniMapData.sSize.x,gw2_radar.miniMapData.sSize.y,GUI.SetCond_Always)
 		GUI:SetNextWindowPosCenter(GUI.SetCond_Always)
 		GUI:PushStyleColor(GUI.Col_WindowBg, 0, 0, 0, 0)
 		GUI:Begin("Vision Draw Space", true, GUI.WindowFlags_NoInputs + GUI.WindowFlags_NoBringToFrontOnFocus + GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoResize + GUI.WindowFlags_NoScrollbar + GUI.WindowFlags_NoCollapse)
@@ -165,7 +167,7 @@ function gw2_radar.draw3DRadar(ticks)
 			if (table.valid(entityList)) then
 				for _,entity in pairs(entityList) do
 					if (table.valid(entity)) then
-						local sPos = entity.sPos
+						local sPos = RenderManager:WorldToScreen(entity.pos)
 						if (table.valid(sPos)) then
 							-- TODO: add race, profession, speciliztion image.
 							-- GUI:AddImage(path .. [[\Asura_tango_icon_200px.png]], sPos.x + 15, sPos.y + 15, sPos.x - 15, sPos.y - 15)
@@ -207,7 +209,8 @@ function gw2_radar.draw2DRadar(ticks)
 			if (table.valid(entityList)) then
 				for _,entity in pairs(entityList) do
 					if (table.valid(entity)) then
-						local rPos = entity.rPos
+						-- local rPos = entity.rPos
+						local rPos = gw2_radar.miniMapData.convertPos(entity.pos)
 						if (table.valid(rPos)) then
 							GUI:AddRectFilled(rPos.x - 5, rPos.y - 5, rPos.x + 5, rPos.y + 5, entity.variables.color.value)
 							GUI:AddRect(rPos.x - 5, rPos.y - 5, rPos.x + 5, rPos.y + 5, 4294967295)
@@ -228,18 +231,21 @@ end
 
 -- Update Loop
 function gw2_radar.Update(_,ticks)
-	if (ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY and ticks - gw2_radar.ticks > gw2_radar.tickDelay) then
-		gw2_radar.ticks = ticks
-		
-		if (gw2_radar.radar2DActive or gw2_radar.radar3DActive) then
-			gw2_radar.updateCompassData()
-			gw2_radar.updateMiniMapData()
-			
-			gw2_radar.updateEntities()
-			gw2_radar.parseEntities()
-			
+	if (ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then
+		if (ticks - gw2_radar.ticks > gw2_radar.tickDelay) then
+			gw2_radar.ticks = ticks
+			if (gw2_radar.radar2DActive or gw2_radar.radar3DActive) then
+				gw2_radar.updateCompassData()
+				gw2_radar.updateMiniMapData()
+			end
 		end
-		
+		if (ticks - gw2_radar.parseTicks > gw2_radar.parseTickDelay) then
+			gw2_radar.parseTicks = ticks
+			if (gw2_radar.radar2DActive or gw2_radar.radar3DActive) then
+				gw2_radar.updateEntities()
+				gw2_radar.parseEntities()
+			end
+		end
 	end
 end
 
@@ -259,6 +265,7 @@ end
 -- Update minimap data.
 function gw2_radar.updateMiniMapData()
 	local screenSizeX, screenSizeY = GUI:GetScreenSize()
+	gw2_radar.miniMapData.sSize = {x = screenSizeX, y = screenSizeY,}
 	gw2_radar.miniMapData.pos = {x = screenSizeX - gw2_radar.compassData.width - 15, y = gw2_radar.compassData.topposition == 0 and screenSizeY - gw2_radar.compassData.height - 75 or 0,}
 	gw2_radar.miniMapData.centerPos = {x = gw2_radar.miniMapData.pos.x + (gw2_radar.compassData.width / 2), y = gw2_radar.miniMapData.pos.y + (gw2_radar.compassData.height / 2)}
 	gw2_radar.miniMapData.pPos = Player.pos
@@ -293,8 +300,8 @@ function gw2_radar.updateEntities()
 				local entity = _G[listName]:Get(id)
 				if (table.valid(entity) and (trackEntity.variables.radar2D.value or trackEntity.variables.radar3D.value) and gw2_radar.matchFilterEntity(trackEntity.filter,entity)) then
 					gw2_radar.trackEntities[listName][id].pos		= entity.pos
-					gw2_radar.trackEntities[listName][id].rPos		= trackEntity.variables.radar2D.value and gw2_radar.miniMapData.convertPos(entity.pos) or nil
-					gw2_radar.trackEntities[listName][id].sPos		= trackEntity.variables.radar3D.value and RenderManager:WorldToScreen(entity.pos) or nil
+					-- gw2_radar.trackEntities[listName][id].rPos		= trackEntity.variables.radar2D.value and gw2_radar.miniMapData.convertPos(entity.pos) or nil
+					-- gw2_radar.trackEntities[listName][id].sPos		= trackEntity.variables.radar3D.value and RenderManager:WorldToScreen(entity.pos) or nil
 					gw2_radar.trackEntities[listName][id].health	= entity.health
 					gw2_radar.trackEntities[listName][id].distance	= entity.distance --math.distance2d(gw2_radar.miniMapData.pPos,entity.pos)
 				else
@@ -307,22 +314,25 @@ end
 
 -- Parse entities.
 function gw2_radar.parseEntities()
-	local data = {}
+	local data = {} -- holds all filters based on "etity list" group.
 	for _,radarType in pairs(gw2_radar.radarTypes) do
 		if (table.valid(radarType) and (radarType.variables.radar2D.value or radarType.variables.radar3D.value)) then
 			data[radarType.list] = data[radarType.list] or {}
 			table.insert(data[radarType.list],radarType)
 		end
 	end
-	
+	-- iterate all entity lists.
 	for listName,radarTypes in pairs(data) do
+		-- iterate entity list filters.
 		for _,radarType in pairs(radarTypes) do
 			if (table.valid(radarType)) then
 				local filters = radarType.filter
 				if (string.valid(listName) and table.valid(filters)) then
-					local list = _G[listName]("")
+					local list = _G[listName]("") -- equal to CharacterList("") OR GadgetList("") or any entity list.
 					if (table.valid(list)) then
+						-- iterate entity list.
 						for _,entity in pairs(list) do
+							-- validate entity, check if entity not on watchlist.
 							if (table.valid(entity) and (table.valid(gw2_radar.trackEntities[listName]) == false or gw2_radar.trackEntities[listName][entity.id] == nil) and gw2_radar.matchFilterEntity(filters,entity)) then
 								local newEntity = {
 									id			= entity.id,
@@ -330,13 +340,13 @@ function gw2_radar.parseEntities()
 									variables	= radarType.variables,
 									filter		= radarType.filter,
 									pos			= entity.pos,
-									rPos		= radarType.variables.radar2D.value and gw2_radar.miniMapData.convertPos(entity.pos) or nil, -- only calculate this position if needed.
-									sPos		= radarType.variables.radar3D.value and RenderManager:WorldToScreen(entity.pos) or nil, -- only calculate this position if needed.
+									-- rPos		= radarType.variables.radar2D.value and gw2_radar.miniMapData.convertPos(entity.pos) or nil, -- only calculate this position if needed.
+									-- sPos		= radarType.variables.radar3D.value and RenderManager:WorldToScreen(entity.pos) or nil, -- only calculate this position if needed.
 									health		= entity.health,
 									distance	= entity.distance --math.distance2d(gw2_radar.miniMapData.pPos,entity.pos),
 								}
-								gw2_radar.trackEntities[listName] = gw2_radar.trackEntities[listName] or {}
-								gw2_radar.trackEntities[listName][newEntity.id] = newEntity
+								gw2_radar.trackEntities[listName] = gw2_radar.trackEntities[listName] or {} -- create tracking group (CharacterList OR GadgetList... etc)
+								gw2_radar.trackEntities[listName][newEntity.id] = newEntity -- add new entity to track.
 							end
 						end
 					end
