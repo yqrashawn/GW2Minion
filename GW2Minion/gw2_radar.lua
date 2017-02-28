@@ -60,15 +60,15 @@ function gw2_radar.Draw(_, ticks )
 			gw2_radar.mainWindow.visible, gw2_radar.mainWindow.open = GUI:Begin(gw2_radar.mainWindow.name, gw2_radar.mainWindow.open)
 			if (gw2_radar.mainWindow.visible) then
 				GUI:BeginGroup()
-					if (GUI:CollapsingHeader("settings")) then
+					if (GUI:CollapsingHeader(GetString("settings"))) then
 						GUI:Indent()
 							GUI:BeginGroup()
 								GUI:Separator()
 									GUI:BeginGroup()
 										GUI:AlignFirstTextHeightToWidgets()
-										GUI:Text("minimap")
+										GUI:Text(GetString("minimap"))
 										GUI:AlignFirstTextHeightToWidgets()
-										GUI:Text("3dradar")
+										GUI:Text(GetString("3dradar"))
 									GUI:EndGroup()
 									GUI:SameLine(0)
 									GUI:BeginGroup()
@@ -89,10 +89,19 @@ function gw2_radar.Draw(_, ticks )
 			GUI:End()
 		end
 		-- if (ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then -- waiting on map open.closed check.
-			-- -- 3D radar
-			gw2_radar.draw3DRadar(ticks)
-			-- -- 2D radar
-			gw2_radar.draw2DRadar(ticks)
+			
+			if (gw2_radar.radar2DActive or gw2_radar.radar3DActive) then
+				-- Parse entities.
+				gw2_radar.parseEntities()
+				-- Update compass data.
+				gw2_radar.updateCompassData()
+				-- Update minimap data.
+				gw2_radar.updateMiniMapData()
+				-- 3D radar.
+				gw2_radar.draw3DRadar()
+				-- 2D radar.
+				gw2_radar.draw2DRadar()
+			end
 		-- end
 	end
 end
@@ -154,7 +163,7 @@ function gw2_radar.drawGUI(group,guiItem)
 	end
 end
 
-function gw2_radar.draw3DRadar(ticks)
+function gw2_radar.draw3DRadar()
 	if (gw2_radar.radar3DActive) then
 		-- 3D Radar
 		GUI:SetNextWindowSize(gw2_radar.miniMapData.sSize.x,gw2_radar.miniMapData.sSize.y,GUI.SetCond_Always)
@@ -166,8 +175,9 @@ function gw2_radar.draw3DRadar(ticks)
 		for _,entityList in pairs(gw2_radar.trackEntities) do
 			if (table.valid(entityList)) then
 				for _,entity in pairs(entityList) do
-					if (table.valid(entity)) then
+					if (table.valid(entity) and entity.variables and entity.variables.radar3D.value) then
 						local sPos = RenderManager:WorldToScreen(entity.pos)
+						-- local sPos = entity.sPos
 						if (table.valid(sPos)) then
 							-- TODO: add race, profession, speciliztion image.
 							-- GUI:AddImage(path .. [[\Asura_tango_icon_200px.png]], sPos.x + 15, sPos.y + 15, sPos.x - 15, sPos.y - 15)
@@ -194,7 +204,7 @@ function gw2_radar.draw3DRadar(ticks)
 	end
 end
 
-function gw2_radar.draw2DRadar(ticks)
+function gw2_radar.draw2DRadar()
 	if (gw2_radar.radar2DActive) then
 		-- 2D Radar / MiniMap overlay.
 		GUI:SetNextWindowPos(gw2_radar.miniMapData.pos.x, gw2_radar.miniMapData.pos.y, GUI.SetCond_Always)
@@ -208,9 +218,10 @@ function gw2_radar.draw2DRadar(ticks)
 		for _,entityList in pairs(gw2_radar.trackEntities) do
 			if (table.valid(entityList)) then
 				for _,entity in pairs(entityList) do
-					if (table.valid(entity)) then
+					if (table.valid(entity) and entity.variables and entity.variables.radar2D.value) then
 						-- local rPos = entity.rPos
 						local rPos = gw2_radar.miniMapData.convertPos(entity.pos)
+						-- local rPos = entity.rPos
 						if (table.valid(rPos)) then
 							GUI:AddRectFilled(rPos.x - 5, rPos.y - 5, rPos.x + 5, rPos.y + 5, entity.variables.color.value)
 							GUI:AddRect(rPos.x - 5, rPos.y - 5, rPos.x + 5, rPos.y + 5, 4294967295)
@@ -231,22 +242,7 @@ end
 
 -- Update Loop
 function gw2_radar.Update(_,ticks)
-	if (ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then
-		if (ticks - gw2_radar.ticks > gw2_radar.tickDelay) then
-			gw2_radar.ticks = ticks
-			if (gw2_radar.radar2DActive or gw2_radar.radar3DActive) then
-				gw2_radar.updateCompassData()
-				gw2_radar.updateMiniMapData()
-			end
-		end
-		if (ticks - gw2_radar.parseTicks > gw2_radar.parseTickDelay) then
-			gw2_radar.parseTicks = ticks
-			if (gw2_radar.radar2DActive or gw2_radar.radar3DActive) then
-				gw2_radar.updateEntities()
-				gw2_radar.parseEntities()
-			end
-		end
-	end
+	
 end
 
 -- Functional Code.
@@ -292,28 +288,9 @@ function gw2_radar.miniMapData.convertPos(ePos)
 	return rPos
 end
 
--- Update entities. (hehe tities...)
-function gw2_radar.updateEntities() 
-	for listName,trackEntities in pairs(gw2_radar.trackEntities) do
-		if (string.valid(listName) and table.valid(trackEntities)) then
-			for id,trackEntity in pairs(trackEntities) do
-				local entity = _G[listName]:Get(id)
-				if (table.valid(entity) and (trackEntity.variables.radar2D.value or trackEntity.variables.radar3D.value) and gw2_radar.matchFilterEntity(trackEntity.filter,entity)) then
-					gw2_radar.trackEntities[listName][id].pos		= entity.pos
-					-- gw2_radar.trackEntities[listName][id].rPos		= trackEntity.variables.radar2D.value and gw2_radar.miniMapData.convertPos(entity.pos) or nil
-					-- gw2_radar.trackEntities[listName][id].sPos		= trackEntity.variables.radar3D.value and RenderManager:WorldToScreen(entity.pos) or nil
-					gw2_radar.trackEntities[listName][id].health	= entity.health
-					gw2_radar.trackEntities[listName][id].distance	= entity.distance --math.distance2d(gw2_radar.miniMapData.pPos,entity.pos)
-				else
-					gw2_radar.trackEntities[listName][id] = nil
-				end
-			end
-		end
-	end
-end
-
--- Parse entities.
+-- Parse entities. (hehe tities...)
 function gw2_radar.parseEntities()
+	local newTrackEntities = {}
 	local data = {} -- holds all filters based on "etity list" group.
 	for _,radarType in pairs(gw2_radar.radarTypes) do
 		if (table.valid(radarType) and (radarType.variables.radar2D.value or radarType.variables.radar3D.value)) then
@@ -323,37 +300,35 @@ function gw2_radar.parseEntities()
 	end
 	-- iterate all entity lists.
 	for listName,radarTypes in pairs(data) do
-		-- iterate entity list filters.
-		for _,radarType in pairs(radarTypes) do
-			if (table.valid(radarType)) then
-				local filters = radarType.filter
-				if (string.valid(listName) and table.valid(filters)) then
-					local list = _G[listName]("") -- equal to CharacterList("") OR GadgetList("") or any entity list.
-					if (table.valid(list)) then
-						-- iterate entity list.
-						for _,entity in pairs(list) do
-							-- validate entity, check if entity not on watchlist.
-							if (table.valid(entity) and (table.valid(gw2_radar.trackEntities[listName]) == false or gw2_radar.trackEntities[listName][entity.id] == nil) and gw2_radar.matchFilterEntity(filters,entity)) then
-								local newEntity = {
-									id			= entity.id,
-									name		= entity.name,
-									variables	= radarType.variables,
-									filter		= radarType.filter,
-									pos			= entity.pos,
-									-- rPos		= radarType.variables.radar2D.value and gw2_radar.miniMapData.convertPos(entity.pos) or nil, -- only calculate this position if needed.
-									-- sPos		= radarType.variables.radar3D.value and RenderManager:WorldToScreen(entity.pos) or nil, -- only calculate this position if needed.
-									health		= entity.health,
-									distance	= entity.distance --math.distance2d(gw2_radar.miniMapData.pPos,entity.pos),
-								}
-								gw2_radar.trackEntities[listName] = gw2_radar.trackEntities[listName] or {} -- create tracking group (CharacterList OR GadgetList... etc)
-								gw2_radar.trackEntities[listName][newEntity.id] = newEntity -- add new entity to track.
-							end
+		local list = _G[listName]("") -- equal to CharacterList("") OR GadgetList("") or any entity list. ITERATE ONLY ONCE!! UNO!!
+		-- iterate entity list.
+		for _,entity in pairs(list) do
+			-- validate entity, check if entity not on watchlist.
+			if (table.valid(entity)) then
+				for _,radarType in pairs(radarTypes) do
+					if (table.valid(radarType)) then
+						local filter = radarType.filter
+						if (gw2_radar.matchFilterEntity(filter,entity)) then
+							local currEntity = gw2_radar.trackEntities[listName] and gw2_radar.trackEntities[listName][entity.id]
+							local newEntity = {
+								id			= currEntity and currEntity.id or entity.id,
+								name		= currEntity and currEntity.name or entity.name,
+								variables	= radarType.variables,
+								filter		= radarType.filter,
+								pos			= entity.pos,
+								health		= entity.health,
+								distance	= entity.distance
+							}
+							newTrackEntities[listName] = newTrackEntities[listName] or {} -- create tracking group (CharacterList OR GadgetList... etc)
+							newTrackEntities[listName][newEntity.id] = newEntity -- add new entity to track.
+							break
 						end
 					end
 				end
 			end
 		end
 	end
+	gw2_radar.trackEntities = newTrackEntities
 end
 
 -- Match entity.
@@ -380,7 +355,7 @@ end
 
 RegisterEventHandler("Module.Initalize",gw2_radar.Init)
 RegisterEventHandler("Gameloop.Draw", gw2_radar.Draw)
-RegisterEventHandler("Gameloop.Update",gw2_radar.Update)
+-- RegisterEventHandler("Gameloop.Update",gw2_radar.Update)
 RegisterEventHandler("Radar.toggle", gw2_radar.ToggleWindow)
 
 
@@ -388,8 +363,8 @@ RegisterEventHandler("Radar.toggle", gw2_radar.ToggleWindow)
 --- ADD ENTRIES HERE:
 
 local player_friend = {
-	name		= "Player Friend",
-	groupName	= "player",
+	name		= GetString("Player Friend"),
+	groupName	= GetString("player"),
 	list		= "CharacterList",
 	variables	= {
 		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
@@ -403,8 +378,8 @@ local player_friend = {
 gw2_radar.addType(player_friend)
 
 local player_foe = {
-	name		= "Player Foe",
-	groupName	= "player",
+	name		= GetString("Player Foe"),
+	groupName	= GetString("player"),
 	list		= "CharacterList",
 	variables	= {
 		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
@@ -418,8 +393,8 @@ local player_foe = {
 gw2_radar.addType(player_foe)
 
 local npc_friend = {
-	name		= "Npc Friend",
-	groupName	= "npc",
+	name		= GetString("Npc Friend"),
+	groupName	= GetString("npc"),
 	list		= "CharacterList",
 	variables	= {
 		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
@@ -434,8 +409,8 @@ local npc_friend = {
 gw2_radar.addType(npc_friend)
 
 local npc_foe = {
-	name		= "Npc Foe",
-	groupName	= "npc",
+	name		= GetString("Npc Foe"),
+	groupName	= GetString("npc"),
 	list		= "CharacterList",
 	variables	= {
 		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
@@ -449,8 +424,8 @@ local npc_foe = {
 gw2_radar.addType(npc_foe)
 
 local npc_neutral = {
-	name		= "Npc Neutral",
-	groupName	= "npc",
+	name		= GetString("Npc Neutral"),
+	groupName	= GetString("npc"),
 	list		= "CharacterList",
 	variables	= {
 		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
@@ -464,8 +439,8 @@ local npc_neutral = {
 gw2_radar.addType(npc_neutral)
 
 local ore_mine = {
-	name		= "Ore Mine",
-	groupName	= "Ore",
+	name		= GetString("Ore Mine"),
+	groupName	= GetString("Ore"),
 	list		= "GadgetList",
 	variables	= {
 		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
@@ -479,8 +454,8 @@ local ore_mine = {
 gw2_radar.addType(ore_mine)
 
 local ore_herb = {
-	name		= "Ore Herb",
-	groupName	= "Ore",
+	name		= GetString("Ore Herb"),
+	groupName	= GetString("Ore"),
 	list		= "GadgetList",
 	variables	= {
 		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
@@ -494,8 +469,8 @@ local ore_herb = {
 gw2_radar.addType(ore_herb)
 
 local ore_wood = {
-	name		= "Ore Wood",
-	groupName	= "Ore",
+	name		= GetString("Ore Wood"),
+	groupName	= GetString("Ore"),
 	list		= "GadgetList",
 	variables	= {
 		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
