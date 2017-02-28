@@ -179,7 +179,7 @@ function gw2_radar.draw3DRadar(ticks)
 								-- GUI:AddRect(sPos.x - 70, sPos.y - 120, sPos.x + 70, sPos.y + 50, GUI:ColorConvertFloat4ToU32(1, 0, 0, 1)) -- TODO: this a good idea? rezise on distance and charsize?
 								GUI:AddRect(sPos.x-37, sPos.y + 30, sPos.x + 37, sPos.y + 37, 4294967295)
 								GUI:AddRectFilled(sPos.x - 35, sPos.y + 32, ((sPos.x - 35) + (70 * (entity.health.percent/100))), sPos.y + 35, GUI:ColorConvertFloat4ToU32(math.abs((-100+entity.health.percent)/100), entity.health.percent/100, 0, 1))
-								GUI:AddText(sPos.x + 52, sPos.y + 28, 4294967295, tostring(entity.health.percent).."%")
+								GUI:AddText(sPos.x + 40, sPos.y + 26, 4294967295, tostring(entity.health.percent).."%")
 							end
 						end
 					end
