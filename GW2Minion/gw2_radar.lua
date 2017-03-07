@@ -9,7 +9,7 @@
 		groupName	= "player", -- Name of the group it belongs to.
 		list		= "CharacterList", -- What entity list to check for this type.
 		variables	= { -- default set of variables. More can be added, but use would have to programmed in.
-			radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,}, -- guiType specifies the kind of gui element. (only "Checkbox" and "ColorEdit4" are supported atm, let me know if you need more.)
+			compass	= {guiType = "Checkbox",	name = "compass",	value = false,}, -- guiType specifies the kind of gui element. (only "Checkbox" and "ColorEdit4" are supported atm, let me know if you need more.)
 			radar3D	= {guiType = "Checkbox",	name = "radar 3D",	value = false,},
 			color	= {guiType = "ColorEdit4",	name = "Color",		value = 2516647680,},
 		},
@@ -162,7 +162,7 @@ function gw2_radar.drawSettings()
 									for attribute,guiItem in pairs(setting.variables) do
 										GUI:BeginGroup()
 											GUI:AlignFirstTextHeightToWidgets()
-											GUI:Text(guiItem.name)
+											GUI:Text(GetString(guiItem.name))
 										GUI:EndGroup()
 										GUI:SameLine(100)
 										GUI:BeginGroup()
@@ -217,10 +217,8 @@ function gw2_radar.draw3DRadar()
 							
 							-- TODO: add race, profession, speciliztion image.
 							-- GUI:AddImage(GetLuaModsPath() .. [[Icons\]] .. [[\Necromancer_tango_icon_20px.png]], sPos.x + (10*scale), sPos.y - (10*scale), sPos.x - (10*scale), sPos.y + (10*scale))
-							
 							local dotScale = scale < 0.5 and 0.5 or scale
-							GUI:AddCircleFilled( sPos.x, sPos.y, 5 * dotScale, entity.variables.color.value)
-							-- GUI:AddCircleFilled( sPos.x, sPos.y, 5, entity.variables.color.value)
+							GUI:AddCircleFilled( sPos.x, sPos.y, (5 * dotScale), entity.variables.color.value)
 							
 							if (scale > 0.5) then
 								GUI:SetWindowFontScale(scale)
@@ -241,8 +239,8 @@ function gw2_radar.draw3DRadar()
 										x2 = (sPos.x + (-35 + (70 * (entity.health.percent/100))) * scale),
 										y2 = (sPos.y + (35 * scale)),
 									}
-									GUI:AddRect(scaledRect.x1, scaledRect.y1, scaledRect.x2, scaledRect.y2, 4294967295)
 									GUI:AddRectFilled(scaledRectFilled.x1, scaledRectFilled.y1, scaledRectFilled.x2, scaledRectFilled.y2, GUI:ColorConvertFloat4ToU32(math.abs((-100+entity.health.percent)/100), entity.health.percent/100, 0, 1))
+									GUI:AddRect(scaledRect.x1, scaledRect.y1, scaledRect.x2, scaledRect.y2, 4294967295)
 									GUI:AddText(sPos.x + (40 * scale), sPos.y + (26 * scale), 4294967295, tostring(entity.health.percent).."%")
 								end
 								GUI:SetWindowFontScale(1)
@@ -276,7 +274,7 @@ function gw2_radar.drawCompass()
 		for _,entityList in pairs(gw2_radar.trackEntities) do
 			if (table.valid(entityList)) then
 				for _,entity in pairs(entityList) do
-					if (table.valid(entity) and entity.variables and entity.variables.radar2D.value) then
+					if (table.valid(entity) and entity.variables and entity.variables.compass.value) then
 						local rPos = entity.rPos
 						if (table.valid(rPos) and rPos.x and rPos.y) then
 							GUI:AddRectFilled(rPos.x - markerSize, rPos.y - markerSize, rPos.x + markerSize, rPos.y + markerSize, entity.variables.color.value)
@@ -304,17 +302,20 @@ function gw2_radar.drawCompassPath()
 	local path = ml_navigation.path
 	local lastPos = gw2_radar.compassData.cPos
 	if (table.valid(path) and table.valid(lastPos)) then
-		local id,pathPointPos = next(path,ml_navigation.pathindex)
-		while (id ~= 0 and table.valid(pathPointPos)) do
-			local currPos = gw2_radar.worldToCompass(pathPointPos)
-			if (table.valid(currPos) and currPos.x and currPos.y) then
-				GUI:AddLine(lastPos.x, lastPos.y, currPos.x, currPos.y, gw2_radar.compassPathColor, 3.0)
-			elseif (table.valid(currPos) and currPos.ex and currPos.ey) then
-				GUI:AddLine(lastPos.x, lastPos.y, currPos.ex, currPos.ey, gw2_radar.compassPathColor, 3.0)
-				break
+		for id,pathPointPos in ipairs(path) do
+		-- local id,pathPointPos = ml_navigation.pathindex,path[ml_navigation.pathindex]
+		-- while (table.valid(pathPointPos)) do
+			if (id >= ml_navigation.pathindex and table.valid(pathPointPos)) then
+				local currPos = gw2_radar.worldToCompass(pathPointPos)
+				if (table.valid(currPos) and currPos.x and currPos.y) then
+					GUI:AddLine(lastPos.x, lastPos.y, currPos.x, currPos.y, gw2_radar.compassPathColor, 3.0)
+				elseif (table.valid(currPos) and currPos.ex and currPos.ey) then
+					GUI:AddLine(lastPos.x, lastPos.y, currPos.ex, currPos.ey, gw2_radar.compassPathColor, 3.0)
+					break
+				end
+				lastPos = {x = currPos.x, y = currPos.y,}
+				-- id,pathPointPos = id+1,path[id+1]
 			end
-			lastPos = {x = currPos.x, y = currPos.y,}
-			id,pathPointPos = next(path,id)
 		end
 	end
 end
@@ -390,7 +391,7 @@ function gw2_radar.parseEntities()
 	if (gw2_radar.compassActive or gw2_radar.radar3DActive) then
 		local data = {}
 		for _,radarType in pairs(gw2_radar.radarTypes) do
-			if (table.valid(radarType) and (radarType.variables.radar2D.value or radarType.variables.radar3D.value)) then
+			if (table.valid(radarType) and (radarType.variables.compass.value or radarType.variables.radar3D.value)) then
 				data[radarType.list] = data[radarType.list] or {}
 				table.insert(data[radarType.list],radarType)
 			end
@@ -410,7 +411,7 @@ function gw2_radar.parseEntities()
 									variables	= radarType.variables,
 									filter		= radarType.filter,
 									pos			= entity.pos,
-									rPos		= radarType.variables.radar2D.value and gw2_radar.worldToCompass(entity.pos) or nil,
+									rPos		= radarType.variables.compass.value and gw2_radar.worldToCompass(entity.pos) or nil,
 									sPos		= radarType.variables.radar3D.value and RenderManager:WorldToScreen(entity.pos) or nil,
 									health		= entity.health,
 									distance	= entity.distance
@@ -464,7 +465,7 @@ local player_friend = {
 	groupName	= GetString("player"),
 	list		= "CharacterList",
 	variables	= {
-		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
+		compass	= {guiType = "Checkbox",	name = "compass",	value = false,},
 		radar3D	= {guiType = "Checkbox",	name = "radar 3D",	value = false,},
 		color	= {guiType = "ColorEdit4",	name = "Color",		value = 2516647680,},
 	},
@@ -479,7 +480,7 @@ local player_foe = {
 	groupName	= GetString("player"),
 	list		= "CharacterList",
 	variables	= {
-		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
+		compass	= {guiType = "Checkbox",	name = "compass",	value = false,},
 		radar3D	= {guiType = "Checkbox",	name = "radar 3D",	value = false,},
 		color	= {guiType = "ColorEdit4",	name = "Color",		value = 2533294335,},
 	},
@@ -494,7 +495,7 @@ local npc_friend = {
 	groupName	= GetString("npc"),
 	list		= "CharacterList",
 	variables	= {
-		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
+		compass	= {guiType = "Checkbox",	name = "compass",	value = false,},
 		radar3D	= {guiType = "Checkbox",	name = "radar 3D",	value = false,},
 		color	= {guiType = "ColorEdit4",	name = "Color",		value = 2533359360,},
 	},
@@ -510,7 +511,7 @@ local npc_foe = {
 	groupName	= GetString("npc"),
 	list		= "CharacterList",
 	variables	= {
-		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
+		compass	= {guiType = "Checkbox",	name = "compass",	value = false,},
 		radar3D	= {guiType = "Checkbox",	name = "radar 3D",	value = false,},
 		color	= {guiType = "ColorEdit4",	name = "Color",		value = 2516582655,},
 	},
@@ -525,7 +526,7 @@ local npc_neutral = {
 	groupName	= GetString("npc"),
 	list		= "CharacterList",
 	variables	= {
-		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
+		compass	= {guiType = "Checkbox",	name = "compass",	value = false,},
 		radar3D	= {guiType = "Checkbox",	name = "radar 3D",	value = false,},
 		color	= {guiType = "ColorEdit4",	name = "Color",		value = 2516647935,},
 	},
@@ -540,7 +541,7 @@ local ore_mine = { -- TODO: gadget/ore not showing up, no such thing as usable..
 	groupName	= GetString("Ore"),
 	list		= "GadgetList",
 	variables	= {
-		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
+		compass	= {guiType = "Checkbox",	name = "compass",	value = false,},
 		radar3D	= {guiType = "Checkbox",	name = "radar 3D",	value = false,},
 		color	= {guiType = "ColorEdit4",	name = "Color",		value = 2519411499,},
 	},
@@ -555,7 +556,7 @@ local ore_herb = {
 	groupName	= GetString("Ore"),
 	list		= "GadgetList",
 	variables	= {
-		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
+		compass	= {guiType = "Checkbox",	name = "compass",	value = false,},
 		radar3D	= {guiType = "Checkbox",	name = "radar 3D",	value = false,},
 		color	= {guiType = "ColorEdit4",	name = "Color",		value = 2523070252,},
 	},
@@ -570,7 +571,7 @@ local ore_wood = {
 	groupName	= GetString("Ore"),
 	list		= "GadgetList",
 	variables	= {
-		radar2D	= {guiType = "Checkbox",	name = "radar 2D",	value = false,},
+		compass	= {guiType = "Checkbox",	name = "compass",	value = false,},
 		radar3D	= {guiType = "Checkbox",	name = "radar 3D",	value = false,},
 		color	= {guiType = "ColorEdit4",	name = "Color",		value = 2518495047,},
 	},
