@@ -268,7 +268,7 @@ function gw2_radar.drawCompass()
 		GUI:PushStyleVar(GUI.StyleVar_WindowRounding, 0)
 		GUI:PushStyleVar(GUI.StyleVar_WindowPadding, 0,0)
 		GUI:PushStyleColor(GUI.Col_WindowBg, 0, 0, 0, 0)
-		GUI:Begin("Vision Compass Space", true, GUI.WindowFlags_ShowBorders + GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoResize + GUI.WindowFlags_NoMove + GUI.WindowFlags_NoScrollbar + GUI.WindowFlags_NoScrollWithMouse + GUI.WindowFlags_NoCollapse + GUI.WindowFlags_NoSavedSettings + GUI.WindowFlags_NoInputs + GUI.WindowFlags_NoFocusOnAppearing + GUI.WindowFlags_NoBringToFrontOnFocus)
+		GUI:Begin("Vision Compass Space", true, GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoResize + GUI.WindowFlags_NoMove + GUI.WindowFlags_NoScrollbar + GUI.WindowFlags_NoScrollWithMouse + GUI.WindowFlags_NoCollapse + GUI.WindowFlags_NoSavedSettings + GUI.WindowFlags_NoInputs + GUI.WindowFlags_NoFocusOnAppearing + GUI.WindowFlags_NoBringToFrontOnFocus)
 		GUI:PopStyleVar(2)
 		GUI:PopStyleColor(1)
 		
@@ -346,7 +346,7 @@ function gw2_radar.updateCompassData() -- TODO: redo this mess. Order stuff, and
 	
 	local screenSizeX, screenSizeY = GUI:GetScreenSize()
 	gw2_radar.compassData.sSize = {x = screenSizeX, y = screenSizeY,}
-	gw2_radar.compassData.pos = {x = screenSizeX - gw2_radar.compassData.width - 15, y = gw2_radar.compassData.topposition == 0 and screenSizeY - gw2_radar.compassData.height - 75 or 0,}
+	gw2_radar.compassData.pos = {x = screenSizeX - gw2_radar.compassData.width, y = gw2_radar.compassData.topposition == 0 and screenSizeY - gw2_radar.compassData.height - 37 or 0,} -- 37 is the bottom offset.
 	gw2_radar.compassData.cPos = {x = gw2_radar.compassData.pos.x + (gw2_radar.compassData.width / 2), y = gw2_radar.compassData.pos.y + (gw2_radar.compassData.height / 2)}
 	gw2_radar.compassData.pPos = Player.pos
 	
