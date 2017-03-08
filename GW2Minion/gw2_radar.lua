@@ -36,6 +36,9 @@ gw2_radar.compassShowPath	= false
 gw2_radar.radar3DShowPath	= false
 gw2_radar.radarTypes		= {}
 gw2_radar.trackEntities		= {}
+gw2_radar.icons				= {
+	--[profession] = pathToIcon_profession
+}
 
 
 function gw2_radar.Init()
@@ -58,7 +61,7 @@ function gw2_radar.Init()
 end
 
 function gw2_radar.Draw(_, ticks )
-	if (ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then
+	if (GetGameState() == GW2.GAMESTATE.GAMEPLAY) then -- TODO: global is too slow, produces errors, fix when that is fixed. if (ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then
 		if (gw2_radar.mainWindow.open) then
 			GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver)
 			gw2_radar.mainWindow.visible, gw2_radar.mainWindow.open = GUI:Begin(gw2_radar.mainWindow.name, gw2_radar.mainWindow.open)
