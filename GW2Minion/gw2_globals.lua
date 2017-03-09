@@ -108,7 +108,8 @@ function ml_global_information.OnUpdate(Event,ticks)
 			ml_global_information.Player_SwimState = Player.swimming or 0
 			ml_global_information.Player_MovementState = Player:GetMovementState() or 1
 			ml_global_information.Player_Party = Player:GetParty() or nil
-
+			ml_global_information.Player_CastInfo = Player.castinfo or nil
+			
 			ml_global_information.CurrentMapID = Player:GetLocalMapID() or 0
 			if (gw2_datamanager and ml_global_information.CurrentMapID ~= 0) then  
 				ml_global_information.CurrentMapName = gw2_datamanager.GetMapName(ml_global_information.CurrentMapID) 
