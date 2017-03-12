@@ -776,6 +776,9 @@ function dev.DrawCall(event, ticks )
 						GUI:PushItemWidth(250)
 						GUI:BulletText("Game Time") GUI:SameLine(200) GUI:InputText("##devuf2",tostring(GetGameTime()))
 						GUI:BulletText("Local MapID") GUI:SameLine(200) GUI:InputText("##devff1",tostring(Player:GetLocalMapID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("Player Endurance") GUI:SameLine(200) GUI:InputText("##devuf3",tostring(Player.endurance))
+						GUI:BulletText("Player Karma") GUI:SameLine(200) GUI:InputText("##devuf3",tostring(Player.karma))
+						
 						
 						if (GUI:Button("AoE Loot",150,15) ) then Player:AoELoot() end
 						if (GUI:Button("Interact/Use",150,15) ) then 
