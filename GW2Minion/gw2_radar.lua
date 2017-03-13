@@ -302,22 +302,24 @@ function gw2_radar.drawCompass()
 end
 
 function gw2_radar.drawCompassPath()
-	local path = ml_navigation.path
-	local lastPos = gw2_radar.compassData.cPos
-	if (table.valid(path) and table.valid(lastPos)) then
-		for id,pathPointPos in ipairs(path) do
-		-- local id,pathPointPos = ml_navigation.pathindex,path[ml_navigation.pathindex]
-		-- while (table.valid(pathPointPos)) do
-			if (id >= ml_navigation.pathindex and table.valid(pathPointPos)) then
-				local currPos = gw2_radar.worldToCompass(pathPointPos)
-				if (table.valid(currPos) and currPos.x and currPos.y) then
-					GUI:AddLine(lastPos.x, lastPos.y, currPos.x, currPos.y, gw2_radar.compassPathColor, 3.0)
-				elseif (table.valid(currPos) and currPos.ex and currPos.ey) then
-					GUI:AddLine(lastPos.x, lastPos.y, currPos.ex, currPos.ey, gw2_radar.compassPathColor, 3.0)
-					break
+	if (gw2_radar.compassShowPath) then
+		local path = ml_navigation.path
+		local lastPos = gw2_radar.compassData.cPos
+		if (table.valid(path) and table.valid(lastPos)) then
+			for id,pathPointPos in ipairs(path) do
+			-- local id,pathPointPos = ml_navigation.pathindex,path[ml_navigation.pathindex]
+			-- while (table.valid(pathPointPos)) do
+				if (id >= ml_navigation.pathindex and table.valid(pathPointPos)) then
+					local currPos = gw2_radar.worldToCompass(pathPointPos)
+					if (table.valid(currPos) and currPos.x and currPos.y) then
+						GUI:AddLine(lastPos.x, lastPos.y, currPos.x, currPos.y, gw2_radar.compassPathColor, 3.0)
+					elseif (table.valid(currPos) and currPos.ex and currPos.ey) then
+						GUI:AddLine(lastPos.x, lastPos.y, currPos.ex, currPos.ey, gw2_radar.compassPathColor, 3.0)
+						break
+					end
+					lastPos = {x = currPos.x, y = currPos.y,}
+					-- id,pathPointPos = id+1,path[id+1]
 				end
-				lastPos = {x = currPos.x, y = currPos.y,}
-				-- id,pathPointPos = id+1,path[id+1]
 			end
 		end
 	end
