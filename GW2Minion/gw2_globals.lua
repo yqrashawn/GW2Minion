@@ -109,6 +109,8 @@ function ml_global_information.OnUpdate(Event,ticks)
 			ml_global_information.Player_MovementState = Player:GetMovementState() or 1
 			ml_global_information.Player_Party = Player:GetParty() or nil
 			ml_global_information.Player_CastInfo = Player.castinfo or nil
+			ml_global_information.Player_Buffs= Player.buffs or {}
+			
 			
 			ml_global_information.CurrentMapID = Player:GetLocalMapID() or 0
 			if (gw2_datamanager and ml_global_information.CurrentMapID ~= 0) then  
