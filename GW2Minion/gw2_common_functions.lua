@@ -628,7 +628,7 @@ function gw2_common_functions.Evade(direction)
 		if (type(direction) ~= "number") then
 			local aggroTargets = CharacterList("aggro,alive,maxdistance=3000")
 			
-			if ( not table.valid(aggroTargets)) then 
+			if ( not table.valid(aggroTargets)) then  -- TODO: only check this if there can be hostile players. -- and PvPManager:IsInMatch()) then -- needa similar wvwvw check.
 				aggroTargets = CharacterList("player,attackable,alive,los,maxdistance=1200")
 			end
 			
@@ -637,6 +637,7 @@ function gw2_common_functions.Evade(direction)
 					local cinfo = target.castinfo
 					if (table.valid(cinfo) and cinfo.targetid == Player.id and Player.castinfo.duration == 0 and TimeSince(gw2_common_functions.lastEvade) > 1500) then
 						evadeTarget = true
+						break
 					end
 				end
 			end
