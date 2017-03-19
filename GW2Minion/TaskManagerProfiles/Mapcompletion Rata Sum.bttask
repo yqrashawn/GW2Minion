@@ -5,7 +5,7 @@ local tbl =
 	{
 		failure = 1,
 		order = 1,
-		repeattasks = 1,
+		repeattasks = 2,
 	},
 	tasks = 
 	{
@@ -15,7 +15,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 0,
+			order = 1,
 			posttasks = 
 			{
 			},
@@ -54,7 +54,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 1,
+			order = 2,
 			posttasks = 
 			{
 			},
@@ -93,7 +93,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 2,
+			order = 3,
 			posttasks = 
 			{
 			},
@@ -132,7 +132,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 3,
+			order = 4,
 			posttasks = 
 			{
 			},
@@ -174,7 +174,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 4,
+			order = 5,
 			posttasks = 
 			{
 			},
@@ -213,7 +213,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 5,
+			order = 6,
 			posttasks = 
 			{
 			},
@@ -291,7 +291,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 6,
+			order = 8,
 			posttasks = 
 			{
 			},
@@ -330,7 +330,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 8,
+			order = 9,
 			posttasks = 
 			{
 			},
@@ -369,7 +369,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 9,
+			order = 10,
 			posttasks = 
 			{
 			},
@@ -408,7 +408,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 10,
+			order = 11,
 			posttasks = 
 			{
 			},
@@ -447,7 +447,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 11,
+			order = 12,
 			posttasks = 
 			{
 			},
@@ -486,7 +486,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 12,
+			order = 13,
 			posttasks = 
 			{
 			},
@@ -525,7 +525,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 13,
+			order = 14,
 			posttasks = 
 			{
 			},
@@ -564,7 +564,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 14,
+			order = 15,
 			posttasks = 
 			{
 			},
@@ -603,7 +603,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 15,
+			order = 16,
 			posttasks = 
 			{
 			},
@@ -642,7 +642,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 16,
+			order = 17,
 			posttasks = 
 			{
 			},
@@ -681,7 +681,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 17,
+			order = 18,
 			posttasks = 
 			{
 			},
@@ -723,7 +723,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 18,
+			order = 19,
 			posttasks = 
 			{
 			},
@@ -762,7 +762,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 19,
+			order = 20,
 			posttasks = 
 			{
 			},
@@ -801,7 +801,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 20,
+			order = 21,
 			posttasks = 
 			{
 			},
@@ -840,7 +840,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 21,
+			order = 22,
 			posttasks = 
 			{
 			},
@@ -882,7 +882,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 22,
+			order = 23,
 			posttasks = 
 			{
 			},
@@ -924,7 +924,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 23,
+			order = 24,
 			posttasks = 
 			{
 			},
@@ -964,6 +964,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 25,
@@ -1006,9 +1007,52 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = false,
 			},
 			lastrun = 0,
 			order = 26,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 139,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "[Vista] Bottom floor",
+				pos = 
+				{
+					hx = -0.25945854187012,
+					hy = 0.17148570716381,
+					hz = 0.95040726661682,
+					x = 1736.1273193359,
+					y = 6009.5151367188,
+					z = -13152.8984375,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 27,
 			posttasks = 
 			{
 			},
@@ -1050,7 +1094,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 27,
+			order = 28,
 			posttasks = 
 			{
 			},
@@ -1092,7 +1136,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 28,
+			order = 29,
 			posttasks = 
 			{
 			},
@@ -1134,7 +1178,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 29,
+			order = 30,
 			posttasks = 
 			{
 			},
@@ -1176,7 +1220,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 30,
+			order = 31,
 			posttasks = 
 			{
 			},
@@ -1215,7 +1259,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 31,
+			order = 32,
 			posttasks = 
 			{
 			},
@@ -1257,7 +1301,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 32,
+			order = 33,
 			posttasks = 
 			{
 			},
@@ -1299,7 +1343,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 33,
+			order = 34,
 			posttasks = 
 			{
 			},
