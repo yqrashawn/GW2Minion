@@ -784,3 +784,21 @@ function gw2_common_functions.GetRandomPoint()
 	
 	return nil
 end
+
+-- Input manager functions specific for gw2.
+function gw2_common_functions.toggleBot()
+	if (GetGameState() == GW2.GAMESTATE.GAMEPLAY and NavigationManager:GetNavMeshState() == GLOBAL.MESHSTATE.MESHREADY) then
+		if (BehaviorManager:Running()) then
+			BehaviorManager:Stop()
+			Player:StopMovement()
+		else
+			BehaviorManager:Start()
+		end
+	end
+end
+
+ml_input_mgr.registerFunction({
+		name = GetString("Toggle Bot"),
+		func = gw2_common_functions.toggleBot,
+	}
+)
