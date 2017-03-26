@@ -177,18 +177,20 @@ function dev.DrawCall(event, ticks )
 						if ( table.valid(list) )then
 							GUI:PushItemWidth(250)
 							for id, b in pairsByKeys(list) do
-								if ( GUI:TreeNode(tostring(id).."-"..b.name)) then
-									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devi0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devi1",tostring(b.itemid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Stackcount") GUI:SameLine(200) GUI:InputText("##devi2",tostring(b.stackcount),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Rarity") GUI:SameLine(200) GUI:InputText("##devi3",tostring(b.rarity),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Itemtype") GUI:SameLine(200) GUI:InputText("##devi4",tostring(b.itemtype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Weapontype") GUI:SameLine(200) GUI:InputText("##devi5",tostring(b.weapontype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Durability") GUI:SameLine(200) GUI:InputText("##devi6",tostring(b.durability),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Soulbound") GUI:SameLine(200) GUI:InputText("##devi7",tostring(b.soulbound),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Salvagable") GUI:SameLine(200) GUI:InputText("##devi8",tostring(b.salvagable),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("IsMailable") GUI:SameLine(200) GUI:InputText("##devi9",tostring(b.ismailable),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("CanSellToTP") GUI:SameLine(200) GUI:InputText("##devi10",tostring(b.canselltotp),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+								local uniqueID = "###dev_inventorysot" .. id
+								if ( GUI:TreeNode("Slot " .. id .. ": " .. b.name .. uniqueID)) then
+									GUI:BulletText("Name")			GUI:SameLine(200) GUI:InputText(uniqueID .. "_1",	tostring(b.name),			GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Ptr")			GUI:SameLine(200) GUI:InputText(uniqueID .. "_2",	string.format( "%X",b.ptr),	GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("ID")			GUI:SameLine(200) GUI:InputText(uniqueID .. "_3",	tostring(b.itemid),			GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Stackcount")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_4",	tostring(b.stackcount),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Rarity")		GUI:SameLine(200) GUI:InputText(uniqueID .. "_5",	tostring(b.rarity),			GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Itemtype")		GUI:SameLine(200) GUI:InputText(uniqueID .. "_6",	tostring(b.itemtype),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Weapontype")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_7",	tostring(b.weapontype),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Durability")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_8",	tostring(b.durability),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Soulbound")		GUI:SameLine(200) GUI:InputText(uniqueID .. "_9",	tostring(b.soulbound),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Salvagable")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_10",	tostring(b.salvagable),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("IsMailable")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_12",	tostring(b.ismailable),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("CanSellToTP")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_13",	tostring(b.canselltotp),	GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									
 									if (GUI:Button("Use",100,15) ) then d("Using Item Result: "..tostring(b:Use())) end
 									GUI:SameLine(200)
