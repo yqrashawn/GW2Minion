@@ -121,18 +121,17 @@ function gw2_radar.Draw(_, ticks )
 			
 			GUI:End()
 		end
-		-- if (ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then -- waiting on map open.closed check.
+		-- if () then -- waiting on map open.closed check.
 			
-			if (gw2_radar.compassActive or gw2_radar.radar3DActive) then
-				-- Update compass data.
-				gw2_radar.updateCompassData()
-				-- Parse entities.
-				gw2_radar.parseEntities()
-				-- 3D radar.
-				gw2_radar.draw3DRadar()
-				-- 2D radar.
-				gw2_radar.drawCompass()
-			end
+			-- Update compass data.
+			gw2_radar.updateCompassData()
+			-- Parse entities.
+			gw2_radar.parseEntities()
+			-- 3D radar.
+			gw2_radar.draw3DRadar()
+			-- 2D radar.
+			gw2_radar.drawCompass()
+			
 		-- end
 	end
 end
@@ -207,48 +206,44 @@ function gw2_radar.draw3DRadar()
 		GUI:Begin("Vision Draw Space", true, GUI.WindowFlags_NoInputs + GUI.WindowFlags_NoBringToFrontOnFocus + GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoResize + GUI.WindowFlags_NoScrollbar + GUI.WindowFlags_NoCollapse)
 		GUI:PopStyleColor(1)
 		
-		for _,entityList in pairs(gw2_radar.trackEntities) do
-			if (table.valid(entityList)) then
-				for _,entity in pairs(entityList) do
-					if (table.valid(entity) and entity.variables and entity.variables.radar3D.value) then
-						local sPos = entity.sPos
-						if (table.valid(sPos)) then
-							local maxDistance =  6000
-							local minDistance = 1000
-							local distance = entity.distance < minDistance and minDistance or entity.distance > maxDistance and maxDistance or entity.distance
-							local scale = (distance - maxDistance) / (minDistance - maxDistance)
-							
-							-- TODO: add race, profession, speciliztion image.
-							-- GUI:AddImage(GetLuaModsPath() .. [[Icons\]] .. [[\Necromancer_tango_icon_20px.png]], sPos.x + (10*scale), sPos.y - (10*scale), sPos.x - (10*scale), sPos.y + (10*scale))
-							local dotScale = scale < 0.5 and 0.5 or scale
-							GUI:AddCircleFilled( sPos.x, sPos.y, (5 * dotScale), entity.variables.color.value)
-							
-							if (scale > 0.5) then
-								GUI:SetWindowFontScale(scale)
-								local text = "["..entity.name.."]["..round(entity.distance).."]"
-								local textSizeX, textSizeY = GUI:CalcTextSize(text)
-								GUI:AddText(sPos.x - (textSizeX/2), sPos.y+textSizeY, 4294967295, text)
-								
-								if (table.valid(entity.health)) then
-									local scaledRect = {
-										x1 = (sPos.x - (37 * scale)),
-										y1 = (sPos.y + (30 * scale)),
-										x2 = (sPos.x + (37 * scale)),
-										y2 = (sPos.y + (37 * scale)),
-									}
-									local scaledRectFilled = {
-										x1 = (sPos.x - (35 * scale)),
-										y1 = (sPos.y + (32 * scale)),
-										x2 = (sPos.x + (-35 + (70 * (entity.health.percent/100))) * scale),
-										y2 = (sPos.y + (35 * scale)),
-									}
-									GUI:AddRectFilled(scaledRectFilled.x1, scaledRectFilled.y1, scaledRectFilled.x2, scaledRectFilled.y2, GUI:ColorConvertFloat4ToU32(math.abs((-100+entity.health.percent)/100), entity.health.percent/100, 0, 1))
-									GUI:AddRect(scaledRect.x1, scaledRect.y1, scaledRect.x2, scaledRect.y2, 4294967295)
-									GUI:AddText(sPos.x + (40 * scale), sPos.y + (26 * scale), 4294967295, tostring(entity.health.percent).."%")
-								end
-								GUI:SetWindowFontScale(1)
-							end
+		for _,entity in pairs(gw2_radar.trackEntities) do
+			if (table.valid(entity) and entity.variables and entity.variables.radar3D.value) then
+				local sPos = entity.sPos
+				if (table.valid(sPos)) then
+					local maxDistance =  6000
+					local minDistance = 1000
+					local distance = entity.distance < minDistance and minDistance or entity.distance > maxDistance and maxDistance or entity.distance
+					local scale = (distance - maxDistance) / (minDistance - maxDistance)
+					
+					-- TODO: add race, profession, speciliztion image.
+					-- GUI:AddImage(GetLuaModsPath() .. [[Icons\]] .. [[\Necromancer_tango_icon_20px.png]], sPos.x + (10*scale), sPos.y - (10*scale), sPos.x - (10*scale), sPos.y + (10*scale))
+					local dotScale = scale < 0.5 and 0.5 or scale
+					GUI:AddCircleFilled( sPos.x, sPos.y, (5 * dotScale), entity.variables.color.value)
+					
+					if (scale > 0.5) then
+						GUI:SetWindowFontScale(scale)
+						local text = "["..entity.name.."]["..round(entity.distance).."]"
+						local textSizeX, textSizeY = GUI:CalcTextSize(text)
+						GUI:AddText(sPos.x - (textSizeX/2), sPos.y+textSizeY, 4294967295, text)
+						
+						if (table.valid(entity.health)) then
+							local scaledRect = {
+								x1 = (sPos.x - (37 * scale)),
+								y1 = (sPos.y + (30 * scale)),
+								x2 = (sPos.x + (37 * scale)),
+								y2 = (sPos.y + (37 * scale)),
+							}
+							local scaledRectFilled = {
+								x1 = (sPos.x - (35 * scale)),
+								y1 = (sPos.y + (32 * scale)),
+								x2 = (sPos.x + (-35 + (70 * (entity.health.percent/100))) * scale),
+								y2 = (sPos.y + (35 * scale)),
+							}
+							GUI:AddRectFilled(scaledRectFilled.x1, scaledRectFilled.y1, scaledRectFilled.x2, scaledRectFilled.y2, GUI:ColorConvertFloat4ToU32(math.abs((-100+entity.health.percent)/100), entity.health.percent/100, 0, 1))
+							GUI:AddRect(scaledRect.x1, scaledRect.y1, scaledRect.x2, scaledRect.y2, 4294967295)
+							GUI:AddText(sPos.x + (40 * scale), sPos.y + (26 * scale), 4294967295, tostring(entity.health.percent).."%")
 						end
+						GUI:SetWindowFontScale(1)
 					end
 				end
 			end
@@ -273,17 +268,42 @@ function gw2_radar.drawCompass()
 		GUI:PopStyleColor(1)
 		
 		local markerSize = 5 - gw2_radar.compassData.zoomlevel
+		local mousePos = {}
+		mousePos.x,mousePos.y = GUI:GetMousePos()
+		local hovering = false
 		
-		for _,entityList in pairs(gw2_radar.trackEntities) do
-			if (table.valid(entityList)) then
-				for _,entity in pairs(entityList) do
-					if (table.valid(entity) and entity.variables and entity.variables.compass.value) then
-						local rPos = entity.rPos
-						if (table.valid(rPos) and rPos.x and rPos.y) then
-							GUI:AddRectFilled(rPos.x - markerSize, rPos.y - markerSize, rPos.x + markerSize, rPos.y + markerSize, entity.variables.color.value)
-							GUI:AddRect(rPos.x - markerSize, rPos.y - markerSize, rPos.x + markerSize, rPos.y + markerSize, 4294967295)
-						end
-					end
+		for _,entity in pairs(gw2_radar.trackEntities) do
+			if (table.valid(entity) and entity.variables and entity.variables.compass.value) then
+				local rPos = entity.rPos
+				if (table.valid(rPos) and rPos.x and rPos.y) then
+					GUI:AddRectFilled(rPos.x - markerSize, rPos.y - markerSize, rPos.x + markerSize, rPos.y + markerSize, entity.variables.color.value)
+					GUI:AddRect(rPos.x - markerSize, rPos.y - markerSize, rPos.x + markerSize, rPos.y + markerSize, 4294967295)
+					-- hover overlay. TODO: still needs refinement.
+					--[[if (mousePos.x > rPos.x - markerSize and mousePos.x < rPos.x + markerSize and mousePos.y > rPos.y - markerSize and mousePos.y < rPos.y + markerSize and not hovering) then
+						hovering = true
+						GUI:PushStyleVar(GUI.StyleVar_WindowPadding, 0,0)
+						GUI:PushStyleVar(GUI.StyleVar_WindowRounding, 0)
+						GUI:PushStyleColor(GUI.Col_WindowBg,0,0,0,0)
+						
+						local text = entity.name .. "\n" .. round(entity.distance) .. GetString(" away")
+						local textSize = {}
+						textSize.x,textSize.y = GUI:CalcTextSize(text)
+						
+						local mousePos = {}
+						mousePos.x,mousePos.y = GUI:GetMousePos()
+						GUI:SetNextWindowPos(mousePos.x-(textSize.x+15), mousePos.y-70, GUI.SetCond_Always)
+						
+						GUI:SetNextWindowSize(textSize.x+15, 40,GUI.SetCond_Always)
+						GUI:BeginTooltip() -- creating own tooltip to force no rounding.
+							GUI:Dummy(1,1)
+							GUI:Dummy(0,0)
+							GUI:SameLine()
+							GUI:TextWrapped(text)
+						GUI:EndTooltip()
+						
+						GUI:PopStyleVar(2)
+						GUI:PopStyleColor(1)
+					end]]
 				end
 			end
 		end
@@ -297,7 +317,6 @@ function gw2_radar.drawCompass()
 		GUI:AddRect(cPos.x - markerSize, cPos.y - markerSize, cPos.x + markerSize, cPos.y + markerSize,  4278190335)
 		
 		GUI:End()
-		
 	end
 end
 
@@ -409,8 +428,8 @@ function gw2_radar.parseEntities()
 					for _,radarType in pairs(radarTypes) do
 						if (table.valid(radarType)) then
 							if (gw2_radar.matchFilterEntity(radarType.filter,entity)) then
-								local currEntity = gw2_radar.trackEntities[listName] and gw2_radar.trackEntities[listName][entity.id]
-								local newEntity = {
+								local currEntity = gw2_radar.trackEntities[entity.id]
+								newTrackEntities[entity.id] = {
 									id			= currEntity and currEntity.id or entity.id,
 									name		= currEntity and string.valid(currEntity.name) and currEntity.name or entity.name,
 									variables	= radarType.variables,
@@ -421,8 +440,6 @@ function gw2_radar.parseEntities()
 									health		= entity.health,
 									distance	= entity.distance
 								}
-								newTrackEntities[listName] = newTrackEntities[listName] or {}
-								newTrackEntities[listName][newEntity.id] = newEntity
 								break
 							end
 						end

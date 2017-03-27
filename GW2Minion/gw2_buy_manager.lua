@@ -303,7 +303,7 @@ function gw2_buy_manager.toolListIDToKey(toolList)
 end
 
 function gw2_buy_manager.checkForInfTools(tool)
-	return (tool and tool.rarity == 4 and tool.stackcount == 0 and true or false)
+	return (tool and tool.rarity == 4 and tool.weapontype == 1 and true or false) -- tool.stackcount == 0 and true or false) -- the stackcount is nolonger 0 for unstackable. Weapontype seems to indicate unlim tools atm. Better then nothing.
 end
 
 function gw2_buy_manager.GetNeededGatheringToolList()
