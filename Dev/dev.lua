@@ -775,6 +775,7 @@ function dev.DrawCall(event, ticks )
 					if ( GUI:TreeNode("Utility Functions & Other Infos") ) then
 						GUI:PushItemWidth(250)
 						GUI:BulletText("Game Time") GUI:SameLine(200) GUI:InputText("##devuf2",tostring(GetGameTime()))
+						GUI:BulletText("Pulse Duration") GUI:SameLine(200) GUI:InputText("##devuf2",tostring(GetBotPerformance()))
 						GUI:BulletText("Local MapID") GUI:SameLine(200) GUI:InputText("##devff1",tostring(Player:GetLocalMapID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						GUI:BulletText("Player Endurance") GUI:SameLine(200) GUI:InputText("##devuf3",tostring(Player.endurance))
 						GUI:BulletText("Player Karma") GUI:SameLine(200) GUI:InputText("##devuf3",tostring(Player.karma))
@@ -799,6 +800,7 @@ function dev.DrawCall(event, ticks )
 		end
 		GUI:End()
 	end
+	
 end
 RegisterEventHandler("Gameloop.Draw", dev.DrawCall)
 
@@ -809,7 +811,7 @@ function dev.DrawCharacterDetails(c)
 	GUI:BulletText("AgentPtr") GUI:SameLine(200) GUI:InputText("##dev1",tostring(string.format( "%X",c.ptr2)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##dev2",tostring(c.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("ContentID") GUI:SameLine(200) GUI:InputText("##dev3",tostring(c.contentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-	GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##dev6",c.Name,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##dev6",c.name,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	local h = c.health
 	GUI:BulletText("Health") GUI:SameLine(200)  GUI:InputFloat3( "##dev7", h.current, h.max, h.percent, 2, GUI.InputTextFlags_ReadOnly)
 	local p = c.pos
@@ -824,7 +826,7 @@ function dev.DrawCharacterDetails(c)
 	local meshpos = c.meshpos
 	GUI:BulletText("MeshPosition") GUI:SameLine(200)  GUI:InputFloat3( "##dev9m", meshpos.x, meshpos.y, meshpos.z, 2, GUI.InputTextFlags_ReadOnly)
 	GUI:BulletText("Dist MeshPos-Player") GUI:SameLine(200)  GUI:InputFloat("##dev12m", meshpos.distance,0,0,2)
-	GUI:BulletText("Dist to MeshPos") GUI:SameLine(200)  GUI:InputFloat("##dev12m", meshpos.meshdistance,0,0,2)	
+	GUI:BulletText("Dist to MeshPos") GUI:SameLine(200)  GUI:InputFloat("##dev13m", meshpos.meshdistance,0,0,2)	
 	GUI:BulletText("Attitude") GUI:SameLine(200) GUI:InputText("##dev23", tostring(c.attitude),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("MovementState") GUI:SameLine(200) GUI:InputText("##dev17", tostring(c.movementstate),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("SwimmingState") GUI:SameLine(200) GUI:InputText("##dev17-b", tostring(c.swimming),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -893,7 +895,6 @@ function dev.DrawCharacterDetails(c)
 	GUI:BulletText("Unknown3") GUI:SameLine(200) GUI:InputText("##dev50", tostring(c.isunknown3),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("Unknown6") GUI:SameLine(200) GUI:InputText("##dev51", tostring(c.isunknown6),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("Unknown10") GUI:SameLine(200) GUI:InputText("##dev52", tostring(c.isunknown10),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-	
 	
 	GUI:PopItemWidth()
 end

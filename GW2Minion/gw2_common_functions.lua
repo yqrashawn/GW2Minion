@@ -623,10 +623,10 @@ end
 -- Evade(dir=0->7).
 gw2_common_functions.lastEvade = 0
 function gw2_common_functions.Evade(direction)
-	if (ml_global_information.Player_Endurance >= 50) then
+	if (ml_global_information.Player_Health.percent < Settings.GW2Minion.evadehpthreshold and ml_global_information.Player_Endurance >= 50) then
 		local evadeTarget = false
 		if (type(direction) ~= "number") then
-			local aggroTargets = CharacterList("aggro,alive,maxdistance=3000")
+			local aggroTargets = CharacterList("aggro,alive,attackable,maxdistance=2000")
 			
 			if ( not table.valid(aggroTargets)) then  -- TODO: only check this if there can be hostile players. -- and PvPManager:IsInMatch()) then -- needa similar wvwvw check.
 				aggroTargets = CharacterList("player,attackable,alive,los,maxdistance=1200")
@@ -635,14 +635,14 @@ function gw2_common_functions.Evade(direction)
 			if (table.valid(aggroTargets)) then
 				for _,target in pairs(aggroTargets) do
 					local cinfo = target.castinfo
-					if (table.valid(cinfo) and cinfo.targetid == Player.id and Player.castinfo.duration == 0 and TimeSince(gw2_common_functions.lastEvade) > 1500) then
+					if (table.valid(cinfo) and cinfo.targetid == ml_global_information.Player_ID and cinfo.slot ~= ml_global_information.MAX_SKILLBAR_SLOTS and ml_global_information.Player_CastInfo.duration == 0 and TimeSince(gw2_common_functions.lastEvade) > 1500) then
 						evadeTarget = true
 						break
 					end
 				end
 			end
 		end
-		if (type(direction) == "number" or evadeTarget) then
+		if ((type(direction) == "number" and direction ~= 3) or evadeTarget) then -- silly fix, but SM uses direction 3 to evade towards a target, while unstuck uses 4 and 5 to evade left n right. But we want it only to evade when being attacked
 			direction = tonumber(direction) or math.random(0,7)
 			if (gw2_common_functions.CanEvadeDirection(direction)) then
 				Player:Evade(direction)
