@@ -980,9 +980,7 @@ function profilePrototype:Use(targetID)
 end
 
 function profilePrototype:Evade()
-	if (Settings.GW2Minion.evade) then
-		gw2_common_functions.Evade()
-	end
+	gw2_common_functions.Evade()
 end
 
 -- Do CombatMovement
