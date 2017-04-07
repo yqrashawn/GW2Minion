@@ -15,7 +15,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 0,
+			order = 1,
 			posttasks = 
 			{
 			},
@@ -57,7 +57,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 1,
+			order = 2,
 			posttasks = 
 			{
 			},
@@ -99,7 +99,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 2,
+			order = 3,
 			posttasks = 
 			{
 			},
@@ -142,7 +142,7 @@ local tbl =
 				hqid = 355,
 			},
 			lastrun = 0,
-			order = 3,
+			order = 4,
 			posttasks = 
 			{
 			},
@@ -353,6 +353,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -378,7 +381,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 4,
+			order = 5,
 			posttasks = 
 			{
 			},
@@ -392,6 +395,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -418,7 +424,7 @@ local tbl =
 				hqid = 274,
 			},
 			lastrun = 0,
-			order = 5,
+			order = 6,
 			posttasks = 
 			{
 			},
@@ -657,6 +663,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -683,7 +692,7 @@ local tbl =
 				hqid = 262,
 			},
 			lastrun = 0,
-			order = 6,
+			order = 7,
 			posttasks = 
 			{
 			},
@@ -761,6 +770,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -786,7 +798,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 7,
+			order = 8,
 			posttasks = 
 			{
 			},
@@ -800,6 +812,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -826,7 +841,7 @@ local tbl =
 				hqid = 263,
 			},
 			lastrun = 0,
-			order = 8,
+			order = 9,
 			posttasks = 
 			{
 			},
@@ -859,22 +874,62 @@ local tbl =
 				{
 					customProperties = 
 					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
 						targets = 
 						{
 							
 							{
-								character = true,
-								contentid = 518792,
-								gadget = false,
-								name = "Dschungelspinne",
+								character = false,
+								contentid = 17739,
+								gadget = true,
+								name = "Moskitolarve",
+							},
+							
+							{
+								character = false,
+								contentid = 29447,
+								gadget = true,
+								name = "Moskitolarve",
+							},
+							
+							{
+								character = false,
+								contentid = 26691,
+								gadget = true,
+								name = "Moskitolarve",
+							},
+							
+							{
+								character = false,
+								contentid = 17780,
+								gadget = true,
+								name = "Moskitolarve",
+							},
+							
+							{
+								character = false,
+								contentid = 6635,
+								gadget = true,
+								name = "Moskitolarve",
 							},
 						},
 					},
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Kill",
-						type = "tm_st_killspecific",
+						name = "Interact",
+						type = "tm_st_interact",
 					},
 				},
 				
@@ -886,17 +941,24 @@ local tbl =
 							
 							{
 								character = true,
-								contentid = 150483,
+								contentid = 518792,
 								gadget = false,
-								name = "Waldhund-Junges",
+								name = "Dschungelspinne",
+							},
+							
+							{
+								character = true,
+								contentid = 368835,
+								gadget = false,
+								name = "Moskito",
 							},
 						},
 					},
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Interact",
-						type = "tm_st_interact",
+						name = "Kill",
+						type = "tm_st_killspecific",
 					},
 				},
 			},
@@ -904,6 +966,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -929,7 +994,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 9,
+			order = 10,
 			posttasks = 
 			{
 			},
@@ -943,6 +1008,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -968,7 +1036,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 10,
+			order = 11,
 			posttasks = 
 			{
 			},
@@ -1005,6 +1073,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 12,
@@ -1021,6 +1090,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1047,7 +1119,7 @@ local tbl =
 				hqid = 261,
 			},
 			lastrun = 0,
-			order = 11,
+			order = 13,
 			posttasks = 
 			{
 			},
@@ -1167,6 +1239,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1193,7 +1268,7 @@ local tbl =
 				hqid = 260,
 			},
 			lastrun = 0,
-			order = 13,
+			order = 14,
 			posttasks = 
 			{
 			},
@@ -1408,7 +1483,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 14,
+			order = 15,
 			posttasks = 
 			{
 			},
@@ -1476,6 +1551,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -1501,7 +1579,49 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 15,
+			order = 16,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 34,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Exploration",
+				pos = 
+				{
+					hx = 0.014412473887205,
+					hy = 0.93017828464508,
+					hz = 0.36682510375977,
+					x = 16249.060546875,
+					y = -24161.185546875,
+					z = -973.53833007813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 17,
 			posttasks = 
 			{
 			},
@@ -1541,12 +1661,33 @@ local tbl =
 				hqid = 276,
 			},
 			lastrun = 0,
-			order = 16,
+			order = 18,
 			posttasks = 
 			{
 			},
 			pretasks = 
 			{
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							hx = 0.41984960436821,
+							hy = 0.67190062999725,
+							hz = 0.61014407873154,
+							x = 18933.837890625,
+							y = -18548.96875,
+							z = -56.165447235107,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Move to",
+						type = "tm_st_moveto",
+					},
+				},
 				
 				{
 					customProperties = 
@@ -1695,59 +1836,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Talk (Gefangener Hund)",
-						type = "tm_st_talk",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						talkagent = 
-						{
-							character = true,
-							contentid = 44623,
-							gadget = false,
-							name = "Captive",
-						},
-						talksteps = 
-						{
-							0,
-							0,
-							0,
-						},
-						talktype = "Index",
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Talk Nightmare Recruit",
-						type = "tm_st_talk",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						talkagent = 
-						{
-							character = true,
-							contentid = 536761,
-							gadget = false,
-							name = "Captive",
-						},
-						talksteps = 
-						{
-							0,
-							0,
-							0,
-						},
-						talktype = "Index",
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Takl more",
+						name = "Gefangener Hund",
 						type = "tm_st_talk",
 					},
 				},
@@ -1771,7 +1860,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Talk (Albtraum-Alphahund)",
+						name = "Albtraum Alphahund",
 						type = "tm_st_talk",
 					},
 				},
@@ -1795,70 +1884,8 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Talk (Albtraum-Junges)",
+						name = "Albtraum Junges",
 						type = "tm_st_talk",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						talkagent = 
-						{
-							character = true,
-							contentid = 174699,
-							gadget = false,
-							name = "Albtraumhof-Wache",
-						},
-						talksteps = 
-						{
-							0,
-							0,
-						},
-						talktype = "Index",
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Talk (Albtraumhof-Wache)",
-						type = "tm_st_talk",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						positions = 
-						{
-							
-							{
-								hx = -0.71766048669815,
-								hy = 0.22813929617405,
-								hz = 0.65796345472336,
-								x = 23193.982421875,
-								y = -14196.34375,
-								z = -647.6884765625,
-							},
-							
-							{
-								hx = 0.1592718064785,
-								hy = -0.98655140399933,
-								hz = 0.036727257072926,
-								x = 21106.658203125,
-								y = -17189.58984375,
-								z = -13.767826080322,
-							},
-						},
-						randommovement = false,
-						randompos = true,
-						repeatpositions = true,
-						usewaypoints = false,
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Move to B",
-						type = "tm_st_movetomultiple",
 					},
 				},
 			},
@@ -1894,7 +1921,49 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 17,
+			order = 19,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 34,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Briarthorn Den",
+				pos = 
+				{
+					hx = 0.12828469276428,
+					hy = 0.77136206626892,
+					hz = 0.6233326792717,
+					x = 22108.27734375,
+					y = -15779.088867188,
+					z = 13.54868888855,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 20,
 			posttasks = 
 			{
 			},
@@ -1973,7 +2042,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 19,
+			order = 21,
 			posttasks = 
 			{
 			},
@@ -2013,7 +2082,7 @@ local tbl =
 				hqid = 275,
 			},
 			lastrun = 0,
-			order = 18,
+			order = 22,
 			posttasks = 
 			{
 			},
@@ -2337,7 +2406,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 20,
+			order = 23,
 			posttasks = 
 			{
 			},
@@ -2361,12 +2430,12 @@ local tbl =
 				name = "[Vista] Ogham Wildnis",
 				pos = 
 				{
-					hx = -0.52520197629929,
-					hy = -0.064221054315567,
-					hz = 0.84855085611343,
-					x = -16693.02734375,
-					y = -27262.521484375,
-					z = -646.76666259766,
+					hx = -0.97308146953583,
+					hy = -0.23046131432056,
+					hz = 0,
+					x = -16562.61328125,
+					y = -27257.2578125,
+					z = -645.41076660156,
 				},
 				radius = 0,
 				type = "tm_vista",
@@ -2379,7 +2448,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 21,
+			order = 24,
 			posttasks = 
 			{
 			},
@@ -2388,6 +2457,18 @@ local tbl =
 			},
 			subtasks = 
 			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
 				
 				{
 					customProperties = 
@@ -2446,7 +2527,7 @@ local tbl =
 				hqid = 277,
 			},
 			lastrun = 0,
-			order = 22,
+			order = 25,
 			posttasks = 
 			{
 			},
@@ -2803,7 +2884,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 23,
+			order = 26,
 			posttasks = 
 			{
 			},
@@ -2845,7 +2926,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 24,
+			order = 27,
 			posttasks = 
 			{
 			},
@@ -2888,7 +2969,7 @@ local tbl =
 				hqid = 268,
 			},
 			lastrun = 0,
-			order = 25,
+			order = 28,
 			posttasks = 
 			{
 			},
@@ -3169,7 +3250,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 26,
+			order = 29,
 			posttasks = 
 			{
 			},
@@ -3208,7 +3289,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 29,
+			order = 30,
 			posttasks = 
 			{
 			},
@@ -3247,7 +3328,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 30,
+			order = 31,
 			posttasks = 
 			{
 			},
@@ -3256,6 +3337,35 @@ local tbl =
 			},
 			subtasks = 
 			{
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 248502,
+								gadget = false,
+								name = "Veteran Uralter Maguuma-Wurm",
+							},
+							
+							{
+								character = true,
+								contentid = 44381,
+								gadget = false,
+								name = "Maguuma-Junges",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
 				
 				{
 					customProperties = 
@@ -3309,40 +3419,14 @@ local tbl =
 						type = "tm_st_killspecific",
 					},
 				},
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = true,
-								contentid = 248502,
-								gadget = false,
-								name = "Veteran Uralter Maguuma-Wurm",
-							},
-							
-							{
-								character = true,
-								contentid = 44381,
-								gadget = false,
-								name = "Maguuma-Junges",
-							},
-						},
-					},
-					taskProperties = 
-					{
-						enabled = false,
-						name = "Fight aggro",
-						type = "tm_st_fightaggro",
-					},
-				},
 			},
 			taskProperties = 
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -3368,7 +3452,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 27,
+			order = 32,
 			posttasks = 
 			{
 			},
@@ -3407,7 +3491,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 28,
+			order = 33,
 			posttasks = 
 			{
 			},
@@ -3446,7 +3530,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 31,
+			order = 34,
 			posttasks = 
 			{
 			},
@@ -3486,7 +3570,7 @@ local tbl =
 				hqid = 269,
 			},
 			lastrun = 0,
-			order = 32,
+			order = 35,
 			posttasks = 
 			{
 			},
@@ -3513,18 +3597,6 @@ local tbl =
 						enabled = true,
 						name = "Check HQ status",
 						type = "tm_st_hqstatus",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Fight",
-						type = "tm_st_fightaggro",
 					},
 				},
 				
@@ -3568,6 +3640,104 @@ local tbl =
 								gadget = true,
 								name = "Krebsfalle",
 							},
+							
+							{
+								character = false,
+								contentid = 22471,
+								gadget = true,
+								name = "Krebsfalle",
+							},
+							
+							{
+								character = false,
+								contentid = 26808,
+								gadget = true,
+								name = "Fischernetz",
+							},
+							
+							{
+								character = false,
+								contentid = 17141,
+								gadget = true,
+								name = "Krebsfalle",
+							},
+							
+							{
+								character = false,
+								contentid = 25979,
+								gadget = true,
+								name = "Fischernetz",
+							},
+							
+							{
+								character = false,
+								contentid = 10331,
+								gadget = true,
+								name = "Krebsfalle",
+							},
+							
+							{
+								character = false,
+								contentid = 26723,
+								gadget = true,
+								name = "Krebsfalle",
+							},
+							
+							{
+								character = false,
+								contentid = 4833,
+								gadget = true,
+								name = "Krebsfalle",
+							},
+							
+							{
+								character = false,
+								contentid = 9142,
+								gadget = true,
+								name = "Fischernetz",
+							},
+							
+							{
+								character = false,
+								contentid = 13397,
+								gadget = true,
+								name = "Krebsfalle",
+							},
+							
+							{
+								character = false,
+								contentid = 1568,
+								gadget = true,
+								name = "Fischernetz",
+							},
+							
+							{
+								character = false,
+								contentid = 12484,
+								gadget = true,
+								name = "Krebsfalle",
+							},
+							
+							{
+								character = false,
+								contentid = 4562,
+								gadget = true,
+								name = "Fischernetz",
+							},
+							
+							{
+								character = false,
+								contentid = 10311,
+								gadget = true,
+								name = "Krebsfalle",
+							},
+							
+							{
+								character = false,
+								contentid = 22988,
+								gadget = true,
+								name = "Fischernetz",
+							},
 						},
 					},
 					taskProperties = 
@@ -3581,46 +3751,34 @@ local tbl =
 				{
 					customProperties = 
 					{
-						positions = 
+						targets = 
 						{
 							
 							{
-								hx = -0.82714575529099,
-								hy = 0.56198745965958,
-								hz = 0,
-								x = -7421.0024414063,
-								y = -7754.353515625,
-								z = 6.2928833961487,
-							},
-							
-							{
-								hx = -0.40673285722733,
-								hy = 0.91354715824127,
-								hz = 0,
-								x = -6939.3764648438,
-								y = -3643.7209472656,
-								z = 26.216680526733,
-							},
-							
-							{
-								hx = 0.13944436609745,
-								hy = -0.99022990465164,
-								hz = 0,
-								x = -9160.2158203125,
-								y = -5459.732421875,
-								z = -27.532098770142,
+								character = true,
+								contentid = 44129,
+								gadget = false,
+								name = "Rasender Wellenreiter",
 							},
 						},
-						randommovement = false,
-						randompos = true,
-						repeatpositions = true,
-						usewaypoints = false,
 					},
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Move ",
-						type = "tm_st_movetomultiple",
+						name = "Kill specific targets",
+						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
 					},
 				},
 			},
@@ -3656,7 +3814,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 33,
+			order = 36,
 			posttasks = 
 			{
 			},
@@ -3695,7 +3853,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 34,
+			order = 37,
 			posttasks = 
 			{
 			},
@@ -3735,7 +3893,7 @@ local tbl =
 				hqid = 270,
 			},
 			lastrun = 0,
-			order = 35,
+			order = 38,
 			posttasks = 
 			{
 			},
@@ -4028,6 +4186,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -4053,7 +4214,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 36,
+			order = 39,
 			posttasks = 
 			{
 			},
@@ -4092,7 +4253,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 37,
+			order = 40,
 			posttasks = 
 			{
 			},
@@ -4131,7 +4292,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 38,
+			order = 41,
 			posttasks = 
 			{
 			},
@@ -4168,9 +4329,10 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 39,
+			order = 42,
 			posttasks = 
 			{
 			},
@@ -4184,6 +4346,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -4209,7 +4374,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 40,
+			order = 43,
 			posttasks = 
 			{
 			},
@@ -4248,7 +4413,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 41,
+			order = 44,
 			posttasks = 
 			{
 			},
@@ -4288,7 +4453,7 @@ local tbl =
 				hqid = 271,
 			},
 			lastrun = 0,
-			order = 42,
+			order = 45,
 			posttasks = 
 			{
 			},
@@ -4462,6 +4627,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -4488,7 +4656,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 43,
+			order = 46,
 			posttasks = 
 			{
 			},
@@ -4512,12 +4680,12 @@ local tbl =
 				name = "[Vista] Ruinen der Ungesehenen",
 				pos = 
 				{
-					hx = -0.48562428355217,
-					hy = 0.45261403918266,
-					hz = 0.74787002801895,
-					x = -6812.357421875,
-					y = 9058.359375,
-					z = -1914.6436767578,
+					hx = 0.10607104003429,
+					hy = 0.47024446725845,
+					hz = 0.87613874673843,
+					x = -6832.5615234375,
+					y = 8994.123046875,
+					z = -1911.5496826172,
 				},
 				radius = 0,
 				type = "tm_vista",
@@ -4528,9 +4696,10 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 44,
+			order = 47,
 			posttasks = 
 			{
 			},
@@ -4544,6 +4713,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 300,
 				maxlevel = 0,
@@ -4569,46 +4741,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 45,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				mapid = 34,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[PoI] Sturmtr\xc3\xbcmmertiefen",
-				pos = 
-				{
-					hx = 0.89185446500778,
-					hy = 0.00092803512234241,
-					hz = 0.45232146978378,
-					x = 14945.9296875,
-					y = -174.41159057617,
-					z = 1639.0803222656,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 46,
+			order = 48,
 			posttasks = 
 			{
 			},
@@ -4647,7 +4780,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 47,
+			order = 49,
 			posttasks = 
 			{
 			},
@@ -4687,7 +4820,7 @@ local tbl =
 				hqid = 266,
 			},
 			lastrun = 0,
-			order = 48,
+			order = 50,
 			posttasks = 
 			{
 			},
@@ -4844,6 +4977,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -4869,7 +5005,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 71,
+			order = 51,
 			posttasks = 
 			{
 			},
@@ -4911,7 +5047,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 49,
+			order = 52,
 			posttasks = 
 			{
 			},
@@ -4925,6 +5061,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -4950,15 +5089,33 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 50,
+			order = 53,
 			posttasks = 
 			{
 			},
 			pretasks = 
 			{
-			},
-			subtasks = 
-			{
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							hx = 0.83534222841263,
+							hy = -0.12413984537125,
+							hz = 0.53553026914597,
+							x = 21704.669921875,
+							y = 9054.4296875,
+							z = -762.24566650391,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Move to location",
+						type = "tm_st_moveto",
+					},
+				},
 				
 				{
 					customProperties = 
@@ -4983,18 +5140,9 @@ local tbl =
 						type = "tm_st_talk",
 					},
 				},
-				
-				{
-					customProperties = 
-					{
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Fight aggro",
-						type = "tm_st_fightaggro",
-					},
-				},
+			},
+			subtasks = 
+			{
 				
 				{
 					customProperties = 
@@ -5013,7 +5161,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Kill",
+						name = "Fight",
 						type = "tm_st_killspecific",
 					},
 				},
@@ -5051,7 +5199,7 @@ local tbl =
 				hqid = 264,
 			},
 			lastrun = 0,
-			order = 51,
+			order = 54,
 			posttasks = 
 			{
 			},
@@ -5179,6 +5327,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -5204,7 +5355,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 52,
+			order = 55,
 			posttasks = 
 			{
 			},
@@ -5218,6 +5369,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -5243,7 +5397,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 53,
+			order = 56,
 			posttasks = 
 			{
 			},
@@ -5257,6 +5411,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -5283,7 +5440,7 @@ local tbl =
 				hqid = 265,
 			},
 			lastrun = 0,
-			order = 54,
+			order = 57,
 			posttasks = 
 			{
 			},
@@ -5408,7 +5565,6 @@ local tbl =
 						repeatpositions = true,
 						usewaypoints = false,
 					},
-					order = 3,
 					taskProperties = 
 					{
 						enabled = true,
@@ -5449,49 +5605,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 72,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 34,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[PoI] - Soggorsort",
-				pos = 
-				{
-					hx = 0.77164924144745,
-					hy = 0.56358790397644,
-					hz = 0.29483237862587,
-					x = 17942.578125,
-					y = 23677.986328125,
-					z = 3701.7165527344,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 55,
+			order = 58,
 			posttasks = 
 			{
 			},
@@ -5530,7 +5644,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 56,
+			order = 59,
 			posttasks = 
 			{
 			},
@@ -5544,6 +5658,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -5569,7 +5686,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 57,
+			order = 60,
 			posttasks = 
 			{
 			},
@@ -5608,7 +5725,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 58,
+			order = 61,
 			posttasks = 
 			{
 			},
@@ -5647,7 +5764,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 59,
+			order = 62,
 			posttasks = 
 			{
 			},
@@ -5656,6 +5773,18 @@ local tbl =
 			},
 			subtasks = 
 			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
 				
 				{
 					customProperties = 
@@ -5724,7 +5853,7 @@ local tbl =
 				hqid = 267,
 			},
 			lastrun = 0,
-			order = 60,
+			order = 63,
 			posttasks = 
 			{
 			},
@@ -5841,7 +5970,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 61,
+			order = 64,
 			posttasks = 
 			{
 			},
@@ -5855,6 +5984,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -5881,7 +6013,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 62,
+			order = 65,
 			posttasks = 
 			{
 			},
@@ -5923,7 +6055,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 63,
+			order = 66,
 			posttasks = 
 			{
 			},
@@ -5937,6 +6069,51 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 34,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Exploration",
+				pos = 
+				{
+					hx = -0.65021657943726,
+					hy = 0.75974893569946,
+					hz = 0,
+					x = 9467.5986328125,
+					y = 43803.8125,
+					z = -12.003670692444,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 67,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -5962,7 +6139,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 64,
+			order = 68,
 			posttasks = 
 			{
 			},
@@ -5976,6 +6153,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -6002,7 +6182,7 @@ local tbl =
 				hqid = 272,
 			},
 			lastrun = 0,
-			order = 65,
+			order = 69,
 			posttasks = 
 			{
 			},
@@ -6127,6 +6307,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -6152,7 +6335,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 66,
+			order = 70,
 			posttasks = 
 			{
 			},
@@ -6191,7 +6374,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 67,
+			order = 71,
 			posttasks = 
 			{
 			},
@@ -6230,7 +6413,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 68,
+			order = 72,
 			posttasks = 
 			{
 			},
@@ -6323,6 +6506,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
@@ -6348,7 +6534,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 69,
+			order = 73,
 			posttasks = 
 			{
 			},
@@ -6388,7 +6574,7 @@ local tbl =
 				hqid = 273,
 			},
 			lastrun = 0,
-			order = 70,
+			order = 74,
 			posttasks = 
 			{
 			},
@@ -6632,6 +6818,9 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
 				mapid = 34,
 				maxduration = 0,
 				maxlevel = 0,
