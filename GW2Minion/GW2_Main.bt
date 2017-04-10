@@ -265,6 +265,72 @@ local tbl =
 												monitorcode = "",
 											},
 										},
+										
+										{
+											class = "Throttle",
+											nodes = 
+											{
+												
+												{
+													class = "Action",
+													nodes = 
+													{
+													},
+													settings = 
+													{
+													},
+													variables = 
+													{
+														finishcode = "",
+														info = "Clear Memory",
+														monitorcode = "",
+														runcode = "if ( Settings.GW2Minion.reduceram ) then\n\t\tClearMemory()\nend",
+														startcode = "",
+													},
+												},
+											},
+											settings = 
+											{
+												duration = 300000,
+											},
+											variables = 
+											{
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.settings.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.settings.duration/1000))..' s') end",
+											},
+										},
+										
+										{
+											class = "Throttle",
+											nodes = 
+											{
+												
+												{
+													class = "Action",
+													nodes = 
+													{
+													},
+													settings = 
+													{
+													},
+													variables = 
+													{
+														finishcode = "",
+														info = "Disable Rendering after 10 seconds ingame to save CPU",
+														monitorcode = "",
+														runcode = "if (Settings.GW2Minion.disablerendering) then\n\t\tRenderManager:ToggleRendering(true)\nend",
+														startcode = "",
+													},
+												},
+											},
+											settings = 
+											{
+												duration = 10000,
+											},
+											variables = 
+											{
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.settings.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.settings.duration/1000))..' s') end",
+											},
+										},
 									},
 									settings = 
 									{
@@ -316,7 +382,7 @@ local tbl =
 		filename = "GW2_Main.bt",
 		finishcode = "",
 		info = "GW2Minion core code, gets called from gw2.lua every Tick.\nUpdates Managers and sets Global Variables. Handles GameStates.\nUpdates Managers and global variables. Handles Main Window and GameStates.",
-		menucode = "-- Character Select\nif ( Settings.GW2Minion.autostartbot == nil) then Settings.GW2Minion.autostartbot = false end\nif ( Settings.GW2Minion.guestserver == nil) then Settings.GW2Minion.guestserver = 0 end\n\n\n-- Ingame\nif(Settings.GW2Minion.deposititems == nil) then Settings.GW2Minion.deposititems = true end\nif(Settings.GW2Minion.combatmovement == nil) then Settings.GW2Minion.combatmovement = true end\nif(Settings.GW2Minion.evadehpthreshold == nil) then Settings.GW2Minion.evadehpthreshold = 80 end\nif(Settings.GW2Minion.ignoreyellowmobs == nil) then Settings.GW2Minion.ignoreyellowmobs = false end\nif(Settings.GW2Minion.revivedownedplayers == nil) then Settings.GW2Minion.revivedownedplayers = true end\nif(Settings.GW2Minion.revivedeadplayers == nil) then Settings.GW2Minion.revivedeadplayers = false end\nif(Settings.GW2Minion.revivenpcs == nil) then Settings.GW2Minion.revivenpcs = false end\nif(Settings.GW2Minion.revivepartymember == nil) then Settings.GW2Minion.revivepartymember = true end\nif(Settings.GW2Minion.skipcutscene == nil) then Settings.GW2Minion.skipcutscene = false end\n\nif (GUI:TreeNode(GetString(\"settings\"))) then\n\n\t\t-- Character Select\n\t\tif (GUI:TreeNode(GetString(\"CharacterSelect\"))) then\n\t\t\t\tSettings.GW2Minion.autostartbot = GUI:Checkbox(GetString(\"autoStartBot\"),Settings.GW2Minion.autostartbot)\n\t\t\t\tGUI:PushItemWidth(150)\n\t\t\t\tSettings.GW2Minion.guestserver = GUI:Combo(GetString(\"guestserver\"),Settings.GW2Minion.guestserver,ml_global_information.GuestServerList)\n\t\t\t\tGUI:PopItemWidth()\n\t\t\t\tGUI:TreePop()\n\t\tend\n\n\t\t-- Ingame\n\t\tif (GUI:TreeNode(GetString(\"Ingame\"))) then\n\t\t\t\t-- TODO: Settings.GW2Minion.skipcutscene = GUI:Checkbox(GetString(\"skipcutscene\"),Settings.GW2Minion.skipcutscene)  inactive since there is no function to skip ..yet...\n\t\t\t\tSettings.GW2Minion.deposititems = GUI:Checkbox(GetString(\"Deposit Items\"),Settings.GW2Minion.deposititems)\n\t\t\t\tSettings.GW2Minion.combatmovement = GUI:Checkbox(GetString(\"Combat Movement\"),Settings.GW2Minion.combatmovement)\n\t\t\t\tSettings.GW2Minion.ignoreyellowmobs = GUI:Checkbox(GetString(\"Ignore Yellow Enemies\"),Settings.GW2Minion.ignoreyellowmobs)\n\t\t\t\tSettings.GW2Minion.skipcutscene = GUI:Checkbox(GetString(\"Skip Cutscene\"),Settings.GW2Minion.skipcutscene)\n\t\t\t\tGUI:PushItemWidth(100)\t\n\t\t\t\tSettings.GW2Minion.evadehpthreshold = GUI:SliderInt(GetString(\"Evade HP\"),Settings.GW2Minion.evadehpthreshold,0,100) if (GUI:IsItemHovered()) then GUI:SetTooltip( GetString(\"The Bot will evade attacks if your HP Percent is below this value.\" )) end\n\t\t\t\tGUI:PopItemWidth()\n\t\t\t\tGUI:SetNextTreeNodeOpened(true,GUI.SetCond_Once)\n\t\t\t\tGUI:SetNextTreeNodeOpened(false,GUI.SetCond_Appearing)\n\t\t\t\tif(GUI:TreeNode(GetStringML(\"Revive\"))) then\n\t\t\t\t\t\tSettings.GW2Minion.revivedeadplayers = GUI:Checkbox(GetString(\"Revive Dead Players\"),Settings.GW2Minion.revivedeadplayers)\n\t\t\t\t\t\tSettings.GW2Minion.revivedownedplayers = GUI:Checkbox(GetString(\"Revive Downed Players\"),Settings.GW2Minion.revivedownedplayers)\n\t\t\t\t\t\tSettings.GW2Minion.revivenpcs = GUI:Checkbox(GetString(\"Revive NPCs\"),Settings.GW2Minion.revivenpcs)\n\t\t\t\t\t\tSettings.GW2Minion.revivepartymember = GUI:Checkbox(GetString(\"Revive Party Members\"),Settings.GW2Minion.revivepartymember)\n\t\t\t\t\t\tGUI:TreePop()\n\t\t\t\tend\t\t\t\t\n\t\t\t\tGUI:TreePop()\n\t\tend\n\n\t\tGUI:TreePop()\nend\n-- Render Skill Proile UI Stuff\nif ( SkillManager ) then\n\t\tSkillManager:RenderCodeEditor()\nend",
+		menucode = "-- Character Select\nif ( Settings.GW2Minion.autostartbot == nil) then Settings.GW2Minion.autostartbot = false end\nif ( Settings.GW2Minion.guestserver == nil) then Settings.GW2Minion.guestserver = 0 end\n\n\n-- Ingame\nif(Settings.GW2Minion.deposititems == nil) then Settings.GW2Minion.deposititems = true end\nif(Settings.GW2Minion.combatmovement == nil) then Settings.GW2Minion.combatmovement = true end\nif(Settings.GW2Minion.evadehpthreshold == nil) then Settings.GW2Minion.evadehpthreshold = 80 end\nif(Settings.GW2Minion.ignoreyellowmobs == nil) then Settings.GW2Minion.ignoreyellowmobs = false end\nif(Settings.GW2Minion.revivedownedplayers == nil) then Settings.GW2Minion.revivedownedplayers = true end\nif(Settings.GW2Minion.revivedeadplayers == nil) then Settings.GW2Minion.revivedeadplayers = false end\nif(Settings.GW2Minion.revivenpcs == nil) then Settings.GW2Minion.revivenpcs = false end\nif(Settings.GW2Minion.revivepartymember == nil) then Settings.GW2Minion.revivepartymember = true end\nif(Settings.GW2Minion.skipcutscene == nil) then Settings.GW2Minion.skipcutscene = false end\nif(Settings.GW2Minion.reduceram == nil) then Settings.GW2Minion.reduceram = false end\nif(Settings.GW2Minion.disablerendering == nil) then Settings.GW2Minion.disablerendering = false end\n\nif (GUI:TreeNode(GetString(\"settings\"))) then\n\n\t\t-- Character Select\n\t\tif (GUI:TreeNode(GetString(\"CharacterSelect\"))) then\n\t\t\t\tSettings.GW2Minion.autostartbot = GUI:Checkbox(GetString(\"autoStartBot\"),Settings.GW2Minion.autostartbot)\n\t\t\t\tGUI:PushItemWidth(150)\n\t\t\t\tSettings.GW2Minion.guestserver = GUI:Combo(GetString(\"guestserver\"),Settings.GW2Minion.guestserver,ml_global_information.GuestServerList)\n\t\t\t\tGUI:PopItemWidth()\n\t\t\t\tGUI:TreePop()\n\t\tend\n\n\t\t-- Ingame\n\t\tif (GUI:TreeNode(GetString(\"Ingame\"))) then\n\t\t\t\t-- TODO: Settings.GW2Minion.skipcutscene = GUI:Checkbox(GetString(\"skipcutscene\"),Settings.GW2Minion.skipcutscene)  inactive since there is no function to skip ..yet...\n\t\t\t\tSettings.GW2Minion.deposititems = GUI:Checkbox(GetString(\"Deposit Items\"),Settings.GW2Minion.deposititems)\n\t\t\t\tSettings.GW2Minion.combatmovement = GUI:Checkbox(GetString(\"Combat Movement\"),Settings.GW2Minion.combatmovement)\n\t\t\t\tSettings.GW2Minion.ignoreyellowmobs = GUI:Checkbox(GetString(\"Ignore Yellow Enemies\"),Settings.GW2Minion.ignoreyellowmobs)\n\t\t\t\tSettings.GW2Minion.skipcutscene = GUI:Checkbox(GetString(\"Skip Cutscene\"),Settings.GW2Minion.skipcutscene)\n\t\t\t\tlocal changed\n\t\t\t\tSettings.GW2Minion.reduceram,changed = GUI:Checkbox(GetString(\"Reduce RAM Usage\"),Settings.GW2Minion.reduceram) if (changed) then ClearMemory() end if (GUI:IsItemHovered()) then GUI:SetTooltip( GetString(\"If enabled, GW2 uses less RAM at the cost of higher CPU and loading times (HDD).\" )) end\t\t\t\t\n\t\t\t\tSettings.GW2Minion.disablerendering,changed = GUI:Checkbox(GetString(\"Disable Rendering\"),Settings.GW2Minion.disablerendering) if (changed) then RenderManager:ToggleRendering(Settings.GW2Minion.disablerendering) end if (GUI:IsItemHovered()) then GUI:SetTooltip( GetString(\"Turns off Rendering. Can cause crashes when you have the Main-Map open in the wrong moment;)\" )) end\n\t\t\t\tGUI:PushItemWidth(100)\t\n\t\t\t\tSettings.GW2Minion.evadehpthreshold = GUI:SliderInt(GetString(\"Evade HP\"),Settings.GW2Minion.evadehpthreshold,0,100) if (GUI:IsItemHovered()) then GUI:SetTooltip( GetString(\"The Bot will evade attacks if your HP Percent is below this value.\" )) end\n\t\t\t\tGUI:PopItemWidth()\n\t\t\t\tGUI:SetNextTreeNodeOpened(true,GUI.SetCond_Once)\n\t\t\t\tGUI:SetNextTreeNodeOpened(false,GUI.SetCond_Appearing)\n\t\t\t\tif(GUI:TreeNode(GetStringML(\"Revive\"))) then\n\t\t\t\t\t\tSettings.GW2Minion.revivedeadplayers = GUI:Checkbox(GetString(\"Revive Dead Players\"),Settings.GW2Minion.revivedeadplayers)\n\t\t\t\t\t\tSettings.GW2Minion.revivedownedplayers = GUI:Checkbox(GetString(\"Revive Downed Players\"),Settings.GW2Minion.revivedownedplayers)\n\t\t\t\t\t\tSettings.GW2Minion.revivenpcs = GUI:Checkbox(GetString(\"Revive NPCs\"),Settings.GW2Minion.revivenpcs)\n\t\t\t\t\t\tSettings.GW2Minion.revivepartymember = GUI:Checkbox(GetString(\"Revive Party Members\"),Settings.GW2Minion.revivepartymember)\n\t\t\t\t\t\tGUI:TreePop()\n\t\t\t\tend\t\t\t\t\n\t\t\t\tGUI:TreePop()\n\t\tend\n\n\t\tGUI:TreePop()\nend\n-- Render Skill Proile UI Stuff\nif ( SkillManager ) then\n\t\tSkillManager:RenderCodeEditor()\nend",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Game State: '..tostring(ml_global_information.GameState))",
 		runcode = "",
 		startcode = "",

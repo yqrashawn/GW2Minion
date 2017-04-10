@@ -777,10 +777,17 @@ function dev.DrawCall(event, ticks )
 					if ( GUI:TreeNode("Utility Functions & Other Infos") ) then
 						GUI:PushItemWidth(250)
 						GUI:BulletText("Game Time") GUI:SameLine(200) GUI:InputText("##devuf2",tostring(GetGameTime()))
+						local p = GetMouseInWorldPos()
+						if ( table.valid(p)) then
+							GUI:BulletText("MousePosition") GUI:SameLine(200)  GUI:InputFloat3( "##devuf5", p.x, p.y, p.z, 2, GUI.InputTextFlags_ReadOnly)
+						else
+							GUI:BulletText("MousePosition") GUI:SameLine(200)  GUI:InputFloat3( "##devuf5", p.x, p.y, p.z, 2, GUI.InputTextFlags_ReadOnly)
+						end
+						
 						GUI:BulletText("Pulse Duration") GUI:SameLine(200) GUI:InputText("##devuf2",tostring(GetBotPerformance()))
 						GUI:BulletText("Local MapID") GUI:SameLine(200) GUI:InputText("##devff1",tostring(Player:GetLocalMapID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						GUI:BulletText("Player Endurance") GUI:SameLine(200) GUI:InputText("##devuf3",tostring(Player.endurance))
-						GUI:BulletText("Player Karma") GUI:SameLine(200) GUI:InputText("##devuf3",tostring(Player.karma))
+						GUI:BulletText("Player Karma") GUI:SameLine(200) GUI:InputText("##devuf4",tostring(Player.karma))
 						
 						
 						if (GUI:Button("AoE Loot",150,15) ) then Player:AoELoot() end
@@ -799,6 +806,10 @@ function dev.DrawCall(event, ticks )
 					
 				end
 			GUI:PopStyleVar(2)
+			
+			
+			
+			
 		end
 		GUI:End()
 	end
@@ -1071,4 +1082,92 @@ function dev.DrawMapMarkerDetails(id,b)
 	end
 end
 
+
+--[[
+map_rect = 
+		{
+			x = 
+			{
+				-21504,
+				-21504,
+			},
+			y = 
+			{
+				21504,
+				21504,
+			},
+		},
+		--]]
+		
+
+dev.nodes = {}
+dev.nodetable = {}
+dev.conneted = {}
+function dev.t()
+	local start = GetTickCount()
+	for x=-100000, 100000, 2500 do
+		for y=-100000, 100000, 2500 do
+			for z=-100000,100000, 1000 do
+				local mp = NavigationManager:GetClosestPointOnMesh({["x"]=x,["y"]=y,["z"]=z,})
+				if ( mp ) then
+					local unique = true
+					for q,w in pairs(dev.nodes) do
+						if ( math.distance3d(mp,w) < 750 ) then
+							unique = false
+							break
+						end
+					end
+					
+					if ( unique ) then
+						mp.x = math.round(mp.x/200,0)*200
+						mp.y = math.round(mp.y/200,0)*200
+						--mp.z = math.round(mp.z/200,0)*200
+						if ( not dev.nodes[tostring(x).."_"..tostring(y).."_"..tostring(z)]) then
+						
+							dev.nodes[tostring(x).."_"..tostring(y).."_"..tostring(z)] = { x=mp.x, y=mp.y, z=mp.z, r =0.5,g =0.9,b =0.5,a =0.9, }
+							table.insert(dev.nodetable, { x=mp.x, y=mp.y, z=mp.z, r =0.5,g =0.9,b =0.5,a =0.9, })
+							table.insert(dev.nodetable, { x=mp.x, y=mp.y, z=(mp.z-50), r =0.5,g =0.9,b =0.5,a =0.9, })
+						end
+					end
+				end
+			end
+		end
+	end
+	local e = GetTickCount()
+	d(tostring(table.size(dev.nodes)).. " in "..tostring(e-start))
+	RenderManager:AddObject("nodenet", dev.nodetable,1 )
+	
+	start = GetTickCount()
+	local pp = Player.pos
+	for i,j in pairs ( dev.nodes ) do
+		-- paths to each neighbour ..		
+		for q,w in pairs ( dev.nodes ) do
+			local dist = math.distance3d(j,w)
+			if (dist < 3550 and dist > 500) then -- a²+b² = c² is enough ?				
+				local path = NavigationManager:GetPath( j.x, j.y, j.z,w.x,w.y,w.z)
+				if ( table.valid(path) and path[table.size(path)-1].type ~= "PARTIAL_PATH") then
+			
+					-- has a valid path to the 'neighbour'
+					if (not j.neighbour) then j.neighbour = {} end
+					j.neighbour[q] = path
+					
+					table.insert(dev.conneted, { x=j.x, y=j.y, z=j.z-50, r =0.5,g =0.5,b =0.9,a =0.9, })
+					table.insert(dev.conneted, { x=w.x, y=w.y, z=w.z, r =0.5,g =0.5,b =0.9,a =0.9, })
+									
+				end
+			end	
+		end
+	end
+	-- remove unreachable nodes
+	for i,j in pairs ( dev.nodes ) do
+		if ( not j.neighbour ) then
+			table.remove(dev.nodes,j)
+			d("REmoved node "..tostring(i))
+		end
+	end
+	e = GetTickCount()
+	
+	RenderManager:AddObject("nodegrid", dev.conneted,1 )
+	d(tostring(table.size(dev.conneted)).. " Connected in "..tostring(e-start))
+end
 
