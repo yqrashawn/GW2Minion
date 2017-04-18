@@ -278,8 +278,8 @@ function gw2_radar.drawCompass()
 				if (table.valid(rPos) and rPos.x and rPos.y) then
 					GUI:AddRectFilled(rPos.x - markerSize, rPos.y - markerSize, rPos.x + markerSize, rPos.y + markerSize, entity.variables.color.value)
 					GUI:AddRect(rPos.x - markerSize, rPos.y - markerSize, rPos.x + markerSize, rPos.y + markerSize, 4294967295)
-					-- hover overlay. TODO: still needs refinement.
-					--[[if (mousePos.x > rPos.x - markerSize and mousePos.x < rPos.x + markerSize and mousePos.y > rPos.y - markerSize and mousePos.y < rPos.y + markerSize and not hovering) then
+					-- hover overlay. TODO: still needs refinement. Covers-up/collides with ingame tooltips.
+					if (mousePos.x > rPos.x - markerSize and mousePos.x < rPos.x + markerSize and mousePos.y > rPos.y - markerSize and mousePos.y < rPos.y + markerSize and not hovering) then
 						hovering = true
 						GUI:PushStyleVar(GUI.StyleVar_WindowPadding, 0,0)
 						GUI:PushStyleVar(GUI.StyleVar_WindowRounding, 0)
@@ -303,7 +303,7 @@ function gw2_radar.drawCompass()
 						
 						GUI:PopStyleVar(2)
 						GUI:PopStyleColor(1)
-					end]]
+					end
 				end
 			end
 		end
@@ -365,9 +365,17 @@ end
 function gw2_radar.updateCompassData() -- TODO: redo this mess. Order stuff, and dont cashe non used stuff.
 	gw2_radar.compassData = HackManager:GetCompassData()
 	
+	
+	-- adjust size for 'interface size' setting.
+	if (GetGameRegion() == 2) then -- for now just adjust for cn default size. TODO: fix with actual interface size when data available.
+		gw2_radar.compassData.width = gw2_radar.compassData.width + 38
+		gw2_radar.compassData.height = gw2_radar.compassData.height + 38
+	end
+	
+	
 	local screenSizeX, screenSizeY = GUI:GetScreenSize()
 	gw2_radar.compassData.sSize = {x = screenSizeX, y = screenSizeY,}
-	gw2_radar.compassData.pos = {x = screenSizeX - gw2_radar.compassData.width, y = gw2_radar.compassData.topposition == 0 and screenSizeY - gw2_radar.compassData.height - 37 or 0,} -- 37 is the bottom offset.
+	gw2_radar.compassData.pos = {x = gw2_radar.compassData.sSize.x - gw2_radar.compassData.width, y = gw2_radar.compassData.topposition == 0 and gw2_radar.compassData.sSize.y - gw2_radar.compassData.height - 37 or 0,} -- 37 is the bottom offset.
 	gw2_radar.compassData.cPos = {x = gw2_radar.compassData.pos.x + (gw2_radar.compassData.width / 2), y = gw2_radar.compassData.pos.y + (gw2_radar.compassData.height / 2)}
 	gw2_radar.compassData.pPos = Player.pos
 	
@@ -375,13 +383,14 @@ function gw2_radar.updateCompassData() -- TODO: redo this mess. Order stuff, and
 	gw2_radar.compassData.cosTheta = math.cos(currDirection)
 	gw2_radar.compassData.sinTheta = math.sin(currDirection)
 	
-	gw2_radar.compassData.scale = (gw2_radar.compassData.maxwidth / 8500) / (gw2_radar.compassData.zoomlevel+1) -- WIKI: "Zoomed in, the horizontal and vertical range of the compass is 4250 units and the diagonal range is 6000 units." - edit: seems to be from middle out.
+	local scaleAdjust = GetGameRegion() == 1 and 8500 or 6000 -- TODO: find the actual scaling it does with diff ui sizes for future.
+	gw2_radar.compassData.scale = (gw2_radar.compassData.maxwidth / scaleAdjust) / (gw2_radar.compassData.zoomlevel+1) -- WIKI: "Zoomed in, the horizontal and vertical range of the compass is 4250 units and the diagonal range is 6000 units." - edit: seems to be from middle out.
 end
 
 function gw2_radar.worldToCompass(ePos)
 	local rPos = {
-		x = (ePos.x - gw2_radar.compassData.pPos.x) * gw2_radar.compassData.scale,
-		y = (ePos.y - gw2_radar.compassData.pPos.y) * gw2_radar.compassData.scale,
+		x = ((ePos.x - gw2_radar.compassData.pPos.x) * gw2_radar.compassData.scale), --PvPManager:IsInMatch() and (ePos.x - ((map_rect.upperRight.x - map_rect.lowerLeft.x)/2)) or 
+		y = ((ePos.y - gw2_radar.compassData.pPos.y) * gw2_radar.compassData.scale), --PvPManager:IsInMatch() and (ePos.y - map_rect.y) or 
 	}
 	rPos = {
 		x = (gw2_radar.compassData.cosTheta * rPos.x - gw2_radar.compassData.sinTheta * rPos.y),
