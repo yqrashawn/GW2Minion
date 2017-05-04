@@ -629,8 +629,7 @@ end
 
 --salvage fun here.
 function gw2_salvage_manager.salvage()
-	if ((gw2_salvage_manager.active and math.random(0,1) == 0 and ml_global_information.Player_Inventory_SlotsFree >= 2) and
-	(ml_global_information.Player_InCombat == false and ml_global_information.Player_Alive and gw2_salvage_manager.checkCustomChecks())) then
+	if ((gw2_salvage_manager.active and math.random(0,1) == 0 and ml_global_information.Player_Inventory_SlotsFree >= 2) and ml_global_information.Player_Alive and gw2_salvage_manager.checkCustomChecks())) then
 		local salvageItems = gw2_salvage_manager.createItemList()
 		if (ValidTable(salvageItems)) then
 			for _,item in pairs(salvageItems) do

@@ -182,7 +182,7 @@ local tbl =
 														finishcode = "",
 														info = "Salvage every ~1500 ms",
 														monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-														runcode = "if ( ml_global_information.Player_InCombat == false ) then\n\t\tgw2_salvage_manager.salvage()\nend\n\nself:fail()",
+														runcode = "gw2_salvage_manager.salvage()\n\nself:fail()",
 														startcode = "",
 													},
 												},
