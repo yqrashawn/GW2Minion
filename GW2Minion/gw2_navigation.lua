@@ -164,6 +164,16 @@ function ml_navigation.Navigate(event, ticks )
 									ml_navigation.StopMovement()
 									return
 								end
+							else
+								-- Check if we have reached the portal end destination.
+								local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
+								if ( nodedist < ml_navigation.NavPointReachedDistances["Walk"]) then
+									d("[Navigation] - We reached the OMC END Node. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
+									if ( omc.precise == nil or omc.precise == true ) then
+										ml_navigation:SetEnsurePosition(nextnode)
+									end
+									ml_navigation.pathindex = ml_navigation.pathindex + 1
+								end
 							end
 																				
 						
@@ -367,8 +377,7 @@ function ml_navigation:ResetOMCHandler()
 	self.omc_starttimer = 0
 	self.omc_startheight = nil	
 end
-	
-	
+
 -- for replacing the original c++ navi with our lua version
 function NavigationManager:MoveTo(x, y, z, crap, navigationmode, randomnodes, smoothturns)
 	-- Return a valid value so that the moveto task does not fail while we move back to the mesh.
