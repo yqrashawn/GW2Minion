@@ -13,18 +13,19 @@ end
 function gw2_common_functions.BufflistHasBuffs(bufflist, buffIDs)
 
 	if(table.valid(bufflist) == false) then return false end
+	
 	if(table.valid(buffIDs)) then
 		local buffstr = ""
 		for buffID,_ in pairs(buffIDs) do
-			buffstr = buffID .. "," .. buffstr
+			buffstr = string.add(buffstr, tostring(buffID), ",")
 		end
 		buffIDs = buffstr
 	end
 	
-	for _orids in StringSplit(tostring(buffIDs),",") do
+	for _orids in string.split(tostring(buffIDs),",") do
 		local found = false
 		if(string.valid(_orids)) then
-			for _andid in StringSplit(_orids,"+") do
+			for _andid in string.split(_orids,"+") do
 					found = false
 				for i, buff in pairs(bufflist) do
 
@@ -580,7 +581,7 @@ function gw2_common_functions.PlayerInInstance()
 	local partyInfo = ml_global_information.Player_Party
 	if (table.valid(partyInfo)) then
 		for _,member in pairs(partyInfo) do
-			if (member.id == ml_global_information.Player_ID and member.isUnknown1 ~= nil and member.isUnknown1 ~= 0) then
+			if (member.id == ml_global_information.Player_ID and member.isunknown1 ~= nil and member.isunknown1 ~= 0) then
 				return true
 			end
 		end
@@ -712,6 +713,54 @@ function gw2_common_functions.filterRelativePostion(entityList,dir)
 	return returnList
 end
 
+-- Check if there is a valid path between startpos and targetpos.
+function gw2_common_functions.ValidPath(startpos,targetpos,allowpartialpath)
+	if(table.valid(startpos) and table.valid(targetpos)) then
+		local path = NavigationManager:GetPath(startpos.x,startpos.y,startpos.z,targetpos.x,targetpos.y,targetpos.z,false)
+		if(table.valid(path)) then
+			
+			if(allowpartialpath) then
+				return true
+			end
+			
+			-- No partial path allowed, so check if the last entry is at the target position
+			local n_path = table.size(path)
+			if(n_path > 1) then
+				if(path[n_path-1].type == "PARTIAL_PATH") then
+					return false
+				end
+			end
+			
+			return true
+		end
+
+	end
+	
+	return false
+end
+
+-- Try to get a random position on the mesh around targetpos and check if it is reachable by the bot
+function gw2_common_functions.GetRandomPointOnCircle(targetpos, min, max, maxtries)
+	maxtries = type(maxtries) == "number" and maxtries or 1
+	
+	local trycount = 0
+	while trycount < maxtries do
+		trycount = trycount + 1
+		
+		local pos = NavigationManager:GetRandomPointOnCircle(targetpos.x, targetpos.y, targetpos.z, 200, 1000)
+		if(table.valid(pos)) then
+			local heightdiff = ml_global_information.Player_Position.z - pos.z
+			if((heightdiff < 50 and heightdiff > -50) and gw2_common_functions.ValidPath(ml_global_information.Player_Position,pos)) then
+				return pos
+			end
+		end
+	end
+	
+	return nil
+end
+
+-- Get a random position on the map.
+-- First try the levelmap, then try to get a position from markers, then any random position on the mesh around the player
 gw2_common_functions.randompointsused = {}
 function gw2_common_functions.GetRandomPoint()
 	if(not gw2_common_functions.randompointsused[ml_global_information.CurrentMapID]) then
@@ -719,21 +768,27 @@ function gw2_common_functions.GetRandomPoint()
 		gw2_common_functions.randompointsused[ml_global_information.CurrentMapID] = {}
 	end
 	
+	local randompointsused = gw2_common_functions.randompointsused[ml_global_information.CurrentMapID]
+	
+	-- Check if the position has been recently used. If it has, ignore it.
 	local function _validpos(pos)
 		if (not table.valid(pos)) then return false end
-	
-		for i,existing in pairs(gw2_common_functions.randompointsused[ml_global_information.CurrentMapID]) do
-			if(TimeSince(existing.time) > 1800000) then gw2_common_functions.randompointsused[ml_global_information.CurrentMapID][i] = nil end
+		
+		for i,existing in ipairs(randompointsused) do
+			if(TimeSince(existing.time) > 1800000) then table.remove(randompointsused, i) end
 			
+			-- The position is too close to a recently used randompos, ignore it.
 			if(math.distance3d(existing.pos,pos) < 500) then
 				return false
 			end
 		end
+		
 		return true
 	end
 	
+	-- Make sure that the position is reachable by the bot
 	local function _validpath(pos)
-		return table.valid(NavigationManager:GetPath(ml_global_information.Player_Position.x,ml_global_information.Player_Position.y,ml_global_information.Player_Position.z,pos.x,pos.y,pos.z))
+		return gw2_common_functions.ValidPath(ml_global_information.Player_Position,pos)
 	end
 	
 	local randompos = nil
@@ -742,8 +797,12 @@ function gw2_common_functions.GetRandomPoint()
 	if (table.valid(gw2_datamanager.levelmap)) then
 		d("Trying to find a random point from the level map")
 		local pos = gw2_datamanager.GetRandomPositionInLevelRange(ml_global_information.Player_Level)
-		if(_validpos(pos) and _validpath(pos)) then
-			randompos = pos
+		if(_validpos(pos)) then
+			if(_validpath(pos)) then
+				randompos = pos
+			else
+				table.insert(randompointsused, {pos = pos, time = ml_global_information.Now, status = "no valid path", type = "levelmap"})
+			end
 		end
 	end
 	
@@ -755,28 +814,37 @@ function gw2_common_functions.GetRandomPoint()
 			local i, MList_n = 0, table.size(MList)
 			while not randompos and i < (MList_n > 10 and 10 or MList_n) do
 				local marker = table.randomvalue(MList)
-				if(table.valid(marker) and _validpos(marker.pos) and marker.pathdistance < 9999999) then
-					randompos = marker.pos
+				if(table.valid(marker) and _validpos(marker.pos)) then
+					if(marker.pathdistance < 9999999) then
+						randompos = marker.pos
+					else
+						table.insert(randompointsused, {pos = marker.pos, time = ml_global_information.Now, status = "no valid path", type = "marker"})
+					end
 				end
 				i = i + 1
 			end
 		end
 	end
 	
+	-- 3rd try
 	if (randompos == nil) then
 		d("Trying to find a random point anywhere on the mesh")
 		local i = 0
 		while not randompos and i < 10 do
 			local pos = NavigationManager:GetRandomPoint(5000) -- 5000 beeing mindistance to player
-			if (table.valid(pos) and _validpos(pos) and _validpath(pos)) then
-				randompos = pos
+			if (_validpos(pos)) then
+				if(_validpath(pos)) then
+					randompos = pos
+				else
+					table.insert(randompointsused, {pos = pos, time = ml_global_information.Now, status = "no valid path", type = "randompoint"})
+				end
 			end
 			i = i + 1
 		end
 	end
 	
 	if (table.valid(randompos)) then
-		table.insert(gw2_common_functions.randompointsused[ml_global_information.CurrentMapID], {pos = randompos, time = ml_global_information.Now})
+		table.insert(randompointsused, {pos = randompos, time = ml_global_information.Now, status = "used", type = "valid"})
 		return randompos
 	end
 	
