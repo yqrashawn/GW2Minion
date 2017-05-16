@@ -609,13 +609,10 @@ function gw2_sell_manager.sellAtVendor(vendor)
 					d("Selling: "..item.name)
 					item:Sell()
 					local uniqueItemID = item.itemid .. item.slot
-					if ( not gw2_sell_manager.VendorSellHistroy[uniqueItemID] or gw2_sell_manager.VendorSellHistroy[uniqueItemID] < 5 ) then
-
-						if ( not gw2_sell_manager.VendorSellHistroy[uniqueItemID] ) then
-							gw2_sell_manager.VendorSellHistroy[uniqueItemID] = 1
-						else
-							gw2_sell_manager.VendorSellHistroy[uniqueItemID] = gw2_sell_manager.VendorSellHistroy[uniqueItemID] + 1
-						end
+					if (not gw2_sell_manager.VendorSellHistroy[uniqueItemID]) then
+						gw2_sell_manager.VendorSellHistroy[uniqueItemID] = 1
+					elseif (gw2_sell_manager.VendorSellHistroy[uniqueItemID] < 5) then
+						gw2_sell_manager.VendorSellHistroy[uniqueItemID] = gw2_sell_manager.VendorSellHistroy[uniqueItemID] + 1
 					else
 						d("Could not sell "..item.name..", blacklisting it")
 						gw2_blacklistmanager.AddBlacklistEntry(GetString("Sell items"), item.itemID, item.name, true)
@@ -631,6 +628,7 @@ function gw2_sell_manager.sellAtVendor(vendor)
 		
 		-- No more items to sell
 		d("Selling finished...")
+		gw2_sell_manager.VendorSellHistroy = {}
 		gw2_sell_manager.VendorSellHistroy.interactcount = 0
 		ml_global_information.Wait(math.random(520,750))
 	end
