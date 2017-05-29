@@ -85,12 +85,13 @@ function gw2minion.Init()
 		ml_mesh_mgr.SetDefaultMesh(647,"Dreamers Terrace (Home)")
 		ml_mesh_mgr.SetDefaultMesh(646,"The House of Caithe")
 		ml_mesh_mgr.SetDefaultMesh(648,"The Omphalos Chamber")
-
+				
 		ml_mesh_mgr.SetDefaultMesh(350,"Heart of the Mists")
+		ml_mesh_mgr.SetDefaultMesh(873,"Southsun Cove")
 		ml_mesh_mgr.SetDefaultMesh(968,"EdgeOfTheMist")
 		ml_mesh_mgr.SetDefaultMesh(988,"Dry Top")
 		ml_mesh_mgr.SetDefaultMesh(1015,"SilverWastes")
-		
+				
 		--HoT
 		ml_mesh_mgr.SetDefaultMesh(1052,"Verdant Brink")
 		ml_mesh_mgr.SetDefaultMesh(1043,"Auric Basin")
