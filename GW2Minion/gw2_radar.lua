@@ -27,15 +27,19 @@ gw2_radar = {}
 
 -- gw2_radar variables.
 gw2_radar.mainWindow		= {name = "Radar", open = false, visible = false}
-gw2_radar.ticks				= 0
-gw2_radar.tickDelay			= 0
+gw2_radar.parseTicks		= 0
+gw2_radar.parseTickDelay	= 30 -- About 30 times a second.
+gw2_radar.computeTicks		= 0
+gw2_radar.computeTickDelay	= 15 -- About 60 times a second.
 gw2_radar.compassData		= {}
 gw2_radar.compassActive		= false
 gw2_radar.radar3DActive		= false
 gw2_radar.compassShowPath	= false
 gw2_radar.radar3DShowPath	= false
 gw2_radar.radarTypes		= {}
+gw2_radar.filterList		= {}
 gw2_radar.trackEntities		= {}
+gw2_radar.compassPath		= {}
 gw2_radar.icons				= {
 	--[profession] = pathToIcon_profession
 }
@@ -57,6 +61,7 @@ function gw2_radar.Init()
 	gw2_radar.compassPathColor = Settings.gw2_radar.compassPathColor
 	
 	gw2_radar.loadSettings()
+	gw2_radar.createFilterList()
 	
 end
 
@@ -121,15 +126,28 @@ function gw2_radar.Draw(_, ticks )
 			
 			GUI:End()
 		end
-		-- if () then -- waiting on map open.closed check.
+		-- if () then -- TODO: waiting on map open.closed check.
 			
-			-- Update compass data.
-			gw2_radar.updateCompassData()
-			-- Parse entities.
-			gw2_radar.parseEntities()
+			-- Delay parsing entities.
+			if (ticks - gw2_radar.parseTicks >= gw2_radar.parseTickDelay) then
+				gw2_radar.parseTicks = ticks
+				-- Parse entities.
+				gw2_radar.parseEntities()
+				-- Parse path.
+				gw2_radar.parseCompassPath()
+			end
+			-- Delay updating compass and position data.
+			if (ticks - gw2_radar.computeTicks >= gw2_radar.computeTickDelay) then
+				gw2_radar.computeTicks = ticks
+				-- Update compass data.
+				gw2_radar.updateCompassData()
+				-- update screen position data.
+				gw2_radar.updateScreenPositionData()
+			end
+			
 			-- 3D radar.
 			gw2_radar.draw3DRadar()
-			-- 2D radar.
+			-- Compass.
 			gw2_radar.drawCompass()
 			
 		-- end
@@ -255,9 +273,8 @@ function gw2_radar.draw3DRadar()
 end
 
 function gw2_radar.drawCompass()
-	if (gw2_radar.compassActive) then
+	if (gw2_radar.compassActive or gw2_radar.compassShowPath) then
 		-- 2D Radar Compass overlay.
-		local imGUI
 		GUI:SetNextWindowPos(gw2_radar.compassData.pos.x, gw2_radar.compassData.pos.y, GUI.SetCond_Always)
 		GUI:SetNextWindowSize(gw2_radar.compassData.width, gw2_radar.compassData.height) --gw2_radar.compassData.mouseover == 0 and gw2_radar.compassData.width or gw2_radar.compassData.width - 25
 		GUI:PushStyleVar(GUI.StyleVar_WindowRounding, 0)
@@ -267,77 +284,87 @@ function gw2_radar.drawCompass()
 		GUI:PopStyleVar(2)
 		GUI:PopStyleColor(1)
 		
-		local markerSize = 5 - gw2_radar.compassData.zoomlevel
-		local mousePos = {}
-		mousePos.x,mousePos.y = GUI:GetMousePos()
-		local hovering = false
-		
-		for _,entity in pairs(gw2_radar.trackEntities) do
-			if (table.valid(entity) and entity.variables and entity.variables.compass.value) then
-				local rPos = entity.rPos
-				if (table.valid(rPos) and rPos.x and rPos.y) then
-					GUI:AddRectFilled(rPos.x - markerSize, rPos.y - markerSize, rPos.x + markerSize, rPos.y + markerSize, entity.variables.color.value)
-					GUI:AddRect(rPos.x - markerSize, rPos.y - markerSize, rPos.x + markerSize, rPos.y + markerSize, 4294967295)
-					-- hover overlay. TODO: still needs refinement. Covers-up/collides with ingame tooltips.
-					if (mousePos.x > rPos.x - markerSize and mousePos.x < rPos.x + markerSize and mousePos.y > rPos.y - markerSize and mousePos.y < rPos.y + markerSize and not hovering) then
-						hovering = true
-						GUI:PushStyleVar(GUI.StyleVar_WindowPadding, 0,0)
-						GUI:PushStyleVar(GUI.StyleVar_WindowRounding, 0)
-						GUI:PushStyleColor(GUI.Col_WindowBg,0,0,0,0)
-						
-						local text = entity.name .. "\n" .. round(entity.distance) .. GetString(" away")
-						local textSize = {}
-						textSize.x,textSize.y = GUI:CalcTextSize(text)
-						
-						local mousePos = {}
-						mousePos.x,mousePos.y = GUI:GetMousePos()
-						GUI:SetNextWindowPos(mousePos.x-(textSize.x+15), mousePos.y-70, GUI.SetCond_Always)
-						
-						GUI:SetNextWindowSize(textSize.x+15, 40,GUI.SetCond_Always)
-						GUI:BeginTooltip() -- creating own tooltip to force no rounding.
-							GUI:Dummy(1,1)
-							GUI:Dummy(0,0)
-							GUI:SameLine()
-							GUI:TextWrapped(text)
-						GUI:EndTooltip()
-						
-						GUI:PopStyleVar(2)
-						GUI:PopStyleColor(1)
+		if (gw2_radar.compassActive) then
+			local markerSize = 5 - gw2_radar.compassData.zoomlevel
+			local mousePos = {}
+			mousePos.x,mousePos.y = GUI:GetMousePos()
+			local hovering = false
+			
+			for _,entity in pairs(gw2_radar.trackEntities) do
+				if (table.valid(entity) and entity.variables and entity.variables.compass.value) then
+					local rPos = entity.rPos
+					if (table.valid(rPos) and rPos.x and rPos.y) then
+						GUI:AddRectFilled(rPos.x - markerSize, rPos.y - markerSize, rPos.x + markerSize, rPos.y + markerSize, entity.variables.color.value)
+						GUI:AddRect(rPos.x - markerSize, rPos.y - markerSize, rPos.x + markerSize, rPos.y + markerSize, 4294967295)
+						-- hover overlay. TODO: still needs refinement. Covers-up/collides with ingame tooltips.
+						if (mousePos.x > rPos.x - markerSize and mousePos.x < rPos.x + markerSize and mousePos.y > rPos.y - markerSize and mousePos.y < rPos.y + markerSize and not hovering) then
+							hovering = true
+							GUI:PushStyleVar(GUI.StyleVar_WindowPadding, 0,0)
+							GUI:PushStyleVar(GUI.StyleVar_WindowRounding, 0)
+							GUI:PushStyleColor(GUI.Col_WindowBg,0,0,0,0)
+							
+							local text = entity.name .. "\n" .. round(entity.distance) .. GetString(" away")
+							local textSize = {}
+							textSize.x,textSize.y = GUI:CalcTextSize(text)
+							
+							local mousePos = {}
+							mousePos.x,mousePos.y = GUI:GetMousePos()
+							GUI:SetNextWindowPos(mousePos.x-(textSize.x+15), mousePos.y-70, GUI.SetCond_Always)
+							
+							GUI:SetNextWindowSize(textSize.x+15, 40,GUI.SetCond_Always)
+							GUI:BeginTooltip() -- creating own tooltip to force no rounding.
+								GUI:Dummy(1,1)
+								GUI:Dummy(0,0)
+								GUI:SameLine()
+								GUI:TextWrapped(text)
+							GUI:EndTooltip()
+							
+							GUI:PopStyleVar(2)
+							GUI:PopStyleColor(1)
+						end
 					end
 				end
 			end
+			
+			-- Draw Player/Self
+			local cPos = gw2_radar.compassData.cPos
+			GUI:AddRectFilled(cPos.x - markerSize, cPos.y - markerSize, cPos.x + markerSize, cPos.y + markerSize,  4278255360)
+			GUI:AddRect(cPos.x - markerSize, cPos.y - markerSize, cPos.x + markerSize, cPos.y + markerSize,  4278190335)
 		end
 		
-		-- Draw compass path.
-		gw2_radar.drawCompassPath()
-		
-		-- Draw Player/Self
-		local cPos = gw2_radar.compassData.cPos
-		GUI:AddRectFilled(cPos.x - markerSize, cPos.y - markerSize, cPos.x + markerSize, cPos.y + markerSize,  4278255360)
-		GUI:AddRect(cPos.x - markerSize, cPos.y - markerSize, cPos.x + markerSize, cPos.y + markerSize,  4278190335)
+		if (gw2_radar.compassShowPath) then
+			-- Compass path.
+			gw2_radar.drawCompassPath()
+		end
 		
 		GUI:End()
 	end
 end
 
 function gw2_radar.drawCompassPath()
+	if (gw2_radar.compassShowPath and table.valid(gw2_radar.compassPath)) then
+		for _,pathLine in pairs(gw2_radar.compassPath) do
+			GUI:AddLine(pathLine.x1, pathLine.y1, pathLine.x2, pathLine.y2, pathLine.color, 3.0)
+		end
+	end
+end
+
+function gw2_radar.parseCompassPath()
+	gw2_radar.compassPath = {}
 	if (gw2_radar.compassShowPath) then
 		local path = ml_navigation.path
 		local lastPos = gw2_radar.compassData.cPos
 		if (table.valid(path) and table.valid(lastPos)) then
 			for id,pathPointPos in ipairs(path) do
-			-- local id,pathPointPos = ml_navigation.pathindex,path[ml_navigation.pathindex]
-			-- while (table.valid(pathPointPos)) do
 				if (id >= ml_navigation.pathindex and table.valid(pathPointPos)) then
 					local currPos = gw2_radar.worldToCompass(pathPointPos)
 					if (table.valid(currPos) and currPos.x and currPos.y) then
-						GUI:AddLine(lastPos.x, lastPos.y, currPos.x, currPos.y, gw2_radar.compassPathColor, 3.0)
+						table.insert(gw2_radar.compassPath,{x1 = lastPos.x, y1 = lastPos.y, x2 = currPos.x, y2 = currPos.y, color = gw2_radar.compassPathColor,})
 					elseif (table.valid(currPos) and currPos.ex and currPos.ey) then
-						GUI:AddLine(lastPos.x, lastPos.y, currPos.ex, currPos.ey, gw2_radar.compassPathColor, 3.0)
+						table.insert(gw2_radar.compassPath,{x1 = lastPos.x, y1 = lastPos.y, x2 = currPos.ex, y2 = currPos.ey, color = gw2_radar.compassPathColor,})
 						break
 					end
 					lastPos = {x = currPos.x, y = currPos.y,}
-					-- id,pathPointPos = id+1,path[id+1]
 				end
 			end
 		end
@@ -418,36 +445,36 @@ function gw2_radar.worldToCompass(ePos)
 	return rPos
 end
 
+-- Create Filter list.
+function gw2_radar.createFilterList()
+	d("hello?")
+	for _,radarType in pairs(gw2_radar.radarTypes) do
+		if (table.valid(radarType) and (radarType.variables.compass.value or radarType.variables.radar3D.value)) then
+			gw2_radar.filterList[radarType.list] = gw2_radar.filterList[radarType.list] or {}
+			table.insert(gw2_radar.filterList[radarType.list],radarType)
+		end
+	end
+end
+
 -- Parse entities. (hehe tities...)
 function gw2_radar.parseEntities()
-	local newTrackEntities = {}
 	if (gw2_radar.compassActive or gw2_radar.radar3DActive) then
-		local data = {}
-		for _,radarType in pairs(gw2_radar.radarTypes) do
-			if (table.valid(radarType) and (radarType.variables.compass.value or radarType.variables.radar3D.value)) then
-				data[radarType.list] = data[radarType.list] or {}
-				table.insert(data[radarType.list],radarType)
-			end
-		end
-		
-		for listName,radarTypes in pairs(data) do
+		local newTrackEntities = {}
+		for listName,radarTypes in pairs(gw2_radar.filterList) do
 			local list = _G[listName]("")
 			for _,entity in pairs(list) do
 				if (table.valid(entity)) then
 					for _,radarType in pairs(radarTypes) do
 						if (table.valid(radarType)) then
-							if (gw2_radar.matchFilterEntity(radarType.filter,entity)) then
+							if (gw2_radar.matchFilterEntity(entity,radarType.filter)) then
 								local currEntity = gw2_radar.trackEntities[entity.id]
 								newTrackEntities[entity.id] = {
 									id			= currEntity and currEntity.id or entity.id,
 									name		= currEntity and string.valid(currEntity.name) and currEntity.name or entity.name,
 									variables	= radarType.variables,
-									filter		= radarType.filter,
 									pos			= entity.pos,
-									rPos		= radarType.variables.compass.value and gw2_radar.worldToCompass(entity.pos) or nil,
-									sPos		= radarType.variables.radar3D.value and RenderManager:WorldToScreen(entity.pos) or nil,
 									health		= entity.health,
-									distance	= entity.distance
+									distance	= entity.distance,
 								}
 								break
 							end
@@ -456,14 +483,16 @@ function gw2_radar.parseEntities()
 				end
 			end
 		end
+		gw2_radar.trackEntities = newTrackEntities
+	else
+		gw2_radar.trackEntities = {}
 	end
-	gw2_radar.trackEntities = newTrackEntities
 end
 
--- Match entity.
-function gw2_radar.matchFilterEntity(filters,entity)
-	if (table.valid(filters) and table.valid(entity)) then
-		for _,filter in pairs(filters) do
+-- Match entity to filter.
+function gw2_radar.matchFilterEntity(entity, filterData)
+	if (table.valid(entity) and table.valid(filterData)) then
+		for _,filter in pairs(filterData) do
 			if (table.valid(filter)) then
 				local entityMatchFilter = true
 				for attribute,wantedValue in pairs(filter) do
@@ -480,6 +509,17 @@ function gw2_radar.matchFilterEntity(filters,entity)
 	end
 	return false
 end
+
+-- Update entity screen and/or minimap positions.
+function gw2_radar.updateScreenPositionData()
+	for _,entity in pairs(gw2_radar.trackEntities) do
+		if (table.valid(entity)) then
+			entity.rPos = gw2_radar.compassActive and entity.variables.compass.value and gw2_radar.worldToCompass(entity.pos) or nil
+			entity.sPos = gw2_radar.radar3DActive and entity.variables.radar3D.value and RenderManager:WorldToScreen(entity.pos) or nil
+		end
+	end
+end
+
 
 
 RegisterEventHandler("Module.Initalize",gw2_radar.Init)
