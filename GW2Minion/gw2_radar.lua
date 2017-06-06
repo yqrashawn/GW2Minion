@@ -447,7 +447,6 @@ end
 
 -- Create Filter list.
 function gw2_radar.createFilterList()
-	d("hello?")
 	for _,radarType in pairs(gw2_radar.radarTypes) do
 		if (table.valid(radarType) and (radarType.variables.compass.value or radarType.variables.radar3D.value)) then
 			gw2_radar.filterList[radarType.list] = gw2_radar.filterList[radarType.list] or {}
