@@ -24,7 +24,7 @@ local tbl =
 						info = "Check viewing status",
 						menucode = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(table.valid(MapMarkerList(\"contentid=31309,agentid=\"..ml_global_information.Player_ID))) then\n\t\td(\"[Vista]: Player marked as viewing vista. Waiting.\")\n\t\tcontext.vista_marker = nil\n\t\tcontext.vista_pos = nil\n\t\tcontext.vista_playerviewing = true\n\t\tml_global_information.Wait(1500)\n\t\tself:running()\nelseif(context.vista_playerviewing) then\n\t\td(\"[Vista]: Waiting for the marker to update.\")\n\t\tcontext.vista_playerviewing = false\n\t\tml_global_information.Wait(2500)\n\t\tself:running()\nelse\n\t\tself:fail()\nend",
+						runcode = "if(table.valid(MapMarkerList(\"contentid=31309,agentid=\"..ml_global_information.Player_ID))) then\n\t\td(\"[tm_Vista]: Player marked as viewing vista. Waiting.\")\n\t\tcontext.vista_marker = nil\n\t\tcontext.vista_pos = nil\n\t\tcontext.vista_playerviewing = true\n\t\tml_global_information.Wait(1500)\n\t\tself:running()\nelseif(context.vista_playerviewing) then\n\t\td(\"[tm_Vista]: Waiting for the marker to update.\")\n\t\tcontext.vista_playerviewing = false\n\t\tml_global_information.Wait(2500)\n\t\tself:running()\nelse\n\t\tself:fail()\nend",
 						startcode = "",
 						subtreeuicode = "",
 					},
@@ -163,12 +163,48 @@ local tbl =
 					},
 					variables = 
 					{
+						finishcode = "",
+						info = "Check combat status",
+						monitorcode = "",
+						runcode = "if(ml_global_information.Player_InCombat) then\n\t\tcontext.combatwait = context.combatwait or ml_global_information.Now\n\n\t\tif(TimeSince(context.combatwait) < 120000) then\n\t\t\t\td(\"[tm_Vista]: In combat. Waiting.\")\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\nelse\n\t\tcontext.combatwait = nil\nend\n\nself:fail()",
+						startcode = "",
+					},
+				},
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "Check spell casting",
+						monitorcode = "",
+						runcode = "if(Player:GetCurrentlyCastedSpell() ~= ml_global_information.MAX_SKILLBAR_SLOTS) then\n\t\td(\"[tm_Vista]: A skill is being cast. Waiting.\")\n\t\tself:running()\nelse\n\t\tself:fail()\nend",
+						startcode = "",
+					},
+				},
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
 						filename = "",
 						finishcode = "",
 						info = "Interact with vista",
 						menucode = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(context.vista_pos) then\n\t\tlocal GList = GadgetList(\"interactable,maxdistance=500\")\n\t\tlocal vista = nil\n\n\t\t-- List all nearest gadgets in case something is really close to the vista\n\t\tif(table.valid(GList)) then\n\t\t\t\tlocal i,gadget = next(GList)\n\t\t\t\twhile not vista and i and gadget do\n\t\t\t\t\t\tif(math.distance3d(gadget.pos,context.vista_pos) < 5) then\n\t\t\t\t\t\t\t\tvista = gadget\n\t\t\t\t\t\tend\n\t\t\t\t\t\ti,gadget = next(GList,i)\n\t\t\t\tend\n\t\tend\n\n\t\tif(vista) then\n\t\t\t\tif(Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS) then\n\t\t\t\t\t\td(\"[Vista]: Interacting with vista\")\n\t\t\t\t\t\tPlayer:StopMovement()\n\t\t\t\t\t\tPlayer:SetTarget(vista.id)\n\t\t\t\t\t\tPlayer:SetFacing(vista.pos.x,vista.pos,y,vista.pos.z)\n\t\t\t\t\t\tPlayer:Interact(vista.id)\n\t\t\t\t\t\tml_global_information.Wait(1500)\n\t\t\t\t\t\tself:running()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\tend\nend\n\nself:fail()",
+						runcode = "if(context.vista_pos) then\n\t\tlocal GList = GadgetList(\"interactable,maxdistance=500\")\n\t\tlocal vista = nil\n\n\t\t-- List all nearest gadgets in case something is really close to the vista\n\t\tif(table.valid(GList)) then\n\t\t\t\tlocal i,gadget = next(GList)\n\t\t\t\twhile not vista and i and gadget do\n\t\t\t\t\t\tif(math.distance3d(gadget.pos,context.vista_pos) < 5) then\n\t\t\t\t\t\t\t\tvista = gadget\n\t\t\t\t\t\tend\n\t\t\t\t\t\ti,gadget = next(GList,i)\n\t\t\t\tend\n\t\tend\n\n\t\tif(vista) then\n\t\t\t\td(\"[tm_Vista]: Interacting with vista\")\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tPlayer:SetTarget(vista.id)\n\t\t\t\tPlayer:SetFacing(vista.pos.x,vista.pos,y,vista.pos.z)\n\t\t\t\tPlayer:Interact(vista.id)\n\t\t\t\tml_global_information.Wait(1500)\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\telse\n\t\t\t\td(\"[tm_Vista]: No vista found. Ending task.\")\n\t\tend\nend\n\nself:fail()",
 						startcode = "",
 						subtreeuicode = "",
 					},
