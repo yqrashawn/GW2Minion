@@ -1,40 +1,74 @@
 -- Heartquest controller
 gw2_tm_heartquest = {}
 gw2_tm_heartquest.lastcheck = 0
+gw2_tm_heartquest.laststatus = true
+gw2_tm_heartquest.lastid = 0
+
 function gw2_tm_heartquest:CanTaskRun_TM(taskProperties,customProperties)
+	if(not customProperties or type(customProperties.hqid) ~= "number" or customProperties.hqid == 0) then
+		d("[gw2_tm_heartquest]: No valid hqid set. Ending task.")
+		return false
+	end
+	
+	-- Reset status if this is a new task
+	if(gw2_tm_heartquest.lastid ~= customProperties.hqid) then
+		gw2_tm_heartquest.lastid = customProperties.hqid
+		gw2_tm_heartquest.laststatus = true
+	end
+	
 	if(TimeSince(gw2_tm_heartquest.lastcheck) > 1000) then
 		gw2_tm_heartquest.lastcheck = ml_global_information.Now
 		if(table.valid(customProperties)) then
+
 			local MList = MapMarkerList("issubregion")
 			if(table.valid(MList)) then
 				for _,marker in pairs(MList) do
 					if(marker.subregionid == customProperties.hqid and marker.contentid == GW2.MAPMARKER.HeartQuestComplete) then
-						return false
+						gw2_tm_heartquest.laststatus = false
+						return gw2_tm_heartquest.laststatus
 					end
 				end
 			end
 		end
+		
+		gw2_tm_heartquest.laststatus = true
 	end
-	return true
+	
+	return gw2_tm_heartquest.laststatus
 end
 
 -- Heropoint controller
 gw2_tm_heropoint = {}
 gw2_tm_heropoint.lastcheck = 0
+gw2_tm_heartquest.laststatus = true
+gw2_tm_heartquest.lastpos = nil
+
 function gw2_tm_heropoint:CanTaskRun_TM(taskProperties,customProperties)
+	
+	-- Reset status if this is a new task
+	if(gw2_tm_heartquest.lastpos == nil or math.distance3d(taskProperties.pos,gw2_tm_heartquest.lastpos) > 5) then
+		gw2_tm_heartquest.lastpos = table.shallowcopy(taskProperties.pos)
+		gw2_tm_heartquest.laststatus = true
+	end
+	
 	if(TimeSince(gw2_tm_heropoint.lastcheck) > 1000) then
 		gw2_tm_heropoint.lastcheck = ml_global_information.Now
-		if(Distance3DT(taskProperties.pos,ml_global_information.Player_Position) < 2000) then
+
+		if(math.distance3d(taskProperties.pos,ml_global_information.Player_Position) < 2000) then
 			local MList = MapMarkerList("nearest,onmesh,contentid="..GW2.MAPMARKER.SkillpointComplete)
 			if(table.valid(MList)) then
 				local _,hp = next(MList)
 				if(not table.valid(hp) or hp.distance < 500) then
-					return false
+					gw2_tm_heartquest.laststatus = false
+					return gw2_tm_heartquest.laststatus
 				end
 			end
 		end
+
+		gw2_tm_heartquest.laststatus = true
 	end
-	return true
+	
+	return gw2_tm_heartquest.laststatus
 end
 
 -- Test controller
@@ -67,10 +101,11 @@ function gw2_taskmanager.Init()
 		ml_task_mgr.AddTaskType("tm_moveto", "blank.st", nil, {allowpretasks = true; displayname = GetString("Move to location")})
 		ml_task_mgr.AddTaskType("tm_generic", "blank.st", nil, {allowpretasks = true; allowposttasks = true; allowsubtasks = true; displayname = GetString("Generic task")})
 		ml_task_mgr.AddTaskType("tm_wait", "Wait.st", nil, {displayname = GetString("Wait")})
-		ml_task_mgr.AddTaskType("tm_vista", "tm_Vista.st", nil, {allowpretasks = true; allowposttasks = true; displayname = GetString("View vista")})
+		ml_task_mgr.AddTaskType("tm_vista", "tm_Vista.st", nil, {allowpretasks = true; allowposttasks = true; displayname = GetString("View vista"); requireduration = true; minduration = 180})
 		ml_task_mgr.AddTaskType("tm_heropoint", "blank.st", gw2_tm_heropoint, {allowpretasks = true; allowposttasks = true; allowsubtasks = true; displayname = GetString("Heropoint")})
 		ml_task_mgr.AddTaskType("tm_hq", "tm_HeartQuest.st", gw2_tm_heartquest, {allowpretasks = true; allowposttasks = true; allowsubtasks = true; displayname = GetString("Heartquest")})
-
+		ml_task_mgr.AddTaskType("tm_usewaypoint", "tm_Usewaypoint.st", nil, {displayname = GetString("Use waypoint")})
+		
 		ml_task_mgr.AddSubTaskType("tm_st_movetomultiple", "tm_MoveToMultiple.st", nil, {displayname = GetString("Move to multiple locations")})
 		ml_task_mgr.AddSubTaskType("tm_st_moveto", "tm_MoveTo.st", nil, {displayname = GetString("Move to location")})
 		ml_task_mgr.AddSubTaskType("tm_st_interact", "tm_Interact.st", nil, {displayname = GetString("Interact")})
@@ -80,10 +115,11 @@ function gw2_taskmanager.Init()
 		ml_task_mgr.AddSubTaskType("tm_st_talk", "tm_Talk.st", nil, {displayname = GetString("Talk")})
 		ml_task_mgr.AddSubTaskType("tm_st_changemesh", "tm_ChangeMesh.st", nil, {displayname = GetString("Change mesh")})
 		ml_task_mgr.AddSubTaskType("tm_st_useitem", "tm_UseItem.st", nil, {displayname = GetString("Use inventory item")})
-		ml_task_mgr.AddSubTaskType("tm_st_deliver", "tm_Deliver.st", nil, {displayname = GetString("Deliver item")})	
+		-- not ready ml_task_mgr.AddSubTaskType("tm_st_deliver", "tm_Deliver.st", nil, {displayname = GetString("Deliver item")})	
 		ml_task_mgr.AddSubTaskType("tm_st_useskill", "tm_UseSkill.st", nil, {displayname = GetString("Use skill")})	
 		ml_task_mgr.AddSubTaskType("tm_st_wait", "Wait.st", nil, {displayname = GetString("Wait")})	
-		
+		ml_task_mgr.AddSubTaskType("tm_st_emote", "tm_Emote.st", nil, {displayname = GetString("Emote")})	
+		ml_task_mgr.AddSubTaskType("tm_st_usewaypoint", "tm_Usewaypoint.st", nil, {displayname = GetString("Use waypoint")})
 		-- For testing				
 		--ml_task_mgr.AddTaskType("tm_subtask_test", "blank.st", gw2_tm_test, {allowpretasks = true; allowposttasks = true; allowsubtasks = true; displayname = GetString("Subtask Test")})
 		--ml_task_mgr.AddSubTaskType("tm_st_test", "blank.st", nil, {displayname = GetString("Do nothing")})	
