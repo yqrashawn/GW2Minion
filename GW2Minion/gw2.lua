@@ -91,6 +91,9 @@ function gw2minion.Init()
 		ml_mesh_mgr.SetDefaultMesh(968,"EdgeOfTheMist")
 		ml_mesh_mgr.SetDefaultMesh(988,"Dry Top")
 		ml_mesh_mgr.SetDefaultMesh(1015,"SilverWastes")
+		
+		ml_mesh_mgr.SetDefaultMesh(1195,"Draconis Mons")		
+				
 				
 		--HoT
 		ml_mesh_mgr.SetDefaultMesh(1052,"Verdant Brink")
@@ -114,7 +117,9 @@ function gw2minion.Init()
 		ml_mesh_mgr.SetDefaultMesh(1011,"sPvP Battle of Champions")
 		ml_mesh_mgr.SetDefaultMesh(1163,"sPvP Revenge of the Capricorn")		
 		ml_mesh_mgr.SetDefaultMesh(1171,"sPvp Coloseum")
-
+		
+		
+		
 		--Instances
 		ml_mesh_mgr.SetDefaultMesh(896,"North Noland Hatchery") -- Diessa Plateau
 		ml_mesh_mgr.SetDefaultMesh(866,"Mad Kings Labyrinth")
@@ -307,7 +312,7 @@ function JSONTEST()
 	else
 		d("NO chars")
 	end	
-	local json = json.encode (j)
+	local json = json.encode(j)
 	
 	FileSave(GetLuaModsPath() .. "\\export.lua", json)
 end

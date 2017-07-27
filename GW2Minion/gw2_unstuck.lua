@@ -134,10 +134,11 @@ end
 
 function gw2_unstuck.HandleOffMesh()
 	local offmeshtime = TimeSince(gw2_unstuck.lasttimeonmesh)
-	d("[Unstuck]: Player not on mesh! ("..tostring(math.round(offmeshtime / 1000)).."s)")
-
+	local ppos = Player.pos	
+	d("[Unstuck]: Player not on mesh at (X: "..tostring(math.round(ppos.x,1)).." Y: "..tostring(math.round(ppos.y,1)).." Z: "..tostring(math.round(ppos.z,1)).." ID: "..tostring( ml_global_information.CurrentMapID).." - ("..tostring(math.round(offmeshtime / 1000)).."s)")
+	
 	if(offmeshtime > 2000) then
-		local p = NavigationManager:GetClosestPointOnMesh(Player.pos)
+		local p = NavigationManager:GetClosestPointOnMesh(ppos)
 		if(table.valid(p) and p.distance > 0 and p.distance < 500) then
 			d("[Unstuck]: Moving blindly to nearby mesh.")
 			if(not gw2_unstuck.HandleStuck_MovedDistanceCheck()) then
