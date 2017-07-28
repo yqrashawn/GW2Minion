@@ -106,7 +106,7 @@ function gw2minion.Init()
 		ml_mesh_mgr.SetDefaultMesh(1178,"BitterfrostFrontier")
 		ml_mesh_mgr.SetDefaultMesh(1185,"Lake Doric")
 		ml_mesh_mgr.SetDefaultMesh(1195,"Draconis Mons")
-		ml_mesh_mgr.SetDefaultMesh(1203,"Sirens Call")
+		ml_mesh_mgr.SetDefaultMesh(1203,"Sirens Landing")
 		
 		--sPVP
 		ml_mesh_mgr.SetDefaultMesh(549,"sPvP Battle of Kyhlo")
