@@ -89,22 +89,24 @@ function gw2minion.Init()
 		ml_mesh_mgr.SetDefaultMesh(350,"Heart of the Mists")
 		ml_mesh_mgr.SetDefaultMesh(873,"Southsun Cove")
 		ml_mesh_mgr.SetDefaultMesh(968,"EdgeOfTheMist")
+		
+		--LS2
 		ml_mesh_mgr.SetDefaultMesh(988,"Dry Top")
 		ml_mesh_mgr.SetDefaultMesh(1015,"SilverWastes")
 		
-		ml_mesh_mgr.SetDefaultMesh(1195,"Draconis Mons")		
-				
-				
 		--HoT
 		ml_mesh_mgr.SetDefaultMesh(1052,"Verdant Brink")
 		ml_mesh_mgr.SetDefaultMesh(1043,"Auric Basin")
 		ml_mesh_mgr.SetDefaultMesh(1041,"DragonStand")
 		ml_mesh_mgr.SetDefaultMesh(1045,"TangledDepths")
 		
+		--LS3
 		ml_mesh_mgr.SetDefaultMesh(1165,"Bloodstone Fen")
 		ml_mesh_mgr.SetDefaultMesh(1175,"Ember Bay")
 		ml_mesh_mgr.SetDefaultMesh(1178,"BitterfrostFrontier")
 		ml_mesh_mgr.SetDefaultMesh(1185,"Lake Doric")
+		ml_mesh_mgr.SetDefaultMesh(1195,"Draconis Mons")
+		ml_mesh_mgr.SetDefaultMesh(1203,"Sirens Landing")
 		
 		--sPVP
 		ml_mesh_mgr.SetDefaultMesh(549,"sPvP Battle of Kyhlo")
