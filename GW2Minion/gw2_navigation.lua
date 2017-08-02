@@ -139,9 +139,22 @@ function ml_navigation.Navigate(event, ticks )
 							Player:Interact()
 							ml_navigation.lastupdate = ml_navigation.lastupdate + 1000
 							ml_navigation.pathindex = ml_navigation.pathindex + 1
-						
+							
 						elseif ( omc.type == 5 ) then
 						-- OMC Portal
+
+							-- Check if we have reached the portal end destination.
+							if(ml_navigation.omc_starttimer ~= 0 and ticks - ml_navigation.omc_starttimer > 200) then
+								local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
+								if ( nodedist < 3*ml_navigation.NavPointReachedDistances["Walk"]) then
+									d("[Navigation] - We reached the OMC END Node. ("..tostring(math.round(nodedist,2)).." < "..tostring(math.round(3*ml_navigation.NavPointReachedDistances["Walk"],2))..")")
+									if ( omc.precise == nil or omc.precise == true ) then
+										ml_navigation:SetEnsurePosition(nextnode)
+									end
+									ml_navigation.pathindex = ml_navigation.pathindex + 1
+								end
+							end
+							
 							-- we should be facing already the correct direction, just walk straight for a few sec
 							if ( Player:CanMove() and ml_navigation.omc_starttimer <= 1500 ) then
 								ml_navigation.omc_starttimer = ticks
@@ -164,19 +177,7 @@ function ml_navigation.Navigate(event, ticks )
 									ml_navigation.StopMovement()
 									return
 								end
-							else
-								-- Check if we have reached the portal end destination.
-								local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
-								if ( nodedist < ml_navigation.NavPointReachedDistances["Walk"]) then
-									d("[Navigation] - We reached the OMC END Node. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
-									if ( omc.precise == nil or omc.precise == true ) then
-										ml_navigation:SetEnsurePosition(nextnode)
-									end
-									ml_navigation.pathindex = ml_navigation.pathindex + 1
-								end
 							end
-																				
-						
 						elseif ( omc.type == 6 ) then
 						-- OMC Lift
 							ml_navigation:NavigateToNode(ppos,nextnode,1500)						

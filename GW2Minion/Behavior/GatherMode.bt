@@ -173,20 +173,6 @@ local tbl =
 							},
 							variables = 
 							{
-								filename = "AttackTargets.st",
-							},
-						},
-						
-						{
-							class = "SubTree",
-							nodes = 
-							{
-							},
-							settings = 
-							{
-							},
-							variables = 
-							{
 								filename = "MoveToRandom.st",
 							},
 						},

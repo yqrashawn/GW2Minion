@@ -747,8 +747,9 @@ function gw2_common_functions.GetRandomPointOnCircle(targetpos, min, max, maxtri
 	while trycount < maxtries do
 		trycount = trycount + 1
 		
-		local pos = NavigationManager:GetRandomPointOnCircle(targetpos.x, targetpos.y, targetpos.z, 200, 1000)
+		local pos = NavigationManager:GetRandomPointOnCircle(targetpos.x, targetpos.y, targetpos.z, min, max)
 		if(table.valid(pos)) then
+			-- Try to get a pos about the same height as the player
 			local heightdiff = ml_global_information.Player_Position.z - pos.z
 			if((heightdiff < 50 and heightdiff > -50) and gw2_common_functions.ValidPath(ml_global_information.Player_Position,pos)) then
 				return pos

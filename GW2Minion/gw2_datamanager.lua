@@ -5,11 +5,13 @@ gw2_datamanager.mapData = {}
 gw2_datamanager.levelmap = {} -- Create a "2D - Levelmap/Table" which provides us an avg. level for all other entries in the zone, also for random navigation
 
 
-function gw2_datamanager.ModuleInit() 	
-	local mdata = persistence.load(gw2_datamanager.path)
-	if(table.valid(mdata)) then
-		d("Map data loaded: "..tostring(table.size(mdata)).." entries found")
-		gw2_datamanager.mapData = mdata
+function gw2_datamanager.ModuleInit()
+	if(FileExists(gw2_datamanager.path)) then
+		local mdata = FileLoad(gw2_datamanager.path)
+		if(table.valid(mdata)) then
+			d("Map data loaded: "..tostring(table.size(mdata)).." entries found")
+			gw2_datamanager.mapData = mdata
+		end
 	end
 end
 
@@ -57,8 +59,8 @@ function gw2_datamanager.GetMapNameList(nav, sort)
 			table.sort(maplist, function(a,b) return a.name < b.name end)
 		end
 	
-		for i,map in ipairs(maplist) do
-			table.insert(mapnamelist, map.name)
+		for i=1,#maplist do
+			table.insert(mapnamelist, maplist[i].name)
 		end
 	end
 		
@@ -113,10 +115,10 @@ function gw2_datamanager.GetLocalWaypointListByDistance(mapID, pos)
 	
 	if (table.valid(mapData)) then
 		for _,waypoint in pairs(mapData) do
-			waypoint.distance2D = Distance2D(waypoint.pos.x,waypoint.pos.y,pos.x,pos.y)
+			waypoint.distance2D = math.distance2d(waypoint.pos.x,waypoint.pos.y,pos.x,pos.y)
 			-- Update distance to use input pos
 			if(waypoint.distance) then
-				waypoint.distance = Distance3DT(waypoint.pos,pos)
+				waypoint.distance = math.distance3d(waypoint.pos,pos)
 			end
 		end
 		
