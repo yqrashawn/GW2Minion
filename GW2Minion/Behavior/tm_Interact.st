@@ -21,6 +21,7 @@ local tbl =
 					{
 						finishcode = "",
 						info = "",
+						interruptcode = "",
 						monitorcode = "",
 						runcode = "if(context.tm_interact_targetid) then\n\t\tif(Player.castinfo.skillid ~= 0) then\n\t\t\t\td(\"[tm_Interact]: Waiting.\")\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\nend\nself:success()",
 						startcode = "",
@@ -39,6 +40,7 @@ local tbl =
 					{
 						finishcode = "",
 						info = "Set up interact target",
+						interruptcode = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 						runcode = "if(context.tm_interact_targetid) then\n\t\tif(context.tm_interact_targetinfo.closedialog and Player:IsConversationOpen()) then\n\t\t\t\tlocal clist_n = table.size(Player:GetConversationOptions())\n\t\t\t\t\t\tPlayer:SelectConversationOptionByIndex(clist_n)\n\t\tend\n\n\t\tif(context.tm_interact_blacklist[context.tm_interact_targetid]) then\n\t\t\t\tcontext.tm_interact_targetid = nil\n\t\t\t\tcontext.tm_interact_targetpos = nil\n\t\t\t\tcontext.tm_interact_targetinfo = nil\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\telse\n\t\t\t\tself:success()\n\t\t\t\treturn \n\t\tend\n\t\nelseif(table.valid(context.tm_interact_targets)) then\n\t\tlocal mergedList = gw2_common_functions.GetAllTargets(\"interactable,onmesh\")\n\t\tlocal validtargets = {}\n\n\t\tif(table.valid(mergedList)) then\n\t\t\t\tfor _,target in pairs(mergedList) do\n\t\t\t\t\t\tfor _,targetinfo in ipairs(context.tm_interact_targets) do\n\t\t\t\t\t\t\t\tif(target.contentid == targetinfo.contentid and type(targetinfo.maxinteract) == \"number\" and context.tm_interact_interactcount[target.contentid]) then\n\t\t\t\t\t\t\t\t\t\tif(context.tm_interact_interactcount[target.contentid] >= targetinfo.maxinteract) then\n\t\t\t\t\t\t\t\t\t\t\t\tcontext.tm_interact_blacklist[target.id] = true\n\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\tend\n\n\t\t\t\t\t\t\t\tif(not context.tm_interact_blacklist[target.id] and target.contentid == targetinfo.contentid and target.pathdistance < 99999) then\n\t\t\t\t\t\t\t\t\t\ttable.insert(validtargets, target)\n\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\tend\n\t\t\t\tend\n\t\tend\n\n\t\tlocal nearest = nil\n\t\tif(table.valid(validtargets)) then\n\t\t\t\ttable.sort(validtargets, function(a,b) return a.pathdistance < b.pathdistance end)\n\n\t\t\t\tnearest = select(2, next(validtargets))\n\t\tend\n\t\t\n\t\tcontext.tm_interact_targetid = nil\n\t\tcontext.tm_interact_targetinfo = nil\n\t\tif(table.valid(nearest)) then\n\t\t\t\tcontext.tm_interact_targetid = nearest.id\n\t\t\t\tcontext.tm_interact_targetpos = nearest.pos\n\n\t\t\t\tif(not context.tm_interact_interactcount[nearest.contentid]) then\n\t\t\t\t\t\tcontext.tm_interact_interactcount[nearest.contentid] = 0\n\t\t\t\tend\n\n\t\t\t\tfor _,interacttarget in pairs(context.tm_interact_targets) do\n\t\t\t\t\t\tif(nearest.contentid == interacttarget.contentid) then\n\t\t\t\t\t\t\t\tcontext.tm_interact_targetinfo = interacttarget\n\t\t\t\t\t\tend\n\t\t\t\tend\n\t\tend\n\n\t\tif(context.tm_interact_targetid and context.tm_interact_targetinfo) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()",
 						startcode = "",
@@ -62,6 +64,7 @@ local tbl =
 							{
 								finishcode = "",
 								info = "",
+								interruptcode = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 								runcode = "if(context.tm_interact_targetid and not context.tm_interact_blacklist[context.tm_interact_targetid]) then\n\t\tlocal dist = math.distance3d(context.tm_interact_targetpos,ml_global_information.Player_Position)\n\t\tif(dist > 1000) then\n\t\t\t\tcontext.moveto_position = context.tm_interact_targetpos\n\t\t\t\tself:fail()\n\t\t\t\treturn\n\t\tend\n\t\t\n\t\tif(context.tm_interact_interacting) then\n\t\t\t\tif(TimeSince(context.tm_interact_interacting) > 15000) then\n\t\t\t\t\t\td(\"[tm_Interact]: This is taking too long. Blacklisting.\")\n\t\t\t\t\t\tcontext.tm_interact_blacklist[context.tm_interact_targetid] = true\n\t\t\t\t\t\tcontext.tm_interact_targetid = nil\t\t\t\n\t\t\t\telseif(Player.castinfo.skillid == 0) then\n\t\t\t\t\t\td(\"[tm_Interact]: Ended.\")\n\t\t\t\t\t\tif(context.tm_interact_targetinfo.oncepertarget ~= false) then\n\t\t\t\t\t\t\t\tcontext.tm_interact_blacklist[context.tm_interact_targetid] = true\n\t\t\t\t\t\tend\n\n\t\t\t\t\t\tif(context.tm_interact_targetinfo.closedialog and Player:IsConversationOpen()) then\n\t\t\t\t\t\t\t\tlocal clist_n = table.size(Player:GetConversationOptions())\n\t\t\t\t\t\t\t\tif(clist_n > 0) then\n\t\t\t\t\t\t\t\t\t\tPlayer:SelectConversationOptionByIndex(clist_n-1)\n\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\tend\n\n\t\t\t\t\t\tcontext.tm_interact_targetid = nil\n\t\t\t\telse\n\t\t\t\t\t\td(\"[tm_Interact]: Waiting...\")\n\t\t\t\t\t\tself:running()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\t\tend\n\t\t\n\t\tif(context.tm_interact_targetid) then\n\t\t\t\tlocal target = CharacterList:Get(context.tm_interact_targetid) or GadgetList:Get(context.tm_interact_targetid)\n\t\t\t\tif(table.valid(target) and target.interactable) then\n\t\t\t\t\t\tif(not target.isininteractrange) then\n\t\t\t\t\t\t\t\tcontext.moveto_position = target.pos\n\t\t\t\t\t\t\t\tself:fail()\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\tPlayer:StopMovement()\n\t\t\t\t\t\t\t\tlocal pTarget = Player:GetTarget()\n\t\t\t\t\t\t\t\tif(target.selectable and (pTarget == nil or pTarget.id ~= target.id)) then\n\t\t\t\t\t\t\t\t\t\tPlayer:SetTarget(target.id)\n\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\tPlayer:SetFacing(target.pos.x,target.pos.y,target.pos.z)\n\t\t\t\t\t\t\t\tPlayer:Interact(target.id)\n\t\t\t\t\t\t\t\tcontext.tm_interact_interacting = ml_global_information.Now\n\t\t\t\t\t\t\t\tcontext.tm_interact_interactcount[target.contentid] = context.tm_interact_interactcount[target.contentid] + 1\n\t\t\t\t\t\t\t\td(\"[tm_Interact]: Interacting.\")\n\t\t\t\t\t\t\t\tml_global_information.Wait(math.random(750,1300))\n\t\t\t\t\t\t\t\tself:running()\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\n\t\t\t\telse\n\t\t\t\t\td(\"[tm_Interact]: Target missing or not interactable.\")\n\t\t\t\t\tcontext.tm_interact_blacklist[context.tm_interact_targetid] = true\n\t\t\t\tend\n\t\tend\nend\ncontext.tm_interact_targetinfo = nil\ncontext.tm_interact_interacting = nil\ncontext.moveto_position = nil\ncontext.moveto_targetid = nil\nself:success()",
 								startcode = "",
@@ -85,6 +88,7 @@ local tbl =
 									{
 										finishcode = "",
 										info = "",
+										interruptcode = "",
 										monitorcode = "",
 										runcode = "if(table.valid(context.moveto_position)) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
 										startcode = "",
@@ -116,7 +120,12 @@ local tbl =
 							},
 							variables = 
 							{
+								finishcode = "",
+								info = "",
+								interruptcode = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+								runcode = "",
+								startcode = "",
 							},
 						},
 					},
@@ -125,7 +134,12 @@ local tbl =
 					},
 					variables = 
 					{
+						finishcode = "",
+						info = "",
+						interruptcode = "",
 						monitorcode = "",
+						runcode = "",
+						startcode = "",
 					},
 				},
 			},
@@ -134,8 +148,12 @@ local tbl =
 			},
 			variables = 
 			{
+				finishcode = "",
 				info = "",
+				interruptcode = "",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+				runcode = "",
+				startcode = "",
 			},
 		},
 	},
@@ -147,6 +165,7 @@ local tbl =
 		filename = "tm_Interact.st",
 		finishcode = "context.tm_interact_interacting = nil\ncontext.tm_interact_targetid = nil\ncontext.tm_interact_targetpos = nil\n\nif(context.tm_interact_targetinfo and context.tm_interact_targetinfo.closedialog and Player:IsConversationOpen()) then\n\t\tlocal clist_n = table.size(Player:GetConversationOptions())\n\t\tif(clist_n > 0) then\n\t\t\t\tPlayer:SelectConversationOptionByIndex(clist_n-1)\n\t\tend\nend",
 		info = "",
+		interruptcode = "",
 		menucode = "",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "context.tm_interact_targets = self.settings.targets\ncontext.tm_interact_blacklist = context.tm_interact_blacklist or {}",
