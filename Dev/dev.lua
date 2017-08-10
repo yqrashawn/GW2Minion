@@ -174,13 +174,14 @@ function dev.DrawCall(event, ticks )
 					
 					local COMBATTRACKER_TYPE = {
 						[1] = "ComboArea",
-						--[2]= Some state thing? DOWNED, poisoned, doublestrike, Death spiral, ?
-						
+						[2] = "Death State",
+						[3] = "Downed State",
 						[4] = "Energy Adjustment",
 						[6] = "Exp Adjustment",
 						[7] = "HP Adjustment",
 						[10] = "Karma Adjustment",
 						[11] = "Luck Adjustment",
+						[20] = "Skill Out of Range",
 						[24] = "WvW Exp Adjustment",
 					}
 					
@@ -199,9 +200,9 @@ function dev.DrawCall(event, ticks )
 							GUI:NextColumn()
 							GUI:Text("Target")
 							GUI:NextColumn()
-							GUI:Text("ValueA")
+							GUI:Text("ValueA") -- Flat amount (dmg)(xp)
 							GUI:NextColumn()
-							GUI:Text("ValueB")
+							GUI:Text("ValueB") -- Negative/Positive valueA (dmg) Bonus (xp)
 							GUI:NextColumn()
 							GUI:Text("Skill")
 							GUI:NextColumn()
