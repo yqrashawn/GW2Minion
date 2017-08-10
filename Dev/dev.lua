@@ -172,6 +172,112 @@ function dev.DrawCall(event, ticks )
 					end
 -- END BUFFS
 					
+					local COMBATTRACKER_TYPE = {
+						[1] = "ComboArea",
+						--[2]= Some state thing? DOWNED, poisoned, doublestrike, Death spiral, ?
+						
+						[4] = "Energy Adjustment",
+						[6] = "Exp Adjustment",
+						[7] = "HP Adjustment",
+						[10] = "Karma Adjustment",
+						[11] = "Luck Adjustment",
+						[24] = "WvW Exp Adjustment",
+					}
+					
+					if ( GUI:TreeNode("Combat Data") ) then
+						local cb = GetCombatData()
+						if (table.valid(cb) ) then
+							GUI:PushItemWidth(250)
+							GUI:Columns( 19, "CMB DATAA", true )
+							GUI:Text("Idx")
+							GUI:NextColumn()
+							GUI:Text("Age")
+							GUI:NextColumn()
+							GUI:Text("Type")
+							GUI:NextColumn()
+							GUI:Text("Source")
+							GUI:NextColumn()
+							GUI:Text("Target")
+							GUI:NextColumn()
+							GUI:Text("ValueA")
+							GUI:NextColumn()
+							GUI:Text("ValueB")
+							GUI:NextColumn()
+							GUI:Text("Skill")
+							GUI:NextColumn()
+							GUI:Text("ComboArea")
+							GUI:NextColumn()
+							GUI:Text("D")
+							GUI:NextColumn()
+							GUI:Text("E")
+							GUI:NextColumn()
+							GUI:Text("F")
+							GUI:NextColumn()
+							GUI:Text("G")
+							GUI:NextColumn()
+							GUI:Text("IsCondition")
+							GUI:NextColumn()
+							GUI:Text("IsCrit")
+							GUI:NextColumn()
+							GUI:Text("J")
+							GUI:NextColumn()
+							GUI:Text("K")
+							GUI:NextColumn()
+							GUI:Text("L")
+							GUI:NextColumn()
+							GUI:Text("M")
+							GUI:NextColumn()
+														
+							for id, b in pairsByKeys(cb) do
+								GUI:Text(tostring(id))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.age))
+								GUI:NextColumn()								
+								GUI:Text(COMBATTRACKER_TYPE[b.type] or tostring(b.type))
+								GUI:NextColumn()
+								GUI:Text(b.source)
+								GUI:NextColumn()
+								GUI:Text(b.target)
+								GUI:NextColumn()
+								GUI:Text(tostring(b.A))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.B))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.skillname))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.comboareaname))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.D))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.E))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.F))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.G))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.iscondition))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.iscrit))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.J))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.K))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.L))
+								GUI:NextColumn()
+								GUI:Text(tostring(b.M))
+								GUI:NextColumn()
+							end
+							GUI:Columns(1)
+							GUI:PopItemWidth()
+						else
+							GUI:Text("No Combat Data found.") 
+						end
+						GUI:TreePop()						
+					end	
+-- END COMBAT DATA
+
+
 					if ( GUI:TreeNode("Inventory") ) then
 						local list = Inventory("")
 						if ( table.valid(list) )then
@@ -799,6 +905,19 @@ function dev.DrawCall(event, ticks )
 								d(Player:Interact())
 							end
 						end
+						
+						GUI:BulletText("Login Character Name:") GUI:SameLine(200) dev.logincharname = GUI:InputText("##devuf5",dev.logincharname  or "")
+						if (GUI:IsItemHovered()) then GUI:SetTooltip("Enter the WRONG NAME and you CRASH!") end
+						GUI:BulletText("Login Server ID:") GUI:SameLine(200) dev.loginserverid = GUI:InputInt("##devuf6",dev.loginserverid or 0 ,1,1)
+						if (dev.logincharname and dev.logincharname ~= "") then 
+							if (GUI:Button("EnterGameWorld",150,15) ) then
+								Player:EnterGameWorld(dev.logincharname,dev.loginserverid)
+							end
+						end
+						
+						
+						
+						
 						GUI:PopItemWidth()
 						GUI:TreePop()
 					end
@@ -824,6 +943,9 @@ function dev.DrawCharacterDetails(c)
 	GUI:BulletText("AgentPtr") GUI:SameLine(200) GUI:InputText("##dev1",tostring(string.format( "%X",c.ptr2)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##dev2",tostring(c.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("ContentID") GUI:SameLine(200) GUI:InputText("##dev3",tostring(c.contentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("PlayerID") GUI:SameLine(200) GUI:InputText("##dev4",tostring(c.playerid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("PartyID") GUI:SameLine(200) GUI:InputText("##dev5",tostring(c.partyid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("TeamID") GUI:SameLine(200) GUI:InputText("##dev53",tostring(c.teamid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##dev6",c.name,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	local h = c.health
 	GUI:BulletText("Health") GUI:SameLine(200)  GUI:InputFloat3( "##dev7", h.current, h.max, h.percent, 2, GUI.InputTextFlags_ReadOnly)
@@ -837,9 +959,11 @@ function dev.DrawCharacterDetails(c)
 	GUI:BulletText("OnMesh") GUI:SameLine(200) GUI:InputText("##dev15", tostring(c.onmesh),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("OnMeshExact") GUI:SameLine(200) GUI:InputText("##dev16", tostring(c.onmeshexact),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	local meshpos = c.meshpos
-	GUI:BulletText("MeshPosition") GUI:SameLine(200)  GUI:InputFloat3( "##dev9m", meshpos.x, meshpos.y, meshpos.z, 2, GUI.InputTextFlags_ReadOnly)
-	GUI:BulletText("Dist MeshPos-Player") GUI:SameLine(200)  GUI:InputFloat("##dev12m", meshpos.distance,0,0,2)
-	GUI:BulletText("Dist to MeshPos") GUI:SameLine(200)  GUI:InputFloat("##dev13m", meshpos.meshdistance,0,0,2)	
+	if(table.valid(meshpos)) then
+		GUI:BulletText("MeshPosition") GUI:SameLine(200)  GUI:InputFloat3( "##dev9m", meshpos.x, meshpos.y, meshpos.z, 2, GUI.InputTextFlags_ReadOnly)
+		GUI:BulletText("Dist MeshPos-Player") GUI:SameLine(200)  GUI:InputFloat("##dev12m", meshpos.distance,0,0,2)
+		GUI:BulletText("Dist to MeshPos") GUI:SameLine(200)  GUI:InputFloat("##dev13m", meshpos.meshdistance,0,0,2)	
+	end
 	GUI:BulletText("Attitude") GUI:SameLine(200) GUI:InputText("##dev23", tostring(c.attitude),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("MovementState") GUI:SameLine(200) GUI:InputText("##dev17", tostring(c.movementstate),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("SwimmingState") GUI:SameLine(200) GUI:InputText("##dev17-b", tostring(c.swimming),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
