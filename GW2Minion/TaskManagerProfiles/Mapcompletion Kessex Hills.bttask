@@ -1572,7 +1572,7 @@ local tbl =
 			taskProperties = 
 			{
 				cooldown = 0,
-				enabled = true,
+				enabled = false,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
@@ -1664,7 +1664,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "//PoI Krait's Larder",
+				name = "PoI Krait's Larder",
 				pos = 
 				{
 					hx = 0.66607195138931,

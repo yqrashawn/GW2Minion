@@ -945,7 +945,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] ???",
+				name = "[PoI] The Aquatarium",
 				pos = 
 				{
 					hx = -0.21309614181519,
@@ -985,7 +985,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 139,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "[Vista] Apprentice Station",
@@ -1013,6 +1013,20 @@ local tbl =
 			order = 26,
 			posttasks = 
 			{
+				
+				{
+					customProperties = 
+					{
+						waypointid = 1209,
+					},
+					order = 0,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Waypoint away",
+						type = "tm_st_usewaypoint",
+					},
+				},
 			},
 			pretasks = 
 			{
@@ -1028,7 +1042,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 139,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "[Vista] Bottom floor",
