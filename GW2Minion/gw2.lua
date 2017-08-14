@@ -20,7 +20,7 @@ function gw2minion.Init()
 
 		-- Set worldnavigation data
 		ml_mesh_mgr.navData = persistence.load(GetLuaModsPath()..[[GW2Minion\]].."worldnav_data.lua")
-		if ( not ValidTable(ml_mesh_mgr.navData)) then 
+		if ( not table.valid(ml_mesh_mgr.navData)) then 
 			ml_mesh_mgr.navData = {} 
 		else
 			ml_mesh_mgr.SetupNavNodes()

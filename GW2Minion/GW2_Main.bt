@@ -80,7 +80,7 @@ local tbl =
 							{
 								finishcode = "",
 								info = "Player Alive",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Health State: '..tostring(ml_global_information.Player_HealthState))\nGUI:Text('Downed: '..tostring(ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Downed))\nif ( ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then\nlocal target = gw2_common_functions.GetBestAggroTarget(true)\nif ( ValidTable(target) ) then\n\tGUI:Text('Downed Target: '..target.name)\nelse\n\tGUI:Text('Downed Target: None')\nend\nGUI:Text('Castinfo-Duration: '..tostring(Player.castinfo.duration))\nend\n",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Health State: '..tostring(ml_global_information.Player_HealthState))\nGUI:Text('Downed: '..tostring(ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Downed))\nif ( ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then\nlocal target = gw2_common_functions.GetBestAggroTarget(true)\nif ( table.valid(target) ) then\n\tGUI:Text('Downed Target: '..target.name)\nelse\n\tGUI:Text('Downed Target: None')\nend\nGUI:Text('Castinfo-Duration: '..tostring(Player.castinfo.duration))\nend\n",
 								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Alive ) then\t\n\tself:success()\nelse\n\tself:fail()\nend",
 								startcode = "",
 							},

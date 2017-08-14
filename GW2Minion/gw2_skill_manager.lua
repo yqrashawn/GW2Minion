@@ -906,7 +906,7 @@ function gw2_skill_manager.CombatMovement()
 end
 
 function gw2_skill_manager.RegisterProfilePath(path)
-	if (string.valid(path) and TableContains(gw2_skill_manager.paths, path) == false) then
+	if (string.valid(path) and table.contains(gw2_skill_manager.paths, path) == false) then
 		table.insert(gw2_skill_manager.paths,path)
 	end
 end
@@ -926,7 +926,7 @@ end
 
 -- Save.
 function profilePrototype:Save()
-	local saveFile = deepcopy(self)
+	local saveFile = table.deepcopy(self)
 	saveFile.clipboard = nil
 	saveFile.tmp = nil
 	if (table.valid(saveFile.skills)) then
@@ -949,7 +949,7 @@ end
 -- Clone.
 function profilePrototype:Clone(newName)
 	if (string.valid(newName)) then
-		local saveFile = deepcopy(self)
+		local saveFile = table.deepcopy(self)
 		saveFile.name = newName
 		return saveFile:Save()
 	end
@@ -1164,7 +1164,7 @@ end
 -- Clone skill.
 function profilePrototype:CloneSkill(skillPriority)
 	if (self.skills[skillPriority]) then
-		local clone = deepcopy(self.skills[skillPriority])
+		local clone = table.deepcopy(self.skills[skillPriority])
 		table.insert(self.skills, skillPriority+1, clone)
 		return true
 	end
@@ -1193,7 +1193,7 @@ end
 -- Copy skill.
 function profilePrototype:CopySkill(skillPriority)
 	if (self.skills[skillPriority]) then
-		self.clipboard = deepcopy(self.skills[skillPriority])
+		self.clipboard = table.deepcopy(self.skills[skillPriority])
 		self.clipboard.priority = nil
 		self.clipboard.skill.id = nil
 		self.clipboard.skill.name = nil
@@ -1208,7 +1208,7 @@ function profilePrototype:PasteSkill(skillPriority)
 		self.clipboard.priority = self.skills[skillPriority].priority
 		self.clipboard.skill.id = self.skills[skillPriority].skill.id
 		self.clipboard.skill.name = self.skills[skillPriority].skill.name
-		self.skills[skillPriority] = deepcopy(self.clipboard)
+		self.skills[skillPriority] = table.deepcopy(self.clipboard)
 		return true
 	end
 	return false
@@ -1252,7 +1252,7 @@ function profilePrototype:SwapAttunement()
 		local attunements = {["Fire"] = GW2.SKILLBARSLOT.Slot_13, ["Water"] = GW2.SKILLBARSLOT.Slot_14, ["Air"] = GW2.SKILLBARSLOT.Slot_15, ["Earth"] = GW2.SKILLBARSLOT.Slot_16,}
 		local currentAttunement = (gw2_common_functions.HasBuffs(Player, "5585") and "Fire" or gw2_common_functions.HasBuffs(Player, "5586") and "Water" or gw2_common_functions.HasBuffs(Player, "5575") and "Air" or gw2_common_functions.HasBuffs(Player, "5580") and "Earth")
 		attunements[currentAttunement] = nil
-		local newAttunement = (attunements[settings.attunement_1] or attunements[settings.attunement_2] or attunements[settings.attunement_3] or attunements[settings.attunement_4] or GetRandomTableEntry(attunement))
+		local newAttunement = (attunements[settings.attunement_1] or attunements[settings.attunement_2] or attunements[settings.attunement_3] or attunements[settings.attunement_4] or table.randomvalue(attunement))
 		if (newAttunement) then
 			Player:CastSpell(newAttunement)
 		end
@@ -1940,7 +1940,7 @@ function skillPrototype:Predict(target)
 			y = tPos.y + math.cos(targetHeading) * targetSpeed/5 * (1 + target.distance / 30),
 			z = tPos.z,
 		}
-		local dist = Distance3D(pPos.x,pPos.y,pPos.z,ePos.x,ePos.y,ePos.z)
+		local dist = math.distance3d(pPos.x,pPos.y,pPos.z,ePos.x,ePos.y,ePos.z)
 		if (dist < self.skill.maxRange) then
 			return ePos
 		end

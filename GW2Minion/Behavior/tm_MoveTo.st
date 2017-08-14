@@ -22,7 +22,7 @@ local tbl =
 						finishcode = "",
 						info = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-						runcode = "if(table.valid(context.tm_moveto_targetpos)) then\n\t\tif(Distance3DT(context.tm_moveto_targetpos, ml_global_information.Player_Position) > 50) then\n\t\t\t\tcontext.moveto_position = context.tm_moveto_targetpos\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()\n",
+						runcode = "if(table.valid(context.tm_moveto_targetpos)) then\n\t\tif(math.distance3d(context.tm_moveto_targetpos, ml_global_information.Player_Position) > 50) then\n\t\t\t\tcontext.moveto_position = context.tm_moveto_targetpos\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()\n",
 						startcode = "",
 					},
 				},

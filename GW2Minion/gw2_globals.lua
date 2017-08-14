@@ -92,7 +92,7 @@ function ml_global_information.OnUpdate(Event,ticks)
 			ml_global_information.Player_Name = Player.name or ""
 			ml_global_information.Player_Health = Player.health or { current = 0, max = 0, percent = 0 }
 			ml_global_information.Player_Profession = Player.profession or 0
-			ml_global_information.Player_ProfessionName = table_invert(GW2.CHARCLASS)[ml_global_information.Player_Profession] or "NoClass"
+			ml_global_information.Player_ProfessionName = table.invert(GW2.CHARCLASS)[ml_global_information.Player_Profession] or "NoClass"
 			ml_global_information.Player_Power = Player.power or 0
 			ml_global_information.Player_Endurance = Player.endurance or 0
 			ml_global_information.Player_InCombat = Player.incombat or false		
