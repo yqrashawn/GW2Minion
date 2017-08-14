@@ -34,7 +34,7 @@ local tbl =
 			variables = 
 			{
 				info = "",
-				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) \nif ( self.lastrun ) then\n\t\tlocal tmr = self.settings.duration/1000 - (GetTickCount() - self.lastrun) \n\t\tif ( tmr < 0 ) then tmr = 0 end \n\t\tGUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\nelse\n\t\tGUI:Text('Runs again in: '..tostring(round(self.settings.duration/1000))..' s')\nend",
+				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) \nif ( self.lastrun ) then\n\t\tlocal tmr = self.settings.duration/1000 - (GetTickCount() - self.lastrun) \n\t\tif ( tmr < 0 ) then tmr = 0 end \n\t\tGUI:Text('Runs again in: '..tostring(math.round(tmr,2 ))..' s')\nelse\n\t\tGUI:Text('Runs again in: '..tostring(math.round(self.settings.duration/1000))..' s')\nend",
 			},
 		},
 	},

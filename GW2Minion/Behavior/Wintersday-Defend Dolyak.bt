@@ -332,7 +332,7 @@ local tbl =
 							},
 							variables = 
 							{
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.settings.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.settings.duration/1000))..' s') end",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.settings.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(math.round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(math.round(self.settings.duration/1000))..' s') end",
 							},
 						},
 						
@@ -365,7 +365,7 @@ local tbl =
 							},
 							variables = 
 							{
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.settings.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(round(self.settings.duration/1000))..' s') end",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.lastrun ) then local tmr = self.settings.duration/1000 - (GetTickCount() - self.lastrun) if ( tmr < 0 ) then tmr = 0 end GUI:Text('Runs again in: '..tostring(math.round(tmr,2 ))..' s')\telse\tGUI:Text('Runs again in: '..tostring(math.round(self.settings.duration/1000))..' s') end",
 							},
 						},
 					},

@@ -477,7 +477,7 @@ function gw2_skill_manager.profileWindow.Draw(event,ticks)
 						if (y >= 20 or y <= -20 ) then
 							local curPrio = priority
 							local movingIsOpen = priority == gw2_skill_manager.skillWindow.prio
-							for i=1,round(math.abs(y/23)) do
+							for i=1,math.round(math.abs(y/23)) do
 								if (gw2_skill_manager.profile:MoveSkill(curPrio,y<0 and "up" or "down")) then
 									curPrio = y<0 and curPrio-1 or curPrio+1
 									-- move skill prio according to dragging.

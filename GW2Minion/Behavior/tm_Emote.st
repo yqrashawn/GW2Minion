@@ -102,7 +102,7 @@ local tbl =
 									},
 									variables = 
 									{
-										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.starttime ) then\tif ( self:getState() == 'success' ) then GUI:Text('Passed Time: '..tostring(round(self.settings.duration/1000))..' s') else GUI:Text('Passed Time: '..tostring(round(GetTickCount() - self.starttime,2 ))..' s') end else GUI:Text('Passed Time: 0 ms') end",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.starttime ) then\tif ( self:getState() == 'success' ) then GUI:Text('Passed Time: '..tostring(math.round(self.settings.duration/1000))..' s') else GUI:Text('Passed Time: '..tostring(math.round(GetTickCount() - self.starttime,2 ))..' s') end else GUI:Text('Passed Time: 0 ms') end",
 									},
 								},
 							},
@@ -210,7 +210,7 @@ local tbl =
 											},
 											variables = 
 											{
-												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.starttime ) then\tif ( self:getState() == 'success' ) then GUI:Text('Passed Time: '..tostring(round(self.settings.duration/1000))..' s') else GUI:Text('Passed Time: '..tostring(round(GetTickCount() - self.starttime,2 ))..' s') end else GUI:Text('Passed Time: 0 ms') end",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.starttime ) then\tif ( self:getState() == 'success' ) then GUI:Text('Passed Time: '..tostring(math.round(self.settings.duration/1000))..' s') else GUI:Text('Passed Time: '..tostring(math.round(GetTickCount() - self.starttime,2 ))..' s') end else GUI:Text('Passed Time: 0 ms') end",
 											},
 										},
 										
@@ -243,7 +243,7 @@ local tbl =
 											},
 											variables = 
 											{
-												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.starttime ) then\tif ( self:getState() == 'success' ) then GUI:Text('Passed Time: '..tostring(round(self.settings.duration/1000))..' s') else GUI:Text('Passed Time: '..tostring(round(GetTickCount() - self.starttime,2 ))..' s') end else GUI:Text('Passed Time: 0 ms') end",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.starttime ) then\tif ( self:getState() == 'success' ) then GUI:Text('Passed Time: '..tostring(math.round(self.settings.duration/1000))..' s') else GUI:Text('Passed Time: '..tostring(math.round(GetTickCount() - self.starttime,2 ))..' s') end else GUI:Text('Passed Time: 0 ms') end",
 											},
 										},
 									},
