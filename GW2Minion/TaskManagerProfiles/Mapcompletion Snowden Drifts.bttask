@@ -265,7 +265,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 31,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "[VISTA] King's Jail Refuge",
@@ -287,171 +287,10 @@ local tbl =
 		{
 			customProperties = 
 			{
-			},
-			lastrun = 0,
-			order = 6,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = true,
-				mapid = 31,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[Jumpinh Puzzle] King Jali's Refuge Part I",
-				pos = 
-				{
-					hx = 0.9539407491684,
-					hy = 0.039577834308147,
-					hz = 0.29737296700478,
-					x = 48089.51171875,
-					y = 5061.7163085938,
-					z = -856.78698730469,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 7,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-				
-				{
-					customProperties = 
-					{
-					},
-					order = 0,
-					taskProperties = 
-					{
-						enabled = true,
-						name = "aggro",
-						type = "tm_st_fightaggro",
-					},
-				},
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 31,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[Jumpinh Puzzle] King Jali's Refuge Part II",
-				pos = 
-				{
-					hx = -0.91235357522964,
-					hy = -0.076113104820251,
-					hz = 0.40226581692696,
-					x = 48300.484375,
-					y = 5979.083984375,
-					z = -1084.8889160156,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 8,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = false,
-								contentid = 6412,
-								gadget = true,
-								name = "Splendid Chest",
-							},
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "open chest",
-						type = "tm_st_interact",
-					},
-				},
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = true,
-				mapid = 31,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[Jumpinh Puzzle] King Jali's Refuge Part III",
-				pos = 
-				{
-					hx = -0.63565051555634,
-					hy = -0.72249084711075,
-					hz = 0.27194741368294,
-					x = 47373.9453125,
-					y = 3775.412109375,
-					z = -68.756202697754,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 9,
+			order = 6,
 			posttasks = 
 			{
 			},
@@ -493,7 +332,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 10,
+			order = 7,
 			posttasks = 
 			{
 			},
@@ -535,7 +374,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 11,
+			order = 8,
 			posttasks = 
 			{
 			},
@@ -577,7 +416,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 12,
+			order = 9,
 			posttasks = 
 			{
 			},
@@ -656,7 +495,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 13,
+			order = 10,
 			posttasks = 
 			{
 			},
@@ -698,7 +537,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 14,
+			order = 11,
 			posttasks = 
 			{
 			},
@@ -741,7 +580,7 @@ local tbl =
 				hqid = 31,
 			},
 			lastrun = 0,
-			order = 15,
+			order = 12,
 			posttasks = 
 			{
 			},
@@ -858,7 +697,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 16,
+			order = 13,
 			posttasks = 
 			{
 			},
@@ -901,7 +740,7 @@ local tbl =
 				hqid = 30,
 			},
 			lastrun = 0,
-			order = 17,
+			order = 14,
 			posttasks = 
 			{
 			},
@@ -1004,7 +843,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 18,
+			order = 15,
 			posttasks = 
 			{
 			},
@@ -1047,7 +886,7 @@ local tbl =
 				hqid = 29,
 			},
 			lastrun = 0,
-			order = 19,
+			order = 16,
 			posttasks = 
 			{
 			},
@@ -1164,7 +1003,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 20,
+			order = 17,
 			posttasks = 
 			{
 			},
@@ -1206,7 +1045,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 21,
+			order = 18,
 			posttasks = 
 			{
 			},
@@ -1248,7 +1087,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 22,
+			order = 19,
 			posttasks = 
 			{
 			},
@@ -1327,7 +1166,7 @@ local tbl =
 				hqid = 26,
 			},
 			lastrun = 0,
-			order = 23,
+			order = 20,
 			posttasks = 
 			{
 			},
@@ -1423,7 +1262,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 24,
+			order = 21,
 			posttasks = 
 			{
 			},
@@ -1466,7 +1305,7 @@ local tbl =
 				hqid = 27,
 			},
 			lastrun = 0,
-			order = 25,
+			order = 22,
 			posttasks = 
 			{
 			},
@@ -1569,7 +1408,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 26,
+			order = 23,
 			posttasks = 
 			{
 			},
@@ -1611,7 +1450,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 27,
+			order = 24,
 			posttasks = 
 			{
 			},
@@ -1653,7 +1492,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 28,
+			order = 25,
 			posttasks = 
 			{
 			},
@@ -1695,7 +1534,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 29,
+			order = 26,
 			posttasks = 
 			{
 			},
@@ -1738,7 +1577,7 @@ local tbl =
 				hqid = 38,
 			},
 			lastrun = 0,
-			order = 30,
+			order = 27,
 			posttasks = 
 			{
 			},
@@ -1834,7 +1673,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 31,
+			order = 28,
 			posttasks = 
 			{
 			},
@@ -1876,7 +1715,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 32,
+			order = 29,
 			posttasks = 
 			{
 			},
@@ -1918,7 +1757,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 33,
+			order = 30,
 			posttasks = 
 			{
 			},
@@ -1960,7 +1799,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 34,
+			order = 31,
 			posttasks = 
 			{
 			},
@@ -2002,7 +1841,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 35,
+			order = 32,
 			posttasks = 
 			{
 			},
@@ -2045,7 +1884,7 @@ local tbl =
 				hqid = 37,
 			},
 			lastrun = 0,
-			order = 36,
+			order = 33,
 			posttasks = 
 			{
 			},
@@ -2155,7 +1994,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 37,
+			order = 34,
 			posttasks = 
 			{
 			},
@@ -2197,7 +2036,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 38,
+			order = 35,
 			posttasks = 
 			{
 			},
@@ -2239,7 +2078,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 39,
+			order = 36,
 			posttasks = 
 			{
 			},
@@ -2327,7 +2166,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 40,
+			order = 37,
 			posttasks = 
 			{
 			},
@@ -2367,206 +2206,10 @@ local tbl =
 		{
 			customProperties = 
 			{
-			},
-			lastrun = 0,
-			order = 41,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = true,
-								contentid = 250323,
-								gadget = false,
-								name = "Vilnia Shadowsong",
-							},
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "kill ",
-						type = "tm_st_killspecific",
-					},
-				},
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 31,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[HP] Raven Shaman's Power Source Part I",
-				pos = 
-				{
-					hx = -0.59848499298096,
-					hy = 0.44757786393166,
-					hz = 0.6644469499588,
-					x = -34291.53125,
-					y = 18645.251953125,
-					z = -3537.2917480469,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 42,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-				
-				{
-					customProperties = 
-					{
-						talkagent = 
-						{
-							character = false,
-							contentid = 45378,
-							gadget = true,
-							name = "Raven Shaman's Power Source",
-						},
-						talksteps = 
-						{
-							0,
-						},
-						talktype = "Index",
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Commune",
-						type = "tm_st_talk",
-					},
-				},
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 31,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[HP] Raven Shaman's Power Source Part II",
-				pos = 
-				{
-					hx = -0.52008932828903,
-					hy = 0.62474632263184,
-					hz = 0.58240801095963,
-					x = -35326.85546875,
-					y = 19774.828125,
-					z = -3224.8757324219,
-				},
-				radius = 0,
-				type = "tm_heropoint",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 43,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-				
-				{
-					customProperties = 
-					{
-						talkagent = 
-						{
-							character = false,
-							contentid = 32088,
-							gadget = true,
-							name = "Portal",
-						},
-						talksteps = 
-						{
-							0,
-						},
-						talktype = "Index",
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "use portal",
-						type = "tm_st_talk",
-					},
-				},
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 31,
-				maxduration = 5,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[HP] Raven Shaman's Power Source Part III",
-				pos = 
-				{
-					hx = 0.37908884882927,
-					hy = -0.62793612480164,
-					hz = 0.67969691753387,
-					x = -35921.90234375,
-					y = 13068.47265625,
-					z = -3702.4638671875,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
 				hqid = 32,
 			},
 			lastrun = 0,
-			order = 44,
+			order = 38,
 			posttasks = 
 			{
 			},
@@ -2677,7 +2320,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 45,
+			order = 39,
 			posttasks = 
 			{
 			},
@@ -2720,7 +2363,7 @@ local tbl =
 				hqid = 34,
 			},
 			lastrun = 0,
-			order = 46,
+			order = 40,
 			posttasks = 
 			{
 			},
@@ -2837,7 +2480,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 47,
+			order = 41,
 			posttasks = 
 			{
 			},
@@ -2879,7 +2522,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 48,
+			order = 42,
 			posttasks = 
 			{
 			},
@@ -2922,7 +2565,7 @@ local tbl =
 				hqid = 36,
 			},
 			lastrun = 0,
-			order = 49,
+			order = 43,
 			posttasks = 
 			{
 			},
@@ -3018,7 +2661,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 50,
+			order = 44,
 			posttasks = 
 			{
 			},
@@ -3061,7 +2704,7 @@ local tbl =
 				hqid = 35,
 			},
 			lastrun = 0,
-			order = 51,
+			order = 45,
 			posttasks = 
 			{
 			},
@@ -3238,7 +2881,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 52,
+			order = 46,
 			posttasks = 
 			{
 			},
@@ -3281,7 +2924,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 53,
+			order = 47,
 			posttasks = 
 			{
 			},
@@ -3323,7 +2966,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 54,
+			order = 48,
 			posttasks = 
 			{
 			},
@@ -3349,7 +2992,6 @@ local tbl =
 					customProperties = 
 					{
 					},
-					order = 1,
 					taskProperties = 
 					{
 						enabled = true,
@@ -3414,7 +3056,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 55,
+			order = 49,
 			posttasks = 
 			{
 			},
@@ -3456,7 +3098,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 56,
+			order = 50,
 			posttasks = 
 			{
 			},
@@ -3499,7 +3141,7 @@ local tbl =
 				hqid = 33,
 			},
 			lastrun = 0,
-			order = 57,
+			order = 51,
 			posttasks = 
 			{
 			},
@@ -3651,7 +3293,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 58,
+			order = 52,
 			posttasks = 
 			{
 			},
@@ -3693,24 +3335,12 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 59,
+			order = 53,
 			posttasks = 
 			{
 			},
 			pretasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "aggro",
-						type = "tm_st_fightaggro",
-					},
-				},
 			},
 			subtasks = 
 			{
@@ -3741,7 +3371,6 @@ local tbl =
 							},
 						},
 					},
-					order = 2,
 					taskProperties = 
 					{
 						enabled = true,
@@ -3806,7 +3435,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 60,
+			order = 54,
 			posttasks = 
 			{
 			},
@@ -3848,7 +3477,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 61,
+			order = 55,
 			posttasks = 
 			{
 			},

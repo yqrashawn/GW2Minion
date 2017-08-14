@@ -15,7 +15,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 0,
+			order = 1,
 			posttasks = 
 			{
 			},
@@ -57,7 +57,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 1,
+			order = 2,
 			posttasks = 
 			{
 			},
@@ -100,7 +100,7 @@ local tbl =
 				hqid = 348,
 			},
 			lastrun = 0,
-			order = 2,
+			order = 3,
 			posttasks = 
 			{
 			},
@@ -218,7 +218,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 3,
+			order = 4,
 			posttasks = 
 			{
 			},
@@ -260,7 +260,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 4,
+			order = 5,
 			posttasks = 
 			{
 			},
@@ -349,7 +349,7 @@ local tbl =
 				hqid = 347,
 			},
 			lastrun = 0,
-			order = 5,
+			order = 6,
 			posttasks = 
 			{
 			},
@@ -488,7 +488,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 6,
+			order = 7,
 			posttasks = 
 			{
 			},
@@ -531,7 +531,7 @@ local tbl =
 				hqid = 98,
 			},
 			lastrun = 0,
-			order = 7,
+			order = 8,
 			posttasks = 
 			{
 			},
@@ -627,7 +627,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 8,
+			order = 9,
 			posttasks = 
 			{
 			},
@@ -670,7 +670,7 @@ local tbl =
 				hqid = 101,
 			},
 			lastrun = 0,
-			order = 9,
+			order = 10,
 			posttasks = 
 			{
 			},
@@ -837,7 +837,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 10,
+			order = 11,
 			posttasks = 
 			{
 			},
@@ -880,7 +880,7 @@ local tbl =
 				hqid = 100,
 			},
 			lastrun = 0,
-			order = 11,
+			order = 12,
 			posttasks = 
 			{
 			},
@@ -1034,7 +1034,7 @@ local tbl =
 				hqid = 102,
 			},
 			lastrun = 0,
-			order = 12,
+			order = 13,
 			posttasks = 
 			{
 			},
@@ -1222,7 +1222,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 13,
+			order = 14,
 			posttasks = 
 			{
 			},
@@ -1265,7 +1265,7 @@ local tbl =
 				hqid = 96,
 			},
 			lastrun = 0,
-			order = 14,
+			order = 15,
 			posttasks = 
 			{
 			},
@@ -1488,7 +1488,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 15,
+			order = 16,
 			posttasks = 
 			{
 			},
@@ -1530,7 +1530,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 16,
+			order = 17,
 			posttasks = 
 			{
 			},
@@ -1615,7 +1615,7 @@ local tbl =
 				hqid = 97,
 			},
 			lastrun = 0,
-			order = 17,
+			order = 19,
 			posttasks = 
 			{
 			},
@@ -1795,7 +1795,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 19,
+			order = 20,
 			posttasks = 
 			{
 			},
@@ -1837,7 +1837,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 20,
+			order = 21,
 			posttasks = 
 			{
 			},
@@ -1879,7 +1879,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 21,
+			order = 22,
 			posttasks = 
 			{
 			},
@@ -1921,7 +1921,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 22,
+			order = 23,
 			posttasks = 
 			{
 			},
@@ -1963,7 +1963,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 23,
+			order = 24,
 			posttasks = 
 			{
 			},
@@ -2063,7 +2063,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 24,
+			order = 25,
 			posttasks = 
 			{
 			},
@@ -2105,7 +2105,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 25,
+			order = 26,
 			posttasks = 
 			{
 			},
@@ -2148,7 +2148,7 @@ local tbl =
 				hqid = 106,
 			},
 			lastrun = 0,
-			order = 26,
+			order = 27,
 			posttasks = 
 			{
 			},
@@ -2286,7 +2286,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 27,
+			order = 28,
 			posttasks = 
 			{
 			},
@@ -2393,7 +2393,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 28,
+			order = 29,
 			posttasks = 
 			{
 			},
@@ -2435,7 +2435,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 29,
+			order = 30,
 			posttasks = 
 			{
 			},
@@ -2536,7 +2536,7 @@ local tbl =
 				hqid = 107,
 			},
 			lastrun = 0,
-			order = 30,
+			order = 31,
 			posttasks = 
 			{
 			},
@@ -2686,7 +2686,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 31,
+			order = 32,
 			posttasks = 
 			{
 			},
@@ -2729,7 +2729,7 @@ local tbl =
 				hqid = 103,
 			},
 			lastrun = 0,
-			order = 32,
+			order = 33,
 			posttasks = 
 			{
 			},
@@ -2903,7 +2903,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 33,
+			order = 34,
 			posttasks = 
 			{
 			},
@@ -2945,7 +2945,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 34,
+			order = 35,
 			posttasks = 
 			{
 			},
@@ -2988,7 +2988,7 @@ local tbl =
 				hqid = 104,
 			},
 			lastrun = 0,
-			order = 35,
+			order = 36,
 			posttasks = 
 			{
 			},
@@ -3190,7 +3190,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 36,
+			order = 37,
 			posttasks = 
 			{
 			},
@@ -3232,7 +3232,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 37,
+			order = 38,
 			posttasks = 
 			{
 			},
@@ -3274,7 +3274,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 38,
+			order = 39,
 			posttasks = 
 			{
 			},
@@ -3316,7 +3316,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 39,
+			order = 40,
 			posttasks = 
 			{
 			},
@@ -3358,7 +3358,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 40,
+			order = 41,
 			posttasks = 
 			{
 			},
@@ -3401,7 +3401,7 @@ local tbl =
 				hqid = 105,
 			},
 			lastrun = 0,
-			order = 41,
+			order = 42,
 			posttasks = 
 			{
 			},
@@ -3532,7 +3532,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 42,
+			order = 43,
 			posttasks = 
 			{
 			},
@@ -3574,7 +3574,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 43,
+			order = 44,
 			posttasks = 
 			{
 			},
@@ -3616,7 +3616,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 44,
+			order = 45,
 			posttasks = 
 			{
 			},
@@ -3658,7 +3658,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 45,
+			order = 46,
 			posttasks = 
 			{
 			},
@@ -3700,7 +3700,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 46,
+			order = 47,
 			posttasks = 
 			{
 			},
@@ -3742,7 +3742,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 47,
+			order = 48,
 			posttasks = 
 			{
 			},
@@ -3784,7 +3784,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 48,
+			order = 49,
 			posttasks = 
 			{
 			},
@@ -3826,7 +3826,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 49,
+			order = 50,
 			posttasks = 
 			{
 			},
@@ -3904,7 +3904,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 50,
+			order = 51,
 			posttasks = 
 			{
 			},
@@ -3946,7 +3946,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 51,
+			order = 52,
 			posttasks = 
 			{
 			},
@@ -3988,7 +3988,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 52,
+			order = 53,
 			posttasks = 
 			{
 			},
@@ -4031,7 +4031,7 @@ local tbl =
 				hqid = 112,
 			},
 			lastrun = 0,
-			order = 53,
+			order = 54,
 			posttasks = 
 			{
 			},
@@ -4183,7 +4183,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 54,
+			order = 55,
 			posttasks = 
 			{
 			},
@@ -4225,7 +4225,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 55,
+			order = 56,
 			posttasks = 
 			{
 			},
@@ -4303,7 +4303,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 56,
+			order = 57,
 			posttasks = 
 			{
 			},
@@ -4345,7 +4345,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 57,
+			order = 58,
 			posttasks = 
 			{
 			},
@@ -4358,7 +4358,7 @@ local tbl =
 			taskProperties = 
 			{
 				cooldown = 0,
-				enabled = true,
+				enabled = false,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
@@ -4387,7 +4387,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 58,
+			order = 59,
 			posttasks = 
 			{
 			},
@@ -4429,7 +4429,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 59,
+			order = 60,
 			posttasks = 
 			{
 			},
@@ -4472,7 +4472,7 @@ local tbl =
 				hqid = 111,
 			},
 			lastrun = 0,
-			order = 60,
+			order = 61,
 			posttasks = 
 			{
 			},
@@ -4856,7 +4856,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 61,
+			order = 62,
 			posttasks = 
 			{
 			},
@@ -4899,7 +4899,7 @@ local tbl =
 				hqid = 110,
 			},
 			lastrun = 0,
-			order = 62,
+			order = 63,
 			posttasks = 
 			{
 			},
@@ -5023,7 +5023,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 63,
+			order = 64,
 			posttasks = 
 			{
 			},
@@ -5065,7 +5065,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 64,
+			order = 65,
 			posttasks = 
 			{
 			},
@@ -5107,7 +5107,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 65,
+			order = 66,
 			posttasks = 
 			{
 			},
@@ -5150,7 +5150,7 @@ local tbl =
 				hqid = 108,
 			},
 			lastrun = 0,
-			order = 66,
+			order = 67,
 			posttasks = 
 			{
 			},
@@ -5316,7 +5316,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 70,
+			order = 68,
 			posttasks = 
 			{
 			},
@@ -5358,7 +5358,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 67,
+			order = 69,
 			posttasks = 
 			{
 			},
@@ -5401,7 +5401,7 @@ local tbl =
 				hqid = 109,
 			},
 			lastrun = 0,
-			order = 68,
+			order = 70,
 			posttasks = 
 			{
 			},
@@ -5525,7 +5525,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 69,
+			order = 71,
 			posttasks = 
 			{
 			},
