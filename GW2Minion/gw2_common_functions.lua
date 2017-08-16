@@ -470,7 +470,7 @@ gw2_common_functions.vendorHistory = {
 	Return=0,
 }
 function gw2_common_functions.handleConversation(result)
-	if (Player:IsConversationOpen() and (Inventory:IsVendorOpened() == false or result == "repair") and ValidString(result)) then
+	if (Player:IsConversationOpen() and (Inventory:IsVendorOpened() == false or result == "repair") and string.valid(result)) then
 		local curVendor = Player:GetTarget()
 		-- Reset the conversationHistory when we got a new or different vendorMarker
 		if (curVendor and curVendor.id and (gw2_common_functions.vendorHistory.LastID ~= curVendor.id or TimeSince(gw2_common_functions.vendorHistory.EntryTime) > 60000)) then
@@ -544,7 +544,7 @@ function gw2_common_functions.handleConversation(result)
 				end
 			end
 		end
-	elseif (Inventory:IsVendorOpened() and ValidString(result)) then
+	elseif (Inventory:IsVendorOpened() and string.valid(result)) then
 		if (result == "buy") then
 			if (Inventory:GetVendorServiceType() == GW2.VENDORSERVICETYPE.VendorBuy) then
 				return true
@@ -568,7 +568,7 @@ end
 function gw2_common_functions.GetProfessionName(profession)
 	profession = profession or Player.profession or 10
 	if (type(profession) == "number" and profession < 10) then
-		local name = table_invert(GW2.CHARCLASS)[profession]
+		local name = table.invert(GW2.CHARCLASS)[profession]
 		if (string.valid(name)) then
 			return name
 		end

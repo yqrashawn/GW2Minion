@@ -1025,7 +1025,7 @@ function dev.DrawCharacterDetails(c)
 	GUI:BulletText("BreakbarPercent") GUI:SameLine(200) GUI:InputText("##dev54", tostring(c.breakbarpercent),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	
 	local castinfo = c.castinfo
-	if ( TableSize(castinfo) > 0 ) then
+	if ( table.size(castinfo) > 0 ) then
 		GUI:BulletText("AttackedTargetPtr") GUI:SameLine(200) GUI:InputText("##dev24",tostring(string.format( "%X",castinfo.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 		GUI:BulletText("AttackedTargetID") GUI:SameLine(200) GUI:InputText("##dev25", tostring(castinfo.targetid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 		GUI:BulletText("Current Skill ID") GUI:SameLine(200) GUI:InputText("##dev26", tostring(castinfo.skillid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -1103,19 +1103,33 @@ function dev.DrawGadgetDetails(c)
 	GUI:BulletText("IsCombatant") GUI:SameLine(200) GUI:InputText("##devg29", tostring(c.iscombatant),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("IsOurs") GUI:SameLine(200) GUI:InputText("##devg30", tostring(c.isours),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("IsTurret") GUI:SameLine(200) GUI:InputText("##devg45", tostring(c.isturret),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown0: 
 	GUI:BulletText("Unknown0") GUI:SameLine(200) GUI:InputText("##devg31", tostring(c.isunknown0),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown1: 
 	GUI:BulletText("Unknown1") GUI:SameLine(200) GUI:InputText("##devg32", tostring(c.isunknown1),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown2: 
 	GUI:BulletText("Unknown2") GUI:SameLine(200) GUI:InputText("##devg33", tostring(c.isunknown2),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown3: 
 	GUI:BulletText("Unknown3") GUI:SameLine(200) GUI:InputText("##devg34", tostring(c.isunknown3),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown4: 
 	GUI:BulletText("Unknown4") GUI:SameLine(200) GUI:InputText("##devg35", tostring(c.isunknown4),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown5: 
 	GUI:BulletText("Unknown5") GUI:SameLine(200) GUI:InputText("##devg36", tostring(c.isunknown5),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown6: Set/Script ID. This seems to link gadgets that perform the same action.
 	GUI:BulletText("Unknown6") GUI:SameLine(200) GUI:InputText("##devg37", tostring(c.isunknown6),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown7: 
 	GUI:BulletText("Unknown7") GUI:SameLine(200) GUI:InputText("##devg38", tostring(c.isunknown7),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown8: 
 	GUI:BulletText("Unknown8") GUI:SameLine(200) GUI:InputText("##devg39", tostring(c.isunknown8),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown9: 
 	GUI:BulletText("Unknown9") GUI:SameLine(200) GUI:InputText("##devg40", tostring(c.isunknown9),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown10: 
 	GUI:BulletText("Unknown10") GUI:SameLine(200) GUI:InputText("##devg41", tostring(c.isunknown10),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown11: 
 	GUI:BulletText("Unknown11") GUI:SameLine(200) GUI:InputText("##devg42", tostring(c.isunknown11),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown12: 
 	GUI:BulletText("Unknown12") GUI:SameLine(200) GUI:InputText("##devg43", tostring(c.isunknown12),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	-- Unknown13: 
 	GUI:BulletText("Unknown13") GUI:SameLine(200) GUI:InputText("##devg44", tostring(c.isunknown13),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:PopItemWidth()
 

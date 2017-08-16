@@ -13,7 +13,7 @@ local AvoidanceAreaOptions = {
 }
 
 function gw2_obstacle_manager.AddAvoidanceArea(options)
-	options = deepcopy(options and table.merge(AvoidanceAreaOptions,options) or AvoidanceAreaOptions)
+	options = table.deepcopy(options and table.merge(AvoidanceAreaOptions,options) or AvoidanceAreaOptions)
 	if(table.valid(options.pos)) then
 		local newpos = NavigationManager:GetClosestPointOnMesh(options.pos)
 		if(newpos ~= nil) then
@@ -49,7 +49,7 @@ function gw2_obstacle_manager.AddAvoidanceArea(options)
 end
 
 function gw2_obstacle_manager.AddAvoidanceAreaAtTarget(target, options)
-	options = deepcopy(options and table.merge(AvoidanceAreaOptions,options) or AvoidanceAreaOptions)
+	options = table.deepcopy(options and table.merge(AvoidanceAreaOptions,options) or AvoidanceAreaOptions)
 	if(table.valid(target)) then
 		options.pos = target.pos
 		options.radius = options.radius or target.radius
@@ -59,7 +59,7 @@ end
 
 -- Remove
 function gw2_obstacle_manager.RemoveAvoidanceArea(options)
-	options = deepcopy(options and table.merge(AvoidanceAreaOptions,options) or AvoidanceAreaOptions)
+	options = table.deepcopy(options and table.merge(AvoidanceAreaOptions,options) or AvoidanceAreaOptions)
 	if(table.valid(options.pos)) then
 		for i,obstacle in pairs(gw2_obstacle_manager.avoidanceareas) do
 			if(obstacle.pos.x == options.pos.x and obstacle.pos.y == options.pos.y and obstacle.pos.z == options.pos.z) then

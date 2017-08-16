@@ -658,12 +658,12 @@ function gw2_unstuck.Draw()
 			Settings.GW2Minion.stuckthreshold = GUI:SliderInt(GetString("Threshold"), Settings.GW2Minion.stuckthreshold, 25, 80)
 			GUI:Separator()
 
-			GUI:Text(GetString("With swiftness")..": "..tostring(round(Settings.GW2Minion.stuckthreshold*1.33,2)))
-			GUI:Text(GetString("In combat")..": "..tostring(round(Settings.GW2Minion.stuckthreshold/2,2)))
-			GUI:Text(GetString("Active threshold")..": "..tostring(round(gw2_unstuck.ActiveThreshold(),2)))
+			GUI:Text(GetString("With swiftness")..": "..tostring(math.round(Settings.GW2Minion.stuckthreshold*1.33,2)))
+			GUI:Text(GetString("In combat")..": "..tostring(math.round(Settings.GW2Minion.stuckthreshold/2,2)))
+			GUI:Text(GetString("Active threshold")..": "..tostring(math.round(gw2_unstuck.ActiveThreshold(),2)))
 			
 			GUI:Text(GetString("Current stuck count")..": "..tostring(gw2_unstuck.stuckcount))
-			GUI:Text(GetString("Distance moved")..": "..tostring(round(gw2_unstuck.distmoved,2)))
+			GUI:Text(GetString("Distance moved")..": "..tostring(math.round(gw2_unstuck.distmoved,2)))
 			
 			GUI:Separator()
 

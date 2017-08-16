@@ -590,14 +590,14 @@ end
 
 -- working checks here.
 function gw2_salvage_manager.haveSalvagebleItems()
-	if (ValidTable(gw2_salvage_manager.createItemList())) then
+	if (table.valid(gw2_salvage_manager.createItemList())) then
 		return true
 	end
 	return false
 end
 
 function gw2_salvage_manager.haveSalvageTools()
-	if (TableSize(Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool))>0) then
+	if (table.size(Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool))>0) then
 		return true
 	end
 	return false
@@ -631,7 +631,7 @@ end
 function gw2_salvage_manager.salvage()
 	if ((gw2_salvage_manager.active and math.random(0,1) == 0 and ml_global_information.Player_Inventory_SlotsFree >= 2) and ml_global_information.Player_Alive and gw2_salvage_manager.checkCustomChecks()) then
 		local salvageItems = gw2_salvage_manager.createItemList()
-		if (ValidTable(salvageItems)) then
+		if (table.valid(salvageItems)) then
 			for _,item in pairs(salvageItems) do
 				local tool = gw2_salvage_manager.getBestTool(item)
 				if (tool and Player:GetCurrentlyCastedSpell() == ml_global_information.MAX_SKILLBAR_SLOTS) then

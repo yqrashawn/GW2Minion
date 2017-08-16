@@ -20,7 +20,7 @@ function gw2minion.Init()
 
 		-- Set worldnavigation data
 		ml_mesh_mgr.navData = persistence.load(GetLuaModsPath()..[[GW2Minion\]].."worldnav_data.lua")
-		if ( not ValidTable(ml_mesh_mgr.navData)) then 
+		if ( not table.valid(ml_mesh_mgr.navData)) then 
 			ml_mesh_mgr.navData = {} 
 		else
 			ml_mesh_mgr.SetupNavNodes()
@@ -99,6 +99,7 @@ function gw2minion.Init()
 		ml_mesh_mgr.SetDefaultMesh(1043,"Auric Basin")
 		ml_mesh_mgr.SetDefaultMesh(1041,"DragonStand")
 		ml_mesh_mgr.SetDefaultMesh(1045,"TangledDepths")
+		ml_mesh_mgr.SetDefaultMesh(1155,"Lions Arch Aerodrome")
 		
 		--LS3
 		ml_mesh_mgr.SetDefaultMesh(1165,"Bloodstone Fen")
@@ -107,7 +108,7 @@ function gw2minion.Init()
 		ml_mesh_mgr.SetDefaultMesh(1185,"Lake Doric")
 		ml_mesh_mgr.SetDefaultMesh(1195,"Draconis Mons")
 		ml_mesh_mgr.SetDefaultMesh(1203,"Sirens Landing")
-		
+
 		--sPVP
 		ml_mesh_mgr.SetDefaultMesh(549,"sPvP Battle of Kyhlo")
 		ml_mesh_mgr.SetDefaultMesh(554,"sPvP Forest of Niflhel")
