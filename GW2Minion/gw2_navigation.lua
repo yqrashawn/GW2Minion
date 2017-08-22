@@ -305,13 +305,30 @@ end
 -- Calculates the Point-Line-Distance between the PlayerPosition and the last and the next PathNode. If it is larger than the treshold, it returns false, we left our path.
 function ml_navigation:IsStillOnPath(ppos,deviationthreshold)	
 	if ( ml_navigation.pathindex > 0 ) then
-		local movstate = Player:GetMovementState() 
-		if ( not (movstate == GW2.MOVEMENTSTATE.Jumping or movestate == GW2.MOVEMENTSTATE.Falling) and math.distancepointline(ml_navigation.path[ml_navigation.pathindex-1],ml_navigation.path[ml_navigation.pathindex],ppos) > deviationthreshold) then			
-			d("[Navigation] - Player not on Path anymore. - Distance to Path: "..tostring(math.distancepointline(ml_navigation.path[ml_navigation.pathindex-1],ml_navigation.path[ml_navigation.pathindex],ppos)).." > "..tostring(deviationthreshold))
-			Player:StopMovement()
-			ml_navigation.renderpathendX = nil
-			return false
+		local movstate = Player:GetMovementState()
+		
+		if( ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater ) then
+			-- ignoring up vector, since recast's string pulling ignores that as well		
+			local from = { x=ml_navigation.path[ml_navigation.pathindex-1].x, y = ml_navigation.path[ml_navigation.pathindex-1].y, z = 0 }
+			local to = { x=ml_navigation.path[ml_navigation.pathindex].x, y = ml_navigation.path[ml_navigation.pathindex].y, z = 0 }
+			local playerpos = { x=ppos.x, y = ppos.y, z = 0 }
+			if ( not (movstate == GW2.MOVEMENTSTATE.Jumping or movestate == GW2.MOVEMENTSTATE.Falling) and math.distancepointline(from, to, playerpos) > deviationthreshold) then			
+				d("[Navigation] - Player not on Path anymore. - 2D-Distance to Path: "..tostring(math.distancepointline(from, to, playerpos)).." > "..tostring(deviationthreshold))
+				Player:StopMovement()
+				ml_navigation.renderpathendX = nil
+				return false
+			end
+		
+		else
+			-- Under water, using 3D
+			if ( not (movstate == GW2.MOVEMENTSTATE.Jumping or movestate == GW2.MOVEMENTSTATE.Falling) and math.distancepointline(ml_navigation.path[ml_navigation.pathindex-1],ml_navigation.path[ml_navigation.pathindex],ppos) > deviationthreshold) then			
+				d("[Navigation] - Player not on Path anymore. - Distance to Path: "..tostring(math.distancepointline(ml_navigation.path[ml_navigation.pathindex-1],ml_navigation.path[ml_navigation.pathindex],ppos)).." > "..tostring(deviationthreshold))
+				Player:StopMovement()
+				ml_navigation.renderpathendX = nil
+				return false
+			end		
 		end
+		
 	end
 	return true
 end
