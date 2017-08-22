@@ -23,7 +23,7 @@ gw2_strings =
 		aRange							= "Range",
 		aMelee							= "Melee",
 		setsAttackRange					= "SetsAttackRange",
-        combatMovement                  = "CombatMovement",
+        combatMovement                  = "Combat Movement",
 		ignoreYellowMob					= "Ignore yellow mobs",
         enableRepair                    = "AutoRepair",
         ignoreMarkerLevels              = "IgnoreMarkerLevels",
@@ -410,7 +410,15 @@ gw2_strings =
 		showObjects						= "Show Objects",		
 		showOnlyGatherables				= "Show Only Gatherables",
 		showSieges						= "Show Sieges",
-		showradar						= "Radar",			
+		showradar						= "Radar",
+		showradar						= "Radar",
+		radarzoom						= "Zoom",
+		radar2dsettings = "2D Settings",
+		nodesettings = "Node Settings",
+		all = "All",
+		ore = "Ore",
+		plants = "Plants",
+		wood = "Wood",
         xPos                            = "X Position",
         yPos                            = "Y Position",
         assist                          = "Assist",
@@ -4128,7 +4136,6 @@ gw2_strings =
 	},    	
 
 }
-
 -- merge  the minionlib strings with our gw2 specific ones
 for language,data in pairs(gw2_strings) do
 	if ( ml_strings[language] ) then
@@ -4136,16 +4143,8 @@ for language,data in pairs(gw2_strings) do
 			if ( ml_strings[language][skey] == nil ) then
 				ml_strings[language][skey] = str
 			else
-				d("Not adding dupliocate string :"..skey)
+				--d("Not adding dupliocate string :"..skey)
 			end
 		end
-	end
-end
-
-function GetUSString(stringName)
-	if ml_strings["us"][stringName] == nil then
-		return stringName
-	else
-		return ml_strings["us"][stringName]
 	end
 end

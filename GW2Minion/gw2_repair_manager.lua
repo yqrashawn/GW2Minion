@@ -2,20 +2,36 @@ gw2_repair_manager = {}
 gw2_repair_manager.damagedLimit = 4
 gw2_repair_manager.brokenLimit = 1
 
+gw2_repair_manager.lastVendorID = nil
+gw2_repair_manager.VendorRepairHistroy = {}
+
 function gw2_repair_manager.getClosestRepairMarker(nearby)
 	local closestLocation = nil
 	local listArg = (nearby == true and ",maxdistance=4000" or "")
-	local markers = MapMarkerList("onmesh,nearest,contentID="..GW2.MAPMARKER.Repair..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorsrepair")))
-	for _,repair in pairs(markers) do
-		if (closestLocation == nil or closestLocation.distance > repair.distance) then
-			if (nearby == true and repair.pathdistance < 4000) then
-				closestLocation = repair
-			elseif (nearby ~= true) then
-				closestLocation = repair
+	local markers = gw2_repair_manager.getMarkerList(listArg)
+	if(table.valid(markers)) then
+		for _,repair in pairs(markers) do
+			if (closestLocation == nil or closestLocation.distance > repair.distance) then
+				if (nearby == true and repair.pathdistance < 4000) then
+					closestLocation = repair
+				elseif (nearby ~= true) then
+					closestLocation = repair
+				end
 			end
 		end
 	end
 	return closestLocation
+end
+
+
+function gw2_repair_manager.getMarkerList(filter)
+	filter = filter or ""
+	local markers = MapMarkerList("onmesh,contentID="..GW2.MAPMARKER.Repair..filter..",exclude_characterid="..gw2_blacklistmanager.GetExcludeString(GetString("vendorsrepair")))
+	if(table.valid(markers)) then
+		return markers
+	end
+	
+	return nil
 end
 
 function gw2_repair_manager.NeedToRepair(nearby)
@@ -37,49 +53,42 @@ function gw2_repair_manager.NeedToRepair(nearby)
 	return broken >= gw2_repair_manager.brokenLimit or damaged >= gw2_repair_manager.damagedLimit
 end
 
-function gw2_repair_manager.RepairAtVendor(marker)
-	if (marker) then
-		local repair = CharacterList:Get(marker.characterID)
-		if (repair == nil) then
-			repair = GadgetList:Get(marker.characterID)
-		end
-		if (repair and repair.isInInteractRange and repair.distance < 100) then
-			Player:StopMovement()
-			local target = Player:GetTarget()
-			if (not target or target.id ~= repair.id) then
-				Player:SetTarget(repair.id)
-			else
-				if (Player:IsConversationOpen() == false) then
-					ml_log(" Opening Repair.. ")
-					Player:Interact(repair.id)
-					ml_global_information.Wait(1500)
-					return true
-				else
-					local result = gw2_common_functions.handleConversation("repair")
-					if (result == false) then
-						d("Repair blacklisted, cant handle opening conversation.")
-						ml_blacklist.AddBlacklistEntry(GetString("vendorsrepair"), repair.id, repair.name, true)
-						return false
-					elseif (result == nil) then
-						ml_global_information.Wait(math.random(520,1200))
-						return true
-					end
-				end
-				
-			end
-		else
-			local pos = marker.pos
-			if ( pos ) then
-				local newTask = gw2_task_moveto.Create()
-				newTask.targetPos = pos
-				newTask.targetID = marker.characterID
-				newTask.targetType = "characterID"
-				newTask.name = "MoveTo Vendor(Repair)"
-				newTask.useWaypoint = true
-				ml_task_hub:CurrentTask():AddSubTask(newTask)
-				return true
-			end
-		end
+function gw2_repair_manager.RepairAtVendor(repair)
+	if (gw2_repair_manager.lastVendorID == nil or gw2_buy_manager.lastVendorID ~= repair.id ) then
+		gw2_repair_manager.lastVendorID = repair.id
+		gw2_repair_manager.VendorBuyHistroy = {}
+		gw2_repair_manager.VendorBuyHistroy.interactcount = 0
 	end
+	
+	if(gw2_repair_manager.VendorBuyHistroy.interactcount > 15) then
+		d("Repair blacklisted: Tried interacting multiple times.")
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("Vendor repair"), repair.id, repair.name, true)			
+	end
+	
+	if (Player:IsConversationOpen() == false) then
+		ml_log("Opening Repair... ")
+		Player:Interact(repair.id)
+		gw2_repair_manager.VendorBuyHistroy.interactcount = gw2_repair_manager.VendorBuyHistroy.interactcount + 1
+		ml_global_information.Wait(math.random(1500,1700))
+		return true
+	else
+		local result = gw2_common_functions.handleConversation("repair")
+		if (result == false) then
+			d("Repair blacklisted: Can not handle conversation.")
+			gw2_blacklistmanager.AddBlacklistEntry(GetString("Vendor repair"), repair.id, repair.name, true)
+			return false
+		end
+		gw2_repair_manager.VendorBuyHistroy.interactcount = 0
+		ml_global_information.Wait(math.random(520,1200))
+		if(Player:IsConversationOpen()) then
+			local options = Player:GetConversationOptions()
+			local n_options = table.size(options)
+			if(options and n_options > 0) then
+				Player:SelectConversationOptionByIndex(n_options-1)
+			end
+		end
+		
+		return true
+	end	
 	return false
 end

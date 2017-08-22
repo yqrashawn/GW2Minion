@@ -1,0 +1,257 @@
+local tbl = 
+{
+	class = "BehaviorTree",
+	nodes = 
+	{
+		
+		{
+			class = "PrioritySelector",
+			nodes = 
+			{
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "",
+						monitorcode = "",
+						runcode = "if(ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then\n\t\tself:fail()\nelse\n\t\tself:success()\nend",
+						startcode = "",
+					},
+				},
+				
+				{
+					class = "PrioritySelector",
+					nodes = 
+					{
+						
+						{
+							class = "Sequence",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Move to Divinity Reach",
+										monitorcode = "",
+										runcode = "if ( Player.localmapid == 18 or Player.localmapid == 881) then\t\t\n\t\tcontext.movetomap_targetmapid = nil\n\t\tself:fail()\n\t\treturn\nelse\n\t\tcontext.movetomap_targetmapid = 18\n\t\tself:success()\n\t\tcontext.status = \"Moving to Divinity's Reach\"\nend",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "SubTree",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+										selectedmapindex = 24,
+										targetmapid = 18,
+										usewaypoints = true,
+									},
+									variables = 
+									{
+										filename = "NavToMap.st",
+									},
+								},
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+							},
+						},
+						
+						{
+							class = "Sequence",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Move into the Bell Choir Map",
+										monitorcode = "",
+										runcode = "if ( Player.localmapid == 18 ) then\n\t\t\n\t\tcontext.moveto_position = { x = -10375, y =3385, z = -2361 }\n  self:success()\n  context.status = \"Joining Bell Choir Event\"\n\t\treturn\n\nend\nself:fail()",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "Wait",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+										duration = 1500,
+									},
+									variables = 
+									{
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.starttime ) then\tif ( self:getState() == 'success' ) then GUI:Text('Passed Time: '..tostring(math.round(self.settings.duration/1000))..' s') else GUI:Text('Passed Time: '..tostring(math.round(GetTickCount() - self.starttime,2 ))..' s') end else GUI:Text('Passed Time: 0 ms') end",
+									},
+								},
+								
+								{
+									class = "SubTree",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+										randomMovement = false,
+										randomizestoppingdistance = false,
+										smoothturns = true,
+										stoppingdistance = 50,
+										stoppingidstancemaxrange = 50,
+										usewaypoints = false,
+									},
+									variables = 
+									{
+										filename = "MoveTo.st",
+									},
+								},
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+							},
+						},
+						
+						{
+							class = "Sequence",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Move to Snowman  & start event",
+										monitorcode = "",
+										runcode = "-- Check if we are in a game already or not\nlocal blist = Player.buffs\n-- 16612 upper part, 16554 = Middle part, 16613 lower part \nif (table.valid(blist) and ( blist[16612] or blist[16554] or blist[16613] )) then\n\t\tcontext.status = \"Playing Songs..\"\n\t\tPlayer:StopMovement()\n\t\tself:fail()\n\t\treturn\nelse\n\nlocal EList = MapMarkerList(\"nearest,isevent,onmesh,eventid=6689\")\nif(table.valid(EList)) then\n\t\tlocal _,event = next(EList)\n\t\tif(table.valid(event)) then\t\t\t\t\t\t\t\t\n\t\t\t\tif(table.valid(event.eventinfo)) then\n\t\t\t\t\t\tif ( event.distance > 75 ) then\n\t\t\t\t\t\t\t\tcontext.moveto_position = event.pos\n\t\t\t\t\t\t\t\tself:success()\t\n\t\t\t\t\t\t\t\tcontext.status = \"Moving to Snowman..\"\n\t\t\t\t\t\t\t\treturn\n\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\td(\"Trying to find position..\")\n\n\t\t\t\t\t\t\t\tlocal hoho = CharacterList:Get(event.characterid)\n\t\t\t\t\t\t\t\tif( not hoho) then\n\t\t\t\t\t\t\t\t\t\tlocal epos = event.pos\n\t\t\t\t\t\t\t\t\t\tif ( epos ) then\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\tcontext.moveto_position = epos\n\t\t\t\t\t\t\t\t\t\t\t\tself:success()\t\n\t\t\t\t\t\t\t\t\t\t\t\tcontext.status = \"Moving to Snowman Event..\"\n\t\t\t\t\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\t\t\t\t\tend\n\n\t\t\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\t\t\tif ( not hoho.isininteractrange ) then\n\t\t\t\t\t\t\t\t\t\t\t\tcontext.moveto_position = hoho.pos\n\t\t\t\t\t\t\t\t\t\t\t\tself:success()\n\t\t\t\t\t\t\t\t\t\t\t\tcontext.status = \"Moving to Snowman..\"\n\t\t\t\t\t\t\t\t\t\t\t\treturn\n\n\t\t\t\t\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\t\t\t\t\tif ( not Player:IsConversationOpen() ) then\n\t\t\t\t\t\t\t\t\t\t\t\t\t\td(\"[BellChoir] - Talking to Snowman\")\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tPlayer:SetTarget(hoho.id)\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tPlayer:Interact(hoho.id)\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tcontext.status = \"Talking to Snowman..\"\n\n\t\t\t\t\t\t\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlocal clist = Player:GetConversationOptions()\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tif (table.valid(clist)) then \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tcontext.status = \"Selecting Bell Location..\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPlayer:SelectConversationOptionByIndex(0)\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\tend\t\t\t\t\n\t\t\t\tend\n\t\tend\nend\nend\nself:fail()",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "SubTree",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+										randomMovement = false,
+										randomizestoppingdistance = false,
+										smoothturns = true,
+										stoppingdistance = 50,
+										stoppingidstancemaxrange = 50,
+										usewaypoints = false,
+									},
+									variables = 
+									{
+										filename = "MoveTo.st",
+									},
+								},
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+							},
+						},
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "",
+								monitorcode = "",
+								runcode = "local blist = Player.buffs\t\nif ( table.valid(blist) )then\n\n\t\tif ( context.Bell1 > 0 and ( not blist[16555] or blist[16555].stacks < context.Bell1)) then Player:CastSpell(5) context.Bell1 = context.Bell1 -1  end\n\t\tif ( context.Bell2 > 0 and ( not blist[16556] or blist[16556].stacks < context.Bell2)) then Player:CastSpell(6) context.Bell2 = context.Bell2 -1  end\n\t\tif ( context.Bell3 > 0 and ( not blist[16557] or blist[16557].stacks < context.Bell3)) then Player:CastSpell(7) context.Bell3 = context.Bell3 -1  end\n\t\tif ( context.Bell4 > 0 and ( not blist[16558] or blist[16558].stacks < context.Bell4)) then Player:CastSpell(8) context.Bell4 = context.Bell4 -1  end\n\n\t\tif ( context.Bell5 > 0 and ( not blist[16559] or blist[16559].stacks < context.Bell5)) then Player:CastSpell(0) context.Bell5 = context.Bell5 -1  end\n\t\tif ( context.Bell6 > 0 and ( not blist[16560] or blist[16560].stacks < context.Bell6)) then Player:CastSpell(1) context.Bell6 = context.Bell6 -1  end\n\t\tif ( context.Bell7 > 0 and ( not blist[16561] or blist[16561].stacks < context.Bell7)) then Player:CastSpell(2) context.Bell7 = context.Bell7 -1  end\n\t\tif ( context.Bell8 > 0 and ( not blist[16562] or blist[16562].stacks < context.Bell8)) then Player:CastSpell(3) context.Bell8 = context.Bell8 -1  end\n\n\n\t\tif ( blist[16555] ) then context.Bell1 = blist[16555].stacks end\n\t\tif ( blist[16556] ) then context.Bell2 = blist[16556].stacks end\n\t\tif ( blist[16557] ) then context.Bell3 = blist[16557].stacks end\n\t\tif ( blist[16558] ) then context.Bell4 = blist[16558].stacks end\n\n\t\tif ( blist[16559] ) then context.Bell5 = blist[16559].stacks end\n\t\tif ( blist[16560] ) then context.Bell6 = blist[16560].stacks end\n\t\tif ( blist[16561] ) then context.Bell7 = blist[16561].stacks end\n\t\tif ( blist[16562] ) then context.Bell8 = blist[16562].stacks end\n\n\n\nend\nself:fail()\n",
+								startcode = "",
+							},
+						},
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						monitorcode = "",
+					},
+				},
+			},
+			settings = 
+			{
+			},
+			variables = 
+			{
+				monitorcode = "",
+			},
+		},
+	},
+	settings = 
+	{
+	},
+	variables = 
+	{
+		filename = "Wintersday-Bell Choir.bt",
+		finishcode = "",
+		info = "",
+		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetStringML(\"Bell Choir Stats\"))) then\n\t\n\t\tif (context and context.status) then\t\t\n\t\t\t\tGUI:Text(\"Status: \"..tostring(context.status))\n\t\telse\n\t\t\t\tGUI:Text(\"Status: None\")\n\t\tend\n\t\t\n\t\tGUI:TreePop()\nend\n",
+		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
+		runcode = "",
+		startcode = "if not context.Bell1 then context.Bell1 = 0 end\nif not context.Bell2 then context.Bell2 = 0 end\nif not context.Bell3 then context.Bell3 = 0 end\nif not context.Bell4 then context.Bell4 = 0 end\n\nif not context.Bell5 then context.Bell5 = 0 end\nif not context.Bell6 then context.Bell6 = 0 end\nif not context.Bell7 then context.Bell7 = 0 end\nif not context.Bell8 then context.Bell8 = 0 end",
+		subtreeuicode = "",
+	},
+}
+
+
+
+return tbl

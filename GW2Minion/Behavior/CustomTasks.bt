@@ -1,0 +1,473 @@
+local tbl = 
+{
+	class = "BehaviorTree",
+	nodes = 
+	{
+		
+		{
+			class = "PrioritySelector",
+			nodes = 
+			{
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "Ingame check",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+						runcode = "-- In CHaracter screen\nif ( ml_global_information.GameState ~= GW2.GAMESTATE.GAMEPLAY ) then\n\tself:success()\nelse\n\tself:fail()\nend",
+						startcode = "",
+					},
+				},
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "Check for valid profile",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+						runcode = "if(not context.taskmanager_activeprofile:IsValid()) then\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+						startcode = "",
+					},
+				},
+				
+				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "Handle task failure",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+						runcode = "local failstatus = context.taskmanager_activeprofile:Failed()\nif(failstatus == \"stop\") then\n\t\tPlayer:StopMovement()\n\t\tself:success()\n\t\treturn\nend\n\nself:fail()",
+						startcode = "",
+					},
+				},
+				
+				{
+					class = "Sequence",
+					nodes = 
+					{
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Defeated ) then\n\t\tcontext.deathcount = context.deathcount and context.deathcount + 1 or 0\n\n\t\tlocal task = context.taskmanager_activetask\n\t\tif(table.valid(task)) then\n\t\t\t\ttask:ResetPreTask()\n\t\t\t\ttask:ResetPostTask()\n\t\t\t\ttask:CallEvent(\"Death\")\n\n\t\t\t\tif(task.taskProperties.gw2_failondeath and task.taskProperties.gw2_failondeathcount) then\n\t\t\t\t\t\tif(context.deathcount > task.taskProperties.gw2_failondeathcount) then\n\t\t\t\t\t\t\t\ttask:Fail()\n\t\t\t\t\t\tend\n\t\t\t\tend\n\t\tend\n\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+								startcode = "",
+							},
+						},
+						
+						{
+							class = "SubTree",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								filename = "DeathHandler.st",
+							},
+						},
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						info = "Death",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+					},
+				},
+				
+				{
+					class = "Sequence",
+					nodes = 
+					{
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "",
+								monitorcode = "",
+								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Downed ) then\n\t\tif(table.valid(context.taskmanager_activetask)) then\n\t\t\t\tcontext.taskmanager_activetask:CallEvent(\"Downed\")\n\t\tend\n\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+								startcode = "",
+							},
+						},
+						
+						{
+							class = "SubTree",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								filename = "DownedHandler.st",
+							},
+						},
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+					},
+				},
+				
+				{
+					class = "PrioritySelector",
+					nodes = 
+					{
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "Setup active task",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "local task = context.taskmanager_activeprofile:ActiveTask()\n\nif(table.valid(task)) then\n\n\t\tif(not task:IsValid() or (task.completed and not table.valid(task:AvailablePostTasks())) or task.failed or (not task.started and not task:CanStart())) then\n\t\t\t\ttask = context.taskmanager_activeprofile:GetNextTask()\t\t\t\t\n\t\tend\n\n\t\tif(context.taskmanager_activeprofile.activeindex ~= context.taskmanager_activeindex) then\n\t\t\t\tcontext.taskmanager_activeindex = context.taskmanager_activeprofile.activeindex\n\t\t\t\td(\"[TaskManager]: Active task index changed. Waiting a bit.\")\n\t\t\t\tcontext.deathcount = 0\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tml_global_information.Wait(500,1000)\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\n\t\tif(task:IsValid()) then\n\t\t\t\tcontext.taskmanager_activetask = task\n\t\t\t\tself:fail()\n\t\telse\n\t\t\t\td(\"[TaskManager]: No available tasks left.\")\n\t\t\t\tcontext.taskmanager_activetask = nil\n\t\t\t\tself:success()\n\t\tend\nelse\n\t\tself:success()\nend\n",
+								startcode = "",
+							},
+						},
+						
+						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "Check for task completion",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "local task = context.taskmanager_activetask\n\nif(not task.completed and not task.failed) then\n\t\tself:fail()\nelseif(table.valid(task:AvailablePostTasks())) then\n\t\tself:fail()\nelse\n\t\ttask:Complete()\n\t\tcontext.taskmanager_activetask = nil\n\t\tml_global_information.Wait(math.random(500,1000))\n\t\tPlayer:StopMovement()\n\t\tself:success()\nend",
+								startcode = "",
+							},
+						},
+						
+						{
+							class = "PrioritySelector",
+							nodes = 
+							{
+								
+								{
+									class = "Sequence",
+									nodes = 
+									{
+										
+										{
+											class = "Action",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+											},
+											variables = 
+											{
+												filename = "",
+												finishcode = "",
+												info = "",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+												runcode = "local task = context.taskmanager_activetask\nif(task.taskProperties.mapid ~= ml_global_information.CurrentMapID) then\n\t\tcontext.movetomap_position = task.taskProperties.pos\n\t\tcontext.movetomap_targetmapid = task.taskProperties.mapid\n\t\tself:success()\nelse\n\t\tcontext.movetomap_targetmapid = nil\n\t\tself:fail()\nend",
+												startcode = "",
+											},
+										},
+										
+										{
+											class = "SubTree",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+												usewaypoints = true,
+											},
+											variables = 
+											{
+												filename = "NavToMap.st",
+											},
+										},
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										info = "Move to start map",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+									},
+								},
+								
+								{
+									class = "Sequence",
+									nodes = 
+									{
+										
+										{
+											class = "Action",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+											},
+											variables = 
+											{
+												finishcode = "",
+												info = "",
+												monitorcode = "",
+												runcode = "local task = context.taskmanager_activetask\n\nif(self.aggro_minhp and TimeSince(self.aggro_lastset) > 300000) then\n\t\tself.aggro_minhp = nil\nend\n\nif(not self.aggro_minhp) then\n\t\tself.aggro_minhp = math.random(40,60)\n\t\tself.aggro_lastset = ml_global_information.Now\nend\n\nif(self.aggro_minhp and not task.startpositionreached and task.taskProperties.gw2_trytosurvive) then\n\t\tif(ml_global_information.Player_Health.percent < self.aggro_minhp) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\n\nself:fail()",
+												startcode = "",
+											},
+										},
+										
+										{
+											class = "SubTree",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+											},
+											variables = 
+											{
+												filename = "HandleAggro.st",
+											},
+										},
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+									},
+								},
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Run pre tasks",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "local task = context.taskmanager_activetask\nlocal pretask = task:GetNextPreTask()\n\nif(table.valid(pretask)) then\n\t\tif(pretask:Run()) then\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\t\tpretask:Complete()\n\t\tself:success()\n\t\treturn\nend\nself:fail()\n",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "Sequence",
+									nodes = 
+									{
+										
+										{
+											class = "Action",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+											},
+											variables = 
+											{
+												finishcode = "",
+												info = "",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+												runcode = "local task = context.taskmanager_activetask\nif(task.startpositionreached and task.tasktype.options.allowradius and task.taskProperties.radius and task.taskProperties.radius > 0) then\n\t\tlocal r = task.taskProperties.radius\n\t\tlocal dist = math.distance3d(task.taskProperties.pos,ml_global_information.Player_Position)\n\n\t\tif(dist > r) then\n\t\t\t\t\td(\"[CustomTask]: Outside task radius. Distance: \"..math.ceil(dist)..\". Radius: \"..math.ceil(r))\n\t\t\t\t\ttask.startpositionreached = false\n\t\t\t\t\ttask.tasktype:Stop()\n\t\t\t\t\tPlayer:StopMovement()\n\t\t\t\t\tml_global_information.Wait(2000,5000)\n\t\t\t\t\tself:running()\n\t\t\t\t\treturn\n\t\tend\nend\nself:success()",
+												startcode = "",
+											},
+										},
+										
+										{
+											class = "Action",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+											},
+											variables = 
+											{
+												finishcode = "",
+												info = "",
+												monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+												runcode = "local task = context.taskmanager_activetask\n\nif(not task.startpositionreached) then\n\n\t\tif(math.distance3d(task.taskProperties.pos, ml_global_information.Player_Position) < 50) then\n\t\t\t\ttask.startpositionreached = true\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tml_global_information.Wait(500,2000)\n\t\t\t\tself:running()\n\t\t\t\treturn\n\t\tend\n\n\t\tcontext.moveto_position = task.taskProperties.pos\n\t\tself:success()\nelse\n\t\tself:fail()\nend",
+												startcode = "",
+											},
+										},
+										
+										{
+											class = "SubTree",
+											nodes = 
+											{
+											},
+											settings = 
+											{
+												randomMovement = true,
+												randomizestoppingdistance = false,
+												smoothturns = true,
+												stoppingdistance = 50,
+												stoppingidstancemaxrange = 100,
+												usewaypoints = false,
+											},
+											variables = 
+											{
+												filename = "MoveTo.st",
+											},
+										},
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										info = "Move to start position",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+									},
+								},
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Run post tasks",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "local task = context.taskmanager_activetask\n\nif(task.completed or task.failed) then\n\t\tlocal posttask = task:GetNextPostTask()\n\n\t\tif(table.valid(posttask)) then\n\n\t\t\t\tif(posttask:Run()) then\n\t\t\t\t\t\tself:running()\n\t\t\t\t\t\treturn\n\t\t\t\tend\n\n\t\t\t\tposttask:Complete()\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\n\nself:fail()\n",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Run custom task",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "local task = context.taskmanager_activetask\n\nif(task:Run()) then\n\t\tself:running()\nelse\n\t\tself:fail()\nend",
+										startcode = "",
+									},
+								},
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+							},
+						},
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						info = "",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+					},
+				},
+			},
+			settings = 
+			{
+			},
+			variables = 
+			{
+				info = "",
+				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
+			},
+		},
+	},
+	settings = 
+	{
+	},
+	variables = 
+	{
+		filename = "CustomTasks.bt",
+		finishcode = "d(\"Custom tasks off\")\nml_global_information.Stop()\nml_task_mgr.Stop()",
+		info = "",
+		menucode = "if(ml_task_mgr.DrawMenuCode) then\n\t\tml_task_mgr.DrawMenuCode()\nend",
+		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)\n\nif(context and context.taskmanager_activeprofile) then\n\t\tGUI:NewLine()\n\t\tlocal profile = context.taskmanager_activeprofile\n\t\tGUI:Text(\"Active profile:\")\n\t\tGUI:Text('Name: '..tostring(profile.name))\n\t\tGUI:Text('Active task: '..tostring(profile.activeindex))\n\t\tGUI:Text('Number of tasks: '..tostring(table.size(profile.tasks)))\n\n\t\tlocal task = context.taskmanager_activeprofile:ActiveTask()\n\t\tif(task:IsValid()) then\n\t\t\t\tGUI:NewLine()\n\t\t\t\tGUI:Text(\"Active task:\")\n\t\t\t\tGUI:Text('Name: '..task:Name())\n\t\t\t\tGUI:Text('Distance to task center: '..tostring(math.ceil(math.distance3d(task.taskProperties.pos,ml_global_information.Player_Position))))\n\t\t\t\tif(type(task.randomizedduration) == \"number\" and task.randomizedduration > 0 and task.runTime) then\n\t\t\t\t\t\tGUI:Text('Duration: '..tostring(task.randomizedduration))\n\t\t\t\t\t\tGUI:Text('Time remaining: '..tostring(task.randomizedduration-math.ceil(task.runTime/1000)))\n\t\t\t\tend\n\t\t\t\tif(type(task.taskProperties.radius) == \"number\" and task.taskProperties.radius > 0) then\n\t\t\t\t\t\tGUI:Text('Radius: '..tostring(task.taskProperties.radius))\n\t\t\t\tend\n\t\tend\nend",
+		runcode = "context.taskmanager_activeprofile = ml_task_mgr.GetCurrentProfile()",
+		startcode = "d(\"Custom tasks on\")\nml_global_information.Start()\nml_task_mgr.Start()",
+		subtreeuicode = "",
+	},
+}
+
+
+
+return tbl

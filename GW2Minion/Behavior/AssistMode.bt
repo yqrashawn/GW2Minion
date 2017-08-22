@@ -5,7 +5,7 @@ local tbl =
 	{
 		
 		{
-			class = "Sequence",
+			class = "PrioritySelector",
 			nodes = 
 			{
 				
@@ -14,35 +14,82 @@ local tbl =
 					nodes = 
 					{
 					},
+					settings = 
+					{
+					},
 					variables = 
 					{
 						finishcode = "",
 						info = "Ingame check",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Guest Server ID: '..tostring(Settings.GW2Minion.guestserver))\nGUI:Text(\"Guest Server Name: \"..ml_global_information.GuestServerList[Settings.GW2Minion.guestserver])\nGUI:Text('Autologin Enabled: '..tostring(Settings.GW2Minion.autostartbot))\nGUI:Text('GameState: '..tostring(ml_global_information.GameState))\nif (self.lastrun) then\n\tGUI:Text('Lastrun: '..tostring(TimeSince(self.lastrun)))\nend\n\n",
-						runcode = "-- In CHaracter screen\nif ( ml_global_information.GameState == 16 ) then\n\tself:success()\nelse\n\tself:fail()\nend\n",
+						runcode = "-- In CHaracter screen\nif ( ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then\n\t\tself:fail()\nelse\n\t\tself:success()\nend",
 						startcode = "",
-						xposoffset = 0,
 					},
 				},
 				
 				{
-					class = "Sequence",
+					class = "PrioritySelector",
 					nodes = 
 					{
 						
 						{
-							class = "Action",
+							class = "Sequence",
 							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Defeated ) then\n\t\tif(Settings.GW2Minion.assistautorespawn) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\t\tself:running()\n\t\treturn\nend\nself:fail()",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "SubTree",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										filename = "DeathHandler.st",
+									},
+								},
+							},
+							settings = 
 							{
 							},
 							variables = 
 							{
-								finishcode = "",
-								info = "Death Handler",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nif ( self.deadtime ) then\n\tGUI:Text('Time Since Death: '..tostring(TimeSince(self.deadtime)))\nelse\n\tGUI:Text('Time Since Death: 0')\nend",
-								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Defeated ) then\t\n\t\n\tif ( not self.deadtime or TimeSince(self.deadtime) > 5000 ) then \n\n\t-- Checking for nearby partymembers\n\t\tlocal party = ml_global_information.Player_Party\n\t\tlocal found = false\n\t\tif ( TableSize(party) > 1 ) then\n\t\t\tlocal idx,pmember = next(party)\n\t\t\twhile (idx and pmember) do\n\t\t\t\tif ( pmember.id ~= 0 ) then\n\t\t\t\t\tlocal char = CharacterList:Get(pmember.id)\n\t\t\t\t\tif ( char ) then\n\t\t\t\t\t\tlocal cPos = char.pos\n\t\t\t\t\t\tif ( cPos and Distance2D ( ml_global_information.Player_Position.x, ml_global_information.Player_Position.y, cPos.x, cPos.y) < 4000 and char.dead == false) then\n\t\t\t\t\t\t\tfound = true\n\t\t\t\t\t\t\tbreak\n\t\t\t\t\t\tend\n\t\t\t\t\tend\n\t\t\t\tend\n\t\t\t\tidx,pmember=next(party,idx)\n\t\t\tend\n\t\tend\n\n\t-- Check for nearby Players who can rezz us\n\tif ( found == false ) then\n\t\tif ( TableSize(CharacterList(\"nearest,alive,friendly,player,maxdistance=1200\"))>0 ) then\n\t\t\tfound = true\n\t\tend\n\tend\n\t\n\t\n\tif ( not found or TimeSince(self.deadtime) > 30000 ) then\n\t\tif ( ml_global_information.Player_LastHealth == nil or ml_global_information.Player_LastHealth < ml_global_information.Player_Health.current ) then\n\t\t\tml_global_information.Player_LastHealth = ml_global_information.Player_Health.current\t\t\n\t\t\tself.deadtime = ml_global_information.Now + 10000\n\t\t\td( \"[Player]: We are beeing revived...waiting a bit longer\" )\n\n\t\telseif ( ml_global_information.Player_LastHealth ~= nil ) then\n\t\t\tself.deadtime = ml_global_information.Now\n\t\t\td( \"[Player]: Respawn at nearest waypoint.\" )\n\t\t\td( Player:RespawnAtClosestWaypoint() )\n\t\t\tml_global_information.Stop()\t\n\t\tend\n\tend\nend\n\tself:fail()\nelse\n\tml_global_information.Player_LastHealth = ml_global_information.Player_Health.current\n\tself:success()\nend",
-								startcode = "",
-								xposoffset = 0,
+								info = "Death",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+							},
+						},
+						
+						{
+							class = "SubTree",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								filename = "DownedHandler.st",
 							},
 						},
 						
@@ -51,20 +98,7 @@ local tbl =
 							nodes = 
 							{
 							},
-							variables = 
-							{
-								finishcode = "",
-								info = "Downed Handler",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Health State: '..tostring(ml_global_information.Player_HealthState))\nGUI:Text('Downed: '..tostring(ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Downed))\nlocal target = gw2_common_functions.GetBestAggroTarget(true)\nif ( ValidTable(target) ) then\n\tGUI:Text('Downed Target: '..target.name)\nelse\n\tGUI:Text('Downed Target: None')\nend\nGUI:Text('Castinfo-Duration: '..tostring(Player.castinfo.duration))\n",
-								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Downed ) then\n\tif ( ml_global_information.Player_IsMoving == true ) then\n\t\tPlayer:StopMovement()\n\tend\n\t\n\t-- Attack nearby target\n\tlocal target = gw2_common_functions.GetBestAggroTarget(true)\n\tif ( ValidTable( target ) ) then\n\t\tlocal currentTarget = Player:GetTarget()\n\t\tif ( not currentTarget or currentTarget.id ~= target.id ) then\n\t\t\tPlayer:SetTarget(target.id)\n\t\tend\n\t\tgw2_skill_manager:Use( target.id )\n\tend\t\n\n\t-- Heal\n\tif ( Player.castinfo.duration == 0 ) then\n\t\tPlayer:CastSpell( GW2.SKILLBARSLOT.Slot_4 )\n\t\tml_global_information.Wait(500)\n\tend\n\tself:fail()\nelse\n\tself:success()\nend",
-								startcode = "",
-								xposoffset = 0,
-							},
-						},
-						
-						{
-							class = "Action",
-							nodes = 
+							settings = 
 							{
 							},
 							variables = 
@@ -72,43 +106,188 @@ local tbl =
 								finishcode = "",
 								info = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Alive ) then\t\n\n\tif ( Settings.GW2Minion.finishenemyassist == true and gw2_common_functions.FinishEnemy() == true ) then return end\n\n\tif ( Settings.GW2Minion.smtargetmode == 1 ) then\n\t\tlocal target = Player:GetTarget()\n\t\tif ( target and (target.alive or target.downed) and target.attackable ) then\t\t\t\t\n\t\t\tgw2_skill_manager:Use(target.id)\n\t\tend\n\t\t\n\telse \n\t\t\n\t\tlocal target = gw2_common_functions.GetBestCharacterTargetForAssist()\t\t\t\n\t\tif ( target and (target.alive or target.downed) and target.attackable ) then\n\t\t\tgw2_skill_manager:Use(target.id)\n\t\tend\n\tend\n\tself:success()\nelse\t\n\tself:fail()\nend",
+								runcode = "-- In case the setting changes right in the middle of movement\nif(context.combat_ismoving and Settings.GW2Minion.moveintocombatrange == false) then\n\t\tPlayer:StopMovement()\n\t\tcontext.combat_moveintocombatrange = false\n\t\tcontext.combat_ismoving = false\nend\nself:fail()",
 								startcode = "",
-								xposoffset = 0,
+							},
+						},
+						
+						{
+							class = "Sequence",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "Finish enemies",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "if ( Settings.GW2Minion.finishenemyassist == true) then\n\t\tif(gw2_common_functions.FinishEnemy() == true) then\n\t\t\t\td(\"[Assist]: Finishing enemy.\")\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "Wait",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+										duration = 1000,
+									},
+									variables = 
+									{
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) if ( self.starttime ) then\tif ( self:getState() == 'success' ) then GUI:Text('Passed Time: '..tostring(math.round(self.settings.duration/1000))..' s') else GUI:Text('Passed Time: '..tostring(math.round(GetTickCount() - self.starttime,2 ))..' s') end else GUI:Text('Passed Time: 0 ms') end",
+									},
+								},
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+							},
+						},
+						
+						{
+							class = "Sequence",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "if(Settings.GW2Minion.smtargetmode == 1 ) then\n\t\tself:success() -- Target Mode == None\nelse\n\t\tself:fail()\nend",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "local target = Player:GetTarget()\nlocal combatmovement\nlocal activerange\n\nif ( SkillManager and SkillManager:Ready() ) then\n\t\tSkillManager:Use(context.combat_targetid)\n\t\tactiverange = SkillManager:GetActiveSkillRange()\n\t\tcombatmovement = SkillManager:GetCombatMovement()\nelse\n\t\tgw2_skill_manager:Use(context.combat_targetid)\n\t\tactiverange = gw2_skill_manager.GetActiveSkillRange()\n\t\tcombatmovement = gw2_skill_manager.CombatMovement()\nend\n\nif(combatmovement and combatmovement.range) then\t\t\n\t\tif ( target == nil or (target.distance <= activerange)) then\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tcombatmovement.range = false\n\t\tend\nend\n\nif(target and (target.alive or target.downed) and target.attackable and not gw2_common_functions.HasBuffs(target,ml_global_information.InvulnerabilityConditions)) then\n\t\tif ( SkillManager and SkillManager:Ready() ) then\n\t\t\t\tSkillManager:Use(target.id)\n\t\telse\n\t\t\t\tgw2_skill_manager:Use(target.id)\n\t\tend\n\n\t\tif(Settings.GW2Minion.moveintocombatrange and ml_global_information.Player_OnMesh) then\n\n\t\t\t\tlocal stoppingdistance = activerange\n\t\t\t\tif(stoppingdistance < 300) then\n\t\t\t\t\t\tstoppingdistance = stoppingdistance + target.radius\n\t\t\t\telse\n\t\t\t\t\t\tstoppingdistance = math.max(300, stoppingdistance / 1.2)\n\t\t\t\tend\n\t\t\t\t\n\t\t\t\tlocal canmove\n\t\t\t\tif ( SkillManager and SkillManager:Ready() ) then\n\t\t\t\t\t\tcanmove = SkillManager:CanMove()\n\t\t\t\telse\n\t\t\t\t\t\tcanmove = gw2_skill_manager.CanMove()\n\t\t\t\tend\n\n\t\t\t\tif(combatmovement and canmove and target.distance > stoppingdistance) then\n\t\t\t\t\t\t\t\tlocal tPos = target.pos\n\t\t\t\t\t\t\t\tNavigationManager:MoveTo(tPos.x,tPos.y,tPos.z,stoppingdistance,false,false,true)\n\t\t\t\t\t\t\t\tcombatmovement.range = true\n\t\t\t\tend\n\t\tend\nend\n\nself:success()",
+										startcode = "",
+									},
+								},
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								info = "Manual target mode",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
+							},
+						},
+						
+						{
+							class = "PrioritySelector",
+							nodes = 
+							{
+								
+								{
+									class = "Action",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										finishcode = "",
+										info = "",
+										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+										runcode = "local ptarget = Player:GetTarget()\nlocal target = nil\nif(ptarget and ptarget.downed and ptarget.friendly and ptarget.distance < 200) then\n\t\tself:success()\n\t\treturn\nend\n\nif(ptarget and ptarget.attackable and not gw2_common_functions.HasBuffs(ptarget,ml_global_information.InvulnerabilityConditions) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Monsters\"),ptarget.contentid) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Temporary Combat\"),ptarget.id)) then\n\t\ttarget = ptarget\nend\n\nlocal besttarget = gw2_common_functions.GetBestCharacterTargetForAssist()\n\nif(besttarget and (target == nil or besttarget.id ~= target.id)) then\n\t\ttarget = besttarget\nend\nif(target and (target.alive or target.downed) and target.attackable and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Monsters\"),target.contentid) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Temporary Combat\"),target.id)) then\n\t\tcontext.combat_targetid = target.id\n\t\tcontext.combat_targetpos = target.pos\n\t\tcontext.combat_moveintocombatrange = Settings.GW2Minion.moveintocombatrange and ml_global_information.Player_OnMesh and target.pathdistance < 9999999\n\t\tcontext.combat_onmeshcheck = false\nelse\n\t\tcontext.combat_targetcheck = nil\nend\nself:fail()",
+										startcode = "",
+									},
+								},
+								
+								{
+									class = "SubTree",
+									nodes = 
+									{
+									},
+									settings = 
+									{
+									},
+									variables = 
+									{
+										filename = "CombatHandler.st",
+									},
+								},
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								info = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
 							},
 						},
 					},
+					settings = 
+					{
+					},
 					variables = 
 					{
-						expanded = true,
-						info = "Death, Downed, Alive branch",
-						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.actualTask or 'None'))",
-						xposoffset = 0.0444444444444,
+						info = "",
+						monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
 					},
 				},
 			},
+			settings = 
+			{
+			},
 			variables = 
 			{
-				expanded = true,
-				failThreshold = 1,
-				info = "GameState Switch",
-				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.activeTask or 'None')) GUI:Text('Succeeded Tasks: '..tostring(self.succeededTasks)) GUI:Text('Failed Tasks: '..tostring(self.failedTasks)) GUI:Text('Running Tasks: '..tostring(self.ranTasks))",
-				successThreshold = 1,
-				xposoffset = 0,
+				info = "",
+				monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Active Child: '..tostring(self.runningTask or 'None'))",
 			},
 		},
 	},
+	settings = 
+	{
+	},
 	variables = 
 	{
-		expanded = true,
 		filename = "AssistMode.bt",
 		finishcode = "d(\"AssistMode Off\")\n\nml_global_information.Stop()",
 		info = "",
-		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetStringML(\"assistMode\"))) then\n\n\t-- SM backwards compatibily fix \n\tgBotMode = GetString(\"assistMode\")\n\t\n\n\tif ( Settings.GW2Minion.smtargetmode == nil) then Settings.GW2Minion.smtargetmode = 1 end\n\tif ( Settings.GW2Minion.smmode == nil) then Settings.GW2Minion.smmode = 1 end\n\tif ( Settings.GW2Minion.moveintoombatrange == nil) then Settings.GW2Minion.moveintoombatrange = true end\n\tif ( Settings.GW2Minion.finishenemyassist == nil) then Settings.GW2Minion.finishenemyassist = true end\n\n\n\tGUI:PushItemWidth(150)\n\tSettings.GW2Minion.smtargetmode = GUI:Combo(GetString(\"sMtargetmode\"),Settings.GW2Minion.smtargetmode,{\"None\",\"LowestHealth\",\"Closest\",\"Biggest Crowd\",})\n\tSettings.GW2Minion.smmode = GUI:Combo(GetString(\"sMmode\"),Settings.GW2Minion.smmode,{\"Everything\",\"Players Only\",})\n\tGUI:PopItemWidth()\n\n\n\tSettings.GW2Minion.moveintoombatrange = GUI:Checkbox(GetString(\"smMoveIntoCombatRange\"),Settings.GW2Minion.moveintoombatrange)\n\tSettings.GW2Minion.finishenemyassist = GUI:Checkbox(GetString(\"AutoStomp\"),Settings.GW2Minion.finishenemyassist)\n\n\tGUI:TreePop()\nend",
+		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetString(\"AssistMode\"))) then\n\t\tif ( Settings.GW2Minion.smtargetmode == nil) then Settings.GW2Minion.smtargetmode = 1 end\n\t\tif ( Settings.GW2Minion.smmode == nil) then Settings.GW2Minion.smmode = 1 end\n\t\tif ( Settings.GW2Minion.moveintocombatrange == nil) then Settings.GW2Minion.moveintocombatrange = true end\n\t\tif ( Settings.GW2Minion.assistautorespawn == nil) then Settings.GW2Minion.assistautorespawn = false end\n\n\n\t\tGUI:PushItemWidth(150)\n\t\tSettings.GW2Minion.smtargetmode = GUI:Combo(GetString(\"sMtargetmode\"),Settings.GW2Minion.smtargetmode,{GetString(\"None\"),GetString(\"LowestHealth\"),GetString(\"Closest\"),GetString(\"Biggest Crowd\"),})\n\t\tSettings.GW2Minion.smmode = GUI:Combo(GetString(\"Attack Mode\"),Settings.GW2Minion.smmode,{GetString(\"Everything\"),GetString(\"Players Only\"),})\n\t\tGUI:PopItemWidth()\n\n\n\t\tSettings.GW2Minion.moveintocombatrange = GUI:Checkbox(GetString(\"Move Into Combat Range\"),Settings.GW2Minion.moveintocombatrange)\t\t\n\t\tSettings.GW2Minion.assistautorespawn = GUI:Checkbox(GetString(\"Auto Respawn\"),Settings.GW2Minion.assistautorespawn)\n\t\tGUI:TreePop()\nend",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Game State: '..tostring(ml_global_information.GameState))",
 		runcode = "",
-		startcode = "d(\"AssistMode On\")\ngw2_unstuck.Start()",
-		xposoffset = 0,
+		startcode = "d(\"AssistMode On\")\nml_global_information.Start()\ngw2_unstuck.manualcontrolmode = true",
 	},
 }
 

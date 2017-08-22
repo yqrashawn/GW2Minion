@@ -1,5 +1,5 @@
 gw2_sell_manager = {}
-gw2_sell_manager.active = false
+gw2_sell_manager.active = true
 gw2_sell_manager.salvageTick = 0
 gw2_sell_manager.toolTip = false
 gw2_sell_manager.filterList = {list = {}, nameList = {}, currID = 1,}
@@ -37,7 +37,7 @@ function gw2_sell_manager.ModuleInit()
 
 	-- init active stuff here.
 	if (Settings.gw2_sell_manager.active == nil) then
-		Settings.gw2_sell_manager.active = false
+		Settings.gw2_sell_manager.active = true
 	end
 	gw2_sell_manager.active = Settings.gw2_sell_manager.active
 	-- end active init.
@@ -69,8 +69,7 @@ function gw2_sell_manager.ModuleInit()
 	gw2_sell_manager.updateInventoryItems()
 
 	-- init button in minionmainbutton
-	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SELLMGR", name = "Sell MGR", onClick = function() gw2_sell_manager.mainWindow.open = gw2_sell_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Sell Manager\" window."},"GW2MINION##MENU_HEADER")
-
+	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SELLMGR", name = "Sell", onClick = function() gw2_sell_manager.mainWindow.open = gw2_sell_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Sell Manager\" window.", texture = GetStartupPath().."\\GUI\\UI_Textures\\sell.png"},"GW2MINION##MENU_HEADER")
 end
 
 -- Gui draw function.
@@ -89,7 +88,7 @@ function gw2_sell_manager.mainWindow.Draw(event,ticks)
 			Settings.gw2_sell_manager.active = gw2_sell_manager.active
 			GUI:EndGroup()
 			if (GUI:IsItemHovered() and gw2_sell_manager.toolTip) then
-				GUI:SetTooltip("Turn Salvaging on or off.")
+				GUI:SetTooltip("Turn Sell Manager on or off.")
 			end
 			-----------------------------------------------------------------------------------------------------------------------------------
 			GUI:Separator()
@@ -502,7 +501,7 @@ end
 
 -- Salvage List stuff here.
 function gw2_sell_manager.createItemList()
-	local inventoryItems = Inventory("exclude_contentid="..ml_blacklist.GetExcludeString(GetString("sellItems")))
+	local inventoryItems = Inventory("exclude_contentid="..gw2_blacklistmanager.GetExcludeString(GetString("Sell items")))
 	local filteredItems = {}
 	if (table.valid(inventoryItems)) then
 		for slot,nItem in pairs(inventoryItems) do
@@ -528,118 +527,121 @@ end
 function gw2_sell_manager.getClosestSellMarker(nearby)
 	local closestLocation = nil
 	local listArg = (nearby == true and ",maxdistance=5000" or "")
-	local markers = MapMarkerList("onmesh"..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorssell")))
-	if ( TableSize(markers) > 0 ) then
-		local i,marker = next (markers)
-		while ( i and marker ) do
-			local mCID = marker.contentID
-			if (mCID == GW2.MAPMARKER.Merchant or mCID == GW2.MAPMARKER.Armorsmith or mCID == GW2.MAPMARKER.Weaponsmith or mCID == GW2.MAPMARKER.Repair) then
-				if (closestLocation == nil or closestLocation.distance > marker.distance) then
-					if (nearby == true and marker.pathdistance < 4000) then
-						closestLocation = marker
-					elseif (nearby ~= true) then
-						closestLocation = marker
-					end
+	local markers = gw2_sell_manager.getMarkerList(listArg)
+	if ( table.valid(markers) ) then
+		for _,marker in pairs(markers) do
+			if (closestLocation == nil or closestLocation.distance > marker.distance) then
+				if (nearby == true and marker.pathdistance < 4000) then
+					closestLocation = marker
+				elseif (nearby ~= true) then
+					closestLocation = marker
 				end
-			end
-			i,marker = next (markers,i)
+			end	
 		end
 	end
 
 	return closestLocation
 end
 
+function gw2_sell_manager.getMarkerList(filter)
+	filter = filter or ""
+	local markers = {}
+	local MList = MapMarkerList("onmesh"..filter..",exclude_characterid="..gw2_blacklistmanager.GetExcludeString(GetString("Vendor sell")))
+	if(table.valid(MList)) then
+		for _,marker in pairs(MList) do
+			local validCID = {
+				GW2.MAPMARKER.Merchant,
+				GW2.MAPMARKER.Armorsmith,
+				GW2.MAPMARKER.Weaponsmith,
+				GW2.MAPMARKER.Repair,
+				GW2.MAPMARKER.ItzelVendor,
+				GW2.MAPMARKER.ExaltedVendor,
+				GW2.MAPMARKER.NuhochVendor,
+			}
+			if (table.contains(validCID,marker.contentid)) then
+				table.insert(markers, marker)
+			end
+		end
+	end
+	return markers
+end
+
 --sellhere.
 gw2_sell_manager.lastVendorID = nil
 gw2_sell_manager.VendorSellHistroy = {}
-function gw2_sell_manager.sellAtVendor(vendorMarker)
-	if (vendorMarker) then
-		local vendor = CharacterList:Get(vendorMarker.characterID)
-		if (vendor == nil) then
-			vendor = GadgetList:Get(vendorMarker.characterID)
+function gw2_sell_manager.sellAtVendor(vendor)
+	if (vendor) then
+		-- Reset vendorhistory on new vendor
+		if ( gw2_sell_manager.lastVendorID == nil or gw2_sell_manager.lastVendorID ~= vendor.id ) then
+			gw2_sell_manager.lastVendorID = vendor.id
+			gw2_sell_manager.VendorSellHistroy = {}
+			gw2_sell_manager.VendorSellHistroy.interactcount = 0
 		end
-		if (vendor and vendor.isInInteractRange and vendor.distance < 100) then
-			Player:StopMovement()
-			-- Reset vendorhistory on new vendor
-			if ( gw2_sell_manager.lastVendorID == nil or gw2_sell_manager.lastVendorID ~= vendor.id ) then
-				gw2_sell_manager.lastVendorID = vendor.id
-				gw2_sell_manager.VendorSellHistroy = {}
-			end
-
-			local target = Player:GetTarget()
-			if (not target or target.id ~= vendor.id) then
-				Player:SetTarget(vendor.id)
-				return true
-			else
-				if (Inventory:IsVendorOpened() == false and Player:IsConversationOpen() == false) then
-					d(" Opening Vendor.. ")
-					Player:Interact(vendor.id)
-					ml_global_information.Wait(1500)
-					return true
-				else
-					local result = gw2_common_functions.handleConversation("sell")
-					if (result == false) then
-						d("Vendor blacklisted, cant handle opening conversation.")
-						ml_blacklist.AddBlacklistEntry(GetString("vendorssell"), vendor.id, vendor.name, true)
-						return false
-					elseif (result == nil) then
-						ml_global_information.Wait(math.random(520,1200))
-						return true
-					end
-				end
-				local iList = gw2_sell_manager.createItemList()
-				local slowdown = math.random(0,1)
-				local soldstuff = false
-				if ( table.valid(iList) ) then
-					if ( slowdown == 0 ) then
-						for _,item in pairs(iList) do
-							d("Selling: "..item.name)
-							item:Sell()
-							local uniqueItemID = item.itemID .. item.slot
-							if ( not gw2_sell_manager.VendorSellHistroy[uniqueItemID] or gw2_sell_manager.VendorSellHistroy[uniqueItemID] < 5 ) then
-
-								if ( not gw2_sell_manager.VendorSellHistroy[uniqueItemID] ) then
-									gw2_sell_manager.VendorSellHistroy[uniqueItemID] = 1
-								else
-									gw2_sell_manager.VendorSellHistroy[uniqueItemID] = gw2_sell_manager.VendorSellHistroy[uniqueItemID] + 1
-								end
-							else
-								d("Can't sell "..item.name..", blacklisting it")
-								ml_blacklist.AddBlacklistEntry(GetString("sellItems"), item.itemID, item.name, true)
-							end
-							return true
-						end
-						return false
-					end
-					return true
-				end
-
-				-- No more items to sell
-				d("Selling finished..")
-				Inventory:SellJunk()
-
-			end
+		
+		if(gw2_sell_manager.VendorSellHistroy.interactcount > 15) then
+			d("Vendor blacklisted: Tried interacting multiple times.")
+			gw2_blacklistmanager.AddBlacklistEntry(GetString("Vendor sell"), vendor.id, vendor.name, true)			
+		end
+		
+		if (Inventory:IsVendorOpened() == false and Player:IsConversationOpen() == false) then
+			d("Opening Vendor... ")
+			Player:Interact(vendor.id)
+			gw2_sell_manager.VendorSellHistroy.interactcount = gw2_sell_manager.VendorSellHistroy.interactcount + 1
+			ml_global_information.Wait(1500)
+			return true
 		else
-			local pos = vendorMarker.pos
-			if ( pos ) then
-				local newTask = gw2_task_moveto.Create()
-				newTask.targetPos = pos
-				newTask.targetID = vendorMarker.characterID
-				newTask.targetType = "characterID"
-				newTask.name = "MoveTo Vendor(SELL)"
-				newTask.useWaypoint = true
-				ml_task_hub:CurrentTask():AddSubTask(newTask)
+			local result = gw2_common_functions.handleConversation("sell")
+			if (result == false) then
+				d("Vendor blacklisted: Could not handle conversation.")
+				gw2_blacklistmanager.AddBlacklistEntry(GetString("Vendor sell"), vendor.id, vendor.name, true)
+				return false
+			elseif (result == nil) then
+				ml_global_information.Wait(math.random(520,1200))
 				return true
 			end
 		end
+		local iList = gw2_sell_manager.createItemList()
+		local slowdown = math.random(0,1)
+		local soldstuff = false
+		if ( table.valid(iList) ) then
+			if ( slowdown == 0 ) then
+				for _,item in pairs(iList) do
+					d("Selling: "..item.name)
+					item:Sell()
+					local uniqueItemID = item.itemid .. item.slot
+					if (not gw2_sell_manager.VendorSellHistroy[uniqueItemID]) then
+						gw2_sell_manager.VendorSellHistroy[uniqueItemID] = 1
+					elseif (gw2_sell_manager.VendorSellHistroy[uniqueItemID] < 5) then
+						gw2_sell_manager.VendorSellHistroy[uniqueItemID] = gw2_sell_manager.VendorSellHistroy[uniqueItemID] + 1
+					else
+						d("Could not sell "..item.name..", blacklisting it")
+						gw2_blacklistmanager.AddBlacklistEntry(GetString("Sell items"), item.itemID, item.name, true)
+					end
+					return true
+				end
+			end
+			return true
+		end
+		
+		d("Selling junk...")
+		Inventory:SellJunk()
+		
+		-- No more items to sell
+		d("Selling finished...")
+		gw2_sell_manager.VendorSellHistroy = {}
+		gw2_sell_manager.VendorSellHistroy.interactcount = 0
+		ml_global_information.Wait(math.random(520,750))
 	end
 	return false
 end
 
 --needtosell.
 function gw2_sell_manager.needToSell(nearby)
-	if (table.valid(gw2_sell_manager.createItemList()) or table.valid(Inventory("rarity="..GW2.ITEMRARITY.Junk))) then
-		if (nearby and ((ml_global_information.Player_Inventory_SlotsFree*100)/Inventory.slotCount) < 33) then
+	local junkitems = Inventory("rarity="..GW2.ITEMRARITY.Junk)
+	local selljunk = table.size(junkitems) > 3 or (table.valid(junkitems) and ((ml_global_information.Player_Inventory_SlotsFree*100)/Inventory.slotcount) < 15)
+	
+	if (table.valid(gw2_sell_manager.createItemList()) or selljunk) then
+		if (nearby and ((ml_global_information.Player_Inventory_SlotsFree*100)/Inventory.slotcount) < 33) then
 			return true
 		elseif (ml_global_information.Player_Inventory_SlotsFree <= 2) then
 			return true

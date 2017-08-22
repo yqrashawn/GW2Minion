@@ -19,15 +19,15 @@ local obj1 = {
 				["minHP"] = 15;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "1";
+				["castOnSelf"] = true;
+				["groundTargeted"] = true;
 				["id"] = 5972;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Toss Elixir S";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 15;
 			};
 			["target"] = {
@@ -39,15 +39,15 @@ local obj1 = {
 				["minHP"] = 15;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 6090;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Toss Elixir S";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 15;
 			};
 			["target"] = {
@@ -59,16 +59,16 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 5834;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Elixir H";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 0;
-				["slowCast"] = "1";
+				["slowCast"] = true;
 			};
 			["target"] = {
 			};
@@ -78,14 +78,14 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 5980;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Cleansing Burst";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 0;
 			};
 			["target"] = {
@@ -96,14 +96,14 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 6176;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Regenerating Mist";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 12;
 			};
 			["target"] = {
@@ -114,15 +114,15 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 29772;
-				["los"] = "0";
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Bandage Self";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 12;
 			};
 			["target"] = {
@@ -133,14 +133,14 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 5857;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Healing Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 0;
 			};
 			["target"] = {
@@ -151,13 +151,13 @@ local obj1 = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 5966;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Healing Mist";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 14;
 			};
 			["target"] = {
@@ -165,90 +165,121 @@ local obj1 = {
 		};
 		[9] = {
 			["player"] = {
+				["allyDownedNearCount"] = 0;
+				["allyDownedRangeMax"] = 0;
+				["allyNearCount"] = 0;
+				["allyRangeMax"] = 0;
+				["boonCount"] = 0;
+				["combatState"] = "Either";
+				["conditionCount"] = 0;
+				["hasBuffs"] = "";
+				["hasNotBuffs"] = "";
+				["maxEndurance"] = 0;
+				["maxHP"] = 0;
+				["maxPower"] = 0;
+				["minEndurance"] = 0;
+				["minHP"] = 0;
+				["minPower"] = 0;
+				["moving"] = "Either";
+			};
+			["skill"] = {
+				["castOnSelf"] = false;
+				["delay"] = 0;
+				["id"] = 30264;
+				["isProjectile"] = false;
+				["lastSkillID"] = "";
+				["los"] = true;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "Overcharge Supply Crate";
+				["radius"] = 0;
+				["relativePosition"] = "None";
+				["setRange"] = false;
+				["slowCast"] = false;
+				["stopsMovement"] = false;
+			};
+			["target"] = {
+				["boonCount"] = 0;
+				["conditionCount"] = 0;
+				["enemyNearCount"] = 0;
+				["enemyRangeMax"] = 0;
+				["hasBuffs"] = "";
+				["hasNotBuffs"] = "";
+				["maxHP"] = 0;
+				["minHP"] = 0;
+				["moving"] = "Either";
+				["type"] = "Either";
+			};
+		};
+		[10] = {
+			["player"] = {
 				["minHP"] = 75;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
 				["id"] = 30357;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Medic Gyro";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 0;
-			};
-			["target"] = {
-			};
-		};
-		[10] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
-				["id"] = 1175;
-				["los"] = "0";
-				["maxRange"] = 0;
-				["minRange"] = 0;
-				["name"] = "Bandage";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 8;
 			};
 			["target"] = {
 			};
 		};
 		[11] = {
 			["player"] = {
-				["minHP"] = 20;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
-				["id"] = 21659;
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
+				["id"] = 1175;
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "A.E.D.";
+				["name"] = "Bandage";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 0;
+				["setRange"] = false;
+				["slot"] = 8;
 			};
 			["target"] = {
 			};
 		};
 		[12] = {
 			["player"] = {
+				["minHP"] = 20;
+			};
+			["skill"] = {
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
+				["id"] = 21659;
+				["maxRange"] = 0;
+				["minRange"] = 0;
+				["name"] = "A.E.D.";
+				["radius"] = 0;
+				["setRange"] = false;
+				["slot"] = 0;
+			};
+			["target"] = {
+			};
+		};
+		[13] = {
+			["player"] = {
 				["minHP"] = 0;
 				["moving"] = "NotMoving";
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
+				["groundTargeted"] = true;
 				["id"] = 30599;
 				["maxRange"] = 360;
 				["minRange"] = 0;
 				["name"] = "Orbital Strike";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 16;
-				["slowCast"] = "1";
-			};
-			["target"] = {
-				["moving"] = "NotMoving";
-			};
-		};
-		[13] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 6177;
-				["maxRange"] = 1500;
-				["minRange"] = 0;
-				["name"] = "Rocket";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 13;
+				["slowCast"] = true;
 			};
 			["target"] = {
 				["moving"] = "NotMoving";
@@ -258,13 +289,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 22573;
+				["groundTargeted"] = true;
+				["id"] = 6177;
 				["maxRange"] = 1500;
 				["minRange"] = 0;
 				["name"] = "Rocket";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 13;
 			};
 			["target"] = {
@@ -275,30 +306,31 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 5867;
-				["maxRange"] = 1200;
+				["groundTargeted"] = false;
+				["id"] = 22573;
+				["maxRange"] = 1500;
 				["minRange"] = 0;
-				["name"] = "Toss Elixir R";
+				["name"] = "Rocket";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 15;
+				["setRange"] = false;
+				["slot"] = 13;
 			};
 			["target"] = {
+				["moving"] = "NotMoving";
 			};
 		};
 		[16] = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6091;
+				["groundTargeted"] = true;
+				["id"] = 5867;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Toss Elixir R";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 13;
+				["setRange"] = false;
+				["slot"] = 15;
 			};
 			["target"] = {
 			};
@@ -307,14 +339,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5975;
+				["groundTargeted"] = false;
+				["id"] = 6091;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Analyze";
+				["name"] = "Toss Elixir R";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 14;
+				["setRange"] = false;
+				["slot"] = 13;
 			};
 			["target"] = {
 			};
@@ -323,13 +355,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6178;
-				["maxRange"] = 1000;
+				["groundTargeted"] = false;
+				["id"] = 5975;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Surprise Shot";
+				["name"] = "Analyze";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 14;
 			};
 			["target"] = {
@@ -337,18 +369,16 @@ local obj1 = {
 		};
 		[19] = {
 			["player"] = {
-				["minHP"] = 70;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "1";
-				["id"] = 29716;
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 6178;
+				["maxRange"] = 1000;
 				["minRange"] = 0;
-				["name"] = "Med Pack Drop";
+				["name"] = "Surprise Shot";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 16;
+				["setRange"] = false;
+				["slot"] = 14;
 			};
 			["target"] = {
 			};
@@ -358,14 +388,14 @@ local obj1 = {
 				["minHP"] = 70;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
-				["id"] = 30588;
-				["maxRange"] = 180;
+				["castOnSelf"] = true;
+				["groundTargeted"] = true;
+				["id"] = 29716;
+				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Med Pack Drop";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 16;
 			};
 			["target"] = {
@@ -373,17 +403,18 @@ local obj1 = {
 		};
 		[21] = {
 			["player"] = {
+				["minHP"] = 70;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 17260;
-				["los"] = "0";
-				["maxRange"] = 1200;
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
+				["id"] = 30588;
+				["maxRange"] = 180;
 				["minRange"] = 0;
-				["name"] = "Detonate Flame Blast";
+				["name"] = "Med Pack Drop";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 6;
+				["setRange"] = false;
+				["slot"] = 16;
 			};
 			["target"] = {
 			};
@@ -392,32 +423,31 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 5810;
-				["isProjectile"] = "1";
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 17260;
+				["los"] = false;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Grenade Barrage";
+				["name"] = "Detonate Flame Blast";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 13;
+				["setRange"] = false;
+				["slot"] = 6;
 			};
 			["target"] = {
-				["moving"] = "NotMoving";
 			};
 		};
 		[23] = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6172;
-				["isProjectile"] = "1";
+				["groundTargeted"] = true;
+				["id"] = 5810;
+				["isProjectile"] = true;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Grenade Barrage";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 13;
 			};
 			["target"] = {
@@ -428,33 +458,32 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
+				["id"] = 6172;
+				["isProjectile"] = true;
+				["maxRange"] = 900;
+				["minRange"] = 0;
+				["name"] = "Grenade Barrage";
+				["radius"] = 0;
+				["setRange"] = false;
+				["slot"] = 13;
+			};
+			["target"] = {
+				["moving"] = "NotMoving";
+			};
+		};
+		[25] = {
+			["player"] = {
+			};
+			["skill"] = {
+				["groundTargeted"] = false;
 				["id"] = 5982;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Launch Personal Battering Ram";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 14;
-			};
-			["target"] = {
-			};
-		};
-		[25] = {
-			["player"] = {
-				["minHP"] = 60;
-			};
-			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "1";
-				["id"] = 5868;
-				["los"] = "0";
-				["maxRange"] = 1200;
-				["minRange"] = 0;
-				["name"] = "Supply Crate";
-				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 4;
 			};
 			["target"] = {
 			};
@@ -464,15 +493,15 @@ local obj1 = {
 				["minHP"] = 60;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
-				["id"] = 6183;
-				["los"] = "0";
-				["maxRange"] = 0;
+				["castOnSelf"] = true;
+				["groundTargeted"] = true;
+				["id"] = 5868;
+				["los"] = false;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
 				["name"] = "Supply Crate";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 4;
 			};
 			["target"] = {
@@ -480,49 +509,52 @@ local obj1 = {
 		};
 		[27] = {
 			["player"] = {
+				["minHP"] = 60;
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 6181;
-				["maxRange"] = 900;
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
+				["id"] = 6183;
+				["los"] = false;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Throw Napalm";
+				["name"] = "Supply Crate";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 15;
+				["setRange"] = false;
+				["slot"] = 4;
 			};
 			["target"] = {
-				["moving"] = "NotMoving";
 			};
 		};
 		[28] = {
 			["player"] = {
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "1";
-				["id"] = 30725;
+				["groundTargeted"] = true;
+				["id"] = 6181;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Toss Elixir X";
+				["name"] = "Throw Napalm";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 16;
+				["setRange"] = false;
+				["slot"] = 15;
 			};
 			["target"] = {
+				["moving"] = "NotMoving";
 			};
 		};
 		[29] = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 29515;
+				["castOnSelf"] = true;
+				["groundTargeted"] = true;
+				["id"] = 30725;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Toss Elixir X";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 16;
 			};
 			["target"] = {
@@ -532,15 +564,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "1";
-				["id"] = 5978;
+				["groundTargeted"] = false;
+				["id"] = 29515;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Toss Elixir H";
+				["name"] = "Toss Elixir X";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 12;
+				["setRange"] = false;
+				["slot"] = 16;
 			};
 			["target"] = {
 			};
@@ -549,14 +580,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
-				["id"] = 6118;
+				["castOnSelf"] = true;
+				["groundTargeted"] = true;
+				["id"] = 5978;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Toss Elixir H";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 12;
 			};
 			["target"] = {
@@ -566,15 +597,15 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "1";
-				["id"] = 5970;
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
+				["id"] = 6118;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Toss Elixir U";
+				["name"] = "Toss Elixir H";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 14;
+				["setRange"] = false;
+				["slot"] = 12;
 			};
 			["target"] = {
 			};
@@ -583,13 +614,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6089;
+				["castOnSelf"] = true;
+				["groundTargeted"] = true;
+				["id"] = 5970;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Toss Elixir U";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 14;
 			};
 			["target"] = {
@@ -597,18 +629,16 @@ local obj1 = {
 		};
 		[34] = {
 			["player"] = {
-				["conditionCount"] = 2;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "1";
-				["id"] = 5969;
+				["groundTargeted"] = false;
+				["id"] = 6089;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Toss Elixir C";
+				["name"] = "Toss Elixir U";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 15;
+				["setRange"] = false;
+				["slot"] = 14;
 			};
 			["target"] = {
 			};
@@ -618,14 +648,14 @@ local obj1 = {
 				["conditionCount"] = 2;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
-				["id"] = 6077;
+				["castOnSelf"] = true;
+				["groundTargeted"] = true;
+				["id"] = 5969;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Toss Elixir C";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 15;
 			};
 			["target"] = {
@@ -633,34 +663,33 @@ local obj1 = {
 		};
 		[36] = {
 			["player"] = {
+				["conditionCount"] = 2;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5999;
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
+				["id"] = 6077;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Throw Wrench";
+				["name"] = "Toss Elixir C";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 14;
+				["setRange"] = false;
+				["slot"] = 15;
 			};
 			["target"] = {
 			};
 		};
 		[37] = {
 			["player"] = {
-				["combatState"] = "InCombat";
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "1";
-				["id"] = 5967;
-				["los"] = "0";
+				["groundTargeted"] = false;
+				["id"] = 5999;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Toss Elixir B";
+				["name"] = "Throw Wrench";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 14;
 			};
 			["target"] = {
@@ -671,13 +700,15 @@ local obj1 = {
 				["combatState"] = "InCombat";
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6092;
+				["castOnSelf"] = true;
+				["groundTargeted"] = true;
+				["id"] = 5967;
+				["los"] = false;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Toss Elixir B";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 14;
 			};
 			["target"] = {
@@ -685,16 +716,17 @@ local obj1 = {
 		};
 		[39] = {
 			["player"] = {
+				["combatState"] = "InCombat";
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6179;
-				["maxRange"] = 600;
+				["groundTargeted"] = false;
+				["id"] = 6092;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Net Attack";
+				["name"] = "Toss Elixir B";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 13;
+				["setRange"] = false;
+				["slot"] = 14;
 			};
 			["target"] = {
 			};
@@ -703,47 +735,47 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6164;
-				["maxRange"] = 360;
+				["groundTargeted"] = false;
+				["id"] = 6179;
+				["maxRange"] = 600;
 				["minRange"] = 0;
-				["name"] = "Mine Field";
+				["name"] = "Net Attack";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 15;
+				["setRange"] = false;
+				["slot"] = 13;
 			};
 			["target"] = {
 			};
 		};
 		[41] = {
 			["player"] = {
-				["minHP"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5813;
-				["maxRange"] = 300;
+				["groundTargeted"] = false;
+				["id"] = 6164;
+				["maxRange"] = 360;
 				["minRange"] = 0;
-				["name"] = "Big Ol' Bomb";
+				["name"] = "Mine Field";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 13;
+				["setRange"] = false;
+				["slot"] = 15;
 			};
 			["target"] = {
 			};
 		};
 		[42] = {
 			["player"] = {
+				["minHP"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5983;
+				["groundTargeted"] = false;
+				["id"] = 5813;
 				["maxRange"] = 300;
 				["minRange"] = 0;
-				["name"] = "Rocket Kick";
+				["name"] = "Big Ol' Bomb";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 14;
+				["setRange"] = false;
+				["slot"] = 13;
 			};
 			["target"] = {
 			};
@@ -752,13 +784,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6180;
-				["maxRange"] = 240;
+				["groundTargeted"] = false;
+				["id"] = 5983;
+				["maxRange"] = 300;
 				["minRange"] = 0;
-				["name"] = "Rumble";
+				["name"] = "Rocket Kick";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 14;
 			};
 			["target"] = {
@@ -768,79 +800,79 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 21661;
-				["maxRange"] = 180;
+				["groundTargeted"] = false;
+				["id"] = 6180;
+				["maxRange"] = 240;
 				["minRange"] = 0;
-				["name"] = "Static Shock";
+				["name"] = "Rumble";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 12;
+				["setRange"] = false;
+				["slot"] = 14;
 			};
 			["target"] = {
 			};
 		};
 		[45] = {
 			["player"] = {
-				["combatState"] = "OutCombat";
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5985;
-				["maxRange"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 21661;
+				["maxRange"] = 180;
 				["minRange"] = 0;
-				["name"] = "Detonate Flame Turret";
+				["name"] = "Static Shock";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 15;
+				["setRange"] = false;
+				["slot"] = 12;
 			};
 			["target"] = {
 			};
 		};
 		[46] = {
 			["player"] = {
+				["combatState"] = "OutCombat";
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 30262;
+				["groundTargeted"] = false;
+				["id"] = 5985;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Detection Pulse";
+				["name"] = "Detonate Flame Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 16;
+				["setRange"] = false;
+				["slot"] = 15;
 			};
 			["target"] = {
 			};
 		};
 		[47] = {
 			["player"] = {
-				["minHP"] = 50;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 30027;
+				["groundTargeted"] = false;
+				["id"] = 30262;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Defense Field";
+				["name"] = "Detection Pulse";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 13;
+				["setRange"] = false;
+				["slot"] = 16;
 			};
 			["target"] = {
 			};
 		};
 		[48] = {
 			["player"] = {
+				["minHP"] = 50;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 30279;
+				["groundTargeted"] = false;
+				["id"] = 30027;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Chemical Field";
+				["name"] = "Defense Field";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 13;
 			};
 			["target"] = {
@@ -848,89 +880,88 @@ local obj1 = {
 		};
 		[49] = {
 			["player"] = {
-				["combatState"] = "OutCombat";
-				["minHP"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5961;
+				["groundTargeted"] = false;
+				["id"] = 30279;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Detonate Healing Turret";
+				["name"] = "Chemical Field";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 12;
+				["setRange"] = false;
+				["slot"] = 13;
 			};
 			["target"] = {
 			};
 		};
 		[50] = {
 			["player"] = {
-				["minHP"] = 85;
+				["combatState"] = "OutCombat";
+				["minHP"] = 0;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
-				["id"] = 30101;
-				["los"] = "0";
+				["groundTargeted"] = false;
+				["id"] = 5961;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Bulwark Gyro";
+				["name"] = "Detonate Healing Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 1;
+				["setRange"] = false;
+				["slot"] = 12;
 			};
 			["target"] = {
 			};
 		};
 		[51] = {
 			["player"] = {
+				["minHP"] = 85;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 29665;
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
+				["id"] = 30101;
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Bypass Coating";
+				["name"] = "Bulwark Gyro";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 14;
+				["setRange"] = false;
+				["slot"] = 1;
 			};
 			["target"] = {
 			};
 		};
 		[52] = {
 			["player"] = {
-				["maxPower"] = 0;
-				["minHP"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5829;
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 29665;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Static Shot";
+				["name"] = "Bypass Coating";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 7;
-				["slowCast"] = "1";
+				["setRange"] = false;
+				["slot"] = 14;
 			};
 			["target"] = {
 			};
 		};
 		[53] = {
 			["player"] = {
-				["combatState"] = "OutCombat";
+				["maxPower"] = 0;
+				["minHP"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5984;
-				["maxRange"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 5829;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Detonate Net Turret";
+				["name"] = "Static Shot";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 13;
+				["setRange"] = true;
+				["slot"] = 7;
+				["slowCast"] = true;
 			};
 			["target"] = {
 			};
@@ -940,13 +971,13 @@ local obj1 = {
 				["combatState"] = "OutCombat";
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6134;
+				["groundTargeted"] = false;
+				["id"] = 5984;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Detonate Rocket Turret";
+				["name"] = "Detonate Net Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 13;
 			};
 			["target"] = {
@@ -954,99 +985,99 @@ local obj1 = {
 		};
 		[55] = {
 			["player"] = {
+				["combatState"] = "OutCombat";
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 31167;
+				["groundTargeted"] = false;
+				["id"] = 6134;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Spare Capacitor";
+				["name"] = "Detonate Rocket Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 15;
+				["setRange"] = false;
+				["slot"] = 13;
 			};
 			["target"] = {
 			};
 		};
 		[56] = {
 			["player"] = {
-				["combatState"] = "OutCombat";
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5957;
+				["groundTargeted"] = false;
+				["id"] = 31167;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Detonate Rifle Turret";
+				["name"] = "Spare Capacitor";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 14;
+				["setRange"] = false;
+				["slot"] = 15;
 			};
 			["target"] = {
 			};
 		};
 		[57] = {
 			["player"] = {
-				["minHP"] = 95;
+				["combatState"] = "OutCombat";
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 29505;
+				["groundTargeted"] = false;
+				["id"] = 5957;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Reconstruction Field";
+				["name"] = "Detonate Rifle Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 12;
+				["setRange"] = false;
+				["slot"] = 14;
 			};
 			["target"] = {
 			};
 		};
 		[58] = {
 			["player"] = {
+				["minHP"] = 95;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5977;
+				["groundTargeted"] = false;
+				["id"] = 29505;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Incendiary Ammo";
+				["name"] = "Reconstruction Field";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 15;
+				["setRange"] = false;
+				["slot"] = 12;
 			};
 			["target"] = {
 			};
 		};
 		[59] = {
 			["player"] = {
-				["combatState"] = "OutCombat";
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5960;
+				["groundTargeted"] = false;
+				["id"] = 5977;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Detonate Thumper Turret";
+				["name"] = "Incendiary Ammo";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 14;
+				["setRange"] = false;
+				["slot"] = 15;
 			};
 			["target"] = {
 			};
 		};
 		[60] = {
 			["player"] = {
-				["moving"] = "Moving";
+				["combatState"] = "OutCombat";
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5973;
+				["groundTargeted"] = false;
+				["id"] = 5960;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Superspeed";
+				["name"] = "Detonate Thumper Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 14;
 			};
 			["target"] = {
@@ -1054,33 +1085,32 @@ local obj1 = {
 		};
 		[61] = {
 			["player"] = {
+				["moving"] = "Moving";
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 30815;
+				["groundTargeted"] = false;
+				["id"] = 5973;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Sneak Gyro";
+				["name"] = "Superspeed";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 4;
+				["setRange"] = false;
+				["slot"] = 14;
 			};
 			["target"] = {
 			};
 		};
 		[62] = {
 			["player"] = {
-				["minHP"] = 60;
 			};
 			["skill"] = {
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5832;
+				["groundTargeted"] = false;
+				["id"] = 30815;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Elixir X";
+				["name"] = "Sneak Gyro";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 4;
 			};
 			["target"] = {
@@ -1088,15 +1118,17 @@ local obj1 = {
 		};
 		[63] = {
 			["player"] = {
+				["minHP"] = 60;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 20451;
+				["delay"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 5832;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Elixir X";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 4;
 			};
 			["target"] = {
@@ -1104,33 +1136,33 @@ local obj1 = {
 		};
 		[64] = {
 			["player"] = {
-				["minHP"] = 85;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 31248;
-				["maxRange"] = 1500;
+				["groundTargeted"] = false;
+				["id"] = 20451;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Blast Gyro Tag";
+				["name"] = "Elixir X";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 2;
+				["setRange"] = false;
+				["slot"] = 4;
 			};
 			["target"] = {
 			};
 		};
 		[65] = {
 			["player"] = {
+				["minHP"] = 85;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5912;
-				["maxRange"] = 1000;
+				["groundTargeted"] = false;
+				["id"] = 31248;
+				["maxRange"] = 1500;
 				["minRange"] = 0;
-				["name"] = "Rocket Turret";
+				["name"] = "Blast Gyro Tag";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 1;
+				["setRange"] = false;
+				["slot"] = 2;
 			};
 			["target"] = {
 			};
@@ -1139,13 +1171,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 22574;
+				["groundTargeted"] = false;
+				["id"] = 5912;
 				["maxRange"] = 1000;
 				["minRange"] = 0;
 				["name"] = "Rocket Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 1;
 			};
 			["target"] = {
@@ -1155,14 +1187,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5818;
+				["groundTargeted"] = false;
+				["id"] = 22574;
 				["maxRange"] = 1000;
 				["minRange"] = 0;
-				["name"] = "Rifle Turret";
+				["name"] = "Rocket Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 2;
+				["setRange"] = false;
+				["slot"] = 1;
 			};
 			["target"] = {
 			};
@@ -1171,14 +1203,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 6161;
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 5818;
+				["maxRange"] = 1000;
 				["minRange"] = 0;
-				["name"] = "Throw Mine";
+				["name"] = "Rifle Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 3;
+				["setRange"] = false;
+				["slot"] = 2;
 			};
 			["target"] = {
 			};
@@ -1187,14 +1219,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5910;
-				["maxRange"] = 600;
+				["groundTargeted"] = true;
+				["id"] = 6161;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Rocket Boots";
+				["name"] = "Throw Mine";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 2;
+				["setRange"] = false;
+				["slot"] = 3;
 			};
 			["target"] = {
 			};
@@ -1203,14 +1235,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5837;
+				["groundTargeted"] = false;
+				["id"] = 5910;
 				["maxRange"] = 600;
 				["minRange"] = 0;
-				["name"] = "Net Turret";
+				["name"] = "Rocket Boots";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 1;
+				["setRange"] = false;
+				["slot"] = 2;
 			};
 			["target"] = {
 			};
@@ -1219,14 +1251,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 29921;
+				["groundTargeted"] = false;
+				["id"] = 5837;
 				["maxRange"] = 600;
 				["minRange"] = 0;
-				["name"] = "Shredder Gyro";
+				["name"] = "Net Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 3;
+				["setRange"] = false;
+				["slot"] = 1;
 			};
 			["target"] = {
 			};
@@ -1235,13 +1267,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5836;
-				["maxRange"] = 450;
+				["groundTargeted"] = true;
+				["id"] = 29921;
+				["maxRange"] = 600;
 				["minRange"] = 0;
-				["name"] = "Flame Turret";
+				["name"] = "Shredder Gyro";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 3;
 			};
 			["target"] = {
@@ -1251,14 +1283,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5838;
-				["maxRange"] = 240;
+				["groundTargeted"] = false;
+				["id"] = 5836;
+				["maxRange"] = 450;
 				["minRange"] = 0;
-				["name"] = "Thumper Turret";
+				["name"] = "Flame Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 2;
+				["setRange"] = false;
+				["slot"] = 3;
 			};
 			["target"] = {
 			};
@@ -1267,13 +1299,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5811;
-				["maxRange"] = 130;
+				["groundTargeted"] = false;
+				["id"] = 5838;
+				["maxRange"] = 240;
 				["minRange"] = 0;
-				["name"] = "Personal Battering Ram";
+				["name"] = "Thumper Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 2;
 			};
 			["target"] = {
@@ -1283,50 +1315,49 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5913;
-				["maxRange"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 5811;
+				["maxRange"] = 130;
 				["minRange"] = 0;
-				["name"] = "Explosive Rockets";
+				["name"] = "Personal Battering Ram";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 1;
+				["setRange"] = false;
+				["slot"] = 2;
 			};
 			["target"] = {
 			};
 		};
 		[76] = {
 			["player"] = {
-				["combatState"] = "InCombat";
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
-				["id"] = 5821;
-				["los"] = "0";
+				["groundTargeted"] = false;
+				["id"] = 5913;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Elixir B";
+				["name"] = "Explosive Rockets";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 2;
+				["setRange"] = false;
+				["slot"] = 1;
 			};
 			["target"] = {
 			};
 		};
 		[77] = {
 			["player"] = {
-				["maxPower"] = 0;
+				["combatState"] = "InCombat";
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6057;
-				["maxRange"] = 900;
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
+				["id"] = 5821;
+				["los"] = false;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Throw Shield";
+				["name"] = "Elixir B";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 9;
+				["setRange"] = false;
+				["slot"] = 2;
 			};
 			["target"] = {
 			};
@@ -1336,50 +1367,48 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6126;
-				["maxRange"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 6057;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Magnetic Inversion";
+				["name"] = "Throw Shield";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
+				["setRange"] = true;
+				["slot"] = 9;
 			};
 			["target"] = {
 			};
 		};
 		[79] = {
 			["player"] = {
+				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
-				["id"] = 5861;
-				["los"] = "0";
+				["groundTargeted"] = false;
+				["id"] = 6126;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Elixir S";
+				["name"] = "Magnetic Inversion";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 3;
+				["setRange"] = true;
+				["slot"] = 8;
 			};
 			["target"] = {
 			};
 		};
 		[80] = {
 			["player"] = {
-				["conditionCount"] = 2;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
-				["id"] = 5860;
-				["los"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
+				["id"] = 5861;
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Elixir C";
+				["name"] = "Elixir S";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 3;
 			};
 			["target"] = {
@@ -1387,18 +1416,19 @@ local obj1 = {
 		};
 		[81] = {
 			["player"] = {
+				["conditionCount"] = 2;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["groundTargeted"] = "0";
-				["id"] = 5862;
-				["los"] = "0";
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
+				["id"] = 5860;
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Elixir U";
+				["name"] = "Elixir C";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 2;
+				["setRange"] = false;
+				["slot"] = 3;
 			};
 			["target"] = {
 			};
@@ -1407,14 +1437,16 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 29739;
+				["castOnSelf"] = true;
+				["groundTargeted"] = false;
+				["id"] = 5862;
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Purge Gyro";
+				["name"] = "Elixir U";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 1;
+				["setRange"] = false;
+				["slot"] = 2;
 			};
 			["target"] = {
 			};
@@ -1423,52 +1455,49 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["delay"] = 10000;
-				["groundTargeted"] = "0";
-				["id"] = 5933;
+				["groundTargeted"] = false;
+				["id"] = 29739;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Elixir Gun";
+				["name"] = "Purge Gyro";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 2;
+				["setRange"] = false;
+				["slot"] = 1;
 			};
 			["target"] = {
 			};
 		};
 		[84] = {
 			["player"] = {
-				["maxPower"] = 0;
-				["minHP"] = 66;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6053;
+				["delay"] = 10000;
+				["groundTargeted"] = false;
+				["id"] = 5933;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Magnetic Shield";
+				["name"] = "Elixir Gun";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
+				["setRange"] = false;
+				["slot"] = 2;
 			};
 			["target"] = {
 			};
 		};
 		[85] = {
 			["player"] = {
+				["maxPower"] = 0;
+				["minHP"] = 66;
 			};
 			["skill"] = {
-				["castOnSelf"] = "1";
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5968;
-				["los"] = "0";
+				["groundTargeted"] = false;
+				["id"] = 6053;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Elixir R";
+				["name"] = "Magnetic Shield";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 3;
+				["setRange"] = true;
+				["slot"] = 8;
 			};
 			["target"] = {
 			};
@@ -1477,14 +1506,17 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5865;
+				["castOnSelf"] = true;
+				["delay"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 5968;
+				["los"] = false;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Utility Goggles";
+				["name"] = "Elixir R";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 2;
+				["setRange"] = false;
+				["slot"] = 3;
 			};
 			["target"] = {
 			};
@@ -1493,13 +1525,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5889;
+				["groundTargeted"] = false;
+				["id"] = 5865;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Thump";
+				["name"] = "Utility Goggles";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 2;
 			};
 			["target"] = {
@@ -1509,14 +1541,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5874;
+				["groundTargeted"] = false;
+				["id"] = 5889;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Automatic Fire";
+				["name"] = "Thump";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 2;
 			};
 			["target"] = {
@@ -1526,13 +1557,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6098;
+				["delay"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 5874;
 				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Automatic Fire";
 				["radius"] = 0;
-				["setRange"] = "0";
+				["setRange"] = false;
 				["slot"] = 2;
 			};
 			["target"] = {
@@ -1542,14 +1574,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5893;
+				["groundTargeted"] = false;
+				["id"] = 6098;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Electrified Net";
+				["name"] = "Automatic Fire";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 1;
+				["setRange"] = false;
+				["slot"] = 2;
 			};
 			["target"] = {
 			};
@@ -1558,14 +1590,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5825;
+				["groundTargeted"] = false;
+				["id"] = 5893;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Slick Shoes";
+				["name"] = "Electrified Net";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 2;
+				["setRange"] = false;
+				["slot"] = 1;
 			};
 			["target"] = {
 			};
@@ -1574,14 +1606,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5900;
+				["groundTargeted"] = false;
+				["id"] = 5825;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Smoke Screen";
+				["name"] = "Slick Shoes";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 3;
+				["setRange"] = false;
+				["slot"] = 2;
 			};
 			["target"] = {
 			};
@@ -1590,14 +1622,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 30032;
-				["maxRange"] = 1500;
+				["groundTargeted"] = false;
+				["id"] = 5900;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Elixir Shell";
+				["name"] = "Smoke Screen";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 9;
+				["setRange"] = false;
+				["slot"] = 3;
 			};
 			["target"] = {
 			};
@@ -1606,13 +1638,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5996;
-				["maxRange"] = 1200;
+				["groundTargeted"] = true;
+				["id"] = 30032;
+				["maxRange"] = 1500;
 				["minRange"] = 0;
-				["name"] = "Magnet";
+				["name"] = "Elixir Shell";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -1622,13 +1654,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 30713;
+				["groundTargeted"] = false;
+				["id"] = 5996;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Thunderclap";
+				["name"] = "Magnet";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -1638,14 +1670,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 5806;
-				["isProjectile"] = "1";
-				["maxRange"] = 900;
+				["groundTargeted"] = true;
+				["id"] = 30713;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Poison Grenade";
+				["name"] = "Thunderclap";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -1655,14 +1686,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6167;
-				["isProjectile"] = "1";
+				["groundTargeted"] = true;
+				["id"] = 5806;
+				["isProjectile"] = true;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Poison Grenade";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -1672,13 +1703,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 5937;
+				["groundTargeted"] = false;
+				["id"] = 6167;
+				["isProjectile"] = true;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Super Elixir";
+				["name"] = "Poison Grenade";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -1686,16 +1718,15 @@ local obj1 = {
 		};
 		[99] = {
 			["player"] = {
-				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6104;
-				["maxRange"] = 0;
+				["groundTargeted"] = true;
+				["id"] = 5937;
+				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Super Elixir";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -1703,15 +1734,16 @@ local obj1 = {
 		};
 		[100] = {
 			["player"] = {
+				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6102;
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 6104;
+				["maxRange"] = 0;
 				["minRange"] = 0;
 				["name"] = "Super Elixir";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -1721,13 +1753,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 14490;
-				["maxRange"] = 600;
+				["groundTargeted"] = false;
+				["id"] = 6102;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Seismic Leap";
+				["name"] = "Super Elixir";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -1737,14 +1769,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 30121;
-				["maxRange"] = 1500;
+				["groundTargeted"] = true;
+				["id"] = 14490;
+				["maxRange"] = 600;
 				["minRange"] = 0;
-				["name"] = "Flash Shell";
+				["name"] = "Seismic Leap";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
+				["setRange"] = true;
+				["slot"] = 9;
 			};
 			["target"] = {
 			};
@@ -1753,14 +1785,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5939;
-				["maxRange"] = 240;
+				["groundTargeted"] = true;
+				["id"] = 30121;
+				["maxRange"] = 1500;
 				["minRange"] = 0;
-				["name"] = "Glue Bomb";
+				["name"] = "Flash Shell";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 9;
+				["setRange"] = true;
+				["slot"] = 8;
 			};
 			["target"] = {
 			};
@@ -1769,13 +1801,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6159;
-				["maxRange"] = 180;
+				["groundTargeted"] = false;
+				["id"] = 5939;
+				["maxRange"] = 240;
 				["minRange"] = 0;
-				["name"] = "Smoke Vent";
+				["name"] = "Glue Bomb";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
@@ -1785,15 +1817,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 5809;
-				["isProjectile"] = "1";
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 6159;
+				["maxRange"] = 180;
 				["minRange"] = 0;
-				["name"] = "Freeze Grenade";
+				["name"] = "Smoke Vent";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
+				["setRange"] = true;
+				["slot"] = 9;
 			};
 			["target"] = {
 			};
@@ -1802,14 +1833,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6168;
-				["isProjectile"] = "1";
+				["groundTargeted"] = true;
+				["id"] = 5809;
+				["isProjectile"] = true;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Freeze Grenade";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 8;
 			};
 			["target"] = {
@@ -1819,13 +1850,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 14556;
+				["groundTargeted"] = false;
+				["id"] = 6168;
+				["isProjectile"] = true;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Throw Boulder";
+				["name"] = "Freeze Grenade";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 8;
 			};
 			["target"] = {
@@ -1835,14 +1867,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["delay"] = 0;
-				["groundTargeted"] = "1";
-				["id"] = 5929;
-				["maxRange"] = 600;
+				["groundTargeted"] = false;
+				["id"] = 14556;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Napalm";
+				["name"] = "Throw Boulder";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 8;
 			};
 			["target"] = {
@@ -1852,14 +1883,15 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 30307;
-				["maxRange"] = 1500;
+				["delay"] = 0;
+				["groundTargeted"] = true;
+				["id"] = 5929;
+				["maxRange"] = 600;
 				["minRange"] = 0;
-				["name"] = "Endothermic Shell";
+				["name"] = "Napalm";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 7;
+				["setRange"] = true;
+				["slot"] = 8;
 			};
 			["target"] = {
 			};
@@ -1868,14 +1900,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5824;
-				["maxRange"] = 240;
+				["groundTargeted"] = true;
+				["id"] = 30307;
+				["maxRange"] = 1500;
 				["minRange"] = 0;
-				["name"] = "Smoke Bomb";
+				["name"] = "Endothermic Shell";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
+				["setRange"] = true;
+				["slot"] = 7;
 			};
 			["target"] = {
 			};
@@ -1884,14 +1916,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 14489;
-				["maxRange"] = 1000;
+				["groundTargeted"] = false;
+				["id"] = 5824;
+				["maxRange"] = 240;
 				["minRange"] = 0;
-				["name"] = "Dash";
+				["name"] = "Smoke Bomb";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 7;
+				["setRange"] = true;
+				["slot"] = 8;
 			};
 			["target"] = {
 			};
@@ -1900,15 +1932,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 30665;
+				["groundTargeted"] = false;
+				["id"] = 14489;
 				["maxRange"] = 1000;
 				["minRange"] = 0;
-				["name"] = "Rocket Charge";
+				["name"] = "Dash";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 7;
-				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
@@ -1917,14 +1948,15 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5936;
-				["maxRange"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 30665;
+				["maxRange"] = 1000;
 				["minRange"] = 0;
-				["name"] = "Acid Bomb";
+				["name"] = "Rocket Charge";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
+				["setRange"] = true;
+				["slot"] = 7;
+				["slowCast"] = true;
 			};
 			["target"] = {
 			};
@@ -1933,13 +1965,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5998;
+				["groundTargeted"] = false;
+				["id"] = 5936;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Gear Shield";
+				["name"] = "Acid Bomb";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 8;
 			};
 			["target"] = {
@@ -1949,15 +1981,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 5808;
-				["isProjectile"] = "1";
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 5998;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Flash Grenade";
+				["name"] = "Gear Shield";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 7;
+				["setRange"] = true;
+				["slot"] = 8;
 			};
 			["target"] = {
 			};
@@ -1966,14 +1997,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6169;
-				["isProjectile"] = "1";
+				["groundTargeted"] = true;
+				["id"] = 5808;
+				["isProjectile"] = true;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Flash Grenade";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 7;
 			};
 			["target"] = {
@@ -1983,14 +2014,15 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 30885;
-				["maxRange"] = 1500;
+				["groundTargeted"] = false;
+				["id"] = 6169;
+				["isProjectile"] = true;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Poison Gas Shell";
+				["name"] = "Flash Grenade";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
+				["setRange"] = true;
+				["slot"] = 7;
 			};
 			["target"] = {
 			};
@@ -1999,32 +2031,29 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5965;
-				["maxRange"] = 450;
+				["groundTargeted"] = true;
+				["id"] = 30885;
+				["maxRange"] = 1500;
 				["minRange"] = 0;
-				["name"] = "Fumigate";
+				["name"] = "Poison Gas Shell";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 7;
+				["setRange"] = true;
+				["slot"] = 6;
 			};
 			["target"] = {
 			};
 		};
 		[119] = {
 			["player"] = {
-				["minHP"] = 75;
 			};
 			["skill"] = {
-				["delay"] = 0;
-				["groundTargeted"] = "0";
-				["id"] = 5930;
-				["los"] = "1";
-				["maxRange"] = 200;
+				["groundTargeted"] = false;
+				["id"] = 5965;
+				["maxRange"] = 450;
 				["minRange"] = 0;
-				["name"] = "Air Blast";
+				["name"] = "Fumigate";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 7;
 			};
 			["target"] = {
@@ -2032,15 +2061,18 @@ local obj1 = {
 		};
 		[120] = {
 			["player"] = {
+				["minHP"] = 75;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5822;
-				["maxRange"] = 180;
+				["delay"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 5930;
+				["los"] = true;
+				["maxRange"] = 200;
 				["minRange"] = 0;
-				["name"] = "Concussion Bomb";
+				["name"] = "Air Blast";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 7;
 			};
 			["target"] = {
@@ -2050,13 +2082,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5905;
-				["maxRange"] = 130;
+				["groundTargeted"] = false;
+				["id"] = 5822;
+				["maxRange"] = 180;
 				["minRange"] = 0;
-				["name"] = "Pry Bar";
+				["name"] = "Concussion Bomb";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 7;
 			};
 			["target"] = {
@@ -2064,69 +2096,68 @@ local obj1 = {
 		};
 		[122] = {
 			["player"] = {
-				["minHP"] = 90;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 29840;
-				["maxRange"] = 170;
+				["groundTargeted"] = false;
+				["id"] = 5905;
+				["maxRange"] = 130;
 				["minRange"] = 0;
-				["name"] = "Shock Shield";
+				["name"] = "Pry Bar";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
-				["slowCast"] = "1";
+				["setRange"] = true;
+				["slot"] = 7;
 			};
 			["target"] = {
 			};
 		};
 		[123] = {
 			["player"] = {
+				["minHP"] = 90;
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 5807;
-				["isProjectile"] = "1";
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 29840;
+				["maxRange"] = 170;
 				["minRange"] = 0;
-				["name"] = "Shrapnel Grenade";
+				["name"] = "Shock Shield";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
+				["setRange"] = true;
+				["slot"] = 8;
+				["slowCast"] = true;
 			};
 			["target"] = {
 			};
 		};
 		[124] = {
 			["player"] = {
-				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6054;
-				["maxRange"] = 0;
+				["groundTargeted"] = true;
+				["id"] = 5807;
+				["isProjectile"] = true;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Static Shield";
+				["name"] = "Shrapnel Grenade";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 9;
+				["setRange"] = true;
+				["slot"] = 6;
 			};
 			["target"] = {
 			};
 		};
 		[125] = {
 			["player"] = {
+				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6170;
-				["isProjectile"] = "1";
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 6054;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Shrapnel Grenade";
+				["name"] = "Static Shield";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
+				["setRange"] = true;
+				["slot"] = 9;
 			};
 			["target"] = {
 			};
@@ -2135,13 +2166,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5935;
+				["groundTargeted"] = false;
+				["id"] = 6170;
+				["isProjectile"] = true;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Glob Shot";
+				["name"] = "Shrapnel Grenade";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
 			};
 			["target"] = {
@@ -2149,17 +2181,16 @@ local obj1 = {
 		};
 		[127] = {
 			["player"] = {
-				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5831;
-				["maxRange"] = 250;
+				["groundTargeted"] = false;
+				["id"] = 5935;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Blowtorch";
+				["name"] = "Glob Shot";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
+				["setRange"] = true;
+				["slot"] = 6;
 			};
 			["target"] = {
 			};
@@ -2169,17 +2200,16 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 5830;
-				["maxRange"] = 700;
+				["groundTargeted"] = false;
+				["id"] = 5831;
+				["maxRange"] = 250;
 				["minRange"] = 0;
-				["name"] = "Glue Shot";
+				["name"] = "Blowtorch";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 9;
+				["setRange"] = true;
+				["slot"] = 8;
 			};
 			["target"] = {
-				["moving"] = "Moving";
 			};
 		};
 		[129] = {
@@ -2187,14 +2217,14 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6004;
-				["maxRange"] = 1200;
+				["groundTargeted"] = true;
+				["id"] = 5830;
+				["maxRange"] = 700;
 				["minRange"] = 0;
-				["name"] = "Net Shot";
+				["name"] = "Glue Shot";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
+				["setRange"] = true;
+				["slot"] = 9;
 			};
 			["target"] = {
 				["moving"] = "Moving";
@@ -2205,16 +2235,17 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6153;
-				["maxRange"] = 300;
+				["groundTargeted"] = false;
+				["id"] = 6004;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Blunderbuss";
+				["name"] = "Net Shot";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 7;
+				["setRange"] = true;
+				["slot"] = 6;
 			};
 			["target"] = {
+				["moving"] = "Moving";
 			};
 		};
 		[131] = {
@@ -2222,14 +2253,14 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5828;
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 6153;
+				["maxRange"] = 300;
 				["minRange"] = 0;
-				["name"] = "Poison Dart Volley";
+				["name"] = "Blunderbuss";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
+				["setRange"] = true;
+				["slot"] = 7;
 			};
 			["target"] = {
 			};
@@ -2239,14 +2270,14 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6154;
-				["maxRange"] = 200;
+				["groundTargeted"] = false;
+				["id"] = 5828;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Overcharged Shot";
+				["name"] = "Poison Dart Volley";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
+				["setRange"] = true;
+				["slot"] = 6;
 			};
 			["target"] = {
 			};
@@ -2256,46 +2287,47 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
+				["groundTargeted"] = false;
+				["id"] = 6154;
+				["maxRange"] = 200;
+				["minRange"] = 0;
+				["name"] = "Overcharged Shot";
+				["radius"] = 0;
+				["setRange"] = true;
+				["slot"] = 8;
+			};
+			["target"] = {
+			};
+		};
+		[134] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = true;
 				["id"] = 6005;
 				["maxRange"] = 800;
 				["minRange"] = 0;
 				["name"] = "Jump Shot";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 9;
 			};
 			["target"] = {
 				["moving"] = "NotMoving";
 			};
 		};
-		[134] = {
+		[135] = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
 				["id"] = 5931;
 				["maxRange"] = 600;
 				["minRange"] = 0;
 				["name"] = "Flame Blast";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
-			};
-			["target"] = {
-			};
-		};
-		[135] = {
-			["player"] = {
-			};
-			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 14488;
-				["maxRange"] = 300;
-				["minRange"] = 0;
-				["name"] = "Kick";
-				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
 			};
 			["target"] = {
@@ -2303,16 +2335,15 @@ local obj1 = {
 		};
 		[136] = {
 			["player"] = {
-				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 10180;
-				["maxRange"] = 600;
+				["groundTargeted"] = false;
+				["id"] = 14488;
+				["maxRange"] = 300;
 				["minRange"] = 0;
 				["name"] = "Kick";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
 			};
 			["target"] = {
@@ -2320,15 +2351,16 @@ local obj1 = {
 		};
 		[137] = {
 			["player"] = {
+				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5823;
-				["maxRange"] = 180;
+				["groundTargeted"] = true;
+				["id"] = 10180;
+				["maxRange"] = 600;
 				["minRange"] = 0;
-				["name"] = "Fire Bomb";
+				["name"] = "Kick";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
 			};
 			["target"] = {
@@ -2338,13 +2370,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5995;
-				["maxRange"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 5823;
+				["maxRange"] = 180;
 				["minRange"] = 0;
-				["name"] = "Box of Nails";
+				["name"] = "Fire Bomb";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
 			};
 			["target"] = {
@@ -2354,47 +2386,79 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 30088;
+				["groundTargeted"] = false;
+				["id"] = 5995;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Electro-whirl";
+				["name"] = "Box of Nails";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 6;
-				["slowCast"] = "1";
 			};
 			["target"] = {
 			};
 		};
 		[140] = {
 			["player"] = {
+				["allyDownedNearCount"] = 0;
+				["allyDownedRangeMax"] = 0;
+				["allyNearCount"] = 0;
+				["allyRangeMax"] = 0;
+				["boonCount"] = 0;
+				["combatState"] = "Either";
+				["conditionCount"] = 0;
+				["hasBuffs"] = "";
+				["hasNotBuffs"] = "";
+				["maxEndurance"] = 0;
+				["maxHP"] = 0;
+				["maxPower"] = 0;
+				["minEndurance"] = 0;
+				["minHP"] = 0;
+				["minPower"] = 0;
+				["moving"] = "Either";
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 30371;
-				["maxRange"] = 1500;
+				["castOnSelf"] = false;
+				["delay"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 30088;
+				["isProjectile"] = false;
+				["lastSkillID"] = "";
+				["los"] = true;
+				["maxRange"] = 180;
 				["minRange"] = 0;
-				["name"] = "Mortar Shot";
+				["name"] = "Electro-whirl";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 5;
+				["relativePosition"] = "None";
+				["setRange"] = true;
+				["slot"] = 6;
+				["slowCast"] = true;
+				["stopsMovement"] = false;
 			};
 			["target"] = {
+				["boonCount"] = 0;
+				["conditionCount"] = 0;
+				["enemyNearCount"] = 0;
+				["enemyRangeMax"] = 0;
+				["hasBuffs"] = "";
+				["hasNotBuffs"] = "";
+				["maxHP"] = 0;
+				["minHP"] = 0;
+				["moving"] = "Either";
+				["type"] = "Either";
 			};
 		};
 		[141] = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "1";
-				["id"] = 5882;
-				["isProjectile"] = "1";
-				["maxRange"] = 900;
+				["groundTargeted"] = true;
+				["id"] = 30371;
+				["maxRange"] = 1500;
 				["minRange"] = 0;
-				["name"] = "Grenade";
+				["name"] = "Mortar Shot";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2404,14 +2468,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6171;
-				["isProjectile"] = "1";
+				["groundTargeted"] = true;
+				["id"] = 5882;
+				["isProjectile"] = true;
 				["maxRange"] = 900;
 				["minRange"] = 0;
 				["name"] = "Grenade";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2421,13 +2485,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5934;
+				["groundTargeted"] = false;
+				["id"] = 6171;
+				["isProjectile"] = true;
 				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Tranquilizer Dart";
+				["name"] = "Grenade";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2437,13 +2502,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5928;
-				["maxRange"] = 425;
+				["groundTargeted"] = false;
+				["id"] = 5934;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Flame Jet";
+				["name"] = "Tranquilizer Dart";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2453,13 +2518,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5842;
-				["maxRange"] = 180;
+				["groundTargeted"] = false;
+				["id"] = 5928;
+				["maxRange"] = 425;
 				["minRange"] = 0;
-				["name"] = "Bomb";
+				["name"] = "Flame Jet";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2469,13 +2534,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5993;
-				["maxRange"] = 130;
+				["groundTargeted"] = false;
+				["id"] = 5842;
+				["maxRange"] = 180;
 				["minRange"] = 0;
-				["name"] = "Whack";
+				["name"] = "Bomb";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2485,13 +2550,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 30489;
+				["groundTargeted"] = false;
+				["id"] = 5993;
 				["maxRange"] = 130;
 				["minRange"] = 0;
-				["name"] = "Equalizing Blow";
+				["name"] = "Whack";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2501,13 +2566,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 29785;
+				["groundTargeted"] = false;
+				["id"] = 30489;
 				["maxRange"] = 130;
 				["minRange"] = 0;
-				["name"] = "Negative Bash";
+				["name"] = "Equalizing Blow";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2517,13 +2582,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 30501;
+				["groundTargeted"] = false;
+				["id"] = 29785;
 				["maxRange"] = 130;
 				["minRange"] = 0;
-				["name"] = "Positive Strike";
+				["name"] = "Negative Bash";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2533,13 +2598,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 14485;
+				["groundTargeted"] = false;
+				["id"] = 30501;
 				["maxRange"] = 130;
 				["minRange"] = 0;
-				["name"] = "Smash";
+				["name"] = "Positive Strike";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2549,13 +2614,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5992;
+				["groundTargeted"] = false;
+				["id"] = 14485;
 				["maxRange"] = 130;
 				["minRange"] = 0;
-				["name"] = "Smack";
+				["name"] = "Smash";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2563,34 +2628,34 @@ local obj1 = {
 		};
 		[152] = {
 			["player"] = {
-				["combatState"] = "OutCombat";
-				["minHP"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6097;
-				["maxRange"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 5992;
+				["maxRange"] = 130;
 				["minRange"] = 0;
-				["name"] = "Detonate Harpoon Turret";
+				["name"] = "Smack";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 14;
+				["setRange"] = true;
+				["slot"] = 5;
 			};
 			["target"] = {
 			};
 		};
 		[153] = {
 			["player"] = {
+				["combatState"] = "OutCombat";
+				["minHP"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 14487;
-				["maxRange"] = 130;
+				["groundTargeted"] = false;
+				["id"] = 6097;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Uppercut";
+				["name"] = "Detonate Harpoon Turret";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 5;
+				["setRange"] = false;
+				["slot"] = 14;
 			};
 			["target"] = {
 			};
@@ -2599,13 +2664,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5994;
+				["groundTargeted"] = false;
+				["id"] = 14487;
 				["maxRange"] = 130;
 				["minRange"] = 0;
-				["name"] = "Thwack";
+				["name"] = "Uppercut";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2615,13 +2680,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 14486;
+				["groundTargeted"] = false;
+				["id"] = 5994;
 				["maxRange"] = 130;
 				["minRange"] = 0;
-				["name"] = "Bash";
+				["name"] = "Thwack";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2631,14 +2696,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6175;
-				["maxRange"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 14486;
+				["maxRange"] = 130;
 				["minRange"] = 0;
-				["name"] = "Box of Piranhas";
+				["name"] = "Bash";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
+				["setRange"] = true;
+				["slot"] = 5;
 			};
 			["target"] = {
 			};
@@ -2647,14 +2712,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6163;
+				["groundTargeted"] = false;
+				["id"] = 6175;
 				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Deploy Mine";
+				["name"] = "Box of Piranhas";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 1;
+				["setRange"] = true;
+				["slot"] = 6;
 			};
 			["target"] = {
 			};
@@ -2663,14 +2728,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6093;
-				["maxRange"] = 1000;
+				["groundTargeted"] = false;
+				["id"] = 6163;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Harpoon Turret";
+				["name"] = "Deploy Mine";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 2;
+				["setRange"] = false;
+				["slot"] = 1;
 			};
 			["target"] = {
 			};
@@ -2679,14 +2744,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6182;
+				["groundTargeted"] = false;
+				["id"] = 6093;
 				["maxRange"] = 1000;
 				["minRange"] = 0;
-				["name"] = "Harpoon";
+				["name"] = "Harpoon Turret";
 				["radius"] = 0;
-				["setRange"] = "0";
-				["slot"] = 14;
+				["setRange"] = false;
+				["slot"] = 2;
 			};
 			["target"] = {
 			};
@@ -2695,14 +2760,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5603;
-				["maxRange"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 6182;
+				["maxRange"] = 1000;
 				["minRange"] = 0;
-				["name"] = "Whirlpool";
+				["name"] = "Harpoon";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 5;
+				["setRange"] = false;
+				["slot"] = 14;
 			};
 			["target"] = {
 			};
@@ -2711,14 +2776,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6147;
-				["maxRange"] = 1200;
+				["groundTargeted"] = false;
+				["id"] = 5603;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Scatter Mines";
+				["name"] = "Whirlpool";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
+				["setRange"] = true;
+				["slot"] = 5;
 			};
 			["target"] = {
 			};
@@ -2727,14 +2792,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6146;
+				["groundTargeted"] = false;
+				["id"] = 6147;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Retreating Grapple";
+				["name"] = "Scatter Mines";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 7;
+				["setRange"] = true;
+				["slot"] = 6;
 			};
 			["target"] = {
 			};
@@ -2743,14 +2808,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6149;
+				["groundTargeted"] = false;
+				["id"] = 6146;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Timed Charge";
+				["name"] = "Retreating Grapple";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 8;
+				["setRange"] = true;
+				["slot"] = 7;
 			};
 			["target"] = {
 			};
@@ -2759,14 +2824,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6145;
+				["groundTargeted"] = false;
+				["id"] = 6149;
 				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Net Wall";
+				["name"] = "Timed Charge";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 9;
+				["setRange"] = true;
+				["slot"] = 8;
 			};
 			["target"] = {
 			};
@@ -2775,14 +2840,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6073;
-				["maxRange"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 6145;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Detonate Mines";
+				["name"] = "Net Wall";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
+				["setRange"] = true;
+				["slot"] = 9;
 			};
 			["target"] = {
 			};
@@ -2791,14 +2856,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6148;
-				["maxRange"] = 1200;
+				["groundTargeted"] = false;
+				["id"] = 6073;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Homing Torpedo";
+				["name"] = "Detonate Mines";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 5;
+				["setRange"] = true;
+				["slot"] = 6;
 			};
 			["target"] = {
 			};
@@ -2807,13 +2872,13 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5916;
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 6148;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Floating Mine";
+				["name"] = "Homing Torpedo";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2823,14 +2888,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5917;
-				["maxRange"] = 600;
+				["groundTargeted"] = false;
+				["id"] = 5916;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Anchor";
+				["name"] = "Floating Mine";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
+				["setRange"] = true;
+				["slot"] = 5;
 			};
 			["target"] = {
 			};
@@ -2839,14 +2904,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5918;
-				["maxRange"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 5917;
+				["maxRange"] = 600;
 				["minRange"] = 0;
-				["name"] = "Buoy";
+				["name"] = "Anchor";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 7;
+				["setRange"] = true;
+				["slot"] = 6;
 			};
 			["target"] = {
 			};
@@ -2855,14 +2920,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5962;
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 5918;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Grappling Line";
+				["name"] = "Buoy";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
+				["setRange"] = true;
+				["slot"] = 7;
 			};
 			["target"] = {
 			};
@@ -2871,14 +2936,14 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5963;
-				["maxRange"] = 0;
+				["groundTargeted"] = false;
+				["id"] = 5962;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Booby Trap";
+				["name"] = "Grappling Line";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 7;
+				["setRange"] = true;
+				["slot"] = 6;
 			};
 			["target"] = {
 			};
@@ -2887,30 +2952,29 @@ local obj1 = {
 			["player"] = {
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5820;
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 5963;
+				["maxRange"] = 0;
 				["minRange"] = 0;
-				["name"] = "Throw Junk";
+				["name"] = "Booby Trap";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 5;
+				["setRange"] = true;
+				["slot"] = 7;
 			};
 			["target"] = {
 			};
 		};
 		[173] = {
 			["player"] = {
-				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 6003;
-				["maxRange"] = 1200;
+				["groundTargeted"] = false;
+				["id"] = 5820;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Hip Shot";
+				["name"] = "Throw Junk";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2921,13 +2985,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 5827;
-				["maxRange"] = 900;
+				["groundTargeted"] = false;
+				["id"] = 6003;
+				["maxRange"] = 1200;
 				["minRange"] = 0;
-				["name"] = "Fragmentation Shot";
+				["name"] = "Hip Shot";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2938,13 +3002,13 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 10661;
-				["maxRange"] = 240;
+				["groundTargeted"] = false;
+				["id"] = 5827;
+				["maxRange"] = 900;
 				["minRange"] = 0;
-				["name"] = "Withering Plague";
+				["name"] = "Fragmentation Shot";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 5;
 			};
 			["target"] = {
@@ -2955,14 +3019,14 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
-				["id"] = 10662;
+				["groundTargeted"] = false;
+				["id"] = 10661;
 				["maxRange"] = 240;
 				["minRange"] = 0;
-				["name"] = "Plague of Darkness";
+				["name"] = "Withering Plague";
 				["radius"] = 0;
-				["setRange"] = "1";
-				["slot"] = 6;
+				["setRange"] = true;
+				["slot"] = 5;
 			};
 			["target"] = {
 			};
@@ -2972,13 +3036,30 @@ local obj1 = {
 				["maxPower"] = 0;
 			};
 			["skill"] = {
-				["groundTargeted"] = "0";
+				["groundTargeted"] = false;
+				["id"] = 10662;
+				["maxRange"] = 240;
+				["minRange"] = 0;
+				["name"] = "Plague of Darkness";
+				["radius"] = 0;
+				["setRange"] = true;
+				["slot"] = 6;
+			};
+			["target"] = {
+			};
+		};
+		[178] = {
+			["player"] = {
+				["maxPower"] = 0;
+			};
+			["skill"] = {
+				["groundTargeted"] = false;
 				["id"] = 10663;
 				["maxRange"] = 240;
 				["minRange"] = 0;
 				["name"] = "Plague of Pestilence";
 				["radius"] = 0;
-				["setRange"] = "1";
+				["setRange"] = true;
 				["slot"] = 7;
 			};
 			["target"] = {

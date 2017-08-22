@@ -46,6 +46,9 @@ gw2_buy_manager.tools = {
 	},
 }
 
+gw2_buy_manager.lastVendorID = nil
+gw2_buy_manager.VendorBuyHistroy = {}
+
 -- Gui stuff here.
 gw2_buy_manager.mainWindow = {
 	name = GetString("buymanager"),
@@ -93,13 +96,14 @@ function gw2_buy_manager.ModuleInit()
 		Settings.gw2_buy_manager.toolList = {
 			nameList = {"None", "Copper", "Iron", "Steel", "Darksteel", "Mithrill", "Orichalcum",},
 			idList = {["None"] = 1, ["Copper"] = 2, ["Iron"] = 3, ["Steel"] = 4, ["Darksteel"] = 5, ["Mithrill"] = 6, ["Orichalcum"] = 7,},
-			currID = 1,
+			currID = 7, -- because player level is invalid at init, checking level is pointless, just setting ori tools and hope for best. (maybe init should be fixed? delayed a bit... so much crap like this because of "premature initialisation")
+			--currID = Player.level < 10 and 2 or Player.level < 20 and 3 or Player.level < 30 and 4 or Player.level < 45 and 5 or Player.level < 60 and 6 or 7, -- set "correct" tool for level, can be used if init ever fixed.
 		}
 	end
 	gw2_buy_manager.toolList = Settings.gw2_buy_manager.toolList
 
 	-- init button in minionmainbutton
-	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##BUYMGR", name = "Buy MGR", onClick = function() gw2_buy_manager.mainWindow.open = gw2_buy_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Buy Manager\" window."},"GW2MINION##MENU_HEADER")
+	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##BUYMGR", name = "Buy", onClick = function() gw2_buy_manager.mainWindow.open = gw2_buy_manager.mainWindow.open ~= true end, tooltip = "Click to open \"Buy Manager\" window.", texture = GetStartupPath().."\\GUI\\UI_Textures\\buy.png"},"GW2MINION##MENU_HEADER")
 
 end
 
@@ -299,7 +303,7 @@ function gw2_buy_manager.toolListIDToKey(toolList)
 end
 
 function gw2_buy_manager.checkForInfTools(tool)
-	return (tool and tool.rarity == 4 and tool.stackcount == 0 and true or false)
+	return (tool and tool.rarity == 4 and tool.weapontype == 1 and true or false) -- tool.stackcount == 0 and true or false) -- the stackcount is nolonger 0 for unstackable. Weapontype seems to indicate unlim tools atm. Better then nothing.
 end
 
 function gw2_buy_manager.GetNeededGatheringToolList()
@@ -332,90 +336,94 @@ end
 function gw2_buy_manager.getClosestBuyMarker(nearby)
 	local closestLocation = nil
 	local listArg = (nearby == true and ",maxdistance=4000" or "")
-	local markers = MapMarkerList("onmesh,nearest,contentID="..GW2.MAPMARKER.Merchant..listArg..",exclude_characterid="..ml_blacklist.GetExcludeString(GetString("vendorsbuy")))
-	for _,merchant in pairs(markers) do
-		if (closestLocation == nil or closestLocation.distance > merchant.distance) then
-			if (nearby == true and merchant.pathdistance < 4000) then
-				closestLocation = merchant
-			elseif (nearby ~= true) then
-				closestLocation = merchant
+	local markers = gw2_buy_manager.getMarkerList(listArg)
+	if(table.valid(markers)) then
+		for _,merchant in pairs(markers) do
+			if (closestLocation == nil or closestLocation.distance > merchant.distance) then
+				if (nearby == true and merchant.pathdistance < 4000) then
+					closestLocation = merchant
+				elseif (nearby ~= true) then
+					closestLocation = merchant
+				end
 			end
 		end
 	end
 	return closestLocation
 end
 
-function gw2_buy_manager.buyAtMerchant(vendorMarker)
-	if (vendorMarker) then
-		vendor = CharacterList:Get(vendorMarker.characterID)
-		if (vendor and vendor.isInInteractRange and vendor.distance < 100) then
-			Player:StopMovement()
-			local target = Player:GetTarget()
-			if (not target or target.id ~= vendor.id) then
-				Player:SetTarget(vendor.id)
-			else
-				if (Inventory:IsVendorOpened() == false and Player:IsConversationOpen() == false) then
-					ml_log(" Opening Vendor.. ")
-					Player:Interact(vendor.id)
-					ml_global_information.Wait(1500)
-					return true
-				else
-					local result = gw2_common_functions.handleConversation("buy")
-					if (result == false) then
-						d("Vendor blacklisted, cant handle opening conversation.")
-						ml_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)
-						return false
-					elseif (result == nil) then
-					
-						ml_global_information.Wait(math.random(520,1200))
+function gw2_buy_manager.getMarkerList(filter)
+	filter = filter or ""	
+	local cid = GW2.MAPMARKER.Merchant..";"..GW2.MAPMARKER.ItzelVendor..";"..GW2.MAPMARKER.ExaltedVendor..";"..GW2.MAPMARKER.NuhochVendor
+	local markers = MapMarkerList("onmesh,contentID="..cid..filter..",exclude_characterid="..gw2_blacklistmanager.GetExcludeString(GetString("Vendor buy")))
+	if(table.valid(markers)) then
+		return markers
+	end
+	return nil
+end
+
+function gw2_buy_manager.buyAtMerchant(vendor)
+	if (gw2_buy_manager.lastVendorID == nil or gw2_buy_manager.lastVendorID ~= vendor.id ) then
+		gw2_buy_manager.lastVendorID = vendor.id
+		gw2_buy_manager.VendorBuyHistroy = {}
+		gw2_buy_manager.VendorBuyHistroy.interactcount = 0
+	end
+	
+	if(gw2_buy_manager.VendorBuyHistroy.interactcount > 15) then
+		d("Vendor blacklisted: Tried interacting multiple times.")
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("Vendor buy"), vendor.id, vendor.name, true)			
+	end
+		
+	if (Inventory:IsVendorOpened() == false and Player:IsConversationOpen() == false) then
+		d("Opening Vendor.. ")
+		Player:Interact(vendor.id)
+		gw2_buy_manager.VendorBuyHistroy.interactcount = gw2_buy_manager.VendorBuyHistroy.interactcount + 1
+		ml_global_information.Wait(1500)
+		return true
+	else
+		local result = gw2_common_functions.handleConversation("buy")
+		if (result == false) then
+			d("Vendor blacklisted: Can not handle conversation.")
+			gw2_blacklistmanager.AddBlacklistEntry(GetString("Vendor buy"), vendor.id, vendor.name, true)
+			return false
+		elseif (result == nil) then				
+			ml_global_information.Wait(math.random(520,1200))
+			return true
+		end
+	end
+
+	if (gw2_buy_manager.vendorSellsCheck() == false) then
+		d("Vendor blacklisted: Does not have needed tools/kits.")
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("Vendor buy"), vendor.id, vendor.name, true)
+		return false
+	end
+	
+	local vendorItems = VendorItemList("")
+	local slowdown = math.random(0,3)
+	if (table.valid(vendorItems) ) then
+		if ( slowdown == 0) then
+			local neededKits = gw2_buy_manager.GetNeededSalvageKitList()
+			local neededTools = gw2_buy_manager.GetNeededGatheringToolList()				
+			
+			for _,item in pairs(vendorItems) do
+				local itemID = item.itemid
+				for id,count in pairs(neededKits) do
+					if (id == itemID and count > 0) then
+						item:Buy()
 						return true
 					end
 				end
-				if (gw2_buy_manager.vendorSellsCheck() == false) then
-					d("Vendor blacklisted, does not have needed tools/kits.")
-					ml_blacklist.AddBlacklistEntry(GetString("vendorsbuy"), vendor.id, vendor.name, true)
-				end
-				local vendorItems = VendorItemList("")
-				local slowdown = math.random(0,3)
-				if (table.valid(vendorItems) ) then
-					if ( slowdown == 0) then
-						local neededKits = gw2_buy_manager.GetNeededSalvageKitList()
-						local neededTools = gw2_buy_manager.GetNeededGatheringToolList()				
-						
-						for _,item in pairs(vendorItems) do
-							local itemID = item.itemID
-							for id,count in pairs(neededKits) do								
-								if (id == itemID and count > 0) then
-									item:Buy()
-									return true
-								end
-							end
-							for id,count in pairs(neededTools) do							
-								if (id == itemID and count > 0) then
-									item:Buy()
-									return true	
-								end
-							end
-						end
-						return false
+				
+				for id,count in pairs(neededTools) do							
+					if (id == itemID and count > 0) then
+						item:Buy()
+						return true	
 					end
-					
-					return true
 				end
 			end
-		else
-			local pos = vendorMarker.pos
-			if ( pos ) then
-				local newTask = gw2_task_moveto.Create()
-				newTask.targetPos = pos
-				newTask.targetID = vendorMarker.characterID
-				newTask.targetType = "character"
-				newTask.name = "MoveTo Vendor(BUY)"
-				newTask.useWaypoint = true
-				ml_task_hub:CurrentTask():AddSubTask(newTask)
-				return true
-			end
+			return false
 		end
+		gw2_buy_manager.VendorBuyHistroy.interactcount = 0
+		return true
 	end
 	return false
 end
