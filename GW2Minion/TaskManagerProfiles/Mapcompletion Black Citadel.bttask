@@ -1,0 +1,1451 @@
+local tbl = 
+{
+	name = "Mapcompletion Black Citadel",
+	properties = 
+	{
+		failure = 1,
+		order = 1,
+		repeattasks = 2,
+	},
+	tasks = 
+	{
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 0,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Ligacus Aquilo",
+				pos = 
+				{
+					hx = -0.75552666187286,
+					hy = -0.44380033016205,
+					hz = 0.48189291357994,
+					x = -6163.1728515625,
+					y = 12029.294921875,
+					z = -6738.2592773438,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 1,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Bane",
+				pos = 
+				{
+					hx = -0.76985287666321,
+					hy = 0.52784007787704,
+					hz = 0.35876375436783,
+					x = -1173.8132324219,
+					y = 10564.501953125,
+					z = -1018.5635986328,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 2,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Memorial",
+				pos = 
+				{
+					hx = -0.25948020815849,
+					hy = 0.88943737745285,
+					hz = 0.37625941634178,
+					x = 1222.681640625,
+					y = 14583.837890625,
+					z = -6669.3364257813,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 3,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista",
+				pos = 
+				{
+					hx = -0.16453838348389,
+					hy = 0.8565092086792,
+					hz = 0.48920249938965,
+					x = 1973.5650634766,
+					y = 17659.38671875,
+					z = -6313.4624023438,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 4,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Serrated Blade Tavern",
+				pos = 
+				{
+					hx = 0.43442669510841,
+					hy = -0.78530246019363,
+					hz = 0.44110485911369,
+					x = 3929.4401855469,
+					y = 17453.447265625,
+					z = -5545.8203125,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 5,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Factorium",
+				pos = 
+				{
+					hx = 0.78638023138046,
+					hy = -0.4972325861454,
+					hz = 0.36655956506729,
+					x = 6995.4584960938,
+					y = 17299.27734375,
+					z = -5562.8955078125,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 6,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Durmand Scriptorium",
+				pos = 
+				{
+					hx = -0.83640658855438,
+					hy = 0.50933367013931,
+					hz = 0.20249244570732,
+					x = 8594.10546875,
+					y = 19390.291015625,
+					z = -5251.6162109375,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 7,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Diessa Gate",
+				pos = 
+				{
+					hx = -0.9188027381897,
+					hy = 0.13088239729404,
+					hz = 0.37238594889641,
+					x = -1390.2174072266,
+					y = 19901.447265625,
+					z = -5516.6875,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 8,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Plaza of Remebrance",
+				pos = 
+				{
+					hx = -0.8007994890213,
+					hy = -0.22908765077591,
+					hz = 0.55338871479034,
+					x = -2493.7985839844,
+					y = 16351.36328125,
+					z = -6124.673828125,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 9,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Hero's",
+				pos = 
+				{
+					hx = 0.81250023841858,
+					hy = -0.41357764601707,
+					hz = 0.41084894537926,
+					x = 6678.12890625,
+					y = 10147.82421875,
+					z = -6610.6171875,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 10,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 371,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Hero's Forum",
+				pos = 
+				{
+					hx = -0.7098051905632,
+					hy = -0.39084014296532,
+					hz = 0.58602094650269,
+					x = 7975.5737304688,
+					y = 12732.439453125,
+					z = -5397.6440429688,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 11,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 371,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI 20th Blood Cohort",
+				pos = 
+				{
+					hx = 0.44487875699997,
+					hy = 0.84541124105453,
+					hz = 0.29557183384895,
+					x = 11590.462890625,
+					y = 17918.833984375,
+					z = -5104.2543945313,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 12,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 371,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI 12th Iron Maniple",
+				pos = 
+				{
+					hx = 0.41684177517891,
+					hy = 0.90897905826569,
+					hz = 0,
+					x = 15868.032226563,
+					y = 17965.677734375,
+					z = -5975.9287109375,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 13,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 371,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Farhar of young Heroes",
+				pos = 
+				{
+					hx = -0.61088567972183,
+					hy = -0.6122921705246,
+					hz = 0.50191330909729,
+					x = 16500.541015625,
+					y = 13527.0546875,
+					z = -5350.1088867188,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 14,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 371,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Ash Checkpoint 13",
+				pos = 
+				{
+					hx = 0.90486830472946,
+					hy = 0.29434248805046,
+					hz = 0.30753177404404,
+					x = 14245.599609375,
+					y = 12448.006835938,
+					z = -5177.7841796875,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 15,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Ashfurt Gate",
+				pos = 
+				{
+					hx = 0.91903305053711,
+					hy = -0.21958896517754,
+					hz = 0.32735136151314,
+					x = 17165.884765625,
+					y = 8774.677734375,
+					z = -5152.76953125,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 16,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Mustering Ground",
+				pos = 
+				{
+					hx = -0.93737858533859,
+					hy = -0.14764136075974,
+					hz = 0.3154733479023,
+					x = 15463.93359375,
+					y = 8477.8154296875,
+					z = -5218.908203125,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 17,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Vigil Chapterhouse",
+				pos = 
+				{
+					hx = -0.9559828042984,
+					hy = -0.16106097400188,
+					hz = 0.2452677488327,
+					x = 7239.6381835938,
+					y = 6329.5419921875,
+					z = -6128.498046875,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 18,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 460,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Citadel Stockade",
+				pos = 
+				{
+					hx = -0.94492965936661,
+					hy = -0.20960649847984,
+					hz = 0.25134238600731,
+					x = 1906.2955322266,
+					y = 8432.4384765625,
+					z = -6287.02734375,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 19,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Imperator's Waypoint",
+				pos = 
+				{
+					hx = 0.51546484231949,
+					hy = -0.75915962457657,
+					hz = 0.39745768904686,
+					x = 22.198160171509,
+					y = 8006.0590820313,
+					z = -8428.71875,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 20,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 372,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Blood Tribune Quaters",
+				pos = 
+				{
+					hx = -0.95172601938248,
+					hy = 0.075301721692085,
+					hz = 0.29756891727448,
+					x = -526.97277832031,
+					y = 6899.7416992188,
+					z = -8568.0205078125,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 21,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 373,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI The War Council",
+				pos = 
+				{
+					hx = -0.9120312333107,
+					hy = -0.14404474198818,
+					hz = 0.38399234414101,
+					x = 573.24084472656,
+					y = 8835.4677734375,
+					z = -9664.908203125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 22,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 373,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Iron Tribune Quaters",
+				pos = 
+				{
+					hx = -0.97411042451859,
+					hy = 0.022486846894026,
+					hz = 0.22495166957378,
+					x = 203.50556945801,
+					y = 7208.5473632813,
+					z = -9646.7841796875,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 23,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 833,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Ash tribune Quarters",
+				pos = 
+				{
+					hx = -0.86875230073929,
+					hy = -0.29545292258263,
+					hz = 0.39746317267418,
+					x = -1200.8057861328,
+					y = 11348.903320313,
+					z = -9019.205078125,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 24,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Storm Caller Triumph",
+				pos = 
+				{
+					hx = -0.88121819496155,
+					hy = -0.00028767986805178,
+					hz = 0.47270971536636,
+					x = -468.86114501953,
+					y = 3575.8930664063,
+					z = -6509.4111328125,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 25,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Junker's",
+				pos = 
+				{
+					hx = 0.88044571876526,
+					hy = -0.41738674044609,
+					hz = 0.22495244443417,
+					x = 3212.0576171875,
+					y = 1873.2172851563,
+					z = -6637.361328125,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 26,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista",
+				pos = 
+				{
+					hx = 0.62583148479462,
+					hy = -0.66649162769318,
+					hz = 0.40512207150459,
+					x = 10145.930664063,
+					y = -907.19592285156,
+					z = -6966.4345703125,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 27,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Gladium",
+				pos = 
+				{
+					hx = -0.15846756100655,
+					hy = -0.96280747652054,
+					hz = 0.21883748471737,
+					x = 778.17785644531,
+					y = -3108.4943847656,
+					z = -3950.4633789063,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 28,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista",
+				pos = 
+				{
+					hx = 0.55743002891541,
+					hy = 0.765480697155,
+					hz = 0.32142040133476,
+					x = -1649.4368896484,
+					y = -2089.4133300781,
+					z = -4003.0087890625,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 29,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Ruins of Rin",
+				pos = 
+				{
+					hx = -0.81370198726654,
+					hy = 0.485641092062,
+					hz = 0.31943979859352,
+					x = -4995.0249023438,
+					y = -5571.9541015625,
+					z = -458.31750488281,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 30,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista",
+				pos = 
+				{
+					hx = -0.63880926370621,
+					hy = 0.18417984247208,
+					hz = 0.74699431657791,
+					x = -5422.1748046875,
+					y = -11386.7578125,
+					z = -2735.1484375,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 31,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Abandoned Caverns",
+				pos = 
+				{
+					hx = -0.69609206914902,
+					hy = 0.48564353585243,
+					hz = 0.52877795696259,
+					x = -12744.341796875,
+					y = -9467.3232421875,
+					z = -383.62020874023,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 32,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista",
+				pos = 
+				{
+					hx = -0.70011055469513,
+					hy = 0.4367607831955,
+					hz = 0.56487631797791,
+					x = -11283.7734375,
+					y = 3883.1975097656,
+					z = -1727.1417236328,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 33,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 218,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Haunted Nolani",
+				pos = 
+				{
+					hx = 0.039412636309862,
+					hy = 0.97279953956604,
+					hz = 0.228271022439,
+					x = -11572.72265625,
+					y = 11094.150390625,
+					z = -855.14031982422,
+				},
+				radius = 5,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+	},
+	version = 0,
+}
+
+
+
+return tbl

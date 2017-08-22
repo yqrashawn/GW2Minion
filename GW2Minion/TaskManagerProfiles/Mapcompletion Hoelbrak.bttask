@@ -1,0 +1,1787 @@
+local tbl = 
+{
+	name = "Mapcompletion Hoelbrak",
+	properties = 
+	{
+		failure = 1,
+		order = 1,
+		repeattasks = 2,
+	},
+	tasks = 
+	{
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 0,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "peeta wp",
+				pos = 
+				{
+					hx = 0.67560476064682,
+					hy = 0.48821493983269,
+					hz = 0.55245304107666,
+					x = -1456.8833007813,
+					y = -1631.9357910156,
+					z = -12221.095703125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 1,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "priory encampment",
+				pos = 
+				{
+					hx = 0.9435201883316,
+					hy = 0.3313150703907,
+					hz = 0,
+					x = -1122.4888916016,
+					y = -4460.4609375,
+					z = -13052.754882813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 2,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "upper balcony wp",
+				pos = 
+				{
+					hx = 0.75228571891785,
+					hy = -0.63067036867142,
+					hz = 0.19058099389076,
+					x = 6696.4418945313,
+					y = -5135.9760742188,
+					z = -13193.856445313,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 3,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "vigil poi",
+				pos = 
+				{
+					hx = 0.52785754203796,
+					hy = -0.76016891002655,
+					hz = 0.37882670760155,
+					x = 8206.7470703125,
+					y = -8339.5361328125,
+					z = -13203.654296875,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 4,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "trade commons wp",
+				pos = 
+				{
+					hx = 0.89078986644745,
+					hy = 0.04549440741539,
+					hz = 0.45213240385056,
+					x = 7195.123046875,
+					y = -1766.6651611328,
+					z = -11888.711914063,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 5,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "the great rise",
+				pos = 
+				{
+					hx = -0.43211200833321,
+					hy = -0.82438635826111,
+					hz = 0.36560401320457,
+					x = 5134.9306640625,
+					y = -5147.9497070313,
+					z = -11412.76171875,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 6,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "great lodge wp",
+				pos = 
+				{
+					hx = 0.13358855247498,
+					hy = -0.95570886135101,
+					hz = 0.26224917173386,
+					x = 3053.0844726563,
+					y = -9049.4990234375,
+					z = -11918.23046875,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 7,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "fang of the serpent",
+				pos = 
+				{
+					hx = -0.52262246608734,
+					hy = -0.8525642156601,
+					hz = 0,
+					x = 1475.3256835938,
+					y = -12103.853515625,
+					z = -11505.556640625,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 8,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 374,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "fang of the serpent poi",
+				pos = 
+				{
+					hx = 0.45648986101151,
+					hy = 0.79399961233139,
+					hz = 0.40147429704666,
+					x = 657.64501953125,
+					y = -13567.3046875,
+					z = -15518.373046875,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 9,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 375,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "krait obelisk shard",
+				pos = 
+				{
+					hx = 0.30049905180931,
+					hy = 0.9183908700943,
+					hz = 0.25740739703178,
+					x = 3238.6267089844,
+					y = -12911.807617188,
+					z = -13471.697265625,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 10,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "vista",
+				pos = 
+				{
+					hx = 0.1546992957592,
+					hy = 0.66125500202179,
+					hz = 0.7340367436409,
+					x = 11611.885742188,
+					y = -7372.4931640625,
+					z = -12611.1171875,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 11,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "southern watchpost wp",
+				pos = 
+				{
+					hx = -0.78147357702255,
+					hy = -0.62393832206726,
+					hz = 0,
+					x = 11165.522460938,
+					y = -10226.213867188,
+					z = -12960.631835938,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 12,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 376,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "stoneright wp",
+				pos = 
+				{
+					hx = -0.39257848262787,
+					hy = -0.91971850395203,
+					hz = 0,
+					x = 15520.1640625,
+					y = -13154.66796875,
+					z = -13252.6953125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 13,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "old fiachs poi",
+				pos = 
+				{
+					hx = 0.34989607334137,
+					hy = -0.85962462425232,
+					hz = 0.3723147213459,
+					x = 21963.947265625,
+					y = -14678.669921875,
+					z = -12087.329101563,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 14,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "boasting hall",
+				pos = 
+				{
+					hx = 0.9384400844574,
+					hy = 0.34544211626053,
+					hz = 0,
+					x = 24886.927734375,
+					y = -10090.546875,
+					z = -11752.500976563,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 15,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "vista",
+				pos = 
+				{
+					hx = -0.55430901050568,
+					hy = 0.62511503696442,
+					hz = 0.54952049255371,
+					x = 18771.90625,
+					y = -9365.40625,
+					z = -13176.223632813,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 16,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "eastern watchpost wp",
+				pos = 
+				{
+					hx = 0.2118097692728,
+					hy = 0.64794635772705,
+					hz = 0.73164343833923,
+					x = 19156.6640625,
+					y = -7919.6801757813,
+					z = -12269.033203125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 17,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "bilrost poi",
+				pos = 
+				{
+					hx = -0.89489638805389,
+					hy = 0.20763766765594,
+					hz = 0.39502790570259,
+					x = 14643.146484375,
+					y = -6691.845703125,
+					z = -11706.72265625,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 18,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "wolf hallow poi",
+				pos = 
+				{
+					hx = -0.38911804556847,
+					hy = 0.83813238143921,
+					hz = 0.38225808739662,
+					x = 17071.921875,
+					y = -4443.2685546875,
+					z = -9639.8203125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 19,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "wolf wp",
+				pos = 
+				{
+					hx = -0.17933976650238,
+					hy = 0.87995725870132,
+					hz = 0.43990051746368,
+					x = 15817.3984375,
+					y = -2455.0483398438,
+					z = -9891.5478515625,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 20,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "poi",
+				pos = 
+				{
+					hx = 0.99998325109482,
+					hy = -0.0057915644720197,
+					hz = 0,
+					x = 20263.5546875,
+					y = 1317.1773681641,
+					z = -9969.8759765625,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 21,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "legends wp",
+				pos = 
+				{
+					hx = 0.95064175128937,
+					hy = -0.31029054522514,
+					hz = 0,
+					x = 21254.169921875,
+					y = 1234.5278320313,
+					z = -10067.625976563,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 22,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "lost spirit hallow",
+				pos = 
+				{
+					hx = 0.92287123203278,
+					hy = -0.38010177016258,
+					hz = 0.061897795647383,
+					x = 23029.083984375,
+					y = -2068.8586425781,
+					z = -10993.411132813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 23,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "vista",
+				pos = 
+				{
+					hx = -0.43001964688301,
+					hy = 0.9028195142746,
+					hz = 0,
+					x = 16911.333984375,
+					y = 4758.8627929688,
+					z = -10409.109375,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 24,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "bear wp",
+				pos = 
+				{
+					hx = 0.80645883083344,
+					hy = 0.31264504790306,
+					hz = 0.50187367200851,
+					x = 17120.96484375,
+					y = 7195.2612304688,
+					z = -8581.6875,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 25,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "bear hallow",
+				pos = 
+				{
+					hx = 0.86593705415726,
+					hy = 0.3443948328495,
+					hz = 0.36269161105156,
+					x = 20533.5546875,
+					y = 8100.0830078125,
+					z = -8258.07421875,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 26,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "skartis steading poi",
+				pos = 
+				{
+					hx = 0.89838111400604,
+					hy = -0.27846178412437,
+					hz = 0.33966228365898,
+					x = 25198.857421875,
+					y = 5404.8735351563,
+					z = -9650.23828125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 27,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "shelter rock wp",
+				pos = 
+				{
+					hx = -0.60813158750534,
+					hy = 0.70781093835831,
+					hz = 0.3594157397747,
+					x = 21530.712890625,
+					y = 13910.3046875,
+					z = -8669.6875,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 28,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "master blackridge steading poi",
+				pos = 
+				{
+					hx = 0.23149079084396,
+					hy = 0.88605105876923,
+					hz = 0.40165346860886,
+					x = 23888.935546875,
+					y = 17429.14453125,
+					z = -8038.0629882813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 29,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "sigfasts steading poi",
+				pos = 
+				{
+					hx = -0.75008428096771,
+					hy = 0.66134226322174,
+					hz = 0,
+					x = 13490.151367188,
+					y = 18799.57421875,
+					z = -9872.7392578125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 30,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "might and main wp",
+				pos = 
+				{
+					hx = -0.88527816534042,
+					hy = 0.46506184339523,
+					hz = 0,
+					x = 9653.3779296875,
+					y = 2269.9697265625,
+					z = -9174.5517578125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 31,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "raven wp",
+				pos = 
+				{
+					hx = -0.23593448102474,
+					hy = 0.97176897525787,
+					hz = 0,
+					x = 9686.107421875,
+					y = 10026.701171875,
+					z = -10452.279296875,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 32,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "raven heart poi",
+				pos = 
+				{
+					hx = 0.26744803786278,
+					hy = 0.75522655248642,
+					hz = 0.59841823577881,
+					x = 10512.893554688,
+					y = 13560.26953125,
+					z = -10131.637695313,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 33,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "raven hallow poi",
+				pos = 
+				{
+					hx = -0.47402635216713,
+					hy = 0.75357627868652,
+					hz = 0.4554358124733,
+					x = 8164.2939453125,
+					y = 13328.7890625,
+					z = -10131.637695313,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 34,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "snow leapard wp",
+				pos = 
+				{
+					hx = -0.94285356998444,
+					hy = 0.33320730924606,
+					hz = 0,
+					x = 2284.3703613281,
+					y = 4626.677734375,
+					z = -9780.08203125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 35,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "vista",
+				pos = 
+				{
+					hx = -0.6668661236763,
+					hy = -0.74517750740051,
+					hz = 0,
+					x = 3349.6086425781,
+					y = 9499.177734375,
+					z = -11593.494140625,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 36,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "dragon hallow poi",
+				pos = 
+				{
+					hx = 0.9632887840271,
+					hy = -0.26846727728844,
+					hz = 0,
+					x = -1679.9633789063,
+					y = 16795.009765625,
+					z = -10189.2421875,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 37,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "snow leapord hallow",
+				pos = 
+				{
+					hx = -0.92975652217865,
+					hy = 0.16417220234871,
+					hz = 0.32954558730125,
+					x = -2139.8779296875,
+					y = 5865.8002929688,
+					z = -9487.515625,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 38,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "hero compass",
+				pos = 
+				{
+					hx = -0.71007609367371,
+					hy = 0.7041249871254,
+					hz = 0,
+					x = -7859.4594726563,
+					y = 5944.9223632813,
+					z = -11403.130859375,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 39,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "courage brewery poi",
+				pos = 
+				{
+					hx = 0.43814000487328,
+					hy = 0.8093364238739,
+					hz = 0.39116221666336,
+					x = -9027.9111328125,
+					y = 9213.244140625,
+					z = -11415.98828125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 40,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "hrothbeir rest poi",
+				pos = 
+				{
+					hx = -0.53130239248276,
+					hy = -0.77058470249176,
+					hz = 0.35201841592789,
+					x = -11187.99609375,
+					y = 4617.0654296875,
+					z = -10935.522460938,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 41,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 326,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "vista",
+				pos = 
+				{
+					hx = 0.26522612571716,
+					hy = 0.55225521326065,
+					hz = 0.79036021232605,
+					x = -16024.802734375,
+					y = 1612.6774902344,
+					z = -11592.502929688,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+	},
+	version = 0,
+}
+
+
+
+return tbl

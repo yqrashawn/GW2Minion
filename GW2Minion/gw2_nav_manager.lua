@@ -4,18 +4,19 @@ function gw2_nav_manager.ModuleInit()
 	ml_node.DistanceTo = gw2_nav_manager.NodeDistanceTo
 end
 
+-- Set up scoring for map entry points
 function gw2_nav_manager.NodeDistanceTo(self,id)
 	local neighbor = self:GetNeighbor(id)
 	local neighborNode = ml_nav_manager.GetNode(id)
 	
-	if(ValidTable(neighbor) and ValidTable(neighborNode)) then
+	if(table.valid(neighbor) and table.valid(neighborNode)) then
 		local nodeEntry = neighborNode:GetNeighbor(self.id)
-		if(ValidTable(nodeEntry)) then
+		if(table.valid(nodeEntry)) then
 			local lowestCost = math.huge
 			for id, exitPos in pairs(neighbor) do
-				if (ValidTable(exitPos)) then
+				if (table.valid(exitPos)) then
 					for _,entryPos in pairs(nodeEntry) do
-						local cost = Distance3DT(entryPos,exitPos)
+						local cost = math.distance3d(entryPos,exitPos)
 						if (cost < lowestCost) then
 							lowestCost = cost
 						end

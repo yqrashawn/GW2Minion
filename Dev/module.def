@@ -1,5 +1,6 @@
 [Module]
 Name=Dev
+Dependencies=minionlib,GW2Minion
 Version=1
-Files=devmonitor.lua
+Files=dev.lua
 Enabled=1
