@@ -79,6 +79,26 @@ ml_global_information.InvulnerabilityConditions = {
 	[29065]		= "Tough Hide"
 }
 
+ml_global_information.VendorSell = {
+	GW2.MAPMARKER.Merchant,
+	GW2.MAPMARKER.Armorsmith,
+	GW2.MAPMARKER.Weaponsmith,
+	GW2.MAPMARKER.Repair,
+	GW2.MAPMARKER.ItzelVendor,
+	GW2.MAPMARKER.ExaltedVendor,
+	GW2.MAPMARKER.NuhochVendor
+}
+
+ml_global_information.VendorBuy = {
+	GW2.MAPMARKER.Merchant,
+	GW2.MAPMARKER.ItzelVendor,
+	GW2.MAPMARKER.ExaltedVendor,
+	GW2.MAPMARKER.NuhochVendor
+}
+
+ml_global_information.VendorRepair = {
+	GW2.MAPMARKER.Repair
+}
 
 -- Moved this here so it's easier to look at and easier to copy paste
 function ml_global_information.OnUpdate(Event,ticks)
