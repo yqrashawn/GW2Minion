@@ -353,7 +353,11 @@ end
 
 function gw2_buy_manager.getMarkerList(filter)
 	filter = filter or ""	
-	local cid = GW2.MAPMARKER.Merchant..";"..GW2.MAPMARKER.ItzelVendor..";"..GW2.MAPMARKER.ExaltedVendor..";"..GW2.MAPMARKER.NuhochVendor
+	local cid = ""
+	for _,contentid in pairs(ml_global_information.VendorBuy) do
+		cid = string.add(cid, tostring(contentid), ";")
+	end
+	
 	local markers = MapMarkerList("onmesh,contentID="..cid..filter..",exclude_characterid="..gw2_blacklistmanager.GetExcludeString(GetString("Vendor buy")))
 	if(table.valid(markers)) then
 		return markers
@@ -396,7 +400,11 @@ function gw2_buy_manager.buyAtMerchant(vendor)
 		gw2_blacklistmanager.AddBlacklistEntry(GetString("Vendor buy"), vendor.id, vendor.name, true)
 		return false
 	end
-	
+
+	return gw2_buy_manager.buyItems()
+end
+
+function gw2_buy_manager.buyItems()
 	local vendorItems = VendorItemList("")
 	local slowdown = math.random(0,3)
 	if (table.valid(vendorItems) ) then
@@ -420,11 +428,12 @@ function gw2_buy_manager.buyAtMerchant(vendor)
 					end
 				end
 			end
-			return false
+			return true
 		end
 		gw2_buy_manager.VendorBuyHistroy.interactcount = 0
 		return true
 	end
+	
 	return false
 end
 

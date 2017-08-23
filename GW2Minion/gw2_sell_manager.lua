@@ -421,6 +421,7 @@ function gw2_sell_manager.mainWindow.Draw(event,ticks)
 		end
 		GUI:End()
 	end
+
 end
 
 -- Filter list functions.
@@ -549,16 +550,7 @@ function gw2_sell_manager.getMarkerList(filter)
 	local MList = MapMarkerList("onmesh"..filter..",exclude_characterid="..gw2_blacklistmanager.GetExcludeString(GetString("Vendor sell")))
 	if(table.valid(MList)) then
 		for _,marker in pairs(MList) do
-			local validCID = {
-				GW2.MAPMARKER.Merchant,
-				GW2.MAPMARKER.Armorsmith,
-				GW2.MAPMARKER.Weaponsmith,
-				GW2.MAPMARKER.Repair,
-				GW2.MAPMARKER.ItzelVendor,
-				GW2.MAPMARKER.ExaltedVendor,
-				GW2.MAPMARKER.NuhochVendor,
-			}
-			if (table.contains(validCID,marker.contentid)) then
+			if (table.contains(ml_global_information.VendorSell,marker.contentid)) then
 				table.insert(markers, marker)
 			end
 		end
@@ -600,39 +592,45 @@ function gw2_sell_manager.sellAtVendor(vendor)
 				return true
 			end
 		end
-		local iList = gw2_sell_manager.createItemList()
-		local slowdown = math.random(0,1)
-		local soldstuff = false
-		if ( table.valid(iList) ) then
-			if ( slowdown == 0 ) then
-				for _,item in pairs(iList) do
-					d("Selling: "..item.name)
-					item:Sell()
-					local uniqueItemID = item.itemid .. item.slot
-					if (not gw2_sell_manager.VendorSellHistroy[uniqueItemID]) then
-						gw2_sell_manager.VendorSellHistroy[uniqueItemID] = 1
-					elseif (gw2_sell_manager.VendorSellHistroy[uniqueItemID] < 5) then
-						gw2_sell_manager.VendorSellHistroy[uniqueItemID] = gw2_sell_manager.VendorSellHistroy[uniqueItemID] + 1
-					else
-						d("Could not sell "..item.name..", blacklisting it")
-						gw2_blacklistmanager.AddBlacklistEntry(GetString("Sell items"), item.itemID, item.name, true)
-					end
-					return true
-				end
-			end
+		if(gw2_sell_manager.sellItems()) then
 			return true
 		end
-		
-		d("Selling junk...")
-		Inventory:SellJunk()
-		
-		-- No more items to sell
-		d("Selling finished...")
-		gw2_sell_manager.VendorSellHistroy = {}
-		gw2_sell_manager.VendorSellHistroy.interactcount = 0
 		ml_global_information.Wait(math.random(520,750))
 	end
 	return false
+end
+
+function gw2_sell_manager.sellItems()
+	local iList = gw2_sell_manager.createItemList()
+	local slowdown = math.random(0,1)
+	local soldstuff = false
+	if ( table.valid(iList) ) then
+		if ( slowdown == 0 ) then
+			for _,item in pairs(iList) do
+				d("Selling: "..item.name)
+				item:Sell()
+				local uniqueItemID = item.itemid .. item.slot
+				if (not gw2_sell_manager.VendorSellHistroy[uniqueItemID]) then
+					gw2_sell_manager.VendorSellHistroy[uniqueItemID] = 1
+				elseif (gw2_sell_manager.VendorSellHistroy[uniqueItemID] < 5) then
+					gw2_sell_manager.VendorSellHistroy[uniqueItemID] = gw2_sell_manager.VendorSellHistroy[uniqueItemID] + 1
+				else
+					d("Could not sell "..item.name..", blacklisting it")
+					gw2_blacklistmanager.AddBlacklistEntry(GetString("Sell items"), item.itemID, item.name, true)
+				end
+				return true
+			end
+		end
+		return true
+	end
+	
+	d("Selling junk...")
+	Inventory:SellJunk()
+	
+	-- No more items to sell
+	d("Selling finished...")
+	gw2_sell_manager.VendorSellHistroy = {}
+	gw2_sell_manager.VendorSellHistroy.interactcount = 0
 end
 
 --needtosell.

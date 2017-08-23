@@ -85,6 +85,8 @@ end
 function gw2_vendorassistant.BuyItems()
 	if((Settings.GW2Minion.autobuy or gw2_vendorassistant.buying) and gw2_vendorassistant.vendoropen) then
 		if(gw2_buy_manager.vendorSellsCheck() and (gw2_buy_manager.NeedToBuySalvageKits(true) or gw2_buy_manager.NeedToBuyGatheringTools(true))) then
+			if(gw2_common_functions.handleConversation("buy") == nil) then return end
+			
 			if(gw2_common_functions.handleConversation("buy")) then
 				if(gw2_buy_manager.buyItems()) then
 					gw2_vendorassistant.buying = true
@@ -101,6 +103,8 @@ end
 -- Sell items
 function gw2_vendorassistant.SellItems()
 	if((Settings.GW2Minion.autosell or gw2_vendorassistant.selling) and gw2_vendorassistant.vendoropen) then
+		if(gw2_common_functions.handleConversation("sell") == nil) then return end
+		
 		if(gw2_common_functions.handleConversation("sell")) then
 			if(gw2_sell_manager.haveItemToSell() and gw2_sell_manager.sellItems()) then
 				gw2_vendorassistant.selling = true
