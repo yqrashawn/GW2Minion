@@ -61,6 +61,25 @@ local tbl =
 						},
 						
 						{
+							class = "Action",
+							nodes = 
+							{
+							},
+							settings = 
+							{
+							},
+							variables = 
+							{
+								finishcode = "",
+								info = "c_Looting",
+								interruptcode = "",
+								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
+								runcode = "self:fail()",
+								startcode = "",
+							},
+						},
+						
+						{
 							class = "SubTree",
 							nodes = 
 							{
@@ -75,7 +94,7 @@ local tbl =
 						},
 						
 						{
-							class = "Action",
+							class = "SubTree",
 							nodes = 
 							{
 							},
@@ -84,11 +103,7 @@ local tbl =
 							},
 							variables = 
 							{
-								finishcode = "",
-								info = "c_Looting",
-								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-								runcode = "self:fail()",
-								startcode = "",
+								filename = "WaitToHeal.st",
 							},
 						},
 						
