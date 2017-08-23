@@ -50,7 +50,7 @@ end
 -- Update conditions
 function gw2_vendorassistant.Update()
 	if(ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then
-		if(BehaviorManager:CurrentBTreeName() == GetString("Assist") or not BehaviorManager:Running()) then
+		if(BehaviorManager:CurrentBTreeName() == GetString("AssistMode") or not BehaviorManager:Running()) then
 			if(gw2_vendorassistant.vendoropen or TimeSince(gw2_vendorassistant.vendorcheck) > 500) then
 				gw2_vendorassistant.vendorcheck = ml_global_information.Now
 				gw2_vendorassistant.vendoropen = Inventory:IsVendorOpened()	
@@ -103,12 +103,15 @@ end
 -- Sell items
 function gw2_vendorassistant.SellItems()
 	if((Settings.GW2Minion.autosell or gw2_vendorassistant.selling) and gw2_vendorassistant.vendoropen) then
-		if(gw2_common_functions.handleConversation("sell") == nil) then return end
-		
-		if(gw2_common_functions.handleConversation("sell")) then
-			if(gw2_sell_manager.haveItemToSell() and gw2_sell_manager.sellItems()) then
-				gw2_vendorassistant.selling = true
-				return true
+		local junkitems = Inventory("rarity="..GW2.ITEMRARITY.Junk)
+		if(gw2_sell_manager.haveItemToSell() or table.valid(junkitems)) then
+			if(gw2_common_functions.handleConversation("sell") == nil) then return end
+			
+			if(gw2_common_functions.handleConversation("sell")) then
+				if(gw2_sell_manager.sellItems()) then
+					gw2_vendorassistant.selling = true
+					return true
+				end
 			end
 		end
 	end
