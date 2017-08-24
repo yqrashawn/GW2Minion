@@ -1032,21 +1032,21 @@ function profilePrototype:DoCombatMovement(targetID)
 		-- Can we move in direction, while not walking towards potential enemy's.
 		local targets = CharacterList("alive,los,notaggro,attackable,hostile,maxdistance=1500,exclude="..target.id)
 
-		if (movementDirection[forward] and table.size(gw2_common_functions.filterRelativePostion(targets,forward)) > 0) then movementDirection[forward] = false end
-		if (movementDirection[backward] and table.size(gw2_common_functions.filterRelativePostion(targets,backward)) > 0) then movementDirection[backward] = false end
-		if (movementDirection[left] and table.size(gw2_common_functions.filterRelativePostion(targets,left)) > 0) then movementDirection[left] = false end
-		if (movementDirection[right] and table.size(gw2_common_functions.filterRelativePostion(targets,right)) > 0) then movementDirection[right] = false end
+		if (movementDirection[forward] and table.valid(gw2_common_functions.filterRelativePostion(targets,forward))) then movementDirection[forward] = false end
+		if (movementDirection[backward] and table.valid(gw2_common_functions.filterRelativePostion(targets,backward))) then movementDirection[backward] = false end
+		if (movementDirection[left] and table.valid(gw2_common_functions.filterRelativePostion(targets,left))) then movementDirection[left] = false end
+		if (movementDirection[right] and table.valid(gw2_common_functions.filterRelativePostion(targets,right))) then movementDirection[right] = false end
 		--
 		if (movementDirection[forward]) then
-			if (movementDirection[left] and table.size(gw2_common_functions.filterRelativePostion(targets,forwardLeft)) > 0) then
+			if (movementDirection[left] and table.valid(gw2_common_functions.filterRelativePostion(targets,forwardLeft))) then
 				movementDirection[left] = false
-			elseif (movementDirection[right] and table.size(gw2_common_functions.filterRelativePostion(targets,forwardRight)) > 0) then
+			elseif (movementDirection[right] and table.valid(gw2_common_functions.filterRelativePostion(targets,forwardRight))) then
 				movementDirection[right] = false
 			end
 		elseif (movementDirection[backward]) then
-			if (movementDirection[left] and table.size(gw2_common_functions.filterRelativePostion(targets,backwardLeft)) > 0) then
+			if (movementDirection[left] and table.valid(gw2_common_functions.filterRelativePostion(targets,backwardLeft))) then
 				movementDirection[left] = false
-			elseif (movementDirection[right] and table.size(gw2_common_functions.filterRelativePostion(targets,backwardRight)) > 0) then
+			elseif (movementDirection[right] and table.valid(gw2_common_functions.filterRelativePostion(targets,backwardRight))) then
 				movementDirection[right] = false
 			end
 		end
@@ -1537,7 +1537,7 @@ function profilePrototype:SwapWeapon( targetdist )
 	end
 	
 	-- Evaluate & Swap	
-	if ( table.size(wpsets) > 0 ) then
+	if ( table.valid(wpsets)) then
 		local bestwpset
 		local bestID
 		for setID,entry in pairs(wpsets) do

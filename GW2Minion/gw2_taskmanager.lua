@@ -5,6 +5,10 @@ gw2_tm_heartquest.laststatus = true
 gw2_tm_heartquest.lastid = 0
 
 function gw2_tm_heartquest:CanTaskRun_TM(taskProperties,customProperties)
+	return gw2_tm_heartquest:CanTaskStart_TM(taskProperties,customProperties)
+end
+
+function gw2_tm_heartquest:CanTaskStart_TM(taskProperties,customProperties)
 	if(not customProperties or type(customProperties.hqid) ~= "number" or customProperties.hqid == 0) then
 		d("[gw2_tm_heartquest]: No valid hqid set. Ending task.")
 		return false
@@ -18,12 +22,18 @@ function gw2_tm_heartquest:CanTaskRun_TM(taskProperties,customProperties)
 	
 	if(TimeSince(gw2_tm_heartquest.lastcheck) > 1000) then
 		gw2_tm_heartquest.lastcheck = ml_global_information.Now
+		
+		if (taskProperties.mapid ~= ml_global_information.CurrentMapID) then
+			gw2_tm_heartquest.laststatus = true
+			return gw2_tm_heartquest.laststatus
+		end
+		
 		if(table.valid(customProperties)) then
 
-			local MList = MapMarkerList("issubregion")
+			local MList = MapMarkerList("issubregion,contentid=31373,71075")
 			if(table.valid(MList)) then
 				for _,marker in pairs(MList) do
-					if(marker.subregionid == customProperties.hqid and marker.contentid == GW2.MAPMARKER.HeartQuestComplete) then
+					if(marker.subregionid == customProperties.hqid) then
 						gw2_tm_heartquest.laststatus = false
 						return gw2_tm_heartquest.laststatus
 					end

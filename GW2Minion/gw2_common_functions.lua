@@ -447,7 +447,7 @@ function gw2_common_functions.GetBestDownstateTarget()
 	local filterstring = gw2_blacklistmanager.GetMonsterExcludeString()
 	
 	local CList = CharacterList("player,attackable,lowesthealth,los,maxdistance=900"..filterstring)
-	if ( table.size(CList) == 0 ) then
+	if ( not table.valid(CList)) then
 		CList = CharacterList("aggro,attackable,lowesthealth,los,maxdistance=900"..filterstring)
 	end
 	if(table.valid(CList)) then

@@ -37,6 +37,7 @@ gw2_radar.radar3DActive		= false
 gw2_radar.compassShowPath	= false
 gw2_radar.radar3DShowPath	= false
 gw2_radar.radarTypes		= {}
+gw2_radar.settingsGroups	= {}
 gw2_radar.filterList		= {}
 gw2_radar.trackEntities		= {}
 gw2_radar.compassPath		= {}
@@ -61,11 +62,12 @@ function gw2_radar.Init()
 	gw2_radar.compassPathColor = Settings.gw2_radar.compassPathColor
 	
 	gw2_radar.loadSettings()
-	gw2_radar.createFilterList()
+	gw2_radar.updateFilterList()
 	
 end
 
 function gw2_radar.Draw(_, ticks )
+	-- Draw main radar gui.
 	if (GetGameState() == GW2.GAMESTATE.GAMEPLAY) then -- TODO: global is too slow, produces errors, fix when that is fixed. if (ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then
 		if (gw2_radar.mainWindow.open) then
 			GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver)
@@ -126,22 +128,21 @@ function gw2_radar.Draw(_, ticks )
 			
 			GUI:End()
 		end
+		
 		-- if () then -- TODO: waiting on map open.closed check.
 			
 			-- Delay parsing entities.
+			-- Checks all required entity lists. Delay this function as much as possible to reduce system load.
 			if (ticks - gw2_radar.parseTicks >= gw2_radar.parseTickDelay) then
 				gw2_radar.parseTicks = ticks
-				-- Parse entities.
 				gw2_radar.parseEntities()
-				-- Parse path.
 				gw2_radar.parseCompassPath()
 			end
 			-- Delay updating compass and position data.
+			-- Delay this function as much as possible to reduce system load.
 			if (ticks - gw2_radar.computeTicks >= gw2_radar.computeTickDelay) then
 				gw2_radar.computeTicks = ticks
-				-- Update compass data.
 				gw2_radar.updateCompassData()
-				-- update screen position data.
 				gw2_radar.updateScreenPositionData()
 			end
 			
@@ -163,15 +164,7 @@ function gw2_radar.loadSettings()
 end
 
 function gw2_radar.drawSettings()
-	local drawGroups = {}
-	for _,radarType in pairs(gw2_radar.radarTypes) do
-		if (table.valid(radarType)) then
-			drawGroups[radarType.groupName] = drawGroups[radarType.groupName] or {}
-			drawGroups[radarType.groupName][radarType.name] = radarType
-		end
-	end
-	
-	for groupName,group in pairs(drawGroups) do
+	for groupName,group in pairs(gw2_radar.settingsGroups) do
 		GUI:BeginGroup()
 			if (GUI:CollapsingHeader(groupName)) then
 				GUI:Indent()
@@ -240,7 +233,7 @@ function gw2_radar.draw3DRadar()
 					
 					if (scale > 0.5) then
 						GUI:SetWindowFontScale(scale)
-						local text = "["..entity.name.."]["..round(entity.distance).."]"
+						local text = "["..entity.name.."]["..math.round(entity.distance).."]"
 						local textSizeX, textSizeY = GUI:CalcTextSize(text)
 						GUI:AddText(sPos.x - (textSizeX/2), sPos.y+textSizeY, 4294967295, text)
 						
@@ -303,7 +296,7 @@ function gw2_radar.drawCompass()
 							GUI:PushStyleVar(GUI.StyleVar_WindowRounding, 0)
 							GUI:PushStyleColor(GUI.Col_WindowBg,0,0,0,0)
 							
-							local text = entity.name .. "\n" .. round(entity.distance) .. GetString(" away")
+							local text = entity.name .. "\n" .. math.round(entity.distance) .. GetString(" away")
 							local textSize = {}
 							textSize.x,textSize.y = GUI:CalcTextSize(text)
 							
@@ -350,7 +343,7 @@ function gw2_radar.drawCompassPath()
 end
 
 function gw2_radar.parseCompassPath()
-	gw2_radar.compassPath = {}
+	table.clear(gw2_radar.compassPath)
 	if (gw2_radar.compassShowPath) then
 		local path = ml_navigation.path
 		local lastPos = gw2_radar.compassData.cPos
@@ -358,13 +351,17 @@ function gw2_radar.parseCompassPath()
 			for id,pathPointPos in ipairs(path) do
 				if (id >= ml_navigation.pathindex and table.valid(pathPointPos)) then
 					local currPos = gw2_radar.worldToCompass(pathPointPos)
-					if (table.valid(currPos) and currPos.x and currPos.y) then
-						table.insert(gw2_radar.compassPath,{x1 = lastPos.x, y1 = lastPos.y, x2 = currPos.x, y2 = currPos.y, color = gw2_radar.compassPathColor,})
-					elseif (table.valid(currPos) and currPos.ex and currPos.ey) then
-						table.insert(gw2_radar.compassPath,{x1 = lastPos.x, y1 = lastPos.y, x2 = currPos.ex, y2 = currPos.ey, color = gw2_radar.compassPathColor,})
+					if (table.valid(currPos)) then
+						if (currPos.x and currPos.y) then
+							gw2_radar.compassPath[#gw2_radar.compassPath + 1] = {x1 = lastPos.x, y1 = lastPos.y, x2 = currPos.x, y2 = currPos.y, color = gw2_radar.compassPathColor,}
+						elseif (currPos.ex and currPos.ey) then
+							gw2_radar.compassPath[#gw2_radar.compassPath + 1] = {x1 = lastPos.x, y1 = lastPos.y, x2 = currPos.ex, y2 = currPos.ey, color = gw2_radar.compassPathColor,}
+							break
+						end
+						lastPos = {x = currPos.x, y = currPos.y,}
+					else
 						break
 					end
-					lastPos = {x = currPos.x, y = currPos.y,}
 				end
 			end
 		end
@@ -385,6 +382,19 @@ end
 function gw2_radar.addType(radarType)
 	if (table.valid(radarType)) then
 		gw2_radar.radarTypes[radarType.name] = radarType
+		gw2_radar.updateSettingsGroups()
+		gw2_radar.updateFilterList()
+	end
+end
+
+-- Update settings groups to draw.
+function gw2_radar.updateSettingsGroups()
+	table.clear(gw2_radar.settingsGroups)
+	for _,radarType in pairs(gw2_radar.radarTypes) do
+		if (table.valid(radarType)) then
+			gw2_radar.settingsGroups[radarType.groupName] = gw2_radar.settingsGroups[radarType.groupName] or {}
+			gw2_radar.settingsGroups[radarType.groupName][radarType.name] = radarType
+		end
 	end
 end
 
@@ -446,7 +456,7 @@ function gw2_radar.worldToCompass(ePos)
 end
 
 -- Create Filter list.
-function gw2_radar.createFilterList()
+function gw2_radar.updateFilterList()
 	for _,radarType in pairs(gw2_radar.radarTypes) do
 		if (table.valid(radarType) and (radarType.variables.compass.value or radarType.variables.radar3D.value)) then
 			gw2_radar.filterList[radarType.list] = gw2_radar.filterList[radarType.list] or {}
@@ -460,8 +470,8 @@ function gw2_radar.parseEntities()
 	if (gw2_radar.compassActive or gw2_radar.radar3DActive) then
 		local newTrackEntities = {}
 		for listName,radarTypes in pairs(gw2_radar.filterList) do
-			local list = _G[listName]("")
-			for _,entity in pairs(list) do
+			local entityList = _G[listName]("")
+			for _,entity in pairs(entityList) do
 				if (table.valid(entity)) then
 					for _,radarType in pairs(radarTypes) do
 						if (table.valid(radarType)) then
@@ -484,7 +494,7 @@ function gw2_radar.parseEntities()
 		end
 		gw2_radar.trackEntities = newTrackEntities
 	else
-		gw2_radar.trackEntities = {}
+		table.clear(gw2_radar.trackEntities)
 	end
 end
 

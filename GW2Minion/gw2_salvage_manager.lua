@@ -597,7 +597,7 @@ function gw2_salvage_manager.haveSalvagebleItems()
 end
 
 function gw2_salvage_manager.haveSalvageTools()
-	if (table.size(Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool))>0) then
+	if (table.valid(Inventory("itemtype="..GW2.ITEMTYPE.SalvageTool))) then
 		return true
 	end
 	return false

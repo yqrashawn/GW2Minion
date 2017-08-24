@@ -414,18 +414,10 @@ function gw2_buy_manager.buyItems()
 			
 			for _,item in pairs(vendorItems) do
 				local itemID = item.itemid
-				for id,count in pairs(neededKits) do
-					if (id == itemID and count > 0) then
-						item:Buy()
-						return true
-					end
-				end
-				
-				for id,count in pairs(neededTools) do							
-					if (id == itemID and count > 0) then
-						item:Buy()
-						return true	
-					end
+				if ((neededKits[itemID] and neededKits[itemID] > 0) or (neededTools[itemID] and neededTools[itemID] > 0)) then
+					d("Buying: "..item.name)
+					item:Buy()
+					return true
 				end
 			end
 			return true
