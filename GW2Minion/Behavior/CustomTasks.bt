@@ -368,7 +368,7 @@ local tbl =
 												smoothturns = true,
 												stoppingdistance = 50,
 												stoppingidstancemaxrange = 100,
-												usewaypoints = false,
+												usewaypoints = true,
 											},
 											variables = 
 											{
@@ -416,6 +416,7 @@ local tbl =
 									{
 										finishcode = "",
 										info = "Run custom task",
+										interruptcode = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 										runcode = "local task = context.taskmanager_activetask\n\nif(task:Run()) then\n\t\tself:running()\nelse\n\t\tself:fail()\nend",
 										startcode = "",
