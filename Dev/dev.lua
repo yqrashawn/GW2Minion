@@ -30,66 +30,6 @@ function dev.DrawCall(event, ticks )
 			GUI:PushStyleVar(GUI.StyleVar_ItemSpacing, 8, 2)
 			
 				if ( gamestate == GW2.GAMESTATE.GAMEPLAY ) then 
-					if ( GUI:TreeNode("Character") ) then
-						
-						if ( GUI:TreeNode("Player") ) then
-							local c = Player
-							if ( c ) then dev.DrawCharacterDetails(c) else	GUI:Text("No Player Found") end
-							GUI:TreePop()
-						end
-						if ( GUI:TreeNode("Target") ) then
-							local c = Player:GetTarget()
-							if ( c and c.ischaracter) then dev.DrawCharacterDetails(c) else	GUI:Text("No Target Found") end
-							GUI:TreePop()
-						end
-						if ( GUI:TreeNode("Nearest") ) then
-							local c = CharacterList("nearest")							
-							if ( table.valid(c) ) then local id,e = next(c) dev.DrawCharacterDetails(e) else	GUI:Text("No Character Nearby") end
-							GUI:TreePop()
-						end
-						if ( GUI:TreeNode("CharacterList") ) then							
-							local c = CharacterList("")
-							if ( table.valid(c) ) then 								
-								for id, e in pairsByKeys(c) do
-									if ( GUI:TreeNode(tostring(id).." - "..e.name) ) then
-											dev.DrawCharacterDetails(e)							
-										GUI:TreePop()
-									end
-								end
-							end
-							GUI:TreePop()
-						end
-						
-						GUI:TreePop()				
-					end
-					
-					if ( GUI:TreeNode("Gadget") ) then
-						
-						if ( GUI:TreeNode("Target") ) then
-							local c = Player:GetTarget()
-							if ( c and c.isgadget) then dev.DrawGadgetDetails(c) else	GUI:Text("No Gadget Found") end
-							GUI:TreePop()
-						end
-						if ( GUI:TreeNode("Nearest") ) then
-							local c = GadgetList("nearest")							
-							if ( table.valid(c) ) then local id,e = next(c) dev.DrawGadgetDetails(e) else	GUI:Text("No Gadget Nearby") end
-							GUI:TreePop()
-						end
-						if ( GUI:TreeNode("GadgetList") ) then							
-							local c = GadgetList("")
-							if ( table.valid(c) ) then 								
-								for id, e in pairsByKeys(c) do
-									if ( GUI:TreeNode(tostring(id).." - "..e.name) ) then
-											dev.DrawGadgetDetails(e)							
-										GUI:TreePop()
-									end
-								end
-							end
-							GUI:TreePop()
-						end
-						GUI:TreePop()				
-					end
-					
 					if ( GUI:TreeNode("Agent") ) then
 						if ( GUI:TreeNode("Target") ) then
 							local c = Player:GetTarget()
@@ -115,6 +55,7 @@ function dev.DrawCall(event, ticks )
 						end
 						GUI:TreePop()				
 					end
+
 					
 					if ( GUI:TreeNode("Buffs") ) then
 						if ( GUI:TreeNode("Player") ) then
@@ -171,6 +112,83 @@ function dev.DrawCall(event, ticks )
 						GUI:TreePop()				
 					end
 -- END BUFFS
+
+					
+					if ( GUI:TreeNode("Character") ) then
+						
+						if ( GUI:TreeNode("Player") ) then
+							local c = Player
+							if ( c ) then dev.DrawCharacterDetails(c) else	GUI:Text("No Player Found") end
+							GUI:TreePop()
+						end
+						if ( GUI:TreeNode("Target") ) then
+							local c = Player:GetTarget()
+							if ( c and c.ischaracter) then dev.DrawCharacterDetails(c) else	GUI:Text("No Target Found") end
+							GUI:TreePop()
+						end
+						if ( GUI:TreeNode("Nearest") ) then
+							local c = CharacterList("nearest")							
+							if ( table.valid(c) ) then local id,e = next(c) dev.DrawCharacterDetails(e) else	GUI:Text("No Character Nearby") end
+							GUI:TreePop()
+						end
+						if ( GUI:TreeNode("CharacterList") ) then							
+							local c = CharacterList("")
+							if ( table.valid(c) ) then 								
+								for id, e in pairsByKeys(c) do
+									if ( GUI:TreeNode(tostring(id).." - "..e.name) ) then
+											dev.DrawCharacterDetails(e)							
+										GUI:TreePop()
+									end
+								end
+							end
+							GUI:TreePop()
+						end
+						
+						GUI:TreePop()				
+					end
+
+					
+					if ( GUI:TreeNode("Chat") ) then
+						GUI:PushItemWidth(250)
+						GUI:BulletText("Channel") GUI:SameLine(200) dev.chatchannel = GUI:InputInt("##devmm8",dev.chatchannel ,1,1)
+						local txt = GetChatMsg(dev.chatchannel,100)
+						if (table.valid(txt)) then 
+							local text = ""
+							for line,tx in pairsByKeys(txt) do
+								text = text.."\n "..tx
+							end
+							GUI:InputTextMultiline( "##getchatstuf", text, GUI:GetWindowContentRegionWidth()-50, 200 , GUI.InputTextFlags_ReadOnly)
+						else
+							GUI:Text("Empty channel..")
+						end						
+						GUI:PopItemWidth()
+						GUI:TreePop()					
+					end
+					
+
+					if ( GUI:TreeNode("Conversation") ) then
+						GUI:PushItemWidth(250)
+						GUI:BulletText("IsConversationOpen") GUI:SameLine(200) GUI:InputText("##devc1",tostring(Player:IsConversationOpen()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						local clist = Player:GetConversationOptions()
+						if (table.valid(clist)) then 
+							for cid,b in pairsByKeys(clist) do
+								if ( GUI:TreeNode(tostring(cid))) then
+									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devc2",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Listindex") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.index),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Type") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.type),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									if (GUI:Button("Select conversation by index",250,18) ) then d("Result: "..tostring(Player:SelectConversationOptionByIndex(cid))) end
+									if (GUI:Button("Select conversation by type",250,18) ) then d("Result: "..tostring(Player:SelectConversationOption(b.type))) end
+									GUI:TreePop()
+								end
+							end
+						end						
+						GUI:PopItemWidth()
+						GUI:TreePop()					
+					end
+-- END CONVERSATION
+
+
 					
 					local COMBATTRACKER_TYPE = {
 						[1] = "ComboArea",
@@ -305,52 +323,35 @@ function dev.DrawCall(event, ticks )
 -- END COMBAT DATA
 
 
-					if ( GUI:TreeNode("Inventory") ) then
-						local list = Inventory("")
-						if ( table.valid(list) )then
-							GUI:PushItemWidth(250)
-							for id, b in pairsByKeys(list) do
-								local uniqueID = "###dev_inventorysot" .. id
-								if ( GUI:TreeNode("Slot " .. id .. ": " .. b.name .. uniqueID)) then
-									GUI:BulletText("Name")			GUI:SameLine(200) GUI:InputText(uniqueID .. "_1",	tostring(b.name),			GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Ptr")			GUI:SameLine(200) GUI:InputText(uniqueID .. "_2",	string.format( "%X",b.ptr),	GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ID")			GUI:SameLine(200) GUI:InputText(uniqueID .. "_3",	tostring(b.itemid),			GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Stackcount")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_4",	tostring(b.stackcount),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Rarity")		GUI:SameLine(200) GUI:InputText(uniqueID .. "_5",	tostring(b.rarity),			GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Itemtype")		GUI:SameLine(200) GUI:InputText(uniqueID .. "_6",	tostring(b.itemtype),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Weapontype")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_7",	tostring(b.weapontype),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Durability")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_8",	tostring(b.durability),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Soulbound")		GUI:SameLine(200) GUI:InputText(uniqueID .. "_9",	tostring(b.soulbound),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Salvagable")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_10",	tostring(b.salvagable),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("IsMailable")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_12",	tostring(b.ismailable),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("CanSellToTP")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_13",	tostring(b.canselltotp),	GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									
-									if (GUI:Button("Use",100,15) ) then d("Using Item Result: "..tostring(b:Use())) end
-									GUI:SameLine(200)
-									if (GUI:Button("Sell",100,15)) then d("Selling Item Result: "..tostring(b:Sell())) end
-									
-									if (GUI:Button("Equip",100,15) ) then d("Equip Item Result: "..tostring(b:Equip(dev.equipitemidx))) end
-									GUI:SameLine(200) 
-									dev.equipitemidx = GUI:Combo("EquipSlot", dev.equipitemidx, dev.equipitemlist)
-									
-									
-									if (GUI:Button("SoulBind",100,15) ) then d("SoulBind Item Result: "..tostring(b:Bind())) end
-									GUI:SameLine(200)
-									if (GUI:Button("Salvage",100,15) ) then d("Salvage Item Result: "..tostring(b:Salvage())) end
-									
-									if (GUI:Button("Destroy",100,15) ) then d("Destroy Item Result: "..tostring(b:Destroy())) end
-									
-									GUI:TreePop()
-								end
-							end							
-							GUI:PopItemWidth()
-						else
-							GUI:Text("No Inventory found.") 
-						end
-						GUI:TreePop()
-					end
--- END INVENTORY
-					
+-- COMPASS
+			if ( GUI:TreeNode("Compass") ) then
+				GUI:PushItemWidth(250)
+				local t = HackManager:GetCompassData()
+				if (t) then
+					GUI:BulletText("ptr") GUI:SameLine(200) GUI:InputText("##devcmp1",tostring(string.format( "%X",t.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("ZoomLevel") GUI:SameLine(200) GUI:InputText("##devcmp2",tostring(t.zoomlevel),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("Pos") GUI:SameLine(200)  GUI:InputFloat2( "##devcmp3", t.x, t.y, 2, GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					-- GUI:BulletText("Pos X") GUI:SameLine(200) GUI:InputText("##devcmp3",tostring(t.x),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					-- GUI:BulletText("Pos Y") GUI:SameLine(200) GUI:InputText("##devcmp4",tostring(t.y),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					-- GUI:BulletText("Pos Z") GUI:SameLine(200) GUI:InputText("##devcmp5",tostring(t.z),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("Width") GUI:SameLine(200) GUI:InputText("##devcmp6",tostring(t.width),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("Height") GUI:SameLine(200) GUI:InputText("##devcmp7",tostring(t.height),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("MaxWidth") GUI:SameLine(200) GUI:InputText("##devcmp8",tostring(t.maxwidth),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("MaxHeight") GUI:SameLine(200) GUI:InputText("##devcmp9",tostring(t.maxheight),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)					
+					GUI:BulletText("MouseOver") GUI:SameLine(200) GUI:InputText("##devcmp10",tostring(t.mouseover),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("Rotate with Player") GUI:SameLine(200) GUI:InputText("##devcmp11",tostring(t.rotation),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					GUI:BulletText("TopRightScreen") GUI:SameLine(200) GUI:InputText("##devcmp12",tostring(t.topposition),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+					local eye = t.eye
+					GUI:BulletText("eyePos") GUI:SameLine(200)  GUI:InputFloat3( "##devcmp13", eye.x, eye.y, eye.z, 2, GUI.InputTextFlags_ReadOnly)
+					local lookat = t.lookat
+					GUI:BulletText("lookatPos") GUI:SameLine(200)  GUI:InputFloat3( "##devcmp14", lookat.x, lookat.y, lookat.z, 2, GUI.InputTextFlags_ReadOnly)
+				end
+				GUI:PopItemWidth()
+				GUI:TreePop()
+			end
+-- END COMPASS
+
+
 -- EQUIPMENT
 					if ( GUI:TreeNode("Equipment") ) then
 						dev.equipitemslotidx = GUI:Combo("EquipSlot", dev.equipitemslotidx or 1, dev.equipmentslot)
@@ -379,23 +380,191 @@ function dev.DrawCall(event, ticks )
 -- END EQUIPMENT
 
 
-					if ( GUI:TreeNode("Vendor") ) then
-						GUI:BulletText("IsVendorOpened") GUI:SameLine(200) GUI:InputText("##devv0",tostring(Inventory:IsVendorOpened()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)	
-						local list = VendorItemList("")
+					
+					if ( GUI:TreeNode("Gadget") ) then
+						
+						if ( GUI:TreeNode("Target") ) then
+							local c = Player:GetTarget()
+							if ( c and c.isgadget) then dev.DrawGadgetDetails(c) else	GUI:Text("No Gadget Found") end
+							GUI:TreePop()
+						end
+						if ( GUI:TreeNode("Nearest") ) then
+							local c = GadgetList("nearest")							
+							if ( table.valid(c) ) then local id,e = next(c) dev.DrawGadgetDetails(e) else	GUI:Text("No Gadget Nearby") end
+							GUI:TreePop()
+						end
+						if ( GUI:TreeNode("GadgetList") ) then							
+							local c = GadgetList("")
+							if ( table.valid(c) ) then 								
+								for id, e in pairsByKeys(c) do
+									if ( GUI:TreeNode(tostring(id).." - "..e.name) ) then
+											dev.DrawGadgetDetails(e)							
+										GUI:TreePop()
+									end
+								end
+							end
+							GUI:TreePop()
+						end
+						GUI:TreePop()				
+					end
+					
+					
+					
+					if ( GUI:TreeNode("Hacks") ) then
+						GUI:PushItemWidth(250)						
+						GUI:BulletText("Position") GUI:SameLine(200)  GUI:InputFloat3( "##devh1", dev.teleportpos.x, dev.teleportpos.y, dev.teleportpos.z, 2, GUI.InputTextFlags_ReadOnly)
+						if (GUI:Button("UseCurrentPos",150,15) ) then dev.teleportpos = Player.pos end GUI:SameLine()
+						if (GUI:Button("Teleport",150,15) ) then d(HackManager:Teleport(tonumber(dev.teleportpos.x),tonumber(dev.teleportpos.y),tonumber(dev.teleportpos.z))) end
+						
+						
+						GUI:BulletText("Zoom") GUI:SameLine(150) local v, d = GUI:InputFloat("##devh9",HackManager:GetZoom(),10,100,2)
+						if ( d ) then HackManager:SetZoom(tonumber(v)) end
+						GUI:BulletText("Speed") GUI:SameLine(150) local v, b = GUI:InputFloat("##devh2",HackManager:GetSpeed(),1,10,2)
+						if ( b ) then HackManager:SetSpeed(tonumber(v)) end
+						GUI:BulletText("Gravity") GUI:SameLine(150) v, b = GUI:InputFloat("##devh3",HackManager:GetGravity(),1,10,2)
+						if ( b ) then HackManager:SetGravity(tonumber(v)) end
+						GUI:BulletText("MaxClimb") GUI:SameLine(150) v, b = GUI:InputFloat("##devh4",HackManager:GetCrawlHeight(),1,10,2)
+						if ( b ) then HackManager:SetCrawlHeight(tonumber(v)) end
+
+						GUI:BulletText("Hover") GUI:SameLine(150) v, b = GUI:Checkbox("##devh5",HackManager.Hover)
+						if ( b ) then HackManager.Hover = v end						
+						GUI:BulletText("Infinite Jump") GUI:SameLine(150) v, b = GUI:Checkbox("##devh6",HackManager.Jump)
+						if ( b ) then HackManager.Jump = v end
+						GUI:BulletText("ExtendGlider") GUI:SameLine(150) v, b = GUI:Checkbox("##devh7",HackManager.ExtendGlider)
+						if ( b ) then HackManager.ExtendGlider = v end
+						GUI:BulletText("NoClip") GUI:SameLine(150) dev.noclip, b = GUI:Checkbox("##devh8",dev.noclip)
+						if ( b ) then HackManager:NoClip(dev.noclip) end
+
+						
+						GUI:PopItemWidth()
+						GUI:TreePop()					
+					end
+--END CHAT		
+
+
+
+
+
+					if ( GUI:TreeNode("Instances") ) then
+						GUI:PushItemWidth(250)
+						GUI:BulletText("IsInstanceDialogShown") GUI:SameLine(200) GUI:InputText("##devin1",tostring(Player:IsInstanceDialogShown()))
+						local dInfo = Player:GetInstanceInfo()
+						if (dInfo) then
+							GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devin16",tostring(string.format( "%X",dInfo.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("Ptr2") GUI:SameLine(200) GUI:InputText("##devin15",tostring(string.format( "%X",dInfo.ptr2)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("EntryID") GUI:SameLine(200) GUI:InputText("##devin2",tostring(dInfo.instanceEntryID),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("ModeID") GUI:SameLine(200) GUI:InputText("##devin3",tostring(dInfo.instanceModeID),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("ModeID2") GUI:SameLine(200) GUI:InputText("##devin4",tostring(dInfo.instanceMode2ID),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("InstanceID") GUI:SameLine(200) GUI:InputText("##devin5",tostring(dInfo.instanceID),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("IsRegistered") GUI:SameLine(200) GUI:InputText("##devin6",tostring(dInfo.isInstanceRegistered),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("Unknown0") GUI:SameLine(200) GUI:InputText("##devin7",tostring(dInfo.isunknown0),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("Unknown1") GUI:SameLine(200) GUI:InputText("##devin8",tostring(dInfo.isunknown1),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("Unknown2") GUI:SameLine(200) GUI:InputText("##devin9",tostring(dInfo.isunknown2),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("Unknown3") GUI:SameLine(200) GUI:InputText("##devin10",tostring(dInfo.isunknown3),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("Unknown4") GUI:SameLine(200) GUI:InputText("##devin11",tostring(dInfo.isunknown4),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("Unknown5") GUI:SameLine(200) GUI:InputText("##devin12",tostring(dInfo.isunknown5),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("Unknown6") GUI:SameLine(200) GUI:InputText("##devin13",tostring(dInfo.isunknown6),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							if (GUI:Button("StartNewInstance",150,15) ) then d("StartNewInstance Result: "..tostring(Player:OpenInstance())) end
+							GUI:SameLine()
+							if (GUI:Button("JoinInstance",150,15) ) then d("JoinInstance Result: "..tostring(Player:JoinInstance())) end
+							if (GUI:Button("LeaveInstance",150,15) ) then d("LeaveInstance Result: "..tostring(Player:LeaveInstance())) end
+							GUI:SameLine()
+							if (GUI:Button("ResetInstance",150,15) ) then d("ResetInstance Result: "..tostring(Player:ResetInstance())) end
+							
+						end						
+						GUI:BulletText("CanClaimReward") GUI:SameLine(200) GUI:InputText("##devin14",tostring(Player:CanClaimReward()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						if (GUI:Button("ClaimReward",150,15) ) then d("ClaimReward Result: "..tostring(Player:ClaimReward())) end
+						
+						GUI:PopItemWidth()
+						GUI:TreePop()					
+					end					
+-- END INSTANCES
+
+
+
+					if ( GUI:TreeNode("Inventory") ) then
+						local list = Inventory("")
 						if ( table.valid(list) )then
 							GUI:PushItemWidth(250)
 							for id, b in pairsByKeys(list) do
-								if ( GUI:TreeNode(tostring(id).."-"..b.name)) then
-									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devv1",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devv2",tostring(b.itemid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Rarity") GUI:SameLine(200) GUI:InputText("##devv3",tostring(b.rarity),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Itemtype") GUI:SameLine(200) GUI:InputText("##devv4",tostring(b.itemtype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Weapontype") GUI:SameLine(200) GUI:InputText("##devv5",tostring(b.weapontype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Price") GUI:SameLine(200) GUI:InputText("##devv6",tostring(b.price),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Quantity") GUI:SameLine(200) GUI:InputText("##devi7",tostring(b.quantity),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									
-									if (GUI:Button("Buy",100,15) ) then d("Buy Item Result: "..tostring(b:Buy())) end
+								local uniqueID = "###dev_inventorysot" .. id
+								if ( GUI:TreeNode("Slot " .. id .. ": " .. b.name .. uniqueID)) then
+									GUI:BulletText("Name")			GUI:SameLine(200) GUI:InputText(uniqueID .. "_1",	tostring(b.name),			GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Ptr")			GUI:SameLine(200) GUI:InputText(uniqueID .. "_2",	string.format( "%X",b.ptr),	GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("ID")			GUI:SameLine(200) GUI:InputText(uniqueID .. "_3",	tostring(b.itemid),			GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Stackcount")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_4",	tostring(b.stackcount),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Rarity")		GUI:SameLine(200) GUI:InputText(uniqueID .. "_5",	tostring(b.rarity),			GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Itemtype")		GUI:SameLine(200) GUI:InputText(uniqueID .. "_6",	tostring(b.itemtype),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Weapontype")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_7",	tostring(b.weapontype),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Durability")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_8",	tostring(b.durability),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Soulbound")		GUI:SameLine(200) GUI:InputText(uniqueID .. "_9",	tostring(b.soulbound),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Salvagable")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_10",	tostring(b.salvagable),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("IsMailable")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_12",	tostring(b.ismailable),		GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("CanSellToTP")	GUI:SameLine(200) GUI:InputText(uniqueID .. "_13",	tostring(b.canselltotp),	GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 																		
+									local upgrades = b.upgrades
+									if (table.valid(upgrades)) then
+										GUI:SetNextTreeNodeOpened(true)
+										if ( GUI:TreeNode("Upgrades:")) then
+											
+											local sigils = upgrades.sigils
+											if ( table.valid(sigils)) then
+												if ( GUI:TreeNode("Sigils/Runes:")) then
+													for i,k in pairs ( sigils ) do 
+														if ( GUI:TreeNode(k.name.."##"..tostring(i))) then
+															GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devupg1",tostring(string.format( "%X",k.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+															GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devupg2",tostring(k.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+															GUI:BulletText("Rarity") GUI:SameLine(200) GUI:InputText("##devupg3",tostring(k.rarity),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+															GUI:TreePop()
+														end
+													end
+													GUI:TreePop()
+												end
+											end
+											
+											local infusions = upgrades.infusions
+											if ( table.valid(infusions)) then
+												if ( GUI:TreeNode("infusions:")) then
+													for i,k in pairs ( infusions ) do 
+														if ( GUI:TreeNode(k.name.."##"..tostring(i))) then
+															GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devipg1",tostring(string.format( "%X",k.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+															GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devipg2",tostring(k.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+															GUI:BulletText("Rarity") GUI:SameLine(200) GUI:InputText("##devipg3",tostring(k.rarity),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+															GUI:TreePop()
+														end
+													end
+													GUI:TreePop()
+												end
+											end
+											
+											local skin = upgrades.skin
+											if ( table.valid(skin)) then
+												if ( GUI:TreeNode("Skin:")) then
+													GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devspg1",tostring(string.format( "%X",skin.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+													GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##devspg2",tostring(skin.name),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+													GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devspg4",tostring(skin.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)													
+													GUI:TreePop()
+												end
+											end
+											GUI:TreePop()
+										end
+									end
+									
+									if (GUI:Button("Use",100,15) ) then d("Using Item Result: "..tostring(b:Use())) end
+									GUI:SameLine(200)
+									if (GUI:Button("Sell",100,15)) then d("Selling Item Result: "..tostring(b:Sell())) end
+									
+									if (GUI:Button("Equip",100,15) ) then d("Equip Item Result: "..tostring(b:Equip(dev.equipitemidx))) end
+									GUI:SameLine(200) 
+									dev.equipitemidx = GUI:Combo("EquipSlot", dev.equipitemidx, dev.equipitemlist)
+									
+									
+									if (GUI:Button("SoulBind",100,15) ) then d("SoulBind Item Result: "..tostring(b:Bind())) end
+									GUI:SameLine(200)
+									if (GUI:Button("Salvage",100,15) ) then d("Salvage Item Result: "..tostring(b:Salvage())) end
+									
+									if (GUI:Button("Destroy",100,15) ) then d("Destroy Item Result: "..tostring(b:Destroy())) end
+									
 									GUI:TreePop()
 								end
 							end							
@@ -403,31 +572,13 @@ function dev.DrawCall(event, ticks )
 						else
 							GUI:Text("No Inventory found.") 
 						end
-						GUI:TreePop()				
+						GUI:TreePop()
 					end
--- END VENDOR 
+-- END INVENTORY
+					
+
 				
-					if ( GUI:TreeNode("Conversation") ) then
-						GUI:PushItemWidth(250)
-						GUI:BulletText("IsConversationOpen") GUI:SameLine(200) GUI:InputText("##devc1",tostring(Player:IsConversationOpen()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						local clist = Player:GetConversationOptions()
-						if (table.valid(clist)) then 
-							for cid,b in pairsByKeys(clist) do
-								if ( GUI:TreeNode(tostring(cid))) then
-									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devc2",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Listindex") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.index),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Type") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.type),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									if (GUI:Button("Select conversation by index",250,18) ) then d("Result: "..tostring(Player:SelectConversationOptionByIndex(cid))) end
-									if (GUI:Button("Select conversation by type",250,18) ) then d("Result: "..tostring(Player:SelectConversationOption(b.type))) end
-									GUI:TreePop()
-								end
-							end
-						end						
-						GUI:PopItemWidth()
-						GUI:TreePop()					
-					end
--- END CONVERSATION
+
 					
 					if ( GUI:TreeNode("MapMarker") ) then						
 						if ( GUI:TreeNode("Nearest") ) then							
@@ -462,26 +613,61 @@ function dev.DrawCall(event, ticks )
 						GUI:TreePop()				
 					end
 -- END MAPMARKER
-					
-					if ( GUI:TreeNode("Waypoints") ) then
-						local list = WaypointList("")
+
+
+					if ( GUI:TreeNode("Movement") ) then
+						GUI:PushItemWidth(250)						
+						GUI:BulletText("CanMove") GUI:SameLine(200) GUI:InputText("##devmm1",tostring(Player:CanMove()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("IsMoving") GUI:SameLine(200) GUI:InputText("##devmm2",tostring(Player:IsMoving()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("MovementState") GUI:SameLine(200) GUI:InputText("##devmm3",tostring(Player:GetMovementState()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						local movstr = ""
+						local movdirs = Player:GetMovement()
+						if (movdirs.forward) then movstr = "forward" end
+						if (movdirs.left) then movstr = movstr.." left" end
+						if (movdirs.right) then movstr = movstr.." right" end
+						if (movdirs.backward) then movstr = movstr.." backward" end
+						GUI:BulletText("MovementDirection") GUI:SameLine(200) GUI:InputText("##devmm4",movstr,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("Direction") GUI:SameLine(200) dev.movementtypeidx = GUI:Combo("##movedir", dev.movementtypeidx, dev.movementtype)
+						if (GUI:Button("Set Direction",150,15) ) then d("Moving..") Player:SetMovement(tonumber(dev.movementtypeidx)) end 
+						GUI:SameLine() if (GUI:Button("UnSet Direction",150,15) ) then Player:UnSetMovement(dev.movementtypeidx) end
+						if (GUI:Button("Jump",150,15) ) then Player:Jump() end  GUI:SameLine() if (GUI:Button("Evade",150,15) ) then Player:Evade(dev.movementtypeidx) end 
+						if (GUI:Button("FaceTarget",150,15) ) then 
+							local t = Player:GetTarget()
+							if ( t ) then
+								d(Player:SetFacing(t.pos.x,t.pos.y,t.pos.z))
+							end
+						end GUI:SameLine()
+						if (GUI:Button("FaceTargetExact",150,15) ) then 
+							local t = Player:GetTarget()
+							if ( t ) then
+								d(Player:SetFacingExact(t.pos.x,t.pos.y,t.pos.z,true))
+							end
+						end		
+						GUI:PopItemWidth()
+						GUI:TreePop()					
+					end
+-- END MOVEMENT		
+
+				
+					if ( GUI:TreeNode("Party") ) then
+						local list = Player:GetParty()
 						if ( table.valid(list) )then
 							GUI:PushItemWidth(250)
 							for id, b in pairsByKeys(list) do
 								if ( GUI:TreeNode(tostring(id).."-"..b.name)) then
-									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devw0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devw1",tostring(b.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##devw8",b.name,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									local p = b.pos
-									GUI:BulletText("Position") GUI:SameLine(200)  GUI:InputFloat3( "##devw2", p.x, p.y, p.z, 2, GUI.InputTextFlags_ReadOnly)
-									GUI:BulletText("Distance") GUI:SameLine(200) GUI:InputFloat("##devw3", b.distance,0,0,2)
-									GUI:BulletText("PathDistance") GUI:SameLine(200) GUI:InputFloat("##devw4", b.pathdistance,0,0,2)
-									GUI:BulletText("OnMesh") GUI:SameLine(200) GUI:InputText("##devw5",tostring(b.onmesh),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Contested") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.contested),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("SameZone") GUI:SameLine(200) GUI:InputText("##devw7",tostring(b.samezone),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									
-									if (GUI:Button("TeleportTo",100,15) ) then d("Buy TeleportTo Result: "..tostring(Player:TeleportToWaypoint(b.id))) end
-																		
+									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devp0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devp1",tostring(b.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("MapID") GUI:SameLine(200) GUI:InputText("##devp2", tostring(b.mapid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("HomeServerID") GUI:SameLine(200) GUI:InputText("##devp3", tostring(b.homeserverid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("CurrentServerID") GUI:SameLine(200) GUI:InputText("##devp4",tostring(b.currentserverid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("InstanceServerID") GUI:SameLine(200) GUI:InputText("##devw5",tostring(b.instanceserverid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("ConnectStatus") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.connectstatus),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("InviteStatus") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.invitestatus),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("HasParty") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.hasparty),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Profession") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.profession),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Level") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.level),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Unknown0") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.isunknown0),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Unknown1") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.isunknown1),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									GUI:TreePop()
 								end
 							end							
@@ -489,9 +675,24 @@ function dev.DrawCall(event, ticks )
 						else
 							GUI:Text("No Inventory found.") 
 						end
-						GUI:TreePop()				
+						GUI:TreePop()					
 					end
--- END WAYPOINTS
+-- END PARTY
+
+
+					
+					if ( GUI:TreeNode("Pet") ) then
+						GUI:PushItemWidth(250)
+						GUI:BulletText("CanSwitchPet") GUI:SameLine(200) GUI:InputText("##devp1",tostring(Player:CanSwitchPet()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("HasPet") GUI:SameLine(200) GUI:InputText("##devp2",tostring(Player:GetPet() ~=nil),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						if (GUI:Button("Switch Pet",150,15) ) then d("Switch Pet Result: "..tostring(Player:SwitchPet())) end
+						GUI:PopItemWidth()
+						GUI:TreePop()
+					end
+--END PET
+
+			
+
 					
 					if ( GUI:TreeNode("PvP") ) then
 						GUI:BulletText("IsInPvPLobby") GUI:SameLine(200) GUI:InputText("##devpp1",tostring(PvPManager:IsInPvPLobby()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)												
@@ -539,270 +740,9 @@ function dev.DrawCall(event, ticks )
 						GUI:TreePop()				
 					end
 -- END PVP
-				
-					if ( GUI:TreeNode("Party") ) then
-						local list = Player:GetParty()
-						if ( table.valid(list) )then
-							GUI:PushItemWidth(250)
-							for id, b in pairsByKeys(list) do
-								if ( GUI:TreeNode(tostring(id).."-"..b.name)) then
-									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devp0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devp1",tostring(b.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("MapID") GUI:SameLine(200) GUI:InputText("##devp2", tostring(b.mapid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("HomeServerID") GUI:SameLine(200) GUI:InputText("##devp3", tostring(b.homeserverid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("CurrentServerID") GUI:SameLine(200) GUI:InputText("##devp4",tostring(b.currentserverid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("InstanceServerID") GUI:SameLine(200) GUI:InputText("##devw5",tostring(b.instanceserverid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ConnectStatus") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.connectstatus),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("InviteStatus") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.invitestatus),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("HasParty") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.hasparty),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Profession") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.profession),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Level") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.level),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Unknown0") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.isunknown0),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Unknown1") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.isunknown1),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:TreePop()
-								end
-							end							
-							GUI:PopItemWidth()
-						else
-							GUI:Text("No Inventory found.") 
-						end
-						GUI:TreePop()					
-					end
--- END PARTY
 
-					if ( GUI:TreeNode("Skills") ) then
-						GUI:BulletText("IsCasting") GUI:SameLine(200) GUI:InputText("##devs1",tostring(Player:IsCasting()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devs2",tostring(Player:CanCast()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("IsSkillPending") GUI:SameLine(200) GUI:InputText("##devs3",tostring(Player:IsSkillPending()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("CurrentSpell") GUI:SameLine(200) GUI:InputText("##devs4",tostring(Player:GetCurrentlyCastedSpell()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("CurrentWeaponSetID") GUI:SameLine(200) GUI:InputText("##devs5",tostring(Player:GetCurrentWeaponSet()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("CurrentTransformID") GUI:SameLine(200) GUI:InputText("##devs6",tostring(Player:GetTransformID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("CanSwapWeaponSet") GUI:SameLine(200) GUI:InputText("##devs7",tostring(Player:CanSwapWeaponSet()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devs8",tostring(Player.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)						
-						if (GUI:Button("SwapWeaponSet",150,15) ) then d("SwapWeaponSet Result: "..tostring(Player:SwapWeaponSet())) end
-						GUI:PushItemWidth(250)
-						for i=0,20 do
-							local b = Player:GetSpellInfo(i)
-							if (table.valid(b)) then 
-								if ( GUI:TreeNode(tostring(i).."-"..b.name)) then
-									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devsk0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Slot") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.slot),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devsk2",tostring(b.skillid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ContentID") GUI:SameLine(200) GUI:InputText("##devsk3", tostring(b.contentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Cooldown") GUI:SameLine(200) GUI:InputText("##devsk4", tostring(b.cooldown),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("CooldownMax") GUI:SameLine(200) GUI:InputText("##devsk5",tostring(b.cooldownmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Ammo") GUI:SameLine(200) GUI:InputText("##devsk16 ", tostring(b.ammo),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("AmmoMax") GUI:SameLine(200) GUI:InputText("##devsk13", tostring(b.ammomax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("AmmoCooldown") GUI:SameLine(200) GUI:InputText("##devsk14", tostring(b.ammocooldown),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("AmmoCooldownMax") GUI:SameLine(200) GUI:InputText("##devsk15", tostring(b.ammocooldownmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("MinRange") GUI:SameLine(200) GUI:InputText("##devsk6",tostring(b.minrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("MaxRange") GUI:SameLine(200) GUI:InputText("##devsk7",tostring(b.maxrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Radius") GUI:SameLine(200) GUI:InputText("##devsk8",tostring(b.radius),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Skilltype") GUI:SameLine(200) GUI:InputText("##devsk9",tostring(b.skilltype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devsk10",tostring(b.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("IsGroundTargeted") GUI:SameLine(200) GUI:InputText("##devsk11",tostring(b.isgroundtargeted),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devsk12",tostring(b.cancast),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									if (GUI:Button("Cast",150,15) ) then 
-										local t = Player:GetTarget()
-										if ( t ) then
-											Player:CastSpell(i,t.id)
-										else
-											Player:CastSpell(i)
-										end
-									end
-									GUI:TreePop()
-								end
-							end
-						end
-						GUI:Separator()
-						if ( GUI:TreeNode("CoolDown List") ) then
-							local cdlist = Player:GetCoolDownList()
-							if ( table.size(cdlist) > 0 ) then
-								for id,e in pairs(cdlist) do
-									GUI:BulletText("ID:"..tostring(id)) GUI:SameLine(140) GUI:Text("CD:"..tostring(e.cooldown)) GUI:SameLine(210) GUI:Text(tostring(e.name))
-								end							
-							else
-								GUI:Text("No Skills on cooldown")
-							end
-						
-							GUI:PopItemWidth()
-							GUI:TreePop()
-						end
-						GUI:PopItemWidth()
-						GUI:TreePop()
-					end
--- END SKILLS
-					
-					if ( GUI:TreeNode("Pet") ) then
-						GUI:PushItemWidth(250)
-						GUI:BulletText("CanSwitchPet") GUI:SameLine(200) GUI:InputText("##devp1",tostring(Player:CanSwitchPet()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("HasPet") GUI:SameLine(200) GUI:InputText("##devp2",tostring(Player:GetPet() ~=nil),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						if (GUI:Button("Switch Pet",150,15) ) then d("Switch Pet Result: "..tostring(Player:SwitchPet())) end
-						GUI:PopItemWidth()
-						GUI:TreePop()
-					end
---END PET
 
-					if ( GUI:TreeNode("Instances") ) then
-						GUI:PushItemWidth(250)
-						GUI:BulletText("IsInstanceDialogShown") GUI:SameLine(200) GUI:InputText("##devin1",tostring(Player:IsInstanceDialogShown()))
-						local dInfo = Player:GetInstanceInfo()
-						if (dInfo) then
-							GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devin16",tostring(string.format( "%X",dInfo.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("Ptr2") GUI:SameLine(200) GUI:InputText("##devin15",tostring(string.format( "%X",dInfo.ptr2)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("EntryID") GUI:SameLine(200) GUI:InputText("##devin2",tostring(dInfo.instanceEntryID),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("ModeID") GUI:SameLine(200) GUI:InputText("##devin3",tostring(dInfo.instanceModeID),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("ModeID2") GUI:SameLine(200) GUI:InputText("##devin4",tostring(dInfo.instanceMode2ID),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("InstanceID") GUI:SameLine(200) GUI:InputText("##devin5",tostring(dInfo.instanceID),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("IsRegistered") GUI:SameLine(200) GUI:InputText("##devin6",tostring(dInfo.isInstanceRegistered),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("Unknown0") GUI:SameLine(200) GUI:InputText("##devin7",tostring(dInfo.isunknown0),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("Unknown1") GUI:SameLine(200) GUI:InputText("##devin8",tostring(dInfo.isunknown1),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("Unknown2") GUI:SameLine(200) GUI:InputText("##devin9",tostring(dInfo.isunknown2),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("Unknown3") GUI:SameLine(200) GUI:InputText("##devin10",tostring(dInfo.isunknown3),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("Unknown4") GUI:SameLine(200) GUI:InputText("##devin11",tostring(dInfo.isunknown4),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("Unknown5") GUI:SameLine(200) GUI:InputText("##devin12",tostring(dInfo.isunknown5),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("Unknown6") GUI:SameLine(200) GUI:InputText("##devin13",tostring(dInfo.isunknown6),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							if (GUI:Button("StartNewInstance",150,15) ) then d("StartNewInstance Result: "..tostring(Player:OpenInstance())) end
-							GUI:SameLine()
-							if (GUI:Button("JoinInstance",150,15) ) then d("JoinInstance Result: "..tostring(Player:JoinInstance())) end
-							if (GUI:Button("LeaveInstance",150,15) ) then d("LeaveInstance Result: "..tostring(Player:LeaveInstance())) end
-							GUI:SameLine()
-							if (GUI:Button("ResetInstance",150,15) ) then d("ResetInstance Result: "..tostring(Player:ResetInstance())) end
-							
-						end						
-						GUI:BulletText("CanClaimReward") GUI:SameLine(200) GUI:InputText("##devin14",tostring(Player:CanClaimReward()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						if (GUI:Button("ClaimReward",150,15) ) then d("ClaimReward Result: "..tostring(Player:ClaimReward())) end
-						
-						GUI:PopItemWidth()
-						GUI:TreePop()					
-					end					
--- END INSTANCES
-					
-					if ( GUI:TreeNode("Quests") ) then
-						GUI:PushItemWidth(250)
-						local qm = QuestManager:GetActiveQuest()
-						if ( table.valid(qm) ) then
-							GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devqe0",tostring(string.format( "%X",qm.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("Ptr2") GUI:SameLine(200) GUI:InputText("##devqe1",tostring(string.format( "%X",qm.ptr2)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("StoryName") GUI:SameLine(200) GUI:InputText("##devq0",qm.storyname,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("StoryID") GUI:SameLine(200) GUI:InputText("##devq1",tostring(qm.storyid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("Ptr3") GUI:SameLine(200) GUI:InputText("##devqe2",tostring(string.format( "%X",qm.ptr3)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestName") GUI:SameLine(200) GUI:InputText("##devq2",qm.questname,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestID") GUI:SameLine(200) GUI:InputText("##devq3",tostring(qm.questid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestComplete") GUI:SameLine(200) GUI:InputText("##devq4",tostring(qm.isquestcomplete),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("Ptr4") GUI:SameLine(200) GUI:InputText("##devqe3",tostring(string.format( "%X",qm.ptr4)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestGoalName") GUI:SameLine(200) GUI:InputText("##devq5",qm.questgoalname,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestGoalID") GUI:SameLine(200) GUI:InputText("##devq6",tostring(qm.questgoalid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestStepCurrent") GUI:SameLine(200) GUI:InputText("##devq7",tostring(qm.stepcurrent),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestStepMax") GUI:SameLine(200) GUI:InputText("##devq8",tostring(qm.stepmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestStepName") GUI:SameLine(200) GUI:InputText("##devq9",qm.stepname,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestStepUnknown1") GUI:SameLine(200) GUI:InputText("##devq10",tostring(qm.stepu1),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestStepUnknown2") GUI:SameLine(200) GUI:InputText("##devq11",tostring(qm.stepu2),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestStepUnknown3") GUI:SameLine(200) GUI:InputText("##devq12",tostring(qm.stepu3),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestStepUnknown4") GUI:SameLine(200) GUI:InputText("##devq13",tostring(qm.stepu4),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("QuestStepUnknown5") GUI:SameLine(200) GUI:InputText("##devq14",tostring(qm.stepu5),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							GUI:BulletText("RewardCount") GUI:SameLine(200) GUI:InputText("##devq14",tostring(qm.questrewardcount),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-							local qmr = QuestManager:GetActiveQuestRewardList()
-							if ( table.valid(qmr) ) then
-								for qid,q in pairsByKeys(qmr) do
-									if ( GUI:TreeNode(tostring(qid).."-"..q.name)) then
-										GUI:BulletText("Ptr5") GUI:SameLine(200) GUI:InputText("##devqe4",tostring(string.format( "%X",qm.ptr5 or 0)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("Ptr6") GUI:SameLine(200) GUI:InputText("##devqe5",tostring(string.format( "%X",qm.ptr6 or 0)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("RewardItemID") GUI:SameLine(200) GUI:InputText("##devq15"..tostring(qid),tostring(q.itemid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("RewardCount") GUI:SameLine(200) GUI:InputText("##devq16"..tostring(qid),tostring(q.count),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("RewardSelectable") GUI:SameLine(200) GUI:InputText("##devq17"..tostring(qid),tostring(q.selectable),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("RewardUnknown") GUI:SameLine(200) GUI:InputText("##devq18"..tostring(qid),tostring(q.isunknown1),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:TreePop()
-									end
-								end
-							end
-						end
-						GUI:PopItemWidth()
-						GUI:TreePop()
-					end
-					
--- END QUEST
-					if ( GUI:TreeNode("Chat") ) then
-						GUI:PushItemWidth(250)
-						GUI:BulletText("Channel") GUI:SameLine(200) dev.chatchannel = GUI:InputInt("##devmm8",dev.chatchannel ,1,1)
-						local txt = GetChatMsg(dev.chatchannel,100)
-						if (table.valid(txt)) then 
-							local text = ""
-							for line,tx in pairsByKeys(txt) do
-								text = text.."\n "..tx
-							end
-							GUI:InputTextMultiline( "##getchatstuf", text, GUI:GetWindowContentRegionWidth()-50, 200 , GUI.InputTextFlags_ReadOnly)
-						else
-							GUI:Text("Empty channel..")
-						end						
-						GUI:PopItemWidth()
-						GUI:TreePop()					
-					end
-					
-					if ( GUI:TreeNode("Hacks") ) then
-						GUI:PushItemWidth(250)						
-						GUI:BulletText("Position") GUI:SameLine(200)  GUI:InputFloat3( "##devh1", dev.teleportpos.x, dev.teleportpos.y, dev.teleportpos.z, 2, GUI.InputTextFlags_ReadOnly)
-						if (GUI:Button("UseCurrentPos",150,15) ) then dev.teleportpos = Player.pos end GUI:SameLine()
-						if (GUI:Button("Teleport",150,15) ) then d(HackManager:Teleport(tonumber(dev.teleportpos.x),tonumber(dev.teleportpos.y),tonumber(dev.teleportpos.z))) end
-						
-						
-						GUI:BulletText("Zoom") GUI:SameLine(150) local v, d = GUI:InputFloat("##devh9",HackManager:GetZoom(),10,100,2)
-						if ( d ) then HackManager:SetZoom(tonumber(v)) end
-						GUI:BulletText("Speed") GUI:SameLine(150) local v, b = GUI:InputFloat("##devh2",HackManager:GetSpeed(),1,10,2)
-						if ( b ) then HackManager:SetSpeed(tonumber(v)) end
-						GUI:BulletText("Gravity") GUI:SameLine(150) v, b = GUI:InputFloat("##devh3",HackManager:GetGravity(),1,10,2)
-						if ( b ) then HackManager:SetGravity(tonumber(v)) end
-						GUI:BulletText("MaxClimb") GUI:SameLine(150) v, b = GUI:InputFloat("##devh4",HackManager:GetCrawlHeight(),1,10,2)
-						if ( b ) then HackManager:SetCrawlHeight(tonumber(v)) end
-
-						GUI:BulletText("Hover") GUI:SameLine(150) v, b = GUI:Checkbox("##devh5",HackManager.Hover)
-						if ( b ) then HackManager.Hover = v end						
-						GUI:BulletText("Infinite Jump") GUI:SameLine(150) v, b = GUI:Checkbox("##devh6",HackManager.Jump)
-						if ( b ) then HackManager.Jump = v end
-						GUI:BulletText("ExtendGlider") GUI:SameLine(150) v, b = GUI:Checkbox("##devh7",HackManager.ExtendGlider)
-						if ( b ) then HackManager.ExtendGlider = v end
-						GUI:BulletText("NoClip") GUI:SameLine(150) dev.noclip, b = GUI:Checkbox("##devh8",dev.noclip)
-						if ( b ) then HackManager:NoClip(dev.noclip) end
-
-						
-						GUI:PopItemWidth()
-						GUI:TreePop()					
-					end
---END CHAT				
-
-					if ( GUI:TreeNode("Movement") ) then
-						GUI:PushItemWidth(250)						
-						GUI:BulletText("CanMove") GUI:SameLine(200) GUI:InputText("##devmm1",tostring(Player:CanMove()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("IsMoving") GUI:SameLine(200) GUI:InputText("##devmm2",tostring(Player:IsMoving()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("MovementState") GUI:SameLine(200) GUI:InputText("##devmm3",tostring(Player:GetMovementState()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						local movstr = ""
-						local movdirs = Player:GetMovement()
-						if (movdirs.forward) then movstr = "forward" end
-						if (movdirs.left) then movstr = movstr.." left" end
-						if (movdirs.right) then movstr = movstr.." right" end
-						if (movdirs.backward) then movstr = movstr.." backward" end
-						GUI:BulletText("MovementDirection") GUI:SameLine(200) GUI:InputText("##devmm4",movstr,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("Direction") GUI:SameLine(200) dev.movementtypeidx = GUI:Combo("##movedir", dev.movementtypeidx, dev.movementtype)
-						if (GUI:Button("Set Direction",150,15) ) then d("Moving..") Player:SetMovement(tonumber(dev.movementtypeidx)) end 
-						GUI:SameLine() if (GUI:Button("UnSet Direction",150,15) ) then Player:UnSetMovement(dev.movementtypeidx) end
-						if (GUI:Button("Jump",150,15) ) then Player:Jump() end  GUI:SameLine() if (GUI:Button("Evade",150,15) ) then Player:Evade(dev.movementtypeidx) end 
-						if (GUI:Button("FaceTarget",150,15) ) then 
-							local t = Player:GetTarget()
-							if ( t ) then
-								d(Player:SetFacing(t.pos.x,t.pos.y,t.pos.z))
-							end
-						end GUI:SameLine()
-						if (GUI:Button("FaceTargetExact",150,15) ) then 
-							local t = Player:GetTarget()
-							if ( t ) then
-								d(Player:SetFacingExact(t.pos.x,t.pos.y,t.pos.z,true))
-							end
-						end		
-						GUI:PopItemWidth()
-						GUI:TreePop()					
-					end
--- END MOVEMENT		
-				
+			
 			if ( GUI:TreeNode("Renderobject List")) then
 			
 				-- RenderManager:AddObject( tablewith vertices here ) , returns the renderobject which is a lua metatable. it has a .id which should be used everytime afterwards if the object is being accessed: Also a .name, .drawmode, .enabled 
@@ -881,39 +821,258 @@ function dev.DrawCall(event, ticks )
 				GUI:TreePop()
 			end
 -- END RENDEROBJECTS	
-				
-				
-				
--- COMPASS
-			if ( GUI:TreeNode("Compass") ) then
-				GUI:PushItemWidth(250)
-				local t = HackManager:GetCompassData()
-				if (t) then
-					GUI:BulletText("ptr") GUI:SameLine(200) GUI:InputText("##devcmp1",tostring(string.format( "%X",t.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-					GUI:BulletText("ZoomLevel") GUI:SameLine(200) GUI:InputText("##devcmp2",tostring(t.zoomlevel),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-					GUI:BulletText("Pos") GUI:SameLine(200)  GUI:InputFloat2( "##devcmp3", t.x, t.y, 2, GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-					-- GUI:BulletText("Pos X") GUI:SameLine(200) GUI:InputText("##devcmp3",tostring(t.x),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-					-- GUI:BulletText("Pos Y") GUI:SameLine(200) GUI:InputText("##devcmp4",tostring(t.y),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-					-- GUI:BulletText("Pos Z") GUI:SameLine(200) GUI:InputText("##devcmp5",tostring(t.z),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-					GUI:BulletText("Width") GUI:SameLine(200) GUI:InputText("##devcmp6",tostring(t.width),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-					GUI:BulletText("Height") GUI:SameLine(200) GUI:InputText("##devcmp7",tostring(t.height),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-					GUI:BulletText("MaxWidth") GUI:SameLine(200) GUI:InputText("##devcmp8",tostring(t.maxwidth),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-					GUI:BulletText("MaxHeight") GUI:SameLine(200) GUI:InputText("##devcmp9",tostring(t.maxheight),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)					
-					GUI:BulletText("MouseOver") GUI:SameLine(200) GUI:InputText("##devcmp10",tostring(t.mouseover),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-					GUI:BulletText("Rotate with Player") GUI:SameLine(200) GUI:InputText("##devcmp11",tostring(t.rotation),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-					GUI:BulletText("TopRightScreen") GUI:SameLine(200) GUI:InputText("##devcmp12",tostring(t.topposition),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-					local eye = t.eye
-					GUI:BulletText("eyePos") GUI:SameLine(200)  GUI:InputFloat3( "##devcmp13", eye.x, eye.y, eye.z, 2, GUI.InputTextFlags_ReadOnly)
-					local lookat = t.lookat
-					GUI:BulletText("lookatPos") GUI:SameLine(200)  GUI:InputFloat3( "##devcmp14", lookat.x, lookat.y, lookat.z, 2, GUI.InputTextFlags_ReadOnly)
-				end
-				GUI:PopItemWidth()
-				GUI:TreePop()
-			end
--- END COMPASS
 
 
-				
+					if ( GUI:TreeNode("Skills") ) then
+						GUI:BulletText("IsCasting") GUI:SameLine(200) GUI:InputText("##devs1",tostring(Player:IsCasting()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devs2",tostring(Player:CanCast()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("IsSkillPending") GUI:SameLine(200) GUI:InputText("##devs3",tostring(Player:IsSkillPending()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("CurrentSpell") GUI:SameLine(200) GUI:InputText("##devs4",tostring(Player:GetCurrentlyCastedSpell()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("CurrentWeaponSetID") GUI:SameLine(200) GUI:InputText("##devs5",tostring(Player:GetCurrentWeaponSet()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("CurrentTransformID") GUI:SameLine(200) GUI:InputText("##devs6",tostring(Player:GetTransformID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("CanSwapWeaponSet") GUI:SameLine(200) GUI:InputText("##devs7",tostring(Player:CanSwapWeaponSet()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devs8",tostring(Player.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)						
+						if (GUI:Button("SwapWeaponSet",150,15) ) then d("SwapWeaponSet Result: "..tostring(Player:SwapWeaponSet())) end
+						GUI:PushItemWidth(250)
+						for i=0,20 do
+							local b = Player:GetSpellInfo(i)
+							if (table.valid(b)) then 
+								if ( GUI:TreeNode(tostring(i).."-"..b.name)) then
+									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devsk0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Slot") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.slot),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devsk2",tostring(b.skillid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("ContentID") GUI:SameLine(200) GUI:InputText("##devsk3", tostring(b.contentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Cooldown") GUI:SameLine(200) GUI:InputText("##devsk4", tostring(b.cooldown),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("CooldownMax") GUI:SameLine(200) GUI:InputText("##devsk5",tostring(b.cooldownmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Ammo") GUI:SameLine(200) GUI:InputText("##devsk16 ", tostring(b.ammo),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("AmmoMax") GUI:SameLine(200) GUI:InputText("##devsk13", tostring(b.ammomax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("AmmoCooldown") GUI:SameLine(200) GUI:InputText("##devsk14", tostring(b.ammocooldown),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("AmmoCooldownMax") GUI:SameLine(200) GUI:InputText("##devsk15", tostring(b.ammocooldownmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("MinRange") GUI:SameLine(200) GUI:InputText("##devsk6",tostring(b.minrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("MaxRange") GUI:SameLine(200) GUI:InputText("##devsk7",tostring(b.maxrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Radius") GUI:SameLine(200) GUI:InputText("##devsk8",tostring(b.radius),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Skilltype") GUI:SameLine(200) GUI:InputText("##devsk9",tostring(b.skilltype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devsk10",tostring(b.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("IsGroundTargeted") GUI:SameLine(200) GUI:InputText("##devsk11",tostring(b.isgroundtargeted),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devsk12",tostring(b.cancast),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									if (GUI:Button("Cast",150,15) ) then 
+										local t = Player:GetTarget()
+										if ( t ) then
+											Player:CastSpell(i,t.id)
+										else
+											Player:CastSpell(i)
+										end
+									end
+									GUI:TreePop()
+								end
+							end
+						end
+						GUI:Separator()
+						if ( GUI:TreeNode("CoolDown List") ) then							
+							local cdlist = Player:GetCoolDownList()
+							if ( table.size(cdlist) > 0 ) then
+								for id,e in pairs(cdlist) do
+									GUI:BulletText("ID:"..tostring(id)) GUI:SameLine(140) GUI:Text("CD:"..tostring(e.cooldown)) GUI:SameLine(210) GUI:Text(tostring(e.name))
+								end							
+							else
+								GUI:Text("No Skills on cooldown")
+							end
+						
+							GUI:PopItemWidth()
+							GUI:TreePop()
+						end
+						GUI:PopItemWidth()
+						GUI:TreePop()
+					end
+-- END SKILLS
+
+
+
+-- START SPECIALIZATIONS
+					if ( GUI:TreeNode("Specializations") ) then
+						GUI:PushItemWidth(120)
+						if ( GUI:TreeNode("All Specializations") ) then
+							local specs = Player:GetSpecs() -- retunrs a list of all specs in the game incl traits
+							if ( table.valid(specs) ) then
+								for i,s in pairs (specs) do
+									if ( GUI:TreeNode(tostring(i).."-"..s.name)) then
+										GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devss0"..tostring(i), tostring(string.format( "%X",s.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devss1"..tostring(i), tostring(s.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("IsElite") GUI:SameLine(200) GUI:InputText("##devss2"..tostring(i), tostring(s.iselite),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)										
+										GUI:BulletText("Spec Slot:") GUI:SameLine() dev.spectslot = GUI:Combo("##spectargetslot", dev.spectslot or 0, { [0] = 0, [1] = 1, [2] = 2})
+										GUI:SameLine() if (GUI:Button("Equip Spec",150,15) ) then d("Equipping Specification "..s.name.." Result: "..tostring(Player:EquipSpec(s.id,dev.spectslot))) end
+										local traits = s.traits
+										if ( GUI:TreeNode("Trait List##"..tostring(i))) then
+											if ( table.size(traits) > 0 ) then										
+												for k, t in pairs ( traits ) do
+													if ( GUI:TreeNode(tostring(k).."-"..t.name)) then
+														GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devsts0"..tostring(k), tostring(string.format( "%X",t.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+														GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devsts1"..tostring(k), tostring(t.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+														GUI:BulletText("Tier") GUI:SameLine(200) GUI:InputText("##devsts2"..tostring(k), tostring(t.tier),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+														GUI:SameLine() if (GUI:Button("Equip Trait",150,15) ) then d("Equipping Trait "..t.name.." Result: "..tostring(Player:EquipTrait(s.id,t.id))) end
+														GUI:TreePop()
+													end
+												end
+											end
+											GUI:TreePop()
+										end
+										GUI:TreePop()
+									end
+								end
+							end
+							GUI:TreePop()
+						end
+						GUI:Separator()
+						
+						
+						GUI:BulletText("Show Specs from:") GUI:SameLine(200) dev.spectarget = GUI:Combo("##spectarget", dev.spectarget or 1, { [1] = GetString("Player"), [2] = GetString("Target")})
+						local source = dev.spectarget ==1 and Player.specs or ( Player:GetTarget() and Player:GetTarget().specs)
+						if ( source ) then							
+							for i,s in pairs (source) do
+								if ( GUI:TreeNode(tostring(i).."-"..s.name)) then
+									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devsp0",tostring(string.format( "%X",s.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devsp1",tostring(s.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("IsElite") GUI:SameLine(200) GUI:InputText("##devsp2",tostring(s.iselite),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("TrainedHeroPoints") GUI:SameLine(200) GUI:InputText("##devsp2",tostring(s.trainedheropoints),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("UnlockedSlots") GUI:SameLine(200) GUI:InputText("##devsp3",tostring(s.unlockedslots),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									local traits = s.traits
+									if ( table.size(traits) > 0 ) then
+										GUI:SetNextTreeNodeOpened(true)
+										if ( GUI:TreeNode("Active Traits:")) then
+											for k, t in pairs ( traits ) do
+												if ( GUI:TreeNode(tostring(k).."-"..t.name)) then
+													GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devstsp0"..tostring(k), tostring(string.format( "%X",t.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+													GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devstsp1"..tostring(k), tostring(t.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+													GUI:BulletText("Tier") GUI:SameLine(200) GUI:InputText("##devstsp2"..tostring(k), tostring(t.tier),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+															
+													GUI:TreePop()
+												end
+											end
+										GUI:TreePop()
+										end
+									else
+										GUI:BulletText("No Active Traits.")
+									end
+									GUI:TreePop()
+								end
+							end
+						end
+						GUI:PopItemWidth()
+						GUI:TreePop()
+					end
+-- END SPECIALIZATIONS
+
+
+					
+					if ( GUI:TreeNode("Quests") ) then
+						GUI:PushItemWidth(250)
+						local qm = QuestManager:GetActiveQuest()
+						if ( table.valid(qm) ) then
+							GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devqe0",tostring(string.format( "%X",qm.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("Ptr2") GUI:SameLine(200) GUI:InputText("##devqe1",tostring(string.format( "%X",qm.ptr2)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("StoryName") GUI:SameLine(200) GUI:InputText("##devq0",qm.storyname,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("StoryID") GUI:SameLine(200) GUI:InputText("##devq1",tostring(qm.storyid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("Ptr3") GUI:SameLine(200) GUI:InputText("##devqe2",tostring(string.format( "%X",qm.ptr3)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestName") GUI:SameLine(200) GUI:InputText("##devq2",qm.questname,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestID") GUI:SameLine(200) GUI:InputText("##devq3",tostring(qm.questid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestComplete") GUI:SameLine(200) GUI:InputText("##devq4",tostring(qm.isquestcomplete),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("Ptr4") GUI:SameLine(200) GUI:InputText("##devqe3",tostring(string.format( "%X",qm.ptr4)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestGoalName") GUI:SameLine(200) GUI:InputText("##devq5",qm.questgoalname,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestGoalID") GUI:SameLine(200) GUI:InputText("##devq6",tostring(qm.questgoalid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestStepCurrent") GUI:SameLine(200) GUI:InputText("##devq7",tostring(qm.stepcurrent),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestStepMax") GUI:SameLine(200) GUI:InputText("##devq8",tostring(qm.stepmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestStepName") GUI:SameLine(200) GUI:InputText("##devq9",qm.stepname,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestStepUnknown1") GUI:SameLine(200) GUI:InputText("##devq10",tostring(qm.stepu1),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestStepUnknown2") GUI:SameLine(200) GUI:InputText("##devq11",tostring(qm.stepu2),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestStepUnknown3") GUI:SameLine(200) GUI:InputText("##devq12",tostring(qm.stepu3),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestStepUnknown4") GUI:SameLine(200) GUI:InputText("##devq13",tostring(qm.stepu4),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("QuestStepUnknown5") GUI:SameLine(200) GUI:InputText("##devq14",tostring(qm.stepu5),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							GUI:BulletText("RewardCount") GUI:SameLine(200) GUI:InputText("##devq14",tostring(qm.questrewardcount),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+							local qmr = QuestManager:GetActiveQuestRewardList()
+							if ( table.valid(qmr) ) then
+								for qid,q in pairsByKeys(qmr) do
+									if ( GUI:TreeNode(tostring(qid).."-"..q.name)) then
+										GUI:BulletText("Ptr5") GUI:SameLine(200) GUI:InputText("##devqe4",tostring(string.format( "%X",qm.ptr5 or 0)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("Ptr6") GUI:SameLine(200) GUI:InputText("##devqe5",tostring(string.format( "%X",qm.ptr6 or 0)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("RewardItemID") GUI:SameLine(200) GUI:InputText("##devq15"..tostring(qid),tostring(q.itemid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("RewardCount") GUI:SameLine(200) GUI:InputText("##devq16"..tostring(qid),tostring(q.count),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("RewardSelectable") GUI:SameLine(200) GUI:InputText("##devq17"..tostring(qid),tostring(q.selectable),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("RewardUnknown") GUI:SameLine(200) GUI:InputText("##devq18"..tostring(qid),tostring(q.isunknown1),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:TreePop()
+									end
+								end
+							end
+						end
+						GUI:PopItemWidth()
+						GUI:TreePop()
+					end
+					
+-- END QUEST
+		
+										
+
+
+					if ( GUI:TreeNode("Vendor") ) then
+						GUI:BulletText("IsVendorOpened") GUI:SameLine(200) GUI:InputText("##devv0",tostring(Inventory:IsVendorOpened()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)	
+						local list = VendorItemList("")
+						if ( table.valid(list) )then
+							GUI:PushItemWidth(250)
+							for id, b in pairsByKeys(list) do
+								if ( GUI:TreeNode(tostring(id).."-"..b.name)) then
+									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devv1",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devv2",tostring(b.itemid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Rarity") GUI:SameLine(200) GUI:InputText("##devv3",tostring(b.rarity),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Itemtype") GUI:SameLine(200) GUI:InputText("##devv4",tostring(b.itemtype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Weapontype") GUI:SameLine(200) GUI:InputText("##devv5",tostring(b.weapontype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Price") GUI:SameLine(200) GUI:InputText("##devv6",tostring(b.price),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Quantity") GUI:SameLine(200) GUI:InputText("##devi7",tostring(b.quantity),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									
+									if (GUI:Button("Buy",100,15) ) then d("Buy Item Result: "..tostring(b:Buy())) end
+																		
+									GUI:TreePop()
+								end
+							end							
+							GUI:PopItemWidth()
+						else
+							GUI:Text("No Inventory found.") 
+						end
+						GUI:TreePop()				
+					end
+-- END VENDOR 
+
+
+
+					if ( GUI:TreeNode("Waypoints") ) then
+						local list = WaypointList("")
+						if ( table.valid(list) )then
+							GUI:PushItemWidth(250)
+							for id, b in pairsByKeys(list) do
+								if ( GUI:TreeNode(tostring(id).."-"..b.name)) then
+									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devw0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devw1",tostring(b.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##devw8",b.name,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									local p = b.pos
+									GUI:BulletText("Position") GUI:SameLine(200)  GUI:InputFloat3( "##devw2", p.x, p.y, p.z, 2, GUI.InputTextFlags_ReadOnly)
+									GUI:BulletText("Distance") GUI:SameLine(200) GUI:InputFloat("##devw3", b.distance,0,0,2)
+									GUI:BulletText("PathDistance") GUI:SameLine(200) GUI:InputFloat("##devw4", b.pathdistance,0,0,2)
+									GUI:BulletText("OnMesh") GUI:SameLine(200) GUI:InputText("##devw5",tostring(b.onmesh),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Contested") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.contested),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("SameZone") GUI:SameLine(200) GUI:InputText("##devw7",tostring(b.samezone),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									
+									if (GUI:Button("TeleportTo",100,15) ) then d("Buy TeleportTo Result: "..tostring(Player:TeleportToWaypoint(b.id))) end
+																		
+									GUI:TreePop()
+								end
+							end							
+							GUI:PopItemWidth()
+						else
+							GUI:Text("No Inventory found.") 
+						end
+						GUI:TreePop()				
+					end
+-- END WAYPOINTS
+		
+		
 					if ( GUI:TreeNode("Utility Functions & Other Infos") ) then
 						GUI:PushItemWidth(250)
 						GUI:BulletText("Game Time") GUI:SameLine(200) GUI:InputText("##devuf2",tostring(GetGameTime()))
