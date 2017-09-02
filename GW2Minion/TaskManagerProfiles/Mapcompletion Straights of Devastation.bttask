@@ -13,6 +13,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				waypointid = 748,
 			},
 			lastrun = 0,
 			order = 1,
@@ -39,15 +40,15 @@ local tbl =
 				name = "WP Bramble Pass",
 				pos = 
 				{
-					hx = -0.37978056073189,
-					hy = -0.92507660388947,
+					hx = -0.38863259553909,
+					hy = -0.92139279842377,
 					hz = 0,
-					x = 20040.5390625,
-					y = 28637.900390625,
-					z = -2836.4401855469,
+					x = 20041.408203125,
+					y = 28639.447265625,
+					z = -2835.5703125,
 				},
 				radius = 0,
-				type = "tm_moveto",
+				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -78,15 +79,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 70,
-				name = "WP Plinth Timberland",
+				name = "POI The Underbelly",
 				pos = 
 				{
-					hx = -0.92131990194321,
-					hy = 0.14873106777668,
-					hz = 0.3592334985733,
-					x = 28104.404296875,
-					y = 21772.66796875,
-					z = -403.62677001953,
+					hx = -0.9347962141037,
+					hy = 0.34027165174484,
+					hz = 0.10183909535408,
+					x = 19424.193359375,
+					y = 26705.50390625,
+					z = -1138.2708740234,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -97,6 +98,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				waypointid = 1625,
 			},
 			lastrun = 0,
 			order = 3,
@@ -123,15 +125,15 @@ local tbl =
 				name = "WP Underbelly",
 				pos = 
 				{
-					hx = -0.12360350042582,
-					hy = -0.90890926122665,
-					hz = 0.3982537984848,
-					x = 20170.599609375,
-					y = 22009.01953125,
-					z = -20.19021987915,
+					hx = -0.012176377698779,
+					hy = -0.99992597103119,
+					hz = 0,
+					x = 20180.783203125,
+					y = 22163.740234375,
+					z = -57.841369628906,
 				},
 				radius = 0,
-				type = "tm_moveto",
+				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -142,48 +144,6 @@ local tbl =
 			},
 			lastrun = 0,
 			order = 4,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = true,
-				mapid = 51,
-				maxduration = 0,
-				maxlevel = 80,
-				minlevel = 70,
-				name = "POI The Underbelly",
-				pos = 
-				{
-					hx = -0.70219951868057,
-					hy = 0.60687530040741,
-					hz = 0.37231463193893,
-					x = 18867.271484375,
-					y = 26822.82421875,
-					z = -171.36585998535,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 5,
 			posttasks = 
 			{
 			},
@@ -223,9 +183,10 @@ local tbl =
 		{
 			customProperties = 
 			{
+				waypointid = 749,
 			},
 			lastrun = 0,
-			order = 6,
+			order = 5,
 			posttasks = 
 			{
 			},
@@ -249,15 +210,15 @@ local tbl =
 				name = "WP Signal Peak",
 				pos = 
 				{
-					hx = -0.91505414247513,
-					hy = -0.25448903441429,
-					hz = 0.31290781497955,
-					x = 5390.119140625,
-					y = 27390.83984375,
-					z = -221.75534057617,
+					hx = -0.16073742508888,
+					hy = -0.54438030719757,
+					hz = 0.82329434156418,
+					x = 5428.9458007813,
+					y = 27374.701171875,
+					z = -211.83573913574,
 				},
 				radius = 0,
-				type = "tm_moveto",
+				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -267,7 +228,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 7,
+			order = 6,
 			posttasks = 
 			{
 			},
@@ -300,6 +261,49 @@ local tbl =
 				},
 				radius = 0,
 				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 1624,
+			},
+			lastrun = 0,
+			order = 7,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 51,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 70,
+				name = "WP Plinth Timberland",
+				pos = 
+				{
+					hx = 0.75069284439087,
+					hy = 0.66065144538879,
+					hz = 0,
+					x = 28059.734375,
+					y = 21770.609375,
+					z = -401.66369628906,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -349,6 +353,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				waypointid = 751,
 			},
 			lastrun = 0,
 			order = 9,
@@ -375,15 +380,15 @@ local tbl =
 				name = "WP Thorn Pass",
 				pos = 
 				{
-					hx = 0.224435582757,
-					hy = 0.9170760512352,
-					hz = 0.32954540848732,
-					x = 35724.9921875,
-					y = 5794.6044921875,
-					z = -1190.2872314453,
+					hx = -0.82813221216202,
+					hy = 0.56053280830383,
+					hz = 0,
+					x = 35744.34375,
+					y = 5803.103515625,
+					z = -1187.2418212891,
 				},
 				radius = 0,
-				type = "tm_moveto",
+				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -433,6 +438,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				waypointid = 750,
 			},
 			lastrun = 0,
 			order = 11,
@@ -459,15 +465,15 @@ local tbl =
 				name = "WP Fort Trinity",
 				pos = 
 				{
-					hx = -0.9155101776123,
-					hy = 0.25284481048584,
-					hz = 0.31290680170059,
-					x = 27978.375,
-					y = 4509.1962890625,
-					z = -770.01477050781,
+					hx = -0.068022064864635,
+					hy = -0.99768382310867,
+					hz = 0,
+					x = 27966.19921875,
+					y = 4510.16015625,
+					z = -769.94647216797,
 				},
 				radius = 0,
-				type = "tm_moveto",
+				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -658,10 +664,10 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 51,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 70,
-				name = "Vista",
+				name = "Vista Fort Trinity",
 				pos = 
 				{
 					hx = -0.25423380732536,
@@ -680,6 +686,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				waypointid = 752,
 			},
 			lastrun = 0,
 			order = 16,
@@ -714,7 +721,7 @@ local tbl =
 					z = -209.90653991699,
 				},
 				radius = 0,
-				type = "tm_moveto",
+				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -790,12 +797,12 @@ local tbl =
 				name = "POI Compass Bridge",
 				pos = 
 				{
-					hx = 0.94598877429962,
-					hy = -0.28414985537529,
-					hz = 0.15609015524387,
-					x = 24042.248046875,
-					y = -10610.40234375,
-					z = 214.6381072998,
+					hx = 0.55118435621262,
+					hy = -0.76740819215775,
+					hz = 0.32753694057465,
+					x = 24076.3046875,
+					y = -10462.627929688,
+					z = -276.58819580078,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -822,15 +829,15 @@ local tbl =
 			taskProperties = 
 			{
 				cooldown = 0,
-				enabled = false,
+				enabled = true,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 51,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 70,
-				name = "Vista",
+				name = "Vista Lightfoot Passage",
 				pos = 
 				{
 					hx = -0.55117708444595,
@@ -875,12 +882,12 @@ local tbl =
 				name = "POI Cadrigans Jetty",
 				pos = 
 				{
-					hx = 0.21329945325851,
-					hy = 0.91054826974869,
-					hz = 0.35412591695786,
-					x = 33554.60546875,
-					y = -12976.296875,
-					z = 157.66012573242,
+					hx = -0.044147849082947,
+					hy = -0.99902498722076,
+					hz = 0,
+					x = 33653.94921875,
+					y = -12935.12109375,
+					z = 44.54020690918,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -954,18 +961,18 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 51,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 70,
-				name = "Vista",
+				name = "Vista Broken Spit",
 				pos = 
 				{
-					hx = 0.37416055798531,
-					hy = -0.78944420814514,
-					hz = 0.48660227656364,
-					x = 17616,
-					y = -16746.482421875,
-					z = -1346.6159667969,
+					hx = 0.033561315387487,
+					hy = -0.38585096597672,
+					hz = 0.92195045948029,
+					x = 17631.603515625,
+					y = -16813.6640625,
+					z = -1378.9001464844,
 				},
 				radius = 0,
 				type = "tm_vista",
@@ -976,6 +983,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				waypointid = 753,
 			},
 			lastrun = 0,
 			order = 23,
@@ -1002,15 +1010,15 @@ local tbl =
 				name = "WP Broken Spit",
 				pos = 
 				{
-					hx = -0.33820050954819,
-					hy = -0.82907503843307,
-					hz = 0.44525837898254,
-					x = 11771.661132813,
-					y = -18311.181640625,
-					z = -18.305974960327,
+					hx = -0.10012218356133,
+					hy = 0.9949751496315,
+					hz = 0,
+					x = 11617.963867188,
+					y = -18487.955078125,
+					z = -47.474758148193,
 				},
 				radius = 0,
-				type = "tm_moveto",
+				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -1044,12 +1052,12 @@ local tbl =
 				name = "POI Broken Spit",
 				pos = 
 				{
-					hx = -0.071792803704739,
-					hy = -0.90278601646423,
-					hz = 0.42405563592911,
-					x = 10558.895507813,
-					y = -19321.720703125,
-					z = 542.70733642578,
+					hx = 0.21668566763401,
+					hy = 0.97624140977859,
+					hz = 0,
+					x = 10476.872070313,
+					y = -19881.947265625,
+					z = 44.150501251221,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -1102,6 +1110,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				waypointid = 759,
 			},
 			lastrun = 0,
 			order = 26,
@@ -1128,15 +1137,15 @@ local tbl =
 				name = "WP Lone Post",
 				pos = 
 				{
-					hx = -0.93549776077271,
-					hy = -0.011434169486165,
-					hz = 0.35314753651619,
-					x = 1069.9826660156,
-					y = -12149.856445313,
-					z = -64.725372314453,
+					hx = -0.22874820232391,
+					hy = -0.68831372261047,
+					hz = 0.68840283155441,
+					x = 952.93768310547,
+					y = -12129.876953125,
+					z = -72.002632141113,
 				},
 				radius = 0,
-				type = "tm_moveto",
+				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -1739,7 +1748,6 @@ local tbl =
 					customProperties = 
 					{
 					},
-					order = 0,
 					taskProperties = 
 					{
 						enabled = true,
@@ -1764,7 +1772,6 @@ local tbl =
 						},
 						talktype = "Index",
 					},
-					order = 1,
 					taskProperties = 
 					{
 						enabled = true,
@@ -1819,7 +1826,6 @@ local tbl =
 					customProperties = 
 					{
 					},
-					order = 0,
 					taskProperties = 
 					{
 						enabled = true,
@@ -1844,7 +1850,6 @@ local tbl =
 						},
 						talktype = "Index",
 					},
-					order = 1,
 					taskProperties = 
 					{
 						enabled = true,
