@@ -963,7 +963,46 @@ function dev.DrawCall(event, ticks )
 -- END SPECIALIZATIONS
 
 
-					
+						if ( GUI:TreeNode("Squad") ) then
+						local list = Player:GetSquad()
+						if ( table.valid(list) )then
+							GUI:PushItemWidth(250)
+							--for i, squadgroup in pairs(list) do	
+								--if ( table.valid(squadgroup)) then
+									for id, b in pairs(list) do	
+										if ( GUI:TreeNode(tostring(id).."-"..b.name)) then
+											GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devsq0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("Player") GUI:SameLine(200) GUI:InputText("##desq16",tostring(string.format( "%X",b.player)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devsq11",tostring(b.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("Account") GUI:SameLine(200) GUI:InputText("##devsq12",tostring(b.accountname),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)											
+											GUI:BulletText("SquadGroup") GUI:SameLine(200) GUI:InputText("##devsq1",tostring(b.subsquad),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("MapID") GUI:SameLine(200) GUI:InputText("##devsq2", tostring(b.mapid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("HomeServerID") GUI:SameLine(200) GUI:InputText("##devsq3", tostring(b.homeserverid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("CurrentServerID") GUI:SameLine(200) GUI:InputText("##devsq4",tostring(b.currentserverid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("InstanceServerID") GUI:SameLine(200) GUI:InputText("##desq5",tostring(b.instanceserverid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("ConnectStatus") GUI:SameLine(200) GUI:InputText("##desq6",tostring(b.connectstatus),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("InviteStatus") GUI:SameLine(200) GUI:InputText("##desq7",tostring(b.invitestatus),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("HasParty") GUI:SameLine(200) GUI:InputText("##desq8",tostring(b.hasparty),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("Profession") GUI:SameLine(200) GUI:InputText("##desq9",tostring(b.profession),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+											GUI:BulletText("Level") GUI:SameLine(200) GUI:InputText("##desq10",tostring(b.level),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)									
+											local pos = b.pos
+											if (table.valid(pos)) then
+												GUI:BulletText("Pos") GUI:SameLine(200)  GUI:InputFloat3( "##desq11", pos.x, pos.y,  pos.z,2, GUI.InputTextFlags_ReadOnly)
+											end
+											GUI:TreePop()
+										end
+									end
+								--end
+							--end
+							GUI:PopItemWidth()
+						else
+							GUI:Text("No Inventory found.") 
+						end
+						GUI:TreePop()					
+					end
+-- END SQUAD
+
+				
 					if ( GUI:TreeNode("Quests") ) then
 						GUI:PushItemWidth(250)
 						local qm = QuestManager:GetActiveQuest()
