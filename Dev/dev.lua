@@ -1372,6 +1372,7 @@ function dev.DrawAgentDetails(c)
 		GUI:BulletText("Dist to MeshPos") GUI:SameLine(200)  GUI:InputFloat("##deva13m", meshpos.meshdistance,0,0,2)	
 	end
 	GUI:BulletText("Alive") GUI:SameLine(200) GUI:InputText("##deva23", tostring(c.alive),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("Attitude") GUI:SameLine(200) GUI:InputText("##deva24", tostring(c.attitude),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("IsInInteractRange") GUI:SameLine(200) GUI:InputText("##deva20", tostring(c.isininteractrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("Interactable") GUI:SameLine(200) GUI:InputText("##deva21", tostring(c.interactable),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("Selectable") GUI:SameLine(200) GUI:InputText("##deva22", tostring(c.selectable),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
