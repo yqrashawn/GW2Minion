@@ -337,7 +337,7 @@ function gw2_common_functions.GetBestAggroTarget(healthstate)
 
 		local currTarget = Player:GetTarget()
 		if ( currTarget ~= nil and currTarget.attackable and currTarget.pathdistance < 9999999) then
-			return target
+			return currTarget
 		end
 	end
 	return nil
