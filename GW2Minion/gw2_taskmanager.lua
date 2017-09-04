@@ -34,6 +34,7 @@ function gw2_tm_heartquest:CanTaskStart_TM(taskProperties,customProperties)
 			if(table.valid(MList)) then
 				for _,marker in pairs(MList) do
 					if(marker.subregionid == customProperties.hqid) then
+						d("[tm_heartquest]: HeartQuest already done. Ending task.")
 						gw2_tm_heartquest.laststatus = false
 						return gw2_tm_heartquest.laststatus
 					end
@@ -54,7 +55,10 @@ gw2_tm_heropoint.laststatus = true
 gw2_tm_heropoint.lastpos = nil
 
 function gw2_tm_heropoint:CanTaskRun_TM(taskProperties,customProperties)
-	
+	return gw2_tm_heropoint:CanTaskStart_TM(taskProperties,customProperties)
+end
+
+function gw2_tm_heropoint:CanTaskStart_TM(taskProperties,customProperties)
 	-- Reset status if this is a new task
 	if(gw2_tm_heropoint.lastpos == nil or math.distance3d(taskProperties.pos,gw2_tm_heropoint.lastpos) > 5) then
 		gw2_tm_heropoint.lastpos = table.shallowcopy(taskProperties.pos)
@@ -63,12 +67,11 @@ function gw2_tm_heropoint:CanTaskRun_TM(taskProperties,customProperties)
 	
 	if(TimeSince(gw2_tm_heropoint.lastcheck) > 1000) then
 		gw2_tm_heropoint.lastcheck = ml_global_information.Now
-
-		if(math.distance3d(taskProperties.pos,ml_global_information.Player_Position) < 2000) then
-			local MList = MapMarkerList("nearest,onmesh,contentid="..GW2.MAPMARKER.SkillpointComplete)
-			if(table.valid(MList)) then
-				local _,hp = next(MList)
-				if(not table.valid(hp) or hp.distance < 500) then
+		local heroPointList = MapMarkerList("contentid="..GW2.MAPMARKER.SkillpointComplete)
+		for _,heroPoint in pairs(heroPointList) do
+			if (table.valid(heroPoint)) then
+				local distanceToHPTask = math.distance3d(heroPoint.pos,taskProperties.pos)
+				if (distanceToHPTask < 500) then
 					gw2_tm_heropoint.laststatus = false
 					return gw2_tm_heropoint.laststatus
 				end
