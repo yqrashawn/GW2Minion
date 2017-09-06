@@ -1084,22 +1084,23 @@ function dev.DrawCall(event, ticks )
 
 
 					if ( GUI:TreeNode("Waypoints") ) then
-						local list = WaypointList("")
+						local list = WaypointList()
 						if ( table.valid(list) )then
 							GUI:PushItemWidth(250)
 							for id, b in pairsByKeys(list) do
 								if ( GUI:TreeNode(tostring(id).."-"..b.name)) then
 									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devw0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devw1",tostring(b.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##devw8",b.name,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Type") GUI:SameLine(200) GUI:InputText("##devw8",tostring(b.type),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									local p = b.pos
 									GUI:BulletText("Position") GUI:SameLine(200)  GUI:InputFloat3( "##devw2", p.x, p.y, p.z, 2, GUI.InputTextFlags_ReadOnly)
 									GUI:BulletText("Distance") GUI:SameLine(200) GUI:InputFloat("##devw3", b.distance,0,0,2)
-									GUI:BulletText("PathDistance") GUI:SameLine(200) GUI:InputFloat("##devw4", b.pathdistance,0,0,2)
 									GUI:BulletText("OnMesh") GUI:SameLine(200) GUI:InputText("##devw5",tostring(b.onmesh),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									GUI:BulletText("Contested") GUI:SameLine(200) GUI:InputText("##devw6",tostring(b.contested),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("Usable") GUI:SameLine(200) GUI:InputText("##devw7",tostring(b.unlocked),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("MapID") GUI:SameLine(200) GUI:InputText("##devw7",tostring(b.mapid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									GUI:BulletText("SameZone") GUI:SameLine(200) GUI:InputText("##devw7",tostring(b.samezone),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									
+									GUI:BulletText("Costs") GUI:SameLine(200) GUI:InputText("##devw9",tostring(b.costs),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									if (GUI:Button("TeleportTo",100,15) ) then d("Buy TeleportTo Result: "..tostring(Player:TeleportToWaypoint(b.id))) end
 																		
 									GUI:TreePop()
@@ -1113,6 +1114,35 @@ function dev.DrawCall(event, ticks )
 					end
 -- END WAYPOINTS
 		
+					if ( GUI:TreeNode("WorldMap") ) then
+						GUI:PushItemWidth(150)
+						if ( GUI:TreeNode("Waypoints") ) then
+							GUI:BulletText("HasWaypoint ID:") GUI:SameLine() dev.haswaypoint = GUI:InputInt("##devwmm1", (dev.haswaypoint or 1), 1, 1)
+							if (GUI:IsItemHovered()) then GUI:SetTooltip("If the entered waypoint ID is available / discovered and can be used.") end
+							GUI:SameLine() GUI:Text("Discovered : "..tostring(WorldMap:HasWaypoint(dev.haswaypoint)))
+							
+							local list = WorldMap:WaypointList()
+							if ( table.valid(list) )then
+								GUI:PushItemWidth(250)
+								for id, b in pairsByKeys(list) do
+									if ( GUI:TreeNode(tostring(id).."-"..b.name)) then
+										GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devmmw0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devmmw1",tostring(b.id),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("MapID") GUI:SameLine(200) GUI:InputText("##devmmw2",tostring(b.mapid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("Type") GUI:SameLine(200) GUI:InputText("##devmmw3",tostring(b.type),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										if (GUI:Button("TeleportTo",100,15) ) then d("Buy TeleportTo Result: "..tostring(Player:TeleportToWaypoint(b.id))) end																			
+										GUI:TreePop()
+									end
+								end							
+								GUI:PopItemWidth()							
+							end
+							GUI:TreePop()
+						end						
+						GUI:PopItemWidth()
+						GUI:TreePop()
+					end					
+-- END WorldMap
+
 		
 					if ( GUI:TreeNode("Utility Functions & Other Infos") ) then
 						GUI:PushItemWidth(250)
