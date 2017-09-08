@@ -95,7 +95,7 @@ function gw2_tm_waypoint:CanTaskStart_TM(taskProperties,customProperties)
 		if(taskProperties.mapid == ml_global_information.CurrentMapID) then
 			if(type(customProperties.waypointid) == "number") then
 				local wp = WorldMap:HasWaypoint(customProperties.waypointid)
-				if(table.valid(wp)) then
+				if(wp == true) then
 					d("[tm_Discoverwaypoint]: Waypoint already discovered. Ending task.")
 					return false
 				end
