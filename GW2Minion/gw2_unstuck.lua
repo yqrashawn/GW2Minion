@@ -499,20 +499,31 @@ function gw2_unstuck.stuckhandlers.waypoint()
 		d("[Unstuck]: Used a waypoint less then 30 seconds ago.")
 		gw2_unstuck.stuckhandlers.stop()
 	elseif (Inventory:GetInventoryMoney() > 200 and not ml_global_information.Player_InCombat) then
-		local WPList = WaypointList("onmesh,nearest,samezone,notcontested")
+		local WPList = WaypointList()
 		if(table.valid(WPList)) then
-			local _,wp = next(WPList)
-			if(table.valid(wp) and wp.distance > 500) then
-				Player:StopMovement()
-				if(Player:TeleportToWaypoint(wp.id)) then
-					gw2_unstuck.Reset()
-					gw2_unstuck.lastwptimer = ml_global_information.Now
-					gw2_unstuck.stucktick = ml_global_information.Now + math.random(3000,5000)				
-					return true
+			local nearesst = nil
+			local nearestdist = 99999999
+			for wid,wpentry in pairs(WPList) do
+				if(wpentry.samezone and wpentry.contested == 0 and wpentry.onmesh and ( not nearesst or (wpentry.distance < nearestdist))) then
+					nearestdist = wpentry.distance
+					nearesst = wpentry
 				end
-				d("[Unstuck]: Failed to use waypoint.")
+			end
+			if(table.valid(nearesst))then
+				if (nearesst.distance > 500) then
+					Player:StopMovement()
+					if(Player:TeleportToWaypoint(nearesst.id)) then
+						gw2_unstuck.Reset()
+						gw2_unstuck.lastwptimer = ml_global_information.Now
+						gw2_unstuck.stucktick = ml_global_information.Now + math.random(3000,5000)				
+						return true
+					end
+					d("[Unstuck]: Failed to use waypoint.")
+				else
+					d("[Unstuck]: We are too close to a Waypoint to Teleport again.")
+				end
 			else
-				d("[Unstuck]: Failed to use waypoint or waypoint too close.")
+				d("[Unstuck]: No Waypoint to Teleport to nearby Found.")
 			end
 		else
 			d("[Unstuck]: No waypoint found.")
