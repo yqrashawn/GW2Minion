@@ -18,7 +18,7 @@ local tbl =
 				finishcode = "",
 				info = "",
 				monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-				runcode = "if(context.usewaypoint_id and context.usewaypoint_id > 0) then\n\t\tlocal wp = WaypointList:Get(context.usewaypoint_id)\n\t\t\n\t\tif(table.valid(wp)) then\n\t\t\t\tif(Inventory:GetInventoryMoney() > (139*math.log10(ml_global_information.Player_Level))*2) then\n\t\t\t\t\t\tif(wp.distance > 250 and Player:TeleportToWaypoint(context.usewaypoint_id)) then\n\t\t\t\t\t\t\t\tself:success()\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\n\t\t\t\telse\n\t\t\t\t\t\td(\"[UseWaypoint]: Not enough gold\")\n\t\t\t\tend\n\t\tend\nend\nself:fail()",
+				runcode = "if(context.usewaypoint_id and context.usewaypoint_id > 0) then\n\t\tlocal wp = WaypointList()[context.usewaypoint_id]\n\t\t\n\t\tif(table.valid(wp)) then\n\t\t\t\tif(Inventory:GetInventoryMoney() > (139*math.log10(ml_global_information.Player_Level))*2) then\n\t\t\t\t\t\tif(wp.distance > 250 and Player:TeleportToWaypoint(context.usewaypoint_id)) then\n\t\t\t\t\t\t\t\tself:success()\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\n\t\t\t\telse\n\t\t\t\t\t\td(\"[UseWaypoint]: Not enough gold\")\n\t\t\t\tend\n\t\tend\nend\nself:fail()",
 				startcode = "",
 			},
 		},
