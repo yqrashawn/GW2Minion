@@ -77,7 +77,10 @@ function gw2_datamanager.GetLocalWaypointList(mapid)
 				local poiData = floorData["points_of_interest"]
 				if (table.valid(poiData)) then
 					for id,data in pairs(poiData) do
-						local wInfo = WorldMap:HasWaypoint(id)
+						local wInfo = WaypointList()[id]
+						if (not table.valid(wInfo)) then
+							wInfo = WorldMap:WaypointList()[id]
+						end
 						if (table.valid(data) and table.valid(wInfo) and data["type"] == "waypoint") then
 						
 							local pos = table.valid(wInfo.pos) and wInfo.pos or {
