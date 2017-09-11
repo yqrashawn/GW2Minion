@@ -1052,7 +1052,7 @@ function dev.DrawCall(event, ticks )
 							--end
 							GUI:PopItemWidth()
 						else
-							GUI:Text("No Inventory found.") 
+							GUI:Text("No Squad found.") 
 						end
 						GUI:TreePop()					
 					end
