@@ -136,7 +136,7 @@ function gw2_common_functions.GetClosestWaypointToPos(mapID,pos)
 	if (table.valid(mapData)) then
 		local i,wdata = next(mapData)
 		while wdata and not waypoint do
-			if (wdata.contested == false and wdata.onmesh) then
+			if (wdata.contested == 0 and wdata.onmesh) then
 				waypoint = wdata
 			end
 			
