@@ -908,6 +908,7 @@ function dev.DrawCall(event, ticks )
 									GUI:BulletText("Skilltype") GUI:SameLine(200) GUI:InputText("##devsk9",tostring(b.skilltype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devsk10",tostring(b.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									GUI:BulletText("IsGroundTargeted") GUI:SameLine(200) GUI:InputText("##devsk11",tostring(b.isgroundtargeted),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									GUI:BulletText("RequiresTarget") GUI:SameLine(200) GUI:InputText("##devsk13",tostring(b.requirestarget),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devsk12",tostring(b.cancast),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									if (GUI:Button("Cast",150,15) ) then 
 										local t = Player:GetTarget()
@@ -921,6 +922,45 @@ function dev.DrawCall(event, ticks )
 								end
 							end
 						end
+						
+						--SkillByID
+						GUI:Separator()
+						if ( GUI:TreeNode("Get Spell InfoBy ID") ) then
+							GUI:BulletText("Spell ID:") GUI:SameLine(200) dev.spellid, dev.spellidchanged = GUI:InputInt("##devss5",dev.spellid  or 1000,1,10)
+							if(dev.spellidchanged) then dev.spellidwaschanged = true end
+							if(dev.spellidwaschanged) then 	-- silly way, buti t crashes when manually entering a number ..idk why, idcare either
+								if (GUI:Button("Show Skill Data",150,15) ) then 
+									dev.spellidwaschanged = nil
+									dev.pickedspellid = dev.spellid
+								end
+							end
+							
+							if (dev.pickedspellid and type(dev.pickedspellid) == "number") then
+								local b = Player:GetSpellInfoByID(dev.pickedspellid)
+								if (table.valid(b)) then 
+										GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devssk0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##devssk1",tostring(b.name),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devssk2",tostring(b.skillid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("ContentID") GUI:SameLine(200) GUI:InputText("##devssk3", tostring(b.contentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("CooldownMax") GUI:SameLine(200) GUI:InputText("##devssk5",tostring(b.cooldownmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("AmmoCooldownMax") GUI:SameLine(200) GUI:InputText("##devsks15", tostring(b.ammocooldownmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("MinRange") GUI:SameLine(200) GUI:InputText("##devssk6",tostring(b.minrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("MaxRange") GUI:SameLine(200) GUI:InputText("##devssk7",tostring(b.maxrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("Radius") GUI:SameLine(200) GUI:InputText("##devsks8",tostring(b.radius),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("Skilltype") GUI:SameLine(200) GUI:InputText("##devssk9",tostring(b.skilltype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devssk10",tostring(b.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("IsGroundTargeted") GUI:SameLine(200) GUI:InputText("##devssk11",tostring(b.isgroundtargeted),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("RequiresTarget") GUI:SameLine(200) GUI:InputText("##devssk13",tostring(b.requirestarget),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devsks12",tostring(b.cancast),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+										
+								else
+									GUI:Text("No Valid Spell Data Found")
+								end
+							end
+							GUI:TreePop()
+						end
+						
+						
 						GUI:Separator()
 						if ( GUI:TreeNode("CoolDown List") ) then							
 							local cdlist = Player:GetCoolDownList()
