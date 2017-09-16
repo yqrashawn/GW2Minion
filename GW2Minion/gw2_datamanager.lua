@@ -94,7 +94,7 @@ function gw2_datamanager.GetLocalWaypointList(mapid)
 								name = data["name"],
 								pos = pos,
 								discovered = table.valid(wInfo),
-								contested =  wInfo.contested,
+								contested =  wInfo.contested == true,
 								onmesh = not (wInfo.onmesh == false),
 								distance = wInfo.distance or nil,
 								mapid = mapid
