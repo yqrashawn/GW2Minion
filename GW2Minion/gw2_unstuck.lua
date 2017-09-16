@@ -504,7 +504,7 @@ function gw2_unstuck.stuckhandlers.waypoint()
 			local nearesst = nil
 			local nearestdist = 99999999
 			for wid,wpentry in pairs(WPList) do
-				if(wpentry.samezone and wpentry.contested == 0 and wpentry.onmesh and ( not nearesst or (wpentry.distance < nearestdist))) then
+				if(wpentry.samezone and not wpentry.contested and wpentry.onmesh and ( not nearesst or (wpentry.distance < nearestdist))) then
 					nearestdist = wpentry.distance
 					nearesst = wpentry
 				end
