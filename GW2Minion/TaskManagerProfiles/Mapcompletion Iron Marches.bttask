@@ -71,25 +71,13 @@ local tbl =
 				{
 					customProperties = 
 					{
-						talkagent = 
-						{
-							character = true,
-							contentid = 263183,
-							gadget = false,
-							name = "Sharky Longears",
-						},
-						talksteps = 
-						{
-							0,
-							0,
-						},
-						talktype = "Index",
 					},
+					order = 2,
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Talk",
-						type = "tm_st_talk",
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
 					},
 				},
 				
@@ -119,6 +107,31 @@ local tbl =
 						enabled = true,
 						name = "Kill specific targets",
 						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = true,
+							contentid = 263183,
+							gadget = false,
+							name = "Sharky Longears",
+						},
+						talksteps = 
+						{
+							0,
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Talk",
+						type = "tm_st_talk",
 					},
 				},
 			},
@@ -2600,6 +2613,28 @@ local tbl =
 				{
 					customProperties = 
 					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 43648,
+								gadget = false,
+								name = "Zzzig",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill specific targets",
+						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
 						talkagent = 
 						{
 							character = true,
@@ -2619,28 +2654,6 @@ local tbl =
 						enabled = true,
 						name = "Talk",
 						type = "tm_st_talk",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = true,
-								contentid = 43648,
-								gadget = false,
-								name = "Zzzig",
-							},
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Kill specific targets",
-						type = "tm_st_killspecific",
 					},
 				},
 			},
@@ -2689,25 +2702,13 @@ local tbl =
 				{
 					customProperties = 
 					{
-						talkagent = 
-						{
-							character = false,
-							contentid = 3839,
-							gadget = true,
-							name = "Imp Power Essence",
-						},
-						talksteps = 
-						{
-							0,
-							0,
-						},
-						talktype = "Index",
 					},
+					order = 2,
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Talk",
-						type = "tm_st_talk",
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
 					},
 				},
 				
@@ -2737,6 +2738,31 @@ local tbl =
 						enabled = true,
 						name = "Kill specific targets",
 						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = false,
+							contentid = 3839,
+							gadget = true,
+							name = "Imp Power Essence",
+						},
+						talksteps = 
+						{
+							0,
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Talk",
+						type = "tm_st_talk",
 					},
 				},
 			},
@@ -2967,7 +2993,7 @@ local tbl =
 							},
 						},
 						randommovement = false,
-						randompos = false,
+						randompos = true,
 						repeatpositions = true,
 						usewaypoints = false,
 					},
@@ -2993,12 +3019,12 @@ local tbl =
 				name = "HQ Help The Sleekfur",
 				pos = 
 				{
-					hx = 0.12481881678104,
-					hy = 0.96999752521515,
-					hz = 0.20862655341625,
-					x = -18352.9765625,
-					y = -5845.6762695313,
-					z = -1409.5670166016,
+					hx = -0.059854865074158,
+					hy = -0.68703478574753,
+					hz = 0.72415512800217,
+					x = -13543.8125,
+					y = -1658.0340576172,
+					z = -1396.7132568359,
 				},
 				radius = 0,
 				type = "tm_hq",
@@ -3021,6 +3047,35 @@ local tbl =
 			},
 			subtasks = 
 			{
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 43413,
+								gadget = false,
+								name = "Scourgejaw Prisoner",
+							},
+							
+							{
+								character = true,
+								contentid = 93114,
+								gadget = false,
+								name = "Scourgejaw Prisoner",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill specific targets",
+						type = "tm_st_killspecific",
+					},
+				},
 				
 				{
 					customProperties = 
@@ -3066,28 +3121,6 @@ local tbl =
 						enabled = true,
 						name = "Interact",
 						type = "tm_st_interact",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = true,
-								contentid = 43413,
-								gadget = false,
-								name = "Scourgejaw Prisoner",
-							},
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Kill specific targets",
-						type = "tm_st_killspecific",
 					},
 				},
 				
@@ -3438,12 +3471,12 @@ local tbl =
 				name = "HQ Help Braxa",
 				pos = 
 				{
-					hx = -0.7316682934761,
-					hy = -0.57347166538239,
-					hz = 0.36849933862686,
-					x = -8155.9501953125,
-					y = -23759.205078125,
-					z = -1153.2156982422,
+					hx = 0.59589850902557,
+					hy = -0.4205784201622,
+					hz = 0.68411892652512,
+					x = -7684.3627929688,
+					y = -24003.392578125,
+					z = -1171.2260742188,
 				},
 				radius = 0,
 				type = "tm_hq",
@@ -3541,17 +3574,47 @@ local tbl =
 							{
 								character = false,
 								closedialog = false,
-								contentid = 23456,
+								contentid = 20599,
 								gadget = true,
 								maxinteract = 1,
-								name = "Kennel Latch",
+								name = "Suspicious Tree",
 								oncepertarget = false,
 							},
 							
 							{
 								character = false,
 								closedialog = false,
-								contentid = 20599,
+								contentid = 22263,
+								gadget = true,
+								maxinteract = 1,
+								name = "Suspicious Tree",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 18832,
+								gadget = true,
+								maxinteract = 1,
+								name = "Suspicious Grassy Area",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 18834,
+								gadget = true,
+								maxinteract = 1,
+								name = "Suspicious Tree",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 32542,
 								gadget = true,
 								maxinteract = 1,
 								name = "Suspicious Tree",
@@ -3593,6 +3656,20 @@ local tbl =
 								gadget = true,
 								name = "Separatist Spike Trap",
 							},
+							
+							{
+								character = false,
+								contentid = 18198,
+								gadget = true,
+								name = "Separatist Spike Trap",
+							},
+							
+							{
+								character = false,
+								contentid = 21011,
+								gadget = true,
+								name = "Hidden Separatist Supply Cache",
+							},
 						},
 					},
 					taskProperties = 
@@ -3600,6 +3677,72 @@ local tbl =
 						enabled = true,
 						name = "Kill specific targets",
 						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = true,
+								contentid = 23456,
+								gadget = true,
+								maxinteract = 1,
+								name = "Kennel Latch",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = true,
+								contentid = 7973,
+								gadget = true,
+								maxinteract = 1,
+								name = "Kennel Latch",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = true,
+								contentid = 28296,
+								gadget = true,
+								maxinteract = 1,
+								name = "Kennel Latch",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = true,
+								contentid = 1258,
+								gadget = true,
+								maxinteract = 1,
+								name = "Kennel Latch",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = true,
+								contentid = 18838,
+								gadget = true,
+								maxinteract = 1,
+								name = "Kennel Latch",
+								oncepertarget = false,
+							},
+						},
+					},
+					order = 4,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Interact",
+						type = "tm_st_interact",
 					},
 				},
 				
@@ -3653,9 +3796,27 @@ local tbl =
 								y = -30939.73046875,
 								z = -1353.7740478516,
 							},
+							
+							{
+								hx = 0.35696062445641,
+								hy = -0.82742667198181,
+								hz = 0.43352538347244,
+								x = 8542.169921875,
+								y = -30713.666015625,
+								z = -1402.8044433594,
+							},
+							
+							{
+								hx = -0.68210279941559,
+								hy = 0.3215184211731,
+								hz = 0.65678131580353,
+								x = 10351.451171875,
+								y = -29789.58203125,
+								z = -1322.4587402344,
+							},
 						},
 						randommovement = false,
-						randompos = false,
+						randompos = true,
 						repeatpositions = true,
 						usewaypoints = false,
 					},
@@ -3772,6 +3933,56 @@ local tbl =
 							
 							{
 								character = true,
+								contentid = 44257,
+								gadget = false,
+								name = "Ghost Spider",
+							},
+						},
+					},
+					order = 5,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill specific targets - ghost spiders",
+						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = true,
+							contentid = 133172,
+							gadget = false,
+							name = "Displaced Spirit",
+						},
+						talksteps = 
+						{
+							0,
+							0,
+							0,
+						},
+						talktype = "Index",
+					},
+					order = 4,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Talk - displaced spirit",
+						type = "tm_st_talk",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
 								contentid = 44778,
 								gadget = false,
 								name = "Shadow Fiend",
@@ -3783,12 +3994,19 @@ local tbl =
 								gadget = false,
 								name = "Shadow Fiend",
 							},
+							
+							{
+								character = true,
+								contentid = 133172,
+								gadget = false,
+								name = "Shadow Fiend",
+							},
 						},
 					},
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Kill specific targets",
+						name = "Kill specific targets - shadow fiend",
 						type = "tm_st_killspecific",
 					},
 				},
@@ -3814,7 +4032,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Talk",
+						name = "Talk - logger",
 						type = "tm_st_talk",
 					},
 				},
@@ -4084,6 +4302,39 @@ local tbl =
 				{
 					customProperties = 
 					{
+						useskills = 
+						{
+							[7631] = 
+							{
+								oncepertarget = true,
+								pos = 
+								{
+									hx = -0.58722269535065,
+									hy = 0.30658331513405,
+									hz = 0.74911689758301,
+									x = 14641.720703125,
+									y = -43553.515625,
+									z = 19.652233123779,
+								},
+								skillid = 7631,
+								skillname = "Throw Chunk of Wall",
+								target = 0,
+								useat = "Position",
+							},
+						},
+					},
+					order = 4,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Use skill",
+						type = "tm_st_useskill",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
 					},
 					taskProperties = 
 					{
@@ -4145,51 +4396,11 @@ local tbl =
 							{
 								character = false,
 								closedialog = false,
-								contentid = 26232,
-								gadget = true,
-								maxinteract = 5,
-								name = "Iron Legion Cannon",
-								oncepertarget = true,
-							},
-							
-							{
-								character = false,
-								closedialog = false,
-								contentid = 17570,
-								gadget = true,
-								maxinteract = 5,
-								name = "Iron Legion Cannon",
-								oncepertarget = true,
-							},
-							
-							{
-								character = false,
-								closedialog = false,
-								contentid = 9459,
-								gadget = true,
-								maxinteract = 5,
-								name = "Iron Legion Cannon",
-								oncepertarget = true,
-							},
-							
-							{
-								character = false,
-								closedialog = false,
-								contentid = 2643,
-								gadget = true,
-								maxinteract = 5,
-								name = "Iron Legion Cannon",
-								oncepertarget = true,
-							},
-							
-							{
-								character = false,
-								closedialog = false,
-								contentid = 31218,
-								gadget = true,
-								maxinteract = 5,
-								name = "Iron Legion Cannon",
-								oncepertarget = true,
+								entity = true,
+								gadget = false,
+								maxinteract = 1,
+								name = "Chunk of Wall",
+								oncepertarget = false,
 							},
 						},
 					},
@@ -4280,6 +4491,118 @@ local tbl =
 						enabled = true,
 						name = "Move to multiple locations",
 						type = "tm_st_movetomultiple",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 771,
+								gadget = true,
+								maxinteract = 1,
+								name = "Live Cannonball",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 29928,
+								gadget = true,
+								maxinteract = 1,
+								name = "Live Cannonball",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 7971,
+								gadget = true,
+								maxinteract = 1,
+								name = "Live Cannonball",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 12874,
+								gadget = true,
+								maxinteract = 1,
+								name = "Live Cannonball",
+								oncepertarget = true,
+							},
+						},
+					},
+					order = 5,
+					taskProperties = 
+					{
+						enabled = false,
+						name = "Interact",
+						type = "tm_st_interact",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 2643,
+								gadget = true,
+								maxinteract = 1,
+								name = "Iron Legion Cannon",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 26232,
+								gadget = true,
+								maxinteract = 1,
+								name = "Iron Legion Cannon",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 17570,
+								gadget = true,
+								maxinteract = 1,
+								name = "Iron Legion Cannon",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 9459,
+								gadget = true,
+								maxinteract = 1,
+								name = "Iron Legion Cannon",
+								oncepertarget = true,
+							},
+						},
+					},
+					order = 6,
+					taskProperties = 
+					{
+						enabled = false,
+						name = "Interact",
+						type = "tm_st_interact",
 					},
 				},
 			},
@@ -4378,15 +4701,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 50,
-				name = "POI Cauldron Seaaring",
+				name = "POI The Cauldron of Seaaring",
 				pos = 
 				{
-					hx = -0.33137115836143,
-					hy = -0.85390573740005,
-					hz = 0.40129554271698,
-					x = -119.6692276001,
-					y = -39812.15625,
-					z = -624.52355957031,
+					hx = -0.55867803096771,
+					hy = -0.69942086935043,
+					hz = 0.44574576616287,
+					x = 241.60737609863,
+					y = -40389.2265625,
+					z = -781.16125488281,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -4445,7 +4768,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 50,
-				name = "HP Searing Cauldron (FUCKING TALK TASK NEEDS LOGIC!)",
+				name = "HP Searing Cauldron",
 				pos = 
 				{
 					hx = -0.58837461471558,
@@ -4952,6 +5275,27 @@ local tbl =
 								contentid = 43448,
 								gadget = false,
 								name = "Ascalonian Fighter",
+							},
+							
+							{
+								character = true,
+								contentid = 43721,
+								gadget = false,
+								name = "Flame Legion Bladestorm",
+							},
+							
+							{
+								character = true,
+								contentid = 386193,
+								gadget = false,
+								name = "Veteran Flame Legion Fire Shaman",
+							},
+							
+							{
+								character = true,
+								contentid = 329415,
+								gadget = false,
+								name = "Rankfur the Smolderfist",
 							},
 						},
 					},
