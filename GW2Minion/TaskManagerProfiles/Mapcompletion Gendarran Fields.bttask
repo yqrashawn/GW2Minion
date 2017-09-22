@@ -13,6 +13,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				waypointid = 227,
 			},
 			lastrun = 0,
 			order = 1,
@@ -31,7 +32,7 @@ local tbl =
 				enabled = true,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
+				gw2_trytosurvive = true,
 				mapid = 24,
 				maxduration = 0,
 				maxlevel = 0,
@@ -39,15 +40,15 @@ local tbl =
 				name = "[WP] Cornucopian Fields",
 				pos = 
 				{
-					hx = -0.98864841461182,
-					hy = -0.1502473950386,
+					hx = -0.9893434047699,
+					hy = -0.14560103416443,
 					hz = 0,
-					x = 9890.8671875,
-					y = -18240.732421875,
-					z = -87.06568145752,
+					x = 9891.5810546875,
+					y = -18241.3359375,
+					z = -86.700004577637,
 				},
 				radius = 0,
-				type = "tm_moveto",
+				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -55,6 +56,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				waypointid = 225,
 			},
 			lastrun = 0,
 			order = 2,
@@ -73,7 +75,7 @@ local tbl =
 				enabled = true,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
+				gw2_trytosurvive = true,
 				mapid = 24,
 				maxduration = 0,
 				maxlevel = 0,
@@ -81,15 +83,15 @@ local tbl =
 				name = "[WP] Broadhollow",
 				pos = 
 				{
-					hx = -0.52992695569992,
-					hy = 0.79481714963913,
-					hz = 0.29570779204369,
-					x = -5511.4907226563,
-					y = -16675.51171875,
-					z = -185.59963989258,
+					hx = -0.061898734420538,
+					hy = -0.99808245897293,
+					hz = 0,
+					x = -5497.4389648438,
+					y = -16655.208984375,
+					z = -183.95941162109,
 				},
 				radius = 0,
-				type = "tm_moveto",
+				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -115,7 +117,7 @@ local tbl =
 				enabled = true,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
+				gw2_trytosurvive = true,
 				mapid = 24,
 				maxduration = 0,
 				maxlevel = 0,
@@ -2425,7 +2427,6 @@ local tbl =
 						repeatpositions = true,
 						usewaypoints = false,
 					},
-					order = 3,
 					taskProperties = 
 					{
 						enabled = true,
@@ -2622,7 +2623,6 @@ local tbl =
 					customProperties = 
 					{
 					},
-					order = 1,
 					taskProperties = 
 					{
 						enabled = true,
@@ -2645,7 +2645,6 @@ local tbl =
 							},
 						},
 					},
-					order = 2,
 					taskProperties = 
 					{
 						enabled = true,
@@ -2673,7 +2672,6 @@ local tbl =
 						},
 						talktype = "Index",
 					},
-					order = 0,
 					taskProperties = 
 					{
 						enabled = true,
