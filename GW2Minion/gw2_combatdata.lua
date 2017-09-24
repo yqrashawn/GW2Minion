@@ -535,10 +535,8 @@ function gw2_combatdata.updateLog()
 	if (table.valid(combatData)) then
 		local currentLog = gw2_combatdata.damageLog
 		local newestTime = gw2_combatdata.timeLastUpdate
-		for id,data in pairs(combatData) do
-			if (data and data.source ~= nil and (data.type == 7 or data.type == 2 or data.type == 3)
-			and ((currentLog[data.source] and currentLog[data.source][data.target] and currentLog[data.source][data.target].timeOfLastHit and data.time > currentLog[data.source][data.target].timeOfLastHit)
-			or data.time > gw2_combatdata.timeLastUpdate)) then
+		for id,data in ipairs(combatData) do
+			if (data and data.source ~= nil and (data.type == 7 or data.type == 2 or data.type == 3) and data.time > gw2_combatdata.timeLastUpdate) then
 				if (data.time > newestTime) then
 					newestTime = data.time
 				end
@@ -564,7 +562,12 @@ function gw2_combatdata.updateLog()
 					
 					-- Add Damage to source>target log.
 					if (data.amount < 0) then
-						currentLog[data.source][data.target].combatLog[data.time] = math.abs(data.amount)
+						-- Damage can come in at the same exact MS, if so, add damage number. (we only log damage as given time, not each dmg seperate.
+						if (currentLog[data.source][data.target].combatLog[data.time]) then
+							currentLog[data.source][data.target].combatLog[data.time] = currentLog[data.source][data.target].combatLog[data.time] + math.abs(data.amount)
+						else
+							currentLog[data.source][data.target].combatLog[data.time] = math.abs(data.amount)
+						end
 					
 					-- Add Geak to heal log.
 					elseif (data.amount > 0) then
@@ -765,9 +768,10 @@ function gw2_combatdata.getDisplayCombatData()
 		end
 	
 	elseif (gw2_combatdata.displayIDs == true) then
-		for playerID,combatData in pairs(gw2_combatdata.combatLog) do
-			displayData[playerID] = combatData
-		end
+		return table.deepcopy(gw2_combatdata.combatLog)
+		-- for playerID,combatData in pairs(gw2_combatdata.combatLog) do
+			-- displayData[playerID] = combatData
+		-- end
 	end
 	return displayData
 end
