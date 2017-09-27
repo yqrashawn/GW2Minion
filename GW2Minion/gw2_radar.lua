@@ -412,6 +412,23 @@ function gw2_radar.updateCompassData() -- TODO: redo this mess. Order stuff, and
 	
 	local screenSizeX, screenSizeY = GUI:GetScreenSize()
 	gw2_radar.compassData.sSize = {x = screenSizeX, y = screenSizeY,}
+	
+	-- TESTCODE!
+	-- scales radar with different window-mode sizes.
+	-- todo: scale calculation still seems off, but right direction of thinking here.
+	-- local proportionX = screenSizeX / (1920 * 0.01) 
+	-- local proportionY = screenSizeY / (1080 * 0.01) 
+	
+	-- local proportion = proportionX < proportionY and proportionX or proportionY
+	
+	-- local compassScaleSizeX = (gw2_radar.compassData.width * 0.01) * proportion 
+	-- local compassScaleSizeY = (gw2_radar.compassData.height * 0.01) * proportion 
+	
+	-- gw2_radar.compassData.width = compassScaleSizeX
+	-- gw2_radar.compassData.height = compassScaleSizeY
+	
+	-- END TESTCODE!!!
+	
 	gw2_radar.compassData.pos = {x = gw2_radar.compassData.sSize.x - gw2_radar.compassData.width, y = gw2_radar.compassData.topposition == 0 and gw2_radar.compassData.sSize.y - gw2_radar.compassData.height - 37 or 0,} -- 37 is the bottom offset.
 	gw2_radar.compassData.cPos = {x = gw2_radar.compassData.pos.x + (gw2_radar.compassData.width / 2), y = gw2_radar.compassData.pos.y + (gw2_radar.compassData.height / 2)}
 	gw2_radar.compassData.pPos = Player.pos

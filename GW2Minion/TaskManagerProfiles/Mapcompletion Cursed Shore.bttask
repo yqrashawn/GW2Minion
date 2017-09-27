@@ -13,45 +13,7 @@ local tbl =
 		{
 			customProperties = 
 			{
-			},
-			lastrun = 0,
-			order = 0,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				mapid = 62,
-				maxduration = 0,
-				maxlevel = 80,
-				minlevel = 0,
-				name = "pursuit pass wp",
-				pos = 
-				{
-					hx = 0.61405956745148,
-					hy = -0.52110350131989,
-					hz = 0.59277480840683,
-					x = 14871.370117188,
-					y = 44693.62890625,
-					z = -3460.2663574219,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
+				waypointid = 791,
 			},
 			lastrun = 0,
 			order = 1,
@@ -75,18 +37,18 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "bitter mountain poi",
+				name = "WP Pursuit Pass",
 				pos = 
 				{
-					hx = 0.86835956573486,
-					hy = -0.055299542844296,
-					hz = 0.49284237623215,
-					x = 4955.1123046875,
-					y = 43873.890625,
-					z = -2975.0471191406,
+					hx = 0.57324916124344,
+					hy = -0.81938123703003,
+					hz = 0,
+					x = 14875.604492188,
+					y = 44688.546875,
+					z = -3458.0952148438,
 				},
 				radius = 0,
-				type = "tm_moveto",
+				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -110,19 +72,22 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
 				mapid = 62,
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "caer shadowfain wp",
+				name = "POI Bitter Mountain",
 				pos = 
 				{
-					hx = -0.99201858043671,
-					hy = 0.12609197199345,
-					hz = 0,
-					x = 4412.5141601563,
-					y = 36220.11328125,
-					z = -1265.1723632813,
+					hx = 0.86835956573486,
+					hy = -0.055299542844296,
+					hz = 0.49284237623215,
+					x = 4955.1123046875,
+					y = 43873.890625,
+					z = -2975.0471191406,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -133,9 +98,52 @@ local tbl =
 		{
 			customProperties = 
 			{
+				waypointid = 801,
 			},
 			lastrun = 0,
 			order = 3,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 62,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "WP Caer Shadowfain",
+				pos = 
+				{
+					hx = -0.48414149880409,
+					hy = 0.8749897480011,
+					hz = 0,
+					x = 4397.2202148438,
+					y = 36224.8984375,
+					z = -1265.1724853516,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 4,
 			posttasks = 
 			{
 			},
@@ -195,11 +203,14 @@ local tbl =
 			{
 				cooldown = 0,
 				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
 				mapid = 62,
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "explorer brothmirr hp",
+				name = "HP Explorer Brothmirr",
 				pos = 
 				{
 					hx = 0.19324363768101,
@@ -218,9 +229,10 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 4,
+			order = 5,
 			posttasks = 
 			{
 			},
@@ -255,12 +267,15 @@ local tbl =
 			taskProperties = 
 			{
 				cooldown = 0,
-				enabled = true,
+				enabled = false,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
 				mapid = 62,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "vista",
+				name = "Vista Caer Shadowfain",
 				pos = 
 				{
 					hx = -0.0065243202261627,
@@ -281,7 +296,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 5,
+			order = 6,
 			posttasks = 
 			{
 			},
@@ -314,6 +329,30 @@ local tbl =
 			},
 			subtasks = 
 			{
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = false,
+							contentid = 18870,
+							gadget = true,
+							name = "Statue of Balthazar",
+						},
+						talksteps = 
+						{
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Talk",
+						type = "tm_st_talk",
+					},
+				},
 			},
 			taskProperties = 
 			{
@@ -326,7 +365,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "statue of balthazzar hp",
+				name = "HP Statue of Balthazzar",
 				pos = 
 				{
 					hx = 0.35008859634399,
@@ -347,7 +386,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 6,
+			order = 7,
 			posttasks = 
 			{
 			},
@@ -392,7 +431,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "strange ring hp",
+				name = "HP Strange Ring",
 				pos = 
 				{
 					hx = -0.26041811704636,
@@ -413,7 +452,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 7,
+			order = 8,
 			posttasks = 
 			{
 			},
@@ -455,7 +494,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 8,
+			order = 9,
 			posttasks = 
 			{
 			},
@@ -497,7 +536,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 9,
+			order = 10,
 			posttasks = 
 			{
 			},
@@ -539,7 +578,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 10,
+			order = 11,
 			posttasks = 
 			{
 			},
@@ -603,7 +642,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 11,
+			order = 12,
 			posttasks = 
 			{
 			},
@@ -645,7 +684,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 12,
+			order = 13,
 			posttasks = 
 			{
 			},
@@ -687,7 +726,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 13,
+			order = 14,
 			posttasks = 
 			{
 			},
@@ -775,7 +814,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 14,
+			order = 15,
 			posttasks = 
 			{
 			},
@@ -817,7 +856,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 15,
+			order = 16,
 			posttasks = 
 			{
 			},
@@ -859,7 +898,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 16,
+			order = 17,
 			posttasks = 
 			{
 			},
@@ -901,7 +940,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 17,
+			order = 18,
 			posttasks = 
 			{
 			},
@@ -967,7 +1006,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 18,
+			order = 19,
 			posttasks = 
 			{
 			},
@@ -1009,7 +1048,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 19,
+			order = 20,
 			posttasks = 
 			{
 			},
@@ -1051,7 +1090,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 20,
+			order = 21,
 			posttasks = 
 			{
 			},
@@ -1117,7 +1156,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 21,
+			order = 22,
 			posttasks = 
 			{
 			},
@@ -1183,7 +1222,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 22,
+			order = 23,
 			posttasks = 
 			{
 			},
@@ -1225,7 +1264,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 23,
+			order = 24,
 			posttasks = 
 			{
 			},
@@ -1293,7 +1332,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 24,
+			order = 25,
 			posttasks = 
 			{
 			},
@@ -1359,7 +1398,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 25,
+			order = 26,
 			posttasks = 
 			{
 			},
@@ -1425,7 +1464,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 26,
+			order = 27,
 			posttasks = 
 			{
 			},
@@ -1467,7 +1506,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 27,
+			order = 28,
 			posttasks = 
 			{
 			},
@@ -1533,7 +1572,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 28,
+			order = 29,
 			posttasks = 
 			{
 			},
@@ -1575,7 +1614,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 29,
+			order = 30,
 			posttasks = 
 			{
 			},
@@ -1643,7 +1682,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 30,
+			order = 31,
 			posttasks = 
 			{
 			},
@@ -1685,7 +1724,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 31,
+			order = 32,
 			posttasks = 
 			{
 			},
@@ -1749,7 +1788,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 32,
+			order = 33,
 			posttasks = 
 			{
 			},
@@ -1791,7 +1830,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 33,
+			order = 34,
 			posttasks = 
 			{
 			},
@@ -1833,7 +1872,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 34,
+			order = 35,
 			posttasks = 
 			{
 			},
@@ -1921,7 +1960,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 35,
+			order = 36,
 			posttasks = 
 			{
 			},
@@ -1985,7 +2024,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 36,
+			order = 37,
 			posttasks = 
 			{
 			},
@@ -2051,7 +2090,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 37,
+			order = 38,
 			posttasks = 
 			{
 			},
@@ -2093,7 +2132,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 38,
+			order = 39,
 			posttasks = 
 			{
 			},
@@ -2135,7 +2174,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 39,
+			order = 40,
 			posttasks = 
 			{
 			},
@@ -2225,7 +2264,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 40,
+			order = 41,
 			posttasks = 
 			{
 			},
@@ -2267,7 +2306,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 41,
+			order = 42,
 			posttasks = 
 			{
 			},
@@ -2345,7 +2384,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 42,
+			order = 43,
 			posttasks = 
 			{
 			},
@@ -2387,7 +2426,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 43,
+			order = 44,
 			posttasks = 
 			{
 			},
@@ -2429,7 +2468,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 44,
+			order = 45,
 			posttasks = 
 			{
 			},
@@ -2545,7 +2584,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 45,
+			order = 46,
 			posttasks = 
 			{
 			},

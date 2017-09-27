@@ -80,7 +80,6 @@ function gw2_combatdata.Init()
 			visible			= true,
 			width			= 100,
 			minWidth		= 50,
-			maxWidth		= 200,
 			variableName	= "name",
 		},
 		[2] = {
@@ -88,7 +87,6 @@ function gw2_combatdata.Init()
 			visible			= true,
 			width			= 100,
 			minWidth		= 50,
-			maxWidth		= 200,
 			variableName	= "targetName",
 		},
 		[3] = {
@@ -96,7 +94,6 @@ function gw2_combatdata.Init()
 			visible			= true,
 			width			= 50,
 			minWidth		= 25,
-			maxWidth		= 50,
 			variableName	= "dps",
 		},
 		[4] = {
@@ -104,7 +101,6 @@ function gw2_combatdata.Init()
 			visible			= true,
 			width			= 50,
 			minWidth		= 25,
-			maxWidth		= 50,
 			variableName	= "hps",
 		},
 		[5] = {
@@ -112,7 +108,6 @@ function gw2_combatdata.Init()
 			visible			= true,
 			width			= 50,
 			minWidth		= 25,
-			maxWidth		= 50,
 			variableName	= "cdps",
 		},
 		[6] = {
@@ -120,7 +115,6 @@ function gw2_combatdata.Init()
 			visible			= true,
 			width			= 50,
 			minWidth		= 50,
-			maxWidth		= 100,
 			variableName	= "damage",
 		},
 		[7] = {
@@ -128,7 +122,6 @@ function gw2_combatdata.Init()
 			visible			= true,
 			width			= 50,
 			minWidth		= 50,
-			maxWidth		= 100,
 			variableName	= "heal",
 		},
 		[8] = {
@@ -136,7 +129,6 @@ function gw2_combatdata.Init()
 			visible			= true,
 			width			= 50,
 			minWidth		= 50,
-			maxWidth		= 100,
 			variableName	= "cDamage",
 		},
 		[9] = {
@@ -144,7 +136,6 @@ function gw2_combatdata.Init()
 			visible			= true,
 			width			= 50,
 			minWidth		= 50,
-			maxWidth		= 150,
 			variableName	= "engagementTime",
 		},
 		[10] = {
@@ -152,14 +143,13 @@ function gw2_combatdata.Init()
 			visible			= true,
 			width			= 50,
 			minWidth		= 50,
-			maxWidth		= 150,
 			variableName	= "ttk",
 		},
 	}
 	
 	gw2_combatdata.columns = Settings.gw2_combatdata.columns
 	
-	gw2_combatdata.icons			= {
+	gw2_combatdata.icons = {
 		profession = {
 			[1] = gw2_combatdata.iconPath .. "Profession\\Guardian.png",
 			[2] = gw2_combatdata.iconPath .. "Profession\\Warrior.png",
@@ -277,7 +267,6 @@ function gw2_combatdata.DrawCombatDataWindow(ticks)
 				end
 				if (teamHighlighted == true) then
 					GUI:PopStyleColor(1)
-					-- TODO: set party/squad id's.
 					if (ticks - gw2_combatdata.partyIDUpdateTicks > gw2_combatdata.partyIDUpdateDelay) then
 						gw2_combatdata.partyIDUpdateTicks = ticks
 						gw2_combatdata.displayIDs = {}
@@ -402,7 +391,7 @@ function gw2_combatdata.DrawCombatDataColumns()
 		end
 		
 		-- Show all other entries.
-		local highlight = true -- TODO: Highlight every other row?
+		local highlight = true
 		local color = GUI:GetStyle().colors[GUI.Col_WindowBg]
 		local colorU32 = GUI:ColorConvertFloat4ToU32(color[1] + (color[1] * 0.9), color[2] + (color[2] * 0.9), color[3] + (color[3] * 0.9), color[4])
 		for _,combatData in table.pairsByValueAttribute(combatDataList, gw2_combatdata.columnSort, gw2_combatdata.sortColumn) do
@@ -593,11 +582,11 @@ function gw2_combatdata.cleanLog()
 			-- remove target that have not been hit for 30 seconds.
 			for targetid,targetLog in pairs(targets) do
 				if (targetLog.timeOfDeath > 0) then
-					if ((targetLog.timeOfDeath + 60000) < gw2_combatdata.timeLastUpdate) then
+					if ((targetLog.timeOfDeath + 60000) < GetSystemTime()) then
 						gw2_combatdata.damageLog[sourceID][targetid] = nil
 						gw2_combatdata.damageLog[targetid] = nil
 					end
-				elseif ((targetLog.timeOfLastHit + 30000) < gw2_combatdata.timeLastUpdate) then -- TODO: replace "gw2_combatdata.timeLastUpdate" with actual timefunction when added!!
+				elseif ((targetLog.timeOfLastHit + 30000) < GetSystemTime()) then
 					gw2_combatdata.damageLog[sourceID][targetid] = nil
 				end
 				if (targetLog.timeOfEngagement < oldestEntryTime) then
@@ -645,7 +634,8 @@ function gw2_combatdata.getSourceTarget(sourceID,combatLog)
 			-- Get time of engagement and last encounter.
 			if (table.valid(sourceTargetLog)) then
 				combatData.timeOfEngagement = sourceTargetLog.timeOfEngagement
-				combatData.timeOfLastEncounter = sourceTargetLog.timeOfDeath > 0 and sourceTargetLog.timeOfDeath or sourceTargetLog.timeOfLastHit
+				-- combatData.timeOfLastEncounter = sourceTargetLog.timeOfDeath > 0 and sourceTargetLog.timeOfDeath or sourceTargetLog.timeOfLastHit
+				combatData.timeOfLastEncounter = sourceTargetLog.timeOfDeath > 0 and sourceTargetLog.timeOfDeath or GetSystemTime() -- TODO: replace time function.
 			end
 			-- Check if we have valid times.
 			if (combatData.timeOfEngagement and combatData.timeOfLastEncounter) then
