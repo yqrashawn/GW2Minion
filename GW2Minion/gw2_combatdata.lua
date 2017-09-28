@@ -12,7 +12,7 @@ gw2_combatdata.mainWindow			= {
 		everyone	= false,
 	}
 }
-gw2_combatdata.active				= true
+gw2_combatdata.active2				= true
 gw2_combatdata.updateTicks			= 0
 gw2_combatdata.upateTickDelay		= 250
 gw2_combatdata.cleanTicks			= 0
@@ -71,8 +71,8 @@ gw2_combatdata.buffLog				= { -- WIP.
 
 function gw2_combatdata.Init()
 	
-	Settings.gw2_combatdata.active = Settings.gw2_combatdata.active or false
-	gw2_combatdata.active = Settings.gw2_combatdata.active
+	Settings.gw2_combatdata.active2 = Settings.gw2_combatdata.active2 or true
+	gw2_combatdata.active2 = Settings.gw2_combatdata.active2
 	
 	Settings.gw2_combatdata.columns = Settings.gw2_combatdata.columns or {
 		[1] = {
@@ -222,13 +222,13 @@ function gw2_combatdata.DrawCombatDataWindow(ticks)
 		gw2_combatdata.mainWindow.visible, gw2_combatdata.mainWindow.open = GUI:Begin(gw2_combatdata.mainWindow.name, gw2_combatdata.mainWindow.open) --,GUI.WindowFlags_NoTitleBar)
 		if (gw2_combatdata.mainWindow.visible) then
 			-- Active checkbox.
-			gw2_combatdata.active,changed = GUI:Checkbox("##CombatData_Active",gw2_combatdata.active)
-			Settings.gw2_combatdata.active = gw2_combatdata.active
+			gw2_combatdata.active2,changed = GUI:Checkbox("##CombatData_Active",gw2_combatdata.active2)
+			Settings.gw2_combatdata.active2 = gw2_combatdata.active2
 			GUI:SameLine()
 			GUI:Text(GetString("Active"))
 			GUI:Separator()
 			
-			if (Settings.gw2_combatdata.active) then
+			if (Settings.gw2_combatdata.active2) then
 				-- Get width and color.
 				local tabButtonWidth = (GUI:GetContentRegionAvailWidth() / table.size(gw2_combatdata.mainWindow.tabs)) - GUI:GetStyle().itemspacing.x/2
 				local activeTabColor = GUI:GetStyle().colors[GUI.Col_ButtonActive]
@@ -793,7 +793,7 @@ end
 
 -- Update Loop
 function gw2_combatdata.Update(_,ticks)
-	if (Settings.gw2_combatdata.active) then
+	if (Settings.gw2_combatdata.active2) then
 		if (ticks - gw2_combatdata.updateTicks >= gw2_combatdata.upateTickDelay) then
 			gw2_combatdata.updateTicks = ticks
 			gw2_combatdata.updateLog()
