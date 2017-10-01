@@ -4,7 +4,7 @@ ml_navigation.CanRun = function() return GetGameState() == GW2.GAMESTATE.GAMEPLA
 -- Handles the Navigation along the current Path. Is not supposed to be called manually.
 function ml_navigation.Navigate(event, ticks )	
 	
-	if ((ticks - (ml_navigation.lastupdate or 0)) > 100) then 
+	if ((ticks - (ml_navigation.lastupdate or 0)) > 10) then 
 		ml_navigation.lastupdate = ticks
 				
 		if ( ml_navigation.CanRun() ) then				
@@ -78,7 +78,9 @@ function ml_navigation.Navigate(event, ticks )
 								-- If Playerheight is lower than 4*omcreached dist AND Playerheight is lower than 4* our Startposition -> we fell below the OMC START & END Point
 								if (( ppos.z > (nextnode.z + 4*ml_navigation.NavPointReachedDistances["Walk"])) and ( ppos.z > ( ml_navigation.omc_startheight + 4*ml_navigation.NavPointReachedDistances["Walk"]))) then
 									if ( ml_navigation.omcteleportallowed and math.distance3d(ppos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"]*10) then
-										ml_navigation:SetEnsurePosition(nextnode) 
+										if ( omc.precise == nil or omc.precise == true ) then
+											ml_navigation:SetEnsurePosition(nextnode)
+										end
 									else
 										d("[Navigation] - We felt below the OMC start & END height, missed our goal...")
 										ml_navigation.StopMovement()
@@ -199,7 +201,7 @@ function ml_navigation.Navigate(event, ticks )
 							else						
 								-- We have not yet reached our node
 								local dist2D = math.distance2d(nextnode,ppos)
-								if ( dist2D < ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()] ) then
+								if (dist2D < ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()] ) then
 									-- We are on the correct horizontal position, but our goal is now either above or below us
 									-- compensate for the fact that the char is always swimming on the surface between 0 - 50 @height
 									local pHeight = ppos.z
@@ -369,7 +371,7 @@ function ml_navigation:EnsurePosition()
 		local ppos = Player.pos
 		local dist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,ml_navigation.ensureposition)
 						
-		if ( dist > 5 and ml_navigation.omcteleportallowed ) then
+		if ( dist > 15 and ml_navigation.omcteleportallowed ) then
 			HackManager:Teleport(ml_navigation.ensureposition.x,ml_navigation.ensureposition.y,ml_navigation.ensureposition.z)
 		end
 		if ( math.angle({x = ppos.hx, y = ppos.hy,  z = 0}, {x = ml_navigation.ensureheading.x-ppos.x, y = ml_navigation.ensureheading.y-ppos.y, z = 0}) > 5 ) then 
