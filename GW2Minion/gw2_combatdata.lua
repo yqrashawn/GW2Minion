@@ -561,7 +561,7 @@ function gw2_combatdata.updateLog()
 					-- Add Geak to heal log.
 					elseif (data.amount > 0) then
 						-- Create log entry if not there.
-						if (not table.valid(gw2_combatdata.healLog[data.source])) then
+						if (not table.valid(gw2_combatdata.healLog[data.target])) then
 							gw2_combatdata.healLog[data.target] = {}
 						end
 						gw2_combatdata.healLog[data.target][data.time] = data.amount
