@@ -225,13 +225,13 @@ function gw2_salvage_manager.mainWindow.Draw(event,ticks)
 					-- CANCEL BUTTON.
 					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
 					GUI:SameLine(80)
-					if (GUI:Button(GetStringML("cancel"),80,30)) then
+					if (GUI:Button(GetString("cancel"),80,30)) then
 						GUI:CloseCurrentPopup()
 					end
 					-- OK BUTTON.
 					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
 					GUI:SameLine(240)
-					if (GUI:Button(GetStringML("ok"),80,30)) then
+					if (GUI:Button(GetString("ok"),80,30)) then
 						if (gw2_salvage_manager.validFilter(gw2_salvage_manager.tempFilter)) then
 							-- save new filter here.
 							if (gw2_salvage_manager.tempFilter.new) then
@@ -265,7 +265,7 @@ function gw2_salvage_manager.mainWindow.Draw(event,ticks)
 						GUI:Dummy(100,20)
 						GUI:Spacing()
 						GUI:SameLine(160)
-						if (GUI:Button(GetStringML("ok"),80,30)) then
+						if (GUI:Button(GetString("ok"),80,30)) then
 							GUI:CloseCurrentPopup()
 						end
 						GUI:EndPopup()
@@ -300,11 +300,11 @@ function gw2_salvage_manager.mainWindow.Draw(event,ticks)
 					GUI:Dummy(100,20)
 					GUI:Spacing()
 					GUI:SameLine(80)
-					if (GUI:Button(GetStringML("cancel"),80,30)) then
+					if (GUI:Button(GetString("cancel"),80,30)) then
 						GUI:CloseCurrentPopup()
 					end
 					GUI:SameLine(240)
-					if (GUI:Button(GetStringML("delete"),80,30)) then
+					if (GUI:Button(GetString("delete"),80,30)) then
 						table.remove(gw2_salvage_manager.filterList.list, gw2_salvage_manager.filterList.currID)
 						gw2_salvage_manager.filterListUpdate()
 						GUI:CloseCurrentPopup()
@@ -396,13 +396,13 @@ function gw2_salvage_manager.mainWindow.Draw(event,ticks)
 					-- CANCEL BUTTON.
 					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
 					GUI:SameLine(80)
-					if (GUI:Button(GetStringML("cancel"),80,30)) then
+					if (GUI:Button(GetString("cancel"),80,30)) then
 						GUI:CloseCurrentPopup()
 					end
 					-- OK BUTTON.
 					-->>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<
 					GUI:SameLine(240)
-					if (GUI:Button(GetStringML("ok"),80,30)) then
+					if (GUI:Button(GetString("ok"),80,30)) then
 						-- save new single item here.
 						if (gw2_salvage_manager.tempSingleItem.new) then
 							gw2_salvage_manager.tempSingleItem.new = nil
@@ -445,11 +445,11 @@ function gw2_salvage_manager.mainWindow.Draw(event,ticks)
 					GUI:Dummy(100,20)
 					GUI:Spacing()
 					GUI:SameLine(80)
-					if (GUI:Button(GetStringML("cancel"),80,30)) then
+					if (GUI:Button(GetString("cancel"),80,30)) then
 						GUI:CloseCurrentPopup()
 					end
 					GUI:SameLine(240)
-					if (GUI:Button(GetStringML("delete"),80,30)) then
+					if (GUI:Button(GetString("delete"),80,30)) then
 						table.remove(gw2_salvage_manager.singleItemList.list, gw2_salvage_manager.singleItemList.currID)
 						gw2_salvage_manager.singleItemListUpdate()
 						GUI:CloseCurrentPopup()

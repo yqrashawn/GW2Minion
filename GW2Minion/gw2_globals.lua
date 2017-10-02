@@ -139,10 +139,6 @@ function ml_global_information.OnUpdate(Event,ticks)
 				ml_global_information.CurrentMapName = ""
 			end
 			
-			if ( not SkillManager or not SkillManager:Ready() ) then -- using the new SM if possible
-				ml_global_information.AttackRange = gw2_skill_manager.GetMaxAttackRange()
-			end
-
 			ml_global_information.Player_CurrentWeaponSet = Player:GetCurrentWeaponSet() or 0	-- 0 Aqua1, 1 Aqua2, 2 Engikit, 3 Necro Lich Form/ranger astralform,  4 Weapon1, 5 Weapon2
 			ml_global_information.Player_TransformID = Player:GetTransformID() or 0 -- 1-4 attunement, 5 deathshroud, 9 rangernormal, 10 rangerastralform
 		end

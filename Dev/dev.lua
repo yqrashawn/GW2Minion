@@ -884,6 +884,7 @@ function dev.DrawCall(event, ticks )
 						GUI:BulletText("CurrentSpell") GUI:SameLine(200) GUI:InputText("##devs4",tostring(Player:GetCurrentlyCastedSpell()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						GUI:BulletText("CurrentWeaponSetID") GUI:SameLine(200) GUI:InputText("##devs5",tostring(Player:GetCurrentWeaponSet()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						GUI:BulletText("CurrentTransformID") GUI:SameLine(200) GUI:InputText("##devs6",tostring(Player:GetTransformID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("LastTransformID") GUI:SameLine(200) GUI:InputText("##devs9",tostring(Player:GetLastTransformID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						GUI:BulletText("CanSwapWeaponSet") GUI:SameLine(200) GUI:InputText("##devs7",tostring(Player:CanSwapWeaponSet()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devs8",tostring(Player.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)						
 						if (GUI:Button("SwapWeaponSet",150,15) ) then d("SwapWeaponSet Result: "..tostring(Player:SwapWeaponSet())) end
@@ -892,24 +893,7 @@ function dev.DrawCall(event, ticks )
 							local b = Player:GetSpellInfo(i)
 							if (table.valid(b)) then 
 								if ( GUI:TreeNode(tostring(i).."-"..b.name)) then
-									GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devsk0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Slot") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.slot),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devsk2",tostring(b.skillid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("ContentID") GUI:SameLine(200) GUI:InputText("##devsk3", tostring(b.contentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Cooldown") GUI:SameLine(200) GUI:InputText("##devsk4", tostring(b.cooldown),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("CooldownMax") GUI:SameLine(200) GUI:InputText("##devsk5",tostring(b.cooldownmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Ammo") GUI:SameLine(200) GUI:InputText("##devsk16 ", tostring(b.ammo),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("AmmoMax") GUI:SameLine(200) GUI:InputText("##devsk13", tostring(b.ammomax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("AmmoCooldown") GUI:SameLine(200) GUI:InputText("##devsk14", tostring(b.ammocooldown),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("AmmoCooldownMax") GUI:SameLine(200) GUI:InputText("##devsk15", tostring(b.ammocooldownmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("MinRange") GUI:SameLine(200) GUI:InputText("##devsk6",tostring(b.minrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("MaxRange") GUI:SameLine(200) GUI:InputText("##devsk7",tostring(b.maxrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Radius") GUI:SameLine(200) GUI:InputText("##devsk8",tostring(b.radius),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Skilltype") GUI:SameLine(200) GUI:InputText("##devsk9",tostring(b.skilltype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devsk10",tostring(b.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("IsGroundTargeted") GUI:SameLine(200) GUI:InputText("##devsk11",tostring(b.isgroundtargeted),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("RequiresTarget") GUI:SameLine(200) GUI:InputText("##devsk13",tostring(b.requirestarget),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-									GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devsk12",tostring(b.cancast),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+									dev.DrawSpellInfo(b)
 									if (GUI:Button("Cast",150,15) ) then 
 										local t = Player:GetTarget()
 										if ( t ) then
@@ -938,21 +922,7 @@ function dev.DrawCall(event, ticks )
 							if (dev.pickedspellid and type(dev.pickedspellid) == "number") then
 								local b = Player:GetSpellInfoByID(dev.pickedspellid)
 								if (table.valid(b)) then 
-										GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devssk0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##devssk1",tostring(b.name),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devssk2",tostring(b.skillid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("ContentID") GUI:SameLine(200) GUI:InputText("##devssk3", tostring(b.contentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("CooldownMax") GUI:SameLine(200) GUI:InputText("##devssk5",tostring(b.cooldownmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("AmmoCooldownMax") GUI:SameLine(200) GUI:InputText("##devsks15", tostring(b.ammocooldownmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("MinRange") GUI:SameLine(200) GUI:InputText("##devssk6",tostring(b.minrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("MaxRange") GUI:SameLine(200) GUI:InputText("##devssk7",tostring(b.maxrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("Radius") GUI:SameLine(200) GUI:InputText("##devsks8",tostring(b.radius),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("Skilltype") GUI:SameLine(200) GUI:InputText("##devssk9",tostring(b.skilltype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devssk10",tostring(b.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("IsGroundTargeted") GUI:SameLine(200) GUI:InputText("##devssk11",tostring(b.isgroundtargeted),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("RequiresTarget") GUI:SameLine(200) GUI:InputText("##devssk13",tostring(b.requirestarget),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devsks12",tostring(b.cancast),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-										
+										dev.DrawSpellInfo(b)
 								else
 									GUI:Text("No Valid Spell Data Found")
 								end
@@ -960,21 +930,6 @@ function dev.DrawCall(event, ticks )
 							GUI:TreePop()
 						end
 						
-						
-						GUI:Separator()
-						if ( GUI:TreeNode("CoolDown List") ) then							
-							local cdlist = Player:GetCoolDownList()
-							if ( table.size(cdlist) > 0 ) then
-								for id,e in pairs(cdlist) do
-									GUI:BulletText("ID:"..tostring(id)) GUI:SameLine(140) GUI:Text("CD:"..tostring(e.cooldown)) GUI:SameLine(210) GUI:Text(tostring(e.name))
-								end							
-							else
-								GUI:Text("No Skills on cooldown")
-							end
-						
-							GUI:PopItemWidth()
-							GUI:TreePop()
-						end
 						GUI:PopItemWidth()
 						GUI:TreePop()
 					end
@@ -1302,6 +1257,8 @@ function dev.DrawCharacterDetails(c)
 	GUI:BulletText("Name") GUI:SameLine(200) GUI:InputText("##dev6",c.name,GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	local h = c.health
 	GUI:BulletText("Health") GUI:SameLine(200)  GUI:InputFloat3( "##dev7", h.current, h.max, h.percent, 2, GUI.InputTextFlags_ReadOnly)
+	GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##dev4442",tostring(c.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("Endurance") GUI:SameLine(200) GUI:InputText("##dev4442",tostring(c.endurance),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	local p = c.pos
 	GUI:BulletText("Position") GUI:SameLine(200)  GUI:InputFloat3( "##dev9", p.x, p.y, p.z, 2, GUI.InputTextFlags_ReadOnly)
 	GUI:BulletText("Heading") GUI:SameLine(200)  GUI:InputFloat3( "##dev10", p.hx, p.hy, p.hz, 2, GUI.InputTextFlags_ReadOnly)
@@ -1586,3 +1543,26 @@ function dev.DrawMapMarkerDetails(id,b)
 	end
 end
 
+function dev.DrawSpellInfo(b)
+	GUI:BulletText("Ptr") GUI:SameLine(200) GUI:InputText("##devsk0",tostring(string.format( "%X",b.ptr)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("Slot") GUI:SameLine(200) GUI:InputText("##devsk1",tostring(b.slot),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("ID") GUI:SameLine(200) GUI:InputText("##devsk2",tostring(b.skillid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("ContentID") GUI:SameLine(200) GUI:InputText("##devsk3", tostring(b.contentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("Cooldown") GUI:SameLine(200) GUI:InputText("##devsk4", tostring(b.cooldown),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CooldownMax") GUI:SameLine(200) GUI:InputText("##devsk5",tostring(b.cooldownmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("Ammo") GUI:SameLine(200) GUI:InputText("##devsk16 ", tostring(b.ammo),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("AmmoMax") GUI:SameLine(200) GUI:InputText("##devsk13", tostring(b.ammomax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("AmmoCooldown") GUI:SameLine(200) GUI:InputText("##devsk14", tostring(b.ammocooldown),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("AmmoCooldownMax") GUI:SameLine(200) GUI:InputText("##devsk15", tostring(b.ammocooldownmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("MinRange") GUI:SameLine(200) GUI:InputText("##devsk6",tostring(b.minrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("MaxRange") GUI:SameLine(200) GUI:InputText("##devsk7",tostring(b.maxrange),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("Radius") GUI:SameLine(200) GUI:InputText("##devsk8",tostring(b.radius),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("Skilltype") GUI:SameLine(200) GUI:InputText("##devsk9",tostring(b.skilltype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devsk10",tostring(b.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("IsGroundTargeted") GUI:SameLine(200) GUI:InputText("##devsk11",tostring(b.isgroundtargeted),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("RequiresTarget") GUI:SameLine(200) GUI:InputText("##devsk13",tostring(b.requirestarget),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devsk12",tostring(b.cancast),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("Flags") GUI:SameLine(200) GUI:InputText("##devsk16",tostring(string.format( "%X",b.flags)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	
+									
+end
