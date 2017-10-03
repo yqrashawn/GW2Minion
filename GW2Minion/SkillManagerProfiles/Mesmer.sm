@@ -413,27 +413,6 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 10341,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
 						uid = "Distance",
 						value = 1200,
 					}, 
@@ -1514,6 +1493,27 @@ local tbl =
 					casttarget = 2,
 				},
 			},
+			id = 10341,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
 			id = 10311,
 			requireslos = true,
 			setsattackrange = false,
@@ -1931,7 +1931,7 @@ local tbl =
 						target = 1,
 						uid = "CombatState",
 					}, 
-					casttarget = 1,
+					casttarget = 2,
 				},
 			},
 			id = 10201,
