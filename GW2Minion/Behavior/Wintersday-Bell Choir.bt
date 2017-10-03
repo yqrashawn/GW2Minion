@@ -244,7 +244,7 @@ local tbl =
 		filename = "Wintersday-Bell Choir.bt",
 		finishcode = "",
 		info = "",
-		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetStringML(\"Bell Choir Stats\"))) then\n\t\n\t\tif (context and context.status) then\t\t\n\t\t\t\tGUI:Text(\"Status: \"..tostring(context.status))\n\t\telse\n\t\t\t\tGUI:Text(\"Status: None\")\n\t\tend\n\t\t\n\t\tGUI:TreePop()\nend\n",
+		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetString(\"Bell Choir Stats\"))) then\n\t\n\t\tif (context and context.status) then\t\t\n\t\t\t\tGUI:Text(\"Status: \"..tostring(context.status))\n\t\telse\n\t\t\t\tGUI:Text(\"Status: None\")\n\t\tend\n\t\t\n\t\tGUI:TreePop()\nend\n",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",
 		startcode = "if not context.Bell1 then context.Bell1 = 0 end\nif not context.Bell2 then context.Bell2 = 0 end\nif not context.Bell3 then context.Bell3 = 0 end\nif not context.Bell4 then context.Bell4 = 0 end\n\nif not context.Bell5 then context.Bell5 = 0 end\nif not context.Bell6 then context.Bell6 = 0 end\nif not context.Bell7 then context.Bell7 = 0 end\nif not context.Bell8 then context.Bell8 = 0 end",
