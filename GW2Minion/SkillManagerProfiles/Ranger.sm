@@ -1,0 +1,2810 @@
+local tbl = 
+{
+	actionlist = 
+	{
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 44948,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 21773,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 21775,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 31914,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 31819,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12483,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12489,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 31496,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Staff",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 31889,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Staff",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 31700,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Staff",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 31535,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Staff",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12481,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Sword_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12482,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Sword_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12622,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Sword_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 43536,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Dagger_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 46123,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Dagger_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12638,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Axe_Offhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12639,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Axe_Offhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12620,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Warhorn",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12621,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Warhorn",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 31318,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Terrestrial",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 360,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 31503,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Terrestrial",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 31406,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Terrestrial",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 31894,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Terrestrial",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12635,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Torch",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12504,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Torch",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12529,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Harpoongun",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12530,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Harpoongun",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12527,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Harpoongun",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12528,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Harpoongun",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12485,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Downed",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 1175,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Downed",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12515,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Downed",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12511,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Longbow",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12509,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Longbow",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12469,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Longbow",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12573,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Longbow",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12480,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Axe_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12490,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Axe_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 250,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12478,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Dagger_Offhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12477,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Dagger_Offhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12557,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Spear",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12561,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Spear",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12552,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Spear",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12559,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Spear",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12630,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Spear",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12508,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Shortbow",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12468,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Shortbow",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12507,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Shortbow",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12517,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Shortbow",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12515,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Drowning",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 1175,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Drowning",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12485,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Drowning",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 220,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12525,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Greatsword",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12624,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Greatsword",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12522,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Greatsword",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12475,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Greatsword",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1000,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12521,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Greatsword",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12500,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12501,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12502,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12631,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12632,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12633,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 42944,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12516,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43726,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 41206,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12537,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 41524,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12542,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43060,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 34309,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 45743,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12550,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 40588,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43136,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 42894,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12569,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 45970,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 41406,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 31888,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12580,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 44617,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 31658,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12593,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12594,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12595,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12596,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 45797,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 40729,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43375,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 40498,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12476,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 46432,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 45717,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43548,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 44626,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 45479,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 45142,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 45789,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43014,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 31804,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30448,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 31607,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12491,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12492,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12493,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12494,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12495,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12496,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12497,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12498,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12499,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 12592,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 31710,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Staff",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12473,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Sword_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12471,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Sword_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12472,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Sword_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 45426,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Dagger_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 40301,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Dagger_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 44278,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Dagger_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 41800,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Dagger_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 31796,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Terrestrial",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12526,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Harpoongun",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12486,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Downed",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12510,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Longbow",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12466,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Axe_Mainhand",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12553,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Spear",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12555,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Spear",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12556,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Spear",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12470,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Shortbow",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12566,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Drowning",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12487,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Greatsword",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12474,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Greatsword",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12488,
+			setsattackrange = false,
+			skillpaletteuid = "Ranger_Greatsword",
+		},
+	},
+	fightrangetype = 1,
+	profession = 4,
+	version = 1,
+	weaponswapmode = 1,
+}
+
+
+
+return tbl

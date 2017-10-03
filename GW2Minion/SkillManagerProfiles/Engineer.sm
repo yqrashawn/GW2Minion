@@ -1,0 +1,3588 @@
+local tbl = 
+{
+	actionlist = 
+	{
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 40507,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30357,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 29629,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5857,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 5802,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 21659,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5834,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		}, 
+		[9] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5807,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Grenade Kit",
+		},
+		[10] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5809,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Grenade Kit",
+		},
+		[11] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5806,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Grenade Kit",
+		},
+		[12] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5808,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Grenade Kit",
+		},
+		[13] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5917,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Drowning",
+		},
+		[14] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5918,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Drowning",
+		},
+		[15] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 1175,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Drowning",
+		},
+		[16] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6073,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Harpoongun",
+		},
+		[17] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6145,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Harpoongun",
+		},
+		[18] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6147,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Harpoongun",
+		},
+		[19] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6149,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Harpoongun",
+		},
+		[20] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6074,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Harpoongun",
+		},
+		[21] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6146,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Harpoongun",
+		},
+		[22] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5962,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Downed",
+		},
+		[23] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5963,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Downed",
+		},
+		[24] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 1175,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Downed",
+		},
+		[25] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 800,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6005,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Rifle",
+		},
+		[26] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6154,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Rifle",
+		},
+		[27] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6004,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Rifle",
+		},
+		[28] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 700,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6153,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Rifle",
+		},
+		[29] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6057,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Shield",
+		},
+		[30] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6053,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Shield",
+		},
+		[31] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6126,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Shield",
+		},
+		[32] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6054,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Shield",
+		},
+		[33] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30121,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_MortarKit",
+		},
+		[34] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30885,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_MortarKit",
+		},
+		[35] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30032,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_MortarKit",
+		},
+		[36] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30307,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_MortarKit",
+		},
+		[37] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 180,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5823,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_BombKit",
+		},
+		[38] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5939,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_BombKit",
+		},
+		[39] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 180,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5822,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_BombKit",
+		},
+		[40] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5824,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_BombKit",
+		},
+		[41] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 42965,
+			setsattackrange = true,
+			skillpaletteuid = "Photon Forge",
+		},
+		[42] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 44530,
+			setsattackrange = true,
+			skillpaletteuid = "Photon Forge",
+		},
+		[43] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 42521,
+			setsattackrange = true,
+			skillpaletteuid = "Photon Forge",
+		},
+		[44] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 45783,
+			setsattackrange = true,
+			skillpaletteuid = "Photon Forge",
+		},
+		[45] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30713,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Hammer",
+		},
+		[46] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1000,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30665,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Hammer",
+		},
+		[47] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 170,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29840,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Hammer",
+		},
+		[48] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30088,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Hammer",
+		},
+		[49] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29547,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Med Kit",
+		},
+		[50] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30817,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Med Kit",
+		},
+		[51] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30162,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Med Kit",
+		},
+		[52] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30513,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Med Kit",
+		},
+		[53] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5828,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Pistol_Mainhand",
+		},
+		[54] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5829,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Pistol_Mainhand",
+		},
+		[55] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5831,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Pistol_OffHand",
+		},
+		[56] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 700,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5830,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Pistol_OffHand",
+		},
+		[57] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5935,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_ElixierGun",
+		},
+		[58] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 450,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5965,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_ElixierGun",
+		},
+		[59] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5936,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_ElixierGun",
+		},
+		[60] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5937,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_ElixierGun",
+		},
+		[61] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5931,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Flamethrower",
+		},
+		[62] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5930,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Flamethrower",
+		},
+		[63] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 17260,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Flamethrower",
+		},
+		[64] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5929,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Flamethrower",
+		},
+		[65] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 180,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6159,
+			setsattackrange = false,
+			skillpaletteuid = "Engi_Flamethrower",
+		},
+		[66] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5905,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Tool Kit",
+		},
+		[67] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5998,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Tool Kit",
+		},
+		[68] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5995,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Tool Kit",
+		},
+		[69] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5996,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Tool Kit",
+		},
+		[70] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6175,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Tool Kit",
+		},
+		[71] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 450,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 40160,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Sword",
+		},
+		[72] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 44110,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Sword",
+		},
+		[73] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5838,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[74] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5966,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[75] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5967,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[76] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30599,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[77] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5968,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[79] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 31248,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[80] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6162,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[81] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5972,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[82] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5973,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[83] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6164,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[84] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5975,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[85] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6166,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[86] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5977,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[87] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5978,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[88] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30262,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[89] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5982,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[90] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 31167,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[91] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 29772,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[93] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6176,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[94] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6177,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[95] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5860,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[96] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6178,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[97] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 29665,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[98] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6179,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[99] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5862,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[100] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6180,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[101] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6181,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[102] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 42842,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[103] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6182,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[104] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6119,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[105] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 22573,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[106] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5867,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[107] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5868,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[108] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 29697,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[109] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 42009,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[110] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5999,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[111] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5810,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[112] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43176,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[113] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5811,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[114] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 45732,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[115] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5813,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[116] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 40533,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[118] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5983,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[119] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 41218,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[120] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43739,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[121] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 29739,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[123] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 29921,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[124] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5832,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[125] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5818,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[126] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 41843,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[127] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30101,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[128] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 31264,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[129] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5821,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[130] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30544,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[131] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 29505,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[132] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30777,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[134] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30279,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[135] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5912,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[136] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6093,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[137] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6078,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[138] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30027,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[139] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5825,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[142] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6082,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[143] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6088,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[144] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5865,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[145] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 21661,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[146] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6161,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[147] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5910,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[148] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6084,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[149] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5861,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[150] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30815,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[151] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 42163,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[152] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6086,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[153] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43845,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[155] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30725,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[156] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 29716,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[157] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 6089,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[158] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 44646,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[159] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5836,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[160] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5969,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[161] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5837,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		[162] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5882,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Grenade Kit",
+		},
+		[163] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5916,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Drowning",
+		},
+		[164] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6148,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Harpoongun",
+		},
+		[165] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5820,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Downed",
+		},
+		[166] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6003,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Rifle",
+		},
+		[167] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30371,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_MortarKit",
+		},
+		[168] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 425,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5928,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Flamethrower",
+		},
+		[169] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29785,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Hammer",
+		},
+		[170] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30501,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Hammer",
+		},
+		[171] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30489,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Hammer",
+		},
+		[172] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 180,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5842,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_BombKit",
+		},
+		[173] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 44588,
+			setsattackrange = true,
+			skillpaletteuid = "Photon Forge",
+		},
+		[174] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 45756,
+			setsattackrange = true,
+			skillpaletteuid = "Photon Forge",
+		},
+		[175] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 45890,
+			setsattackrange = true,
+			skillpaletteuid = "Photon Forge",
+		},
+		[176] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30521,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Med Kit",
+		},
+		[177] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5827,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Pistol_Mainhand",
+		},
+		[178] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5934,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_ElixierGun",
+		},
+		[179] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5994,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Tool Kit",
+		},
+		[180] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5993,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Tool Kit",
+		},
+		[181] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5992,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Tool Kit",
+		},
+		[182] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 43476,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Sword",
+		},
+		[183] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 45979,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Sword",
+		},
+		[184] = 
+		{
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 45581,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Sword",
+		},
+	},
+	fightrangetype = 1,
+	profession = 3,
+	version = 1,
+	weaponswapmode = 1,
+}
+
+
+
+return tbl

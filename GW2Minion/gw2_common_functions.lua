@@ -862,7 +862,7 @@ gw2_common_functions.combatmovement = {
 
 function gw2_common_functions:DoCombatMovement(target)
 	
-	local fightdistance = ml_global_information.AttackRange
+	local fightdistance = ml_global_information.AttackRange or 154
 	if ( table.valid(target) and target.distance <= (fightdistance + 250) and not self.combatmovement.range and ml_global_information.Player_Alive and ml_global_information.Player_OnMesh and ml_global_information.Player_Health.percent < 99) then
 		local isimmobilized	
 		if ( table.size(ml_global_information.Player_Buffs) > 0 ) then
