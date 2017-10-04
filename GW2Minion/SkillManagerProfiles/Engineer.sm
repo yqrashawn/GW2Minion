@@ -3678,6 +3678,7 @@ local tbl =
 			skillpaletteuid = "Engi_Sword",
 		},
 	},
+	botmainmenu_luacode = "",
 	fightrangetype = 1,
 	profession = 3,
 	version = 1,

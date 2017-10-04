@@ -165,7 +165,7 @@ function gw2_combatdata.Init()
 	
 	
 	-- init button in minionmainbutton
-	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##COMBATDATA", name = "DPS", onClick = function() gw2_combatdata.mainWindow.open = gw2_combatdata.mainWindow.open ~= true end, tooltip = "Click to open \"Combat Data\" window.", texture = GetStartupPath().."\\GUI\\UI_Textures\\sword.png"},"GW2MINION##MENU_HEADER")
+	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##COMBATDATA", name = "DPS Meter", onClick = function() gw2_combatdata.mainWindow.open = gw2_combatdata.mainWindow.open ~= true end, tooltip = "Click to open \"Combat Data\" window.", texture = GetStartupPath().."\\GUI\\UI_Textures\\sword.png"},"GW2MINION##MENU_HEADER")
 end
 
 -- Draw main column window.
