@@ -9,8 +9,6 @@ function gw2minion.Init()
 	} 
 	ml_gui.ui_mgr:AddComponent(gw2mainmenu)
 	
-	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##SKILLMANAGER", name = "SkillManager", onClick = SkillManager:ToggleWindow(), tooltip = GetString("Open the \"Skill Manager\" window."), texture = GetStartupPath().."\\GUI\\UI_Textures\\sword.png"},"GW2MINION##MENU_HEADER")	
-	
 	-- Setup GuestServerList
 	gw2minion.RefreshGuestServers()	
 	
