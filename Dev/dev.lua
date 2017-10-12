@@ -910,17 +910,9 @@ function dev.DrawCall(event, ticks )
 						--SkillByID
 						GUI:Separator()
 						if ( GUI:TreeNode("Get Spell InfoBy ID") ) then
-							GUI:BulletText("Spell ID:") GUI:SameLine(200) dev.spellid, dev.spellidchanged = GUI:InputInt("##devss5",dev.spellid  or 1000,1,10)
-							if(dev.spellidchanged) then dev.spellidwaschanged = true end
-							if(dev.spellidwaschanged) then 	-- silly way, buti t crashes when manually entering a number ..idk why, idcare either
-								if (GUI:Button("Show Skill Data",150,15) ) then 
-									dev.spellidwaschanged = nil
-									dev.pickedspellid = dev.spellid
-								end
-							end
-							
-							if (dev.pickedspellid and type(dev.pickedspellid) == "number") then
-								local b = Player:GetSpellInfoByID(dev.pickedspellid)
+							GUI:BulletText("Spell ID:") GUI:SameLine(200) dev.spellid, dev.spellidchanged = GUI:InputInt("##devss5",dev.spellid or 1000,1,10)
+							if (dev.spellid > 0 and dev.spellid and type(dev.spellid) == "number") then
+								local b = Player:GetSpellInfoByID(dev.spellid)
 								if (table.valid(b)) then 
 										dev.DrawSpellInfo(b)
 								else
