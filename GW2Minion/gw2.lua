@@ -137,19 +137,6 @@ function gw2minion.Init()
 end
 RegisterEventHandler("Module.Initalize",gw2minion.Init)
 
--- Called (also) by the ml_skill_mgr.lua @minionlib to refresh the SM profiles
-function gw2minion.RequestSMProfileUpdate()
-	local folderpath = GetLuaModsPath()  .. "GW2Minion\\\SkillManagerProfiles"
-	SkillManager:SetProfileFolder( folderpath)
-	local profileList = FolderList( folderpath, [[(.*)sm$]])
-	if (table.valid(profileList)) then
-		for _,filename in pairs(profileList) do
-			SkillManager:RegisterProfile( folderpath, string.trim(filename,3))			
-		end
-	end
-end
-RegisterEventHandler("RequestSMProfileUpdate", gw2minion.RequestSMProfileUpdate)
-
 -- Get's called internally in ml_bt_mgr.lua by the :run() of the gw2minion.mainbtreeinstance. This draws UI code for ther internal GW2_Main btree here.
 -- This is to add always the same "core" functions and UI elements to the Main Menu
 function gw2minion.DrawMenuCode()

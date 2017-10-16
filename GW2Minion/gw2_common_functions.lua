@@ -112,7 +112,7 @@ end
 
 function gw2_common_functions.FinishEnemy()
 	if ( ml_global_information.Player_IsMoving == false and ml_global_information.Player_Health.percent > 15 ) then
-		local EList = CharacterList("nearest,downed,attackable,interactable,selectable,maxdistance=150")
+		local EList = CharacterList("nearest,downed,attackable,interactable,selectable,maxdistance=175")
 		if ( EList ) then
 			local id,entity = next (EList)
 			if ( id and entity ) then
@@ -863,7 +863,7 @@ gw2_common_functions.combatmovement = {
 function gw2_common_functions:DoCombatMovement(target)
 	
 	local fightdistance = ml_global_information.AttackRange or 154
-	if ( table.valid(target) and target.distance <= (fightdistance + 250) and not self.combatmovement.range and ml_global_information.Player_Alive and ml_global_information.Player_OnMesh and ml_global_information.Player_Health.percent < 99) then
+	if ( table.valid(target) and target.distance <= (fightdistance + 250) and target.alive and not self.combatmovement.range and ml_global_information.Player_Alive and ml_global_information.Player_OnMesh and ml_global_information.Player_Health.percent < 99) then
 		local isimmobilized	
 		if ( table.size(ml_global_information.Player_Buffs) > 0 ) then
 			for id,v in pairs (ml_global_information.Player_Buffs) do
