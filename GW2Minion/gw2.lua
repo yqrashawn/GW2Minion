@@ -121,6 +121,10 @@ function gw2minion.Init()
 		ml_mesh_mgr.SetDefaultMesh(1163,"sPvP Revenge of the Capricorn")		
 		ml_mesh_mgr.SetDefaultMesh(1171,"sPvp Coloseum")
 		
+		--PoF
+		ml_mesh_mgr.SetDefaultMesh(1210,"Crystal Oasis")
+		ml_mesh_mgr.SetDefaultMesh(1228,"Elon Riverlands")
+		ml_mesh_mgr.SetDefaultMesh(1211,"Desert Highlands")
 		
 		
 		--Instances
