@@ -1191,6 +1191,7 @@ function dev.DrawCall(event, ticks )
 					if ( GUI:TreeNode("Utility Functions & Other Infos") ) then
 						GUI:PushItemWidth(250)
 						GUI:BulletText("Game Time") GUI:SameLine(200) GUI:InputText("##devuf2",tostring(GetGameTime()))
+						GUI:BulletText("Computer ID") GUI:SameLine(200) GUI:InputText("##devuf1",tostring(GetComputerID()))
 						local p = GetMouseInWorldPos()
 						if ( table.valid(p)) then
 							GUI:BulletText("MousePosition") GUI:SameLine(200)  GUI:InputFloat3( "##devuf5", p.x, p.y, p.z, 2, GUI.InputTextFlags_ReadOnly)

@@ -125,6 +125,7 @@ function gw2minion.Init()
 		ml_mesh_mgr.SetDefaultMesh(1210,"Crystal Oasis")
 		ml_mesh_mgr.SetDefaultMesh(1228,"Elon Riverlands")
 		ml_mesh_mgr.SetDefaultMesh(1211,"Desert Highlands")
+		ml_mesh_mgr.SetDefaultMesh(1226,"The Desolation")
 		
 		
 		--Instances
