@@ -886,7 +886,9 @@ function dev.DrawCall(event, ticks )
 						GUI:BulletText("CurrentTransformID") GUI:SameLine(200) GUI:InputText("##devs6",tostring(Player:GetTransformID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						GUI:BulletText("LastTransformID") GUI:SameLine(200) GUI:InputText("##devs9",tostring(Player:GetLastTransformID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						GUI:BulletText("CanSwapWeaponSet") GUI:SameLine(200) GUI:InputText("##devs7",tostring(Player:CanSwapWeaponSet()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devs8",tostring(Player.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)						
+						GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devs8",tostring(Player.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("Power2") GUI:SameLine(200) GUI:InputText("##devs11",tostring(Player.power2),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("Power3") GUI:SameLine(200) GUI:InputText("##devs10",tostring(Player.power3),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						if (GUI:Button("SwapWeaponSet",150,15) ) then d("SwapWeaponSet Result: "..tostring(Player:SwapWeaponSet())) end
 						GUI:PushItemWidth(250)
 						for i=0,20 do
