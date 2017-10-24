@@ -12,7 +12,6 @@ function ml_navigation.Navigate(event, ticks )
 			
 			-- Normal Navigation Mode
 			if ( ml_navigation.pathsettings.navigationmode == 1 ) then
-				
 				if ( table.valid(ml_navigation.path) and table.size(ml_navigation.path) > ml_navigation.pathindex ) then					
 					local nextnode = ml_navigation.path[ ml_navigation.pathindex ]
 					
@@ -189,8 +188,14 @@ function ml_navigation.Navigate(event, ticks )
 					elseif (string.contains(nextnode.type,"CUBE")) then
 -- Cube Navigation	
 						if(not gw2_unstuck.HandleStuck()) then
-							-- Check if we left our path
-							if ( not ml_navigation:IsStillOnPath(ppos,ml_navigation.pathsettings.pathdeviationdistance) ) then return end
+							-- Check if we left our path, different rules for first path node, to prevent loading lag from getting us stuck.
+							if (ml_navigation.pathindex == 0 or ml_navigation.pathindex == 1) then
+								-- We are at the 1st path node, increase path deviationthreshold to prevent getting stuck in getting cube path over and over.
+								ml_navigation:IsStillOnPath(ppos,ml_navigation.pathsettings.pathdeviationdistance * 5)
+							else
+								-- We are using cubes, increase path deviationthreshold, compared to walking.
+								ml_navigation:IsStillOnPath(ppos,ml_navigation.pathsettings.pathdeviationdistance * 2)
+							end
 					
 							-- Check if the next node is reached:
 							local dist3D = math.distance3d(nextnode,ppos)
