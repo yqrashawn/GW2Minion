@@ -4,6 +4,7 @@ local tbl =
 	{
 		
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -15,18 +16,26 @@ local tbl =
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 15,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 13050,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -34,22 +43,30 @@ local tbl =
 				{
 					
 					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 66,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 13021,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -61,18 +78,26 @@ local tbl =
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 66,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 13027,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -80,22 +105,30 @@ local tbl =
 				{
 					
 					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 66,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 30400,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -103,22 +136,224 @@ local tbl =
 				{
 					
 					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 66,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 21778,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 66,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 45088,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 30,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 13117,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						bufftype = 2,
+						operator = 4,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 3,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 13106,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					},
+					
+					{
+						operator = 4,
+						state = 1,
+						uid = "Breakbar",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 13012,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Thief_pistol_oh",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "if ( context.attack_target and context.attack_target.isplayer and context.attack_target.castinfo.skillid>0) then\nreturn true\nelse\nreturn false\nend",
+			conditions = 
+			{
+			},
+			id = 13012,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Thief_pistol_oh",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						buff = 833,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						buff = 872,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						buff = 27705,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						buff = 791,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 13035,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -127,21 +362,29 @@ local tbl =
 					
 					{
 						healthtype = 3,
-						operator = 1,
-						target = 2,
+						operator = 2,
+						target = 1,
 						uid = "Health",
-						value = 75,
+						value = 33,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
 			},
-			id = 45088,
+			id = 45508,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -149,43 +392,38 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 13012,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_pistol_oh",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
+						operator = 3,
+						uid = "Power",
+						value = 100,
+					},
+					
+					{
+						count = 3,
+						distance = 240,
+						operator = 4,
+						target = 2,
+						type = 1,
+						uid = "Entities In Range",
+					},
 					
 					{
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 900,
+						value = 240,
 					}, 
 					casttarget = 1,
 				},
 			},
 			id = 13113,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_pistol_oh",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -196,23 +434,76 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 900,
+						value = 1500,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 13015,
+			id = 43390,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_sword",
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 4,
+						state = 1,
+						uid = "Breakbar",
+						value = 1,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 13132,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "if ( context.attack_target and context.attack_target.isplayer ) then\nreturn true\nelse\nreturn false\nend",
+			conditions = 
+			{
+			},
+			id = 13132,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						bufftype = 2,
+						operator = 4,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 1,
+					},
 					
 					{
 						operator = 1,
@@ -224,12 +515,45 @@ local tbl =
 				},
 			},
 			id = 13128,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_sword",
 		},
 		
 		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					},
+					
+					{
+						buffid = 13127,
+						operator = 2,
+						target = 2,
+						uid = "Buff (ID)",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 13015,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Thief_sword",
+		},
+		
+		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -246,56 +570,14 @@ local tbl =
 				},
 			},
 			id = 13112,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_sword",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 13019,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_dagger_oh",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 13013,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_dagger_oh",
-		},
-		
-		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -312,34 +594,14 @@ local tbl =
 				},
 			},
 			id = 30597,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_staff",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 30775,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_staff",
-		},
-		
-		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -351,39 +613,26 @@ local tbl =
 						target = 1,
 						uid = "Distance",
 						value = 130,
+					},
+					
+					{
+						buffid = 727,
+						operator = 1,
+						target = 2,
+						uid = "Buff (ID)",
 					}, 
 					casttarget = 1,
 				},
 			},
 			id = 30520,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_staff",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 450,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 29911,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_staff",
-		},
-		
-		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -400,12 +649,14 @@ local tbl =
 				},
 			},
 			id = 44695,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_rifle_kneel",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -422,12 +673,14 @@ local tbl =
 				},
 			},
 			id = 40436,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_rifle_kneel",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -444,12 +697,14 @@ local tbl =
 				},
 			},
 			id = 44591,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_rifle_kneel",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -461,17 +716,58 @@ local tbl =
 						target = 1,
 						uid = "Distance",
 						value = 900,
+					},
+					
+					{
+						operator = 4,
+						target = 1,
+						uid = "Distance",
+						value = 500,
 					}, 
 					casttarget = 1,
 				},
 			},
 			id = 13040,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_dagger_mh",
 		},
 		
 		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 450,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 1,
+						uid = "Health",
+						value = 25,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 13097,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Thief_dagger_mh",
+		},
+		
+		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -488,12 +784,14 @@ local tbl =
 				},
 			},
 			id = 13006,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_dagger_mh",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -504,40 +802,33 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 450,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 13097,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_dagger_mh",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
+						value = 900,
+					},
 					
 					{
-						operator = 1,
+						operator = 3,
+						uid = "Power",
+						value = 100,
+					},
+					
+					{
+						operator = 4,
 						target = 1,
 						uid = "Distance",
-						value = 130,
+						value = 500,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 13110,
+			id = 13019,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_dagger_mh",
+			setsattackrange = false,
+			skillpaletteuid = "Thief_dagger_oh",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -554,12 +845,14 @@ local tbl =
 				},
 			},
 			id = 41494,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_rifle_freeaction",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -576,12 +869,14 @@ local tbl =
 				},
 			},
 			id = 41937,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_rifle_freeaction",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -598,12 +893,14 @@ local tbl =
 				},
 			},
 			id = 43916,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_rifle_freeaction",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -620,12 +917,14 @@ local tbl =
 				},
 			},
 			id = 13140,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_downed",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -641,12 +940,14 @@ local tbl =
 				},
 			},
 			id = 1175,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_downed",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -663,12 +964,14 @@ local tbl =
 				},
 			},
 			id = 13033,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_downed",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -684,12 +987,14 @@ local tbl =
 				},
 			},
 			id = 13080,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_drowning",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -706,12 +1011,14 @@ local tbl =
 				},
 			},
 			id = 13081,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_drowning",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -727,12 +1034,14 @@ local tbl =
 				},
 			},
 			id = 1175,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_drowning",
 		},
 		
 		{
+			activationtime = 2.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -749,12 +1058,14 @@ local tbl =
 				},
 			},
 			id = 13068,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_spear",
 		},
 		
 		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -770,12 +1081,14 @@ local tbl =
 				},
 			},
 			id = 13122,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_spear",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -792,12 +1105,14 @@ local tbl =
 				},
 			},
 			id = 13070,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_spear",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -814,12 +1129,14 @@ local tbl =
 				},
 			},
 			id = 13069,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_spear",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -836,12 +1153,14 @@ local tbl =
 				},
 			},
 			id = 13078,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_harpoongun",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -858,12 +1177,14 @@ local tbl =
 				},
 			},
 			id = 13075,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_harpoongun",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -880,12 +1201,14 @@ local tbl =
 				},
 			},
 			id = 13076,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_harpoongun",
 		},
 		
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -902,12 +1225,14 @@ local tbl =
 				},
 			},
 			id = 13073,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_harpoongun",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -924,56 +1249,14 @@ local tbl =
 				},
 			},
 			id = 13074,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_harpoongun",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 13008,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_pistol_mh",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 13111,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_pistol_mh",
-		},
-		
-		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -990,17 +1273,27 @@ local tbl =
 				},
 			},
 			id = 13011,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_pistol_mh",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 25,
+					},
 					
 					{
 						operator = 1,
@@ -1012,12 +1305,14 @@ local tbl =
 				},
 			},
 			id = 13010,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_pistol_mh",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1025,87 +1320,31 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 25,
+					},
+					
+					{
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 900,
+						value = 400,
 					}, 
 					casttarget = 1,
 				},
 			},
 			id = 13083,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_shortbow",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 13041,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_shortbow",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 13024,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_shortbow",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 13025,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_shortbow",
-		},
-		
-		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1121,17 +1360,122 @@ local tbl =
 				},
 			},
 			id = 13043,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_shortbow",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						count = 3,
+						distance = 240,
+						operator = 4,
+						target = 1,
+						type = 1,
+						uid = "Entities In Range",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 360,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 13041,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Thief_shortbow",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					},
+					
+					{
+						operator = 1,
+						target = 2,
+						uid = "Downed",
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						count = 3,
+						distance = 240,
+						operator = 4,
+						target = 1,
+						type = 1,
+						uid = "Entities In Range",
+					},
+					
+					{
+						operator = 3,
+						uid = "Power",
+						value = 100,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					},
+					
+					{
+						operator = 4,
+						target = 1,
+						uid = "Distance",
+						value = 360,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 13024,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Thief_shortbow",
+		},
+		
+		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					},
 					
 					{
 						operator = 1,
@@ -1142,17 +1486,26 @@ local tbl =
 				},
 			},
 			id = 13082,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					},
 					
 					{
 						operator = 1,
@@ -1163,17 +1516,26 @@ local tbl =
 				},
 			},
 			id = 13020,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 4,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					},
 					
 					{
 						operator = 1,
@@ -1184,33 +1546,14 @@ local tbl =
 				},
 			},
 			id = 13085,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 13117,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Thief_Thief",
-		},
-		
-		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1226,17 +1569,26 @@ local tbl =
 				},
 			},
 			id = 13055,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					},
 					
 					{
 						operator = 1,
@@ -1247,12 +1599,14 @@ local tbl =
 				},
 			},
 			id = 30077,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1263,17 +1617,26 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 30519,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1289,17 +1652,26 @@ local tbl =
 				},
 			},
 			id = 13057,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					},
 					
 					{
 						operator = 1,
@@ -1310,17 +1682,26 @@ local tbl =
 				},
 			},
 			id = 29639,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					},
 					
 					{
 						operator = 1,
@@ -1331,17 +1712,26 @@ local tbl =
 				},
 			},
 			id = 29516,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					},
 					
 					{
 						operator = 1,
@@ -1352,17 +1742,26 @@ local tbl =
 				},
 			},
 			id = 13028,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					},
 					
 					{
 						operator = 1,
@@ -1373,12 +1772,14 @@ local tbl =
 				},
 			},
 			id = 41205,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1389,17 +1790,32 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						uid = "Endurance",
+						value = 20,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 13062,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1409,65 +1825,9 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 13064,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Thief_Thief",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 13002,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Thief_Thief",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 41158,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Thief_Thief",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
+						uid = "Distance",
+						value = 1200,
+					},
 					
 					{
 						operator = 1,
@@ -1478,33 +1838,14 @@ local tbl =
 				},
 			},
 			id = 13066,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 13035,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Thief_Thief",
-		},
-		
-		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1520,33 +1861,14 @@ local tbl =
 				},
 			},
 			id = 13037,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 13132,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Thief_Thief",
-		},
-		
-		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1562,12 +1884,14 @@ local tbl =
 				},
 			},
 			id = 13038,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1583,12 +1907,14 @@ local tbl =
 				},
 			},
 			id = 16435,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1604,12 +1930,14 @@ local tbl =
 				},
 			},
 			id = 16436,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1625,12 +1953,14 @@ local tbl =
 				},
 			},
 			id = 13093,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1646,12 +1976,14 @@ local tbl =
 				},
 			},
 			id = 13096,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1662,17 +1994,26 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 30868,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1688,12 +2029,14 @@ local tbl =
 				},
 			},
 			id = 13056,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1703,23 +2046,9 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 13106,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Thief_Thief",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
+						uid = "Distance",
+						value = 130,
+					},
 					
 					{
 						operator = 1,
@@ -1730,17 +2059,27 @@ local tbl =
 				},
 			},
 			id = 13026,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 1,
+						uid = "Health",
+						value = 20,
+					},
 					
 					{
 						operator = 1,
@@ -1751,12 +2090,14 @@ local tbl =
 				},
 			},
 			id = 13044,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1767,17 +2108,26 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 30369,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1788,17 +2138,27 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "CombatState",
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 33,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 13060,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1806,25 +2166,12 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 13014,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Thief_Thief",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
+						target = 2,
+						uid = "Health",
+						value = 33,
+					},
 					
 					{
 						operator = 1,
@@ -1835,17 +2182,27 @@ local tbl =
 				},
 			},
 			id = 13046,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 1,
+						uid = "Health",
+						value = 33,
+					},
 					
 					{
 						operator = 1,
@@ -1856,12 +2213,14 @@ local tbl =
 				},
 			},
 			id = 13065,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1872,22 +2231,39 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "CombatState",
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 40,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 30661,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					},
 					
 					{
 						operator = 1,
@@ -1898,12 +2274,14 @@ local tbl =
 				},
 			},
 			id = 46335,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1914,22 +2292,37 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 20,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 41372,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					},
 					
 					{
 						operator = 1,
@@ -1940,12 +2333,14 @@ local tbl =
 				},
 			},
 			id = 45672,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1956,17 +2351,26 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 30693,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1977,17 +2381,26 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 30568,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Thief_Thief",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1997,18 +2410,52 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 130,
+					},
+					
+					{
+						buffid = 18831,
+						operator = 1,
+						target = 2,
+						uid = "Buff (ID)",
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
-			id = 45508,
+			id = 13112,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Thief_Thief",
+			setsattackrange = true,
+			skillpaletteuid = "Thief_sword",
 		},
 		
 		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 13016,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Thief_sword",
+		},
+		
+		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2025,12 +2472,14 @@ local tbl =
 				},
 			},
 			id = 13009,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_sword",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2047,12 +2496,14 @@ local tbl =
 				},
 			},
 			id = 13114,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_sword",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2069,12 +2520,14 @@ local tbl =
 				},
 			},
 			id = 13088,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_sword",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2091,12 +2544,14 @@ local tbl =
 				},
 			},
 			id = 13116,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_sword",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2113,12 +2568,14 @@ local tbl =
 				},
 			},
 			id = 30135,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_staff",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2135,12 +2592,14 @@ local tbl =
 				},
 			},
 			id = 30614,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_staff",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2157,12 +2616,14 @@ local tbl =
 				},
 			},
 			id = 30434,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_staff",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2179,12 +2640,14 @@ local tbl =
 				},
 			},
 			id = 30210,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_staff",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2201,12 +2664,14 @@ local tbl =
 				},
 			},
 			id = 44087,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_rifle_kneel",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2223,12 +2688,14 @@ local tbl =
 				},
 			},
 			id = 40710,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_rifle_kneel",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2245,12 +2712,14 @@ local tbl =
 				},
 			},
 			id = 13005,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_dagger_mh",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2267,12 +2736,14 @@ local tbl =
 				},
 			},
 			id = 13087,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_dagger_mh",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2289,12 +2760,14 @@ local tbl =
 				},
 			},
 			id = 13004,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_dagger_mh",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2311,12 +2784,14 @@ local tbl =
 				},
 			},
 			id = 13108,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_dagger_mh",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2333,12 +2808,14 @@ local tbl =
 				},
 			},
 			id = 44087,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_rifle_freeaction",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2355,12 +2832,14 @@ local tbl =
 				},
 			},
 			id = 41422,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_rifle_freeaction",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2377,12 +2856,14 @@ local tbl =
 				},
 			},
 			id = 13003,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_downed",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2399,12 +2880,14 @@ local tbl =
 				},
 			},
 			id = 13079,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_drowning",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2421,12 +2904,14 @@ local tbl =
 				},
 			},
 			id = 13120,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_spear",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2443,12 +2928,14 @@ local tbl =
 				},
 			},
 			id = 13121,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_spear",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2465,34 +2952,14 @@ local tbl =
 				},
 			},
 			id = 13125,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_spear",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 150,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 13119,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Thief_spear",
-		},
-		
-		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2509,12 +2976,14 @@ local tbl =
 				},
 			},
 			id = 13072,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_harpoongun",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2531,12 +3000,14 @@ local tbl =
 				},
 			},
 			id = 13126,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_harpoongun",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2553,12 +3024,14 @@ local tbl =
 				},
 			},
 			id = 13115,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_pistol_mh",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2575,12 +3048,14 @@ local tbl =
 				},
 			},
 			id = 13084,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_pistol_mh",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2597,12 +3072,14 @@ local tbl =
 				},
 			},
 			id = 13022,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_shortbow",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2619,12 +3096,230 @@ local tbl =
 				},
 			},
 			id = 13129,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Thief_shortbow",
 		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 43768,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 43373,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 40903,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 44526,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 40888,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 40133,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 40904,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 42863,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 39960,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Thief_Thief",
+		},
 	},
 	fightrangetype = 1,
+	fixedfightrange = 900,
 	profession = 5,
 	version = 1,
 	weaponswapmode = 1,

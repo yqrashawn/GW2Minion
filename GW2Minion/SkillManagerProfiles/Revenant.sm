@@ -4,6 +4,7 @@ local tbl =
 	{
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -11,22 +12,31 @@ local tbl =
 				{
 					
 					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 33,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 45686,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Renegade Stance",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -38,18 +48,27 @@ local tbl =
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 33,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 28219,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Demon Stance",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -61,18 +80,27 @@ local tbl =
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 33,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 26937,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Assassin Stance",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -80,22 +108,29 @@ local tbl =
 				{
 					
 					{
-						healthtype = 3,
 						operator = 1,
-						target = 2,
-						uid = "Health",
-						value = 75,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
 					}, 
 					casttarget = 2,
 				},
 			},
-			id = 28427,
+			id = 29148,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Centaur Stance",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -107,18 +142,57 @@ local tbl =
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 90,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28427,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Centaur Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 27220,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Dragon Stance",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -126,22 +200,31 @@ local tbl =
 				{
 					
 					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 33,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 27228,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Dragon Stance",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -153,18 +236,165 @@ local tbl =
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 33,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 27372,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Dwarf Stance",
 		},
 		
 		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 2,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 29371,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 2,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 27014,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Dragon Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 2,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 26644,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Dragon Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 20,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 120,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 26557,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Dwarf Stance",
+		},
+		
+		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -181,12 +411,14 @@ local tbl =
 				},
 			},
 			id = 29233,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Sword_Mainhand",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -203,12 +435,14 @@ local tbl =
 				},
 			},
 			id = 26699,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Sword_Mainhand",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -225,12 +459,14 @@ local tbl =
 				},
 			},
 			id = 43993,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Shortbow",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -247,12 +483,14 @@ local tbl =
 				},
 			},
 			id = 41820,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Shortbow",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -269,12 +507,14 @@ local tbl =
 				},
 			},
 			id = 41829,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Shortbow",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -291,12 +531,14 @@ local tbl =
 				},
 			},
 			id = 40175,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Shortbow",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -313,12 +555,14 @@ local tbl =
 				},
 			},
 			id = 28253,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Hammer",
 		},
 		
 		{
+			activationtime = 1.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -326,26 +570,11 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 27976,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Revenant_Hammer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
+						operator = 4,
+						state = 1,
+						uid = "Breakbar",
+						value = 1,
+					},
 					
 					{
 						operator = 1,
@@ -357,17 +586,66 @@ local tbl =
 				},
 			},
 			id = 28110,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Hammer",
 		},
 		
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 66,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 27976,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Revenant_Hammer",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 40,
+					},
 					
 					{
 						operator = 1,
@@ -378,12 +656,14 @@ local tbl =
 				},
 			},
 			id = 27665,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Hammer",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -400,12 +680,14 @@ local tbl =
 				},
 			},
 			id = 28827,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Spear",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -422,12 +704,14 @@ local tbl =
 				},
 			},
 			id = 28815,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Spear",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -444,12 +728,14 @@ local tbl =
 				},
 			},
 			id = 28930,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Spear",
 		},
 		
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -466,12 +752,14 @@ local tbl =
 				},
 			},
 			id = 28915,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Spear",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -488,12 +776,14 @@ local tbl =
 				},
 			},
 			id = 28797,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Spear",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -510,12 +800,14 @@ local tbl =
 				},
 			},
 			id = 28692,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Spear",
 		},
 		
 		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -531,12 +823,14 @@ local tbl =
 				},
 			},
 			id = 1175,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Downed",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -553,12 +847,14 @@ local tbl =
 				},
 			},
 			id = 27063,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Downed",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -575,17 +871,65 @@ local tbl =
 				},
 			},
 			id = 27792,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Downed",
 		},
 		
 		{
+			activationtime = 3,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 25,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28262,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Revenant_Shield",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 66,
+					},
 					
 					{
 						operator = 1,
@@ -597,164 +941,14 @@ local tbl =
 				},
 			},
 			id = 29386,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Shield",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 28262,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Revenant_Shield",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 480,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 28357,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Revenant_Mace_Mainhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 27964,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Revenant_Mace_Mainhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 28029,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Revenant_Axe_Offhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 28409,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Revenant_Axe_Offhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 28571,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Revenant_Sword_Offhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 27074,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Revenant_Sword_Offhand",
-		},
-		
-		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -771,17 +965,185 @@ local tbl =
 				},
 			},
 			id = 28472,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Sword_Offhand",
 		},
 		
 		{
+			activationtime = 2.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 66,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28571,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Revenant_Sword_Offhand",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 27074,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Revenant_Sword_Offhand",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 480,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 28357,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Revenant_Mace_Mainhand",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 480,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 27964,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Revenant_Mace_Mainhand",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 28029,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Revenant_Axe_Offhand",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 28409,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Revenant_Axe_Offhand",
+		},
+		
+		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 66,
+					},
 					
 					{
 						operator = 1,
@@ -793,17 +1155,26 @@ local tbl =
 				},
 			},
 			id = 29288,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Staff",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 4,
+						state = 1,
+						uid = "Breakbar",
+						value = 1,
+					},
 					
 					{
 						operator = 1,
@@ -815,17 +1186,35 @@ local tbl =
 				},
 			},
 			id = 28978,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Staff",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 80,
+					},
+					
+					{
+						bufftype = 2,
+						operator = 4,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 2,
+					},
 					
 					{
 						operator = 1,
@@ -837,13 +1226,15 @@ local tbl =
 				},
 			},
 			id = 29321,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Staff",
 		},
 		
 		{
-			condition_luacode = "return true",
+			activationtime = 0.75,
+			condition_luacode = "if ( context.attack_target and context.attack_target.isplayer and context.attack_target.castinfo.skillid>0) then return true else return false end",
 			conditions = 
 			{
 				
@@ -859,17 +1250,26 @@ local tbl =
 				},
 			},
 			id = 29145,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Staff",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 450,
+					},
 					
 					{
 						operator = 1,
@@ -880,12 +1280,14 @@ local tbl =
 				},
 			},
 			id = 29393,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Revenant",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -895,606 +1297,35 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
+						uid = "Distance",
+						value = 900,
+					},
+					
+					{
+						buffid = 45614,
+						operator = 4,
+						target = 2,
+						uid = "Buffs (Count by ID)",
+						value = 10,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
 						uid = "CombatState",
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 42836,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Revenant",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 45537,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Revenant",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29371,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Revenant",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 44076,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Revenant",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 42752,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Renegade Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 41220,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Renegade Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 45773,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Renegade Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 40485,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Renegade Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 42949,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Renegade Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 28287,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Demon Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 27322,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Demon Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 26693,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Demon Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 27917,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Demon Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 27505,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Demon Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 28231,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Assassin Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 27107,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Assassin Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 28382,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Assassin Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29209,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Assassin Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 28406,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Assassin Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 27715,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Centaur Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 26821,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Centaur Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 27025,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Centaur Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 27628,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Centaur Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 27356,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Centaur Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 26644,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Dragon Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 27162,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Dragon Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 27080,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Dragon Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 28075,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Dragon Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 27760,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Dragon Stance",
-		},
-		
-		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1510,17 +1341,169 @@ local tbl =
 				},
 			},
 			id = 28379,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Dragon Stance",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 30,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 27760,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Dragon Stance",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 27162,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Dragon Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 2,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						buff = 791,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						buff = 833,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						buff = 27705,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						buff = 872,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 27080,
+			instantcast = true,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Dragon Stance",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 10,
+					},
 					
 					{
 						operator = 1,
@@ -1531,12 +1514,14 @@ local tbl =
 				},
 			},
 			id = 28113,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Dragon Stance",
 		},
 		
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1546,23 +1531,844 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
+						uid = "Distance",
+						value = 450,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 50,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
 						uid = "CombatState",
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
-			id = 27014,
+			id = 28075,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Dragon Stance",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
+						count = 3,
+						distance = 240,
+						operator = 4,
+						target = 2,
+						type = 2,
+						uid = "Entities In Range",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 45537,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
+						count = 3,
+						distance = 300,
+						operator = 4,
+						target = 2,
+						type = 2,
+						uid = "Entities In Range",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 44076,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 42752,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Renegade Stance",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					},
+					
+					{
+						operator = 4,
+						state = 1,
+						uid = "Breakbar",
+						value = 1,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 41220,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Renegade Stance",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 66,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 45773,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Renegade Stance",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 42949,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Renegade Stance",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					},
+					
+					{
+						operator = 4,
+						skillid = 42949,
+						uid = "Cooldown  - by Skill ID",
+						value = 5000,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 40485,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Renegade Stance",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 800,
+					},
+					
+					{
+						operator = 5,
+						target = 1,
+						uid = "Distance",
+						value = 360,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 27917,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Demon Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 26693,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Demon Stance",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					},
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 20,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28287,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Demon Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 80,
+					},
+					
+					{
+						bufftype = 2,
+						operator = 4,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 4,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 27322,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Demon Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					},
+					
+					{
+						bufftype = 1,
+						operator = 4,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 2,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 27505,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Demon Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					},
+					
+					{
+						operator = 5,
+						target = 1,
+						uid = "Distance",
+						value = 500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 28231,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Assassin Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28382,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Assassin Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 450,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 27107,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Assassin Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 500,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 80,
+					},
+					
+					{
+						bufftype = 2,
+						operator = 4,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 3,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 29209,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Assassin Stance",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					},
+					
+					{
+						operator = 4,
+						state = 1,
+						uid = "Breakbar",
+						value = 1,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28406,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Assassin Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
+						bufftype = 2,
+						operator = 4,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 4,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 27715,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Centaur Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 50,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 27025,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Centaur Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 27628,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Centaur Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 33,
+					},
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 20,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 26821,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Centaur Stance",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 33,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 27356,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Centaur Stance",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					},
 					
 					{
 						operator = 1,
@@ -1573,17 +2379,25 @@ local tbl =
 				},
 			},
 			id = 27975,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Dwarf Stance",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
 					
 					{
 						operator = 1,
@@ -1594,12 +2408,14 @@ local tbl =
 				},
 			},
 			id = 26956,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Dwarf Stance",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1609,18 +2425,27 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
+						uid = "Distance",
+						value = 600,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
 						uid = "CombatState",
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 28516,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Dwarf Stance",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1630,39 +2455,34 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 26557,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Dwarf Stance",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
+						uid = "Distance",
+						value = 1200,
+					},
+					
+					{
+						operator = 5,
+						target = 1,
+						uid = "Distance",
+						value = 500,
+					},
 					
 					{
 						operator = 1,
 						target = 1,
 						uid = "CombatState",
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 26679,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Dwarf Stance",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1679,12 +2499,14 @@ local tbl =
 				},
 			},
 			id = 29057,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Sword_Mainhand",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1701,12 +2523,14 @@ local tbl =
 				},
 			},
 			id = 29256,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Sword_Mainhand",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1723,12 +2547,14 @@ local tbl =
 				},
 			},
 			id = 28964,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Sword_Mainhand",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1745,12 +2571,14 @@ local tbl =
 				},
 			},
 			id = 40497,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Shortbow",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1767,12 +2595,14 @@ local tbl =
 				},
 			},
 			id = 28549,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Hammer",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1789,12 +2619,14 @@ local tbl =
 				},
 			},
 			id = 28714,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Spear",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1811,12 +2643,14 @@ local tbl =
 				},
 			},
 			id = 28180,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Downed",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1833,12 +2667,14 @@ local tbl =
 				},
 			},
 			id = 26666,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Mace_Mainhand",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1855,12 +2691,14 @@ local tbl =
 				},
 			},
 			id = 27066,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Mace_Mainhand",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1877,12 +2715,14 @@ local tbl =
 				},
 			},
 			id = 26730,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Mace_Mainhand",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1899,12 +2739,14 @@ local tbl =
 				},
 			},
 			id = 29331,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Staff",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1921,12 +2763,14 @@ local tbl =
 				},
 			},
 			id = 29180,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Staff",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1943,9 +2787,387 @@ local tbl =
 				},
 			},
 			id = 29002,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Revenant_Staff",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						buffid = 44272,
+						operator = 2,
+						target = 2,
+						uid = "Buff (ID)",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 46409,
+			instantcast = true,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						buffid = 27732,
+						operator = 2,
+						target = 2,
+						uid = "Buff (ID)",
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						operator = 2,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						buffid = 27732,
+						operator = 2,
+						target = 2,
+						uid = "Buff (ID)",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28085,
+			instantcast = true,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						buffid = 27928,
+						operator = 2,
+						target = 2,
+						uid = "Buff (ID)",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28494,
+			instantcast = true,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						buffid = 27928,
+						operator = 2,
+						target = 2,
+						uid = "Buff (ID)",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28376,
+			instantcast = true,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						buffid = 27890,
+						operator = 2,
+						target = 2,
+						uid = "Buff (ID)",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 27659,
+			instantcast = true,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						buffid = 27890,
+						operator = 2,
+						target = 2,
+						uid = "Buff (ID)",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28134,
+			instantcast = true,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						buffid = 27205,
+						operator = 2,
+						target = 2,
+						uid = "Buff (ID)",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 26650,
+			instantcast = true,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						buffid = 27205,
+						operator = 2,
+						target = 2,
+						uid = "Buff (ID)",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28419,
+			instantcast = true,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						buffid = 27972,
+						operator = 2,
+						target = 2,
+						uid = "Buff (ID)",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28195,
+			instantcast = true,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 10,
+					},
+					
+					{
+						buffid = 27972,
+						operator = 2,
+						target = 2,
+						uid = "Buff (ID)",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 28141,
+			instantcast = true,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Revenant",
 		},
 	},
 	fightrangetype = 1,
