@@ -370,17 +370,17 @@ local tbl =
 				{
 					
 					{
+						operator = 1,
+						target = 2,
+						uid = "Aggro",
+					},
+					
+					{
 						healthtype = 3,
 						operator = 1,
 						target = 1,
 						uid = "Health",
 						value = 75,
-					},
-					
-					{
-						operator = 1,
-						target = 2,
-						uid = "Aggro",
 					}, 
 					casttarget = 1,
 				},
@@ -426,16 +426,16 @@ local tbl =
 				{
 					
 					{
-						operator = 5,
-						uid = "Power",
-						value = 15,
-					},
-					
-					{
 						operator = 1,
 						target = 1,
 						uid = "Distance",
 						value = 300,
+					},
+					
+					{
+						operator = 5,
+						uid = "Power",
+						value = 15,
 					}, 
 					casttarget = 1,
 				},
@@ -505,12 +505,6 @@ local tbl =
 				{
 					
 					{
-						operator = 4,
-						uid = "Power",
-						value = 30,
-					},
-					
-					{
 						operator = 1,
 						target = 1,
 						uid = "Distance",
@@ -523,6 +517,12 @@ local tbl =
 						target = 1,
 						uid = "Health",
 						value = 85,
+					},
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 30,
 					}, 
 					casttarget = 2,
 				},
@@ -530,16 +530,16 @@ local tbl =
 				{
 					
 					{
-						operator = 4,
-						uid = "Power",
-						value = 30,
-					},
-					
-					{
 						operator = 1,
 						target = 1,
 						uid = "Distance",
 						value = 175,
+					},
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 30,
 					}, 
 					casttarget = 1,
 				},
@@ -615,17 +615,17 @@ local tbl =
 				{
 					
 					{
-						operator = 5,
-						uid = "Power",
-						value = 15,
-					},
-					
-					{
 						bufftype = 2,
 						operator = 4,
 						target = 1,
 						uid = "Buffs (Count)",
 						value = 2,
+					},
+					
+					{
+						operator = 5,
+						uid = "Power",
+						value = 15,
 					},
 					
 					{
@@ -654,17 +654,17 @@ local tbl =
 				{
 					
 					{
+						operator = 4,
+						uid = "Power",
+						value = 40,
+					},
+					
+					{
 						healthtype = 3,
 						operator = 1,
 						target = 1,
 						uid = "Health",
 						value = 90,
-					},
-					
-					{
-						operator = 4,
-						uid = "Power",
-						value = 40,
 					}, 
 					casttarget = 2,
 				},
@@ -672,17 +672,17 @@ local tbl =
 				{
 					
 					{
-						operator = 4,
-						uid = "Power",
-						value = 20,
-					},
-					
-					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
 						value = 30,
+					},
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 20,
 					}, 
 					casttarget = 2,
 				},
@@ -703,12 +703,6 @@ local tbl =
 				{
 					
 					{
-						operator = 4,
-						uid = "Ammo",
-						value = 1,
-					},
-					
-					{
 						buff = 721,
 						operator = 2,
 						target = 1,
@@ -720,6 +714,12 @@ local tbl =
 						target = 1,
 						uid = "Distance",
 						value = 900,
+					},
+					
+					{
+						operator = 4,
+						uid = "Ammo",
+						value = 1,
 					}, 
 					casttarget = 1,
 				},
@@ -747,16 +747,16 @@ local tbl =
 					},
 					
 					{
+						operator = 4,
+						uid = "Ammo",
+						value = 1,
+					},
+					
+					{
 						operator = 1,
 						target = 1,
 						uid = "Distance",
 						value = 900,
-					},
-					
-					{
-						operator = 4,
-						uid = "Ammo",
-						value = 1,
 					}, 
 					casttarget = 1,
 				},
@@ -872,17 +872,17 @@ local tbl =
 				{
 					
 					{
-						buff = 1122,
-						operator = 1,
-						target = 2,
-						uid = "Buff (Name)",
-					},
-					
-					{
 						operator = 1,
 						target = 1,
 						uid = "Distance",
 						value = 350,
+					},
+					
+					{
+						buff = 1122,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
 					}, 
 					casttarget = 1,
 				},
@@ -1073,18 +1073,18 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					},
-					
-					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
 						value = 70,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
 					}, 
 					casttarget = 1,
 				},
@@ -1352,17 +1352,17 @@ local tbl =
 				{
 					
 					{
-						buff = 722,
-						operator = 2,
-						target = 1,
-						uid = "Buff (Name)",
-					},
-					
-					{
 						operator = 1,
 						target = 1,
 						uid = "Distance",
 						value = 600,
+					},
+					
+					{
+						buff = 722,
+						operator = 2,
+						target = 1,
+						uid = "Buff (Name)",
 					}, 
 					casttarget = 1,
 				},
@@ -1490,13 +1490,6 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					},
-					
-					{
 						count = 1,
 						distance = 700,
 						operator = 4,
@@ -1511,6 +1504,13 @@ local tbl =
 						target = 1,
 						uid = "Buffs (Count)",
 						value = 2,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
 					}, 
 					casttarget = 1,
 				},
@@ -1653,18 +1653,18 @@ local tbl =
 				{
 					
 					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					},
+					
+					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
 						value = 85,
-					},
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
 					}, 
 					casttarget = 1,
 				},
@@ -1686,15 +1686,15 @@ local tbl =
 					
 					{
 						operator = 1,
-						target = 2,
-						uid = "Distance",
-						value = 900,
+						target = 3,
+						uid = "Downed",
 					},
 					
 					{
 						operator = 1,
-						target = 3,
-						uid = "Downed",
+						target = 2,
+						uid = "Distance",
+						value = 900,
 					}, 
 					casttarget = 3,
 				},
@@ -2557,19 +2557,17 @@ local tbl =
 			condition_luacode = "return true",
 			conditions = 
 			{
-			},
-			id = 10692,
-			instantcast = false,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Necromancer_Spear",
-		},
-		
-		{
-			activationtime = 0.5,
-			condition_luacode = "return true",
-			conditions = 
-			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
 			},
 			id = 10616,
 			instantcast = false,
@@ -2583,6 +2581,17 @@ local tbl =
 			condition_luacode = "return true",
 			conditions = 
 			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
 			},
 			id = 10695,
 			instantcast = false,
@@ -2596,21 +2605,19 @@ local tbl =
 			condition_luacode = "return true",
 			conditions = 
 			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
 			},
 			id = 10619,
-			instantcast = false,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Necromancer_Spear",
-		},
-		
-		{
-			activationtime = 0.75,
-			condition_luacode = "return true",
-			conditions = 
-			{
-			},
-			id = 10617,
 			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
@@ -2622,21 +2629,19 @@ local tbl =
 			condition_luacode = "return true",
 			conditions = 
 			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
 			},
 			id = 10694,
-			instantcast = false,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Necromancer_Spear",
-		},
-		
-		{
-			activationtime = 0.75,
-			condition_luacode = "return true",
-			conditions = 
-			{
-			},
-			id = 10693,
 			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
@@ -3132,6 +3137,19 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10617,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Spear",
+		},
+		
+		{
 			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
@@ -3153,6 +3171,43 @@ local tbl =
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Necromancer_Trident",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10692,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Spear",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10693,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Spear",
 		},
 	},
 	fightrangetype = 1,
