@@ -863,7 +863,10 @@ gw2_common_functions.combatmovement = {
 function gw2_common_functions:DoCombatMovement(target)
 	
 	local fightdistance = ml_global_information.AttackRange or 154
-	if ( table.valid(target) and target.distance <= (fightdistance + 250) and target.alive and not self.combatmovement.range and ml_global_information.Player_Alive and ml_global_information.Player_OnMesh and ml_global_information.Player_Health.percent < 99) then
+	
+	if (self.combatmovement.range and (target == nil or target.distance < fightdistance)) then Player:StopMovement() self.combatmovement.range = false end  -- "range" is "moving into combat range"
+	
+	if ( table.valid(target) and target.distance <= fightdistance and target.alive and ml_global_information.Player_Alive and ml_global_information.Player_OnMesh) then -- and ml_global_information.Player_Health.percent < 99
 		local isimmobilized	
 		if ( table.size(ml_global_information.Player_Buffs) > 0 ) then
 			for id,v in pairs (ml_global_information.Player_Buffs) do
@@ -881,20 +884,20 @@ function gw2_common_functions:DoCombatMovement(target)
 			local tDistance = target.distance
 			
 			-- Stop walking into range.
-			if (self.combatmovement.range and tDistance < fightdistance - 250) then Player:StopMovement() self.combatmovement.range = false end  -- "range" is "moving into combat range"
+			-- if (self.combatmovement.range and tDistance < fightdistance - 250) then Player:StopMovement() self.combatmovement.range = false end  -- "range" is "moving into combat range"
 			-- Face target.
 			local tpos = target.pos
 			Player:SetFacingExact(tpos.x, tpos.y, tpos.z)
 			-- Range, walking too close to enemy, stop walking forward.
-			if (fightdistance > 300 and tDistance < (fightdistance / 2)) then movementDirection[forward] = false end
+			if (fightdistance > 300 and tDistance < fightdistance) then movementDirection[forward] = false end
 			-- Range, walking too far from enemy, stop walking backward.
 			if (fightdistance > 300 and tDistance > fightdistance * 0.95) then movementDirection[backward] = false end
 			-- Melee, walking too close to enemy, stop walking forward.
 			if (tDistance < target.radius) then movementDirection[forward] = false end
 			-- Melee, walking too far from enemy, stop walking backward.
-			if (tDistance > fightdistance) then movementDirection[backward] = false end
-			-- We are strafing too far from target, stop walking left or right.
-			if (tDistance > fightdistance) then
+			if (fightdistance <= 300 or tDistance > fightdistance) then movementDirection[backward] = false end
+			-- We are strafing too far from target, stop walking left or right. We are in a melee fight, moving around the target just makes us spin.
+			if (tDistance > fightdistance or tDistance < 250) then
 				movementDirection[left] = false
 				movementDirection[right] = false
 			end
@@ -921,7 +924,7 @@ function gw2_common_functions:DoCombatMovement(target)
 			end
 
 			-- Can we move in direction, while not walking towards potential enemy's.
-			local targets = CharacterList("alive,los,notaggro,attackable,hostile,maxdistance=1500,exclude="..target.id)
+			local targets = CharacterList("alive,los,notaggro,attackable,hostile,exclude="..target.id)
 
 			if (movementDirection[forward] and table.size(gw2_common_functions.filterRelativePostion(targets,forward)) > 0) then movementDirection[forward] = false end
 			if (movementDirection[backward] and table.size(gw2_common_functions.filterRelativePostion(targets,backward)) > 0) then movementDirection[backward] = false end
@@ -950,14 +953,14 @@ function gw2_common_functions:DoCombatMovement(target)
 				-- Range, try to stay back from target.
 				if (fightdistance > 300) then
 					movementDirection[forward] = false
-					if (tDistance >= fightdistance - 25) then
+					if (tDistance >= fightdistance - 250) then
 						movementDirection[backward] = false
 					end
 				end
 				-- Melee, try to stay close to target.
 				if (fightdistance <= 300) then
 					movementDirection[backward] = false
-					if (tDistance <= fightdistance - 25) then
+					if (tDistance <= fightdistance) then
 						movementDirection[forward] = false
 					end
 				end
@@ -983,10 +986,16 @@ function gw2_common_functions:DoCombatMovement(target)
 			for direction,canMove in pairs(movementDirection) do
 				if (canMove) then
 					Player:SetMovement(direction)
+				else
+					Player:UnSetMovement(direction)
 				end
 			end
 			self.combatmovement.combat = true
 			return
+		-- cant move anyway, stop trying.
+		else
+			Player:StopMovement()
+			self.combatmovement.combat = false
 		end
 	
 	elseif(self.combatmovement.combat) then -- Stop active combat movement.		 
