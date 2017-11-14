@@ -21,6 +21,7 @@ local tbl =
 					{
 						finishcode = "",
 						info = "Ingame check",
+						interruptcode = "",
 						monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))\nGUI:Text('Guest Server ID: '..tostring(Settings.GW2Minion.guestserver))\nGUI:Text(\"Guest Server Name: \"..ml_global_information.GuestServerList[Settings.GW2Minion.guestserver])\nGUI:Text('Autologin Enabled: '..tostring(Settings.GW2Minion.autostartbot))\nGUI:Text('GameState: '..tostring(ml_global_information.GameState))\nif (self.lastrun) then\n\tGUI:Text('Lastrun: '..tostring(TimeSince(self.lastrun)))\nend\n\n",
 						runcode = "-- In CHaracter screen\nif ( ml_global_information.GameState == GW2.GAMESTATE.GAMEPLAY) then\n\t\tself:fail()\nelse\n\t\tself:success()\nend",
 						startcode = "",
@@ -49,6 +50,7 @@ local tbl =
 									{
 										finishcode = "",
 										info = "",
+										interruptcode = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 										runcode = "if ( ml_global_information.Player_HealthState == GW2.HEALTHSTATE.Defeated ) then\n\t\tif(Settings.GW2Minion.assistautorespawn) then\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\n\t\tself:running()\n\t\treturn\nend\nself:fail()",
 										startcode = "",
@@ -105,6 +107,7 @@ local tbl =
 							{
 								finishcode = "",
 								info = "",
+								interruptcode = "",
 								monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 								runcode = "-- In case the setting changes right in the middle of movement\nif(context.combat_ismoving and Settings.GW2Minion.moveintocombatrange == false) then\n\t\tPlayer:StopMovement()\n\t\tcontext.combat_moveintocombatrange = false\n\t\tcontext.combat_ismoving = false\nend\nself:fail()",
 								startcode = "",
@@ -128,6 +131,7 @@ local tbl =
 									{
 										finishcode = "",
 										info = "Finish enemies",
+										interruptcode = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 										runcode = "if ( Settings.GW2Minion.finishenemyassist == true) then\n\t\tif(gw2_common_functions.FinishEnemy() == true) then\n\t\t\t\td(\"[Assist]: Finishing enemy.\")\n\t\t\t\tself:success()\n\t\t\t\treturn\n\t\tend\nend\nself:fail()",
 										startcode = "",
@@ -175,6 +179,7 @@ local tbl =
 									{
 										finishcode = "",
 										info = "",
+										interruptcode = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
 										runcode = "if(Settings.GW2Minion.smtargetmode == 1 ) then\n\t\tself:success() -- Target Mode == None\nelse\n\t\tself:fail()\nend",
 										startcode = "",
@@ -193,8 +198,9 @@ local tbl =
 									{
 										finishcode = "",
 										info = "",
+										interruptcode = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "local target = Player:GetTarget()\nlocal combatmovement\nlocal activerange\n\nif ( SkillManager) then\n\t\tSkillManager:SetTarget(context.combat_targetid)\n\t\tactiverange = ml_global_information.AttackRange\n\t\tcombatmovement = gw2_common_functions:GetCombatMovement()\nend\n\nif(combatmovement and combatmovement.range) then\t\t\n\t\tif ( target == nil or (target.distance <= activerange)) then\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tcombatmovement.range = false\n\t\tend\nend\n\nif(target and (target.alive or target.downed) and target.attackable and not gw2_common_functions.HasBuffs(target,ml_global_information.InvulnerabilityConditions)) then\n\t\tif ( SkillManager ) then\n\t\t\t\tSkillManager:SetTarget(target.id)\n\t\tend\n\n\t\tif(Settings.GW2Minion.moveintocombatrange and ml_global_information.Player_OnMesh) then\n\n\t\t\t\tlocal stoppingdistance = activerange\n\t\t\t\tif(stoppingdistance < 300) then\n\t\t\t\t\t\tstoppingdistance = stoppingdistance + target.radius\n\t\t\t\telse\n\t\t\t\t\t\tstoppingdistance = math.max(300, stoppingdistance / 1.2)\n\t\t\t\tend\n\t\t\t\t\n\t\t\t\tlocal canmove\n\t\t\t\tif ( SkillManager ) then\n\t\t\t\t\t\tcanmove = gw2_common_functions:CombatMovementCanMove()\n\t\t\t\tend\n\n\t\t\t\tif(combatmovement and canmove and target.distance > stoppingdistance) then\n\t\t\t\t\t\t\t\tlocal tPos = target.pos\n\t\t\t\t\t\t\t\tNavigationManager:MoveTo(tPos.x,tPos.y,tPos.z,stoppingdistance,false,false,true)\n\t\t\t\t\t\t\t\tcombatmovement.range = true\n\t\t\t\tend\n\t\tend\nend\n\nself:success()",
+										runcode = "local target = Player:GetTarget()\nlocal combatmovement = gw2_common_functions:GetCombatMovement()\nlocal activerange = ml_global_information.AttackRange\n\nif(combatmovement and combatmovement.range) then\t\t\n\t\tif ( target == nil or (target.distance <= activerange)) then\n\t\t\t\tPlayer:StopMovement()\n\t\t\t\tcombatmovement.range = false\n\t\tend\nend\n\nif(target and (target.alive or target.downed) and target.attackable and not gw2_common_functions.HasBuffs(target,ml_global_information.InvulnerabilityConditions)) then\n\t\tSkillManager:SetTarget(target.id)\n\t\tactiverange = ml_global_information.AttackRange\n\t\tcombatmovement = gw2_common_functions:GetCombatMovement()\n\n\t\tif(Settings.GW2Minion.moveintocombatrange and ml_global_information.Player_OnMesh) then\n\n\t\t\t\tlocal stoppingdistance = activerange\n\t\t\t\tif(stoppingdistance < 300) then\n\t\t\t\t\t\tstoppingdistance = stoppingdistance + target.radius\n\t\t\t\telse\n\t\t\t\t\t\tstoppingdistance = math.max(300, stoppingdistance / 1.2)\n\t\t\t\tend\n\t\t\t\t\n\t\t\t\tlocal canmove = gw2_common_functions:CombatMovementCanMove()\n\n\t\t\t\tif(combatmovement and canmove and target.distance > stoppingdistance) then\n\t\t\t\t\t\t\t\tlocal tPos = target.pos\n\t\t\t\t\t\t\t\tif(NavigationManager:MoveTo(tPos.x,tPos.y,tPos.z,stoppingdistance,false,false,true) >= 0) then\n\t\t\t\t\t\t\t\t\t\tcombatmovement.range = true\n\t\t\t\t\t\t\t\tend\n\t\t\t\tend\n\t\tend\nelse\n\t\t-- Don't keep casting at invalid targets\n\t\tSkillManager:SetTarget(nil)\nend\n\nself:success()",
 										startcode = "",
 									},
 								},
@@ -227,7 +233,7 @@ local tbl =
 										finishcode = "",
 										info = "",
 										monitorcode = "GUI:Text('Last State: '..tostring(self:getState()))",
-										runcode = "local ptarget = Player:GetTarget()\nlocal target = nil\nif(ptarget and ptarget.downed and ptarget.friendly and ptarget.distance < 200) then\n\t\tself:success()\n\t\treturn\nend\n\nif(ptarget and ptarget.attackable and not gw2_common_functions.HasBuffs(ptarget,ml_global_information.InvulnerabilityConditions) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Monsters\"),ptarget.contentid) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Temporary Combat\"),ptarget.id)) then\n\t\ttarget = ptarget\nend\n\nlocal besttarget = gw2_common_functions.GetBestCharacterTargetForAssist()\n\nif(besttarget and (target == nil or besttarget.id ~= target.id)) then\n\t\ttarget = besttarget\nend\nif(target and (target.alive or target.downed) and target.attackable and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Monsters\"),target.contentid) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Temporary Combat\"),target.id)) then\n\t\tcontext.combat_targetid = target.id\n\t\tcontext.combat_targetpos = target.pos\n\t\tcontext.combat_moveintocombatrange = Settings.GW2Minion.moveintocombatrange and ml_global_information.Player_OnMesh and target.pathdistance < 9999999\n\t\tcontext.combat_onmeshcheck = false\nelse\n\t\tcontext.combat_targetcheck = nil\nend\nself:fail()",
+										runcode = "local ptarget = Player:GetTarget()\nlocal target = nil\nif(ptarget and ptarget.downed and ptarget.friendly and ptarget.distance < 200) then\n\t\tself:success()\n\t\treturn\nend\n\nif(ptarget and ptarget.attackable and not gw2_common_functions.HasBuffs(ptarget,ml_global_information.InvulnerabilityConditions) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Monsters\"),ptarget.contentid) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Temporary Combat\"),ptarget.id)) then\n\t\ttarget = ptarget\nend\n\nlocal besttarget = gw2_common_functions.GetBestCharacterTargetForAssist()\n\nif(besttarget and (target == nil or besttarget.id ~= target.id)) then\n\t\ttarget = besttarget\nend\n\nif(target and (target.alive or target.downed) and target.attackable and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Monsters\"),target.contentid) and not gw2_blacklistmanager.CheckBlacklistEntry(GetString(\"Temporary Combat\"),target.id)) then\n\t\tcontext.combat_targetid = target.id\n\t\tcontext.combat_targetpos = target.pos\n\t\tcontext.combat_moveintocombatrange = Settings.GW2Minion.moveintocombatrange and ml_global_information.Player_OnMesh and target.pathdistance < 9999999\n\t\tcontext.combat_onmeshcheck = false\nelse\n\t\tcontext.combat_targetcheck = nil\nend\nself:fail()",
 										startcode = "",
 									},
 								},

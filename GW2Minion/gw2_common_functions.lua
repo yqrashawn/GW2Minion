@@ -343,23 +343,27 @@ function gw2_common_functions.GetBestAggroTarget(healthstate)
 	return nil
 end
 
-
+-- Find the best event targets.
+-- Filters mobs based on distance (and path distance) to the event center
 function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 	local filters = {
 		"aggro,onmesh,lowesthealth,los",
+		"aggro,onmesh,shortestpath",
 		"aggro,onmesh,nearest",
 		"hostile,onmesh,nearest"
 	}
 	
 	if(table.valid(marker) and type(radius) == "number") then
-	
+		
+		-- If the target can be found in the objective details, use that (event is target)
 		if(table.valid(objectivedetails) and objectivedetails.value1) then
 			local target = CharacterList:Get(objectivedetails.value1) or GadgetList:Get(objectivedetails.value1)
-			if(table.valid(target) and target.alive and target.attackable and target.pathdistance < 9999999) then
+			if(table.valid(target) and target.alive and target.attackable and not gw2_blacklistmanager.IsMonsterBlacklisted(target) and target.pathdistance < 9999999) then
 				return target
 			end
 		end
 		
+		-- Find mobs
 		local i,filter = next(filters)
 		while i and filter do
 			local target = gw2_common_functions.GetCharacterTargetExtended(filter)
@@ -367,10 +371,18 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 			if(table.valid(target)) then
 				if((target.alive or target.downed) and target.pathdistance < 9999999) then
 					local dist = math.distance3d(target.pos,marker.pos)
-
-					if(dist < radius) then
-						return target
+					if(dist <= radius) then
+						local path = NavigationManager:GetPath(marker.pos.x,marker.pos.y,marker.pos.z,target.pos.x,target.pos.y,target.pos.z)
+						local pdist = math.huge
+						if(table.valid(path)) then pdist = PathDistance(path) end
+						
+						if(pdist <= radius) then
+							return target
+						end
 					end
+
+					gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), target.id, target.name, 5000)
+					d("[GetBestEventTarget] - Blacklisting "..target.name.." ID: "..tostring(target.id) .. ", out of event radius.")						
 				else					
 					if ( not target.isplayer ) then -- don't blacklist players which are dead for 90sec..stupid in spvp WHY THE FUCK IS PVP USING THE PVE EVENT TARGET FUNCTION
 						gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), target.id, target.name, 5000)
@@ -381,16 +393,26 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 			
 			i,filter = next(filters,i)
 		end
-
-		local GList = GadgetList("hostile,attackable,alive,onmesh,nearest"..gw2_blacklistmanager.GetMonsterExcludeString())
+		
+		-- Find attackable gadgets
+		local GList = GadgetList("hostile,attackable,alive,onmesh,shortestpath"..gw2_blacklistmanager.GetMonsterExcludeString())
 		if(table.valid(GList)) then
 			local _,gagdet = next(GList)
 			if(table.valid(gadget)) then
-				if(gagdet.alive and gagdet.pathdistance < 9999999) then
+				if(gagdet.alive and gadget.pathdistance < 9999999) then
 					local dist = math.distance3d(gagdet.pos,marker.pos)
-					if(dist < radius) then
-						return gagdet
+					if(dist <= radius) then
+						local path = NavigationManager:GetPath(marker.pos.x,marker.pos.y,marker.pos.z,gagdet.pos.x,gagdet.pos.y,gagdet.pos.z)
+						local pdist = math.huge
+						if(table.valid(path)) then pdist = PathDistance(path) end
+						
+						if(pdist <= radius) then
+							return gagdet
+						end
 					end
+
+					gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), gagdet.id, gagdet.name, 5000)
+					d("[GetBestEventTarget] - Blacklisting "..gagdet.name.." ID: "..tostring(gagdet.id) .. ", out of event radius.")
 				else
 					gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), gagdet.id, gagdet.name, 5000)
 					d("[GetBestEventTarget] - Blacklisting "..gagdet.name.." ID: "..tostring(gagdet.id))
@@ -789,7 +811,10 @@ function gw2_common_functions.GetRandomPoint()
 	
 	-- Make sure that the position is reachable by the bot
 	local function _validpath(pos)
-		return gw2_common_functions.ValidPath(ml_global_information.Player_Position,pos)
+		if(table.valid(pos)) then
+			return NavigationManager:IsReachable(pos.x,pos.y,pos.z)
+		end
+		return false
 	end
 	
 	local randompos = nil
@@ -816,7 +841,7 @@ function gw2_common_functions.GetRandomPoint()
 			while not randompos and i < (MList_n > 10 and 10 or MList_n) do
 				local marker = table.randomvalue(MList)
 				if(table.valid(marker) and _validpos(marker.pos)) then
-					if(marker.pathdistance < 9999999) then
+					if(_validpath(marker.pos)) then
 						randompos = marker.pos
 					else
 						table.insert(randompointsused, {pos = marker.pos, time = ml_global_information.Now, status = "no valid path", type = "marker"})
@@ -867,16 +892,8 @@ function gw2_common_functions:DoCombatMovement(target)
 	if (self.combatmovement.range and (target == nil or target.distance < fightdistance)) then Player:StopMovement() self.combatmovement.range = false end  -- "range" is "moving into combat range"
 	
 	if ( table.valid(target) and target.distance <= fightdistance and target.alive and ml_global_information.Player_Alive and ml_global_information.Player_OnMesh) then -- and ml_global_information.Player_Health.percent < 99
-		local isimmobilized	
-		if ( table.size(ml_global_information.Player_Buffs) > 0 ) then
-			for id,v in pairs (ml_global_information.Player_Buffs) do
-				if ( ml_global_information.ImmobilizeConditions[id] ) then
-					isimmobilized = true
-					break
-				end
-			end
-		end
-		
+		local isimmobilized	= gw2_common_functions.BufflistHasBuffs(ml_global_information.Player_Buffs, ml_global_information.ImmobilizeConditions)
+
 		if (not isimmobilized) then		
 			local forward,backward,left,right,forwardLeft,forwardRight,backwardLeft,backwardRight = GW2.MOVEMENTTYPE.Forward,GW2.MOVEMENTTYPE.Backward,GW2.MOVEMENTTYPE.Left,GW2.MOVEMENTTYPE.Right,4,5,6,7
 			local currentMovement = ml_global_information.Player_MovementDirections
