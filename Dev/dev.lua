@@ -763,7 +763,9 @@ function dev.DrawCall(event, ticks )
 						if (GUI:Button("Join PvP Lobby",150,15) ) then d("Join PvP Lobby: "..tostring(PvPManager:JoinPvPLobby())) end GUI:SameLine()
 						if (GUI:Button("Leave PvP Lobby",150,15) ) then d("Leave PvP Lobby: "..tostring(PvPManager:LeavePvPLobby())) end
 						if (GUI:Button("Join Unranked Queue",150,15) ) then d("Join Unranked Queue: "..tostring(PvPManager:JoinArenaQueue(1))) end
-						if (GUI:Button("Leave Unranked Queue",150,15) ) then d("Leave Unranked Queue: "..tostring(PvPManager:LeaveArenaQueue())) end
+						GUI:SameLine()
+						if (GUI:Button("Join Ranked Queue",150,15) ) then d("Join Ranked Queue: "..tostring(PvPManager:JoinArenaQueue(2))) end
+						if (GUI:Button("Leave Queue",150,15) ) then d("Leave Unranked Queue: "..tostring(PvPManager:LeaveArenaQueue())) end
 						if (GUI:Button("Set Ready",150,15) ) then d("Set Ready: "..tostring(PvPManager:SetReady())) end
 						
 						GUI:BulletText("CanJoinTeamRED") GUI:SameLine(200) GUI:InputText("##devpp9",tostring(PvPManager:CanJoinTeam(1)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -880,7 +882,7 @@ function dev.DrawCall(event, ticks )
 					if ( GUI:TreeNode("Skills") ) then
 						GUI:BulletText("IsCasting") GUI:SameLine(200) GUI:InputText("##devs1",tostring(Player:IsCasting()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devs2",tostring(Player:CanCast()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-						GUI:BulletText("IsSkillPending") GUI:SameLine(200) GUI:InputText("##devs3",tostring(Player:IsSkillPending()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("IsSkillPending") GUI:SameLine(200) GUI:InputText("##devs3",tostring(Player:IsSkillPending()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)						
 						GUI:BulletText("CurrentSpell") GUI:SameLine(200) GUI:InputText("##devs4",tostring(Player:GetCurrentlyCastedSpell()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						GUI:BulletText("CurrentWeaponSetID") GUI:SameLine(200) GUI:InputText("##devs5",tostring(Player:GetCurrentWeaponSet()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 						GUI:BulletText("CurrentTransformID") GUI:SameLine(200) GUI:InputText("##devs6",tostring(Player:GetTransformID()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
@@ -1556,9 +1558,9 @@ function dev.DrawSpellInfo(b)
 	GUI:BulletText("Skilltype") GUI:SameLine(200) GUI:InputText("##devsk9",tostring(b.skilltype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("Power") GUI:SameLine(200) GUI:InputText("##devsk10",tostring(b.power),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("IsGroundTargeted") GUI:SameLine(200) GUI:InputText("##devsk11",tostring(b.isgroundtargeted),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-	GUI:BulletText("RequiresTarget") GUI:SameLine(200) GUI:InputText("##devsk13",tostring(b.requirestarget),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("RequiresTarget") GUI:SameLine(200) GUI:InputText("##devsk19",tostring(b.requirestarget),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devsk12",tostring(b.cancast),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-	GUI:BulletText("Flags") GUI:SameLine(200) GUI:InputText("##devsk16",tostring(string.format( "%X",b.flags)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-	
+	GUI:BulletText("Flags") GUI:SameLine(200) GUI:InputText("##devsk17",tostring(string.format( "%X",b.flags)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("IsSpellCurrentlyCast") GUI:SameLine(200) GUI:InputText("##devsk18",tostring(Player:IsSpellCurrentlyCast(b.slot)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									
 end
