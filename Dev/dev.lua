@@ -1127,6 +1127,22 @@ function dev.DrawCall(event, ticks )
 -- END VENDOR 
 
 
+					if ( GUI:TreeNode("Wallet") ) then
+						local list = Player:GetWallet()
+						if ( table.valid(list) )then
+							GUI:PushItemWidth(250)
+							for id, b in pairs(list) do
+								GUI:BulletText(tostring(id).." : "..b.name) GUI:SameLine(300) GUI:Text(" - "..tostring(b.amount))
+							end							
+							GUI:PopItemWidth()
+						else
+							GUI:Text("No Inventory found.") 
+						end
+						GUI:TreePop()				
+					end
+-- END VENDOR 
+
+
 
 					if ( GUI:TreeNode("Waypoints (Local Map)") ) then
 						local list = WaypointList()
