@@ -4,232 +4,7 @@ local tbl =
 	{
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						healthtype = 3,
-						operator = 1,
-						target = 2,
-						uid = "Health",
-						value = 75,
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 30189,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						healthtype = 3,
-						operator = 1,
-						target = 2,
-						uid = "Health",
-						value = 75,
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 21815,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						healthtype = 3,
-						operator = 1,
-						target = 2,
-						uid = "Health",
-						value = 75,
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 41100,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						healthtype = 3,
-						operator = 1,
-						target = 2,
-						uid = "Health",
-						value = 75,
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14389,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						healthtype = 3,
-						operator = 1,
-						target = 2,
-						uid = "Health",
-						value = 75,
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14401,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						healthtype = 3,
-						operator = 1,
-						target = 2,
-						uid = "Health",
-						value = 75,
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14402,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14381,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Longbow",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14504,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Longbow",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14519,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Longbow",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14505,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Longbow",
-		},
-		
-		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -243,232 +18,28 @@ local tbl =
 					}, 
 					casttarget = 2,
 				},
-			},
-			id = 14391,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Downed",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
 				
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 900,
+						uid = "Health",
+						value = 100,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 14515,
+			id = 30435,
+			instantcast = true,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Downed",
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 1175,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Downed",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14366,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Sword_Mainhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14497,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Sword_Mainhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14393,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Warhorn",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14394,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Warhorn",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14418,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Axe_Offhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14399,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Axe_Offhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1000,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14489,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Rampage",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14490,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Rampage",
-		},
-		
-		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -483,80 +54,29 @@ local tbl =
 					}, 
 					casttarget = 1,
 				},
-			},
-			id = 14488,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Rampage",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
 				
 				{
 					
 					{
+						count = 3,
+						distance = 300,
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 900,
+						type = 1,
+						uid = "Entities In Range",
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 14556,
+			id = 44165,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Warrior_Rampage",
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 29845,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Torch",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 180,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 29940,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Torch",
-		},
-		
-		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -572,13 +92,15 @@ local tbl =
 					casttarget = 1,
 				},
 			},
-			id = 14416,
+			id = 29923,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Warrior_Rifle",
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -586,21 +108,24 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
+						bufftype = 2,
+						operator = 5,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 2,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 14360,
+			id = 14372,
+			instantcast = true,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Rifle",
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 3,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -608,152 +133,37 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14395,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Rifle",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14472,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Rifle",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14359,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Hammer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14511,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Hammer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14482,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Hammer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 150,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14386,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Hammer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 50,
 					}, 
 					casttarget = 2,
 				},
+				
+				{
+					
+					{
+						count = 4,
+						distance = 200,
+						operator = 1,
+						target = 1,
+						type = 1,
+						uid = "Entities In Range",
+					}, 
+					casttarget = 1,
+				},
 			},
-			id = 1175,
+			id = 14362,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Warrior_Drowning",
+			skillpaletteuid = "Warrior_Shield",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -764,303 +174,32 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 150,
+						value = 400,
 					}, 
 					casttarget = 1,
 				},
-			},
-			id = 14464,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Drowning",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
 				
 				{
 					
 					{
+						bufftype = 5,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14391,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Drowning",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 1,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 44004,
+			id = 30343,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Warrior_Dagger_Offhand",
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 300,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 45160,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Dagger_Offhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14421,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Axe_Mainhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14398,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Axe_Mainhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14465,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Harpoongun",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14466,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Harpoongun",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14481,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Harpoongun",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14467,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Harpoongun",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14518,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Mace_Offhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14415,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Mace_Offhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 300,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 46233,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Dagger_Mainhand",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 44937,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Dagger_Mainhand",
-		},
-		
-		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1077,12 +216,14 @@ local tbl =
 				},
 			},
 			id = 14361,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Shield",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1090,20 +231,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 30,
 					}, 
 					casttarget = 2,
 				},
 			},
-			id = 14362,
+			id = 14392,
+			instantcast = true,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Shield",
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1111,21 +256,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
+						target = 2,
+						uid = "Health",
+						value = 40,
 					}, 
-					casttarget = 1,
+					casttarget = 2,
 				},
 			},
-			id = 14507,
+			id = 14412,
+			instantcast = true,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Mace_Mainhand",
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1133,21 +281,24 @@ local tbl =
 				{
 					
 					{
+						bufftype = 2,
 						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 3,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 14503,
+			id = 45380,
+			instantcast = true,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Mace_Mainhand",
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1155,21 +306,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
+						target = 2,
+						uid = "Health",
+						value = 30,
 					}, 
-					casttarget = 1,
+					casttarget = 2,
 				},
 			},
-			id = 14400,
+			id = 14413,
+			instantcast = true,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Sword_Offhand",
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1177,21 +331,24 @@ local tbl =
 				{
 					
 					{
+						bufftype = 2,
 						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 5,
 					}, 
-					casttarget = 1,
+					casttarget = 2,
 				},
 			},
-			id = 14498,
+			id = 14479,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Sword_Offhand",
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1199,21 +356,36 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 3.4408148237197e-27,
+						target = 2,
+						uid = "Health",
+						value = 65,
 					}, 
-					casttarget = 1,
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						bufftype = 2,
+						operator = 5,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 3,
+					}, 
+					casttarget = 2,
 				},
 			},
-			id = 14557,
+			id = 30189,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Sword_Offhand",
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1221,21 +393,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 150,
+						target = 2,
+						uid = "Health",
+						value = 50,
 					}, 
-					casttarget = 1,
+					casttarget = 2,
 				},
 			},
-			id = 14501,
+			id = 21815,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Sword_Offhand",
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1243,21 +418,135 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 150,
+						target = 2,
+						uid = "Health",
+						value = 50,
 					}, 
-					casttarget = 1,
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						bufftype = 2,
+						operator = 1,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 7,
+					}, 
+					casttarget = 2,
 				},
 			},
-			id = 14440,
+			id = 41100,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Spear",
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						bufftype = 2,
+						operator = 5,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 5,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 14389,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 50,
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						bufftype = 2,
+						operator = 1,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 3,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 14401,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 60,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 14402,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1273,100 +562,15 @@ local tbl =
 					casttarget = 1,
 				},
 			},
-			id = 14448,
+			id = 30074,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Warrior_Spear",
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14480,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Spear",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14441,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_Spear",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14510,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_GreatSword",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 130,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 14554,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Warrior_GreatSword",
-		},
-		
-		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1382,13 +586,15 @@ local tbl =
 					casttarget = 1,
 				},
 			},
-			id = 14446,
+			id = 14506,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Warrior_GreatSword",
+			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1399,39 +605,20 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 800,
+						value = 1200,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 14447,
+			id = 14522,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Warrior_GreatSword",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14405,
-			requireslos = true,
-			setsattackrange = false,
 			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1441,18 +628,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
-			id = 14406,
+			id = 14520,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1462,18 +652,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
-			id = 14407,
+			id = 14521,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1481,419 +674,24 @@ local tbl =
 				{
 					
 					{
+						bufftype = 5,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 1,
 					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14408,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14409,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14410,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14412,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14413,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14414,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14544,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14545,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14546,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14547,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14422,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14423,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14424,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14425,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14426,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14427,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14428,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14429,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14430,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 30258,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1901,20 +699,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Health",
+						value = 70,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
-			id = 43123,
+			id = 14368,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1922,377 +724,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14443,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 31048,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14575,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29923,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 30435,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29679,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29941,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 30074,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14469,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14470,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14471,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14473,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14474,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14475,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14479,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14353,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14354,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 50,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 14355,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2300,797 +749,100 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14483,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 45252,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29613,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14367,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14368,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 45333,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 41919,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 45380,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14372,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14419,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 30343,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14375,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 44165,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 30989,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29644,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14506,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 30879,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29852,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 30851,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 30682,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14502,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14512,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14513,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14387,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14388,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14549,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14550,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14392,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14520,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14521,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14522,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14396,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14516,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 43745,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14528,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14551,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 14403,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 50,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 14404,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Warrior",
 		},
 		
 		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 50,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 14406,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						count = 5,
+						distance = 500,
+						operator = 1,
+						target = 2,
+						type = 1,
+						uid = "Entities In Range",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14409,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 1,
+						uid = "Health",
+						value = 40,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14410,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3100,18 +852,93 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
-			id = 14514,
+			id = 14381,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Warrior",
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Longbow",
 		},
 		
 		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14504,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Longbow",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14519,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Longbow",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14505,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Longbow",
+		},
+		
+		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3128,12 +955,2872 @@ local tbl =
 				},
 			},
 			id = 14431,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Longbow",
 		},
 		
 		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 10,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 14391,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Downed",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14515,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Downed",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 40,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 1175,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Downed",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14366,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Sword_Mainhand",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14497,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Sword_Mainhand",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 4,
+						operator = 1,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14393,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Warhorn",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						count = 2,
+						distance = 600,
+						operator = 1,
+						target = 1,
+						type = 1,
+						uid = "Entities In Range",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14394,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Warhorn",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14418,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Axe_Offhand",
+		},
+		
+		{
+			activationtime = 3.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14399,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Axe_Offhand",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1000,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14489,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Rampage",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14490,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Rampage",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14488,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Rampage",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14556,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Rampage",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29845,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Torch",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 180,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 2,
+						operator = 1,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 2,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29940,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Torch",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14416,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Rifle",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						count = 2,
+						distance = 130,
+						operator = 1,
+						target = 1,
+						type = 1,
+						uid = "Entities In Range",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14360,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Rifle",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 5,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14395,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Rifle",
+		},
+		
+		{
+			activationtime = 2.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14472,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Rifle",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						count = 2,
+						distance = 130,
+						operator = 1,
+						target = 1,
+						type = 1,
+						uid = "Entities In Range",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14359,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Hammer",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14511,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Hammer",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14482,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Hammer",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14386,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Hammer",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 44004,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Dagger_Offhand",
+		},
+		
+		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 45160,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Dagger_Offhand",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14421,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Axe_Mainhand",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14398,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Axe_Mainhand",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 5,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14467,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Harpoongun",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14465,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Harpoongun",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14466,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Harpoongun",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14481,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Harpoongun",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14518,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Mace_Offhand",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						count = 2,
+						distance = 150,
+						operator = 1,
+						target = 1,
+						type = 1,
+						uid = "Entities In Range",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14415,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Mace_Offhand",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 46233,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Dagger_Mainhand",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 44937,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Dagger_Mainhand",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14507,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Mace_Mainhand",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14503,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Mace_Mainhand",
+		},
+		
+		{
+			activationtime = 2.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14400,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Sword_Offhand",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 0,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14557,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Sword_Offhand",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14498,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Sword_Offhand",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14501,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Sword_Offhand",
+		},
+		
+		{
+			activationtime = 2.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14480,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Spear",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 120,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14440,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Spear",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14448,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Spear",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						count = 2,
+						distance = 150,
+						operator = 1,
+						target = 1,
+						type = 1,
+						uid = "Entities In Range",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14441,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Spear",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14510,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_GreatSword",
+		},
+		
+		{
+			activationtime = 2,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14446,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_GreatSword",
+		},
+		
+		{
+			activationtime = 3.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14554,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_GreatSword",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 450,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14447,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_GreatSword",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 50,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 14405,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 50,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 14407,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 50,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 14408,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14414,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14544,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14545,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14546,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14547,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14422,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14423,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14424,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14425,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14427,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 3,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14428,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 3,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14429,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 3,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14430,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						bufftype = 1,
+						operator = 1,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 2,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 43123,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14443,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 31048,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14575,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29679,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 170,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29941,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30074,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14469,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14470,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14471,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14473,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14474,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14475,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14353,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14354,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 1,
+						uid = "Health",
+						value = 50,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14483,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 450,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 1,
+						operator = 1,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 2,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 45252,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29613,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 3,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14367,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 30,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 45333,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 41919,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30879,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 2,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 14419,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14375,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30989,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29644,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 450,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29852,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30851,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 2.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30682,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14502,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14512,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14513,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14387,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						bufftype = 2,
+						operator = 1,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43745,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 450,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14388,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14549,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14550,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14396,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14516,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 5,
+						operator = 1,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14551,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 1,
+						uid = "Health",
+						value = 50,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14403,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14514,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 14431,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Warrior_Longbow",
+		},
+		
+		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3150,12 +3837,14 @@ local tbl =
 				},
 			},
 			id = 14390,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Downed",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3172,12 +3861,14 @@ local tbl =
 				},
 			},
 			id = 14363,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Sword_Mainhand",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3194,12 +3885,14 @@ local tbl =
 				},
 			},
 			id = 14364,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Sword_Mainhand",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3216,12 +3909,14 @@ local tbl =
 				},
 			},
 			id = 14365,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Sword_Mainhand",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3238,12 +3933,14 @@ local tbl =
 				},
 			},
 			id = 14485,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Rampage",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3260,12 +3957,14 @@ local tbl =
 				},
 			},
 			id = 14486,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Rampage",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3282,12 +3981,14 @@ local tbl =
 				},
 			},
 			id = 14487,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Rampage",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3304,12 +4005,14 @@ local tbl =
 				},
 			},
 			id = 14432,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Rifle",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3326,12 +4029,14 @@ local tbl =
 				},
 			},
 			id = 14384,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Hammer",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3348,12 +4053,14 @@ local tbl =
 				},
 			},
 			id = 14385,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Hammer",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3370,12 +4077,14 @@ local tbl =
 				},
 			},
 			id = 14358,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Hammer",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3392,12 +4101,14 @@ local tbl =
 				},
 			},
 			id = 14463,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Drowning",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3408,18 +4119,20 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 130,
+						value = 1200,
 					}, 
 					casttarget = 1,
 				},
 			},
 			id = 14370,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Axe_Mainhand",
 		},
 		
 		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3436,12 +4149,14 @@ local tbl =
 				},
 			},
 			id = 14371,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Axe_Mainhand",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3458,12 +4173,14 @@ local tbl =
 				},
 			},
 			id = 14369,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Axe_Mainhand",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3480,12 +4197,14 @@ local tbl =
 				},
 			},
 			id = 14552,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Harpoongun",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3502,12 +4221,14 @@ local tbl =
 				},
 			},
 			id = 42745,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Dagger_Mainhand",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3524,12 +4245,14 @@ local tbl =
 				},
 			},
 			id = 40560,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Dagger_Mainhand",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3546,12 +4269,14 @@ local tbl =
 				},
 			},
 			id = 40275,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Dagger_Mainhand",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3568,12 +4293,14 @@ local tbl =
 				},
 			},
 			id = 14377,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Mace_Mainhand",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3590,12 +4317,14 @@ local tbl =
 				},
 			},
 			id = 14378,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Mace_Mainhand",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3612,12 +4341,14 @@ local tbl =
 				},
 			},
 			id = 14376,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Mace_Mainhand",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3634,12 +4365,14 @@ local tbl =
 				},
 			},
 			id = 14437,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Spear",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3656,12 +4389,14 @@ local tbl =
 				},
 			},
 			id = 14438,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Spear",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3678,12 +4413,14 @@ local tbl =
 				},
 			},
 			id = 14439,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_Spear",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3700,12 +4437,14 @@ local tbl =
 				},
 			},
 			id = 14373,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_GreatSword",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3722,12 +4461,14 @@ local tbl =
 				},
 			},
 			id = 14356,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_GreatSword",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3744,9 +4485,33 @@ local tbl =
 				},
 			},
 			id = 14374,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Warrior_GreatSword",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 2,
+						uid = "Aggro",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 14528,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Warrior",
 		},
 	},
 	fightrangetype = 1,
