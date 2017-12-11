@@ -4,6 +4,57 @@ local tbl =
 	{
 		
 		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 30,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5639,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Elementalist",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 40,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 29968,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Elementalist",
+		},
+		
+		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -27,6 +78,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -50,6 +102,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 2.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -73,6 +126,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -90,12 +144,14 @@ local tbl =
 				},
 			},
 			id = 44239,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -119,6 +175,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -142,6 +199,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 4,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -149,41 +207,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 40,
 					}, 
 					casttarget = 2,
 				},
 			},
-			id = 5606,
+			id = 29415,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Water",
+			setsattackrange = false,
+			skillpaletteuid = "Elementalist",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5748,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Water",
-		},
-		
-		{
+			activationtime = 4,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -194,893 +235,20 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 1200,
+						value = 200,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 5605,
+			id = 29719,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Water",
+			skillpaletteuid = "Elementalist",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5607,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Water",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5497,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Focus_Offhand_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5678,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Focus_Offhand_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 240,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5487,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Water",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 400,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5537,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Water",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5538,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Scepter_Water",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5510,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Scepter_Water",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5530,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Focus_Offhand_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5562,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Focus_Offhand_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 450,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 45313,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Sword_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 180,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 46447,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Sword_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5644,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 400,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5496,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 29548,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Warhorn_Offhand_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 750,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 29533,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Warhorn_Offhand_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 170,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 46295,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Sword_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 180,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 40709,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Sword_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 240,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5690,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Offhand_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 360,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5522,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Offhand_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5529,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Offhand_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 150,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5687,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Offhand_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5686,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5683,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 228,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5685,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5528,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 42867,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Sword_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 600,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 44998,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Sword_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5527,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 300,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5646,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 400,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5658,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5662,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5659,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5661,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 1175,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Downed",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5505,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Downed",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5564,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Downed",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5681,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Water",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5550,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Water",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5551,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Water",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5515,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Water",
-		},
-		
-		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1096,34 +264,15 @@ local tbl =
 					casttarget = 1,
 				},
 			},
-			id = 42271,
+			id = 30662,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Sword_Water",
+			skillpaletteuid = "Elementalist",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 44405,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Sword_Water",
-		},
-		
-		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1134,18 +283,20 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 750,
+						value = 130,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 30008,
+			id = 29948,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Warhorn_Offhand_Air",
+			setsattackrange = false,
+			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1156,18 +307,116 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 1200,
+						value = 130,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 30795,
+			id = 30432,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Warhorn_Offhand_Air",
+			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5738,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5736,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5735,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist",
+		},
+		
+		{
+			activationtime = 4,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29706,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Elementalist",
+		},
+		
+		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1183,13 +432,15 @@ local tbl =
 					casttarget = 1,
 				},
 			},
-			id = 29453,
+			id = 5737,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Warhorn_Offhand_Earth",
+			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 4,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1200,455 +451,20 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 750,
+						value = 130,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 30336,
+			id = 29618,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Warhorn_Offhand_Earth",
+			skillpaletteuid = "Elementalist",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 360,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 30864,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Warhorn_Offhand_Water",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 750,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 30446,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Warhorn_Offhand_Water",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5696,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Scepter_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5695,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Scepter_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5597,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5599,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5566,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5600,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 240,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5525,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5559,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5556,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Focus_Offhand_Water",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5490,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Focus_Offhand_Water",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5552,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5682,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5671,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5553,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5691,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Offhand_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 300,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5557,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Dagger_Offhand_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5692,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Scepter_Fire",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 900,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5675,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Scepter_Fire",
-		},
-		
-		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1664,55 +480,15 @@ local tbl =
 					casttarget = 1,
 				},
 			},
-			id = 5609,
+			id = 5516,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Drowning",
+			skillpaletteuid = "Elementalist",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5610,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Drowning",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 1175,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Drowning",
-		},
-		
-		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1723,18 +499,116 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 1200,
+						value = 600,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 5655,
+			id = 5531,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Air",
+			skillpaletteuid = "zFiery Greatsword",
 		},
 		
 		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5517,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFiery Greatsword",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5697,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFiery Greatsword",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5533,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFiery Greatsword",
+		},
+		
+		{
+			activationtime = 2.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5532,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFiery Greatsword",
+		},
+		
+		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1750,13 +624,135 @@ local tbl =
 					casttarget = 1,
 				},
 			},
-			id = 5650,
+			id = 5567,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Air",
+			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5721,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFrost Bow",
+		},
+		
+		{
+			activationtime = 2.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5723,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFrost Bow",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5568,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFrost Bow",
+		},
+		
+		{
+			activationtime = 2,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5720,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFrost Bow",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5595,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFrost Bow",
+		},
+		
+		{
+			activationtime = 3.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1772,100 +768,39 @@ local tbl =
 					casttarget = 1,
 				},
 			},
-			id = 5652,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5648,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Trident_Air",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 300,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5555,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Focus_Offhand_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5521,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Focus_Offhand_Earth",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 5679,
+			id = 5501,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Staff_Fire",
 		},
 		
 		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5680,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Fire",
+		},
+		
+		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1888,6 +823,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1903,13 +839,893 @@ local tbl =
 					casttarget = 1,
 				},
 			},
-			id = 5501,
+			id = 5679,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Staff_Fire",
 		},
 		
 		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 320,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5606,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Water",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5748,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Water",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5605,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Water",
+		},
+		
+		{
+			activationtime = 1.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5607,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Water",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5497,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Focus_Offhand_Fire",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 40,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5678,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Focus_Offhand_Fire",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5487,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Water",
+		},
+		
+		{
+			activationtime = 2.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 400,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5537,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Water",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5538,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Scepter_Water",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5510,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Scepter_Water",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 400,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5530,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Focus_Offhand_Air",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5562,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Focus_Offhand_Air",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 450,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 45313,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Sword_Fire",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 180,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 46447,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Sword_Fire",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5644,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Fire",
+		},
+		
+		{
+			activationtime = 2.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 400,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5496,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Fire",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29548,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Warhorn_Offhand_Fire",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 750,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29533,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Warhorn_Offhand_Fire",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 170,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 46295,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Sword_Earth",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 180,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 40709,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Sword_Earth",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5690,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Offhand_Earth",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 360,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5522,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Offhand_Earth",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5529,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Offhand_Air",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5687,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Offhand_Air",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5686,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Earth",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5683,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Earth",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 40,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5685,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Earth",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5528,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Earth",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 42867,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Sword_Air",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 44998,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Sword_Air",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						count = 3,
+						distance = 130,
+						operator = 1,
+						target = 1,
+						type = 1,
+						uid = "Entities In Range",
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 40,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5527,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Air",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5646,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Air",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 400,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5658,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Earth",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5662,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Earth",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5659,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Earth",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5661,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Earth",
+		},
+		
+		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1924,13 +1740,39 @@ local tbl =
 					casttarget = 2,
 				},
 			},
-			id = 5680,
+			id = 1175,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
-			skillpaletteuid = "Elementalist_Staff_Fire",
+			skillpaletteuid = "Elementalist_Downed",
 		},
 		
 		{
+			activationtime = 3.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5505,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Downed",
+		},
+		
+		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1941,17 +1783,1000 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5564,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Downed",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5681,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Water",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5550,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Water",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5551,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Water",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5515,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Water",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 42271,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Sword_Water",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 44405,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Sword_Water",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 750,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30008,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Warhorn_Offhand_Air",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30795,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Warhorn_Offhand_Air",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29453,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Warhorn_Offhand_Earth",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 750,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30336,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Warhorn_Offhand_Earth",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 360,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30864,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Warhorn_Offhand_Water",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 750,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30446,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Warhorn_Offhand_Water",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5696,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Scepter_Earth",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5695,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Scepter_Earth",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5597,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Fire",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5599,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Fire",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5566,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Fire",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5600,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Fire",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5525,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Earth",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5559,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Earth",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5556,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Focus_Offhand_Water",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5490,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Focus_Offhand_Water",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5552,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Air",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						bufftype = 1,
+						operator = 1,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5682,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Air",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5671,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Air",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5553,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Staff_Air",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5691,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Offhand_Fire",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5557,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Dagger_Offhand_Fire",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5692,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Scepter_Fire",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5675,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Scepter_Fire",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5609,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Drowning",
+		},
+		
+		{
+			activationtime = 3,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5610,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Drowning",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 1175,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Drowning",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5655,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Air",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5650,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Air",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5652,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Air",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5648,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Trident_Air",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5555,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Focus_Offhand_Earth",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 30,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5521,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Elementalist_Focus_Offhand_Earth",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						count = 3,
+						distance = 130,
+						operator = 1,
+						target = 1,
+						type = 1,
+						uid = "Entities In Range",
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 5520,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Dagger_Offhand_Water",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1959,20 +2784,24 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
+						bufftype = 2,
+						operator = 5,
 						target = 1,
-						uid = "CombatState",
+						uid = "Buffs (Count)",
+						value = 2,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 5558,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Dagger_Offhand_Water",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1989,12 +2818,14 @@ local tbl =
 				},
 			},
 			id = 5561,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Scepter_Air",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2011,12 +2842,14 @@ local tbl =
 				},
 			},
 			id = 5694,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Scepter_Air",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2026,39 +2859,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 900,
 					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5567,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Elementalist",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 5536,
+			instantcast = true,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2068,18 +2883,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 600,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 43638,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2089,18 +2907,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 180,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 40183,
+			instantcast = true,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2116,12 +2937,14 @@ local tbl =
 				},
 			},
 			id = 5554,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2131,18 +2954,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1500,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 5539,
+			instantcast = true,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2152,18 +2978,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 34714,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2173,18 +3002,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 25489,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2200,12 +3032,14 @@ local tbl =
 				},
 			},
 			id = 5540,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2215,18 +3049,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 240,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 5635,
+			instantcast = true,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2236,60 +3073,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
 					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29968,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Elementalist",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 30662,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Elementalist",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 25497,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2299,39 +3097,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 900,
 					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29719,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Elementalist",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 5638,
+			instantcast = true,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2339,41 +3119,24 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
+						bufftype = 5,
+						operator = 5,
 						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5639,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Elementalist",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						uid = "Buffs (Count)",
+						value = 1,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 45746,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2381,20 +3144,24 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
+						bufftype = 5,
+						operator = 5,
 						target = 1,
-						uid = "CombatState",
+						uid = "Buffs (Count)",
+						value = 1,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 30047,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2416,6 +3183,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2431,12 +3199,14 @@ local tbl =
 				},
 			},
 			id = 44612,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2444,20 +3214,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 50,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 44926,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2479,6 +3253,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2486,41 +3261,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29706,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Elementalist",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 50,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 5641,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2528,62 +3286,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 30432,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Elementalist",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29415,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Elementalist",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 10,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 5570,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2591,83 +3311,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 5516,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Elementalist",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29948,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Elementalist",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29618,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Elementalist",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 10,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 5542,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2675,20 +3336,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 20,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 5571,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2696,20 +3361,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Health",
+						value = 10,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 5572,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 3.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2718,40 +3387,32 @@ local tbl =
 					
 					{
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Distance",
+						value = 900,
 					}, 
-					casttarget = 2,
+					casttarget = 3,
 				},
-			},
-			id = 5738,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Elementalist",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
 				
 				{
 					
 					{
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 3,
+						uid = "Downed",
 					}, 
-					casttarget = 2,
+					casttarget = 3,
 				},
 			},
 			id = 5761,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2767,12 +3428,14 @@ local tbl =
 				},
 			},
 			id = 5534,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Elementalist",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2789,12 +3452,14 @@ local tbl =
 				},
 			},
 			id = 5604,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Trident_Water",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2811,12 +3476,14 @@ local tbl =
 				},
 			},
 			id = 15716,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Dagger_Water",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2839,6 +3506,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2855,12 +3523,14 @@ local tbl =
 				},
 			},
 			id = 40326,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Sword_Fire",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2883,6 +3553,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2905,6 +3576,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2927,6 +3599,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2949,6 +3622,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2965,12 +3639,14 @@ local tbl =
 				},
 			},
 			id = 43080,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Sword_Earth",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2993,6 +3669,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3015,6 +3692,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3031,12 +3709,14 @@ local tbl =
 				},
 			},
 			id = 45216,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Sword_Air",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3059,6 +3739,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3081,6 +3762,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3103,6 +3785,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3119,12 +3802,14 @@ local tbl =
 				},
 			},
 			id = 5657,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Trident_Earth",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3147,6 +3832,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3169,6 +3855,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3185,12 +3872,14 @@ local tbl =
 				},
 			},
 			id = 45983,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Sword_Water",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3213,6 +3902,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3235,6 +3925,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3257,6 +3948,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3273,12 +3965,14 @@ local tbl =
 				},
 			},
 			id = 5598,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Trident_Fire",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3301,6 +3995,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3317,12 +4012,14 @@ local tbl =
 				},
 			},
 			id = 5518,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Staff_Air",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3345,6 +4042,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3367,6 +4065,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3389,6 +4088,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3411,6 +4111,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 3.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3427,9 +4128,468 @@ local tbl =
 				},
 			},
 			id = 5526,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Elementalist_Scepter_Air",
+		}, 
+		[174] = 
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 550,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5719,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFlame Axe",
+		},
+		[175] = 
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5718,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFlame Axe",
+		},
+		[176] = 
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5717,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFlame Axe",
+		},
+		[177] = 
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5593,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFlame Axe",
+		},
+		[178] = 
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5541,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zFlame Axe",
+		},
+		[179] = 
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5732,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zLightning Hammer",
+		},
+		[180] = 
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 360,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5725,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zLightning Hammer",
+		},
+		[181] = 
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5733,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zLightning Hammer",
+		},
+		[182] = 
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5625,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zLightning Hammer",
+		},
+		[183] = 
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5726,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skill_next = 
+			{
+				activationtime = 0.5,
+				condition_luacode = "return true",
+				conditions = 
+				{
+					
+					{
+						
+						{
+							operator = 1,
+							target = 1,
+							uid = "Distance",
+							value = 130,
+						}, 
+						casttarget = 1,
+					},
+				},
+				id = 5727,
+				instantcast = false,
+				requireslos = true,
+				setsattackrange = true,
+				skill_next = 
+				{
+					activationtime = 0.5,
+					condition_luacode = "return true",
+					conditions = 
+					{
+						
+						{
+							
+							{
+								operator = 1,
+								target = 1,
+								uid = "Distance",
+								value = 130,
+							}, 
+							casttarget = 1,
+						},
+					},
+					id = 5728,
+					instantcast = false,
+					requireslos = true,
+					setsattackrange = true,
+					skillpaletteuid = "zLightning Hammer",
+				},
+				skillpaletteuid = "zLightning Hammer",
+			},
+			skillpaletteuid = "zLightning Hammer",
+		},
+		[184] = 
+		{
+			activationtime = 3,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 40,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 5623,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zEarth Shield",
+		},
+		[185] = 
+		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5747,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zEarth Shield",
+		},
+		[186] = 
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5547,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zEarth Shield",
+		},
+		[187] = 
+		{
+			activationtime = 2.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 35,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 21647,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "zEarth Shield",
+		},
+		[188] = 
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 5621,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skill_next = 
+			{
+				activationtime = 0.75,
+				condition_luacode = "return true",
+				conditions = 
+				{
+					
+					{
+						
+						{
+							operator = 1,
+							target = 1,
+							uid = "Distance",
+							value = 130,
+						}, 
+						casttarget = 1,
+					},
+				},
+				id = 21646,
+				instantcast = false,
+				requireslos = true,
+				setsattackrange = true,
+				skill_next = 
+				{
+					activationtime = 0.75,
+					condition_luacode = "return true",
+					conditions = 
+					{
+						
+						{
+							
+							{
+								operator = 1,
+								target = 1,
+								uid = "Distance",
+								value = 130,
+							}, 
+							casttarget = 1,
+						},
+					},
+					id = 5746,
+					instantcast = false,
+					requireslos = true,
+					setsattackrange = true,
+					skillpaletteuid = "zEarth Shield",
+				},
+				skillpaletteuid = "zEarth Shield",
+			},
+			skillpaletteuid = "zEarth Shield",
 		},
 	},
 	fightrangetype = 1,

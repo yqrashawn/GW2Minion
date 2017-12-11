@@ -4,6 +4,7 @@ local tbl =
 	{
 		
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -15,18 +16,45 @@ local tbl =
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 30,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 10247,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 70,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 21750,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -38,18 +66,20 @@ local tbl =
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 65,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 10176,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -67,12 +97,14 @@ local tbl =
 				},
 			},
 			id = 10177,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -84,18 +116,20 @@ local tbl =
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 60,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 30305,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -107,18 +141,20 @@ local tbl =
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 60,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 40200,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 2.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -130,18 +166,20 @@ local tbl =
 						operator = 1,
 						target = 2,
 						uid = "Health",
-						value = 75,
+						value = 60,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 10213,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -165,6 +203,199 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29830,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 2.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 50,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 10237,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 2.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 10211,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10191,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10287,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10190,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10192,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10202,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -181,12 +412,14 @@ local tbl =
 				},
 			},
 			id = 10224,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_drowning",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -203,12 +436,14 @@ local tbl =
 				},
 			},
 			id = 10366,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_drowning",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -224,12 +459,14 @@ local tbl =
 				},
 			},
 			id = 1175,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_drowning",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -246,12 +483,14 @@ local tbl =
 				},
 			},
 			id = 10175,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_pistol",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -268,12 +507,14 @@ local tbl =
 				},
 			},
 			id = 10229,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_pistol",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -290,12 +531,14 @@ local tbl =
 				},
 			},
 			id = 10282,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_focus",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -312,12 +555,14 @@ local tbl =
 				},
 			},
 			id = 10186,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_focus",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -325,20 +570,25 @@ local tbl =
 				{
 					
 					{
+						count = 3,
+						distance = 600,
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						type = 1,
+						uid = "Entities In Range",
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 10363,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_focus",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -355,12 +605,14 @@ local tbl =
 				},
 			},
 			id = 10224,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_downed",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -383,6 +635,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -404,6 +657,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -420,12 +674,14 @@ local tbl =
 				},
 			},
 			id = 10327,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Trident",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -442,12 +698,14 @@ local tbl =
 				},
 			},
 			id = 10259,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Trident",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -464,12 +722,14 @@ local tbl =
 				},
 			},
 			id = 10260,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Trident",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -486,12 +746,14 @@ local tbl =
 				},
 			},
 			id = 10328,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Trident",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -508,12 +770,14 @@ local tbl =
 				},
 			},
 			id = 10314,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_scepter",
 		},
 		
 		{
+			activationtime = 2,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -530,12 +794,14 @@ local tbl =
 				},
 			},
 			id = 10168,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_scepter",
 		},
 		
 		{
+			activationtime = 2,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -552,12 +818,14 @@ local tbl =
 				},
 			},
 			id = 10276,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_scepter",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -574,12 +842,14 @@ local tbl =
 				},
 			},
 			id = 43761,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_axe",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -596,56 +866,14 @@ local tbl =
 				},
 			},
 			id = 45243,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_axe",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 10310,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Mesmer_staff_ambush",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 10216,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Mesmer_staff_ambush",
-		},
-		
-		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -662,12 +890,14 @@ local tbl =
 				},
 			},
 			id = 10169,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_staff_ambush",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -677,18 +907,69 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 240,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 10331,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_staff_ambush",
 		},
 		
 		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10310,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_staff_ambush",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10216,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_staff_ambush",
+		},
+		
+		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -705,12 +986,14 @@ local tbl =
 				},
 			},
 			id = 10334,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_mh",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -718,21 +1001,25 @@ local tbl =
 				{
 					
 					{
+						count = 2,
+						distance = 600,
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 600,
+						type = 1,
+						uid = "Entities In Range",
 					}, 
 					casttarget = 1,
 				},
 			},
 			id = 10337,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_mh",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -749,56 +1036,14 @@ local tbl =
 				},
 			},
 			id = 10173,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_mh",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 10310,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Mesmer_staff",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1200,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 10216,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Mesmer_staff",
-		},
-		
-		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -815,12 +1060,14 @@ local tbl =
 				},
 			},
 			id = 10169,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_staff",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -830,18 +1077,69 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 240,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 10331,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_staff",
 		},
 		
 		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10310,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_staff",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10216,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_staff",
+		},
+		
+		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -858,12 +1156,14 @@ local tbl =
 				},
 			},
 			id = 10220,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_greatsword",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -880,12 +1180,14 @@ local tbl =
 				},
 			},
 			id = 10333,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_greatsword",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -902,12 +1204,14 @@ local tbl =
 				},
 			},
 			id = 10218,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_greatsword",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -924,12 +1228,14 @@ local tbl =
 				},
 			},
 			id = 10221,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_greatsword",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -946,12 +1252,14 @@ local tbl =
 				},
 			},
 			id = 10220,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_greatsword_ambush",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -968,12 +1276,14 @@ local tbl =
 				},
 			},
 			id = 10333,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_greatsword_ambush",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -990,12 +1300,14 @@ local tbl =
 				},
 			},
 			id = 10218,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_greatsword_ambush",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1012,12 +1324,14 @@ local tbl =
 				},
 			},
 			id = 10221,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_greatsword_ambush",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1034,12 +1348,14 @@ local tbl =
 				},
 			},
 			id = 10285,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_torch",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1056,12 +1372,14 @@ local tbl =
 				},
 			},
 			id = 10189,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_torch",
 		},
 		
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1078,12 +1396,14 @@ local tbl =
 				},
 			},
 			id = 10255,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_spear",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1100,12 +1420,14 @@ local tbl =
 				},
 			},
 			id = 10251,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_spear",
 		},
 		
 		{
+			activationtime = 1.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1122,12 +1444,14 @@ local tbl =
 				},
 			},
 			id = 10318,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_spear",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1135,20 +1459,25 @@ local tbl =
 				{
 					
 					{
+						count = 3,
+						distance = 130,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						type = 1,
+						uid = "Entities In Range",
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 10325,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_spear",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1165,12 +1494,14 @@ local tbl =
 				},
 			},
 			id = 10322,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_spear",
 		},
 		
 		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1187,12 +1518,14 @@ local tbl =
 				},
 			},
 			id = 29649,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_shield",
 		},
 		
 		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1209,12 +1542,14 @@ local tbl =
 				},
 			},
 			id = 30769,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_shield",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1231,12 +1566,14 @@ local tbl =
 				},
 			},
 			id = 30643,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_shield",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1253,12 +1590,14 @@ local tbl =
 				},
 			},
 			id = 10334,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_ambush_mh",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1266,21 +1605,25 @@ local tbl =
 				{
 					
 					{
+						count = 2,
+						distance = 600,
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 600,
+						type = 1,
+						uid = "Entities In Range",
 					}, 
 					casttarget = 1,
 				},
 			},
 			id = 10337,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_ambush_mh",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1297,12 +1640,14 @@ local tbl =
 				},
 			},
 			id = 10173,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_ambush_mh",
 		},
 		
 		{
+			activationtime = 2.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1319,12 +1664,14 @@ local tbl =
 				},
 			},
 			id = 10280,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_oh",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1341,12 +1688,14 @@ local tbl =
 				},
 			},
 			id = 10174,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_oh",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1363,12 +1712,14 @@ local tbl =
 				},
 			},
 			id = 10358,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_oh",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1385,12 +1736,14 @@ local tbl =
 				},
 			},
 			id = 10314,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_cepter_ambush",
 		},
 		
 		{
+			activationtime = 2,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1407,12 +1760,14 @@ local tbl =
 				},
 			},
 			id = 10276,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_cepter_ambush",
 		},
 		
 		{
+			activationtime = 2,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1429,12 +1784,14 @@ local tbl =
 				},
 			},
 			id = 10168,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_cepter_ambush",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1451,12 +1808,14 @@ local tbl =
 				},
 			},
 			id = 45243,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_axe_ambush",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1473,12 +1832,14 @@ local tbl =
 				},
 			},
 			id = 43761,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_axe_ambush",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1488,18 +1849,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 900,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 10341,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1507,20 +1871,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 50,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 10311,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1529,19 +1897,34 @@ local tbl =
 					
 					{
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 30,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 10187,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1551,60 +1934,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 900,
 					}, 
-					casttarget = 2,
-				},
-			},
-			id = 10190,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 10191,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 41065,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1614,60 +1958,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 900,
 					}, 
-					casttarget = 2,
-				},
-			},
-			id = 10192,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 10287,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 30525,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1677,18 +1982,33 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 40,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 29519,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1698,18 +2018,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 45046,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1718,40 +2041,34 @@ local tbl =
 					
 					{
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Distance",
+						value = 1200,
 					}, 
 					casttarget = 2,
 				},
-			},
-			id = 10247,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
 				
 				{
 					
 					{
-						operator = 1,
+						bufftype = 2,
+						operator = 5,
 						target = 1,
-						uid = "CombatState",
+						uid = "Buffs (Count)",
+						value = 2,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 10203,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1761,18 +2078,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 900,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 42851,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1780,20 +2100,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 30,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 29526,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1801,20 +2125,24 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
+						bufftype = 2,
+						operator = 5,
 						target = 1,
-						uid = "CombatState",
+						uid = "Buffs (Count)",
+						value = 3,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 10209,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1824,18 +2152,33 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 20,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 10236,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1843,20 +2186,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 50,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 29578,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1866,18 +2213,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 900,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 30814,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1887,144 +2237,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 10200,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 10232,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 10201,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 45666,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 10202,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 10234,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 43064,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
+			activationtime = 2.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2040,12 +2267,39 @@ local tbl =
 				},
 			},
 			id = 10204,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 20,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 10232,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2055,18 +2309,152 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 40,
 					}, 
 					casttarget = 2,
+				},
+			},
+			id = 10201,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						operator = 2,
+						target = 2,
+						uid = "Clone",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 45666,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 50,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 10234,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 43064,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Mesmer_Mesmer",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						bufftype = 2,
+						operator = 5,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 2,
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
 				},
 			},
 			id = 10267,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2076,18 +2464,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 900,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 30359,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2097,18 +2488,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 900,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 29856,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2118,39 +2512,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
 					}, 
-					casttarget = 2,
-				},
-			},
-			id = 10237,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 10206,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2160,18 +2536,33 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 50,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 10238,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 2.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2179,20 +2570,24 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
+						bufftype = 2,
+						operator = 5,
 						target = 1,
-						uid = "CombatState",
+						uid = "Buffs (Count)",
+						value = 3,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 10207,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2202,18 +2597,33 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 2,
+						operator = 5,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 2,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 10185,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2223,18 +2633,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 30747,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2250,12 +2663,14 @@ local tbl =
 				},
 			},
 			id = 10197,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2265,18 +2680,33 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 40,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 10302,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2286,39 +2716,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1200,
 					}, 
-					casttarget = 2,
-				},
-			},
-			id = 10211,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 10212,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2327,19 +2739,32 @@ local tbl =
 					
 					{
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Distance",
+						value = 1200,
 					}, 
-					casttarget = 2,
+					casttarget = 3,
+				},
+				
+				{
+					
+					{
+						operator = 1,
+						target = 3,
+						uid = "Downed",
+					}, 
+					casttarget = 3,
 				},
 			},
 			id = 10244,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 1.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2347,20 +2772,24 @@ local tbl =
 				{
 					
 					{
+						healthtype = 3,
 						operator = 1,
-						target = 1,
-						uid = "CombatState",
+						target = 2,
+						uid = "Health",
+						value = 30,
 					}, 
 					casttarget = 2,
 				},
 			},
 			id = 10245,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2370,39 +2799,21 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 450,
 					}, 
-					casttarget = 2,
+					casttarget = 1,
 				},
 			},
 			id = 45449,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
+			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Mesmer",
 		},
 		
 		{
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 2,
-				},
-			},
-			id = 29830,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Mesmer_Mesmer",
-		},
-		
-		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2419,12 +2830,14 @@ local tbl =
 				},
 			},
 			id = 10196,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_drowning",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2441,12 +2854,14 @@ local tbl =
 				},
 			},
 			id = 10196,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_downed",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2463,12 +2878,14 @@ local tbl =
 				},
 			},
 			id = 10258,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_Trident",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2485,12 +2902,14 @@ local tbl =
 				},
 			},
 			id = 10289,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_scepter",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2507,12 +2926,14 @@ local tbl =
 				},
 			},
 			id = 10290,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_scepter",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2529,12 +2950,14 @@ local tbl =
 				},
 			},
 			id = 10291,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_scepter",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2551,12 +2974,14 @@ local tbl =
 				},
 			},
 			id = 44791,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_axe",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2573,12 +2998,14 @@ local tbl =
 				},
 			},
 			id = 41164,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_axe",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2595,12 +3022,14 @@ local tbl =
 				},
 			},
 			id = 44840,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_axe",
 		},
 		
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2617,12 +3046,14 @@ local tbl =
 				},
 			},
 			id = 40184,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_staff_ambush",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2639,12 +3070,14 @@ local tbl =
 				},
 			},
 			id = 10170,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_mh",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2661,12 +3094,14 @@ local tbl =
 				},
 			},
 			id = 10171,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_mh",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2683,12 +3118,14 @@ local tbl =
 				},
 			},
 			id = 10172,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_mh",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2705,12 +3142,14 @@ local tbl =
 				},
 			},
 			id = 10273,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_staff",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2727,12 +3166,14 @@ local tbl =
 				},
 			},
 			id = 10219,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_greatsword",
 		},
 		
 		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2749,12 +3190,14 @@ local tbl =
 				},
 			},
 			id = 44241,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_greatsword_ambush",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2771,12 +3214,14 @@ local tbl =
 				},
 			},
 			id = 10317,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_spear",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2793,12 +3238,14 @@ local tbl =
 				},
 			},
 			id = 10315,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_spear",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2815,12 +3262,14 @@ local tbl =
 				},
 			},
 			id = 10316,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_spear",
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2837,12 +3286,14 @@ local tbl =
 				},
 			},
 			id = 45230,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_sword_ambush_mh",
 		},
 		
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2859,12 +3310,14 @@ local tbl =
 				},
 			},
 			id = 42304,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_cepter_ambush",
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2881,6 +3334,7 @@ local tbl =
 				},
 			},
 			id = 44321,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Mesmer_axe_ambush",
