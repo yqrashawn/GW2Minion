@@ -28,6 +28,24 @@ local tbl =
 				},
 				
 				{
+					class = "Action",
+					nodes = 
+					{
+					},
+					settings = 
+					{
+					},
+					variables = 
+					{
+						finishcode = "",
+						info = "",
+						monitorcode = "",
+						runcode = "local meshstate = NavigationManager:GetNavMeshState()\n\nif(meshstate ~= GLOBAL.MESHSTATE.MESHREADY) then\nd(\"test\")\n\t\td(\"[NavToMap]: Waiting for the mesh to load.\")\n\t\tself:running()\n\t\treturn\nend\n\t\tself:fail()",
+						startcode = "",
+					},
+				},
+				
+				{
 					class = "PrioritySelector",
 					nodes = 
 					{
