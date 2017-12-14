@@ -99,7 +99,7 @@ local tbl =
 										finishcode = "",
 										info = "Pickup Presents",
 										monitorcode = "",
-										runcode = "local glist = GadgetList(\"nearest,interactable,contentid=22957\")\nif ( table.valid(glist) ) then\n\t\tlocal present = select(2,next(glist))\n\t\tif ( present ) then\n\t\t\t\tif ( not present.isininteractrange ) then\n\t\t\t\t\t\tcontext.moveto_position = present.pos\n\t\t\t\t\t\tself:success()\n\t\t\t\t\t\treturn\n\t\t\t\telse\n\t\t\t\t\t\td(\"[Dolyak] - Picking up present.\")\n\t\t\t\t\t\tPlayer:Interact(present.id)\t\t\t\t\t\t\n\t\t\t\t\t\tBehaviorManager:SetLastTick(BehaviorManager:GetLastTick() + 1500)\n\t\t\t\t\t\tif ( not context.presentscollected ) \n\t\t\t\t\t\t\t\tthen context.presentscollected = 1\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\tcontext.presentscollected = context.presentscollected + 1\n\t\t\t\t\t\tend\n\t\t\t\t\t\tSettings.GW2Minion.presentstotal = Settings.GW2Minion.presentstotal + 1\n\t\t\t\tend\n\t\tend\t\t\nend\nself:fail()",
+										runcode = "local glist = GadgetList(\"nearest,interactable,contentid=22957\")\nif ( table.valid(glist) ) then\n\t\tlocal present = select(2,next(glist))\n\t\tif ( present ) then\n\t\t\t\tif ( not present.isininteractrange ) then\n\t\t\t\t\t\tcontext.moveto_position = present.pos\n\t\t\t\t\t\tself:success()\n\t\t\t\t\t\treturn\n\t\t\t\telse\n\t\t\t\t\t\td(\"[Dolyak] - Picking up present.\")\n\t\t\t\t\t\tPlayer:SetTarget(present.id)\n\t\t\t\t\t\tml_global_information.Wait(math.random(300,500))\n\t\t\t\t\t\tPlayer:Interact(present.id)\t\t\t\t\t\t\n\t\t\t\t\t\tBehaviorManager:SetLastTick(BehaviorManager:GetLastTick() + 1500)\n\t\t\t\t\t\tif ( not context.presentscollected ) \n\t\t\t\t\t\t\t\tthen context.presentscollected = 1\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\tcontext.presentscollected = context.presentscollected + 1\n\t\t\t\t\t\tend\n\t\t\t\t\t\tSettings.GW2Minion.presentstotal = Settings.GW2Minion.presentstotal + 1\n\t\t\t\tend\n\t\tend\t\t\nend\nself:fail()",
 										startcode = "",
 									},
 								},
@@ -203,60 +203,28 @@ local tbl =
 										finishcode = "",
 										info = "Stay near dolyak",
 										monitorcode = "",
-										runcode = "local EList = MapMarkerList(\"nearest,isevent,onmesh,eventid=9141\")\nif(table.valid(EList)) then\n\t\tlocal _,event = next(EList)\n\t\tif(table.valid(event)) then\t\t\t\t\t\t\t\t\n\t\t\t\tif(table.valid(event.eventinfo)) then\n\t\t\t\t\t\tif ( event.distance > 350 ) then\n\t\t\t\t\t\t\t\tcontext.moveto_position = event.pos\n\t\t\t\t\t\t\t\tself:success()\t\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\t\t\t\t\n\t\t\t\tend\n\t\tend\nend\nself:fail()",
+										runcode = "local EList = MapMarkerList(\"nearest,isevent,onmesh,eventid=10090\")\n\nif(table.valid(EList)) then\ncontext.donationlimit = nil\nontext.rpos = nil\ncontext.donationcount = 0\ncontext.yakexist = ml_global_information.Now\n\t\tlocal _,event = next(EList)\n\t\tif(table.valid(event)) then\t\t\t\t\t\t\t\t\n\t\t\t\tif(table.valid(event.eventinfo)) then\n\t\t\t\t\t\tif ( event.distance > 350 ) then\n\t\t\t\t\t\t\t\tcontext.moveto_position = event.pos\n\t\t\t\t\t\t\t\tself:success()\t\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\t\t\t\t\n\t\t\t\tend\n\t\tend\nend\nself:fail()",
 										startcode = "",
 									},
 								},
 								
 								{
-									class = "PrioritySelector",
+									class = "SubTree",
 									nodes = 
 									{
-										
-										{
-											class = "Action",
-											nodes = 
-											{
-											},
-											settings = 
-											{
-											},
-											variables = 
-											{
-												finishcode = "",
-												info = "Update Event data",
-												monitorcode = "",
-												runcode = "local EList = MapMarkerList(\"nearest,isevent,onmesh,eventid=9141\")\nif(table.valid(EList)) then\n\t\tlocal _,event = next(EList)\n\t\tif(table.valid(event)) then\t\t\t\t\t\t\t\t\n\t\t\t\tif(table.valid(event.eventinfo)) then\n\t\t\t\t\t\tif ( event.distance > 350 ) then\n\t\t\t\t\t\t\t\tcontext.moveto_position = event.pos\n\t\t\t\t\t\t\t\tself:fail()\t\n\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\tend\t\t\t\t\n\t\t\t\tend\n\t\tend\nend\nself:success()",
-												startcode = "",
-											},
-										},
-										
-										{
-											class = "SubTree",
-											nodes = 
-											{
-											},
-											settings = 
-											{
-												randomMovement = true,
-												randomizestoppingdistance = false,
-												smoothturns = true,
-												stoppingdistance = 25,
-												stoppingidstancemaxrange = 50,
-												usewaypoints = false,
-											},
-											variables = 
-											{
-												filename = "MoveTo.st",
-											},
-										},
 									},
 									settings = 
 									{
+										randomMovement = true,
+										randomizestoppingdistance = false,
+										smoothturns = true,
+										stoppingdistance = 25,
+										stoppingidstancemaxrange = 50,
+										usewaypoints = false,
 									},
 									variables = 
 									{
-										monitorcode = "",
+										filename = "MoveTo.st",
 									},
 								},
 							},
@@ -292,7 +260,7 @@ local tbl =
 												finishcode = "",
 												info = "Donate adn move to random spot",
 												monitorcode = "",
-												runcode = "local EList = MapMarkerList(\"nearest,isevent,onmesh,eventid=9142\")\nif(table.valid(EList)) then\n\t\tlocal _,event = next(EList)\n\t\tif(table.valid(event)) then\t\t\t\t\t\t\t\t\n\t\t\t\tif(table.valid(event.eventinfo)) then\n\t\t\t\t\t\tif ( not context.donated and Inventory:GetInventoryMoney() > 10000) then\n\t\t\t\t\t\t\t\tlocal hoho = CharacterList:Get(event.characterid)\n\t\t\t\t\t\t\t\tif( not hoho) then\n\t\t\t\t\t\t\t\t\t\tlocal epos = event.pos\n\t\t\t\t\t\t\t\t\t\tif ( epos ) then\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\tcontext.moveto_position = epos\n\t\t\t\t\t\t\t\t\t\t\t\tself:success()\t\n\t\t\t\t\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\t\t\t\t\tend\n\n\t\t\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\t\t\tif ( not hoho.isininteractrange ) then\n\t\t\t\t\t\t\t\t\t\t\t\tcontext.moveto_position = hoho.pos\n\t\t\t\t\t\t\t\t\t\t\t\tself:success()\n\t\t\t\t\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\t\t\t\t\tif ( not Player:IsConversationOpen() ) then\n\t\t\t\t\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Talking to Hoho\")\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tPlayer:SetTarget(hoho.id)\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tPlayer:Interact(hoho.id)\n\n\t\t\t\t\t\t\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\tlocal clist = Player:GetConversationOptions()\n\t\t\t\t\t\t\t\t\t\t\t\t\tif (table.valid(clist)) then \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tif( table.size(clist) == 3 ) then \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Selecting donate chat option\")\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPlayer:SelectConversationOptionByIndex(0)\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\telseif ( table.size(clist) == 4 ) then\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Donating a silver\")\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPlayer:SelectConversationOptionByIndex(1)\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tcontext.donated = true\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings.GW2Minion.hohodonation = Settings.GW2Minion.hohodonation + 1\n\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tlocal epos = event.pos\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tlocal rpos = NavigationManager:GetRandomPointOnCircle(epos.x,epos.y,epos.z,150,800)\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tif ( rpos ) then\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Moving to random startpos..\")\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tcontext.moveto_position = rpos\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself:success()\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\t\t\tend\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tend\n\n\t\t\t\t\t\telse\n\n\t\t\t\t\t\t\n\n\n\t\t\t\t\t\t\t\tif ( event.distance > 1000 ) then\n\t\t\t\t\t\t\t\t\t\tlocal epos = event.pos\n\t\t\t\t\t\t\t\t\t\tlocal rpos = NavigationManager:GetRandomPointOnCircle(epos.x,epos.y,epos.z,150,800)\n\t\t\t\t\t\t\t\t\t\tif ( rpos ) then\n\t\t\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Moving to random startpos..\")\n\t\t\t\t\t\t\t\t\t\t\t\tcontext.moveto_position = rpos\n\t\t\t\t\t\t\t\t\t\t\t\tself:success()\t\n\t\t\t\t\t\t\t\t\t\t\t\treturn\n\t\t\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\tend\t\t\t\t\n\t\t\t\tend\n\t\tend\nend\nself:fail()",
+												runcode = "---we hit this node which means escort is inactive\nif context.yakexist and TimeSince(context.yakexist) > 5000 then\n\tif not context.donationlimit then\n\t\tcontext.donationlimit = math.random(8,15)\n\tend\n\t\n\tlocal hohopos = {x=-14486,y=-4239,z=-2403}\n\tlocal hohodist = math.distance3d(Player.pos.x,Player.pos.y,Player.pos.x,hohopos.x,hohopos.y,hohopos.z)\n\tif ( Inventory:GetInventoryMoney() > 10000 and context.donationcount < context.donationlimit ) then\n\t\t\tlocal hoho\n\t\t\tlocal hlist= CharacterList(\"npc,interactable\")\n\t\t\tif table.valid(hlist) then\n\t\t\t\tfor i , ho in pairs(hlist) do\n\t\t\t\t\tif ho.level == 20 then\n\t\t\t\t\t\tif (math.abs(ho.pos.x - hohopos.x) + math.abs(ho.pos.y - hohopos.y)) < 50 then\n\t\t\t\t\t\t\thoho = ho\n\t\t\t\t\t\tend\n\t\t\t\t\tend\n\t\t\t\tend\n\t\t\tend\n\t\t\tif( not hoho) then\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\tcontext.moveto_position = hohopos\n\t\t\t\tself:success()\t\n\t\t\t\treturn\n\n\t\t\telse\n\t\t\t\tif ( not hoho.isininteractrange ) then\n\t\t\t\t\t\tcontext.moveto_position = hoho.pos\n\t\t\t\t\t\tself:success()\n\t\t\t\t\t\treturn\n\t\t\t\telse\n\t\t\t\t\tif ( not Player:IsConversationOpen() ) then\n\t\t\t\t\t\t\td(\"[Dolyak] - Talking to Hoho\")\n\t\t\t\t\t\t\tPlayer:SetTarget(hoho.id)\n\t\t\t\t\t\t\tPlayer:Interact(hoho.id)\n\n\t\t\t\t\telse\n\n\t\t\t\t\t\tlocal clist = Player:GetConversationOptions()\n\t\t\t\t\t\tif (table.valid(clist)) then \n\t\t\t\t\t\t\t\tif( table.size(clist) == 3 ) then \n\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Selecting donate chat option\")\n\t\t\t\t\t\t\t\t\t\tPlayer:SelectConversationOptionByIndex(0)\n\t\t\t\t\t\t\t\telseif ( table.size(clist) == 4 ) then\n\t\t\t\t\t\t\t\t\t\td(\"[Dolyak] - Donating a silver\")\n\t\t\t\t\t\t\t\t\t\tPlayer:SelectConversationOptionByIndex(1)\t\t\n\t\t\t\t\t\t\t\t\t\tml_global_information.Wait(math.random(2000,5000))\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tcontext.donationcount = context.donationcount + 1 \n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings.GW2Minion.hohodonation = Settings.GW2Minion.hohodonation + 1\n\t\t\t\t\t\t\t\tend\n\t\t\t\t\t\tend\n\t\t\t\t\t\t\n\n\t\t\t\t\tend\n\t\t\t\tend\t\t\t\t\t\t\t\t\n\t\t\tend\n\n\telse\n\t\t\tlocal epos = hohopos\n\t\t\tif not context.rpos then\n\t\t\t\tcontext.rpos = NavigationManager:GetRandomPointOnCircle(epos.x,epos.y,epos.z,150,800)\n\t\t\tend\n\t\t\tif ( hohodist > 1000 ) then\t\t\n\t\t\t\t\tlocal rpos = context.rpos \n\t\t\t\t\tif ( rpos ) then\n\t\t\t\t\t\t\td(\"[Dolyak] - Moving to random startpos..\")\n\t\t\t\t\t\t\tcontext.moveto_position = rpos\n\t\t\t\t\t\t\tself:success()\t\n\t\t\t\t\t\t\treturn\n\t\t\t\t\tend\n\t\t\tend\n\tend\t\t\t\t\nend\nself:fail()",
 												startcode = "",
 											},
 										},
@@ -398,7 +366,7 @@ local tbl =
 		menucode = "GUI:SetNextTreeNodeOpened(true,GUI.SetCond_Appearing)\nif (GUI:TreeNode(GetString(\"Dolyak Stats\"))) then\n\n\t\tif ( Settings.GW2Minion.presentstotal == nil) then Settings.GW2Minion.presentstotal = 0 end\n\t\tif ( Settings.GW2Minion.hohodonation == nil) then Settings.GW2Minion.hohodonation = 0 end\n\t\t\n\n\n\t\tif ( context and context.presentscollected ) then\n\t\t\t\tGUI:Text(\"Presents Collected Session: \"..tostring(context.presentscollected))\n\t\telse\n\t\t\t\tGUI:Text(\"Presents Collected Session: 0\")\n\t\tend\n\n\t\tGUI:Text(\"Presents Collected Total: \"..tostring(Settings.GW2Minion.presentstotal))\n\t\tGUI:Text(\"Silver Donated to HoHo: \"..tostring(Settings.GW2Minion.hohodonation))\n\n\t\tGUI:TreePop()\nend",
 		monitorcode = "GUI:Text('Last State: '..tostring(self:getState())) GUI:Text('Filename: '..self.variables.filename) GUI:Text('Filepath: '..self.filepath)",
 		runcode = "",
-		startcode = "",
+		startcode = "context.yakexist = ml_global_information.Now\ncontext.donationcount = 0",
 		subtreeuicode = "",
 	},
 }
