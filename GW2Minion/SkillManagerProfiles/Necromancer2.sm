@@ -1,0 +1,3165 @@
+local tbl = 
+{
+	actionlist = 
+	{
+		
+		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 10547,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 40,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 10577,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 10548,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 80,
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 3,
+						uid = "Health",
+						value = 65,
+					}, 
+					casttarget = 3,
+				},
+			},
+			id = 10527,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 21762,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 80,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43148,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 80,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30488,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30105,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 275,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 42355,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 10646,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						buff = 872,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						bufftype = 2,
+						operator = 4,
+						target = 2,
+						uid = "Buffs (Count)",
+						value = 4,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10562,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 225,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 40274,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10549,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						buff = 872,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 1,
+						uid = "Health",
+						value = 75,
+					},
+					
+					{
+						operator = 1,
+						target = 2,
+						uid = "Aggro",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10583,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						bufftype = 1,
+						operator = 4,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10602,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 5,
+						uid = "Power",
+						value = 15,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30792,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 5,
+						target = 1,
+						uid = "Distance",
+						value = 325,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30961,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_ReaperShroud",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43148,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 30,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1600,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 1,
+						uid = "Health",
+						value = 85,
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 30,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 175,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 44663,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 35,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 60,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 175,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 44428,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 2,
+						target = 1,
+						uid = "Distance",
+						value = 175,
+					},
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 35,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						operator = 5,
+						uid = "Power",
+						value = 15,
+					},
+					
+					{
+						bufftype = 2,
+						operator = 4,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 2,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 20,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 40813,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 1,
+						uid = "Health",
+						value = 90,
+					},
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 40,
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 20,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 30,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 43448,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 4,
+						uid = "Ammo",
+						value = 1,
+					},
+					
+					{
+						buff = 721,
+						operator = 2,
+						target = 1,
+						uid = "Buff (Name)",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 44946,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						buff = 721,
+						operator = 2,
+						target = 1,
+						uid = "Buff (Name)",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					},
+					
+					{
+						operator = 4,
+						uid = "Ammo",
+						value = 1,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 42297,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 225,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30557,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_ReaperShroud",
+		},
+		
+		{
+			activationtime = 2.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 300,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30504,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_ReaperShroud",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30825,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_ReaperShroud",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29958,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_ReaperShroud",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						buff = 1122,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 350,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29709,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_ReaperShroud",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10647,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						count = 1,
+						distance = 1200,
+						operator = 1,
+						target = 2,
+						type = 1,
+						uid = "Entities In Range",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 10585,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_DeathShroud",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10588,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_DeathShroud",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1150,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10604,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_DeathShroud",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 19504,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_DeathShroud",
+		},
+		
+		{
+			activationtime = 3.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10594,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_DeathShroud",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10554,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_DeathShroud",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 70,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10550,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10633,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Lich-Form",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10632,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Lich-Form",
+		},
+		
+		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10636,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Lich-Form",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10709,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Scepter",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 44296,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Torch",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 45846,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Torch",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10532,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Scepter",
+		},
+		
+		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10543,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10608,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						bufftype = 1,
+						operator = 4,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 1,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 42917,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						buff = 722,
+						operator = 2,
+						target = 1,
+						uid = "Buff (Name)",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30670,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30772,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10689,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						buff = 872,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 500,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29414,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29666,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					},
+					
+					{
+						count = 1,
+						distance = 700,
+						operator = 4,
+						target = 1,
+						type = 1,
+						uid = "Entities In Range",
+					},
+					
+					{
+						bufftype = 2,
+						operator = 4,
+						target = 1,
+						uid = "Buffs (Count)",
+						value = 2,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10606,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 4,
+						target = 2,
+						uid = "Health",
+						value = 50,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10544,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10620,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						buff = 872,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						operator = 1,
+						target = 2,
+						uid = "Aggro",
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 1,
+						uid = "Health",
+						value = 85,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 10685,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10622,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 85,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10612,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 3,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 2,
+						uid = "Distance",
+						value = 900,
+					},
+					
+					{
+						operator = 1,
+						target = 3,
+						uid = "Downed",
+					}, 
+					casttarget = 3,
+				},
+			},
+			id = 10611,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10541,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10533,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 1.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10589,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10590,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10570,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10540,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						buff = 872,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						operator = 1,
+						uid = "Power",
+						value = 25,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10600,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10546,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10545,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						buff = 872,
+						operator = 1,
+						target = 2,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 2,
+				},
+				
+				{
+					
+					{
+						buff = 872,
+						operator = 1,
+						target = 3,
+						uid = "Buff (Name)",
+					}, 
+					casttarget = 3,
+				},
+			},
+			id = 10609,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10607,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 275,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 42935,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 41615,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Necromancer",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10605,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Staff",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 75,
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 19117,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Staff",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 19116,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Staff",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 19115,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Staff",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10705,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Dagger_oh",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10706,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Dagger_oh",
+		},
+		
+		{
+			activationtime = 1.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10528,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Axe",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10701,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Axe",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10529,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Dagger_mh",
+		},
+		
+		{
+			activationtime = 3,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10563,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Dagger_mh",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10707,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Focus",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10555,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Focus",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29867,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Greatsword",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 360,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29855,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Greatsword",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 220,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30860,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Greatsword",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 170,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30163,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Greatsword",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 750,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29740,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Greatsword",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 29705,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Greatsword",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30799,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Greatsword",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10557,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Warhorn",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10556,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Warhorn",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10692,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Spear",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10616,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Spear",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10695,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Spear",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10619,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Spear",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10617,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Spear",
+		},
+		
+		{
+			activationtime = 1.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10694,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Spear",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10693,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Spear",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10624,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Trident",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10625,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Trident",
+		},
+		
+		{
+			activationtime = 2,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 360,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10629,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Trident",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10628,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Trident",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10623,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Trident",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 1175,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Downed",
+		},
+		
+		{
+			activationtime = 1.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10660,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Downed",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10559,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Downed",
+		},
+		
+		{
+			activationtime = 6.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10560,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Downed",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 1175,
+			instantcast = false,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Necromancer_Drowning",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10641,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Drowning",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10642,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Drowning",
+		},
+		
+		{
+			activationtime = 2,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 10640,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Drowning",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 18504,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_DeathShroud",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10698,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Scepter",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10552,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Scepter",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10699,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Scepter",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10596,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Staff",
+		},
+		
+		{
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 900,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10561,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Axe",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10704,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Dagger_mh",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10702,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Dagger_mh",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 130,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10703,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Dagger_mh",
+		},
+		
+		{
+			activationtime = 0.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10634,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Lich-Form",
+		},
+		
+		{
+			activationtime = 0.25,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 600,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10635,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Lich-Form",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1200,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 10623,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Necromancer_Trident",
+		},
+	},
+	fightrangetype = 1,
+	profession = 8,
+	version = 1,
+}
+
+
+
+return tbl
