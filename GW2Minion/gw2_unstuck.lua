@@ -49,6 +49,7 @@ end
 -- Only reset position for now
 function gw2_unstuck.SoftReset()
 	gw2_unstuck.lastposition = ml_global_information.Player_Position
+	gw2_unstuck.stucktick = ml_global_information.Now
 end
 
 function gw2_unstuck.HandleStuck()
@@ -115,7 +116,7 @@ function gw2_unstuck.HandleStuck()
 end
 
 function gw2_unstuck.OnMesh()
-	if(not Player.onmesh and not gw2_unstuck.manualcontrolmode) then
+	if(not Player.onmesh and not gw2_unstuck.manualcontrolmode and not ml_navigation.navconnection) then
 		local meshstate = NavigationManager:GetNavMeshState()
 		if(meshstate == GLOBAL.MESHSTATE.MESHEMPTY or meshstate == GLOBAL.MESHSTATE.MESHBUILDING or not string.valid(ml_mesh_mgr.currentfilename)) then
 			d("[Unstuck]: No mesh loaded for this map.")
@@ -422,7 +423,11 @@ end
 
 function gw2_unstuck.ActiveThreshold()
 	local threshold = gw2_unstuck.threshold * (gw2_common_functions.HasBuffs(Player, ml_global_information.SpeedBoons) and 1.33 or 1) -- Increased threshold with swiftness
-
+	
+	if ( Player.swimming == GW2.SWIMSTATE.Diving ) then
+		threshold = threshold * 4
+	end
+	
 	if (ml_global_information.Player_InCombat or gw2_common_functions.HasBuffs(Player, ml_global_information.SlowConditions) or gw2_unstuck.movementtype.backward) then
 		-- We only move half (or less) the distance with conditions that slow movement
 		threshold = threshold / 2

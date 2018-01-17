@@ -1,341 +1,430 @@
 -- Extends minionlib's ml_navigation.lua by adding the game specific navigation handler
-ml_navigation.CanRun = function() return GetGameState() == GW2.GAMESTATE.GAMEPLAY end 
+
+-- Since we have different "types" of movement, add all types and assign a value to them. Make sure to include one entry for each of the 4 kinds below per movement type!
+ml_navigation.NavPointReachedDistances = 			{ 	["Walk"] = 32,		["Diving"] = 48,}		-- Distance to the next node in the path at which the ml_navigation.pathindex is iterated 
+ml_navigation.PathDeviationDistances = 				{ 	["Walk"] = 50,		["Diving"] = 150, }		-- The max. distance the playerposition can be away from the current path. (The Point-Line distance between player and the last & next pathnode)
+
+ml_navigation.avoidanceareasize = 50
+ml_navigation.avoidanceareas = { }	-- TODO: make a proper API in c++ for handling a list and accessing single entries 
+
+
+
+ml_navigation.GetMovementType = function() if ( Player.swimming ~= GW2.SWIMSTATE.Diving ) then return "Walk" else return "Diving" end end	-- Return the EXACT NAMES you used above in the 4 tables for movement type keys
+ml_navigation.StopMovement = function() Player:StopMovement() end
+
+-- Main function to move the player. 'targetid' is optional but should be used as often as possible, if there is no target, use 0
+function Player:MoveTo(x, y, z, targetid, stoppingdistance, randommovement, smoothturns) 
+	ml_navigation.stoppingdistance = stoppingdistance or 154
+	ml_navigation.randommovement = randommovement
+	ml_navigation.smoothturns = smoothturns or true
+	ml_navigation.targetid = targetid or 0
+	
+	if ( ml_navigation.targetposition and math.distance3d(ml_navigation.targetposition, { x=x, y=y, z=z }) > 10 ) then
+		gw2_unstuck.SoftReset()
+	end
+	ml_navigation.targetposition = { x=x, y=y, z=z }
+	
+	if( not ml_navigation.navconnection or ml_navigation.navconnection.type == 5) then	-- We are not currently handling a NavConnection / ignore MacroMesh Connections, these have to be replaced with a proper path by calling this exact function here
+		ml_navigation.navconnection = nil
+		return ml_navigation:MoveTo(x, y, z, targetID)
+	else
+		return table.size(ml_navigation.path)
+	end
+end
 
 -- Handles the Navigation along the current Path. Is not supposed to be called manually.
 function ml_navigation.Navigate(event, ticks )	
-	
+		
 	if ((ticks - (ml_navigation.lastupdate or 0)) > 10) then 
 		ml_navigation.lastupdate = ticks
 				
-		if ( ml_navigation.CanRun() ) then				
-			local ppos = Player.pos
-			
-			-- Normal Navigation Mode
-			if ( ml_navigation.pathsettings.navigationmode == 1 ) then
-				if ( table.valid(ml_navigation.path) and table.size(ml_navigation.path) > ml_navigation.pathindex ) then					
-					local nextnode = ml_navigation.path[ ml_navigation.pathindex ]
+		if ( GetGameState() == GW2.GAMESTATE.GAMEPLAY) then				
+			local playerpos = Player.pos
+			ml_navigation.pathindex = NavigationManager.NavPathNode	-- gets the current path index which is saved in c++ ( and changed there on updating / adjusting the path, which happens each time MoveTo() is called. Index starts at 1 and 'usually' is 2 whne running
+						
+			local pathsize = table.size(ml_navigation.path)
+			if ( pathsize > 0 ) then
+				if ( ml_navigation.pathindex <= pathsize ) then
+					local lastnode =  ml_navigation.pathindex > 1 and ml_navigation.path[ ml_navigation.pathindex - 1] or nil
+					local nextnode = ml_navigation.path[ ml_navigation.pathindex ]					
+					local nextnextnode = ml_navigation.path[ ml_navigation.pathindex + 1]
 					
 					-- Ensure Position: Takes a second to make sure the player is really stopped at the wanted position (used for precise OMC bunnyhopping)
-					if ( table.valid (ml_navigation.ensureposition) and ml_navigation:EnsurePosition() ) then						
+					if ( table.valid (ml_navigation.ensureposition) and ml_navigation:EnsurePosition(playerpos) ) then						
+						
 						return
 					end
 					
--- OffMeshConnection Navigation
-					if (nextnode.type == "OMC_END") then
-						if ( nextnode.id == nil ) then ml_error("[Navigation] - No OffMeshConnection ID received!") return end
-						local omc = ml_mesh_mgr.offmeshconnections[nextnode.id]
-						if( not omc ) then ml_error("[Navigation] - No OffMeshConnection Data found for ID: "..tostring(nextnode.id)) return end
-							
-						-- A general check, for the case that the player never reaches either OMC END
-						if ( not ml_navigation.omc_id or ml_navigation.omc_id ~= nextnode.id ) then	-- Update the currently tracked omc_id and variables
-							ml_navigation.omc_id = nextnode.id
-							ml_navigation.omc_traveltimer = ticks
-							ml_navigation.omc_traveldist = math.distance3d(ppos,nextnode)
-						else	-- We are still pursuing the same omc, check if we are getting closer over time
-							local timepassed = ticks - ml_navigation.omc_traveltimer
-							if ( timepassed < 3000) then 
-								local dist = math.distance3d(ppos,nextnode)
-								if ( timepassed > 2000 and ml_navigation.omc_traveldist > dist) then
-									ml_navigation.omc_traveldist = dist
-									ml_navigation.omc_traveltimer = ticks
-								end
-							else
-								d("[Navigation] - Not getting closer to OMC END node. We are most likely stuck.")
-								ml_navigation.StopMovement()
-								return
-							end								
-						end
-							
-						-- Max Timer Check in case something unexpected happened
-						if ( ml_navigation.omc_starttimer ~= 0 and ticks - ml_navigation.omc_starttimer > 10000 ) then
-							d("[Navigation] - Could not read OMC END in ~10 seconds, something went wrong..")
-							ml_navigation.StopMovement()
-							return
-						end
-								
-						-- OMC Handling by Type
-						if ( omc.type == 1 ) then
-							-- OMC JUMP										
-							local movementstate = Player:GetMovementState()	
-							
-							if ( movementstate == GW2.MOVEMENTSTATE.Jumping) then
-								if ( not ml_navigation.omc_startheight ) then ml_navigation.omc_startheight = ppos.z end
-								-- Additionally check if we are "above" the target point already, in that case, stop moving forward
-								local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
-								if ( nodedist < ml_navigation.NavPointReachedDistances["Walk"] or (ppos.z < nextnode.z and math.distance2d(ppos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"]) ) then
-									d("[Navigation] - We are above the OMC_END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
-									Player:Stop()
-									if ( omc.precise == nil or omc.precise == true  ) then
-										ml_navigation:SetEnsurePosition(nextnode)
-									end									
-								else									
-									Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
-									Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
-								end
-								
-							elseif ( movementstate == GW2.MOVEMENTSTATE.Falling and ml_navigation.omc_startheight) then
-								-- If Playerheight is lower than 4*omcreached dist AND Playerheight is lower than 4* our Startposition -> we fell below the OMC START & END Point
-								if (( ppos.z > (nextnode.z + 4*ml_navigation.NavPointReachedDistances["Walk"])) and ( ppos.z > ( ml_navigation.omc_startheight + 4*ml_navigation.NavPointReachedDistances["Walk"]))) then
-									if ( ml_navigation.omcteleportallowed and math.distance3d(ppos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"]*10) then
-										if ( omc.precise == nil or omc.precise == true ) then
-											ml_navigation:SetEnsurePosition(nextnode)
-										end
-									else
-										d("[Navigation] - We felt below the OMC start & END height, missed our goal...")
-										ml_navigation.StopMovement()
-									end
-								else
-									-- Additionally check if we are "above" the target point already, in that case, stop moving forward
-									local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
-									if ( nodedist < ml_navigation.NavPointReachedDistances["Walk"] or (ppos.z < nextnode.z and math.distance2d(ppos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"])) then
-										d("[Navigation] - We are above the OMC END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
-										Player:Stop()
-										if ( omc.precise == nil or omc.precise == true  ) then
-											ml_navigation:SetEnsurePosition(nextnode)											
-										end									
-									else									
-										Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
-										Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
-									end
-								end
-								
-							else	 
-								-- We are still before our Jump
-								if ( not ml_navigation.omc_startheight ) then
-									if ( Player:CanMove() and ml_navigation.omc_starttimer == 0 ) then
-										ml_navigation.omc_starttimer = ticks
-										Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
-										Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
-									elseif ( Player:IsMoving() and ticks - ml_navigation.omc_starttimer > 100 ) then
-										Player:Jump()
-									end
-									
-								else
-									-- We are after the Jump and landed already
-									local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
-									if ( nodedist < ml_navigation.NavPointReachedDistances["Walk"]) then
-										d("[Navigation] - We reached the OMC END Node. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
-										if ( omc.precise == nil or omc.precise == true ) then
-											ml_navigation:SetEnsurePosition(nextnode)
-										end
-										ml_navigation.pathindex = ml_navigation.pathindex + 1
-									else									
-										Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
-										Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
-									end
-								end
-							end								
-									
-						elseif ( omc.type == 2 ) then
-						-- OMC Walk
-							ml_navigation:NavigateToNode(ppos,nextnode,1000)
-										
-						elseif ( omc.type == 3 ) then
-						-- OMC Teleport
-							HackManager:Teleport(nextnode.x,nextnode.y,nextnode.z)
-							ml_navigation.pathindex = ml_navigation.pathindex + 1
-							
-						elseif ( omc.type == 4 ) then
-						-- OMC Interact
-							Player:Interact()
-							ml_navigation.lastupdate = ml_navigation.lastupdate + 1000
-							ml_navigation.pathindex = ml_navigation.pathindex + 1
-							
-						elseif ( omc.type == 5 ) then
-						-- OMC Portal
-
-							-- Check if we have reached the portal end destination.
-							if(ml_navigation.omc_starttimer ~= 0 and ticks - ml_navigation.omc_starttimer > 200) then
-								local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
-								if ( nodedist < 3*ml_navigation.NavPointReachedDistances["Walk"]) then
-									d("[Navigation] - We reached the OMC END Node. ("..tostring(math.round(nodedist,2)).." < "..tostring(math.round(3*ml_navigation.NavPointReachedDistances["Walk"],2))..")")
-									if ( omc.precise == nil or omc.precise == true ) then
-										ml_navigation:SetEnsurePosition(nextnode)
-									end
-									ml_navigation.pathindex = ml_navigation.pathindex + 1
-								end
-							end
-							
-							-- we should be facing already the correct direction, just walk straight for a few sec
-							if ( Player:CanMove() and ml_navigation.omc_starttimer <= 1500 ) then
-								ml_navigation.omc_starttimer = ticks
-								-- find out from which side we are coming:
-								local dA = math.distance3d(omc.from,ppos)
-								local dB = math.distance3d(omc.to,ppos)
-								local closest = omc.from
-								if ( dB < dA ) then closest = omc.to end
-								Player:SetFacingH(closest.hx,closest.hy,closest.hz)
-								if ( ml_navigation.omc_starttimer > 1000 ) then
-									Player:SetMovement(GW2.MOVEMENTTYPE.Forward)								
-								end
-								
-							elseif ( Player:IsMoving() and ticks - ml_navigation.omc_starttimer > 3500 ) then
-								-- we should be on the other side of the portal now
-								ml_navigation:NavigateToNode(ppos,nextnode,2500)
-								-- Max Timer Check in case something unexpected happened
-								if ( ml_navigation.omc_starttimer ~= 0 and ticks - ml_navigation.omc_starttimer > 5000 ) then
-									d("[Navigation] - Could not read OMC END in ~10 seconds, something went wrong..")
-									ml_navigation.StopMovement()
-									return
-								end
-							end
-						elseif ( omc.type == 6 ) then
-						-- OMC Lift
-							ml_navigation:NavigateToNode(ppos,nextnode,1500)						
-																
-						end						
-						
-					elseif (string.contains(nextnode.type,"CUBE")) then
--- Cube Navigation	
-						if(not gw2_unstuck.HandleStuck()) then
-							-- Check if we left our path, different rules for first path node, to prevent loading lag from getting us stuck.
-							if (ml_navigation.pathindex == 0 or ml_navigation.pathindex == 1) then
-								-- We are at the 1st path node, increase path deviationthreshold to prevent getting stuck in getting cube path over and over.
-								ml_navigation:IsStillOnPath(ppos,ml_navigation.pathsettings.pathdeviationdistance * 5)
-							else
-								-- We are using cubes, increase path deviationthreshold, compared to walking.
-								ml_navigation:IsStillOnPath(ppos,ml_navigation.pathsettings.pathdeviationdistance * 2)
-							end
 					
-							-- Check if the next node is reached:
-							local dist3D = math.distance3d(nextnode,ppos)
-							if ( dist3D < ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()]) then
-								-- We reached the node
-								d("[Navigation] - Cube Node reached. ("..tostring(math.round(dist3D,2)).." < "..tostring(ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()])..")")
-								ml_navigation.pathindex = ml_navigation.pathindex + 1							
-							else						
-								-- We have not yet reached our node
-								local dist2D = math.distance2d(nextnode,ppos)
-								if (dist2D < ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()] ) then
-									-- We are on the correct horizontal position, but our goal is now either above or below us
-									-- compensate for the fact that the char is always swimming on the surface between 0 - 50 @height
-									local pHeight = ppos.z
-									if ( nextnode.z < 50 ) then pHeight = nextnode.z end -- if the node is in shallow water (<50) , fix the playerheight at this pos. Else it gets super wonky at this point.
-									local distH = math.abs(math.abs(pHeight) - math.abs(nextnode.z))
-									
-									if ( distH > ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()]) then							
-										-- Move Up / Down only until we reached the node
-										Player:StopHorizontalMovement()
-										if ( pHeight > nextnode.z ) then	-- minus is "up" in gw2
-											Player:SetMovement(GW2.MOVEMENTTYPE.SwimUp)
-										else							
-											Player:SetMovement(GW2.MOVEMENTTYPE.SwimDown)
+					-- Handle Current NavConnections
+					if( ml_navigation.navconnection ) then
+
+						-- Temp solution to cancel navcon handling after 10 sec
+						if ( ml_navigation.navconnection_start_tmr and ( ml_global_information.Now - ml_navigation.navconnection_start_tmr > 10000)) then
+							d("[Navigation] - We did not complete the Navconnection handling in 10 seconds, something went wrong ?...Resetting Path..")							
+							Player:StopMovement()							
+						end
+
+					
+						--d("ml_navigation.navconnection ID " ..tostring(ml_navigation.navconnection.id))
+						--CubeCube & PolyPoly && Floor-Cube -> go straight to the end node
+						if(ml_navigation.navconnection.type == 1 or ml_navigation.navconnection.type == 2 or ml_navigation.navconnection.type == 3) then 
+							lastnode = nextnode
+							nextnode = ml_navigation.path[ ml_navigation.pathindex + 1]
+						
+						-- Custom OMC
+						elseif(ml_navigation.navconnection.type == 4) then
+							
+							if(ml_navigation.navconnection.subtype == 1 ) then
+								-- JUMP
+								lastnode = nextnode
+								nextnode = ml_navigation.path[ ml_navigation.pathindex + 1]
+								local movementstate = Player:GetMovementState()
+								if ( movementstate == GW2.MOVEMENTSTATE.Jumping) then
+									if ( not ml_navigation.omc_startheight ) then ml_navigation.omc_startheight = playerpos.z end
+									-- Additionally check if we are "above" the target point already, in that case, stop moving forward
+									local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(playerpos,nextnode)
+									if ( (nodedist - ml_navigation.navconnection.radius*32 )  < ml_navigation.NavPointReachedDistances["Walk"] or (playerpos.z < nextnode.z and math.distance2d(playerpos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"]) ) then
+										d("[Navigation] - We are above the OMC_END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
+										Player:Stop()
+										if ( ml_navigation.navconnection.radius < 1.0  ) then
+											ml_navigation:SetEnsureEndPosition(nextnode, nextnextnode, playerpos)
+										end
+									else									
+										Player:SetMovement(GW2.MOVEMENTTYPE.Forward)										
+									end
+									Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
+								
+								elseif ( movementstate == GW2.MOVEMENTSTATE.Falling and ml_navigation.omc_startheight) then
+									-- If Playerheight is lower than 4*omcreached dist AND Playerheight is lower than 4* our Startposition -> we fell below the OMC START & END Point
+									if (( playerpos.z > (nextnode.z + 4*ml_navigation.NavPointReachedDistances["Walk"])) and ( playerpos.z > ( ml_navigation.omc_startheight + 4*ml_navigation.NavPointReachedDistances["Walk"]))) then
+										if ( ml_navigation.omcteleportallowed and math.distance3d(playerpos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"]*10) then
+											if ( ml_navigation.navconnection.radius < 1.0  ) then
+												ml_navigation:SetEnsureEndPosition(nextnode, nextnextnode, playerpos)
+											end
+										else
+											d("[Navigation] - We felt below the OMC start & END height, missed our goal...")
+											ml_navigation.StopMovement()
+										end
+									else
+										-- Additionally check if we are "above" the target point already, in that case, stop moving forward
+										local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(playerpos,nextnode)
+										if ( (nodedist - ml_navigation.navconnection.radius*32 )  < ml_navigation.NavPointReachedDistances["Walk"] or (playerpos.z < nextnode.z and math.distance2d(playerpos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"])) then
+											d("[Navigation] - We are above the OMC END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
+											Player:Stop()
+											if ( ml_navigation.navconnection.radius < 1.0  ) then
+												ml_navigation:SetEnsureEndPosition(nextnode, nextnextnode, playerpos)
+											end									
+										else									
+											Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+											Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
+										end
+									end
+								
+								else	 
+									-- We are still before our Jump
+									if ( not ml_navigation.omc_startheight ) then
+										if ( Player:CanMove() and ml_navigation.omc_starttimer == 0 ) then
+											ml_navigation.omc_starttimer = ticks
+											Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+											Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
+										elseif ( Player:IsMoving() and ticks - ml_navigation.omc_starttimer > 100 ) then
+											Player:Jump()
 										end
 										
 									else
-										-- We have a good "height" position already, let's move a bit more towards the node on the horizontal plane
-										Player:StopVerticalMovement()
-										Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)						
-										Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
-									end	
+										-- We are after the Jump and landed already
+										local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(playerpos,nextnode)
+										if ( (nodedist - ml_navigation.navconnection.radius*32 ) < ml_navigation.NavPointReachedDistances["Walk"]) then
+											d("[Navigation] - We reached the OMC END Node. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
+											local nextnode = nextnextnode
+											local nextnextnode = ml_navigation.path[ ml_navigation.pathindex + 2]
+											if ( ml_navigation.navconnection.radius < 1.0  ) then
+												ml_navigation:SetEnsureEndPosition(nextnode, nextnextnode, playerpos)
+											end
+											ml_navigation.pathindex = ml_navigation.pathindex + 1
+											NavigationManager.NavPathNode = ml_navigation.pathindex
+											ml_navigation.navconnection = nil
+											
+										else									
+											Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+											Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
+										end
+									end
+								end
+								return
+								
+								
+							elseif(ml_navigation.navconnection.subtype == 2 ) then
+								-- WALK
+								lastnode = nextnode		-- OMC start
+								nextnode = ml_navigation.path[ ml_navigation.pathindex + 1]	-- OMC end
+								
+							elseif(ml_navigation.navconnection.subtype == 3 ) then
+								-- TELEPORT
+								nextnode = ml_navigation.path[ ml_navigation.pathindex + 1]
+								HackManager:Teleport(nextnode.x,nextnode.y,nextnode.z)
+								ml_navigation.pathindex = ml_navigation.pathindex + 1
+								NavigationManager.NavPathNode = ml_navigation.pathindex
+								ml_navigation.navconnection = nil
+								return
+								
+							elseif(ml_navigation.navconnection.subtype == 4 ) then
+								-- INTERACT
+								Player:Interact()
+								ml_navigation.lastupdate = ml_navigation.lastupdate + 1000
+								ml_navigation.pathindex = ml_navigation.pathindex + 1
+								NavigationManager.NavPathNode = ml_navigation.pathindex
+								ml_navigation.navconnection = nil
+								return
+								
+							elseif(ml_navigation.navconnection.subtype == 5 ) then
+								-- PORTAL
+								-- Check if we have reached the portal end position
+								portalend = ml_navigation.path[ ml_navigation.pathindex + 1]
+								if (ml_navigation:NextNodeReached( playerpos, portalend, nextnextnode ) )then
+									ml_navigation.pathindex = ml_navigation.pathindex + 1
+									NavigationManager.NavPathNode = ml_navigation.pathindex
+									ml_navigation.navconnection = nil
 									
 								else
-									Player:StopVerticalMovement()
-									Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)						
-									Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+									-- We need to face and move 
+									-- find out from which side we are coming:
+									local dA = math.distance3d(ml_navigation.navconnection.from, playerpos)
+									local dB = math.distance3d(ml_navigation.navconnection.to, playerpos)
+									local closest = ml_navigation.navconnection.from
+									if ( dB < dA ) then closest = ml_navigation.navconnection.to end
+									Player:SetFacingH(closest.hx,closest.hy,closest.hz)
+									ml_navigation:MoveToNextNode(playerpos, lastnode, nextnode, true)
 								end
+								return
+								
+							elseif(ml_navigation.navconnection.subtype == 6 ) then
+								-- Custom Lua Code
+								ml_error("TODO: HANDLE CUSTOM OMC LUA CODE , SET ml_navigation.navconnection = nil AFTER DONE")
+								lastnode = nextnode
+								nextnode = ml_navigation.path[ ml_navigation.pathindex + 1]
+								
 							end
+							
+							
+						-- Macromesh node
+						elseif(ml_navigation.navconnection.type == 5) then
+							-- we should not be here in the first place..c++ should have replaced any macromesh node with walkable paths. But since this is on a lot faster timer than the main bot pulse, it can happen that 4-5 pathnodes are "reached" and then a macronode appears. 
+							d("[Navigation] - Reached a Macromesh node... waiting for a path update...")
+							Player:Stop()
+							return
+							
 						else
-							ml_navigation:ResetCurrentPath()
+							d("[Navigation] - OMC BUT UNKNOWN TYPE !? WE SHOULD NOT BE HERE!!!")
 						end
--- CUBE Navigation END					
-					else
--- Normal Ground Navigation
-					if(not gw2_unstuck.HandleStuck()) then
-						ml_navigation:NavigateToNode(ppos,nextnode)
-					else
-						ml_navigation:ResetCurrentPath()
 					end
--- Normal Ground Navigation END
-
+					
+					
+					-- Move to next node in our path	
+					if (ml_navigation:NextNodeReached( playerpos, nextnode ,nextnextnode) )then
+						ml_navigation.pathindex = ml_navigation.pathindex + 1
+						NavigationManager.NavPathNode = ml_navigation.pathindex
+					else
+						ml_navigation:MoveToNextNode(playerpos, lastnode, nextnode )
 					end
+					return 
 				else
 					d("[Navigation] - Path end reached.")
-					ml_navigation.StopMovement()
+					Player:StopMovement()
 					gw2_unstuck.Reset()
+								
 				end
-				
-			elseif (ml_navigation.pathsettings.navigationmode == 2 ) then
-				d("Addd  other navmodes...?")
-					
 			end
+		end
+		
+		-- stoopid case catch
+		if( ml_navigation.navconnection ) then
+			ml_error("[Navigation] - Breaking out of not handled NavConnection.")
+			Player:StopMovement()
 		end
 	end
 end
 RegisterEventHandler("Gameloop.Draw", ml_navigation.Navigate)
-	
--- Used by multiple places in the Navigate() function, so I'll put it here again...no redudant code...
-function ml_navigation:NavigateToNode(ppos, nextnode, stillonpaththreshold)
-	-- Check if we left our path
-	if ( stillonpaththreshold ) then
-		if ( not ml_navigation:IsStillOnPath(ppos,stillonpaththreshold) ) then return end	
-	else
-		if ( not ml_navigation:IsStillOnPath(ppos,ml_navigation.pathsettings.pathdeviationdistance) ) then return end	
-	end
+
+-- Checks if the next node in our path was reached, takes differen movements into account ( swimming, walking, riding etc. )
+function ml_navigation:NextNodeReached( playerpos, nextnode , nextnextnode)
+		
+		-- take into account navconnection radius, to randomize the movement on places where precision is not needed
+		local navcon = nil
+		local navconradius = 0
+		if( nextnode.navconnectionid and nextnode.navconnectionid ~= 0) then
+			navcon = ml_mesh_mgr.navconnections[nextnode.navconnectionid]
+			if ( navcon ) then
+				navconradius = navcon.radius *32 -- meshspace to gamespace is *32 in GW2
+			end
+		end		
+			
+		if (Player.swimming ~= GW2.SWIMSTATE.Diving) then		
+			local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(playerpos,nextnode)
+			if ( (nodedist - navconradius) < ml_navigation.NavPointReachedDistances["Walk"] ) then
+				d("[Navigation] - Node reached. ("..tostring(math.round(nodedist - navconradius,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
+				-- We arrived at a NavConnection Node
+				if( navcon) then
+					d("[Navigation] -  Arrived at NavConnection ID: "..tostring(nextnode.navconnectionid))
+					ml_navigation:ResetOMCHandler()
+					ml_navigation.navconnection = navcon
+					if( not ml_navigation.navconnection ) then 
+						ml_error("[Navigation] -  No NavConnection Data found for ID: "..tostring(nextnode.navconnectionid))
+						return false
+					end
+					if ( navconradius > 0 and navconradius < 1.0 ) then	-- kinda shitfix for the conversion of the old OMCs to the new NavCons, I set all precise connections to have a radius of 0.5
+						ml_navigation:SetEnsureStartPosition(nextnode, nextnextnode, playerpos, ml_navigation.navconnection) 
+					end
+					-- Add for now a timer to cancel the shit after 10 seconds if something really went crazy wrong
+					ml_navigation.navconnection_start_tmr = ml_global_information.Now
 					
-	-- Check if the next node is reached
-	local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,nextnode)
-	if ( nodedist < ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()] ) then
-		d("[Navigation] - Node reached. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()])..")")
-							
-		-- We arrived at an OMC Node
-		if ( string.contains(nextnode.type,"OMC")) then
-			ml_navigation:ResetOMCHandler()
-			if ( nextnode.id == nil ) then ml_error("[Navigation] - No OffMeshConnection ID received!") return end
-			local omc = ml_mesh_mgr.offmeshconnections[nextnode.id]
-			if( not omc ) then ml_error("[Navigation] - No OffMeshConnection Data found for ID: "..tostring(nextnode.id)) return end
-			if ( omc.precise == nil or omc.precise == true ) then	
-				ml_navigation:SetEnsurePosition(nextnode) 
-			end			
-		end
-		ml_navigation.pathindex = ml_navigation.pathindex + 1
-	else						
-		-- We have not yet reached our node
-		local anglediff = math.angle({x = ppos.hx, y = ppos.hy,  z = 0}, {x = nextnode.x-ppos.x, y = nextnode.y-ppos.y, z = 0})															
-		if ( ml_navigation.pathsettings.smoothturns and anglediff < 75 and nodedist > 2*ml_navigation.NavPointReachedDistances[ml_navigation.GetMovementType()] ) then
-			Player:SetFacing(nextnode.x,nextnode.y,nextnode.z)
+				else
+					ml_navigation.navconnection = nil
+					return true
+				end
+				
+			else
+				-- Still walking towards the nextnode...
+				--d("nodedist  - navconradius "..tostring(nodedist).. " - " ..tostring(navconradius))
+			
+			end
+						
 		else
-			Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
+		-- Handle underwater movement
+			-- Check if the next Cubenode is reached:
+			local dist3D = math.distance3d(nextnode,playerpos)
+			if ( (dist3D - navconradius) < ml_navigation.NavPointReachedDistances["Diving"]) then
+				-- We reached the node
+				d("[Navigation] - Cube Node reached. ("..tostring(math.round(dist3D - navconradius,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Diving"])..")")
+					
+				-- We arrived at a NavConnection Node
+				if( navcon) then
+					d("[Navigation] -  Arrived at NavConnection ID: "..tostring(nextnode.navconnectionid))
+					ml_navigation:ResetOMCHandler()
+					ml_navigation.navconnection = navcon
+					if( not ml_navigation.navconnection ) then 
+						ml_error("[Navigation] -  No NavConnection Data found for ID: "..tostring(nextnode.navconnectionid))
+						return false
+					end
+					if ( navconradius > 0 and navconradius < 1.0 ) then	-- kinda shitfix for the conversion of the old OMCs to the new NavCons, I set all precise connections to have a radius of 0.5
+						ml_navigation:SetEnsureStartPosition(nextnode, nextnextnode, playerpos, ml_navigation.navconnection) 
+					end
+				
+				else
+					ml_navigation.navconnection = nil
+					return true
+				end				
+			end
 		end
+	return false
+end
+
+function ml_navigation:MoveToNextNode( playerpos, lastnode, nextnode, overridefacing )
+	
+	-- Only check unstuck when we are not handling a navconnection
+	if ( ml_navigation.navconnection or ( not ml_navigation.navconnection and not gw2_unstuck.HandleStuck())) then
 		
-		-- Make sure we are not strafing away (happens sometimes after being dead + movement was set)
-		local movdirs = Player:GetMovement()						
-		if (movdirs.backward) then Player:UnSetMovement(1) end
-		if (movdirs.left) then Player:UnSetMovement(2) end
-		if (movdirs.right) then Player:UnSetMovement(3) end	
-		
-		Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+		if ( Player.swimming ~= GW2.SWIMSTATE.Diving ) then
+			-- We have not yet reached our next node
+			if( not overridefacing ) then
+				local anglediff = math.angle({x = playerpos.hx, y = playerpos.hy,  z = 0}, {x = nextnode.x-playerpos.x, y = nextnode.y-playerpos.y, z = 0})
+				local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(playerpos,nextnode)
+				if ( ml_navigation.smoothturns and anglediff < 75 and nodedist > 2*ml_navigation.NavPointReachedDistances["Walk"] ) then
+					Player:SetFacing(nextnode.x,nextnode.y,nextnode.z)
+				else
+					Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
+				end
+			end
+			
+			-- Make sure we are not strafing away (happens sometimes after being dead + movement was set)
+			local movdirs = Player:GetMovement()						
+			if (movdirs.backward) then Player:UnSetMovement(1) end
+			if (movdirs.left) then Player:UnSetMovement(2) end
+			if (movdirs.right) then Player:UnSetMovement(3) end	
+			
+			Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+			self:IsStillOnPath(playerpos, lastnode, nextnode, ml_navigation.PathDeviationDistances["Walk"])
+			
+			
+		else
+		-- Handle underwater movement
+			
+			-- We have not yet reached our node
+			local dist2D = math.distance2d(nextnode,playerpos)
+			if (dist2D < ml_navigation.NavPointReachedDistances["Diving"] ) then
+				-- We are on the correct horizontal position, but our goal is now either above or below us
+				-- compensate for the fact that the char is always swimming on the surface between 0 - 50 @height
+				local pHeight = playerpos.z
+				if ( nextnode.z < 50 ) then pHeight = nextnode.z end -- if the node is in shallow water (<50) , fix the playerheight at this pos. Else it gets super wonky at this point.
+				local distH = math.abs(math.abs(pHeight) - math.abs(nextnode.z))
+				
+				if ( distH > ml_navigation.NavPointReachedDistances["Diving"]) then							
+					-- Move Up / Down only until we reached the node
+					Player:StopHorizontalMovement()
+					if ( pHeight > nextnode.z ) then	-- minus is "up" in gw2
+						Player:SetMovement(GW2.MOVEMENTTYPE.SwimUp)
+					else							
+						Player:SetMovement(GW2.MOVEMENTTYPE.SwimDown)
+					end
+					
+				else
+					-- We have a good "height" position already, let's move a bit more towards the node on the horizontal plane
+					Player:StopVerticalMovement()
+					if( not overridefacing ) then
+						Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)
+					end
+					Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+				end	
+						
+			else
+				Player:StopVerticalMovement()
+				if( not overridefacing ) then
+					Player:SetFacingExact(nextnode.x,nextnode.y,nextnode.z,true)		
+				end
+				Player:SetMovement(GW2.MOVEMENTTYPE.Forward)
+			end
+			self:IsStillOnPath(playerpos, lastnode, nextnode, ml_navigation.PathDeviationDistances["Diving"])
+			
+		end
+	
+	else 
+		d("[ml_navigation:MoveToNextNode] - Unstuck kicked in...resetting Path.")
+		Player:StopMovement()	
 	end
+	return false
 end
 
 
 -- Calculates the Point-Line-Distance between the PlayerPosition and the last and the next PathNode. If it is larger than the treshold, it returns false, we left our path.
-function ml_navigation:IsStillOnPath(ppos,deviationthreshold)	
-	if ( ml_navigation.pathindex > 0 ) then
-		local movstate = Player:GetMovementState()
-		
-		if( ml_global_information.Player_SwimState == GW2.SWIMSTATE.NotInWater ) then
-			-- ignoring up vector, since recast's string pulling ignores that as well		
-			local from = { x=ml_navigation.path[ml_navigation.pathindex-1].x, y = ml_navigation.path[ml_navigation.pathindex-1].y, z = 0 }
-			local to = { x=ml_navigation.path[ml_navigation.pathindex].x, y = ml_navigation.path[ml_navigation.pathindex].y, z = 0 }
-			local playerpos = { x=ppos.x, y = ppos.y, z = 0 }
-			if ( not (movstate == GW2.MOVEMENTSTATE.Jumping or movestate == GW2.MOVEMENTSTATE.Falling) and math.distancepointline(from, to, playerpos) > deviationthreshold) then			
-				d("[Navigation] - Player not on Path anymore. - 2D-Distance to Path: "..tostring(math.distancepointline(from, to, playerpos)).." > "..tostring(deviationthreshold))
-				Player:StopMovement()
-				ml_navigation.renderpathendX = nil
-				return false
+function ml_navigation:IsStillOnPath(ppos, lastnode, nextnode, deviationthreshold)	
+	if ( lastnode ) then
+		-- Dont use this when we crossed / crossing a navcon
+		if (lastnode.navconnectionid == 0 ) then
+	
+			local movstate = Player:GetMovementState()		
+			if( Player.swimming ~= GW2.SWIMSTATE.Diving2 ) then
+				-- Ignoring up vector, since recast's string pulling ignores that as well		
+				local from = { x=lastnode.x, y = lastnode.y, z = 0 }
+				local to = { x=nextnode.x, y = nextnode.y, z = 0 }
+				local playerpos = { x=ppos.x, y = ppos.y, z = 0 }
+				if ( not (movstate == GW2.MOVEMENTSTATE.Jumping or movestate == GW2.MOVEMENTSTATE.Falling) and math.distancepointline(from, to, playerpos) > deviationthreshold) then			
+					d("[Navigation] - Player left the path - 2D-Distance to Path: "..tostring(math.distancepointline(from, to, playerpos)).." > "..tostring(deviationthreshold))
+					NavigationManager:UpdatePathStart()
+					ml_navigation:MoveTo(ml_navigation.targetposition.x, ml_navigation.targetposition.y, ml_navigation.targetposition.z, ml_navigation.targetid)
+					return false
+				end
+			
+			else
+				-- Under water, using 3D
+				if ( not (movstate == GW2.MOVEMENTSTATE.Jumping or movestate == GW2.MOVEMENTSTATE.Falling) and math.distancepointline(lastnode, nextnode, ppos) > deviationthreshold) then			
+					d("[Navigation] - Player not on Path anymore. - Distance to Path: "..tostring(math.distancepointline(lastnode,nextnode,ppos)).." > "..tostring(deviationthreshold))
+					NavigationManager:UpdatePathStart()
+					ml_navigation:MoveTo(ml_navigation.targetposition.x, ml_navigation.targetposition.y, ml_navigation.targetposition.z, ml_navigation.targetid)
+					return false
+				end		
 			end
-		
-		else
-			-- Under water, using 3D
-			if ( not (movstate == GW2.MOVEMENTSTATE.Jumping or movestate == GW2.MOVEMENTSTATE.Falling) and math.distancepointline(ml_navigation.path[ml_navigation.pathindex-1],ml_navigation.path[ml_navigation.pathindex],ppos) > deviationthreshold) then			
-				d("[Navigation] - Player not on Path anymore. - Distance to Path: "..tostring(math.distancepointline(ml_navigation.path[ml_navigation.pathindex-1],ml_navigation.path[ml_navigation.pathindex],ppos)).." > "..tostring(deviationthreshold))
-				Player:StopMovement()
-				ml_navigation.renderpathendX = nil
-				return false
-			end		
 		end
-		
 	end
 	return true
 end
@@ -355,38 +444,72 @@ function ml_navigation:GetRaycast_Player_Node_Distance(ppos,node)
 	return dist
 end
 
--- Sets the position and heading which the main call will make sure that it has before continuing the movement
-function ml_navigation:SetEnsurePosition(node, isstartnode)
+-- Sets the position and heading which the main call will make sure that it has before continuing the movement. Used for NavConnections / OMC
+function ml_navigation:SetEnsureStartPosition(currentnode, nextnode, playerpos, navconnection)
 	Player:Stop()
-	ml_navigation.ensureposition = {x = node.x, y = node.y, z = node.z}										
-	if ( table.size(ml_navigation.path) > ml_navigation.pathindex+1 ) then
-		node = ml_navigation.path[ ml_navigation.pathindex+1 ]		
-		ml_navigation.ensureheading = {x = node.x, y = node.y, z = node.z}	-- Face Next Node
+	self.ensureposition = {x = currentnode.x, y = currentnode.y, z = currentnode.z}
+	
+	-- Find out which side of the NavCon we are at
+	local nearside, farside
+	if (math.distance3d(playerpos, navconnection.from) < math.distance3d(playerpos, navconnection.to) ) then
+		nearside = navconnection.from
+		farside = navconnection.to
 	else
-		ml_navigation.ensureheading = {x = node.x, y = node.y, z = node.z}	-- Fallback case
+		nearside = navconnection.to
+		farside = navconnection.from
 	end
-	ml_navigation:EnsurePosition()
+	
+	if(nearside.hx ~= 0 ) then
+		self.ensureheading = nearside
+		self.ensureheadingtargetpos =  nil
+	else	
+		self.ensureheading = nil
+		self.ensureheadingtargetpos = {x = farside.x, y = farside.y, z = farside.z}
+	end	
+	self:EnsurePosition(playerpos)
+end
+function ml_navigation:SetEnsureEndPosition(currentnode, nextnode, playerpos)
+	Player:Stop()
+	self.ensureposition = {x = currentnode.x, y = currentnode.y, z = currentnode.z}	
+	if (nextnode) then
+		self.ensureheadingtargetpos = {x = nextnode.x, y = nextnode.y, z = nextnode.z}
+	end
+	self:EnsurePosition(playerpos)
 end
 
--- Ensures that the player is really at a specific position, stopped and facing correctly
-function ml_navigation:EnsurePosition()
-	if ( not ml_navigation.ensurepositionstarttime ) then ml_navigation.ensurepositionstarttime = ml_global_information.Now end
-	if ( (ml_global_information.Now - ml_navigation.ensurepositionstarttime) < 750 ) then		
+	
+-- Ensures that the player is really at a specific position, stopped and facing correctly. Used for NavConnections / OMC
+function ml_navigation:EnsurePosition(playerpos)
+	if ( not self.ensurepositionstarttime ) then self.ensurepositionstarttime = ml_global_information.Now end
+	
+	local dist = self:GetRaycast_Player_Node_Distance(playerpos,self.ensureposition)
+	if ( dist > 15 ) then
+		HackManager:Teleport(self.ensureposition.x,self.ensureposition.y,self.ensureposition.z)
+	end
+			
+	if ( (ml_global_information.Now - self.ensurepositionstarttime) < 750 and ((self.ensureheading and Player:IsFacingH(self.ensureheading.hx,self.ensureheading.hy,self.ensureheading.hz) ~= 0)  or  (self.ensureheadingtargetpos and Player:IsFacing(self.ensureheadingtargetpos.x,self.ensureheadingtargetpos.y,self.ensureheadingtargetpos.z)~= 0)) )then		
+		
 		if ( Player:IsMoving () ) then Player:Stop() end
-		local ppos = Player.pos
-		local dist = ml_navigation:GetRaycast_Player_Node_Distance(ppos,ml_navigation.ensureposition)
+		local dist = self:GetRaycast_Player_Node_Distance(playerpos,self.ensureposition)
 						
-		if ( dist > 15 and ml_navigation.omcteleportallowed ) then
-			HackManager:Teleport(ml_navigation.ensureposition.x,ml_navigation.ensureposition.y,ml_navigation.ensureposition.z)
+		if ( dist > 15 ) then
+			HackManager:Teleport(self.ensureposition.x,self.ensureposition.y,self.ensureposition.z)
 		end
-		if ( math.angle({x = ppos.hx, y = ppos.hy,  z = 0}, {x = ml_navigation.ensureheading.x-ppos.x, y = ml_navigation.ensureheading.y-ppos.y, z = 0}) > 5 ) then 
-			Player:SetFacingExact(ml_navigation.ensureheading.x,ml_navigation.ensureheading.y,ml_navigation.ensureheading.z,true) 
+		
+		if ( self.ensureheading ) then
+			Player:SetFacingH(self.ensureheading.hx,self.ensureheading.hy,self.ensureheading.hz)		
+		
+		elseif (self.ensureheadingtargetpos) then
+			Player:SetFacingExact(self.ensureheadingtargetpos.x,self.ensureheadingtargetpos.y,self.ensureheadingtargetpos.z,true) 
 		end
+		
 		return true
+		
 	else	-- We waited long enough
-		ml_navigation.ensureposition = nil
-		ml_navigation.ensureheading = nil
-		ml_navigation.ensurepositionstarttime = nil
+		self.ensureposition = nil
+		self.ensureheading = nil
+		self.ensureheadingtargetpos = nil
+		self.ensurepositionstarttime = nil
 	end
 	return false
 end
@@ -398,22 +521,21 @@ function ml_navigation:ResetOMCHandler()
 	self.omc_traveltimer = nil
 	self.ensureposition = nil
 	self.ensureheading = nil
+	self.ensureheadingtargetpos = nil
 	self.ensurepositionstarttime = nil
 	self.omc_starttimer = 0
-	self.omc_startheight = nil	
+	self.omc_startheight = nil
+	self.navconnection = nil
 end
 
--- for replacing the original c++ navi with our lua version
-function NavigationManager:MoveTo(x, y, z, crap, navigationmode, randomnodes, smoothturns)
-	-- Return a valid value so that the moveto task does not fail while we move back to the mesh.
-	if(not ml_navigation.omc_id and not gw2_unstuck.OnMesh()) then return 0 end
-	
-	return ml_navigation:MoveTo(x, y, z, navigationmode, randomnodes, smoothturns)
-end
-
-function Player:StopMovement()
+-- Resets Path and Stops the Player Movement 
+function Player:StopMovement()	
+	ml_navigation.navconnection = nil
+	ml_navigation.navconnection_start_tmr = nil
+	ml_navigation.pathindex = 0
 	ml_navigation:ResetCurrentPath()
 	ml_navigation:ResetOMCHandler()
-	gw2_unstuck.SoftReset()
+	gw2_unstuck.Reset()
 	Player:Stop()
+	NavigationManager:ResetPath()	
 end

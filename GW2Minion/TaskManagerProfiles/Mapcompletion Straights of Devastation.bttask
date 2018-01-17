@@ -79,15 +79,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 70,
-				name = "POI The Underbelly",
+				name = "POI The Underbelly (Nav Mesh Error)",
 				pos = 
 				{
-					hx = -0.9347962141037,
-					hy = 0.34027165174484,
-					hz = 0.10183909535408,
-					x = 19424.193359375,
-					y = 26705.50390625,
-					z = -1138.2708740234,
+					hx = 0.99558579921722,
+					hy = 0.09385584294796,
+					hz = 0,
+					x = 19370.72265625,
+					y = 26694.111328125,
+					z = -97.742568969727,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -1237,7 +1237,7 @@ local tbl =
 			taskProperties = 
 			{
 				cooldown = 0,
-				enabled = false,
+				enabled = true,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
@@ -1280,12 +1280,12 @@ local tbl =
 			taskProperties = 
 			{
 				cooldown = 0,
-				enabled = false,
+				enabled = true,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 51,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 70,
 				name = "Vista",
