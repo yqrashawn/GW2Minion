@@ -25,6 +25,9 @@ function Player:MoveTo(x, y, z, targetid, stoppingdistance, randommovement, smoo
 	ml_navigation.targetposition = { x=x, y=y, z=z }
 	
 	if( not ml_navigation.navconnection or ml_navigation.navconnection.type == 5) then	-- We are not currently handling a NavConnection / ignore MacroMesh Connections, these have to be replaced with a proper path by calling this exact function here
+		if (ml_navigation.navconnection) then 
+			gw2_unstuck.Reset()
+		end
 		ml_navigation.navconnection = nil
 		return ml_navigation:MoveTo(x, y, z, targetID)
 	else
@@ -268,6 +271,7 @@ function ml_navigation:NextNodeReached( playerpos, nextnode , nextnextnode)
 				if( navcon) then
 					d("[Navigation] -  Arrived at NavConnection ID: "..tostring(nextnode.navconnectionid))
 					ml_navigation:ResetOMCHandler()
+					gw2_unstuck.Reset()
 					ml_navigation.navconnection = navcon
 					if( not ml_navigation.navconnection ) then 
 						ml_error("[Navigation] -  No NavConnection Data found for ID: "..tostring(nextnode.navconnectionid))
@@ -280,6 +284,9 @@ function ml_navigation:NextNodeReached( playerpos, nextnode , nextnextnode)
 					ml_navigation.navconnection_start_tmr = ml_global_information.Now
 					
 				else
+					if (ml_navigation.navconnection) then 
+						gw2_unstuck.Reset()
+					end
 					ml_navigation.navconnection = nil
 					return true
 				end
@@ -302,6 +309,7 @@ function ml_navigation:NextNodeReached( playerpos, nextnode , nextnextnode)
 				if( navcon) then
 					d("[Navigation] -  Arrived at NavConnection ID: "..tostring(nextnode.navconnectionid))
 					ml_navigation:ResetOMCHandler()
+					gw2_unstuck.Reset()
 					ml_navigation.navconnection = navcon
 					if( not ml_navigation.navconnection ) then 
 						ml_error("[Navigation] -  No NavConnection Data found for ID: "..tostring(nextnode.navconnectionid))
@@ -312,6 +320,9 @@ function ml_navigation:NextNodeReached( playerpos, nextnode , nextnextnode)
 					end
 				
 				else
+					if (ml_navigation.navconnection) then 
+						gw2_unstuck.Reset()
+					end
 					ml_navigation.navconnection = nil
 					return true
 				end				
@@ -389,8 +400,7 @@ function ml_navigation:MoveToNextNode( playerpos, lastnode, nextnode, overridefa
 		end
 	
 	else 
-		d("[ml_navigation:MoveToNextNode] - Unstuck kicked in...resetting Path.")
-		Player:StopMovement()	
+		--d("[ml_navigation:MoveToNextNode] - Unstuck ...")
 	end
 	return false
 end
