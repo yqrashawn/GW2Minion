@@ -835,6 +835,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 11,
@@ -855,7 +856,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 19,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 4,
 				name = "Vista",
@@ -1793,6 +1794,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 20,
@@ -1813,7 +1815,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 19,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 6,
 				name = "Vista",
@@ -1900,15 +1902,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 6,
-				name = "WP Langmar Estate",
+				name = "WP Langmar Estate ",
 				pos = 
 				{
-					hx = 0.53311121463776,
-					hy = 0.70779758691788,
-					hz = 0.46348133683205,
-					x = -32443.2109375,
-					y = -20105.40625,
-					z = -2023.3469238281,
+					hx = 0.59744369983673,
+					hy = 0.63168996572495,
+					hz = 0.49399274587631,
+					x = -32546.7890625,
+					y = -20179.724609375,
+					z = -1982.3636474609,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -2061,6 +2063,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 25,
@@ -2081,7 +2084,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 19,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 8,
 				name = "Vista",
@@ -3188,6 +3191,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 37,
@@ -3208,7 +3212,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 19,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 7,
 				name = "Vista",
@@ -3356,6 +3360,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 41,
@@ -3376,7 +3381,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 19,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 7,
 				name = "Vista",
@@ -3556,12 +3561,12 @@ local tbl =
 				name = "POI Shards of War",
 				pos = 
 				{
-					hx = -0.35932901501656,
-					hy = -0.81418895721436,
-					hz = 0.45604708790779,
-					x = 3116.8562011719,
-					y = 13053.729492188,
-					z = -81.783012390137,
+					hx = -0.48355033993721,
+					hy = 0.81523215770721,
+					hz = 0.31870931386948,
+					x = 2916.76171875,
+					y = 12780.91796875,
+					z = -38.254417419434,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -3614,6 +3619,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 45,
@@ -3634,7 +3640,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 19,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 11,
 				name = "Vista",
@@ -3944,6 +3950,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 52,
@@ -3964,7 +3971,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 19,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 15,
 				name = "Vista",
@@ -4301,6 +4308,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 57,
@@ -4321,7 +4329,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 19,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 15,
 				name = "Vista",
@@ -4427,6 +4435,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 60,
@@ -4447,7 +4456,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 19,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 13,
 				name = "Vista",
@@ -5105,6 +5114,7 @@ local tbl =
 		{
 			customProperties = 
 			{
+				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 66,
@@ -5125,7 +5135,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
 				mapid = 19,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 13,
 				name = "Vista",

@@ -65,7 +65,8 @@ function ml_navigation.Navigate(event, ticks )
 						-- Temp solution to cancel navcon handling after 10 sec
 						if ( ml_navigation.navconnection_start_tmr and ( ml_global_information.Now - ml_navigation.navconnection_start_tmr > 10000)) then
 							d("[Navigation] - We did not complete the Navconnection handling in 10 seconds, something went wrong ?...Resetting Path..")							
-							Player:StopMovement()							
+							Player:StopMovement()
+							return
 						end
 
 					
@@ -87,7 +88,7 @@ function ml_navigation.Navigate(event, ticks )
 									if ( not ml_navigation.omc_startheight ) then ml_navigation.omc_startheight = playerpos.z end
 									-- Additionally check if we are "above" the target point already, in that case, stop moving forward
 									local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(playerpos,nextnode)
-									if ( (nodedist - ml_navigation.navconnection.radius*32 )  < ml_navigation.NavPointReachedDistances["Walk"] or (playerpos.z < nextnode.z and math.distance2d(playerpos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"]) ) then
+									if ( (nodedist)  < ml_navigation.NavPointReachedDistances["Walk"] or (playerpos.z < nextnode.z and math.distance2d(playerpos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"]) ) then
 										d("[Navigation] - We are above the OMC_END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
 										Player:Stop()
 										if ( ml_navigation.navconnection.radius < 1.0  ) then
@@ -112,7 +113,7 @@ function ml_navigation.Navigate(event, ticks )
 									else
 										-- Additionally check if we are "above" the target point already, in that case, stop moving forward
 										local nodedist = ml_navigation:GetRaycast_Player_Node_Distance(playerpos,nextnode)
-										if ( (nodedist - ml_navigation.navconnection.radius*32 )  < ml_navigation.NavPointReachedDistances["Walk"] or (playerpos.z < nextnode.z and math.distance2d(playerpos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"])) then
+										if ( (nodedist)  < ml_navigation.NavPointReachedDistances["Walk"] or (playerpos.z < nextnode.z and math.distance2d(playerpos,nextnode) < ml_navigation.NavPointReachedDistances["Walk"])) then
 											d("[Navigation] - We are above the OMC END Node, stopping movement. ("..tostring(math.round(nodedist,2)).." < "..tostring(ml_navigation.NavPointReachedDistances["Walk"])..")")
 											Player:Stop()
 											if ( ml_navigation.navconnection.radius < 1.0  ) then

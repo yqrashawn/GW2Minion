@@ -416,7 +416,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 27,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "[VISTA] Nentor Valley",
@@ -743,17 +743,17 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 27,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[VISTA] Icedevil's Needle",
+				name = "[VISTA] Icedevil's Needle ",
 				pos = 
 				{
-					hx = 0.40987667441368,
-					hy = 0.0062025752849877,
-					hz = 0.91211986541748,
-					x = -2851.3395996094,
-					y = 51633.296875,
+					hx = -0.76946049928665,
+					hy = 0.17647688090801,
+					hz = 0.61382931470871,
+					x = -2839.0588378906,
+					y = 51630.48828125,
 					z = -4496.8520507813,
 				},
 				radius = 0,
@@ -888,7 +888,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[POI] Skritt Hill",
+				name = "[POI] Skritt Hill ",
 				pos = 
 				{
 					hx = 0.92351537942886,
@@ -1160,7 +1160,6 @@ local tbl =
 							},
 						},
 					},
-					order = 5,
 					taskProperties = 
 					{
 						enabled = true,
@@ -1186,7 +1185,6 @@ local tbl =
 							},
 						},
 					},
-					order = 6,
 					taskProperties = 
 					{
 						enabled = true,
@@ -1212,7 +1210,6 @@ local tbl =
 							},
 						},
 					},
-					order = 7,
 					taskProperties = 
 					{
 						enabled = true,
@@ -1238,7 +1235,6 @@ local tbl =
 							},
 						},
 					},
-					order = 8,
 					taskProperties = 
 					{
 						enabled = true,
@@ -1264,7 +1260,6 @@ local tbl =
 							},
 						},
 					},
-					order = 9,
 					taskProperties = 
 					{
 						enabled = true,
@@ -1294,7 +1289,6 @@ local tbl =
 							},
 						},
 					},
-					order = 4,
 					taskProperties = 
 					{
 						enabled = true,
@@ -1338,12 +1332,12 @@ local tbl =
 				enabled = false,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
+				gw2_trytosurvive = true,
 				mapid = 27,
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Help Hune manage the lodge",
+				name = "[HQ] Help Hune manage the lodge (Do Manually)",
 				pos = 
 				{
 					hx = 0.35971316695213,
@@ -1608,15 +1602,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Frozen Portal",
+				name = "[HP] Frozen Portal (Fixed Nav Position)",
 				pos = 
 				{
-					hx = 0.24804705381393,
-					hy = -0.91780471801758,
-					hz = 0.31001162528992,
-					x = 18035.59765625,
-					y = 45554.3671875,
-					z = -8604.244140625,
+					hx = -0.57306551933289,
+					hy = -0.62459003925323,
+					hz = 0.53054994344711,
+					x = 18148.75,
+					y = 45462.87890625,
+					z = -8643.712890625,
 				},
 				radius = 0,
 				type = "tm_heropoint",
@@ -1690,10 +1684,10 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 27,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[VISTA] Chillwing Perch",
+				name = "[VISTA] Chillwing Perch ",
 				pos = 
 				{
 					hx = -0.18656349182129,
@@ -2293,7 +2287,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[POI] Windy Cave",
+				name = "[POI] Windy Cave ",
 				pos = 
 				{
 					hx = -0.098394513130188,
@@ -2315,200 +2309,6 @@ local tbl =
 			},
 			lastrun = 0,
 			order = 28,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = false,
-				gw2_failondeath = true,
-				gw2_failondeathcount = 2,
-				gw2_trytosurvive = false,
-				mapid = 27,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[TREASURE] Windy Cave Part I",
-				pos = 
-				{
-					hx = 0.52684932947159,
-					hy = 0.84112417697906,
-					hz = 0.1222290918231,
-					x = -3963.2768554688,
-					y = 38097.75,
-					z = -2077.1022949219,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 29,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-				
-				{
-					customProperties = 
-					{
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "aggro",
-						type = "tm_st_fightaggro",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = true,
-								contentid = 264314,
-								gadget = false,
-								name = "Veteran Chromatic Ooze",
-							},
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "kill",
-						type = "tm_st_killspecific",
-					},
-				},
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = false,
-				gw2_failondeath = true,
-				gw2_failondeathcount = 2,
-				gw2_trytosurvive = false,
-				mapid = 27,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[TREASURE] Windy Cave Part II",
-				pos = 
-				{
-					hx = 0.35244405269623,
-					hy = 0.7858766913414,
-					hz = -0.50811517238617,
-					x = -3791.2351074219,
-					y = 38337.24609375,
-					z = -2091.7497558594,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 30,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-				
-				{
-					customProperties = 
-					{
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "aggro",
-						type = "tm_st_fightaggro",
-					},
-				},
-			},
-			subtasks = 
-			{
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = false,
-								contentid = 5840,
-								gadget = true,
-								name = "Grand Chest",
-							},
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Open Chest",
-						type = "tm_st_interact",
-					},
-				},
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = false,
-				gw2_failondeath = true,
-				gw2_failondeathcount = 2,
-				gw2_trytosurvive = true,
-				mapid = 27,
-				maxduration = 10,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[TREASURE] Windy Cave Part III",
-				pos = 
-				{
-					hx = 0.19162179529667,
-					hy = 0.84568816423416,
-					hz = -0.49808898568153,
-					x = -3779.0737304688,
-					y = 38333.63671875,
-					z = -2092.8757324219,
-				},
-				radius = 0,
-				type = "tm_generic",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 31,
 			posttasks = 
 			{
 			},
@@ -2551,7 +2351,7 @@ local tbl =
 				hqid = 52,
 			},
 			lastrun = 0,
-			order = 32,
+			order = 29,
 			posttasks = 
 			{
 			},
@@ -2920,7 +2720,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 33,
+			order = 30,
 			posttasks = 
 			{
 			},
@@ -2962,7 +2762,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 34,
+			order = 31,
 			posttasks = 
 			{
 			},
@@ -3004,7 +2804,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 35,
+			order = 32,
 			posttasks = 
 			{
 			},
@@ -3102,7 +2902,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 36,
+			order = 33,
 			posttasks = 
 			{
 			},
@@ -3123,7 +2923,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[POI] Posternus Caverns",
+				name = "[POI] Posternus Caverns ",
 				pos = 
 				{
 					hx = -0.0100540779531,
@@ -3145,7 +2945,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 37,
+			order = 34,
 			posttasks = 
 			{
 			},
@@ -3163,7 +2963,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 27,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "[VISTA] Durmand Priory",
@@ -3187,7 +2987,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 38,
+			order = 35,
 			posttasks = 
 			{
 			},
@@ -3229,7 +3029,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 39,
+			order = 36,
 			posttasks = 
 			{
 			},
@@ -3271,7 +3071,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 40,
+			order = 37,
 			posttasks = 
 			{
 			},
@@ -3308,15 +3108,15 @@ local tbl =
 			taskProperties = 
 			{
 				cooldown = 0,
-				enabled = false,
+				enabled = true,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
+				gw2_trytosurvive = true,
 				mapid = 27,
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Heart of the Priory (talk doesn't work)",
+				name = "[HP] Heart of the Priory (Fixed)",
 				pos = 
 				{
 					hx = -0.43094071745872,
@@ -3337,7 +3137,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 41,
+			order = 38,
 			posttasks = 
 			{
 			},
@@ -3379,7 +3179,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 42,
+			order = 39,
 			posttasks = 
 			{
 			},
@@ -3421,7 +3221,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 43,
+			order = 40,
 			posttasks = 
 			{
 			},
@@ -3463,7 +3263,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 44,
+			order = 41,
 			posttasks = 
 			{
 			},
@@ -3505,7 +3305,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 45,
+			order = 42,
 			posttasks = 
 			{
 			},
@@ -3547,7 +3347,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 46,
+			order = 43,
 			posttasks = 
 			{
 			},
@@ -3590,7 +3390,7 @@ local tbl =
 				hqid = 45,
 			},
 			lastrun = 0,
-			order = 47,
+			order = 44,
 			posttasks = 
 			{
 			},
@@ -3750,7 +3550,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 48,
+			order = 45,
 			posttasks = 
 			{
 			},
@@ -3771,15 +3571,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[POI] Bearstone Shrine",
+				name = "[POI] Bearstone Shrine ",
 				pos = 
 				{
-					hx = -0.69782394170761,
-					hy = 0.71587592363358,
-					hz = 0.023735044524074,
-					x = -18136.564453125,
-					y = -240.05529785156,
-					z = -3247.5625,
+					hx = -0.62613612413406,
+					hy = 0.63823318481445,
+					hz = 0.44789719581604,
+					x = -18299.654296875,
+					y = -62.395671844482,
+					z = -3420.2419433594,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -3792,7 +3592,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 49,
+			order = 46,
 			posttasks = 
 			{
 			},
@@ -3834,7 +3634,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 50,
+			order = 47,
 			posttasks = 
 			{
 			},
@@ -3876,7 +3676,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 51,
+			order = 48,
 			posttasks = 
 			{
 			},
@@ -3919,7 +3719,7 @@ local tbl =
 				hqid = 51,
 			},
 			lastrun = 0,
-			order = 52,
+			order = 49,
 			posttasks = 
 			{
 			},
@@ -4072,7 +3872,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Help Researcher Suki examine imps near Rocklair",
+				name = "[HQ] Help Researcher Suki examine imps near Rocklair (Do Manually)",
 				pos = 
 				{
 					hx = 0.42992049455643,
@@ -4093,7 +3893,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 53,
+			order = 50,
 			posttasks = 
 			{
 			},
@@ -4114,7 +3914,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[POI] Molevan Portage",
+				name = "[POI] Molevan Portage ",
 				pos = 
 				{
 					hx = 0.18755236268044,
@@ -4135,7 +3935,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 54,
+			order = 51,
 			posttasks = 
 			{
 			},
@@ -4178,7 +3978,7 @@ local tbl =
 				hqid = 53,
 			},
 			lastrun = 0,
-			order = 55,
+			order = 52,
 			posttasks = 
 			{
 			},
@@ -4356,7 +4156,7 @@ local tbl =
 				hqid = 50,
 			},
 			lastrun = 0,
-			order = 56,
+			order = 53,
 			posttasks = 
 			{
 			},
@@ -4628,15 +4428,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Investigate and contain the expanding steam creature forces",
+				name = "[HQ] Investigate and contain the expanding steam creature forces ",
 				pos = 
 				{
-					hx = 0.95740723609924,
-					hy = -0.089155547320843,
-					hz = 0.27463191747665,
-					x = 14418.767578125,
-					y = 10431.42578125,
-					z = -5310.9194335938,
+					hx = -0.31466230750084,
+					hy = 0.014052455313504,
+					hz = 0.94909965991974,
+					x = 14559.578125,
+					y = 10428.249023438,
+					z = -5370.16015625,
 				},
 				radius = 0,
 				type = "tm_hq",
@@ -4649,7 +4449,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 57,
+			order = 54,
 			posttasks = 
 			{
 			},
@@ -4670,7 +4470,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[POI] Steam Mechagate",
+				name = "[POI] Steam Mechagate ",
 				pos = 
 				{
 					hx = -0.57933831214905,
@@ -4691,7 +4491,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 58,
+			order = 55,
 			posttasks = 
 			{
 			},
@@ -4712,15 +4512,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[POI] Grenth's Door",
+				name = "[POI] Grenth's Door ",
 				pos = 
 				{
-					hx = 0.93066018819809,
-					hy = -0.0047928956337273,
-					hz = 0.36585327982903,
-					x = 18104.26171875,
-					y = -2422.3400878906,
-					z = -4869.3359375,
+					hx = -0.84545493125916,
+					hy = -0.079344801604748,
+					hz = 0.52811962366104,
+					x = 18891.380859375,
+					y = -2319.3464355469,
+					z = -4888.1455078125,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -4733,7 +4533,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 59,
+			order = 56,
 			posttasks = 
 			{
 			},
@@ -4790,7 +4590,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Grenth's Door",
+				name = "[HP] Grenth's Door ",
 				pos = 
 				{
 					hx = 0.85458272695541,
@@ -4811,7 +4611,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 60,
+			order = 57,
 			posttasks = 
 			{
 			},
@@ -4868,15 +4668,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Steam Portal",
+				name = "[HP] Steam Portal ",
 				pos = 
 				{
-					hx = -0.049542717635632,
-					hy = -0.88155692815781,
-					hz = 0.46947091817856,
-					x = 7881.1079101563,
-					y = 2622.6704101563,
-					z = -4617.4423828125,
+					hx = -0.51733958721161,
+					hy = -0.49815589189529,
+					hz = 0.69584512710571,
+					x = 7952.3505859375,
+					y = 2575.3205566406,
+					z = -4613.0595703125,
 				},
 				radius = 0,
 				type = "tm_heropoint",
@@ -4890,7 +4690,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 61,
+			order = 58,
 			posttasks = 
 			{
 			},
@@ -4908,10 +4708,10 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 27,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[VISTA] West of Reaper's Gate",
+				name = "[VISTA] West of Reaper's Gate ",
 				pos = 
 				{
 					hx = 0.017922421917319,
@@ -4932,7 +4732,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 62,
+			order = 59,
 			posttasks = 
 			{
 			},
@@ -4948,20 +4748,20 @@ local tbl =
 				enabled = true,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
+				gw2_trytosurvive = true,
 				mapid = 27,
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[POI] Icebound Plunge",
+				name = "[POI] Icebound Plunge (Fixed Nav Position)",
 				pos = 
 				{
-					hx = 0.37410399317741,
-					hy = 0.87931448221207,
-					hz = 0.29470705986023,
-					x = 7231.587890625,
-					y = 827.16455078125,
-					z = -3284.8823242188,
+					hx = 0.35728675127029,
+					hy = 0.9339947104454,
+					hz = 0,
+					x = 7570.4438476563,
+					y = 1547.5677490234,
+					z = -3284.8666992188,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -4974,7 +4774,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 63,
+			order = 60,
 			posttasks = 
 			{
 			},
@@ -5017,7 +4817,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 64,
+			order = 61,
 			posttasks = 
 			{
 			},
@@ -5035,18 +4835,18 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 27,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[VISTA] False River Valley",
+				name = "[VISTA] False River Valley ",
 				pos = 
 				{
-					hx = -0.59121781587601,
-					hy = -0.80651187896729,
-					hz = 0,
-					x = 16086.430664063,
-					y = -11359.892578125,
-					z = -6331.6923828125,
+					hx = -0.51208156347275,
+					hy = -0.605852663517,
+					hz = 0.60886371135712,
+					x = 16129.885742188,
+					y = -11307.47265625,
+					z = -6238.7236328125,
 				},
 				radius = 0,
 				type = "tm_vista",
@@ -5059,7 +4859,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 65,
+			order = 62,
 			posttasks = 
 			{
 			},
@@ -5101,7 +4901,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 66,
+			order = 63,
 			posttasks = 
 			{
 			},
@@ -5143,7 +4943,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 67,
+			order = 64,
 			posttasks = 
 			{
 			},
@@ -5186,7 +4986,7 @@ local tbl =
 				hqid = 43,
 			},
 			lastrun = 0,
-			order = 68,
+			order = 65,
 			posttasks = 
 			{
 			},
@@ -5426,7 +5226,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 69,
+			order = 66,
 			posttasks = 
 			{
 			},
@@ -5468,7 +5268,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 70,
+			order = 67,
 			posttasks = 
 			{
 			},
@@ -5489,7 +5289,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[POI] The Molitage Digs",
+				name = "[POI] The Molitage Digs ",
 				pos = 
 				{
 					hx = 0.8639303445816,
@@ -5511,7 +5311,7 @@ local tbl =
 				hqid = 42,
 			},
 			lastrun = 0,
-			order = 71,
+			order = 68,
 			posttasks = 
 			{
 			},
@@ -5809,7 +5609,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 72,
+			order = 69,
 			posttasks = 
 			{
 			},
@@ -5852,7 +5652,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 73,
+			order = 70,
 			posttasks = 
 			{
 			},
@@ -5870,18 +5670,18 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 27,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[VISTA] Venison Pass",
+				name = "[VISTA] Venison Pass ",
 				pos = 
 				{
-					hx = -0.68076360225677,
-					hy = 0.18090055882931,
-					hz = 0.70981401205063,
-					x = 15547.595703125,
-					y = -50513.1015625,
-					z = -4646.2290039063,
+					hx = 0.75390893220901,
+					hy = -0.20151069760323,
+					hz = 0.62531173229218,
+					x = 15443.493164063,
+					y = -50445.23828125,
+					z = -4594.0859375,
 				},
 				radius = 0,
 				type = "tm_vista",
@@ -5894,7 +5694,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 74,
+			order = 71,
 			posttasks = 
 			{
 			},
@@ -5937,7 +5737,7 @@ local tbl =
 				hqid = 44,
 			},
 			lastrun = 0,
-			order = 75,
+			order = 72,
 			posttasks = 
 			{
 			},
@@ -6208,7 +6008,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 76,
+			order = 73,
 			posttasks = 
 			{
 			},
@@ -6250,7 +6050,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 77,
+			order = 74,
 			posttasks = 
 			{
 			},
@@ -6292,7 +6092,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 78,
+			order = 75,
 			posttasks = 
 			{
 			},
@@ -6334,7 +6134,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 79,
+			order = 76,
 			posttasks = 
 			{
 			},
@@ -6355,7 +6155,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[POI] Ettinworks Lab",
+				name = "[POI] Ettinworks Lab ",
 				pos = 
 				{
 					hx = -0.91629493236542,
@@ -6377,7 +6177,7 @@ local tbl =
 				hqid = 41,
 			},
 			lastrun = 0,
-			order = 80,
+			order = 77,
 			posttasks = 
 			{
 			},
@@ -6627,7 +6427,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 81,
+			order = 78,
 			posttasks = 
 			{
 			},
@@ -6669,7 +6469,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 82,
+			order = 79,
 			posttasks = 
 			{
 			},
@@ -6712,7 +6512,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 83,
+			order = 80,
 			posttasks = 
 			{
 			},
@@ -6730,10 +6530,10 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 27,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[VISTA] East of False Lake",
+				name = "[VISTA] East of False Lake ",
 				pos = 
 				{
 					hx = -0.42012047767639,
@@ -6754,7 +6554,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 84,
+			order = 81,
 			posttasks = 
 			{
 			},
@@ -6796,7 +6596,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 85,
+			order = 82,
 			posttasks = 
 			{
 			},
@@ -6838,7 +6638,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 86,
+			order = 83,
 			posttasks = 
 			{
 			},
@@ -6880,7 +6680,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 87,
+			order = 84,
 			posttasks = 
 			{
 			},
@@ -6959,15 +6759,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Lionguard Mette",
+				name = "[HP] Lionguard Mette ",
 				pos = 
 				{
-					hx = 0.88104367256165,
-					hy = 0.086050964891911,
-					hz = 0.46514225006104,
-					x = -12749.690429688,
-					y = -17340.42578125,
-					z = -1579.3067626953,
+					hx = -0.10307542234659,
+					hy = -0.62846302986145,
+					hz = 0.77097964286804,
+					x = -12637.217773438,
+					y = -17253.345703125,
+					z = -1581.5144042969,
 				},
 				radius = 0,
 				type = "tm_heropoint",
@@ -6980,7 +6780,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 88,
+			order = 85,
 			posttasks = 
 			{
 			},
@@ -7022,7 +6822,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 89,
+			order = 86,
 			posttasks = 
 			{
 			},
@@ -7065,7 +6865,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 90,
+			order = 87,
 			posttasks = 
 			{
 			},
@@ -7083,7 +6883,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 27,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "[VISTA] Jestam Isle",
@@ -7108,7 +6908,7 @@ local tbl =
 				hqid = 39,
 			},
 			lastrun = 0,
-			order = 91,
+			order = 88,
 			posttasks = 
 			{
 			},
@@ -7311,7 +7111,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 92,
+			order = 89,
 			posttasks = 
 			{
 			},
@@ -7353,7 +7153,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 93,
+			order = 90,
 			posttasks = 
 			{
 			},
@@ -7454,7 +7254,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 94,
+			order = 91,
 			posttasks = 
 			{
 			},
@@ -7497,7 +7297,7 @@ local tbl =
 				hqid = 40,
 			},
 			lastrun = 0,
-			order = 95,
+			order = 92,
 			posttasks = 
 			{
 			},
@@ -7672,7 +7472,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 96,
+			order = 93,
 			posttasks = 
 			{
 			},
@@ -7714,7 +7514,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 97,
+			order = 94,
 			posttasks = 
 			{
 			},
@@ -7757,7 +7557,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 98,
+			order = 95,
 			posttasks = 
 			{
 			},
@@ -7775,7 +7575,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 27,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "[VISTA] Demon's Maw",

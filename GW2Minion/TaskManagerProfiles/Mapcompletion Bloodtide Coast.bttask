@@ -1,0 +1,4506 @@
+local tbl = 
+{
+	name = "Mapcompletion Bloodtide Coast",
+	properties = 
+	{
+		failure = 1,
+		order = 1,
+		repeattasks = 2,
+	},
+	tasks = 
+	{
+		
+		{
+			customProperties = 
+			{
+				waypointid = 419,
+			},
+			lastrun = 0,
+			order = 1,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Archen Foreland",
+				pos = 
+				{
+					hx = 0.035278391093016,
+					hy = -0.72134256362915,
+					hz = 0.69167935848236,
+					x = 8583.580078125,
+					y = 37962.17578125,
+					z = -592.41546630859,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 420,
+			},
+			lastrun = 0,
+			order = 2,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Sorrowful Waypoint",
+				pos = 
+				{
+					hx = -0.36666345596313,
+					hy = -0.3850037753582,
+					hz = 0.84695339202881,
+					x = -9551.0673828125,
+					y = 27389.19921875,
+					z = 1769.9127197266,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 421,
+			},
+			lastrun = 0,
+			order = 3,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Stormbluff Waypoint",
+				pos = 
+				{
+					hx = -0.43915370106697,
+					hy = -0.59433591365814,
+					hz = 0.67372757196426,
+					x = 2143.9587402344,
+					y = 20412.103515625,
+					z = -1458.8327636719,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 1035,
+			},
+			lastrun = 0,
+			order = 4,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Deadend Waypoint",
+				pos = 
+				{
+					hx = -0.24282076954842,
+					hy = -0.82550400495529,
+					hz = 0.50949108600616,
+					x = 9450.720703125,
+					y = 27090.15625,
+					z = -20.580451965332,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 422,
+			},
+			lastrun = 0,
+			order = 5,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Marshwatch Haven Waypoint",
+				pos = 
+				{
+					hx = 0.8160035610199,
+					hy = -0.40662449598312,
+					hz = 0.41084629297256,
+					x = 23013.384765625,
+					y = 33289.5859375,
+					z = -1872.8635253906,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 423,
+			},
+			lastrun = 0,
+			order = 6,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Remanda Waypoint",
+				pos = 
+				{
+					hx = -0.050296571105719,
+					hy = -0.85925561189651,
+					hz = 0.50906783342361,
+					x = 19858.447265625,
+					y = 12343.307617188,
+					z = 6.7464213371277,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 424,
+			},
+			lastrun = 0,
+			order = 7,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Laughing Gull Waypoint",
+				pos = 
+				{
+					hx = -0.74546891450882,
+					hy = 0.56169611215591,
+					hz = 0.35885030031204,
+					x = -5722.7436523438,
+					y = 3509.6511230469,
+					z = -53.806079864502,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 425,
+			},
+			lastrun = 0,
+			order = 8,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Barrier Camp Waypoint",
+				pos = 
+				{
+					hx = -0.29199290275574,
+					hy = -0.78625351190567,
+					hz = 0.54455995559692,
+					x = -19080.1484375,
+					y = -5509.7890625,
+					z = -82.586212158203,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 426,
+			},
+			lastrun = 0,
+			order = 9,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Firthside Vigil Waypoint",
+				pos = 
+				{
+					hx = 0.44187551736832,
+					hy = -0.79045909643173,
+					hz = 0.42417031526566,
+					x = 6071.2592773438,
+					y = -3499.6379394531,
+					z = -333.35025024414,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 427,
+			},
+			lastrun = 0,
+			order = 10,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Lostwreck Waypoint",
+				pos = 
+				{
+					hx = -0.88104420900345,
+					hy = 0.34135454893112,
+					hz = 0.32747238874435,
+					x = 25130.673828125,
+					y = -3973.9252929688,
+					z = -5.3410882949829,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 432,
+			},
+			lastrun = 0,
+			order = 11,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Bogside Camp Waypoint",
+				pos = 
+				{
+					hx = 0.88150000572205,
+					hy = -0.47218400239944,
+					hz = 0,
+					x = 24783.28125,
+					y = -18626.982421875,
+					z = -447.94165039063,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 432,
+			},
+			lastrun = 0,
+			order = 12,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Whisperwill Waypoint",
+				pos = 
+				{
+					hx = -0.57854211330414,
+					hy = -0.72860461473465,
+					hz = 0.36663925647736,
+					x = 21085.599609375,
+					y = -31697.103515625,
+					z = -46.582386016846,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 429,
+			},
+			lastrun = 0,
+			order = 13,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Mournful Waypoint",
+				pos = 
+				{
+					hx = 0.52701771259308,
+					hy = 0.83414453268051,
+					hz = 0.1626505702734,
+					x = -3814.5239257813,
+					y = -19677.466796875,
+					z = -216.94290161133,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 430,
+			},
+			lastrun = 0,
+			order = 14,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Castavall Waypoint",
+				pos = 
+				{
+					hx = -0.9431369304657,
+					hy = -0.02342539280653,
+					hz = 0.33157804608345,
+					x = -3523.0661621094,
+					y = -24792.0390625,
+					z = 5284.4624023438,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				waypointid = 431,
+			},
+			lastrun = 0,
+			order = 15,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "WP Jelako Waypoint",
+				pos = 
+				{
+					hx = 0.79860329627991,
+					hy = 0.49976915121078,
+					hz = 0.33535587787628,
+					x = -19962.25390625,
+					y = -30064.283203125,
+					z = -648.10485839844,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 16,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Aquanarium Hydropost",
+				pos = 
+				{
+					hx = -0.3430917263031,
+					hy = -0.92303931713104,
+					hz = 0.17403011023998,
+					x = -10659.735351563,
+					y = 23682.216796875,
+					z = 2491.7397460938,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 17,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 180,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Broken Beacon",
+				pos = 
+				{
+					hx = -0.19326332211494,
+					hy = 0.85363405942917,
+					hz = 0.48369216918945,
+					x = -8097.923828125,
+					y = 36957.375,
+					z = -1960.6685791016,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 18,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Vonooroovah",
+				pos = 
+				{
+					hx = -0.97348880767822,
+					hy = -0.2287346124649,
+					hz = 0,
+					x = -13938.908203125,
+					y = 30647.146484375,
+					z = 2292.9658203125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 19,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Stormbluff Beacon",
+				pos = 
+				{
+					hx = -0.1771384626627,
+					hy = 0.96867620944977,
+					hz = 0.17403556406498,
+					x = -2556.6223144531,
+					y = 23567.509765625,
+					z = -2030.6676025391,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 20,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Deadend Cave",
+				pos = 
+				{
+					hx = -0.95317733287811,
+					hy = -0.30241200327873,
+					hz = 0,
+					x = 7744.2114257813,
+					y = 22004.21875,
+					z = 41.213348388672,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 21,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Mudflat Camp",
+				pos = 
+				{
+					hx = -0.91696214675903,
+					hy = -0.25874510407448,
+					hz = 0.30369621515274,
+					x = 18693.673828125,
+					y = 4655.6166992188,
+					z = -769.99328613281,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 22,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Sullivan's Wake",
+				pos = 
+				{
+					hx = 0.73697054386139,
+					hy = 0.64480221271515,
+					hz = 0.20274245738983,
+					x = 5432.6831054688,
+					y = 7874.9208984375,
+					z = -694.75561523438,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 23,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Gleaner's Archway (Mesh Fixed)",
+				pos = 
+				{
+					hx = 0.4173524081707,
+					hy = 0.7466796040535,
+					hz = 0.51796382665634,
+					x = 21526.25,
+					y = -18247.984375,
+					z = -971.52813720703,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 24,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Covington Keep (Mesh Fixed)",
+				pos = 
+				{
+					hx = 0.18364988267422,
+					hy = 0.83978015184402,
+					hz = 0.51092272996902,
+					x = -6465.6508789063,
+					y = 8688.7314453125,
+					z = -722.09375,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 25,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Morgooroo",
+				pos = 
+				{
+					hx = -0.339833766222,
+					hy = 0.16021479666233,
+					hz = 0.92673850059509,
+					x = -9810.1884765625,
+					y = -6262.7963867188,
+					z = 3009.5764160156,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 26,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Breekeelee (Mesh Fixed)",
+				pos = 
+				{
+					hx = 0.93264698982239,
+					hy = 0.36079028248787,
+					hz = 0,
+					x = -18204.78515625,
+					y = 6497.0200195313,
+					z = 2093.671875,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 27,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Glorious Drill Collective",
+				pos = 
+				{
+					hx = -0.69760245084763,
+					hy = -0.6245933175087,
+					hz = 0.35104709863663,
+					x = 1401.0344238281,
+					y = -12203.01171875,
+					z = -1389.3509521484,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 28,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Challdar's Nest",
+				pos = 
+				{
+					hx = -0.68713247776031,
+					hy = -0.7231924533844,
+					hz = -0.069581992924213,
+					x = 17328.537109375,
+					y = -9487.583984375,
+					z = -2237.3364257813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 29,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Lostwreck Passage",
+				pos = 
+				{
+					hx = 0.53666967153549,
+					hy = -0.7932163476944,
+					hz = 0.28773856163025,
+					x = 27426.212890625,
+					y = -8274.02734375,
+					z = 142.63926696777,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 30,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Rhiann's Respite",
+				pos = 
+				{
+					hx = -0.80526882410049,
+					hy = -0.40640127658844,
+					hz = 0.43171763420105,
+					x = 24646.703125,
+					y = -31810.65625,
+					z = -46.61971282959,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 31,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Lapatl Grounds",
+				pos = 
+				{
+					hx = -0.11165913939476,
+					hy = -0.97880280017853,
+					hz = 0.17168952524662,
+					x = -21467.9140625,
+					y = -20200.302734375,
+					z = -1815.6801757813,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 32,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Lorantl Grounds (Mesh Fixed)",
+				pos = 
+				{
+					hx = 0.9232205748558,
+					hy = -0.094836309552193,
+					hz = 0.3723840713501,
+					x = 12008.56640625,
+					y = 4324.392578125,
+					z = -27.584016799927,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 33,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "POI Bloody Bill's Base",
+				pos = 
+				{
+					hx = 0.69010430574417,
+					hy = 0.67392510175705,
+					hz = 0.26378205418587,
+					x = 17768.236328125,
+					y = 19844.951171875,
+					z = -554.62237548828,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 34,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = false,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HP Deputy Crackshot (Bot Cant Use Cannons)",
+				pos = 
+				{
+					hx = -0.18052461743355,
+					hy = -0.75071221590042,
+					hz = 0.63548570871353,
+					x = -1633.7934570313,
+					y = 24364.04296875,
+					z = -2283.2756347656,
+				},
+				radius = 0,
+				type = "tm_heropoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 35,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = true,
+							contentid = 283754,
+							gadget = false,
+							name = "Agent Xinn",
+						},
+						talksteps = 
+						{
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Talk ",
+						type = "tm_st_talk",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 283754,
+								gadget = false,
+								name = "Agent Xinn",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill",
+						type = "tm_st_killspecific",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HP Agent Xinn",
+				pos = 
+				{
+					hx = -0.43247404694557,
+					hy = -0.79337775707245,
+					hz = 0.42838993668556,
+					x = 8775.0673828125,
+					y = 25848.751953125,
+					z = -11.578079223633,
+				},
+				radius = 0,
+				type = "tm_heropoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 36,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 314,
+								gadget = true,
+								maxinteract = 1,
+								name = "Beckoning Force",
+								oncepertarget = true,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Interact",
+						type = "tm_st_interact",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = false,
+							contentid = 314,
+							gadget = true,
+							name = "Beckoning Force",
+						},
+						talksteps = 
+						{
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Talk",
+						type = "tm_st_talk",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HP Beckoning Force ",
+				pos = 
+				{
+					hx = 0.90779006481171,
+					hy = 0.1703387349844,
+					hz = 0.38327780365944,
+					x = -6601.5581054688,
+					y = 9949.6259765625,
+					z = 32.721790313721,
+				},
+				radius = 0,
+				type = "tm_heropoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 37,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 180,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista Portage Hills",
+				pos = 
+				{
+					hx = -0.23084066808224,
+					hy = -0.72555506229401,
+					hz = 0.64829194545746,
+					x = 18421.59765625,
+					y = 37022.796875,
+					z = -1304.7072753906,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 38,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 44318,
+								gadget = false,
+								name = "River Drake Broodmother",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill",
+						type = "tm_st_killspecific",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HP River Drake Broodmother",
+				pos = 
+				{
+					hx = -0.46591475605965,
+					hy = 0.7067933678627,
+					hz = 0.532321870327,
+					x = 26805.126953125,
+					y = -7319.625,
+					z = 810.36224365234,
+				},
+				radius = 0,
+				type = "tm_heropoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 39,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 180,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista Stormbluff Isle",
+				pos = 
+				{
+					hx = -0.14508105814457,
+					hy = 0.87218141555786,
+					hz = 0.46717348694801,
+					x = 3179.2021484375,
+					y = 23575.173828125,
+					z = -2786.0725097656,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 40,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = false,
+							contentid = 19559,
+							gadget = true,
+							name = "Krait Place of Power",
+						},
+						talksteps = 
+						{
+							0,
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Talk",
+						type = "tm_st_talk",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HP Krait Place Of Power",
+				pos = 
+				{
+					hx = 0.18773011863232,
+					hy = -0.2454581707716,
+					hz = 0.9510560631752,
+					x = -2578.515625,
+					y = -25477.38671875,
+					z = 9860.1591796875,
+				},
+				radius = 0,
+				type = "tm_heropoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 41,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 180,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista Vindar's Lagoon",
+				pos = 
+				{
+					hx = 0.60061603784561,
+					hy = 0.5583536028862,
+					hz = 0.5722776055336,
+					x = 19812.283203125,
+					y = 23908.62890625,
+					z = -885.33062744141,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 42,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = true,
+							contentid = 492383,
+							gadget = false,
+							name = "Two-Eye Ignatl",
+						},
+						talksteps = 
+						{
+							1,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Talk ",
+						type = "tm_st_talk",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HP Two-Eye Ignatl",
+				pos = 
+				{
+					hx = 0.63851511478424,
+					hy = 0.76960927248001,
+					hz = 0,
+					x = -15552.115234375,
+					y = -26248.685546875,
+					z = -36.076526641846,
+				},
+				radius = 0,
+				type = "tm_heropoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 43,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 180,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista Laughing Gull Island (Mesh Fixed)",
+				pos = 
+				{
+					hx = -0.039963662624359,
+					hy = 0.86727070808411,
+					hz = 0.49623021483421,
+					x = -8972.69921875,
+					y = 9468.029296875,
+					z = -1040.9693603516,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 44,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 180,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista Mole's Head",
+				pos = 
+				{
+					hx = -0.66766446828842,
+					hy = -0.36029827594757,
+					hz = 0.65146702528,
+					x = 3856.8620605469,
+					y = -9578.7734375,
+					z = -2260.0068359375,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 45,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 180,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista Whisperwill Bogs",
+				pos = 
+				{
+					hx = -0.26697620749474,
+					hy = 0.72165393829346,
+					hz = 0.63870120048523,
+					x = 26867.404296875,
+					y = -26308.501953125,
+					z = -2005.2856445313,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 46,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 180,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Vista Jelako Cliffrise",
+				pos = 
+				{
+					hx = 0.70643728971481,
+					hy = 0.29652738571167,
+					hz = 0.64266467094421,
+					x = -12021.76171875,
+					y = -35597.15625,
+					z = -1165.1502685547,
+				},
+				radius = 0,
+				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 188,
+			},
+			lastrun = 0,
+			order = 47,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 188,
+						hqpos = 
+						{
+							x = 6033.3989257813,
+							y = 36141.19140625,
+							z = -107.61680603027,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 44211,
+								gadget = false,
+								name = "Marsh Drake Hatchling",
+							},
+							
+							{
+								character = true,
+								contentid = 44199,
+								gadget = false,
+								name = "Marsh Drake",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill Marsh Dark Hatchling",
+						type = "tm_st_killspecific",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Help the Lionguard ",
+				pos = 
+				{
+					hx = -0.85577929019928,
+					hy = -0.35521572828293,
+					hz = 0.37611645460129,
+					x = 6133.4565429688,
+					y = 36156.0546875,
+					z = -121.35520935059,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 187,
+			},
+			lastrun = 0,
+			order = 48,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 187,
+						hqpos = 
+						{
+							x = -8336,
+							y = 38019,
+							z = -1988,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 7944,
+								gadget = true,
+								maxinteract = 20,
+								name = "Cursed Pirate Artifact",
+								oncepertarget = false,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Collect Curesed Pirate Artifacts",
+						type = "tm_st_interact",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = true,
+								contentid = 6612,
+								gadget = true,
+								maxinteract = 1,
+								name = "Treasure Chest",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = true,
+								contentid = 4865,
+								gadget = true,
+								maxinteract = 1,
+								name = "Treasure Chest",
+								oncepertarget = false,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Treasure Chest",
+						type = "tm_st_interact",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 43771,
+								gadget = false,
+								name = "Ghostly Pirate Fighter",
+							},
+							
+							{
+								character = true,
+								contentid = 172056,
+								gadget = false,
+								name = "Ghostly Pirate Gunner",
+							},
+							
+							{
+								character = true,
+								contentid = 43701,
+								gadget = false,
+								name = "Ghostly Pirate Fighter",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill Ghosty Pirates",
+						type = "tm_st_killspecific",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Help the Priory",
+				pos = 
+				{
+					hx = -0.74171644449234,
+					hy = 0.50360745191574,
+					hz = 0.44298559427261,
+					x = -8341.001953125,
+					y = 37945.43359375,
+					z = -1984.638671875,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 196,
+			},
+			lastrun = 0,
+			order = 49,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 5,
+						hqid = 196,
+						hqpos = 
+						{
+							x = -7859,
+							y = 30727,
+							z = 15,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 196,
+						hqpos = 
+						{
+							x = -7859,
+							y = 30727,
+							z = 15,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 459526,
+								gadget = false,
+								name = "Kamm-Skal",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill Ridgeback Skale",
+						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						positions = 
+						{
+							
+							{
+								hx = -0.9975254535675,
+								hy = -0.070305980741978,
+								hz = -0.00035564467543736,
+								x = -612.80212402344,
+								y = 31591.099609375,
+								z = 3.0373156070709,
+							},
+							
+							{
+								hx = -0.99758291244507,
+								hy = -0.069487482309341,
+								hz = -8.8933607912622e-05,
+								x = -3299.8640136719,
+								y = 31403.4609375,
+								z = -8.4490728378296,
+							},
+							
+							{
+								hx = -0.95879238843918,
+								hy = -0.28400748968124,
+								hz = 0.0075443587265909,
+								x = -5849.3081054688,
+								y = 31084.80859375,
+								z = -0.091669097542763,
+							},
+							
+							{
+								hx = 0.57331693172455,
+								hy = 0.81931072473526,
+								hz = 0.0061362590640783,
+								x = -5256.0278320313,
+								y = 32288.40234375,
+								z = 12.651468276978,
+							},
+						},
+						randommovement = false,
+						randompos = true,
+						repeatpositions = true,
+						usewaypoints = false,
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Move to multiple locations",
+						type = "tm_st_movetomultiple",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Teach Quaggans ",
+				pos = 
+				{
+					hx = 0.98613524436951,
+					hy = 0.16594372689724,
+					hz = 0,
+					x = -7643.0903320313,
+					y = 30734.48828125,
+					z = 6.0900821685791,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 195,
+			},
+			lastrun = 0,
+			order = 50,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 195,
+						hqpos = 
+						{
+							x = -6481.9189453125,
+							y = 23138.1953125,
+							z = -59.523475646973,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 29086,
+								gadget = true,
+								maxinteract = 1,
+								name = "Dilithium Capacitor",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 1517,
+								gadget = true,
+								maxinteract = 1,
+								name = "Dilithium Capacitor",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 7988,
+								gadget = true,
+								maxinteract = 1,
+								name = "Dilithium Capacitor",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 1839,
+								gadget = true,
+								maxinteract = 1,
+								name = "Dilithium Capacitor",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 10316,
+								gadget = true,
+								maxinteract = 1,
+								name = "Dilithium Capacitor",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 14813,
+								gadget = true,
+								maxinteract = 1,
+								name = "Dilithium Capacitor",
+								oncepertarget = true,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Interact",
+						type = "tm_st_interact",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 43434,
+								gadget = false,
+								name = "Mark I Golem",
+							},
+							
+							{
+								character = true,
+								contentid = 43551,
+								gadget = false,
+								name = "Inquest Golemcaster",
+							},
+							
+							{
+								character = true,
+								contentid = 524808,
+								gadget = false,
+								name = "Inquest Technician",
+							},
+							
+							{
+								character = true,
+								contentid = 43557,
+								gadget = false,
+								name = "Inquest Technician",
+							},
+							
+							{
+								character = true,
+								contentid = 327098,
+								gadget = false,
+								name = "Inquest Extinguisher",
+							},
+							
+							{
+								character = true,
+								contentid = 43549,
+								gadget = false,
+								name = "Mark II Golem",
+							},
+							
+							{
+								character = true,
+								contentid = 43554,
+								gadget = false,
+								name = "Inquest Golemancer",
+							},
+							
+							{
+								character = true,
+								contentid = 503480,
+								gadget = false,
+								name = "Inquest Grenadier",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill specific targets",
+						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						positions = 
+						{
+							
+							{
+								hx = -0.75203448534012,
+								hy = -0.49644559621811,
+								hz = 0.43357342481613,
+								x = -9800.2958984375,
+								y = 24372.1015625,
+								z = 2143.4912109375,
+							},
+							
+							{
+								hx = -0.38160988688469,
+								hy = -0.74166810512543,
+								hz = 0.55163604021072,
+								x = -10256.21875,
+								y = 23339.466796875,
+								z = 2665.205078125,
+							},
+							
+							{
+								hx = -0.70427507162094,
+								hy = -0.69666689634323,
+								hz = 0.13657175004482,
+								x = -11273.361328125,
+								y = 22525.509765625,
+								z = 2726.7214355469,
+							},
+							
+							{
+								hx = -0.8290638923645,
+								hy = 0.51010429859161,
+								hz = 0.22901232540607,
+								x = -12461.577148438,
+								y = 23527.275390625,
+								z = 2798.1472167969,
+							},
+						},
+						randommovement = false,
+						randompos = false,
+						repeatpositions = true,
+						usewaypoints = false,
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Move to multiple locations",
+						type = "tm_st_movetomultiple",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Disrupt Experiments (Mesh Fixed)",
+				pos = 
+				{
+					hx = -0.1029999256134,
+					hy = 0.95093661546707,
+					hz = 0.29173722863197,
+					x = -6429.6904296875,
+					y = 23281.583984375,
+					z = -75.792129516602,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 190,
+			},
+			lastrun = 0,
+			order = 51,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 190,
+						hqpos = 
+						{
+							x = 18876.900390625,
+							y = 23831.30078125,
+							z = -302.01599121094,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								contentid = 8610,
+								gadget = true,
+								name = "Pirate Supplies",
+							},
+							
+							{
+								character = true,
+								contentid = 550500,
+								gadget = false,
+								name = "Bloody Buccaneer",
+							},
+							
+							{
+								character = false,
+								contentid = 13307,
+								gadget = true,
+								name = "Pirate Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 16661,
+								gadget = true,
+								name = "Pirate Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 1480,
+								gadget = true,
+								name = "Pirate Supplies",
+							},
+							
+							{
+								character = true,
+								contentid = 372105,
+								gadget = false,
+								name = "Bloody Buccaneer",
+							},
+							
+							{
+								character = true,
+								contentid = 501294,
+								gadget = false,
+								name = "Bloody Buccaneer",
+							},
+							
+							{
+								character = true,
+								contentid = 555663,
+								gadget = false,
+								name = "Bloody Buccaneer",
+							},
+							
+							{
+								character = true,
+								contentid = 507390,
+								gadget = false,
+								name = "Bloody Buccaneer",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill Pirates",
+						type = "tm_st_killspecific",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Bloody Buccaneers",
+				pos = 
+				{
+					hx = -0.81111371517181,
+					hy = -0.44610291719437,
+					hz = 0.37826809287071,
+					x = 17604.53515625,
+					y = 19617.064453125,
+					z = -540.66271972656,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 191,
+			},
+			lastrun = 0,
+			order = 52,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 191,
+						hqpos = 
+						{
+							x = 27953.595703125,
+							y = 21418.796875,
+							z = -953.95404052734,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 3417,
+								gadget = true,
+								maxinteract = 10,
+								name = "Bottle of Rum",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 21426,
+								gadget = true,
+								maxinteract = 10,
+								name = "Bottle of Rum",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 13681,
+								gadget = true,
+								maxinteract = 10,
+								name = "Bottle of Rum",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								entity = true,
+								gadget = false,
+								maxinteract = 10,
+								name = "Bottle of Rum",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 12912,
+								gadget = true,
+								maxinteract = 10,
+								name = "Bottle of Rum",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 19810,
+								gadget = true,
+								maxinteract = 10,
+								name = "Bottle of Rum",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 1760,
+								gadget = true,
+								maxinteract = 10,
+								name = "Bottle of Rum",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 24969,
+								gadget = true,
+								maxinteract = 10,
+								name = "Bottle of Rum",
+								oncepertarget = false,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Interact with Bottle of Rum",
+						type = "tm_st_interact",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						useskills = 
+						{
+							[8078] = 
+							{
+								oncepertarget = true,
+								pos = 
+								{
+								},
+								skillid = 8078,
+								skillname = "Throw",
+								target = 0,
+								useat = "Self",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Use Skill ",
+						type = "tm_st_useskill",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Help Maintain Order ",
+				pos = 
+				{
+					hx = 0.61453080177307,
+					hy = -0.6116424202919,
+					hz = 0.49824237823486,
+					x = 29184.546875,
+					y = 20346.341796875,
+					z = -1275.5130615234,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 189,
+			},
+			lastrun = 0,
+			order = 53,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 189,
+						hqpos = 
+						{
+							x = 3604.2299804688,
+							y = 11027.299804688,
+							z = -26.30470085144,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 520159,
+								gadget = false,
+								name = "Crafty Corsair",
+							},
+							
+							{
+								character = true,
+								contentid = 372105,
+								gadget = false,
+								name = "Crafty Corsair",
+							},
+							
+							{
+								character = true,
+								contentid = 501294,
+								gadget = false,
+								name = "Crafty Corsair",
+							},
+							
+							{
+								character = true,
+								contentid = 472241,
+								gadget = false,
+								name = "Crafty Corsair",
+							},
+							
+							{
+								character = true,
+								contentid = 547130,
+								gadget = false,
+								name = "Crafty Corsair",
+							},
+							
+							{
+								character = true,
+								contentid = 550500,
+								gadget = false,
+								name = "Covington Pirate",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill Crafty Corsair",
+						type = "tm_st_killspecific",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Help Spy ",
+				pos = 
+				{
+					hx = 0.058429468423128,
+					hy = -0.85660475492477,
+					hz = 0.5126541852951,
+					x = 3615.2431640625,
+					y = 11155.698242188,
+					z = 18.3893699646,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 194,
+			},
+			lastrun = 0,
+			order = 54,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 194,
+						hqpos = 
+						{
+							x = -20322.30078125,
+							y = -4281.1000976563,
+							z = -305.92700195313,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 44110,
+								gadget = false,
+								name = "Crow",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill Crows",
+						type = "tm_st_killspecific",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Fight Quaggan Affliction",
+				pos = 
+				{
+					hx = -0.75314676761627,
+					hy = 0.65785253047943,
+					hz = 0,
+					x = -20271.376953125,
+					y = -4250.982421875,
+					z = -305.12365722656,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 192,
+			},
+			lastrun = 0,
+			order = 55,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 192,
+						hqpos = 
+						{
+							x = -6219.8598632813,
+							y = -3649.7900390625,
+							z = 3314.1101074219,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 11964,
+								gadget = true,
+								maxinteract = 1,
+								name = "Weapon Crate",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 4238,
+								gadget = true,
+								maxinteract = 1,
+								name = "Weapon Crate",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 20750,
+								gadget = true,
+								maxinteract = 1,
+								name = "Weapon Crate",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 5287,
+								gadget = true,
+								maxinteract = 1,
+								name = "Weapon Crate",
+								oncepertarget = false,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Interact Weapon Crate",
+						type = "tm_st_interact",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						useskills = 
+						{
+							[8082] = 
+							{
+								oncepertarget = true,
+								pos = 
+								{
+								},
+								skillid = 8082,
+								skillname = "Stab",
+								target = 0,
+								useat = "Self",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Use skill",
+						type = "tm_st_useskill",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 491294,
+								gadget = false,
+								name = "Risen Thrall",
+							},
+							
+							{
+								character = true,
+								contentid = 301461,
+								gadget = false,
+								name = "Risen Thrall",
+							},
+							
+							{
+								character = false,
+								contentid = 21380,
+								gadget = true,
+								name = "Orrian Fish",
+							},
+							
+							{
+								character = true,
+								contentid = 224293,
+								gadget = false,
+								name = "Risen Thrall",
+							},
+							
+							{
+								character = false,
+								contentid = 8320,
+								gadget = true,
+								name = "Orrian Fish",
+							},
+							
+							{
+								character = true,
+								contentid = 301463,
+								gadget = false,
+								name = "Risen Thrall",
+							},
+							
+							{
+								character = true,
+								contentid = 43630,
+								gadget = false,
+								name = "Risen Thrall",
+							},
+							
+							{
+								character = true,
+								contentid = 216733,
+								gadget = false,
+								name = "Risen Thrall",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill Risen Thrall",
+						type = "tm_st_killspecific",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Help Arm the Quaggans",
+				pos = 
+				{
+					hx = 0.8531996011734,
+					hy = -0.042940899729729,
+					hz = 0.51981389522552,
+					x = -6350.9438476563,
+					y = -3558.5925292969,
+					z = 3342.2634277344,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 197,
+			},
+			lastrun = 0,
+			order = 56,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 197,
+						hqpos = 
+						{
+							x = 7166.37890625,
+							y = -8280.3681640625,
+							z = -827.48492431641,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 327052,
+								gadget = false,
+								name = "Risen Brute",
+							},
+							
+							{
+								character = true,
+								contentid = 74073,
+								gadget = false,
+								name = "Risen Plague Carrier",
+							},
+							
+							{
+								character = true,
+								contentid = 522412,
+								gadget = false,
+								name = "Risen Brute",
+							},
+							
+							{
+								character = true,
+								contentid = 43644,
+								gadget = false,
+								name = "Risen Brute",
+							},
+							
+							{
+								character = true,
+								contentid = 301461,
+								gadget = false,
+								name = "Risen Thrall",
+							},
+							
+							{
+								character = true,
+								contentid = 445363,
+								gadget = false,
+								name = "Risen Brute",
+							},
+							
+							{
+								character = true,
+								contentid = 79419,
+								gadget = false,
+								name = "Risen Grub",
+							},
+							
+							{
+								character = true,
+								contentid = 224293,
+								gadget = false,
+								name = "Risen Thrall",
+							},
+							
+							{
+								character = true,
+								contentid = 327176,
+								gadget = false,
+								name = "Risen Brute",
+							},
+							
+							{
+								character = true,
+								contentid = 537768,
+								gadget = false,
+								name = "Risen Plague Carrier",
+							},
+							
+							{
+								character = true,
+								contentid = 306196,
+								gadget = false,
+								name = "Risen Thrall",
+							},
+							
+							{
+								character = true,
+								contentid = 43642,
+								gadget = false,
+								name = "Risen Plague Carrier",
+							},
+							
+							{
+								character = true,
+								contentid = 43710,
+								gadget = false,
+								name = "Risen Abomination",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill Risen",
+						type = "tm_st_killspecific",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Help The Vigil ",
+				pos = 
+				{
+					hx = -0.94530600309372,
+					hy = -0.22585819661617,
+					hz = 0.23533943295479,
+					x = 4954.087890625,
+					y = -10686.560546875,
+					z = -1189.802734375,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 198,
+			},
+			lastrun = 0,
+			order = 57,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 198,
+						hqpos = 
+						{
+							x = 11307.299804688,
+							y = -6156.41015625,
+							z = -907.25299072266,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 26755,
+								gadget = true,
+								maxinteract = 10,
+								name = "Corrupted Trees",
+								oncepertarget = false,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Interact",
+						type = "tm_st_interact",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Assist Crusader Aisling ",
+				pos = 
+				{
+					hx = 0.73017013072968,
+					hy = 0.64579969644547,
+					hz = 0.22314640879631,
+					x = 10549.107421875,
+					y = -5929.6650390625,
+					z = -863.25085449219,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 193,
+			},
+			lastrun = 0,
+			order = 58,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 193,
+						hqpos = 
+						{
+							x = -19640.958984375,
+							y = -22478.783203125,
+							z = -1344.6807861328,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ Status",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 7844,
+								gadget = true,
+								maxinteract = 1,
+								name = "Orrian Grub Hole",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 23495,
+								gadget = true,
+								maxinteract = 1,
+								name = "Orrian Grub Hole",
+								oncepertarget = false,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 7306,
+								gadget = true,
+								maxinteract = 1,
+								name = "Orrian Grub Hole",
+								oncepertarget = false,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Interact ",
+						type = "tm_st_interact",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 44233,
+								gadget = false,
+								name = "Firefly",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill Fireflys",
+						type = "tm_st_killspecific",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Help Shore Up Hylek Defenses",
+				pos = 
+				{
+					hx = 0.7667892575264,
+					hy = 0.33983311057091,
+					hz = 0.5445619225502,
+					x = -19706.48046875,
+					y = -22530.98828125,
+					z = -1350.37890625,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 199,
+			},
+			lastrun = 0,
+			order = 59,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						useskills = 
+						{
+							[8145] = 
+							{
+								oncepertarget = true,
+								pos = 
+								{
+								},
+								skillid = 8145,
+								skillname = "Use Potion",
+								target = 22813,
+								useat = "Target",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight Aggro",
+						type = "tm_st_useskill",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 8604,
+								gadget = true,
+								maxinteract = 1,
+								name = "Oasis Mushroom",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 8559,
+								gadget = true,
+								maxinteract = 1,
+								name = "Oasis Spring Coral",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 1470,
+								gadget = true,
+								maxinteract = 1,
+								name = "Oasis Strangler Vine",
+								oncepertarget = true,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Get First Set Of Components",
+						type = "tm_st_interact",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = true,
+							contentid = 44627,
+							gadget = false,
+							name = "Cesseilia",
+						},
+						talksteps = 
+						{
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Combine First Set",
+						type = "tm_st_talk",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						useskills = 
+						{
+							[8145] = 
+							{
+								oncepertarget = true,
+								pos = 
+								{
+									hx = -0.69023817777634,
+									hy = 0.57213807106018,
+									hz = 0.44297775626183,
+									x = 24597.572265625,
+									y = -30985.1640625,
+									z = 7.1388492584229,
+								},
+								skillid = 8145,
+								skillname = "Use Potion",
+								skillslot = 5,
+								target = 21801,
+								useat = "Target",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Use First Potion",
+						type = "tm_st_useskill",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						duration = 5,
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Wait",
+						type = "tm_st_wait",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								closedialog = false,
+								contentid = 232719,
+								gadget = false,
+								maxinteract = 1,
+								name = "Oasis Frog",
+								oncepertarget = true,
+							},
+							
+							{
+								character = true,
+								closedialog = false,
+								contentid = 500808,
+								gadget = false,
+								maxinteract = 1,
+								name = "Oasis Sparkfly",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 1470,
+								gadget = true,
+								maxinteract = 1,
+								name = "Oasis Strangler Vine",
+								oncepertarget = true,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Get Second Set Of Components",
+						type = "tm_st_interact",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = true,
+							contentid = 44627,
+							gadget = false,
+							name = "Cesseilia",
+						},
+						talksteps = 
+						{
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Combine Second Set",
+						type = "tm_st_talk",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						useskills = 
+						{
+							[8145] = 
+							{
+								oncepertarget = true,
+								pos = 
+								{
+									hx = 0.37566444277763,
+									hy = 0.89664506912231,
+									hz = 0.23431581258774,
+									x = 24379.33984375,
+									y = -31441.078125,
+									z = -114.13762664795,
+								},
+								skillid = 8145,
+								skillname = "Use Potion",
+								target = 21998,
+								useat = "Target",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Use Second Potion",
+						type = "tm_st_useskill",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						duration = 5,
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Wait",
+						type = "tm_st_wait",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								closedialog = false,
+								contentid = 232719,
+								gadget = false,
+								maxinteract = 1,
+								name = "Oasis Frog",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 19583,
+								gadget = true,
+								maxinteract = 1,
+								name = "Oasis Spring Coral",
+								oncepertarget = true,
+							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 8607,
+								gadget = true,
+								maxinteract = 1,
+								name = "Oasis Strangler Vine",
+								oncepertarget = true,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Interact",
+						type = "tm_st_interact",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = true,
+							contentid = 44627,
+							gadget = false,
+							name = "Cesseilia",
+						},
+						talksteps = 
+						{
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Combine Third Set Of Components",
+						type = "tm_st_talk",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						useskills = 
+						{
+							[8145] = 
+							{
+								oncepertarget = true,
+								pos = 
+								{
+								},
+								skillid = 8145,
+								skillname = "Use Potion",
+								target = 22813,
+								useat = "Target",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Use Third Potion",
+						type = "tm_st_useskill",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 73,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "HQ Help Cesseilia ",
+				pos = 
+				{
+					hx = -0.99689829349518,
+					hy = -0.078700289130211,
+					hz = 0,
+					x = 24525.400390625,
+					y = -31173.93359375,
+					z = -32.147941589355,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+	},
+	version = 0,
+}
+
+
+
+return tbl
