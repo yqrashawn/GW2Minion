@@ -86,8 +86,7 @@ function gw2_obstacle_manager.SetupAvoidanceAreas()
 		for _,obstacle in pairs(gw2_obstacle_manager.avoidanceareas) do
 			ml_navigation:AddAvoidanceArea(obstacle.pos, obstacle.radius)
 		end
-		d("TODO: ADD BACK SetAvoidanceAreas() / Obstacles...")
-		--NavigationManager:SetAvoidanceAreas(ml_navigation.avoidanceareas)
+		NavigationManager:SetAvoidanceAreas(ml_navigation.avoidanceareas)
 	end
 end
 
