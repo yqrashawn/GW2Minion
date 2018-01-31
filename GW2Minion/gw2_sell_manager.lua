@@ -78,7 +78,7 @@ function gw2_sell_manager.mainWindow.Draw(event,ticks)
 		-- set size on first use only.
 		GUI:SetNextWindowSize(250,400,GUI.SetCond_FirstUseEver)
 		-- update visible and open variables.
-		gw2_sell_manager.mainWindow.visible, gw2_sell_manager.mainWindow.open = GUI:Begin(gw2_sell_manager.mainWindow.name, gw2_sell_manager.mainWindow.open, GUI.WindowFlags_AlwaysAutoResize+GUI.WindowFlags_NoCollapse)
+		gw2_sell_manager.mainWindow.visible, gw2_sell_manager.mainWindow.open = GUI:Begin(gw2_sell_manager.mainWindow.name, gw2_sell_manager.mainWindow.open, GUI.WindowFlags_AlwaysAutoResize) --+GUI.WindowFlags_NoCollapse
 		if (gw2_sell_manager.mainWindow.visible) then
 			-- Status field.
 			-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
