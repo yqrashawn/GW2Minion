@@ -151,6 +151,7 @@ function ml_global_information.Start()
 end
 
 function ml_global_information.Stop()
+	d("Global Inf Stop")
     Player:StopMovement() -- this function is overrwitten in gw2_navigation.lua (on the bottom). It stops the player, clearls the path and resets OMCs. 
 	gw2_unstuck.Stop()
 end

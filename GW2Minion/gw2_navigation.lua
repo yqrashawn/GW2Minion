@@ -446,6 +446,41 @@ function ml_navigation:GetRaycast_Player_Node_Distance(ppos,node)
 	local P_hit, P_hitx, P_hity, P_hitz   = RayCast(ppos.x,ppos.y,ppos.z-120,ppos.x,ppos.y,ppos.z+120) 
 	local N_hit, N_hitx, N_hity, N_hitz = RayCast(node.x,node.y,node.z-120,node.x,node.y,node.z+120) 
 	local dist = math.distance3d(ppos,node)
+	
+	-- To prevent spinny dancing when we are unable to reach the 3D targetposition due to whatever reason , a little safety check here
+	if ( not self.lastpathnode or self.lastpathnode.x ~= node.x or self.lastpathnode.y ~= node.y or self.lastpathnode.z ~= node.z ) then
+		self.lastpathnode = node
+		self.lastpathnodedist = nil
+		self.lastpathnodecloser = 0
+		self.lastpathnodefar = 0
+	else
+		
+		if ( Player:IsMoving () and Player.swimming ~= GW2.SWIMSTATE.Diving ) then
+			-- we are still moving towards the same node
+			local dist2d = math.distance2d(ppos,node)
+			if ( dist2d < 5*ml_navigation.NavPointReachedDistances["Walk"] ) then
+				-- count / record if we are getting closer to it or if we are spinning around
+				if( self.lastpathnodedist ) then 
+					if( dist2d <= self.lastpathnodedist ) then
+						self.lastpathnodecloser = self.lastpathnodecloser + 1
+					else
+						if ( self.lastpathnodecloser > 1 ) then -- start counting after we actually started moving closer, else turns or at start of moving fucks the logic
+							self.lastpathnodefar = self.lastpathnodefar + 1
+						end
+					end
+				end
+				self.lastpathnodedist = dist2d
+			end
+			
+			if(self.lastpathnodefar > 3) then
+				d("Spinnydance  ? going back and forth ?? - reset navigation..")
+				d(tostring(dist2d).. " ---- ".. tostring(self.lastpathnodefar))
+				return 0 -- should make the calling logic "arrive" at the node				
+			end
+		end
+	end
+	
+	
 	if (P_hit and N_hit ) then 
 		local raydist = math.distance3d(P_hitx, P_hity, P_hitz , N_hitx, N_hity, N_hitz)
 		if (raydist < dist) then 

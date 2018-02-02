@@ -151,6 +151,7 @@ function gw2_unstuck.HandleOffMesh()
 	if(gw2_unstuck.lasttimeonmesh > 0 and offmeshtime > 20000 and TimeSince(gw2_unstuck.offmeshwptrytime) > 5000) then
 		if(not gw2_unstuck.stuckhandlers.waypoint()) then
 		--if(1==1) then
+		d("Unstuck A")
 			Player:StopMovement()
 
 			gw2_unstuck.offmeshwptrycount = gw2_unstuck.offmeshwptrycount + 1
@@ -516,6 +517,7 @@ function gw2_unstuck.stuckhandlers.waypoint()
 			end
 			if(table.valid(nearesst))then
 				if (nearesst.distance > 500) then
+				d("Unstuck B")
 					Player:StopMovement()
 					if(Player:TeleportToWaypoint(nearesst.id)) then
 						gw2_unstuck.Reset()
@@ -556,7 +558,7 @@ function gw2_unstuck.stuckhandlers.attack(object)
 			end
 			object.health = target.health.current
 		end
-		
+		d("Unstuck C")
 		Player:StopMovement()
 		
 		local maxrange = skill.maxrange > 150 and skill.maxrange or 150
