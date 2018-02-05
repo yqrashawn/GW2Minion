@@ -40,7 +40,13 @@ function ml_navigation.Navigate(event, ticks )
 		
 	if ((ticks - (ml_navigation.lastupdate or 0)) > 10) then 
 		ml_navigation.lastupdate = ticks
-				
+		
+		if(ml_navigation.forcereset) then
+			ml_navigation.forcereset = nil
+			Player:StopMovement()
+			return
+		end
+		
 		if ( GetGameState() == GW2.GAMESTATE.GAMEPLAY) then				
 			local playerpos = Player.pos
 			ml_navigation.pathindex = NavigationManager.NavPathNode	-- gets the current path index which is saved in c++ ( and changed there on updating / adjusting the path, which happens each time MoveTo() is called. Index starts at 1 and 'usually' is 2 whne running
@@ -475,6 +481,7 @@ function ml_navigation:GetRaycast_Player_Node_Distance(ppos,node)
 			if(self.lastpathnodefar > 3) then
 				d("Spinnydance  ? going back and forth ?? - reset navigation..")
 				d(tostring(dist2d).. " ---- ".. tostring(self.lastpathnodefar))
+				ml_navigation.forcereset = true
 				return 0 -- should make the calling logic "arrive" at the node				
 			end
 		end
@@ -584,4 +591,5 @@ function Player:StopMovement()
 	gw2_unstuck.Reset()
 	Player:Stop()
 	NavigationManager:ResetPath()	
+	gw2_common_functions:StopCombatMovement()
 end

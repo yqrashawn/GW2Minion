@@ -247,8 +247,8 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 
 	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("onmesh,nearest,maxlevel=15") end
 
-	if(table.valid(target) and (not target.attackable or target.pathdistance > 9999999)) then
-		gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), target.id, target.name, 5000)
+	if(table.valid(target) and (not target.attackable or not target.isreachable)) then
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), target.id, target.name, 5000, gw2_common_functions.BlackListUntilReachableAndAttackable)
 		d("[GetBestCharacterTarget] - Blacklisting "..target.name.." ID: "..tostring(target.id))
 		target = nil
 	end
@@ -261,7 +261,7 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 	else
 
 		local currTarget = Player:GetTarget()
-		if ( currTarget ~= nil and currTarget.attackable and currTarget.alive and currTarget.onmesh) then
+		if ( currTarget ~= nil and currTarget.attackable and currTarget.alive and currTarget.onmesh and currTarget.isreachable) then
 			return target
 		end
 	end
@@ -322,8 +322,8 @@ function gw2_common_functions.GetBestAggroTarget(healthstate)
 	-- Try to get Aggro Enemy
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
 	
-	if(table.valid(target) and (not target.attackable or target.pathdistance >= 9999999)) then
-		gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), target.id, target.name, 5000)
+	if(table.valid(target) and (not target.attackable or not target.isreachable)) then
+		gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), target.id, target.name, 5000, gw2_common_functions.BlackListUntilReachableAndAttackable)
 		d("[GetBestAggroTarget] - Blacklisting "..target.name.." ID: "..tostring(target.id))
 		target = nil
 	end
@@ -336,7 +336,7 @@ function gw2_common_functions.GetBestAggroTarget(healthstate)
 	else
 
 		local currTarget = Player:GetTarget()
-		if ( currTarget ~= nil and currTarget.attackable and currTarget.aggro and currTarget.pathdistance < 9999999) then
+		if ( currTarget ~= nil and currTarget.attackable and currTarget.aggro and currTarget.isreachable) then
 			return currTarget
 		end
 	end
@@ -369,7 +369,7 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 			local target = gw2_common_functions.GetCharacterTargetExtended(filter)
 
 			if(table.valid(target)) then
-				if((target.alive or target.downed) and target.pathdistance < 9999999) then
+				if((target.alive or target.downed) and target.isreachable) then
 					local dist = math.distance3d(target.pos,marker.pos)
 					if(dist <= radius) then
 						local path = NavigationManager:GetPath(marker.pos.x,marker.pos.y,marker.pos.z,target.pos.x,target.pos.y,target.pos.z)
@@ -1027,6 +1027,18 @@ function gw2_common_functions:GetCombatMovement()
 end
 function gw2_common_functions:CombatMovementCanMove()
 	return not self.combatmovement.combat
+end
+function gw2_common_functions:StopCombatMovement()
+	self.combatmovement.combat = false
+	self.combatmovement.range = false
+	self.combatmovement.allowed = true
+	Player:StopHorizontalMovement()
+end
+
+-- used in the combathandler to blacklist players until they are reachable and not just by a flat silly duration, that breaks the fast paced logic in spvp
+gw2_common_functions.BlackListUntilReachableAndAttackable = function(id)
+	local target = CharacterList:Get(id)
+	return not target or (target.isreachable and target.attackable)
 end
 
 -- Input manager functions specific for gw2.

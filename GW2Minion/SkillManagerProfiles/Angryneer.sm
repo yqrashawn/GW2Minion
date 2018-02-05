@@ -28,7 +28,20 @@ local tbl =
 		},
 		
 		{
-			activationtime = 0.5,
+			activationtime = 0,
+			condition_luacode = "if(context.actionlist and context.attack_target) then\n\t\tfor id,a in pairs(context.actionlist) do\n\t\t\t\tif(a.id == 5931 and a.temp.internalcd) then\n\t\t\t\t\t\tlocal timesincecast = ml_global_information.Now - a.temp.internalcd\n\t\t\t\t\t\tlocal target = context.attack_target\n\t\t\t\t\t\tlocal tdist = target.distance\n\t\t\t\t\t\t\n\t\t\t\t\t\t--wd(tostring(timesincecast) .. \" - \" ..tostring(tdist))\n\t\t\t\t\t\tif (tdist < 850 and timesincecast > 950 ) then\n\t\t\t\t\t\t\t\treturn true\n\t\t\t\t\t\telseif (tdist < 500 and timesincecast > 550 ) then\n\t\t\t\t\t\t\t\treturn true\n\t\t\t\t\t\telseif (tdist < 250 and timesincecast > 100 ) then\n\t\t\t\t\t\t\t\treturn true\n\t\t\t\t\t\tend\t\t\t\t\t\t\n\t\t\t\tend\n\t\tend\nend\nreturn false",
+			conditions = 
+			{
+			},
+			id = 17260,
+			instantcast = true,
+			requireslos = false,
+			setsattackrange = false,
+			skillpaletteuid = "Engi_Flamethrower",
+		},
+		
+		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -37,16 +50,72 @@ local tbl =
 					
 					{
 						operator = 1,
-						target = 3,
+						target = 1,
 						uid = "CombatState",
 					}, 
-					casttarget = 3,
+					casttarget = 1,
 				},
 			},
-			id = 5967,
+			id = 5977,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 70,
+					},
+					
+					{
+						operator = 1,
+						target = 2,
+						uid = "Aggro",
+					}, 
+					casttarget = 2,
+				},
+			},
+			id = 30027,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		
+		{
+			activationtime = 0,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 180,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 6159,
+			instantcast = true,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Engi_Flamethrower",
 		},
 		
 		{
@@ -273,12 +342,13 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 600,
+						value = 725,
 					}, 
 					casttarget = 1,
 				},
 			},
-			id = 5929,
+			id = 5931,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engi_Flamethrower",
@@ -301,20 +371,10 @@ local tbl =
 					casttarget = 1,
 				},
 			},
-			id = 5931,
+			id = 5929,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
-			skill_next = 
-			{
-				activationtime = 0,
-				condition_luacode = "return true",
-				conditions = 
-				{
-				},
-				id = 17260,
-				instantcast = true,
-				skillpaletteuid = "Engi_Flamethrower",
-			},
 			skillpaletteuid = "Engi_Flamethrower",
 		},
 		
@@ -327,10 +387,11 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
+						healthtype = 3,
+						operator = 4,
 						target = 1,
-						uid = "Distance",
-						value = 600,
+						uid = "Health",
+						value = 25,
 					},
 					
 					{
@@ -342,11 +403,10 @@ local tbl =
 					},
 					
 					{
-						healthtype = 3,
-						operator = 4,
+						operator = 1,
 						target = 1,
-						uid = "Health",
-						value = 25,
+						uid = "Distance",
+						value = 600,
 					}, 
 					casttarget = 1,
 				},
@@ -375,9 +435,47 @@ local tbl =
 				},
 			},
 			id = 5930,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engi_Flamethrower",
+		},
+		
+		{
+			activationtime = 1.75,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 750,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 30665,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skill_next = 
+			{
+				activationtime = 1,
+				condition_luacode = "return true",
+				conditions = 
+				{
+				},
+				id = 30088,
+				instantcast = false,
+				requireslos = true,
+				setsattackrange = true,
+				skillpaletteuid = "Engi_Hammer",
+			},
+			skillpaletteuid = "Engi_Hammer",
 		},
 		
 		{
@@ -389,17 +487,17 @@ local tbl =
 				{
 					
 					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
 						value = 95,
-					},
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
@@ -430,25 +528,19 @@ local tbl =
 		},
 		
 		{
-			activationtime = 2.25,
-			condition_luacode = "return true",
-			conditions = 
-			{
-			},
-			id = 5928,
-			instantcast = false,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Engi_Flamethrower",
-		},
-		
-		{
 			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 450,
+					},
 					
 					{
 						healthtype = 3,
@@ -461,19 +553,35 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 450,
-					},
-					
-					{
-						operator = 1,
-						target = 1,
 						uid = "CombatState",
 					}, 
 					casttarget = 1,
 				},
 			},
 			id = 5836,
+			requireslos = true,
+			setsattackrange = false,
+			skillpaletteuid = "Engineer",
+		},
+		
+		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 1,
+						target = 3,
+						uid = "CombatState",
+					}, 
+					casttarget = 3,
+				},
+			},
+			id = 5967,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
@@ -511,9 +619,11 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
+						bufftype = 5,
+						operator = 4,
 						target = 2,
-						uid = "Movement",
+						uid = "Buffs (Count)",
+						value = 1,
 					},
 					
 					{
@@ -523,11 +633,9 @@ local tbl =
 					},
 					
 					{
-						bufftype = 5,
-						operator = 4,
+						operator = 1,
 						target = 2,
-						uid = "Buffs (Count)",
-						value = 1,
+						uid = "Movement",
 					}, 
 					casttarget = 1,
 				},
@@ -536,30 +644,6 @@ local tbl =
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
-		},
-		
-		{
-			activationtime = 0,
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 180,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 6159,
-			instantcast = true,
-			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Engi_Flamethrower",
 		},
 		
 		{
@@ -583,8 +667,8 @@ local tbl =
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
-		}, 
-		[20] = 
+		},
+		
 		{
 			activationtime = 0.5,
 			condition_luacode = "return true",
@@ -594,16 +678,16 @@ local tbl =
 				{
 					
 					{
-						operator = 2,
-						target = 1,
-						uid = "Movement",
-					},
-					
-					{
 						operator = 1,
 						target = 1,
 						uid = "Distance",
 						value = 500,
+					},
+					
+					{
+						operator = 2,
+						target = 1,
+						uid = "Movement",
 					}, 
 					casttarget = 1,
 				},
@@ -613,32 +697,61 @@ local tbl =
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
-		[21] = 
+		
 		{
-			activationtime = 0,
+			activationtime = 2.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
-				
-				{
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					}, 
-					casttarget = 1,
-				},
 			},
-			id = 5977,
-			instantcast = true,
+			id = 5928,
+			instantcast = false,
 			requireslos = true,
-			setsattackrange = false,
-			skillpaletteuid = "Engineer",
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Flamethrower",
 		},
-		[22] = 
+		
 		{
-			activationtime = 0,
+			activationtime = 1,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 5963,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Downed",
+		},
+		
+		{
+			activationtime = 1.0000001192093,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 5962,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Downed",
+		},
+		
+		{
+			activationtime = 0.30000001192093,
+			condition_luacode = "return true",
+			conditions = 
+			{
+			},
+			id = 5820,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Engi_Downed",
+		},
+		
+		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -646,28 +759,33 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
+						operator = 2,
 						target = 2,
 						uid = "Aggro",
 					},
 					
 					{
-						healthtype = 3,
 						operator = 1,
-						target = 2,
-						uid = "Health",
-						value = 70,
+						target = 1,
+						uid = "Alive",
+					},
+					
+					{
+						operator = 2,
+						target = 1,
+						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
 			},
-			id = 30027,
-			instantcast = true,
+			id = 5927,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 	},
+	botmainmenu_luacode = "GUI:Text(\"*Angryneer Skill Profile Requires:\")\nGUI:Text(\"- Heal Turret\")\nGUI:Text(\"- Hammer\")\nGUI:Text(\"- FlameThrower\")\nGUI:Text(\"- Elixier B & Supply Crate\")\n",
 	fightrangetype = 1,
 	profession = 3,
 	version = 1,

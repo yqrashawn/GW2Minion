@@ -33,16 +33,31 @@ function gw2_blacklistmanager.OnUpdate(_,ticks)
 	if(TimeSince(gw2_blacklistmanager.ticks) > 1000) then
 		gw2_blacklistmanager.ticks = ticks
 		
+		local lists = {GetString("Temporary Combat"), GetString("Vendor sell"), GetString("Vendor repair"), GetString("Vendor buy")}
+		
 		if(gw2_blacklistmanager.currentmapid ~= ml_global_information.CurrentMapID) then
 			gw2_blacklistmanager.currentmapid = ml_global_information.CurrentMapID
 			
-			-- Remove entries blacklisted by id if the map changes
-			local lists = {GetString("Temporary Combat"), GetString("Vendor sell"), GetString("Vendor repair"), GetString("Vendor buy")}
+			-- Remove entries blacklisted by id if the map changes			
 			for _,listname in pairs(lists) do
 				if(gw2_blacklistmanager.lists[listname]) then
 					local tmpentries = ml_list_mgr.FindEntries(listname,"expiration~=0,mapid~="..tostring(ml_global_information.CurrentMapID))
 					if(table.valid(tmpentries)) then
 						for k,_ in pairs(tmpentries) do
+							gw2_blacklistmanager.lists[listname]:DeleteEntry(k)
+						end
+					end
+				end
+			end
+		end
+		
+		-- check if an entry has an additional function that, if it evaluates to true will remove the entry from the list
+		for _,listname in pairs(lists) do
+			if(gw2_blacklistmanager.lists[listname]) then
+				local tmpentries = ml_list_mgr.FindEntries(listname,"expiration~=0,mapid~="..tostring(ml_global_information.CurrentMapID))
+				if(table.valid(tmpentries)) then
+					for id,k in pairs(tmpentries) do
+						if( k.removefunc and type(k.removefunc) == "function" and k.removefunc(k.id) == true)then
 							gw2_blacklistmanager.lists[listname]:DeleteEntry(k)
 						end
 					end
@@ -58,7 +73,7 @@ RegisterEventHandler("Gameloop.Update", gw2_blacklistmanager.OnUpdate)
 -- id can be ANYTHING. It's an identifier. Depends on the list.
 -- Events use eventid, vendors use id, inventory items use itemid, monsters use both id and contentid.
 -- Add an entry to listname.
-function gw2_blacklistmanager.AddBlacklistEntry(listname, id, name, duration)
+function gw2_blacklistmanager.AddBlacklistEntry(listname, id, name, duration, removefromblacklistfunction)
 	if(listname and id and table.valid(gw2_blacklistmanager.lists[listname])) then
 		
 		-- Force no permanent player blacklisting
@@ -74,7 +89,7 @@ function gw2_blacklistmanager.AddBlacklistEntry(listname, id, name, duration)
 			if(duration > 5000) then
 				local target = CharacterList:Get(id)
 				if ( table.valid(target) and target.isplayer) then
-					duration = 5000
+					duration = 2500
 				end
 			end
 		end
@@ -84,7 +99,7 @@ function gw2_blacklistmanager.AddBlacklistEntry(listname, id, name, duration)
 			duration = ml_global_information.Now + duration
 		end
 		
-		gw2_blacklistmanager.lists[listname]:AddEntry({id = id, name = name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = duration})
+		gw2_blacklistmanager.lists[listname]:AddEntry({id = id, name = name or "unknown", mapid = ml_global_information.CurrentMapID, expiration = duration, removefunc = removefromblacklistfunction})
 	end
 end
 
