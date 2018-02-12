@@ -4,6 +4,7 @@ local tbl =
 	{
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -27,6 +28,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -50,6 +52,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -73,6 +76,7 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -96,6 +100,7 @@ local tbl =
 		}, 
 		[6] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -119,6 +124,7 @@ local tbl =
 		},
 		[7] = 
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -142,6 +148,7 @@ local tbl =
 		},
 		[9] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -164,6 +171,7 @@ local tbl =
 		},
 		[10] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -186,6 +194,7 @@ local tbl =
 		},
 		[11] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -208,6 +217,7 @@ local tbl =
 		},
 		[12] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -230,6 +240,7 @@ local tbl =
 		},
 		[13] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -252,6 +263,7 @@ local tbl =
 		},
 		[14] = 
 		{
+			activationtime = 3,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -273,6 +285,7 @@ local tbl =
 		},
 		[15] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -294,6 +307,7 @@ local tbl =
 		},
 		[16] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -315,6 +329,7 @@ local tbl =
 		},
 		[17] = 
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -337,6 +352,7 @@ local tbl =
 		},
 		[18] = 
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -359,6 +375,7 @@ local tbl =
 		},
 		[19] = 
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -381,6 +398,7 @@ local tbl =
 		},
 		[20] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -402,6 +420,7 @@ local tbl =
 		},
 		[21] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -424,6 +443,7 @@ local tbl =
 		},
 		[22] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -446,6 +466,7 @@ local tbl =
 		},
 		[23] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -467,6 +488,7 @@ local tbl =
 		},
 		[24] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -488,6 +510,7 @@ local tbl =
 		},
 		[25] = 
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -510,6 +533,7 @@ local tbl =
 		},
 		[26] = 
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -532,6 +556,7 @@ local tbl =
 		},
 		[27] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -554,6 +579,7 @@ local tbl =
 		},
 		[28] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -576,6 +602,7 @@ local tbl =
 		},
 		[29] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -598,6 +625,7 @@ local tbl =
 		},
 		[30] = 
 		{
+			activationtime = 3,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -619,6 +647,7 @@ local tbl =
 		},
 		[31] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -640,6 +669,7 @@ local tbl =
 		},
 		[32] = 
 		{
+			activationtime = 2,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -661,6 +691,7 @@ local tbl =
 		},
 		[33] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -683,6 +714,7 @@ local tbl =
 		},
 		[34] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -705,6 +737,7 @@ local tbl =
 		},
 		[35] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -727,6 +760,7 @@ local tbl =
 		},
 		[36] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -749,6 +783,7 @@ local tbl =
 		},
 		[37] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -771,6 +806,7 @@ local tbl =
 		},
 		[38] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -793,6 +829,7 @@ local tbl =
 		},
 		[39] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -815,6 +852,7 @@ local tbl =
 		},
 		[40] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -837,6 +875,7 @@ local tbl =
 		},
 		[41] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -859,6 +898,7 @@ local tbl =
 		},
 		[42] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -881,6 +921,7 @@ local tbl =
 		},
 		[43] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -903,6 +944,7 @@ local tbl =
 		},
 		[44] = 
 		{
+			activationtime = 1.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -925,6 +967,7 @@ local tbl =
 		},
 		[45] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -947,6 +990,7 @@ local tbl =
 		},
 		[46] = 
 		{
+			activationtime = 1.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -969,6 +1013,7 @@ local tbl =
 		},
 		[47] = 
 		{
+			activationtime = 1.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -991,11 +1036,19 @@ local tbl =
 		},
 		[48] = 
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 240,
+					},
 					
 					{
 						operator = 1,
@@ -1006,12 +1059,14 @@ local tbl =
 				},
 			},
 			id = 30088,
+			instantcast = false,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Engi_Hammer",
 		},
 		[49] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1034,6 +1089,7 @@ local tbl =
 		},
 		[50] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1056,6 +1112,7 @@ local tbl =
 		},
 		[51] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1078,6 +1135,7 @@ local tbl =
 		},
 		[52] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1100,6 +1158,7 @@ local tbl =
 		},
 		[53] = 
 		{
+			activationtime = 1.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1122,6 +1181,7 @@ local tbl =
 		},
 		[54] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1144,6 +1204,7 @@ local tbl =
 		},
 		[55] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1166,6 +1227,7 @@ local tbl =
 		},
 		[56] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1188,6 +1250,7 @@ local tbl =
 		},
 		[57] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1210,6 +1273,7 @@ local tbl =
 		},
 		[58] = 
 		{
+			activationtime = 2.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1232,6 +1296,7 @@ local tbl =
 		},
 		[59] = 
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1253,6 +1318,7 @@ local tbl =
 		},
 		[60] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1275,6 +1341,7 @@ local tbl =
 		},
 		[61] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1297,6 +1364,7 @@ local tbl =
 		},
 		[62] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1319,6 +1387,7 @@ local tbl =
 		},
 		[63] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1334,12 +1403,14 @@ local tbl =
 				},
 			},
 			id = 17260,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Engi_Flamethrower",
 		},
 		[64] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1362,6 +1433,7 @@ local tbl =
 		},
 		[65] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1378,12 +1450,14 @@ local tbl =
 				},
 			},
 			id = 6159,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = true,
 			skillpaletteuid = "Engi_Flamethrower",
 		},
 		[66] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1406,6 +1480,7 @@ local tbl =
 		},
 		[67] = 
 		{
+			activationtime = 2,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1427,6 +1502,7 @@ local tbl =
 		},
 		[68] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1448,6 +1524,7 @@ local tbl =
 		},
 		[69] = 
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1470,6 +1547,7 @@ local tbl =
 		},
 		[70] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1491,6 +1569,7 @@ local tbl =
 		},
 		[71] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1513,6 +1592,7 @@ local tbl =
 		},
 		[72] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1535,6 +1615,7 @@ local tbl =
 		},
 		[73] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1556,6 +1637,7 @@ local tbl =
 		},
 		[74] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1571,12 +1653,14 @@ local tbl =
 				},
 			},
 			id = 5966,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[75] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1598,6 +1682,7 @@ local tbl =
 		},
 		[76] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1619,6 +1704,7 @@ local tbl =
 		},
 		[77] = 
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1640,6 +1726,7 @@ local tbl =
 		},
 		[79] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1661,6 +1748,7 @@ local tbl =
 		},
 		[80] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1676,12 +1764,14 @@ local tbl =
 				},
 			},
 			id = 6162,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[81] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1703,6 +1793,7 @@ local tbl =
 		},
 		[82] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1718,12 +1809,14 @@ local tbl =
 				},
 			},
 			id = 5973,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[83] = 
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1745,6 +1838,7 @@ local tbl =
 		},
 		[84] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1760,12 +1854,14 @@ local tbl =
 				},
 			},
 			id = 5975,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[85] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1781,12 +1877,14 @@ local tbl =
 				},
 			},
 			id = 6166,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[86] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1802,12 +1900,14 @@ local tbl =
 				},
 			},
 			id = 5977,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[87] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1829,6 +1929,7 @@ local tbl =
 		},
 		[88] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1850,6 +1951,7 @@ local tbl =
 		},
 		[89] = 
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1871,6 +1973,7 @@ local tbl =
 		},
 		[90] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1892,6 +1995,7 @@ local tbl =
 		},
 		[91] = 
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1913,6 +2017,7 @@ local tbl =
 		},
 		[92] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1928,12 +2033,14 @@ local tbl =
 				},
 			},
 			id = 5985,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[93] = 
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1955,6 +2062,7 @@ local tbl =
 		},
 		[94] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1976,6 +2084,7 @@ local tbl =
 		},
 		[95] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -1997,6 +2106,7 @@ local tbl =
 		},
 		[96] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2012,12 +2122,14 @@ local tbl =
 				},
 			},
 			id = 6178,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[97] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2039,6 +2151,7 @@ local tbl =
 		},
 		[98] = 
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2060,6 +2173,7 @@ local tbl =
 		},
 		[99] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2075,12 +2189,14 @@ local tbl =
 				},
 			},
 			id = 5862,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[100] = 
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2102,6 +2218,7 @@ local tbl =
 		},
 		[101] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2123,6 +2240,7 @@ local tbl =
 		},
 		[102] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2144,6 +2262,7 @@ local tbl =
 		},
 		[103] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2165,6 +2284,7 @@ local tbl =
 		},
 		[104] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2180,12 +2300,14 @@ local tbl =
 				},
 			},
 			id = 6119,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[105] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2207,6 +2329,7 @@ local tbl =
 		},
 		[106] = 
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2228,6 +2351,7 @@ local tbl =
 		},
 		[107] = 
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2249,6 +2373,7 @@ local tbl =
 		},
 		[109] = 
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2270,6 +2395,7 @@ local tbl =
 		},
 		[110] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2291,6 +2417,7 @@ local tbl =
 		},
 		[111] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2312,6 +2439,7 @@ local tbl =
 		},
 		[112] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2327,12 +2455,14 @@ local tbl =
 				},
 			},
 			id = 43176,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[113] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2354,6 +2484,7 @@ local tbl =
 		},
 		[114] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2369,12 +2500,14 @@ local tbl =
 				},
 			},
 			id = 45732,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[115] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2396,6 +2529,7 @@ local tbl =
 		},
 		[116] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2417,6 +2551,7 @@ local tbl =
 		},
 		[118] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2438,6 +2573,7 @@ local tbl =
 		},
 		[119] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2453,12 +2589,14 @@ local tbl =
 				},
 			},
 			id = 41218,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[120] = 
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2480,6 +2618,7 @@ local tbl =
 		},
 		[121] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2495,12 +2634,14 @@ local tbl =
 				},
 			},
 			id = 29739,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[123] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2522,6 +2663,7 @@ local tbl =
 		},
 		[124] = 
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2543,6 +2685,7 @@ local tbl =
 		},
 		[125] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2564,6 +2707,7 @@ local tbl =
 		},
 		[126] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2585,6 +2729,7 @@ local tbl =
 		},
 		[127] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2600,12 +2745,14 @@ local tbl =
 				},
 			},
 			id = 30101,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[129] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2627,6 +2774,7 @@ local tbl =
 		},
 		[131] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2648,6 +2796,7 @@ local tbl =
 		},
 		[134] = 
 		{
+			activationtime = 0.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2669,6 +2818,7 @@ local tbl =
 		},
 		[135] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2690,6 +2840,7 @@ local tbl =
 		},
 		[136] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2711,6 +2862,7 @@ local tbl =
 		},
 		[137] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2726,17 +2878,27 @@ local tbl =
 				},
 			},
 			id = 6078,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[138] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
 				
 				{
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 70,
+					},
 					
 					{
 						operator = 1,
@@ -2747,12 +2909,14 @@ local tbl =
 				},
 			},
 			id = 30027,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[139] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2768,12 +2932,14 @@ local tbl =
 				},
 			},
 			id = 5825,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[142] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2789,12 +2955,14 @@ local tbl =
 				},
 			},
 			id = 6082,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[143] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2810,12 +2978,14 @@ local tbl =
 				},
 			},
 			id = 6088,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[144] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2831,12 +3001,14 @@ local tbl =
 				},
 			},
 			id = 5865,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[145] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2858,6 +3030,7 @@ local tbl =
 		},
 		[146] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2879,6 +3052,7 @@ local tbl =
 		},
 		[147] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2900,6 +3074,7 @@ local tbl =
 		},
 		[148] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2915,12 +3090,14 @@ local tbl =
 				},
 			},
 			id = 6084,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[149] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2936,12 +3113,14 @@ local tbl =
 				},
 			},
 			id = 5861,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[150] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2963,6 +3142,7 @@ local tbl =
 		},
 		[151] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2978,12 +3158,14 @@ local tbl =
 				},
 			},
 			id = 42163,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[152] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -2999,12 +3181,14 @@ local tbl =
 				},
 			},
 			id = 6086,
+			instantcast = true,
 			requireslos = true,
 			setsattackrange = false,
 			skillpaletteuid = "Engineer",
 		},
 		[153] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3026,6 +3210,7 @@ local tbl =
 		},
 		[155] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3047,6 +3232,7 @@ local tbl =
 		},
 		[156] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3068,6 +3254,7 @@ local tbl =
 		},
 		[157] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3089,6 +3276,7 @@ local tbl =
 		},
 		[158] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3110,6 +3298,7 @@ local tbl =
 		},
 		[159] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3131,6 +3320,7 @@ local tbl =
 		},
 		[160] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3152,6 +3342,7 @@ local tbl =
 		},
 		[161] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3173,6 +3364,7 @@ local tbl =
 		},
 		[162] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3195,6 +3387,7 @@ local tbl =
 		},
 		[163] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3217,6 +3410,7 @@ local tbl =
 		},
 		[164] = 
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3239,6 +3433,7 @@ local tbl =
 		},
 		[165] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3261,6 +3456,7 @@ local tbl =
 		},
 		[166] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3283,6 +3479,7 @@ local tbl =
 		},
 		[167] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3305,6 +3502,7 @@ local tbl =
 		},
 		[168] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3327,6 +3525,7 @@ local tbl =
 		},
 		[169] = 
 		{
+			activationtime = 0,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3349,6 +3548,7 @@ local tbl =
 		},
 		[170] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3371,6 +3571,7 @@ local tbl =
 		},
 		[171] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3393,6 +3594,7 @@ local tbl =
 		},
 		[172] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3415,6 +3617,7 @@ local tbl =
 		},
 		[173] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3437,6 +3640,7 @@ local tbl =
 		},
 		[174] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3459,6 +3663,7 @@ local tbl =
 		},
 		[175] = 
 		{
+			activationtime = 1.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3481,6 +3686,7 @@ local tbl =
 		},
 		[176] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3503,6 +3709,7 @@ local tbl =
 		},
 		[177] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3525,6 +3732,7 @@ local tbl =
 		},
 		[178] = 
 		{
+			activationtime = 2.25,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3547,6 +3755,7 @@ local tbl =
 		},
 		[179] = 
 		{
+			activationtime = 1,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3569,6 +3778,7 @@ local tbl =
 		},
 		[180] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3591,6 +3801,7 @@ local tbl =
 		},
 		[181] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3613,6 +3824,7 @@ local tbl =
 		},
 		[182] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3635,6 +3847,7 @@ local tbl =
 		},
 		[183] = 
 		{
+			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3657,6 +3870,7 @@ local tbl =
 		},
 		[184] = 
 		{
+			activationtime = 0.5,
 			condition_luacode = "return true",
 			conditions = 
 			{
@@ -3678,7 +3892,7 @@ local tbl =
 			skillpaletteuid = "Engi_Sword",
 		},
 	},
-	botmainmenu_luacode = "",
+	botmainmenu_luacode = "GUI:Separator()\nif ( not context.lockedtargetid ) then\n\t\tlocal target = Player:GetTarget()\n\t\tif ( target and target.attackable ) then\t\t\n\t\t\t\tif(GUI:Button(\"Lock : \"..target.name)) then\n\t\t\t\t\t\t\tcontext.lockedtargetid = target.id\n\t\t\t\t\t\t\tcontext.lockedtargetname = target.name\n\t\t\t\tend\n\t\telse\n\t\t\t\tGUI:Button(\"Lock Target: Select a valid Target\")\n\t\tend\n\nelse\n\t\tlocal validtarget = CharacterList:Get(context.lockedtargetid)\n\t\tif (validtarget) then\n\t\t\t\tPlayer:SetTarget(\tcontext.lockedtargetid )\n\t\t\t\tcontext.attack_target = validtarget\n\t\t\t\tcontext.attack_targetid\t= context.lockedtargetid\n\t\tend\n\t\tif( GUI:Button(\"UnLock: \"..context.lockedtargetname)) then\n\t\t\t\tcontext.lockedtargetid = nil\t\t\t\t\n\t\tend\nend\nGUI:Separator()\n\n\n\n",
 	fightrangetype = 1,
 	profession = 3,
 	version = 1,

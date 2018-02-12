@@ -586,7 +586,7 @@ function gw2_combatdata.cleanLog()
 						gw2_combatdata.damageLog[sourceID][targetid] = nil
 						gw2_combatdata.damageLog[targetid] = nil
 					end
-				elseif ((targetLog.timeOfLastHit + 30000) < GetSystemTime()) then
+				elseif ((targetLog.timeOfLastHit + 30000) < GetSystemTime() and gw2_combatdata.damageLog[sourceID]) then
 					gw2_combatdata.damageLog[sourceID][targetid] = nil
 				end
 				if (targetLog.timeOfEngagement < oldestEntryTime) then
