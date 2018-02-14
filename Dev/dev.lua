@@ -1136,7 +1136,7 @@ function dev.DrawCall(event, ticks )
 							end							
 							GUI:PopItemWidth()
 						else
-							GUI:Text("No Inventory found.") 
+							GUI:Text("No Wallet found.") 
 						end
 						GUI:TreePop()				
 					end
@@ -1485,7 +1485,7 @@ function dev.DrawMapMarkerDetails(id,b)
 		GUI:BulletText("API ID") GUI:SameLine(200) GUI:InputText("##devm3",tostring(b.apiid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 		GUI:BulletText("Content ID") if (GUI:IsItemHovered()) then GUI:SetTooltip("Content is (should :D) be a stable unique ID for you to use.") end GUI:SameLine(200) GUI:InputText("##devm8",tostring(b.contentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)		
 		GUI:BulletText("Context ID") if (GUI:IsItemHovered()) then GUI:SetTooltip("Context ID is NOT a 'stable', it changes now and then. This is EventID, QuestID and similiar IDs.") end GUI:SameLine(200) GUI:InputText("##devm6",tostring(b.contextid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
-		GUI:BulletText("Connected AgentID") GUI:SameLine(200) GUI:InputText("##devm7",tostring(b.agent),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+		GUI:BulletText("Connected AgentID") GUI:SameLine(200) GUI:InputText("##devm7",tostring(b.agentid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 		GUI:BulletText("MarkerType") GUI:SameLine(200) GUI:InputText("##devm4",tostring(b.markertype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)			
 		GUI:BulletText("WorldMarkerType") if (GUI:IsItemHovered()) then GUI:SetTooltip("This changed a few times in the past...") end GUI:SameLine(200) GUI:InputText("##devmm4",tostring(b.worldmarkertype),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)					
 		GUI:BulletText("SubregionID") if (GUI:IsItemHovered()) then GUI:SetTooltip("ID to identify the Heart Quests") end  GUI:SameLine(200) GUI:InputText("##devm9",tostring(b.subregionid),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)		

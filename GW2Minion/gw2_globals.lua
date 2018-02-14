@@ -79,6 +79,7 @@ ml_global_information.InvulnerabilityConditions = {
 	[29065]		= "Tough Hide"
 }
 
+-- These are MapMarker - ContentIDs
 ml_global_information.VendorSell = {
 	GW2.MAPMARKER.Merchant,
 	GW2.MAPMARKER.Armorsmith,
@@ -86,7 +87,8 @@ ml_global_information.VendorSell = {
 	GW2.MAPMARKER.Repair,
 	GW2.MAPMARKER.ItzelVendor,
 	GW2.MAPMARKER.ExaltedVendor,
-	GW2.MAPMARKER.NuhochVendor
+	GW2.MAPMARKER.NuhochVendor,
+	305607,  -- Priory Historian Bandit Chest Seller
 }
 
 ml_global_information.VendorBuy = {
