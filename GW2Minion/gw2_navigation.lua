@@ -210,11 +210,39 @@ function ml_navigation.Navigate(event, ticks )
 								return
 								
 							elseif(ml_navigation.navconnection.subtype == 6 ) then
-								-- Custom Lua Code
-								ml_error("TODO: HANDLE CUSTOM OMC LUA CODE , SET ml_navigation.navconnection = nil AFTER DONE")
-								lastnode = nextnode
-								nextnode = ml_navigation.path[ ml_navigation.pathindex + 1]
-								
+								-- Custom Lua Code								
+								lastnode = nextnode		-- OMC start
+								nextnode = nextnextnode	-- OMC end
+								local result
+								if ( ml_navigation.navconnection.luacode and ml_navigation.navconnection.luacode ~= "" and ml_navigation.navconnection.luacode ~= " " ) then
+									
+									if ( not ml_navigation.navconnection.luacode_compiled and not ml_navigation.navconnection.luacode_bugged ) then					
+										local execstring = 'return function(self,startnode,endnode) '..ml_navigation.navconnection.luacode..' end'
+										local func = loadstring(execstring)
+										if ( func ) then
+											result = func()(ml_navigation.navconnection, lastnode, nextnode)
+											ml_navigation.navconnection.luacode_compiled = func	
+										else
+											ml_navigation.navconnection.luacode_compiled = nil
+											ml_navigation.navconnection.luacode_bugged = true
+											ml_error("[Navigation] - The Mesh Connection Lua Code has a BUG !!")
+											assert(loadstring(execstring)) -- print out the actual error
+										end
+									else
+										--executing the already loaded function
+										result = ml_navigation.navconnection.luacode_compiled()(ml_navigation.navconnection, lastnode, nextnode)
+									end									
+									
+								else
+									d("[Navigation] - ERROR: A 'Custom Lua Code' MeshConnection has NO lua code!...")
+								end
+								-- continue to walk to the omc end
+								if ( result ) then
+									-- moving on to the omc end							
+								else
+									-- keep calling the MeshConnection
+									return
+								end
 							end
 							
 							
@@ -427,7 +455,8 @@ function ml_navigation:IsStillOnPath(ppos, lastnode, nextnode, deviationthreshol
 				local playerpos = { x=ppos.x, y = ppos.y, z = 0 }
 				if ( not (movstate == GW2.MOVEMENTSTATE.Jumping or movestate == GW2.MOVEMENTSTATE.Falling) and math.distancepointline(from, to, playerpos) > deviationthreshold) then			
 					d("[Navigation] - Player left the path - 2D-Distance to Path: "..tostring(math.distancepointline(from, to, playerpos)).." > "..tostring(deviationthreshold))
-					NavigationManager:UpdatePathStart()
+					--NavigationManager:UpdatePathStart()  -- this seems to cause some weird twitching loops sometimes..not sure why
+					NavigationManager:ResetPath()
 					ml_navigation:MoveTo(ml_navigation.targetposition.x, ml_navigation.targetposition.y, ml_navigation.targetposition.z, ml_navigation.targetid)
 					return false
 				end
@@ -436,7 +465,8 @@ function ml_navigation:IsStillOnPath(ppos, lastnode, nextnode, deviationthreshol
 				-- Under water, using 3D
 				if ( not (movstate == GW2.MOVEMENTSTATE.Jumping or movestate == GW2.MOVEMENTSTATE.Falling) and math.distancepointline(lastnode, nextnode, ppos) > deviationthreshold) then			
 					d("[Navigation] - Player not on Path anymore. - Distance to Path: "..tostring(math.distancepointline(lastnode,nextnode,ppos)).." > "..tostring(deviationthreshold))
-					NavigationManager:UpdatePathStart()
+					--NavigationManager:UpdatePathStart()
+					NavigationManager:ResetPath()
 					ml_navigation:MoveTo(ml_navigation.targetposition.x, ml_navigation.targetposition.y, ml_navigation.targetposition.z, ml_navigation.targetid)
 					return false
 				end		
@@ -585,9 +615,9 @@ end
 function Player:StopMovement()	
 	ml_navigation.navconnection = nil
 	ml_navigation.navconnection_start_tmr = nil
-	ml_navigation.pathindex = 0
+	ml_navigation.pathindex = 0	
 	ml_navigation:ResetCurrentPath()
-	ml_navigation:ResetOMCHandler()
+	ml_navigation:ResetOMCHandler()	
 	gw2_unstuck.Reset()
 	Player:Stop()
 	NavigationManager:ResetPath()	
