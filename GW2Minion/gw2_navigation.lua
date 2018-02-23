@@ -221,7 +221,9 @@ function ml_navigation.Navigate(event, ticks )
 										local func = loadstring(execstring)
 										if ( func ) then
 											result = func()(ml_navigation.navconnection, lastnode, nextnode)
-											ml_navigation.navconnection.luacode_compiled = func	
+											if ( ml_navigation.navconnection ) then -- yeah happens, crazy, riught ?
+												ml_navigation.navconnection.luacode_compiled = func	
+											end
 										else
 											ml_navigation.navconnection.luacode_compiled = nil
 											ml_navigation.navconnection.luacode_bugged = true
