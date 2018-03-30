@@ -186,6 +186,53 @@ RegisterEventHandler("RefreshBehaviorFiles", gw2minion.LoadBehaviorFiles)
 
 function gw2minion.DrawCall(event, ticks )
 	
+	-- Version check, this will popup a window informing about the "might work, but can crash or worse" after a MINOR game update and when the bot auto updated
+	if (not gw2minion.versionchecked) then
+		local v1,v2 = GetGameVersion()
+		if(v1 ~= v2) then
+			GUI:OpenPopup(GetString("Bot Update Required"))
+			
+			GUI:SetNextWindowSize(600,200)
+			if (GUI:BeginPopupModal("Bot Update Required",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
+				GUI:Spacing()
+				GUI:SameLine(25)
+				GUI:Text(GetString("GW2 was updated and we need to update GW2Minion as well."))
+				GUI:Spacing()
+				GUI:SameLine(25)
+				GUI:Text(GetString("Until that happens, GW2Minion 'can' continue to work."))
+				GUI:Spacing()
+				GUI:SameLine(25)
+				GUI:Text(GetString("Some features are NOT available in this mode ( No Hacks.. )."))
+				GUI:Spacing()
+				GUI:SameLine(25)
+				GUI:Text(GetString("Be aware that in this mode the game MAY CRASH at any given time !"))
+				GUI:Spacing()
+				GUI:SameLine(25)
+				GUI:Text(GetString("If that happens, there is nothing you can do but to wait for the update."))
+				GUI:Spacing()
+				GUI:SameLine(25)
+				GUI:SetWindowFontScale(0.8)
+				GUI:Text("Enjoy the No-Downtime-Mode ;)")
+				GUI:SetWindowFontScale(1)
+				
+				GUI:Spacing()
+				GUI:Separator()
+				GUI:Dummy(100,10)
+				GUI:Spacing()
+				GUI:SameLine(80)
+				if (GUI:Button(GetString("I UNDERSTAND THE TEXT ABOVE AND WANT TO CONTINUE"),450,30)) then
+					GUI:CloseCurrentPopup()
+					gw2minion.versionchecked = true
+				end
+				GUI:EndPopup()
+			end
+			
+		else
+			gw2minion.versionchecked = true
+		end			
+	end
+	
+	
 	if ( BehaviorManager:Ready() == true ) then
 		if ( gw2minion.mainbtreeinstance ) then
 			-- Run the local behaviortree
