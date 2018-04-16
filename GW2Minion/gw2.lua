@@ -193,7 +193,7 @@ function gw2minion.DrawCall(event, ticks )
 			GUI:OpenPopup(GetString("Bot Update Required"))
 			
 			GUI:SetNextWindowSize(600,200)
-			if (GUI:BeginPopupModal("Bot Update Required",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
+			if (GUI:BeginPopupModal("Game Update Information",true,GUI.WindowFlags_NoResize+GUI.WindowFlags_NoMove+GUI.WindowFlags_ShowBorders)) then
 				GUI:Spacing()
 				GUI:SameLine(25)
 				GUI:Text(GetString("GW2 was updated and we need to update GW2Minion as well."))
@@ -208,7 +208,7 @@ function gw2minion.DrawCall(event, ticks )
 				GUI:Text(GetString("Be aware that in this mode the game MAY CRASH at any given time !"))
 				GUI:Spacing()
 				GUI:SameLine(25)
-				GUI:Text(GetString("If that happens, there is nothing you can do but to wait for the update."))
+				GUI:Text(GetString("If that happens, there is nothing you can do but to wait for the Bot update."))
 				GUI:Spacing()
 				GUI:SameLine(25)
 				GUI:SetWindowFontScale(0.8)

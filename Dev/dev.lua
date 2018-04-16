@@ -1097,7 +1097,14 @@ function dev.DrawCall(event, ticks )
 		
 										
 
-
+					-- Also available:
+					-- Inventory:Get(itemid)
+					-- Inventory:GetEquippedItembySlot()
+					-- Inventory:GetInventoryMoney()
+					-- Inventory:GetVendorServiceType()
+					-- Inventory:SetVendorServiceType( type, tabindex)
+					-- Inventory:SellJunk( )
+					-- Inventory:DepositCollectables( )
 					if ( GUI:TreeNode("Vendor") ) then
 						GUI:BulletText("IsVendorOpened") GUI:SameLine(200) GUI:InputText("##devv0",tostring(Inventory:IsVendorOpened()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)	
 						local list = VendorItemList("")
@@ -1586,5 +1593,19 @@ function dev.DrawSpellInfo(b)
 	GUI:BulletText("CanCast") GUI:SameLine(200) GUI:InputText("##devsk12",tostring(b.cancast),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("Flags") GUI:SameLine(200) GUI:InputText("##devsk17",tostring(string.format( "%X",b.flags)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 	GUI:BulletText("IsSpellCurrentlyCast") GUI:SameLine(200) GUI:InputText("##devsk18",tostring(Player:IsSpellCurrentlyCast(b.slot)),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CastTime") GUI:SameLine(200) GUI:InputText("##devsk22",tostring(b.casttime),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CastTime2") GUI:SameLine(200) GUI:InputText("##devsk20",tostring(b.casttime2),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CastTime3") GUI:SameLine(200) GUI:InputText("##devsk21",tostring(b.casttime3),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	
+	GUI:BulletText("CastAnim0") GUI:SameLine(200) GUI:InputText("##devsk23",tostring(b.isunknown0),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CastAnim1") GUI:SameLine(200) GUI:InputText("##devsk24",tostring(b.isunknown1),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CastAnim2") GUI:SameLine(200) GUI:InputText("##devsk25",tostring(b.isunknown2),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CastAnim3") GUI:SameLine(200) GUI:InputText("##devsk26",tostring(b.isunknown3),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CastAnim4") GUI:SameLine(200) GUI:InputText("##devsk27",tostring(b.isunknown4),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CastAnim5") GUI:SameLine(200) GUI:InputText("##devsk28",tostring(b.isunknown5),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CastAnim6") GUI:SameLine(200) GUI:InputText("##devsk29",tostring(b.isunknown6),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CastAnim7") GUI:SameLine(200) GUI:InputText("##devsk30",tostring(b.isunknown7),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CastAnim8") GUI:SameLine(200) GUI:InputText("##devsk31",tostring(b.isunknown8),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+	GUI:BulletText("CastAnim9") GUI:SameLine(200) GUI:InputText("##devsk32",tostring(b.isunknown9),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
 									
 end
