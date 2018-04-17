@@ -1107,6 +1107,10 @@ function dev.DrawCall(event, ticks )
 					-- Inventory:DepositCollectables( )
 					if ( GUI:TreeNode("Vendor") ) then
 						GUI:BulletText("IsVendorOpened") GUI:SameLine(200) GUI:InputText("##devv0",tostring(Inventory:IsVendorOpened()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)	
+						GUI:BulletText("Service Type") GUI:SameLine(200) GUI:InputText("##dev10",tostring(Inventory:GetVendorServiceType()),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("Service Type Tab") GUI:SameLine(200) GUI:InputText("##dev8",tostring(VendorItemList.tabindex),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						GUI:BulletText("Service Type Tab Max") GUI:SameLine(200) GUI:InputText("##dev9",tostring(VendorItemList.tabindexmax),GUI.InputTextFlags_ReadOnly+GUI.InputTextFlags_AutoSelectAll)
+						
 						local list = VendorItemList("")
 						if ( table.valid(list) )then
 							GUI:PushItemWidth(250)
