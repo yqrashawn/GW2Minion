@@ -466,7 +466,7 @@ function dev.DrawCall(event, ticks )
 					
 					if ( GUI:TreeNode("Hacks") ) then
 						GUI:PushItemWidth(250)						
-						GUI:BulletText("Position") GUI:SameLine(200)  GUI:InputFloat3( "##devh1", dev.teleportpos.x, dev.teleportpos.y, dev.teleportpos.z, 2, GUI.InputTextFlags_ReadOnly)
+						GUI:BulletText("Position") GUI:SameLine(200) dev.teleportpos.x, dev.teleportpos.y, dev.teleportpos.z = GUI:InputFloat3( "##devh1", dev.teleportpos.x, dev.teleportpos.y, dev.teleportpos.z, 2)
 						if (GUI:Button("UseCurrentPos",150,15) ) then dev.teleportpos = Player.pos end GUI:SameLine()
 						if (GUI:Button("Teleport",150,15) ) then d(HackManager:Teleport(tonumber(dev.teleportpos.x),tonumber(dev.teleportpos.y),tonumber(dev.teleportpos.z))) end
 						
