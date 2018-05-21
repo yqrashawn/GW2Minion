@@ -70,10 +70,10 @@ gw2_combatdata.buffLog				= { -- WIP.
 
 
 function gw2_combatdata.Init()
-	
+
 	Settings.gw2_combatdata.active2 = Settings.gw2_combatdata.active2 or true
 	gw2_combatdata.active2 = Settings.gw2_combatdata.active2
-	
+
 	Settings.gw2_combatdata.columns = Settings.gw2_combatdata.columns or {
 		[1] = {
 			name			= GetString("Name"),
@@ -146,9 +146,9 @@ function gw2_combatdata.Init()
 			variableName	= "ttk",
 		},
 	}
-	
+
 	gw2_combatdata.columns = Settings.gw2_combatdata.columns
-	
+
 	gw2_combatdata.icons = {
 		profession = {
 			[1] = gw2_combatdata.iconPath .. "Profession\\Guardian.png",
@@ -162,8 +162,8 @@ function gw2_combatdata.Init()
 			[9] = gw2_combatdata.iconPath .. "Profession\\Revenant.png",
 		},
 	}
-	
-	
+
+
 	-- init button in minionmainbutton
 	ml_gui.ui_mgr:AddMember({ id = "GW2MINION##COMBATDATA", name = "DPS Meter", onClick = function() gw2_combatdata.mainWindow.open = gw2_combatdata.mainWindow.open ~= true end, tooltip = "Click to open \"Combat Data\" window.", texture = GetStartupPath().."\\GUI\\UI_Textures\\sword.png"},"GW2MINION##MENU_HEADER")
 end
@@ -173,10 +173,10 @@ function gw2_combatdata.Draw(_, ticks)
 	if (GetGameState() == GW2.GAMESTATE.GAMEPLAY) then
 		-- Draw selected target information.
 		gw2_combatdata.DrawSelectedTargetInfo(ticks)
-		
+
 		-- Draw detailed Combat data window.
 		gw2_combatdata.DrawCombatDataWindow(ticks)
-		
+
 	end
 end
 
@@ -190,7 +190,7 @@ function gw2_combatdata.DrawSelectedTargetInfo(ticks)
 		GUI:PushStyleColor(GUI.Col_WindowBg, 0, 0, 0, 0)
 		GUI:Begin("DPS Free Draw Space", true, GUI.WindowFlags_NoInputs + GUI.WindowFlags_NoBringToFrontOnFocus + GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoResize + GUI.WindowFlags_NoScrollbar + GUI.WindowFlags_NoCollapse)
 		GUI:PopStyleColor(1)
-			
+
 			-- DPS.
 			local playerCombatData = gw2_combatdata.combatLog[ml_global_information.Player_ID]
 			if (table.valid(playerCombatData)) then
@@ -202,7 +202,7 @@ function gw2_combatdata.DrawSelectedTargetInfo(ticks)
 					GUI:AddText((screenSizeX / 2) - 176, 39, 4278190080, "DPS:0 TTK:00:00")
 				end
 			end
-			
+
 			-- Draw Selected target Health.
 			local sPos = {
 				x = (screenSizeX / 2) - 175,
@@ -210,8 +210,8 @@ function gw2_combatdata.DrawSelectedTargetInfo(ticks)
 			}
 			GUI:AddText(sPos.x, sPos.y, 4294967295, math.round(gw2_combatdata.selectedTargetData.health.current) .. "/" .. gw2_combatdata.selectedTargetData.health.max)
 		GUI:End()
-		
-		
+
+
 	end
 end
 
@@ -227,12 +227,12 @@ function gw2_combatdata.DrawCombatDataWindow(ticks)
 			GUI:SameLine()
 			GUI:Text(GetString("Active"))
 			GUI:Separator()
-			
+
 			if (Settings.gw2_combatdata.active2) then
 				-- Get width and color.
 				local tabButtonWidth = (GUI:GetContentRegionAvailWidth() / table.size(gw2_combatdata.mainWindow.tabs)) - GUI:GetStyle().itemspacing.x/2
 				local activeTabColor = GUI:GetStyle().colors[GUI.Col_ButtonActive]
-				
+
 				-- Highlight player tab if selected.
 				local playerHighlighted = false
 				if (gw2_combatdata.mainWindow.tabs.player) then
@@ -251,7 +251,7 @@ function gw2_combatdata.DrawCombatDataWindow(ticks)
 					gw2_combatdata.displayIDs = {[ml_global_information.Player_ID] = true,}
 				end
 				GUI:SameLine()
-				
+
 				-- Highlight team tab if selected.
 				local teamHighlighted = false
 				if (gw2_combatdata.mainWindow.tabs.team) then
@@ -288,7 +288,7 @@ function gw2_combatdata.DrawCombatDataWindow(ticks)
 					end
 				end
 				GUI:SameLine()
-				
+
 				-- Highlight everyone tab if selected.
 				local everyoneHighlighted = false
 				if (gw2_combatdata.mainWindow.tabs.everyone) then
@@ -307,7 +307,7 @@ function gw2_combatdata.DrawCombatDataWindow(ticks)
 					gw2_combatdata.displayIDs = true
 				end
 				GUI:Separator()
-				
+
 				-- Draw columns.
 				gw2_combatdata.DrawCombatDataColumns()
 			end
@@ -327,14 +327,14 @@ function gw2_combatdata.DrawCombatDataColumns()
 			table.insert(columnDrawList,columnData)
 		end
 	end
-	
+
 	-- Check and iterate visible collumns list.
 	if (table.valid(columnDrawList)) then
 		local columnCount = #columnDrawList
 		local windowWidth = GUI:GetWindowWidth()
 		GUI:Columns(columnCount, "combatLog", true)
 		for order,columnData in ipairs(columnDrawList) do
-			
+
 			GUI:BeginGroup()
 				GUI:AlignFirstTextHeightToWidgets()
 				GUI:Text(columnData.name)
@@ -352,33 +352,33 @@ function gw2_combatdata.DrawCombatDataColumns()
 				GUI:SameLine()
 				GUI:Dummy(columnData.width,15)
 			GUI:EndGroup()
-			
+
 			if (GUI:IsItemClicked(0)) then
 				gw2_combatdata.columnSort = columnData.variableName
-			
+
 			elseif (GUI:IsItemClicked(1)) then
 				gw2_combatdata.selectedColumn = columnData--table.deepcopy(columnData)
 				GUI:OpenPopup("ColumnContext")
 			end
-			
+
 			if (order < columnCount) then
 				GUI:SetColumnOffset(GUI:GetColumnIndex() + 2,GUI:GetColumnOffset(GUI:GetColumnIndex() + 1) + columnDrawList[order + 1].width)
 				GUI:SetColumnOffset(GUI:GetColumnIndex() + 1,GUI:GetColumnOffset(GUI:GetColumnIndex()) + columnDrawList[order].width)
 			elseif (order == columnCount) then
 				GUI:SetColumnOffset(GUI:GetColumnIndex() + 1,GUI:GetColumnOffset(GUI:GetColumnIndex()) + windowWidth)
 			end
-			
-			
+
+
 			-- Goto next column
 			GUI:NextColumn()
-			
+
 		end
 		-- Seperate columns names from the info they display.
 		GUI:Separator()
-		
+
 		-- Display combat data.
 		local combatDataList = gw2_combatdata.getDisplayCombatData()
-		
+
 		-- Show self/player always ontop of the list.
 		local playerCombatData = combatDataList[ml_global_information.Player_ID]
 		if (table.valid(playerCombatData)) then
@@ -389,7 +389,7 @@ function gw2_combatdata.DrawCombatDataColumns()
 			end
 			combatDataList[ml_global_information.Player_ID] = nil
 		end
-		
+
 		-- Show all other entries.
 		local highlight = true
 		local color = GUI:GetStyle().colors[GUI.Col_WindowBg]
@@ -403,17 +403,17 @@ function gw2_combatdata.DrawCombatDataColumns()
 					end
 					-- Draw Column Content.
 					gw2_combatdata.DrawColumnContent(columnData, combatData)
-					
+
 					GUI:NextColumn()
 				end
 				highlight = not highlight
 			end
 		end
-		
-		
-		
+
+
+
 		GUI:Columns(1)
-		
+
 		-- Draw column context menu.
 		if (GUI:BeginPopup("ColumnContext")) then
 			local selectedColumn = gw2_combatdata.selectedColumn
@@ -437,14 +437,14 @@ function gw2_combatdata.DrawCombatDataColumns()
 						end
 					end
 				end
-				
+
 				GUI:EndMenu()
 			end
-			
+
 			GUI:EndPopup()
 		end
 	end
-	
+
 end
 
 function gw2_combatdata.DrawColumnContent(columnData, combatData)
@@ -548,7 +548,7 @@ function gw2_combatdata.updateLog()
 					if (currentLog[data.source][data.target].timeOfLastHit < data.time) then
 						currentLog[data.source][data.target].timeOfLastHit = data.time
 					end
-					
+
 					-- Add Damage to source>target log.
 					if (data.amount < 0) then
 						-- Damage can come in at the same exact MS, if so, add damage number. (we only log damage as given time, not each dmg seperate.
@@ -557,7 +557,7 @@ function gw2_combatdata.updateLog()
 						else
 							currentLog[data.source][data.target].combatLog[data.time] = math.abs(data.amount)
 						end
-					
+
 					-- Add Geak to heal log.
 					elseif (data.amount > 0) then
 						-- Create log entry if not there.
@@ -598,7 +598,7 @@ function gw2_combatdata.cleanLog()
 			gw2_combatdata.damageLog[sourceID] = nil
 		end
 	end
-	
+
 	-- Clean heal log file.
 	for entityID,healLog in pairs(gw2_combatdata.healLog) do
 		if (table.valid(healLog)) then
@@ -611,7 +611,7 @@ function gw2_combatdata.cleanLog()
 			gw2_combatdata.healLog[entityID] = nil
 		end
 	end
-	
+
 end
 
 function gw2_combatdata.getSourceTarget(sourceID,combatLog)
@@ -655,7 +655,7 @@ function gw2_combatdata.getSourceTarget(sourceID,combatLog)
 				end
 			end
 		end
-		
+
 		local healLog = gw2_combatdata.healLog[combatLog.targetid]
 		if (table.valid(healLog)) then
 			for timestamp,healAmount in pairs(healLog) do
@@ -664,14 +664,14 @@ function gw2_combatdata.getSourceTarget(sourceID,combatLog)
 				end
 			end
 		end
-		
+
 		combatData.engagementTime = (combatData.timeOfLastEncounter - combatData.timeOfEngagement) / 1000
 		combatData.dps = combatData.engagementTime > 0 and math.round(combatData.damage / combatData.engagementTime) or 0
 		combatData.cdps = combatData.engagementTime > 0 and math.round(combatData.cDamage / combatData.engagementTime) or 0
 		combatData.hps = combatData.engagementTime > 0 and math.round(combatData.heal / combatData.engagementTime) or 0
 		combatData.ttk = combatData.dps > 0 and combatLog.targetHealth.current / combatData.dps or 0
 	end
-	
+
 	return combatData
 end
 
@@ -687,7 +687,7 @@ function gw2_combatdata.updateCombatData()
 	if (table.valid(players)) then
 		for _,player in pairs(players) do
 			local playerID = player.id
-			
+
 			if (gw2_combatdata.combatLog[playerID]) then
 				trackedIDs[playerID] = table.deepcopy(gw2_combatdata.combatLog[playerID],false)
 			end
@@ -702,24 +702,24 @@ function gw2_combatdata.updateCombatData()
 					buffData = {},
 				}
 			end
-			
+
 			local targetChanged = false
 			if (player.castinfo and player.castinfo.targetid > 0 and player.castinfo.targetid ~= playerID and player.castinfo.targetid ~= trackedIDs[playerID].targetid) then
 				trackedIDs[playerID].targetid = player.castinfo.targetid
 				targetChanged = true
 			end
-			
+
 			if (table.valid(trackedIDs[playerID])) then
 				if (not string.valid(trackedIDs[playerID].name)) then
 					trackedIDs[playerID].name = player.name
 				end
-				
+
 				if (trackedIDs[playerID].profession == 0) then
 					trackedIDs[playerID].profession = player.profession
 				end
-				
-				
-				
+
+
+
 				if (trackedIDs[playerID].targetid) then
 					local target = CharacterList:Get(trackedIDs[playerID].targetid) or GadgetList:Get(trackedIDs[playerID].targetid) or AgentList:Get(trackedIDs[playerID].targetid)
 					if (table.valid(target) and target.attackable) then
@@ -729,7 +729,7 @@ function gw2_combatdata.updateCombatData()
 						trackedIDs[playerID].targetHealth = target.health or {max = 0, current = 0, percent = 100,}
 					end
 				end
-				
+
 				local combatData = {}
 				if (string.valid(trackedIDs[playerID].targetName)) then
 					combatData = gw2_combatdata.getSourceTarget(playerID,trackedIDs[playerID])
@@ -742,11 +742,11 @@ function gw2_combatdata.updateCombatData()
 				trackedIDs[playerID].cDamage = combatData.cDamage or 0
 				trackedIDs[playerID].engagementTime = combatData.engagementTime or 0
 				trackedIDs[playerID].ttk = combatData.ttk or 0
-				
+
 			end
 		end
 	end
-	
+
 	gw2_combatdata.combatLog = trackedIDs
 end
 
@@ -756,7 +756,7 @@ function gw2_combatdata.getDisplayCombatData()
 		for playerID in pairs(gw2_combatdata.displayIDs) do
 			displayData[playerID] = gw2_combatdata.combatLog[playerID]
 		end
-	
+
 	elseif (gw2_combatdata.displayIDs == true) then
 		return table.deepcopy(gw2_combatdata.combatLog)
 		-- for playerID,combatData in pairs(gw2_combatdata.combatLog) do
@@ -777,7 +777,7 @@ function gw2_combatdata.updateSelectedTargetData()
 				max		= target.health.max,
 				percent	= target.health.percent,
 			},
-			
+
 		}
 	else
 		gw2_combatdata.selectedTargetData = {}

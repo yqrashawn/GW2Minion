@@ -8,7 +8,7 @@ end
 function gw2_nav_manager.NodeDistanceTo(self,id)
 	local neighbor = self:GetNeighbor(id)
 	local neighborNode = ml_nav_manager.GetNode(id)
-	
+
 	if(table.valid(neighbor) and table.valid(neighborNode)) then
 		local nodeEntry = neighborNode:GetNeighbor(self.id)
 		if(table.valid(nodeEntry)) then
@@ -26,7 +26,7 @@ function gw2_nav_manager.NodeDistanceTo(self,id)
 			return lowestCost
 		end
 	end
-	
+
 	return 1
 end
 

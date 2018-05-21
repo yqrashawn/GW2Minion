@@ -13,7 +13,7 @@ end
 function gw2_common_functions.BufflistHasBuffs(bufflist, buffIDs)
 
 	if(table.valid(bufflist) == false) then return false end
-	
+
 	if(table.valid(buffIDs)) then
 		local buffstr = ""
 		for buffID,_ in pairs(buffIDs) do
@@ -21,7 +21,7 @@ function gw2_common_functions.BufflistHasBuffs(bufflist, buffIDs)
 		end
 		buffIDs = buffstr
 	end
-	
+
 	for _orids in string.split(tostring(buffIDs),",") do
 		local found = false
 		if(string.valid(_orids)) then
@@ -132,6 +132,7 @@ end
 
 function gw2_common_functions.GetClosestWaypointToPos(mapID,pos)
 	local waypoint = nil
+  HackManager:Teleport(pos.x,pos.y,pos.z)
 	local mapData = gw2_datamanager.GetLocalWaypointListByDistance(mapID,pos)
 	if (table.valid(mapData)) then
 		local i,wdata = next(mapData)
@@ -139,7 +140,7 @@ function gw2_common_functions.GetClosestWaypointToPos(mapID,pos)
 			if (not wdata.contested and wdata.onmesh) then
 				waypoint = wdata
 			end
-			
+
 			i,wdata = next(mapData,i)
 		end
 	end
@@ -151,10 +152,10 @@ function gw2_common_functions.GetClosestWaypointToMap(targetMapID, currentMapID)
 	currentMapID = currentMapID ~= nil and currentMapID or ml_global_information.CurrentMapID
 	local pos = ml_global_information.Player_Pos
 
-	if(targetMapID ~= nil) then	
+	if(targetMapID ~= nil) then
 		local currNode = ml_nav_manager.GetNode(currentMapID)
 		local destNode = ml_nav_manager.GetNode(targetMapID)
-		
+
 		if(currNode and destNode) then
 			-- Walk the path in reverse to see if any close maps have waypoints
 			local navPath = ml_nav_manager.GetPath(destNode, currNode)
@@ -162,7 +163,7 @@ function gw2_common_functions.GetClosestWaypointToMap(targetMapID, currentMapID)
 			if(table.valid(navPath)) then
 				local prevNode = nil
 				local closestWaypoint = nil
-				
+
 				local i,node = next(navPath)
 				while i and node and not closestWaypoint do
 					if(prevNode == nil) then
@@ -184,48 +185,48 @@ function gw2_common_functions.GetClosestWaypointToMap(targetMapID, currentMapID)
 							end
 						end
 					end
-					
+
 					prevNode = node
 					i,node = next(navPath, i)
 				end
-				
+
 				if(table.valid(closestWaypoint)) then
 					return closestWaypoint
 				end
 			end
 		end
 	end
-	
+
 	return nil
 end
 
 -- Gets all targets (Characters and Gadgets) from filterstring
 function gw2_common_functions.GetAllTargets(filterstring)
 	filterstring = string.valid(filterstring) and filterstring or ""
-	
+
 	local mergedList = {}
-	
+
 	local CList = CharacterList(filterstring)
 	local GList = GadgetList(filterstring)
-	
+
 	if(table.valid(CList)) then
 		for _,character in pairs(CList) do
 			table.insert(mergedList, character)
 		end
 	end
-	
+
 	if(table.valid(GList)) then
 		for _,gadget in pairs(GList) do
 			table.insert(mergedList, gadget)
 		end
 	end
-	
+
 	return mergedList
 end
 
 -- Tries to get a "best target" to attack
 function gw2_common_functions.GetBestCharacterTarget( maxrange )
-		
+
 	local range = maxrange
 	if ( range == nil ) then
 		range = ml_global_information.AttackRange
@@ -252,7 +253,7 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 		d("[GetBestCharacterTarget] - Blacklisting "..target.name.." ID: "..tostring(target.id))
 		target = nil
 	end
-		
+
 	if ( target and target.id ) then
 		if ( target.distance < 1500 and target.los ) then
 			Player:SetTarget(target.id)
@@ -269,23 +270,22 @@ function gw2_common_functions.GetBestCharacterTarget( maxrange )
 end
 -- Tries to get a "best target" to attack for assist mode (maxdistance limited)
 function gw2_common_functions.GetBestCharacterTargetForAssist( )
-	
 	gw2_common_functions.useCustomSMFilterSettings = true
-	
+
 	-- Ignore yellow check.
 	local hostileCheck = Settings.GW2Minion.ignoreyellowmobs and ",hostile" or ""
 	-- Try to get Enemy with los in range first
 	local target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange).. hostileCheck .. ",los")
-	
+
 	-- Try to get downed enemy
-	if(target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange).. hostileCheck .. ",los", GW2.HEALTHSTATE.Downed) end	
+	if(target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange).. hostileCheck .. ",los", GW2.HEALTHSTATE.Downed) end
 	-- Try to get Enemy without los in range
 	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. hostileCheck) end
 	-- Try to get Enemy without los in range + 250
 	if (target == nil) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange + 250) .. hostileCheck) end
-	-- 
+	--
 	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. "onmesh,nearest,los,maxlevel=15") end
-	-- 
+	--
 	if (target == nil and not Settings.GW2Minion.ignoreyellowmobs) then target = gw2_common_functions.GetCharacterTargetExtended("maxdistance="..tostring(ml_global_information.AttackRange) .. "onmesh,nearest,maxlevel=15") end
 
 	gw2_common_functions.useCustomSMFilterSettings = nil
@@ -307,27 +307,27 @@ end
 -- Tries to get a "best aggro target" to attack
 function gw2_common_functions.GetBestAggroTarget(healthstate)
 	local range = ml_global_information.AttackRange or 750
-	
+
 	if ( range < 200 ) then range = 750 end -- extend search range a bit for melee chars
 	if ( range > 1000 ) then range = 1000 end -- limit search range a bit for ranged chars
-	
+
 	-- Try to get Aggro Enemy Players with los in range first
 	local target = gw2_common_functions.GetCharacterTargetExtended("player,onmesh,lowesthealth,los,maxdistance="..tostring(range), healthstate)
 
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("player,onmesh,nearest,maxdistance="..tostring(range*2), healthstate) end
-	
+
 	-- Try to get Aggro Enemy with los in range first
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,lowesthealth,los,maxdistance="..tostring(range), healthstate) end
 
 	-- Try to get Aggro Enemy
 	if ( not target ) then target = gw2_common_functions.GetCharacterTargetExtended("aggro,onmesh,nearest") end
-	
+
 	if(table.valid(target) and (not target.attackable or not target.isreachable)) then
 		gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), target.id, target.name, 5000, gw2_common_functions.BlackListUntilReachableAndAttackable)
 		d("[GetBestAggroTarget] - Blacklisting "..target.name.." ID: "..tostring(target.id))
 		target = nil
 	end
-	
+
 	if ( target and target.id ) then
 		if ( target.distance < 1500 and target.los ) then
 			Player:SetTarget(target.id)
@@ -352,9 +352,9 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 		"aggro,onmesh,nearest",
 		"hostile,onmesh,nearest"
 	}
-	
+
 	if(table.valid(marker) and type(radius) == "number") then
-		
+
 		-- If the target can be found in the objective details, use that (event is target)
 		if(table.valid(objectivedetails) and objectivedetails.value1) then
 			local target = CharacterList:Get(objectivedetails.value1) or GadgetList:Get(objectivedetails.value1)
@@ -362,7 +362,7 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 				return target
 			end
 		end
-		
+
 		-- Find mobs
 		local i,filter = next(filters)
 		while i and filter do
@@ -375,25 +375,25 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 						local path = NavigationManager:GetPath(marker.pos.x,marker.pos.y,marker.pos.z,target.pos.x,target.pos.y,target.pos.z)
 						local pdist = math.huge
 						if(table.valid(path)) then pdist = PathDistance(path) end
-						
+
 						if(pdist <= radius) then
 							return target
 						end
 					end
 
 					gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), target.id, target.name, 5000)
-					d("[GetBestEventTarget] - Blacklisting "..target.name.." ID: "..tostring(target.id) .. ", out of event radius.")						
-				else					
+					d("[GetBestEventTarget] - Blacklisting "..target.name.." ID: "..tostring(target.id) .. ", out of event radius.")
+				else
 					if ( not target.isplayer ) then -- don't blacklist players which are dead for 90sec..stupid in spvp WHY THE FUCK IS PVP USING THE PVE EVENT TARGET FUNCTION
 						gw2_blacklistmanager.AddBlacklistEntry(GetString("Temporary Combat"), target.id, target.name, 5000)
 						d("[GetBestEventTarget] - Blacklisting "..target.name.." ID: "..tostring(target.id))
 					end
 				end
 			end
-			
+
 			i,filter = next(filters,i)
 		end
-		
+
 		-- Find attackable gadgets
 		local GList = GadgetList("hostile,attackable,alive,onmesh,shortestpath"..gw2_blacklistmanager.GetMonsterExcludeString())
 		if(table.valid(GList)) then
@@ -405,7 +405,7 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 						local path = NavigationManager:GetPath(marker.pos.x,marker.pos.y,marker.pos.z,gagdet.pos.x,gagdet.pos.y,gagdet.pos.z)
 						local pdist = math.huge
 						if(table.valid(path)) then pdist = PathDistance(path) end
-						
+
 						if(pdist <= radius) then
 							return gagdet
 						end
@@ -420,12 +420,11 @@ function gw2_common_functions.GetBestEventTarget(marker,objectivedetails,radius)
 			end
 		end
 	end
-	
+
 	return nil
 end
 
 function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthstate )
-    
 	if ( filterstring ) then
 		filterstring = filterstring..",attackable,nocritter"
 	else
@@ -438,21 +437,21 @@ function gw2_common_functions.GetCharacterTargetExtended( filterstring, healthst
 		filterstring = filterstring..",downed"
 	end
 
-	-- Only in AssistMode we want to allow these settings	
+	-- Only in AssistMode we want to allow these settings
 	if ( gw2_common_functions.useCustomSMFilterSettings ) then
 		if (Settings.GW2Minion.smmode == 2) then filterstring = filterstring..",player" end		-- Attackmode for Assist : 1 = Everything, 2 = Players
 		if (Settings.GW2Minion.smtargetmode == 2) then filterstring = filterstring..",lowesthealth" end
 		if (Settings.GW2Minion.smtargetmode == 3) then filterstring = filterstring..",nearest" end
 		if (Settings.GW2Minion.smtargetmode == 4) then filterstring = filterstring..",clustered=600" end
 	end
-	
+
 	filterstring = filterstring..gw2_blacklistmanager.GetMonsterExcludeString()
 
 	local TargetList = CharacterList(filterstring)
 	if ( TargetList ) then
 		local id,entry = next(TargetList)
 		if (id and entry ) then
-		
+
 			if(not gw2_common_functions.HasBuffs(entry,ml_global_information.InvulnerabilityConditions)) then
 				return entry
 			else
@@ -467,7 +466,7 @@ end
 -- Downed state target needs to be a bit different and ignore assist settings
 function gw2_common_functions.GetBestDownstateTarget()
 	local filterstring = gw2_blacklistmanager.GetMonsterExcludeString()
-	
+
 	local CList = CharacterList("player,attackable,lowesthealth,los,maxdistance=900"..filterstring)
 	if ( not table.valid(CList)) then
 		CList = CharacterList("aggro,attackable,lowesthealth,los,maxdistance=900"..filterstring)
@@ -521,7 +520,7 @@ function gw2_common_functions.handleConversation(result)
 					else
 						Player:SelectConversationOption(GW2.CONVERSATIONOPTIONS.Repair)
 					end
-					
+
 					gw2_common_functions.vendorHistory["Repair"] = gw2_common_functions.vendorHistory["Repair"] + 1
 					return true
 				elseif (conversation.type == GW2.CONVERSATIONOPTIONS.Shop and (result == "sell" or result == "buy") and gw2_common_functions.vendorHistory["Shop"] < 5) then
@@ -598,7 +597,7 @@ function gw2_common_functions.GetProfessionName(profession)
 	return "NoClass"
 end
 
--- return true/false if player is in an instance (only works for dungeons and normal instances, not while using "home instance stone" or "hall of monuments portal stone") 
+-- return true/false if player is in an instance (only works for dungeons and normal instances, not while using "home instance stone" or "hall of monuments portal stone")
 function gw2_common_functions.PlayerInInstance()
 	local partyInfo = ml_global_information.Player_Party
 	if (table.valid(partyInfo)) then
@@ -650,11 +649,11 @@ function gw2_common_functions.Evade(direction)
 		local evadeTarget = false
 		if (type(direction) ~= "number") then
 			local aggroTargets = CharacterList("aggro,alive,attackable,maxdistance=2000")
-			
+
 			if ( not table.valid(aggroTargets)) then  -- TODO: only check this if there can be hostile players. -- and PvPManager:IsInMatch()) then -- needa similar wvwvw check.
 				aggroTargets = CharacterList("player,attackable,alive,los,maxdistance=1200")
 			end
-			
+
 			if (table.valid(aggroTargets)) then
 				for _,target in pairs(aggroTargets) do
 					local cinfo = target.castinfo
@@ -740,11 +739,11 @@ function gw2_common_functions.ValidPath(startpos,targetpos,allowpartialpath)
 	if(table.valid(startpos) and table.valid(targetpos)) then
 		local path = NavigationManager:GetPath(startpos.x,startpos.y,startpos.z,targetpos.x,targetpos.y,targetpos.z,false)
 		if(table.valid(path)) then
-			
+
 			if(allowpartialpath) then
 				return true
 			end
-			
+
 			-- No partial path allowed, so check if the last entry is at the target position
 			local n_path = table.size(path)
 			if(n_path > 1) then
@@ -752,23 +751,23 @@ function gw2_common_functions.ValidPath(startpos,targetpos,allowpartialpath)
 					return false
 				end
 			end
-			
+
 			return true
 		end
 
 	end
-	
+
 	return false
 end
 
 -- Try to get a random position on the mesh around targetpos and check if it is reachable by the bot
 function gw2_common_functions.GetRandomPointOnCircle(targetpos, min, max, maxtries)
 	maxtries = type(maxtries) == "number" and maxtries or 1
-	
+
 	local trycount = 0
 	while trycount < maxtries do
 		trycount = trycount + 1
-		
+
 		local pos = NavigationManager:GetRandomPointOnCircle(targetpos.x, targetpos.y, targetpos.z, min, max)
 		if(table.valid(pos)) then
 			-- Try to get a pos about the same height as the player
@@ -778,7 +777,7 @@ function gw2_common_functions.GetRandomPointOnCircle(targetpos, min, max, maxtri
 			end
 		end
 	end
-	
+
 	return nil
 end
 
@@ -790,25 +789,25 @@ function gw2_common_functions.GetRandomPoint()
 		gw2_common_functions.randompointsused = {}
 		gw2_common_functions.randompointsused[ml_global_information.CurrentMapID] = {}
 	end
-	
+
 	local randompointsused = gw2_common_functions.randompointsused[ml_global_information.CurrentMapID]
-	
+
 	-- Check if the position has been recently used. If it has, ignore it.
 	local function _validpos(pos)
 		if (not table.valid(pos)) then return false end
-		
+
 		for i,existing in ipairs(randompointsused) do
 			if(TimeSince(existing.time) > 1800000) then table.remove(randompointsused, i) end
-			
+
 			-- The position is too close to a recently used randompos, ignore it.
 			if(math.distance3d(existing.pos,pos) < 500) then
 				return false
 			end
 		end
-		
+
 		return true
 	end
-	
+
 	-- Make sure that the position is reachable by the bot
 	local function _validpath(pos)
 		if(table.valid(pos)) then
@@ -816,9 +815,9 @@ function gw2_common_functions.GetRandomPoint()
 		end
 		return false
 	end
-	
+
 	local randompos = nil
-	
+
 	-- 1st try
 	if (table.valid(gw2_datamanager.levelmap)) then
 		d("Trying to find a random point from the level map")
@@ -831,7 +830,7 @@ function gw2_common_functions.GetRandomPoint()
 			end
 		end
 	end
-	
+
 	-- 2nd try
 	if(randompos == nil) then
 		d("Trying to find a random point from markers")
@@ -851,7 +850,7 @@ function gw2_common_functions.GetRandomPoint()
 			end
 		end
 	end
-	
+
 	-- 3rd try
 	if (randompos == nil) then
 		d("Trying to find a random point anywhere on the mesh")
@@ -868,14 +867,14 @@ function gw2_common_functions.GetRandomPoint()
 			i = i + 1
 		end
 	end
-	
+
 	if (table.valid(randompos)) then
 		table.insert(randompointsused, {pos = randompos, time = ml_global_information.Now, status = "used", type = "valid"})
 		return randompos
 	end
-	
+
 	d("No random point found")
-	
+
 	return nil
 end
 
@@ -886,20 +885,20 @@ gw2_common_functions.combatmovement = {
 }
 
 function gw2_common_functions:DoCombatMovement(target)
-	
+
 	local fightdistance = ml_global_information.AttackRange or 154
-	
+
 	if (self.combatmovement.range and (target == nil or ( target.distance < fightdistance and target.los))) then d("CombatMovement: InRange, Stopping..") Player:StopMovement() self.combatmovement.range = false end  -- "range" is "moving into combat range"
-	
+
 	if ( table.valid(target) and target.distance <= fightdistance and target.alive and ml_global_information.Player_Alive and ml_global_information.Player_OnMesh) then -- and ml_global_information.Player_Health.percent < 99
 		local isimmobilized	= gw2_common_functions.BufflistHasBuffs(ml_global_information.Player_Buffs, ml_global_information.ImmobilizeConditions)
 
-		if (not isimmobilized) then		
+		if (not isimmobilized) then
 			local forward,backward,left,right,forwardLeft,forwardRight,backwardLeft,backwardRight = GW2.MOVEMENTTYPE.Forward,GW2.MOVEMENTTYPE.Backward,GW2.MOVEMENTTYPE.Left,GW2.MOVEMENTTYPE.Right,4,5,6,7
 			local currentMovement = ml_global_information.Player_MovementDirections
 			local movementDirection = {[forward] = true, [backward] = true,[left] = true,[right] = true,}
 			local tDistance = target.distance
-			
+
 			-- Stop walking into range.
 			-- if (self.combatmovement.range and tDistance < fightdistance - 250) then Player:StopMovement() self.combatmovement.range = false end  -- "range" is "moving into combat range"
 			-- Face target.
@@ -966,7 +965,7 @@ function gw2_common_functions:DoCombatMovement(target)
 
 			-- We know where we can move, decide where to go.
 			if (movementDirection[forward] and movementDirection[backward]) then -- Can move forward and backward, choose.
-				
+
 				-- Range, try to stay back from target.
 				if (fightdistance > 300) then
 					movementDirection[forward] = false
@@ -981,7 +980,7 @@ function gw2_common_functions:DoCombatMovement(target)
 						movementDirection[forward] = false
 					end
 				end
-				
+
 			end
 			if (movementDirection[left] and movementDirection[right]) then -- Can move left and right, choose.
 				if (currentMovement.left) then -- We are moving left already.
@@ -1015,14 +1014,14 @@ function gw2_common_functions:DoCombatMovement(target)
 			Player:StopMovement()
 			self.combatmovement.combat = false
 		end
-	
-	elseif(self.combatmovement.combat) then -- Stop active combat movement.		 
+
+	elseif(self.combatmovement.combat) then -- Stop active combat movement.
 		d("Combatmovment:Stop active combat movement.")
 		Player:StopMovement()
 		self.combatmovement.combat = false
 	end
 end
-function gw2_common_functions:GetCombatMovement() 
+function gw2_common_functions:GetCombatMovement()
 	return self.combatmovement
 end
 function gw2_common_functions:CombatMovementCanMove()

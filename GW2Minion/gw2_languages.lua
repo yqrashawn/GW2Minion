@@ -58,7 +58,7 @@ gw2_strings =
 		disabledrawing 					= "Disable Rendering",
 		killaggrononfateenemies 		= "Kill attacking None-Fate Enemies",
         -- ml_mesh_mgr.lua
-        meshManager                     = "MeshManager", 	
+        meshManager                     = "MeshManager",
 		activated                       = "Activated",
         mapName                         = "Map",
         navmesh                         = "Navmesh",
@@ -81,7 +81,7 @@ gw2_strings =
 		recoder							= "Record Mesh",
 		connections						= "Connections",
         enablePSwitch					= "EnableParanoiaSwitch",
-        pSwitchCount                    = "ParanoiaPlayerCount",		
+        pSwitchCount                    = "ParanoiaPlayerCount",
         maMarkerID                      = "ID",
         maMarkerName                    = "Name",
 		-- mc_meshswitcher.lua
@@ -92,7 +92,7 @@ gw2_strings =
 		editmap							= "Edit Map",
 		deletemap						= "Delete Map",
 		lblsave							= "Save",
-		
+
         -- skillmanager.lua
 		skillbook                 	 	= "SkillBook",
 		skillManager                    = "SkillManager",
@@ -101,7 +101,7 @@ gw2_strings =
         skillEditor_gather            	= "SkillEditor_Gathering",
 		saveProfile                 	= "Save Current Profile",
 		newProfileName                  = "New Profile Name",
-        newProfile                      = "New Profile",		
+        newProfile                      = "New Profile",
 		skillbookrefresh                = "Refresh Skills",
 		targetType                      = "Target",
 		stepmin							= "Step <",
@@ -117,7 +117,7 @@ gw2_strings =
 		cpmax							= "CP >",
         gpmin							= "GP <",
 		gpmax							= "GP >",
-		iqstack							= "InnerQuiet Stack >=",		
+		iqstack							= "InnerQuiet Stack >=",
 		notused							= "NotUsed",
 		excellent						= "Excellent",
 		good							= "Good",
@@ -128,10 +128,10 @@ gw2_strings =
         profile                         = "Profile",
 		sMmode							= "Attack Mode",
 		sMtargetmode					= "Target Mode",
-		refreshProfiles                 = "Refresh Profile List",			
+		refreshProfiles                 = "Refresh Profile List",
         deleteProfile                   = "Delete Current Profile",
         autoDetectSkills                 = "Autodetect Skills",
-		addinterrupt                    = "Add Interrupt",  
+		addinterrupt                    = "Add Interrupt",
 		addblock                        = "Add Block",
 		refreshSkillList                = "Clear & Refresh SkillList",
         skillEditor                     = "Skill Editor",
@@ -151,11 +151,11 @@ gw2_strings =
 		smthrottle						= "Throttle (ms)",
 		casttime						= "Casttime (ms)",
 		playerEnduranceGT				= "Player Endurance%>",
-		playerEnduranceLT				= "Player Endurance%<",	
+		playerEnduranceLT				= "Player Endurance%<",
 		cooldown                        = "Cooldown",
         minRange                        = "MinRange",
         maxRange                        = "MaxRange",
-        isGroundTargeted                = "Is GroundTargeted",        
+        isGroundTargeted                = "Is GroundTargeted",
         useOutOfCombat                  = "Use out of Combat",
         playerMoving                    = "Player Moving",
         playerHPGT                      = "Player HP% >",
@@ -216,7 +216,7 @@ gw2_strings =
 		smRelativePosition				= "Relative position",
 		smAlliesDownedNearCount			= "Downed Allies(count)",
 		smAlliesDownedNearRange			= "Downed Allies(range)",
-		
+
 --vendorManager
 		enableSelling					= "AutoSellItems",
 		vendorManager					= "VendorManager",
@@ -272,7 +272,7 @@ gw2_strings =
 		aelegendary 					= "Equip Legendary",
 		aeartefact						= "Equip Artefact",
 		aebonus							= "",
-		
+
 		--Autoequip
 		enableEquip						= "AutoEquip",
 		AutoEquipSettings				= "AutoEquipSettings",
@@ -300,7 +300,7 @@ gw2_strings =
 		potiontype						= "Potion Type",
 		potusebelow						= "Use Below %",
 		potionssettings					= "Potions Settings",
-		
+
 		--Mail Settings
 		mail 							= "Mail",
 		enableMailing					= "Enable Mailing",
@@ -319,14 +319,14 @@ gw2_strings =
 		PriorizeAttunement4				= "Attunement Prio 4",
 		AutoStomp						= "Finish Enemy",
 		AutoRezz						= "Rezz Friendly",
-		
+
         --ffxiv stuff specific stuff
         botMode                       	= "Bot Mode",
         addGrindSpot                    = "Add Grind Marker",
         addFishingSpot                  = "Add Fishing Marker",
         addMiningSpot                   = "Add Mining Marker",
         addBotanySpot                   = "Add Botany Marker",
-        addNavSpot                      = "Add Nav Marker",		
+        addNavSpot                      = "Add Nav Marker",
         deleteSpot                      = "Delete Nearest Marker",
         markers                         = "Markers",
         markerLevel						= "Marker Level",
@@ -343,7 +343,7 @@ gw2_strings =
 		recAreaSize						= "Record Size",
 		changeMesh						= "Change Mesh",
 		changeAreaType					= "Change Type",
-		changeAreaSize					= "Change Size",		
+		changeAreaSize					= "Change Size",
 		biDirOffMesh					= "Bidirectional Offmeshconnection",
 		addOffMeshSpot					= "Add OffMeshConnection",
 		delOffMeshSpot					= "Del OffMeshConnection",
@@ -407,7 +407,7 @@ gw2_strings =
         showEventObjects                = "Show Event Objects",
         showAetherytes                  = "Show Aetherytes",
 		showNPCs						= "Show NPCs",
-		showObjects						= "Show Objects",		
+		showObjects						= "Show Objects",
 		showOnlyGatherables				= "Show Only Gatherables",
 		showSieges						= "Show Sieges",
 		showradar						= "Radar",
@@ -423,7 +423,7 @@ gw2_strings =
         yPos                            = "Y Position",
         assist                          = "Assist",
         assistPriority            	    = "Priority",
-		
+
 		-- new stuff (since last translation)
 		useMooch						= "Use Mooch",
 		markerManager					= "MarkerManager",
@@ -435,7 +435,7 @@ gw2_strings =
 		editMarkers						= "Edit Markers",
 		markerType						= "Marker Type",
 		editMarkerList					= "Setup List",
-		addMarker					 	= "Add To List",		
+		addMarker					 	= "Add To List",
 		removeListMarker				= "Remove From List",
 		editMarker						= "Edit Marker",
 		newMarker						= "New Marker",
@@ -491,7 +491,7 @@ gw2_strings =
         clickToTeleport                 = "Click To Teleport",
         clickToTravel                   = "Click To Travel",
 		questRunProfile					= "RunQuests",
-		questManager					= "QuestManager",		
+		questManager					= "QuestManager",
 		quests							= "Quests",
 		questEditor						= "Quest Editor",
 		questDone						= "Quest Done",
@@ -509,7 +509,7 @@ gw2_strings =
 		questStepDetails				= "Script Details",
 		questStepScript					= "Task-Script",
 		questStepDelete					= "Delete Step",
-		questName						= "Name",		
+		questName						= "Name",
 		questMinLevel					= "Min Level",
 		questMaxLevel					= "Max Level",
 		questPreQuest					= "Needs Previous Quest",
@@ -545,13 +545,13 @@ gw2_strings =
 		questGenMapExplo				= "Generate Map Profile",
 		questRandomized					= "Random Quest",
 		mapobjects						= "Mapobjects",
-		
+
 		--mc_ai_vendor.lua
 		vendors							= "Vendors",
 		vendorEnabled					= "Sell Items",
 		vendorsbuy						= "VendorsBuyTools",
-		blacklistVendor					= "Blacklist Vendor",		
-		
+		blacklistVendor					= "Blacklist Vendor",
+
 		rarityMax                       = "Max Rarity",
 		rarityNone                      = "None",
         rarityJunk                      = "Junk",
@@ -563,10 +563,10 @@ gw2_strings =
         salvage                         = "Salvage",
         enableSalvage                   = "EnableSalvage",
 		salvageItems                    = "Items",
-		
+
 		sellmanager						= "SellManager",
 		selleditor						= "SellEditor",
-		sellGroup						= "Sell Settings",				
+		sellGroup						= "Sell Settings",
 		active							= "Active",
 		newfiltername					= "New Filter Name",
 		newfilter						= "New Filter",
@@ -593,7 +593,7 @@ gw2_strings =
 		filterdetails					= "Filter Details",
 		buyGroup						= "Buy Settings",
 		repairDamaged					= "Repair Damaged >",
-		repairBroken					= "Repair Broken >",		
+		repairBroken					= "Repair Broken >",
 		salvagefilters					= "Salvage Multiple Items by Filter",
 		salvageByID						= "Salvage Single Items",
 		salvageItemList					= "Salvage Itemlist",
@@ -602,7 +602,7 @@ gw2_strings =
 		salvageByIDRemoveItem			= "Remove Item",
 		salvagemanager					= "Salvage Manager",
 		salvageeditor					= "Salvage Editor",
-		
+
 		--buymanager
 		buymanager						= "Buy Manager",
 		buyAllKits						= "Buy all Kits",
@@ -624,14 +624,14 @@ gw2_strings =
 		buyMaster						= "Master Kit",
 		unlimitedKit					= "Unlimited Kit",
 		mysticKit						= "Mystic Kit",
-		
+
 		--mc_ai_event.lua
 		events							= "Events",
 		event							= "Event",
 		doEvents						= "Do Events",
 		blacklistEvent					= "Blacklist Event",
-		
-		--mc_multibot		
+
+		--mc_multibot
 		multibotmanager					= "MultiBotManager",
 		groupInfo						= "MyParty",
 		member1							= "Partymember1",
@@ -655,9 +655,9 @@ gw2_strings =
 		--mc_main.lua
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive NPCs",
-		reviveplayers					= "Revive Players",	
-		
-		
+		reviveplayers					= "Revive Players",
+
+
 		--taskmanager
 		customTasks						= "CustomTasks",
 		taskManager						= "TaskManager",
@@ -696,10 +696,10 @@ gw2_strings =
 		taskTalk						= "Talk",
 		taskspvp						= "sPvP",
 		useWaypoint						= "Use Waypoint",
-		
-    },                                  
-    ["cn"] =                            
-    {                               
+
+    },
+    ["cn"] =
+    {
         -- gw2.lua
 		aLogin    		                = "登陆名称",
 		aPassword  		                = "密码",
@@ -786,7 +786,7 @@ gw2_strings =
 		editmap							= "编辑地图",
 		deletemap						= "删除地图",
 		lblsave							= "保存",
-		
+
         -- skillmanager.lua
         skillbook                 	 	= "技能书",
         skillManager                    = "技能管理器",
@@ -795,7 +795,7 @@ gw2_strings =
         skillEditor_gather            	= "技能编辑器_采集",
 		saveProfile                 	= "保存当前配置",
         newProfileName                  = "新配置文件名字",
-        newProfile                      = "新配置文件",	
+        newProfile                      = "新配置文件",
 		skillbookrefresh                = "舒心技能",
         targetType                      = "目标类型",
 		stepmin							= "步骤 <",
@@ -825,7 +825,7 @@ gw2_strings =
 		refreshProfiles                 = "刷新配置文件列表",
         deleteProfile                   = "删除当前配置",
         autoDetectSkills                 = "自动检测技能",
-		addinterrupt                    = "Add Interrupt",  
+		addinterrupt                    = "Add Interrupt",
     addblock                        = "Add Block",
 		refreshSkillList                 = "清除 & 刷新技能列表",
         skillEditor                     = "技能编辑器",
@@ -845,7 +845,7 @@ gw2_strings =
 		smthrottle						= "Throttle (ms)",
 		casttime						= "施法时间（ms）",
 		playerEnduranceGT				= "自身耐力%>",
-		playerEnduranceLT				= "自身耐力%<",	
+		playerEnduranceLT				= "自身耐力%<",
 		cooldown                        = "冷却",
         minRange                        = "最小范围",
         maxRange                        = "最大范围",
@@ -881,7 +881,7 @@ gw2_strings =
 		SwapR							= "随机切换",
 		SwapCD							= "切换当技能2-5在冷却（CD）",
 		SwapRange						= "切换当目标超出范围",
-		PriorizeKit						= "优先套件",		
+		PriorizeKit						= "优先套件",
 		PriorizeAttunement1				= "元素优先级 1",
 		PriorizeAttunement2				= "元素优先级 2",
 		PriorizeAttunement3				= "元素优先级 3",
@@ -978,7 +978,7 @@ gw2_strings =
 		aelegendary 					= "Equip Legendary",
 		aeartefact						= "Equip Artefact",
 		aebonus							= "",
-		
+
 		--Autoequip
 		enableEquip						= "自动换装备",
 		AutoEquipSettings				= "自动换装设置",
@@ -1000,7 +1000,7 @@ gw2_strings =
 		weapon							= "Equip Weapons",
 		aearmornormal					= "Equip Normal",
 		aeweaponnormal					= "Equip Normal",
-		
+
 		--potion settings
 		usepotion						= "使用药水",
 		potiontype						= "药水类型",
@@ -1024,14 +1024,14 @@ gw2_strings =
 		PriorizeAttunement4				= "Attunement Prio 4",
 		AutoStomp						= "Finish Enemy",
 		AutoRezz						= "Rezz Friendly",
-		
+
         --ffxiv
         botMode                       	= "挂机模式",
         addGrindSpot                    = "添加普通地面挂机标识",
         addFishingSpot                  = "添加钓鱼标识",
         addMiningSpot                   = "添加挖矿标识",
         addBotanySpot                   = "添加采集标识",
-        addNavSpot                      = "添加导航标识",		
+        addNavSpot                      = "添加导航标识",
         deleteSpot                      = "删掉最近的标识",
         markers                         = "标识",
         markerLevel						= "标识等级",
@@ -1048,7 +1048,7 @@ gw2_strings =
 		recAreaSize						= "录制大小",
 		changeMesh						= "改变网格",
 		changeAreaType					= "改变类型",
-		changeAreaSize					= "改变大小",		
+		changeAreaSize					= "改变大小",
 		biDirOffMesh					= "双向 连接点（跳跃）",
 		addOffMeshSpot					= "添加 连接点（跳跃）",
 		delOffMeshSpot					= "删除 连接点（跳跃）",
@@ -1120,7 +1120,7 @@ gw2_strings =
         yPos                            = "Y 坐标",
         assist                          = "辅助",
 		assistPriority            	    = "优先级",
-        
+
 		-- new stuff (since last translation)
 		useMooch						= "Use Mooch",
 		markerManager					= "MarkerManager",
@@ -1187,7 +1187,7 @@ gw2_strings =
         clickToTeleport                 = "点击瞬移",
         clickToTravel                   = "点击移动",
 		questRunProfile					= "运行任务",
-		questManager					= "任务管理器",			
+		questManager					= "任务管理器",
 		quests							= "任务",
 		questEditor						= "任务编辑器",
 		questDone						= "任务完成",
@@ -1205,7 +1205,7 @@ gw2_strings =
 		questStepDetails				= "步骤细节",
 		questStepScript					= "步骤脚本",
 		questStepDelete					= "删除步骤",
-		questName						= "名字",		
+		questName						= "名字",
 		questMinLevel					= "最小等级",
 		questMaxLevel					= "最大等级",
 		questPreQuest					= "预先要做的任务 (名字)",
@@ -1217,7 +1217,7 @@ gw2_strings =
 		questGenMapExplo				= "生成地图配置文件",
 		questRandomized					= "随机任务",
 		mapobjects						= "地图目标",
-		
+
 		markerMode						= "标记模式",
 		markerList						= "标记列表",
 		singleMarker					= "单一的标记",
@@ -1252,8 +1252,8 @@ gw2_strings =
 		vendors							= "商人",
 		vendorEnabled					= "卖物品",
 		vendorsbuy						= "可购买工具的商人",
-		blacklistVendor					= "商人黑名单",		
-		
+		blacklistVendor					= "商人黑名单",
+
 		rarityMax                       = "最高稀有度",
 		rarityNone                      = "无",
         rarityJunk                      = "白",
@@ -1265,10 +1265,10 @@ gw2_strings =
         salvage                         = "拆解",
         enableSalvage                   = "开启拆解",
 		salvageItems                    = "物品",
-		
+
 		sellmanager						= "卖管理器",
 		selleditor						= "卖编辑器",
-		sellGroup						= "卖设置",				
+		sellGroup						= "卖设置",
 		active							= "激活",
 		newfiltername					= "新过滤器名字",
 		newfilter						= "新过滤器",
@@ -1290,7 +1290,7 @@ gw2_strings =
 		filterdetails					= "过滤器细节",
 		buyGroup						= "买设置",
 		repairDamaged					= "毁坏修复 >",
-		repairBroken					= "破损修复 >",		
+		repairBroken					= "破损修复 >",
 		salvagefilters					= "通过过滤器拆解多个物品",
 		salvageByID						= "拆解单个物品",
 		salvageItemList					= "拆解物品清单",
@@ -1299,7 +1299,7 @@ gw2_strings =
 		salvageByIDRemoveItem			= "移除物品",
 		salvagemanager					= "拆解管理器",
 		salvageeditor					= "拆解编辑器",
-		
+
 		--buymanager
 		buymanager						= "买管理",
 		buyAllKits						= "买所有工具",
@@ -1321,14 +1321,14 @@ gw2_strings =
 		buyMaster						= "大师工具",
 		unlimitedKit					= "Unlimited Kit",
 		mysticKit						= "Mystic Kit",
-		
+
 		--mc_ai_event.lua
 		events							= "动态事件",
 		event							= "动态事件",
 		doEvents						= "做动态事件",
 		blacklistEvent					= "动态事件黑名单",
-		
-		--mc_multibot		
+
+		--mc_multibot
 		multibotmanager					= "组队管理器",
 		groupInfo						= "我的队伍",
 		member1							= "队员1",
@@ -1352,8 +1352,8 @@ gw2_strings =
 		--mc_main.lua
 		guestserver						= "访问其他服务器",
 		revivecharacters				= "复活其他人",
-		reviveplayers					= "复活角色",	
-		
+		reviveplayers					= "复活角色",
+
 		--taskmanager
 		customTasks						= "CustomTasks",
 		taskManager						= "TaskManager",
@@ -1438,7 +1438,7 @@ gw2_strings =
 		craftNormal						= "Crafting Normal",
 		craftMagic						= "Crafting Magic",
 		craftArtefact					= "Crafting Artefact",
-		gatherSettings                  = "採集設定",        
+		gatherSettings                  = "採集設定",
 		skipcutscene					= "カットシーンスキップ",
 		depositItems					= "アイテム預金",
 		checkChat						= "チャット警告",
@@ -1446,20 +1446,20 @@ gw2_strings =
 		disabledrawing 					= "Disable Rendering",
 		killaggrononfateenemies 					= "Kill attacking None-Fate Enemies",
         -- mesher.lua
-        meshManager                     = "３Dメッシュ管理", 	
+        meshManager                     = "３Dメッシュ管理",
 		activated                       = "実行中",
         mapName                         = "地図",
         navmesh                         = "３Dメッシュナビ",
         waypoint                        = "中間地点",
         generalSettings                 = "一般設定",
-		getWaypoint						= "中間地点確保",		
+		getWaypoint						= "中間地点確保",
 		useInSwitcher					= "メッシュ変換使用",
 		enableSwitcher					= "メッシュ変換起動",
 		minSwitchTime					= "メッシュ変換最小時間",
 		maxSwitchTime					= "メッシュ変換最長時間",
 		switchTimer						= "メッシュ変換次タイマー",
 		switcherSettings				= "メッシュ変換設定",
-		showMesh						= "メッシュ表示(三角)",		
+		showMesh						= "メッシュ表示(三角)",
 		showrealMesh					= "３Dメッシュナビ表示",
 		newMeshName						= "新規メッシュファイル名",
 		newMesh							= "新規メッシュファイル",
@@ -1469,7 +1469,7 @@ gw2_strings =
         recoder							= "Record Mesh",
 		connections						= "Connections",
 		enablePSwitch					= "パラノイアスイッチ起動",
-        pSwitchCount                    = "パラノイアプレイヤー数",	
+        pSwitchCount                    = "パラノイアプレイヤー数",
         maMarkerID                      = "ID",
         maMarkerName                    = "名",
 		-- mc_meshswitcher.lua
@@ -1480,7 +1480,7 @@ gw2_strings =
 		editmap							= "Edit Map",
 		deletemap						= "Delete Map",
 		lblsave							= "Save",
-		
+
         -- skillmanager.lua
 		skillbook                 	 	= "スキルブック",
 		skillManager                    = "スキル管理",
@@ -1489,7 +1489,7 @@ gw2_strings =
         skillEditor_gather            	= "スキル編集_採集",
 		saveProfile                 	= "プロファイル保存",
 		newProfileName                  = "新規プロファイル名",
-        newProfile                      = "新規プロファイル",		
+        newProfile                      = "新規プロファイル",
 		skillbookrefresh                = "スキルブックリフレッシュ",
 		targetType                      = "標的",
 		stepmin							= "ターン <",
@@ -1516,10 +1516,10 @@ gw2_strings =
         profile                         = "プロファイル",
 		sMmode							= "攻撃モード",
 		sMtargetmode					= "標的モード",
-		refreshProfiles                 = "プロファイル表リフレッシュ",			
+		refreshProfiles                 = "プロファイル表リフレッシュ",
         deleteProfile                   = "現プロファイル削除",
         autoDetectSkills                 = "スキル自動検索",
-		addinterrupt                    = "Add Interrupt",  
+		addinterrupt                    = "Add Interrupt",
     addblock                        = "Add Block",
 		refreshSkillList                = "スキル表　新規＆リフレッシュ",
         skillEditor                     = "スキル編集",
@@ -1539,11 +1539,11 @@ gw2_strings =
 		smthrottle						= "Throttle (ms)",
 		casttime						= "Casttime (ms)",
 		playerEnduranceGT				= "Player Endurance%>",
-		playerEnduranceLT				= "Player Endurance%<",		
+		playerEnduranceLT				= "Player Endurance%<",
 		cooldown                        = "再使用時間",
         minRange                        = "最小範囲",
         maxRange                        = "最大範囲",
-        isGroundTargeted                = "は、地上標的だった",        
+        isGroundTargeted                = "は、地上標的だった",
         useOutOfCombat                  = "戦闘中は使用不可能",
         playerMoving                    = "プレイヤー移動中",
         playerHPGT                      = "プレイヤー HP% >",
@@ -1605,7 +1605,7 @@ gw2_strings =
 		smRelativePosition				= "Relative position",
 		smAlliesDownedNearCount			= "Downed Allies(count)",
 		smAlliesDownedNearRange			= "Downed Allies(range)",
-    
+
 		--vendorManager
 		enableSelling					= "AutoSellItems",
 		vendorManager					= "VendorManager",
@@ -1661,7 +1661,7 @@ gw2_strings =
 		aelegendary 					= "Equip Legendary",
 		aeartefact						= "Equip Artefact",
 		aebonus							= "",
-		
+
 		--Autoequip
 		enableEquip						= "AutoEquip",
 		AutoEquipSettings				= "AutoEquipSettings",
@@ -1683,7 +1683,7 @@ gw2_strings =
 		weapon							= "Equip Weapons",
 		aearmornormal					= "Equip Normal",
 		aeweaponnormal					= "Equip Normal",
-		
+
 		--potion settings
 		usepotion						= "Use Potion",
 		potiontype						= "Potion Type",
@@ -1700,7 +1700,7 @@ gw2_strings =
 		PriorizeAttunement4				= "Attunement Prio 4",
 		AutoStomp						= "Finish Enemy",
 		AutoRezz						= "Rezz Friendly",
-		
+
 		--Mail Settings
 		mail 							= "Mail",
 		enableMailing					= "Enable Mailing",
@@ -1708,14 +1708,14 @@ gw2_strings =
 		mailsubject						= "Subject : ",
 		mailstack						= "Item Stack Size :",
 		MailManager						= "MailManager",
-		
+
         --ffxiv stuff specific stuff
         botMode                       	= "Bot モード",
         addGrindSpot                    = "レベルングマーカー追加",
         addFishingSpot                  = "漁師マーカー追加",
         addMiningSpot                   = "採掘師マーカー追加",
         addBotanySpot                   = "園芸師マーカー追加",
-        addNavSpot                      = "ナビマーカー追加",		
+        addNavSpot                      = "ナビマーカー追加",
         deleteSpot                      = "最寄りのマーカー削除",
         markers                         = "マーカー",
         markerLevel						= "マーカーレベル",
@@ -1732,7 +1732,7 @@ gw2_strings =
 		recAreaSize						= "大小記録",
 		changeMesh						= "３Dメッシュ変更",
 		changeAreaType					= "種類変更",
-		changeAreaSize					= "大小変更",		
+		changeAreaSize					= "大小変更",
 		biDirOffMesh					= "双方向　Offメッシュ接続",
 		addOffMeshSpot					= "追加 Offメッシュ接続",
 		delOffMeshSpot					= "削除 Offメッシュ接続",
@@ -1871,7 +1871,7 @@ gw2_strings =
         clickToTeleport                 = "Click To Teleport",
         clickToTravel                   = "Click To Travel",
 		questRunProfile					= "RunQuests",
-		questManager					= "QuestManager",		
+		questManager					= "QuestManager",
 		quests							= "Quests",
 		questEditor						= "Quest Editor",
 		questDone						= "Quest Done",
@@ -1889,7 +1889,7 @@ gw2_strings =
 		questStepDetails				= "Script Details",
 		questStepScript					= "Task-Script",
 		questStepDelete					= "Delete Step",
-		questName						= "Name",		
+		questName						= "Name",
 		questMinLevel					= "Min Level",
 		questMaxLevel					= "Max Level",
 		questPreQuest					= "Requires Quest (Name)",
@@ -1924,13 +1924,13 @@ gw2_strings =
 		questsaveStep					= "Save Step",
 		questGenMapExplo				= "Generate Map Profile",
 		mapobjects						= "Mapobjects",
-		
+
 		--mc_ai_vendor.lua
 		vendors							= "Vendors",
 		vendorEnabled					= "Sell Items",
 		vendorsbuy						= "VendorsBuyTools",
-		blacklistVendor					= "Blacklist Vendor",		
-		
+		blacklistVendor					= "Blacklist Vendor",
+
 		rarityMax                       = "Max Rarity",
 		rarityNone                      = "None",
         rarityJunk                      = "Junk",
@@ -1942,10 +1942,10 @@ gw2_strings =
         salvage                         = "Salvage",
         enableSalvage                   = "EnableSalvage",
 		salvageItems                    = "Items",
-		
+
 		sellmanager						= "SellManager",
 		selleditor						= "SellEditor",
-		sellGroup						= "Sell Settings",				
+		sellGroup						= "Sell Settings",
 		active							= "Active",
 		newfiltername					= "New Filter Name",
 		newfilter						= "New Filter",
@@ -1972,7 +1972,7 @@ gw2_strings =
 		filterdetails					= "Filter Details",
 		buyGroup						= "Buy Settings",
 		repairDamaged					= "Repair Damaged >",
-		repairBroken					= "Repair Broken >",		
+		repairBroken					= "Repair Broken >",
 		salvagefilters					= "Salvage Multiple Items by Filter",
 		salvageByID						= "Salvage Single Items",
 		salvageItemList					= "Salvage Itemlist",
@@ -1981,7 +1981,7 @@ gw2_strings =
 		salvageByIDRemoveItem			= "Remove Item",
 		salvagemanager					= "Salvage Manager",
 		salvageeditor					= "Salvage Editor",
-		
+
 		--buymanager
 		buymanager						= "Buy Manager",
 		buyAllKits						= "Buy all Kits",
@@ -2003,14 +2003,14 @@ gw2_strings =
 		buyMaster						= "Master Kit",
 		unlimitedKit					= "Unlimited Kit",
 		mysticKit						= "Mystic Kit",
-		
+
 		--mc_ai_event.lua
 		events							= "Events",
 		event							= "Event",
 		doEvents						= "Do Events",
 		blacklistEvent					= "Blacklist Event",
-		
-		--mc_multibot		
+
+		--mc_multibot
 		multibotmanager					= "MultiBotManager",
 		groupInfo						= "MyParty",
 		member1							= "Partymember1",
@@ -2035,7 +2035,7 @@ gw2_strings =
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive NPCs",
 		reviveplayers					= "Revive Players",
-		
+
 		--taskmanager
 		customTasks						= "CustomTasks",
 		taskManager						= "TaskManager",
@@ -2074,7 +2074,7 @@ gw2_strings =
 		taskTalk						= "Talk",
 		taskspvp						= "sPvP",
 		useWaypoint						= "Use Waypoint",
-	},   
+	},
     ["de"] =
     {
 		aLogin    		                = "LoginName",
@@ -2129,7 +2129,7 @@ gw2_strings =
 		disabledrawing 					= "Disable Rendering",
 		killaggrononfateenemies 					= "Kill attacking None-Fate Enemies",
         -- mesher.lua
-        meshManager                     = "MeshManager", 	
+        meshManager                     = "MeshManager",
 		activated                       = "Activated",
         mapName                         = "Map",
         navmesh                         = "Navmesh",
@@ -2152,10 +2152,10 @@ gw2_strings =
 		connections						= "Connections",
 		editor							= "Editor",
         enablePSwitch					= "EnableParanoiaSwitch",
-        pSwitchCount                    = "ParanoiaPlayerCount",		
+        pSwitchCount                    = "ParanoiaPlayerCount",
         maMarkerID                      = "ID",
         maMarkerName                    = "Name",
-		
+
 		-- mc_meshswitcher.lua
 		maprotation						= "MapRotation",
 		mapid							= "MapID",
@@ -2164,7 +2164,7 @@ gw2_strings =
 		editmap							= "Edit Map",
 		deletemap						= "Delete Map",
 		lblsave							= "Save",
-		
+
         -- skillmanager.lua
 		skillbook                 	 	= "SkillBook",
 		skillManager                    = "SkillManager",
@@ -2173,7 +2173,7 @@ gw2_strings =
         skillEditor_gather            	= "SkillEditor_Gathering",
 		saveProfile                 	= "Save Current Profile",
 		newProfileName                  = "New Profile Name",
-        newProfile                      = "New Profile",		
+        newProfile                      = "New Profile",
 		skillbookrefresh                = "Refresh Skills",
 		targetType                      = "Target",
 		stepmin							= "Step <",
@@ -2200,10 +2200,10 @@ gw2_strings =
         profile                         = "Profile",
 		sMmode							= "Attack Mode",
 		sMtargetmode					= "Target Mode",
-		refreshProfiles                 = "Refresh Profile List",			
+		refreshProfiles                 = "Refresh Profile List",
         deleteProfile                   = "Delete Current Profile",
         autoDetectSkills                 = "Autodetect Skills",
-		addinterrupt                    = "Add Interrupt",  
+		addinterrupt                    = "Add Interrupt",
     addblock                        = "Add Block",
     refreshSkillList                = "Clear & Refresh SkillList",
         skillEditor                     = "Skill Editor",
@@ -2223,11 +2223,11 @@ gw2_strings =
 		smthrottle						= "Throttle (ms)",
 		casttime						= "Casttime (ms)",
 		playerEnduranceGT				= "Player Endurance%>",
-		playerEnduranceLT				= "Player Endurance%<",	
+		playerEnduranceLT				= "Player Endurance%<",
 		cooldown                        = "Cooldown",
         minRange                        = "MinRange",
         maxRange                        = "MaxRange",
-        isGroundTargeted                = "Is GroundTargeted",        
+        isGroundTargeted                = "Is GroundTargeted",
         useOutOfCombat                  = "Use out of Combat",
         playerMoving                    = "Player Moving",
         playerHPGT                      = "Player HP% >",
@@ -2288,7 +2288,7 @@ gw2_strings =
 		smRelativePosition				= "Relative position",
 		smAlliesDownedNearCount			= "Downed Allies(count)",
 		smAlliesDownedNearRange			= "Downed Allies(range)",
-    
+
 		--vendorManager
 		enableSelling					= "AutoSellItems",
 		vendorManager					= "VendorManager",
@@ -2344,7 +2344,7 @@ gw2_strings =
 		aelegendary 					= "Equip Legendary",
 		aeartefact						= "Equip Artefact",
 		aebonus							= "",
-		
+
 		--Autoequip
 		enableEquip						= "AutoEquip",
 		AutoEquipSettings				= "AutoEquipSettings",
@@ -2366,13 +2366,13 @@ gw2_strings =
 		weapon							= "Equip Weapons",
 		aearmornormal					= "Equip Normal",
 		aeweaponnormal					= "Equip Normal",
-		
+
 		--potion settings
 		usepotion						= "Use Potion",
 		potiontype						= "Potion Type",
 		potusebelow						= "Use Below %",
 		potionssettings					= "Potions Settings",
-       
+
 		--Mail Settings
 		mail 							= "Mail",
 		enableMailing					= "Enable Mailing",
@@ -2391,14 +2391,14 @@ gw2_strings =
 		PriorizeAttunement4				= "Attunement Prio 4",
 		AutoStomp						= "Finish Enemy",
 		AutoRezz						= "Rezz Friendly",
-		
+
 	   --ffxiv stuff specific stuff
         botMode                       	= "Bot Mode",
         addGrindSpot                    = "Add Grind Marker",
         addFishingSpot                  = "Add Fishing Marker",
         addMiningSpot                   = "Add Mining Marker",
         addBotanySpot                   = "Add Botany Marker",
-        addNavSpot                      = "Add Nav Marker",		
+        addNavSpot                      = "Add Nav Marker",
         deleteSpot                      = "Delete Nearest Marker",
         markers                         = "Markers",
         markerLevel						= "Marker Level",
@@ -2415,7 +2415,7 @@ gw2_strings =
 		recAreaSize						= "Record Size",
 		changeMesh						= "Change Mesh",
 		changeAreaType					= "Change Type",
-		changeAreaSize					= "Change Size",		
+		changeAreaSize					= "Change Size",
 		biDirOffMesh					= "Bidirectional Offmeshconnection",
 		addOffMeshSpot					= "Add OffMeshConnection",
 		delOffMeshSpot					= "Del OffMeshConnection",
@@ -2554,7 +2554,7 @@ gw2_strings =
         clickToTeleport                 = "Click To Teleport",
         clickToTravel                   = "Click To Travel",
 		questRunProfile					= "RunQuests",
-		questManager					= "QuestManager",		
+		questManager					= "QuestManager",
 		quests							= "Quests",
 		questEditor						= "Quest Editor",
 		questDone						= "Quest Done",
@@ -2572,7 +2572,7 @@ gw2_strings =
 		questStepDetails				= "Script Details",
 		questStepScript					= "Task-Script",
 		questStepDelete					= "Delete Step",
-		questName						= "Name",		
+		questName						= "Name",
 		questMinLevel					= "Min Level",
 		questMaxLevel					= "Max Level",
 		questPreQuest					= "Needs Previous Quest",
@@ -2607,13 +2607,13 @@ gw2_strings =
 		questsaveStep					= "Save Step",
 		questGenMapExplo				= "Generate Map Profile",
 		mapobjects						= "Mapobjects",
-		
+
 		--mc_ai_vendor.lua
 		vendors							= "Vendors",
 		vendorEnabled					= "Sell Items",
 		vendorsbuy						= "VendorsBuyTools",
-		blacklistVendor					= "Blacklist Vendor",		
-		
+		blacklistVendor					= "Blacklist Vendor",
+
 		rarityMax                       = "Max Rarity",
 		rarityNone                      = "None",
         rarityJunk                      = "Junk",
@@ -2625,10 +2625,10 @@ gw2_strings =
         salvage                         = "Salvage",
         enableSalvage                   = "EnableSalvage",
 		salvageItems                    = "Items",
-		
+
 		sellmanager						= "SellManager",
 		selleditor						= "SellEditor",
-		sellGroup						= "Sell Settings",				
+		sellGroup						= "Sell Settings",
 		active							= "Active",
 		newfiltername					= "New Filter Name",
 		newfilter						= "New Filter",
@@ -2655,7 +2655,7 @@ gw2_strings =
 		filterdetails					= "Filter Details",
 		buyGroup						= "Buy Settings",
 		repairDamaged					= "Repair Damaged >",
-		repairBroken					= "Repair Broken >",		
+		repairBroken					= "Repair Broken >",
 		salvagefilters					= "Salvage Multiple Items by Filter",
 		salvageByID						= "Salvage Single Items",
 		salvageItemList					= "Salvage Itemlist",
@@ -2664,7 +2664,7 @@ gw2_strings =
 		salvageByIDRemoveItem			= "Remove Item",
 		salvagemanager					= "Salvage Manager",
 		salvageeditor					= "Salvage Editor",
-		
+
 		--buymanager
 		buymanager						= "Buy Manager",
 		buyAllKits						= "Buy all Kits",
@@ -2686,14 +2686,14 @@ gw2_strings =
 		buyMaster						= "Master Kit",
 		unlimitedKit					= "Unlimited Kit",
 		mysticKit						= "Mystic Kit",
-		
+
 		--mc_ai_event.lua
 		events							= "Events",
 		event							= "Event",
 		doEvents						= "Do Events",
 		blacklistEvent					= "Blacklist Event",
-		
-		--mc_multibot		
+
+		--mc_multibot
 		multibotmanager					= "MultiBotManager",
 		groupInfo						= "MyParty",
 		member1							= "Partymember1",
@@ -2718,7 +2718,7 @@ gw2_strings =
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive NPCs",
 		reviveplayers					= "Revive Players",
-		
+
 		--taskmanager
 		customTasks						= "CustomTasks",
 		taskManager						= "TaskManager",
@@ -2757,7 +2757,7 @@ gw2_strings =
 		taskTalk						= "Talk",
 		taskspvp						= "sPvP",
 		useWaypoint						= "Use Waypoint",
-	},     
+	},
     ["fr"] =
     {
 		aLogin    		                = "LoginName",
@@ -2811,7 +2811,7 @@ gw2_strings =
 		disabledrawing 					= "Désactiver Rendering",
 		killaggrononfateenemies 		= "Tuer aggros non présent dans les fates",
         -- mesher.lua
-        meshManager                     = "MeshManager", 	
+        meshManager                     = "MeshManager",
 		activated                       = "Activer",
         mapName                         = "Carte",
         navmesh                         = "Navmesh",
@@ -2834,7 +2834,7 @@ gw2_strings =
 		connections						= "Connections",
 		editor							= "Éditeur",
         enablePSwitch					= "ActiverChangeurParanoia",
-        pSwitchCount                    = "NombreJoueurParanoia",		
+        pSwitchCount                    = "NombreJoueurParanoia",
         maMarkerID                      = "ID",
         maMarkerName                    = "Nom",
 		-- mc_meshswitcher.lua
@@ -2845,7 +2845,7 @@ gw2_strings =
 		editmap							= "Edit Map",
 		deletemap						= "Delete Map",
 		lblsave							= "Save",
-		
+
         -- skillmanager.lua
 		skillbook                 	 	= "Livre des Compétences",
 		skillManager                    = "ManagerCompétences",
@@ -2854,7 +2854,7 @@ gw2_strings =
         skillEditor_gather            	= "ÉditeurCompétences_Gather",
 		saveProfile                 	= "Savegarder Profil Courrent",
 		newProfileName                  = "Nom Nouveau Profil",
-        newProfile                      = "Nouveau Profil",			
+        newProfile                      = "Nouveau Profil",
 		skillbookrefresh                = "Rafraîchir Compétences",
 		targetType                      = "Cible",
 		stepmin							= "Étape <",
@@ -2882,10 +2882,10 @@ gw2_strings =
         profile                         = "Profil",
 		sMmode							= "Mode Attaque",
 		sMtargetmode					= "Mode Cible",
-		refreshProfiles                 = "Rafraîchir Liste Profil",			
+		refreshProfiles                 = "Rafraîchir Liste Profil",
         deleteProfile                   = "Supprimer Profil Courrent",
         autoDetectSkills                 = "Autodetecter Compétences",
-		addinterrupt                    = "Add Interrupt",  
+		addinterrupt                    = "Add Interrupt",
     addblock                        = "Add Block",
 		refreshSkillList                = "Effacer & rafraîchir Liste de Compétences",
         skillEditor                     = "Éditeur Compétences",
@@ -2907,11 +2907,11 @@ gw2_strings =
 		smsktypedmg						= "Damage",
 		smsktypeheal					= "Heal",
 		playerEnduranceGT				= "Player Endurance%>",
-		playerEnduranceLT				= "Player Endurance%<",			
+		playerEnduranceLT				= "Player Endurance%<",
 		cooldown                        = "Cooldown",
         minRange                        = "MinRange",
         maxRange                        = "MaxRange",
-        isGroundTargeted                = "est GroundTargeted",       
+        isGroundTargeted                = "est GroundTargeted",
         useOutOfCombat                  = "Utiliser en dehors des combat",
         playerMoving                    = "Joueur En Mouvement",
         playerHPGT                      = "Joueur HP% >",
@@ -2972,7 +2972,7 @@ gw2_strings =
 		smRelativePosition				= "Relative position",
 		smAlliesDownedNearCount			= "Downed Allies(count)",
 		smAlliesDownedNearRange			= "Downed Allies(range)",
-    
+
 		--vendorManager
 		enableSelling					= "AutoSellItems",
 		vendorManager					= "VendorManager",
@@ -3028,7 +3028,7 @@ gw2_strings =
 		aelegendary 					= "Equip Legendary",
 		aeartefact						= "Equip Artefact",
 		aebonus							= "",
-		
+
 		--Autoequip
 		enableEquip						= "AutoEquip",
 		AutoEquipSettings				= "AutoEquipSettings",
@@ -3050,13 +3050,13 @@ gw2_strings =
 		weapon							= "Equip Weapons",
 		aearmornormal					= "Equip Normal",
 		aeweaponnormal					= "Equip Normal",
-		
+
 		--potion settings
 		usepotion						= "Use Potion",
 		potiontype						= "Potion Type",
 		potusebelow						= "Use Below %",
 		potionssettings					= "Potions Settings",
-		
+
 		--Mail Settings
 		mail 							= "Mail",
 		enableMailing					= "Enable Mailing",
@@ -3076,14 +3076,14 @@ gw2_strings =
 		PriorizeAttunement4				= "Attunement Prio 4",
 		AutoStomp						= "Finish Enemy",
 		AutoRezz						= "Rezz Friendly",
-		
+
         --ffxiv stuff specific stuff
        botMode                       	= "Mode Bot",
         addGrindSpot                    = "Ajouter Grind Marker",
         addFishingSpot                  = "Ajouter Fishing Marker",
         addMiningSpot                   = "Ajouter Mining Marker",
         addBotanySpot                   = "Ajouter Botany Marker",
-        addNavSpot                      = "Ajouter Nav Marker",		
+        addNavSpot                      = "Ajouter Nav Marker",
         deleteSpot                      = "Supprimer Nearest Marker",
 
         markers                         = "Marqueurs",
@@ -3102,7 +3102,7 @@ gw2_strings =
 		recAreaSize						= "Enregistrer Size",
 		changeMesh						= "Changer Mesh",
 		changeAreaType					= "Changer Type",
-		changeAreaSize					= "Changer Size",		
+		changeAreaSize					= "Changer Size",
 		biDirOffMesh					= "Bidirectional Offmeshconnection",
 		addOffMeshSpot					= "Ajouter OffMeshConnection",
 		delOffMeshSpot					= "Spr OffMeshConnection",
@@ -3249,7 +3249,7 @@ gw2_strings =
         clickToTeleport                 = "Clic Pour Teleport",
         clickToTravel                   = "Clic Pour Voyager",
 		questRunProfile					= "RunQuests",
-		questManager					= "QuestManager",		
+		questManager					= "QuestManager",
 		quests							= "Quests",
 		questEditor						= "Quest Editor",
 		questDone						= "Quest Done",
@@ -3267,7 +3267,7 @@ gw2_strings =
 		questStepDetails				= "Script Details",
 		questStepScript					= "Task-Script",
 		questStepDelete					= "Delete Step",
-		questName						= "Name",		
+		questName						= "Name",
 		questMinLevel					= "Min Level",
 		questMaxLevel					= "Max Level",
 		questPreQuest					= "Requires Quest (Name)",
@@ -3302,13 +3302,13 @@ gw2_strings =
 		questsaveStep					= "Save Step",
 		questGenMapExplo				= "Generate Map Profile",
 		mapobjects						= "Mapobjects",
-		
+
 		--mc_ai_vendor.lua
 		vendors							= "Vendors",
 		vendorEnabled					= "Sell Items",
 		vendorsbuy						= "VendorsBuyTools",
-		blacklistVendor					= "Blacklist Vendor",		
-		
+		blacklistVendor					= "Blacklist Vendor",
+
 		rarityMax                       = "Max Rarity",
 		rarityNone                      = "None",
         rarityJunk                      = "Junk",
@@ -3320,10 +3320,10 @@ gw2_strings =
         salvage                         = "Salvage",
         enableSalvage                   = "EnableSalvage",
 		salvageItems                    = "Items",
-		
+
 		sellmanager						= "SellManager",
 		selleditor						= "SellEditor",
-		sellGroup						= "Sell Settings",				
+		sellGroup						= "Sell Settings",
 		active							= "Active",
 		newfiltername					= "New Filter Name",
 		newfilter						= "New Filter",
@@ -3350,7 +3350,7 @@ gw2_strings =
 		filterdetails					= "Filter Details",
 		buyGroup						= "Buy Settings",
 		repairDamaged					= "Repair Damaged >",
-		repairBroken					= "Repair Broken >",		
+		repairBroken					= "Repair Broken >",
 		salvagefilters					= "Salvage Multiple Items by Filter",
 		salvageByID						= "Salvage Single Items",
 		salvageItemList					= "Salvage Itemlist",
@@ -3359,7 +3359,7 @@ gw2_strings =
 		salvageByIDRemoveItem			= "Remove Item",
 		salvagemanager					= "Salvage Manager",
 		salvageeditor					= "Salvage Editor",
-		
+
 		--buymanager
 		buymanager						= "Buy Manager",
 		buyAllKits						= "Buy all Kits",
@@ -3381,14 +3381,14 @@ gw2_strings =
 		buyMaster						= "Master Kit",
 		unlimitedKit					= "Unlimited Kit",
 		mysticKit						= "Mystic Kit",
-		
+
 		--mc_ai_event.lua
 		events							= "Events",
 		event							= "Event",
 		doEvents						= "Do Events",
 		blacklistEvent					= "Blacklist Event",
-		
-		--mc_multibot		
+
+		--mc_multibot
 		multibotmanager					= "MultiBotManager",
 		groupInfo						= "MyParty",
 		member1							= "Partymember1",
@@ -3413,7 +3413,7 @@ gw2_strings =
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive NPCs",
 		reviveplayers					= "Revive Players",
-		
+
 		--taskmanager
 		customTasks						= "CustomTasks",
 		taskManager						= "TaskManager",
@@ -3452,7 +3452,7 @@ gw2_strings =
 		taskTalk						= "Talk",
 		taskspvp						= "sPvP",
 		useWaypoint						= "Use Waypoint",
-	},       
+	},
     ["ru"] =
     {
 		aLogin    		                = "LoginName",
@@ -3506,7 +3506,7 @@ gw2_strings =
 		disabledrawing 					= "Disable Rendering",
 		killaggrononfateenemies 					= "Kill attacking None-Fate Enemies",
         -- mesher.lua
-        meshManager                     = "MeshManager", 	
+        meshManager                     = "MeshManager",
 		activated                       = "Activated",
         mapName                         = "Map",
         navmesh                         = "Navmesh",
@@ -3529,7 +3529,7 @@ gw2_strings =
         recoder							= "Record Mesh",
 		connections						= "Connections",
 		enablePSwitch					= "EnableParanoiaSwitch",
-        pSwitchCount                    = "ParanoiaPlayerCount",		
+        pSwitchCount                    = "ParanoiaPlayerCount",
         maMarkerID                      = "ID",
         maMarkerName                    = "Name",
 		-- mc_meshswitcher.lua
@@ -3540,7 +3540,7 @@ gw2_strings =
 		editmap							= "Edit Map",
 		deletemap						= "Delete Map",
 		lblsave							= "Save",
-		
+
         -- skillmanager.lua
 		skillbook                 	 	= "SkillBook",
 		skillManager                    = "SkillManager",
@@ -3549,7 +3549,7 @@ gw2_strings =
         skillEditor_gather            	= "SkillEditor_Gathering",
 		saveProfile                 	= "Save Current Profile",
 		newProfileName                  = "New Profile Name",
-        newProfile                      = "New Profile",		
+        newProfile                      = "New Profile",
 		skillbookrefresh                = "Refresh Skills",
 		targetType                      = "Target",
 		stepmin							= "Step <",
@@ -3576,10 +3576,10 @@ gw2_strings =
         profile                         = "Profile",
 		sMmode							= "Attack Mode",
 		sMtargetmode					= "Target Mode",
-		refreshProfiles                 = "Refresh Profile List",			
+		refreshProfiles                 = "Refresh Profile List",
         deleteProfile                   = "Delete Current Profile",
         autoDetectSkills                 = "Autodetect Skills",
-		addinterrupt                    = "Add Interrupt",  
+		addinterrupt                    = "Add Interrupt",
     addblock                        = "Add Block",
 		refreshSkillList                = "Clear & Refresh SkillList",
         skillEditor                     = "Skill Editor",
@@ -3589,7 +3589,7 @@ gw2_strings =
         los                  		    = "Needs LineOfSight",
 		setsAttackRange                 = "Sets AttackRange",
 		instacast            		    = "Instant Skill",
-		channeled            		    = "Channel Skill",	
+		channeled            		    = "Channel Skill",
 		casttime            		    = "Casttime (ms)",
 		smthrottle            		    = "Throttle (ms)",
 		smsktype            		    = "Type",
@@ -3603,7 +3603,7 @@ gw2_strings =
 		cooldown                        = "Cooldown",
         minRange                        = "MinRange",
         maxRange                        = "MaxRange",
-        isGroundTargeted                = "Is GroundTargeted",        
+        isGroundTargeted                = "Is GroundTargeted",
         useOutOfCombat                  = "Use out of Combat",
         playerMoving                    = "Player Moving",
         playerHPGT                      = "Player HP% >",
@@ -3720,7 +3720,7 @@ gw2_strings =
 		aelegendary 					= "Equip Legendary",
 		aeartefact						= "Equip Artefact",
 		aebonus							= "",
-		
+
 		--Autoequip
 		enableEquip						= "AutoEquip",
 		AutoEquipSettings				= "AutoEquipSettings",
@@ -3742,13 +3742,13 @@ gw2_strings =
 		weapon							= "Equip Weapons",
 		aearmornormal					= "Equip Normal",
 		aeweaponnormal					= "Equip Normal",
-		
+
 		--potion settings
 		usepotion						= "Use Potion",
 		potiontype						= "Potion Type",
 		potusebelow						= "Use Below %",
 		potionssettings					= "Potions Settings",
-		
+
 		--Mail Settings
 		mail 							= "Mail",
 		enableMailing					= "Enable Mailing",
@@ -3767,14 +3767,14 @@ gw2_strings =
 		PriorizeAttunement4				= "Attunement Prio 4",
 		AutoStomp						= "Finish Enemy",
 		AutoRezz						= "Rezz Friendly",
-		
+
         --ffxiv stuff specific stuff
         botMode                       	= "Bot Mode",
         addGrindSpot                    = "Add Grind Marker",
         addFishingSpot                  = "Add Fishing Marker",
         addMiningSpot                   = "Add Mining Marker",
         addBotanySpot                   = "Add Botany Marker",
-        addNavSpot                      = "Add Nav Marker",		
+        addNavSpot                      = "Add Nav Marker",
         deleteSpot                      = "Delete Nearest Marker",
         markers                         = "Markers",
         markerLevel						= "Marker Level",
@@ -3791,7 +3791,7 @@ gw2_strings =
 		recAreaSize						= "Record Size",
 		changeMesh						= "Change Mesh",
 		changeAreaType					= "Change Type",
-		changeAreaSize					= "Change Size",		
+		changeAreaSize					= "Change Size",
 		biDirOffMesh					= "Bidirectional Offmeshconnection",
 		addOffMeshSpot					= "Add OffMeshConnection",
 		delOffMeshSpot					= "Del OffMeshConnection",
@@ -3930,7 +3930,7 @@ gw2_strings =
         clickToTeleport                 = "Click To Teleport",
         clickToTravel                   = "Click To Travel",
 		questRunProfile					= "RunQuests",
-		questManager					= "QuestManager",		
+		questManager					= "QuestManager",
 		quests							= "Quests",
 		questEditor						= "Quest Editor",
 		questDone						= "Quest Done",
@@ -3948,7 +3948,7 @@ gw2_strings =
 		questStepDetails				= "Script Details",
 		questStepScript					= "Task-Script",
 		questStepDelete					= "Delete Step",
-		questName						= "Name",		
+		questName						= "Name",
 		questMinLevel					= "Min Level",
 		questMaxLevel					= "Max Level",
 		questPreQuest					= "Requires Quest (Name)",
@@ -3966,7 +3966,7 @@ gw2_strings =
 	    PartyGrind          = "Party Grind",
 	    PartyLeader         = "Leader:",
 	    GetPartyLeader      = "Target->Leader",
-	    UseGamePartyLeader  = "Use Party Leader",	
+	    UseGamePartyLeader  = "Use Party Leader",
         TargetIsCasting           = "Target Casting",
         TargetCastingOnMe           = "Casting On",
         TargetCastingTime           = "Casting Time >",
@@ -3983,13 +3983,13 @@ gw2_strings =
 		questsaveStep					= "Save Step",
 		questGenMapExplo				= "Generate Map Profile",
 		mapobjects						= "Mapobjects",
-		
+
 		--mc_ai_vendor.lua
 		vendors							= "Vendors",
 		vendorEnabled					= "Sell Items",
 		vendorsbuy						= "VendorsBuyTools",
-		blacklistVendor					= "Blacklist Vendor",		
-		
+		blacklistVendor					= "Blacklist Vendor",
+
 		rarityMax                       = "Max Rarity",
 		rarityNone                      = "None",
         rarityJunk                      = "Junk",
@@ -4001,10 +4001,10 @@ gw2_strings =
         salvage                         = "Salvage",
         enableSalvage                   = "EnableSalvage",
 		salvageItems                    = "Items",
-		
+
 		sellmanager						= "SellManager",
 		selleditor						= "SellEditor",
-		sellGroup						= "Sell Settings",				
+		sellGroup						= "Sell Settings",
 		active							= "Active",
 		newfiltername					= "New Filter Name",
 		newfilter						= "New Filter",
@@ -4031,7 +4031,7 @@ gw2_strings =
 		filterdetails					= "Filter Details",
 		buyGroup						= "Buy Settings",
 		repairDamaged					= "Repair Damaged >",
-		repairBroken					= "Repair Broken >",		
+		repairBroken					= "Repair Broken >",
 		salvagefilters					= "Salvage Multiple Items by Filter",
 		salvageByID						= "Salvage Single Items",
 		salvageItemList					= "Salvage Itemlist",
@@ -4040,7 +4040,7 @@ gw2_strings =
 		salvageByIDRemoveItem			= "Remove Item",
 		salvagemanager					= "Salvage Manager",
 		salvageeditor					= "Salvage Editor",
-		
+
 		--buymanager
 		buymanager						= "Buy Manager",
 		buyAllKits						= "Buy all Kits",
@@ -4062,14 +4062,14 @@ gw2_strings =
 		buyMaster						= "Master Kit",
 		mysticKit						= "Mystic Kit",
 		unlimitedKit					= "Unlimited Kit",
-		
+
 		--mc_ai_event.lua
 		events							= "Events",
 		event							= "Event",
 		doEvents						= "Do Events",
 		blacklistEvent					= "Blacklist Event",
-		
-		--mc_multibot		
+
+		--mc_multibot
 		multibotmanager					= "MultiBotManager",
 		groupInfo						= "MyParty",
 		member1							= "Partymember1",
@@ -4094,7 +4094,7 @@ gw2_strings =
 		guestserver						= "GuestServer",
 		revivecharacters				= "Revive NPCs",
 		reviveplayers					= "Revive Players",
-		
+
 		--taskmanager
 		customTasks						= "CustomTasks",
 		taskManager						= "TaskManager",
@@ -4133,7 +4133,7 @@ gw2_strings =
 		taskTalk						= "Talk",
 		taskspvp						= "sPvP",
 		useWaypoint						= "Use Waypoint",
-	},    	
+	},
 
 }
 -- merge  the minionlib strings with our gw2 specific ones

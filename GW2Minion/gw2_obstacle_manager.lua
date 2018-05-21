@@ -22,7 +22,7 @@ function gw2_obstacle_manager.AddAvoidanceArea(options)
 
 		local add = true
 		local i,existing = next(gw2_obstacle_manager.avoidanceareas)
-		
+
 		while i and existing and add do
 			if(math.distance2d(existing.pos,options.pos) < existing.radius) then
 				add = false
@@ -31,10 +31,10 @@ function gw2_obstacle_manager.AddAvoidanceArea(options)
 		end
 
 		if(add) then
-			
+
 			options.time = options.time or ml_global_information.Now
 			table.insert(gw2_obstacle_manager.avoidanceareas, options)
-			
+
 			if(options.showAddMessage) then
 				if(type(options.duration) == "number") then
 					d("Avoidance area added with duration : "..math.ceil(options.duration/1000).."s")
@@ -42,7 +42,7 @@ function gw2_obstacle_manager.AddAvoidanceArea(options)
 					d("Avoidance area added.")
 				end
 			end
-			
+
 			gw2_obstacle_manager.SetupAvoidanceAreas()
 		end
 	end
@@ -100,7 +100,7 @@ function gw2_obstacle_manager.OnUpdateHandler(_,tick)
 				table.remove(gw2_obstacle_manager.avoidanceareas, i)
 			end
 		end
-		
+
 		if(avoidanceRemoved) then
 			gw2_obstacle_manager.SetupAvoidanceAreas()
 		end

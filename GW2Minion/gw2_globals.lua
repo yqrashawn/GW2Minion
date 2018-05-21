@@ -106,7 +106,7 @@ ml_global_information.VendorRepair = {
 function ml_global_information.OnUpdate(Event,ticks)
 	if(TimeSince(ml_global_information.Lasttick) > BehaviorManager:GetTicksThreshold()) then
 		ml_global_information.Lasttick = ticks
-		
+
 		ml_global_information.GameState = GetGameState()
 
 		if(Player) then
@@ -117,7 +117,7 @@ function ml_global_information.OnUpdate(Event,ticks)
 			ml_global_information.Player_ProfessionName = table.invert(GW2.CHARCLASS)[ml_global_information.Player_Profession] or "NoClass"
 			ml_global_information.Player_Power = Player.power or 0
 			ml_global_information.Player_Endurance = Player.endurance or 0
-			ml_global_information.Player_InCombat = Player.incombat or false		
+			ml_global_information.Player_InCombat = Player.incombat or false
 			ml_global_information.Player_Position = Player.pos
 			ml_global_information.Player_Level = Player.level
 			ml_global_information.Player_OnMesh = Player.onmesh or false
@@ -132,15 +132,15 @@ function ml_global_information.OnUpdate(Event,ticks)
 			ml_global_information.Player_Party = Player:GetParty() or nil
 			ml_global_information.Player_CastInfo = Player.castinfo or nil
 			ml_global_information.Player_Buffs = Player.buffs or {}
-			
-			
+
+
 			ml_global_information.CurrentMapID = Player:GetLocalMapID() or 0
-			if (gw2_datamanager and ml_global_information.CurrentMapID ~= 0) then  
-				ml_global_information.CurrentMapName = gw2_datamanager.GetMapName(ml_global_information.CurrentMapID) 
+			if (gw2_datamanager and ml_global_information.CurrentMapID ~= 0) then
+				ml_global_information.CurrentMapName = gw2_datamanager.GetMapName(ml_global_information.CurrentMapID)
 			else
 				ml_global_information.CurrentMapName = ""
 			end
-			
+
 			ml_global_information.Player_CurrentWeaponSet = Player:GetCurrentWeaponSet() or 0	-- 0 Aqua1, 1 Aqua2, 2 Engikit, 3 Necro Lich Form/ranger astralform,  4 Weapon1, 5 Weapon2
 			ml_global_information.Player_TransformID = Player:GetTransformID() or 0 -- 1-4 attunement, 5 deathshroud, 9 rangernormal, 10 rangerastralform
 		end
@@ -154,7 +154,7 @@ end
 
 function ml_global_information.Stop()
 	d("Global Inf Stop")
-    Player:StopMovement() -- this function is overrwitten in gw2_navigation.lua (on the bottom). It stops the player, clearls the path and resets OMCs. 
+    Player:StopMovement() -- this function is overrwitten in gw2_navigation.lua (on the bottom). It stops the player, clearls the path and resets OMCs.
 	gw2_unstuck.Stop()
 end
 
