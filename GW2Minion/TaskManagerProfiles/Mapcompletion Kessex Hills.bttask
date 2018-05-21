@@ -586,7 +586,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 23,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "Vista Delanian Foothills",
@@ -930,7 +930,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 23,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "Vista Earthworks Bluff",
@@ -1015,7 +1015,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 23,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "Vista Giant's Passage",
@@ -1324,7 +1324,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 23,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "Vista Triskellion Vale",
@@ -2187,7 +2187,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 23,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "Vista Careboth Canyon",
@@ -2272,7 +2272,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 23,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "Vista Wizard's Fief",
@@ -3010,7 +3010,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 23,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "Vista Viathan Lake",
@@ -3326,7 +3326,7 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 23,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
 				name = "Vista Fort Salma",
@@ -3376,6 +3376,26 @@ local tbl =
 				{
 					customProperties = 
 					{
+						hqchecktimer = 180,
+						hqid = 257,
+						hqpos = 
+						{
+							x = -37045,
+							y = 18003,
+							z = -3678,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check",
+						type = "tm_st_hqstatus",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
 						targets = 
 						{
 							
@@ -3410,9 +3430,12 @@ local tbl =
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 13646,
 								gadget = true,
+								maxinteract = 20,
 								name = "Spike Trap",
+								oncepertarget = false,
 							},
 						},
 					},
@@ -3427,20 +3450,22 @@ local tbl =
 				{
 					customProperties = 
 					{
-						hqchecktimer = 50,
-						hqid = 257,
-						hqpos = 
+						targetpos = 
 						{
-							x = -37045,
-							y = 18003,
-							z = -3678,
+							hx = -0.74068784713745,
+							hy = -0.66222077608109,
+							hz = 0.11333714425564,
+							x = -39892.96875,
+							y = 13917.404296875,
+							z = -2511.7023925781,
 						},
 					},
+					order = 4,
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check",
-						type = "tm_st_hqstatus",
+						name = "Move to location",
+						type = "tm_st_moveto",
 					},
 				},
 			},
@@ -3628,77 +3653,77 @@ local tbl =
 				{
 					customProperties = 
 					{
-						targetpos = 
-						{
-							hx = 0.59651660919189,
-							hy = -0.64183801412582,
-							hz = 0.48188364505768,
-							x = -18548.84765625,
-							y = 759.92822265625,
-							z = 3519.7189941406,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Move to",
-						type = "tm_st_moveto",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
 						targets = 
 						{
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 22184,
 								gadget = true,
+								maxinteract = 20,
 								name = "Crab Trap",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 29418,
 								gadget = true,
+								maxinteract = 20,
 								name = "Crab Trap",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 5407,
 								gadget = true,
+								maxinteract = 20,
 								name = "Crab Trap",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 15997,
 								gadget = true,
+								maxinteract = 20,
 								name = "Crab Trap",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 21624,
 								gadget = true,
+								maxinteract = 2,
 								name = "Crab Trap",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 28462,
 								gadget = true,
+								maxinteract = 20,
 								name = "Crab Trap",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 19108,
 								gadget = true,
+								maxinteract = 20,
 								name = "Crab Trap",
+								oncepertarget = false,
 							},
 						},
 					},
@@ -3729,6 +3754,27 @@ local tbl =
 						enabled = true,
 						name = "Kill",
 						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							hx = 0.59651660919189,
+							hy = -0.64183801412582,
+							hz = 0.48188364505768,
+							x = -18548.84765625,
+							y = 759.92822265625,
+							z = 3519.7189941406,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Move to",
+						type = "tm_st_moveto",
 					},
 				},
 				
@@ -3839,6 +3885,19 @@ local tbl =
 				{
 					customProperties = 
 					{
+					},
+					order = 1,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
 						talkagent = 
 						{
 							character = false,
@@ -3859,6 +3918,25 @@ local tbl =
 						type = "tm_st_talk",
 					},
 				},
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							x = -39353.8984375,
+							y = -13264.48046875,
+							z = -894.90002441406,
+						},
+					},
+					order = 2,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Move to location",
+						type = "tm_st_moveto",
+					},
+				},
 			},
 			taskProperties = 
 			{
@@ -3870,7 +3948,7 @@ local tbl =
 				mapid = 23,
 				maxduration = 0,
 				maxlevel = 0,
-				minlevel = 20,
+				minlevel = 23,
 				name = "HP Mermoot Hill",
 				pos = 
 				{

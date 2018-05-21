@@ -192,86 +192,122 @@ local tbl =
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 27505,
 								gadget = true,
+								maxinteract = 1,
 								name = "Wurm Mound",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 24128,
 								gadget = true,
+								maxinteract = 1,
 								name = "Wurm Mound",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 26261,
 								gadget = true,
+								maxinteract = 1,
 								name = "Wurm Mound",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 4284,
 								gadget = true,
+								maxinteract = 1,
 								name = "Wurm Mound",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 18083,
 								gadget = true,
+								maxinteract = 1,
 								name = "Wurm Mound",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 8958,
 								gadget = true,
+								maxinteract = 1,
 								name = "Wurm Mound",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 29589,
 								gadget = true,
+								maxinteract = 1,
 								name = "Wurm Mound",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 23433,
 								gadget = true,
+								maxinteract = 1,
 								name = "Wurm Mound",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 14662,
 								gadget = true,
+								maxinteract = 1,
 								name = "Wurm Mound",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 11370,
 								gadget = true,
+								maxinteract = 1,
 								name = "Wurm Mound",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 32346,
 								gadget = true,
+								maxinteract = 1,
 								name = "Wurm Mound",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 22465,
 								gadget = true,
+								maxinteract = 1,
 								name = "Wurm Mound",
+								oncepertarget = false,
 							},
 						},
 					},
@@ -291,9 +327,12 @@ local tbl =
 							
 							{
 								character = true,
+								closedialog = false,
 								contentid = 373497,
 								gadget = false,
+								maxinteract = 1,
 								name = "Brown Cow",
+								oncepertarget = false,
 							},
 						},
 					},
@@ -313,107 +352,152 @@ local tbl =
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 18077,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 8951,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 27246,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 15056,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 20334,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 5046,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 29812,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 18842,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 26438,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 32152,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 19232,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 21208,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 363,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 15140,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 3856,
 								gadget = true,
+								maxinteract = 1,
 								name = "Scorched Corn",
+								oncepertarget = false,
 							},
 						},
 					},
@@ -1783,100 +1867,142 @@ local tbl =
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 31518,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 23879,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 26241,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 31926,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 18019,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 1925,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 1066,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 20546,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 26578,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 2848,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 6238,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 11324,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 25853,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 5195,
 								gadget = true,
+								maxinteract = 3,
 								name = "Lost Trinket",
+								oncepertarget = false,
 							},
 						},
 					},
@@ -2096,7 +2222,7 @@ local tbl =
 				mapid = 15,
 				maxduration = 0,
 				maxlevel = 80,
-				minlevel = 0,
+				minlevel = 5,
 				name = "Earthen Magic Hero Challenge",
 				pos = 
 				{
@@ -2628,113 +2754,6 @@ local tbl =
 			},
 			subtasks = 
 			{
-				
-				{
-					customProperties = 
-					{
-						talkagent = 
-						{
-							character = false,
-							contentid = 26969,
-							gadget = true,
-							name = "Banditenbeute",
-						},
-						talksteps = 
-						{
-							0,
-						},
-						talktype = "Index",
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Talk",
-						type = "tm_st_talk",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = true,
-								contentid = 43469,
-								gadget = false,
-								name = "Rogue",
-							},
-							
-							{
-								character = true,
-								contentid = 301457,
-								gadget = false,
-								name = "Franklin Quickblade",
-							},
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "kill",
-						type = "tm_st_killspecific",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Fight aggro",
-						type = "tm_st_fightaggro",
-					},
-				},
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = true,
-				mapid = 15,
-				maxduration = 0,
-				maxlevel = 80,
-				minlevel = 0,
-				name = "Bandit Loot Hero Challenge",
-				pos = 
-				{
-					hx = -0.55566811561584,
-					hy = 0.83140420913696,
-					hz = 0,
-					x = -29253.0546875,
-					y = -4024.6704101563,
-					z = -1304.2770996094,
-				},
-				radius = 0,
-				type = "tm_heropoint",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 26,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
 			},
 			taskProperties = 
 			{
@@ -2769,7 +2788,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 27,
+			order = 26,
 			posttasks = 
 			{
 			},
@@ -2811,93 +2830,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 28,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-				
-				{
-					customProperties = 
-					{
-						talkagent = 
-						{
-							character = false,
-							contentid = 21540,
-							gadget = true,
-							name = "Ert's Jug of Power Unguent",
-						},
-						talksteps = 
-						{
-							0,
-						},
-						talktype = "Index",
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Interact",
-						type = "tm_st_talk",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						itemlist = 
-						{
-							
-							{
-								id = 22375,
-								name = "Ert's Unguent",
-							},
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "use Inventory item",
-						type = "tm_st_useitem",
-					},
-				},
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = true,
-				gw2_failondeathcount = 3,
-				gw2_trytosurvive = true,
-				mapid = 15,
-				maxduration = 0,
-				maxlevel = 80,
-				minlevel = 0,
-				name = "Ert and Burt Hero point",
-				pos = 
-				{
-					hx = 0.79364436864853,
-					hy = -0.60838198661804,
-					hz = 0,
-					x = -40799.14453125,
-					y = -4767.4833984375,
-					z = -2802.5778808594,
-				},
-				radius = 0,
-				type = "tm_heropoint",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 29,
+			order = 27,
 			posttasks = 
 			{
 			},
@@ -2921,12 +2854,12 @@ local tbl =
 				name = "Duran Brothers point of interest",
 				pos = 
 				{
-					hx = -0.92144471406937,
-					hy = -0.30849376320839,
-					hz = 0.23615935444832,
-					x = -31290.822265625,
-					y = -19982.5625,
-					z = -103.69486236572,
+					hx = 0.92307823896408,
+					hy = 0.13345785439014,
+					hz = 0.36071538925171,
+					x = -31126.748046875,
+					y = -20352.828125,
+					z = -4.1887712478638,
 				},
 				radius = 0,
 				type = "tm_moveto",
@@ -2940,7 +2873,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 30,
+			order = 28,
 			posttasks = 
 			{
 			},
@@ -2982,7 +2915,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 31,
+			order = 29,
 			posttasks = 
 			{
 			},
@@ -3025,7 +2958,7 @@ local tbl =
 				hqid = 212,
 			},
 			lastrun = 0,
-			order = 32,
+			order = 30,
 			posttasks = 
 			{
 			},
@@ -3184,7 +3117,7 @@ local tbl =
 				hqid = 211,
 			},
 			lastrun = 0,
-			order = 33,
+			order = 31,
 			posttasks = 
 			{
 			},
@@ -3366,7 +3299,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 34,
+			order = 32,
 			posttasks = 
 			{
 			},
@@ -3382,7 +3315,7 @@ local tbl =
 				enabled = true,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
+				gw2_trytosurvive = true,
 				mapid = 15,
 				maxduration = 0,
 				maxlevel = 80,
@@ -3408,7 +3341,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 35,
+			order = 33,
 			posttasks = 
 			{
 			},
@@ -3450,7 +3383,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 36,
+			order = 34,
 			posttasks = 
 			{
 			},
@@ -3492,95 +3425,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 37,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-				
-				{
-					customProperties = 
-					{
-						talkagent = 
-						{
-							character = true,
-							contentid = 45413,
-							gadget = false,
-							name = "Chhk der Windm\xc3\xbchlenk\xc3\xb6nig",
-						},
-						talksteps = 
-						{
-							0,
-						},
-						talktype = "Index",
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Talk",
-						type = "tm_st_talk",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = true,
-								contentid = 45413,
-								gadget = false,
-								name = "Chhk der Windm\xc3\xbchlenk\xc3\xb6nig",
-							},
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Kill",
-						type = "tm_st_killspecific",
-					},
-				},
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = true,
-				mapid = 15,
-				maxduration = 0,
-				maxlevel = 80,
-				minlevel = 0,
-				name = "Chhk the Windmill King Hero Point",
-				pos = 
-				{
-					hx = 0.29341652989388,
-					hy = 0.95598471164703,
-					hz = 0,
-					x = 1282.6838378906,
-					y = 6839.7836914063,
-					z = -2323.97265625,
-				},
-				radius = 0,
-				type = "tm_heropoint",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 38,
+			order = 35,
 			posttasks = 
 			{
 			},
@@ -3623,7 +3468,7 @@ local tbl =
 				hqid = 226,
 			},
 			lastrun = 0,
-			order = 39,
+			order = 36,
 			posttasks = 
 			{
 			},
@@ -3864,7 +3709,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 40,
+			order = 37,
 			posttasks = 
 			{
 			},
@@ -3907,7 +3752,7 @@ local tbl =
 				hqid = 227,
 			},
 			lastrun = 0,
-			order = 41,
+			order = 38,
 			posttasks = 
 			{
 			},
@@ -4088,7 +3933,7 @@ local tbl =
 				hqid = 228,
 			},
 			lastrun = 0,
-			order = 42,
+			order = 39,
 			posttasks = 
 			{
 			},
@@ -4228,7 +4073,7 @@ local tbl =
 			{
 			},
 			lastrun = 0,
-			order = 43,
+			order = 40,
 			posttasks = 
 			{
 			},
@@ -4271,7 +4116,7 @@ local tbl =
 				fightaggro = true,
 			},
 			lastrun = 0,
-			order = 44,
+			order = 41,
 			posttasks = 
 			{
 			},
@@ -4304,6 +4149,287 @@ local tbl =
 				},
 				radius = 0,
 				type = "tm_vista",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 42,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = false,
+							contentid = 26969,
+							gadget = true,
+							name = "Banditenbeute",
+						},
+						talksteps = 
+						{
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Talk",
+						type = "tm_st_talk",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 43469,
+								gadget = false,
+								name = "Rogue",
+							},
+							
+							{
+								character = true,
+								contentid = 301457,
+								gadget = false,
+								name = "Franklin Quickblade",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "kill",
+						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 15,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 10,
+				name = "Bandit Loot Hero Challenge",
+				pos = 
+				{
+					hx = -0.55566811561584,
+					hy = 0.83140420913696,
+					hz = 0,
+					x = -29253.0546875,
+					y = -4024.6704101563,
+					z = -1304.2770996094,
+				},
+				radius = 0,
+				type = "tm_heropoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 43,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = false,
+							contentid = 21540,
+							gadget = true,
+							name = "Ert's Jug of Power Unguent",
+						},
+						talksteps = 
+						{
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Interact",
+						type = "tm_st_talk",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						itemlist = 
+						{
+							
+							{
+								id = 22375,
+								name = "Ert's Unguent",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "use Inventory item",
+						type = "tm_st_useitem",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = true,
+				gw2_failondeathcount = 3,
+				gw2_trytosurvive = true,
+				mapid = 15,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "Ert and Burt Hero point",
+				pos = 
+				{
+					hx = 0.79364436864853,
+					hy = -0.60838198661804,
+					hz = 0,
+					x = -40799.14453125,
+					y = -4767.4833984375,
+					z = -2802.5778808594,
+				},
+				radius = 0,
+				type = "tm_heropoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 44,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+						talkagent = 
+						{
+							character = true,
+							contentid = 45413,
+							gadget = false,
+							name = "Chhk der Windm\xc3\xbchlenk\xc3\xb6nig",
+						},
+						talksteps = 
+						{
+							0,
+						},
+						talktype = "Index",
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Talk",
+						type = "tm_st_talk",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 45413,
+								gadget = false,
+								name = "Chhk der Windm\xc3\xbchlenk\xc3\xb6nig",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill",
+						type = "tm_st_killspecific",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 15,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 0,
+				name = "Chhk the Windmill King Hero Point",
+				pos = 
+				{
+					hx = 0.29341652989388,
+					hy = 0.95598471164703,
+					hz = 0,
+					x = 1282.6838378906,
+					y = 6839.7836914063,
+					z = -2323.97265625,
+				},
+				radius = 0,
+				type = "tm_heropoint",
 			},
 			version = 0,
 		},
@@ -4379,7 +4505,7 @@ local tbl =
 				mapid = 15,
 				maxduration = 0,
 				maxlevel = 80,
-				minlevel = 0,
+				minlevel = 11,
 				name = "Carnie Jeb hero Challenge",
 				pos = 
 				{
