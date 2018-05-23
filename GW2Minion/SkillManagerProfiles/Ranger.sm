@@ -12,17 +12,17 @@ local tbl =
 				{
 					
 					{
-						operator = 4,
-						uid = "Power",
-						value = 100,
-					},
-					
-					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
 						value = 85,
+					},
+					
+					{
+						operator = 4,
+						uid = "Power",
+						value = 100,
 					}, 
 					casttarget = 2,
 				},
@@ -146,18 +146,18 @@ local tbl =
 				{
 					
 					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
 						count = 2,
 						distance = 500,
 						operator = 4,
 						target = 2,
 						type = 1,
 						uid = "Entities In Range",
-					},
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
@@ -165,18 +165,18 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 400,
-					},
-					
-					{
 						healthtype = 3,
 						operator = 1,
 						target = 1,
 						uid = "Health",
 						value = 75,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 400,
 					}, 
 					casttarget = 1,
 				},
@@ -404,7 +404,7 @@ local tbl =
 			},
 			id = 31914,
 			instantcast = false,
-			requireslos = true,
+			requireslos = false,
 			setsattackrange = false,
 			skillpaletteuid = "Ranger",
 		},
@@ -620,6 +620,30 @@ local tbl =
 		},
 		
 		{
+			activationtime = 0.5,
+			condition_luacode = "return true",
+			conditions = 
+			{
+				
+				{
+					
+					{
+						operator = 2,
+						target = 1,
+						uid = "Distance",
+						value = 185,
+					}, 
+					casttarget = 1,
+				},
+			},
+			id = 12482,
+			instantcast = false,
+			requireslos = true,
+			setsattackrange = true,
+			skillpaletteuid = "Ranger_Sword_Mainhand",
+		},
+		
+		{
 			activationtime = 2.5,
 			condition_luacode = "return true",
 			conditions = 
@@ -652,18 +676,18 @@ local tbl =
 				{
 					
 					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
+					},
+					
+					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
 						value = 80,
-					},
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1500,
 					}, 
 					casttarget = 1,
 				},
@@ -695,17 +719,17 @@ local tbl =
 				{
 					
 					{
-						operator = 2,
-						target = 2,
-						uid = "Distance",
-						value = 900,
-					},
-					
-					{
 						buff = 727,
 						operator = 1,
 						target = 3,
 						uid = "Buff (Name)",
+					},
+					
+					{
+						operator = 2,
+						target = 2,
+						uid = "Distance",
+						value = 900,
 					}, 
 					casttarget = 3,
 				},
@@ -745,18 +769,18 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 1500,
-					},
-					
-					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
 						value = 85,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 1500,
 					}, 
 					casttarget = 2,
 				},
@@ -854,30 +878,6 @@ local tbl =
 		},
 		
 		{
-			activationtime = 0.5,
-			condition_luacode = "return true",
-			conditions = 
-			{
-				
-				{
-					
-					{
-						operator = 2,
-						target = 1,
-						uid = "Distance",
-						value = 130,
-					}, 
-					casttarget = 1,
-				},
-			},
-			id = 12482,
-			instantcast = false,
-			requireslos = true,
-			setsattackrange = true,
-			skillpaletteuid = "Ranger_Sword_Mainhand",
-		},
-		
-		{
 			activationtime = 0.75,
 			condition_luacode = "return true",
 			conditions = 
@@ -940,17 +940,17 @@ local tbl =
 					},
 					
 					{
-						buff = 1187,
-						operator = 2,
-						target = 2,
-						uid = "Buff (Name)",
-					},
-					
-					{
 						operator = 1,
 						target = 1,
 						uid = "Distance",
 						value = 550,
+					},
+					
+					{
+						buff = 1187,
+						operator = 2,
+						target = 2,
+						uid = "Buff (Name)",
 					}, 
 					casttarget = 1,
 				},
@@ -1817,17 +1817,17 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					},
-					
-					{
 						healthtype = 3,
 						operator = 1,
 						target = 1,
 						uid = "Health",
 						value = 90,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
 					},
 					
 					{
@@ -1855,14 +1855,6 @@ local tbl =
 				{
 					
 					{
-						healthtype = 3,
-						operator = 1,
-						target = 2,
-						uid = "Health",
-						value = 90,
-					},
-					
-					{
 						operator = 1,
 						target = 1,
 						uid = "Distance",
@@ -1873,6 +1865,14 @@ local tbl =
 						operator = 1,
 						target = 2,
 						uid = "Aggro",
+					},
+					
+					{
+						healthtype = 3,
+						operator = 1,
+						target = 2,
+						uid = "Health",
+						value = 90,
 					},
 					
 					{
@@ -1899,16 +1899,16 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
-					},
-					
-					{
 						buff = 872,
 						operator = 1,
 						target = 2,
 						uid = "Buff (Name)",
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
@@ -1917,9 +1917,8 @@ local tbl =
 					
 					{
 						operator = 1,
-						target = 2,
-						uid = "Distance",
-						value = 575,
+						target = 3,
+						uid = "Pet",
 					},
 					
 					{
@@ -1932,8 +1931,9 @@ local tbl =
 					
 					{
 						operator = 1,
-						target = 3,
-						uid = "Pet",
+						target = 2,
+						uid = "Distance",
+						value = 575,
 					}, 
 					casttarget = 3,
 				},
@@ -1954,16 +1954,16 @@ local tbl =
 				{
 					
 					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
 						buff = 872,
 						operator = 1,
 						target = 2,
 						uid = "Buff (Name)",
-					},
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
@@ -2052,14 +2052,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1600,
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 1600,
+						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
@@ -2082,14 +2082,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 1550,
+						uid = "CombatState",
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1550,
 					}, 
 					casttarget = 2,
 				},
@@ -2112,14 +2112,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 1500,
+						uid = "CombatState",
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1500,
 					},
 					
 					{
@@ -2173,14 +2173,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 270,
+						uid = "CombatState",
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 270,
 					}, 
 					casttarget = 2,
 				},
@@ -2203,14 +2203,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 400,
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 400,
+						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
@@ -2279,14 +2279,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 600,
+						uid = "CombatState",
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 600,
 					}, 
 					casttarget = 2,
 				},
@@ -2513,14 +2513,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 130,
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 130,
+						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
@@ -2585,14 +2585,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 240,
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 240,
+						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
@@ -2797,14 +2797,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 450,
+						uid = "CombatState",
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 450,
 					}, 
 					casttarget = 2,
 				},
@@ -2918,17 +2918,17 @@ local tbl =
 				{
 					
 					{
+						operator = 1,
+						target = 1,
+						uid = "CombatState",
+					},
+					
+					{
 						healthtype = 3,
 						operator = 2,
 						target = 2,
 						uid = "Health",
 						value = 80,
-					},
-					
-					{
-						operator = 1,
-						target = 1,
-						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
@@ -3094,14 +3094,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 600,
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 600,
+						uid = "CombatState",
 					}, 
 					casttarget = 2,
 				},
@@ -3334,14 +3334,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 1500,
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 1500,
+						uid = "CombatState",
 					}, 
 					casttarget = 1,
 				},
@@ -3519,18 +3519,18 @@ local tbl =
 				{
 					
 					{
-						operator = 1,
-						target = 1,
-						uid = "Distance",
-						value = 235,
-					},
-					
-					{
 						healthtype = 3,
 						operator = 1,
 						target = 2,
 						uid = "Health",
 						value = 80,
+					},
+					
+					{
+						operator = 1,
+						target = 1,
+						uid = "Distance",
+						value = 235,
 					}, 
 					casttarget = 2,
 				},
@@ -3553,14 +3553,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 180,
+						uid = "CombatState",
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 180,
 					}, 
 					casttarget = 2,
 				},
@@ -3583,14 +3583,14 @@ local tbl =
 					{
 						operator = 1,
 						target = 1,
-						uid = "Distance",
-						value = 180,
+						uid = "CombatState",
 					},
 					
 					{
 						operator = 1,
 						target = 1,
-						uid = "CombatState",
+						uid = "Distance",
+						value = 180,
 					}, 
 					casttarget = 2,
 				},
@@ -3826,7 +3826,7 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 1500,
+						value = 1525,
 					}, 
 					casttarget = 1,
 				},
@@ -3874,7 +3874,7 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 130,
+						value = 185,
 					}, 
 					casttarget = 1,
 				},
@@ -3898,7 +3898,7 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 130,
+						value = 185,
 					}, 
 					casttarget = 1,
 				},
@@ -3922,7 +3922,7 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 130,
+						value = 185,
 					}, 
 					casttarget = 1,
 				},
@@ -3946,7 +3946,7 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 130,
+						value = 185,
 					}, 
 					casttarget = 1,
 				},
@@ -3970,7 +3970,7 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 130,
+						value = 185,
 					}, 
 					casttarget = 1,
 				},
@@ -3994,7 +3994,7 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 130,
+						value = 185,
 					}, 
 					casttarget = 1,
 				},
@@ -4018,7 +4018,7 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 130,
+						value = 185,
 					}, 
 					casttarget = 1,
 				},
@@ -4234,7 +4234,7 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 130,
+						value = 185,
 					}, 
 					casttarget = 1,
 				},
@@ -4258,7 +4258,7 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 130,
+						value = 185,
 					}, 
 					casttarget = 1,
 				},
@@ -4282,7 +4282,7 @@ local tbl =
 						operator = 1,
 						target = 1,
 						uid = "Distance",
-						value = 130,
+						value = 185,
 					}, 
 					casttarget = 1,
 				},
