@@ -37,7 +37,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Soraa Draa",
+				name = "Soren Draa (Waypoint)",
 				pos = 
 				{
 					hx = -0.62960565090179,
@@ -79,7 +79,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Terranexik-Labor",
+				name = "Terranexic Lab (POI)",
 				pos = 
 				{
 					hx = 0.13837625086308,
@@ -122,7 +122,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[Vista] Wildflammenh\xc3\xb6hlen",
+				name = "Wildflame Carverns (Vista)",
 				pos = 
 				{
 					hx = -0.87114310264587,
@@ -385,7 +385,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 1",
+				name = "Support Doola (Heart)",
 				pos = 
 				{
 					hx = 0.86134678125381,
@@ -427,7 +427,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Schlachtfeldplatz",
+				name = "Battlebround Plaza (POI)",
 				pos = 
 				{
 					hx = 0.8155152797699,
@@ -469,7 +469,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Hydron-Einheit",
+				name = "Hydrone Unit (Waypoint)",
 				pos = 
 				{
 					hx = 0.55438262224197,
@@ -512,7 +512,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[Vista] Incinergen-Labor",
+				name = "Incinergen Labs (Vista)",
 				pos = 
 				{
 					hx = -0.30815559625626,
@@ -554,7 +554,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Incinergen-Labor",
+				name = "Incinergen Labs (POI)",
 				pos = 
 				{
 					hx = -0.65303814411163,
@@ -596,7 +596,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Splorge Metamystik-Labor",
+				name = "Splorge Metamysic Labs (POI)",
 				pos = 
 				{
 					hx = 0.63003408908844,
@@ -639,7 +639,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[Vista] Splorge Metamystik-Labor",
+				name = "Splorge Metamysic Labs (Vista)",
 				pos = 
 				{
 					hx = 0.27865308523178,
@@ -1041,7 +1041,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 2",
+				name = "Assist Professor Gahf (Heart)",
 				pos = 
 				{
 					hx = 0.56587570905685,
@@ -1083,7 +1083,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Aeronotek-Labor",
+				name = "Aeronotics Lab (POI)",
 				pos = 
 				{
 					hx = -0.17994946241379,
@@ -1125,7 +1125,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Das Optikalium",
+				name = "The Opticalium (POI)",
 				pos = 
 				{
 					hx = 0.18675415217876,
@@ -1332,7 +1332,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 3",
+				name = "Assist the Opticalium (Heart)",
 				pos = 
 				{
 					hx = 0.60633903741837,
@@ -1374,7 +1374,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Jeztar-F\xc3\xa4lle",
+				name = "Jeztar Falls  (Waypoint)",
 				pos = 
 				{
 					hx = 0.96889299154282,
@@ -1416,7 +1416,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Incomp-Optik",
+				name = "Incomp Optics (POI)",
 				pos = 
 				{
 					hx = -0.78395050764084,
@@ -1536,100 +1536,142 @@ local tbl =
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 26761,
 								gadget = true,
+								maxinteract = 1,
 								name = "Elektrische Verzerrung",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 18431,
 								gadget = true,
+								maxinteract = 1,
 								name = "Elektrische Verzerrung",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 10934,
 								gadget = true,
+								maxinteract = 1,
 								name = "Elektrische Verzerrung",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 15953,
 								gadget = true,
+								maxinteract = 1,
 								name = "Elektrische Verzerrung",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 27020,
 								gadget = true,
+								maxinteract = 1,
 								name = "SCHROTT 80-T",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 4992,
 								gadget = true,
+								maxinteract = 1,
 								name = "Elektrische Verzerrung",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 20013,
 								gadget = true,
+								maxinteract = 1,
 								name = "Elektrische Verzerrung",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 9580,
 								gadget = true,
+								maxinteract = 1,
 								name = "SCHROTT 80-T",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 9974,
 								gadget = true,
+								maxinteract = 1,
 								name = "Elektrische Verzerrung",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 15257,
 								gadget = true,
+								maxinteract = 1,
 								name = "Elektrische Verzerrung",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 17508,
 								gadget = true,
+								maxinteract = 1,
 								name = "SCHROTT 80-T",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 4429,
 								gadget = true,
+								maxinteract = 1,
 								name = "SCHROTT 80-T",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 7521,
 								gadget = true,
+								maxinteract = 1,
 								name = "Elektrische Verzerrung",
+								oncepertarget = false,
 							},
 							
 							{
 								character = false,
+								closedialog = true,
 								contentid = 10698,
 								gadget = true,
+								maxinteract = 1,
 								name = "SCHROTT 80-T",
+								oncepertarget = false,
 							},
 						},
 					},
@@ -1674,7 +1716,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 4",
+				name = "Assist Reasearcher Kaii (Heart)",
 				pos = 
 				{
 					hx = 0.58559602499008,
@@ -1716,7 +1758,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Aquannianische Forschergruppe",
+				name = "Aquannian Research Group (POI)",
 				pos = 
 				{
 					hx = -0.97447687387466,
@@ -1758,7 +1800,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] PR&T Esoterik",
+				name = "PR&T Esoterics (POI)",
 				pos = 
 				{
 					hx = -0.32302415370941,
@@ -1942,7 +1984,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 4",
+				name = "Assist PR&T Esoterics (Heart)",
 				pos = 
 				{
 					hx = 0.93575406074524,
@@ -2051,7 +2093,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Utcua",
+				name = "Utcua (Hero)",
 				pos = 
 				{
 					hx = 0.87226289510727,
@@ -2233,7 +2275,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 5",
+				name = "Help Bloop (Heart)",
 				pos = 
 				{
 					hx = 0.44027775526047,
@@ -2275,7 +2317,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Durotl-Gr\xc3\xbcnde",
+				name = "Durotl Ground (POI)",
 				pos = 
 				{
 					hx = 0.1302105486393,
@@ -2317,7 +2359,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Loch",
+				name = "Loch (Waypoint)",
 				pos = 
 				{
 					hx = -0.75931864976883,
@@ -2513,7 +2555,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 6",
+				name = "Help Shoon (Heart)",
 				pos = 
 				{
 					hx = -0.99632197618484,
@@ -2608,7 +2650,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Spukhaus ",
+				name = "Arcanic Interfernmeter (Hero)",
 				pos = 
 				{
 					hx = -0.82117533683777,
@@ -2650,7 +2692,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Alte Golem-Fabrik",
+				name = "Old Golem Factory (Waypoint)",
 				pos = 
 				{
 					hx = -0.23124873638153,
@@ -2692,7 +2734,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Rana-Anlegestellenkomplex",
+				name = "Rana Landing Complex (Waypoint)",
 				pos = 
 				{
 					hx = -0.4586763381958,
@@ -2734,7 +2776,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Brill-Allianz-Labor",
+				name = "Brill Alliance Labs (POI)",
 				pos = 
 				{
 					hx = -0.8036447763443,
@@ -2777,7 +2819,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[Vista] Brill-Allianz-Labor",
+				name = "Brill Alliance Labs (Vista)",
 				pos = 
 				{
 					hx = -0.74203056097031,
@@ -2818,26 +2860,6 @@ local tbl =
 						enabled = true,
 						name = "Fight aggro",
 						type = "tm_st_fightaggro",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						hqchecktimer = 180,
-						hqid = 324,
-						hqpos = 
-						{
-							x = 0,
-							y = 0,
-							z = 0,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Check HQ status",
-						type = "tm_st_hqstatus",
 					},
 				},
 				
@@ -3074,6 +3096,26 @@ local tbl =
 						type = "tm_st_movetomultiple",
 					},
 				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 324,
+						hqpos = 
+						{
+							x = 0,
+							y = 0,
+							z = 0,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ status",
+						type = "tm_st_hqstatus",
+					},
+				},
 			},
 			taskProperties = 
 			{
@@ -3086,7 +3128,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 7 (Nav Position Fixed) ",
+				name = "Help Brill (Heart)",
 				pos = 
 				{
 					hx = 0.28626844286919,
@@ -3128,7 +3170,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Desider Atum",
+				name = "Desider Atum (Waypoint)",
 				pos = 
 				{
 					hx = -0.39235496520996,
@@ -3170,7 +3212,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Dr.Bleents Lager",
+				name = "Dr.Bleents Enacampment (POI)",
 				pos = 
 				{
 					hx = 0.8231400847435,
@@ -3385,7 +3427,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 8",
+				name = "Help Hrouda (Heart)",
 				pos = 
 				{
 					hx = 0.8231400847435,
@@ -3427,7 +3469,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Akk-Wildnis",
+				name = "Akk Wilds (Waypoint)",
 				pos = 
 				{
 					hx = 0.66177570819855,
@@ -3474,41 +3516,24 @@ local tbl =
 				{
 					customProperties = 
 					{
-						hqchecktimer = 180,
-						hqid = 326,
-						hqpos = 
-						{
-							x = 0,
-							y = 0,
-							z = 0,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Check HQ status",
-						type = "tm_st_hqstatus",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
 						targets = 
 						{
 							
 							{
 								character = false,
+								closedialog = false,
 								contentid = 2412,
 								gadget = true,
+								maxinteract = 1,
 								name = "Portalst\xc3\xbcck",
+								oncepertarget = false,
 							},
 						},
 					},
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Portalst\xc3\xbcck benutzen",
+						name = "Interact",
 						type = "tm_st_interact",
 					},
 				},
@@ -3633,6 +3658,26 @@ local tbl =
 						type = "tm_st_movetomultiple",
 					},
 				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 326,
+						hqpos = 
+						{
+							x = 0,
+							y = 0,
+							z = 0,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ status",
+						type = "tm_st_hqstatus",
+					},
+				},
 			},
 			taskProperties = 
 			{
@@ -3645,7 +3690,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 9",
+				name = "Assist Parnna (Heart)",
 				pos = 
 				{
 					hx = -0.79440838098526,
@@ -3687,7 +3732,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Parnnas Tor",
+				name = "Parnna's Gate (POI)",
 				pos = 
 				{
 					hx = 0.83637619018555,
@@ -3763,7 +3808,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[Vista] Sonnenschirm-H\xc3\xb6hlen",
+				name = "Sunshade Caves (Vista)",
 				pos = 
 				{
 					hx = 0.22649471461773,
@@ -3790,48 +3835,31 @@ local tbl =
 			},
 			pretasks = 
 			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 35,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[PoI] Oolas altes Labor",
-				pos = 
+				
 				{
-					hx = 0.51675885915756,
-					hy = -0.65268725156784,
-					hz = 0.55403941869736,
-					x = 26055.3828125,
-					y = -7652.2602539063,
-					z = -951.42364501953,
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = true,
+								contentid = 23192,
+								gadget = true,
+								maxinteract = 1,
+								name = "",
+								oncepertarget = true,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Interact",
+						type = "tm_st_interact",
+					},
 				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 40,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
 			},
 			subtasks = 
 			{
@@ -3902,7 +3930,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Oola (no terminal added)",
+				name = "Oola (Hero)",
 				pos = 
 				{
 					hx = 0.44851794838905,
@@ -3914,6 +3942,48 @@ local tbl =
 				},
 				radius = 0,
 				type = "tm_heropoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 40,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 35,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Old Oola Lab (POI)",
+				pos = 
+				{
+					hx = 0.51675885915756,
+					hy = -0.65268725156784,
+					hz = 0.55403941869736,
+					x = 26055.3828125,
+					y = -7652.2602539063,
+					z = -951.42364501953,
+				},
+				radius = 0,
+				type = "tm_moveto",
 			},
 			version = 0,
 		},
@@ -3944,7 +4014,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Cuatl",
+				name = "Cuatl Morass (Waypoint)",
 				pos = 
 				{
 					hx = -0.37626168131828,
@@ -3985,26 +4055,6 @@ local tbl =
 						enabled = true,
 						name = "Fight aggro",
 						type = "tm_st_fightaggro",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						hqchecktimer = 180,
-						hqid = 327,
-						hqpos = 
-						{
-							x = 0,
-							y = 0,
-							z = 0,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Check HQ status",
-						type = "tm_st_hqstatus",
 					},
 				},
 				
@@ -4128,6 +4178,26 @@ local tbl =
 						type = "tm_st_movetomultiple",
 					},
 				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 327,
+						hqpos = 
+						{
+							x = 0,
+							y = 0,
+							z = 0,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ status",
+						type = "tm_st_hqstatus",
+					},
+				},
 			},
 			taskProperties = 
 			{
@@ -4140,7 +4210,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 10",
+				name = "Help the Lionguard (Heart)",
 				pos = 
 				{
 					hx = 0.091239549219608,
@@ -4230,7 +4300,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Guatl-Heilschlamm",
+				name = "Cuatk Health Goo (Hero)",
 				pos = 
 				{
 					hx = -0.10079242289066,
@@ -4273,7 +4343,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[Vista] Desider Atum",
+				name = "Desider Atum (Vista)",
 				pos = 
 				{
 					hx = -0.3609524667263,
@@ -4315,7 +4385,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Altes Flamen-Labor",
+				name = "Old Flamen Lab (POI)",
 				pos = 
 				{
 					hx = 0.81586921215057,
@@ -4357,7 +4427,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Biokessel Alchemie",
+				name = "Biocauldren Alchemics (POI)",
 				pos = 
 				{
 					hx = 0.66237872838974,
@@ -4521,7 +4591,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 11",
+				name = "Help the Michotl (Heart)",
 				pos = 
 				{
 					hx = -0.85600000619888,
@@ -4599,7 +4669,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Verd\xc3\xa4chtiges Steuerpult",
+				name = "Suspicious Control Panel (Hero)",
 				pos = 
 				{
 					hx = 0.067513644695282,
@@ -4641,7 +4711,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Michotl-Gr\xc3\xbcnde",
+				name = "Michotl Grounds (Waypoint)",
 				pos = 
 				{
 					hx = -0.49767428636551,
@@ -4683,7 +4753,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Arterium-Freistatt",
+				name = "Arterium Haven (Waypoint)",
 				pos = 
 				{
 					hx = 0.43811109662056,
@@ -4726,7 +4796,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[Vista] Artergon-W\xc3\xa4lde",
+				name = "Arterium Haven (Vista)",
 				pos = 
 				{
 					hx = -0.61220133304596,
@@ -4768,7 +4838,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] \xc3\x9cberlebendenlager",
+				name = "Survivor's Encampment (Waypoint)",
 				pos = 
 				{
 					hx = 0.47918307781219,
@@ -4967,7 +5037,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 12",
+				name = "Assist the Chaos Krewe (Heart)",
 				pos = 
 				{
 					hx = 0.52055037021637,
@@ -5009,7 +5079,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Armeisenh\xc3\xbcgel",
+				name = "Anthill (Waypoint)",
 				pos = 
 				{
 					hx = -0.25630769133568,
@@ -5051,7 +5121,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Transfertor",
+				name = "Transfer Gate (POI)",
 				pos = 
 				{
 					hx = -0.99984139204025,
@@ -5093,7 +5163,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Innerer Inquestur-Komplex",
+				name = "Inner Inquest Complex (POI)",
 				pos = 
 				{
 					hx = -0.77216547727585,
@@ -5135,7 +5205,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] S.A.U.B.E.R. Station",
+				name = "C.L.E.A.N. Station (POI)",
 				pos = 
 				{
 					hx = 0.34614828228951,
@@ -5178,7 +5248,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[Vista] S.A.U.B.E.R. Station",
+				name = "C.L.E.A.N. Station (Vista)",
 				pos = 
 				{
 					hx = 0.67848044633865,
@@ -5220,7 +5290,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Verbindungsturm Scoln",
+				name = "Conduit Tower Scoln (POI)",
 				pos = 
 				{
 					hx = 0.4612390100956,
@@ -5262,7 +5332,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Muridianisches Hochland",
+				name = "Muridian (Waypoint)",
 				pos = 
 				{
 					hx = -0.97506433725357,
@@ -5304,7 +5374,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Verbindungsturm Nopp",
+				name = "Conduit Tower Nopp (POI)",
 				pos = 
 				{
 					hx = 0.22868412733078,
@@ -5346,7 +5416,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Transformator-Zentrum Kachong",
+				name = "Transformator Hub Kachong (POI)",
 				pos = 
 				{
 					hx = 0.20128726959229,
@@ -5388,7 +5458,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[PoI] Verbindungsturm Blig",
+				name = "Conduit Tower Blig (POI)",
 				pos = 
 				{
 					hx = 0.77291679382324,
@@ -5430,7 +5500,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Artergon (Nav Position Fixed) ",
+				name = "Artergon (Waypoint)",
 				pos = 
 				{
 					hx = -0.41331285238266,
@@ -5779,7 +5849,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 13",
+				name = "Help the Luminates (Heart)",
 				pos = 
 				{
 					hx = -0.99996799230576,
@@ -5857,7 +5927,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Luminate-Werk",
+				name = "Luminates Plant (Hero)",
 				pos = 
 				{
 					hx = 0.61696869134903,
@@ -5899,7 +5969,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[WP] Hexan-Abflachung",
+				name = "Hexane Regrade (Waypoint)",
 				pos = 
 				{
 					hx = -0.68978083133698,
@@ -6112,7 +6182,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 14",
+				name = "Help Peacemaker Owta (Heart)",
 				pos = 
 				{
 					hx = 0.23071804642677,
@@ -6131,52 +6201,9 @@ local tbl =
 		{
 			customProperties = 
 			{
-				fightaggro = true,
 			},
 			lastrun = 0,
 			order = 69,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 35,
-				maxduration = 180,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "[Vista] \xc3\x84u\xc3\x9ferer Inquestur-Komplex",
-				pos = 
-				{
-					hx = -0.26138645410538,
-					hy = 0.50248599052429,
-					hz = 0.82412678003311,
-					x = 13735.581054688,
-					y = 33838.76171875,
-					z = -776.31994628906,
-				},
-				radius = 250,
-				type = "tm_vista",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 70,
 			posttasks = 
 			{
 			},
@@ -6233,7 +6260,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Eis 4444",
+				name = "Black ice 4444 (Hero)",
 				pos = 
 				{
 					hx = -0.0072598257102072,
@@ -6245,6 +6272,49 @@ local tbl =
 				},
 				radius = 0,
 				type = "tm_heropoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				fightaggro = true,
+			},
+			lastrun = 0,
+			order = 70,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 35,
+				maxduration = 180,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Inquest Outer Complex (Vista)",
+				pos = 
+				{
+					hx = -0.26138645410538,
+					hy = 0.50248599052429,
+					hz = 0.82412678003311,
+					x = 13735.581054688,
+					y = 33838.76171875,
+					z = -776.31994628906,
+				},
+				radius = 250,
+				type = "tm_vista",
 			},
 			version = 0,
 		},
@@ -6274,26 +6344,6 @@ local tbl =
 						enabled = true,
 						name = "Fight aggro",
 						type = "tm_st_fightaggro",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						hqchecktimer = 180,
-						hqid = 332,
-						hqpos = 
-						{
-							x = 0,
-							y = 0,
-							z = 0,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Check HQ status",
-						type = "tm_st_hqstatus",
 					},
 				},
 				
@@ -6397,6 +6447,26 @@ local tbl =
 						type = "tm_st_movetomultiple",
 					},
 				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 332,
+						hqpos = 
+						{
+							x = 0,
+							y = 0,
+							z = 0,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ status",
+						type = "tm_st_hqstatus",
+					},
+				},
 			},
 			taskProperties = 
 			{
@@ -6409,7 +6479,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HQ] Level 15",
+				name = "Help the C.L.E.A.N. Krewe (Heart)",
 				pos = 
 				{
 					hx = -0.94395649433136,
@@ -6516,7 +6586,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "[HP] Alte Elementar-Feuer-Energie",
+				name = "Ancient Elemental Fire Energy (Hero)",
 				pos = 
 				{
 					hx = -0.49474588036537,

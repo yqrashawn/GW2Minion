@@ -36,7 +36,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Sojourner's",
+				name = "Sojourner's (Waypoint)",
 				pos = 
 				{
 					hx = 0.99844890832901,
@@ -218,7 +218,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 15 Sojourner's Way",
+				name = "Help Waldo (Heart)",
 				pos = 
 				{
 					hx = 0.87123101949692,
@@ -260,7 +260,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Jannaj's Bandits",
+				name = "Jannaj's Bandits (POI)",
 				pos = 
 				{
 					hx = 0.3165123462677,
@@ -302,7 +302,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Uzolan's Hideout",
+				name = "Uzolan's Hideout (POI)",
 				pos = 
 				{
 					hx = -0.0062045059166849,
@@ -462,15 +462,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 16 Delanian Foothills",
+				name = "Help Lionguard Micah (Heart)",
 				pos = 
 				{
-					hx = -0.86552023887634,
-					hy = -0.027822455391288,
-					hz = 0.50010067224503,
-					x = 37206.60546875,
-					y = 14749.909179688,
-					z = -1690.4547119141,
+					hx = -0.2062138915062,
+					hy = 0.7973193526268,
+					hz = 0.56723690032959,
+					x = 37032.77734375,
+					y = 15050.43359375,
+					z = -1545.7298583984,
 				},
 				radius = 0,
 				type = "tm_hq",
@@ -504,7 +504,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Delanian",
+				name = "Delanian (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -546,7 +546,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Black Haven",
+				name = "Black Haven (POI)",
 				pos = 
 				{
 					hx = 0.59309667348862,
@@ -589,7 +589,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "Vista Delanian Foothills",
+				name = "Delanian Foothills (Vista)",
 				pos = 
 				{
 					hx = -0.11300169676542,
@@ -680,7 +680,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HP Blackroot Cut",
+				name = "Blackroot Cut (Hero)",
 				pos = 
 				{
 					hx = 0.93250715732574,
@@ -722,7 +722,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Barnaby's Watch",
+				name = "Barnaby's Watch (POI)",
 				pos = 
 				{
 					hx = -0.5298912525177,
@@ -848,7 +848,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 17 Earthlord's Gap",
+				name = "Help Guard Barnaby (Heart)",
 				pos = 
 				{
 					hx = -0.43818613886833,
@@ -890,7 +890,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Cavernhold Camp",
+				name = "Cavernhold Camp (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -933,7 +933,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "Vista Earthworks Bluff",
+				name = "Earthworks Bluff (Vista)",
 				pos = 
 				{
 					hx = 0.55707269906998,
@@ -975,7 +975,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Earthworks Camp",
+				name = "Earthworks Camp (Waypoint)",
 				pos = 
 				{
 					hx = 0.10051775723696,
@@ -1018,7 +1018,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "Vista Giant's Passage",
+				name = "Giant's Passage (Vista)",
 				pos = 
 				{
 					hx = -0.40022054314613,
@@ -1060,7 +1060,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Kessex Haven",
+				name = "Kessex Haven (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -1242,7 +1242,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 18 Triskellion Vale",
+				name = "Help Engineer Gilli (Heart)",
 				pos = 
 				{
 					hx = 0.21248587965965,
@@ -1284,7 +1284,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Quarryside",
+				name = "Quarryside (POI)",
 				pos = 
 				{
 					hx = -0.52273923158646,
@@ -1327,7 +1327,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "Vista Triskellion Vale",
+				name = "Triskellion Vale (Vista)",
 				pos = 
 				{
 					hx = 0.60257035493851,
@@ -1369,7 +1369,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Gap",
+				name = "Gap (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -1411,7 +1411,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Goff's Bandits",
+				name = "Goff's Bandits (POI)",
 				pos = 
 				{
 					hx = -0.655741751194,
@@ -1453,7 +1453,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Greyhoof Camp",
+				name = "Greyhoof Camp (Waypoint)",
 				pos = 
 				{
 					hx = 0.76032269001007,
@@ -1495,7 +1495,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Kenna's Bandits",
+				name = "Kenna's Bandits (POI)",
 				pos = 
 				{
 					hx = 0.91556620597839,
@@ -1537,7 +1537,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Viathan",
+				name = "Viathan (Waypoint)",
 				pos = 
 				{
 					hx = -0.62623816728592,
@@ -1556,52 +1556,9 @@ local tbl =
 		{
 			customProperties = 
 			{
-				hqid = 251,
 			},
 			lastrun = 0,
 			order = 25,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = false,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = false,
-				mapid = 23,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 0,
-				name = "//HQ Level 19 Vithan's Arm",
-				pos = 
-				{
-					hx = -0.8476545214653,
-					hy = 0.086553297936916,
-					hz = 0.52344089746475,
-					x = 6705.8041992188,
-					y = -4076.3781738281,
-					z = -751.97534179688,
-				},
-				radius = 0,
-				type = "tm_hq",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 26,
 			posttasks = 
 			{
 			},
@@ -1622,7 +1579,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Triskell Quay",
+				name = "Triskell Quay (POI)",
 				pos = 
 				{
 					hx = 0.54885011911392,
@@ -1634,6 +1591,132 @@ local tbl =
 				},
 				radius = 0,
 				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 251,
+			},
+			lastrun = 0,
+			order = 26,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					order = 2,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 24546,
+								gadget = true,
+								maxinteract = 1,
+								name = "Toxic Sludge",
+								oncepertarget = false,
+							},
+						},
+					},
+					order = 3,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Interact",
+						type = "tm_st_interact",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 549696,
+								gadget = false,
+								name = "Shark",
+							},
+						},
+					},
+					order = 1,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Kill specific targets",
+						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 120,
+						hqid = 251,
+						hqpos = 
+						{
+							x = 6606.9990234375,
+							y = -4052.9995117188,
+							z = -749.05236816406,
+						},
+					},
+					order = 0,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check HQ status",
+						type = "tm_st_hqstatus",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = false,
+				mapid = 23,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 0,
+				name = "Help the Fishers of Triskell (Heart)",
+				pos = 
+				{
+					hx = -0.10402020066977,
+					hy = 0.8990975022316,
+					hz = -0.42521008849144,
+					x = 6779.294921875,
+					y = -9661.3466796875,
+					z = 1180.4827880859,
+				},
+				radius = 0,
+				type = "tm_hq",
 			},
 			version = 0,
 		},
@@ -1664,7 +1747,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Krait's Larder",
+				name = "Krait's Larder (POI)",
 				pos = 
 				{
 					hx = 0.66607195138931,
@@ -1706,7 +1789,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Overlake Haven",
+				name = "Overlake Haven (Waypoint)",
 				pos = 
 				{
 					hx = 0.43216761946678,
@@ -1860,7 +1943,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 20 Giant's Passage",
+				name = "Assist Overlake (Heart)",
 				pos = 
 				{
 					hx = -0.4249372780323,
@@ -2063,7 +2146,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 21 Dominion Killing Zone",
+				name = "Assist Sangdo (Heart)",
 				pos = 
 				{
 					hx = 0.87129652500153,
@@ -2105,7 +2188,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Mafic's Core",
+				name = "Mafic's Core (POI)",
 				pos = 
 				{
 					hx = 0.13646367192268,
@@ -2147,7 +2230,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Careboth",
+				name = "Careboth (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -2190,7 +2273,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "Vista Careboth Canyon",
+				name = "Careboth Canyon (Vista)",
 				pos = 
 				{
 					hx = 0.15191119909286,
@@ -2232,7 +2315,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Isgarren's View",
+				name = "Isgarren's View (POI)",
 				pos = 
 				{
 					hx = 0.89216560125351,
@@ -2275,7 +2358,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "Vista Wizard's Fief",
+				name = "Wizard's Fief (Vista)",
 				pos = 
 				{
 					hx = 0.75578880310059,
@@ -2375,7 +2458,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 20,
-				name = "HP Wizard's Fief",
+				name = "Wizard's Fief (Hero)",
 				pos = 
 				{
 					hx = 0.98418563604355,
@@ -2417,7 +2500,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Garenhoff",
+				name = "Garenhoff (POI)",
 				pos = 
 				{
 					hx = -0.087304972112179,
@@ -2459,7 +2542,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Darkwound",
+				name = "Darkwound (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -2501,7 +2584,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Gort's Pit",
+				name = "Gort's Pit (POI)",
 				pos = 
 				{
 					hx = -0.37344151735306,
@@ -2587,7 +2670,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HP Draithor's Demesnes",
+				name = "Draithor's Demesnes (Hero)",
 				pos = 
 				{
 					hx = 0.50675940513611,
@@ -2665,7 +2748,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HP Eukaryan Caves",
+				name = "Eukaryan Caves (Hero)",
 				pos = 
 				{
 					hx = -0.31928956508636,
@@ -2844,7 +2927,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 22 Eukaryan Caves",
+				name = "Help Matlal (Heart)",
 				pos = 
 				{
 					hx = -0.50136315822601,
@@ -2886,7 +2969,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Ireko Tradecamp",
+				name = "Ireko Tradecamp (Waypoint)",
 				pos = 
 				{
 					hx = -0.42214202880859,
@@ -2928,7 +3011,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Togatl Grounds",
+				name = "Togatl Grounds (POI)",
 				pos = 
 				{
 					hx = 0.99651789665222,
@@ -2970,7 +3053,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Lair of the Seawitch",
+				name = "Lair of the Seawitch (POI)",
 				pos = 
 				{
 					hx = -0.26039278507233,
@@ -3013,7 +3096,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "Vista Viathan Lake",
+				name = "Viathan Lake (Vista)",
 				pos = 
 				{
 					hx = 0.90839785337448,
@@ -3055,7 +3138,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Tower of Nightmares",
+				name = "Tower of Nightmares (POI)",
 				pos = 
 				{
 					hx = 0.30953815579414,
@@ -3097,7 +3180,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Auld Red Wharf",
+				name = "Auld Red Wharf (POI)",
 				pos = 
 				{
 					hx = 0.87087404727936,
@@ -3244,7 +3327,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 22 Greyhoof Meadows",
+				name = "Help Sargeant Rane (Heart)",
 				pos = 
 				{
 					hx = 0.83361601829529,
@@ -3286,7 +3369,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Fort Salma",
+				name = "Fort Salma (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -3329,7 +3412,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "Vista Fort Salma",
+				name = "Fort Salma (Vista)",
 				pos = 
 				{
 					hx = -0.62376838922501,
@@ -3460,7 +3543,6 @@ local tbl =
 							z = -2511.7023925781,
 						},
 					},
-					order = 4,
 					taskProperties = 
 					{
 						enabled = true,
@@ -3480,7 +3562,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 23 Halacon Cataracts",
+				name = "Aid Fort Salma (Heart)",
 				pos = 
 				{
 					hx = 0.10118030756712,
@@ -3522,7 +3604,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Halacon",
+				name = "Halacon (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -3564,7 +3646,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Wallwatcher Camp",
+				name = "Wallwatcher Camp (POI)",
 				pos = 
 				{
 					hx = -0.80764371156693,
@@ -3606,7 +3688,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Thunder Ridge Camp",
+				name = "Thunder Ridge Camp (POI)",
 				pos = 
 				{
 					hx = -0.89519399404526,
@@ -3809,7 +3891,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 23 Viathan Lake",
+				name = "Help Doolsileep (Heart)",
 				pos = 
 				{
 					hx = -0.74939477443695,
@@ -3851,7 +3933,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Overlord",
+				name = "Overlord (Waypoint)",
 				pos = 
 				{
 					hx = -0.93541324138641,
@@ -3886,7 +3968,6 @@ local tbl =
 					customProperties = 
 					{
 					},
-					order = 1,
 					taskProperties = 
 					{
 						enabled = true,
@@ -3929,7 +4010,6 @@ local tbl =
 							z = -894.90002441406,
 						},
 					},
-					order = 2,
 					taskProperties = 
 					{
 						enabled = true,
@@ -3949,7 +4029,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 23,
-				name = "HP Mermoot Hill",
+				name = "Mermoot Hill (Hero)",
 				pos = 
 				{
 					hx = 0.90959221124649,
@@ -3991,7 +4071,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Shadowheart Site",
+				name = "Shadowheart Site (Waypoint)",
 				pos = 
 				{
 					hx = 0.21555806696415,
@@ -4165,7 +4245,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 22 Lychcroft Mere",
+				name = "Aid the wardens of Shadowheart (Heart)",
 				pos = 
 				{
 					hx = 0.69499105215073,
@@ -4208,7 +4288,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "Vista Lychcroft Mere",
+				name = "Lychcroft Mere (Vista)",
 				pos = 
 				{
 					hx = -0.39572685956955,
@@ -4354,7 +4434,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 24 Viath Shore",
+				name = "Viath Shore (Heart)",
 				pos = 
 				{
 					hx = -0.93909507989883,
@@ -4396,7 +4476,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "PoI Mudbay Digs",
+				name = "Mudbay Digs (POI)",
 				pos = 
 				{
 					hx = -0.054887764155865,
@@ -4521,7 +4601,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Level 25 Overlord's Greatcamp",
+				name = "Help Seraph Soldier (Heart)",
 				pos = 
 				{
 					hx = -0.76440232992172,
