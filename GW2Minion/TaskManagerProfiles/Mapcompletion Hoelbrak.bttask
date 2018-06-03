@@ -37,7 +37,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Peeta's",
+				name = "Peeta's (Waypoint)",
 				pos = 
 				{
 					hx = 0.67560476064682,
@@ -79,7 +79,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Priory Encampment",
+				name = "Priory Encampment (POI)",
 				pos = 
 				{
 					hx = 0.14428925514221,
@@ -122,7 +122,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Upper Balcony",
+				name = "Upper Balcony (Waypoint)",
 				pos = 
 				{
 					hx = -0.075290098786354,
@@ -164,7 +164,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Vigil Billet",
+				name = "Vigil Billet (POI)",
 				pos = 
 				{
 					hx = -0.67261064052582,
@@ -207,7 +207,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Trade Commons",
+				name = "Trade Commons (Waypoint)",
 				pos = 
 				{
 					hx = -0.5115795135498,
@@ -249,7 +249,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - The Great Rise",
+				name = "The Great Rise (POI)",
 				pos = 
 				{
 					hx = 0.45078483223915,
@@ -292,7 +292,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Great Lodge",
+				name = "Great Lodge (Waypoint)",
 				pos = 
 				{
 					hx = -0.44354596734047,
@@ -334,7 +334,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Fang of the Serpent",
+				name = "Fang of the Serpent (POI)",
 				pos = 
 				{
 					hx = -0.52262246608734,
@@ -376,7 +376,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Knut Whitebear's Loft",
+				name = "Knut Whitebear's Loft (POI)",
 				pos = 
 				{
 					hx = 0.29953122138977,
@@ -418,7 +418,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Traveler's Loft",
+				name = "Traveler's Loft (POI)",
 				pos = 
 				{
 					hx = 0.86748898029327,
@@ -461,7 +461,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista",
+				name = "Southern Watchpost (Vista)",
 				pos = 
 				{
 					hx = 0.1546992957592,
@@ -504,7 +504,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Southern Watchpost",
+				name = "Southern Watchpost (Waypoint)",
 				pos = 
 				{
 					hx = 0.52535277605057,
@@ -546,7 +546,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Stoneright's Steading",
+				name = "Stoneright's Steading (POI)",
 				pos = 
 				{
 					hx = -0.23051629960537,
@@ -588,7 +588,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Old Fiach's Lorestead",
+				name = "Old Fiach's Lorestead (POI)",
 				pos = 
 				{
 					hx = 0.11315615475178,
@@ -630,7 +630,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Boasting Hall",
+				name = "Boasting Hall (POI)",
 				pos = 
 				{
 					hx = 0.60063487291336,
@@ -673,7 +673,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista",
+				name = "Eastern Watchpoint (Vista)",
 				pos = 
 				{
 					hx = -0.55430901050568,
@@ -716,7 +716,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Eastern Watchpost",
+				name = "Eastern Watchpost (Waypoint)",
 				pos = 
 				{
 					hx = -0.53979730606079,
@@ -758,7 +758,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Bilrost Gallery",
+				name = "Bilrost Gallery (POI)",
 				pos = 
 				{
 					hx = -0.70373564958572,
@@ -800,7 +800,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Wolf Hallow",
+				name = "Wolf Hallow (POI)",
 				pos = 
 				{
 					hx = -0.49216043949127,
@@ -843,7 +843,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Wolf",
+				name = "Wolf (Waypoint)",
 				pos = 
 				{
 					hx = -0.81484895944595,
@@ -885,7 +885,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Vheratha's Tavern",
+				name = "Vheratha's Tavern (POI)",
 				pos = 
 				{
 					hx = 0.28513556718826,
@@ -928,7 +928,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Legends",
+				name = "Legends (Waypoint)",
 				pos = 
 				{
 					hx = 0.97935461997986,
@@ -970,7 +970,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Lost Spirit's Hallow",
+				name = "Lost Spirit's Hallow (POI)",
 				pos = 
 				{
 					hx = 0.8406571149826,
@@ -1013,7 +1013,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista",
+				name = "Bear Lodge (Vista)",
 				pos = 
 				{
 					hx = -0.42529940605164,
@@ -1056,7 +1056,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Bear",
+				name = "Bear (Waypoint)",
 				pos = 
 				{
 					hx = -0.76142328977585,
@@ -1098,7 +1098,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Bear Hallow",
+				name = "Bear Hallow (POI)",
 				pos = 
 				{
 					hx = 0.68240314722061,
@@ -1140,7 +1140,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Skarti's Steading",
+				name = "Skarti's Steading (POI)",
 				pos = 
 				{
 					hx = -0.48560982942581,
@@ -1183,7 +1183,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Shelter Rock",
+				name = "Shelter Rock (Waypoint)",
 				pos = 
 				{
 					hx = -0.080260686576366,
@@ -1225,7 +1225,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Master Blackforge's Steading",
+				name = "Master Blackforge's Steading (POI)",
 				pos = 
 				{
 					hx = 0.23873360455036,
@@ -1267,7 +1267,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Sigfast's Steading",
+				name = "Sigfast's Steading (POI)",
 				pos = 
 				{
 					hx = -0.27737075090408,
@@ -1309,7 +1309,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "POI - Brawler's Bout",
+				name = "Brawler's Bout (POI)",
 				pos = 
 				{
 					hx = 0.081063158810139,
@@ -1352,7 +1352,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Might and Main",
+				name = "Might and Main (Waypoint)",
 				pos = 
 				{
 					hx = -0.44182655215263,
@@ -1395,7 +1395,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Raven",
+				name = "Raven (Waypoint)",
 				pos = 
 				{
 					hx = -0.25014957785606,
@@ -1437,7 +1437,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Raven Hearth",
+				name = "Raven Hearth (POI)",
 				pos = 
 				{
 					hx = -0.57135742902756,
@@ -1479,7 +1479,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Raven Hallow",
+				name = "Raven Hallow (POI)",
 				pos = 
 				{
 					hx = 0.17151793837547,
@@ -1522,7 +1522,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Snow Leapard",
+				name = "Snow Leapard (Waypoint)",
 				pos = 
 				{
 					hx = 0.99743634462357,
@@ -1564,7 +1564,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Snow Leapord Hallow",
+				name = "Snow Leapord Hallow (POI)",
 				pos = 
 				{
 					hx = -0.49988830089569,
@@ -1607,7 +1607,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista",
+				name = "Raven Lodge (Vista)",
 				pos = 
 				{
 					hx = -0.6668661236763,
@@ -1649,7 +1649,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Dragon Hallow",
+				name = "Dragon Hallow (POI)",
 				pos = 
 				{
 					hx = 0.17052598297596,
@@ -1692,7 +1692,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "WP - Hero's Compass",
+				name = "Hero's Compass (Waypoint)",
 				pos = 
 				{
 					hx = -0.17437213659286,
@@ -1734,7 +1734,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Courage Brewery",
+				name = "Courage Brewery (POI)",
 				pos = 
 				{
 					hx = 0.3386167883873,
@@ -1776,7 +1776,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "POI - Hrothbeir's Rest",
+				name = "Hrothbeir's Rest (POI)",
 				pos = 
 				{
 					hx = -0.34074532985687,
@@ -1816,10 +1816,10 @@ local tbl =
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
 				mapid = 326,
-				maxduration = 0,
+				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "vista",
+				name = "Lake Mourn (Vista)",
 				pos = 
 				{
 					hx = 0.26522612571716,

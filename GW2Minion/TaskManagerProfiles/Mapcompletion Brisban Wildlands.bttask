@@ -13,10 +13,53 @@ local tbl =
 		{
 			customProperties = 
 			{
-				hqid = 311,
+				waypointid = 93,
 			},
 			lastrun = 0,
 			order = 1,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 54,
+				maxduration = 0,
+				maxlevel = 80,
+				minlevel = 15,
+				name = "Wendon (Waypoint)",
+				pos = 
+				{
+					hx = 1,
+					hy = 0,
+					hz = 0,
+					x = 38094.78125,
+					y = 25535.970703125,
+					z = -2213.3234863281,
+				},
+				radius = 0,
+				type = "tm_discoverwaypoint",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 311,
+			},
+			lastrun = 0,
+			order = 2,
 			posttasks = 
 			{
 			},
@@ -53,7 +96,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -239,7 +282,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Help The Seryph",
+				name = "Help The Seryph (Heart)",
 				pos = 
 				{
 					hx = 0.30023449659348,
@@ -251,49 +294,6 @@ local tbl =
 				},
 				radius = 0,
 				type = "tm_hq",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-				waypointid = 93,
-			},
-			lastrun = 0,
-			order = 2,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = true,
-				mapid = 54,
-				maxduration = 0,
-				maxlevel = 80,
-				minlevel = 15,
-				name = "WP Wendon ",
-				pos = 
-				{
-					hx = 1,
-					hy = 0,
-					hz = 0,
-					x = 38094.78125,
-					y = 25535.970703125,
-					z = -2213.3234863281,
-				},
-				radius = 0,
-				type = "tm_discoverwaypoint",
 			},
 			version = 0,
 		},
@@ -324,7 +324,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Willem's Bandits",
+				name = "Willem's Bandits (POI)",
 				pos = 
 				{
 					hx = 0.31774523854256,
@@ -366,7 +366,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Seryph Protectors",
+				name = "Seryph Protectors (POI)",
 				pos = 
 				{
 					hx = 0.12394274771214,
@@ -408,7 +408,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Beldame's Rise",
+				name = "Beldame's Rise (POI)",
 				pos = 
 				{
 					hx = -0.48416131734848,
@@ -450,7 +450,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Revered Terebinth",
+				name = "Revered Terebinth (POI)",
 				pos = 
 				{
 					hx = -0.452308177948,
@@ -493,7 +493,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "WP Watchful Source ",
+				name = "Watchful Source (Waypoint)",
 				pos = 
 				{
 					hx = 0.31988418102264,
@@ -552,7 +552,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -717,15 +717,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Thwart The Nighmare Court",
+				name = "Thwart The Nighmare Court (Heart)",
 				pos = 
 				{
-					hx = -0.087832182645798,
-					hy = 0.99613529443741,
-					hz = 0,
-					x = 38694.28125,
-					y = -15118.529296875,
-					z = -2869.17578125,
+					hx = 0.035903949290514,
+					hy = 0.89395117759705,
+					hz = 0.44672381877899,
+					x = 38701.05859375,
+					y = -12321.2421875,
+					z = -1414.1989746094,
 				},
 				radius = 0,
 				type = "tm_hq",
@@ -759,7 +759,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Joy's End",
+				name = "Joy's End (POI)",
 				pos = 
 				{
 					hx = -0.39026167988777,
@@ -818,7 +818,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -912,7 +912,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Help Leigheara",
+				name = "Help Leigheara (Heart)",
 				pos = 
 				{
 					hx = 0.26899942755699,
@@ -955,7 +955,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "Vista Nemeton Grove",
+				name = "Nemeton Grove (Vista)",
 				pos = 
 				{
 					hx = -0.60394322872162,
@@ -998,7 +998,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "WP Mrot Boru",
+				name = "Mrot Boru (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -1041,7 +1041,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "Vista Venlin Vale",
+				name = "Venlin Vale (Vista)",
 				pos = 
 				{
 					hx = -0.87715876102448,
@@ -1100,7 +1100,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ Status",
+						name = "Check Status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -1277,7 +1277,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Aethervolt Researchers",
+				name = "Aethervolt Researchers (Heart)",
 				pos = 
 				{
 					hx = 0.063387893140316,
@@ -1319,7 +1319,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Aethervolt Lab",
+				name = "Aethervolt Lab (POI)",
 				pos = 
 				{
 					hx = 0.95255303382874,
@@ -1378,7 +1378,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -1564,7 +1564,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Keep The Inquest From Endangering Mrot Boru ",
+				name = "Keep The Inquest From Endangering Mrot Boru (Heart)",
 				pos = 
 				{
 					hx = 0.39009162783623,
@@ -1606,7 +1606,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Inavariant Base",
+				name = "Inavariant Base (POI)",
 				pos = 
 				{
 					hx = 0.046433366835117,
@@ -1649,7 +1649,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 0,
-				name = "Vista Koga Ruins",
+				name = "Koga Ruins (Vista)",
 				pos = 
 				{
 					hx = -0.094698220491409,
@@ -1692,7 +1692,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "WP Mirkrise",
+				name = "Mirkrise (Waypoint)",
 				pos = 
 				{
 					hx = -0.39588582515717,
@@ -1735,7 +1735,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "Vista The Shattered Henge",
+				name = "The Shattered Henge (Vista)",
 				pos = 
 				{
 					hx = 0.31352278590202,
@@ -1778,7 +1778,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "WP Ulta Metamagicals",
+				name = "Ulta Metamagicals (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -1820,7 +1820,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Engrav Exploration Post",
+				name = "Engrav Exploration Post (POI)",
 				pos = 
 				{
 					hx = -0.10819057375193,
@@ -1863,7 +1863,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "WP Britiline",
+				name = "Britiline (Waypoint)",
 				pos = 
 				{
 					hx = -0.99261891841888,
@@ -1905,7 +1905,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Breean's Bandits",
+				name = "Breean's Bandits (POI)",
 				pos = 
 				{
 					hx = -0.50993210077286,
@@ -1947,7 +1947,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Angelan's Bandits",
+				name = "Angelan's Bandits (POI)",
 				pos = 
 				{
 					hx = -0.45088881254196,
@@ -1989,7 +1989,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Skrittsatawney",
+				name = "Skrittsatawney (POI)",
 				pos = 
 				{
 					hx = -0.90705436468124,
@@ -2032,7 +2032,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "Vista Gotala Cascade",
+				name = "Gotala Cascade (Vista)",
 				pos = 
 				{
 					hx = -0.86948442459106,
@@ -2074,7 +2074,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Ogotl Grounds",
+				name = "Ogotl Grounds (POI)",
 				pos = 
 				{
 					hx = -0.30688399076462,
@@ -2117,7 +2117,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "WP Tunnels  ",
+				name = "Tunnels (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -2176,7 +2176,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -2297,7 +2297,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Help The Skritt",
+				name = "Help The Skritt (Heart)",
 				pos = 
 				{
 					hx = -0.80045628547668,
@@ -2340,7 +2340,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "Vista Skrittsburgh Tunnels",
+				name = "Skrittsburgh Tunnels (Vista)",
 				pos = 
 				{
 					hx = -0.10113541781902,
@@ -2383,7 +2383,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "WP Hillstead",
+				name = "Hillstead (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -2442,7 +2442,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -2589,7 +2589,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Help The Grub Farmers",
+				name = "Help The Grub Farmers (Heart)",
 				pos = 
 				{
 					hx = -0.52032446861267,
@@ -2632,7 +2632,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "WP Eastend",
+				name = "Eastend (Waypoint)",
 				pos = 
 				{
 					hx = 1,
@@ -2691,7 +2691,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -2826,7 +2826,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Help The Skritt Defend Skrittsburgh East End",
+				name = "Help The Skritt Defend Skrittsburgh East End (Heart)",
 				pos = 
 				{
 					hx = 0.85606867074966,
@@ -2885,7 +2885,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -3055,7 +3055,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Hinder Scotta's Bandits",
+				name = "Hinder Scotta's Bandits (Heart)",
 				pos = 
 				{
 					hx = -0.92175042629242,
@@ -3097,7 +3097,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Scotta's Bandits",
+				name = "Scotta's Bandits (POI)",
 				pos = 
 				{
 					hx = -0.73981189727783,
@@ -3140,7 +3140,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "WP Seryph Observers",
+				name = "Seryph Observers (Waypoint)",
 				pos = 
 				{
 					hx = -0.85148847103119,
@@ -3183,7 +3183,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "Vista Hidden Lake North (Nav Mesh Fixed)",
+				name = "Hidden Lake North (Vista)",
 				pos = 
 				{
 					hx = -0.75939065217972,
@@ -3242,7 +3242,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -3505,7 +3505,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Help The Conered Spies At Seraph Observers",
+				name = "Help The Conered Spies At Seraph Observers (Heart)",
 				pos = 
 				{
 					hx = -0.93634289503098,
@@ -3548,7 +3548,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "WP Gallowfields",
+				name = "Gallowfields (Waypoint)",
 				pos = 
 				{
 					hx = 0.88235872983932,
@@ -3590,7 +3590,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Plunders Hold",
+				name = "Plunders Hold (POI)",
 				pos = 
 				{
 					hx = 0.13761876523495,
@@ -3649,7 +3649,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -3794,6 +3794,16 @@ local tbl =
 								name = "Bandit Battle Orders",
 								oncepertarget = false,
 							},
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 27535,
+								gadget = true,
+								maxinteract = 1,
+								name = "Bandit Battle Orders",
+								oncepertarget = false,
+							},
 						},
 					},
 					taskProperties = 
@@ -3815,7 +3825,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Infiltrate and disrupt",
+				name = "Infiltrate and disrupt (Heart)",
 				pos = 
 				{
 					hx = -0.79434663057327,
@@ -3856,26 +3866,6 @@ local tbl =
 						enabled = true,
 						name = "Fight aggro",
 						type = "tm_st_fightaggro",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						hqchecktimer = 180,
-						hqid = 314,
-						hqpos = 
-						{
-							x = -28293.900390625,
-							y = 20503.5,
-							z = -2449.8312988281,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "Check HQ status",
-						type = "tm_st_hqstatus",
 					},
 				},
 				
@@ -4034,6 +4024,26 @@ local tbl =
 						type = "tm_st_movetomultiple",
 					},
 				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 180,
+						hqid = 314,
+						hqpos = 
+						{
+							x = -28293.900390625,
+							y = 20503.5,
+							z = -2449.8312988281,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Check status",
+						type = "tm_st_hqstatus",
+					},
+				},
 			},
 			taskProperties = 
 			{
@@ -4046,15 +4056,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Help The Skritt Challenge The Bandits",
+				name = "Help The Skritt Challenge The Bandits (Heart)",
 				pos = 
 				{
-					hx = -0.84133732318878,
-					hy = -0.24480967223644,
-					hz = 0.48189184069633,
-					x = -28179.9375,
-					y = 20478.638671875,
-					z = -2449.2915039063,
+					hx = 0.57001715898514,
+					hy = 0.78987312316895,
+					hz = 0.22623194754124,
+					x = -28959.705078125,
+					y = 19788.60546875,
+					z = -899.99206542969,
 				},
 				radius = 0,
 				type = "tm_hq",
@@ -4088,7 +4098,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "WP Proxemics Lab",
+				name = "Proxemics Lab (Waypoint)",
 				pos = 
 				{
 					hx = -0.75698238611221,
@@ -4130,7 +4140,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Robbari's Bandits",
+				name = "Robbari's Bandits (POI)",
 				pos = 
 				{
 					hx = 0.72654056549072,
@@ -4172,7 +4182,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Cutpurse Circle",
+				name = "Cutpurse Circle (POI)",
 				pos = 
 				{
 					hx = -0.92383974790573,
@@ -4231,7 +4241,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -4434,7 +4444,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Help Peacemaker Klodi",
+				name = "Help Peacemaker Klodi (Heart)",
 				pos = 
 				{
 					hx = -0.96551781892776,
@@ -4477,7 +4487,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "WP Triforge",
+				name = "Triforge (Waypoint)",
 				pos = 
 				{
 					hx = -0.80256730318069,
@@ -4536,7 +4546,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -4721,7 +4731,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Help Valiant Mathair",
+				name = "Help Valiant Mathair (Heart)",
 				pos = 
 				{
 					hx = -0.90927177667618,
@@ -4763,7 +4773,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Fort Vandal",
+				name = "Fort Vandal (POI)",
 				pos = 
 				{
 					hx = -0.39477235078812,
@@ -4805,7 +4815,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Discover Toxal Bog",
+				name = "Discover Toxal Bog (POI)",
 				pos = 
 				{
 					hx = 0.34693315625191,
@@ -4847,7 +4857,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "POI Tangle Root outpost",
+				name = "Tangle Root outpost (POI)",
 				pos = 
 				{
 					hx = -0.68136250972748,
@@ -4889,7 +4899,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "POI Thaumacore Inquiry Center",
+				name = "Thaumacore Inquiry Center (POI)",
 				pos = 
 				{
 					hx = 0.85132801532745,
@@ -4967,7 +4977,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HP Skrittsburgh Tunnels North",
+				name = "Skrittsburgh Tunnels North (Hero)",
 				pos = 
 				{
 					hx = -0.32524144649506,
@@ -5046,7 +5056,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HP Inventor Shminkta (Nav Mesh Fixed)",
+				name = "Inventor Shminkta (Hero)",
 				pos = 
 				{
 					hx = -0.91129595041275,
@@ -5145,7 +5155,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HP Keg Of Skrittsburgh (Nav Mesh Fixed)",
+				name = "Keg Of Skrittsburgh (Hero)",
 				pos = 
 				{
 					hx = -0.32604944705963,
@@ -5224,7 +5234,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 22,
-				name = "HP Koga Ruins",
+				name = "Koga Ruins (Hero)",
 				pos = 
 				{
 					hx = 0.69479137659073,
@@ -5302,7 +5312,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 22,
-				name = "HP Broken Cromlech",
+				name = "Broken Cromlech (Hero)",
 				pos = 
 				{
 					hx = -0.52526134252548,
@@ -5380,7 +5390,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 22,
-				name = "HP Crepustrak West ",
+				name = "Crepustrak West (Hero)",
 				pos = 
 				{
 					hx = -0.99692171812057,
@@ -5478,7 +5488,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 22,
-				name = "HP Crepustrak South West",
+				name = "Crepustrak South West (Hero)",
 				pos = 
 				{
 					hx = -0.93948215246201,
@@ -5510,7 +5520,6 @@ local tbl =
 					customProperties = 
 					{
 					},
-					order = 0,
 					taskProperties = 
 					{
 						enabled = true,
@@ -5569,7 +5578,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HP Hidden Lake",
+				name = "Hidden Lake (Hero)",
 				pos = 
 				{
 					hx = -0.97033542394638,
@@ -5627,8 +5636,8 @@ local tbl =
 					},
 					taskProperties = 
 					{
-						enabled = true,
-						name = "Check HQ status",
+						enabled = false,
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -5645,7 +5654,8 @@ local tbl =
 						},
 						talksteps = 
 						{
-							1,
+							2,
+							2,
 							2,
 							0,
 						},
@@ -5685,7 +5695,8 @@ local tbl =
 						talksteps = 
 						{
 							3,
-							2,
+							3,
+							3,
 							0,
 						},
 						talktype = "Index",
@@ -5724,6 +5735,7 @@ local tbl =
 						talksteps = 
 						{
 							2,
+							1,
 							1,
 							0,
 						},
@@ -5764,6 +5776,7 @@ local tbl =
 						{
 							2,
 							1,
+							1,
 							0,
 						},
 						talktype = "Index",
@@ -5773,6 +5786,27 @@ local tbl =
 						enabled = true,
 						name = "Talk Step",
 						type = "tm_st_talk",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							hx = -0.53803354501724,
+							hy = -0.7871361374855,
+							hz = 0.30155703425407,
+							x = -7510.068359375,
+							y = -7763.056640625,
+							z = -318.18606567383,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Move to location",
+						type = "tm_st_moveto",
 					},
 				},
 				
@@ -5815,7 +5849,7 @@ local tbl =
 			taskProperties = 
 			{
 				cooldown = 0,
-				enabled = true,
+				enabled = false,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
@@ -5823,15 +5857,15 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Assist Ulta Metamagicals",
+				name = "Assist Ulta Metamagicals (Heart)",
 				pos = 
 				{
-					hx = -0.70808488130569,
-					hy = 0.35658234357834,
-					hz = 0.60947912931442,
-					x = -4518.47265625,
-					y = -7620.7758789063,
-					z = -867.564453125,
+					hx = 0.83421719074249,
+					hy = 0.54796552658081,
+					hz = -0.061770156025887,
+					x = -7693.9951171875,
+					y = -8257.8212890625,
+					z = -424.01083374023,
 				},
 				radius = 0,
 				type = "tm_hq",
@@ -5882,7 +5916,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "Check HQ status",
+						name = "Check status",
 						type = "tm_st_hqstatus",
 					},
 				},
@@ -5996,7 +6030,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 80,
 				minlevel = 15,
-				name = "HQ Remove Threats To Durmond Priory Researchers",
+				name = "Remove Threats To Durmond Priory Researchers (Heart)",
 				pos = 
 				{
 					hx = 0.94605034589767,

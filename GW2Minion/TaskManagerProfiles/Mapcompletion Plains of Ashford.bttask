@@ -36,7 +36,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "WP Smokestead",
+				name = "Smokestead (Waypoint)",
 				pos = 
 				{
 					hx = 0.62070250511169,
@@ -78,7 +78,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "POI Three Legions Court",
+				name = "Three Legions Court (POI)",
 				pos = 
 				{
 					hx = -0.31455796957016,
@@ -197,7 +197,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 2,
-				name = "HQ Help Tolona",
+				name = "Help Tolona (Heart)",
 				pos = 
 				{
 					hx = 0.26283848285675,
@@ -239,7 +239,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 2,
-				name = "WP Greysteel Armory",
+				name = "Greysteel Armory (Waypoint)",
 				pos = 
 				{
 					hx = 0.41804599761963,
@@ -327,7 +327,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 3,
-				name = "HP ",
+				name = "Centurion Titus (Hero)",
 				pos = 
 				{
 					hx = -0.056993268430233,
@@ -467,7 +467,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 3,
-				name = "HQ Rid the training area of pests",
+				name = "Rid the training area of pests (Heart)",
 				pos = 
 				{
 					hx = 0.095055595040321,
@@ -509,7 +509,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 3,
-				name = "POI Mock's Niche",
+				name = "Mock's Niche (POI)",
 				pos = 
 				{
 					hx = -0.76711672544479,
@@ -606,7 +606,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 2,
-				name = "HQ Crucibis Forgeweld",
+				name = "Crucibis Forgeweld (Heart)",
 				pos = 
 				{
 					hx = 0.05096397921443,
@@ -648,7 +648,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 3,
-				name = "POI Wrecking Yard",
+				name = "Wrecking Yard (POI)",
 				pos = 
 				{
 					hx = -0.17812576889992,
@@ -816,7 +816,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 3,
-				name = "HQ Scar Stripeclaw",
+				name = "Scar Stripeclaw (Heart)",
 				pos = 
 				{
 					hx = 0.38451308012009,
@@ -859,7 +859,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 4,
-				name = "Vista",
+				name = "Lake Feritas (Vista)",
 				pos = 
 				{
 					hx = 0.53102904558182,
@@ -1013,7 +1013,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 4,
-				name = "HQ Strum Bassclash",
+				name = "Strum Bassclash (Heart)",
 				pos = 
 				{
 					hx = 0.44805324077606,
@@ -1202,7 +1202,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 5,
-				name = "HQ Latera Painstorm",
+				name = "Latera Painstorm (Heart)",
 				pos = 
 				{
 					hx = -0.10925307869911,
@@ -1244,7 +1244,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 6,
-				name = "WP Feritas",
+				name = "Feritas (Waypoint)",
 				pos = 
 				{
 					hx = -0.91388595104218,
@@ -1468,7 +1468,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 6,
-				name = "HQ Bryllana Deepmind",
+				name = "Bryllana Deepmind (Heart)",
 				pos = 
 				{
 					hx = -0.43766561150551,
@@ -1510,7 +1510,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 6,
-				name = "WP Vir's Gate",
+				name = "Vir's Gate (Waypoint)",
 				pos = 
 				{
 					hx = -0.53873026371002,
@@ -1552,7 +1552,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 6,
-				name = "POI Barradin's Vaults",
+				name = "Barradin's Vaults (POI)",
 				pos = 
 				{
 					hx = 0.91250932216644,
@@ -1594,7 +1594,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 6,
-				name = "POI Sharptail Encampment",
+				name = "Sharptail Encampment (POI)",
 				pos = 
 				{
 					hx = 0.31920453906059,
@@ -1775,7 +1775,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 6,
-				name = "HQ Kyra Sharptracker",
+				name = "Kyra Sharptracker (Heart)",
 				pos = 
 				{
 					hx = -0.52711069583893,
@@ -1818,7 +1818,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 6,
-				name = "Vista",
+				name = "Victor's Presidium (Vista)",
 				pos = 
 				{
 					hx = -0.39939481019974,
@@ -1860,7 +1860,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 6,
-				name = "WP Decimus",
+				name = "Decimus (Waypoint)",
 				pos = 
 				{
 					hx = -0.17764356732368,
@@ -1902,7 +1902,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 6,
-				name = "WP Langmar Estate ",
+				name = "Langmar Estate (Waypoint)",
 				pos = 
 				{
 					hx = 0.59744369983673,
@@ -1944,7 +1944,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 6,
-				name = "POI Igni Castrum",
+				name = "Igni Castrum (POI)",
 				pos = 
 				{
 					hx = 0.55786389112473,
@@ -1982,7 +1982,7 @@ local tbl =
 					taskProperties = 
 					{
 						enabled = true,
-						name = "aggro",
+						name = "Kill Aggro",
 						type = "tm_st_fightaggro",
 					},
 				},
@@ -2044,7 +2044,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 8,
-				name = "HP",
+				name = "Effigy Core (Hero)",
 				pos = 
 				{
 					hx = -0.88505983352661,
@@ -2087,7 +2087,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 8,
-				name = "Vista",
+				name = "Lake Adorea (Vista)",
 				pos = 
 				{
 					hx = -0.24867530167103,
@@ -2129,7 +2129,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 9,
-				name = "WP Adorea",
+				name = "Adorea (Waypoint)",
 				pos = 
 				{
 					hx = 0.91557145118713,
@@ -2170,6 +2170,31 @@ local tbl =
 						enabled = true,
 						name = "aggro",
 						type = "tm_st_fightaggro",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targets = 
+						{
+							
+							{
+								character = false,
+								closedialog = false,
+								contentid = 16452,
+								gadget = true,
+								maxinteract = 1,
+								name = "Torch",
+								oncepertarget = false,
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Interact",
+						type = "tm_st_interact",
 					},
 				},
 				
@@ -2268,7 +2293,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 10,
-				name = "HQ Gavros Spiritfoe",
+				name = "Gavros Spiritfoe (Heart)",
 				pos = 
 				{
 					hx = 0.15987583994865,
@@ -2375,7 +2400,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 11,
-				name = "HP",
+				name = "Ethereal Vanguard Monument (Hero)",
 				pos = 
 				{
 					hx = -0.93438732624054,
@@ -2417,7 +2442,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 11,
-				name = "WP Ashford",
+				name = "Ashford (Waypoint)",
 				pos = 
 				{
 					hx = 0.79251569509506,
@@ -2517,7 +2542,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 11,
-				name = "HP",
+				name = "Centurion Micka Thickblood (Hero)",
 				pos = 
 				{
 					hx = -0.68923264741898,
@@ -2668,7 +2693,7 @@ local tbl =
 				maxduration = 300,
 				maxlevel = 0,
 				minlevel = 12,
-				name = "HQ Paenula Drakecatcher (sometimes bugged)",
+				name = "Paenula Drakecatcher (Heart)",
 				pos = 
 				{
 					hx = -0.12024480849504,
@@ -2710,7 +2735,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 8,
-				name = "POI Victory Cenograph",
+				name = "Victory Cenograph (POI)",
 				pos = 
 				{
 					hx = -0.08423525094986,
@@ -2885,7 +2910,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 8,
-				name = "HQ Kessis Ironbound",
+				name = "Kessis Ironbound (Heart)",
 				pos = 
 				{
 					hx = 0.12694352865219,
@@ -2927,7 +2952,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 8,
-				name = "POI Exterminatus HQ",
+				name = "Exterminatus HQ (POI)",
 				pos = 
 				{
 					hx = -0.834452688694,
@@ -2969,7 +2994,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 7,
-				name = "WP Temperus",
+				name = "Temperus (Waypoint)",
 				pos = 
 				{
 					hx = 0.057034529745579,
@@ -3172,7 +3197,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 7,
-				name = "HQ Blayd Gutwrencher",
+				name = "Blayd Gutwrencher (Heart)",
 				pos = 
 				{
 					hx = 0.050566505640745,
@@ -3215,7 +3240,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 7,
-				name = "Vista",
+				name = "(Vista)",
 				pos = 
 				{
 					hx = -0.28974267840385,
@@ -3257,7 +3282,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 7,
-				name = "POI Calhaan's Haunt",
+				name = "Calhaan's Haunt (POI)",
 				pos = 
 				{
 					hx = -0.15026226639748,
@@ -3299,7 +3324,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 7,
-				name = "WP Martyr's",
+				name = "Martyr's (Waypoint)",
 				pos = 
 				{
 					hx = 0.65781700611115,
@@ -3341,7 +3366,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 7,
-				name = "POI Deadgod's Lair",
+				name = "Deadgod's Lair (POI)",
 				pos = 
 				{
 					hx = 0.8741352558136,
@@ -3384,7 +3409,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 7,
-				name = "Vista",
+				name = "The Toppled Wall (Vista)",
 				pos = 
 				{
 					hx = -0.47439926862717,
@@ -3425,26 +3450,6 @@ local tbl =
 						enabled = true,
 						name = "aggro",
 						type = "tm_st_fightaggro",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						hqchecktimer = 120,
-						hqid = 105,
-						hqpos = 
-						{
-							x = 5990.16015625,
-							y = 17241.400390625,
-							z = -1369.9200439453,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "check",
-						type = "tm_st_hqstatus",
 					},
 				},
 				
@@ -3495,6 +3500,20 @@ local tbl =
 								gadget = true,
 								name = "Harpyien-Nest",
 							},
+							
+							{
+								character = false,
+								contentid = 23749,
+								gadget = true,
+								name = "Harpy Nest",
+							},
+							
+							{
+								character = false,
+								contentid = 22521,
+								gadget = true,
+								name = "Harpy Nest",
+							},
 						},
 					},
 					taskProperties = 
@@ -3502,6 +3521,26 @@ local tbl =
 						enabled = true,
 						name = "kill",
 						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 120,
+						hqid = 105,
+						hqpos = 
+						{
+							x = 5990.16015625,
+							y = 17241.400390625,
+							z = -1369.9200439453,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "check",
+						type = "tm_st_hqstatus",
 					},
 				},
 			},
@@ -3516,7 +3555,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 15,
-				name = "HQ Sagum Relicseeker",
+				name = "Sagum Relicseeker (Heart)",
 				pos = 
 				{
 					hx = 0.69808733463287,
@@ -3558,7 +3597,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 15,
-				name = "POI Shards of War",
+				name = "Shards of War (POI)",
 				pos = 
 				{
 					hx = -0.48355033993721,
@@ -3600,7 +3639,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 10,
-				name = "WP Spirit Hunter Camp",
+				name = "Spirit Hunter Camp (Waypoint)",
 				pos = 
 				{
 					hx = -0.8547415137291,
@@ -3643,7 +3682,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 11,
-				name = "Vista",
+				name = "Phasmatis Corridor (Vista)",
 				pos = 
 				{
 					hx = 0.74600237607956,
@@ -3685,7 +3724,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 11,
-				name = "POI Swordcross Outpost",
+				name = "Swordcross Outpost (POI)",
 				pos = 
 				{
 					hx = -0.043943796306849,
@@ -3727,7 +3766,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 11,
-				name = "POI Ghostsummit",
+				name = "Ghostsummit (POI)",
 				pos = 
 				{
 					hx = -0.48570919036865,
@@ -3769,7 +3808,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 11,
-				name = "WP Ascalonian Catacombs",
+				name = "Ascalonian Catacombs (Waypoint)",
 				pos = 
 				{
 					hx = 0.54722279310226,
@@ -3811,7 +3850,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 13,
-				name = "WP Phasmatis",
+				name = "Phasmatis (Waypoint)",
 				pos = 
 				{
 					hx = 0.47989964485168,
@@ -3838,6 +3877,18 @@ local tbl =
 			},
 			pretasks = 
 			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
 			},
 			subtasks = 
 			{
@@ -3884,12 +3935,12 @@ local tbl =
 				enabled = true,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
-				gw2_trytosurvive = true,
+				gw2_trytosurvive = false,
 				mapid = 19,
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 14,
-				name = "22d",
+				name = "Ruins of Ascalon City (Hero)",
 				pos = 
 				{
 					hx = 0.60841083526611,
@@ -3931,7 +3982,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 15,
-				name = "POI Viewing Hill",
+				name = "Viewing Hill (POI)",
 				pos = 
 				{
 					hx = 0.45176699757576,
@@ -3974,7 +4025,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 15,
-				name = "Vista",
+				name = "Ascalon City (Vista)",
 				pos = 
 				{
 					hx = 0.0062261642888188,
@@ -4016,7 +4067,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 15,
-				name = "WP Ascalon City",
+				name = "Ascalon City (Waypoint)",
 				pos = 
 				{
 					hx = 0.02179379761219,
@@ -4044,6 +4095,19 @@ local tbl =
 			},
 			pretasks = 
 			{
+				
+				{
+					customProperties = 
+					{
+					},
+					order = 0,
+					taskProperties = 
+					{
+						enabled = true,
+						name = "Fight aggro",
+						type = "tm_st_fightaggro",
+					},
+				},
 			},
 			subtasks = 
 			{
@@ -4169,7 +4233,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 0,
-				name = "HQ Ghyrtratus Fiendmauler",
+				name = "Ghyrtratus Fiendmauler (Heart)",
 				pos = 
 				{
 					hx = 0.16638575494289,
@@ -4211,7 +4275,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 15,
-				name = "POI Foefire's Heart",
+				name = "Foefire's Heart (POI)",
 				pos = 
 				{
 					hx = -0.078812591731548,
@@ -4289,7 +4353,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 15,
-				name = "HP",
+				name = "Ascalonian Ruins (Hero)",
 				pos = 
 				{
 					hx = -0.012972041964531,
@@ -4332,7 +4396,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 15,
-				name = "Vista",
+				name = "Human's Lament (Vista)",
 				pos = 
 				{
 					hx = -0.82052159309387,
@@ -4366,7 +4430,7 @@ local tbl =
 			taskProperties = 
 			{
 				cooldown = 0,
-				enabled = false,
+				enabled = true,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = false,
@@ -4374,7 +4438,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 13,
-				name = "POI Stonecrag Kraal (only reachable after event-chain)",
+				name = "Stonecrag Kraal (POI)",
 				pos = 
 				{
 					hx = -0.14273574948311,
@@ -4416,7 +4480,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 13,
-				name = "WP Watchcrag Tower",
+				name = "Watchcrag Tower (Waypoint)",
 				pos = 
 				{
 					hx = -0.64933574199677,
@@ -4459,7 +4523,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 13,
-				name = "Vista",
+				name = "Cadem Forest (Vista)",
 				pos = 
 				{
 					hx = 0.1038346067071,
@@ -4478,10 +4542,52 @@ local tbl =
 		{
 			customProperties = 
 			{
-				hqid = 111,
 			},
 			lastrun = 0,
 			order = 61,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 19,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 13,
+				name = "Duskrend Overlook (Waypoint)",
+				pos = 
+				{
+					hx = -0.9148765206337,
+					hy = -0.27580267190933,
+					hz = 0.29484543204308,
+					x = 42962.56640625,
+					y = -6991.5268554688,
+					z = -1331.9033203125,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 110,
+			},
+			lastrun = 0,
+			order = 62,
 			posttasks = 
 			{
 			},
@@ -4506,13 +4612,63 @@ local tbl =
 				{
 					customProperties = 
 					{
-						hqchecktimer = 180,
-						hqid = 111,
+						targets = 
+						{
+							
+							{
+								character = true,
+								contentid = 458978,
+								gadget = false,
+								name = "Brackwasser-Skal",
+							},
+							
+							{
+								character = true,
+								contentid = 43945,
+								gadget = false,
+								name = "Skal-Junges",
+							},
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "kill",
+						type = "tm_st_killspecific",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						targetpos = 
+						{
+							hx = -0.74974530935287,
+							hy = 0.463747382164,
+							hz = 0.47203853726387,
+							x = 41684.26953125,
+							y = -16441.853515625,
+							z = 13.82529258728,
+						},
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "move",
+						type = "tm_st_moveto",
+					},
+				},
+				
+				{
+					customProperties = 
+					{
+						hqchecktimer = 300,
+						hqid = 110,
 						hqpos = 
 						{
-							x = 36257.69921875,
-							y = -1922.1700439453,
-							z = -1076.3900146484,
+							x = 44138,
+							y = -18303.69921875,
+							z = -643.57000732422,
 						},
 					},
 					taskProperties = 
@@ -4520,6 +4676,103 @@ local tbl =
 						enabled = true,
 						name = "check",
 						type = "tm_st_hqstatus",
+					},
+				},
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 19,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 13,
+				name = "Researcher Irkz (Heart)",
+				pos = 
+				{
+					hx = -0.70728814601898,
+					hy = -0.344801902771,
+					hz = 0.61713457107544,
+					x = 44192.94921875,
+					y = -18265.57421875,
+					z = -649.64025878906,
+				},
+				radius = 0,
+				type = "tm_hq",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+			},
+			lastrun = 0,
+			order = 63,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+			},
+			taskProperties = 
+			{
+				cooldown = 0,
+				enabled = true,
+				gw2_failondeath = false,
+				gw2_failondeathcount = 4,
+				gw2_trytosurvive = true,
+				mapid = 19,
+				maxduration = 0,
+				maxlevel = 0,
+				minlevel = 11,
+				name = "Loreclaw (Waypoint)",
+				pos = 
+				{
+					hx = -0.96209001541138,
+					hy = -0.22478921711445,
+					hz = 0.15444278717041,
+					x = 30192.126953125,
+					y = -17796.40625,
+					z = -110.3271484375,
+				},
+				radius = 0,
+				type = "tm_moveto",
+			},
+			version = 0,
+		},
+		
+		{
+			customProperties = 
+			{
+				hqid = 111,
+			},
+			lastrun = 0,
+			order = 64,
+			posttasks = 
+			{
+			},
+			pretasks = 
+			{
+			},
+			subtasks = 
+			{
+				
+				{
+					customProperties = 
+					{
+					},
+					taskProperties = 
+					{
+						enabled = true,
+						name = "aggro",
+						type = "tm_st_fightaggro",
 					},
 				},
 				
@@ -4531,212 +4784,177 @@ local tbl =
 							
 							{
 								character = false,
-								contentid = 27140,
+								contentid = 12200,
 								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
+								name = "Ogre Pet House",
 							},
 							
 							{
 								character = false,
 								contentid = 30753,
 								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
+								name = "Ogre Supplies",
 							},
 							
 							{
 								character = false,
-								contentid = 7817,
+								contentid = 20479,
 								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
-							},
-							
-							{
-								character = false,
-								contentid = 5062,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
-							},
-							
-							{
-								character = false,
-								contentid = 3578,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
-							},
-							
-							{
-								character = false,
-								contentid = 2085,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
-							},
-							
-							{
-								character = false,
-								contentid = 1355,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
-							},
-							
-							{
-								character = false,
-								contentid = 7645,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
-							},
-							
-							{
-								character = false,
-								contentid = 7461,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
-							},
-							
-							{
-								character = false,
-								contentid = 30679,
-								gadget = true,
-								name = "Oger-Waffenst\xc3\xa4nder",
-							},
-							
-							{
-								character = false,
-								contentid = 9427,
-								gadget = true,
-								name = "Oger-Waffenst\xc3\xa4nder",
-							},
-							
-							{
-								character = false,
-								contentid = 30976,
-								gadget = true,
-								name = "Oger-Waffenst\xc3\xa4nder",
-							},
-							
-							{
-								character = false,
-								contentid = 28095,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
+								name = "Ogre Territory Marker",
 							},
 							
 							{
 								character = false,
 								contentid = 14525,
 								gadget = true,
-								name = "Oger-Z\xc3\xa4hmlingshaus",
+								name = "Ogre Pet House",
 							},
 							
 							{
 								character = false,
-								contentid = 24037,
+								contentid = 6640,
 								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
+								name = "Ogre Supplies",
 							},
 							
 							{
 								character = false,
-								contentid = 4898,
+								contentid = 23397,
 								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
+								name = "Ogre Supplies",
 							},
 							
 							{
 								character = false,
-								contentid = 25631,
+								contentid = 18516,
 								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
+								name = "Ogre Territory Marker",
+							},
+							
+							{
+								character = false,
+								contentid = 28095,
+								gadget = true,
+								name = "Ogre Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 5062,
+								gadget = true,
+								name = "Ogre Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 3578,
+								gadget = true,
+								name = "Ogre Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 7645,
+								gadget = true,
+								name = "Ogre Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 2085,
+								gadget = true,
+								name = "Ogre Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 25918,
+								gadget = true,
+								name = "Ogre Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 1355,
+								gadget = true,
+								name = "Ogre Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 17594,
+								gadget = true,
+								name = "Ogre Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 6972,
+								gadget = true,
+								name = "Ogre Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 8517,
+								gadget = true,
+								name = "Ogre Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 12196,
+								gadget = true,
+								name = "Ogre Weapon Rack",
+							},
+							
+							{
+								character = false,
+								contentid = 29554,
+								gadget = true,
+								name = "Ogre Supplies",
+							},
+							
+							{
+								character = false,
+								contentid = 31633,
+								gadget = true,
+								name = "Ogre Pet House",
+							},
+							
+							{
+								character = false,
+								contentid = 13045,
+								gadget = true,
+								name = "Ogre Supplies",
 							},
 							
 							{
 								character = true,
-								contentid = 43581,
+								contentid = 44195,
 								gadget = false,
-								name = "Oger-Tierb\xc3\xa4ndiger",
-							},
-							
-							{
-								character = true,
-								contentid = 331273,
-								gadget = false,
-								name = "Falkenaugen-Greif",
-							},
-							
-							{
-								character = false,
-								contentid = 25794,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
-							},
-							
-							{
-								character = false,
-								contentid = 7493,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
-							},
-							
-							{
-								character = false,
-								contentid = 10948,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
-							},
-							
-							{
-								character = false,
-								contentid = 12200,
-								gadget = true,
-								name = "Oger-Z\xc3\xa4hmlingshaus",
-							},
-							
-							{
-								character = false,
-								contentid = 18574,
-								gadget = true,
-								name = "Oger-Z\xc3\xa4hmlingshaus",
-							},
-							
-							{
-								character = false,
-								contentid = 3401,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
-							},
-							
-							{
-								character = false,
-								contentid = 26568,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
-							},
-							
-							{
-								character = false,
-								contentid = 4400,
-								gadget = true,
-								name = "Oger-Z\xc3\xa4hmlingshaus",
-							},
-							
-							{
-								character = false,
-								contentid = 9511,
-								gadget = true,
-								name = "Oger-Vorr\xc3\xa4te",
+								name = "Rock Dog",
 							},
 							
 							{
 								character = true,
 								contentid = 462980,
 								gadget = false,
-								name = "Oger-J\xc3\xa4ger",
+								name = "Ogre Hunter",
 							},
 							
 							{
 								character = true,
 								contentid = 43582,
 								gadget = false,
-								name = "Oger-J\xc3\xa4gerin",
+								name = "Ogre Hunter",
+							},
+							
+							{
+								character = false,
+								contentid = 7366,
+								gadget = true,
+								name = "Ogre Territory Marker",
 							},
 						},
 					},
@@ -4832,114 +5050,17 @@ local tbl =
 						type = "tm_st_moveto",
 					},
 				},
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = true,
-				mapid = 19,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 13,
-				name = "HQ Androchus the Hidden",
-				pos = 
-				{
-					hx = 0.12995468080044,
-					hy = 0.82431882619858,
-					hz = 0.55100834369659,
-					x = 36257.6015625,
-					y = -1957.0043945313,
-					z = -1138.0858154297,
-				},
-				radius = 0,
-				type = "tm_hq",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 62,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = true,
-				mapid = 19,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 13,
-				name = "WP Duskrend overlook",
-				pos = 
-				{
-					hx = -0.9148765206337,
-					hy = -0.27580267190933,
-					hz = 0.29484543204308,
-					x = 42962.56640625,
-					y = -6991.5268554688,
-					z = -1331.9033203125,
-				},
-				radius = 0,
-				type = "tm_moveto",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-				hqid = 110,
-			},
-			lastrun = 0,
-			order = 63,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
 				
 				{
 					customProperties = 
 					{
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "aggro",
-						type = "tm_st_fightaggro",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						hqchecktimer = 300,
-						hqid = 110,
+						hqchecktimer = 180,
+						hqid = 111,
 						hqpos = 
 						{
-							x = 44138,
-							y = -18303.69921875,
-							z = -643.57000732422,
+							x = 36257.69921875,
+							y = -1922.1700439453,
+							z = -1076.3900146484,
 						},
 					},
 					taskProperties = 
@@ -4949,61 +5070,11 @@ local tbl =
 						type = "tm_st_hqstatus",
 					},
 				},
-				
-				{
-					customProperties = 
-					{
-						targets = 
-						{
-							
-							{
-								character = true,
-								contentid = 458978,
-								gadget = false,
-								name = "Brackwasser-Skal",
-							},
-							
-							{
-								character = true,
-								contentid = 43945,
-								gadget = false,
-								name = "Skal-Junges",
-							},
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "kill",
-						type = "tm_st_killspecific",
-					},
-				},
-				
-				{
-					customProperties = 
-					{
-						targetpos = 
-						{
-							hx = -0.74974530935287,
-							hy = 0.463747382164,
-							hz = 0.47203853726387,
-							x = 41684.26953125,
-							y = -16441.853515625,
-							z = 13.82529258728,
-						},
-					},
-					taskProperties = 
-					{
-						enabled = true,
-						name = "move",
-						type = "tm_st_moveto",
-					},
-				},
 			},
 			taskProperties = 
 			{
 				cooldown = 0,
-				enabled = true,
+				enabled = false,
 				gw2_failondeath = false,
 				gw2_failondeathcount = 4,
 				gw2_trytosurvive = true,
@@ -5011,60 +5082,18 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 13,
-				name = "HQ Researcher Irkz",
+				name = "Androchus the Hidden (Heart)",
 				pos = 
 				{
-					hx = -0.70728814601898,
-					hy = -0.344801902771,
-					hz = 0.61713457107544,
-					x = 44192.94921875,
-					y = -18265.57421875,
-					z = -649.64025878906,
+					hx = -0.89616894721985,
+					hy = 0.3641502559185,
+					hz = 0.25352683663368,
+					x = 39497.734375,
+					y = 1829.2886962891,
+					z = -473.75790405273,
 				},
 				radius = 0,
 				type = "tm_hq",
-			},
-			version = 0,
-		},
-		
-		{
-			customProperties = 
-			{
-			},
-			lastrun = 0,
-			order = 64,
-			posttasks = 
-			{
-			},
-			pretasks = 
-			{
-			},
-			subtasks = 
-			{
-			},
-			taskProperties = 
-			{
-				cooldown = 0,
-				enabled = true,
-				gw2_failondeath = false,
-				gw2_failondeathcount = 4,
-				gw2_trytosurvive = true,
-				mapid = 19,
-				maxduration = 0,
-				maxlevel = 0,
-				minlevel = 11,
-				name = "WP Loreclaw",
-				pos = 
-				{
-					hx = -0.96209001541138,
-					hy = -0.22478921711445,
-					hz = 0.15444278717041,
-					x = 30192.126953125,
-					y = -17796.40625,
-					z = -110.3271484375,
-				},
-				radius = 0,
-				type = "tm_moveto",
 			},
 			version = 0,
 		},
@@ -5095,7 +5124,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 12,
-				name = "POI",
+				name = "Camp Keiran (POI)",
 				pos = 
 				{
 					hx = 0.17715294659138,
@@ -5138,7 +5167,7 @@ local tbl =
 				maxduration = 180,
 				maxlevel = 0,
 				minlevel = 13,
-				name = "Vista",
+				name = "Ascalon Basin (Vista)",
 				pos = 
 				{
 					hx = -0.46927651762962,
@@ -5305,7 +5334,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 12,
-				name = "HQ Mei Hawkslayer",
+				name = "Mei Hawkslayer (Heart)",
 				pos = 
 				{
 					hx = -0.83292293548584,
@@ -5347,7 +5376,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 12,
-				name = "Discover",
+				name = "Windrock Maze (Discover)",
 				pos = 
 				{
 					hx = -0.56958132982254,
@@ -5389,7 +5418,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 11,
-				name = "WP Irondock Shipyard",
+				name = "Irondock Shipyard (Waypoint)",
 				pos = 
 				{
 					hx = 0.66600692272186,
@@ -5514,7 +5543,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 11,
-				name = "HQ Sesto Headsplitter",
+				name = "Sesto Headsplitter (Heart)",
 				pos = 
 				{
 					hx = 0.23346790671349,
@@ -5556,7 +5585,7 @@ local tbl =
 				maxduration = 0,
 				maxlevel = 0,
 				minlevel = 11,
-				name = "Discover",
+				name = "Lamia Mire (Discover)",
 				pos = 
 				{
 					hx = 0.66198897361755,
